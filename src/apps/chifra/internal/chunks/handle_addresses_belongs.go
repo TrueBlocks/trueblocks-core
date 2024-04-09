@@ -94,20 +94,20 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 			if discApps, err = indexChunk.ReadAppearancesAndReset(&discAddr); err != nil {
 				return false, err
 			}
-			s.Appearances = make([]types.AppRecord, 0, len(discApps))
+			s.Appearances = make([]types.SimpleAppRecord, 0, len(discApps))
 			for _, a := range discApps {
-				s.Appearances = append(s.Appearances, types.AppRecord{
+				s.Appearances = append(s.Appearances, types.SimpleAppRecord{
 					BlockNumber:      uint32(a.BlockNumber),
 					TransactionIndex: uint32(a.TransactionIndex),
 				})
 			}
-			s.AddressRecord = types.AddrRecord{
+			s.AddressRecord = types.SimpleAddrRecord{
 				Address: discAddr.Address,
 				Offset:  discAddr.Offset,
 				Count:   uint32(len(discApps)),
 			}
 			if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {
-				good := []types.AppRecord{}
+				good := []types.SimpleAppRecord{}
 				for _, app := range s.Appearances {
 					if uint64(app.BlockNumber) >= opts.FirstBlock && uint64(app.BlockNumber) <= opts.LastBlock {
 						good = append(good, app)
@@ -177,20 +177,20 @@ func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[t
 			if discApps, err = indexChunk.ReadAppearancesAndReset(&discAddr); err != nil {
 				return false, err
 			}
-			s.Appearances = make([]types.AppRecord, 0, len(discApps))
+			s.Appearances = make([]types.SimpleAppRecord, 0, len(discApps))
 			for _, a := range discApps {
-				s.Appearances = append(s.Appearances, types.AppRecord{
+				s.Appearances = append(s.Appearances, types.SimpleAppRecord{
 					BlockNumber:      uint32(a.BlockNumber),
 					TransactionIndex: uint32(a.TransactionIndex),
 				})
 			}
-			s.AddressRecord = types.AddrRecord{
+			s.AddressRecord = types.SimpleAddrRecord{
 				Address: discAddr.Address,
 				Offset:  discAddr.Offset,
 				Count:   uint32(len(discApps)),
 			}
 			if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {
-				good := []types.AppRecord{}
+				good := []types.SimpleAppRecord{}
 				for _, app := range s.Appearances {
 					if uint64(app.BlockNumber) >= opts.FirstBlock && uint64(app.BlockNumber) <= opts.LastBlock {
 						good = append(good, app)

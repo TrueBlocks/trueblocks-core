@@ -2690,11 +2690,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#chunkaddress">ChunkAddress</a>, <a href="/data-model/admin/#chunkbloom">ChunkBloom</a>, <a href="/data-model/admin/#chunkindex">ChunkIndex</a>, <a href="/data-model/admin/#chunkpinreport">ChunkPinReport</a>, <a href="/data-model/admin/#chunkrecord">ChunkRecord</a>, <a href="/data-model/admin/#chunkstats">ChunkStats</a>, <a href="/data-model/admin/#ipfspin">IpfsPin</a>, <a href="/data-model/admin/#manifest">Manifest</a> or <a href="/data-model/admin/#reportcheck">ReportCheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#appearancetable">AppearanceTable</a>, <a href="/data-model/admin/#chunkaddress">ChunkAddress</a>, <a href="/data-model/admin/#chunkbloom">ChunkBloom</a>, <a href="/data-model/admin/#chunkindex">ChunkIndex</a>, <a href="/data-model/admin/#chunkpinreport">ChunkPinReport</a>, <a href="/data-model/admin/#chunkrecord">ChunkRecord</a>, <a href="/data-model/admin/#chunkstats">ChunkStats</a>, <a href="/data-model/admin/#ipfspin">IpfsPin</a>, <a href="/data-model/admin/#manifest">Manifest</a> or <a href="/data-model/admin/#reportcheck">ReportCheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/appearanceTable"
                         - $ref: "#/components/schemas/chunkAddress"
                         - $ref: "#/components/schemas/chunkBloom"
                         - $ref: "#/components/schemas/chunkIndex"
@@ -3011,6 +3012,20 @@ components:
           type: string
           format: datetime
           description: "the timestamp as a date (calculated)"
+    appearanceTable:
+      description: "an appearance table for an address"
+      type: object
+      properties:
+        AddressRecord:
+          type: object
+          items:
+            $ref: "#/components/schemas/addrRecord"
+          description: "the address record for these appearances"
+        Appearances:
+          type: object
+          items:
+            $ref: "#/components/schemas/appRecord"
+          description: "all the appearances for this address"
     monitor:
       description: "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
       type: object

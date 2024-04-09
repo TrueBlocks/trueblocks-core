@@ -133,7 +133,7 @@ func GetChunksOptions(args []string, g *globals.GlobalOptions) *ChunksOptions {
 }
 
 // EXISTING_CODE
-func (opts *ChunksOptions) shouldShow(obj types.AddrRecord) bool {
+func (opts *ChunksOptions) shouldShow(obj types.SimpleAddrRecord) bool {
 	if opts.Mode == "addresses" || opts.Mode == "appearances" {
 		return opts.Globals.Verbose
 	}
