@@ -18,7 +18,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -83,7 +83,7 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 	return &opts, nil
 }
 
-func (opts *TokensOptions) Query() ([]bool, *rpc.MetaData, error) {
+func (opts *TokensOptions) Query() ([]bool, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.Tokens(&buffer); err != nil {
 		logger.Fatal(err)

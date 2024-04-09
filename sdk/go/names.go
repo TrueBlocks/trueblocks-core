@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -86,7 +85,7 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 	return &opts, nil
 }
 
-func (opts *NamesOptions) Query() ([]types.SimpleName, *rpc.MetaData, error) {
+func (opts *NamesOptions) Query() ([]types.SimpleName, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.Names(&buffer); err != nil {
 		logger.Fatal(err)

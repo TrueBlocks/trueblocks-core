@@ -6,18 +6,21 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package statusPkg
+package types
 
 // EXISTING_CODE
 import (
 	"encoding/json"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // EXISTING_CODE
 
-type simpleCacheItem struct {
+type RawCacheItem struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+type SimpleCacheItem struct {
 	Items         []any  `json:"items"`
 	LastCached    string `json:"lastCached,omitempty"`
 	NFiles        uint64 `json:"nFiles"`
@@ -30,27 +33,30 @@ type simpleCacheItem struct {
 	// EXISTING_CODE
 }
 
-func (s *simpleCacheItem) String() string {
+func (s *SimpleCacheItem) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *simpleCacheItem) Raw() *types.RawModeler {
+func (s *SimpleCacheItem) Raw() *RawModeler {
 	return nil
 }
 
-func (s *simpleCacheItem) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *SimpleCacheItem) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
 	// EXISTING_CODE
 
-	return types.Model{
+	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 // EXISTING_CODE
 // EXISTING_CODE

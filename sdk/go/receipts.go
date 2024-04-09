@@ -17,7 +17,6 @@ import (
 	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -70,7 +69,7 @@ func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 	return &opts, nil
 }
 
-func (opts *ReceiptsOptions) Query() ([]types.SimpleReceipt, *rpc.MetaData, error) {
+func (opts *ReceiptsOptions) Query() ([]types.SimpleReceipt, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.Receipts(&buffer); err != nil {
 		logger.Fatal(err)

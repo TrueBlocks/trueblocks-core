@@ -57,7 +57,7 @@ func Get{{.Proper}}Options(args []string) (*{{.Proper}}Options, error) {
 	return &opts, nil
 }
 
-func (opts *{{.Proper}}Options) Query() ([]{{.Returns}}, *rpc.MetaData, error) {
+func (opts *{{.Proper}}Options) Query() ([]{{.Returns}}, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.{{.Proper}}(&buffer); err != nil {
 		logger.Fatal(err)

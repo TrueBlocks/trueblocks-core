@@ -17,7 +17,7 @@ import (
 	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -79,7 +79,7 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 	return &opts, nil
 }
 
-func (opts *MonitorsOptions) Query() ([]bool, *rpc.MetaData, error) {
+func (opts *MonitorsOptions) Query() ([]bool, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.Monitors(&buffer); err != nil {
 		logger.Fatal(err)

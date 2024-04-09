@@ -11,6 +11,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// TODO: Remove rpc.MetaData and use types.MetaData throughout
+
 var discardWriter = io.Writer(nil)
 
 func init() {

@@ -20,7 +20,7 @@ func (opts *StatusOptions) HandleDiagnose() error {
 		}
 
 		// We want to short circuit the output in the non-json case
-		if s.toTemplate(opts.Globals.Writer, testMode, opts.Diagnose, logger.LogTimerOn(), opts.Globals.Format) {
+		if toTemplate(s, opts.Globals.Writer, testMode, opts.Diagnose, logger.LogTimerOn(), opts.Globals.Format) {
 			return
 		}
 

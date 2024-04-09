@@ -18,7 +18,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -88,7 +87,7 @@ func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 	return &opts, nil
 }
 
-func (opts *TransactionsOptions) Query() ([]types.SimpleTransaction, *rpc.MetaData, error) {
+func (opts *TransactionsOptions) Query() ([]types.SimpleTransaction, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.Transactions(&buffer); err != nil {
 		logger.Fatal(err)
