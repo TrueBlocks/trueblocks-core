@@ -6,18 +6,21 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package chunksPkg
+package types
 
 // EXISTING_CODE
 import (
 	"encoding/json"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // EXISTING_CODE
 
-type simpleReportCheck struct {
+type RawReportCheck struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+type SimpleReportCheck struct {
 	CheckedCnt uint32   `json:"checkedCnt"`
 	FailedCnt  uint32   `json:"failedCnt"`
 	MsgStrings []string `json:"msgStrings"`
@@ -31,16 +34,16 @@ type simpleReportCheck struct {
 	// EXISTING_CODE
 }
 
-func (s *simpleReportCheck) String() string {
+func (s *SimpleReportCheck) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *simpleReportCheck) Raw() *types.RawModeler {
+func (s *SimpleReportCheck) Raw() *RawModeler {
 	return nil
 }
 
-func (s *simpleReportCheck) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *SimpleReportCheck) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -77,11 +80,14 @@ func (s *simpleReportCheck) Model(chain, format string, verbose bool, extraOptio
 	}
 	// EXISTING_CODE
 
-	return types.Model{
+	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 // EXISTING_CODE
 // EXISTING_CODE

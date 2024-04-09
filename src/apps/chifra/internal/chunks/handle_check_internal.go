@@ -12,12 +12,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // CheckInternal reads the header of each chunk on disc looking for the Magic number and
 // the hash of the spec version for expected values.
-func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *simpleReportCheck) error {
+func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *types.SimpleReportCheck) error {
 	for _, fileName := range fileNames {
 		opts.checkIndexChunkInternal(fileName, false /* check version */, report)
 		// opts.checkBloomInternal(testId, fileName, report)
@@ -25,7 +26,7 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 	return nil
 }
 
-func (opts *ChunksOptions) checkIndexChunkInternal(fileName string, checkVersion bool, report *simpleReportCheck) {
+func (opts *ChunksOptions) checkIndexChunkInternal(fileName string, checkVersion bool, report *types.SimpleReportCheck) {
 	report.VisitedCnt++
 	report.CheckedCnt++
 
@@ -50,7 +51,7 @@ func (opts *ChunksOptions) checkIndexChunkInternal(fileName string, checkVersion
 	indexChunk.Close()
 }
 
-func (opts *ChunksOptions) checkSnaps(fileName string, indexChunk *index.Index, report *simpleReportCheck) {
+func (opts *ChunksOptions) checkSnaps(fileName string, indexChunk *index.Index, report *types.SimpleReportCheck) {
 	report.VisitedCnt++
 	report.CheckedCnt++
 

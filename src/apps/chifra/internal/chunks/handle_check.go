@@ -121,63 +121,63 @@ func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) 
 		return remoteArray[i] < remoteArray[j]
 	})
 
-	reports := []simpleReportCheck{}
+	reports := []types.SimpleReportCheck{}
 
 	allowMissing := config.GetScrape(chain).AllowMissing
 
-	seq := simpleReportCheck{Reason: "Filenames sequential"}
+	seq := types.SimpleReportCheck{Reason: "Filenames sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
 		return err, false
 	}
 	reports = append(reports, seq)
 
-	intern := simpleReportCheck{Reason: "Internally consistent"}
+	intern := types.SimpleReportCheck{Reason: "Internally consistent"}
 	if err := opts.CheckInternal(fileNames, blockNums, &intern); err != nil {
 		return err, false
 	}
 	reports = append(reports, intern)
 
-	version := simpleReportCheck{Reason: "Correct version"}
+	version := types.SimpleReportCheck{Reason: "Correct version"}
 	if err := opts.CheckVersion(fileNames, blockNums, &version); err != nil {
 		return err, false
 	}
 	reports = append(reports, version)
 
-	con := simpleReportCheck{Reason: "Consistent hashes"}
+	con := types.SimpleReportCheck{Reason: "Consistent hashes"}
 	if err := opts.CheckHashes(cacheManifest, remoteManifest, &con); err != nil {
 		return err, false
 	}
 	reports = append(reports, con)
 
-	sizes := simpleReportCheck{Reason: "Check file sizes"}
+	sizes := types.SimpleReportCheck{Reason: "Check file sizes"}
 	if err := opts.CheckSizes(fileNames, blockNums, cacheManifest, remoteManifest, &sizes); err != nil {
 		return err, false
 	}
 	reports = append(reports, sizes)
 
 	// compare with çached manifest with files on disc
-	d2c := simpleReportCheck{Reason: "Disc files to cached manifest"}
+	d2c := types.SimpleReportCheck{Reason: "Disc files to cached manifest"}
 	if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {
 		return err, false
 	}
 	reports = append(reports, d2c)
 
 	// compare with remote manifest with files on disc
-	d2r := simpleReportCheck{Reason: "Disc files to remote manifest"}
+	d2r := types.SimpleReportCheck{Reason: "Disc files to remote manifest"}
 	if err := opts.CheckManifest(fnArray, remoteArray, &d2r); err != nil {
 		return err, false
 	}
 	reports = append(reports, d2r)
 
 	// compare remote manifest to cached manifest
-	r2c := simpleReportCheck{Reason: "Remote manifest to cached manifest"}
+	r2c := types.SimpleReportCheck{Reason: "Remote manifest to cached manifest"}
 	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
 		return err, false
 	}
 	reports = append(reports, r2c)
 
 	if opts.Deep {
-		deep := simpleReportCheck{Reason: "Deep checks for " + opts.Mode}
+		deep := types.SimpleReportCheck{Reason: "Deep checks for " + opts.Mode}
 		if err := opts.CheckDeep(cacheManifest, &deep); err != nil {
 			return err, false
 		}

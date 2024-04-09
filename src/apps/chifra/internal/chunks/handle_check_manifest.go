@@ -7,6 +7,8 @@ package chunksPkg
 import (
 	"fmt"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type CompareState struct {
@@ -23,7 +25,7 @@ type CompareState struct {
 // CheckManifest takes two arrays (either onDisc vs. LocalManifest, onDisc vs. RemoteManifest, or LocalManifest
 // vs. RemoteManifest) and compares them for equality. If everything is up to date, all three arrays should
 // be identical. Only the block ranges are in the arrays.
-func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *simpleReportCheck) error {
+func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.SimpleReportCheck) error {
 	comp := CompareState{
 		testMode: opts.Globals.TestMode,
 		details:  opts.Globals.Verbose,
@@ -45,7 +47,7 @@ func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *simple
 }
 
 // TODO: Can this be made concurrent?
-func (comp *CompareState) checkArrays(report *simpleReportCheck) error {
+func (comp *CompareState) checkArrays(report *types.SimpleReportCheck) error {
 	marker := ""
 	if comp.testMode {
 		marker = " (testing)"

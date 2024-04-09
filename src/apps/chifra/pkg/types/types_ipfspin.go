@@ -6,7 +6,7 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package chunksPkg
+package types
 
 // EXISTING_CODE
 import (
@@ -14,12 +14,16 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // EXISTING_CODE
 
-type simpleIpfsPin struct {
+type RawIpfsPin struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+type SimpleIpfsPin struct {
 	Cid        base.IpfsHash `json:"cid"`
 	DatePinned string        `json:"datePinned"`
 	FileName   string        `json:"fileName"`
@@ -30,16 +34,16 @@ type simpleIpfsPin struct {
 	// EXISTING_CODE
 }
 
-func (s *simpleIpfsPin) String() string {
+func (s *SimpleIpfsPin) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *simpleIpfsPin) Raw() *types.RawModeler {
+func (s *SimpleIpfsPin) Raw() *RawModeler {
 	return nil
 }
 
-func (s *simpleIpfsPin) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *SimpleIpfsPin) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -60,7 +64,7 @@ func (s *simpleIpfsPin) Model(chain, format string, verbose bool, extraOptions m
 	}
 	// EXISTING_CODE
 
-	return types.Model{
+	return Model{
 		Data:  model,
 		Order: order,
 	}
