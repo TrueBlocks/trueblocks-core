@@ -684,7 +684,7 @@ string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void* data) {
     }
 
     // We've hit a token, toss the start token, look for a field and toss the last token
-    // leaving the remainder of the format in fmtOut.  A field is found if we find a pair
+    // leaving the remainder of the format in fmtOut. A field is found if we find a pair
     // of squigglies).  Save text inside the start token and outside the field in pre and post
     ASSERT(startsWith(fmtOut, '['));
 
