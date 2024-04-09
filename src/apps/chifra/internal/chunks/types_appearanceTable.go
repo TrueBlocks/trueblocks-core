@@ -21,16 +21,16 @@ type AppRecord struct {
 	TransactionIndex uint32 `json:"transactionIndex"`
 }
 
-type simpleAppearanceTable struct {
+type SimpleAppearanceTable struct {
 	AddressRecord AddrRecord  `json:"addressRecord"`
 	Appearances   []AppRecord `json:"appearances"`
 }
 
-func (s *simpleAppearanceTable) Raw() *types.RawModeler {
+func (s *SimpleAppearanceTable) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleAppearanceTable) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *SimpleAppearanceTable) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
 	return types.Model{
 		Data: map[string]any{
 			"address":     s.AddressRecord.Address.Hex(),

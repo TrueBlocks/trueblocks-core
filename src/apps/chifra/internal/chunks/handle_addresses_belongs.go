@@ -75,7 +75,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 			continue
 		}
 
-		s := simpleAppearanceTable{}
+		s := SimpleAppearanceTable{}
 		if err := binary.Read(indexChunk.File, binary.LittleEndian, &s.AddressRecord); err != nil {
 			return false, err
 		}
