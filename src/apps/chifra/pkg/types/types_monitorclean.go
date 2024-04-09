@@ -18,16 +18,20 @@ import (
 // EXISTING_CODE
 
 type RawMonitorClean struct {
+	Address  string `json:"address"`
+	Dups     string `json:"dups"`
+	SizeNow  string `json:"sizeNow"`
+	SizeThen string `json:"sizeThen"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleMonitorClean struct {
-	Address  base.Address `json:"address"`
-	Dups     int64        `json:"dups"`
-	SizeNow  int64        `json:"sizeNow"`
-	SizeThen int64        `json:"sizeThen"`
-
+	Address  base.Address     `json:"address"`
+	Dups     int64            `json:"dups"`
+	SizeNow  int64            `json:"sizeNow"`
+	SizeThen int64            `json:"sizeThen"`
+	raw      *RawMonitorClean `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -37,8 +41,12 @@ func (s *SimpleMonitorClean) String() string {
 	return string(bytes)
 }
 
-func (s *SimpleMonitorClean) Raw() *RawModeler {
-	return nil
+func (s *SimpleMonitorClean) Raw() *RawMonitorClean {
+	return s.raw
+}
+
+func (s *SimpleMonitorClean) SetRaw(raw *RawMonitorClean) {
+	s.raw = raw
 }
 
 func (s *SimpleMonitorClean) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
@@ -66,8 +74,11 @@ func (s *SimpleMonitorClean) Model(chain, format string, verbose bool, extraOpti
 	}
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleMonitorClean) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 // EXISTING_CODE
 // EXISTING_CODE

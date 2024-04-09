@@ -19,6 +19,14 @@ import (
 // EXISTING_CODE
 
 type RawBlockCount struct {
+	AddressCnt      string `json:"addressCnt"`
+	BlockNumber     string `json:"blockNumber"`
+	LogsCnt         string `json:"logsCnt"`
+	Timestamp       string `json:"timestamp"`
+	TracesCnt       string `json:"tracesCnt"`
+	TransactionsCnt string `json:"transactionsCnt"`
+	UnclesCnt       string `json:"unclesCnt"`
+	WithdrawalsCnt  string `json:"withdrawalsCnt"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -32,7 +40,7 @@ type SimpleBlockCount struct {
 	TransactionsCnt uint64         `json:"transactionsCnt"`
 	UnclesCnt       uint64         `json:"unclesCnt,omitempty"`
 	WithdrawalsCnt  uint64         `json:"withdrawalsCnt,omitempty"`
-
+	raw             *RawBlockCount `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -42,8 +50,12 @@ func (s *SimpleBlockCount) String() string {
 	return string(bytes)
 }
 
-func (s *SimpleBlockCount) Raw() *RawModeler {
-	return nil
+func (s *SimpleBlockCount) Raw() *RawBlockCount {
+	return s.raw
+}
+
+func (s *SimpleBlockCount) SetRaw(raw *RawBlockCount) {
+	s.raw = raw
 }
 
 func (s *SimpleBlockCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
@@ -125,8 +137,11 @@ func (s *SimpleBlockCount) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleBlockCount) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 // EXISTING_CODE
 // EXISTING_CODE

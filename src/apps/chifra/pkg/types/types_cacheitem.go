@@ -16,19 +16,26 @@ import (
 // EXISTING_CODE
 
 type RawCacheItem struct {
+	Items         []string `json:"items"`
+	LastCached    string   `json:"lastCached"`
+	NFiles        string   `json:"nFiles"`
+	NFolders      string   `json:"nFolders"`
+	Path          string   `json:"path"`
+	SizeInBytes   string   `json:"sizeInBytes"`
+	CacheItemType string   `json:"type"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleCacheItem struct {
-	Items         []any  `json:"items"`
-	LastCached    string `json:"lastCached,omitempty"`
-	NFiles        uint64 `json:"nFiles"`
-	NFolders      uint64 `json:"nFolders"`
-	Path          string `json:"path"`
-	SizeInBytes   int64  `json:"sizeInBytes"`
-	CacheItemType string `json:"type"`
-
+	Items         []any         `json:"items"`
+	LastCached    string        `json:"lastCached,omitempty"`
+	NFiles        uint64        `json:"nFiles"`
+	NFolders      uint64        `json:"nFolders"`
+	Path          string        `json:"path"`
+	SizeInBytes   int64         `json:"sizeInBytes"`
+	CacheItemType string        `json:"type"`
+	raw           *RawCacheItem `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -38,8 +45,12 @@ func (s *SimpleCacheItem) String() string {
 	return string(bytes)
 }
 
-func (s *SimpleCacheItem) Raw() *RawModeler {
-	return nil
+func (s *SimpleCacheItem) Raw() *RawCacheItem {
+	return s.raw
+}
+
+func (s *SimpleCacheItem) SetRaw(raw *RawCacheItem) {
+	s.raw = raw
 }
 
 func (s *SimpleCacheItem) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
@@ -55,8 +66,11 @@ func (s *SimpleCacheItem) Model(chain, format string, verbose bool, extraOptions
 	}
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleCacheItem) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 // EXISTING_CODE
 // EXISTING_CODE

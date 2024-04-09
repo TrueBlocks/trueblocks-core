@@ -19,6 +19,11 @@ import (
 // EXISTING_CODE
 
 type RawTraceCount struct {
+	BlockNumber      string `json:"blockNumber"`
+	Timestamp        string `json:"timestamp"`
+	TracesCnt        string `json:"tracesCnt"`
+	TransactionHash  string `json:"transactionHash"`
+	TransactionIndex string `json:"transactionIndex"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -29,7 +34,7 @@ type SimpleTraceCount struct {
 	TracesCnt        uint64         `json:"tracesCnt"`
 	TransactionHash  base.Hash      `json:"transactionHash"`
 	TransactionIndex base.Blknum    `json:"transactionIndex"`
-
+	raw              *RawTraceCount `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -39,8 +44,12 @@ func (s *SimpleTraceCount) String() string {
 	return string(bytes)
 }
 
-func (s *SimpleTraceCount) Raw() *RawModeler {
-	return nil
+func (s *SimpleTraceCount) Raw() *RawTraceCount {
+	return s.raw
+}
+
+func (s *SimpleTraceCount) SetRaw(raw *RawTraceCount) {
+	s.raw = raw
 }
 
 func (s *SimpleTraceCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
@@ -74,8 +83,11 @@ func (s *SimpleTraceCount) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleTraceCount) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 // EXISTING_CODE
 // EXISTING_CODE

@@ -19,6 +19,9 @@ import (
 // EXISTING_CODE
 
 type RawTimestamp struct {
+	BlockNumber string `json:"blockNumber"`
+	Diff        string `json:"diff"`
+	Timestamp   string `json:"timestamp"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -27,7 +30,7 @@ type SimpleTimestamp struct {
 	BlockNumber base.Blknum    `json:"blockNumber"`
 	Diff        int64          `json:"diff"`
 	Timestamp   base.Timestamp `json:"timestamp"`
-
+	raw         *RawTimestamp  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -37,8 +40,12 @@ func (s *SimpleTimestamp) String() string {
 	return string(bytes)
 }
 
-func (s *SimpleTimestamp) Raw() *RawModeler {
-	return nil
+func (s *SimpleTimestamp) Raw() *RawTimestamp {
+	return s.raw
+}
+
+func (s *SimpleTimestamp) SetRaw(raw *RawTimestamp) {
+	s.raw = raw
 }
 
 func (s *SimpleTimestamp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
@@ -68,8 +75,11 @@ func (s *SimpleTimestamp) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleTimestamp) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 // EXISTING_CODE
 // EXISTING_CODE

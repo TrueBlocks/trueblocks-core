@@ -197,14 +197,6 @@ func (m *Member) GoType() string {
 		return "[]Tx"
 	}
 
-	if m.Container() == "Status" {
-		if m.Type == "CacheItem" {
-			return "[]simpleCacheItem"
-		} else if m.Type == "Chain" {
-			return "[]types.SimpleChain"
-		}
-	}
-
 	ret := m.Type
 	if m.IsObject() {
 		if m.GoName() != "TokenType" {

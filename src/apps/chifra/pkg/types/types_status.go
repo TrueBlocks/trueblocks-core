@@ -20,6 +20,26 @@ import (
 // EXISTING_CODE
 
 type RawStatus struct {
+	CachePath     string   `json:"cachePath"`
+	Caches        []string `json:"caches"`
+	Chain         string   `json:"chain"`
+	ChainConfig   string   `json:"chainConfig"`
+	ChainId       string   `json:"chainId"`
+	Chains        []string `json:"chains"`
+	ClientVersion string   `json:"clientVersion"`
+	HasEsKey      string   `json:"hasEsKey"`
+	HasPinKey     string   `json:"hasPinKey"`
+	IndexPath     string   `json:"indexPath"`
+	IsApi         string   `json:"isApi"`
+	IsArchive     string   `json:"isArchive"`
+	IsScraping    string   `json:"isScraping"`
+	IsTesting     string   `json:"isTesting"`
+	IsTracing     string   `json:"isTracing"`
+	NetworkId     string   `json:"networkId"`
+	Progress      string   `json:"progress"`
+	RootConfig    string   `json:"rootConfig"`
+	RpcProvider   string   `json:"rpcProvider"`
+	Version       string   `json:"version"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -45,7 +65,7 @@ type SimpleStatus struct {
 	RootConfig    string            `json:"rootConfig,omitempty"`
 	RpcProvider   string            `json:"rpcProvider,omitempty"`
 	Version       string            `json:"version,omitempty"`
-
+	raw           *RawStatus        `json:"-"`
 	// EXISTING_CODE
 	Meta  *MetaData `json:"meta,omitempty"`
 	Diffs *MetaData `json:"diffs,omitempty"`
@@ -57,8 +77,12 @@ func (s *SimpleStatus) String() string {
 	return string(bytes)
 }
 
-func (s *SimpleStatus) Raw() *RawModeler {
-	return nil
+func (s *SimpleStatus) Raw() *RawStatus {
+	return s.raw
+}
+
+func (s *SimpleStatus) SetRaw(raw *RawStatus) {
+	s.raw = raw
 }
 
 func (s *SimpleStatus) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
@@ -158,6 +182,12 @@ func (s *SimpleStatus) Model(chain, format string, verbose bool, extraOptions ma
 		Data:  model,
 		Order: order,
 	}
+}
+
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleStatus) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE
