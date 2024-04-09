@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -37,6 +38,11 @@ type SimpleTraceResult struct {
 	raw     *RawTraceResult `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *SimpleTraceResult) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleTraceResult) Raw() *RawTraceResult {

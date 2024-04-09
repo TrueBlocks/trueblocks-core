@@ -10,6 +10,8 @@ package tracesPkg
 
 // EXISTING_CODE
 import (
+	"encoding/json"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -26,6 +28,11 @@ type simpleTraceCount struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *simpleTraceCount) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *simpleTraceCount) Raw() *types.RawModeler {

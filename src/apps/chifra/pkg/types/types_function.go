@@ -59,6 +59,11 @@ type SimpleFunction struct {
 	// EXISTING_CODE
 }
 
+func (s *SimpleFunction) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
+}
+
 func (s *SimpleFunction) Raw() *RawFunction {
 	return s.raw
 }

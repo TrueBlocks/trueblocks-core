@@ -10,6 +10,7 @@ package chunksPkg
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -27,6 +28,11 @@ type simpleIpfsPin struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *simpleIpfsPin) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *simpleIpfsPin) Raw() *types.RawModeler {

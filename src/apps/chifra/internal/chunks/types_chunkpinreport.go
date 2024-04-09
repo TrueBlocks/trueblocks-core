@@ -10,6 +10,8 @@ package chunksPkg
 
 // EXISTING_CODE
 import (
+	"encoding/json"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -25,6 +27,11 @@ type simpleChunkPinReport struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *simpleChunkPinReport) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *simpleChunkPinReport) Raw() *types.RawModeler {

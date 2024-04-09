@@ -10,6 +10,8 @@ package statusPkg
 
 // EXISTING_CODE
 import (
+	"encoding/json"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -26,6 +28,11 @@ type simpleCacheItem struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *simpleCacheItem) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *simpleCacheItem) Raw() *types.RawModeler {

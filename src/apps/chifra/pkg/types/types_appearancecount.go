@@ -9,7 +9,11 @@
 package types
 
 // EXISTING_CODE
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import (
+	"encoding/json"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
 
 // EXISTING_CODE
 
@@ -28,6 +32,11 @@ type SimpleAppearanceCount struct {
 	raw      *RawAppearanceCount `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *SimpleAppearanceCount) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleAppearanceCount) Raw() *RawAppearanceCount {

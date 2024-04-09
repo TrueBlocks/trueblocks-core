@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -54,6 +55,11 @@ type SimpleTraceAction struct {
 	raw            *RawTraceAction `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *SimpleTraceAction) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleTraceAction) Raw() *RawTraceAction {

@@ -10,6 +10,8 @@ package blocksPkg
 
 // EXISTING_CODE
 import (
+	"encoding/json"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -29,6 +31,11 @@ type simpleBlockCount struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *simpleBlockCount) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *simpleBlockCount) Raw() *types.RawModeler {

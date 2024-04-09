@@ -9,7 +9,11 @@
 package chunksPkg
 
 // EXISTING_CODE
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+import (
+	"encoding/json"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+)
 
 // EXISTING_CODE
 
@@ -25,6 +29,11 @@ type simpleReportCheck struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *simpleReportCheck) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *simpleReportCheck) Raw() *types.RawModeler {

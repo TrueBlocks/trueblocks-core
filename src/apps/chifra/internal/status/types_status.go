@@ -10,6 +10,7 @@ package statusPkg
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"sort"
@@ -56,6 +57,11 @@ type simpleStatus struct {
 	Meta  *rpc.MetaData `json:"meta,omitempty"`
 	Diffs *rpc.MetaData `json:"diffs,omitempty"`
 	// EXISTING_CODE
+}
+
+func (s *simpleStatus) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *simpleStatus) Raw() *types.RawModeler {
