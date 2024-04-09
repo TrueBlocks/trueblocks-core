@@ -16,20 +16,28 @@ import (
 // EXISTING_CODE
 
 type RawReportCheck struct {
+	CheckedCnt string   `json:"checkedCnt"`
+	FailedCnt  string   `json:"failedCnt"`
+	MsgStrings []string `json:"msgStrings"`
+	PassedCnt  string   `json:"passedCnt"`
+	Reason     string   `json:"reason"`
+	Result     string   `json:"result"`
+	SkippedCnt string   `json:"skippedCnt"`
+	VisitedCnt string   `json:"visitedCnt"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleReportCheck struct {
-	CheckedCnt uint32   `json:"checkedCnt"`
-	FailedCnt  uint32   `json:"failedCnt"`
-	MsgStrings []string `json:"msgStrings"`
-	PassedCnt  uint32   `json:"passedCnt"`
-	Reason     string   `json:"reason"`
-	Result     string   `json:"result"`
-	SkippedCnt uint32   `json:"skippedCnt"`
-	VisitedCnt uint32   `json:"visitedCnt"`
-
+	CheckedCnt uint32          `json:"checkedCnt"`
+	FailedCnt  uint32          `json:"failedCnt"`
+	MsgStrings []string        `json:"msgStrings"`
+	PassedCnt  uint32          `json:"passedCnt"`
+	Reason     string          `json:"reason"`
+	Result     string          `json:"result"`
+	SkippedCnt uint32          `json:"skippedCnt"`
+	VisitedCnt uint32          `json:"visitedCnt"`
+	raw        *RawReportCheck `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -39,8 +47,12 @@ func (s *SimpleReportCheck) String() string {
 	return string(bytes)
 }
 
-func (s *SimpleReportCheck) Raw() *RawModeler {
-	return nil
+func (s *SimpleReportCheck) Raw() *RawReportCheck {
+	return s.raw
+}
+
+func (s *SimpleReportCheck) SetRaw(raw *RawReportCheck) {
+	s.raw = raw
 }
 
 func (s *SimpleReportCheck) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
@@ -86,8 +98,11 @@ func (s *SimpleReportCheck) Model(chain, format string, verbose bool, extraOptio
 	}
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleReportCheck) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 // EXISTING_CODE
 // EXISTING_CODE

@@ -21,7 +21,7 @@ func (opts *ChunksOptions) HandleList(unused []uint64) error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawIpfsPin], errorChan chan error) {
 		var perPage = 1000
 		if testMode {
 			perPage = -100

@@ -19,6 +19,11 @@ import (
 // EXISTING_CODE
 
 type RawIpfsPin struct {
+	Cid        string `json:"cid"`
+	DatePinned string `json:"datePinned"`
+	FileName   string `json:"fileName"`
+	Size       string `json:"size"`
+	Status     string `json:"status"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -29,7 +34,7 @@ type SimpleIpfsPin struct {
 	FileName   string        `json:"fileName"`
 	Size       int64         `json:"size"`
 	Status     string        `json:"status"`
-
+	raw        *RawIpfsPin   `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -39,8 +44,12 @@ func (s *SimpleIpfsPin) String() string {
 	return string(bytes)
 }
 
-func (s *SimpleIpfsPin) Raw() *RawModeler {
-	return nil
+func (s *SimpleIpfsPin) Raw() *RawIpfsPin {
+	return s.raw
+}
+
+func (s *SimpleIpfsPin) SetRaw(raw *RawIpfsPin) {
+	s.raw = raw
 }
 
 func (s *SimpleIpfsPin) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
@@ -68,6 +77,12 @@ func (s *SimpleIpfsPin) Model(chain, format string, verbose bool, extraOptions m
 		Data:  model,
 		Order: order,
 	}
+}
+
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleIpfsPin) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

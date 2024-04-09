@@ -4,4 +4,4 @@
     doc_descr = "a JSON object containing the results of pinning the Unchained Index"
     doc_route = "436-chunkPinReport"
     produced_by = "chunks"
-    go_output = "src/apps/chifra/internal/chunks"
+    go_output = "src/apps/chifra/pkg/types"
