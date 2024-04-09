@@ -6,20 +6,24 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package whenPkg
+package types
 
 // EXISTING_CODE
 import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
 
-type simpleTimestamp struct {
+type RawTimestamp struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+type SimpleTimestamp struct {
 	BlockNumber base.Blknum    `json:"blockNumber"`
 	Diff        int64          `json:"diff"`
 	Timestamp   base.Timestamp `json:"timestamp"`
@@ -28,16 +32,16 @@ type simpleTimestamp struct {
 	// EXISTING_CODE
 }
 
-func (s *simpleTimestamp) String() string {
+func (s *SimpleTimestamp) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *simpleTimestamp) Raw() *types.RawModeler {
+func (s *SimpleTimestamp) Raw() *RawModeler {
 	return nil
 }
 
-func (s *simpleTimestamp) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *SimpleTimestamp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -54,15 +58,18 @@ func (s *simpleTimestamp) Model(chain, format string, verbose bool, extraOptions
 	}
 	// EXISTING_CODE
 
-	return types.Model{
+	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
 
-func (s *simpleTimestamp) Date() string {
+func (s *SimpleTimestamp) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 // EXISTING_CODE
 // EXISTING_CODE

@@ -4,4 +4,4 @@
     doc_descr = "the number of timestamps in the timestamps database"
     doc_route = "245-timestampCount"
     produced_by = "when"
-    go_output = "src/apps/chifra/internal/when"
+    go_output = "src/apps/chifra/pkg/types"

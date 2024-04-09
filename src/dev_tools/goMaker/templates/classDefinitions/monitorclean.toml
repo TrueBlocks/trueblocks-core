@@ -4,4 +4,4 @@
     doc_descr = "report on cleaning dups out of monitors"
     doc_route = "427-monitorClean"
     produced_by = "monitors"
-    go_output = "src/apps/chifra/internal/monitors"
+    go_output = "src/apps/chifra/pkg/types"

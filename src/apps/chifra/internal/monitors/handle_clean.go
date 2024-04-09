@@ -22,7 +22,7 @@ func (opts *MonitorsOptions) HandleClean() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for _, mon := range monArray {
 			addr := mon.Address.Hex()
-			s := simpleMonitorClean{
+			s := types.SimpleMonitorClean{
 				Address: mon.Address,
 			}
 			if testMode {

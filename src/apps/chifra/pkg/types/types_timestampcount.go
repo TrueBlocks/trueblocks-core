@@ -6,34 +6,37 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package whenPkg
+package types
 
 // EXISTING_CODE
 import (
 	"encoding/json"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // EXISTING_CODE
 
-type simpleTimestampCount struct {
+type RawTimestampCount struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+type SimpleTimestampCount struct {
 	Count uint64 `json:"count"`
 
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *simpleTimestampCount) String() string {
+func (s *SimpleTimestampCount) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *simpleTimestampCount) Raw() *types.RawModeler {
+func (s *SimpleTimestampCount) Raw() *RawModeler {
 	return nil
 }
 
-func (s *simpleTimestampCount) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *SimpleTimestampCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -46,11 +49,14 @@ func (s *simpleTimestampCount) Model(chain, format string, verbose bool, extraOp
 	}
 	// EXISTING_CODE
 
-	return types.Model{
+	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 // EXISTING_CODE
 // EXISTING_CODE

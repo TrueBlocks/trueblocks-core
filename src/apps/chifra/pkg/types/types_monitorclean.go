@@ -6,19 +6,23 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package monitorsPkg
+package types
 
 // EXISTING_CODE
 import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // EXISTING_CODE
 
-type simpleMonitorClean struct {
+type RawMonitorClean struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+type SimpleMonitorClean struct {
 	Address  base.Address `json:"address"`
 	Dups     int64        `json:"dups"`
 	SizeNow  int64        `json:"sizeNow"`
@@ -28,16 +32,16 @@ type simpleMonitorClean struct {
 	// EXISTING_CODE
 }
 
-func (s *simpleMonitorClean) String() string {
+func (s *SimpleMonitorClean) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *simpleMonitorClean) Raw() *types.RawModeler {
+func (s *SimpleMonitorClean) Raw() *RawModeler {
 	return nil
 }
 
-func (s *simpleMonitorClean) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *SimpleMonitorClean) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -56,11 +60,14 @@ func (s *simpleMonitorClean) Model(chain, format string, verbose bool, extraOpti
 	}
 	// EXISTING_CODE
 
-	return types.Model{
+	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 // EXISTING_CODE
 // EXISTING_CODE

@@ -41,7 +41,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 					return
 				}
 
-				blockCount := simpleBlockCount{
+				blockCount := types.SimpleBlockCount{
 					BlockNumber:     block.BlockNumber,
 					Timestamp:       block.Timestamp,
 					TransactionsCnt: uint64(len(block.Transactions)),

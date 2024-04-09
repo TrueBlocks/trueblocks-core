@@ -87,7 +87,7 @@ func (opts *TracesOptions) HandleCounts() error {
 				})
 
 				for _, item := range items {
-					counter := simpleTraceCount{
+					counter := types.SimpleTraceCount{
 						BlockNumber:      uint64(item.BlockNumber),
 						TransactionIndex: uint64(item.TransactionIndex),
 						TransactionHash:  item.Hash,
