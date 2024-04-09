@@ -5,13 +5,25 @@
 package chunksPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
+// AddrRecord is a single record in the Address table
+type AddrRecord struct {
+	Address base.Address `json:"address"`
+	Offset  uint32       `json:"offset"`
+	Count   uint32       `json:"count"`
+}
+
+type AppRecord struct {
+	BlockNumber      uint32 `json:"blockNumber"`
+	TransactionIndex uint32 `json:"transactionIndex"`
+}
+
 type simpleAppearanceTable struct {
-	AddressRecord index.AddressRecord      `json:"addressRecord"`
-	Appearances   []index.AppearanceRecord `json:"appearances"`
+	AddressRecord AddrRecord  `json:"addressRecord"`
+	Appearances   []AppRecord `json:"appearances"`
 }
 
 func (s *simpleAppearanceTable) Raw() *types.RawModeler {

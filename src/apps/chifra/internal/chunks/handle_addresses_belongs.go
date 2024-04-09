@@ -85,11 +85,29 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 				break
 			}
 
-			if s.Appearances, err = indexChunk.ReadAppearancesAndReset(&s.AddressRecord); err != nil {
+			var discApps []index.AppearanceRecord
+			discAddr := index.AddressRecord{
+				Address: s.AddressRecord.Address,
+				Offset:  s.AddressRecord.Offset,
+				Count:   s.AddressRecord.Count,
+			}
+			if discApps, err = indexChunk.ReadAppearancesAndReset(&discAddr); err != nil {
 				return false, err
 			}
+			s.Appearances = make([]AppRecord, 0, len(discApps))
+			for _, a := range discApps {
+				s.Appearances = append(s.Appearances, AppRecord{
+					BlockNumber:      uint32(a.BlockNumber),
+					TransactionIndex: uint32(a.TransactionIndex),
+				})
+			}
+			s.AddressRecord = AddrRecord{
+				Address: discAddr.Address,
+				Offset:  discAddr.Offset,
+				Count:   uint32(len(discApps)),
+			}
 			if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {
-				good := []index.AppearanceRecord{}
+				good := []AppRecord{}
 				for _, app := range s.Appearances {
 					if uint64(app.BlockNumber) >= opts.FirstBlock && uint64(app.BlockNumber) <= opts.LastBlock {
 						good = append(good, app)
