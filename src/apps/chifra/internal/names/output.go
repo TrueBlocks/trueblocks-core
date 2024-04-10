@@ -54,7 +54,7 @@ func ServeNames(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// NamesInternal handles the internal workings of the names command.  Returns an error.
+// NamesInternal handles the internal workings of the names command. Returns an error.
 func (opts *NamesOptions) NamesInternal() error {
 	var err error
 	if err = opts.validateNames(); err != nil {

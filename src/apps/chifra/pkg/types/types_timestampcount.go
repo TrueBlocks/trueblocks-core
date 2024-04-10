@@ -9,6 +9,10 @@
 package types
 
 // EXISTING_CODE
+import (
+	"encoding/json"
+)
+
 // EXISTING_CODE
 
 type RawTimestampCount struct {
@@ -22,6 +26,11 @@ type SimpleTimestampCount struct {
 	raw   *RawTimestampCount `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *SimpleTimestampCount) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleTimestampCount) Raw() *RawTimestampCount {

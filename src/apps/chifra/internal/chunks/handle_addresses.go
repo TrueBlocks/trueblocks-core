@@ -23,11 +23,11 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 	been_here := 0
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawChunkAddress], errorChan chan error) {
 		var showAddresses func(walker *walk.CacheWalker, path string, first bool) (bool, error)
 		if opts.Globals.Verbose {
 			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
-				return opts.handleResolvedRecords(modelChan, walker, path, first)
+				return opts.handleResolvedRecords1(modelChan, walker, path, first)
 			}
 		} else {
 			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
@@ -69,12 +69,12 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 						continue
 					}
 
-					obj := index.AddressRecord{}
+					obj := types.SimpleAddrRecord{}
 					if err := binary.Read(indexChunk.File, binary.LittleEndian, &obj); err != nil {
 						return false, err
 					}
 
-					s := simpleChunkAddress{
+					s := types.SimpleChunkAddress{
 						Address: obj.Address,
 						Range:   indexChunk.Range.String(),
 						Offset:  uint64(obj.Offset),

@@ -5,7 +5,6 @@
     doc_descr = "receipt data as returned from the RPC (with slight enhancements)"
     doc_route = "212-receipt"
     produced_by = "receipts, export"
-    go_output = "src/apps/chifra/pkg/types"
     cache_type = "cacheable"
     cache_by = "block"
     cache_as = "group"

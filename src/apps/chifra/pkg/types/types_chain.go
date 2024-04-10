@@ -9,6 +9,7 @@
 package types
 
 // EXISTING_CODE
+import "encoding/json"
 
 // EXISTING_CODE
 
@@ -35,6 +36,11 @@ type SimpleChain struct {
 	raw            *RawChain `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *SimpleChain) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleChain) Raw() *RawChain {

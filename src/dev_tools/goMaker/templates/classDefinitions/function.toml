@@ -5,5 +5,4 @@
     doc_descr = "a human-readable representation of a Solidity function call or event"
     doc_route = "506-function"
     produced_by = "abis, export"
-    go_output = "src/apps/chifra/pkg/types"
     cache_type = "marshal_only"

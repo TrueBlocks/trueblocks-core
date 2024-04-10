@@ -5,6 +5,5 @@
     doc_descr = "transaction data as returned from the RPC (with slight enhancements)"
     doc_route = "206-transaction"
     produced_by = "transactions, export"
-    go_output = "src/apps/chifra/pkg/types"
     cache_type = "cacheable"
     cache_by = "tx"

@@ -6,7 +6,7 @@ package monitor
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (mon *Monitor) RemoveDups() (int64, int64, error) {
@@ -25,10 +25,10 @@ func (mon *Monitor) RemoveDups() (int64, int64, error) {
 		cntBefore := mon.Count()
 		cntAfter := cntBefore
 
-		var prev index.AppearanceRecord
-		deDupped := make([]index.AppearanceRecord, 0, mon.Count())
+		var prev types.SimpleAppRecord
+		deDupped := make([]types.SimpleAppRecord, 0, mon.Count())
 		for i, app := range apps {
-			iApp := index.AppearanceRecord{
+			iApp := types.SimpleAppRecord{
 				BlockNumber:      app.BlockNumber,
 				TransactionIndex: app.TransactionIndex,
 			}

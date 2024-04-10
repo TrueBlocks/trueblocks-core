@@ -5,4 +5,3 @@
     doc_descr = "a configuration item carrying information about a single chain"
     doc_route = "439-chain"
     produced_by = "status, config"
-    go_output = "src/apps/chifra/pkg/types"

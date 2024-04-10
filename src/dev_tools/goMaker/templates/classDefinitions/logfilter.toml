@@ -4,4 +4,3 @@
     doc_descr = "used by the fast path log queries for various commands"
     doc_route = "218-logFilter"
     produced_by = "blocks, logs"
-    go_output = "src/apps/chifra/pkg/types"

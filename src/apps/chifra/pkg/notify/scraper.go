@@ -7,6 +7,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
 )
 
+// TODO: Remove rpc.MetaData and use types.MetaData throughout
+
 const (
 	MessageChunkWritten Message = "chunkWritten"
 	MessageStageUpdated Message = "stageUpdated"

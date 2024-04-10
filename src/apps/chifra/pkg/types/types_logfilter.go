@@ -10,6 +10,8 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -34,6 +36,11 @@ type SimpleLogFilter struct {
 	raw       *RawLogFilter  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *SimpleLogFilter) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleLogFilter) Raw() *RawLogFilter {

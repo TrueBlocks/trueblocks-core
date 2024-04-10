@@ -43,7 +43,7 @@ func ServeList(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// ListInternal handles the internal workings of the list command.  Returns an error.
+// ListInternal handles the internal workings of the list command. Returns an error.
 func (opts *ListOptions) ListInternal() error {
 	var err error
 	if err = opts.validateList(); err != nil {

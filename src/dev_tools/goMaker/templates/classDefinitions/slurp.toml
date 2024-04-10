@@ -4,7 +4,6 @@
     doc_descr = "transaction data as returned from by remote APIs"
     doc_route = "512-slurp"
     produced_by = "slurp"
-    go_output = "src/apps/chifra/pkg/types"
     cache_type = "cacheable"
     cache_by = "address,tx"
     cache_as = "group"

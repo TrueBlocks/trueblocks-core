@@ -42,7 +42,7 @@ func ServeStatus(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// StatusInternal handles the internal workings of the status command.  Returns an error.
+// StatusInternal handles the internal workings of the status command. Returns an error.
 func (opts *StatusOptions) StatusInternal() error {
 	var err error
 	if err = opts.validateStatus(); err != nil {

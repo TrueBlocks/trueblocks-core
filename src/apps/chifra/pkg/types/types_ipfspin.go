@@ -6,34 +6,53 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package chunksPkg
+package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // EXISTING_CODE
 
-type simpleIpfsPin struct {
+type RawIpfsPin struct {
+	Cid        string `json:"cid"`
+	DatePinned string `json:"datePinned"`
+	FileName   string `json:"fileName"`
+	Size       string `json:"size"`
+	Status     string `json:"status"`
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+type SimpleIpfsPin struct {
 	Cid        base.IpfsHash `json:"cid"`
 	DatePinned string        `json:"datePinned"`
 	FileName   string        `json:"fileName"`
 	Size       int64         `json:"size"`
 	Status     string        `json:"status"`
-
+	raw        *RawIpfsPin   `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *simpleIpfsPin) Raw() *types.RawModeler {
-	return nil
+func (s *SimpleIpfsPin) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *simpleIpfsPin) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *SimpleIpfsPin) Raw() *RawIpfsPin {
+	return s.raw
+}
+
+func (s *SimpleIpfsPin) SetRaw(raw *RawIpfsPin) {
+	s.raw = raw
+}
+
+func (s *SimpleIpfsPin) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -54,10 +73,16 @@ func (s *simpleIpfsPin) Model(chain, format string, verbose bool, extraOptions m
 	}
 	// EXISTING_CODE
 
-	return types.Model{
+	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleIpfsPin) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

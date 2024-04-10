@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -48,6 +49,11 @@ type SimpleResult struct {
 	Values        map[string]string `json:"values"`
 	ReturnedBytes string
 	// EXISTING_CODE
+}
+
+func (s *SimpleResult) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleResult) Raw() *RawResult {

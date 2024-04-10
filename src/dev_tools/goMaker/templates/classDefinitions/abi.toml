@@ -4,4 +4,3 @@
     doc_descr = "a human-readable representation of a Solidity smart contract"
     doc_route = "503-abi"
     produced_by = "abis"
-    go_output = "src/apps/chifra/pkg/types"

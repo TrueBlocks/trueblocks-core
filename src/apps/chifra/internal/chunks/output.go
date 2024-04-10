@@ -14,8 +14,6 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -52,7 +50,7 @@ func ServeChunks(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// ChunksInternal handles the internal workings of the chunks command.  Returns an error.
+// ChunksInternal handles the internal workings of the chunks command. Returns an error.
 func (opts *ChunksOptions) ChunksInternal() error {
 	var err error
 	if err = opts.validateChunks(); err != nil {
@@ -135,7 +133,7 @@ func GetChunksOptions(args []string, g *globals.GlobalOptions) *ChunksOptions {
 }
 
 // EXISTING_CODE
-func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
+func (opts *ChunksOptions) shouldShow(obj types.SimpleAddrRecord) bool {
 	if opts.Mode == "addresses" || opts.Mode == "appearances" {
 		return opts.Globals.Verbose
 	}
@@ -146,14 +144,6 @@ func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
 		}
 	}
 	return false
-}
-
-func FormattedTag(verbose bool, hash base.Hash) string {
-	if tag, ok := config.VersionTags[hash.Hex()]; !ok {
-		return utils.FormattedHash(verbose, hash.Hex())
-	} else {
-		return tag
-	}
 }
 
 func GetChunkStats(chain, path string) (s types.SimpleChunkStats, err error) {

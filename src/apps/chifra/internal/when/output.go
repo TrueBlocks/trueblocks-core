@@ -43,7 +43,7 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// WhenInternal handles the internal workings of the when command.  Returns an error.
+// WhenInternal handles the internal workings of the when command. Returns an error.
 func (opts *WhenOptions) WhenInternal() error {
 	var err error
 	if err = opts.validateWhen(); err != nil {

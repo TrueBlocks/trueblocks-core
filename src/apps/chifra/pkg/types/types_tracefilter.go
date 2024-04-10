@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -40,6 +41,11 @@ type SimpleTraceFilter struct {
 	raw         *RawTraceFilter `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *SimpleTraceFilter) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleTraceFilter) Raw() *RawTraceFilter {

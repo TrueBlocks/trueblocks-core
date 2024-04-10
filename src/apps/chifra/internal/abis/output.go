@@ -42,7 +42,7 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// AbisInternal handles the internal workings of the abis command.  Returns an error.
+// AbisInternal handles the internal workings of the abis command. Returns an error.
 func (opts *AbisOptions) AbisInternal() error {
 	var err error
 	if err = opts.validateAbis(); err != nil {

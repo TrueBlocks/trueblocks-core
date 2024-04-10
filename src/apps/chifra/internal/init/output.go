@@ -42,7 +42,7 @@ func ServeInit(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// InitInternal handles the internal workings of the init command.  Returns an error.
+// InitInternal handles the internal workings of the init command. Returns an error.
 func (opts *InitOptions) InitInternal() error {
 	var err error
 	if err = opts.validateInit(); err != nil {

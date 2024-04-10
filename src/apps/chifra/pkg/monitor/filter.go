@@ -13,7 +13,7 @@ import (
 )
 
 func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, withCount bool) (apps []types.SimpleAppearance, cnt int, err error) {
-	readAppearances := func(apps *[]index.AppearanceRecord) (err error) {
+	readAppearances := func(apps *[]types.SimpleAppRecord) (err error) {
 		if int64(len(*apps)) > mon.Count() {
 			err = fmt.Errorf("array is larger than the size of the file (%d,%d)", len(*apps), mon.Count())
 			return
@@ -48,7 +48,7 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, with
 		return nil, 0, nil
 	}
 
-	fromDisc := make([]index.AppearanceRecord, mon.Count())
+	fromDisc := make([]types.SimpleAppRecord, mon.Count())
 	if err := readAppearances(&fromDisc); err != nil {
 		mon.Close()
 		return nil, 0, err

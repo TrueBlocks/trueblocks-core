@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type writeReport struct {
@@ -32,13 +33,13 @@ func (c *writeReport) Report() {
 	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
 }
 
-func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string, addrAppearanceMap map[string][]AppearanceRecord, nApps int) (*writeReport, error) {
+func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string, addrAppearanceMap map[string][]types.SimpleAppRecord, nApps int) (*writeReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
 	// Create space for the two tables...
-	addressTable := make([]AddressRecord, 0, len(addrAppearanceMap))
-	appearanceTable := make([]AppearanceRecord, 0, nApps)
+	addressTable := make([]types.SimpleAddrRecord, 0, len(addrAppearanceMap))
+	appearanceTable := make([]types.SimpleAppRecord, 0, nApps)
 
 	// We want to sort the items in the map by address (maps in GoLang are not sorted)
 	sorted := []string{}
@@ -64,7 +65,7 @@ func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string,
 		bl.InsertAddress(address)
 
 		// ...and append the record to the addressTable.
-		addressTable = append(addressTable, AddressRecord{
+		addressTable = append(addressTable, types.SimpleAddrRecord{
 			Address: address,
 			Offset:  offset,
 			Count:   uint32(len(apps)),

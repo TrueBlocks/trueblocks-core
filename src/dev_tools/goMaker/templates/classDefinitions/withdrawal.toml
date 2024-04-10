@@ -5,7 +5,6 @@
     doc_descr = "withdrawal record for post-Shanghai withdrawals from the consensus layer"
     doc_route = "209-withdrawal"
     produced_by = "blocks"
-    go_output = "src/apps/chifra/pkg/types"
     cache_type = "cacheable"
     cache_by = "block"
     cache_as = "group"

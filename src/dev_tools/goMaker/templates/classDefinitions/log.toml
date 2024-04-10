@@ -5,7 +5,6 @@
     doc_descr = "log data as returned from the RPC (with slight enhancements)"
     doc_route = "215-log"
     produced_by = "logs, export, blocks"
-    go_output = "src/apps/chifra/pkg/types"
     cache_type = "cacheable"
     cache_by = "block"
     cache_as = "group"

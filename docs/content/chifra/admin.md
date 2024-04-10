@@ -338,6 +338,7 @@ Notes:
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
+- [appearancetable](/data-model/accounts/#appearancetable)
 - [chunkaddress](/data-model/admin/#chunkaddress)
 - [chunkbloom](/data-model/admin/#chunkbloom)
 - [chunkindex](/data-model/admin/#chunkindex)
