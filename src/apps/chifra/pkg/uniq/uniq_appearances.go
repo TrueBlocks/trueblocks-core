@@ -182,7 +182,7 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 
 var mapSync sync.Mutex
 
-// addAddressToMaps help keep track of appearances for an address. An appearance is inserted into `appsMap`
+// addAddressToMaps helps keep track of appearances for an address. An appearance is inserted into `appsMap`
 // if we've never seen this appearance before. `appsMap` is used to build the appearance table when writing the
 // chunk. `addrMap` helps eliminate duplicates and is used to build the address table when writing the chunk.
 // Precompiles are ignored. If the given address string does not start with a lead `0x`, it is normalized.

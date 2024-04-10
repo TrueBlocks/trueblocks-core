@@ -212,7 +212,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
         if (!arg.empty())
             argumentsOut3.push_back(arg);
 
-    // If we have a command file, we will use it, if not we will creat one and pretend we have one.
+    // If we have a command file, we will use it, if not we will create one and pretend we have one.
     string_q commandList = "";
     for (auto arg : argumentsOut3) {
         commandList += (arg + " ");
@@ -247,7 +247,7 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         replaceAll(cmdLine, "--append", "");
     }
 
-    // Note: check each item individual in case more than one appears on the command line
+    // Note: check each item individually in case more than one appears on the command line
     cmdLine += " ";
     replace(cmdLine, "--output ", "--output:");
 
