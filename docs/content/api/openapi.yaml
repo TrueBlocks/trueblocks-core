@@ -3015,6 +3015,20 @@ components:
           type: string
           format: datetime
           description: "the timestamp as a date (calculated)"
+    appearanceTable:
+      description: "an appearance table for an address"
+      type: object
+      properties:
+        AddressRecord:
+          type: object
+          items:
+            $ref: "#/components/schemas/addrRecord"
+          description: "the address record for these appearances"
+        Appearances:
+          type: array
+          items:
+            $ref: "#/components/schemas/appRecord"
+          description: "all the appearances for this address"
     monitor:
       description: "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
       type: object

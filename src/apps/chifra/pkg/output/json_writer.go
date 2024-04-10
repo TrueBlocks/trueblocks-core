@@ -10,6 +10,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
+// TODO: Remove rpc.MetaData and use types.MetaData throughout
+
 type FieldType int
 
 var comma = ","
