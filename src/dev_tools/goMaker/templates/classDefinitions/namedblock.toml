@@ -4,4 +4,3 @@
     doc_descr = "a block that has been given a particular name such as `first` or `latest`"
     doc_route = "239-namedBlock"
     produced_by = "when"
-    go_output = "src/apps/chifra/pkg/types"

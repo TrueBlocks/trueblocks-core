@@ -5,4 +5,3 @@
     doc_descr = "a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk"
     doc_route = "409-chunkRecord"
     produced_by = "chunks, init, scrape"
-    go_output = "src/apps/chifra/pkg/types"

@@ -5,4 +5,3 @@
     doc_descr = "an appearance table for an address"
     doc_route = "103-appearanceTable"
     produced_by = "chunks"
-    go_output = "src/apps/chifra/pkg/types"
