@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -84,7 +83,7 @@ type abisGeneric interface {
 	types.SimpleFunction
 }
 
-func queryAbis[T abisGeneric](opts *AbisOptions) ([]T, *rpc.MetaData, error) {
+func queryAbis[T abisGeneric](opts *AbisOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.AbisBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -99,7 +98,7 @@ func queryAbis[T abisGeneric](opts *AbisOptions) ([]T, *rpc.MetaData, error) {
 }
 
 // Abis implements the chifra abis command.
-func (opts *AbisOptions) Abis() ([]types.SimpleFunction, *rpc.MetaData, error) {
+func (opts *AbisOptions) Abis() ([]types.SimpleFunction, *types.MetaData, error) {
 	return queryAbis[types.SimpleFunction](opts)
 }
 

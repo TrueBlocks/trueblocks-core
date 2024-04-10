@@ -18,7 +18,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -103,7 +102,7 @@ type slurpGeneric interface {
 		types.SimpleSlurpCount
 }
 
-func querySlurp[T slurpGeneric](opts *SlurpOptions) ([]T, *rpc.MetaData, error) {
+func querySlurp[T slurpGeneric](opts *SlurpOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.SlurpBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -118,17 +117,17 @@ func querySlurp[T slurpGeneric](opts *SlurpOptions) ([]T, *rpc.MetaData, error) 
 }
 
 // Slurp implements the chifra slurp command.
-func (opts *SlurpOptions) Slurp() ([]types.SimpleSlurp, *rpc.MetaData, error) {
+func (opts *SlurpOptions) Slurp() ([]types.SimpleSlurp, *types.MetaData, error) {
 	return querySlurp[types.SimpleSlurp](opts)
 }
 
 // SlurpAppearances implements the chifra slurp --appearances command.
-func (opts *SlurpOptions) SlurpAppearances() ([]types.SimpleAppearance, *rpc.MetaData, error) {
+func (opts *SlurpOptions) SlurpAppearances() ([]types.SimpleAppearance, *types.MetaData, error) {
 	return querySlurp[types.SimpleAppearance](opts)
 }
 
 // SlurpCount implements the chifra slurp --count command.
-func (opts *SlurpOptions) SlurpCount() ([]types.SimpleSlurpCount, *rpc.MetaData, error) {
+func (opts *SlurpOptions) SlurpCount() ([]types.SimpleSlurpCount, *types.MetaData, error) {
 	return querySlurp[types.SimpleSlurpCount](opts)
 }
 

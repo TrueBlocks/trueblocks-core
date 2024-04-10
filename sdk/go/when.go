@@ -83,7 +83,7 @@ type whenGeneric interface {
 		types.SimpleTimestampCount
 }
 
-func queryWhen[T whenGeneric](opts *WhenOptions) ([]T, *rpc.MetaData, error) {
+func queryWhen[T whenGeneric](opts *WhenOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.WhenBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -98,17 +98,17 @@ func queryWhen[T whenGeneric](opts *WhenOptions) ([]T, *rpc.MetaData, error) {
 }
 
 // When implements the chifra when command.
-func (opts *WhenOptions) When() ([]types.SimpleNamedBlock, *rpc.MetaData, error) {
+func (opts *WhenOptions) When() ([]types.SimpleNamedBlock, *types.MetaData, error) {
 	return queryWhen[types.SimpleNamedBlock](opts)
 }
 
 // WhenTimestamps implements the chifra when --timestamps command.
-func (opts *WhenOptions) WhenTimestamps() ([]types.SimpleTimestamp, *rpc.MetaData, error) {
+func (opts *WhenOptions) WhenTimestamps() ([]types.SimpleTimestamp, *types.MetaData, error) {
 	return queryWhen[types.SimpleTimestamp](opts)
 }
 
 // WhenCount implements the chifra when --count command.
-func (opts *WhenOptions) WhenCount() ([]types.SimpleTimestampCount, *rpc.MetaData, error) {
+func (opts *WhenOptions) WhenCount() ([]types.SimpleTimestampCount, *types.MetaData, error) {
 	return queryWhen[types.SimpleTimestampCount](opts)
 }
 

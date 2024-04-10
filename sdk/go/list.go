@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -87,7 +86,7 @@ type listGeneric interface {
 		types.SimpleBounds
 }
 
-func queryList[T listGeneric](opts *ListOptions) ([]T, *rpc.MetaData, error) {
+func queryList[T listGeneric](opts *ListOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ListBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -102,17 +101,17 @@ func queryList[T listGeneric](opts *ListOptions) ([]T, *rpc.MetaData, error) {
 }
 
 // List implements the chifra list command.
-func (opts *ListOptions) List() ([]types.SimpleAppearance, *rpc.MetaData, error) {
+func (opts *ListOptions) List() ([]types.SimpleAppearance, *types.MetaData, error) {
 	return queryList[types.SimpleAppearance](opts)
 }
 
 // ListCount implements the chifra list --count command.
-func (opts *ListOptions) ListCount() ([]types.SimpleAppearanceCount, *rpc.MetaData, error) {
+func (opts *ListOptions) ListCount() ([]types.SimpleAppearanceCount, *types.MetaData, error) {
 	return queryList[types.SimpleAppearanceCount](opts)
 }
 
 // ListBounds implements the chifra list --bounds command.
-func (opts *ListOptions) ListBounds() ([]types.SimpleBounds, *rpc.MetaData, error) {
+func (opts *ListOptions) ListBounds() ([]types.SimpleBounds, *types.MetaData, error) {
 	return queryList[types.SimpleBounds](opts)
 }
 

@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -92,7 +91,7 @@ type namesGeneric interface {
 		string
 }
 
-func queryNames[T namesGeneric](opts *NamesOptions) ([]T, *rpc.MetaData, error) {
+func queryNames[T namesGeneric](opts *NamesOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.NamesBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -107,17 +106,17 @@ func queryNames[T namesGeneric](opts *NamesOptions) ([]T, *rpc.MetaData, error) 
 }
 
 // Names implements the chifra names command.
-func (opts *NamesOptions) Names() ([]types.SimpleName, *rpc.MetaData, error) {
+func (opts *NamesOptions) Names() ([]types.SimpleName, *types.MetaData, error) {
 	return queryNames[types.SimpleName](opts)
 }
 
 // NamesAddr implements the chifra names --addr command.
-func (opts *NamesOptions) NamesAddr() ([]base.Address, *rpc.MetaData, error) {
+func (opts *NamesOptions) NamesAddr() ([]base.Address, *types.MetaData, error) {
 	return queryNames[base.Address](opts)
 }
 
 // NamesTags implements the chifra names --tags command.
-func (opts *NamesOptions) NamesTags() ([]string, *rpc.MetaData, error) {
+func (opts *NamesOptions) NamesTags() ([]string, *types.MetaData, error) {
 	return queryNames[string](opts)
 }
 

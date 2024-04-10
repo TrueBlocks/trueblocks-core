@@ -17,7 +17,6 @@ import (
 	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -74,7 +73,7 @@ type receiptsGeneric interface {
 	types.SimpleReceipt
 }
 
-func queryReceipts[T receiptsGeneric](opts *ReceiptsOptions) ([]T, *rpc.MetaData, error) {
+func queryReceipts[T receiptsGeneric](opts *ReceiptsOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ReceiptsBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -89,7 +88,7 @@ func queryReceipts[T receiptsGeneric](opts *ReceiptsOptions) ([]T, *rpc.MetaData
 }
 
 // Receipts implements the chifra receipts command.
-func (opts *ReceiptsOptions) Receipts() ([]types.SimpleReceipt, *rpc.MetaData, error) {
+func (opts *ReceiptsOptions) Receipts() ([]types.SimpleReceipt, *types.MetaData, error) {
 	return queryReceipts[types.SimpleReceipt](opts)
 }
 

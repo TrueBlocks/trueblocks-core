@@ -19,7 +19,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -106,7 +105,7 @@ type blocksGeneric interface {
 		types.SimpleBlockCount
 }
 
-func queryBlocks[T blocksGeneric](opts *BlocksOptions) ([]T, *rpc.MetaData, error) {
+func queryBlocks[T blocksGeneric](opts *BlocksOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.BlocksBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -121,37 +120,37 @@ func queryBlocks[T blocksGeneric](opts *BlocksOptions) ([]T, *rpc.MetaData, erro
 }
 
 // Blocks implements the chifra blocks command.
-func (opts *BlocksOptions) Blocks() ([]types.SimpleBlock[types.SimpleTransaction], *rpc.MetaData, error) {
+func (opts *BlocksOptions) Blocks() ([]types.SimpleBlock[types.SimpleTransaction], *types.MetaData, error) {
 	return queryBlocks[types.SimpleBlock[types.SimpleTransaction]](opts)
 }
 
 // BlocksHashes implements the chifra blocks --hashes command.
-func (opts *BlocksOptions) BlocksHashes() ([]types.SimpleBlock[string], *rpc.MetaData, error) {
+func (opts *BlocksOptions) BlocksHashes() ([]types.SimpleBlock[string], *types.MetaData, error) {
 	return queryBlocks[types.SimpleBlock[string]](opts)
 }
 
 // BlocksTraces implements the chifra blocks --traces command.
-func (opts *BlocksOptions) BlocksTraces() ([]types.SimpleTrace, *rpc.MetaData, error) {
+func (opts *BlocksOptions) BlocksTraces() ([]types.SimpleTrace, *types.MetaData, error) {
 	return queryBlocks[types.SimpleTrace](opts)
 }
 
 // BlocksUniq implements the chifra blocks --uniq command.
-func (opts *BlocksOptions) BlocksUniq() ([]types.SimpleAppearance, *rpc.MetaData, error) {
+func (opts *BlocksOptions) BlocksUniq() ([]types.SimpleAppearance, *types.MetaData, error) {
 	return queryBlocks[types.SimpleAppearance](opts)
 }
 
 // BlocksLogs implements the chifra blocks --logs command.
-func (opts *BlocksOptions) BlocksLogs() ([]types.SimpleLog, *rpc.MetaData, error) {
+func (opts *BlocksOptions) BlocksLogs() ([]types.SimpleLog, *types.MetaData, error) {
 	return queryBlocks[types.SimpleLog](opts)
 }
 
 // BlocksWithdrawals implements the chifra blocks --withdrawals command.
-func (opts *BlocksOptions) BlocksWithdrawals() ([]types.SimpleWithdrawal, *rpc.MetaData, error) {
+func (opts *BlocksOptions) BlocksWithdrawals() ([]types.SimpleWithdrawal, *types.MetaData, error) {
 	return queryBlocks[types.SimpleWithdrawal](opts)
 }
 
 // BlocksCount implements the chifra blocks --count command.
-func (opts *BlocksOptions) BlocksCount() ([]types.SimpleBlockCount, *rpc.MetaData, error) {
+func (opts *BlocksOptions) BlocksCount() ([]types.SimpleBlockCount, *types.MetaData, error) {
 	return queryBlocks[types.SimpleBlockCount](opts)
 }
 

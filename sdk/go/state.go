@@ -19,7 +19,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -96,7 +95,7 @@ type stateGeneric interface {
 		types.SimpleResult
 }
 
-func queryState[T stateGeneric](opts *StateOptions) ([]T, *rpc.MetaData, error) {
+func queryState[T stateGeneric](opts *StateOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.StateBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -111,12 +110,12 @@ func queryState[T stateGeneric](opts *StateOptions) ([]T, *rpc.MetaData, error) 
 }
 
 // State implements the chifra state command.
-func (opts *StateOptions) State() ([]types.SimpleState, *rpc.MetaData, error) {
+func (opts *StateOptions) State() ([]types.SimpleState, *types.MetaData, error) {
 	return queryState[types.SimpleState](opts)
 }
 
 // StateCall implements the chifra state --call command.
-func (opts *StateOptions) StateCall() ([]types.SimpleResult, *rpc.MetaData, error) {
+func (opts *StateOptions) StateCall() ([]types.SimpleResult, *types.MetaData, error) {
 	return queryState[types.SimpleResult](opts)
 }
 

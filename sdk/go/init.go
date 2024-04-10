@@ -18,7 +18,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -76,7 +76,7 @@ func GetInitOptions(args []string) (*InitOptions, error) {
 type initGeneric interface {
 }
 
-func queryInit[T initGeneric](opts *InitOptions) ([]T, *rpc.MetaData, error) {
+func queryInit[T initGeneric](opts *InitOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.InitBytes(&buffer); err != nil {
 		logger.Fatal(err)

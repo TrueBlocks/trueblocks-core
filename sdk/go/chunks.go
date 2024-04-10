@@ -19,7 +19,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	chunks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -101,7 +101,7 @@ func GetChunksOptions(args []string) (*ChunksOptions, error) {
 type chunksGeneric interface {
 }
 
-func queryChunks[T chunksGeneric](opts *ChunksOptions) ([]T, *rpc.MetaData, error) {
+func queryChunks[T chunksGeneric](opts *ChunksOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ChunksBytes(&buffer); err != nil {
 		logger.Fatal(err)

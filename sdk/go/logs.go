@@ -17,7 +17,6 @@ import (
 	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -76,7 +75,7 @@ type logsGeneric interface {
 	types.SimpleLog
 }
 
-func queryLogs[T logsGeneric](opts *LogsOptions) ([]T, *rpc.MetaData, error) {
+func queryLogs[T logsGeneric](opts *LogsOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.LogsBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -91,7 +90,7 @@ func queryLogs[T logsGeneric](opts *LogsOptions) ([]T, *rpc.MetaData, error) {
 }
 
 // Logs implements the chifra logs command.
-func (opts *LogsOptions) Logs() ([]types.SimpleLog, *rpc.MetaData, error) {
+func (opts *LogsOptions) Logs() ([]types.SimpleLog, *types.MetaData, error) {
 	return queryLogs[types.SimpleLog](opts)
 }
 

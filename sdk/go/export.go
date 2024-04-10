@@ -19,7 +19,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -121,7 +120,7 @@ type exportGeneric interface {
 		types.SimpleAppearanceCount
 }
 
-func queryExport[T exportGeneric](opts *ExportOptions) ([]T, *rpc.MetaData, error) {
+func queryExport[T exportGeneric](opts *ExportOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ExportBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -136,47 +135,47 @@ func queryExport[T exportGeneric](opts *ExportOptions) ([]T, *rpc.MetaData, erro
 }
 
 // Export implements the chifra export command.
-func (opts *ExportOptions) Export() ([]types.SimpleTransaction, *rpc.MetaData, error) {
+func (opts *ExportOptions) Export() ([]types.SimpleTransaction, *types.MetaData, error) {
 	return queryExport[types.SimpleTransaction](opts)
 }
 
 // ExportAppearances implements the chifra export --appearances command.
-func (opts *ExportOptions) ExportAppearances() ([]types.SimpleAppearance, *rpc.MetaData, error) {
+func (opts *ExportOptions) ExportAppearances() ([]types.SimpleAppearance, *types.MetaData, error) {
 	return queryExport[types.SimpleAppearance](opts)
 }
 
 // ExportReceipts implements the chifra export --receipts command.
-func (opts *ExportOptions) ExportReceipts() ([]types.SimpleReceipt, *rpc.MetaData, error) {
+func (opts *ExportOptions) ExportReceipts() ([]types.SimpleReceipt, *types.MetaData, error) {
 	return queryExport[types.SimpleReceipt](opts)
 }
 
 // ExportLogs implements the chifra export --logs command.
-func (opts *ExportOptions) ExportLogs() ([]types.SimpleLog, *rpc.MetaData, error) {
+func (opts *ExportOptions) ExportLogs() ([]types.SimpleLog, *types.MetaData, error) {
 	return queryExport[types.SimpleLog](opts)
 }
 
 // ExportTraces implements the chifra export --traces command.
-func (opts *ExportOptions) ExportTraces() ([]types.SimpleTrace, *rpc.MetaData, error) {
+func (opts *ExportOptions) ExportTraces() ([]types.SimpleTrace, *types.MetaData, error) {
 	return queryExport[types.SimpleTrace](opts)
 }
 
 // ExportStatements implements the chifra export --statements command.
-func (opts *ExportOptions) ExportStatements() ([]types.SimpleStatement, *rpc.MetaData, error) {
+func (opts *ExportOptions) ExportStatements() ([]types.SimpleStatement, *types.MetaData, error) {
 	return queryExport[types.SimpleStatement](opts)
 }
 
 // ExportBalances implements the chifra export --balances command.
-func (opts *ExportOptions) ExportBalances() ([]types.SimpleState, *rpc.MetaData, error) {
+func (opts *ExportOptions) ExportBalances() ([]types.SimpleState, *types.MetaData, error) {
 	return queryExport[types.SimpleState](opts)
 }
 
 // ExportWithdrawals implements the chifra export --withdrawals command.
-func (opts *ExportOptions) ExportWithdrawals() ([]types.SimpleWithdrawal, *rpc.MetaData, error) {
+func (opts *ExportOptions) ExportWithdrawals() ([]types.SimpleWithdrawal, *types.MetaData, error) {
 	return queryExport[types.SimpleWithdrawal](opts)
 }
 
 // ExportCount implements the chifra export --count command.
-func (opts *ExportOptions) ExportCount() ([]types.SimpleAppearanceCount, *rpc.MetaData, error) {
+func (opts *ExportOptions) ExportCount() ([]types.SimpleAppearanceCount, *types.MetaData, error) {
 	return queryExport[types.SimpleAppearanceCount](opts)
 }
 

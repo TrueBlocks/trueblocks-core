@@ -18,7 +18,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -88,7 +87,7 @@ type tokensGeneric interface {
 	types.SimpleToken
 }
 
-func queryTokens[T tokensGeneric](opts *TokensOptions) ([]T, *rpc.MetaData, error) {
+func queryTokens[T tokensGeneric](opts *TokensOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.TokensBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -103,7 +102,7 @@ func queryTokens[T tokensGeneric](opts *TokensOptions) ([]T, *rpc.MetaData, erro
 }
 
 // Tokens implements the chifra tokens command.
-func (opts *TokensOptions) Tokens() ([]types.SimpleToken, *rpc.MetaData, error) {
+func (opts *TokensOptions) Tokens() ([]types.SimpleToken, *types.MetaData, error) {
 	return queryTokens[types.SimpleToken](opts)
 }
 

@@ -76,7 +76,7 @@ type tracesGeneric interface {
 		types.SimpleTraceCount
 }
 
-func queryTraces[T tracesGeneric](opts *TracesOptions) ([]T, *rpc.MetaData, error) {
+func queryTraces[T tracesGeneric](opts *TracesOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.TracesBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -91,12 +91,12 @@ func queryTraces[T tracesGeneric](opts *TracesOptions) ([]T, *rpc.MetaData, erro
 }
 
 // Traces implements the chifra traces command.
-func (opts *TracesOptions) Traces() ([]types.SimpleTrace, *rpc.MetaData, error) {
+func (opts *TracesOptions) Traces() ([]types.SimpleTrace, *types.MetaData, error) {
 	return queryTraces[types.SimpleTrace](opts)
 }
 
 // TracesCount implements the chifra traces --count command.
-func (opts *TracesOptions) TracesCount() ([]types.SimpleTraceCount, *rpc.MetaData, error) {
+func (opts *TracesOptions) TracesCount() ([]types.SimpleTraceCount, *types.MetaData, error) {
 	return queryTraces[types.SimpleTraceCount](opts)
 }
 

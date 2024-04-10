@@ -94,7 +94,7 @@ type transactionsGeneric interface {
 		types.SimpleLog
 }
 
-func queryTransactions[T transactionsGeneric](opts *TransactionsOptions) ([]T, *rpc.MetaData, error) {
+func queryTransactions[T transactionsGeneric](opts *TransactionsOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.TransactionsBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -109,22 +109,22 @@ func queryTransactions[T transactionsGeneric](opts *TransactionsOptions) ([]T, *
 }
 
 // Transactions implements the chifra transactions command.
-func (opts *TransactionsOptions) Transactions() ([]types.SimpleTransaction, *rpc.MetaData, error) {
+func (opts *TransactionsOptions) Transactions() ([]types.SimpleTransaction, *types.MetaData, error) {
 	return queryTransactions[types.SimpleTransaction](opts)
 }
 
 // TransactionsTraces implements the chifra transactions --traces command.
-func (opts *TransactionsOptions) TransactionsTraces() ([]types.SimpleTrace, *rpc.MetaData, error) {
+func (opts *TransactionsOptions) TransactionsTraces() ([]types.SimpleTrace, *types.MetaData, error) {
 	return queryTransactions[types.SimpleTrace](opts)
 }
 
 // TransactionsUniq implements the chifra transactions --uniq command.
-func (opts *TransactionsOptions) TransactionsUniq() ([]types.SimpleAppearance, *rpc.MetaData, error) {
+func (opts *TransactionsOptions) TransactionsUniq() ([]types.SimpleAppearance, *types.MetaData, error) {
 	return queryTransactions[types.SimpleAppearance](opts)
 }
 
 // TransactionsLogs implements the chifra transactions --logs command.
-func (opts *TransactionsOptions) TransactionsLogs() ([]types.SimpleLog, *rpc.MetaData, error) {
+func (opts *TransactionsOptions) TransactionsLogs() ([]types.SimpleLog, *types.MetaData, error) {
 	return queryTransactions[types.SimpleLog](opts)
 }
 
