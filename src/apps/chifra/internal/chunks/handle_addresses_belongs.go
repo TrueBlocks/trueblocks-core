@@ -85,27 +85,10 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 				break
 			}
 
-			var discApps []index.AppearanceRecord
-			discAddr := index.AddressRecord{
-				Address: s.AddressRecord.Address,
-				Offset:  s.AddressRecord.Offset,
-				Count:   s.AddressRecord.Count,
-			}
-			if discApps, err = indexChunk.ReadAppearancesAndReset(&discAddr); err != nil {
+			if s.Appearances, err = indexChunk.ReadAppearancesAndReset(&s.AddressRecord); err != nil {
 				return false, err
 			}
-			s.Appearances = make([]types.SimpleAppRecord, 0, len(discApps))
-			for _, a := range discApps {
-				s.Appearances = append(s.Appearances, types.SimpleAppRecord{
-					BlockNumber:      uint32(a.BlockNumber),
-					TransactionIndex: uint32(a.TransactionIndex),
-				})
-			}
-			s.AddressRecord = types.SimpleAddrRecord{
-				Address: discAddr.Address,
-				Offset:  discAddr.Offset,
-				Count:   uint32(len(discApps)),
-			}
+			s.AddressRecord.Count = uint32(len(s.Appearances))
 			if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {
 				good := []types.SimpleAppRecord{}
 				for _, app := range s.Appearances {
@@ -168,27 +151,10 @@ func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[t
 				break
 			}
 
-			var discApps []index.AppearanceRecord
-			discAddr := index.AddressRecord{
-				Address: s.AddressRecord.Address,
-				Offset:  s.AddressRecord.Offset,
-				Count:   s.AddressRecord.Count,
-			}
-			if discApps, err = indexChunk.ReadAppearancesAndReset(&discAddr); err != nil {
+			if s.Appearances, err = indexChunk.ReadAppearancesAndReset(&s.AddressRecord); err != nil {
 				return false, err
 			}
-			s.Appearances = make([]types.SimpleAppRecord, 0, len(discApps))
-			for _, a := range discApps {
-				s.Appearances = append(s.Appearances, types.SimpleAppRecord{
-					BlockNumber:      uint32(a.BlockNumber),
-					TransactionIndex: uint32(a.TransactionIndex),
-				})
-			}
-			s.AddressRecord = types.SimpleAddrRecord{
-				Address: discAddr.Address,
-				Offset:  discAddr.Offset,
-				Count:   uint32(len(discApps)),
-			}
+			s.AddressRecord.Count = uint32(len(s.Appearances))
 			if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {
 				good := []types.SimpleAppRecord{}
 				for _, app := range s.Appearances {

@@ -69,7 +69,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 						continue
 					}
 
-					obj := index.AddressRecord{}
+					obj := types.SimpleAddrRecord{}
 					if err := binary.Read(indexChunk.File, binary.LittleEndian, &obj); err != nil {
 						return false, err
 					}

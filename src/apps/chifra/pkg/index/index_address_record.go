@@ -8,19 +8,13 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 const (
 	// AddrRecordWidth - size of Address Record
 	AddrRecordWidth = 28
 )
-
-// AddressRecord is a single record in the Address table
-type AddressRecord struct {
-	Address base.Address `json:"address"`
-	Offset  uint32       `json:"offset"`
-	Count   uint32       `json:"count"`
-}
 
 func (chunk *Index) searchForAddressRecord(address base.Address) int {
 	compareFunc := func(pos int) bool {
@@ -39,7 +33,7 @@ func (chunk *Index) searchForAddressRecord(address base.Address) int {
 			return false
 		}
 
-		addressRec := AddressRecord{}
+		addressRec := types.SimpleAddrRecord{}
 		if err = binary.Read(chunk.File, binary.LittleEndian, &addressRec); err != nil {
 			fmt.Println(err)
 			return false
@@ -52,7 +46,7 @@ func (chunk *Index) searchForAddressRecord(address base.Address) int {
 
 	readLocation := int64(HeaderWidth + pos*AddrRecordWidth)
 	_, _ = chunk.File.Seek(readLocation, io.SeekStart)
-	rec := AddressRecord{}
+	rec := types.SimpleAddrRecord{}
 	if err := binary.Read(chunk.File, binary.LittleEndian, &rec); err != nil {
 		return -1
 	}

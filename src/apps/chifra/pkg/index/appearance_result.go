@@ -5,6 +5,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // AppearanceResult carries the appearances found in a single Index for the given address.
@@ -31,7 +32,7 @@ func (chunk *Index) ReadAppearances(address base.Address) *AppearanceResult {
 		return &ret
 	}
 
-	addressRecord := AddressRecord{}
+	addressRecord := types.SimpleAddrRecord{}
 	if err := binary.Read(chunk.File, binary.LittleEndian, &addressRecord); err != nil {
 		ret.Err = err
 		return &ret
@@ -43,6 +44,14 @@ func (chunk *Index) ReadAppearances(address base.Address) *AppearanceResult {
 		return &ret
 	}
 
-	ret.AppRecords = &appearances
+	a := make([]AppearanceRecord, 0, len(appearances))
+	for _, aa := range appearances {
+		a = append(a, AppearanceRecord{
+			BlockNumber:      aa.BlockNumber,
+			TransactionIndex: aa.TransactionIndex,
+		})
+	}
+	ret.AppRecords = &a
+
 	return &ret
 }

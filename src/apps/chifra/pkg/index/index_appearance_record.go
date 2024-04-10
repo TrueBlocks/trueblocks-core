@@ -3,6 +3,8 @@ package index
 import (
 	"encoding/binary"
 	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 const (
@@ -16,7 +18,7 @@ type AppearanceRecord struct {
 	TransactionIndex uint32 `json:"transactionIndex"`
 }
 
-func (chunk *Index) ReadAppearancesAndReset(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {
+func (chunk *Index) ReadAppearancesAndReset(addrRecord *types.SimpleAddrRecord) (apps []types.SimpleAppRecord, err error) {
 	offset, err := chunk.File.Seek(0, io.SeekCurrent)
 	if err != nil {
 		return apps, err
@@ -35,7 +37,7 @@ func (chunk *Index) ReadAppearancesAndReset(addrRecord *AddressRecord) (apps []A
 	return apps, nil
 }
 
-func (chunk *Index) readAppearanceRecords(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {
+func (chunk *Index) readAppearanceRecords(addrRecord *types.SimpleAddrRecord) (apps []types.SimpleAppRecord, err error) {
 	readLocation := int64(HeaderWidth + AddrRecordWidth*chunk.Header.AddressCount + AppRecordWidth*addrRecord.Offset)
 
 	_, err = chunk.File.Seek(readLocation, io.SeekStart)
@@ -43,7 +45,7 @@ func (chunk *Index) readAppearanceRecords(addrRecord *AddressRecord) (apps []App
 		return
 	}
 
-	apps = make([]AppearanceRecord, addrRecord.Count)
+	apps = make([]types.SimpleAppRecord, addrRecord.Count)
 	err = binary.Read(chunk.File, binary.LittleEndian, &apps)
 
 	return

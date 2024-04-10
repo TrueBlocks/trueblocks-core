@@ -79,7 +79,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *types.
 				}
 
 				for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-					obj := index.AddressRecord{}
+					obj := types.SimpleAddrRecord{}
 					if err := binary.Read(indexChunk.File, binary.LittleEndian, &obj); err != nil {
 						return err
 					}
