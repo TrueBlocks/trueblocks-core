@@ -15,13 +15,6 @@ import (
 
 func (opts *SlurpOptions) HandleCount() error {
 	testMode := opts.Globals.TestMode
-	paginator := rpc.Paginator{
-		Page:    opts.FirstPage(),
-		PerPage: int(opts.PerPage),
-	}
-	if opts.Globals.TestMode {
-		paginator.PerPage = 100
-	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
@@ -29,7 +22,7 @@ func (opts *SlurpOptions) HandleCount() error {
 		totalFiltered := 0
 		for _, addr := range opts.Addrs {
 			for _, tt := range opts.Types {
-				paginator.Page = opts.FirstPage()
+				paginator := rpc.NewPageNumberPaginator(opts.FirstPage(), opts.PerPageValue())
 
 				bar := logger.NewBar(logger.BarOptions{
 					Type:    logger.Expanding,
@@ -39,11 +32,15 @@ func (opts *SlurpOptions) HandleCount() error {
 
 				done := false
 				for !done {
-					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, opts.Source, addr, tt, &paginator)
+					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, opts.Source, addr, tt, paginator)
 					totalFetched += nFetched
-					paginator.Page++                    // order matters
-					done = nFetched < paginator.PerPage // order matters
-					if err != nil {                     // order matters
+					nextPageErr := paginator.NextPage() // order matters
+					if nextPageErr != nil {
+						errorChan <- nextPageErr
+						return
+					}
+					done = nFetched < paginator.PerPage() // order matters
+					if err != nil {                       // order matters
 						errorChan <- err
 						continue
 					}

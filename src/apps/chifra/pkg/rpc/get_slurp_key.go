@@ -1,96 +1,109 @@
 package rpc
 
 import (
+	"encoding/json"
 	"errors"
-	"strings"
+	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func getUrlAndHeaders() (string, map[string]string, error) {
-	key := config.GetKey("trueblocks").ApiKey
-	if key == "" {
-		return "", map[string]string{}, errors.New("cannot read API key")
-	}
-
-	url := "https://trueblocks.io/api/rpc"
-	headers := map[string]string{
-		"Authorization": "Bearer " + key,
-	}
-
-	if file.FileExists("./.key") {
-		// TODO: This can be removed at some point
-		lines := file.AsciiFileToLines(".key")
-		if len(lines) < 6 {
-			myUrl := lines[0]
-			myHeaders := map[string]string{}
-			for i := 1; i < len(lines); i++ {
-				parts := strings.Split(lines[i], "=")
-				if len(parts) != 2 {
-					continue
-				}
-				myHeaders[parts[0]] = parts[1]
-			}
-			url = myUrl
-			headers = myHeaders
-		}
-	}
-
-	return url, headers, nil
-}
+var ErrApiUrl = errors.New("cannot read API URL")
 
 type keyParam struct {
 	Address string `json:"address"`
-	Page    int    `json:"page"`
+	PageId  string `json:"pageId"`
 	PerPage int    `json:"perPage"`
 }
 
 type Meta struct {
-	LastIndexedBlock int    `json:"lastIndexedBlock,omitempty"`
-	Address          string `json:"address,omitempty"`
+	LastIndexedBlock lastIndexedBlock `json:"lastIndexedBlock,omitempty"`
+	Address          string           `json:"address,omitempty"`
+	PreviousPageId   string           `json:"previousPageId"`
+	NextPageId       string           `json:"nextPageId"`
 }
 
-type Data interface{ int | []types.SimpleSlurp }
+// The only purpose of this type is to parse Key's lastIndexedBlock (string) into int
+type lastIndexedBlock int
+
+func (l *lastIndexedBlock) UnmarshalJSON(data []byte) (err error) {
+	var value int64
+	var unquoted string
+	unquoted, err = strconv.Unquote(string(data))
+	if err != nil {
+		return
+	}
+
+	value, err = strconv.ParseInt(unquoted, 0, 64)
+	*l = lastIndexedBlock(value)
+	return
+}
+
+type Data interface {
+	int | []types.SimpleSlurp | []KeyAppearance
+}
 type keyResponse[D Data] struct {
 	Data D    `json:"data"`
 	Meta Meta `json:"meta"`
 }
 
-func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
-	url, headers, err := getUrlAndHeaders()
-	if err != nil {
-		return []types.SimpleSlurp{}, 0, err
+type KeyAppearance struct {
+	BlockNumber      string `json:"blockNumber"`
+	TransactionIndex string `json:"transactionIndex"`
+}
+
+func (k *KeyAppearance) SimpleSlurp() (s types.SimpleSlurp, err error) {
+	s = types.SimpleSlurp{}
+	if err = json.Unmarshal([]byte(k.BlockNumber), &s.BlockNumber); err != nil {
+		return
+	}
+	err = json.Unmarshal([]byte(k.TransactionIndex), &s.TransactionIndex)
+	return
+}
+
+func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator Paginator) ([]types.SimpleSlurp, int, error) {
+	url := config.GetChain(chain).KeyEndpoint
+	if url == "" {
+		return []types.SimpleSlurp{}, 0, ErrApiUrl
+	}
+
+	pageId, ok := paginator.Page().(string)
+	if !ok {
+		return []types.SimpleSlurp{}, 0, errors.New("expected page id")
 	}
 
 	method := "tb_getAppearances"
 	params := query.Params{keyParam{
 		Address: addr,
-		Page:    paginator.Page,
-		PerPage: paginator.PerPage,
+		PageId:  pageId,
+		PerPage: paginator.PerPage(),
 	}}
 
-	if response, err := query.QueryWithHeaders[keyResponse[[]types.SimpleSlurp]](url, headers, method, params); err != nil {
+	if response, err := query.QueryWithHeaders[keyResponse[[]KeyAppearance]](url, nil, method, params); err != nil {
 		return []types.SimpleSlurp{}, 0, err
 	} else {
 		v := make([]types.SimpleSlurp, 0, len(response.Data))
 		for _, a := range response.Data {
-			s := types.SimpleSlurp{
-				BlockNumber:      a.BlockNumber,
-				TransactionIndex: a.TransactionIndex,
+			slurp, err := a.SimpleSlurp()
+			if err != nil {
+				return []types.SimpleSlurp{}, 0, err
 			}
-			v = append(v, s)
+			v = append(v, slurp)
 		}
+		// update paginator
+		paginator.SetNextPage(response.Meta.NextPageId)
+		paginator.SetPreviousPage(response.Meta.PreviousPageId)
+
 		return v, len(v), nil
 	}
 }
 
 func (conn *Connection) getTxCountByAddressKey(chain, addr string) (int, error) {
-	url, headers, err := getUrlAndHeaders()
-	if err != nil {
-		return 0, err
+	url := config.GetChain(chain).KeyEndpoint
+	if url == "" {
+		return 0, ErrApiUrl
 	}
 
 	method := "tb_getAppearanceCount"
@@ -98,7 +111,7 @@ func (conn *Connection) getTxCountByAddressKey(chain, addr string) (int, error) 
 		Address: addr,
 	}}
 
-	if response, err := query.QueryWithHeaders[keyResponse[int]](url, headers, method, params); err != nil {
+	if response, err := query.QueryWithHeaders[keyResponse[int]](url, nil, method, params); err != nil {
 		return 0, err
 	} else {
 		return response.Data, err

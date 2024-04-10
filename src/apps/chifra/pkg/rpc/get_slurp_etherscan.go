@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (conn *Connection) getTxsByAddressEs(chain, addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
+func (conn *Connection) getTxsByAddressEs(chain, addr, requestType string, paginator Paginator) ([]types.SimpleSlurp, int, error) {
 	url, err := getEtherscanUrl(chain, addr, requestType, paginator)
 	if err != nil {
 		return []types.SimpleSlurp{}, 0, err
@@ -126,7 +126,7 @@ func (conn *Connection) rawSlurpToSimple(addr, requestType string, rawTx *types.
 	return s, nil
 }
 
-func getEtherscanUrl(chain, value string, requestType string, paginator *Paginator) (string, error) {
+func getEtherscanUrl(chain, value string, requestType string, paginator Paginator) (string, error) {
 	var actions = map[string]string{
 		"ext":         "txlist",
 		"int":         "txlistinternal",
@@ -160,14 +160,14 @@ func getEtherscanUrl(chain, value string, requestType string, paginator *Paginat
 	ret = strings.Replace(ret, "[{TT}]", tt, -1)
 	ret = strings.Replace(ret, "[{ACTION}]", actions[requestType], -1)
 	ret = strings.Replace(ret, "[{VALUE}]", value, -1)
-	ret = strings.Replace(ret, "[{PAGE}]", fmt.Sprintf("%d", paginator.Page), -1)
-	ret = strings.Replace(ret, "[{PER_PAGE}]", fmt.Sprintf("%d", paginator.PerPage), -1)
+	ret = strings.Replace(ret, "[{PAGE}]", fmt.Sprintf("%d", paginator.Page()), -1)
+	ret = strings.Replace(ret, "[{PER_PAGE}]", fmt.Sprintf("%d", paginator.PerPage()), -1)
 	ret = ret + "&apikey=" + key
 
 	return ret, nil
 }
 
-func (conn *Connection) getTxCountByAddressEs(chain, addr, requestType string, paginator *Paginator) (int, error) {
+func (conn *Connection) getTxCountByAddressEs(chain, addr, requestType string, paginator Paginator) (int, error) {
 	_, cnt, err := conn.getTxsByAddressEs(chain, addr, requestType, paginator)
 	return cnt, err
 }

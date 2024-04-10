@@ -222,4 +222,15 @@ func (opts *SlurpOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
+func (opts *SlurpOptions) PerPageValue() int {
+	if opts.Globals.TestMode {
+		return 100
+	}
+	if opts.Source == "key" && opts.PerPage > 1000 {
+		// 1000 is the current max in Key
+		return 1000
+	}
+	return int(opts.PerPage)
+}
+
 // EXISTING_CODE
