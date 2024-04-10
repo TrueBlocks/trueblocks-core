@@ -36,8 +36,8 @@ func (opts *TracesOptions) String() string {
 	return string(bytes)
 }
 
-// Traces implements the chifra traces command for the SDK.
-func (opts *TracesOptions) Traces(w io.Writer) error {
+// TracesBytes implements the chifra traces command for the SDK.
+func (opts *TracesOptions) TracesBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting traces struct to URL values: %v", err)
@@ -46,7 +46,7 @@ func (opts *TracesOptions) Traces(w io.Writer) error {
 	return traces.Traces(w, values)
 }
 
-// tracesParseFunc handles specail cases such as structs and enums (if any).
+// tracesParseFunc handles special cases such as structs and enums (if any).
 func tracesParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*TracesOptions)
@@ -71,18 +71,33 @@ func GetTracesOptions(args []string) (*TracesOptions, error) {
 	return &opts, nil
 }
 
-func (opts *TracesOptions) Query() ([]types.SimpleTrace, *types.MetaData, error) {
+type tracesGeneric interface {
+	types.SimpleTrace |
+		types.SimpleTraceCount
+}
+
+func queryTraces[T tracesGeneric](opts *TracesOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Traces(&buffer); err != nil {
+	if err := opts.TracesBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleTrace]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Traces implements the chifra traces command.
+func (opts *TracesOptions) Traces() ([]types.SimpleTrace, *types.MetaData, error) {
+	return queryTraces[types.SimpleTrace](opts)
+}
+
+// TracesCount implements the chifra traces --count command.
+func (opts *TracesOptions) TracesCount() ([]types.SimpleTraceCount, *types.MetaData, error) {
+	return queryTraces[types.SimpleTraceCount](opts)
 }
 
 // No enums

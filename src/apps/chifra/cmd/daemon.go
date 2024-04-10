@@ -25,7 +25,6 @@ import (
 // daemonCmd represents the daemon command
 var daemonCmd = &cobra.Command{
 	Use:     usageDaemon,
-	Short:   shortDaemon,
 	Long:    longDaemon,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("daemon", func() *globals.GlobalOptions {
@@ -38,8 +37,6 @@ var daemonCmd = &cobra.Command{
 	Aliases: []string{"serve"}}
 
 const usageDaemon = `daemon [flags]`
-
-const shortDaemon = "initialize and control long-running processes such as the API and the scrapers"
 
 const longDaemon = `Purpose:
   Initialize and control long-running processes such as the API and the scrapers.`
@@ -58,14 +55,14 @@ func init() {
 
 	daemonCmd.Flags().SortFlags = false
 
-	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Url, "url", "u", "localhost:8080", "specify the API server's url and optionally its port")
+	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Url, "url", "u", "localhost:8080", `specify the API server's url and optionally its port`)
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Api, "api", "a", "on", `instruct the node to start the API server (hidden)
 One of [ off | on ]`)
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Scrape, "scrape", "s", "", `start the scraper, initialize it with either just blooms or entire index, generate for new blocks (hidden)
 One of [ off | blooms | index ]`)
-	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Monitor, "monitor", "m", false, "instruct the node to start the monitors tool (hidden)")
-	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Grpc, "grpc", "g", false, "run gRPC server to serve names")
-	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", "deprecated please use --url flag instead")
+	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Monitor, "monitor", "m", false, `instruct the node to start the monitors tool (hidden)`)
+	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Grpc, "grpc", "g", false, `run gRPC server to serve names`)
+	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", `deprecated please use --url flag instead`)
 	if os.Getenv("TEST_MODE") != "true" {
 		_ = daemonCmd.Flags().MarkHidden("api")
 		_ = daemonCmd.Flags().MarkHidden("scrape")

@@ -18,7 +18,7 @@ func DoTransactions() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.Transactions(&buf); err != nil {
+	if err := opts.TransactionsBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

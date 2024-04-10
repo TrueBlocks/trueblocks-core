@@ -25,7 +25,6 @@ import (
 // receiptsCmd represents the receipts command
 var receiptsCmd = &cobra.Command{
 	Use:     usageReceipts,
-	Short:   shortReceipts,
 	Long:    longReceipts,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("receipts", func() *globals.GlobalOptions {
@@ -41,8 +40,6 @@ const usageReceipts = `receipts [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)`
-
-const shortReceipts = "retrieve receipts for the given transaction(s)"
 
 const longReceipts = `Purpose:
   Retrieve receipts for the given transaction(s).`
@@ -61,7 +58,7 @@ func init() {
 
 	receiptsCmd.Flags().SortFlags = false
 
-	receiptsCmd.Flags().BoolVarP(&receiptsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	receiptsCmd.Flags().BoolVarP(&receiptsPkg.GetOptions().Articulate, "articulate", "a", false, `articulate the retrieved data if ABIs can be found`)
 	globals.InitGlobals("receipts", receiptsCmd, &receiptsPkg.GetOptions().Globals, capabilities)
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))

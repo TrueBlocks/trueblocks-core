@@ -42,8 +42,8 @@ func (opts *StateOptions) String() string {
 	return string(bytes)
 }
 
-// State implements the chifra state command for the SDK.
-func (opts *StateOptions) State(w io.Writer) error {
+// StateBytes implements the chifra state command for the SDK.
+func (opts *StateOptions) StateBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting state struct to URL values: %v", err)
@@ -52,7 +52,7 @@ func (opts *StateOptions) State(w io.Writer) error {
 	return state.State(w, values)
 }
 
-// stateParseFunc handles specail cases such as structs and enums (if any).
+// stateParseFunc handles special cases such as structs and enums (if any).
 func stateParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*StateOptions)
@@ -90,18 +90,33 @@ func GetStateOptions(args []string) (*StateOptions, error) {
 	return &opts, nil
 }
 
-func (opts *StateOptions) Query() ([]types.SimpleState, *types.MetaData, error) {
+type stateGeneric interface {
+	types.SimpleState |
+		types.SimpleResult
+}
+
+func queryState[T stateGeneric](opts *StateOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.State(&buffer); err != nil {
+	if err := opts.StateBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleState]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// State implements the chifra state command.
+func (opts *StateOptions) State() ([]types.SimpleState, *types.MetaData, error) {
+	return queryState[types.SimpleState](opts)
+}
+
+// StateCall implements the chifra state --call command.
+func (opts *StateOptions) StateCall() ([]types.SimpleResult, *types.MetaData, error) {
+	return queryState[types.SimpleResult](opts)
 }
 
 type StateParts int

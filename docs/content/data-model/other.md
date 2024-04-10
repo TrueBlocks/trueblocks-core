@@ -1,6 +1,6 @@
 ---
 title: "Other"
-description: ""
+description: "Access to other and external data"
 lead: ""
 lastmod:
   - :git
@@ -9,8 +9,8 @@ lastmod:
 draft: false
 menu:
   data:
-    parent: "collections"
-weight: 5000
+    parent: collections
+weight: 51000
 toc: true
 ---
 
@@ -131,6 +131,21 @@ Slurps consist of the following fields:
 | articulatedTx    | if present, the function that was called in the transaction                                           | [Function](/data-model/other/#function) |
 | compressedTx     | truncated, more readable version of the articulation                                                  | string                                  |
 | isError          | `true` if the transaction ended in error, `false` otherwise                                           | bool                                    |
+
+## SlurpCount
+
+The `slurpCount` carries information about the counts returned by remote APIs.
+
+The following commands produce and manage SlurpCounts:
+
+- [chifra slurp](/chifra/other/#chifra-slurp)
+
+SlurpCounts consist of the following fields:
+
+| Field   | Description                                             | Type    |
+| ------- | ------------------------------------------------------- | ------- |
+| address | the address used to query the API                       | address |
+| count   | the number of records known by the API for this address | uint64  |
 
 ## Base types
 

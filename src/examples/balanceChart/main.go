@@ -23,7 +23,7 @@ func main() {
 		Expand:  true,
 	}
 
-	names, _, err := namesOpts.Query()
+	names, _, err := namesOpts.Names()
 	if err != nil {
 		logger.Fatal(err)
 	}
@@ -76,7 +76,7 @@ func getBalances(names []types.SimpleName, chain string, start, end gostradamus.
 			Chain: chain,
 		},
 	}
-	clamps, _, _ := clamp.Query()
+	clamps, _, _ := clamp.When()
 	if start.UnixTimestamp() < clamps[0].Timestamp {
 		start = gostradamus.FromUnixTimestamp(clamps[0].Timestamp)
 	}
@@ -92,7 +92,7 @@ func getBalances(names []types.SimpleName, chain string, start, end gostradamus.
 		},
 	}
 
-	if blocks, _, err := whenOpts.Query(); err != nil {
+	if blocks, _, err := whenOpts.When(); err != nil {
 		logger.Error(err)
 		return []types.SimpleState{}, err
 	} else {
@@ -123,7 +123,7 @@ func getBalances(names []types.SimpleName, chain string, start, end gostradamus.
 			},
 		}
 
-		if state, meta, err := stateOpts.Query(); err != nil {
+		if state, meta, err := stateOpts.State(); err != nil {
 			logger.Error(err)
 			return []types.SimpleState{}, err
 		} else {

@@ -34,8 +34,8 @@ func (opts *ReceiptsOptions) String() string {
 	return string(bytes)
 }
 
-// Receipts implements the chifra receipts command for the SDK.
-func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
+// ReceiptsBytes implements the chifra receipts command for the SDK.
+func (opts *ReceiptsOptions) ReceiptsBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting receipts struct to URL values: %v", err)
@@ -44,7 +44,7 @@ func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
 	return receipts.Receipts(w, values)
 }
 
-// receiptsParseFunc handles specail cases such as structs and enums (if any).
+// receiptsParseFunc handles special cases such as structs and enums (if any).
 func receiptsParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*ReceiptsOptions)
@@ -69,18 +69,27 @@ func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 	return &opts, nil
 }
 
-func (opts *ReceiptsOptions) Query() ([]types.SimpleReceipt, *types.MetaData, error) {
+type receiptsGeneric interface {
+	types.SimpleReceipt
+}
+
+func queryReceipts[T receiptsGeneric](opts *ReceiptsOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Receipts(&buffer); err != nil {
+	if err := opts.ReceiptsBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleReceipt]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Receipts implements the chifra receipts command.
+func (opts *ReceiptsOptions) Receipts() ([]types.SimpleReceipt, *types.MetaData, error) {
+	return queryReceipts[types.SimpleReceipt](opts)
 }
 
 // No enums

@@ -43,8 +43,8 @@ func (opts *SlurpOptions) String() string {
 	return string(bytes)
 }
 
-// Slurp implements the chifra slurp command for the SDK.
-func (opts *SlurpOptions) Slurp(w io.Writer) error {
+// SlurpBytes implements the chifra slurp command for the SDK.
+func (opts *SlurpOptions) SlurpBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting slurp struct to URL values: %v", err)
@@ -53,7 +53,7 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 	return slurp.Slurp(w, values)
 }
 
-// slurpParseFunc handles specail cases such as structs and enums (if any).
+// slurpParseFunc handles special cases such as structs and enums (if any).
 func slurpParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*SlurpOptions)
@@ -96,18 +96,39 @@ func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 	return &opts, nil
 }
 
-func (opts *SlurpOptions) Query() ([]types.SimpleSlurp, *types.MetaData, error) {
+type slurpGeneric interface {
+	types.SimpleSlurp |
+		types.SimpleAppearance |
+		types.SimpleSlurpCount
+}
+
+func querySlurp[T slurpGeneric](opts *SlurpOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Slurp(&buffer); err != nil {
+	if err := opts.SlurpBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleSlurp]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Slurp implements the chifra slurp command.
+func (opts *SlurpOptions) Slurp() ([]types.SimpleSlurp, *types.MetaData, error) {
+	return querySlurp[types.SimpleSlurp](opts)
+}
+
+// SlurpAppearances implements the chifra slurp --appearances command.
+func (opts *SlurpOptions) SlurpAppearances() ([]types.SimpleAppearance, *types.MetaData, error) {
+	return querySlurp[types.SimpleAppearance](opts)
+}
+
+// SlurpCount implements the chifra slurp --count command.
+func (opts *SlurpOptions) SlurpCount() ([]types.SimpleSlurpCount, *types.MetaData, error) {
+	return querySlurp[types.SimpleSlurpCount](opts)
 }
 
 type SlurpTypes int

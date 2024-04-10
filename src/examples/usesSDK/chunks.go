@@ -18,7 +18,7 @@ func DoChunks() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.Chunks(&buf); err != nil {
+	if err := opts.ChunksBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

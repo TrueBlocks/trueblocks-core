@@ -64,8 +64,8 @@ func (opts *ExportOptions) String() string {
 	return string(bytes)
 }
 
-// Export implements the chifra export command for the SDK.
-func (opts *ExportOptions) Export(w io.Writer) error {
+// ExportBytes implements the chifra export command for the SDK.
+func (opts *ExportOptions) ExportBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting export struct to URL values: %v", err)
@@ -74,7 +74,7 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 	return export.Export(w, values)
 }
 
-// exportParseFunc handles specail cases such as structs and enums (if any).
+// exportParseFunc handles special cases such as structs and enums (if any).
 func exportParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*ExportOptions)
@@ -108,18 +108,75 @@ func GetExportOptions(args []string) (*ExportOptions, error) {
 	return &opts, nil
 }
 
-func (opts *ExportOptions) Query() ([]bool, *types.MetaData, error) {
+type exportGeneric interface {
+	types.SimpleTransaction |
+		types.SimpleAppearance |
+		types.SimpleReceipt |
+		types.SimpleLog |
+		types.SimpleTrace |
+		types.SimpleStatement |
+		types.SimpleState |
+		types.SimpleWithdrawal |
+		types.SimpleAppearanceCount
+}
+
+func queryExport[T exportGeneric](opts *ExportOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Export(&buffer); err != nil {
+	if err := opts.ExportBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Export implements the chifra export command.
+func (opts *ExportOptions) Export() ([]types.SimpleTransaction, *types.MetaData, error) {
+	return queryExport[types.SimpleTransaction](opts)
+}
+
+// ExportAppearances implements the chifra export --appearances command.
+func (opts *ExportOptions) ExportAppearances() ([]types.SimpleAppearance, *types.MetaData, error) {
+	return queryExport[types.SimpleAppearance](opts)
+}
+
+// ExportReceipts implements the chifra export --receipts command.
+func (opts *ExportOptions) ExportReceipts() ([]types.SimpleReceipt, *types.MetaData, error) {
+	return queryExport[types.SimpleReceipt](opts)
+}
+
+// ExportLogs implements the chifra export --logs command.
+func (opts *ExportOptions) ExportLogs() ([]types.SimpleLog, *types.MetaData, error) {
+	return queryExport[types.SimpleLog](opts)
+}
+
+// ExportTraces implements the chifra export --traces command.
+func (opts *ExportOptions) ExportTraces() ([]types.SimpleTrace, *types.MetaData, error) {
+	return queryExport[types.SimpleTrace](opts)
+}
+
+// ExportStatements implements the chifra export --statements command.
+func (opts *ExportOptions) ExportStatements() ([]types.SimpleStatement, *types.MetaData, error) {
+	return queryExport[types.SimpleStatement](opts)
+}
+
+// ExportBalances implements the chifra export --balances command.
+func (opts *ExportOptions) ExportBalances() ([]types.SimpleState, *types.MetaData, error) {
+	return queryExport[types.SimpleState](opts)
+}
+
+// ExportWithdrawals implements the chifra export --withdrawals command.
+func (opts *ExportOptions) ExportWithdrawals() ([]types.SimpleWithdrawal, *types.MetaData, error) {
+	return queryExport[types.SimpleWithdrawal](opts)
+}
+
+// ExportCount implements the chifra export --count command.
+func (opts *ExportOptions) ExportCount() ([]types.SimpleAppearanceCount, *types.MetaData, error) {
+	return queryExport[types.SimpleAppearanceCount](opts)
 }
 
 type ExportFlow int

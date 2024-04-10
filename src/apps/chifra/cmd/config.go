@@ -25,7 +25,6 @@ import (
 // configCmd represents the config command
 var configCmd = &cobra.Command{
 	Use:     usageConfig,
-	Short:   shortConfig,
 	Long:    longConfig,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("config", func() *globals.GlobalOptions {
@@ -43,8 +42,6 @@ Arguments:
   mode - either show or edit the configuration
 	One of [ show | edit ]`
 
-const shortConfig = "report on and edit the configuration of the TrueBlocks system"
-
 const longConfig = `Purpose:
   Report on and edit the configuration of the TrueBlocks system.`
 
@@ -56,7 +53,7 @@ func init() {
 
 	configCmd.Flags().SortFlags = false
 
-	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, "show the configuration paths for the system")
+	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, `show the configuration paths for the system`)
 	globals.InitGlobals("config", configCmd, &configPkg.GetOptions().Globals, capabilities)
 
 	configCmd.SetUsageTemplate(UsageWithNotes(notesConfig))

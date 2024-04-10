@@ -18,7 +18,7 @@ func DoAbis() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.Abis(&buf); err != nil {
+	if err := opts.AbisBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

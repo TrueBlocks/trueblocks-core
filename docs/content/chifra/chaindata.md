@@ -1,6 +1,6 @@
 ---
 title: "Chain data"
-description: ""
+description: "Access and cache blockchain-related data"
 lead: ""
 lastmod:
   - :git
@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 27000
+weight: 21000
 toc: true
 ---
 
@@ -95,7 +95,6 @@ Links:
 
 - [api docs](/api/#operation/chaindata-blocks)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getBlocks.csv)
 
 ## chifra transactions
 
@@ -153,7 +152,6 @@ Links:
 
 - [api docs](/api/#operation/chaindata-transactions)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getTrans.csv)
 
 ## chifra receipts
 
@@ -200,7 +198,6 @@ Links:
 
 - [api docs](/api/#operation/chaindata-receipts)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getReceipts.csv)
 
 ## chifra logs
 
@@ -247,7 +244,6 @@ Links:
 
 - [api docs](/api/#operation/chaindata-logs)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getLogs.csv)
 
 ## chifra traces
 
@@ -301,7 +297,6 @@ Links:
 
 - [api docs](/api/#operation/chaindata-traces)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getTraces.csv)
 
 ## chifra when
 
@@ -358,6 +353,5 @@ Links:
 
 - [api docs](/api/#operation/chaindata-when)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/when)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/whenBlock.csv)
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

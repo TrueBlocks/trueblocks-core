@@ -43,8 +43,8 @@ func (opts *TransactionsOptions) String() string {
 	return string(bytes)
 }
 
-// Transactions implements the chifra transactions command for the SDK.
-func (opts *TransactionsOptions) Transactions(w io.Writer) error {
+// TransactionsBytes implements the chifra transactions command for the SDK.
+func (opts *TransactionsOptions) TransactionsBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting transactions struct to URL values: %v", err)
@@ -53,7 +53,7 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 	return transactions.Transactions(w, values)
 }
 
-// transactionsParseFunc handles specail cases such as structs and enums (if any).
+// transactionsParseFunc handles special cases such as structs and enums (if any).
 func transactionsParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*TransactionsOptions)
@@ -87,18 +87,45 @@ func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 	return &opts, nil
 }
 
-func (opts *TransactionsOptions) Query() ([]types.SimpleTransaction, *types.MetaData, error) {
+type transactionsGeneric interface {
+	types.SimpleTransaction |
+		types.SimpleTrace |
+		types.SimpleAppearance |
+		types.SimpleLog
+}
+
+func queryTransactions[T transactionsGeneric](opts *TransactionsOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Transactions(&buffer); err != nil {
+	if err := opts.TransactionsBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleTransaction]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Transactions implements the chifra transactions command.
+func (opts *TransactionsOptions) Transactions() ([]types.SimpleTransaction, *types.MetaData, error) {
+	return queryTransactions[types.SimpleTransaction](opts)
+}
+
+// TransactionsTraces implements the chifra transactions --traces command.
+func (opts *TransactionsOptions) TransactionsTraces() ([]types.SimpleTrace, *types.MetaData, error) {
+	return queryTransactions[types.SimpleTrace](opts)
+}
+
+// TransactionsUniq implements the chifra transactions --uniq command.
+func (opts *TransactionsOptions) TransactionsUniq() ([]types.SimpleAppearance, *types.MetaData, error) {
+	return queryTransactions[types.SimpleAppearance](opts)
+}
+
+// TransactionsLogs implements the chifra transactions --logs command.
+func (opts *TransactionsOptions) TransactionsLogs() ([]types.SimpleLog, *types.MetaData, error) {
+	return queryTransactions[types.SimpleLog](opts)
 }
 
 type TransactionsFlow int

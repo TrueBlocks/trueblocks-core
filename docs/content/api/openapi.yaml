@@ -561,7 +561,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#appearancecount">AppearanceCount</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a> or <a href="/data-model/chaindata/#transaction">Transaction</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#appearancecount">AppearanceCount</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/chainstate/#state">State</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a> or <a href="/data-model/chaindata/#transaction">Transaction</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -572,6 +572,7 @@ paths:
                         - $ref: "#/components/schemas/monitor"
                         - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/receipt"
+                        - $ref: "#/components/schemas/state"
                         - $ref: "#/components/schemas/statement"
                         - $ref: "#/components/schemas/token"
                         - $ref: "#/components/schemas/trace"
@@ -776,7 +777,7 @@ paths:
     get:
       tags:
         - Accounts
-      summary: Manage names for addresses
+      summary: Manage names
       description: Query addresses or names of well-known accounts. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
       operationId: accounts-names
       parameters:
@@ -2795,7 +2796,7 @@ paths:
       tags:
         - Other
       summary: Slurp Api services
-      description: Fetch data from Etherscan for any address. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
+      description: Fetch data from Etherscan and other APIs for any address. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
       operationId: other-slurp
       parameters:
         - name: addrs
@@ -2949,10 +2950,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/other/#slurp">Slurp</a> data. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
+                    description: Produces <a href="/data-model/other/#slurp">Slurp</a> or <a href="/data-model/other/#slurpcount">SlurpCount</a> data. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
                     type: array
                     items:
-                      $ref: "#/components/schemas/slurp"
+                      oneOf:
+                        - $ref: "#/components/schemas/slurp"
+                        - $ref: "#/components/schemas/slurpCount"
                 example:
                   [
                     {
@@ -3012,20 +3015,6 @@ components:
           type: string
           format: datetime
           description: "the timestamp as a date (calculated)"
-    appearanceTable:
-      description: "an appearance table for an address"
-      type: object
-      properties:
-        AddressRecord:
-          type: object
-          items:
-            $ref: "#/components/schemas/addrRecord"
-          description: "the address record for these appearances"
-        Appearances:
-          type: array
-          items:
-            $ref: "#/components/schemas/appRecord"
-          description: "all the appearances for this address"
     monitor:
       description: "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
       type: object
@@ -3324,6 +3313,20 @@ components:
           type: string
           format: string
           description: "the reason for the correcting entries, if any"
+    appearanceTable:
+      description: "an appearance table for an address"
+      type: object
+      properties:
+        AddressRecord:
+          type: object
+          items:
+            $ref: "#/components/schemas/addrRecord"
+          description: "the address record for these appearances"
+        Appearances:
+          type: array
+          items:
+            $ref: "#/components/schemas/appRecord"
+          description: "all the appearances for this address"
     block:
       description: "block data as returned from the RPC (with slight enhancements)"
       type: object
@@ -4524,7 +4527,7 @@ components:
             $ref: "#/components/schemas/parameter"
           description: "for composite types, the parameters making up the composite"
     slurp:
-      description: "transaction data as returned from by Etherscan"
+      description: "transaction data as returned from by remote APIs"
       type: object
       properties:
         hash:
@@ -4596,6 +4599,18 @@ components:
           type: boolean
           format: boolean
           description: "`true` if the transaction ended in error, `false` otherwise"
+    slurpCount:
+      description: "counts of transaction data returned by remote APIs"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address used to query the API"
+        count:
+          type: number
+          format: uint64
+          description: "the number of records known by the API for this address"
     response:
       required:
         - result

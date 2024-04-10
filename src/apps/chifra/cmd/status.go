@@ -25,7 +25,6 @@ import (
 // statusCmd represents the status command
 var statusCmd = &cobra.Command{
 	Use:     usageStatus,
-	Short:   shortStatus,
 	Long:    longStatus,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("status", func() *globals.GlobalOptions {
@@ -43,8 +42,6 @@ Arguments:
   modes - the (optional) name of the binary cache to report on, terse otherwise
 	One or more of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]`
 
-const shortStatus = "report on the state of the internal binary caches"
-
 const longStatus = `Purpose:
   Report on the state of the internal binary caches.`
 
@@ -59,10 +56,10 @@ func init() {
 
 	statusCmd.Flags().SortFlags = false
 
-	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Diagnose, "diagnose", "d", false, "same as the default but with additional diagnostics")
-	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
-	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().MaxRecords, "max_records", "e", 10000, "the maximum number of records to process")
-	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Chains, "chains", "a", false, "include a list of chain configurations in the output")
+	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Diagnose, "diagnose", "d", false, `same as the default but with additional diagnostics`)
+	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().FirstRecord, "first_record", "c", 0, `the first record to process`)
+	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().MaxRecords, "max_records", "e", 10000, `the maximum number of records to process`)
+	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Chains, "chains", "a", false, `include a list of chain configurations in the output`)
 	globals.InitGlobals("status", statusCmd, &statusPkg.GetOptions().Globals, capabilities)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))

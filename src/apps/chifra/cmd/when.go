@@ -25,7 +25,6 @@ import (
 // whenCmd represents the when command
 var whenCmd = &cobra.Command{
 	Use:     usageWhen,
-	Short:   shortWhen,
 	Long:    longWhen,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("when", func() *globals.GlobalOptions {
@@ -41,8 +40,6 @@ const usageWhen = `when [flags] < block | date > [ block... | date... ]
 
 Arguments:
   blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)`
-
-const shortWhen = "find block(s) based on date, blockNum, timestamp, or 'special'"
 
 const longWhen = `Purpose:
   Find block(s) based on date, blockNum, timestamp, or 'special'.`
@@ -60,14 +57,14 @@ func init() {
 
 	whenCmd.Flags().SortFlags = false
 
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().List, "list", "l", false, "export a list of the 'special' blocks")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Timestamps, "timestamps", "t", false, "display or process timestamps")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Count, "count", "U", false, "with --timestamps only, returns the number of timestamps in the cache")
-	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Truncate, "truncate", "n", 0, "with --timestamps only, truncates the timestamp file at this block (hidden)")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Repair, "repair", "r", false, "with --timestamps only, repairs block(s) in the block range by re-querying from the chain")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, "with --timestamps only, checks the validity of the timestamp data")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Update, "update", "u", false, "with --timestamps only, bring the timestamp database forward to the latest block")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "d", false, "with --timestamps --check only, verifies timestamps from on chain (slow)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().List, "list", "l", false, `export a list of the 'special' blocks`)
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Timestamps, "timestamps", "t", false, `display or process timestamps`)
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Count, "count", "U", false, `with --timestamps only, returns the number of timestamps in the cache`)
+	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Truncate, "truncate", "n", 0, `with --timestamps only, truncates the timestamp file at this block (hidden)`)
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Repair, "repair", "r", false, `with --timestamps only, repairs block(s) in the block range by re-querying from the chain`)
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, `with --timestamps only, checks the validity of the timestamp data`)
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Update, "update", "u", false, `with --timestamps only, bring the timestamp database forward to the latest block`)
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "d", false, `with --timestamps --check only, verifies timestamps from on chain (slow)`)
 	if os.Getenv("TEST_MODE") != "true" {
 		_ = whenCmd.Flags().MarkHidden("truncate")
 	}

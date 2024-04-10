@@ -19,7 +19,7 @@ func DoBlocks() {
 	}
 
 	var buf bytes.Buffer
-	if err := opts.Blocks(&buf); err != nil {
+	if err := opts.BlocksBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

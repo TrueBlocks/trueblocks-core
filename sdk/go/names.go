@@ -50,8 +50,8 @@ func (opts *NamesOptions) String() string {
 	return string(bytes)
 }
 
-// Names implements the chifra names command for the SDK.
-func (opts *NamesOptions) Names(w io.Writer) error {
+// NamesBytes implements the chifra names command for the SDK.
+func (opts *NamesOptions) NamesBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting names struct to URL values: %v", err)
@@ -60,7 +60,7 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 	return names.Names(w, values)
 }
 
-// namesParseFunc handles specail cases such as structs and enums (if any).
+// namesParseFunc handles special cases such as structs and enums (if any).
 func namesParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*NamesOptions)
@@ -85,18 +85,39 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 	return &opts, nil
 }
 
-func (opts *NamesOptions) Query() ([]types.SimpleName, *types.MetaData, error) {
+type namesGeneric interface {
+	types.SimpleName |
+		base.Address |
+		string
+}
+
+func queryNames[T namesGeneric](opts *NamesOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Names(&buffer); err != nil {
+	if err := opts.NamesBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleName]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Names implements the chifra names command.
+func (opts *NamesOptions) Names() ([]types.SimpleName, *types.MetaData, error) {
+	return queryNames[types.SimpleName](opts)
+}
+
+// NamesAddr implements the chifra names --addr command.
+func (opts *NamesOptions) NamesAddr() ([]base.Address, *types.MetaData, error) {
+	return queryNames[base.Address](opts)
+}
+
+// NamesTags implements the chifra names --tags command.
+func (opts *NamesOptions) NamesTags() ([]string, *types.MetaData, error) {
+	return queryNames[string](opts)
 }
 
 // No enums

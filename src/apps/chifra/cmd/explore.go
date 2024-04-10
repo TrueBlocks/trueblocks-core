@@ -25,7 +25,6 @@ import (
 // exploreCmd represents the explore command
 var exploreCmd = &cobra.Command{
 	Use:     usageExplore,
-	Short:   shortExplore,
 	Long:    longExplore,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("explore", func() *globals.GlobalOptions {
@@ -41,8 +40,6 @@ const usageExplore = `explore [flags] [terms...]
 
 Arguments:
   terms - one or more address, name, block, or transaction identifier`
-
-const shortExplore = "open a local or remote explorer for one or more addresses, blocks, or transactions"
 
 const longExplore = `Purpose:
   Open a local or remote explorer for one or more addresses, blocks, or transactions.`
@@ -60,8 +57,8 @@ func init() {
 
 	exploreCmd.Flags().SortFlags = false
 
-	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Local, "local", "l", false, "open the local TrueBlocks explorer")
-	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Google, "google", "g", false, "search google excluding popular blockchain explorers")
+	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Local, "local", "l", false, `open the local TrueBlocks explorer`)
+	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Google, "google", "g", false, `search google excluding popular blockchain explorers`)
 	globals.InitGlobals("explore", exploreCmd, &explorePkg.GetOptions().Globals, capabilities)
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))

@@ -39,8 +39,8 @@ func (opts *AbisOptions) String() string {
 	return string(bytes)
 }
 
-// Abis implements the chifra abis command for the SDK.
-func (opts *AbisOptions) Abis(w io.Writer) error {
+// AbisBytes implements the chifra abis command for the SDK.
+func (opts *AbisOptions) AbisBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting abis struct to URL values: %v", err)
@@ -49,7 +49,7 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 	return abis.Abis(w, values)
 }
 
-// abisParseFunc handles specail cases such as structs and enums (if any).
+// abisParseFunc handles special cases such as structs and enums (if any).
 func abisParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*AbisOptions)
@@ -79,18 +79,27 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 	return &opts, nil
 }
 
-func (opts *AbisOptions) Query() ([]bool, *types.MetaData, error) {
+type abisGeneric interface {
+	types.SimpleFunction
+}
+
+func queryAbis[T abisGeneric](opts *AbisOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Abis(&buffer); err != nil {
+	if err := opts.AbisBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Abis implements the chifra abis command.
+func (opts *AbisOptions) Abis() ([]types.SimpleFunction, *types.MetaData, error) {
+	return queryAbis[types.SimpleFunction](opts)
 }
 
 // No enums

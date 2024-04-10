@@ -38,8 +38,8 @@ func (opts *InitOptions) String() string {
 	return string(bytes)
 }
 
-// Init implements the chifra init command for the SDK.
-func (opts *InitOptions) Init(w io.Writer) error {
+// InitBytes implements the chifra init command for the SDK.
+func (opts *InitOptions) InitBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting init struct to URL values: %v", err)
@@ -48,7 +48,7 @@ func (opts *InitOptions) Init(w io.Writer) error {
 	return initPkg.Init(w, values)
 }
 
-// initParseFunc handles specail cases such as structs and enums (if any).
+// initParseFunc handles special cases such as structs and enums (if any).
 func initParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*InitOptions)
@@ -73,18 +73,27 @@ func GetInitOptions(args []string) (*InitOptions, error) {
 	return &opts, nil
 }
 
-func (opts *InitOptions) Query() ([]bool, *types.MetaData, error) {
+type initGeneric interface {
+	bool
+}
+
+func queryInit[T initGeneric](opts *InitOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Init(&buffer); err != nil {
+	if err := opts.InitBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// InitAll implements the chifra init --all command.
+func (opts *InitOptions) InitAll() ([]bool, *types.MetaData, error) {
+	return queryInit[bool](opts)
 }
 
 // No enums

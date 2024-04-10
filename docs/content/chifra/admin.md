@@ -1,6 +1,6 @@
 ---
 title: "Admin"
-description: ""
+description: "Control the scraper and build the index"
 lead: ""
 lastmod:
   - :git
@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 47000
+weight: 41000
 toc: true
 ---
 
@@ -60,7 +60,6 @@ Links:
 
 - [api docs](/api/#operation/admin-config)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/config.csv)
 
 ## chifra status
 
@@ -112,7 +111,6 @@ Links:
 
 - [api docs](/api/#operation/admin-status)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/status)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/cacheStatus.csv)
 
 ## chifra daemon
 
@@ -164,7 +162,6 @@ Links:
 
 - no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
-- no tests for this command
 
 ### further information
 
@@ -227,7 +224,6 @@ Links:
 
 - [api docs](/api/#operation/admin-scrape)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/blockScrape.csv)
 
 ### configuration
 
@@ -357,7 +353,6 @@ Links:
 
 - [api docs](/api/#operation/admin-chunks)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/chunkMan.csv)
 
 ## chifra init
 
@@ -412,6 +407,5 @@ Links:
 
 - [api docs](/api/#operation/admin-init)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/init.csv)
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*
