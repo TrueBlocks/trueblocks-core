@@ -86,11 +86,6 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
                 return goldPath;
             }
             break;
-        case 'i':
-            if (fieldName % "isCmd") {
-                return bool_2_Str(isCmd);
-            }
-            break;
         case 'm':
             if (fieldName % "mode") {
                 return mode;
@@ -178,12 +173,6 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
         case 'g':
             if (fieldName % "goldPath") {
                 goldPath = fieldValue;
-                return true;
-            }
-            break;
-        case 'i':
-            if (fieldName % "isCmd") {
-                isCmd = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -290,7 +279,6 @@ void CTestCase::registerClass(void) {
     ADD_FIELD(CTestCase, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTestCase, "test_id", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CTestCase, "test_id");
-    ADD_FIELD(CTestCase, "isCmd", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTestCase, "schema");
@@ -351,39 +339,6 @@ const char* STR_DISPLAY_TESTCASE = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
-CStringArray commands = {"COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv", "TOUCHFILE|touch", "RESET"};
-//-----------------------------------------------------------------------
-bool prepareBuiltIn(string_q& options) {
-    for (auto cmd : commands) {
-        string_q match = nextTokenClear(cmd, '|');
-        if (startsWith(options, match)) {
-            bool debug = false;
-            ostringstream os;
-            if (match == "RESET") {
-                cleanFolder(cacheFolder_tmp);
-                options = "";
-                if (debug)
-                    os << "Cleanup" << endl;
-
-            } else {
-                if (debug)
-                    os << "pwd ; echo \"" << substitute(options, "\"", "'")
-                       << "\" ; find ./testing_data/ -exec ls -l {} ';'; ";
-                os << options;
-                if (debug)
-                    os << " ; find ./testing_data/ -exec ls -l {} ';' ; ";
-                options = substitute(os.str(), "$CACHE/", cacheFolder);
-                replaceAll(options, match, cmd);
-            }
-            if (debug)
-                cerr << os.str() << endl;
-            return true;
-        }
-    }
-    return false;
-}
-
-//-----------------------------------------------------------------------
 CTestCase::CTestCase(const string_q& line, uint32_t id) {
     origLine = line;
 
@@ -405,20 +360,18 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     }
 
     path = nextTokenClear(tool, '/');
-    if (endsWith(path, "lib"))
-        path = "libs/" + path;
-
-    isCmd = contains(path, "tools") || contains(path, "apps") || contains(path, "go-apps") || contains(path, "libs");
-    if (isCmd)
-        isCmd = !contains(path, "dev_tools") && !contains(tool, "chifra");
     fileName = tool + "_" + name + ".txt";
     replaceAll(post, "n", "");
     replaceAll(post, "y", postProcessor);
     if (!post.empty() && !contains(post, "gojq") && post != "jq ." && post != "post")
         LOG_WARN("test post processor (", post, ") has unexpected value. Is it correct?");
 
-    builtin = prepareBuiltIn(options);
-    if (!builtin) {
+    if (startsWith(options, "RESET")) {
+        cleanFolder(cacheFolder_tmp);
+        options = "";
+        builtin = true;
+    } else {
+        builtin = false;
         replaceAll(options, " = ", "=");
         replaceAll(options, "= ", "=");
         replaceAll(options, " & ", "&");

@@ -40,9 +40,7 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (false) {
-            // do nothing -- make auto code generation easier
-        } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
+        if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             if (!confirmEnum("mode", mode, arg))
                 return false;
         } else if (arg == "-m" || arg == "--mode") {

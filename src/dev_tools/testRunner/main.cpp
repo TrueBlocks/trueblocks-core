@@ -1,15 +1,7 @@
-/*-------------------------------------------------------------------------------------------
- * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
- *
- * This program is free software: you may redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version. This program is
- * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see http://www.gnu.org/licenses/.
- *-------------------------------------------------------------------------------------------*/
+// Support --mode both|cmd|api
+// Make sure both gold and working folders exist
+// Must read .env files if present and put them in the environment
+
 #include "utillib.h"
 #include "options.h"
 #include "testcase.h"
@@ -124,8 +116,7 @@ int main(int argc, const char* argv[]) {
     // Write performance data to a file and results to the screen
     perf << total.Format(perf_fmt) << endl;
     cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
-    string_q perfFile =
-        rootConfigs + string_q("perf/performance") + (total.allPassed ? "" : "_failed") + ".csv";
+    string_q perfFile = rootConfigs + string_q("perf/performance") + (total.allPassed ? "" : "_failed") + ".csv";
     appendToAsciiFile(perfFile, perf.str());
     appendToAsciiFile(rootConfigs + "perf/performance_slow.csv", slow.str());
 
@@ -139,7 +130,8 @@ int main(int argc, const char* argv[]) {
                 ostringstream copyCmd;
                 copyCmd << "cp -f \"";
                 copyCmd << rootConfigs + file << "\" \"" << copyPath << "\"";
-                if (system(copyCmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+                if (system(copyCmd.str().c_str())) {
+                }  // Don't remove cruft. Silences compiler warnings
             }
         }
     }
@@ -152,31 +144,19 @@ int main(int argc, const char* argv[]) {
     return total.allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-//-----------------------------------------------------------------------
-void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int whichTest) {
+void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
+                       int whichTest) {
     bool cmdTests = whichTest & CMD;
 
     CMeasure measure(testPath, testName, (cmdTests ? "cmd" : "api"));
     cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
 
     for (auto test : testArray) {
-        if (verbose)
-            cerr << string_q(120, '=') << endl << test << endl << string_q(120, '=') << endl;
         test.prepareTest(cmdTests);
         if ((!cmdTests && test.mode == "cmd") || (cmdTests && test.mode == "api")) {
             // do nothing - wrong mode
-
-        } else if (!folderExists(test.goldPath)) {
-            LOG_WARN("Folder ", test.goldPath, " not found.");
-            return;
-
-        } else if (!folderExists(test.workPath)) {
-            LOG_WARN("Folder " + test.workPath + " not found.");
-            return;
-
         } else {
             ostringstream cmd;
-
             CStringArray fileLines;
             string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
             if (fileExists(envFile))
@@ -195,16 +175,11 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 string_q envs = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
                 string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
 
-                string_q exe;
-                if (contains(test.path, "libs")) {
-                    exe = "test/" + test.tool;
-                    if (test.isCmd)
-                        exe = getPathToCommands(exe);
-
-                } else {
-                    exe = test.tool;
-                    if (test.isCmd)
-                        exe = "chifra " + test.route;
+                bool isCmd =
+                    (contains(test.path, "tools") || contains(test.path, "apps")) && !contains(test.tool, "chifra");
+                string_q exe = test.tool;
+                if (isCmd) {
+                    exe = "chifra " + test.route;
                 }
 
                 string_q fullCmd = exe + " " + test.options;
@@ -251,8 +226,8 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 prepender << test.route << "?" << test.options << endl;
             }
 
-            // To run the test, we cd into the gold path (so we find the test files), but we send results to working
-            // folder
+            // To run the test, we cd into the gold path (so we find the test
+            // files), but we send results to working folder
             string_q goldApiPath = substitute(test.goldPath, "/api_tests", "");
             string_q outputFile = test.getOutputFile(whichTest == API, goldApiPath);
             string_q theCmd = "cd \"" + goldApiPath + "\" ; " + cmd.str();
@@ -264,9 +239,9 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                            "/api_tests", "");
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
-            if (test.mode == "both" || contains(test.tool, "lib"))
-                measure.nTests++;
-            if (system(theCmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+            measure.nTests++;
+            if (system(theCmd.c_str())) {
+            }  // Don't remove cruft. Silences compiler warnings
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
             forEveryFileInFolder(test.goldPath + "*", postCleanup, NULL);
@@ -291,8 +266,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             stringToAsciiFile(test.workPath + test.fileName, contents);
 
             if (test.builtin) {
-                if (test.mode == "both" || contains(test.tool, "lib"))
-                    measure.nPassed++;
+                measure.nPassed++;
                 continue;
             }
 
@@ -324,8 +298,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 
             string_q result = "ok";
             if (!newText.empty() && newText == oldText) {
-                if (test.mode == "both" || contains(test.tool, "lib"))
-                    measure.nPassed++;
+                measure.nPassed++;
 
             } else {
                 ostringstream os;

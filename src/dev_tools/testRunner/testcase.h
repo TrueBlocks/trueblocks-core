@@ -40,7 +40,6 @@ class CTestCase : public CBaseNode {
     string_q workPath;
     string_q fileName;
     uint32_t test_id;
-    bool isCmd;
 
   public:
     CTestCase(void);
@@ -120,7 +119,6 @@ inline void CTestCase::initialize(void) {
     workPath = "";
     fileName = "";
     test_id = 0;
-    isCmd = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -146,7 +144,6 @@ inline void CTestCase::duplicate(const CTestCase& te) {
     workPath = te.workPath;
     fileName = te.fileName;
     test_id = te.test_id;
-    isCmd = te.isCmd;
 
     // EXISTING_CODE
     // EXISTING_CODE
