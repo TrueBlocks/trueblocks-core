@@ -1604,7 +1604,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 - We completed partial ports for `chifra blocks`, `chifra transactions`, and `chifra traces`. In some cases, this changed the format of the output (especially for JSON output). In every case, we think the data has been improved.
 - Implemented `--articulate` across many tools in GoLang. (Thanks Dawid!)
 - We made significant improvements to the documentation including more examples for the API docs and cross links to data models from tools producing the same.
-- We prepared all tools for using the GoLang `--cache` options (caching is not yet enabled in the GoLang code). (Thanks Dawid!)
+- We prepared all tools for using the GoLang `--cache` options (caching is not yet yet enabled in the GoLang code). (Thanks Dawid!)
 - Better support for streaming output to various formats (including preliminary support for `.xlsx`).
 - Begun improvements for more useful and flexible connections to the RPC.
 
@@ -1614,7 +1614,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
   - Changed `abi_source` to `abiSource`.
   - Changed `input_dicts` to `inputDicts`.
   - Changed `output_dicts` to `outputDicts`.
-  - Removed `input_names` and `output_names`. (These may be added back in the future.)
+  - Removed `input_names` and `output_names`. (These may be added back in in the future.)
 - `Reconciliation` data model:
   - Changed `prevBlock` to `prevAppBlk`.
   - Changed `prevBlkBal` to `prevBal`.
@@ -1747,7 +1747,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 - Removed `--tsx` option as unused.
 - Removed `--dump` option as unused.
 - Added `--sdk` option to output Python and Typescript SDKs.
-- Separation of `CParameter` class from `CMember` class making publically presented `CParamater` much simpler since most of the complications came from that class's use in makeClass.
+- Separation of `CParameter` class from `CMember` class making publically presented `CParamater` much simple since most of the complications came from that class's use in makeClass.
 
 **testRunner**
 
@@ -1793,7 +1793,7 @@ With this release, we made a lot of improvements to the help file and the code. 
 
 **chifra traces**
 
-- An attempt was made to improve the data exported from this tool, as it was quite confused previously. There may be unforeseen breaking changes to the exported data.
+- An attempt was made to improve the data exported from this tool, as it was quite confused previously. There may be unforeseen breaking changes to the expotred data.
 - Removed unused (and previously unimplemented) `--statediff` option.
 - Partial port to GoLang. See note above.
 

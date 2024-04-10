@@ -28,7 +28,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------------
 CRuntimeClass CBaseNode::classCBaseNode;
 static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL);
-vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have been registered
+vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have beebn registered
 
 //--------------------------------------------------------------------------------
 CBaseNode::CBaseNode(void) {
@@ -669,7 +669,7 @@ string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node) {
 string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void* data) {
     string_q chunk = fmtOut;
     if (!contains(fmtOut, "[")) {
-        // There are no more tokens. Return the last chunk and empty out the format
+        // There are no more tokens.  Return the last chunk and empty out the format
         fmtOut = "";
         return chunk;
     }
@@ -684,7 +684,7 @@ string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void* data) {
     }
 
     // We've hit a token, toss the start token, look for a field and toss the last token
-    // leaving the remainder of the format in fmtOut. A field is found if we find a pair
+    // leaving the remainder of the format in fmtOut.  A field is found if we find a pair
     // of squigglies).  Save text inside the start token and outside the field in pre and post
     ASSERT(startsWith(fmtOut, '['));
 
