@@ -6,32 +6,54 @@ import (
 )
 
 type Option struct {
-	Num            string   `json:"num" csv:"num"`
-	Folder         string   `json:"folder" csv:"folder"`
-	Tags           string   `json:"tags" csv:"tags"`
-	ApiRoute       string   `json:"api_route" csv:"api_route"`
-	Tool           string   `json:"tool" csv:"tool"`
-	LongName       string   `json:"longName" csv:"longName"`
-	HotKey         string   `json:"hotKey" csv:"hotKey"`
-	DefVal         string   `json:"def_val" csv:"def_val"`
-	IsRequired     bool     `json:"is_required" csv:"is_required"`
-	IsCustomizable bool     `json:"is_customizable" csv:"is_customizable"`
-	IsVisible      bool     `json:"is_visible" csv:"is_visible"`
-	IsVisibleDocs  bool     `json:"is_visible_docs" csv:"is_visible_docs"`
-	Generate       string   `json:"generate" csv:"generate"`
-	OptionType     string   `json:"option_type" csv:"option_type"`
-	DataType       string   `json:"data_type" csv:"data_type"`
-	Description    string   `json:"description" csv:"description"`
-	IsArray        bool     `json:"is_array" csv:"is_array"`
-	IsEnum         bool     `json:"is_enum" csv:"is_enum"`
-	Enums          []string `json:"enums" csv:"enums"`
-	DefaultEnum    string   `json:"default_enum" csv:"default_enum"`
-	GoName         string   `json:"go_name" csv:"go_name"`
-	GoType         string   `json:"go_type" csv:"go_type"`
-	GoSdkName      string   `json:"go_sdk_name" csv:"go_sdk_name"`
-	GoSdkType      string   `json:"go_sdk_type" csv:"go_sdk_type"`
-	GoOptionsType  string   `json:"go_options_type" csv:"go_options_type"`
-	cmdPtr         *Command `json:"-" csv:"-"`
+	Num           int      `json:"num" csv:"num"`
+	Folder        string   `json:"folder" csv:"folder"`
+	Group         string   `json:"group" csv:"group"`
+	Route         string   `json:"route" csv:"route"`
+	Tool          string   `json:"tool" csv:"tool"`
+	LongName      string   `json:"longName" csv:"longName"`
+	HotKey        string   `json:"hotKey" csv:"hotKey"`
+	DefVal        string   `json:"def_val" csv:"def_val"`
+	Attributes    string   `json:"attributes" csv:"attributes"`
+	OptionType    string   `json:"option_type" csv:"option_type"`
+	DataType      string   `json:"data_type" csv:"data_type"`
+	ReturnType    string   `json:"return_type,omitempty" csv:"return_type"`
+	Summary       string   `json:"summary,omitempty" csv:"summary"`
+	Usage         string   `json:"usage,omitempty" csv:"usage"`
+	Capabilities  string   `json:"capabilities,omitempty" csv:"capabilities"`
+	Description   string   `json:"description,omitempty" csv:"description"`
+	Enums         []string `json:"enums,omitempty"`
+	DefaultEnum   string   `json:"default_enum,omitempty"`
+	GoName        string   `json:"go_name"`
+	GoType        string   `json:"go_type"`
+	GoSdkName     string   `json:"go_sdk_name"`
+	GoSdkType     string   `json:"go_sdk_type"`
+	GoOptionsType string   `json:"go_options_type"`
+	cmdPtr        *Command `json:"-" csv:"-"`
+}
+
+func (op *Option) IsRequired() bool {
+	return strings.Contains(op.Attributes, "required")
+}
+
+func (op *Option) IsVisible() bool {
+	return strings.Contains(op.Attributes, "visible")
+}
+
+func (op *Option) IsVisibleDocs() bool {
+	return strings.Contains(op.Attributes, "docs")
+}
+
+func (op *Option) IsConfig() bool {
+	return strings.Contains(op.Attributes, "config")
+}
+
+func (op *Option) IsEnum() bool {
+	return strings.Contains(op.DataType, "enum")
+}
+
+func (op *Option) IsArray() bool {
+	return strings.Contains(op.DataType, "list")
 }
 
 func (op Option) String() string {
@@ -39,29 +61,54 @@ func (op Option) String() string {
 	return string(bytes)
 }
 
-func (op *Option) CamelCase() string {
-	return CamelCase(op.LongName)
+func (op *Option) EnumChoices() string {
+	ret := "One of "
+	if op.IsArray() {
+		ret = "One or more of "
+	}
+	return ret + "[ " + strings.Join(op.Enums, " | ") + " ]"
 }
 
 func (op Option) Validate() bool {
-	return op.Tags != "Dev"
+	return op.LongName != "--------"
 }
 
 func readCmdOption(op *Option, data *any) (bool, error) {
+	op.Group = strings.Trim(op.Group, wss)
+	op.Folder = strings.Trim(op.Folder, wss)
+	op.Route = strings.Trim(op.Route, wss)
+	op.Tool = strings.Trim(op.Tool, wss)
+	op.LongName = strings.Trim(op.LongName, wss)
+	op.HotKey = strings.Trim(op.HotKey, wss)
+	op.DefVal = strings.Trim(op.DefVal, wss)
+	op.Attributes = strings.Trim(op.Attributes, wss)
+	op.OptionType = strings.Trim(op.OptionType, wss)
+	op.DataType = strings.Trim(op.DataType, wss)
+	op.ReturnType = strings.Trim(op.ReturnType, wss)
+	op.Summary = strings.Trim(op.Summary, wss)
+	op.Usage = strings.Trim(op.Usage, wss)
+	op.Capabilities = strings.Trim(op.Capabilities, wss)
+	op.Description = strings.Trim(op.Description, wss)
+
 	op.Description = strings.ReplaceAll(op.Description, "&#44;", ",")
+	op.Description = strings.ReplaceAll(op.Description, "&#39;", "'")
+	op.Description = strings.ReplaceAll(op.Description, "`", "")
+
+	op.DefVal = strings.Replace(op.DefVal, "NOPOS", "utils.NOPOS", -1)
+
 	return true, nil
 }
 
 func (op *Option) IsHidden() bool {
-	return !op.IsVisibleDocs ||
-		(!op.IsRequired && !op.IsCustomizable && !op.IsVisible && op.IsVisibleDocs)
+	return !op.IsVisibleDocs() ||
+		(!op.IsRequired() && !op.IsVisible() && op.IsVisibleDocs())
 }
 
 func (op *Option) toGoName() string {
 	ret := op.LongName
 	if len(op.LongName) >= 2 {
 		ret = GoName(op.LongName)
-		if op.Generate == "config" {
+		if op.IsConfig() {
 			ret = "Settings." + ret
 		}
 	}
@@ -155,7 +202,7 @@ func (op *Option) toGoSdkType() string {
 }
 
 func (op *Option) JsonTag() string {
-	return "`json:\"" + op.CamelCase() + ",omitempty\"`"
+	return "`json:\"" + CamelCase(op.LongName) + ",omitempty\"`"
 }
 
 func (op *Option) PyHotKey() string {
@@ -169,12 +216,20 @@ func (op *Option) CmdDefault() string {
 	return strings.Replace(op.Default(), "utils.NOPOS", "0", -1)
 }
 
+func (op *Option) IsFlag() bool {
+	return op.OptionType == "flag" || op.OptionType == "switch"
+}
+
+func (op *Option) IsAlias() bool {
+	return op.OptionType == "alias"
+}
+
 func (op *Option) IsPositional() bool {
 	return op.OptionType == "positional"
 }
 
 func (op *Option) Default() string {
-	if op.IsArray || strings.HasPrefix(op.DataType, "list") {
+	if op.IsArray() {
 		return "nil"
 	}
 	if len(op.DefVal) == 0 {
@@ -199,27 +254,27 @@ func (op *Option) Default() string {
 }
 
 func (op *Option) EnumName() string {
-	if len(op.ApiRoute) < 2 {
+	if len(op.Route) < 2 {
 		return ""
 	}
-	return strings.ToUpper(op.ApiRoute[0:1]) + op.ApiRoute[1:] + op.GoName
+	return strings.ToUpper(op.Route[0:1]) + op.Route[1:] + op.GoName
 }
 
 func (op *Option) EnumTag() string {
-	if len(op.ApiRoute) < 2 || len(op.GoSdkName) < 2 {
+	if len(op.Route) < 2 || len(op.GoSdkName) < 2 {
 		return ""
 	}
-	return strings.ToUpper(op.ApiRoute[0:1]) + op.GoSdkName[0:1]
+	return strings.ToUpper(op.Route[0:1]) + op.GoSdkName[0:1]
 }
 
 func (op *Option) EnumNone() string {
-	if len(op.ApiRoute) < 3 || len(op.GoSdkName) < 2 {
+	if len(op.Route) < 3 || len(op.GoSdkName) < 2 {
 		return ""
 	}
 	tag := op.EnumTag()
 	if tag == "CM" {
 		// name clash otherwise
-		tag = strings.ToUpper(op.ApiRoute[0:2]) + op.GoSdkName[0:1]
+		tag = strings.ToUpper(op.Route[0:2]) + op.GoSdkName[0:1]
 	}
 	return "No" + tag
 }
@@ -232,7 +287,7 @@ func (op *Option) EnumDef() string {
 	for i, e := range op.Enums {
 		token := tag + strings.ToUpper(e[0:1]) + e[1:]
 		if e == "some" {
-			if op.ApiRoute == "state" {
+			if op.Route == "state" {
 				some = []string{"SPBalance", "SPProxy", "SPDeployed", "SPAccttype"}
 			}
 			token += "=" + strings.Join(some, "|")
@@ -435,7 +490,7 @@ func (op *Option) DocType() string {
 }
 
 func (op *Option) IsNullDefault2() bool {
-	return op.IsNullDefault() || op.Generate == "config"
+	return op.IsNullDefault() || op.IsConfig()
 }
 
 func (op *Option) IsNullDefault() bool {
@@ -451,7 +506,7 @@ func (op *Option) IsNullDefault() bool {
 
 // Enum1 for tag {{.Enum1}}
 func (op *Option) Enum1() string {
-	if !op.IsEnum {
+	if !op.IsEnum() {
 		return ""
 	}
 	tmplName := "enum1"
@@ -470,7 +525,7 @@ func (op *Option) Enum1() string {
 
 // Enum2 for tag {{.Enum2}}
 func (op *Option) Enum2() string {
-	if !op.IsEnum {
+	if !op.IsEnum() {
 		return ""
 	}
 	tmplName := "enum2"
@@ -535,7 +590,7 @@ func (op *Option) IsFloat() bool {
 }
 
 func (op *Option) TestLog() string {
-	if op.Generate == "config" {
+	if op.IsConfig() {
 		return ""
 	}
 	tmplName := "testLogs"
@@ -571,26 +626,6 @@ func (op *Option) TestLog() string {
 	return op.executeTemplate(tmplName, tmpl)
 }
 
-// SdkField for tag {{.SdkField}}}
-func (op *Option) SdkField() string {
-	tmplName := "sdkField"
-	tmpl := `	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
-`
-	return op.executeTemplate(tmplName, tmpl)
-}
-
-// SetOption for tag {{.SetOption}}
-func (op *Option) SetOption() string {
-	ret := ""
-	if !op.IsPositional() && op.OptionType != "alias" {
-		tmplName := "setOptions"
-		tmpl := `[{ROUTE}]Cmd.Flags().{{.CobraType}}VarP(&[{ROUTE}]Pkg.GetOptions().{{.GoName}}, "{{.LongName}}", "{{.HotKey}}", {{.CmdDefault}}, {{.CobraDescription}})`
-		ret = op.executeTemplate(tmplName, tmpl)
-	}
-	ret = strings.ReplaceAll(ret, "[{ROUTE}]", op.ApiRoute)
-	return ret
-}
-
 func (op *Option) CobraType() string {
 	m := map[string]string{
 		"<address>":    "String",
@@ -606,22 +641,6 @@ func (op *Option) CobraType() string {
 		"list<topic>":  "StringSlice",
 	}
 	return m[op.DataType]
-}
-
-func (op *Option) CobraDescription() string {
-	d := op.Description
-	if op.IsHidden() {
-		d += " (hidden)"
-	}
-	if op.IsEnum {
-		e := "One of "
-		if op.IsArray {
-			e = "One or more of "
-		}
-		e += "[ " + strings.Join(op.Enums, " | ") + " ]"
-		return "`" + d + "\n" + e + "`"
-	}
-	return "\"" + d + "\""
 }
 
 func (op *Option) DefaultApi() string {
@@ -683,15 +702,15 @@ func (op *Option) DescrCaps() string {
 
 func (op *Option) RequestOpt() string {
 	var ret string
-	if op.Generate == "config" {
+	if op.IsConfig() {
 		tmplName := "requestOpts1"
-		tmpl := `	case "{{.CamelCase}}":
+		tmpl := `	case "{{toCamel .LongName}}":
 		configs[key] = value[0]`
 		ret = op.executeTemplate(tmplName, tmpl)
 	} else {
 		if strings.HasPrefix(op.DataType, "list") {
 			tmplName := "requestOpts2"
-			tmpl := `		case "{{.CamelCase}}":
+			tmpl := `		case "{{toCamel .LongName}}":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.{{.GoName}} = append(opts.{{.GoName}}, s...)
@@ -699,22 +718,22 @@ func (op *Option) RequestOpt() string {
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else if op.DataType == "<boolean>" {
 			tmplName := "requestOpts3"
-			tmpl := `		case "{{.CamelCase}}":
+			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = true`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
 			tmplName := "requestOpts4"
-			tmpl := `		case "{{.CamelCase}}":
+			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = globals.ToUint64(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else if op.DataType == "<double>" {
 			tmplName := "requestOpts5"
-			tmpl := `		case "{{.CamelCase}}":
+			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = globals.ToFloat64(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else {
 			tmplName := "requestOpts6"
-			tmpl := `		case "{{.CamelCase}}":
+			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = value[0]`
 			ret = op.executeTemplate(tmplName, tmpl)
 		}
@@ -724,4 +743,42 @@ func (op *Option) RequestOpt() string {
 
 func (op *Option) executeTemplate(name, tmplCode string) string {
 	return executeTemplate(op, "option", name, tmplCode)
+}
+
+func (op *Option) RetType() string {
+	v := op.ReturnType
+	if v != "string" && v != "base.Address" && v != "bool" {
+		v = "types.Simple" + FirstUpper(v)
+	}
+	return v
+}
+
+func (op *Option) ToolTurd() string {
+	if op.Tool == "" {
+		return ""
+	}
+	return "--" + Lower(op.Tool) + " "
+}
+
+func (op *Option) SdkEndpoint() string {
+	if len(op.ReturnType) == 0 {
+		return ""
+	}
+
+	longName := FirstUpper(op.LongName)
+	if op.OptionType == "positional" {
+		longName = ""
+	}
+	opp := Option{
+		Route:      FirstUpper(op.Route),
+		Tool:       longName,
+		ReturnType: op.RetType(),
+	}
+	tmplName := "returnTypes"
+	tmpl := `	// {{.Route}}{{.Tool}} implements the chifra {{toLower .Route}} {{.ToolTurd}}command.
+func (opts *{{.Route}}Options) {{.Route}}{{.Tool}}() ([]{{.ReturnType}}, *types.MetaData, error) {
+	return query{{.Route}}[{{.ReturnType}}](opts)
+}
+`
+	return opp.executeTemplate(tmplName, tmpl)
 }

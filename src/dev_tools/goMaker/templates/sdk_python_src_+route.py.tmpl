@@ -10,7 +10,7 @@ from . import session
 {{.Route}}Pos = "{{.FirstPositional}}"
 {{.Route}}Fmt = "json"
 {{.Route}}Opts = {
-{{range .Options}}{{if not .IsHidden}}{{if not .IsPositional}}    "{{.CamelCase}}": {"hotkey": "{{.PyHotKey}}", "type": "{{.OptionType}}"},
+{{range .Options}}{{if not .IsHidden}}{{if not .IsPositional}}    "{{toCamel .LongName}}": {"hotkey": "{{.PyHotKey}}", "type": "{{.OptionType}}"},
 {{end}}{{end}}{{end}}{{.PyGlobals}}
 }
 

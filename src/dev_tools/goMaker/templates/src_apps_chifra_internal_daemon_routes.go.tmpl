@@ -12,7 +12,7 @@ import (
 	// EXISTING_CODE
 	// EXISTING_CODE
 
-{{range .Commands}}{{if ne .Lower "daemon"}}{{if ne .Lower ""}}	{{.Lower}}Pkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/{{.Lower}}"
+{{range .Commands}}{{if ne .Route "daemon"}}{{if ne .Route ""}}	{{toLower .Route}}Pkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/{{toLower .Route}}"
 {{end}}{{end}}{{end}}
 )
 
@@ -25,8 +25,8 @@ type Route struct {
 }
 
 var routes = []Route{
-{{range .Commands}}{{if ne .Lower "daemon"}}{{if ne .Lower ""}}	{"Route{{.Proper}}", "GET", "/{{.Lower}}", func(w http.ResponseWriter, r *http.Request) {
-		if err := {{.Lower}}Pkg.Serve{{.Proper}}(w, r); err != nil {
+{{range .Commands}}{{if ne .Route "daemon"}}{{if ne .Route ""}}	{"Route{{toProper .Route}}", "GET", "/{{toLower .Route}}", func(w http.ResponseWriter, r *http.Request) {
+		if err := {{toLower .Route}}Pkg.Serve{{toProper .Route}}(w, r); err != nil {
 			RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}},

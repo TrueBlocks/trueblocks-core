@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	codeBase, err := types.LoadDefinitions()
+	codeBase, err := types.LoadCodebase()
 	if err != nil {
 		logger.Error(err)
 		os.Exit(1)
@@ -54,8 +54,7 @@ var cbTemplates = []types.Generator{
 	{
 		Against: "groups",
 		Templates: []string{
-			"docs_content_chifra_group.md.tmpl",
-			"docs_content_data-model_group.md.tmpl",
+			"docs_content_reason_group.md.tmpl",
 		},
 	},
 }

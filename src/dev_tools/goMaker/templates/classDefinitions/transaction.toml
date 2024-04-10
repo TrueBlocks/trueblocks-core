@@ -1,5 +1,5 @@
 [settings]
-    class = "CTransaction"
+    class = "Transaction"
     contained_by = "block"
     doc_group = "02-Chain Data"
     doc_descr = "transaction data as returned from the RPC (with slight enhancements)"

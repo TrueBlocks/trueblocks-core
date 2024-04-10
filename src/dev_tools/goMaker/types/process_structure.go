@@ -22,14 +22,17 @@ func (s *Structure) ProcessFile(source string) error {
 		return nil
 	}
 
-	dest := convertToDestPath(source, "", s.Name(), "")
+	dest := convertToDestPath(source, "", s.Name(), "", "")
 	tmpl := file.AsciiFileToString(source)
 	result := s.executeTemplate(source, tmpl)
 	dest = strings.Replace(dest, "/src/apps/chifra/pkg/types/", "/src/apps/chifra/pkg/types/types_", -1)
-	return codeWriter.WriteCode(dest, result)
+	_, err := codeWriter.WriteCode(dest, result)
+	return err
 }
 
 func readStructure(st *Structure, data *any) (bool, error) {
 	st.DocDescr = strings.ReplaceAll(st.DocDescr, "&#44;", ",")
+	st.ProducedBy = strings.Replace(st.ProducedBy, " ", "", -1)
+	st.Producers = strings.Split(st.ProducedBy, ",")
 	return true, nil
 }

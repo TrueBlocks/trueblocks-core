@@ -12,20 +12,20 @@ import (
 	"io"
 	"net/url"
 
-	{{.Pkg}} "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/{{.Lower}}"
+	{{.Pkg}} "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/{{toLower .Route}}"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// {{.Proper}} provides an interface to the command line chifra {{.Lower}} through the SDK.
-func {{.Proper}}(w io.Writer, values url.Values) error {
+// {{toProper .Route}} provides an interface to the command line chifra {{toLower .Route}} through the SDK.
+func {{toProper .Route}}(w io.Writer, values url.Values) error {
 	{{.Pkg}}.ResetOptions(sdkTestMode)
-	opts := {{.Pkg}}.{{.Proper}}FinishParseInternal(w, values)
-	outputHelpers.EnableCommand("{{.Lower}}", true)
+	opts := {{.Pkg}}.{{toProper .Route}}FinishParseInternal(w, values)
+	outputHelpers.EnableCommand("{{toLower .Route}}", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	outputHelpers.InitJsonWriterApi("{{.Lower}}", w, &opts.Globals)
-	err := opts.{{.Proper}}Internal()
-	outputHelpers.CloseJsonWriterIfNeededApi("{{.Lower}}", err, &opts.Globals)
+	outputHelpers.InitJsonWriterApi("{{toLower .Route}}", w, &opts.Globals)
+	err := opts.{{toProper .Route}}Internal()
+	outputHelpers.CloseJsonWriterIfNeededApi("{{toLower .Route}}", err, &opts.Globals)
 
 	return err
 }

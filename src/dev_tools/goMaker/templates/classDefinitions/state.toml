@@ -1,8 +1,8 @@
 [settings]
-    class = "CState"
+    class = "State"
     doc_group = "03-Chain State"
     doc_descr = "the state of an Ethereum account (EOA or smart contract) on-chain"
     doc_route = "303-state"
-    produced_by = "state"
+    produced_by = "export,state"
     cache_type = "cacheable"
     cache_by = "address,block"

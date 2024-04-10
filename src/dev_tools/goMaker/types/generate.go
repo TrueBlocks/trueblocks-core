@@ -24,9 +24,16 @@ func (cb *CodeBase) Generate(generators []Generator) {
 				}
 			}
 		case "groups":
-			for _, group := range cb.ModelList() {
-				for _, source := range gen.Templates {
-					if err := cb.ProcessGroupFile(source, group.GroupName()); err != nil {
+			for _, source := range gen.Templates {
+				for _, group := range cb.GroupList("") {
+					if err := cb.ProcessGroupFile(source, "readme", group.GroupName()); err != nil {
+						logger.Fatal(err)
+					}
+				}
+			}
+			for _, source := range gen.Templates {
+				for _, group := range cb.GroupList("") {
+					if err := cb.ProcessGroupFile(source, "model", group.GroupName()); err != nil {
 						logger.Fatal(err)
 					}
 				}
@@ -53,5 +60,6 @@ func (cb *CodeBase) Generate(generators []Generator) {
 		}
 	}
 
+	logger.Info()
 	logger.Info(colors.Green + "Done..." + strings.Repeat(" ", 120) + colors.Off + "\033[K")
 }
