@@ -3022,7 +3022,7 @@ components:
             $ref: "#/components/schemas/addrRecord"
           description: "the address record for these appearances"
         Appearances:
-          type: object
+          type: array
           items:
             $ref: "#/components/schemas/appRecord"
           description: "all the appearances for this address"

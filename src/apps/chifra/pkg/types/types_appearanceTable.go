@@ -29,15 +29,15 @@ type SimpleAppRecord struct {
 // EXISTING_CODE
 
 type RawAppearanceTable struct {
-	AddressRecord string `json:"AddressRecord"`
-	Appearances   string `json:"Appearances"`
+	AddressRecord string   `json:"AddressRecord"`
+	Appearances   []string `json:"Appearances"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleAppearanceTable struct {
-	AddressRecord SimpleAddrRecord    `json:"addressRecord"`
-	Appearances   []SimpleAppRecord   `json:"appearances"`
+	AddressRecord SimpleAddrRecord    `json:"AddressRecord"`
+	Appearances   []SimpleAppRecord   `json:"Appearances"`
 	raw           *RawAppearanceTable `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE

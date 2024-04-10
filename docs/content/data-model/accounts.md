@@ -68,10 +68,10 @@ The following commands produce and manage AppearanceTables:
 
 AppearanceTables consist of the following fields:
 
-| Field         | Description                              | Type       |
-| ------------- | ---------------------------------------- | ---------- |
-| AddressRecord | the address record for these appearances | AddrRecord |
-| Appearances   | all the appearances for this address     | AppRecord  |
+| Field         | Description                              | Type        |
+| ------------- | ---------------------------------------- | ----------- |
+| AddressRecord | the address record for these appearances | AddrRecord  |
+| Appearances   | all the appearances for this address     | AppRecord[] |
 
 ## Monitor
 
