@@ -117,7 +117,7 @@ func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[t
 	if path != index.ToBloomPath(path) {
 		return false, fmt.Errorf("should not happen in showAddressesBelongs")
 	}
-x
+
 	path = index.ToIndexPath(path)
 	if !file.FileExists(path) {
 		// Bloom files exist, but index files don't. It's okay.

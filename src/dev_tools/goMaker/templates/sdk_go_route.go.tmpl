@@ -63,7 +63,7 @@ type {{toCamel .Route}}Generic interface {
 	{{.ReturnTypes}}
 }
 
-func query{{toProper .Route}}[T {{toCamel .Route}}Generic](opts *{{toProper .Route}}Options) ([]T, *rpc.MetaData, error) {
+func query{{toProper .Route}}[T {{toCamel .Route}}Generic](opts *{{toProper .Route}}Options) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.{{toProper .Route}}Bytes(&buffer); err != nil {
 		logger.Fatal(err)

@@ -1,7 +1,7 @@
 [settings]
-    class = "CAppearanceTable"
+    class = "AppearanceTable"
     contained_by = "Monitor"
     doc_group = "01-Accounts"
     doc_descr = "an appearance table for an address"
-    doc_route = "103-appearanceTable"
+    doc_route = "121-appearanceTable"
     produced_by = "chunks"

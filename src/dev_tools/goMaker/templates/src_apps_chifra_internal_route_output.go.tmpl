@@ -33,7 +33,7 @@ func Serve{{toProper .Route}}(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// {{.Proper}}Internal handles the internal workings of the {{.Route}} command. Returns an error.
+// {{toProper .Route}}Internal handles the internal workings of the {{.Route}} command. Returns an error.
 func (opts *{{toProper .Route}}Options) {{toProper .Route}}Internal() error {
 	var err error
 	if err = opts.validate{{toProper .Route}}(); err != nil {

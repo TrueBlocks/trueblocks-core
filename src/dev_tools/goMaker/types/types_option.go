@@ -776,7 +776,7 @@ func (op *Option) SdkEndpoint() string {
 	}
 	tmplName := "returnTypes"
 	tmpl := `	// {{.Route}}{{.Tool}} implements the chifra {{toLower .Route}} {{.ToolTurd}}command.
-func (opts *{{.Route}}Options) {{.Route}}{{.Tool}}() ([]{{.ReturnType}}, *rpc.MetaData, error) {
+func (opts *{{.Route}}Options) {{.Route}}{{.Tool}}() ([]{{.ReturnType}}, *types.MetaData, error) {
 	return query{{.Route}}[{{.ReturnType}}](opts)
 }
 `

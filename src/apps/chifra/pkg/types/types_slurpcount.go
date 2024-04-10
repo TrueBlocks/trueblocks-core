@@ -9,7 +9,11 @@
 package types
 
 // EXISTING_CODE
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import (
+	"encoding/json"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
 
 // EXISTING_CODE
 
@@ -26,6 +30,11 @@ type SimpleSlurpCount struct {
 	raw     *RawSlurpCount `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *SimpleSlurpCount) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleSlurpCount) Raw() *RawSlurpCount {

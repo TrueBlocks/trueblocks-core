@@ -58,21 +58,6 @@ Appearances consist of the following fields:
 | timestamp        | the timestamp for this appearance                       | timestamp |
 | date             | the timestamp as a date (calculated)                    | datetime  |
 
-## AppearanceTable
-
-
-
-The following commands produce and manage AppearanceTables:
-
-- [chifra chunks](/chifra/admin/#chifra-chunks)
-
-AppearanceTables consist of the following fields:
-
-| Field         | Description                              | Type        |
-| ------------- | ---------------------------------------- | ----------- |
-| AddressRecord | the address record for these appearances | AddrRecord  |
-| Appearances   | all the appearances for this address     | AppRecord[] |
-
 ## Monitor
 
 A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associated with a given
@@ -244,6 +229,21 @@ Statements consist of the following fields:
 | endBalDiff          | endBal - endBalCalc, if non-zero, the reconciliation failed (calculated)                                                              | int256    |
 | endBalCalc          | begBal + amountNet (calculated)                                                                                                       | int256    |
 | correctingReason    | the reason for the correcting entries, if any                                                                                         | string    |
+
+## AppearanceTable
+
+The `appearanceTable` data model carries an address and all appearances for that address found in any given chunk.
+
+The following commands produce and manage AppearanceTables:
+
+- [chifra chunks](/chifra/admin/#chifra-chunks)
+
+AppearanceTables consist of the following fields:
+
+| Field         | Description                              | Type        |
+| ------------- | ---------------------------------------- | ----------- |
+| AddressRecord | the address record for these appearances | AddrRecord  |
+| Appearances   | all the appearances for this address     | AppRecord[] |
 
 ## Base types
 
