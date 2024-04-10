@@ -5,4 +5,3 @@
     doc_descr = "a single entry in the results of a status query when `--verbose` is enabled"
     doc_route = "430-cacheItem"
     produced_by = "status"
-    go_output = "src/apps/chifra/internal/status"

@@ -42,7 +42,7 @@ func ServeTraces(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// TracesInternal handles the internal workings of the traces command.  Returns an error.
+// TracesInternal handles the internal workings of the traces command. Returns an error.
 func (opts *TracesOptions) TracesInternal() error {
 	var err error
 	if err = opts.validateTraces(); err != nil {

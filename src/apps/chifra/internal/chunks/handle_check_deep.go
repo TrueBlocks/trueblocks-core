@@ -25,7 +25,7 @@ import (
 
 type reporter struct {
 	chunk  *types.SimpleChunkRecord
-	report *simpleReportCheck
+	report *types.SimpleReportCheck
 	mutex  *sync.Mutex
 }
 
@@ -33,7 +33,7 @@ type reporter struct {
 // that all addresses in the index return true when checked against its corresponding
 // Bloom filter. In `manifest` mode, it checks that each IPFS hash in the manifest is
 // actually pinned. The later requires a locally running IPFS node.
-func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simpleReportCheck) error {
+func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *types.SimpleReportCheck) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
@@ -79,7 +79,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 				}
 
 				for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-					obj := index.AddressRecord{}
+					obj := types.SimpleAddrRecord{}
 					if err := binary.Read(indexChunk.File, binary.LittleEndian, &obj); err != nil {
 						return err
 					}

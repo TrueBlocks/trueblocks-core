@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -55,6 +56,11 @@ type SimpleName struct {
 	// EXISTING_CODE
 	Prefund base.Wei `json:"prefund,omitempty"`
 	// EXISTING_CODE
+}
+
+func (s *SimpleName) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleName) Raw() *RawName {

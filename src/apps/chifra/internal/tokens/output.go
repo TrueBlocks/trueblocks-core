@@ -42,7 +42,7 @@ func ServeTokens(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// TokensInternal handles the internal workings of the tokens command.  Returns an error.
+// TokensInternal handles the internal workings of the tokens command. Returns an error.
 func (opts *TokensOptions) TokensInternal() error {
 	var err error
 	if err = opts.validateTokens(); err != nil {

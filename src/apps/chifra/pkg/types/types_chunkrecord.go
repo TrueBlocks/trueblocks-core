@@ -38,6 +38,11 @@ type SimpleChunkRecord struct {
 	// EXISTING_CODE
 }
 
+func (s *SimpleChunkRecord) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
+}
+
 func (s *SimpleChunkRecord) Raw() *RawChunkRecord {
 	return s.raw
 }
@@ -80,9 +85,4 @@ func (s *SimpleChunkRecord) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
-func (s *SimpleChunkRecord) String() string {
-	bytes, _ := json.MarshalIndent(s, "", "  ")
-	return string(bytes)
-}
-
 // EXISTING_CODE

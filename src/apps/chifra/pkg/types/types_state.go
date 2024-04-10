@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -49,6 +50,11 @@ type SimpleState struct {
 	raw         *RawState      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *SimpleState) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleState) Raw() *RawState {

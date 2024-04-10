@@ -18,7 +18,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -79,7 +79,7 @@ func GetConfigOptions(args []string) (*ConfigOptions, error) {
 	return &opts, nil
 }
 
-func (opts *ConfigOptions) Query() ([]bool, *rpc.MetaData, error) {
+func (opts *ConfigOptions) Query() ([]bool, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.Config(&buffer); err != nil {
 		logger.Fatal(err)

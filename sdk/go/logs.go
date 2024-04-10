@@ -17,7 +17,6 @@ import (
 	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -72,7 +71,7 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 	return &opts, nil
 }
 
-func (opts *LogsOptions) Query() ([]types.SimpleLog, *rpc.MetaData, error) {
+func (opts *LogsOptions) Query() ([]types.SimpleLog, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.Logs(&buffer); err != nil {
 		logger.Fatal(err)

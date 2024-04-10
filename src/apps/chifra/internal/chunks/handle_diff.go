@@ -105,13 +105,14 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 
 	apps := make([]types.SimpleAppearance, 0, 500000)
 	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-		s := simpleAppearanceTable{}
+		s := types.SimpleAppearanceTable{}
 		if err := binary.Read(indexChunk.File, binary.LittleEndian, &s.AddressRecord); err != nil {
 			return false, err
 		}
 		if s.Appearances, err = indexChunk.ReadAppearancesAndReset(&s.AddressRecord); err != nil {
 			return false, err
 		}
+		s.AddressRecord.Count = uint32(len(s.Appearances))
 		for _, app := range s.Appearances {
 			apps = append(apps, types.SimpleAppearance{
 				Address:          s.AddressRecord.Address,

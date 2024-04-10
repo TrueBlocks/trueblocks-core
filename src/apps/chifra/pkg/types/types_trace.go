@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -58,6 +59,11 @@ type SimpleTrace struct {
 	TraceIndex base.Blknum `json:"-"`
 	sortString string      `json:"-"`
 	// EXISTING_CODE
+}
+
+func (s *SimpleTrace) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleTrace) Raw() *RawTrace {

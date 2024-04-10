@@ -4,4 +4,3 @@
     doc_descr = "the number of records, file size, and last visited block for a given monitor"
     doc_route = "112-appearanceCount"
     produced_by = "list, export"
-    go_output = "src/apps/chifra/pkg/types"

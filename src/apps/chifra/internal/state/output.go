@@ -42,7 +42,7 @@ func ServeState(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// StateInternal handles the internal workings of the state command.  Returns an error.
+// StateInternal handles the internal workings of the state command. Returns an error.
 func (opts *StateOptions) StateInternal() error {
 	var err error
 	if err = opts.validateState(); err != nil {

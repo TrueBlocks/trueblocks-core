@@ -124,7 +124,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 
 			// reset for next chunk
 			bm.meta, _ = bm.opts.Conn.GetMetaData(bm.IsTestMode())
-			appMap = make(map[string][]index.AppearanceRecord, 0)
+			appMap = make(map[string][]types.SimpleAppRecord, 0)
 			chunkRange.First = chunkRange.Last + 1
 			chunkRange.Last = chunkRange.Last + 1
 			nAppearances = 0
@@ -175,11 +175,11 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 }
 
 // AsciiFileToAppearanceMap reads the appearances from the stage file and returns them as a map
-func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]index.AppearanceRecord, base.FileRange, int) {
+func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.SimpleAppRecord, base.FileRange, int) {
 	appearances := file.AsciiFileToLines(fn)
 	os.Remove(fn) // It's okay to remove this. If it fails, we'll just start over.
 
-	appMap := make(map[string][]index.AppearanceRecord, len(appearances))
+	appMap := make(map[string][]types.SimpleAppRecord, len(appearances))
 	fileRange := base.FileRange{First: utils.NOPOS, Last: 0}
 
 	if len(appearances) == 0 {
@@ -199,7 +199,7 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]index.
 			}
 			fileRange.First = utils.Min(fileRange.First, bn)
 			fileRange.Last = utils.Max(fileRange.Last, bn)
-			appMap[addr] = append(appMap[addr], index.AppearanceRecord{
+			appMap[addr] = append(appMap[addr], types.SimpleAppRecord{
 				BlockNumber:      uint32(bn),
 				TransactionIndex: uint32(txid),
 			})

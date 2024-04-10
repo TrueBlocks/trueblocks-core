@@ -21,7 +21,7 @@ func (opts *ChunksOptions) HandleList(unused []uint64) error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawIpfsPin], errorChan chan error) {
 		var perPage = 1000
 		if testMode {
 			perPage = -100
@@ -32,7 +32,7 @@ func (opts *ChunksOptions) HandleList(unused []uint64) error {
 			for _, line := range array {
 				parts := strings.Split(line, "\t")
 				if len(parts) == 5 {
-					s := simpleIpfsPin{
+					s := types.SimpleIpfsPin{
 						Cid:        base.IpfsHash(parts[0]),
 						DatePinned: parts[1],
 						FileName:   parts[2],

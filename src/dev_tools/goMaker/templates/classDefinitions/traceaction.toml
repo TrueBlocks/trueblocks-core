@@ -5,5 +5,4 @@
     doc_descr = "trace action data as returned from the RPC (with slight enhancements)"
     doc_route = "224-traceAction"
     produced_by = "traces, export, blocks"
-    go_output = "src/apps/chifra/pkg/types"
     cache_type = "marshal_only"

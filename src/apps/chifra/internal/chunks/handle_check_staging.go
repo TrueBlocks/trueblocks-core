@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // CheckStaging checks the staging file which should be names first-second.txt
@@ -20,7 +21,7 @@ import (
 //  2. Makes sure the first < last
 //  3. Makes sure that the first block inside is == first if allow_missing == false, > otherwise
 //  4. Makes sure that the last block inside is == last if allow_missing == false, < otherwise
-func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, report *simpleReportCheck) error {
+func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, report *types.SimpleReportCheck) error {
 	chain := opts.Globals.Chain
 	stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)

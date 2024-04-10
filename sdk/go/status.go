@@ -18,7 +18,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -82,7 +82,7 @@ func GetStatusOptions(args []string) (*StatusOptions, error) {
 	return &opts, nil
 }
 
-func (opts *StatusOptions) Query() ([]bool, *rpc.MetaData, error) {
+func (opts *StatusOptions) Query() ([]bool, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.Status(&buffer); err != nil {
 		logger.Fatal(err)

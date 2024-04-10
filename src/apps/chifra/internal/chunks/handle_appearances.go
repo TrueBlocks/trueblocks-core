@@ -48,7 +48,7 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 				if opts.Globals.TestMode && i > walker.MaxTests() {
 					continue
 				}
-				rec := index.AppearanceRecord{}
+				rec := types.SimpleAppRecord{}
 				if err := binary.Read(indexChunk.File, binary.LittleEndian, &rec); err != nil {
 					return false, err
 				}

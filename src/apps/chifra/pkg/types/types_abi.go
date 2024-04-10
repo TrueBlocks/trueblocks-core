@@ -10,6 +10,8 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -28,6 +30,11 @@ type SimpleAbi struct {
 	raw       *RawAbi          `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *SimpleAbi) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleAbi) Raw() *RawAbi {

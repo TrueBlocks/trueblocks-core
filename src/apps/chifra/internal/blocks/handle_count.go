@@ -18,7 +18,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawBlockCount], errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
@@ -41,7 +41,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 					return
 				}
 
-				blockCount := simpleBlockCount{
+				blockCount := types.SimpleBlockCount{
 					BlockNumber:     block.BlockNumber,
 					Timestamp:       block.Timestamp,
 					TransactionsCnt: uint64(len(block.Transactions)),

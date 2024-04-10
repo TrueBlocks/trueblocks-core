@@ -19,7 +19,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -91,7 +90,7 @@ func GetStateOptions(args []string) (*StateOptions, error) {
 	return &opts, nil
 }
 
-func (opts *StateOptions) Query() ([]types.SimpleState, *rpc.MetaData, error) {
+func (opts *StateOptions) Query() ([]types.SimpleState, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.State(&buffer); err != nil {
 		logger.Fatal(err)

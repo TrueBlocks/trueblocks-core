@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // Prepare performs actions that need to be done prior to entering the
@@ -45,10 +46,10 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 		return false, err
 	}
 
-	appMap := make(map[string][]index.AppearanceRecord, len(prefunds))
+	appMap := make(map[string][]types.SimpleAppRecord, len(prefunds))
 	for i, prefund := range prefunds {
 		addr := prefund.Address.Hex()
-		appMap[addr] = append(appMap[addr], index.AppearanceRecord{
+		appMap[addr] = append(appMap[addr], types.SimpleAppRecord{
 			BlockNumber:      0,
 			TransactionIndex: uint32(i),
 		})
