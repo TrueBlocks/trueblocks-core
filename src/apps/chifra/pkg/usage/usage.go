@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// Replace accepts an string and an arbitrary number of additional string parameters. It replaces
+// Replace accepts a string and an arbitrary number of additional string parameters. It replaces
 // {N} in the string with the Nth additional string.
 func Replace(msg string, values ...string) string {
 	ret := msg
