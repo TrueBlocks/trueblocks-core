@@ -44,6 +44,11 @@ type SimpleParameter struct {
 	// EXISTING_CODE
 }
 
+func (s *SimpleParameter) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
+}
+
 func (s *SimpleParameter) Raw() *RawParameter {
 	return s.raw
 }

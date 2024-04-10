@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -96,6 +97,11 @@ type SimpleStatement struct {
 	ReconType ReconType `json:"-"`
 	AssetType string    `json:"-"`
 	// EXISTING_CODE
+}
+
+func (s *SimpleStatement) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleStatement) Raw() *RawStatement {

@@ -18,7 +18,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -79,7 +79,7 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 	return &opts, nil
 }
 
-func (opts *AbisOptions) Query() ([]bool, *rpc.MetaData, error) {
+func (opts *AbisOptions) Query() ([]bool, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.Abis(&buffer); err != nil {
 		logger.Fatal(err)

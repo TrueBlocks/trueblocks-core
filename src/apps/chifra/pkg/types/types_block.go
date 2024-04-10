@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -66,6 +67,11 @@ type SimpleBlock[Tx string | SimpleTransaction] struct {
 	raw           *RawBlock          `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *SimpleBlock[Tx]) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleBlock[Tx]) Raw() *RawBlock {

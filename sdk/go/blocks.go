@@ -19,7 +19,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -96,7 +95,7 @@ func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 	return &opts, nil
 }
 
-func (opts *BlocksOptions) Query() ([]types.SimpleBlock[string], *rpc.MetaData, error) {
+func (opts *BlocksOptions) Query() ([]types.SimpleBlock[string], *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.Blocks(&buffer); err != nil {
 		logger.Fatal(err)

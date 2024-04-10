@@ -19,7 +19,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -108,7 +108,7 @@ func GetExportOptions(args []string) (*ExportOptions, error) {
 	return &opts, nil
 }
 
-func (opts *ExportOptions) Query() ([]bool, *rpc.MetaData, error) {
+func (opts *ExportOptions) Query() ([]bool, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.Export(&buffer); err != nil {
 		logger.Fatal(err)

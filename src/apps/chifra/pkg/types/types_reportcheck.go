@@ -6,32 +6,56 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package chunksPkg
+package types
 
 // EXISTING_CODE
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+import (
+	"encoding/json"
+)
 
 // EXISTING_CODE
 
-type simpleReportCheck struct {
-	CheckedCnt uint32   `json:"checkedCnt"`
-	FailedCnt  uint32   `json:"failedCnt"`
+type RawReportCheck struct {
+	CheckedCnt string   `json:"checkedCnt"`
+	FailedCnt  string   `json:"failedCnt"`
 	MsgStrings []string `json:"msgStrings"`
-	PassedCnt  uint32   `json:"passedCnt"`
+	PassedCnt  string   `json:"passedCnt"`
 	Reason     string   `json:"reason"`
 	Result     string   `json:"result"`
-	SkippedCnt uint32   `json:"skippedCnt"`
-	VisitedCnt uint32   `json:"visitedCnt"`
-
+	SkippedCnt string   `json:"skippedCnt"`
+	VisitedCnt string   `json:"visitedCnt"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *simpleReportCheck) Raw() *types.RawModeler {
-	return nil
+type SimpleReportCheck struct {
+	CheckedCnt uint32          `json:"checkedCnt"`
+	FailedCnt  uint32          `json:"failedCnt"`
+	MsgStrings []string        `json:"msgStrings"`
+	PassedCnt  uint32          `json:"passedCnt"`
+	Reason     string          `json:"reason"`
+	Result     string          `json:"result"`
+	SkippedCnt uint32          `json:"skippedCnt"`
+	VisitedCnt uint32          `json:"visitedCnt"`
+	raw        *RawReportCheck `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
-func (s *simpleReportCheck) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *SimpleReportCheck) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
+}
+
+func (s *SimpleReportCheck) Raw() *RawReportCheck {
+	return s.raw
+}
+
+func (s *SimpleReportCheck) SetRaw(raw *RawReportCheck) {
+	s.raw = raw
+}
+
+func (s *SimpleReportCheck) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -68,10 +92,16 @@ func (s *simpleReportCheck) Model(chain, format string, verbose bool, extraOptio
 	}
 	// EXISTING_CODE
 
-	return types.Model{
+	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleReportCheck) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

@@ -23,6 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -377,13 +378,13 @@ const (
 	endOfTxId           = 42 + 1 + 9 + 1 + 5
 )
 
-func getAppearances(addrStr string, lines []string, lastVisited uint32, found int) *[]index.AppearanceRecord {
-	results := make([]index.AppearanceRecord, 0, 1000)
+func getAppearances(addrStr string, lines []string, lastVisited uint32, found int) *[]types.SimpleAppRecord {
+	results := make([]types.SimpleAppRecord, 0, 1000)
 	for idx := found; idx < len(lines); idx++ {
 		if !strings.HasPrefix(lines[idx], addrStr) {
 			break
 		}
-		r := index.AppearanceRecord{
+		r := types.SimpleAppRecord{
 			BlockNumber:      uint32(globals.ToUint64(lines[idx][startOfBlockNum:endOfBlockNum])),
 			TransactionIndex: uint32(globals.ToUint64(lines[idx][startOfTxId:endOfTxId])),
 		}

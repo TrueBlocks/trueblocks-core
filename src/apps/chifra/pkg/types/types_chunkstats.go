@@ -9,6 +9,8 @@
 package types
 
 // EXISTING_CODE
+import "encoding/json"
+
 // EXISTING_CODE
 
 type RawChunkStats struct {
@@ -46,6 +48,11 @@ type SimpleChunkStats struct {
 	raw           *RawChunkStats `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (s *SimpleChunkStats) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleChunkStats) Raw() *RawChunkStats {

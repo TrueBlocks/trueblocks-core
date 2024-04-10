@@ -20,7 +20,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawChunkBloom], errorChan chan error) {
 		showBloom := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showBloom")
@@ -42,7 +42,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 				return false, err
 			}
 
-			s := simpleChunkBloom{
+			s := types.SimpleChunkBloom{
 				Magic:     fmt.Sprintf("0x%x", bl.Header.Magic),
 				Hash:      bl.Header.Hash,
 				Size:      stats.BloomSz,

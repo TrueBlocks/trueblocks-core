@@ -12,7 +12,7 @@ func (opts *StatusOptions) HandleDiagnose() error {
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawStatus], errorChan chan error) {
 		s, err := opts.GetSimpleStatus(opts.Diagnose)
 		if err != nil {
 			errorChan <- err
@@ -20,7 +20,7 @@ func (opts *StatusOptions) HandleDiagnose() error {
 		}
 
 		// We want to short circuit the output in the non-json case
-		if s.toTemplate(opts.Globals.Writer, testMode, opts.Diagnose, logger.LogTimerOn(), opts.Globals.Format) {
+		if toTemplate(s, opts.Globals.Writer, testMode, opts.Diagnose, logger.LogTimerOn(), opts.Globals.Format) {
 			return
 		}
 

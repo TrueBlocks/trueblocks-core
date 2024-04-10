@@ -96,10 +96,6 @@ func (cb *CodeBase) LoadStructures(thePath string, structMap map[string]Structur
 				if f.Settings.Class[0] == 'C' {
 					f.Settings.Class = f.Settings.Class[1:]
 				}
-				if f.Settings.GoOutput == "documentation only" {
-					f.Settings.GoOutput = "<docs_only>"
-					f.Settings.DisableGo = true
-				}
 				mapKey := strings.ToLower(class)
 				structMap[mapKey] = f.Settings
 			}

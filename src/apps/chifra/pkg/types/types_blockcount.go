@@ -6,18 +6,32 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package blocksPkg
+package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
 
-type simpleBlockCount struct {
+type RawBlockCount struct {
+	AddressCnt      string `json:"addressCnt"`
+	BlockNumber     string `json:"blockNumber"`
+	LogsCnt         string `json:"logsCnt"`
+	Timestamp       string `json:"timestamp"`
+	TracesCnt       string `json:"tracesCnt"`
+	TransactionsCnt string `json:"transactionsCnt"`
+	UnclesCnt       string `json:"unclesCnt"`
+	WithdrawalsCnt  string `json:"withdrawalsCnt"`
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+type SimpleBlockCount struct {
 	AddressCnt      uint64         `json:"addressCnt,omitempty"`
 	BlockNumber     base.Blknum    `json:"blockNumber"`
 	LogsCnt         uint64         `json:"logsCnt,omitempty"`
@@ -26,16 +40,25 @@ type simpleBlockCount struct {
 	TransactionsCnt uint64         `json:"transactionsCnt"`
 	UnclesCnt       uint64         `json:"unclesCnt,omitempty"`
 	WithdrawalsCnt  uint64         `json:"withdrawalsCnt,omitempty"`
-
+	raw             *RawBlockCount `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *simpleBlockCount) Raw() *types.RawModeler {
-	return nil
+func (s *SimpleBlockCount) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *simpleBlockCount) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *SimpleBlockCount) Raw() *RawBlockCount {
+	return s.raw
+}
+
+func (s *SimpleBlockCount) SetRaw(raw *RawBlockCount) {
+	s.raw = raw
+}
+
+func (s *SimpleBlockCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -104,14 +127,20 @@ func (s *simpleBlockCount) Model(chain, format string, verbose bool, extraOption
 	}
 	// EXISTING_CODE
 
-	return types.Model{
+	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
 
-func (s *simpleBlockCount) Date() string {
+func (s *SimpleBlockCount) Date() string {
 	return utils.FormattedDate(s.Timestamp)
+}
+
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleBlockCount) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

@@ -4,4 +4,3 @@
     doc_descr = "an association between a human-readable name and an address used throughout TrueBlocks"
     doc_route = "109-name"
     produced_by = "names"
-    go_output = "src/apps/chifra/pkg/types"

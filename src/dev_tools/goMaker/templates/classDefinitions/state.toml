@@ -4,6 +4,5 @@
     doc_descr = "the state of an Ethereum account (EOA or smart contract) on-chain"
     doc_route = "303-state"
     produced_by = "state"
-    go_output = "src/apps/chifra/pkg/types"
     cache_type = "cacheable"
     cache_by = "address,block"

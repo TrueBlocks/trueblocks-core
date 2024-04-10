@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -96,6 +97,11 @@ type SimpleTransaction struct {
 	Rewards    *Rewards           `json:"-"`
 	Statements *[]SimpleStatement `json:"statements"`
 	// EXISTING_CODE
+}
+
+func (s *SimpleTransaction) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *SimpleTransaction) Raw() *RawTransaction {

@@ -49,7 +49,7 @@ func ServeDaemon(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// DaemonInternal handles the internal workings of the daemon command.  Returns an error.
+// DaemonInternal handles the internal workings of the daemon command. Returns an error.
 func (opts *DaemonOptions) DaemonInternal() error {
 	var err error
 	if err = opts.validateDaemon(); err != nil {

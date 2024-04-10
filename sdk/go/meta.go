@@ -1,10 +1,8 @@
 package sdk
 
-import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-)
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 
-func GetMetaData() (*rpc.MetaData, error) {
+func GetMetaData() (*types.MetaData, error) {
 	unused := BlocksOptions{
 		BlockIds: []string{"1"},
 		Hashes:   true,
