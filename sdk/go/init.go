@@ -74,6 +74,7 @@ func GetInitOptions(args []string) (*InitOptions, error) {
 }
 
 type initGeneric interface {
+	bool
 }
 
 func queryInit[T initGeneric](opts *InitOptions) ([]T, *types.MetaData, error) {
@@ -88,6 +89,11 @@ func queryInit[T initGeneric](opts *InitOptions) ([]T, *types.MetaData, error) {
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// InitAll implements the chifra init --all command.
+func (opts *InitOptions) InitAll() ([]bool, *types.MetaData, error) {
+	return queryInit[bool](opts)
 }
 
 // No enums

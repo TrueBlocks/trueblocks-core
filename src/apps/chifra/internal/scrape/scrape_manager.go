@@ -9,8 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TODO: Remove rpc.MetaData and use types.MetaData throughout
-
 // BlazeManager manages the scraper by keeping track of the progress of the scrape and
 // maintaining the timestamp array and processed map. The processed map helps us know
 // if every block was visited or not.

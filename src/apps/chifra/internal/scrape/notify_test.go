@@ -13,8 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
 )
 
-// TODO: Remove rpc.MetaData and use types.MetaData throughout
-
 func TestNotify(t *testing.T) {
 	results := make([]string, 0)
 	var mutex sync.Mutex

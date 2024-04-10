@@ -58,21 +58,6 @@ Appearances consist of the following fields:
 | timestamp        | the timestamp for this appearance                       | timestamp |
 | date             | the timestamp as a date (calculated)                    | datetime  |
 
-## AppearanceTable
-
-
-
-The following commands produce and manage AppearanceTables:
-
-- [chifra chunks](/chifra/admin/#chifra-chunks)
-
-AppearanceTables consist of the following fields:
-
-| Field         | Description                              | Type        |
-| ------------- | ---------------------------------------- | ----------- |
-| AddressRecord | the address record for these appearances | AddrRecord  |
-| Appearances   | all the appearances for this address     | AppRecord[] |
-
 ## Monitor
 
 A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associated with a given

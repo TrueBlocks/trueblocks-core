@@ -2,8 +2,6 @@ package notify
 
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 
-// TODO: Remove rpc.MetaData and use types.MetaData throughout
-
 type Message string
 
 type Notification[T NotificationPayload] struct {
