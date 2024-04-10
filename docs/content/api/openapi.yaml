@@ -58,7 +58,7 @@ info:
      "http://localhost:8080/blocks?blocks=100-110&cache=true"
      ```
 
-     Caching speeds up repeat queries significantly. The cache options are
+     Cacheing speeds up repeat queries significantly. The cache options are
      particularly useful for calls to data-rich endpoints, like most endpoints
      in the  "Accounts" collection.
 

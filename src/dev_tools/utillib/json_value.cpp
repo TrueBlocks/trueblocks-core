@@ -136,7 +136,7 @@ ValueIteratorBase::computeDistance(const SelfType& other) const {
     // RogueWave STL,
     // which is the one used by default).
     // Using a portable hand-made version for non random iterator instead:
-    // return difference_type( std::distance( current_, other.current_ ) );
+    //   return difference_type( std::distance( current_, other.current_ ) );
     difference_type myDistance = 0;
     for (std::map<CZString, Value>::iterator it = current_; it != other.current_; ++it) {
         ++myDistance;
