@@ -1,6 +1,6 @@
 ---
 title: "Chain state"
-description: ""
+description: "Access to account and token state"
 lead: ""
 lastmod:
   - :git
@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 33000
+weight: 31000
 toc: true
 ---
 
@@ -84,7 +84,6 @@ Links:
 
 - [api docs](/api/#operation/chainstate-state)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getState.csv)
 
 ## chifra tokens
 
@@ -142,6 +141,5 @@ Links:
 
 - [api docs](/api/#operation/chainstate-tokens)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getTokens.csv)
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

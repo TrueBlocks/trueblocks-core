@@ -1,7 +1,7 @@
 [settings]
-    class = "CSlurp"
+    class = "Slurp"
     doc_group = "05-Other"
-    doc_descr = "transaction data as returned from by Etherscan"
+    doc_descr = "transaction data as returned from by remote APIs"
     doc_route = "512-slurp"
     produced_by = "slurp"
     cache_type = "cacheable"

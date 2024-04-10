@@ -45,8 +45,8 @@ func (opts *ListOptions) String() string {
 	return string(bytes)
 }
 
-// List implements the chifra list command for the SDK.
-func (opts *ListOptions) List(w io.Writer) error {
+// ListBytes implements the chifra list command for the SDK.
+func (opts *ListOptions) ListBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting list struct to URL values: %v", err)
@@ -55,7 +55,7 @@ func (opts *ListOptions) List(w io.Writer) error {
 	return list.List(w, values)
 }
 
-// listParseFunc handles specail cases such as structs and enums (if any).
+// listParseFunc handles special cases such as structs and enums (if any).
 func listParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*ListOptions)
@@ -80,18 +80,39 @@ func GetListOptions(args []string) (*ListOptions, error) {
 	return &opts, nil
 }
 
-func (opts *ListOptions) Query() ([]types.SimpleAppearance, *types.MetaData, error) {
+type listGeneric interface {
+	types.SimpleAppearance |
+		types.SimpleAppearanceCount |
+		types.SimpleBounds
+}
+
+func queryList[T listGeneric](opts *ListOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.List(&buffer); err != nil {
+	if err := opts.ListBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleAppearance]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// List implements the chifra list command.
+func (opts *ListOptions) List() ([]types.SimpleAppearance, *types.MetaData, error) {
+	return queryList[types.SimpleAppearance](opts)
+}
+
+// ListCount implements the chifra list --count command.
+func (opts *ListOptions) ListCount() ([]types.SimpleAppearanceCount, *types.MetaData, error) {
+	return queryList[types.SimpleAppearanceCount](opts)
+}
+
+// ListBounds implements the chifra list --bounds command.
+func (opts *ListOptions) ListBounds() ([]types.SimpleBounds, *types.MetaData, error) {
+	return queryList[types.SimpleBounds](opts)
 }
 
 // No enums

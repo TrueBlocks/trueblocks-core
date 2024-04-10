@@ -8,10 +8,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/spf13/cobra"
 )
-
-// TODO: Remove rpc.MetaData and use types.MetaData throughout
 
 var discardWriter = io.Writer(nil)
 
@@ -117,7 +116,7 @@ func InitJsonWriterApi(cmdName string, w io.Writer, opts *globals.GlobalOptions)
 	if enabledForCmds[cmdName] && opts.Format == "json" && !ok {
 		jw := output.NewDefaultJsonWriter(w, false)
 		jw.ShouldWriteMeta = true
-		jw.GetMeta = func() (*rpc.MetaData, error) {
+		jw.GetMeta = func() (*types.MetaData, error) {
 			chain := opts.Chain
 			conn := rpc.TempConnection(chain)
 			return conn.GetMetaData(opts.OutputOptions.TestMode)

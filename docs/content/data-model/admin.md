@@ -1,6 +1,6 @@
 ---
 title: "Admin"
-description: ""
+description: "Control the scraper and build the index"
 lead: ""
 lastmod:
   - :git
@@ -9,8 +9,8 @@ lastmod:
 draft: false
 menu:
   data:
-    parent: "collections"
-weight: 4000
+    parent: collections
+weight: 41000
 toc: true
 ---
 

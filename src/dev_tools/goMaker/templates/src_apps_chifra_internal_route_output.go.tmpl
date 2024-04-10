@@ -11,32 +11,32 @@ package {{.Route}}Pkg
 // EXISTING_CODE
 // EXISTING_CODE
 
-// Run{{.Proper}} handles the {{.Route}} command for the command line. Returns error only as per cobra.
-func Run{{.Proper}}(cmd *cobra.Command, args []string) error {
-	opts := {{.Lower}}FinishParse(args)
+// Run{{toProper .Route}} handles the {{.Route}} command for the command line. Returns error only as per cobra.
+func Run{{toProper .Route}}(cmd *cobra.Command, args []string) error {
+	opts := {{toLower .Route}}FinishParse(args)
 	outputHelpers.EnableCommand("{{.Route}}", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("{{.Route}}", &opts.Globals)
-	return opts.{{.Proper}}Internal()
+	return opts.{{toProper .Route}}Internal()
 }
 
-// Serve{{.Proper}} handles the {{.Route}} command for the API. Returns an error.
-func Serve{{.Proper}}(w http.ResponseWriter, r *http.Request) error {
-	opts := {{.Lower}}FinishParseApi(w, r)
+// Serve{{toProper .Route}} handles the {{.Route}} command for the API. Returns an error.
+func Serve{{toProper .Route}}(w http.ResponseWriter, r *http.Request) error {
+	opts := {{toLower .Route}}FinishParseApi(w, r)
 	outputHelpers.EnableCommand("{{.Route}}", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("{{.Route}}", w, &opts.Globals)
-	err := opts.{{.Proper}}Internal()
+	err := opts.{{toProper .Route}}Internal()
 	outputHelpers.CloseJsonWriterIfNeededApi("{{.Route}}", err, &opts.Globals)
 	return err
 }
 
-// {{.Proper}}Internal handles the internal workings of the {{.Route}} command. Returns an error.
-func (opts *{{.Proper}}Options) {{.Proper}}Internal() error {
+// {{toProper .Route}}Internal handles the internal workings of the {{.Route}} command. Returns an error.
+func (opts *{{toProper .Route}}Options) {{toProper .Route}}Internal() error {
 	var err error
-	if err = opts.validate{{.Proper}}(); err != nil {
+	if err = opts.validate{{toProper .Route}}(); err != nil {
 		return err
 	}
 
@@ -49,8 +49,8 @@ func (opts *{{.Proper}}Options) {{.Proper}}Internal() error {
 	return err
 }
 
-// Get{{.Proper}}Options returns the options for this tool so other tools may use it.
-func Get{{.Proper}}Options(args []string, g *globals.GlobalOptions) *{{.Proper}}Options {
+// Get{{toProper .Route}}Options returns the options for this tool so other tools may use it.
+func Get{{toProper .Route}}Options(args []string, g *globals.GlobalOptions) *{{toProper .Route}}Options {
 	ret := {{.Route}}FinishParse(args)
 	if g != nil {
 		ret.Globals = *g

@@ -1,5 +1,5 @@
 [settings]
-    class = "CReportCheck"
+    class = "ReportCheck"
     doc_group = "04-Admin"
     doc_descr = "report on checking contents of chunks"
     doc_route = "433-reportCheck"

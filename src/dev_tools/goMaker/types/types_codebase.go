@@ -79,57 +79,20 @@ func (cb *CodeBase) TagSummary() string {
 		return cb.Commands[i].Num < cb.Commands[j].Num
 	})
 
+	cur := ""
 	ret := []string{}
 	for _, c := range cb.Commands {
-		if c.Route == "" {
+		if cur != c.Group {
 			tmplName := "tags"
 			tmpl := `  - name: {{.Group}}
     description: {{.Description}}`
 			ret = append(ret, c.executeTemplate(tmplName, tmpl))
 		}
+		cur = c.Group
 	}
 	return strings.Join(ret, "\n")
 }
 
 func (cb *CodeBase) executeTemplate(name, tmplCode string) string {
 	return executeTemplate(cb, "codebase", name, tmplCode)
-}
-
-func (cb *CodeBase) ModelList() []Structure {
-	theMap := map[string]Structure{}
-	for _, st := range cb.Structures {
-		theMap[st.GroupName()] = st
-	}
-
-	ret := []Structure{}
-	for key := range theMap {
-		st := Structure{
-			DocGroup: theMap[key].DocGroup,
-			DocDescr: theMap[key].DocDescr,
-			cbPtr:    cb,
-		}
-		ret = append(ret, st)
-	}
-	return ret
-}
-
-func (cb *CodeBase) CommandList() []Command {
-	theMap := map[string]Command{}
-	for _, c := range cb.Commands {
-		theMap[c.GroupName()] = c
-	}
-
-	ret := []Command{}
-	for key := range theMap {
-		c := Command{
-			Route:       theMap[key].Route,
-			Group:       theMap[key].Group,
-			Description: theMap[key].Description,
-			Num:         theMap[key].Num,
-			Aliases:     theMap[key].Aliases,
-			cbPtr:       cb,
-		}
-		ret = append(ret, c)
-	}
-	return ret
 }

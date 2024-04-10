@@ -1,5 +1,5 @@
 [settings]
-    class = "CLog"
+    class = "Log"
     contained_by = "receipt"
     doc_group = "02-Chain Data"
     doc_descr = "log data as returned from the RPC (with slight enhancements)"

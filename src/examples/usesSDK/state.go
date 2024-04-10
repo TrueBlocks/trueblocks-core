@@ -23,7 +23,7 @@ func DoState() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.State(&buf); err != nil {
+	if err := opts.StateBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

@@ -1,6 +1,6 @@
 ---
 title: "Chain data"
-description: ""
+description: "Access and cache blockchain-related data"
 lead: ""
 lastmod:
   - :git
@@ -9,8 +9,8 @@ lastmod:
 draft: false
 menu:
   data:
-    parent: "collections"
-weight: 2000
+    parent: collections
+weight: 21000
 toc: true
 ---
 

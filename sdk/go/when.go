@@ -42,8 +42,8 @@ func (opts *WhenOptions) String() string {
 	return string(bytes)
 }
 
-// When implements the chifra when command for the SDK.
-func (opts *WhenOptions) When(w io.Writer) error {
+// WhenBytes implements the chifra when command for the SDK.
+func (opts *WhenOptions) WhenBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting when struct to URL values: %v", err)
@@ -52,7 +52,7 @@ func (opts *WhenOptions) When(w io.Writer) error {
 	return when.When(w, values)
 }
 
-// whenParseFunc handles specail cases such as structs and enums (if any).
+// whenParseFunc handles special cases such as structs and enums (if any).
 func whenParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*WhenOptions)
@@ -77,18 +77,39 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 	return &opts, nil
 }
 
-func (opts *WhenOptions) Query() ([]types.SimpleNamedBlock, *types.MetaData, error) {
+type whenGeneric interface {
+	types.SimpleNamedBlock |
+		types.SimpleTimestamp |
+		types.SimpleTimestampCount
+}
+
+func queryWhen[T whenGeneric](opts *WhenOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.When(&buffer); err != nil {
+	if err := opts.WhenBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleNamedBlock]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// When implements the chifra when command.
+func (opts *WhenOptions) When() ([]types.SimpleNamedBlock, *types.MetaData, error) {
+	return queryWhen[types.SimpleNamedBlock](opts)
+}
+
+// WhenTimestamps implements the chifra when --timestamps command.
+func (opts *WhenOptions) WhenTimestamps() ([]types.SimpleTimestamp, *types.MetaData, error) {
+	return queryWhen[types.SimpleTimestamp](opts)
+}
+
+// WhenCount implements the chifra when --count command.
+func (opts *WhenOptions) WhenCount() ([]types.SimpleTimestampCount, *types.MetaData, error) {
+	return queryWhen[types.SimpleTimestampCount](opts)
 }
 
 // No enums

@@ -54,8 +54,8 @@ func (opts *ChunksOptions) String() string {
 	return string(bytes)
 }
 
-// Chunks implements the chifra chunks command for the SDK.
-func (opts *ChunksOptions) Chunks(w io.Writer) error {
+// ChunksBytes implements the chifra chunks command for the SDK.
+func (opts *ChunksOptions) ChunksBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting chunks struct to URL values: %v", err)
@@ -64,7 +64,7 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 	return chunks.Chunks(w, values)
 }
 
-// chunksParseFunc handles specail cases such as structs and enums (if any).
+// chunksParseFunc handles special cases such as structs and enums (if any).
 func chunksParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*ChunksOptions)
@@ -98,13 +98,16 @@ func GetChunksOptions(args []string) (*ChunksOptions, error) {
 	return &opts, nil
 }
 
-func (opts *ChunksOptions) Query() ([]bool, *types.MetaData, error) {
+type chunksGeneric interface {
+}
+
+func queryChunks[T chunksGeneric](opts *ChunksOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Chunks(&buffer); err != nil {
+	if err := opts.ChunksBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
@@ -182,4 +185,39 @@ func enumFromChunksMode(values []string) (ChunksMode, error) {
 }
 
 // EXISTING_CODE
+// ChunksManifest implements the chifra chunks manifest command.
+func (opts *ChunksOptions) ChunksManifest() ([]types.SimpleChunkRecord, *types.MetaData, error) {
+	return queryChunks[types.SimpleChunkRecord](opts)
+}
+
+// ChunksIndex implements the chifra chunks index command.
+func (opts *ChunksOptions) ChunksIndex() ([]types.SimpleChunkIndex, *types.MetaData, error) {
+	return queryChunks[types.SimpleChunkIndex](opts)
+}
+
+// ChunksBlooms implements the chifra chunks blooms command.
+func (opts *ChunksOptions) ChunksBlooms() ([]types.SimpleChunkBloom, *types.MetaData, error) {
+	return queryChunks[types.SimpleChunkBloom](opts)
+}
+
+// ChunksPins implements the chifra chunks pins command.
+func (opts *ChunksOptions) ChunksPins() ([]types.SimpleChunkPinReport, *types.MetaData, error) {
+	return queryChunks[types.SimpleChunkPinReport](opts)
+}
+
+// ChunksAddresses implements the chifra chunks addresses command.
+func (opts *ChunksOptions) ChunksAddresses() ([]types.SimpleChunkAddress, *types.MetaData, error) {
+	return queryChunks[types.SimpleChunkAddress](opts)
+}
+
+// // ChunksAppearances implements the chifra chunks appearance command.
+// func (opts *ChunksOptions) ChunksAppearances() ([]types.SimpleChunkAppearance, *types.MetaData, error) {
+// 	return queryChunks[types.SimpleChunkAppearance](opts)
+// }
+
+// ChunkStats implements the chifra chunks stats command.
+func (opts *ChunksOptions) ChunkStats() ([]types.SimpleChunkStats, *types.MetaData, error) {
+	return queryChunks[types.SimpleChunkStats](opts)
+}
+
 // EXISTING_CODE

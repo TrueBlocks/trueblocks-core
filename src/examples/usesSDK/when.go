@@ -22,7 +22,7 @@ func DoWhen() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.When(&buf); err != nil {
+	if err := opts.WhenBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

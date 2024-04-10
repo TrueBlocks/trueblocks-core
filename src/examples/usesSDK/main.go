@@ -31,12 +31,6 @@ var testBlocks = []string{
 	"14011011",
 }
 
-var recentBlocks = []string{
-	"17000000",
-	"17500000",
-	"18000000",
-}
-
 var testAddrs = []string{
 	"0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
 }

@@ -25,7 +25,6 @@ import (
 // slurpCmd represents the slurp command
 var slurpCmd = &cobra.Command{
 	Use:     usageSlurp,
-	Short:   shortSlurp,
 	Long:    longSlurp,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("slurp", func() *globals.GlobalOptions {
@@ -43,10 +42,8 @@ Arguments:
   addrs - one or more addresses to slurp from Etherscan (required)
   blocks - an optional range of blocks to slurp`
 
-const shortSlurp = "fetch data from Etherscan for any address"
-
 const longSlurp = `Purpose:
-  Fetch data from Etherscan for any address.`
+  Fetch data from Etherscan and other APIs for any address.`
 
 const notesSlurp = `
 Notes:
@@ -66,14 +63,14 @@ func init() {
 
 	slurpCmd.Flags().StringSliceVarP(&slurpPkg.GetOptions().Types, "types", "t", nil, `which types of transactions to request
 One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | some | all ]`)
-	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Appearances, "appearances", "p", false, "show only the blocknumber.tx_id appearances of the exported transactions")
-	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Appearances, "appearances", "p", false, `show only the blocknumber.tx_id appearances of the exported transactions`)
+	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Articulate, "articulate", "a", false, `articulate the retrieved data if ABIs can be found`)
 	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().Source, "source", "S", "etherscan", `the source of the slurped data
 One of [ etherscan | key ]`)
-	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Count, "count", "U", false, "for --appearances mode only, display only the count of records")
-	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().Page, "page", "g", 0, "the page to retrieve (hidden)")
-	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 3000, "the number of records to request on each page (hidden)")
-	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, "seconds to sleep between requests")
+	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Count, "count", "U", false, `for --appearances mode only, display only the count of records`)
+	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().Page, "page", "g", 0, `the page to retrieve (hidden)`)
+	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 3000, `the number of records to request on each page (hidden)`)
+	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, `seconds to sleep between requests`)
 	if os.Getenv("TEST_MODE") != "true" {
 		_ = slurpCmd.Flags().MarkHidden("page")
 		_ = slurpCmd.Flags().MarkHidden("per_page")

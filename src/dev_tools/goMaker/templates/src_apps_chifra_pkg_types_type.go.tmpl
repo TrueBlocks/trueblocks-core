@@ -17,27 +17,27 @@ type Raw{{.Class}} struct {
 	// EXISTING_CODE
 }
 
-type Simple{{.ModelName2}} struct {
+type Simple{{.ModelName "simple"}} struct {
 {{range .Members}}{{if .IsSimpField}}{{.GoName}} {{.GoType}} {{.Tag}}
 {{end}}{{end}}	raw *Raw{{.Class}} `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *Simple{{.ModelName}}) String() string {
+func (s *Simple{{.ModelName ""}}) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *Simple{{.ModelName}}) Raw() *Raw{{.Class}} {
+func (s *Simple{{.ModelName ""}}) Raw() *Raw{{.Class}} {
 	return s.raw
 }
 
-func (s *Simple{{.ModelName}}) SetRaw(raw *Raw{{.Class}}) {
+func (s *Simple{{.ModelName ""}}) SetRaw(raw *Raw{{.Class}}) {
 	s.raw = raw
 }
 
-func (s *Simple{{.ModelName}}) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Simple{{.ModelName ""}}) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -51,7 +51,7 @@ func (s *Simple{{.ModelName}}) Model(chain, format string, verbose bool, extraOp
 }
 
 {{if .HasTimestamp}} 
-func (s *Simple{{.ModelName}}) Date() string {
+func (s *Simple{{.ModelName ""}}) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 {{end}}
@@ -66,15 +66,15 @@ type Simple{{.Class}}{{if .IsCacheAsGroup}}Group{{end}} struct {
 	{{end}}{{.Class}}s      []Simple{{.Class}}
 }
 {{end}}
-func (s *Simple{{.ModelName}}{{if .IsCacheAsGroup}}Group{{end}}) CacheName() string {
+func (s *Simple{{.ModelName ""}}{{if .IsCacheAsGroup}}Group{{end}}) CacheName() string {
 	return "{{.Class}}"
 }
 
-func (s *Simple{{.ModelName}}{{if .IsCacheAsGroup}}Group{{end}}) CacheId() string {
+func (s *Simple{{.ModelName ""}}{{if .IsCacheAsGroup}}Group{{end}}) CacheId() string {
 	return fmt.Sprintf({{.CacheIdStr}})
 }
 
-func (s *Simple{{.ModelName}}{{if .IsCacheAsGroup}}Group{{end}}) CacheLocation() (directory string, extension string) {
+func (s *Simple{{.ModelName ""}}{{if .IsCacheAsGroup}}Group{{end}}) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -89,23 +89,23 @@ func (s *Simple{{.ModelName}}{{if .IsCacheAsGroup}}Group{{end}}) CacheLocation()
 }
 
 {{if .IsCacheAsGroup}}
-func (s *Simple{{.ModelName}}Group) MarshalCache(writer io.Writer) (err error) {
+func (s *Simple{{.ModelName ""}}Group) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.{{.Class}}s)
 }
 
-func (s *Simple{{.ModelName}}Group) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Simple{{.ModelName ""}}Group) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	return cache.ReadValue(reader, &s.{{.Class}}s, version)
 }
 
 {{end}}
 {{end}}
-func (s *Simple{{.ModelName}}) MarshalCache(writer io.Writer) (err error) {
+func (s *Simple{{.ModelName ""}}) MarshalCache(writer io.Writer) (err error) {
 	{{range .Members}}{{.MarshalCode}}{{end}}
 
 	return nil
 }
 
-func (s *Simple{{.ModelName3}}) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Simple{{.ModelName "cache"}}) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	{{range .Members}}{{.UnmarshalCode}}{{end}}
 
 	s.FinishUnmarshal()
@@ -115,7 +115,7 @@ func (s *Simple{{.ModelName3}}) UnmarshalCache(version uint64, reader io.Reader)
 {{end}}
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Simple{{.ModelName}}) FinishUnmarshal() {
+func (s *Simple{{.ModelName ""}}) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

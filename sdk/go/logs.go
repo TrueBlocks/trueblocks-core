@@ -36,8 +36,8 @@ func (opts *LogsOptions) String() string {
 	return string(bytes)
 }
 
-// Logs implements the chifra logs command for the SDK.
-func (opts *LogsOptions) Logs(w io.Writer) error {
+// LogsBytes implements the chifra logs command for the SDK.
+func (opts *LogsOptions) LogsBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting logs struct to URL values: %v", err)
@@ -46,7 +46,7 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 	return logs.Logs(w, values)
 }
 
-// logsParseFunc handles specail cases such as structs and enums (if any).
+// logsParseFunc handles special cases such as structs and enums (if any).
 func logsParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*LogsOptions)
@@ -71,18 +71,27 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 	return &opts, nil
 }
 
-func (opts *LogsOptions) Query() ([]types.SimpleLog, *types.MetaData, error) {
+type logsGeneric interface {
+	types.SimpleLog
+}
+
+func queryLogs[T logsGeneric](opts *LogsOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Logs(&buffer); err != nil {
+	if err := opts.LogsBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleLog]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Logs implements the chifra logs command.
+func (opts *LogsOptions) Logs() ([]types.SimpleLog, *types.MetaData, error) {
+	return queryLogs[types.SimpleLog](opts)
 }
 
 // No enums

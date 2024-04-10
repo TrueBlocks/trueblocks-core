@@ -35,8 +35,8 @@ func (opts *ConfigOptions) String() string {
 	return string(bytes)
 }
 
-// Config implements the chifra config command for the SDK.
-func (opts *ConfigOptions) Config(w io.Writer) error {
+// ConfigBytes implements the chifra config command for the SDK.
+func (opts *ConfigOptions) ConfigBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting config struct to URL values: %v", err)
@@ -45,7 +45,7 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 	return config.Config(w, values)
 }
 
-// configParseFunc handles specail cases such as structs and enums (if any).
+// configParseFunc handles special cases such as structs and enums (if any).
 func configParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*ConfigOptions)
@@ -79,13 +79,16 @@ func GetConfigOptions(args []string) (*ConfigOptions, error) {
 	return &opts, nil
 }
 
-func (opts *ConfigOptions) Query() ([]bool, *types.MetaData, error) {
+type configGeneric interface {
+}
+
+func queryConfig[T configGeneric](opts *ConfigOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Config(&buffer); err != nil {
+	if err := opts.ConfigBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {

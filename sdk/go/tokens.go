@@ -39,8 +39,8 @@ func (opts *TokensOptions) String() string {
 	return string(bytes)
 }
 
-// Tokens implements the chifra tokens command for the SDK.
-func (opts *TokensOptions) Tokens(w io.Writer) error {
+// TokensBytes implements the chifra tokens command for the SDK.
+func (opts *TokensOptions) TokensBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting tokens struct to URL values: %v", err)
@@ -49,7 +49,7 @@ func (opts *TokensOptions) Tokens(w io.Writer) error {
 	return tokens.Tokens(w, values)
 }
 
-// tokensParseFunc handles specail cases such as structs and enums (if any).
+// tokensParseFunc handles special cases such as structs and enums (if any).
 func tokensParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*TokensOptions)
@@ -83,18 +83,27 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 	return &opts, nil
 }
 
-func (opts *TokensOptions) Query() ([]bool, *types.MetaData, error) {
+type tokensGeneric interface {
+	types.SimpleToken
+}
+
+func queryTokens[T tokensGeneric](opts *TokensOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Tokens(&buffer); err != nil {
+	if err := opts.TokensBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Tokens implements the chifra tokens command.
+func (opts *TokensOptions) Tokens() ([]types.SimpleToken, *types.MetaData, error) {
+	return queryTokens[types.SimpleToken](opts)
 }
 
 type TokensParts int

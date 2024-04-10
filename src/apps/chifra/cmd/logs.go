@@ -25,7 +25,6 @@ import (
 // logsCmd represents the logs command
 var logsCmd = &cobra.Command{
 	Use:     usageLogs,
-	Short:   shortLogs,
 	Long:    longLogs,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("logs", func() *globals.GlobalOptions {
@@ -41,8 +40,6 @@ const usageLogs = `logs [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)`
-
-const shortLogs = "retrieve logs for the given transaction(s)"
 
 const longLogs = `Purpose:
   Retrieve logs for the given transaction(s).`
@@ -62,9 +59,9 @@ func init() {
 
 	logsCmd.Flags().SortFlags = false
 
-	logsCmd.Flags().StringSliceVarP(&logsPkg.GetOptions().Emitter, "emitter", "m", nil, "filter logs to show only those logs emitted by the given address(es)")
-	logsCmd.Flags().StringSliceVarP(&logsPkg.GetOptions().Topic, "topic", "B", nil, "filter logs to show only those with this topic(s)")
-	logsCmd.Flags().BoolVarP(&logsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	logsCmd.Flags().StringSliceVarP(&logsPkg.GetOptions().Emitter, "emitter", "m", nil, `filter logs to show only those logs emitted by the given address(es)`)
+	logsCmd.Flags().StringSliceVarP(&logsPkg.GetOptions().Topic, "topic", "B", nil, `filter logs to show only those with this topic(s)`)
+	logsCmd.Flags().BoolVarP(&logsPkg.GetOptions().Articulate, "articulate", "a", false, `articulate the retrieved data if ABIs can be found`)
 	globals.InitGlobals("logs", logsCmd, &logsPkg.GetOptions().Globals, capabilities)
 
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))

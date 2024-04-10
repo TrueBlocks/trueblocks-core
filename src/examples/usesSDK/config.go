@@ -18,7 +18,7 @@ func DoConfig() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.Config(&buf); err != nil {
+	if err := opts.ConfigBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

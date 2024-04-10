@@ -25,7 +25,6 @@ import (
 // blocksCmd represents the blocks command
 var blocksCmd = &cobra.Command{
 	Use:     usageBlocks,
-	Short:   shortBlocks,
 	Long:    longBlocks,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("blocks", func() *globals.GlobalOptions {
@@ -41,8 +40,6 @@ const usageBlocks = `blocks [flags] <block> [block...]
 
 Arguments:
   blocks - a space-separated list of one or more block identifiers (required)`
-
-const shortBlocks = "retrieve one or more blocks from the chain or local cache"
 
 const longBlocks = `Purpose:
   Retrieve one or more blocks from the chain or local cache.`
@@ -68,23 +65,23 @@ func init() {
 
 	blocksCmd.Flags().SortFlags = false
 
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uncles, "uncles", "c", false, "display uncle blocks (if any) instead of the requested block")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Traces, "traces", "t", false, "export the traces from the block as opposed to the block data")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uniq, "uniq", "u", false, "display a list of uniq address appearances per transaction")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Hashes, "hashes", "e", false, `display only transaction hashes, default is to display full transaction detail`)
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uncles, "uncles", "c", false, `display uncle blocks (if any) instead of the requested block`)
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Traces, "traces", "t", false, `export the traces from the block as opposed to the block data`)
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uniq, "uniq", "u", false, `display a list of uniq address appearances per transaction`)
 	blocksCmd.Flags().StringVarP(&blocksPkg.GetOptions().Flow, "flow", "f", "", `for the --uniq option only, export only from or to (including trace from or to)
 One of [ from | to | reward ]`)
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Logs, "logs", "l", false, "display only the logs found in the block(s)")
-	blocksCmd.Flags().StringSliceVarP(&blocksPkg.GetOptions().Emitter, "emitter", "m", nil, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)")
-	blocksCmd.Flags().StringSliceVarP(&blocksPkg.GetOptions().Topic, "topic", "B", nil, "for the --logs option only, filter logs to show only those with this topic(s)")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Withdrawals, "withdrawals", "i", false, "export the withdrawals from the block as opposed to the block data")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Articulate, "articulate", "a", false, "for the --logs option only, articulate the retrieved data if ABIs can be found")
-	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().BigRange, "big_range", "r", 500, "for the --logs option only, allow for block ranges larger than 500")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Count, "count", "U", false, "display only the count of appearances for --addrs or --uniq")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().CacheTxs, "cache_txs", "", false, "force a write of the block's transactions to the cache (slow) (hidden)")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().CacheTraces, "cache_traces", "", false, "force a write of the block's traces to the cache (slower) (hidden)")
-	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().List, "list", "L", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
-	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().ListCount, "list_count", "C", 0, "the number of blocks to report for --list option (hidden)")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Logs, "logs", "l", false, `display only the logs found in the block(s)`)
+	blocksCmd.Flags().StringSliceVarP(&blocksPkg.GetOptions().Emitter, "emitter", "m", nil, `for the --logs option only, filter logs to show only those logs emitted by the given address(es)`)
+	blocksCmd.Flags().StringSliceVarP(&blocksPkg.GetOptions().Topic, "topic", "B", nil, `for the --logs option only, filter logs to show only those with this topic(s)`)
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Withdrawals, "withdrawals", "i", false, `export the withdrawals from the block as opposed to the block data`)
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Articulate, "articulate", "a", false, `for the --logs option only, articulate the retrieved data if ABIs can be found`)
+	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().BigRange, "big_range", "r", 500, `for the --logs option only, allow for block ranges larger than 500`)
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Count, "count", "U", false, `display only the count of appearances for --addrs or --uniq`)
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().CacheTxs, "cache_txs", "", false, `force a write of the block's transactions to the cache (slow) (hidden)`)
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().CacheTraces, "cache_traces", "", false, `force a write of the block's traces to the cache (slower) (hidden)`)
+	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().List, "list", "L", 0, `summary list of blocks running backwards from latest block minus num (hidden)`)
+	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().ListCount, "list_count", "C", 0, `the number of blocks to report for --list option (hidden)`)
 	if os.Getenv("TEST_MODE") != "true" {
 		_ = blocksCmd.Flags().MarkHidden("cache_txs")
 		_ = blocksCmd.Flags().MarkHidden("cache_traces")

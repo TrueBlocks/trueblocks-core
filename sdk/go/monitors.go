@@ -44,8 +44,8 @@ func (opts *MonitorsOptions) String() string {
 	return string(bytes)
 }
 
-// Monitors implements the chifra monitors command for the SDK.
-func (opts *MonitorsOptions) Monitors(w io.Writer) error {
+// MonitorsBytes implements the chifra monitors command for the SDK.
+func (opts *MonitorsOptions) MonitorsBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting monitors struct to URL values: %v", err)
@@ -54,7 +54,7 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 	return monitors.Monitors(w, values)
 }
 
-// monitorsParseFunc handles specail cases such as structs and enums (if any).
+// monitorsParseFunc handles special cases such as structs and enums (if any).
 func monitorsParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*MonitorsOptions)
@@ -79,18 +79,39 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 	return &opts, nil
 }
 
-func (opts *MonitorsOptions) Query() ([]bool, *types.MetaData, error) {
+type monitorsGeneric interface {
+	bool |
+		types.SimpleMonitorClean |
+		types.SimpleMonitor
+}
+
+func queryMonitors[T monitorsGeneric](opts *MonitorsOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Monitors(&buffer); err != nil {
+	if err := opts.MonitorsBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Monitors implements the chifra monitors command.
+func (opts *MonitorsOptions) Monitors() ([]bool, *types.MetaData, error) {
+	return queryMonitors[bool](opts)
+}
+
+// MonitorsClean implements the chifra monitors --clean command.
+func (opts *MonitorsOptions) MonitorsClean() ([]types.SimpleMonitorClean, *types.MetaData, error) {
+	return queryMonitors[types.SimpleMonitorClean](opts)
+}
+
+// MonitorsList implements the chifra monitors --list command.
+func (opts *MonitorsOptions) MonitorsList() ([]types.SimpleMonitor, *types.MetaData, error) {
+	return queryMonitors[types.SimpleMonitor](opts)
 }
 
 // No enums

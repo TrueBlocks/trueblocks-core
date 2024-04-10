@@ -30,7 +30,7 @@ func main() {
 		BlockIds: blockIds,
 		Globals:  sdk.Globals{Cache: true},
 	}
-	blocks, _, err := whenOpts.Query()
+	blocks, _, err := whenOpts.When()
 	if err != nil {
 		logger.Fatal("Error querying blocks with WhenOptions", "err", err)
 	}

@@ -14,14 +14,14 @@ import (
 
 // TODO: use types.MetaData throughout
 
-func (conn *Connection) GetMetaData(testmode bool) (*MetaData, error) {
+func (conn *Connection) GetMetaData(testmode bool) (*types.MetaData, error) {
 	chainId, networkId, err := conn.GetClientIDs()
 	if err != nil {
 		return nil, err
 	}
 
 	if testmode {
-		return &MetaData{
+		return &types.MetaData{
 			Unripe:    0xdeadbeef,
 			Ripe:      0xdeadbeef,
 			Staging:   0xdeadbeef,
@@ -33,7 +33,7 @@ func (conn *Connection) GetMetaData(testmode bool) (*MetaData, error) {
 		}, nil
 	}
 
-	var meta MetaData
+	var meta types.MetaData
 	meta.Chain = conn.Chain
 	meta.ChainId = chainId
 	meta.NetworkId = networkId
@@ -75,7 +75,3 @@ func (conn *Connection) GetMetaData(testmode bool) (*MetaData, error) {
 
 	return &meta, nil
 }
-
-// TODO: Remove rpc.MetaData and use types.MetaData throughout
-
-type MetaData = types.MetaData

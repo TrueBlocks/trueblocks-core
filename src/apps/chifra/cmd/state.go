@@ -25,7 +25,6 @@ import (
 // stateCmd represents the state command
 var stateCmd = &cobra.Command{
 	Use:     usageState,
-	Short:   shortState,
 	Long:    longState,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("state", func() *globals.GlobalOptions {
@@ -42,8 +41,6 @@ const usageState = `state [flags] <address> [address...] [block...]
 Arguments:
   addrs - one or more addresses (0x...) from which to retrieve balances (required)
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'`
-
-const shortState = "retrieve account balance(s) for one or more addresses at given block(s)"
 
 const longState = `Purpose:
   Retrieve account balance(s) for one or more addresses at given block(s).`
@@ -68,11 +65,11 @@ func init() {
 
 	stateCmd.Flags().StringSliceVarP(&statePkg.GetOptions().Parts, "parts", "p", nil, `control which state to export
 One or more of [ balance | nonce | code | proxy | deployed | accttype | some | all ]`)
-	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
-	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "z", false, "suppress the display of zero balance accounts")
-	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "l", "", "call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data")
-	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Articulate, "articulate", "a", false, "for the --call option only, articulate the retrieved data if ABIs can be found")
-	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation")
+	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, `only report a balance when it changes from one block to the next`)
+	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "z", false, `suppress the display of zero balance accounts`)
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "l", "", `call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data`)
+	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Articulate, "articulate", "a", false, `for the --call option only, articulate the retrieved data if ABIs can be found`)
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", `for the --call option only, redirects calls to this implementation`)
 	globals.InitGlobals("state", stateCmd, &statePkg.GetOptions().Globals, capabilities)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))

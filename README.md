@@ -196,3 +196,4 @@ Thanks to the following people who have contributed to this project:
 - [@MysticRyuujin](https://github.com/MysticRyuujin)
 - [@MattDodsonEnglish](https://github.com/MattDodsonEnglish)
 - [@crodnun](https://github.com/crodnun)
+- many others

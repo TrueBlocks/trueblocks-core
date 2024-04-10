@@ -19,7 +19,7 @@ func DoMonitors() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.Monitors(&buf); err != nil {
+	if err := opts.MonitorsBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

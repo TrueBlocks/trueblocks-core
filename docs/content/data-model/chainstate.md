@@ -1,6 +1,6 @@
 ---
 title: "Chain state"
-description: ""
+description: "Access to account and token state"
 lead: ""
 lastmod:
   - :git
@@ -9,8 +9,8 @@ lastmod:
 draft: false
 menu:
   data:
-    parent: "collections"
-weight: 3000
+    parent: collections
+weight: 31000
 toc: true
 ---
 
@@ -28,6 +28,7 @@ contract. This is the decoded `output` value of the smart contract call.
 
 The following commands produce and manage States:
 
+- [chifra export](/chifra/accounts/#chifra-export)
 - [chifra state](/chifra/chainstate/#chifra-state)
 
 States consist of the following fields:

@@ -51,8 +51,8 @@ func (opts *BlocksOptions) String() string {
 	return string(bytes)
 }
 
-// Blocks implements the chifra blocks command for the SDK.
-func (opts *BlocksOptions) Blocks(w io.Writer) error {
+// BlocksBytes implements the chifra blocks command for the SDK.
+func (opts *BlocksOptions) BlocksBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting blocks struct to URL values: %v", err)
@@ -61,7 +61,7 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 	return blocks.Blocks(w, values)
 }
 
-// blocksParseFunc handles specail cases such as structs and enums (if any).
+// blocksParseFunc handles special cases such as structs and enums (if any).
 func blocksParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*BlocksOptions)
@@ -95,18 +95,63 @@ func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 	return &opts, nil
 }
 
-func (opts *BlocksOptions) Query() ([]types.SimpleBlock[string], *types.MetaData, error) {
+type blocksGeneric interface {
+	types.SimpleBlock[types.SimpleTransaction] |
+		types.SimpleBlock[string] |
+		types.SimpleTrace |
+		types.SimpleAppearance |
+		types.SimpleLog |
+		types.SimpleWithdrawal |
+		types.SimpleBlockCount
+}
+
+func queryBlocks[T blocksGeneric](opts *BlocksOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Blocks(&buffer); err != nil {
+	if err := opts.BlocksBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleBlock[string]]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Blocks implements the chifra blocks command.
+func (opts *BlocksOptions) Blocks() ([]types.SimpleBlock[types.SimpleTransaction], *types.MetaData, error) {
+	return queryBlocks[types.SimpleBlock[types.SimpleTransaction]](opts)
+}
+
+// BlocksHashes implements the chifra blocks --hashes command.
+func (opts *BlocksOptions) BlocksHashes() ([]types.SimpleBlock[string], *types.MetaData, error) {
+	return queryBlocks[types.SimpleBlock[string]](opts)
+}
+
+// BlocksTraces implements the chifra blocks --traces command.
+func (opts *BlocksOptions) BlocksTraces() ([]types.SimpleTrace, *types.MetaData, error) {
+	return queryBlocks[types.SimpleTrace](opts)
+}
+
+// BlocksUniq implements the chifra blocks --uniq command.
+func (opts *BlocksOptions) BlocksUniq() ([]types.SimpleAppearance, *types.MetaData, error) {
+	return queryBlocks[types.SimpleAppearance](opts)
+}
+
+// BlocksLogs implements the chifra blocks --logs command.
+func (opts *BlocksOptions) BlocksLogs() ([]types.SimpleLog, *types.MetaData, error) {
+	return queryBlocks[types.SimpleLog](opts)
+}
+
+// BlocksWithdrawals implements the chifra blocks --withdrawals command.
+func (opts *BlocksOptions) BlocksWithdrawals() ([]types.SimpleWithdrawal, *types.MetaData, error) {
+	return queryBlocks[types.SimpleWithdrawal](opts)
+}
+
+// BlocksCount implements the chifra blocks --count command.
+func (opts *BlocksOptions) BlocksCount() ([]types.SimpleBlockCount, *types.MetaData, error) {
+	return queryBlocks[types.SimpleBlockCount](opts)
 }
 
 type BlocksFlow int
