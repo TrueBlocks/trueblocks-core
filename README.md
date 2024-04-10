@@ -99,7 +99,7 @@ Let's look at the first subcommand, called `status`.
 chifra status
 ```
 
-If you get a bunch of data, congratulations, your installation is working.  Try this command which shows every 10th block between the first and the 100,000th:
+If you get a bunch of data, congratulations, your installation is working. Try this command which shows every 10th block between the first and the 100,000th:
 
 ```[shell]
 chifra blocks 0-100000:10

@@ -183,7 +183,7 @@ string_q doCommand(const string_q& cmd, bool readStderr) {
     if (system(theCommand.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
-    // Check twice for existance since the previous command creates the file but may take some time
+    // Check twice for existence since the previous command creates the file but may take some time
     waitForCreate(filename);
     string_q ret;
     asciiFileToString(filename, ret);
