@@ -42,7 +42,7 @@ func ServeLogs(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// LogsInternal handles the internal workings of the logs command.  Returns an error.
+// LogsInternal handles the internal workings of the logs command. Returns an error.
 func (opts *LogsOptions) LogsInternal() error {
 	var err error
 	if err = opts.validateLogs(); err != nil {

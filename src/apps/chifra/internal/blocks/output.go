@@ -42,7 +42,7 @@ func ServeBlocks(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// BlocksInternal handles the internal workings of the blocks command.  Returns an error.
+// BlocksInternal handles the internal workings of the blocks command. Returns an error.
 func (opts *BlocksOptions) BlocksInternal() error {
 	var err error
 	if err = opts.validateBlocks(); err != nil {

@@ -42,7 +42,7 @@ func ServeTransactions(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// TransactionsInternal handles the internal workings of the transactions command.  Returns an error.
+// TransactionsInternal handles the internal workings of the transactions command. Returns an error.
 func (opts *TransactionsOptions) TransactionsInternal() error {
 	var err error
 	if err = opts.validateTransactions(); err != nil {

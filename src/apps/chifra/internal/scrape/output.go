@@ -44,7 +44,7 @@ func ServeScrape(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// ScrapeInternal handles the internal workings of the scrape command.  Returns an error.
+// ScrapeInternal handles the internal workings of the scrape command. Returns an error.
 func (opts *ScrapeOptions) ScrapeInternal() error {
 	var err error
 	if err = opts.validateScrape(); err != nil {

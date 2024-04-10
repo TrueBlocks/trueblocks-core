@@ -42,7 +42,7 @@ func ServeConfig(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// ConfigInternal handles the internal workings of the config command.  Returns an error.
+// ConfigInternal handles the internal workings of the config command. Returns an error.
 func (opts *ConfigOptions) ConfigInternal() error {
 	var err error
 	if err = opts.validateConfig(); err != nil {
