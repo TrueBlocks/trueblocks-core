@@ -2,7 +2,7 @@ package monitor
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -19,10 +19,10 @@ func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
 		return false, nil
 
 	} else {
-		var keep []index.AppearanceRecord
+		var keep []types.SimpleAppRecord
 		for _, app := range apps {
 			if app.BlockNumber <= num {
-				keep = append(keep, index.AppearanceRecord{
+				keep = append(keep, types.SimpleAppRecord{
 					BlockNumber:      app.BlockNumber,
 					TransactionIndex: app.TransactionIndex,
 				})

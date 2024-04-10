@@ -33,13 +33,13 @@ func (c *writeReport) Report() {
 	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
 }
 
-func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string, addrAppearanceMap map[string][]AppearanceRecord, nApps int) (*writeReport, error) {
+func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string, addrAppearanceMap map[string][]types.SimpleAppRecord, nApps int) (*writeReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
 	// Create space for the two tables...
 	addressTable := make([]types.SimpleAddrRecord, 0, len(addrAppearanceMap))
-	appearanceTable := make([]AppearanceRecord, 0, nApps)
+	appearanceTable := make([]types.SimpleAppRecord, 0, nApps)
 
 	// We want to sort the items in the map by address (maps in GoLang are not sorted)
 	sorted := []string{}

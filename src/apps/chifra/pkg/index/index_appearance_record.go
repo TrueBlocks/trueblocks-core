@@ -12,12 +12,6 @@ const (
 	AppRecordWidth = 8
 )
 
-// AppearanceRecord is a single record in the Appearance table
-type AppearanceRecord struct {
-	BlockNumber      uint32 `json:"blockNumber"`
-	TransactionIndex uint32 `json:"transactionIndex"`
-}
-
 func (chunk *Index) ReadAppearancesAndReset(addrRecord *types.SimpleAddrRecord) (apps []types.SimpleAppRecord, err error) {
 	offset, err := chunk.File.Seek(0, io.SeekCurrent)
 	if err != nil {

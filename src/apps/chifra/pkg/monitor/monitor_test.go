@@ -12,7 +12,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -51,25 +50,25 @@ func Test_Monitor_ReadApp(t *testing.T) {
 		RemoveTestMonitor(&mon, t)
 	}()
 
-	var got index.AppearanceRecord
+	var got types.SimpleAppRecord
 	err := mon.ReadAppearanceAt(0, &got)
 	if err == nil {
 		t.Error("Should have been 'index out of range in ReadAppearanceAt[0]' error")
 	}
 
-	expected := index.AppearanceRecord{BlockNumber: 1001001, TransactionIndex: 0}
+	expected := types.SimpleAppRecord{BlockNumber: 1001001, TransactionIndex: 0}
 	err = mon.ReadAppearanceAt(1, &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
 	}
 
-	expected = index.AppearanceRecord{BlockNumber: 1001002, TransactionIndex: 1}
+	expected = types.SimpleAppRecord{BlockNumber: 1001002, TransactionIndex: 1}
 	err = mon.ReadAppearanceAt(2, &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
 	}
 
-	expected = index.AppearanceRecord{BlockNumber: 1001003, TransactionIndex: 2}
+	expected = types.SimpleAppRecord{BlockNumber: 1001003, TransactionIndex: 2}
 	err = mon.ReadAppearanceAt(mon.Count(), &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
@@ -229,7 +228,7 @@ func RemoveTestMonitor(mon *Monitor, t *testing.T) {
 
 const nTests = 3
 
-var testApps = []index.AppearanceRecord{
+var testApps = []types.SimpleAppRecord{
 	{BlockNumber: 1001001, TransactionIndex: 0},
 	{BlockNumber: 1001002, TransactionIndex: 1},
 	{BlockNumber: 1001003, TransactionIndex: 2},

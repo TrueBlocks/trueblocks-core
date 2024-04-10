@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -69,7 +68,7 @@ func (f *AppearanceFilter) GetOuterBounds() base.BlockRange {
 }
 
 // ApplyFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
-func (f *AppearanceFilter) ApplyFilter(app *index.AppearanceRecord) (passed, finished bool) {
+func (f *AppearanceFilter) ApplyFilter(app *types.SimpleAppRecord) (passed, finished bool) {
 	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)} // --first_block/--last_block
 	if !appRange.Intersects(base.FileRange(f.exportRange)) {
 		return false, false
@@ -78,7 +77,7 @@ func (f *AppearanceFilter) ApplyFilter(app *index.AppearanceRecord) (passed, fin
 }
 
 // ApplyRangeFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
-func (f *AppearanceFilter) ApplyRangeFilter(app *index.AppearanceRecord) (passed, finished bool) {
+func (f *AppearanceFilter) ApplyRangeFilter(app *types.SimpleAppRecord) (passed, finished bool) {
 	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)} // --first_block/--last_block
 	return appRange.Intersects(base.FileRange(f.exportRange)), false
 }

@@ -12,7 +12,7 @@ import (
 type AppearanceResult struct {
 	Address    base.Address
 	Range      base.FileRange
-	AppRecords *[]AppearanceRecord
+	AppRecords *[]types.SimpleAppRecord
 	Err        error
 }
 
@@ -44,14 +44,6 @@ func (chunk *Index) ReadAppearances(address base.Address) *AppearanceResult {
 		return &ret
 	}
 
-	a := make([]AppearanceRecord, 0, len(appearances))
-	for _, aa := range appearances {
-		a = append(a, AppearanceRecord{
-			BlockNumber:      aa.BlockNumber,
-			TransactionIndex: aa.TransactionIndex,
-		})
-	}
-	ret.AppRecords = &a
-
+	ret.AppRecords = &appearances
 	return &ret
 }

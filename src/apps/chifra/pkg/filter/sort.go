@@ -3,7 +3,7 @@ package filter
 import (
 	"sort"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type AppearanceSort int
@@ -14,7 +14,7 @@ const (
 	Reversed
 )
 
-func (f *AppearanceFilter) Sort(fromDisc []index.AppearanceRecord) {
+func (f *AppearanceFilter) Sort(fromDisc []types.SimpleAppRecord) {
 	if f.sortBy == Sorted || f.sortBy == Reversed {
 		sort.Slice(fromDisc, func(i, j int) bool {
 			if f.sortBy == Reversed {
