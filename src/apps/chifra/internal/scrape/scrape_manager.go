@@ -5,11 +5,9 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
-
-// TODO: Remove rpc.MetaData and use types.MetaData throughout
 
 // BlazeManager manages the scraper by keeping track of the progress of the scrape and
 // maintaining the timestamp array and processed map. The processed map helps us know
@@ -19,7 +17,7 @@ type BlazeManager struct {
 	timestamps   map[base.Blknum]tslib.TimestampRecord
 	processedMap map[base.Blknum]bool
 	opts         *ScrapeOptions
-	meta         *rpc.MetaData
+	meta         *types.MetaData
 	startBlock   base.Blknum
 	blockCount   base.Blknum
 	ripeBlock    base.Blknum

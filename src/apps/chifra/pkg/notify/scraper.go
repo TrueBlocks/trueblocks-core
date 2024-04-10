@@ -3,11 +3,9 @@ package notify
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
 )
-
-// TODO: Remove rpc.MetaData and use types.MetaData throughout
 
 const (
 	MessageChunkWritten Message = "chunkWritten"
@@ -37,7 +35,7 @@ func (n *NotificationPayloadAppearance) FromString(s string) (err error) {
 	return
 }
 
-func NewChunkWrittenNotification(meta *rpc.MetaData, chunk string) *Notification[string] {
+func NewChunkWrittenNotification(meta *types.MetaData, chunk string) *Notification[string] {
 	return &Notification[string]{
 		Msg:     MessageChunkWritten,
 		Meta:    meta,
@@ -45,7 +43,7 @@ func NewChunkWrittenNotification(meta *rpc.MetaData, chunk string) *Notification
 	}
 }
 
-func NewStageUpdatedNotification(meta *rpc.MetaData, chunkRange string) *Notification[string] {
+func NewStageUpdatedNotification(meta *types.MetaData, chunkRange string) *Notification[string] {
 	return &Notification[string]{
 		Msg:     MessageChunkWritten,
 		Meta:    meta,
@@ -53,7 +51,7 @@ func NewStageUpdatedNotification(meta *rpc.MetaData, chunkRange string) *Notific
 	}
 }
 
-func NewAppearanceNotification(meta *rpc.MetaData, appearances []NotificationPayloadAppearance) *Notification[[]NotificationPayloadAppearance] {
+func NewAppearanceNotification(meta *types.MetaData, appearances []NotificationPayloadAppearance) *Notification[[]NotificationPayloadAppearance] {
 	return &Notification[[]NotificationPayloadAppearance]{
 		Msg:     MessageChunkWritten,
 		Meta:    meta,
