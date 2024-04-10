@@ -24,7 +24,7 @@ Arguments:
 
 Flags:
   -t, --types strings   which types of transactions to request
-                        One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]
+                        One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | some | all ]
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
   -a, --articulate      articulate the retrieved data if ABIs can be found
   -S, --source string   the source of the slurped data
@@ -59,7 +59,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  ```
+```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
@@ -69,3 +69,4 @@ of any line makes it a comment.
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

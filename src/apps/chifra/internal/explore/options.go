@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package explorePkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -17,6 +21,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // ExploreOptions provides all command options for the chifra explore command.
@@ -50,9 +55,17 @@ func (opts *ExploreOptions) String() string {
 
 // exploreFinishParseApi finishes the parsing for server invocations. Returns a new ExploreOptions.
 func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ExploreFinishParseInternal(w, values)
+}
+
+func ExploreFinishParseInternal(w io.Writer, values url.Values) *ExploreOptions {
 	copy := defaultExploreOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "terms":
 			for _, val := range value {
@@ -69,7 +82,7 @@ func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	opts.Terms, _ = opts.Conn.GetEnsAddresses(opts.Terms)
@@ -121,12 +134,14 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultExploreOptions.Globals)
 	defaultExploreOptions.Globals.TestMode = testMode
 	defaultExploreOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra explore
+	var capabilities caps.Capability // capabilities for chifra explore
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.NoColor)
+	capabilities = capabilities.Add(caps.Chain)
+	capabilities = capabilities.Add(caps.File)
 	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Fmt)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 	defaultExploreOptions.Globals.Caps = capabilities
 }
@@ -139,4 +154,3 @@ func (opts *ExploreOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

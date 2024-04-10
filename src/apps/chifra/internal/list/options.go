@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package listPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -20,6 +24,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // ListOptions provides all command options for the chifra list command.
@@ -62,7 +67,7 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != utils.NOPOS && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -75,13 +80,19 @@ func (opts *ListOptions) String() string {
 
 // listFinishParseApi finishes the parsing for server invocations. Returns a new ListOptions.
 func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ListFinishParseInternal(w, values)
+}
+
+func ListFinishParseInternal(w io.Writer, values url.Values) *ListOptions {
 	copy := defaultListOptions
 	opts := &copy
-	opts.FirstRecord = 0
 	opts.MaxRecords = 250
-	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -116,7 +127,7 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
@@ -176,7 +187,8 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultListOptions.Globals)
 	defaultListOptions.Globals.TestMode = testMode
 	defaultListOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra list
+	var capabilities caps.Capability // capabilities for chifra list
+	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultListOptions.Globals.Caps = capabilities
@@ -190,4 +202,3 @@ func (opts *ListOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

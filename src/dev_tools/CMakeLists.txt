@@ -6,5 +6,5 @@ set(BASE_LIBS util ${CURL_LIBRARIES})
 set(BASE_INCLUDE "${CMAKE_SOURCE_DIR}/dev_tools/utillib")
 
 add_subdirectory(utillib)
-add_subdirectory(makeClass)
 add_subdirectory(testRunner)
+add_subdirectory(goMaker)

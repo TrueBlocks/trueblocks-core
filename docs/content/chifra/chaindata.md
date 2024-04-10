@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 1200
+weight: 27000
 toc: true
 ---
 
@@ -83,13 +83,13 @@ Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
 - [block](/data-model/chaindata/#block)
-- [withdrawal](/data-model/chaindata/#withdrawal)
+- [blockcount](/data-model/chaindata/#blockcount)
 - [log](/data-model/chaindata/#log)
-- [trace](/data-model/chaindata/#trace)
 - [logfilter](/data-model/chaindata/#logfilter)
+- [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
-- [blockcount](/data-model/chaindata/#blockcount)
+- [withdrawal](/data-model/chaindata/#withdrawal)
 
 Links:
 
@@ -293,9 +293,9 @@ Data models produced by this tool:
 
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
-- [traceresult](/data-model/chaindata/#traceresult)
 - [tracecount](/data-model/chaindata/#tracecount)
 - [tracefilter](/data-model/chaindata/#tracefilter)
+- [traceresult](/data-model/chaindata/#traceresult)
 
 Links:
 
@@ -360,3 +360,4 @@ Links:
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/when)
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/whenBlock.csv)
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

@@ -263,102 +263,6 @@ void CTestCase::finishParse() {
     // EXISTING_CODE
 }
 
-//---------------------------------------------------------------------------------------------------
-bool CTestCase::Serialize(CArchive& archive) {
-    if (archive.isWriting())
-        return SerializeC(archive);
-
-    // Always read the base class (it will handle its own backLevels if any, then
-    // read this object's back level (if any) or the current version.
-    CBaseNode::Serialize(archive);
-    if (readBackLevel(archive))
-        return true;
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-    archive >> origLine;
-    archive >> builtin;
-    archive >> onOff;
-    archive >> mode;
-    archive >> speed;
-    archive >> route;
-    archive >> tool;
-    archive >> name;
-    archive >> post;
-    archive >> options;
-    archive >> path;
-    archive >> goldPath;
-    archive >> workPath;
-    archive >> fileName;
-    // archive >> test_id;
-    archive >> isCmd;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    finishParse();
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool CTestCase::SerializeC(CArchive& archive) const {
-    // Writing always writes the latest version of the data
-    CBaseNode::SerializeC(archive);
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-    archive << origLine;
-    archive << builtin;
-    archive << onOff;
-    archive << mode;
-    archive << speed;
-    archive << route;
-    archive << tool;
-    archive << name;
-    archive << post;
-    archive << options;
-    archive << path;
-    archive << goldPath;
-    archive << workPath;
-    archive << fileName;
-    // archive << test_id;
-    archive << isCmd;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool CTestCase::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
-    ASSERT(archiveIn.isReading());
-    ASSERT(archiveOut.isWriting());
-    CTestCase copy;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    copy.Serialize(archiveIn);
-    copy.SerializeC(archiveOut);
-    return true;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CTestCaseArray& array) {
-    uint64_t count;
-    archive >> count;
-    array.resize(count);
-    for (size_t i = 0; i < count; i++) {
-        ASSERT(i < array.capacity());
-        array.at(i).Serialize(archive);
-    }
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CTestCaseArray& array) {
-    uint64_t count = array.size();
-    archive << count;
-    for (size_t i = 0; i < array.size(); i++)
-        array[i].SerializeC(archive);
-    return archive;
-}
-
 //---------------------------------------------------------------------------
 void CTestCase::registerClass(void) {
     // only do this once
@@ -431,26 +335,6 @@ string_q nextTestcaseChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 // EXISTING_CODE
 // EXISTING_CODE
 
-//---------------------------------------------------------------------------
-bool CTestCase::readBackLevel(CArchive& archive) {
-    bool done = false;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CTestCase& tes) {
-    tes.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CTestCase& tes) {
-    tes.Serialize(archive);
-    return archive;
-}
-
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CTestCase& it) {
     // EXISTING_CODE
@@ -516,7 +400,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     options = parts.size() > 7 ? trim(parts[7]) : "";
 
     if (contains(line, "&&")) {
-        cerr << bRed << "test case " << bTeal << name << bRed << " contains '&&'. Quitting..." << cOff << endl;
+        cerr << "test case " << name << " contains '&&'. Quitting..." << endl;
         exit(0);
     }
 
@@ -546,7 +430,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
 }
 
 //---------------------------------------------------------------------------------------------
-void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
+void CTestCase::prepareTest(bool cmdLine) {
     goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/", "/test/gold/" + path + "/" + tool + "/");
     workPath = substitute(goldPath, "/gold/", "/working/");
     establishFolder(goldPath);
@@ -588,12 +472,6 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
             goldPath += "api_tests/";
             workPath += "api_tests/";
         }
-    }
-
-    if (removeWorking) {
-        string_q removePath = workPath + fileName;  // order matters
-        if (fileExists(removePath))
-            ::remove(removePath.c_str());
     }
 }
 

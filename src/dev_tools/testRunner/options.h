@@ -11,10 +11,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass --options. Edit only those parts of
- * the code outside of the BEG_CODE/END_CODE sections
- */
 #include "utillib.h"
 #include "testcase.h"
 #include "measure.h"
@@ -26,16 +22,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
-    string_q filter;
-    uint64_t skip;
-    bool report;
-
-    int modes = CMD;
-    bool ignoreOff = false;
+    // int modes = BOTH;
     CStringArray tests;
-    bool full_test;
     string_q apiProvider;
-    uint64_t nRun = 0;
 
     COptions(void);
     ~COptions(void);
@@ -43,8 +32,7 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    void doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
-                 int which, bool doRemove);
+    void doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int which);
     bool cleanTest(const string_q& path, const string_q& testName);
 };
 

@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package statePkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -19,6 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // StateOptions provides all command options for the chifra state command.
@@ -64,9 +69,17 @@ func (opts *StateOptions) String() string {
 
 // stateFinishParseApi finishes the parsing for server invocations. Returns a new StateOptions.
 func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return StateFinishParseInternal(w, values)
+}
+
+func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 	copy := defaultStateOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -99,7 +112,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
@@ -177,10 +190,11 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultStateOptions.Globals)
 	defaultStateOptions.Globals.TestMode = testMode
 	defaultStateOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra state
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra state
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
+	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultStateOptions.Globals.Caps = capabilities
 }
@@ -197,4 +211,3 @@ func (opts *StateOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

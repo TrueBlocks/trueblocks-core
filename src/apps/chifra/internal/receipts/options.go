@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package receiptsPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -18,6 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // ReceiptsOptions provides all command options for the chifra receipts command.
@@ -50,9 +55,17 @@ func (opts *ReceiptsOptions) String() string {
 
 // receiptsFinishParseApi finishes the parsing for server invocations. Returns a new ReceiptsOptions.
 func receiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ReceiptsFinishParseInternal(w, values)
+}
+
+func ReceiptsFinishParseInternal(w io.Writer, values url.Values) *ReceiptsOptions {
 	copy := defaultReceiptsOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "transactions":
 			for _, val := range value {
@@ -67,7 +80,7 @@ func receiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOpt
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -117,10 +130,11 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultReceiptsOptions.Globals)
 	defaultReceiptsOptions.Globals.TestMode = testMode
 	defaultReceiptsOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra receipts
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra receipts
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultReceiptsOptions.Globals.Caps = capabilities
 }
@@ -136,4 +150,3 @@ func (opts *ReceiptsOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

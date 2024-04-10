@@ -38,32 +38,32 @@ Notes:
 
 Data models produced by this tool:
 
-- [manifest](/data-model/admin/#manifest)
 - [chunkrecord](/data-model/admin/#chunkrecord)
+- [manifest](/data-model/admin/#manifest)
 
 ### configuration
 
 Each of the following additional configurable command line options are available.
 
 **Configuration file:** `trueBlocks.toml`  
-**Configuration group:** `[scrape.<chain>]`  
+**Configuration group:** `[scrape.<chain>]`
 
-| Item               | Type         | Default      | Description / Default |
-| ------------------ | ------------ | ------------ | --------- |
-| appsPerChunk       | uint64       | 2000000      | the number of appearances to build into a chunk before consolidating it |
-| snapToGrid         | uint64       | 250000       | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
-| firstSnap          | uint64       | 2000000      | the first block at which snap_to_grid is enabled |
-| unripeDist         | uint64       | 28           | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe |
-| channelCount       | uint64       | 20           | number of concurrent processing channels |
-| allowMissing       | bool         | true         | do not report errors for blockchains that contain blocks with zero addresses |
+| Item         | Type   | Default | Description / Default                                                                                                    |
+| ------------ | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------ |
+| appsPerChunk | uint64 | 2000000 | the number of appearances to build into a chunk before consolidating it                                                  |
+| snapToGrid   | uint64 | 250000  | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
+| firstSnap    | uint64 | 2000000 | the first block at which snap_to_grid is enabled                                                                         |
+| unripeDist   | uint64 | 28      | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                |
+| channelCount | uint64 | 20      | number of concurrent processing channels                                                                                 |
+| allowMissing | bool   | false   | do not report errors for blockchains that contain blocks with zero addresses                                             |
 
 Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 respectively. See the specification for a justification of these values.
 
 These items may be set in three ways, each overriding the preceding method:
 
 -- in the above configuration file under the `[scrape.<chain>]` group,  
--- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  
--- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).  
+-- in the environment by exporting the configuration item as upper case (with underbars removed) and prepended with (TB underbar SCRAPE underbar CHAIN) with the underbars included, or  
+-- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).
 
 ### further information
 
@@ -110,7 +110,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  ```
+```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
@@ -120,3 +120,4 @@ of any line makes it a comment.
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

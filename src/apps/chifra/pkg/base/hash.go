@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/ethereum/go-ethereum/common"
@@ -74,10 +73,6 @@ func HexToHash(hex string) (hash Hash) {
 	return
 }
 
-func BigToHash(b *big.Int) Hash {
-	return BytesToHash(b.Bytes())
-}
-
 func BytesToHash(b []byte) (hash Hash) {
 	hash.SetBytes(b)
 	return
@@ -88,7 +83,7 @@ func bytesToHashString(hashBytes []byte) string {
 }
 
 func IsValidHex(typ string, val string, nBytes int) (bool, error) {
-	if _, err := ValidHex(typ, val, nBytes); err != nil {
+	if _, err := ValidHex(val, nBytes); err != nil {
 		if errors.Is(err, ErrInvalidLength) {
 			//lint:ignore ST1005 sorry
 			return false, fmt.Errorf("The %s option (%s) must be %d bytes long.", typ, val, nBytes)

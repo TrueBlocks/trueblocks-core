@@ -225,7 +225,6 @@ size_t CSharedResource::Read(void* buff, size_t size, size_t cnt) {
 }
 
 //----------------------------------------------------------------------
-// clang-format off
 size_t CSharedResource::Read(bool& val) { return Read(&val, sizeof(bool), 1); }
 size_t CSharedResource::Read(char& val) { return Read(&val, sizeof(char), 1); }
 size_t CSharedResource::Read(int& val) { return Read(&val, sizeof(int), 1); }
@@ -240,7 +239,6 @@ size_t CSharedResource::Read(long long& val) { return Read(&val, sizeof(long lon
 size_t CSharedResource::Read(unsigned long long& val) { return Read(&val, sizeof(long long), 1); }  // NOLINT
 size_t CSharedResource::Read(float& val) { return Read(&val, sizeof(float), 1); }
 size_t CSharedResource::Read(double& val) { return Read(&val, sizeof(double), 1); }
-// clang-format on
 
 //----------------------------------------------------------------------
 size_t CSharedResource::Read(string_q& str) {
@@ -278,7 +276,6 @@ size_t CSharedResource::Write(const void* buff, size_t size, size_t cnt) const {
 }
 
 //----------------------------------------------------------------------
-// clang-format off
 size_t CSharedResource::Write(bool val) const { return Write(&val, sizeof(bool), 1); }
 size_t CSharedResource::Write(char val) const { return Write(&val, sizeof(char), 1); }
 size_t CSharedResource::Write(int val) const { return Write(&val, sizeof(int), 1); }
@@ -293,7 +290,6 @@ size_t CSharedResource::Write(long long val) const { return Write(&val, sizeof(l
 size_t CSharedResource::Write(unsigned long long val) const { return Write(&val, sizeof(long long), 1); }  // NOLINT
 size_t CSharedResource::Write(float val) const { return Write(&val, sizeof(float), 1); }
 size_t CSharedResource::Write(double val) const { return Write(&val, sizeof(double), 1); }
-// clang-format on
 
 //----------------------------------------------------------------------
 size_t CSharedResource::Write(const string_q& val) const {
@@ -370,15 +366,11 @@ void cleanFileLocks(void) {
 //-----------------------------------------------------------------------
 void defaultQuitHandler(int signum) {
     if (quitCount(1) > 2) {
-        // LOG_INFO(cBlue, COptionsBase::g_progName, ": defaultQuitHander (>2): ", quitCount(), ": ", signum, cOff);
         cleanFileLocks();
         if (signum != -1) {
-            // LOG_INFO(cYellow, COptionsBase::g_progName, ": defaultQuitHander (>2): ", quitCount(), ": ", signum,
-            // cOff);
             exit(EXIT_SUCCESS);
         }
     }
-    // LOG_INFO(cTeal, COptionsBase::g_progName, ": defaultQuitHander (<2): ", quitCount(), ": ", signum, cOff);
 }
 
 //-----------------------------------------------------------------------

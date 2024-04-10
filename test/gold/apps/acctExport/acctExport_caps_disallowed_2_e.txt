@@ -1,4 +1,4 @@
-chifra export  trueblocks.eth --wei
+chifra export  trueblocks.eth --wei --max_records 3
 Error: 
   unknown flag: --wei
 

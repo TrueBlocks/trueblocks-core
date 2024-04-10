@@ -1,0 +1,9 @@
+[settings]
+    class = "CResult"
+    doc_group = "03-Chain State"
+    doc_descr = "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
+    doc_route = "309-result"
+    produced_by = "state"
+    go_output = "src/apps/chifra/pkg/types"
+    cache_type = "cacheable"
+    cache_by = "address,block,fourbyte"

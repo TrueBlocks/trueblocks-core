@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -63,7 +64,7 @@ func (opts *SlurpOptions) HandleCount() error {
 						sleep := opts.Sleep
 						if sleep > 0 {
 							ms := time.Duration(sleep*1000) * time.Millisecond
-							logger.Progress(!opts.Globals.TestMode, fmt.Sprintf("Sleeping for %g seconds", sleep))
+							logger.Progress(true, fmt.Sprintf("Sleeping for %g seconds", sleep))
 							time.Sleep(ms)
 						}
 					}
@@ -76,8 +77,8 @@ func (opts *SlurpOptions) HandleCount() error {
 				errorChan <- fmt.Errorf(msg)
 			} else {
 				s := types.SimpleMonitor{
-					Address:  addr,
-					NRecords: totalFiltered,
+					Address:  base.HexToAddress(addr),
+					NRecords: int64(totalFiltered),
 				}
 				modelChan <- &s
 			}

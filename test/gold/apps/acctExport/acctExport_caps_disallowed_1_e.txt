@@ -1,4 +1,4 @@
-chifra export  trueblocks.eth --raw
+chifra export  trueblocks.eth --raw --max_records 3
 Error: 
   unknown flag: --raw
 

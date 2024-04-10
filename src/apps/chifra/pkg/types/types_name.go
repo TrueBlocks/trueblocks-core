@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -10,7 +10,6 @@ package types
 
 // EXISTING_CODE
 import (
-	"math/big"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -54,7 +53,7 @@ type SimpleName struct {
 	Tags       string       `json:"tags"`
 	raw        *RawName     `json:"-"`
 	// EXISTING_CODE
-	Prefund big.Int `json:"prefund,omitempty"`
+	Prefund base.Wei `json:"prefund,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -108,7 +107,9 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 		model["address"] = strings.ToLower(s.Address.String())
 	}
 
-	if extraOptions["expand"] != true && extraOptions["prefund"] != true {
+	isExpanded := extraOptions["expand"] == true
+	isPrefund := extraOptions["prefund"] == true
+	if !isExpanded && !isPrefund {
 		x := []string{}
 		for _, v := range order {
 			if v != "source" {
@@ -117,6 +118,11 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 		}
 		order = x
 		delete(model, "source")
+	}
+
+	if isExpanded && isPrefund {
+		model["prefund"] = s.Prefund.String()
+		order = append(order, "prefund")
 	}
 
 	if format == "json" {
@@ -178,7 +184,7 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 			model["decimals"] = ""
 		}
 
-		if extraOptions["expand"] == true {
+		if isExpanded {
 			model["deleted"] = s.Deleted
 			order = append(order, "deleted")
 			model["isCustom"] = s.IsCustom
@@ -200,6 +206,12 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 		Data:  model,
 		Order: order,
 	}
+}
+
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleName) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE
@@ -246,4 +258,3 @@ func NewNameFromGrpc(gRpcName *proto.Name) *SimpleName {
 }
 
 // EXISTING_CODE
-

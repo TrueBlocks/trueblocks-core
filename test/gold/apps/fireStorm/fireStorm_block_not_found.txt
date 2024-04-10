@@ -4,7 +4,7 @@ TEST[DATE|TIME] Caps:  -fmt,-noHeader,-output,-append
 TEST[DATE|TIME] Format:  txt
 Error: block at 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2 returned an error: not found
 Usage:
-  chifra explore [flags] <term> [term...]
+  chifra explore [flags] [terms...]
 
 Arguments:
   terms - one or more address, name, block, or transaction identifier

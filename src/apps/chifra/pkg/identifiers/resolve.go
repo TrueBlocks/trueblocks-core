@@ -165,6 +165,10 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 			if err != nil {
 				return bn, err
 			}
+			if bn == current {
+				// might happen if the block spans the period
+				bn++ // ensure at least one block's advancement
+			}
 		}
 
 	} else {

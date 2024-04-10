@@ -1,0 +1,26 @@
+{{range .ModelList}}{{if eq .GroupName "[{GROUP}]"}}---
+title: "{{.GroupTitle}}"
+description: ""
+lead: ""
+lastmod:
+  - :git
+  - lastmod
+  - publishDate
+draft: false
+menu:
+  data:
+    parent: "collections"
+weight: {{.GroupWeight}}
+toc: true
+---
+
+{{.GroupIntro}}
+
+{{.Markdowns}}
+## Base types
+
+This documentation mentions the following basic data types.
+
+{{.BaseTypes}}
+
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*{{end}}{{end}}

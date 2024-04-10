@@ -3,7 +3,6 @@ package rpc
 import (
 	"errors"
 	"fmt"
-	"math/big"
 	"strconv"
 	"strings"
 
@@ -147,7 +146,7 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo stri
 
 // GetBalanceAtToken returns token balance for given block. `hexBlockNo` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func (conn *Connection) GetBalanceAtToken(token, holder base.Address, hexBlockNo string) (balance *big.Int, err error) {
+func (conn *Connection) GetBalanceAtToken(token, holder base.Address, hexBlockNo string) (*base.Wei, error) {
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
 		hexBlockNo = fmt.Sprintf("0x%x", utils.MustParseUint(hexBlockNo))
 	}
@@ -172,7 +171,7 @@ func (conn *Connection) GetBalanceAtToken(token, holder base.Address, hexBlockNo
 	}
 
 	if output["balance"] == nil {
-		return big.NewInt(0), nil
+		return base.NewWei(0), nil
 	}
 
 	return base.HexToWei(*output["balance"]), nil

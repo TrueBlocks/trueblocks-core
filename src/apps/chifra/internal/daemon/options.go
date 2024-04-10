@@ -1,21 +1,26 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package daemonPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // DaemonOptions provides all command options for the chifra daemon command.
@@ -59,9 +64,20 @@ func (opts *DaemonOptions) String() string {
 
 // daemonFinishParseApi finishes the parsing for server invocations. Returns a new DaemonOptions.
 func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return DaemonFinishParseInternal(w, values)
+}
+
+func DaemonFinishParseInternal(w io.Writer, values url.Values) *DaemonOptions {
 	copy := defaultDaemonOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	opts.Url = "localhost:8080"
+	opts.Api = "on"
+	opts.Port = ":8080"
+	for key, value := range values {
 		switch key {
 		case "url":
 			opts.Url = value[0]
@@ -81,7 +97,7 @@ func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	if len(opts.Port) > 0 && opts.Port != ":8080" && opts.Url == "localhost:8080" {
@@ -140,14 +156,12 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultDaemonOptions.Globals)
 	defaultDaemonOptions.Globals.TestMode = testMode
 	defaultDaemonOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra daemon
+	var capabilities caps.Capability // capabilities for chifra daemon
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.NoColor)
 	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Chain)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
-	// capabilities = capabilities.Remove(caps.Fmt)
-	// capabilities = capabilities.Remove(caps.File)
 	// EXISTING_CODE
 	defaultDaemonOptions.Globals.Caps = capabilities
 }
@@ -160,4 +174,3 @@ func (opts *DaemonOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

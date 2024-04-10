@@ -1,7 +1,10 @@
 /* eslint object-curly-newline: ["error", "never"] */
 /* eslint max-len: ["error", 160] */
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
 /*
- * This file was generated with makeClass --sdk. Do not edit it.
+ * This file was auto generated. DO NOT EDIT.
  */
 import * as ApiCallers from '../lib/api_callers';
 import { address, blknum, Token } from '../types';
@@ -14,13 +17,11 @@ export function getTokens(
     byAcct?: boolean,
     changes?: boolean,
     noZero?: boolean,
+    fmt?: string,
     chain: string,
     noHeader?: boolean,
-    fmt?: string,
-    verbose?: boolean,
-    ether?: boolean,
-    raw?: boolean,
     cache?: boolean,
+    decache?: boolean,
   },
   options?: RequestInit,
 ) {
@@ -28,4 +29,3 @@ export function getTokens(
     { endpoint: '/tokens', method: 'get', parameters, options },
   );
 }
-

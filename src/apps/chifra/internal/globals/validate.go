@@ -5,10 +5,10 @@
 package globals
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -47,7 +47,7 @@ func (opts *GlobalOptions) Validate() error {
 
 	// TODO: This hack is here to make test cases pass. It can be removed at some point
 	if opts.Format == "json" && len(opts.OutputFn) > 0 && opts.TestMode {
-		fmt.Println("{ \"outputFilename\": \"--output_filename--\" }")
+		logger.Info("{ \"outputFilename\": \"--output_filename--\" }")
 	}
 
 	if opts.Cache && opts.Decache {

@@ -29,8 +29,9 @@ func (opts *StateOptions) HandleCall() error {
 	}
 
 	callAddress := base.HexToAddress(opts.Addrs[0])
-	if opts.ProxyFor != "" {
-		callAddress = base.HexToAddress(opts.ProxyFor)
+	proxy := base.HexToAddress(opts.ProxyFor)
+	if !proxy.IsZero() {
+		callAddress = proxy
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())

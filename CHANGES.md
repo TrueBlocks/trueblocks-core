@@ -686,7 +686,7 @@ The following data models were either modified, added, removed, or renamed by ha
 - #3215 chifra tokens with --verbose produces empty dates
 - #3214 chifra cmd - thoughts from making a tutorial in Berlin
 - #3213 chifra export --trace --count doesn't work
-- #3212 chifra cmd -- any use of `--chain` with a value not found in the array shoudl fail more gracefully
+- #3212 chifra cmd -- any use of `--chain` with a value not found in the array should fail more gracefully
 - #3211 Omission of popular contracts with long vanity addresses
 - #3210 chifra chunks manifest --pin requires ipfs even if the help text says otherwise
 - #3207 chifra blocks no reporting...

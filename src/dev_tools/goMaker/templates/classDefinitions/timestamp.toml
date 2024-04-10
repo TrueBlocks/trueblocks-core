@@ -1,0 +1,7 @@
+[settings]
+    class = "CTimestamp"
+    doc_group = "02-Chain Data"
+    doc_descr = "the timestamp, date and difference in timestamp of previous block produced by chifra when"
+    doc_route = "242-timestamp"
+    produced_by = "when"
+    go_output = "src/apps/chifra/internal/when"

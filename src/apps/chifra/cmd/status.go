@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -53,9 +54,8 @@ Notes:
   - If no mode is supplied, a terse report is generated.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra status
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra status
+	capabilities = capabilities.Add(caps.Default)
 
 	statusCmd.Flags().SortFlags = false
 
@@ -73,4 +73,3 @@ func init() {
 
 	chifraCmd.AddCommand(statusCmd)
 }
-

@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package transactionsPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -19,6 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // TransactionsOptions provides all command options for the chifra transactions command.
@@ -68,9 +73,17 @@ func (opts *TransactionsOptions) String() string {
 
 // transactionsFinishParseApi finishes the parsing for server invocations. Returns a new TransactionsOptions.
 func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return TransactionsFinishParseInternal(w, values)
+}
+
+func TransactionsFinishParseInternal(w io.Writer, values url.Values) *TransactionsOptions {
 	copy := defaultTransactionsOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "transactions":
 			for _, val := range value {
@@ -107,7 +120,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -159,11 +172,12 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultTransactionsOptions.Globals)
 	defaultTransactionsOptions.Globals.TestMode = testMode
 	defaultTransactionsOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra transactions
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra transactions
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultTransactionsOptions.Globals.Caps = capabilities
 }
@@ -180,4 +194,3 @@ func (opts *TransactionsOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

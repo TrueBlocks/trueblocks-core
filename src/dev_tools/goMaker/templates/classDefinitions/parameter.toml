@@ -1,0 +1,9 @@
+[settings]
+    class = "CParameter"
+    contained_by = "function, parameter"
+    doc_group = "05-Other"
+    doc_descr = "an input or output parameter to a Solidity function or event"
+    doc_route = "509-parameter"
+    produced_by = "abis, export"
+    go_output = "src/apps/chifra/pkg/types"
+    cache_type = "marshal_only"

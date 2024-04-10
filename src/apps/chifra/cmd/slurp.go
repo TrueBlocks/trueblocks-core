@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -55,17 +56,16 @@ Notes:
   - If the value of --source is key, --types is ignored and only appearances or counts are returned.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra slurp
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra slurp
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
-	// EXISTING_CODE
 
 	slurpCmd.Flags().SortFlags = false
 
 	slurpCmd.Flags().StringSliceVarP(&slurpPkg.GetOptions().Types, "types", "t", nil, `which types of transactions to request
-One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]`)
+One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | some | all ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Appearances, "appearances", "p", false, "show only the blocknumber.tx_id appearances of the exported transactions")
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().Source, "source", "S", "etherscan", `the source of the slurped data
@@ -75,8 +75,8 @@ One of [ etherscan | key ]`)
 	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 3000, "the number of records to request on each page (hidden)")
 	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, "seconds to sleep between requests")
 	if os.Getenv("TEST_MODE") != "true" {
-		slurpCmd.Flags().MarkHidden("page")
-		slurpCmd.Flags().MarkHidden("per_page")
+		_ = slurpCmd.Flags().MarkHidden("page")
+		_ = slurpCmd.Flags().MarkHidden("per_page")
 	}
 	globals.InitGlobals("slurp", slurpCmd, &slurpPkg.GetOptions().Globals, capabilities)
 
@@ -88,4 +88,3 @@ One of [ etherscan | key ]`)
 
 	chifraCmd.AddCommand(slurpCmd)
 }
-

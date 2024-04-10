@@ -3,7 +3,7 @@ Error:
   unknown flag: --cache
 
 Usage:
-  chifra explore [flags] <term> [term...]
+  chifra explore [flags] [terms...]
 
 Arguments:
   terms - one or more address, name, block, or transaction identifier

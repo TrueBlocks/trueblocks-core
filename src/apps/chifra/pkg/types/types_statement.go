@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -12,7 +12,6 @@ package types
 import (
 	"fmt"
 	"io"
-	"math/big"
 	"path/filepath"
 	"strings"
 
@@ -62,31 +61,31 @@ type RawStatement struct {
 
 type SimpleStatement struct {
 	AccountedFor        base.Address   `json:"accountedFor"`
-	AmountIn            big.Int        `json:"amountIn,omitempty"`
-	AmountOut           big.Int        `json:"amountOut,omitempty"`
+	AmountIn            base.Wei       `json:"amountIn,omitempty"`
+	AmountOut           base.Wei       `json:"amountOut,omitempty"`
 	AssetAddr           base.Address   `json:"assetAddr"`
 	AssetSymbol         string         `json:"assetSymbol"`
-	BegBal              big.Int        `json:"begBal"`
+	BegBal              base.Wei       `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
-	CorrectingIn        big.Int        `json:"correctingIn,omitempty"`
-	CorrectingOut       big.Int        `json:"correctingOut,omitempty"`
+	CorrectingIn        base.Wei       `json:"correctingIn,omitempty"`
+	CorrectingOut       base.Wei       `json:"correctingOut,omitempty"`
 	CorrectingReason    string         `json:"correctingReason,omitempty"`
 	Decimals            uint64         `json:"decimals"`
-	EndBal              big.Int        `json:"endBal"`
-	GasOut              big.Int        `json:"gasOut,omitempty"`
-	InternalIn          big.Int        `json:"internalIn,omitempty"`
-	InternalOut         big.Int        `json:"internalOut,omitempty"`
+	EndBal              base.Wei       `json:"endBal"`
+	GasOut              base.Wei       `json:"gasOut,omitempty"`
+	InternalIn          base.Wei       `json:"internalIn,omitempty"`
+	InternalOut         base.Wei       `json:"internalOut,omitempty"`
 	LogIndex            base.Blknum    `json:"logIndex"`
-	MinerBaseRewardIn   big.Int        `json:"minerBaseRewardIn,omitempty"`
-	MinerNephewRewardIn big.Int        `json:"minerNephewRewardIn,omitempty"`
-	MinerTxFeeIn        big.Int        `json:"minerTxFeeIn,omitempty"`
-	MinerUncleRewardIn  big.Int        `json:"minerUncleRewardIn,omitempty"`
-	PrefundIn           big.Int        `json:"prefundIn,omitempty"`
-	PrevBal             big.Int        `json:"prevBal,omitempty"`
+	MinerBaseRewardIn   base.Wei       `json:"minerBaseRewardIn,omitempty"`
+	MinerNephewRewardIn base.Wei       `json:"minerNephewRewardIn,omitempty"`
+	MinerTxFeeIn        base.Wei       `json:"minerTxFeeIn,omitempty"`
+	MinerUncleRewardIn  base.Wei       `json:"minerUncleRewardIn,omitempty"`
+	PrefundIn           base.Wei       `json:"prefundIn,omitempty"`
+	PrevBal             base.Wei       `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`
 	Recipient           base.Address   `json:"recipient"`
-	SelfDestructIn      big.Int        `json:"selfDestructIn,omitempty"`
-	SelfDestructOut     big.Int        `json:"selfDestructOut,omitempty"`
+	SelfDestructIn      base.Wei       `json:"selfDestructIn,omitempty"`
+	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
 	SpotPrice           float64        `json:"spotPrice"`
 	Timestamp           base.Timestamp `json:"timestamp"`
@@ -130,36 +129,36 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"accountedFor":        s.AccountedFor,
 		"sender":              s.Sender,
 		"recipient":           s.Recipient,
-		"begBal":              utils.FormattedValue(s.BegBal, asEther, decimals),
-		"amountNet":           utils.FormattedValue(*s.AmountNet(), asEther, decimals),
-		"endBal":              utils.FormattedValue(s.EndBal, asEther, decimals),
+		"begBal":              base.FormattedValue(&s.BegBal, asEther, decimals),
+		"amountNet":           base.FormattedValue(s.AmountNet(), asEther, decimals),
+		"endBal":              base.FormattedValue(&s.EndBal, asEther, decimals),
 		"reconciliationType":  s.ReconType.String(),
 		"reconciled":          s.Reconciled(),
-		"totalIn":             utils.FormattedValue(*s.TotalIn(), asEther, decimals),
-		"amountIn":            utils.FormattedValue(s.AmountIn, asEther, decimals),
-		"internalIn":          utils.FormattedValue(s.InternalIn, asEther, decimals),
-		"selfDestructIn":      utils.FormattedValue(s.SelfDestructIn, asEther, decimals),
-		"minerBaseRewardIn":   utils.FormattedValue(s.MinerBaseRewardIn, asEther, decimals),
-		"minerNephewRewardIn": utils.FormattedValue(s.MinerNephewRewardIn, asEther, decimals),
-		"minerTxFeeIn":        utils.FormattedValue(s.MinerTxFeeIn, asEther, decimals),
-		"minerUncleRewardIn":  utils.FormattedValue(s.MinerUncleRewardIn, asEther, decimals),
-		"correctingIn":        utils.FormattedValue(s.CorrectingIn, asEther, decimals),
-		"prefundIn":           utils.FormattedValue(s.PrefundIn, asEther, decimals),
-		"totalOut":            utils.FormattedValue(*s.TotalOut(), asEther, decimals),
-		"amountOut":           utils.FormattedValue(s.AmountOut, asEther, decimals),
-		"internalOut":         utils.FormattedValue(s.InternalOut, asEther, decimals),
-		"correctingOut":       utils.FormattedValue(s.CorrectingOut, asEther, decimals),
-		"selfDestructOut":     utils.FormattedValue(s.SelfDestructOut, asEther, decimals),
-		"gasOut":              utils.FormattedValue(s.GasOut, asEther, decimals),
-		"totalOutLessGas":     utils.FormattedValue(*s.TotalOutLessGas(), asEther, decimals),
-		"begBalDiff":          utils.FormattedValue(*s.BegBalDiff(), asEther, decimals),
-		"endBalDiff":          utils.FormattedValue(*s.EndBalDiff(), asEther, decimals),
-		"endBalCalc":          utils.FormattedValue(*s.EndBalCalc(), asEther, decimals),
+		"totalIn":             base.FormattedValue(s.TotalIn(), asEther, decimals),
+		"amountIn":            base.FormattedValue(&s.AmountIn, asEther, decimals),
+		"internalIn":          base.FormattedValue(&s.InternalIn, asEther, decimals),
+		"selfDestructIn":      base.FormattedValue(&s.SelfDestructIn, asEther, decimals),
+		"minerBaseRewardIn":   base.FormattedValue(&s.MinerBaseRewardIn, asEther, decimals),
+		"minerNephewRewardIn": base.FormattedValue(&s.MinerNephewRewardIn, asEther, decimals),
+		"minerTxFeeIn":        base.FormattedValue(&s.MinerTxFeeIn, asEther, decimals),
+		"minerUncleRewardIn":  base.FormattedValue(&s.MinerUncleRewardIn, asEther, decimals),
+		"correctingIn":        base.FormattedValue(&s.CorrectingIn, asEther, decimals),
+		"prefundIn":           base.FormattedValue(&s.PrefundIn, asEther, decimals),
+		"totalOut":            base.FormattedValue(s.TotalOut(), asEther, decimals),
+		"amountOut":           base.FormattedValue(&s.AmountOut, asEther, decimals),
+		"internalOut":         base.FormattedValue(&s.InternalOut, asEther, decimals),
+		"correctingOut":       base.FormattedValue(&s.CorrectingOut, asEther, decimals),
+		"selfDestructOut":     base.FormattedValue(&s.SelfDestructOut, asEther, decimals),
+		"gasOut":              base.FormattedValue(&s.GasOut, asEther, decimals),
+		"totalOutLessGas":     base.FormattedValue(s.TotalOutLessGas(), asEther, decimals),
+		"begBalDiff":          base.FormattedValue(s.BegBalDiff(), asEther, decimals),
+		"endBalDiff":          base.FormattedValue(s.EndBalDiff(), asEther, decimals),
+		"endBalCalc":          base.FormattedValue(s.EndBalCalc(), asEther, decimals),
 		"correctingReason":    s.CorrectingReason,
 	}
 
 	if s.ReconType&First == 0 {
-		model["prevBal"] = utils.FormattedValue(s.PrevBal, asEther, decimals)
+		model["prevBal"] = base.FormattedValue(&s.PrevBal, asEther, decimals)
 	} else if format != "json" {
 		model["prevBal"] = ""
 	}
@@ -185,7 +184,6 @@ func (s *SimpleStatement) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// --> cacheable by address,tx as group
 type SimpleStatementGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
@@ -543,6 +541,7 @@ func (s *SimpleStatement) UnmarshalCache(version uint64, reader io.Reader) (err 
 	return nil
 }
 
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *SimpleStatement) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -551,8 +550,8 @@ func (s *SimpleStatement) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleStatement) TotalIn() *big.Int {
-	vals := []big.Int{
+func (s *SimpleStatement) TotalIn() *base.Wei {
+	vals := []base.Wei{
 		s.AmountIn,
 		s.InternalIn,
 		s.SelfDestructIn,
@@ -564,7 +563,7 @@ func (s *SimpleStatement) TotalIn() *big.Int {
 		s.PrefundIn,
 	}
 
-	sum := big.NewInt(0)
+	sum := base.NewWei(0)
 	for _, n := range vals {
 		sum = sum.Add(sum, &n)
 	}
@@ -572,8 +571,8 @@ func (s *SimpleStatement) TotalIn() *big.Int {
 	return sum
 }
 
-func (s *SimpleStatement) TotalOut() *big.Int {
-	vals := []big.Int{
+func (s *SimpleStatement) TotalOut() *base.Wei {
+	vals := []base.Wei{
 		s.AmountOut,
 		s.InternalOut,
 		s.CorrectingOut,
@@ -581,7 +580,7 @@ func (s *SimpleStatement) TotalOut() *big.Int {
 		s.GasOut,
 	}
 
-	sum := big.NewInt(0)
+	sum := base.NewWei(0)
 	for _, n := range vals {
 		sum = sum.Add(sum, &n)
 	}
@@ -590,40 +589,40 @@ func (s *SimpleStatement) TotalOut() *big.Int {
 }
 
 func (s *SimpleStatement) IsMaterial() bool {
-	return s.TotalIn().Cmp(new(big.Int)) != 0 || s.TotalOut().Cmp(new(big.Int)) != 0
+	return s.TotalIn().Cmp(new(base.Wei)) != 0 || s.TotalOut().Cmp(new(base.Wei)) != 0
 }
 
-func (s *SimpleStatement) AmountNet() *big.Int {
-	return new(big.Int).Sub(s.TotalIn(), s.TotalOut())
+func (s *SimpleStatement) AmountNet() *base.Wei {
+	return new(base.Wei).Sub(s.TotalIn(), s.TotalOut())
 }
 
-func (s *SimpleStatement) TotalOutLessGas() *big.Int {
+func (s *SimpleStatement) TotalOutLessGas() *base.Wei {
 	val := s.TotalOut()
-	return new(big.Int).Sub(val, &s.GasOut)
+	return new(base.Wei).Sub(val, &s.GasOut)
 }
 
-func (s *SimpleStatement) BegBalDiff() *big.Int {
-	val := &big.Int{}
+func (s *SimpleStatement) BegBalDiff() *base.Wei {
+	val := &base.Wei{}
 
 	if s.BlockNumber == 0 {
-		val = new(big.Int).SetInt64(0)
+		val = new(base.Wei).SetInt64(0)
 	} else {
-		new(big.Int).Sub(&s.BegBal, &s.PrevBal)
+		new(base.Wei).Sub(&s.BegBal, &s.PrevBal)
 	}
 
 	return val
 }
 
-func (s *SimpleStatement) EndBalCalc() *big.Int {
-	return new(big.Int).Add(&s.BegBal, s.AmountNet())
+func (s *SimpleStatement) EndBalCalc() *base.Wei {
+	return new(base.Wei).Add(&s.BegBal, s.AmountNet())
 }
 
-func (s *SimpleStatement) EndBalDiff() *big.Int {
-	return new(big.Int).Sub(s.EndBalCalc(), &s.EndBal)
+func (s *SimpleStatement) EndBalDiff() *base.Wei {
+	return new(base.Wei).Sub(s.EndBalCalc(), &s.EndBal)
 }
 
 func (s *SimpleStatement) Reconciled() bool {
-	zero := new(big.Int).SetInt64(0)
+	zero := new(base.Wei).SetInt64(0)
 	return (s.EndBalDiff().Cmp(zero) == 0 && s.BegBalDiff().Cmp(zero) == 0)
 }
 
@@ -679,8 +678,8 @@ func (s *SimpleStatement) CorrectForNullTransfer(tx *SimpleTransaction) bool {
 		if s.isNullTransfer(tx) {
 			logger.TestLog(true, "Correcting token transfer for a null transfer")
 			amt := s.TotalIn() // use totalIn since this is the amount that was faked
-			s.AmountOut = *new(big.Int)
-			s.AmountIn = *new(big.Int)
+			s.AmountOut = *new(base.Wei)
+			s.AmountIn = *new(base.Wei)
 			s.CorrectingIn = *amt
 			s.CorrectingOut = *amt
 			s.CorrectingReason = "null-transfer"
@@ -709,7 +708,7 @@ func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
 		s.CorrectingIn.SetUint64(0)
 		s.CorrectingOut.SetUint64(0)
 		s.CorrectingReason = ""
-		zero := new(big.Int).SetInt64(0)
+		zero := new(base.Wei).SetInt64(0)
 		cmpBegBal := s.BegBalDiff().Cmp(zero)
 		cmpEndBal := s.EndBalDiff().Cmp(zero)
 
@@ -722,11 +721,11 @@ func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
 		}
 
 		if cmpEndBal > 0 {
-			n := new(big.Int).Add(&s.CorrectingIn, s.EndBalDiff())
+			n := new(base.Wei).Add(&s.CorrectingIn, s.EndBalDiff())
 			s.CorrectingIn = *n
 			s.CorrectingReason += "endbal"
 		} else if cmpEndBal < 0 {
-			n := new(big.Int).Add(&s.CorrectingOut, s.EndBalDiff())
+			n := new(base.Wei).Add(&s.CorrectingOut, s.EndBalDiff())
 			s.CorrectingOut = *n
 			s.CorrectingReason += "endbal"
 		}
@@ -797,21 +796,21 @@ func (s *SimpleStatement) DebugStatement(ctx Ledgerer) {
 	logger.TestLog(true, "End of trial balance report")
 }
 
-func isZero(val *big.Int) bool {
-	return val.Cmp(big.NewInt(0)) == 0
+func isZero(val *base.Wei) bool {
+	return val.Cmp(base.NewWei(0)) == 0
 }
 
-func reportE(msg string, val *big.Int) {
-	logger.TestLog(!isZero(val), msg, utils.FormattedValue(*val, true, 18))
+func reportE(msg string, val *base.Wei) {
+	logger.TestLog(!isZero(val), msg, base.FormattedValue(val, true, 18))
 }
 
-func report2(msg string, v1 *big.Int, v2 *big.Int) {
+func report2(msg string, v1 *base.Wei, v2 *base.Wei) {
 	s := ""
 	if v1 != nil {
-		s = utils.FormattedValue(*v1, true, 18)
+		s = base.FormattedValue(v1, true, 18)
 	}
 	if v2 != nil {
-		s += " (" + utils.FormattedValue(*v2, true, 18) + ")"
+		s += " (" + base.FormattedValue(v2, true, 18) + ")"
 	}
 	logger.TestLog(true, msg, s)
 }
@@ -820,9 +819,8 @@ func reportL(msg string) {
 	report2(msg, nil, nil)
 }
 
-func report1(msg string, val *big.Int) {
+func report1(msg string, val *base.Wei) {
 	report2(msg, val, nil)
 }
 
 // EXISTING_CODE
-

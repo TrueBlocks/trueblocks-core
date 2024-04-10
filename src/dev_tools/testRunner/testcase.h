@@ -53,7 +53,7 @@ class CTestCase : public CBaseNode {
     // EXISTING_CODE
     string_q getOutputFile(bool isApi, const string_q& goldApiPath) const;
     explicit CTestCase(const string_q& line, uint32_t id);
-    void prepareTest(bool cmdLine, bool removeWorking);
+    void prepareTest(bool cmdLine);
     // EXISTING_CODE
     bool operator==(const CTestCase& it) const;
     bool operator!=(const CTestCase& it) const {
@@ -66,7 +66,6 @@ class CTestCase : public CBaseNode {
     void clear(void);
     void initialize(void);
     void duplicate(const CTestCase& te);
-    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -179,14 +178,6 @@ inline bool operator<(const CTestCase& v1, const CTestCase& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CTestCase> CTestCaseArray;
-extern CArchive& operator>>(CArchive& archive, CTestCaseArray& array);
-extern CArchive& operator<<(CArchive& archive, const CTestCaseArray& array);
-
-//---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CTestCase& tes);
-extern CArchive& operator>>(CArchive& archive, CTestCase& tes);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_TESTCASE;
 
 //---------------------------------------------------------------------------

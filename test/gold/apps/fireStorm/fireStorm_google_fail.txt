@@ -6,7 +6,7 @@ TEST[DATE|TIME] Caps:  -fmt,-noHeader,-output,-append
 TEST[DATE|TIME] Format:  txt
 Error: The --local option is not available with the --google option.
 Usage:
-  chifra explore [flags] <term> [term...]
+  chifra explore [flags] [terms...]
 
 Arguments:
   terms - one or more address, name, block, or transaction identifier

@@ -10,22 +10,13 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass --options. Edit only those parts of
- * the code outside of the BEG_CODE/END_CODE sections
- */
 #include "options.h"
 #include "measure.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    // clang-format off
     COption("mode", "m", "enum[cmd*|api|both]", OPT_FLAG, "determine which set of tests to run"),
-    COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
-    COption("skip", "s", "<uint64>", OPT_FLAG, "run only every 'skip' test (faster)"),
-    COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
-    // clang-format on
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -56,21 +47,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-m" || arg == "--mode") {
             return flag_required("mode");
-
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
-            if (!confirmEnum("filter", filter, arg))
-                return false;
-        } else if (arg == "-f" || arg == "--filter") {
-            return flag_required("filter");
-
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
-            if (!confirmUint("skip", skip, arg))
-                return false;
-        } else if (arg == "-s" || arg == "--skip") {
-            return flag_required("skip");
-
-        } else if (arg == "-r" || arg == "--report") {
-            report = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -132,38 +108,28 @@ bool COptions::parseArguments(string_q& command) {
     if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
         return usage("[dev]debug_curl is set in config file. All tests will fail.");
 
-    modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));
-
-    if (filter.empty())
-        filter = "fast";
-    else if (filter == "all")
-        filter = "";
-
-    if (tests.empty()) {
-        full_test = true;
-        if (runSlurps) {
-            tests.push_back("tools/ethslurp");
-        }
-        tests.push_back("tools/ethNames");
-        tests.push_back("tools/getBlocks");
-        tests.push_back("tools/getLogs");
-        tests.push_back("tools/getReceipts");
-        tests.push_back("tools/getState");
-        tests.push_back("tools/getTokens");
-        tests.push_back("tools/getTraces");
-        tests.push_back("tools/getTrans");
-        tests.push_back("tools/grabABI");
-        tests.push_back("tools/whenBlock");
-        tests.push_back("apps/acctExport");
-        tests.push_back("apps/blockScrape");
-        tests.push_back("apps/cacheStatus");
-        tests.push_back("apps/chunkMan");
-        tests.push_back("apps/chifra");
-        tests.push_back("apps/config");
-        tests.push_back("apps/fireStorm");
-        tests.push_back("apps/init");
-        tests.push_back("apps/daemon");
+    if (runSlurps) {
+        tests.push_back("tools/ethslurp");
     }
+    tests.push_back("tools/ethNames");
+    tests.push_back("tools/getBlocks");
+    tests.push_back("tools/getLogs");
+    tests.push_back("tools/getReceipts");
+    tests.push_back("tools/getState");
+    tests.push_back("tools/getTokens");
+    tests.push_back("tools/getTraces");
+    tests.push_back("tools/getTrans");
+    tests.push_back("tools/grabABI");
+    tests.push_back("tools/whenBlock");
+    tests.push_back("apps/acctExport");
+    tests.push_back("apps/blockScrape");
+    tests.push_back("apps/cacheStatus");
+    tests.push_back("apps/chunkMan");
+    tests.push_back("apps/chifra");
+    tests.push_back("apps/config");
+    tests.push_back("apps/fireStorm");
+    tests.push_back("apps/init");
+    tests.push_back("apps/daemon");
 
     SHOW_FIELD(CTestCase, "test_id");
 
@@ -179,15 +145,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params, 0);
-    // END_CODE_GLOBALOPTS
-
-    filter = "";
-    skip = 1;
-    report = false;
-
-    full_test = false;
     minArgs = 0;
 }
 
@@ -196,9 +154,6 @@ COptions::COptions(void) {
     CMeasure::registerClass();
 
     Init();
-
-    // clang-format off
-    // clang-format on
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -208,11 +163,9 @@ COptions::~COptions(void) {
 //---------------------------------------------------------------------------------------------------
 bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     ostringstream os;
-    // clang-format off
     os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"" << testName << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
     os << "find ../../../working/" << path << "/" << testName << "/api_tests/ -maxdepth 1 -name \"" << testName << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
     if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    // clang-format on
     return true;
 }
 
@@ -227,7 +180,7 @@ void establishTestData(void) {
     jqDef = "jq .";
     // }
     postProcessor = getGlobalConfig("testRunner")->getConfigStr("settings", "json_pretty_print", jqDef);
-    cerr << bYellow << "Using `" << postProcessor << "` for post processing." << cOff << endl;
+    cerr << "Using `" << postProcessor << "` for post processing." << endl;
 
     // TODO: This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO: these tests fail. To reproduce, delete the entire cache, comment the lines below
@@ -236,13 +189,13 @@ void establishTestData(void) {
     // Forces a few blocks into the cache
     doCommand("chifra blocks --uniq 0 2>/dev/null");
 
-    cerr << bYellow << "Cleaning monitor caches..." << cOff << endl;
+    cerr << "Cleaning monitor caches..." << endl;
     doCommand("chifra monitors --decache 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2>/dev/null");
     doCommand("chifra monitors --decache 0x9531c059098e3d194ff87febb587ab07b30b1306 2>/dev/null");
     doCommand("chifra monitors --decache 0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3 2>/dev/null");
     doCommand("chifra monitors --decache 0xd0b3462481c33f63a288cd1923e2a261ee65b4ff 2>/dev/null");
 
-    cerr << bYellow << "Cleaning abi caches..." << cOff << endl;
+    cerr << "Cleaning abi caches..." << endl;
     doCommand("chifra abis --decache 2>/dev/null");
     doCommand("chifra abis --decache 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51 2>/dev/null");
     doCommand("chifra abis --decache 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373 2>/dev/null");
@@ -270,7 +223,7 @@ void establishTestData(void) {
     // grabABI_ens_test.txt, grabABI_ens_test.txt, acctExport_statement_unfiltered.txt,
     // acctExport_statement_unfiltered.txt It's all related to abis being in the cache Forces the retreival of a few ABI
     // files without which some tests will fail
-    cerr << bYellow << "Downloading abi files..." << cOff << endl;
+    cerr << "Downloading abi files..." << endl;
     doCommand("chifra abis 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
     doCommand("chifra abis 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373");
     doCommand("chifra abis 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359");

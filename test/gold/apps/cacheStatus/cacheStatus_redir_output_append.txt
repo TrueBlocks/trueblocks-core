@@ -5,7 +5,7 @@ TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
 TEST[DATE|TIME] Format:  json
-{ "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 ----
 Results in ./output_test_file
 {

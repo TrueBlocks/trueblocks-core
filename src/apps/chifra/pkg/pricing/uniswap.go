@@ -2,7 +2,6 @@ package pricing
 
 import (
 	"fmt"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -78,22 +77,22 @@ func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
-	reserve0 := new(big.Float)
+	reserve0 := new(base.Ether)
 	if result.Values != nil && (result.Values["_reserve0"] == "" || result.Values["_reserve0"] == "0") {
 		reserve0.SetString("1")
 	} else {
 		reserve0.SetString(result.Values["_reserve0"])
 	}
-	reserve1 := new(big.Float)
+	reserve1 := new(base.Ether)
 	if result.Values != nil && (result.Values["_reserve1"] == "" || result.Values["_reserve1"] == "0") {
 		reserve1.SetString("1")
 	} else {
 		reserve1.SetString(result.Values["_reserve1"])
 	}
-	bigPrice := new(big.Float)
+	bigPrice := new(base.Ether)
 	bigPrice = bigPrice.Quo(reserve0, reserve1)
 
-	price, _ = bigPrice.Float64()
+	price = bigPrice.Float64()
 	price *= multiplier
 	source = "uniswap"
 
@@ -110,7 +109,7 @@ func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 		reversed:    reversed,
 		float0:      reserve0,
 		float1:      reserve1,
-		float2:      new(big.Float).SetFloat64(multiplier),
+		float2:      new(base.Ether).SetFloat64(multiplier),
 		bigPrice:    bigPrice,
 		price:       price,
 		source:      source,

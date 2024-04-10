@@ -1,4 +1,4 @@
-export?addrs=trueblocks.eth&wei
+export?addrs=trueblocks.eth&wei&maxRecords=3
 {
   "errors": [
     "Invalid key (wei) in export route."

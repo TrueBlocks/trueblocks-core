@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -54,12 +55,11 @@ Notes:
   - The --decache option removes the all transaction(s) and all traces in those transactions from the cache.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra transactions
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra transactions
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
-	// EXISTING_CODE
 
 	transactionsCmd.Flags().SortFlags = false
 
@@ -74,8 +74,8 @@ One of [ from | to ]`)
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().CacheTraces, "cache_traces", "", false, "force the transaction's traces into the cache (hidden)")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Seed, "seed", "S", false, "find the source of the funds sent to the receiver (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
-		transactionsCmd.Flags().MarkHidden("cache_traces")
-		transactionsCmd.Flags().MarkHidden("seed")
+		_ = transactionsCmd.Flags().MarkHidden("cache_traces")
+		_ = transactionsCmd.Flags().MarkHidden("seed")
 	}
 	globals.InitGlobals("transactions", transactionsCmd, &transactionsPkg.GetOptions().Globals, capabilities)
 
@@ -87,4 +87,3 @@ One of [ from | to ]`)
 
 	chifraCmd.AddCommand(transactionsCmd)
 }
-

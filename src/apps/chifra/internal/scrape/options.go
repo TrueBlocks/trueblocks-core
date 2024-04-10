@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package scrapePkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -18,20 +22,21 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
-	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
-	Touch        uint64                `json:"touch,omitempty"`        // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
-	RunCount     uint64                `json:"runCount,omitempty"`     // Run the scraper this many times, then quit
-	Publisher    string                `json:"publisher,omitempty"`    // For some query options, the publisher of the index
-	DryRun       bool                  `json:"dryRun,omitempty"`       // Show the configuration that would be applied if run,no changes are made
-	Settings     config.ScrapeSettings `json:"settings,omitempty"`     // Configuration items for the scrape
-	Globals      globals.GlobalOptions `json:"globals,omitempty"`      // The global options
-	Conn         *rpc.Connection       `json:"conn,omitempty"`         // The connection to the RPC server
-	BadFlag      error                 `json:"badFlag,omitempty"`      // An error flag if needed
+	BlockCnt  uint64                `json:"blockCnt,omitempty"`  // Maximum number of blocks to process per pass
+	Sleep     float64               `json:"sleep,omitempty"`     // Seconds to sleep between scraper passes
+	Touch     uint64                `json:"touch,omitempty"`     // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
+	RunCount  uint64                `json:"runCount,omitempty"`  // Run the scraper this many times, then quit
+	Publisher string                `json:"publisher,omitempty"` // For some query options, the publisher of the index
+	DryRun    bool                  `json:"dryRun,omitempty"`    // Show the configuration that would be applied if run,no changes are made
+	Settings  config.ScrapeSettings `json:"settings,omitempty"`  // Configuration items for the scrape
+	Globals   globals.GlobalOptions `json:"globals,omitempty"`   // The global options
+	Conn      *rpc.Connection       `json:"conn,omitempty"`      // The connection to the RPC server
+	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
 	// EXISTING_CODE
 	PublisherAddr base.Address `json:"-"`
 	// EXISTING_CODE
@@ -39,6 +44,7 @@ type ScrapeOptions struct {
 
 var defaultScrapeOptions = ScrapeOptions{
 	BlockCnt: 2000,
+	Sleep:    14,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -62,19 +68,25 @@ func (opts *ScrapeOptions) String() string {
 
 // scrapeFinishParseApi finishes the parsing for server invocations. Returns a new ScrapeOptions.
 func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ScrapeFinishParseInternal(w, values)
+}
+
+func ScrapeFinishParseInternal(w io.Writer, values url.Values) *ScrapeOptions {
 	copy := defaultScrapeOptions
 	opts := &copy
 	opts.BlockCnt = 2000
 	opts.Sleep = 14
-	opts.Touch = 0
-	opts.RunCount = 0
 	opts.Settings.AppsPerChunk = 2000000
 	opts.Settings.SnapToGrid = 250000
 	opts.Settings.FirstSnap = 2000000
 	opts.Settings.UnripeDist = 28
 	opts.Settings.ChannelCount = 20
 	configs := make(map[string]string, 10)
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "blockCnt":
 			opts.BlockCnt = globals.ToUint64(value[0])
@@ -89,15 +101,15 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 		case "dryRun":
 			opts.DryRun = true
 		case "appsPerChunk":
-			fallthrough
+			configs[key] = value[0]
 		case "snapToGrid":
-			fallthrough
+			configs[key] = value[0]
 		case "firstSnap":
-			fallthrough
+			configs[key] = value[0]
 		case "unripeDist":
-			fallthrough
+			configs[key] = value[0]
 		case "channelCount":
-			fallthrough
+			configs[key] = value[0]
 		case "allowMissing":
 			configs[key] = value[0]
 		default:
@@ -106,7 +118,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
@@ -167,13 +179,13 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultScrapeOptions.Globals)
 	defaultScrapeOptions.Globals.TestMode = testMode
 	defaultScrapeOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra scrape
+	var capabilities caps.Capability // capabilities for chifra scrape
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.NoColor)
+	capabilities = capabilities.Add(caps.Chain)
 	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Fmt)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.File)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 	defaultScrapeOptions.Globals.Caps = capabilities
 }
@@ -186,4 +198,3 @@ func (opts *ScrapeOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

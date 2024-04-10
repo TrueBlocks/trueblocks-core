@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 1800
+weight: 53000
 toc: true
 ---
 
@@ -36,7 +36,7 @@ Purpose:
   Open a local or remote explorer for one or more addresses, blocks, or transactions.
 
 Usage:
-  chifra explore [flags] <term> [term...]
+  chifra explore [flags] [terms...]
 
 Arguments:
   terms - one or more address, name, block, or transaction identifier
@@ -83,7 +83,7 @@ Arguments:
 
 Flags:
   -t, --types strings   which types of transactions to request
-                        One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]
+                        One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | some | all ]
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
   -a, --articulate      articulate the retrieved data if ABIs can be found
   -S, --source string   the source of the slurped data
@@ -115,3 +115,4 @@ Links:
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/ethslurp.csv)
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

@@ -12,7 +12,7 @@
 
 - [Introduction](#introduction)
 - [Installing](#installing)
-- [Command line](#command-line)
+- [Command Line](#command-line)
 - [Chifra Serve](#chifra-serve)
 - [Troubleshooting](#troubleshooting)
 - [The unchained index](#the-unchained-index)
@@ -25,7 +25,7 @@
 
 ## Introduction
 
-TrueBlocks improves access to blockchain data for any EVM-compatible chain (particularly Ethereum mainnet) while remaining entirely local.
+TrueBlocks improves access to blockchain data for EVM-compatible chains (particularly Ethereum mainnet) while remaining entirely local.
 
 Features:
 

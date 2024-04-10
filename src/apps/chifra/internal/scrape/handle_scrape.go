@@ -31,10 +31,13 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	}()
 
 	path := config.PathToIndex(chain)
+	provider := config.GetChain(chain).RpcProvider
 	if testMode {
 		path = "--unchained-path--"
+		provider = "--rpc-provider--"
 	}
 	logger.Info("Scraping:")
+	logger.Info("  RPC:     ", provider)
 	logger.Info("  Path:    ", path)
 	logger.Info("  Settings:", config.GetScrape(chain))
 	if opts.DryRun {

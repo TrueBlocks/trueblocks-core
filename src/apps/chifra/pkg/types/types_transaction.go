@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -12,7 +12,6 @@ package types
 import (
 	"fmt"
 	"io"
-	"math/big"
 	"path/filepath"
 	"strings"
 
@@ -27,14 +26,14 @@ type StorageSlot struct {
 }
 
 type Rewards struct {
-	Block  big.Int `json:"block"`
-	Nephew big.Int `json:"nephew"`
-	TxFee  big.Int `json:"txFee"`
-	Uncle  big.Int `json:"uncle"`
+	Block  base.Wei `json:"block"`
+	Nephew base.Wei `json:"nephew"`
+	TxFee  base.Wei `json:"txFee"`
+	Uncle  base.Wei `json:"uncle"`
 }
 
-func NewReward(block, nephew, txFee, uncle *big.Int) (Rewards, big.Int) {
-	total := new(big.Int).Add(block, nephew)
+func NewReward(block, nephew, txFee, uncle *base.Wei) (Rewards, base.Wei) {
+	total := new(base.Wei).Add(block, nephew)
 	total = total.Add(total, txFee)
 	total = total.Add(total, uncle)
 	return Rewards{
@@ -128,7 +127,7 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		"date":             s.Date(),
 		"to":               to,
 		"transactionIndex": s.TransactionIndex,
-		"value":            utils.FormattedValue(s.Value, asEther, 18),
+		"value":            base.FormattedValue(&s.Value, asEther, 18),
 	}
 
 	order = []string{
@@ -185,10 +184,10 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		if s.Nonce > 0 {
 			model["nonce"] = s.Nonce
 		}
-		model["value"] = utils.FormattedValue(s.Value, asEther, 18)
+		model["value"] = base.FormattedValue(&s.Value, asEther, 18)
 		model["gas"] = s.Gas
 
-		model["ether"] = utils.FormattedValue(s.Value, true, 18)
+		model["ether"] = base.FormattedValue(&s.Value, true, 18)
 		if s.MaxFeePerGas > 0 {
 			model["maxFeePerGas"] = s.MaxFeePerGas
 		}
@@ -278,8 +277,8 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 			model["type"] = ""
 		}
 		order = append(order, "type")
-		model["ether"] = utils.FormattedValue(s.Value, true, 18)
-		ethGasPrice := utils.FormattedValue(*big.NewInt(0).SetUint64(s.GasPrice), true, 18)
+		model["ether"] = base.FormattedValue(&s.Value, true, 18)
+		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(s.GasPrice), true, 18)
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 
@@ -318,7 +317,6 @@ func (s *SimpleTransaction) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// --> cacheable by tx
 func (s *SimpleTransaction) CacheName() string {
 	return "Transaction"
 }
@@ -565,6 +563,7 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 	return nil
 }
 
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *SimpleTransaction) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -678,4 +677,3 @@ func (s *SimpleTransaction) GasCost() base.Gas {
 }
 
 // EXISTING_CODE
-

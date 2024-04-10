@@ -16,8 +16,6 @@
 #include "sfarchive.h"
 #include "exportcontext.h"
 #include "conversions.h"
-#include "version.h"
-#include "testing.h"
 #include "logging.h"
 #include "runtimeclass.h"
 #include "json_reader.h"
@@ -42,7 +40,7 @@ CBaseNode::~CBaseNode(void) {
 //--------------------------------------------------------------------------------
 void CBaseNode::initialize(void) {
     m_deleted = false;
-    m_schema = getVersionNum();
+    m_schema = 20000+500+8;
     m_showing = true;
 }
 
@@ -377,30 +375,6 @@ char* cleanUpJson(char* s) {
     }
     *l = '\0';
     return start;
-}
-
-//---------------------------------------------------------------------------
-bool CBaseNode::Serialize(CArchive& archive) {
-    archive >> m_deleted;
-    archive >> m_schema;
-    archive >> m_showing;
-    string_q str;
-    archive >> str;
-    ASSERT(str == string_q(getRuntimeClass()->getClassNamePtr()));
-    return false;
-}
-
-//---------------------------------------------------------------------------
-bool CBaseNode::SerializeC(CArchive& archive) const {
-    // Not happy with this, but we must set the schema version prior to writing
-    // the data. We only write the latest version of the to the hard drive.
-    ((CBaseNode*)this)->m_schema = getVersionNum();  // NOLINT
-
-    archive << m_deleted;
-    archive << m_schema;
-    archive << m_showing;
-    archive << getRuntimeClass()->getClassNamePtr();
-    return false;
 }
 
 //--------------------------------------------------------------------------------
@@ -830,6 +804,3 @@ string_q reformat1(const string_q& in, size_t len) {
     return ret;
 }
 }  // namespace qblocks
-
-uint64_t testing::Test::nFuncs;
-testing::PF testing::Test::funcs[];

@@ -70,7 +70,7 @@ func (r FileRange) String() string {
 	return fmt.Sprintf("%09d-%09d", r.First, r.Last)
 }
 
-// RangeToFilename returns a fileName and and existance bool given a file range and a type
+// RangeToFilename returns a fileName and existence bool given a file range and a type
 func (r *FileRange) RangeToFilename(chain string) (bool, string) {
 	fileName := config.PathToIndex(chain) + "finalized/" + r.String() + ".bin"
 	return file.FileExists(fileName), fileName

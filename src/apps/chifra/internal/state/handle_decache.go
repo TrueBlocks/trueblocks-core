@@ -25,8 +25,9 @@ func (opts *StateOptions) HandleDecache() error {
 		address := base.HexToAddress(addressStr)
 		if len(opts.Call) > 0 {
 			callAddress := base.HexToAddress(opts.Addrs[0])
-			if opts.ProxyFor != "" {
-				callAddress = base.HexToAddress(opts.ProxyFor)
+			proxy := base.HexToAddress(opts.ProxyFor)
+			if !proxy.IsZero() {
+				callAddress = proxy
 			}
 			if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
 				wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)

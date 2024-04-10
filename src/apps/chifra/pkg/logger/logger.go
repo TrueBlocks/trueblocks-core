@@ -6,6 +6,7 @@ package logger
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"math"
 	"os"
@@ -41,6 +42,11 @@ var (
 	testMode    = false
 )
 
+func SetTestMode(onOff bool) {
+	testMode = onOff
+	testModeSet = true
+}
+
 // TestLog is used to print log lines during testing only
 func TestLog(notDefault bool, a ...interface{}) {
 	if !testModeSet {
@@ -58,6 +64,7 @@ func TestLog(notDefault bool, a ...interface{}) {
 }
 
 var (
+	isTestMode    = false
 	timingModeSet = false
 	timingMode    = true
 	decorationOff = false
@@ -71,13 +78,20 @@ func ToggleDecoration() {
 	decorationOff = !decorationOff
 }
 
+var loggerWriter io.Writer = nil
+
 func init() {
 	if !timingModeSet {
 		on := os.Getenv("TB_LOGTIMER_OFF") == ""
-		testing := os.Getenv("TEST_MODE") == "true"
-		timingMode = on && !testing
+		isTestMode = os.Getenv("TEST_MODE") == "true"
+		timingMode = on && !isTestMode
 		timingModeSet = true
 	}
+	loggerWriter = os.Stderr
+}
+
+func SetLoggerWriter(w io.Writer) {
+	loggerWriter = w
 }
 
 // toLog prints `a` to stderr with a label corresponding to the severity level
@@ -90,36 +104,36 @@ func toLog(sev severity, a ...interface{}) {
 	}
 
 	if !decorationOff {
-		fmt.Fprintf(os.Stderr, "%s[%s] ", severityToLabel[sev], timeDatePart)
+		fmt.Fprintf(loggerWriter, "%s[%s] ", severityToLabel[sev], timeDatePart)
 	}
 	if sev == progress {
 		for index, aa := range a {
 			if index > 0 {
-				fmt.Fprint(os.Stderr, " ")
+				fmt.Fprint(loggerWriter, " ")
 			}
-			fmt.Fprint(os.Stderr, aa)
+			fmt.Fprint(loggerWriter, aa)
 		}
-		fmt.Fprint(os.Stderr, "\r")
+		fmt.Fprint(loggerWriter, "\r")
 
 	} else if sev == infoC {
-		fmt.Fprintf(os.Stderr, "%s%s%s ", colors.Green, a[0], colors.Off)
+		fmt.Fprintf(loggerWriter, "%s%s%s ", colors.Green, a[0], colors.Off)
 		for _, aa := range a[1:] {
-			fmt.Fprintf(os.Stderr, "%s", aa)
+			fmt.Fprintf(loggerWriter, "%s", aa)
 		}
-		fmt.Fprintln(os.Stderr, "")
+		fmt.Fprintln(loggerWriter, "")
 
 	} else if sev == warning {
-		defer fmt.Fprint(os.Stderr, colors.Off)
-		fmt.Fprint(os.Stderr, colors.Yellow)
-		fmt.Fprintln(os.Stderr, a...)
+		defer fmt.Fprint(loggerWriter, colors.Off)
+		fmt.Fprint(loggerWriter, colors.Yellow)
+		fmt.Fprintln(loggerWriter, a...)
 
 	} else if sev == err {
-		defer fmt.Fprint(os.Stderr, colors.Off)
-		fmt.Fprint(os.Stderr, colors.Red)
-		fmt.Fprintln(os.Stderr, a...)
+		defer fmt.Fprint(loggerWriter, colors.Off)
+		fmt.Fprint(loggerWriter, colors.Red)
+		fmt.Fprintln(loggerWriter, a...)
 
 	} else {
-		fmt.Fprintln(os.Stderr, a...)
+		fmt.Fprintln(loggerWriter, a...)
 	}
 }
 
@@ -148,7 +162,7 @@ func Panic(v ...any) {
 }
 
 func Progress(tick bool, v ...any) {
-	if !utils.IsTerminal() || !tick {
+	if isTestMode || !utils.IsTerminal() || !tick {
 		return
 	}
 	toLog(progress, v...)

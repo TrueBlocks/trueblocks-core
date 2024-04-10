@@ -1,0 +1,4 @@
+name     ,type    ,strDefault ,attributes ,docOrder ,description
+address  ,address ,           ,           ,       1 ,the address for this count
+nRecords ,uint64  ,           ,           ,       2 ,the number of appearances for the given address
+fileSize ,uint64  ,           ,           ,       3 ,the size of the monitor file containing those appearances

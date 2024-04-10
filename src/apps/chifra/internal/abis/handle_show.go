@@ -26,8 +26,9 @@ func (opts *AbisOptions) HandleShow() (err error) {
 		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
 		for _, addr := range opts.Addrs {
 			address := base.HexToAddress(addr)
-			if len(opts.ProxyFor) > 0 {
-				address = base.HexToAddress(opts.ProxyFor)
+			proxy := base.HexToAddress(opts.ProxyFor)
+			if !proxy.IsZero() {
+				address = proxy
 			}
 			err = abi.LoadAbi(opts.Conn, address, &abiCache.AbiMap)
 			if err != nil {

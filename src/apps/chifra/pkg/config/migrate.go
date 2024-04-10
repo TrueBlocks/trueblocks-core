@@ -27,7 +27,7 @@ func migrate(currentVer version.Version) error {
 
 	var cfg ConfigFile
 	configFile := PathToConfigFile()
-	if err := readFile(configFile, &cfg); err != nil {
+	if err := ReadToml(configFile, &cfg); err != nil {
 		return err
 	}
 
@@ -111,7 +111,7 @@ type OldScrape struct {
 
 func MergeScrapeConfig(fn string, scrape *ScrapeSettings) error {
 	var sCfg OldScrape
-	if err := readFile(fn, &sCfg); err != nil {
+	if err := ReadToml(fn, &sCfg); err != nil {
 		return err
 	}
 	if sCfg.Settings.AppsPerChunk > 0 {

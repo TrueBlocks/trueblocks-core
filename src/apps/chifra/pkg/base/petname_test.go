@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func Test_Monitor_Print(t *testing.T) {
+func Test_Petnames(t *testing.T) {
 	type Test struct {
 		Address string
 		Petname string

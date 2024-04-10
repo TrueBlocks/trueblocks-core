@@ -1,8 +1,0 @@
-[settings]
-class = CAbi
-fields = abi.csv
-doc_group = 05-Other
-doc_descr = a human-readable representation of a Solidity smart contract
-doc_route = 501-abi
-doc_producer = abis
-# go_output = src/apps/chifra/internal/abis

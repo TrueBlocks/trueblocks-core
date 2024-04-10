@@ -10,14 +10,17 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *WhenOptions) HandleShow() error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawNamedBlock], errorChan chan error) {
@@ -31,6 +34,11 @@ func (opts *WhenOptions) HandleShow() error {
 				cancel()
 				return
 			}
+
+			bar := logger.NewBar(logger.BarOptions{
+				Enabled: !testMode && !utils.IsTerminal(),
+				Total:   int64(len(blockNums)),
+			})
 
 			for _, bn := range blockNums {
 				block, err := opts.Conn.GetBlockHeaderByNumber(bn)
@@ -56,7 +64,9 @@ func (opts *WhenOptions) HandleShow() error {
 				} else {
 					modelChan <- nb
 				}
+				bar.Tick()
 			}
+			bar.Finish(true)
 		}
 	}
 

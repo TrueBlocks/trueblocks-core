@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -48,14 +49,12 @@ Notes:
   - The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra scrape
-	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Fmt)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.File)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra scrape
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.NoColor)
+	capabilities = capabilities.Add(caps.Chain)
 
 	scrapeCmd.Flags().SortFlags = false
 
@@ -72,15 +71,15 @@ func init() {
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.ChannelCount, "channel_count", "", 20, "number of concurrent processing channels (hidden)")
 	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Settings.AllowMissing, "allow_missing", "", false, "do not report errors for blockchains that contain blocks with zero addresses (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
-		scrapeCmd.Flags().MarkHidden("run_count")
-		scrapeCmd.Flags().MarkHidden("publisher")
-		scrapeCmd.Flags().MarkHidden("dry_run")
-		scrapeCmd.Flags().MarkHidden("apps_per_chunk")
-		scrapeCmd.Flags().MarkHidden("snap_to_grid")
-		scrapeCmd.Flags().MarkHidden("first_snap")
-		scrapeCmd.Flags().MarkHidden("unripe_dist")
-		scrapeCmd.Flags().MarkHidden("channel_count")
-		scrapeCmd.Flags().MarkHidden("allow_missing")
+		_ = scrapeCmd.Flags().MarkHidden("run_count")
+		_ = scrapeCmd.Flags().MarkHidden("publisher")
+		_ = scrapeCmd.Flags().MarkHidden("dry_run")
+		_ = scrapeCmd.Flags().MarkHidden("apps_per_chunk")
+		_ = scrapeCmd.Flags().MarkHidden("snap_to_grid")
+		_ = scrapeCmd.Flags().MarkHidden("first_snap")
+		_ = scrapeCmd.Flags().MarkHidden("unripe_dist")
+		_ = scrapeCmd.Flags().MarkHidden("channel_count")
+		_ = scrapeCmd.Flags().MarkHidden("allow_missing")
 	}
 	globals.InitGlobals("scrape", scrapeCmd, &scrapePkg.GetOptions().Globals, capabilities)
 
@@ -92,4 +91,3 @@ func init() {
 
 	chifraCmd.AddCommand(scrapeCmd)
 }
-

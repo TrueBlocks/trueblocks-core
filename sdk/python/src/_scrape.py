@@ -10,9 +10,8 @@ scrapeOpts = {
     "blockCnt": {"hotkey": "-n", "type": "flag"},
     "sleep": {"hotkey": "-s", "type": "flag"},
     "touch": {"hotkey": "-l", "type": "flag"},
+    "chain": {"hotkey": "-", "type": "flag"},
     "fmt": {"hotkey": "-x", "type": "flag"},
-    "verbose:": {"hotkey": "-v", "type": "switch"},
-    "help": {"hotkey": "-h", "type": "switch"},
 }
 
 def scrape(self):
@@ -21,4 +20,3 @@ def scrape(self):
     if ret[0] == 'json':
         return session.get(url).json()
     return session.get(url).text
-

@@ -1,4 +1,4 @@
-chifra list  trueblocks.eth --wei
+chifra list  trueblocks.eth --wei --max_records 10
 Error: 
   unknown flag: --wei
 

@@ -4,7 +4,6 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"math/big"
 	"path/filepath"
 	"strings"
 
@@ -83,10 +82,6 @@ func HexToAddress(hex string) (addr Address) {
 	return
 }
 
-func BigToAddress(b *big.Int) Address {
-	return BytesToAddress(b.Bytes())
-}
-
 func BytesToAddress(b []byte) (addr Address) {
 	addr.SetBytes(b)
 	return
@@ -141,11 +136,11 @@ var ErrNoLeading0x = errors.New("hex string must start with 0x")
 var ErrInvalidLength = errors.New("hex string must be an even length")
 var ErrInvalidHex = errors.New("hex string must contain only hex characters")
 
-func ValidHex(typ string, val string, nBytes int) (bool, error) {
-	return isValidHex(typ, val, nBytes)
+func ValidHex(val string, nBytes int) (bool, error) {
+	return isValidHex(val, nBytes)
 }
 
-func isValidHex(typ string, val string, nBytes int) (bool, error) {
+func isValidHex(val string, nBytes int) (bool, error) {
 	if !strings.HasPrefix(val, "0x") {
 		return false, ErrNoLeading0x
 	} else if len(val) != (2 + nBytes*2) {
@@ -165,7 +160,7 @@ func IsValidAddressE(val string) (bool, error) {
 	if strings.HasSuffix(val, ".eth") {
 		return strings.Replace(val, "\t\n\r", "", -1) == val, nil
 	}
-	return isValidHex("address", val, 20)
+	return isValidHex(val, 20)
 }
 
 // FAKE_ETH_ADDRESS is the address we use to represent ETH in the ledgers

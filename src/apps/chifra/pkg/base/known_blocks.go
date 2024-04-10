@@ -6,6 +6,7 @@ var (
 	London         = "london"
 	Merge          = "merge"
 	Shanghai       = "shanghai"
+	FirstTrace     = "first_trace"
 )
 
 var knownBlocks = map[string]map[string]Blknum{
@@ -19,6 +20,9 @@ var knownBlocks = map[string]map[string]Blknum{
 	"sepolia": {
 		Merge:    1450409,
 		Shanghai: 2990908,
+	},
+	"optimism": {
+		FirstTrace: 105235063,
 	},
 }
 

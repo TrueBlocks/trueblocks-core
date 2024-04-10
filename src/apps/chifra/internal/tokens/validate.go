@@ -26,7 +26,7 @@ func (opts *TokensOptions) validateTokens() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[name|symbol|decimals|totalSupply|version|all]")
+	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[name|symbol|decimals|totalSupply|version|some|all]")
 	if err != nil {
 		return err
 	}
@@ -58,7 +58,7 @@ func (opts *TokensOptions) validateTokens() error {
 
 			// all but the last is assumed to be a token
 			for _, addr := range opts.Addrs[:len(opts.Addrs)-1] {
-				err := opts.Conn.IsContractAt(base.HexToAddress(addr), nil)
+				err := opts.Conn.IsContractAtLatest(base.HexToAddress(addr))
 				if err != nil {
 					if errors.Is(err, rpc.ErrNotAContract) {
 						return validate.Usage("The value {0} is not a token contract.", addr)
@@ -69,7 +69,7 @@ func (opts *TokensOptions) validateTokens() error {
 		} else {
 			// the first is assumed to be a smart contract, the rest can be either non-existant, another smart contract or an EOA
 			addr := opts.Addrs[0]
-			err := opts.Conn.IsContractAt(base.HexToAddress(addr), nil)
+			err := opts.Conn.IsContractAtLatest(base.HexToAddress(addr))
 			if err != nil {
 				if err != nil {
 					if errors.Is(err, rpc.ErrNotAContract) {

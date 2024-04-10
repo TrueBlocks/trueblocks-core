@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -53,10 +54,9 @@ Notes:
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra when
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra when
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
-	// EXISTING_CODE
 
 	whenCmd.Flags().SortFlags = false
 
@@ -69,7 +69,7 @@ func init() {
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Update, "update", "u", false, "with --timestamps only, bring the timestamp database forward to the latest block")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "d", false, "with --timestamps --check only, verifies timestamps from on chain (slow)")
 	if os.Getenv("TEST_MODE") != "true" {
-		whenCmd.Flags().MarkHidden("truncate")
+		_ = whenCmd.Flags().MarkHidden("truncate")
 	}
 	globals.InitGlobals("when", whenCmd, &whenPkg.GetOptions().Globals, capabilities)
 
@@ -81,4 +81,3 @@ func init() {
 
 	chifraCmd.AddCommand(whenCmd)
 }
-

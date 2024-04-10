@@ -1,0 +1,7 @@
+[settings]
+    class = "CManifest"
+    doc_group = "04-Admin"
+    doc_descr = "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
+    doc_route = "406-manifest"
+    produced_by = "chunks, init, scrape"
+    go_output = "src/apps/chifra/pkg/types"

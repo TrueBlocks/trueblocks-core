@@ -1,0 +1,7 @@
+[settings]
+    class = "CTraceCount"
+    doc_group = "02-Chain Data"
+    doc_descr = "counts the number of traces in a transaction"
+    doc_route = "230-traceCount"
+    produced_by = "traces"
+    go_output = "src/apps/chifra/internal/traces"

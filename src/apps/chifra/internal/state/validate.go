@@ -18,6 +18,7 @@ import (
 
 func (opts *StateOptions) validateState() error {
 	chain := opts.Globals.Chain
+	proxy := base.HexToAddress(opts.ProxyFor)
 
 	opts.testLog()
 
@@ -29,7 +30,7 @@ func (opts *StateOptions) validateState() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[none|some|all|balance|nonce|code|proxy|deployed|accttype]")
+	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[balance|nonce|code|proxy|deployed|accttype|some|all]")
 	if err != nil {
 		return err
 	}
@@ -60,11 +61,11 @@ func (opts *StateOptions) validateState() error {
 			}
 
 			contract := opts.Addrs[0]
-			if len(opts.ProxyFor) > 0 {
-				contract = opts.ProxyFor
+			if !proxy.IsZero() {
+				contract = proxy.Hex()
 			}
 
-			err := opts.Conn.IsContractAt(base.HexToAddress(contract), nil)
+			err := opts.Conn.IsContractAtLatest(base.HexToAddress(contract))
 			if err != nil {
 				if errors.Is(err, rpc.ErrNotAContract) {
 					return validate.Usage("The address for the --call option must be a smart contract.")
@@ -74,8 +75,8 @@ func (opts *StateOptions) validateState() error {
 
 			// Before we do anythinng, let's just make sure we have a valid four-byte
 			callAddress := base.HexToAddress(opts.Addrs[0])
-			if opts.ProxyFor != "" {
-				callAddress = base.HexToAddress(opts.ProxyFor)
+			if !proxy.IsZero() {
+				callAddress = proxy
 			}
 			// TODO: Can't we preserve the results of this so we don't have to do it later?
 			if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
@@ -99,7 +100,7 @@ func (opts *StateOptions) validateState() error {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--call")
 			}
 
-			if len(opts.ProxyFor) > 0 {
+			if !proxy.IsZero() {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--proxy_for", "--call")
 			}
 

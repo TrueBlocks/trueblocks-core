@@ -11,5 +11,6 @@ TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append
 TEST[DATE|TIME] Format:  txt
 The index (3735928560) is ahead of the chain ("0xdeadbeef").
 INFO[DATE|TIME] Scraping:
+INFO[DATE|TIME]   RPC:      --rpc-provider--
 INFO[DATE|TIME]   Path:     --unchained-path--
 INFO[DATE|TIME]   Settings: {10000 10000 10000 10000 true 10000}

@@ -1,0 +1,10 @@
+name            ,type      ,strDefault ,attributes ,docOrder ,description
+blockNumber     ,blknum    ,           ,           ,       1 ,the block's block number
+timestamp       ,timestamp ,           ,           ,       2 ,the timestamp of the block
+date            ,datetime  ,           ,calc       ,       3 ,the timestamp as a date
+transactionsCnt ,uint64    ,           ,           ,       4 ,the number transactions in the block
+unclesCnt       ,uint64    ,           ,omitempty  ,       5 ,the number of uncles in the block
+logsCnt         ,uint64    ,           ,omitempty  ,       6 ,the number of logs in the block
+tracesCnt       ,uint64    ,           ,omitempty  ,       7 ,the number of traces in the block
+withdrawalsCnt  ,uint64    ,           ,omitempty  ,       8 ,the number of withdrawals in the block
+addressCnt      ,uint64    ,           ,omitempty  ,       9 ,the number of address appearances in the block

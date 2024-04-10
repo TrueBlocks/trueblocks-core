@@ -1,7 +1,10 @@
 /* eslint object-curly-newline: ["error", "never"] */
 /* eslint max-len: ["error", 160] */
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
 /*
- * This file was generated with makeClass --sdk. Do not edit it.
+ * This file was auto generated. DO NOT EDIT.
  */
 import * as ApiCallers from '../lib/api_callers';
 import { address, Appearance, blknum, Block, BlockCount, Log, LogFilter, topic, Trace, TraceAction, TraceResult, uint64, Withdrawal } from '../types';
@@ -21,13 +24,13 @@ export function getBlocks(
     articulate?: boolean,
     bigRange?: uint64,
     count?: boolean,
+    fmt?: string,
     chain: string,
     noHeader?: boolean,
-    fmt?: string,
-    verbose?: boolean,
+    cache?: boolean,
+    decache?: boolean,
     ether?: boolean,
     raw?: boolean,
-    cache?: boolean,
   },
   options?: RequestInit,
 ) {
@@ -35,4 +38,3 @@ export function getBlocks(
     { endpoint: '/blocks', method: 'get', parameters, options },
   );
 }
-

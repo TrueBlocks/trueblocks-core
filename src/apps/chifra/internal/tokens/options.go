@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package tokensPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -19,6 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // TokensOptions provides all command options for the chifra tokens command.
@@ -59,9 +64,17 @@ func (opts *TokensOptions) String() string {
 
 // tokensFinishParseApi finishes the parsing for server invocations. Returns a new TokensOptions.
 func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return TokensFinishParseInternal(w, values)
+}
+
+func TokensFinishParseInternal(w io.Writer, values url.Values) *TokensOptions {
 	copy := defaultTokensOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -90,7 +103,7 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	if len(opts.Addrs) == 1 && len(opts.Parts) == 0 {
@@ -179,9 +192,10 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultTokensOptions.Globals)
 	defaultTokensOptions.Globals.TestMode = testMode
 	defaultTokensOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra tokens
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra tokens
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultTokensOptions.Globals.Caps = capabilities
 }
@@ -197,4 +211,3 @@ func (opts *TokensOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

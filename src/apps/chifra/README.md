@@ -36,3 +36,5 @@ Purpose:
 
   Use "chifra [command] --help" for more information about a command.
 ```
+
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

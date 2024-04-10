@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package initPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -18,6 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // InitOptions provides all command options for the chifra init command.
@@ -56,11 +61,17 @@ func (opts *InitOptions) String() string {
 
 // initFinishParseApi finishes the parsing for server invocations. Returns a new InitOptions.
 func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return InitFinishParseInternal(w, values)
+}
+
+func InitFinishParseInternal(w io.Writer, values url.Values) *InitOptions {
 	copy := defaultInitOptions
 	opts := &copy
-	opts.FirstBlock = 0
-	opts.Sleep = 0.0
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "all":
 			opts.All = true
@@ -78,7 +89,7 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
@@ -134,13 +145,13 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultInitOptions.Globals)
 	defaultInitOptions.Globals.TestMode = testMode
 	defaultInitOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra init
+	var capabilities caps.Capability // capabilities for chifra init
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.NoColor)
+	capabilities = capabilities.Add(caps.Chain)
 	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Fmt)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.File)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 	defaultInitOptions.Globals.Caps = capabilities
 }
@@ -153,4 +164,3 @@ func (opts *InitOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

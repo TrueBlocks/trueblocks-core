@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -58,16 +59,15 @@ Notes:
   - You may specify multiple modes on a single line.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra state
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra state
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
-	// EXISTING_CODE
 
 	stateCmd.Flags().SortFlags = false
 
 	stateCmd.Flags().StringSliceVarP(&statePkg.GetOptions().Parts, "parts", "p", nil, `control which state to export
-One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]`)
+One or more of [ balance | nonce | code | proxy | deployed | accttype | some | all ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "z", false, "suppress the display of zero balance accounts")
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "l", "", "call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data")
@@ -83,4 +83,3 @@ One or more of [ none | some | all | balance | nonce | code | proxy | deployed |
 
 	chifraCmd.AddCommand(stateCmd)
 }
-

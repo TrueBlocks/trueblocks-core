@@ -1,0 +1,119 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
+package {{.Route}}Pkg
+
+import (
+	// EXISTING_CODE
+	// EXISTING_CODE
+)
+
+// {{.Proper}}Options provides all command options for the chifra {{.Lower}} command.
+type {{.Proper}}Options struct {
+{{.OptFields}}	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+var default{{.Proper}}Options = {{.Proper}}Options{
+	{{.GoDefs}}
+}
+
+// testLog is used only during testing to export the options for this test case.
+func (opts *{{.Proper}}Options) testLog() {
+{{.TestLogs}}	opts.Conn.TestLog(opts.getCaches())
+	opts.Globals.TestLog()
+}
+
+// String implements the Stringer interface
+func (opts *{{.Proper}}Options) String() string {
+	b, _ := json.MarshalIndent(opts, "", "  ")
+	return string(b)
+}
+
+// {{.Lower}}FinishParseApi finishes the parsing for server invocations. Returns a new {{.Proper}}Options.
+func {{.Lower}}FinishParseApi(w http.ResponseWriter, r *http.Request) *{{.Proper}}Options {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return {{.Proper}}FinishParseInternal(w, values)
+}
+
+func {{.Proper}}FinishParseInternal(w io.Writer, values url.Values) *{{.Proper}}Options {
+	copy := default{{.Proper}}Options
+	opts := &copy
+{{.DefaultsApi}}	for key, value := range values {
+		switch key {
+{{.RequestOpts}}		default:
+			if !copy.Globals.Caps.HasKey(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "{{.Route}}")
+			}
+		}
+	}
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
+{{.EnsConvert1}}
+	// EXISTING_CODE
+	// EXISTING_CODE
+{{.EnsConvert2}}
+	return opts
+}
+
+// {{.Lower}}FinishParse finishes the parsing for command line invocations. Returns a new {{.Proper}}Options.
+func {{.Lower}}FinishParse(args []string) *{{.Proper}}Options {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
+	defFmt := "txt"
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+{{.EnsConvert1}}
+	// EXISTING_CODE
+	// EXISTING_CODE
+{{.EnsConvert2}}	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
+
+	return opts
+}
+
+func GetOptions() *{{.Proper}}Options {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &default{{.Proper}}Options
+}
+
+func ResetOptions(testMode bool) {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	default{{.Proper}}Options = {{.Proper}}Options{}
+	globals.SetDefaults(&default{{.Proper}}Options.Globals)
+	default{{.Proper}}Options.Globals.TestMode = testMode
+	default{{.Proper}}Options.Globals.Writer = w
+	{{.AddCaps}}	// EXISTING_CODE
+	// EXISTING_CODE
+	default{{.Proper}}Options.Globals.Caps = capabilities
+}
+
+func (opts *{{.Proper}}Options) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

@@ -3,7 +3,6 @@ package base
 import (
 	"bytes"
 	"fmt"
-	"math/big"
 	"reflect"
 	"testing"
 
@@ -21,10 +20,6 @@ func TestAddress_Hex(t *testing.T) {
 	}
 
 	addr := HexToAddress("0x00000000000000000000000000000000deadbeef")
-	expectedAddr := BigToAddress(big.NewInt(0x00000000000000000000000000000000DEADBeeF))
-	if addr != expectedAddr {
-		t.Error("incorrect result from HexToAddress")
-	}
 
 	hex := "0xF1AA581F353005BA3765B81BF52D6B1C488C2101"
 	addr.SetHex(hex)

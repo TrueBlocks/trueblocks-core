@@ -71,7 +71,7 @@ func (opts *SlurpOptions) HandleAppearances() error {
 						sleep := opts.Sleep
 						if sleep > 0 {
 							ms := time.Duration(sleep*1000) * time.Millisecond
-							logger.Progress(!opts.Globals.TestMode, fmt.Sprintf("Sleeping for %g seconds", sleep))
+							logger.Progress(true, fmt.Sprintf("Sleeping for %g seconds", sleep))
 							time.Sleep(ms)
 						}
 					}
@@ -92,10 +92,10 @@ func (opts *SlurpOptions) HandleAppearances() error {
 func (opts *SlurpOptions) FirstPage() int {
 	switch opts.Source {
 	case "etherscan":
-		fallthrough
+		return 1
 	case "key":
 		fallthrough
 	default:
-		return 1
+		return 0
 	}
 }

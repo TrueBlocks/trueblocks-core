@@ -1,2 +1,0 @@
-name  ,type   ,strDefault ,omitempty ,doc ,description
-count ,uint64 ,           ,          ,  1 ,the number of timestamps in the timestamps database

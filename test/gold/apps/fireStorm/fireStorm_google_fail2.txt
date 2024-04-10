@@ -5,7 +5,7 @@ TEST[DATE|TIME] Caps:  -fmt,-noHeader,-output,-append
 TEST[DATE|TIME] Format:  txt
 Error: The --google option requires an address term.
 Usage:
-  chifra explore [flags] <term> [term...]
+  chifra explore [flags] [terms...]
 
 Arguments:
   terms - one or more address, name, block, or transaction identifier

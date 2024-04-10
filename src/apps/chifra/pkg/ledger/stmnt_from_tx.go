@@ -1,9 +1,10 @@
 package ledger
 
 import (
-	"math/big"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -37,7 +38,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		// TODO: BOGUS PERF - This greatly increases the number of times we call into eth_getBalance which is quite slow
 		prevBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.PrevBlock)
 		if trans.BlockNumber == 0 {
-			prevBal = new(big.Int)
+			prevBal = new(base.Wei)
 		}
 		begBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock-1)
 		endBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock)
@@ -68,12 +69,12 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 
 		// Do not collapse. A single transaction may have many movements of money
 		if l.AccountFor == ret.Sender {
-			gasUsed := new(big.Int)
+			gasUsed := new(base.Wei)
 			if trans.Receipt != nil {
 				gasUsed.SetUint64(trans.Receipt.GasUsed)
 			}
-			gasPrice := new(big.Int).SetUint64(trans.GasPrice)
-			gasOut := new(big.Int).Mul(gasUsed, gasPrice)
+			gasPrice := new(base.Wei).SetUint64(trans.GasPrice)
+			gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
 
 			ret.AmountOut = trans.Value
 			ret.GasOut = *gasOut
@@ -111,7 +112,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 				logger.TestLog(!l.UseTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), "need to decend into traces")
 			}
 			if traceStatements, err := l.getStatementsFromTraces(conn, trans, &ret); err != nil {
-				logger.Warn(l.TestMode, "Error getting statement from traces")
+				logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 			} else {
 				statements = append(statements, traceStatements...)
 			}

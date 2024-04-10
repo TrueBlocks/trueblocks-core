@@ -1,0 +1,8 @@
+name           ,type      ,strDefault ,attributes ,docOrder ,description
+address        ,address   ,           ,           ,       1 ,the recipient for the withdrawn ether
+amount         ,wei       ,           ,           ,       2 ,a nonzero amount of ether given in gwei (1e9 wei)
+blockNumber    ,blknum    ,           ,           ,       3 ,the number of this block
+index          ,uint64    ,           ,           ,       4 ,a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal
+timestamp      ,timestamp ,           ,           ,       5 ,the timestamp for this block
+date           ,datetime  ,           ,calc       ,       6 ,the timestamp as a date
+validatorIndex ,uint64    ,           ,           ,       7 ,the validator_index of the validator on the consensus layer the withdrawal corresponds to
