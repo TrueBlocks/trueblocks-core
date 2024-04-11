@@ -1,6 +1,10 @@
-/*
- */
+// If a test case is not commented out (with #) copy its gold file to working (since
+// we've cleaned the working otherwise)
 // If configured, copy the data out to the folder our performance measurement tool knows about
+// Handle _curl files (X-POST, etc.)
+// Clean existing .txt files in both root and api_files folders prior to the test
+// Append --output file results to the output file
+// Prepend test data to the output file
 // Write performance data to a file and results to the screen
 // Support --mode both|cmd|api
 // Make sure both gold and working folders exist
@@ -11,7 +15,6 @@
 #include "testcase.h"
 #include "measure.h"
 
-CStringArray fails;
 extern const char* STR_SCREEN_REPORT;
 extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
 
@@ -22,7 +25,6 @@ int main(int argc, const char* argv[]) {
     CMeasure total("all", "all", "all");
     cerr.rdbuf(cout.rdbuf());
 
-    // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return EXIT_FAILURE;
@@ -52,10 +54,14 @@ int main(int argc, const char* argv[]) {
 
             map<string_q, CTestCase> testMap;
             for (auto line : lines) {
-                bool ignore1 = startsWith(line, "#");
+                if (startsWith(line, "#")) {
+                    continue;
+                }
                 bool ignore2 = !startsWith(line, "on");
-                bool ignore3 = startsWith(line, "enabled");
-                if (line.empty() || ignore1 || ignore2 || ignore3) {
+                if (startsWith(line, "enabled")) {
+                    continue
+                }
+                if (line.empty() || ignore2) {
                     if (ignore2) {
                         if (trim(line).substr(0, 120).length() > 0) {
                             cerr << "   # " << line.substr(0, 120) << endl;
@@ -63,7 +69,6 @@ int main(int argc, const char* argv[]) {
                         CTestCase test(line, 0);
                         test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
                                                    "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
-                        // if the gold file exists, copy the test case back to working (it may have been removed)
                         if (fileExists(test.goldPath)) {
                             test.workPath =
                                 substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
@@ -95,7 +100,6 @@ int main(int argc, const char* argv[]) {
                 testArray.push_back(t.second);
             sort(testArray.begin(), testArray.end());
 
-            expContext().exportFmt = CSV1;
             options.doTests(total, testArray, path, testName, API);
             options.doTests(total, testArray, path, testName, CMD);
             if (shouldQuit())
@@ -114,7 +118,7 @@ int main(int argc, const char* argv[]) {
 
     cerr << string_q(125, '=') << endl;
     cerr << total.Format(STR_SCREEN_REPORT) << endl;
-    for (auto fail : fails)
+    for (auto fail : options.fails)
         cerr << fail;
     cerr << endl;
 
@@ -277,7 +281,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             }
 
             if (!contains(test.origLine, " all,")) {
-                // Prepare for presentation to the screen...
                 reverse(test.name);
                 test.name = substitute(padLeft(test.name, 30).substr(0, 30), " ", ".");
                 reverse(test.name);
@@ -285,7 +288,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                      << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
                 cerr << trim(test.name) << " " << result << "  " << trim(test.options).substr(0, 90) << endl;
             } else {
-                // we ignore ethQuote testing since it deprecated
             }
 
             usleep(500);
@@ -294,7 +296,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             }
             envLines.clear();
         }
-        // Cleanup files put in the temp folder, if any
         if (fileExists("/tmp/output_test_with_path.json")) {
             ::remove("/tmp/output_test_with_path.json");
         }
@@ -302,14 +303,12 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 
     total += measure;
     if (measure.nTests) {
-        // measure.allPassed = measure.nTests == measure.nPassed;
         cerr << measure.Format(STR_SCREEN_REPORT) << endl;
     }
 
     return;
 }
 
-//-----------------------------------------------------------------------
 bool saveAndCopy(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
@@ -320,7 +319,6 @@ bool saveAndCopy(const string_q& customFile, void* data) {
     return true;
 }
 
-//-----------------------------------------------------------------------
 bool replaceFile(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');

@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
-    // int modes = BOTH;
+    CStringArray fails;
     CStringArray tests;
 
     COptions(void);
