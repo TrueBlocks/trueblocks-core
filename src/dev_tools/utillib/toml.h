@@ -15,7 +15,6 @@
 #include <algorithm>
 #include <vector>
 #include "database.h"
-#include "biglib.h"
 
 namespace qblocks {
 

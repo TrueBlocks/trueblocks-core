@@ -11,7 +11,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
-#include "biglib.h"
 #include "sfarchive.h"
 #include "filenames.h"
 #include "logging.h"
@@ -90,20 +89,6 @@ CArchive& CArchive::operator<<(const string_q& str) {
     return *this;
 }
 
-// CArchive& CArchive::operator<<(const biguint_t& bn) {
-//     *this << bn.capacity;
-//     *this << bn.len;
-//     for (size_t i = 0; i < bn.len; i++)
-//         *this << (uint64_t)bn.blk[i];
-//     return *this;
-// }
-
-// CArchive& CArchive::operator<<(const bigint_t& bn) {
-//     *this << (const unsigned int)bn.sign;
-//     *this << bn.mag;
-//     return *this;
-// }
-
 CArchive& CArchive::operator<<(const time_q& date) {
     *this << date_2_Ts(date);
     return *this;
@@ -116,14 +101,6 @@ CArchive& operator<<(CArchive& archive, const CStringArray& array) {
         archive << array[i];
     return archive;
 }
-
-// CArchive& operator<<(CArchive& archive, const CBigUintArray& array) {
-//     uint64_t count = array.size();
-//     archive << count;
-//     for (size_t i = 0; i < array.size(); i++)
-//         archive << array[i];
-//     return archive;
-// }
 
 CArchive& operator<<(CArchive& archive, const CUintArray& array) {
     uint64_t count = array.size();
@@ -207,26 +184,6 @@ CArchive& CArchive::operator>>(string_q& str) {
     return *this;
 }
 
-// CArchive& CArchive::operator>>(biguint_t& bn) {
-//     // Note: I experimented with writing out
-//     // the blk in one Read/Write but it was
-//     // always slower on my m achine
-//     unsigned int size;
-//     *this >> size;
-//     bn.allocate(size);
-//     bn.capacity = size;
-//     *this >> bn.len;
-//     for (size_t i = 0; i < bn.len; i++)
-//         *this >> bn.blk[i];
-//     return *this;
-// }
-
-// CArchive& CArchive::operator>>(bigint_t& bn) {
-//     *this >> bn.sign;
-//     *this >> bn.mag;
-//     return *this;
-// }
-
 CArchive& operator>>(CArchive& archive, CStringArray& array) {
     uint64_t count;
     archive >> count;
@@ -237,17 +194,6 @@ CArchive& operator>>(CArchive& archive, CStringArray& array) {
     }
     return archive;
 }
-
-// CArchive& operator>>(CArchive& archive, CBigUintArray& array) {
-//     uint64_t count;
-//     archive >> count;
-//     for (size_t i = 0; i < count; i++) {
-//         biguint_t num;
-//         archive >> num;
-//         array.push_back(num);
-//     }
-//     return archive;
-// }
 
 //----------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CUintArray& array) {
