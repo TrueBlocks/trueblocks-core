@@ -7,6 +7,12 @@
 // }
 // if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
 //     return usage("[dev]debug_curl is set in config file. All tests will fail.");
+// bool hasKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
+// bool wantsTest = getEnvStr("TEST_SLURPS") == "true";
+// bool runSlurps = (hasKey && wantsTest);
+// if (runSlurps) {
+//     tests.push_back("tools/ethslurp");
+// }
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -38,15 +44,6 @@ bool COptions::parseArguments(string_q& command) {
     ::setenv("NO_USERQUERY", "true", 1);
 
     Init();
-
-    CToml config(rootConfigToml_makeClass);
-
-    bool hasKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
-    bool wantsTest = getEnvStr("TEST_SLURPS") == "true";
-    bool runSlurps = (hasKey && wantsTest);
-    if (runSlurps) {
-        tests.push_back("tools/ethslurp");
-    }
     tests.push_back("tools/ethNames");
     tests.push_back("tools/getBlocks");
     tests.push_back("tools/getLogs");
@@ -66,9 +63,6 @@ bool COptions::parseArguments(string_q& command) {
     tests.push_back("apps/fireStorm");
     tests.push_back("apps/init");
     tests.push_back("apps/daemon");
-
-    // SHOW_FIELD(CTestCase, "test_id");
-
     establishTestData();
 
     return true;
@@ -103,18 +97,11 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     return true;
 }
 
-string_q postProcessor = "";
-
 //---------------------------------------------------------------------------------------------------
 void establishTestData(void) {
     cleanFolder(cacheFolder_tmp);
 
-    string_q jqDef = doCommand("which gojq");
-    // if (jqDef.empty()) {
-    jqDef = "jq .";
-    // }
-    postProcessor = getGlobalConfig("testRunner")->getConfigStr("settings", "json_pretty_print", jqDef);
-    cerr << "Using `" << postProcessor << "` for post processing." << endl;
+    cerr << "Using `jq .` for post processing." << endl;
 
     // TODO: This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO: these tests fail. To reproduce, delete the entire cache, comment the lines below

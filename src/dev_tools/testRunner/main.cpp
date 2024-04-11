@@ -59,6 +59,10 @@ int main(int argc, const char* argv[]) {
                             cerr << "   # " << line.substr(0, 120) << endl;
                         }
                         CTestCase test(line, 0);
+                        if (contains(line, "&&")) {
+                            cerr << "test case " << test.name << " contains '&&'. Quitting..." << endl;
+                            exit(0);
+                        }
                         test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
                                                    "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
                         // if the gold file exists, copy the test case back to working (it may have been removed)
@@ -243,7 +247,10 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             // To run the test, we cd into the gold path (so we find the test
             // files), but we send results to working folder
             string_q goldApiPath = substitute(test.goldPath, "/api_tests", "");
-            string_q outputFile = test.getOutputFile(whichTest == API, goldApiPath);
+            string_q outputFile = "";
+            if (whichTest != API && contains(test.origLine, "output")) {
+                outputFile = test.getOutputFile(test.origLine, goldApiPath);
+            }
             string_q theCmd = "cd \"" + goldApiPath + "\" ; " + cmd.str();
 
             string_q customized =
@@ -395,25 +402,19 @@ const char* STR_SCREEN_REPORT =
     "seconds [{AVGSECS}] avg.";
 
 //---------------------------------------------------------------------------------------------
-string CTestCase::getOutputFile(bool isApi, const string& goldApiPath) const {
-    if (isApi) {
-        return "";
-    }
-
+string_q CTestCase::getOutputFile(const string_q& orig, const string_q& goldApiPath) const {
+    string_q line = substitute(substitute(orig, "&", "|"), "=", "|");
+    CStringArray parts;
+    explode(parts, line, '|');
+    bool next = false;
     string_q outputFile;
-    if (contains(origLine, "output")) {
-        string_q line = substitute(substitute(origLine, "&", "|"), "=", "|");
-        CStringArray parts;
-        explode(parts, line, '|');
-        bool next = false;
-        for (auto part : parts) {
-            part = trim(part);
-            if (next && outputFile.empty()) {
-                outputFile = goldApiPath + part;
-            }
-            if (part == "output") {
-                next = true;
-            }
+    for (auto part : parts) {
+        part = trim(part);
+        if (next && outputFile.empty()) {
+            outputFile = goldApiPath + part;
+        }
+        if (part == "output") {
+            next = true;
         }
     }
     return outputFile;

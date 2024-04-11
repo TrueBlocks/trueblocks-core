@@ -10,7 +10,7 @@ import (
 )
 
 func QueryUser(prompt, noResponse string) bool {
-	if os.Getenv("NO_USERQUERY") == "true" {
+	if os.Getenv("NO_USERQUERY") == "true" || os.Getenv("TEST_MODE") == "true" {
 		return true
 	} else if len(os.Getenv("NO_USERQUERY")) > 0 {
 		return false

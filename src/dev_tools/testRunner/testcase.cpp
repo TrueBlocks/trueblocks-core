@@ -16,8 +16,6 @@
  */
 #include "testcase.h"
 
-extern string_q postProcessor;
-
 namespace qblocks {
 
 //---------------------------------------------------------------------------
@@ -354,17 +352,11 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     post = parts.size() > 6 ? trim(parts[6]) : "";
     options = parts.size() > 7 ? trim(parts[7]) : "";
 
-    if (contains(line, "&&")) {
-        cerr << "test case " << name << " contains '&&'. Quitting..." << endl;
-        exit(0);
-    }
+    replaceAll(post, "n", "");
+    replaceAll(post, "y", "jq .");
 
     path = nextTokenClear(tool, '/');
     fileName = tool + "_" + name + ".txt";
-    replaceAll(post, "n", "");
-    replaceAll(post, "y", postProcessor);
-    if (!post.empty() && !contains(post, "gojq") && post != "jq ." && post != "post")
-        LOG_WARN("test post processor (", post, ") has unexpected value. Is it correct?");
 
     if (startsWith(options, "RESET")) {
         cleanFolder(cacheFolder_tmp);
@@ -389,8 +381,8 @@ void CTestCase::prepareTest(bool cmdLine) {
     establishFolder(goldPath);
     establishFolder(workPath);
 
-    if (fileExists("testing_file"))
-        ::remove("testing_file");
+    // if (fileExists("testing_file"))
+    //     ::remove("testing_file");
 
     if (!builtin) {  // order matters
         if (cmdLine) {
