@@ -13,16 +13,13 @@
 #include "utillib.h"
 #include "options.h"
 #include "testcase.h"
-#include "measure.h"
 
-extern const char* STR_SCREEN_REPORT;
 extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
 
-    CMeasure total("all", "all", "all");
     cerr.rdbuf(cout.rdbuf());
 
     COptions options;
@@ -100,8 +97,8 @@ int main(int argc, const char* argv[]) {
                 testArray.push_back(t.second);
             sort(testArray.begin(), testArray.end());
 
-            options.doTests(total, testArray, path, testName, API);
-            options.doTests(total, testArray, path, testName, CMD);
+            options.doTests(testArray, path, testName, API);
+            options.doTests(testArray, path, testName, CMD);
             if (shouldQuit())
                 break;
 
@@ -114,10 +111,12 @@ int main(int argc, const char* argv[]) {
 
     // We've run through all the tests. We know how many we've run and we know how
     // many have passed, so we know if all of them passed.
-    bool allPassed = total.nTests == total.nPassed;
+    bool allPassed = options.totalTests == options.totalPassed;
+    uint64_t nFailed = options.totalTests - options.totalPassed;
 
     cerr << string_q(125, '=') << endl;
-    cerr << total.Format(STR_SCREEN_REPORT) << endl;
+    cerr << "   all (all): " << options.totalTests << " tests " << options.totalPassed << " passed ";
+    cerr << (nFailed ? "" : "ok") << " " << nFailed << " failed." << endl;
     for (auto fail : options.fails)
         cerr << fail;
     cerr << endl;
@@ -125,12 +124,12 @@ int main(int argc, const char* argv[]) {
     return allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
-                       int whichTest) {
+void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int whichTest) {
     bool cmdTests = whichTest & CMD;
 
-    CMeasure measure(testPath, testName, (cmdTests ? "cmd" : "api"));
-    cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
+    uint64_t nTests = 0;
+    uint64_t nPassed = 0;
+    cerr << "Testing " + testName + " " + (cmdTests ? "cmd" : "api") + " mode):" << endl;
 
     for (auto test : testArray) {
         test.prepareTest(cmdTests);
@@ -218,7 +217,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                            "/api_tests", "");
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
-            measure.nTests++;
+            nTests++;
             if (system(theCmd.c_str())) {
             }  // Don't remove cruft. Silences compiler warnings
             if (folderExists(customized))
@@ -268,13 +267,13 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 
             string_q result = "ok";
             if (!newText.empty() && newText == oldText) {
-                measure.nPassed++;
+                nPassed++;
 
             } else {
                 ostringstream os;
-                os << "\tFailed: " << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
+                os << "\tFailed: " << (endsWith(test.path, "lib") ? test.tool : testName) << " ";
                 os << test.name << ".txt "
-                   << "(" << measure.cmd << " " << trim(test.options) << ")";
+                   << "(" << testName << " " << trim(test.options) << ")";
                 os << endl;
                 fails.push_back(os.str());
                 result = "X";
@@ -284,8 +283,8 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 reverse(test.name);
                 test.name = substitute(padLeft(test.name, 30).substr(0, 30), " ", ".");
                 reverse(test.name);
-                cerr << "   " << timeRep << " - "
-                     << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
+                cerr << "   " << timeRep << " - " << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : testName)
+                     << " ";
                 cerr << trim(test.name) << " " << result << "  " << trim(test.options).substr(0, 90) << endl;
             } else {
             }
@@ -301,9 +300,13 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
         }
     }
 
-    total += measure;
-    if (measure.nTests) {
-        cerr << measure.Format(STR_SCREEN_REPORT) << endl;
+    totalTests += nTests;
+    totalPassed += nPassed;
+    if (nTests) {
+        uint64_t nFailed = nTests - nPassed;
+        cerr << "   " + testName + " " + (cmdTests ? "cmd" : "api") + ": " << nTests << " tests ";
+        cerr << nPassed << " passed ";
+        cerr << (nFailed ? "X" : "ok") << " " << nFailed << " failed." << endl;
     }
 
     return;
@@ -329,12 +332,6 @@ bool replaceFile(const string_q& customFile, void* data) {
     return true;
 }
 
-//-----------------------------------------------------------------------
-const char* STR_SCREEN_REPORT =
-    "   [{CMD}] ([{TYPE}][,{FILTER}]): [{NTESTS}] tests [{NPASSED}] passed [{CHECK}] [{FAILED} failed] in "
-    "[{TOTSECS}].";
-
-//---------------------------------------------------------------------------------------------
 string_q getOutputFile(const string_q& orig, const string_q& goldApiPath) {
     string_q line = substitute(substitute(orig, "&", "|"), "=", "|");
     CStringArray parts;

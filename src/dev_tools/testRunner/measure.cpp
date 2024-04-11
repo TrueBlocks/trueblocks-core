@@ -14,6 +14,7 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+#if 0
 #include "measure.h"
 
 namespace qblocks {
@@ -237,3 +238,4 @@ CMeasure::CMeasure(const string_q& g, const string_q& c, const string_q& t) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
+#endif

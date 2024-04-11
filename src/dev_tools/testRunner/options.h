@@ -13,7 +13,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "utillib.h"
 #include "testcase.h"
-#include "measure.h"
 
 #define API (1 << 0)
 #define CMD (1 << 1)
@@ -22,6 +21,8 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
+    uint64_t totalTests = 0;
+    uint64_t totalPassed = 0;
     CStringArray fails;
     CStringArray tests;
 
@@ -31,8 +32,7 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    void doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
-                 int which);
+    void doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int which);
     bool cleanTest(const string_q& path, const string_q& testName);
 };
 

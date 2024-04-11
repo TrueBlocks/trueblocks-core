@@ -113,8 +113,6 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    CMeasure::registerClass();
-
     Init();
 }
 
