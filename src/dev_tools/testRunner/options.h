@@ -33,7 +33,6 @@ class COptions : public COptionsBase {
     void Init(void) override;
 
     void doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int which);
-    bool cleanTest(const string_q& path, const string_q& testName);
 };
 
 //-----------------------------------------------------------------------

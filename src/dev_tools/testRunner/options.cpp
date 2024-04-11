@@ -14,7 +14,6 @@
 //     tests.push_back("tools/ethslurp");
 // }
 #include "options.h"
-#include "measure.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
@@ -118,16 +117,4 @@ COptions::COptions(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COptions::cleanTest(const string_q& path, const string_q& testName) {
-    ostringstream os;
-    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"" << testName
-       << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    os << "find ../../../working/" << path << "/" << testName << "/api_tests/ -maxdepth 1 -name \"" << testName
-       << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    if (system(os.str().c_str())) {
-    }  // Don't remove cruft. Silences compiler warnings
-    return true;
 }

@@ -15,6 +15,7 @@
 #include "testcase.h"
 
 extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
+extern bool cleanTest(const string_q& path, const string_q& testName);
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -36,8 +37,8 @@ int main(int argc, const char* argv[]) {
 
         for (auto testName : options.tests) {
             string_q path = nextTokenClear(testName, '/');
-            options.cleanTest(path, testName);
-            options.cleanTest(path, testName + "/api_tests");
+            cleanTest(path, testName);
+            cleanTest(path, testName + "/api_tests");
 
             string_q testFile = testFolder + path + "/" + testName + ".csv";
             if (!fileExists(testFile))
@@ -348,4 +349,15 @@ string_q getOutputFile(const string_q& orig, const string_q& goldApiPath) {
         }
     }
     return outputFile;
+}
+
+bool cleanTest(const string_q& path, const string_q& testName) {
+    ostringstream os;
+    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"" << testName
+       << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/api_tests/ -maxdepth 1 -name \"" << testName
+       << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    if (system(os.str().c_str())) {
+    }  // Don't remove cruft. Silences compiler warnings
+    return true;
 }
