@@ -84,7 +84,7 @@ int main(int argc, const char* argv[]) {
 
                 } else {
                     CTestCase test(line, testID++);
-                    string_q key = test.Format("[{KEY}]");
+                    string_q key = test.route + "-" + test.tool + "-" + test.name;
                     if (testMap[key] != CTestCase()) {
                         cerr << "Duplicate test names: " << key << ". Quitting..." << endl;
                         return EXIT_FAILURE;
@@ -98,8 +98,8 @@ int main(int argc, const char* argv[]) {
                 testArray.push_back(t.second);
             sort(testArray.begin(), testArray.end());
 
-            options.doTests(testArray, path, testName, API);
-            options.doTests(testArray, path, testName, CMD);
+            options.doTests(testArray, testName, API);
+            options.doTests(testArray, testName, CMD);
             if (shouldQuit())
                 break;
 
@@ -125,8 +125,7 @@ int main(int argc, const char* argv[]) {
     return allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-void COptions::doTests(vector<CTestCase>& testArray, const string_q& testPath, const string_q& testName,
-                       int whichTest) {
+void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, int whichTest) {
     bool cmdTests = whichTest & CMD;
 
     uint64_t nTests = 0;

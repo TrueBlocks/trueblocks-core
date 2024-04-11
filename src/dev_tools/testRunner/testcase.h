@@ -141,11 +141,11 @@ inline void CTestCase::prepareTest(bool cmdLine) {
 }
 
 inline CTestCase::CTestCase(const string_q& line, uint32_t id) {
+    test_id = id;
     origLine = line;
 
     CStringArray parts;
     explode(parts, line, ',');
-    test_id = id;
     onOff = parts.size() > 0 ? trim(parts[0]) : "";
     mode = parts.size() > 1 ? trim(parts[1]) : "";
     speed = parts.size() > 2 ? trim(parts[2]) : "";

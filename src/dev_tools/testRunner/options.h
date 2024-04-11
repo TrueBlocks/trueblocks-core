@@ -32,7 +32,7 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    void doTests(vector<CTestCase>& testArray, const string_q& testPath, const string_q& testName, int which);
+    void doTests(vector<CTestCase>& testArray, const string_q& testName, int which);
 };
 
 //-----------------------------------------------------------------------
