@@ -93,7 +93,7 @@ int main(int argc, const char* argv[]) {
                 }
             }
 
-            CTestCaseArray testArray;
+            vector<CTestCase> testArray;
             for (auto t : testMap)
                 testArray.push_back(t.second);
             sort(testArray.begin(), testArray.end());
@@ -125,7 +125,8 @@ int main(int argc, const char* argv[]) {
     return allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int whichTest) {
+void COptions::doTests(vector<CTestCase>& testArray, const string_q& testPath, const string_q& testName,
+                       int whichTest) {
     bool cmdTests = whichTest & CMD;
 
     uint64_t nTests = 0;

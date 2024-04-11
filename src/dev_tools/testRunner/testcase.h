@@ -1,28 +1,7 @@
 #pragma once
-/*-------------------------------------------------------------------------------------------
- * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
- *
- * This program is free software: you may redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version. This program is
- * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see http://www.gnu.org/licenses/.
- *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
- */
+
 #include "utillib.h"
 
-namespace qblocks {
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-//--------------------------------------------------------------------------
 class CTestCase : public CBaseNode {
   public:
     string_q origLine;
@@ -40,69 +19,23 @@ class CTestCase : public CBaseNode {
     string_q fileName;
     uint32_t test_id;
 
-  public:
     CTestCase(void);
     CTestCase(const CTestCase& te);
     virtual ~CTestCase(void);
     CTestCase& operator=(const CTestCase& te);
 
-    DECLARE_NODE(CTestCase);
-
-    // EXISTING_CODE
-    string_q getOutputFile(const string_q& orig, const string_q& goldApiPath) const;
     explicit CTestCase(const string_q& line, uint32_t id);
     void prepareTest(bool cmdLine);
-    // EXISTING_CODE
     bool operator==(const CTestCase& it) const;
     bool operator!=(const CTestCase& it) const {
         return !operator==(it);
     }
     friend bool operator<(const CTestCase& v1, const CTestCase& v2);
     friend ostream& operator<<(ostream& os, const CTestCase& it);
-
-  protected:
-    void clear(void);
-    void initialize(void);
-    void duplicate(const CTestCase& te);
-
-    // EXISTING_CODE
-    // EXISTING_CODE
 };
 
-//--------------------------------------------------------------------------
 inline CTestCase::CTestCase(void) {
-    initialize();
-    // EXISTING_CODE
-    // EXISTING_CODE
-}
-
-//--------------------------------------------------------------------------
-inline CTestCase::CTestCase(const CTestCase& te) {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    duplicate(te);
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-//--------------------------------------------------------------------------
-inline CTestCase::~CTestCase(void) {
-    clear();
-    // EXISTING_CODE
-    // EXISTING_CODE
-}
-
-//--------------------------------------------------------------------------
-inline void CTestCase::clear(void) {
-    // EXISTING_CODE
-    // EXISTING_CODE
-}
-
-//--------------------------------------------------------------------------
-inline void CTestCase::initialize(void) {
     CBaseNode::initialize();
-
     origLine = "";
     onOff = "";
     mode = "";
@@ -117,16 +50,10 @@ inline void CTestCase::initialize(void) {
     workPath = "";
     fileName = "";
     test_id = 0;
-
-    // EXISTING_CODE
-    // EXISTING_CODE
 }
 
-//--------------------------------------------------------------------------
-inline void CTestCase::duplicate(const CTestCase& te) {
-    clear();
+inline CTestCase::CTestCase(const CTestCase& te) {
     CBaseNode::duplicate(te);
-
     origLine = te.origLine;
     onOff = te.onOff;
     mode = te.mode;
@@ -141,35 +68,104 @@ inline void CTestCase::duplicate(const CTestCase& te) {
     workPath = te.workPath;
     fileName = te.fileName;
     test_id = te.test_id;
-
-    // EXISTING_CODE
-    // EXISTING_CODE
 }
 
-//--------------------------------------------------------------------------
+inline CTestCase::~CTestCase(void) {
+}
+
 inline CTestCase& CTestCase::operator=(const CTestCase& te) {
-    duplicate(te);
-    // EXISTING_CODE
-    // EXISTING_CODE
+    CBaseNode::duplicate(te);
+    origLine = te.origLine;
+    onOff = te.onOff;
+    mode = te.mode;
+    speed = te.speed;
+    route = te.route;
+    tool = te.tool;
+    name = te.name;
+    post = te.post;
+    options = te.options;
+    path = te.path;
+    goldPath = te.goldPath;
+    workPath = te.workPath;
+    fileName = te.fileName;
+    test_id = te.test_id;
     return *this;
 }
 
-//-------------------------------------------------------------------------
 inline bool CTestCase::operator==(const CTestCase& it) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    // Equality operator as defined in class definition
     return (route % it.route && tool % it.tool && name % it.name);
 }
 
-//-------------------------------------------------------------------------
 inline bool operator<(const CTestCase& v1, const CTestCase& v2) {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    // Default sort as defined in class definition
     return v1.test_id < v2.test_id;
 }
 
-typedef vector<CTestCase> CTestCaseArray;
-extern const char* STR_DISPLAY_TESTCASE;
-}  // namespace qblocks
+inline void CTestCase::prepareTest(bool cmdLine) {
+    goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/", "/test/gold/" + path + "/" + tool + "/");
+    workPath = substitute(goldPath, "/gold/", "/working/");
+    establishFolder(goldPath);
+    establishFolder(workPath);
+
+    if (cmdLine) {
+        CStringArray opts = {"val",   "addrs",     "blocks", "files", "dates",  "transactions",
+                             "terms", "functions", "modes",  "mode",  "topics", "fourbytes"};
+        options = "&" + options;
+        for (auto opt : opts)
+            replaceAll(options, "&" + opt + "=", " ");
+        replaceAll(options, "%20", " ");
+        replaceAll(options, "@", " -");
+        replaceAll(options, "&", " --");
+        replaceAll(options, "\\*", " \"*\"");
+        replaceAll(options, "=", " ");
+        if (trim(options) == "--" || startsWith(trim(options), "-- "))
+            replace(options, "--", "");
+
+    } else {
+        if (tool == "chifra")
+            nextTokenClear(options, '&');
+        CStringArray parts;
+        explode(parts, options, '&');
+        ostringstream os;
+        for (auto part : parts) {
+            string_q key = nextTokenClear(part, '=');
+            if (!os.str().empty())
+                os << "&";
+            os << toCamelCase(key) << (part.empty() ? "" : "=" + part);
+        }
+        options = os.str();
+        replaceAll(options, "@", "");
+        replaceAll(options, " ", "%20");
+        goldPath += "api_tests/";
+        workPath += "api_tests/";
+    }
+}
+
+inline CTestCase::CTestCase(const string_q& line, uint32_t id) {
+    origLine = line;
+
+    CStringArray parts;
+    explode(parts, line, ',');
+    test_id = id;
+    onOff = parts.size() > 0 ? trim(parts[0]) : "";
+    mode = parts.size() > 1 ? trim(parts[1]) : "";
+    speed = parts.size() > 2 ? trim(parts[2]) : "";
+    route = parts.size() > 3 ? trim(parts[3]) : "";
+    tool = parts.size() > 4 ? trim(parts[4]) : "";
+    name = parts.size() > 5 ? trim(parts[5]) : "";
+    post = parts.size() > 6 ? trim(parts[6]) : "";
+    options = parts.size() > 7 ? trim(parts[7]) : "";
+
+    replaceAll(post, "n", "");
+    replaceAll(post, "y", "jq .");
+
+    path = nextTokenClear(tool, '/');
+    fileName = tool + "_" + name + ".txt";
+
+    replaceAll(options, " = ", "=");
+    replaceAll(options, "= ", "=");
+    replaceAll(options, " & ", "&");
+    replaceAll(options, "& ", "&");
+    replaceAll(options, " @ ", "@");
+    replaceAll(options, "@ ", "@");
+    replaceAll(options, "&#44;", ",");
+}

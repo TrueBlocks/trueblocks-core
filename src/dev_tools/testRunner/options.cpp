@@ -15,13 +15,11 @@
 // }
 #include "options.h"
 
-//---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-//---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
@@ -104,17 +102,14 @@ bool COptions::parseArguments(string_q& command) {
     return true;
 }
 
-//---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params, 0);
     minArgs = 0;
 }
 
-//---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
 }
 
-//---------------------------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
