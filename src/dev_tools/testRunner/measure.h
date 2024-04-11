@@ -25,11 +25,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CMeasure : public CBaseNode {
   public:
-    string_q date;
-    string_q machine;
-    string_q node;
-    string_q chain;
-    string_q epoch;
     string_q group;
     string_q cmd;
     string_q type;
@@ -45,7 +40,6 @@ class CMeasure : public CBaseNode {
     DECLARE_NODE(CMeasure);
 
     // EXISTING_CODE
-    bool allPassed;
     CMeasure(const string_q& g, const string_q& c, const string_q& t);
     CMeasure& operator+=(const CMeasure& m) {
         nTests += m.nTests;
@@ -103,11 +97,6 @@ inline void CMeasure::clear(void) {
 inline void CMeasure::initialize(void) {
     CBaseNode::initialize();
 
-    date = "";
-    machine = "";
-    node = "";
-    chain = "";
-    epoch = "";
     group = "";
     cmd = "";
     type = "";
@@ -115,8 +104,6 @@ inline void CMeasure::initialize(void) {
     nPassed = 0;
 
     // EXISTING_CODE
-    chain = getGlobalConfig("testRunner")->getConfigStr("settings", "defaultChain", "mainnet");
-    allPassed = false;
     // EXISTING_CODE
 }
 
@@ -125,11 +112,6 @@ inline void CMeasure::duplicate(const CMeasure& me) {
     clear();
     CBaseNode::duplicate(me);
 
-    date = me.date;
-    machine = me.machine;
-    node = me.node;
-    chain = me.chain;
-    epoch = me.epoch;
     group = me.group;
     cmd = me.cmd;
     type = me.type;
@@ -137,7 +119,6 @@ inline void CMeasure::duplicate(const CMeasure& me) {
     nPassed = me.nPassed;
 
     // EXISTING_CODE
-    allPassed = me.allPassed;
     // EXISTING_CODE
 }
 

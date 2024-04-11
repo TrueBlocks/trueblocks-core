@@ -210,7 +210,7 @@ CArchive& CArchive::operator>>(string_q& str) {
 CArchive& CArchive::operator>>(biguint_t& bn) {
     // Note: I experimented with writing out
     // the blk in one Read/Write but it was
-    // always slower on my machine
+    // always slower on my m achine
     unsigned int size;
     *this >> size;
     bn.allocate(size);

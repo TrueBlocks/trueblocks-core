@@ -110,9 +110,7 @@ int main(int argc, const char* argv[]) {
 
     // We've run through all the tests. We know how many we've run and we know how
     // many have passed, so we know if all of them passed.
-    total.allPassed = total.nTests == total.nPassed;
-    ::sleep(1);
-    total.date = Now().Format(FMT_EXPORT);
+    bool allPassed = total.nTests == total.nPassed;
 
     cerr << string_q(125, '=') << endl;
     cerr << total.Format(STR_SCREEN_REPORT) << endl;
@@ -120,7 +118,7 @@ int main(int argc, const char* argv[]) {
         cerr << fail;
     cerr << endl;
 
-    return total.allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
+    return allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
@@ -314,7 +312,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 
     total += measure;
     if (measure.nTests) {
-        measure.allPassed = measure.nTests == measure.nPassed;
+        // measure.allPassed = measure.nTests == measure.nPassed;
         cerr << measure.Format(STR_SCREEN_REPORT) << endl;
     }
 

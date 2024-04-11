@@ -70,21 +70,8 @@ string_q CMeasure::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if (fieldName % "chain") {
-                return chain;
-            }
             if (fieldName % "cmd") {
                 return cmd;
-            }
-            break;
-        case 'd':
-            if (fieldName % "date") {
-                return date;
-            }
-            break;
-        case 'e':
-            if (fieldName % "epoch") {
-                return epoch;
             }
             break;
         case 'g':
@@ -92,15 +79,7 @@ string_q CMeasure::getValueByName(const string_q& fieldName) const {
                 return group;
             }
             break;
-        case 'm':
-            if (fieldName % "machine") {
-                return machine;
-            }
-            break;
         case 'n':
-            if (fieldName % "node") {
-                return node;
-            }
             if (fieldName % "nTests") {
                 return uint_2_Str(nTests);
             }
@@ -134,24 +113,8 @@ bool CMeasure::setValueByName(const string_q& fieldNameIn, const string_q& field
 
     switch (tolower(fieldName[0])) {
         case 'c':
-            if (fieldName % "chain") {
-                chain = fieldValue;
-                return true;
-            }
             if (fieldName % "cmd") {
                 cmd = fieldValue;
-                return true;
-            }
-            break;
-        case 'd':
-            if (fieldName % "date") {
-                date = fieldValue;
-                return true;
-            }
-            break;
-        case 'e':
-            if (fieldName % "epoch") {
-                epoch = fieldValue;
                 return true;
             }
             break;
@@ -161,17 +124,7 @@ bool CMeasure::setValueByName(const string_q& fieldNameIn, const string_q& field
                 return true;
             }
             break;
-        case 'm':
-            if (fieldName % "machine") {
-                machine = fieldValue;
-                return true;
-            }
-            break;
         case 'n':
-            if (fieldName % "node") {
-                node = fieldValue;
-                return true;
-            }
             if (fieldName % "nTests") {
                 nTests = str_2_Uint(fieldValue);
                 return true;
@@ -210,11 +163,6 @@ void CMeasure::registerClass(void) {
     ADD_FIELD(CMeasure, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CMeasure, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMeasure, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMeasure, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMeasure, "machine", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMeasure, "node", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMeasure, "chain", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMeasure, "epoch", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "cmd", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -244,10 +192,6 @@ string_q nextMeasureChunk_custom(const string_q& fieldIn, const void* dataPtr) {
             case 'c':
                 if (fieldIn % "check")
                     return (mea->nPassed == mea->nTests ? "ok" : "");
-                break;
-            case 'e':
-                if (fieldIn % "epoch")
-                    return substitute(mea->epoch, "E-", (mea->allPassed ? "E-" : "F-"));
                 break;
             case 'f':
                 if (fieldIn % "failed")
@@ -287,13 +231,6 @@ ostream& operator<<(ostream& os, const CMeasure& it) {
 // EXISTING_CODE
 CMeasure::CMeasure(const string_q& g, const string_q& c, const string_q& t) {
     initialize();
-    date = Now().Format(FMT_EXPORT);
-    machine = "test-machine";
-    node = "TG";
-    // uint16_t maj, min, build;
-    // getVersionValues(maj, min, build);
-    epoch = "not-a-test";  // getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-" +
-                           // uint_2_Str((maj * 100) + min));
     group = g;
     cmd = c;
     type = t;
