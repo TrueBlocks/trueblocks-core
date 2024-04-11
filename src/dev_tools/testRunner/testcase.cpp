@@ -359,7 +359,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     fileName = tool + "_" + name + ".txt";
 
     if (startsWith(options, "RESET")) {
-        cleanFolder(cacheFolder_tmp);
+        // cleanFolder(cacheFolder_tmp);
         options = "";
         builtin = true;
     } else {

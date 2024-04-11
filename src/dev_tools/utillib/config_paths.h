@@ -23,14 +23,10 @@ extern string_q getPathToChainConfig(const string_q& _part);
 extern string_q getPathToCache(const string_q& _part);
 extern string_q getPathToIndex(const string_q& _part);
 extern string_q getChain(void);
-extern string_q getChainSymbol(void);
-extern string_q getRpcProvider(void);
-extern string_q getDefaultChain(void);
 
 //--------------------------------------------------------------------------------
 #define rootConfigs (getPathToRootConfig(""))
 #define rootConfigs_abis (rootConfigs + "abis/")
-#define rootConfigs_perf (rootConfigs + "perf/")
 
 //-------------------------------------------------------------------------
 #define chainConfigs (getPathToChainConfig(""))
@@ -50,9 +46,6 @@ extern string_q getDefaultChain(void);
 
 //---------------------------------------------------------------------------
 extern string_q getPathToCommands(const string_q& _part);
-extern void loadEnvironmentPaths(const string_q& chainIn, const string_q& unchainedPathIn, const string_q& cachePathIn);
-inline void loadEnvironmentPaths(void) {
-    loadEnvironmentPaths("", "", "");
-}
+extern void loadEnvironmentPaths(void);
 
 }  // namespace qblocks

@@ -373,7 +373,7 @@ CSourceSearch::CSourceSearch(COptions* o) : opt(o) {
                 CName name;
                 if (fields.empty()) {
                     explode(fields, line, ',');
-                    line = FAKE_ETH_ADDRESS + string_q(",") + getChainSymbol() + "," + getChainSymbol() + ",,18," +
+                    line = FAKE_ETH_ADDRESS + string_q(",") + get ChainSymbol() + "," + get ChainSymbol() + ",,18," +
                            addr_2_Petname(FAKE_ETH_ADDRESS, '-');
                     name.parseCSV(fields, line);
                     whiteList[FAKE_ETH_ADDRESS] = name;

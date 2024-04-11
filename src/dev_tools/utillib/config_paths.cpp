@@ -22,24 +22,6 @@
 
 namespace qblocks {
 
-//---------------------------------------------------------------------------------------------------
-#define TEST_PATH(path, part, type)                                                                                    \
-    if (!isTestMode()) {                                                                                               \
-        if (!folderExists((path))) {                                                                                   \
-            LOG_ERR(string_q(type) + " folder must exist: ", (path));                                                  \
-            quickQuitHandler(1);                                                                                       \
-        }                                                                                                              \
-        if (!(part).empty() && !fileExists((path) + (part))) {                                                         \
-            LOG_ERR(string_q(type) + " part is missing: ", (path) + (part));                                           \
-            quickQuitHandler(1);                                                                                       \
-        }                                                                                                              \
-        if (!endsWith((path), "/")) {                                                                                  \
-            LOG_ERR(string_q(type) + " folder must end with '/': ", (path));                                           \
-            quickQuitHandler(1);                                                                                       \
-        }                                                                                                              \
-    }
-
-//---------------------------------------------------------------------------------------------------
 static CConfigEnv g_configEnv;
 const CConfigEnv* getConfigEnv(void) {
     if (g_configEnv.configPath.empty()) {
@@ -56,54 +38,27 @@ const CConfigEnv* getConfigEnv(void) {
 
 //---------------------------------------------------------------------------------------------------
 string_q getPathToRootConfig(const string_q& _part) {
-    string_q ret = getConfigEnv()->configPath;
-    TEST_PATH(ret, _part, "Configuration");
-    return ret + _part;
+    return getConfigEnv()->configPath + _part;
 }
 
 //--------------------------------------------------------------------------------------
 string_q getPathToChainConfig(const string_q& _part) {
-    string_q ret = getConfigEnv()->chainConfigPath;
-    TEST_PATH(ret, _part, "Chain Configuration");
-    return ret + _part;
+    return getConfigEnv()->chainConfigPath + _part;
 }
 
 //-------------------------------------------------------------------------
 string_q getPathToCache(const string_q& _part) {
-    string_q ret = getConfigEnv()->cachePath;
-    TEST_PATH(ret, _part, "Cache");
-    return ret + _part;
+    return getConfigEnv()->cachePath + _part;
 }
 
 //-------------------------------------------------------------------------
 string_q getPathToIndex(const string_q& _part) {
-    string_q ret = getConfigEnv()->indexPath;
-    TEST_PATH(ret, _part, "Index");
-    return ret + _part;
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q getDefaultChain(void) {
-    string_q ret = getConfigEnv()->defChain;
-    ASSERT(!ret.empty());
-    return ret;
+    return getConfigEnv()->indexPath + _part;
 }
 
 //---------------------------------------------------------------------------------------------------
 string_q getChain(void) {
     string_q ret = getConfigEnv()->chain;
-    ASSERT(!ret.empty());
-    return ret;
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q getChainSymbol(void) {
-    return getGlobalConfig("")->getConfigStr("chains." + getChain(), "symbol", "ETH");
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q getRpcProvider(void) {
-    string_q ret = getConfigEnv()->rpcProvider;
     ASSERT(!ret.empty());
     return ret;
 }
@@ -114,45 +69,24 @@ string_q getPathToCommands(const string_q& _part) {
 }
 
 extern string_q getConfigPathLocal(void);
-//-------------------------------------------------------------------------
-// This routine is only used by tools that do not make their way through chifra.
-// (makeClass and testRunner primarily). It mimics the way chifra works to build
-// the configPaths. We ignore in this `chain`, defaulting to mainnet.
-void loadEnvironmentPaths(const string_q& chainIn, const string_q& unchainedPathIn, const string_q& cachePathIn) {
-    string_q chain = (chainIn.empty() ? "mainnet" : chainIn);
-
+void loadEnvironmentPaths(void) {
+    string_q chain = "mainnet";
     string_q configPath = getConfigPathLocal();
-
-    // We need to set enough of the environment for us to get the RPC from the config file...
     ostringstream os1;
     os1 << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << "," << (configPath + "cache/mainnet/")
         << "," << (configPath + "unchained/mainnet/") << ",mainnet,x";
     ::setenv("TB_CONFIG_ENV", os1.str().c_str(), true);
     string_q rpc = getGlobalConfig("")->getConfigStr("chains.mainnet", "rpcProvider", "http://localhost:8545");
-
-    // Because `g_configEnv` is statis, we need to clear it...
     g_configEnv = CConfigEnv();  // reset so we get the rest
-
-    string_q unchainedPath = substitute(substitute(unchainedPathIn, "/unchained", ""), chain + "/", "");
-    if (unchainedPath.empty()) {
-        unchainedPath = configPath;
-    }
-
-    string_q cachePath = substitute(substitute(cachePathIn, "/cache", ""), chain + "/", "");
-    if (cachePath.empty()) {
-        cachePath = configPath;
-    }
-
-    // and reset it with the full env
+    string_q unchainedPath = configPath;
+    string_q cachePath = configPath;
     ostringstream os;
     os << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << "," << (cachePath + "cache/mainnet/")
        << "," << (unchainedPath + "unchained/mainnet/") << ",mainnet," << rpc;
-
     string_q env = os.str();
     if (!chain.empty()) {
         replaceAll(env, "mainnet", chain);
     }
-
     ::setenv("TB_CONFIG_ENV", env.c_str(), true);
 }
 

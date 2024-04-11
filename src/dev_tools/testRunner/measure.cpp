@@ -112,9 +112,6 @@ string_q CMeasure::getValueByName(const string_q& fieldName) const {
             if (fieldName % "type") {
                 return type;
             }
-            if (fieldName % "totSecs") {
-                return double_2_Str(totSecs, 5);
-            }
             break;
         default:
             break;
@@ -189,10 +186,6 @@ bool CMeasure::setValueByName(const string_q& fieldNameIn, const string_q& field
                 type = fieldValue;
                 return true;
             }
-            if (fieldName % "totSecs") {
-                totSecs = str_2_Double(fieldValue);
-                return true;
-            }
             break;
         default:
             break;
@@ -227,7 +220,6 @@ void CMeasure::registerClass(void) {
     ADD_FIELD(CMeasure, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "nTests", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CMeasure, "nPassed", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CMeasure, "totSecs", T_DOUBLE, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CMeasure, "schema");
@@ -238,7 +230,6 @@ void CMeasure::registerClass(void) {
     builtIns.push_back(_biCMeasure);
 
     // EXISTING_CODE
-    ADD_FIELD(CMeasure, "avgSecs", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CMeasure, "check", T_TEXT, ++fieldNum);
     ADD_FIELD(CMeasure, "failed", T_TEXT, ++fieldNum);
     // EXISTING_CODE
@@ -250,10 +241,6 @@ string_q nextMeasureChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (mea) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'a':
-                if (fieldIn % "avgSecs")
-                    return double_2_Str(mea->avgSecs(), 5);
-                break;
             case 'c':
                 if (fieldIn % "check")
                     return (mea->nPassed == mea->nTests ? "ok" : "");
@@ -297,22 +284,6 @@ ostream& operator<<(ostream& os, const CMeasure& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_MEASURE =
-    "[{GIT_HASH}]\t"
-    "[{DATE}]\t"
-    "[{MACHINE}]\t"
-    "[{NODE}]\t"
-    "[{CHAIN}]\t"
-    "[{EPOCH}]\t"
-    "[{GROUP}]\t"
-    "[{CMD}]\t"
-    "[{TYPE}]\t"
-    "[{NTESTS}]\t"
-    "[{NPASSED}]\t"
-    "[{TOTSECS}]\t"
-    "[{AVGSECS}]";
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 CMeasure::CMeasure(const string_q& g, const string_q& c, const string_q& t) {
     initialize();
@@ -321,7 +292,8 @@ CMeasure::CMeasure(const string_q& g, const string_q& c, const string_q& t) {
     node = "TG";
     // uint16_t maj, min, build;
     // getVersionValues(maj, min, build);
-    epoch = "not-a-test"; // getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-" + uint_2_Str((maj * 100) + min));
+    epoch = "not-a-test";  // getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-" +
+                           // uint_2_Str((maj * 100) + min));
     group = g;
     cmd = c;
     type = t;

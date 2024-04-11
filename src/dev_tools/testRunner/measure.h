@@ -35,7 +35,6 @@ class CMeasure : public CBaseNode {
     string_q type;
     uint64_t nTests;
     uint64_t nPassed;
-    double totSecs;
 
   public:
     CMeasure(void);
@@ -51,11 +50,7 @@ class CMeasure : public CBaseNode {
     CMeasure& operator+=(const CMeasure& m) {
         nTests += m.nTests;
         nPassed += m.nPassed;
-        totSecs += m.totSecs;
         return *this;
-    }
-    double avgSecs(void) const {
-        return totSecs / (double)nTests;
     }
     // EXISTING_CODE
     bool operator==(const CMeasure& it) const;
@@ -118,7 +113,6 @@ inline void CMeasure::initialize(void) {
     type = "";
     nTests = 0;
     nPassed = 0;
-    totSecs = 0.0;
 
     // EXISTING_CODE
     chain = getGlobalConfig("testRunner")->getConfigStr("settings", "defaultChain", "mainnet");
@@ -141,7 +135,6 @@ inline void CMeasure::duplicate(const CMeasure& me) {
     type = me.type;
     nTests = me.nTests;
     nPassed = me.nPassed;
-    totSecs = me.totSecs;
 
     // EXISTING_CODE
     allPassed = me.allPassed;
@@ -174,7 +167,6 @@ inline bool operator<(const CMeasure& v1, const CMeasure& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CMeasure> CMeasureArray;
-extern const char* STR_DISPLAY_MEASURE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

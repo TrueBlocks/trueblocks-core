@@ -52,7 +52,7 @@
 
 // //-------------------------------------------------------------------------
 // int main(int argc, const char* argv[]) {
-//     loadEnvironmentPaths();
+//     loadE nvironmentPaths();
 
 //     etherlib_init(quickQuitHandler);
 

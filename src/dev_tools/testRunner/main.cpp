@@ -1,3 +1,7 @@
+/*
+ */
+// If configured, copy the data out to the folder our performance measurement tool knows about
+// Write performance data to a file and results to the screen
 // Support --mode both|cmd|api
 // Make sure both gold and working folders exist
 // Must read .env files if present and put them in the environment
@@ -7,19 +11,14 @@
 #include "testcase.h"
 #include "measure.h"
 
-ostringstream perf;
-ostringstream slow;
 CStringArray fails;
 extern const char* STR_SCREEN_REPORT;
-string_q perf_fmt;
 extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
-    // CTestCase::registerClass();
 
-    establishFolder(cacheFolder_tmp);
     CMeasure total("all", "all", "all");
     cerr.rdbuf(cout.rdbuf());
 
@@ -28,11 +27,13 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return EXIT_FAILURE;
 
-    string_q testFolder = getSourcePath3();
+    string_q testFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
     uint32_t testID = 0;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return EXIT_FAILURE;
+
+        cleanFolder(cacheFolder_tmp);
 
         for (auto testName : options.tests) {
             string_q path = nextTokenClear(testName, '/');
@@ -60,10 +61,6 @@ int main(int argc, const char* argv[]) {
                             cerr << "   # " << line.substr(0, 120) << endl;
                         }
                         CTestCase test(line, 0);
-                        if (contains(line, "&&")) {
-                            cerr << "test case " << test.name << " contains '&&'. Quitting..." << endl;
-                            exit(0);
-                        }
                         test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
                                                    "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
                         // if the gold file exists, copy the test case back to working (it may have been removed)
@@ -99,7 +96,6 @@ int main(int argc, const char* argv[]) {
             sort(testArray.begin(), testArray.end());
 
             expContext().exportFmt = CSV1;
-            perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
             options.doTests(total, testArray, path, testName, API);
             options.doTests(total, testArray, path, testName, CMD);
             if (shouldQuit())
@@ -118,29 +114,7 @@ int main(int argc, const char* argv[]) {
     ::sleep(1);
     total.date = Now().Format(FMT_EXPORT);
 
-    // Write performance data to a file and results to the screen
-    perf << total.Format(perf_fmt) << endl;
-    cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
-    string_q perfFile = rootConfigs + string_q("perf/performance") + (total.allPassed ? "" : "_failed") + ".csv";
-    appendToAsciiFile(perfFile, perf.str());
-    appendToAsciiFile(rootConfigs + "perf/performance_slow.csv", slow.str());
-
-    // If configured, copy the data out to the folder our performance measurement tool knows about
-    string_q copyPath = getGlobalConfig("testRunner")->getConfigStr("settings", "copy_path", "<not_set>");
-    if (folderExists(copyPath)) {
-        CStringArray files = {"perf/performance.csv", "perf/performance_failed.csv", "perf/performance_slow.csv",
-                              "perf/performance_scraper.csv"};
-        for (auto file : files) {
-            if (fileExists(rootConfigs + file)) {
-                ostringstream copyCmd;
-                copyCmd << "cp -f \"";
-                copyCmd << rootConfigs + file << "\" \"" << copyPath << "\"";
-                if (system(copyCmd.str().c_str())) {
-                }  // Don't remove cruft. Silences compiler warnings
-            }
-        }
-    }
-
+    cerr << string_q(125, '=') << endl;
     cerr << total.Format(STR_SCREEN_REPORT) << endl;
     for (auto fail : fails)
         cerr << fail;
@@ -189,14 +163,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             if (cmdTests) {
                 string_q envs = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
                 string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
-
-                bool isCmd =
-                    (contains(test.path, "tools") || contains(test.path, "apps")) && !contains(test.tool, "chifra");
-                string_q exe = test.tool;
-                if (isCmd) {
-                    exe = "chifra " + test.route;
-                }
-
+                string_q exe = "chifra" + (contains(test.tool, "chifra") ? "" : " " + test.route);
                 string_q fullCmd = exe + " " + test.options;
                 string_q debugCmd = relativize(fullCmd);
                 string_q redir = test.workPath + test.fileName;
@@ -264,7 +231,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             }  // Don't remove cruft. Silences compiler warnings
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
-            forEveryFileInFolder(test.goldPath + "*", postCleanup, NULL);
 
             string_q contents = asciiFileToString(test.workPath + test.fileName);
             if (!prepender.str().empty()) {
@@ -330,11 +296,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 cerr << "   " << timeRep << " - "
                      << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
                 cerr << trim(test.name) << " " << result << "  " << trim(test.options).substr(0, 90) << endl;
-                if (thisTime > verySlow) {
-                    slow << "   " << double_2_Str(thisTime) << " - "
-                         << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
-                    slow << trim(test.name) << " " << trim(test.options).substr(0, 90) << endl;
-                }
             } else {
                 // we ignore ethQuote testing since it deprecated
             }
@@ -355,7 +316,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
     if (measure.nTests) {
         measure.allPassed = measure.nTests == measure.nPassed;
         cerr << measure.Format(STR_SCREEN_REPORT) << endl;
-        perf << measure.Format(perf_fmt) << endl;
     }
 
     return;
@@ -384,23 +344,9 @@ bool replaceFile(const string_q& customFile, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool postCleanup(const string_q& path, void* data) {
-    if (contains(path, "makeClass") && (endsWith(path, ".cpp") || endsWith(path, ".h"))) {
-        ::remove(path.c_str());
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
-double verySlow = .6;
-double tooSlow = .4;
-double fastEnough = .2;
-
-//-----------------------------------------------------------------------
 const char* STR_SCREEN_REPORT =
     "   [{CMD}] ([{TYPE}][,{FILTER}]): [{NTESTS}] tests [{NPASSED}] passed [{CHECK}] [{FAILED} failed] in "
-    "[{TOTSECS}] "
-    "seconds [{AVGSECS}] avg.";
+    "[{TOTSECS}].";
 
 //---------------------------------------------------------------------------------------------
 string_q getOutputFile(const string_q& orig, const string_q& goldApiPath) {
