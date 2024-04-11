@@ -1,5 +1,4 @@
 enabled ,mode ,speed ,route  ,path/tool        ,filename                     ,post ,options
-on      ,cmd  ,fast  ,export ,apps/blockScrape ,RESET                        ,n    ,RESET
 on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,help                         ,n    ,@h
 on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,help_long                    ,n    ,help
 on      ,both ,fast  ,scrape ,apps/blockScrape ,invalid                      ,n    ,junk
@@ -29,7 +28,6 @@ off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_32_running_pause_2_okay ,n 
 off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_33_paused_restart_okay  ,n    ,modes = both & action = restart
 off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_34_running_pause_3_okay ,n    ,modes = both & action = pause
 off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_35_paused_quit_okay     ,n    ,modes = both & action = quit
-off     ,both ,fast  ,export ,apps/blockScrape ,RESET2                       ,n    ,RESET
 off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,modes = both & sleep = .5
 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,by_file_bad                  ,n    ,file = cmd_file_2

@@ -1,5 +1,4 @@
 enabled ,mode ,speed ,route  ,path/tool   ,filename          ,post ,options
-on      ,cmd  ,fast  ,config ,apps/config ,RESET             ,n    ,RESET
 on      ,cmd  ,fast  ,config ,apps/config ,help              ,n    ,@h
 on      ,cmd  ,fast  ,config ,apps/config ,help_long         ,n    ,help
 on      ,cmd  ,fast  ,config ,apps/config ,invalid_param_2   ,y    ,@l & junk

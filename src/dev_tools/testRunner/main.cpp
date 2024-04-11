@@ -129,16 +129,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
     cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
 
     for (auto test : testArray) {
-        if (test.builtin) {
-            string_q goldApiPath = substitute(test.goldPath, "/api_tests", "");
-            string_q theCmd = "cd \"" + goldApiPath + "\" ; " + test.options;
-            if (system(theCmd.c_str())) {
-            }  // Don't remove cruft. Silences compiler warnings
-            measure.nTests++;
-            measure.nPassed++;
-            continue;
-        }
-
         test.prepareTest(cmdTests);
         if ((!cmdTests && test.mode == "cmd") || (cmdTests && test.mode == "api")) {
             // do nothing - wrong mode

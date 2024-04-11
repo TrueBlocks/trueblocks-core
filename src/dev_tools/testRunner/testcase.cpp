@@ -69,11 +69,6 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "builtin") {
-                return bool_2_Str_t(builtin);
-            }
-            break;
         case 'f':
             if (fieldName % "fileName") {
                 return fileName;
@@ -156,12 +151,6 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "builtin") {
-                builtin = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
         case 'f':
             if (fieldName % "fileName") {
                 fileName = fieldValue;
@@ -262,7 +251,6 @@ void CTestCase::registerClass(void) {
     ADD_FIELD(CTestCase, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CTestCase, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "origLine", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTestCase, "builtin", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTestCase, "onOff", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTestCase, "mode", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTestCase, "speed", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -358,20 +346,13 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     path = nextTokenClear(tool, '/');
     fileName = tool + "_" + name + ".txt";
 
-    if (startsWith(options, "RESET")) {
-        // cleanFolder(cacheFolder_tmp);
-        options = "";
-        builtin = true;
-    } else {
-        builtin = false;
-        replaceAll(options, " = ", "=");
-        replaceAll(options, "= ", "=");
-        replaceAll(options, " & ", "&");
-        replaceAll(options, "& ", "&");
-        replaceAll(options, " @ ", "@");
-        replaceAll(options, "@ ", "@");
-        replaceAll(options, "&#44;", ",");
-    }
+    replaceAll(options, " = ", "=");
+    replaceAll(options, "= ", "=");
+    replaceAll(options, " & ", "&");
+    replaceAll(options, "& ", "&");
+    replaceAll(options, " @ ", "@");
+    replaceAll(options, "@ ", "@");
+    replaceAll(options, "&#44;", ",");
 }
 
 //---------------------------------------------------------------------------------------------
@@ -381,39 +362,37 @@ void CTestCase::prepareTest(bool cmdLine) {
     establishFolder(goldPath);
     establishFolder(workPath);
 
-    if (!builtin) {  // order matters
-        if (cmdLine) {
-            CStringArray opts = {"val",   "addrs",     "blocks", "files", "dates",  "transactions",
-                                 "terms", "functions", "modes",  "mode",  "topics", "fourbytes"};
-            options = "&" + options;
-            for (auto opt : opts)
-                replaceAll(options, "&" + opt + "=", " ");
-            replaceAll(options, "%20", " ");
-            replaceAll(options, "@", " -");
-            replaceAll(options, "&", " --");
-            replaceAll(options, "\\*", " \"*\"");
-            replaceAll(options, "=", " ");
-            if (trim(options) == "--" || startsWith(trim(options), "-- "))
-                replace(options, "--", "");
+    if (cmdLine) {
+        CStringArray opts = {"val",   "addrs",     "blocks", "files", "dates",  "transactions",
+                             "terms", "functions", "modes",  "mode",  "topics", "fourbytes"};
+        options = "&" + options;
+        for (auto opt : opts)
+            replaceAll(options, "&" + opt + "=", " ");
+        replaceAll(options, "%20", " ");
+        replaceAll(options, "@", " -");
+        replaceAll(options, "&", " --");
+        replaceAll(options, "\\*", " \"*\"");
+        replaceAll(options, "=", " ");
+        if (trim(options) == "--" || startsWith(trim(options), "-- "))
+            replace(options, "--", "");
 
-        } else {
-            if (tool == "chifra")
-                nextTokenClear(options, '&');
-            CStringArray parts;
-            explode(parts, options, '&');
-            ostringstream os;
-            for (auto part : parts) {
-                string_q key = nextTokenClear(part, '=');
-                if (!os.str().empty())
-                    os << "&";
-                os << toCamelCase(key) << (part.empty() ? "" : "=" + part);
-            }
-            options = os.str();
-            replaceAll(options, "@", "");
-            replaceAll(options, " ", "%20");
-            goldPath += "api_tests/";
-            workPath += "api_tests/";
+    } else {
+        if (tool == "chifra")
+            nextTokenClear(options, '&');
+        CStringArray parts;
+        explode(parts, options, '&');
+        ostringstream os;
+        for (auto part : parts) {
+            string_q key = nextTokenClear(part, '=');
+            if (!os.str().empty())
+                os << "&";
+            os << toCamelCase(key) << (part.empty() ? "" : "=" + part);
         }
+        options = os.str();
+        replaceAll(options, "@", "");
+        replaceAll(options, " ", "%20");
+        goldPath += "api_tests/";
+        workPath += "api_tests/";
     }
 }
 

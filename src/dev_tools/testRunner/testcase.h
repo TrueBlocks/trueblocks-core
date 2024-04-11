@@ -26,7 +26,6 @@ namespace qblocks {
 class CTestCase : public CBaseNode {
   public:
     string_q origLine;
-    bool builtin;
     string_q onOff;
     string_q mode;
     string_q speed;
@@ -105,7 +104,6 @@ inline void CTestCase::initialize(void) {
     CBaseNode::initialize();
 
     origLine = "";
-    builtin = false;
     onOff = "";
     mode = "";
     speed = "";
@@ -130,7 +128,6 @@ inline void CTestCase::duplicate(const CTestCase& te) {
     CBaseNode::duplicate(te);
 
     origLine = te.origLine;
-    builtin = te.builtin;
     onOff = te.onOff;
     mode = te.mode;
     speed = te.speed;
