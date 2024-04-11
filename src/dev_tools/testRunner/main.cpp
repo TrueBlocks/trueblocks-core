@@ -12,6 +12,7 @@ ostringstream slow;
 CStringArray fails;
 extern const char* STR_SCREEN_REPORT;
 string_q perf_fmt;
+extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -249,7 +250,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             string_q goldApiPath = substitute(test.goldPath, "/api_tests", "");
             string_q outputFile = "";
             if (whichTest != API && contains(test.origLine, "output")) {
-                outputFile = test.getOutputFile(test.origLine, goldApiPath);
+                outputFile = getOutputFile(test.origLine, goldApiPath);
             }
             string_q theCmd = "cd \"" + goldApiPath + "\" ; " + cmd.str();
 
@@ -402,7 +403,7 @@ const char* STR_SCREEN_REPORT =
     "seconds [{AVGSECS}] avg.";
 
 //---------------------------------------------------------------------------------------------
-string_q CTestCase::getOutputFile(const string_q& orig, const string_q& goldApiPath) const {
+string_q getOutputFile(const string_q& orig, const string_q& goldApiPath) {
     string_q line = substitute(substitute(orig, "&", "|"), "=", "|");
     CStringArray parts;
     explode(parts, line, '|');

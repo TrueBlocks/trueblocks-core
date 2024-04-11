@@ -381,9 +381,6 @@ void CTestCase::prepareTest(bool cmdLine) {
     establishFolder(goldPath);
     establishFolder(workPath);
 
-    // if (fileExists("testing_file"))
-    //     ::remove("testing_file");
-
     if (!builtin) {  // order matters
         if (cmdLine) {
             CStringArray opts = {"val",   "addrs",     "blocks", "files", "dates",  "transactions",
