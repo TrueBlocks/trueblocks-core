@@ -173,11 +173,6 @@ inline bool operator<(const CTestCase& v1, const CTestCase& v2) {
     return v1.test_id < v2.test_id;
 }
 
-//---------------------------------------------------------------------------
 typedef vector<CTestCase> CTestCaseArray;
 extern const char* STR_DISPLAY_TESTCASE;
-
-//---------------------------------------------------------------------------
-// EXISTING_CODE
-// EXISTING_CODE
 }  // namespace qblocks

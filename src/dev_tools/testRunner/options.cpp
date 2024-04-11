@@ -1,3 +1,13 @@
+// Allow for running either a single test (by route) or a group (by group)
+// string_q localFile = getCWD() + "addresses.tsv";
+// replace(localFile, "test/gold/dev_tools/testRunner", "build");
+// if (fileExists(localFile)) {
+//     LOG_ERR(localFile, " found in local folder. Chifra monitor tests will fail.");
+//     exit(0);
+// }
+// if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
+//     return usage("[dev]debug_curl is set in config file. All tests will fail.");
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -15,7 +25,6 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("mode", "m", "enum[cmd*|api|both]", OPT_FLAG, "determine which set of tests to run"),
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -28,84 +37,13 @@ bool COptions::parseArguments(string_q& command) {
 
     ::setenv("NO_USERQUERY", "true", 1);
 
-    string_q mode = "";
-    string_q path;
+    Init();
+
+    CToml config(rootConfigToml_makeClass);
 
     bool hasKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
     bool wantsTest = getEnvStr("TEST_SLURPS") == "true";
     bool runSlurps = (hasKey && wantsTest);
-
-    CToml config(rootConfigToml_makeClass);
-
-    Init();
-    explode(arguments, command, ' ');
-    for (auto arg : arguments) {
-        if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
-            if (!confirmEnum("mode", mode, arg))
-                return false;
-        } else if (arg == "-m" || arg == "--mode") {
-            return flag_required("mode");
-
-        } else if (startsWith(arg, '-')) {  // do not collapse
-
-            if (!builtInCmd(arg)) {
-                return invalid_option(arg);
-            }
-        } else {
-            arg = trim(arg, '/');
-            if (arg == "dev_tools" || arg == "dev_tools/") {
-                break;
-
-            } else if (arg == "tools" || arg == "tools/") {
-                static bool been_here = false;
-                if (been_here)
-                    break;
-                been_here = true;
-                if (runSlurps) {
-                    tests.push_back("tools/ethslurp");
-                }
-                tests.push_back("tools/ethNames");
-                tests.push_back("tools/getBlocks");
-                tests.push_back("tools/getLogs");
-                tests.push_back("tools/getReceipts");
-                tests.push_back("tools/getState");
-                tests.push_back("tools/getTokens");
-                tests.push_back("tools/getTraces");
-                tests.push_back("tools/getTrans");
-                tests.push_back("tools/grabABI");
-                tests.push_back("tools/whenBlock");
-
-            } else if (arg == "apps" || arg == "apps/") {
-                static bool been_here = false;
-                if (been_here)
-                    break;
-                been_here = true;
-                tests.push_back("apps/acctExport");
-                tests.push_back("apps/blockScrape");
-                tests.push_back("apps/cacheStatus");
-                tests.push_back("apps/chunkMan");
-                tests.push_back("apps/chifra");
-                tests.push_back("apps/config");
-                tests.push_back("apps/fireStorm");
-                tests.push_back("apps/init");
-                tests.push_back("apps/daemon");
-
-            } else {
-                tests.push_back(arg);
-            }
-        }
-    }
-
-    string_q localFile = getCWD() + "addresses.tsv";
-    replace(localFile, "test/gold/dev_tools/testRunner", "build");
-    if (fileExists(localFile)) {
-        LOG_ERR(localFile, " found in local folder. Chifra monitor tests will fail.");
-        exit(0);
-    }
-
-    if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
-        return usage("[dev]debug_curl is set in config file. All tests will fail.");
-
     if (runSlurps) {
         tests.push_back("tools/ethslurp");
     }
@@ -129,12 +67,7 @@ bool COptions::parseArguments(string_q& command) {
     tests.push_back("apps/init");
     tests.push_back("apps/daemon");
 
-    SHOW_FIELD(CTestCase, "test_id");
-
-    // TODO: this value is not in the testRunner config file, add it
-    apiProvider = getGlobalConfig("testRunner")->getConfigStr("settings", "api_provider", "http://localhost:8080");
-    if (!endsWith(apiProvider, '/'))
-        apiProvider += "/";
+    // SHOW_FIELD(CTestCase, "test_id");
 
     establishTestData();
 
@@ -161,9 +94,12 @@ COptions::~COptions(void) {
 //---------------------------------------------------------------------------------------------------
 bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     ostringstream os;
-    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"" << testName << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    os << "find ../../../working/" << path << "/" << testName << "/api_tests/ -maxdepth 1 -name \"" << testName << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"" << testName
+       << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/api_tests/ -maxdepth 1 -name \"" << testName
+       << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    if (system(os.str().c_str())) {
+    }  // Don't remove cruft. Silences compiler warnings
     return true;
 }
 

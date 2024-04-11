@@ -24,7 +24,6 @@ class COptions : public COptionsBase {
   public:
     // int modes = BOTH;
     CStringArray tests;
-    string_q apiProvider;
 
     COptions(void);
     ~COptions(void);
@@ -32,7 +31,8 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    void doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int which);
+    void doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
+                 int which);
     bool cleanTest(const string_q& path, const string_q& testName);
 };
 

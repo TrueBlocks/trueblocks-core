@@ -152,6 +152,16 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
     cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
 
     for (auto test : testArray) {
+        if (test.builtin) {
+            string_q goldApiPath = substitute(test.goldPath, "/api_tests", "");
+            string_q theCmd = "cd \"" + goldApiPath + "\" ; " + test.options;
+            if (system(theCmd.c_str())) {
+            }  // Don't remove cruft. Silences compiler warnings
+            measure.nTests++;
+            measure.nPassed++;
+            continue;
+        }
+
         test.prepareTest(cmdTests);
         if ((!cmdTests && test.mode == "cmd") || (cmdTests && test.mode == "api")) {
             // do nothing - wrong mode
@@ -194,7 +204,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 cmd << env << fullCmd << " >>" << redir << " 2>&1";
 
             } else {
-                bool has_options = (!test.builtin && !test.options.empty());
+                bool has_options = !test.options.empty();
                 bool has_post = !test.post.empty();
                 bool has_env = (envLines.size() > 0);
 
@@ -217,6 +227,10 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 if (has_env)
                     cmd << "-H \"X-TestRunner-Env: " << substitute(linesToString(envLines, '|'), " ", "") << "\" ";
                 cmd << "\"";
+                string_q apiProvider =
+                    getGlobalConfig("testRunner")->getConfigStr("settings", "api_provider", "http://localhost:8080");
+                if (!endsWith(apiProvider, "/"))
+                    apiProvider += "/";
                 cmd << apiProvider;
                 cmd << test.route;
                 cmd << (has_options ? ("?" + test.options) : "");
@@ -231,8 +245,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             string_q goldApiPath = substitute(test.goldPath, "/api_tests", "");
             string_q outputFile = test.getOutputFile(whichTest == API, goldApiPath);
             string_q theCmd = "cd \"" + goldApiPath + "\" ; " + cmd.str();
-            if (test.builtin)
-                theCmd = "cd \"" + goldApiPath + "\" ; " + test.options;
 
             string_q customized =
                 substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.name + "/",
@@ -257,18 +269,10 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 os << "Results in " << substitute(outputFile, goldApiPath, "./") << endl;
                 os << asciiFileToString(outputFile) << endl;
                 contents += os.str();
-                // } else if (!outputFile.empty()) {
-                //     cerr << "Output file not seen: " << outputFile << endl;
-                //     exit(1);
             }
 
             replaceAll(contents, "3735928559", "\"0xdeadbeef\"");
             stringToAsciiFile(test.workPath + test.fileName, contents);
-
-            if (test.builtin) {
-                measure.nPassed++;
-                continue;
-            }
 
             double thisTime = .02;
             string_q timeRep = double_2_Str(thisTime, 5);
@@ -303,8 +307,8 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             } else {
                 ostringstream os;
                 os << "\tFailed: " << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
-                os << test.name << ".txt " << "(" << (test.builtin ? "" : measure.cmd) << " "
-                   << trim(test.options) << ")";
+                os << test.name << ".txt "
+                   << "(" << measure.cmd << " " << trim(test.options) << ")";
                 os << endl;
                 fails.push_back(os.str());
                 result = "X";
@@ -389,3 +393,28 @@ const char* STR_SCREEN_REPORT =
     "   [{CMD}] ([{TYPE}][,{FILTER}]): [{NTESTS}] tests [{NPASSED}] passed [{CHECK}] [{FAILED} failed] in "
     "[{TOTSECS}] "
     "seconds [{AVGSECS}] avg.";
+
+//---------------------------------------------------------------------------------------------
+string CTestCase::getOutputFile(bool isApi, const string& goldApiPath) const {
+    if (isApi) {
+        return "";
+    }
+
+    string_q outputFile;
+    if (contains(origLine, "output")) {
+        string_q line = substitute(substitute(origLine, "&", "|"), "=", "|");
+        CStringArray parts;
+        explode(parts, line, '|');
+        bool next = false;
+        for (auto part : parts) {
+            part = trim(part);
+            if (next && outputFile.empty()) {
+                outputFile = goldApiPath + part;
+            }
+            if (part == "output") {
+                next = true;
+            }
+        }
+    }
+    return outputFile;
+}
