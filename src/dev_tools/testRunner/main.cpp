@@ -59,7 +59,7 @@ int main(int argc, const char* argv[]) {
                 }
                 bool ignore2 = !startsWith(line, "on");
                 if (startsWith(line, "enabled")) {
-                    continue
+                    continue;
                 }
                 if (line.empty() || ignore2) {
                     if (ignore2) {
