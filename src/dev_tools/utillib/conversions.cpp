@@ -21,7 +21,7 @@ extern uint64_t hex_2_Uint64(const string_q& str);
 extern int64_t hex_2_Int64(const string_q& str) {
     return (int64_t)hex_2_Uint64(str);
 }
-extern biguint_t exp_2_BigUint(const string_q& str);
+// extern biguint_t exp_2_BigUint(const string_q& str);
 
 //--------------------------------------------------------------------------------
 string_q chr_2_HexStr(const string_q& str) {
@@ -35,15 +35,15 @@ string_q chr_2_HexStr(const string_q& str) {
 }
 
 //--------------------------------------------------------------------------------
-string_q bnu_2_Hex(const biguint_t& i) {
-    return string(BigUnsignedInABase(i, 16));
-}
+// string_q bnu_2_Hex(const biguint_t& i) {
+//     return string(BigUnsignedInABase(i, 16));
+// }
 
 //--------------------------------------------------------------------------------
-string_q uint_2_Hex(uint64_t num) {
-    biguint_t bn = num;
-    return toLower("0x" + bnu_2_Hex(bn));
-}
+// string_q uint_2_Hex(uint64_t num) {
+//     biguint_t bn = num;
+//     return toLower("0x" + bnu_2_Hex(bn));
+// }
 
 //--------------------------------------------------------------------------------
 string_q str_2_Ether(const string_q& _value, uint64_t decimals) {
@@ -82,14 +82,14 @@ uint64_t str_2_Uint(const string_q& str) {
 }
 
 //--------------------------------------------------------------------------------
-string_q str_2_Hex(const string_q& str) {
-    if (str == "null")
-        return str;
-    if (str.empty())
-        return "0x0";
-    biguint_t bn = str_2_Wei(str);
-    return toLower("0x" + bnu_2_Hex(bn));
-}
+// string_q str_2_Hex(const string_q& str) {
+//     if (str == "null")
+//         return str;
+//     if (str.empty())
+//         return "0x0";
+//     biguint_t bn = str_2_Wei(str);
+//     return toLower("0x" + bnu_2_Hex(bn));
+// }
 
 //--------------------------------------------------------------------------------
 gas_t str_2_Gas(const string_q& str) {
@@ -102,19 +102,19 @@ double str_2_Double(const string_q& str) {
 }
 
 //--------------------------------------------------------------------------------
-inline bigint_t str_2_BigInt_nonhex(const string_q& s) {
-    biguint_t val;
-    if (s[0] == '-') {
-        string_q ss = s.substr(1, s.length());
-        val = str_2_BigUint(ss);
-        return bigint_t(val, -1);
-    } else if (s[0] == '+') {
-        string_q ss = s.substr(1, s.length());
-        val = str_2_BigUint(ss);
-        return bigint_t(val, 1);
-    }
-    return str_2_BigUint(s);
-}
+// inline bigint_t str_2_BigInt_nonhex(const string_q& s) {
+//     biguint_t val;
+//     if (s[0] == '-') {
+//         string_q ss = s.substr(1, s.length());
+//         val = str_2_BigUint(ss);
+//         return bigint_t(val, -1);
+//     } else if (s[0] == '+') {
+//         string_q ss = s.substr(1, s.length());
+//         val = str_2_BigUint(ss);
+//         return bigint_t(val, 1);
+//     }
+//     return str_2_BigUint(s);
+// }
 
 //--------------------------------------------------------------------------------
 inline string_q getMax(size_t bits) {
@@ -159,77 +159,77 @@ inline string_q getMax(size_t bits) {
 
 // #define NO_STR_CONVERT_FAST
 //--------------------------------------------------------------------------------
-bigint_t str_2_BigInt(const string_q& s, size_t bits) {
-#ifdef NO_STR_CONVERT_FAST
-    return 0;
-#else
-    if (s.empty() || s == "0x")
-        return 0;
+// bigint_t str_2_BigInt(const string_q& s, size_t bits) {
+// #ifdef NO_STR_CONVERT_FAST
+//     return 0;
+// #else
+//     if (s.empty() || s == "0x")
+//         return 0;
 
-    if (!isHexStr(s))
-        return str_2_BigInt_nonhex(s);
+//     if (!isHexStr(s))
+//         return str_2_BigInt_nonhex(s);
 
-    biguint_t uValIn = str_2_BigUint(s);
+//     biguint_t uValIn = str_2_BigUint(s);
 
-    string_q ss = substitute(s, "0x", "");
-    ss = trimLeading(ss, '0');
-    size_t len = ss.length();
+//     string_q ss = substitute(s, "0x", "");
+//     ss = trimLeading(ss, '0');
+//     size_t len = ss.length();
 
-    if (bits != 257 && len < bits / 4)
-        ss = padLeft(ss, bits / 4, '0');
-    else
-        bits = min((size_t)256, len * 4);
+//     if (bits != 257 && len < bits / 4)
+//         ss = padLeft(ss, bits / 4, '0');
+//     else
+//         bits = min((size_t)256, len * 4);
 
-    string_q maxStr = getMax(bits);
-    if (maxStr.empty())
-        return uValIn;
-    bigint_t maxInt = bigint_t(str_2_BigUint(maxStr), 1);
-    bigint_t sVal = bigint_t(uValIn, 1);
-    if (sVal > (maxInt / 2))       // If it's bigger than half, we have to wrap
-        sVal = sVal - maxInt - 1;  // wrap if larger than half of max int256
+//     string_q maxStr = getMax(bits);
+//     if (maxStr.empty())
+//         return uValIn;
+//     bigint_t maxInt = bigint_t(str_2_BigUint(maxStr), 1);
+//     bigint_t sVal = bigint_t(uValIn, 1);
+//     if (sVal > (maxInt / 2))       // If it's bigger than half, we have to wrap
+//         sVal = sVal - maxInt - 1;  // wrap if larger than half of max int256
 
-    return sVal;
-#endif
-}
+//     return sVal;
+// #endif
+// }
 
-//--------------------------------------------------------------------------------
-biguint_t str_2_BigUint(const string_q& str, size_t bits) {
-#ifdef NO_STR_CONVERT_FAST
-    return 0;
-#else
-    if (str.empty() || str == "0x")
-        return 0;
+// //--------------------------------------------------------------------------------
+// biguint_t str_2_BigUint(const string_q& str, size_t bits) {
+// #ifdef NO_STR_CONVERT_FAST
+//     return 0;
+// #else
+//     if (str.empty() || str == "0x")
+//         return 0;
 
-    string_q ss = substitute(str, "0x", "");
-    ss = trimLeading(ss, '0');
+//     string_q ss = substitute(str, "0x", "");
+//     ss = trimLeading(ss, '0');
 
-    biguint_t ret;
-    if (isHexStr(str)) {
-        size_t lenInBits = ss.length() * 4;
-        if (lenInBits > bits && bits != 257) {
-            reverse(ss);
-            ss = ss.substr(0, bits / 4);
-            reverse(ss);
-        }
-        ret = str_2_Wei("0x" + ss);
-    } else {
-        ret = biguint_t(BigUnsignedInABase(ss, 10));
-    }
+//     biguint_t ret;
+//     if (isHexStr(str)) {
+//         size_t lenInBits = ss.length() * 4;
+//         if (lenInBits > bits && bits != 257) {
+//             reverse(ss);
+//             ss = ss.substr(0, bits / 4);
+//             reverse(ss);
+//         }
+//         ret = str_2_Wei("0x" + ss);
+//     } else {
+//         ret = biguint_t(BigUnsignedInABase(ss, 10));
+//     }
 
-    if (bits == 257)
-        return ret;
+//     if (bits == 257)
+//         return ret;
 
-    string_q maxStr = getMax(bits);
-    if (maxStr.empty())
-        return ret;
-    biguint_t maxInt = biguint_t(BigUnsignedInABase(maxStr, 10));
+//     string_q maxStr = getMax(bits);
+//     if (maxStr.empty())
+//         return ret;
+//     biguint_t maxInt = biguint_t(BigUnsignedInABase(maxStr, 10));
 
-    if (ret > maxInt)  // If it's bigger than the max size, we have to wrap
-        ret = (ret % maxInt);
+//     if (ret > maxInt)  // If it's bigger than the max size, we have to wrap
+//         ret = (ret % maxInt);
 
-    return ret;
-#endif
-}
+//     return ret;
+// #endif
+// }
 
 //-----------------------------------------------------------------------
 address_t topic_2_Addr(const topic_t& topic) {
@@ -238,37 +238,37 @@ address_t topic_2_Addr(const topic_t& topic) {
     return "0x" + padLeft(topic.substr(26, 66), 40, '0');
 }
 
-//--------------------------------------------------------------------------------
-address_t str_2_Addr(const string_q& str) {
-    if (isZeroHash(str))
-        return "0x0";
+// //--------------------------------------------------------------------------------
+// address_t str_2_Addr(const string_q& str) {
+//     if (isZeroHash(str))
+//         return "0x0";
 
-    string_q ret = substitute(str, "0x", "");
-    if (ret.length() == 64) {
-        string_q leading(64 - 40, '0');
-        if (startsWith(ret, leading))
-            replace(ret, leading, "");
-    }
+//     string_q ret = substitute(str, "0x", "");
+//     if (ret.length() == 64) {
+//         string_q leading(64 - 40, '0');
+//         if (startsWith(ret, leading))
+//             replace(ret, leading, "");
+//     }
 
-    return "0x" + toLower(padLeft(ret, 20 * 2, '0'));
-}
-
-//--------------------------------------------------------------------------------
-hash_t str_2_Hash(const string_q& str) {
-    if (isZeroHash(str))
-        return "0x0";
-    string_q ret = substitute(str, "0x", "");
-    return toLower("0x" + padLeft(ret, 32 * 2, '0'));
-}
+//     return "0x" + toLower(padLeft(ret, 20 * 2, '0'));
+// }
 
 //--------------------------------------------------------------------------------
-biguint_t str_2_Wei(const string_q& str) {
-    if (contains(str, "0x"))
-        return biguint_t(BigUnsignedInABase(extract(str, 2).c_str(), 16));
-    if (contains(str, "e"))
-        return exp_2_BigUint(str.c_str());
-    return str_2_BigUint(str);
-}
+// hash_t str_2_Hash(const string_q& str) {
+//     if (isZeroHash(str))
+//         return "0x0";
+//     string_q ret = substitute(str, "0x", "");
+//     return toLower("0x" + padLeft(ret, 32 * 2, '0'));
+// }
+
+//--------------------------------------------------------------------------------
+// biguint_t str_2_Wei(const string_q& str) {
+//     if (contains(str, "0x"))
+//         return biguint_t(BigUnsignedInABase(extract(str, 2).c_str(), 16));
+//     if (contains(str, "e"))
+//         return exp_2_BigUint(str.c_str());
+//     return str_2_BigUint(str);
+// }
 
 //--------------------------------------------------------------------------------
 string_q bool_2_Str(bool num) {
@@ -326,9 +326,9 @@ string_q double_2_Str(double f, size_t nDecimals) {
 }
 
 //--------------------------------------------------------------------------------
-string_q bnu_2_Str(const biguint_t& num) {
-    return string(BigUnsignedInABase(num, 10));
-}
+// string_q bnu_2_Str(const biguint_t& num) {
+//     return string(BigUnsignedInABase(num, 10));
+// }
 
 //--------------------------------------------------------------------------------
 string_q addr_2_Str(const address_t& addr) {
@@ -341,16 +341,16 @@ string_q hash_2_Str(const hash_t& hash) {
 }
 
 //--------------------------------------------------------------------------------
-biguint_t topic_2_BigUint(const topic_t& topic) {
-    return str_2_Wei(topic);
-}
+// biguint_t topic_2_BigUint(const topic_t& topic) {
+//     return str_2_Wei(topic);
+// }
 
-//--------------------------------------------------------------------------------
-bool isZeroHash(const hash_t& hash) {
-    if (!isNumeral(hash) && !isHexStr(hash))
-        return false;
-    return (str_2_Wei(hash) == 0);
-}
+// //--------------------------------------------------------------------------------
+// bool isZeroHash(const hash_t& hash) {
+//     if (!isNumeral(hash) && !isHexStr(hash))
+//         return false;
+//     return (str_2_Wei(hash) == 0);
+// }
 
 //-----------------------------------------------------------------------
 bool isEtherAddr(const address_t& addr) {
@@ -487,19 +487,19 @@ uint64_t hex_2_Uint64(const string_q& str) {
 }
 
 //--------------------------------------------------------------------------------
-biguint_t exp_2_BigUint(const string_q& s) {
-    string_q exponent = s.c_str();
-    string_q decimals = nextTokenClear(exponent, 'e');
-    string_q num = nextTokenClear(decimals, '.');
-    uint64_t nD = decimals.length();
-    uint64_t e = str_2_Uint(exponent);
-    biguint_t ee = 1;
-    uint64_t power = e - nD;
-    for (uint64_t i = 0; i < power; i++)
-        ee *= 10;
-    num += decimals;
-    return str_2_BigUint(num) * ee;
-}
+// biguint_t exp_2_BigUint(const string_q& s) {
+//     string_q exponent = s.c_str();
+//     string_q decimals = nextTokenClear(exponent, 'e');
+//     string_q num = nextTokenClear(decimals, '.');
+//     uint64_t nD = decimals.length();
+//     uint64_t e = str_2_Uint(exponent);
+//     biguint_t ee = 1;
+//     uint64_t power = e - nD;
+//     for (uint64_t i = 0; i < power; i++)
+//         ee *= 10;
+//     num += decimals;
+//     return str_2_BigUint(num) * ee;
+// }
 
 //----------------------------------------------------------------
 hashbytes_t hash_2_Bytes(const hash_t& hashIn) {
@@ -510,14 +510,14 @@ hashbytes_t hash_2_Bytes(const hash_t& hashIn) {
     return ret;
 }
 
-//----------------------------------------------------------------
-hash_t bytes_2_Hash(uint8_t const bytes[32]) {
-    ostringstream os;
-    os << "0x";
-    for (size_t i = 0; i < 32; i++)
-        os << toLower(padLeft(bnu_2_Hex(bytes[i]), 2, '0'));
-    return os.str();
-}
+// //----------------------------------------------------------------
+// hash_t bytes_2_Hash(uint8_t const bytes[32]) {
+//     ostringstream os;
+//     os << "0x";
+//     for (size_t i = 0; i < 32; i++)
+//         os << toLower(padLeft(bnu_2_Hex(bytes[i]), 2, '0'));
+//     return os.str();
+// }
 
 //----------------------------------------------------------------
 addrbytes_t addr_2_Bytes(const address_t& addrIn) {
@@ -529,22 +529,22 @@ addrbytes_t addr_2_Bytes(const address_t& addrIn) {
 }
 
 //----------------------------------------------------------------
-address_t bytes_2_Addr(uint8_t const bytes[20]) {
-    ostringstream os;
-    os << "0x";
-    for (size_t i = 0; i < 20; i++)
-        os << toLower(padLeft(bnu_2_Hex(bytes[i]), 2, '0'));
-    return os.str();
-}
+// address_t bytes_2_Addr(uint8_t const bytes[20]) {
+//     ostringstream os;
+//     os << "0x";
+//     for (size_t i = 0; i < 20; i++)
+//         os << toLower(padLeft(bnu_2_Hex(bytes[i]), 2, '0'));
+//     return os.str();
+// }
 
 //----------------------------------------------------------------------------
-address_t bytes_2_Addr(const char* bytes) {
-    ostringstream os;
-    os << "0x";
-    for (size_t i = 0; i < 20; i++)
-        os << toLower(padLeft(bnu_2_Hex(bytes[i]), 2, '0'));
-    return os.str();
-}
+// address_t bytes_2_Addr(const char* bytes) {
+//     ostringstream os;
+//     os << "0x";
+//     for (size_t i = 0; i < 20; i++)
+//         os << toLower(padLeft(bnu_2_Hex(bytes[i]), 2, '0'));
+//     return os.str();
+// }
 
 //----------------------------------------------------------------------------
 uchar_t hex_2_Ascii(char c1, char c2) {
@@ -628,14 +628,21 @@ time_q str_2_Date(const string_q& strIn) {
     }
 
     replaceAny(str, "T:-", "");
-    if (str.length() == 4)  str += "0101000000";       // YYYY NOLINT
-    else if (str.length() == 6)  str += "01000000";    // YYYYMM
-    else if (str.length() == 8)  str += "000000";      // YYYYMMDD
-    else if (str.length() == 10) str += "0000";        // YYYYMMDDHH
-    else if (str.length() == 12) str += "00";          // YYYYMMDDHHMM
-    else if (str.length() == 14) str += "";            // YYYYMMDDHHMMSS
-    else { LOG_WARN("str_2_Date: Invalid date string '", strIn, "'"); }  // NOLINT
-
+    if (str.length() == 4)
+        str += "0101000000";  // YYYY NOLINT
+    else if (str.length() == 6)
+        str += "01000000";  // YYYYMM
+    else if (str.length() == 8)
+        str += "000000";  // YYYYMMDD
+    else if (str.length() == 10)
+        str += "0000";  // YYYYMMDDHH
+    else if (str.length() == 12)
+        str += "00";  // YYYYMMDDHHMM
+    else if (str.length() == 14)
+        str += "";  // YYYYMMDDHHMMSS
+    else {
+        LOG_WARN("str_2_Date: Invalid date string '", strIn, "'");
+    }  // NOLINT
 
 #define NP ((uint32_t)-1)
 #define str_2_Int32u(a) (uint32_t) str_2_Uint((a))

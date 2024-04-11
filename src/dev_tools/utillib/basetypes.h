@@ -77,6 +77,7 @@ using namespace std;  // NOLINT - bad practice, but it's way too late now
 
 namespace qblocks {
 
+using string_q = std::string;
 //-------------------------------------------------------------------------
 typedef pair<string_q, string_q> CNameValue;
 typedef vector<CNameValue> CNameValueArray;

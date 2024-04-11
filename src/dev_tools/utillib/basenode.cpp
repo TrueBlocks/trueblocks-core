@@ -40,7 +40,7 @@ CBaseNode::~CBaseNode(void) {
 //--------------------------------------------------------------------------------
 void CBaseNode::initialize(void) {
     m_deleted = false;
-    m_schema = 20000+500+8;
+    m_schema = 20000 + 500 + 8;
     m_showing = true;
 }
 
@@ -584,10 +584,10 @@ void CBaseNode::toJson(ostream& os) const {
 
             } else {
                 if (isNum) {
-                    if (expContext().hexNums && !startsWith(val, "0x") && !val.empty())
-                        val = str_2_Hex(val);
-                    if (val.empty())
-                        val = uint_2_Str(0);
+                    // if (expContext().hexNums && !startsWith(val, "0x") && !val.empty())
+                    //     val = str_2_Hex(val);
+                    // if (val.empty())
+                    val = uint_2_Str(0);
                 }
                 bool quote = expContext().quoteNums || (isApiMode() && val.empty());
                 os << (quote ? "\"" : "") << val << (quote ? "\"" : "");

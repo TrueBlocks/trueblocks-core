@@ -42,7 +42,7 @@ class CArchive : public CSharedResource {
 
     explicit CArchive(bool isReading) : CSharedResource() {
         m_isReading = isReading;
-        m_header.m_version = 20000+500+8;
+        m_header.m_version = 20000 + 500 + 8;
         // writeMsgFunc     = NULL;
         // readMsgFunc      = NULL;
     }
@@ -75,8 +75,8 @@ class CArchive : public CSharedResource {
     CArchive& operator<<(float f);
     CArchive& operator<<(double f);
     CArchive& operator<<(const string_q& str);
-    CArchive& operator<<(const biguint_t& bn);
-    CArchive& operator<<(const bigint_t& bn);
+    // CArchive& operator<<(const biguint_t& bn);
+    // CArchive& operator<<(const bigint_t& bn);
     CArchive& operator<<(const char* str);
     CArchive& operator<<(const time_q& date);
 
@@ -93,18 +93,18 @@ class CArchive : public CSharedResource {
     CArchive& operator>>(float& f);
     CArchive& operator>>(double& f);
     CArchive& operator>>(string_q& str);
-    CArchive& operator>>(biguint_t& bn);
-    CArchive& operator>>(bigint_t& bn);
+    // CArchive& operator>>(biguint_t& bn);
+    // CArchive& operator>>(bigint_t& bn);
     CArchive& operator>>(time_q& date);
 };
 
 extern CArchive& operator<<(CArchive& archive, const CStringArray& array);
-extern CArchive& operator<<(CArchive& archive, const CBigUintArray& array);
+// extern CArchive& operator<<(CArchive& archive, const CBigUintArray& array);
 extern CArchive& operator<<(CArchive& archive, const CUintArray& array);
 extern CArchive& operator<<(CArchive& archive, const CIntArray& array);
 
 extern CArchive& operator>>(CArchive& archive, CStringArray& array);
-extern CArchive& operator>>(CArchive& archive, CBigUintArray& array);
+// extern CArchive& operator>>(CArchive& archive, CBigUintArray& array);
 extern CArchive& operator>>(CArchive& archive, CUintArray& array);
 extern CArchive& operator>>(CArchive& archive, CIntArray& array);
 

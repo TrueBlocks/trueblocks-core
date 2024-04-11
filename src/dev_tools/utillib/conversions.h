@@ -28,7 +28,7 @@ using gas_t = uint64_t;
 using address_t = string_q;
 using hash_t = string_q;
 using ipfshash_t = string_q;
-using wei_t = biguint_t;
+// using wei_t = biguint_t;
 using topic_t = string_q;
 using fourbyte_t = string_q;
 using uchar_t = unsigned char;
@@ -40,8 +40,8 @@ using CStringArray = vector<string_q>;
 using CBlknumArray = vector<uint64_t>;
 using CUintArray = vector<uint64_t>;
 using CIntArray = vector<int64_t>;
-using CBigUintArray = vector<biguint_t>;
-using CBigIntArray = vector<bigint_t>;
+// using CBigUintArray = vector<biguint_t>;
+// using CBigIntArray = vector<bigint_t>;
 using CAddressArray = vector<address_t>;
 using CTopicArray = vector<topic_t>;
 using CFourbyteArray = vector<fourbyte_t>;
@@ -58,16 +58,16 @@ using CIndexStringMap = CIndexHashMap;
 extern bool str_2_Bool(const string_q& str);
 extern int64_t str_2_Int(const string_q& str);
 extern uint64_t str_2_Uint(const string_q& str);
-extern string_q str_2_Hex(const string_q& str);
+// extern string_q str_2_Hex(const string_q& str);
 extern gas_t str_2_Gas(const string_q& str);
 extern double str_2_Double(const string_q& str);
-extern bigint_t str_2_BigInt(const string_q& str, size_t bits = 257);
-extern biguint_t str_2_BigUint(const string_q& str, size_t bits = 257);
-extern biguint_t topic_2_BigUint(const topic_t& topic);
+// extern bigint_t str_2_BigInt(const string_q& str, size_t bits = 257);
+// extern biguint_t str_2_BigUint(const string_q& str, size_t bits = 257);
+// extern biguint_t topic_2_BigUint(const topic_t& topic);
 extern address_t str_2_Addr(const string_q& str);
 extern address_t topic_2_Addr(const topic_t& topic);
 extern hash_t str_2_Hash(const string_q& str);
-extern biguint_t str_2_Wei(const string_q& str);
+// extern biguint_t str_2_Wei(const string_q& str);
 inline topic_t str_2_Topic(const string_q& str) {
     return str;
 }
@@ -89,7 +89,7 @@ extern string_q int_2_Str(int64_t num);
 extern string_q uint_2_Str(uint64_t num);
 extern string_q gas_2_Str(const gas_t& gas);
 extern string_q double_2_Str(double f, size_t nDecimals = NOPOS);
-extern string_q bnu_2_Str(const biguint_t& bu);
+// extern string_q bnu_2_Str(const biguint_t& bu);
 extern string_q addr_2_Str(const address_t& addr);
 extern string_q hash_2_Str(const hash_t& hash);
 inline string_q topic_2_Str(const topic_t& topic) {
@@ -109,7 +109,7 @@ extern address_t bytes_2_Addr(const char* bytes);
 
 //-------------------------------------------------------------------------
 extern string_q chr_2_HexStr(const string_q& str);
-extern string_q bnu_2_Hex(const biguint_t& bu);
+// extern string_q bnu_2_Hex(const biguint_t& bu);
 extern string_q uint_2_Hex(uint64_t num);
 extern string_q str_2_Ether(const string_q& str, uint64_t decimals);
 
@@ -121,7 +121,7 @@ extern time_q str_2_Date(const string_q& str);
 extern timestamp_t date_2_Ts(const string_q& str);
 
 //--------------------------------------------------------------------
-extern bool isZeroHash(const hash_t& hash);
+// extern bool isZeroHash(const hash_t& hash);
 extern bool isEtherAddr(const address_t& addr);
 extern bool isNumeral(const string_q& test);
 extern bool isDouble(const string_q& test);
