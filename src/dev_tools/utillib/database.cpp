@@ -73,12 +73,6 @@ bool CSharedResource::waitOnLock(bool deleteOnFail) const {
     return false;
 }
 
-bool CSharedResource::ReLock(const string_q& mode) {
-    Close();
-    m_fp = fopen(m_filename.c_str(), mode.c_str());
-    return isOpen();
-}
-
 bool CSharedResource::Lock(const string_q& fn, const string_q& mode, size_t lockType) {
     m_filename = fn;
     m_mode = mode;
@@ -115,12 +109,15 @@ bool CSharedResource::Lock(const string_q& fn, const string_q& mode, size_t lock
     if (openIt) {
         m_fp = fopen(m_filename.c_str(), m_mode.c_str());  // operator on event database
     }
-
-    return isOpen();
+    return m_fp != NULL;
 }
 
 void CSharedResource::Release(void) {
-    Close();
+    if (m_fp) {
+        fflush(m_fp);
+        fclose(m_fp);
+    }
+    m_fp = NULL;
     if (m_ownsLock) {
         string_q lockFilename = m_filename + ".lck";
         bool ret = remove(lockFilename.c_str());
@@ -134,173 +131,7 @@ void CSharedResource::Release(void) {
     m_ownsLock = false;
 }
 
-void CSharedResource::Close(void) {
-    if (m_fp) {
-        fflush(m_fp);
-        fclose(m_fp);
-    }
-    m_fp = NULL;
-}
-
-string_q uint_2_Strx(uint64_t i) {
-    ostringstream os;
-    os << i;
-    return os.str();
-}
-string_q CSharedResource::LockFailure(void) const {
-    return uint_2_Strx(m_error) + ": " + m_errorMsg;
-}
-
-bool CSharedResource::Eof(void) const {
-    return feof(m_fp);
-}
-
-void CSharedResource::Seek(long offset, int whence) const {  // NOLINT
-    fseek(m_fp, offset, whence);
-}
-
-long CSharedResource::Tell(void) const {  // NOLINT
-    return ftell(m_fp);
-}
-
-size_t CSharedResource::Read(void* buff, size_t size, size_t cnt) {
-    return fread(buff, cnt, size, m_fp);
-}
-
-//----------------------------------------------------------------------
-size_t CSharedResource::Read(bool& val) {
-    return Read(&val, sizeof(bool), 1);
-}
-size_t CSharedResource::Read(char& val) {
-    return Read(&val, sizeof(char), 1);
-}
-size_t CSharedResource::Read(int& val) {
-    return Read(&val, sizeof(int), 1);
-}
-size_t CSharedResource::Read(int8_t& val) {
-    return Read(&val, sizeof(int8_t), 1);
-}
-size_t CSharedResource::Read(uint8_t& val) {
-    return Read(&val, sizeof(uint8_t), 1);
-}
-size_t CSharedResource::Read(int16_t& val) {
-    return Read(&val, sizeof(int16_t), 1);
-}
-size_t CSharedResource::Read(uint16_t& val) {
-    return Read(&val, sizeof(uint16_t), 1);
-}
-size_t CSharedResource::Read(unsigned int& val) {
-    return Read(&val, sizeof(int), 1);
-}
-size_t CSharedResource::Read(long& val) {
-    return Read(&val, sizeof(long), 1);
-}  // NOLINT
-size_t CSharedResource::Read(unsigned long& val) {
-    return Read(&val, sizeof(long), 1);
-}  // NOLINT
-size_t CSharedResource::Read(long long& val) {
-    return Read(&val, sizeof(long long), 1);
-}  // NOLINT
-size_t CSharedResource::Read(unsigned long long& val) {
-    return Read(&val, sizeof(long long), 1);
-}  // NOLINT
-size_t CSharedResource::Read(float& val) {
-    return Read(&val, sizeof(float), 1);
-}
-size_t CSharedResource::Read(double& val) {
-    return Read(&val, sizeof(double), 1);
-}
-
-//----------------------------------------------------------------------
-size_t CSharedResource::Read(string_q& str) {
-    unsigned long len;                     // NOLINT
-    Read(&len, sizeof(unsigned long), 1);  // NOLINT
-
-    if (len < 8192) {
-        char buff[8192];
-        Read(buff, sizeof(char), len);
-        buff[len] = '\0';
-        str = buff;
-    } else {
-        char* buff = new char[len + 1];
-        Read(buff, sizeof(char), len);
-        buff[len] = '\0';
-        str = buff;
-        delete[] buff;
-    }
-
-    return len;
-}
-
-//----------------------------------------------------------------------
-char* CSharedResource::ReadLine(char* buff, size_t maxBuff) {
-    return fgets(buff, static_cast<int>(maxBuff), m_fp);
-}
-
-//----------------------------------------------------------------------
-size_t CSharedResource::Write(const void* buff, size_t size, size_t cnt) const {
-    return fwrite(buff, size, cnt, m_fp);
-}
-
-//----------------------------------------------------------------------
-size_t CSharedResource::Write(bool val) const {
-    return Write(&val, sizeof(bool), 1);
-}
-size_t CSharedResource::Write(char val) const {
-    return Write(&val, sizeof(char), 1);
-}
-size_t CSharedResource::Write(int val) const {
-    return Write(&val, sizeof(int), 1);
-}
-size_t CSharedResource::Write(int8_t val) const {
-    return Write(&val, sizeof(int8_t), 1);
-}
-size_t CSharedResource::Write(uint8_t val) const {
-    return Write(&val, sizeof(uint8_t), 1);
-}
-size_t CSharedResource::Write(int16_t val) const {
-    return Write(&val, sizeof(int16_t), 1);
-}
-size_t CSharedResource::Write(uint16_t val) const {
-    return Write(&val, sizeof(uint16_t), 1);
-}
-size_t CSharedResource::Write(unsigned int val) const {
-    return Write(&val, sizeof(int), 1);
-}
-size_t CSharedResource::Write(long val) const {
-    return Write(&val, sizeof(long), 1);
-}  // NOLINT
-size_t CSharedResource::Write(unsigned long val) const {
-    return Write(&val, sizeof(long), 1);
-}  // NOLINT
-size_t CSharedResource::Write(long long val) const {
-    return Write(&val, sizeof(long long), 1);
-}  // NOLINT
-size_t CSharedResource::Write(unsigned long long val) const {
-    return Write(&val, sizeof(long long), 1);
-}  // NOLINT
-size_t CSharedResource::Write(float val) const {
-    return Write(&val, sizeof(float), 1);
-}
-size_t CSharedResource::Write(double val) const {
-    return Write(&val, sizeof(double), 1);
-}
-
-//----------------------------------------------------------------------
-size_t CSharedResource::Write(const string_q& val) const {
-    unsigned long len = val.length();                    // NOLINT
-    size_t ret = Write(&len, sizeof(unsigned long), 1);  // NOLINT
-    return Write(val.c_str(), sizeof(char), len) + ret;
-}
-
-//----------------------------------------------------------------------
-void CSharedResource::WriteLine(const string_q& str) {
-    fprintf(m_fp, "%s", str.c_str());
-}
-
 string_q manageRemoveList(const string_q& filename) {
-    // We want to protect this so it doesn't get messed up. We don't
-    // add the same string twice, so it's all good
     mutex aMutex;
     lock_guard<mutex> lock(aMutex);
 
@@ -327,38 +158,38 @@ size_t asciiFileToBuffer(const string_q& fileName, vector<char>& buffer) {
     buffer.resize(len);
     CSharedResource archive;
     if (archive.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
-        archive.Read(buffer.data(), len, 1);
-        archive.Release();
+        fread(buffer.data(), 1, len, archive.m_fp);
+        if (archive.m_fp) {
+            fflush(archive.m_fp);
+            fclose(archive.m_fp);
+        }
+        archive.m_fp = NULL;
     }
     return buffer.size();
 }
 
-size_t asciiFileToString(const string_q& fileName, string_q& contents) {
+string_q asciiFileToString(const string_q& filename) {
     vector<char> buffer;
-    asciiFileToBuffer(fileName, buffer);
+    asciiFileToBuffer(filename, buffer);
     buffer.push_back('\0');  // not sure if this is needed or not. At worse it's redundant
-    contents = buffer.data();
-    return contents.size();
+    return buffer.data();
 }
 
 size_t asciiFileToLines(const string_q& fileName, CStringArray& lines) {
-    string_q contents;
-    asciiFileToString(fileName, contents);
+    string_q contents = asciiFileToString(fileName);
     explode(lines, contents, '\n');
     return lines.size();
-}
-
-string_q asciiFileToString(const string_q& filename) {
-    string_q ret;
-    asciiFileToString(filename, ret);
-    return ret;
 }
 
 size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
     CSharedResource lock;
     if (lock.Lock(fileName, modeWriteCreate, LOCK_WAIT)) {
-        lock.WriteLine(contents.c_str());
-        lock.Release();
+        fprintf(lock.m_fp, "%s", contents.c_str());
+        if (lock.m_fp) {
+            fflush(lock.m_fp);
+            fclose(lock.m_fp);
+        }
+        lock.m_fp = NULL;
     } else {
         return false;
     }

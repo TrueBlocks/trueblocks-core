@@ -32,7 +32,6 @@ class CSharedResource {
 
   public:
     FILE* m_fp;
-
     CSharedResource(void) {
         m_fp = NULL;
         m_error = 0;
@@ -44,68 +43,9 @@ class CSharedResource {
     }
 
     bool Lock(const string_q& fn, const string_q& mode, size_t obeyLock);
-    bool ReLock(const string_q& mode);
     void Release(void);
-    void Close(void);
-
-    bool isOpen(void) const {
-        return (m_fp != NULL);
-    }
-
-    long Tell(void) const;                     // NOLINT
-    void Seek(long offset, int whence) const;  // NOLINT
-    bool Eof(void) const;
-    char* ReadLine(char* buff, size_t maxBuff);
-    void WriteLine(const string_q& str);
-    string_q LockFailure(void) const;
-    void flush(void) {
-        if (m_fp)
-            fflush(m_fp);
-    }
-    void setFilename(const string_q& fn) {
-        m_filename = fn;
-    }
-
-  public:
-    size_t Read(bool& val);
-    size_t Read(char& val);
-    size_t Read(int& val);
-    size_t Read(int8_t& val);
-    size_t Read(uint8_t& val);
-    size_t Read(int16_t& val);
-    size_t Read(uint16_t& val);
-    size_t Read(unsigned int& val);
-    size_t Read(long& val);                // NOLINT
-    size_t Read(unsigned long& val);       // NOLINT
-    size_t Read(long long& val);           // NOLINT
-    size_t Read(unsigned long long& val);  // NOLINT
-    size_t Read(float& val);
-    size_t Read(double& val);
-    size_t Read(string_q& val);
-
-    size_t Write(bool val) const;
-    size_t Write(char val) const;
-    size_t Write(int val) const;
-    size_t Write(int8_t val) const;
-    size_t Write(uint8_t val) const;
-    size_t Write(int16_t val) const;
-    size_t Write(uint16_t val) const;
-    size_t Write(unsigned int val) const;
-    size_t Write(long val) const;                // NOLINT
-    size_t Write(unsigned long val) const;       // NOLINT
-    size_t Write(long long val) const;           // NOLINT
-    size_t Write(unsigned long long val) const;  // NOLINT
-    size_t Write(float val) const;
-    size_t Write(double val) const;
-    size_t Write(const string_q& val) const;
-
-    size_t Read(void* buff, size_t size, size_t cnt);
-    size_t Write(const void* buff, size_t size, size_t cnt) const;
 
   private:
-    size_t Read(const char* val) const;
-    size_t Write(const char* val) const;
-
     bool waitOnLock(bool deleteOnFail) const;
     bool createLockFile(const string_q& lockfilename);
     bool createLock(bool createOnFail);

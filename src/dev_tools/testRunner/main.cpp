@@ -33,14 +33,11 @@ int main(int argc, const char* argv[]) {
             return EXIT_FAILURE;
         }
 
-        string_q contents = asciiFileToString(testFile) + "\n";
-        replaceAll(contents, "\n\n", "\n");
-
-        CStringArray lines;
-        explode(lines, contents, '\n');
-
+        CStringArray testLines;
         vector<CTestCase> testArray;
-        for (auto line : lines) {
+        asciiFileToLines(testFile, testLines);
+
+        for (auto line : testLines) {
             if (startsWith(line, "#") || startsWith(line, "enabled") || line.empty()) {
                 continue;
             }
@@ -177,9 +174,9 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
             if (system(theCmd.c_str())) {
             }  // Don't remove cruft. Silences compiler warnings
 
-            string_q contents = asciiFileToString(test.workPath + test.fileName);
+            string_q contents2 = asciiFileToString(test.workPath + test.fileName);
             if (!prepender.str().empty()) {
-                contents = prepender.str() + contents;
+                contents2 = prepender.str() + contents2;
             }
 
             if (!outputFile.empty() && fileExists(outputFile)) {
@@ -187,11 +184,11 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
                 os << "----" << endl;
                 os << "Results in " << substitute(outputFile, goldApiPath, "./") << endl;
                 os << asciiFileToString(outputFile) << endl;
-                contents += os.str();
+                contents2 += os.str();
             }
 
-            replaceAll(contents, "3735928559", "\"0xdeadbeef\"");
-            stringToAsciiFile(test.workPath + test.fileName, contents);
+            replaceAll(contents2, "3735928559", "\"0xdeadbeef\"");
+            stringToAsciiFile(test.workPath + test.fileName, contents2);
 
             if (endsWith(test.path, "lib"))
                 replace(test.workPath, "../", "");
@@ -201,21 +198,21 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
 
             string_q oldFn = test.workPath + test.fileName;
             string_q oldText = asciiFileToString(oldFn);
-            if (contains(oldText, "The XDG_")) {
-                // Weird case where we can't turn off timestamp from logs, so we blow away the timing here
-                CStringArray lines;
-                explode(lines, oldText, '\n');
-                ostringstream os;
-                for (auto line : lines) {
-                    if (contains(line, "The XDG_")) {
-                        line = substitute(line, "The XDG_", "|The XDG_");
-                        nextTokenClear(line, '|');
-                    }
-                    os << line << endl;
-                }
-                oldText = os.str();
-                stringToAsciiFile(oldFn, oldText);
-            }
+            // if (contains(oldText, "The XDG_")) {
+            //     // Weird case where we can't turn off timestamp from logs, so we blow away the timing here
+            //     CStringArray lines;
+            //     explode(lines, oldText, '\n');
+            //     ostringstream os;
+            //     for (auto line : lines) {
+            //         if (contains(line, "The XDG_")) {
+            //             line = substitute(line, "The XDG_", "|The XDG_");
+            //             nextTokenClear(line, '|');
+            //         }
+            //         os << line << endl;
+            //     }
+            //     oldText = os.str();
+            //     stringToAsciiFile(oldFn, oldText);
+            // }
 
             string_q result = "ok";
             if (!newText.empty() && newText == oldText) {
