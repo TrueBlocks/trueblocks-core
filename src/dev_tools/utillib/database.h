@@ -113,22 +113,10 @@ class CSharedResource {
     CSharedResource(const CSharedResource& l);
     CSharedResource& operator=(const CSharedResource& l);
 };
+
 extern string_q asciiFileToString(const string_q& filename);
-extern size_t asciiFileToString(const string_q& filename, string& contents);  // non-copy
 extern size_t asciiFileToLines(const string_q& fileName, CStringArray& lines);
-extern size_t asciiFileToLines(const string_q& fileName, CUintArray& lines);
 extern size_t stringToAsciiFile(const string_q& fileName, const string_q& contents);
-typedef void (*QUITHANDLER)(int s);
-extern void defaultQuitHandler(int s);
-extern void quickQuitHandler(int signum);
-extern void registerQuitHandler(QUITHANDLER qh);
-extern void cleanFileLocks(void);
-extern bool shouldQuit(void);
-extern void lockSection(void);
-extern void unlockSection(void);
-inline bool isFileLocked(const string_q& fileName) {
-    return fileExists(fileName + ".lck");
-}
 extern string_q manageRemoveList(const string_q& filename = "");
 
 }  // namespace qblocks

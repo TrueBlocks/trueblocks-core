@@ -1,18 +1,3 @@
-/*-------------------------------------------------------------------------------------------
- * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
- *
- * This program is free software: you may redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version. This program is
- * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see http://www.gnu.org/licenses/.
- *-------------------------------------------------------------------------------------------*/
-// NOTE: This file has a lot of NOLINT's in it. Because it's someone else's code, I wanted
-// to be conservitive in changing it. It's easier to hide the lint than modify the code
-
 #include "basetypes.h"
 
 #include "database.h"
@@ -28,10 +13,6 @@ namespace qblocks {
 #define LK_BAD_OPEN_MODE 3
 #define LK_NO_REMOVE_LOCK 4
 
-//----------------------------------------------------------------------
-extern size_t quitCount(size_t s = 0);
-
-//----------------------------------------------------------------------
 bool CSharedResource::createLockFile(const string_q& lockfilename) {
     m_ownsLock = false;
     FILE* fp = fopen(lockfilename.c_str(), modeWriteCreate);
@@ -47,7 +28,6 @@ bool CSharedResource::createLockFile(const string_q& lockfilename) {
     return false;  // why could I not create the lock file?
 }
 
-//----------------------------------------------------------------------
 bool CSharedResource::createLock(bool createOnFail) {
     string_q lockFilename = m_filename + ".lck";
 
@@ -59,9 +39,7 @@ bool CSharedResource::createLock(bool createOnFail) {
         i++;
     }
 
-    // Someone has had the lock for maxSecondsLock seconds -- if told to blow that lock away
     if (createOnFail) {
-        // Release the old lock and create a new one
         m_ownsLock = true;
         Release();
         return createLockFile(lockFilename);
@@ -70,7 +48,6 @@ bool CSharedResource::createLock(bool createOnFail) {
     return false;
 }
 
-//----------------------------------------------------------------------
 bool CSharedResource::waitOnLock(bool deleteOnFail) const {
     string_q lockFilename = m_filename + ".lck";
 
@@ -96,23 +73,17 @@ bool CSharedResource::waitOnLock(bool deleteOnFail) const {
     return false;
 }
 
-//----------------------------------------------------------------------
 bool CSharedResource::ReLock(const string_q& mode) {
     Close();
     m_fp = fopen(m_filename.c_str(), mode.c_str());
-
     return isOpen();
 }
 
-//----------------------------------------------------------------------
 bool CSharedResource::Lock(const string_q& fn, const string_q& mode, size_t lockType) {
     m_filename = fn;
     m_mode = mode;
     m_fp = NULL;
 
-    // If the file we are trying to lock does not exist but we are not trying to open
-    // it under one of the create modes then do not create a lock, do not open the file,
-    // and let the user know.
     if (!fileExists(m_filename) && (m_mode != modeWriteCreate && m_mode != modeWriteAppend)) {
         m_error = LK_FILE_NOT_EXIST;
         m_errorMsg = "File does not exist: " + m_filename;
@@ -148,27 +119,21 @@ bool CSharedResource::Lock(const string_q& fn, const string_q& mode, size_t lock
     return isOpen();
 }
 
-//----------------------------------------------------------------------
 void CSharedResource::Release(void) {
     Close();
-
     if (m_ownsLock) {
         string_q lockFilename = m_filename + ".lck";
         bool ret = remove(lockFilename.c_str());
         manageRemoveList("r:" + lockFilename);
         if (ret != 0) {
-            //              fprintf(stdout, "What happened?: %d: %s\n", ret, (const char *)(m_filename + ".lck"));
             m_error = LK_NO_REMOVE_LOCK;
             m_errorMsg = "Could not remove lock";
-        } else {
-            //              fprintf(stdout, "Removed it: %s\n", (const char *)(m_filename + ".lck"));
         }
     }
 
     m_ownsLock = false;
 }
 
-//----------------------------------------------------------------------
 void CSharedResource::Close(void) {
     if (m_fp) {
         fflush(m_fp);
@@ -186,22 +151,18 @@ string_q CSharedResource::LockFailure(void) const {
     return uint_2_Strx(m_error) + ": " + m_errorMsg;
 }
 
-//----------------------------------------------------------------------
 bool CSharedResource::Eof(void) const {
     return feof(m_fp);
 }
 
-//----------------------------------------------------------------------
 void CSharedResource::Seek(long offset, int whence) const {  // NOLINT
     fseek(m_fp, offset, whence);
 }
 
-//----------------------------------------------------------------------
 long CSharedResource::Tell(void) const {  // NOLINT
     return ftell(m_fp);
 }
 
-//----------------------------------------------------------------------
 size_t CSharedResource::Read(void* buff, size_t size, size_t cnt) {
     return fread(buff, cnt, size, m_fp);
 }
@@ -337,89 +298,6 @@ void CSharedResource::WriteLine(const string_q& str) {
     fprintf(m_fp, "%s", str.c_str());
 }
 
-//-----------------------------------------------------------------------
-static uint32_t sectionLocks = 0;
-void lockSection(void) {
-    sectionLocks++;
-    // LOG8("Section locked: ", sectionLocks);
-}
-
-//-----------------------------------------------------------------------
-void unlockSection(void) {
-    if (sectionLocks > 0)
-        sectionLocks--;
-    // LOG8("Section unlocked: ", sectionLocks);
-}
-
-//-----------------------------------------------------------------------
-static bool isSectionLocked(void) {
-    return (sectionLocks > 0);
-}
-
-//-----------------------------------------------------------------------
-size_t quitCount(size_t s) {
-    // This is global data, and therefore not thread safe, but it's okay since
-    // we want to count a quit request no matter which thread it's from.
-    static size_t g_QuitCount = 0;
-    if (g_QuitCount && isSectionLocked())  // ignore if we're locked
-        return false;
-    g_QuitCount += s;
-    return g_QuitCount;
-}
-
-//-----------------------------------------------------------------------
-bool shouldQuit(void) {
-    if (quitCount() == 0)
-        return false;
-    cout << "\nFinishing work...\n";
-    cleanFileLocks();
-    cout.flush();
-    return true;
-}
-
-//-----------------------------------------------------------------------
-void cleanFileLocks(void) {
-    // We want to clean the list entirely, once we start
-    mutex aMutex;
-    lock_guard<mutex> lock(aMutex);
-
-    string_q list = manageRemoveList();
-    CStringArray files;
-    explode(files, list, '|');
-    for (auto file : files) {
-        remove(file.c_str());
-    }
-    manageRemoveList("clear");
-}
-
-//-----------------------------------------------------------------------
-void defaultQuitHandler(int signum) {
-    if (quitCount(1) > 2) {
-        cleanFileLocks();
-        if (signum != -1) {
-            exit(EXIT_SUCCESS);
-        }
-    }
-}
-
-//-----------------------------------------------------------------------
-void quickQuitHandler(int signum) {
-    cleanFileLocks();
-    if (signum != -1)
-        exit(EXIT_SUCCESS);
-}
-
-//-----------------------------------------------------------------------
-void registerQuitHandler(QUITHANDLER qh) {
-    struct sigaction sigIntHandler;
-    sigIntHandler.sa_handler = qh;
-    sigemptyset(&sigIntHandler.sa_mask);
-    sigIntHandler.sa_flags = 0;
-    sigaction(SIGINT, &sigIntHandler, NULL);
-    sigaction(SIGTERM, &sigIntHandler, NULL);
-}
-
-//-----------------------------------------------------------------------
 string_q manageRemoveList(const string_q& filename) {
     // We want to protect this so it doesn't get messed up. We don't
     // add the same string twice, so it's all good
@@ -455,7 +333,6 @@ size_t asciiFileToBuffer(const string_q& fileName, vector<char>& buffer) {
     return buffer.size();
 }
 
-//----------------------------------------------------------------------
 size_t asciiFileToString(const string_q& fileName, string_q& contents) {
     vector<char> buffer;
     asciiFileToBuffer(fileName, buffer);
@@ -464,7 +341,6 @@ size_t asciiFileToString(const string_q& fileName, string_q& contents) {
     return contents.size();
 }
 
-//----------------------------------------------------------------------
 size_t asciiFileToLines(const string_q& fileName, CStringArray& lines) {
     string_q contents;
     asciiFileToString(fileName, contents);
@@ -472,22 +348,12 @@ size_t asciiFileToLines(const string_q& fileName, CStringArray& lines) {
     return lines.size();
 }
 
-//----------------------------------------------------------------------
-size_t asciiFileToLines(const string_q& fileName, CUintArray& lines) {
-    string_q contents;
-    asciiFileToString(fileName, contents);
-    explode(lines, contents, '\n');
-    return lines.size();
-}
-
-//----------------------------------------------------------------------
 string_q asciiFileToString(const string_q& filename) {
     string_q ret;
     asciiFileToString(filename, ret);
     return ret;
 }
 
-//----------------------------------------------------------------------
 size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
     CSharedResource lock;
     if (lock.Lock(fileName, modeWriteCreate, LOCK_WAIT)) {
