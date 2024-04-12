@@ -25,7 +25,6 @@ int main(int argc, const char* argv[]) {
         return EXIT_FAILURE;
 
     string_q testFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
-    uint32_t testID = 0;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return EXIT_FAILURE;
@@ -60,7 +59,7 @@ int main(int argc, const char* argv[]) {
                     exit(1);
                 }
 
-                CTestCase test(line, testID++);
+                CTestCase test(line);
                 if (!startsWith(line, "on")) {
                     if (trim(line).substr(0, 120).length() > 0) {
                         cerr << "   # " << line.substr(0, 120) << endl;
@@ -78,7 +77,6 @@ int main(int argc, const char* argv[]) {
                     testArray.push_back(test);
                 }
             }
-            // sort(testArray.begin(), testArray.end());
 
             options.doTests(testArray, testName, API);
             options.doTests(testArray, testName, CMD);
@@ -107,25 +105,24 @@ int main(int argc, const char* argv[]) {
     return allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, int whichTest) {
-    bool cmdTests = whichTest & CMD;
-
+void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, int which) {
     uint64_t nTests = 0;
     uint64_t nPassed = 0;
-    cerr << "Testing " + testName + " " + (cmdTests ? "cmd" : "api") + " mode):" << endl;
+    cerr << "Testing " + testName + " " + ((which & CMD) ? "cmd" : "api") + " mode):" << endl;
 
     for (auto test : testArray) {
-        test.prepareTest(cmdTests);
-        if ((!cmdTests && test.mode == "cmd") || (cmdTests && test.mode == "api")) {
+        test.prepareTest(which & CMD);
+        if ((!(which & CMD) && test.mode == "cmd") || ((which & CMD) && test.mode == "api")) {
             // do nothing - wrong mode
         } else {
             ostringstream cmd;
+            ostringstream prepender;
+
             CStringArray fileLines;
             string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
             if (fileExists(envFile))
                 asciiFileToLines(envFile, fileLines);
 
-            ostringstream prepender;
             CStringArray envLines;
             for (auto f : fileLines) {
                 if (!startsWith(f, "#")) {
@@ -134,7 +131,7 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
                 }
             }
 
-            if (cmdTests) {
+            if (which & CMD) {
                 string_q envs = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
                 string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
                 string_q exe = "chifra" + (contains(test.tool, "chifra") ? "" : " " + test.route);
@@ -186,25 +183,16 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
                 prepender << test.route << "?" << test.options << endl;
             }
 
-            // To run the test, we cd into the gold path (so we find the test
-            // files), but we send results to working folder
             string_q goldApiPath = substitute(test.goldPath, "/api_tests", "");
             string_q outputFile = "";
-            if (whichTest != API && contains(test.origLine, "output")) {
+            if (which != API && contains(test.origLine, "output")) {
                 outputFile = getOutputFile(test.origLine, goldApiPath);
             }
             string_q theCmd = "cd \"" + goldApiPath + "\" ; " + cmd.str();
 
-            string_q customized =
-                substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.name + "/",
-                           "/api_tests", "");
-            if (folderExists(customized))
-                forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             nTests++;
             if (system(theCmd.c_str())) {
             }  // Don't remove cruft. Silences compiler warnings
-            if (folderExists(customized))
-                forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 
             string_q contents = asciiFileToString(test.workPath + test.fileName);
             if (!prepender.str().empty()) {
@@ -287,32 +275,12 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
     totalPassed += nPassed;
     if (nTests) {
         uint64_t nFailed = nTests - nPassed;
-        cerr << "   " + testName + " " + (cmdTests ? "cmd" : "api") + ": " << nTests << " tests ";
+        cerr << "   " + testName + " " + ((which & CMD) ? "cmd" : "api") + ": " << nTests << " tests ";
         cerr << nPassed << " passed ";
         cerr << (nFailed ? "X" : "ok") << " " << nFailed << " failed." << endl;
     }
 
     return;
-}
-
-bool saveAndCopy(const string_q& customFile, void* data) {
-    CStringArray parts;
-    explode(parts, customFile, '/');
-    string_q destFile = getConfigEnv()->configPath + "configs/mainnet/" + parts[parts.size() - 1];
-    string_q saveFile = getConfigEnv()->cachePath + "tmp/" + parts[parts.size() - 1] + ".save";
-    copyFile(destFile, saveFile);
-    copyFile(customFile, destFile);
-    return true;
-}
-
-bool replaceFile(const string_q& customFile, void* data) {
-    CStringArray parts;
-    explode(parts, customFile, '/');
-    string_q destFile = getConfigEnv()->configPath + "configs/mainnet/" + parts[parts.size() - 1];
-    string_q saveFile = getConfigEnv()->cachePath + "tmp/" + parts[parts.size() - 1] + ".save";
-    copyFile(saveFile, destFile);
-    ::remove(saveFile.c_str());
-    return true;
 }
 
 string_q getOutputFile(const string_q& orig, const string_q& goldApiPath) {

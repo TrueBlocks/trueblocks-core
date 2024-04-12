@@ -36,8 +36,6 @@ class COptions : public COptionsBase {
 };
 
 //-----------------------------------------------------------------------
-extern bool saveAndCopy(const string_q& path, void* data);
-extern bool replaceFile(const string_q& path, void* data);
 extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
 extern bool cleanTest(const string_q& path, const string_q& testName);
 extern string_q relativize(const string_q& path);

@@ -17,14 +17,13 @@ class CTestCase : public CBaseNode {
     string_q goldPath;
     string_q workPath;
     string_q fileName;
-    uint32_t test_id;
 
     CTestCase(void);
     CTestCase(const CTestCase& te);
     virtual ~CTestCase(void);
     CTestCase& operator=(const CTestCase& te);
 
-    explicit CTestCase(const string_q& line, uint32_t id);
+    explicit CTestCase(const string_q& line);
     void prepareTest(bool cmdLine);
     bool operator==(const CTestCase& it) const;
     bool operator!=(const CTestCase& it) const {
@@ -49,7 +48,6 @@ inline CTestCase::CTestCase(void) {
     goldPath = "";
     workPath = "";
     fileName = "";
-    test_id = 0;
 }
 
 inline CTestCase::CTestCase(const CTestCase& te) {
@@ -67,7 +65,6 @@ inline CTestCase::CTestCase(const CTestCase& te) {
     goldPath = te.goldPath;
     workPath = te.workPath;
     fileName = te.fileName;
-    test_id = te.test_id;
 }
 
 inline CTestCase::~CTestCase(void) {
@@ -88,7 +85,6 @@ inline CTestCase& CTestCase::operator=(const CTestCase& te) {
     goldPath = te.goldPath;
     workPath = te.workPath;
     fileName = te.fileName;
-    test_id = te.test_id;
     return *this;
 }
 
@@ -97,7 +93,7 @@ inline bool CTestCase::operator==(const CTestCase& it) const {
 }
 
 inline bool operator<(const CTestCase& v1, const CTestCase& v2) {
-    return v1.test_id < v2.test_id;
+    return true;
 }
 
 inline void CTestCase::prepareTest(bool cmdLine) {
@@ -140,8 +136,7 @@ inline void CTestCase::prepareTest(bool cmdLine) {
     }
 }
 
-inline CTestCase::CTestCase(const string_q& line, uint32_t id) {
-    test_id = id;
+inline CTestCase::CTestCase(const string_q& line) {
     origLine = line;
 
     CStringArray parts;

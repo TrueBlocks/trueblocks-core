@@ -56,7 +56,6 @@ string_q nextOptionChunk(const string_q& fieldIn, const void* dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q COption::getValueByName(const string_q& fieldName) const {
-    // Give customized code a chance to override first
     string_q ret = nextOptionChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
