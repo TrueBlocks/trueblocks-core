@@ -14,7 +14,6 @@
 #include "basenode.h"
 #include "fielddata.h"
 #include "conversions.h"
-// #include "logging.h"
 
 namespace qblocks {
 

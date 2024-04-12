@@ -16,7 +16,6 @@
 #include "sftime.h"
 #include "sfos.h"
 #include "conversions.h"
-// #include "logging.h"
 
 namespace qblocks {
 

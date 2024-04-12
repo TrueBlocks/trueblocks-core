@@ -14,7 +14,6 @@
 #include <dirent.h>
 #include "filenames.h"
 #include "sfos.h"
-// #include "logging.h"
 
 namespace qblocks {
 

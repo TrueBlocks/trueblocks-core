@@ -15,7 +15,6 @@
 #include "toml.h"
 #include "conversions.h"
 #include "sfstring.h"
-// #include "logging.h"
 
 namespace qblocks {
 

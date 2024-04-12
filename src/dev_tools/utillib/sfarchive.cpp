@@ -13,7 +13,6 @@
 #include "basetypes.h"
 #include "sfarchive.h"
 #include "filenames.h"
-// #include "logging.h"
 
 namespace qblocks {
 

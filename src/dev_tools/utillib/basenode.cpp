@@ -15,7 +15,6 @@
 #include "sfarchive.h"
 #include "exportcontext.h"
 #include "conversions.h"
-// #include "logging.h"
 #include "runtimeclass.h"
 
 namespace qblocks {

@@ -11,7 +11,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "conversions.h"
-// #include "logging.h"
 
 namespace qblocks {
 
