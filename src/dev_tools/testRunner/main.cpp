@@ -163,10 +163,10 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
                 if (has_env)
                     cmd << "-H \"X-TestRunner-Env: " << substitute(linesToString(envLines, '|'), " ", "") << "\" ";
                 cmd << "\"";
-                string_q apiProvider =
-                    getGlobalConfig("testRunner")->getConfigStr("settings", "api_provider", "http://localhost:8080");
-                if (!endsWith(apiProvider, "/"))
-                    apiProvider += "/";
+                extern string_q getEnvStr(const string_q& name);
+                string_q port = getEnvStr("TB_TEST_API_SERVER");
+                // getGlobalConfig("testRunner")->getConfigStr("settings", "api_provider", "http://localhost:8080");
+                string_q apiProvider = "http://localhost:" + (port.empty() ? "8080" : port) + "/";
                 cmd << apiProvider;
                 cmd << test.route;
                 cmd << (has_options ? ("?" + test.options) : "");
