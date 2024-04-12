@@ -1,7 +1,3 @@
-/*
-
-*/
-
 // If a test case is not commented out (with #) copy its gold file to working (since
 // we've cleaned the working otherwise)
 // If configured, copy the data out to the folder our performance measurement tool knows about
@@ -53,34 +49,35 @@ int main(int argc, const char* argv[]) {
 
             map<string_q, CTestCase> testMap;
             for (auto line : lines) {
-                if (startsWith(line, "#")) {
+                if (startsWith(line, "#") || startsWith(line, "enabled") || line.empty()) {
                     continue;
                 }
-                bool ignore2 = !startsWith(line, "on");
-                if (startsWith(line, "enabled")) {
-                    continue;
+                CStringArray parts;
+                explode(parts, line, ',');
+                if (parts.size() < 7) {
+                    cerr << "Wrong size in test line: " << testName << ": " << line << endl;
+                    exit(1);
                 }
-                if (line.empty() || ignore2) {
-                    if (ignore2) {
-                        if (trim(line).substr(0, 120).length() > 0) {
-                            cerr << "   # " << line.substr(0, 120) << endl;
-                        }
-                        CTestCase test(line, 0);
-                        test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
-                                                   "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
-                        if (fileExists(test.goldPath)) {
-                            test.workPath =
-                                substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
-                                           "/test/working/" + test.path + "/" + test.tool + "/" + test.fileName);
-                            copyFile(test.goldPath, test.workPath);
-                        }
-                        replace(test.goldPath, "/" + test.tool + "/", "/" + test.tool + "/api_tests/");
-                        if (fileExists(test.goldPath)) {
-                            test.workPath = substitute(
-                                getCWD(), "/test/gold/dev_tools/testRunner/",
+
+                if (!startsWith(line, "on")) {
+                    if (trim(line).substr(0, 120).length() > 0) {
+                        cerr << "   # " << line.substr(0, 120) << endl;
+                    }
+                    CTestCase test(line, 0);
+                    test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
+                                               "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
+                    if (fileExists(test.goldPath)) {
+                        test.workPath =
+                            substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
+                                       "/test/working/" + test.path + "/" + test.tool + "/" + test.fileName);
+                        copyFile(test.goldPath, test.workPath);
+                    }
+                    replace(test.goldPath, "/" + test.tool + "/", "/" + test.tool + "/api_tests/");
+                    if (fileExists(test.goldPath)) {
+                        test.workPath = substitute(
+                            getCWD(), "/test/gold/dev_tools/testRunner/",
                                 "/test/working/" + test.path + "/" + test.tool + "/api_tests/" + test.fileName);
-                            copyFile(test.goldPath, test.workPath);
-                        }
+                        copyFile(test.goldPath, test.workPath);
                     }
 
                 } else {
@@ -218,12 +215,12 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
                 substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.name + "/",
                            "/api_tests", "");
             if (folderExists(customized))
-                forEveryFileInFolder(customized + "", saveAndCopy, NULL);
+                forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             nTests++;
             if (system(theCmd.c_str())) {
             }  // Don't remove cruft. Silences compiler warnings
             if (folderExists(customized))
-                forEveryFileInFolder(customized + "", replaceFile, NULL);
+                forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 
             string_q contents = asciiFileToString(test.workPath + test.fileName);
             if (!prepender.str().empty()) {
