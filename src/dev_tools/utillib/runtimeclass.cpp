@@ -31,17 +31,6 @@ char* CRuntimeClass::getClassNamePtr(void) const {
 }
 
 //-------------------------------------------------------------------------
-bool CRuntimeClass::isDerivedFrom(const CRuntimeClass* pBaseClass) const {
-    const CRuntimeClass* pClassThis = this;
-    while (pClassThis != NULL) {
-        if (pClassThis == pBaseClass)
-            return true;
-        pClassThis = pClassThis->m_BaseClass;
-    }
-    return false;
-}
-
-//-------------------------------------------------------------------------
 CBaseNode* CRuntimeClass::createObject(void) {
     if (m_CreateFunc)
         return (*m_CreateFunc)();

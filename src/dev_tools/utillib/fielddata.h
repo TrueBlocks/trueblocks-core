@@ -94,13 +94,6 @@ class CFieldData {
         m_hidden = hide;
     }
 
-    bool isObject(void) const {
-        return m_fieldType & TS_OBJECT;
-    }
-    bool isArray(void) const {
-        return m_fieldType & TS_ARRAY;
-    }
-
     string_q getName(void) const {
         return m_fieldName;
     }

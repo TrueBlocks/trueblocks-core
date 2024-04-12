@@ -1,3 +1,7 @@
+/*
+
+*/
+
 // If a test case is not commented out (with #) copy its gold file to working (since
 // we've cleaned the working otherwise)
 // If configured, copy the data out to the folder our performance measurement tool knows about
@@ -16,7 +20,7 @@
 
 extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
 extern bool cleanTest(const string_q& path, const string_q& testName);
-
+extern string_q relativize(const string_q& path);
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
@@ -33,7 +37,7 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return EXIT_FAILURE;
 
-        cleanFolder(cacheFolder_tmp);
+        cleanFolder(getConfigEnv()->cachePath + "tmp/");
 
         for (auto testName : options.tests) {
             string_q path = nextTokenClear(testName, '/');
@@ -217,12 +221,12 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
                 substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.name + "/",
                            "/api_tests", "");
             if (folderExists(customized))
-                forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
+                forEveryFileInFolder(customized + "", saveAndCopy, NULL);
             nTests++;
             if (system(theCmd.c_str())) {
             }  // Don't remove cruft. Silences compiler warnings
             if (folderExists(customized))
-                forEveryFileInFolder(customized + "/*", replaceFile, NULL);
+                forEveryFileInFolder(customized + "", replaceFile, NULL);
 
             string_q contents = asciiFileToString(test.workPath + test.fileName);
             if (!prepender.str().empty()) {
@@ -316,8 +320,8 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
 bool saveAndCopy(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = rootConfigs + "configs/mainnet/" + parts[parts.size() - 1];
-    string_q saveFile = cacheFolder_tmp + parts[parts.size() - 1] + ".save";
+    string_q destFile = getConfigEnv()->configPath + "configs/mainnet/" + parts[parts.size() - 1];
+    string_q saveFile = getConfigEnv()->cachePath + "tmp/" + parts[parts.size() - 1] + ".save";
     copyFile(destFile, saveFile);
     copyFile(customFile, destFile);
     return true;
@@ -326,8 +330,8 @@ bool saveAndCopy(const string_q& customFile, void* data) {
 bool replaceFile(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = rootConfigs + "configs/mainnet/" + parts[parts.size() - 1];
-    string_q saveFile = cacheFolder_tmp + parts[parts.size() - 1] + ".save";
+    string_q destFile = getConfigEnv()->configPath + "configs/mainnet/" + parts[parts.size() - 1];
+    string_q saveFile = getConfigEnv()->cachePath + "tmp/" + parts[parts.size() - 1] + ".save";
     copyFile(saveFile, destFile);
     ::remove(saveFile.c_str());
     return true;
@@ -360,4 +364,16 @@ bool cleanTest(const string_q& path, const string_q& testName) {
     if (system(os.str().c_str())) {
     }  // Don't remove cruft. Silences compiler warnings
     return true;
+}
+
+string_q relativize(const string_q& path) {
+    string_q ret = path;
+    replace(ret, getConfigEnv()->indexPath, "$INDEX/");
+    replace(ret, getConfigEnv()->cachePath, "$CACHE/");
+    replace(ret, getConfigEnv()->chainConfigPath, "$CHAIN/");
+    replace(ret, getConfigEnv()->configPath, "$CONFIG/");
+    replace(ret, getPathToCommands("test/"), "");
+    replace(ret, getPathToCommands(""), "");
+    replace(ret, getHomeFolder(), "$HOME/");
+    return ret;
 }

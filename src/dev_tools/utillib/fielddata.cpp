@@ -147,7 +147,6 @@ void manageFields(const string_q& listIn, bool show) {
 //-----------------------------------------------------------------------
 void manageFields(const string_q& formatIn) {
     if (countOf(formatIn, '[') != countOf(formatIn, ']') || countOf(formatIn, '{') != countOf(formatIn, '}')) {
-        LOG_ERR("Mismatched brackets in format string: ", formatIn);
         return;
     }
 

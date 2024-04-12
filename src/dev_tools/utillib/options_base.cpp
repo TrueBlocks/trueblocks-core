@@ -16,6 +16,7 @@
 #include "options_base.h"
 #include "filenames.h"
 #include "exportcontext.h"
+#include "configenv.h"
 
 namespace qblocks {
 
@@ -403,154 +404,11 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
         expContext().fmtMap["header"] = "";
 }
 
-//---------------------------------------------------------------------------------------------------
-bool COptionsBase::confirmUint(const string_q& name, uint64_t& value, const string_q& argIn) const {
-    value = NOPOS;
-
-    COption option;
-    if (!findParam(name, option))
-        return usage("Unknown parameter `" + name + "'.");
-    if (!contains(option.option_type, "uint") && !contains(option.option_type, "blknum"))
-        return true;
-
-    string_q arg = argIn;
-    replace(arg, option.hotKey + ":", "");
-    replace(arg, name + ":", "");
-    replaceAll(arg, "-", "");
-
-    if (!isNumeral(arg))
-        return usage("Value to --" + name + " parameter (" + arg + ") must be a valid unsigned integer.");
-    value = str_2_Uint(arg);
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COptionsBase::confirmUint(const string_q& name, uint32_t& value, const string_q& arg) const {
-    value = (uint32_t)NOPOS;
-    uint64_t temp;
-    if (!confirmUint(name, temp, arg))
-        return false;
-    value = (uint32_t)temp;
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COptionsBase::confirmDouble(const string_q& name, double& value, const string_q& argIn) const {
-    value = NOPOS;
-
-    COption option;
-    if (!findParam(name, option))
-        return usage("Unknown parameter `" + name + "'.");
-    if (!contains(option.option_type, "double"))
-        return true;
-
-    string_q arg = argIn;
-    replace(arg, option.hotKey + ":", "");
-    replace(arg, name + ":", "");
-    replaceAll(arg, "-", "");
-
-    if (!isDouble(arg))
-        return usage("Value to --" + name + " parameter (" + arg + ") must be a valid double.");
-    value = str_2_Double(arg);
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const string_q& argIn,
-                                   blknum_t latest) const {
-    value = NOPOS;
-
-    COption option;
-    if (!findParam(name, option))
-        return usage("Unknown parameter `" + name + "'.");
-    if (!contains(option.option_type, "uint") && !contains(option.option_type, "blknum"))
-        return true;
-
-    string_q arg = argIn;
-    replace(arg, option.hotKey + ":", "");
-    replace(arg, name + ":", "");
-    replaceAll(arg, "-", "");
-
-    if (contains(option.option_type, "blknum")) {
-        if (arg == "first") {
-            value = 0;
-            return true;
-        }
-        if (arg == "latest") {
-            value = latest;
-            return true;
-        }
-    }
-
-    if (!confirmUint(name, value, argIn))
-        return false;
-
-    if (value > latest)
-        return usage("Block number (" + argIn + ") is greater than the latest block (" + uint_2_Str(latest) + ").");
-
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COptionsBase::confirmEnum(const string_q& name, string_q& value, const string_q& argIn) const {
-    COption option;
-    if (!findParam(name, option))
-        return usage("Unknown parameter `" + name + "'.");
-    if (option.option_type.empty() || !contains(option.option_type, "enum["))
-        return true;
-
-    string_q type = option.option_type;
-    replace(type, "*", "");
-    replace(type, "enum", "");
-    replace(type, "list<", "");
-    replace(type, ">", "");
-    replace(type, "[", "|");
-    replace(type, "]", "|");
-
-    string_q arg = argIn;
-    if (!option.hotKey.empty()) {
-        replace(arg, option.hotKey + ":", "");
-    }
-    replace(arg, name + ":", "");
-    replaceAll(arg, "-", "");
-
-    if (!contains(type, "|" + arg + "|")) {
-        string_q desc = substitute(substitute(option.description, ", one ", "| One "), "*", "");
-        nextTokenClear(desc, '|');
-        return usage("Invalid option '" + arg + "' for '" + name + "'." + desc + " required.");
-    }
-
-    value = arg;
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COptionsBase::findParam(const string_q& name, COption& paramOut) const {
-    for (const auto& option : parameters) {
-        if (startsWith(option.longName, "--" + name)) {  // flags, toggles, switches
-            paramOut = option;
-            return true;
-        }
-        if (startsWith(option.longName, name)) {
-            paramOut = option;
-            return true;
-        }
-    }
-
-    return false;
-}
-
 //--------------------------------------------------------------------------------
 bool COptionsBase::invalid_option(const string_q& arg) const {
     if (startsWith(arg, "-") && !contains(arg, "--") && isBadSingleDash(arg))
         return invalid_option(arg + ". Did you mean -" + arg + "?");
     return usage("Invalid option: " + arg);
-}
-
-//--------------------------------------------------------------------------------
-bool COptionsBase::flag_required(const string_q& command) const {
-    string_q req = "The --[{COMMAND}] option requires a value.";
-    return usage(substitute(req, "[{COMMAND}]", command));
 }
 
 //--------------------------------------------------------------------------------
@@ -657,13 +515,13 @@ const CToml* getGlobalConfig(const string_q& mergeIn) {
     static string_q components = "trueBlocks|";
 
     if (!toml) {
-        string_q configFile = rootConfigToml_trueBlocks;
+        string_q configFile = getConfigEnv()->configPath + "trueBlocks.toml";
         static CToml theToml(configFile);
         toml = &theToml;
         string_q name = COptionsBase::g_progName;
-        string_q fileName = chainConfigToml_merge;
+        string_q fileName = getConfigEnv()->chainConfigPath + name + ".toml";
         if (name == "makeClass" || name == "testRunner")
-            fileName = rootConfigToml_merge;
+            fileName = getConfigEnv()->configPath + name + ".toml";
         if (fileExists(fileName) && !contains(components, name + "|")) {
             components += name + "|";
             CToml custom(fileName);
@@ -674,9 +532,9 @@ const CToml* getGlobalConfig(const string_q& mergeIn) {
     // If we're told explicitly to load another config, do that as well
     if (!mergeIn.empty()) {
         string_q name = mergeIn;
-        string_q fileName = chainConfigToml_merge;
+        string_q fileName = getConfigEnv()->chainConfigPath + name + ".toml";
         if (name == "makeClass" || name == "testRunner")
-            fileName = rootConfigToml_merge;
+            fileName = getConfigEnv()->configPath + name + ".toml";
         if (fileExists(fileName) && !contains(components, name + "|")) {
             components += name + "|";
             CToml custom(fileName);
@@ -687,62 +545,6 @@ const CToml* getGlobalConfig(const string_q& mergeIn) {
     return toml;
 }
 
-//-----------------------------------------------------------------------
-static bool sortByValue(const CNameValue& p1, const CNameValue& p2) {
-    blknum_t b1 = str_2_Uint(p1.second);
-    blknum_t b2 = str_2_Uint(p2.second);
-    if (b1 == 0) {
-        if (p1.first == "latest")
-            b1 = NOPOS;
-    }
-    if (b2 == 0) {
-        if (p2.first == "latest")
-            b2 = NOPOS;
-    }
-    return b1 < b2;
-}
-
-//-----------------------------------------------------------------------
-// TODO: Can we remove this since this is all processed in the go code?
-// TODO: Almost - if we convert specials to block numbers before calling into the C++
-CNameValueArray COptionsBase::specials;
-
-//--------------------------------------------------------------------------------
-bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
-    if (arg == "latest") {
-        pair.first = "latest";
-        return true;
-    }
-
-    if (specials.size() == 0) {
-        CStringArray lines;
-        asciiFileToLines(chainConfigsTxt_specials, lines);
-        bool first = true;
-        for (auto line : lines) {
-            if (!first) {
-                CStringArray fields;
-                explode(fields, line, ',');
-                if (fields.size() > 1) {
-                    CNameValue pp = make_pair(fields[1], fields[0]);
-                    specials.push_back(pp);
-                }
-            }
-            first = false;
-        }
-        sort(specials.begin(), specials.end(), sortByValue);
-    }
-
-    for (auto special : specials) {
-        if (arg == special.first) {
-            pair = special;
-            return true;
-        }
-    }
-
-    return false;
-}
-
-//---------------------------------------------------------------------------------------------------
 COptionsBase::COptionsBase(void) {
     minArgs = 1;
     isRaw = false;
@@ -792,7 +594,8 @@ void COptionsBase::closeRedirect(void) {
         if (!isTestMode() && rd_zipOnClose) {
             ostringstream os;
             os << "gzip -fv " << substitute(outFn, ".gz", "");
-            if (system(os.str().c_str())) {}  // Don't remove. Silences warnings
+            if (system(os.str().c_str())) {
+            }  // Don't remove. Silences warnings
         }
 
         rd_zipOnClose = false;

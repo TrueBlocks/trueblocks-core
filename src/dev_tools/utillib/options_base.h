@@ -54,18 +54,8 @@ class COptionsBase {
     bool prePrepareArguments(CStringArray& separatedArgs_, int argCountIn, const char* argvIn[]);
     bool builtInCmd(const string_q& arg);
     bool standardOptions(string_q& cmdLine);
-    bool confirmEnum(const string_q& name, string_q& value, const string_q& arg) const;
-    bool confirmBlockNum(const string_q& name, blknum_t& value, const string_q& arg, blknum_t latest) const;
-    bool confirmUint(const string_q& name, uint64_t& value, const string_q& arg) const;
-    bool confirmDouble(const string_q& name, double& value, const string_q& arg) const;
-    bool confirmUint(const string_q& name, uint32_t& value, const string_q& arg) const;
-
-    // supporting special block names
-    static CNameValueArray specials;
-    static bool findSpecial(CNameValue& pair, const string_q& arg);
 
   public:
-    // enabling options
     bool isEnabled(uint32_t q) const;
     void optionOff(uint32_t q);
     void optionOn(uint32_t q);
@@ -75,10 +65,8 @@ class COptionsBase {
         return false;
     }
 
-    bool flag_required(const string_q& command) const;
     bool invalid_option(const string_q& arg) const;
 
-    bool findParam(const string_q& name, COption& paramOut) const;
     string_q expandOption(string_q& arg);
     bool isBadSingleDash(const string_q& arg) const;
 

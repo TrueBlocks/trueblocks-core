@@ -50,7 +50,6 @@ class CRuntimeClass {
     virtual ~CRuntimeClass(void);
 
     char* getClassNamePtr(void) const;
-    bool isDerivedFrom(const CRuntimeClass* pBaseClass) const;
     void initialize(const string_q& protoName);
     CBaseNode* createObject(void);
 

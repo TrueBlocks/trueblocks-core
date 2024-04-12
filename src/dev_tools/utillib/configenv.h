@@ -41,61 +41,19 @@ class CConfigEnv : public CBaseNode {
     CConfigEnv(const CConfigEnv& co);
     virtual ~CConfigEnv(void);
     CConfigEnv& operator=(const CConfigEnv& co);
-
     DECLARE_NODE(CConfigEnv);
 
-    // EXISTING_CODE
-    // EXISTING_CODE
+  private:
     bool operator==(const CConfigEnv& it) const;
     bool operator!=(const CConfigEnv& it) const {
         return !operator==(it);
     }
     friend bool operator<(const CConfigEnv& v1, const CConfigEnv& v2);
     friend ostream& operator<<(ostream& os, const CConfigEnv& it);
-
-  protected:
-    void clear(void);
-    void initialize(void);
-    void duplicate(const CConfigEnv& co);
-
-    // EXISTING_CODE
-    // EXISTING_CODE
 };
 
-//--------------------------------------------------------------------------
 inline CConfigEnv::CConfigEnv(void) {
-    initialize();
-    // EXISTING_CODE
-    // EXISTING_CODE
-}
-
-//--------------------------------------------------------------------------
-inline CConfigEnv::CConfigEnv(const CConfigEnv& co) {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    duplicate(co);
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-//--------------------------------------------------------------------------
-inline CConfigEnv::~CConfigEnv(void) {
-    clear();
-    // EXISTING_CODE
-    // EXISTING_CODE
-}
-
-//--------------------------------------------------------------------------
-inline void CConfigEnv::clear(void) {
-    // EXISTING_CODE
-    // EXISTING_CODE
-}
-
-//--------------------------------------------------------------------------
-inline void CConfigEnv::initialize(void) {
     CBaseNode::initialize();
-
     chain = "";
     configPath = "";
     chainConfigPath = "";
@@ -103,16 +61,10 @@ inline void CConfigEnv::initialize(void) {
     indexPath = "";
     defChain = "";
     rpcProvider = "";
-
-    // EXISTING_CODE
-    // EXISTING_CODE
 }
 
-//--------------------------------------------------------------------------
-inline void CConfigEnv::duplicate(const CConfigEnv& co) {
-    clear();
+inline CConfigEnv::CConfigEnv(const CConfigEnv& co) {
     CBaseNode::duplicate(co);
-
     chain = co.chain;
     configPath = co.configPath;
     chainConfigPath = co.chainConfigPath;
@@ -120,40 +72,32 @@ inline void CConfigEnv::duplicate(const CConfigEnv& co) {
     indexPath = co.indexPath;
     defChain = co.defChain;
     rpcProvider = co.rpcProvider;
-
-    // EXISTING_CODE
-    // EXISTING_CODE
 }
 
-//--------------------------------------------------------------------------
+inline CConfigEnv::~CConfigEnv(void) {
+}
+
 inline CConfigEnv& CConfigEnv::operator=(const CConfigEnv& co) {
-    duplicate(co);
-    // EXISTING_CODE
-    // EXISTING_CODE
+    CBaseNode::duplicate(co);
+    chain = co.chain;
+    configPath = co.configPath;
+    chainConfigPath = co.chainConfigPath;
+    cachePath = co.cachePath;
+    indexPath = co.indexPath;
+    defChain = co.defChain;
+    rpcProvider = co.rpcProvider;
     return *this;
 }
 
-//-------------------------------------------------------------------------
 inline bool CConfigEnv::operator==(const CConfigEnv& it) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
     return false;
 }
 
-//-------------------------------------------------------------------------
 inline bool operator<(const CConfigEnv& v1, const CConfigEnv& v2) {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
-//---------------------------------------------------------------------------
-typedef vector<CConfigEnv> CConfigEnvArray;
-extern const char* STR_DISPLAY_CONFIGENV;
+extern const CConfigEnv* getConfigEnv(void);
+extern void loadEnvironmentPaths(void);
 
-//---------------------------------------------------------------------------
-// EXISTING_CODE
-// EXISTING_CODE
 }  // namespace qblocks

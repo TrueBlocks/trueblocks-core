@@ -35,10 +35,6 @@ void COption::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     // EXISTING_CODE
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["option_fmt"] : fmtIn);
-    if (fmt.empty()) {
-        toJson(ctx);
-        return;
-    }
 
     // EXISTING_CODE
     // EXISTING_CODE
