@@ -32,7 +32,6 @@ inline bool establishFolder(const string_q& path) {
 }
 
 extern string_q getCWD(const string_q& filename = "");
-extern string_q doCommand(const string_q& cmd, bool readStderr = false);
 extern string_q makeValidName(const string_q& inOut);
 
 }  // namespace qblocks

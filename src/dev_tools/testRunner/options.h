@@ -21,6 +21,10 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
+    string_q chain;
+    string_q configPath;
+    string_q chainConfigPath;
+    string_q cachePath;
     uint64_t totalTests = 0;
     uint64_t totalPassed = 0;
     CStringArray fails;
@@ -33,11 +37,14 @@ class COptions : public COptionsBase {
     void Init(void) override;
 
     void doTests(vector<CTestCase>& testArray, const string_q& testName, int which);
+    void loadEnvironmentPaths(void);
+    string_q relativize(const string_q& path);
+    const CToml* getGlobalConfig(const string_q& name);
 };
 
 //-----------------------------------------------------------------------
 extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
 extern bool cleanTest(const string_q& path, const string_q& testName);
-extern string_q relativize(const string_q& path);
 extern void copyBack(const string_q& path, const string_q& tool, const string_q& fileName);
 extern string_q linesToString(const CStringArray& lines, char sep = '\n');
+extern string_q doCommand(const string_q& cmd, bool readStderr = false);

@@ -27,7 +27,6 @@
 #include "sfstring.h"
 #include "database.h"
 #include "filenames.h"
-#include "configenv.h"
 
 namespace qblocks {
 
@@ -128,16 +127,6 @@ void doGlob(size_t& nStrs, string_q* strs, const string_q& maskIn, int wantFiles
     globfree(&globBuf);
 }
 
-//-------------------------------------------------------------------------------------------------------------
-inline bool waitForCreate(const string_q& filename) {
-    size_t mx = 1000;
-    size_t cnt = 0;
-    while (cnt < mx && !fileExists(filename))
-        cnt++;
-
-    return fileExists(filename);
-}
-
 //---------------------------------------------------------------------------------------
 static const char* CHR_VALID_NAME =
     "\t\n\r()<>[]{}`\\|; "
@@ -153,27 +142,6 @@ string_q makeValidName(const string_q& inOut) {
     return ret;
 }
 
-//------------------------------------------------------------------------------------------
-string_q doCommand(const string_q& cmd, bool readStderr) {
-    time_q now = Now();
-    string_q tmpPath = "/tmp/";
-    string_q filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
-    string_q theCommand = (cmd + " >" + filename);
-    if (readStderr) {
-        theCommand = (cmd + " >/dev/null 2>" + filename);
-    }
-    if (system(theCommand.c_str())) {
-    }  // Don't remove cruft. Silences compiler warnings
-
-    // Check twice for existence since the previous command creates the file but may take some time
-    waitForCreate(filename);
-    string_q ret;
-    asciiFileToString(filename, ret);
-    ::remove(filename.c_str());
-    return trim(ret, '\n');
-}
-
-//------------------------------------------------------------------
 string_q getCWD(const string_q& filename) {
     string_q folder;
     size_t kMaxPathSize = _POSIX_PATH_MAX;

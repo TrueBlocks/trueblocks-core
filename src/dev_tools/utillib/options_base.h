@@ -14,7 +14,6 @@
 #include "filenames.h"
 #include "toml.h"
 #include "option.h"
-#include "configenv.h"
 
 namespace qblocks {
 
@@ -66,10 +65,6 @@ class CDefaultOptions : public COptionsBase {
 };
 
 extern uint64_t verbose;
-
-//--------------------------------------------------------------------------------
-class CToml;
-extern const CToml* getGlobalConfig(const string_q& name);
 
 inline bool listBlocks(uint64_t bn, void* data) {
     CUintArray* array = (CUintArray*)data;

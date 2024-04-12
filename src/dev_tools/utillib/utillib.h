@@ -9,6 +9,5 @@
 #include "sfarchive.h"
 #include "options_base.h"
 #include "filenames.h"
-#include "configenv.h"
 
 using namespace qblocks;  // NOLINT

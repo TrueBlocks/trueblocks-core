@@ -17,7 +17,6 @@
 #include "database.h"
 #include "options_base.h"
 #include "filenames.h"
-#include "configenv.h"
 
 namespace qblocks {
 
@@ -30,41 +29,6 @@ string_q COptionsBase::getProgName(void) const {
 }
 
 uint64_t verbose = false;
-
-const CToml* getGlobalConfig(const string_q& mergeIn) {
-    static CToml* toml = NULL;
-    static string_q components = "trueBlocks|";
-
-    if (!toml) {
-        string_q configFile = getConfigEnv()->configPath + "trueBlocks.toml";
-        static CToml theToml(configFile);
-        toml = &theToml;
-        string_q name = COptionsBase::g_progName;
-        string_q fileName = getConfigEnv()->chainConfigPath + name + ".toml";
-        if (name == "makeClass" || name == "testRunner")
-            fileName = getConfigEnv()->configPath + name + ".toml";
-        if (fileExists(fileName) && !contains(components, name + "|")) {
-            components += name + "|";
-            CToml custom(fileName);
-            toml->mergeFile(&custom);
-        }
-    }
-
-    // If we're told explicitly to load another config, do that as well
-    if (!mergeIn.empty()) {
-        string_q name = mergeIn;
-        string_q fileName = getConfigEnv()->chainConfigPath + name + ".toml";
-        if (name == "makeClass" || name == "testRunner")
-            fileName = getConfigEnv()->configPath + name + ".toml";
-        if (fileExists(fileName) && !contains(components, name + "|")) {
-            components += name + "|";
-            CToml custom(fileName);
-            toml->mergeFile(&custom);
-        }
-    }
-
-    return toml;
-}
 
 COptionsBase::COptionsBase(void) {
     arguments.clear();

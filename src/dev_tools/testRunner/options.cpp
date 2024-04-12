@@ -5,9 +5,9 @@
 //     LOG_ERR(localFile, " found in local folder. Chifra monitor tests will fail.");
 //     exit(0);
 // }
-// if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
+// if (g etGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
 //     return usage("[dev]debug_curl is set in config file. All tests will fail.");
-// bool hasKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
+// bool hasKey = g etGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
 // bool wantsTest = getEnvStr("TEST_SLURPS") == "true";
 // bool runSlurps = (hasKey && wantsTest);
 // if (runSlurps) {
@@ -102,4 +102,67 @@ COptions::COptions(void) {
 }
 
 COptions::~COptions(void) {
+}
+
+const CToml* COptions::getGlobalConfig(const string_q& mergeIn) {
+    static CToml* toml = NULL;
+    static string_q components = "trueBlocks|";
+
+    if (!toml) {
+        string_q configFile = configPath + "trueBlocks.toml";
+        static CToml theToml(configFile);
+        toml = &theToml;
+        string_q name = COptionsBase::g_progName;
+        string_q fileName = chainConfigPath + name + ".toml";
+        if (name == "makeClass" || name == "testRunner")
+            fileName = configPath + name + ".toml";
+        if (fileExists(fileName) && !contains(components, name + "|")) {
+            components += name + "|";
+            CToml custom(fileName);
+            toml->mergeFile(&custom);
+        }
+    }
+
+    // If we're told explicitly to load another config, do that as well
+    if (!mergeIn.empty()) {
+        string_q name = mergeIn;
+        string_q fileName = chainConfigPath + name + ".toml";
+        if (name == "makeClass" || name == "testRunner")
+            fileName = configPath + name + ".toml";
+        if (fileExists(fileName) && !contains(components, name + "|")) {
+            components += name + "|";
+            CToml custom(fileName);
+            toml->mergeFile(&custom);
+        }
+    }
+
+    return toml;
+}
+
+inline bool waitForCreate(const string_q& filename) {
+    size_t mx = 1000;
+    size_t cnt = 0;
+    while (cnt < mx && !fileExists(filename))
+        cnt++;
+
+    return fileExists(filename);
+}
+
+string_q doCommand(const string_q& cmd, bool readStderr) {
+    time_q now = Now();
+    string_q tmpPath = "/tmp/";
+    string_q filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
+    string_q theCommand = (cmd + " >" + filename);
+    if (readStderr) {
+        theCommand = (cmd + " >/dev/null 2>" + filename);
+    }
+    if (system(theCommand.c_str())) {
+    }  // Don't remove cruft. Silences compiler warnings
+
+    // Check twice for existence since the previous command creates the file but may take some time
+    waitForCreate(filename);
+    string_q ret;
+    asciiFileToString(filename, ret);
+    ::remove(filename.c_str());
+    return trim(ret, '\n');
 }

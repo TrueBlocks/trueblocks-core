@@ -16,10 +16,11 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    loadEnvironmentPaths();
+    COptions options;
+    options.loadEnvironmentPaths();
+
     cerr.rdbuf(cout.rdbuf());
 
-    COptions options;
     if (argc > 0) {
         COptionsBase::g_progName = CFilename(argv[0]).getFilename();
     }
@@ -28,7 +29,7 @@ int main(int argc, const char* argv[]) {
     if (!options.parseArguments(""))
         return EXIT_FAILURE;
 
-    cleanFolder(getConfigEnv()->cachePath + "tmp/");
+    cleanFolder(options.cachePath + "tmp/");
 
     for (auto testName : options.tests) {
         string_q path = nextTokenClear(testName, '/');
@@ -305,13 +306,13 @@ bool cleanTest(const string_q& path, const string_q& testName) {
     return true;
 }
 
-string_q relativize(const string_q& path) {
+string_q COptions::relativize(const string_q& path) {
     string_q ret = path;
-    replace(ret, getConfigEnv()->cachePath, "$CACHE/");
-    replace(ret, getConfigEnv()->chainConfigPath, "$CHAIN/");
-    replace(ret, getConfigEnv()->configPath, "$CONFIG/");
-    replace(ret, getPathToCommands("test/"), "");
-    replace(ret, getPathToCommands(""), "");
+    replace(ret, cachePath, "$CACHE/");
+    replace(ret, chainConfigPath, "$CHAIN/");
+    replace(ret, configPath, "$CONFIG/");
+    // replace(ret, getHomeFolder() + ".local/bin/chifra/test/"), "");
+    // replace(ret, getHomeFolder() + ".local/bin/chifra/", "");
     replace(ret, getHomeFolder(), "$HOME/");
     return ret;
 }
@@ -339,4 +340,15 @@ string_q linesToString(const CStringArray& lines, char sep) {
     for (auto line : lines)
         os << line << (sep != 0 ? string_q(1, sep) : "");
     return os.str();
+}
+
+void COptions::loadEnvironmentPaths(void) {
+    chain = "mainnet";
+#if defined(__linux) || defined(__linux__) || defined(linux) || defined(__unix) || defined(__unix__)
+    configPath = getHomeFolder() + ".local/share/trueblocks/";
+#elif defined(__APPLE__) || defined(__MACH__)
+    configPath = getHomeFolder() + "Library/Application Support/TrueBlocks/";
+#endif
+    chainConfigPath = configPath + "config/mainnet/";
+    cachePath = configPath + "cache/mainnet/";
 }
