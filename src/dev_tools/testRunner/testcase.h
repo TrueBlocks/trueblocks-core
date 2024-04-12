@@ -146,13 +146,13 @@ inline CTestCase::CTestCase(const string_q& line, uint32_t id) {
 
     CStringArray parts;
     explode(parts, line, ',');
-    onOff = trim(parts[0]);
-    mode = trim(parts[1]);
-    speed = trim(parts[2]);
-    route = trim(parts[3]);
-    tool = trim(parts[4]);
-    name = trim(parts[5]);
-    post = trim(parts[6]);
+    onOff = parts.size() > 0 ? trim(parts[0]) : "";
+    mode = parts.size() > 1 ? trim(parts[1]) : "";
+    speed = parts.size() > 2 ? trim(parts[2]) : "";
+    route = parts.size() > 3 ? trim(parts[3]) : "";
+    tool = parts.size() > 4 ? trim(parts[4]) : "";
+    name = parts.size() > 5 ? trim(parts[5]) : "";
+    post = parts.size() > 6 ? trim(parts[6]) : "";
     options = parts.size() > 7 ? trim(parts[7]) : "";
 
     replaceAll(post, "n", "");
