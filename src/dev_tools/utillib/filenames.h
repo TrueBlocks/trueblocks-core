@@ -33,7 +33,6 @@ class CPath : public CFilename {
 
   public:
     explicit CPath(const string_q& pathIn) : CFilename(pathIn) {
-        ASSERT(fileName.empty());
     }
     virtual bool isValid(void) {
         return CFilename::isValid() && fileName.empty();

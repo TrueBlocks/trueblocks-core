@@ -47,39 +47,14 @@
 #include <dlfcn.h>
 #include <memory>
 
-//-------------------------------------------------------------------------
 using namespace std;  // NOLINT - bad practice, but it's way too late now
 
-//--------------------------------------------------------------------
 #define NOPOS ((size_t)-1)
 
-//-------------------------------------------------------------------------
-// #define DEBUG 1
-#ifdef _DEBUG
-#define ASSERT(a)                                                                                                      \
-    {                                                                                                                  \
-        if (!(a)) {                                                                                                    \
-            cout << "error at " << __FILE__ << "(" << __LINE__ << ")\n";                                               \
-        }                                                                                                              \
-    }
-#define XX(a)                                                                                                          \
-    {                                                                                                                  \
-        cout << __FILE__ << " : " << __LINE__ << "\n\t" << (a) << "\n";                                                \
-        cout.flush();                                                                                                  \
-    }
-#else
-#define ASSERT(a)
-#define XX(a)
-#endif
-
-//-------------------------------------------------------------------------
 #include "sfstring.h"
 
 namespace qblocks {
 
 using string_q = std::string;
-//-------------------------------------------------------------------------
-typedef pair<string_q, string_q> CNameValue;
-typedef map<string_q, uint64_t> CCounterMap;
 
 }  // namespace qblocks

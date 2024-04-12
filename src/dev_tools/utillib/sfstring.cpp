@@ -383,13 +383,20 @@ string_q extract(const string_q& haystack, size_t pos, size_t len) {
 string_q escape_string(const string_q& str) {
     string_q res;
     for (auto it = str.begin(); it != str.end(); ++it) {
-             if (*it == '\b') res += "\\b";  // NOLINT
-        else if (*it == '\t') res += "\\t";
-        else if (*it == '\n') res += "\\n";
-        else if (*it == '\f') res += "\\f";
-        else if (*it == '\r') res += "\\r";
-        else if (*it == '"') res += "\\\"";
-        else if (*it == '\\') res += "\\\\";
+        if (*it == '\b')
+            res += "\\b";  // NOLINT
+        else if (*it == '\t')
+            res += "\\t";
+        else if (*it == '\n')
+            res += "\\n";
+        else if (*it == '\f')
+            res += "\\f";
+        else if (*it == '\r')
+            res += "\\r";
+        else if (*it == '"')
+            res += "\\\"";
+        else if (*it == '\\')
+            res += "\\\\";
         else if (static_cast<uint32_t>(*it) <= UINT32_C(0x001f)) {  // NOLINT
             res += "\\u";
             stringstream ss;
@@ -469,7 +476,6 @@ void simplifySolidity(string_q& code) {
                 }
                 break;
             default:
-                ASSERT(0);
                 return;
         }
     }

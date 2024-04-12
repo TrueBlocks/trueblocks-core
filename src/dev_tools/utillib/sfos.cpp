@@ -70,8 +70,6 @@ int copyFile(const string_q& fromIn, const string_q& toIn) {
 // Returns a list of either files or folders, but not both.
 //------------------------------------------------------------------
 void doGlob(size_t& nStrs, string_q* strs, const string_q& maskIn, int wantFiles) {
-    ASSERT(!strs || nStrs);
-
     glob_t globBuf;
 
     string_q mask = maskIn;
@@ -109,9 +107,6 @@ void doGlob(size_t& nStrs, string_q* strs, const string_q& maskIn, int wantFiles
                 path = CFilename(path).getFilename();
                 if (startsWith(path, '/'))
                     path = extract(path, 1);
-                // The path we return is always just the name of the folder or file
-                // without any leading (or even existing) '/'
-                ASSERT(path.length() && path[0] != '/');
 
                 if (wantFiles == ANY_FILETYPE) {
                     if (isDir)

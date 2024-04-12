@@ -67,8 +67,6 @@ time_q::time_q(const tm& st, bool useDayOfWeek) {
     tm sysTime = st;
     if (!sysTime.tm_year)
         sysTime.tm_year = static_cast<int>(Now().GetYear());
-    ASSERT(sysTime.tm_year);
-
     if (useDayOfWeek) {
         *this = time_q(CDate((uint32_t)sysTime.tm_year, (uint32_t)sysTime.tm_mon, (uint32_t)sysTime.tm_mday,
                              (uint32_t)(sysTime.tm_wday + 1)),
@@ -167,12 +165,10 @@ string_q time_q::Format(const string_q& sFormat) const {
                             break;
                         }
                         case 'P': {
-                            ASSERT(getTimePart().IsValid());
                             ret += (GetHour() >= 12 ? "pm" : "am");
                             break;
                         }
                         case 'p': {
-                            ASSERT(getTimePart().IsValid());
                             ret += (GetHour() >= 12 ? "p" : "a");
                             break;
                         }
@@ -281,20 +277,17 @@ ostream& operator<<(ostream& os, const time_q& x) {
 
 //-------------------------------------------------------------------------
 uint32_t time_q::CTimeOfDay::GetHour() const {
-    ASSERT(IsValid());
     return (uint32_t)(m_nSeconds / SECS_PER_HOUR);
 }
 
 //-------------------------------------------------------------------------
 uint32_t time_q::CTimeOfDay::GetMinute() const {
-    ASSERT(IsValid());
     uint32_t secsInHours = GetHour() * SECS_PER_HOUR;
     return (uint32_t)((m_nSeconds - secsInHours) / SECS_PER_MIN);
 }
 
 //-------------------------------------------------------------------------
 uint32_t time_q::CTimeOfDay::GetSecond() const {
-    ASSERT(IsValid());
     uint32_t secsInHours = GetHour() * SECS_PER_HOUR;
     uint32_t secsInMins = GetMinute() * SECS_PER_MIN;
     return (m_nSeconds - secsInHours - secsInMins);
@@ -302,7 +295,6 @@ uint32_t time_q::CTimeOfDay::GetSecond() const {
 
 //-------------------------------------------------------------------------
 uint32_t time_q::CTimeOfDay::GetTotalSeconds() const {
-    ASSERT(IsValid());
     return m_nSeconds;
 }
 
@@ -348,7 +340,6 @@ extern uint32_t getDayOfWeek(const time_q::CDate& date);
 // We only do the test for equality and greater than. We then use these
 // to do all other tests
 bool time_q::operator==(const time_q& date) const {
-    ASSERT(IsValid());
     return (m_nSeconds == date.m_nSeconds);
 }
 
@@ -403,7 +394,6 @@ bool time_q::IsValid() const {
 
 //-------------------------------------------------------------------------
 time_q::CDate time_q::getDatePart() const {
-    ASSERT(IsValid());
     return CDate((m_nSeconds / SECS_PER_DAY) - 2000000000L);
 }
 
@@ -411,9 +401,6 @@ time_q::CDate time_q::getDatePart() const {
 time_q::CTimeOfDay time_q::getTimePart() const {
     if (m_nSeconds == getDatePart().GetTotalDays())
         return CTimeOfDay(0);  // midnight at start of day
-
-    ASSERT(IsValid());
-    ASSERT(m_nSeconds >= getDatePart().GetTotalDays());
 
     int64_t secs = m_nSeconds;
     int64_t dateSecs = getDatePart().GetTotalDays() * SECS_PER_DAY;
@@ -528,25 +515,21 @@ time_q::CTimeOfDay::CTimeOfDay(const string_q& timeStr, const string_q& fmtStr) 
 
 //-------------------------------------------------------------------------
 uint32_t time_q::CDate::GetDay() const {
-    ASSERT(IsValid());
     return getDateStruct().m_Day;
 }
 
 //-------------------------------------------------------------------------
 uint32_t time_q::CDate::GetMonth() const {
-    ASSERT(IsValid());
     return getDateStruct().m_Month;
 }
 
 //-------------------------------------------------------------------------
 uint32_t time_q::CDate::GetYear() const {
-    ASSERT(IsValid());
     return getDateStruct().m_Year;
 }
 
 //-------------------------------------------------------------------------
 int64_t time_q::CDate::GetTotalDays() const {
-    ASSERT(IsValid());
     return (int64_t)m_nDays;
 }
 
@@ -597,7 +580,6 @@ time_q::CDate::CDate(uint32_t y, uint32_t m, uint32_t weekInMonth, uint32_t dayO
     // assume any year is OK
     if ((m >= 1 && m <= 12) && (weekInMonth >= 1 && weekInMonth <= 4) && (dayOfWeek >= 1 && dayOfWeek <= 7)) {
         CDate firstDay(y, m, 1);
-        ASSERT(firstDay.IsValid());
 
         uint32_t dow = getDayOfWeek(firstDay);
         uint32_t d = (((dayOfWeek - dow + 7) % 7) + (7 * (weekInMonth - 1)) + 1);
@@ -664,7 +646,6 @@ time_q::CDate::CDate(const string_q& dateStr, const string_q& fmtStr) {
             case 'Y': {
                 year = (uint32_t)str_2_Uint(nextTokenClear(str, sep));
                 char c = fmtStr.at(3);
-                ASSERT((c == '2') || (c == '4'));
                 if (c == '2' || year < 100) {
                     if (year >= 50)
                         year += 1900;
@@ -692,7 +673,6 @@ time_q::CDate& time_q::CDate::operator=(const CDate& date) {
 //-------------------------------------------------------------------------
 template <class TYPE>
 TYPE lfloor(TYPE a, TYPE b) {
-    ASSERT(b > 0);
     return (a >= 0 ? a / b : (a % b == 0) - 1 - ((TYPE)labs(a)) / b);
 }
 
@@ -718,10 +698,6 @@ time_q::CDate& time_q::CDate::setValues(uint32_t y, uint32_t m, uint32_t d) {
 
 //-------------------------------------------------------------------------
 CDateStruct time_q::CDate::getDateStruct() const {
-    // See the comment in CDate::setValues(uint32_t Year, uint32_t Month, uint32_t Day)
-    // for references to where the algorithm is taken from
-    ASSERT(IsValid());
-
     CDateStruct ds;
     int64_t gdn = int64_t(m_nDays - 1999422265);
     int64_t y4 = 1461;
@@ -772,7 +748,6 @@ CDateStruct time_q::CDate::getDateStruct() const {
 
 //---------------------------------------------------------------------------------------
 uint32_t getDayOfWeek(const time_q::CDate& date) {
-    ASSERT(date.IsValid());
     return uint32_t((date.GetTotalDays() % 7)) + uint32_t(1);
 }
 
@@ -1056,7 +1031,6 @@ time_q fileLastModifyDate(const string_q& filename) {
     // Convert time_t to struct tm
     tm unused;
     tm* t = localtime_r(&statBuf.st_mtime, &unused);
-    ASSERT(t);
     return time_q((uint32_t)t->tm_year + 1900, (uint32_t)t->tm_mon + 1, (uint32_t)t->tm_mday, (uint32_t)t->tm_hour,
                   (uint32_t)t->tm_min, (uint32_t)t->tm_sec);
 }

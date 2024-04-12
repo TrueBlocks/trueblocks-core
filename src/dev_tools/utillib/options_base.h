@@ -16,15 +16,8 @@
 #include "option.h"
 #include "configenv.h"
 
-//-----------------------------------------------------------------------------
 namespace qblocks {
 
-//-----------------------------------------------------------------------------
-typedef bool (*NAMEVALFUNC)(CNameValue& pair, void* data);
-typedef bool (*UINT64VISITFUNC)(uint64_t num, void* data);
-typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
-
-//-----------------------------------------------------------------------------
 class COptionsBase {
   public:
     CStringArray commandLines;

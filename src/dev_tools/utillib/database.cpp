@@ -100,10 +100,6 @@ bool CSharedResource::waitOnLock(bool deleteOnFail) const {
 
 //----------------------------------------------------------------------
 bool CSharedResource::ReLock(const string_q& mode) {
-    ASSERT(isOpen());
-    ASSERT(m_ownsLock);
-
-    // Close and re-open the file without relinqishing the lock
     Close();
     m_fp = fopen(m_filename.c_str(), mode.c_str());
 
@@ -112,8 +108,6 @@ bool CSharedResource::ReLock(const string_q& mode) {
 
 //----------------------------------------------------------------------
 bool CSharedResource::Lock(const string_q& fn, const string_q& mode, size_t lockType) {
-    ASSERT(!isOpen());
-
     m_filename = fn;
     m_mode = mode;
     m_fp = NULL;
@@ -137,7 +131,6 @@ bool CSharedResource::Lock(const string_q& fn, const string_q& mode, size_t lock
         openIt = true;
 
     } else if (m_mode == modeReadWrite || m_mode == modeWriteAppend || m_mode == modeWriteCreate) {
-        ASSERT(lockType == LOCK_CREATE || lockType == LOCK_WAIT);
         openIt = createLock(lockType != LOCK_WAIT);
         if (!openIt) {
             m_error = LK_NO_CREATE_LOCK_FILE;
@@ -196,25 +189,21 @@ string_q CSharedResource::LockFailure(void) const {
 
 //----------------------------------------------------------------------
 bool CSharedResource::Eof(void) const {
-    ASSERT(isOpen());
     return feof(m_fp);
 }
 
 //----------------------------------------------------------------------
 void CSharedResource::Seek(long offset, int whence) const {  // NOLINT
-    ASSERT(isOpen());
     fseek(m_fp, offset, whence);
 }
 
 //----------------------------------------------------------------------
 long CSharedResource::Tell(void) const {  // NOLINT
-    ASSERT(isOpen());
     return ftell(m_fp);
 }
 
 //----------------------------------------------------------------------
 size_t CSharedResource::Read(void* buff, size_t size, size_t cnt) {
-    ASSERT(isOpen());
     return fread(buff, cnt, size, m_fp);
 }
 
@@ -264,8 +253,6 @@ size_t CSharedResource::Read(double& val) {
 
 //----------------------------------------------------------------------
 size_t CSharedResource::Read(string_q& str) {
-    ASSERT(isOpen());
-
     unsigned long len;                     // NOLINT
     Read(&len, sizeof(unsigned long), 1);  // NOLINT
 
@@ -287,13 +274,11 @@ size_t CSharedResource::Read(string_q& str) {
 
 //----------------------------------------------------------------------
 char* CSharedResource::ReadLine(char* buff, size_t maxBuff) {
-    ASSERT(isOpen());
     return fgets(buff, static_cast<int>(maxBuff), m_fp);
 }
 
 //----------------------------------------------------------------------
 size_t CSharedResource::Write(const void* buff, size_t size, size_t cnt) const {
-    ASSERT(isOpen());
     return fwrite(buff, size, cnt, m_fp);
 }
 
@@ -343,8 +328,6 @@ size_t CSharedResource::Write(double val) const {
 
 //----------------------------------------------------------------------
 size_t CSharedResource::Write(const string_q& val) const {
-    ASSERT(isOpen());
-
     unsigned long len = val.length();                    // NOLINT
     size_t ret = Write(&len, sizeof(unsigned long), 1);  // NOLINT
     return Write(val.c_str(), sizeof(char), len) + ret;
@@ -352,7 +335,6 @@ size_t CSharedResource::Write(const string_q& val) const {
 
 //----------------------------------------------------------------------
 void CSharedResource::WriteLine(const string_q& str) {
-    ASSERT(isOpen());
     fprintf(m_fp, "%s", str.c_str());
 }
 
