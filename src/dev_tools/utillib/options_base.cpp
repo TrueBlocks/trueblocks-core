@@ -1,3 +1,6 @@
+/*
+ */
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -12,10 +15,8 @@
  *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
 #include "database.h"
-#include "exportcontext.h"
 #include "options_base.h"
 #include "filenames.h"
-#include "exportcontext.h"
 #include "configenv.h"
 
 namespace qblocks {
@@ -189,19 +190,6 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
                     return usage("Invalid verbose level '" + arg + "'.");
                 verbose = str_2_Uint(arg);
             }
-
-        } else if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:")) {
-            arg = substitute(substitute(arg, "--fmt:", ""), "-x:", "");
-            if (arg == "txt") {
-                expContext().exportFmt = TXT1;
-            } else if (arg == "csv") {
-                expContext().exportFmt = CSV1;
-            } else if (arg == "json") {
-                expContext().exportFmt = JSON1;
-            } else {
-                return usage("The --fmt option (" + arg + ") must be one of [ json | txt | csv ].");
-            }
-            argumentsOut[i] = "";
         }
     }
 
@@ -285,12 +273,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         return false;
     }
 
-    if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether ")) {
-        replaceAll(cmdLine, "--ether ", "");
-        expContext().asEther = true;
-        expContext().asWei = false;
-    }
-
     if (isEnabled(OPT_RAW) && contains(cmdLine, "--raw ")) {
         replaceAll(cmdLine, "--raw ", "");
         isRaw = true;
@@ -319,24 +301,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         } else {
             return usage("Could not open output stream at '" + rd_outputFilename + ".");
         }
-        CStringArray parts;
-        explode(parts, temp, '.');
-        if (parts.size() > 0) {
-            string_q last = parts[parts.size() - 1];
-            if (last == "txt") {
-                expContext().exportFmt = TXT1;
-            } else if (last == "csv") {
-                expContext().exportFmt = CSV1;
-            } else if (last == "json") {
-                expContext().exportFmt = JSON1;
-            }
-        }
-    }
-
-    if (isEnabled(OPT_WEI) && contains(cmdLine, "--wei ")) {
-        replaceAll(cmdLine, "--wei ", "");
-        expContext().asEther = false;
-        expContext().asWei = true;
     }
 
     cmdLine = substitute(trim(cmdLine), "  ", " ");
@@ -358,13 +322,9 @@ bool COptionsBase::builtInCmd(const string_q& arg) {
             return true;
     }
 
-    if (isEnabled(OPT_ETHER) && arg == "--ether")
-        return true;
     if (isEnabled(OPT_OUTPUT) && (startsWith(arg, "--output:") || startsWith(arg, "--append")))
         return true;
     if (isEnabled(OPT_RAW) && arg == "--raw")
-        return true;
-    if (isEnabled(OPT_WEI) && arg == "--wei")
         return true;
     if (arg == "--version")
         return true;
@@ -373,33 +333,6 @@ bool COptionsBase::builtInCmd(const string_q& arg) {
     if (arg == "--noop")
         return true;
     return false;
-}
-
-//-----------------------------------------------------------------------
-void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
-                                    const string_q& meta) {
-    string_q format;
-    switch (expContext().exportFmt) {
-        case NONE1:
-            format = defFormat;
-            manageFields(dataType + ":" + cleanFmt(format));
-            break;
-        case TXT1:
-        case CSV1:
-            format = defFormat;
-            manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format)));
-            break;
-        case JSON1:
-            format = "";
-            break;
-    }
-    if (expContext().asEther)
-        format = substitute(format, "{BALANCE}", "{ETHER}");
-    expContext().fmtMap["meta"] = meta;
-    expContext().fmtMap["format"] = cleanFmt(format);
-    expContext().fmtMap["header"] = cleanFmt(format);
-    if (noHeader)
-        expContext().fmtMap["header"] = "";
 }
 
 //--------------------------------------------------------------------------------
@@ -578,15 +511,6 @@ void COptionsBase::closeRedirect(void) {
         coutSaved = NULL;
         // Let the call know where we put the data
         string_q outFn = (isTestMode() ? "--output_filename--" : rd_outputFilename) + (rd_zipOnClose ? ".gz" : "");
-        switch (expContext().exportFmt) {
-            case TXT1:
-            case CSV1:
-                // only report if the user isn't in API mode
-                break;
-            default:
-                cerr << "{ \"outputFilename\": \"" << outFn << "\" }";
-                break;
-        }
 
         // Zip the file if we're told to do so
         if (!isTestMode() && rd_zipOnClose) {
@@ -599,15 +523,6 @@ void COptionsBase::closeRedirect(void) {
         rd_zipOnClose = false;
         rd_outputFilename = "";
     }
-}
-
-//-----------------------------------------------------------------------
-string_q cleanFmt(const string_q& str) {
-    format_t fmt = expContext().exportFmt;
-    string_q ret = (substitute(substitute(substitute(str, "\n", ""), "\\n", "\n"), "\\t", "\t"));
-    if (fmt == CSV1)
-        ret = "\"" + substitute(ret, "\t", "\",\"") + "\"";
-    return ret;
 }
 
 }  // namespace qblocks

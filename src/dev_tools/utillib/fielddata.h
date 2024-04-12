@@ -87,12 +87,6 @@ class CFieldData {
         m_hidden = cp.m_hidden;
         return *this;
     }
-    bool isHidden(void) const {
-        return m_hidden;
-    }
-    void setHidden(bool hide) {
-        m_hidden = hide;
-    }
 
     string_q getName(void) const {
         return m_fieldName;
@@ -144,7 +138,5 @@ class CFieldData {
 typedef vector<CFieldData> CFieldDataArray;
 
 //-----------------------------------------------------------------------
-extern void manageFields(const string_q& formatStr);
-extern void manageFields(const string_q& listIn, bool show);
 extern string_q fieldTypeName(uint64_t type);
 }  // namespace qblocks

@@ -19,7 +19,6 @@
 #include "sfos.h"
 #include "database.h"
 #include "toml.h"
-#include "exportcontext.h"
 #include "sfarchive.h"
 #include "fielddata.h"
 #include "options_base.h"

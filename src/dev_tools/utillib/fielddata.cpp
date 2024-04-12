@@ -106,68 +106,9 @@ string_q fieldTypeStr(uint64_t type) {
 ostream& operator<<(ostream& os, const CFieldData& item) {
     os << padRight(item.getName(), 20) << "\t";
     os << item.getID() << "\t";
-    os << item.isHidden() << "\t";
+    // os << item.isHidden() << "\t";
     os << fieldTypeStr(item.getType());
     return os;
-}
-
-//-----------------------------------------------------------------------
-void manageFields(const string_q& listIn, bool show) {
-    string_q list = substitute(listIn, " ", "");
-    while (!list.empty()) {
-        string_q fields = nextTokenClear(list, '|');
-        string_q cl = nextTokenClear(fields, ':');
-        CBaseNode* item = createObjectOfType(cl);
-        while (item && !fields.empty()) {
-            string_q fieldName = nextTokenClear(fields, ',');
-            if (fieldName == "all") {
-                if (show) {
-                    item->getRuntimeClass()->showAllFields();
-                } else {
-                    item->getRuntimeClass()->hideAllFields();
-                }
-            } else if (fieldName == "none") {
-                if (show) {
-                    item->getRuntimeClass()->hideAllFields();
-                } else {
-                    item->getRuntimeClass()->showAllFields();
-                }
-            } else {
-                CFieldData* f = item->getRuntimeClass()->findField(fieldName);
-                if (f) {
-                    f->setHidden(!show);
-                }
-            }
-        }
-        delete item;
-    }
-}
-
-//-----------------------------------------------------------------------
-void manageFields(const string_q& formatIn) {
-    if (countOf(formatIn, '[') != countOf(formatIn, ']') || countOf(formatIn, '{') != countOf(formatIn, '}')) {
-        return;
-    }
-
-    string_q format = formatIn;
-    string_q cl = nextTokenClear(format, ':');
-
-    string_q fields;
-    CStringArray p1;
-    explode(p1, format, '[');
-    for (size_t i = 0; i < p1.size(); i++) {
-        CStringArray p2;
-        explode(p2, p1[i], '{');
-        for (size_t j = 0; j < p2.size(); j++) {
-            string_q field = toLower(nextTokenClear(p2[j], '}') + ",");
-            CStringArray p3;
-            explode(p3, field, ':');
-            fields += p3[p3.size() - 1];
-        }
-    }
-
-    manageFields(cl + ":all", false);
-    manageFields(cl + ":" + fields, true);
 }
 
 }  // namespace qblocks

@@ -13,7 +13,6 @@
 #include "basetypes.h"
 #include "basenode.h"
 #include "sfarchive.h"
-#include "exportcontext.h"
 #include "conversions.h"
 #include "runtimeclass.h"
 
@@ -21,8 +20,6 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------------
 CRuntimeClass CBaseNode::classCBaseNode;
-static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL);
-vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have been registered
 
 //--------------------------------------------------------------------------------
 CBaseNode::CBaseNode(void) {
@@ -88,13 +85,6 @@ bool CBaseNode::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
     }
     return false;
-}
-
-//--------------------------------------------------------------------------------
-string_q CBaseNode::getKeyByName(const string_q& fieldName) const {
-    if (expContext().quoteKeys)
-        return "\"" + substitute(fieldName, "Dict", "") + "\"" + ": ";
-    return fieldName + ": ";
 }
 
 //--------------------------------------------------------------------------------
@@ -164,27 +154,6 @@ bool isEmptyObj(const string_q& str) {
         s++;
     }
     return startToken && endToken;
-}
-
-//--------------------------------------------------------------------------------
-CBaseNode* getDefaultObject(const CFieldData& field) {
-    // A map of default object types that persists between calls
-    static map<string_q, CBaseNode*> defObjects;
-    const CRuntimeClass* pClass = field.getObjType();
-    CBaseNode* defObject = NULL;
-    if (pClass) {
-        if (defObjects[pClass->m_ClassName]) {
-            // if we already have an object of this type, use it
-            defObject = defObjects[pClass->m_ClassName];
-
-        } else {
-            // Create a default object of this type - do this only once
-            // It's stored statically so will be cleaned up on exit
-            defObject = createObjectOfType(pClass->m_ClassName);
-            defObjects[pClass->m_ClassName] = defObject;  // store it for next time
-        }
-    }
-    return defObject;
 }
 
 //--------------------------------------------------------------------------------
@@ -351,16 +320,6 @@ string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void* data) {
         prompt = truncPad(prompt, maxWidth);  // pad or trun cate
     }
     return pre + prompt + post;
-}
-
-//---------------------------------------------------------------------------------------------------
-CBaseNode* createObjectOfType(const string_q& className) {
-    for (auto builtIn : builtIns) {
-        if (builtIn.m_pClass && builtIn.m_pClass->m_ClassName == className)
-            if (builtIn.m_pClass->m_CreateFunc)
-                return (*builtIn.m_pClass->m_CreateFunc)();
-    }
-    return NULL;
 }
 
 //--------------------------------------------------------------------------------

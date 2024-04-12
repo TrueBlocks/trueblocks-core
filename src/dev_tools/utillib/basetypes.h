@@ -80,7 +80,6 @@ namespace qblocks {
 using string_q = std::string;
 //-------------------------------------------------------------------------
 typedef pair<string_q, string_q> CNameValue;
-typedef map<string_q, string_q> CNameValueMap;
 typedef map<string_q, uint64_t> CCounterMap;
 
 }  // namespace qblocks

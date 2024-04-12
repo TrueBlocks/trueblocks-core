@@ -13,7 +13,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "filenames.h"
 #include "toml.h"
-#include "exportcontext.h"
 #include "option.h"
 #include "configenv.h"
 
@@ -75,9 +74,6 @@ class COptionsBase {
         return rd_outputFilename;
     }
 
-    void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
-                          const string_q& meta = "");
-
     vector<COption> parameters;
     virtual void Init(void) = 0;
     // void registerOptions(size_t nP, const COption* pP, uint32_t on = NOOPT, uint32_t off = NOOPT);
@@ -118,7 +114,6 @@ inline bool listBlocks(uint64_t bn, void* data) {
     return true;
 }
 extern bool prepareEnv(int argc, const char* argv[]);
-extern string_q cleanFmt(const string_q& str);
 inline bool isReserved(const string_q& command) {
     const char* STR_RESERVED =
         "|help|verbose|fmt|output|append|noop|version|nocolor|no_header|raw|"

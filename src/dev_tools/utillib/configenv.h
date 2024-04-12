@@ -17,7 +17,6 @@
  */
 #include "basetypes.h"
 #include "basenode.h"
-#include "exportcontext.h"
 #include "sfarchive.h"
 
 namespace qblocks {
@@ -38,7 +37,6 @@ class CConfigEnv : public CBaseNode {
     CConfigEnv(const CConfigEnv& co);
     virtual ~CConfigEnv(void);
     CConfigEnv& operator=(const CConfigEnv& co);
-    DECLARE_NODE(CConfigEnv);
 
   private:
     bool operator==(const CConfigEnv& it) const;

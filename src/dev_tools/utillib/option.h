@@ -28,14 +28,11 @@ namespace qblocks {
 #define OPT_VERBOSE (1 << 2)
 #define OPT_FMT (1 << 3)
 #define OPT_UNUSED (1 << 4)
-#define OPT_WEI (1 << 5)
-#define OPT_ETHER (1 << 6)
 #define OPT_RAW (1 << 11)
 #define OPT_PREFUND (1 << 12)
 #define OPT_OUTPUT (1 << 13)
 #define OPT_CHECKLATEST (1 << 21)
-#define OPT_DENOM (OPT_WEI | OPT_ETHER)
-#define OPT_DEFAULT (OPT_HELP | OPT_VERBOSE | OPT_FMT | OPT_DENOM | OPT_OUTPUT | OPT_CHECKLATEST)
+#define OPT_DEFAULT (OPT_HELP | OPT_VERBOSE | OPT_FMT | OPT_OUTPUT | OPT_CHECKLATEST)
 
 #define OPT_REQUIRED (1 << 14)
 #define OPT_POSITIONAL (1 << 15)
@@ -66,61 +63,18 @@ class COption : public CBaseNode {
     virtual ~COption(void);
     COption& operator=(const COption& op);
 
-    DECLARE_NODE(COption);
-
-    // EXISTING_CODE
     COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
-    // EXISTING_CODE
     bool operator==(const COption& it) const;
     bool operator!=(const COption& it) const {
         return !operator==(it);
     }
     friend bool operator<(const COption& v1, const COption& v2);
     friend ostream& operator<<(ostream& os, const COption& it);
-
-  protected:
-    void clear(void);
-    void initialize(void);
-    void duplicate(const COption& op);
-
-    // EXISTING_CODE
-    // EXISTING_CODE
 };
 
 //--------------------------------------------------------------------------
 inline COption::COption(void) {
-    initialize();
-    // EXISTING_CODE
-    // EXISTING_CODE
-}
-
-//--------------------------------------------------------------------------
-inline COption::COption(const COption& op) {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    duplicate(op);
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-//--------------------------------------------------------------------------
-inline COption::~COption(void) {
-    clear();
-    // EXISTING_CODE
-    // EXISTING_CODE
-}
-
-//--------------------------------------------------------------------------
-inline void COption::clear(void) {
-    // EXISTING_CODE
-    // EXISTING_CODE
-}
-
-//--------------------------------------------------------------------------
-inline void COption::initialize(void) {
     CBaseNode::initialize();
-
     hotKey = "";
     longName = "";
     description = "";
@@ -130,16 +84,11 @@ inline void COption::initialize(void) {
     is_positional = false;
     is_required = false;
     is_deprecated = false;
-
-    // EXISTING_CODE
-    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void COption::duplicate(const COption& op) {
-    clear();
+inline COption::COption(const COption& op) {
     CBaseNode::duplicate(op);
-
     hotKey = op.hotKey;
     longName = op.longName;
     description = op.description;
@@ -149,40 +98,29 @@ inline void COption::duplicate(const COption& op) {
     is_positional = op.is_positional;
     is_required = op.is_required;
     is_deprecated = op.is_deprecated;
-
-    // EXISTING_CODE
-    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
+inline COption::~COption(void) {
+}
+
 inline COption& COption::operator=(const COption& op) {
-    duplicate(op);
-    // EXISTING_CODE
-    // EXISTING_CODE
+    CBaseNode::duplicate(op);
+    hotKey = op.hotKey;
+    longName = op.longName;
+    description = op.description;
+    permitted = op.permitted;
+    option_type = op.option_type;
+    is_visible = op.is_visible;
+    is_positional = op.is_positional;
+    is_required = op.is_required;
+    is_deprecated = op.is_deprecated;
     return *this;
 }
 
 //-------------------------------------------------------------------------
 inline bool COption::operator==(const COption& it) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
     return false;
 }
 
-//-------------------------------------------------------------------------
-inline bool operator<(const COption& v1, const COption& v2) {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted, preserve ordering
-    return true;
-}
-
-//---------------------------------------------------------------------------
-typedef vector<COption> COptionArray;
-extern const char* STR_DISPLAY_OPTION;
-
-//---------------------------------------------------------------------------
-// EXISTING_CODE
-// EXISTING_CODE
 }  // namespace qblocks

@@ -20,18 +20,6 @@ typedef CBaseNode* (*PFNV)(void);
 
 //----------------------------------------------------------------------------
 class CRuntimeClass;
-class CBuiltIn {
-  public:
-    const CRuntimeClass* m_pClass;
-    CBuiltIn(CRuntimeClass* pClass, const string_q& className, size_t size, PFNV createFunc, CRuntimeClass* pBase);
-    friend bool operator<(const CBuiltIn& v1, const CBuiltIn& v2);
-    bool operator==(const CBuiltIn& item) const;
-    bool operator!=(const CBuiltIn& item) const {
-        return !operator==(item);
-    }
-};
-CBaseNode* createObjectOfType(const string_q& className);
-extern vector<CBuiltIn> builtIns;
 
 //----------------------------------------------------------------------------
 typedef bool (*FIELDVISITFUNC)(const CFieldData& fld, void* data);
@@ -53,130 +41,11 @@ class CRuntimeClass {
     void initialize(const string_q& protoName);
     CBaseNode* createObject(void);
 
-    void addField(const string_q& fieldName, size_t dataType, size_t fieldID);
-    void addObject(const string_q& fieldName, size_t dataType, size_t fieldID, const CRuntimeClass* pClass);
-    void hideAllFields(void);
-    void showAllFields(void);
     void sortFieldList(void);
     bool forEveryField(FIELDVISITFUNC func, void* data);
-
-    CFieldData* findField(const string_q& fieldName);
-    bool isFieldHidden(const string_q& fieldName);
 };
 
 //---------------------------------------------------------------------------
 extern string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node);
-
-//------------------------------------------------------------
-#define GETRUNTIME_CLASS(CLASS_NAME) (&CLASS_NAME::class##CLASS_NAME)
-
-//------------------------------------------------------------
-#define DECLARE_NODE(CLASS_NAME)                                                                                       \
-  public:                                                                                                              \
-    static CRuntimeClass class##CLASS_NAME;                                                                            \
-    static CBaseNode* createObject(void);                                                                              \
-    static void registerClass(void);                                                                                   \
-    CRuntimeClass* getRuntimeClass(void) const override;                                                               \
-    string_q getValueByName(const string_q& fieldName) const override;                                                 \
-    bool setValueByName(const string_q& fieldName, const string_q& fieldValue) override;                               \
-    void finishParse(void) override;                                                                                   \
-    void Format(ostream& ctx, const string_q& fmtIn, void* data = NULL) const override;                                \
-    string_q Format(const string_q& fmtIn = "") const override {                                                       \
-        stringstream ctx;                                                                                              \
-        Format(ctx, fmtIn, NULL);                                                                                      \
-        return ctx.str();                                                                                              \
-    }                                                                                                                  \
-    string_q getClassName(void) const;
-
-//------------------------------------------------------------
-#define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME)                                                                     \
-    static CBuiltIn _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME),                   \
-                                    CLASS_NAME::createObject, GETRUNTIME_CLASS(BASECLASS_NAME));                       \
-    CRuntimeClass CLASS_NAME::class##CLASS_NAME;                                                                       \
-    CRuntimeClass* CLASS_NAME::getRuntimeClass(void) const {                                                           \
-        return &CLASS_NAME::class##CLASS_NAME;                                                                         \
-    }                                                                                                                  \
-    string_q CLASS_NAME::getClassName(void) const {                                                                    \
-        return CLASS_NAME::class##CLASS_NAME.getClassNamePtr();                                                        \
-    }                                                                                                                  \
-    CBaseNode* CLASS_NAME::createObject(void) {                                                                        \
-        return new CLASS_NAME;                                                                                         \
-    }
-
-//------------------------------------------------------------
-#define ADD_FIELD(CLASS_NAME, FIELD_NAME, FIELD_TYPE, FIELD_ID)                                                        \
-    GETRUNTIME_CLASS(CLASS_NAME)->addField(FIELD_NAME, FIELD_TYPE, FIELD_ID);
-
-//------------------------------------------------------------
-#define ADD_OBJECT(CLASS_NAME, FIELD_NAME, FIELD_TYPE, FIELD_ID, CLASS_PTR)                                            \
-    GETRUNTIME_CLASS(CLASS_NAME)->addObject(FIELD_NAME, FIELD_TYPE, FIELD_ID, CLASS_PTR);
-
-//------------------------------------------------------------
-#define SUBFIELD_FMT(a, sf, b)                                                                                         \
-    string_q("[\"") + string_q(sf) + string_q("\": \"{") + toUpper(string_q(a)) + "::" + toUpper(string_q(sf)) +       \
-        "}\"" + (b ? ", ]" : "]")
-
-//------------------------------------------------------------
-#define HAS_FIELD(CLASS_NAME, FIELD_NAME) (GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME) != NULL)
-
-//------------------------------------------------------------
-#define HIDE_FIELD(CLASS_NAME, FIELD_NAME)                                                                             \
-    {                                                                                                                  \
-        CFieldData* f = GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME);                                           \
-        if (f)                                                                                                         \
-            f->setHidden(true);                                                                                        \
-    }
-
-//------------------------------------------------------------
-#define SET_TYPE(CLASS_NAME, FIELD_NAME, NEW_TYPE)                                                                     \
-    {                                                                                                                  \
-        CFieldData* f = GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME);                                           \
-        if (f)                                                                                                         \
-            f->setType(NEW_TYPE);                                                                                      \
-    }
-
-//------------------------------------------------------------
-#define HIDE_PARENT_FIELD(CLASS_NAME, FIELD_NAME)                                                                      \
-    {                                                                                                                  \
-        CRuntimeClass* p = GETRUNTIME_CLASS(CLASS_NAME)->m_BaseClass;                                                  \
-        if (p) {                                                                                                       \
-            CFieldData* f = p->findField(FIELD_NAME);                                                                  \
-            if (f)                                                                                                     \
-                f->setHidden(true);                                                                                    \
-        }                                                                                                              \
-    }
-
-//------------------------------------------------------------
-#define UNHIDE_FIELD(CLASS_NAME, FIELD_NAME)                                                                           \
-    {                                                                                                                  \
-        CFieldData* f = GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME);                                           \
-        if (f)                                                                                                         \
-            f->setHidden(false);                                                                                       \
-    }
-
-//------------------------------------------------------------
-#define SHOW_FIELD(CLASS_NAME, FIELD_NAME)                                                                             \
-    {                                                                                                                  \
-        CFieldData* f = GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME);                                           \
-        if (f)                                                                                                         \
-            f->setHidden(false);                                                                                       \
-    }
-
-//------------------------------------------------------------
-#define HIDE_ALL_FIELDS(CLASS_NAME)                                                                                    \
-    { GETRUNTIME_CLASS(CLASS_NAME)->hideAllFields(); }
-#define SHOW_ALL_FIELDS(CLASS_NAME)                                                                                    \
-    { GETRUNTIME_CLASS(CLASS_NAME)->showAllFields(); }
-
-//------------------------------------------------------------
-#define RENAME_FIELD(CLASS_NAME, OLD_NAME, NEW_NAME)                                                                   \
-    {                                                                                                                  \
-        CFieldData* f = GETRUNTIME_CLASS(CLASS_NAME)->findField(OLD_NAME);                                             \
-        if (f)                                                                                                         \
-            f->setName(NEW_NAME);                                                                                      \
-    }
-
-//------------------------------------------------------------
-#define IS_HIDDEN(CLASS_NAME, FIELD_NAME) GETRUNTIME_CLASS(CLASS_NAME)->isFieldHidden(FIELD_NAME)
 
 }  // namespace qblocks
