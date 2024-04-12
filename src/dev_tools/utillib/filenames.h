@@ -1,16 +1,4 @@
 #pragma once
-/*-------------------------------------------------------------------------------------------
- * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
- *
- * This program is free software: you may redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version. This program is
- * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see http://www.gnu.org/licenses/.
- *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
 #include "sfos.h"
 
@@ -52,31 +40,13 @@ class CPath : public CFilename {
     }
 };
 
-//------------------------------------------------------------------
-extern string_q getEffectiveUserName(void);
 extern string_q getHomeFolder(void);
 extern bool forEveryFileInFolder(const string_q& mask, CONSTAPPLYFUNC func, void* data);
 extern size_t listFilesInFolder(CStringArray& files, const string_q& mask, bool recurse);
 extern size_t nFilesInFolder(const string& path, bool recurse = false);
 extern string_q getLastFileInFolder(const string_q& folder, bool recurse);
 
-//-------------------------------------------------------------------------
 #define ANY_FILETYPE -1
-
-//-------------------------------------------------------------------------
-#define quote(a) (string_q("\"") + a + "\"")
-
-//----------------------------------------------------------------------------------
-#define F_INCLUDE_FOLDERS (1 << 1)
-#define F_INCLUDE_FILES (1 << 2)
-#define F_FULL_PATHS (1 << 3)
-#define F_RECURSIVE (1 << 4)
-#define F_DEPTHFIRST (1 << 5)
-#define F_SORTED (1 << 6)
-#define F_INCLUDE_ALL (F_INCLUDE_FOLDERS | F_INCLUDE_FILES)
-#define F_DEFAULT (F_INCLUDE_ALL | F_RECURSIVE | F_SORTED)
-#define F_FILES_ONLY (F_INCLUDE_FILES | F_RECURSIVE | F_SORTED)
-#define F_FOLDERS_ONLY (F_INCLUDE_FOLDERS | F_RECURSIVE | F_SORTED)
 
 }  // namespace qblocks
 

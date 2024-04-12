@@ -103,19 +103,6 @@ string_q getLastFileInFolder(const string_q& folder, bool recurse) {
 }
 
 //--------------------------------------------------------------------------------
-string_q getEffectiveUserName(void) {
-    struct passwd pd;
-    struct passwd* pwdptr = &pd;
-    struct passwd* tempPwdPtr;
-    char pwdbuffer[200];
-    size_t pwdlinelen = sizeof(pwdbuffer);
-
-    if (getpwuid_r(getuid(), pwdptr, pwdbuffer, pwdlinelen, &tempPwdPtr) == 0)
-        return string_q(pd.pw_name);
-    return "nobody";
-}
-
-//--------------------------------------------------------------------------------
 string_q getHomeFolder(void) {
     struct passwd pd;
     struct passwd* pwdptr = &pd;
