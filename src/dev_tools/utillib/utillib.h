@@ -6,7 +6,6 @@
 #include "sfos.h"
 #include "database.h"
 #include "sfarchive.h"
-#include "options_base.h"
 #include "filenames.h"
 
 using namespace qblocks;  // NOLINT

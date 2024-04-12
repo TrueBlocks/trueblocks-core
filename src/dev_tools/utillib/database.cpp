@@ -19,7 +19,6 @@
 #include "sfos.h"
 #include "filenames.h"
 #include "conversions.h"
-#include "options_base.h"
 
 namespace qblocks {
 

@@ -82,47 +82,6 @@ time_q& time_q::operator=(const time_q& d) {
     return *this;
 }
 
-//----------------------------------------------------------------------------------------------------
-// %a    Abbreviated weekday name
-// %A    Full weekday name
-// %b    Abbreviated month name
-// %B    Full month name
-// %d    Day of month as decimal number (01 - 31)
-// %f    Calendar being used "O.S" Old Style (Julian) or "N.S" New Style (Gregorian)
-// %j    Day of year as decimal number (001 - 366)
-// %m    Month as decimal number (01 - 12)
-// %P    AM/PM indicator
-// %p    a/p indicator
-// %U    Week of year as decimal number
-// %w    Weekday as decimal number (1 - 7; Sunday is 1)
-// %x    Date representation for current locale,  namely
-//         Date representation + " " + Time Representation for current locale
-// %y    Year without century, as decimal number (00 - 99)
-// %Y    Year with century, as decimal number
-// %c    Year displayed using C.E.(Current Epoch) / B.C.E (Before Current Epoch) convention e.g. -1023 = 1022 BCE
-//
-// %H    Hours in the day
-// %h    12 Hour format Hours in (00 - 12)
-// %M    Minutes in the hour
-// %S    Seconds in the minute
-// %Q    Seconds so far this day
-// %%    Percent sign
-//
-//
-// may also need to include full windows escape character
-//
-// %%    Percent sign
-//
-// As in the printf function, the # flag may prefix any formatting code.
-// In that case, the meaning of the format code is changed as follows.
-//
-// Format Code Meaning
-// %#x Long date representation, appropriate to current locale, namely
-//       Long Date representation + " " + Time Representation for current locale
-//
-//
-// %#d, %#j, %#m, %#U, %#w, %#y, %#H, %#h, %#M, %#S  Remove leading zeros (if any).
-//----------------------------------------------------------------------------------------------------
 string_q time_q::Format(const string_q& sFormat) const {
     string_q ret;
     if (IsValid()) {
@@ -600,24 +559,6 @@ time_q::CDate::CDate(const tm& sysTime) {
     setValues((uint32_t)sysTime.tm_year, (uint32_t)sysTime.tm_mon, (uint32_t)sysTime.tm_mday);
 }
 
-//-------------------------------------------------------------------------
-//
-// dateStr is a legal date string as defined by fmtStr.
-//
-// fmtStr is a 5 character string where the first 3 indicate the
-// order of the month/day/year, the fourth character indicates the length
-// of the year, and the fifth character indicates the separator.
-//
-// For example:
-//
-// fmtStr dateStr Result
-//
-// "dmy2/" "20/03/96" 20th March 1996
-// "mdy4-" "03-28-1996" 28th March 1996
-//
-// This feature allows for the creation of CDate's from a string
-// as entered in a masked edit field or from a parsed report.
-//-------------------------------------------------------------------------
 time_q::CDate::CDate(const string_q& dateStr, const string_q& fmtStr) {
     m_nDays = (uint64_t)LONG_MIN;
     if (fmtStr.length() != 5) {
@@ -656,10 +597,10 @@ time_q::CDate::CDate(const string_q& dateStr, const string_q& fmtStr) {
         }
     }
 
-#define CLAMP(_vv, _ll, _hh) min((uint32_t)_hh, max((uint32_t)_ll, (uint32_t)_vv))
-    year = CLAMP(year, earliestDate.GetYear(), latestDate.GetYear());
-    month = CLAMP(month, 1, 12);
-    day = CLAMP(day, 1, DaysInMonth(year, month));
+    // #define CLAMP(_vv, _ll, _hh) min((uint32_t)_hh, max((uint32_t)_ll, (uint32_t)_vv))
+    //     year = CLAMP(year, earliestDate.GetYear(), latestDate.GetYear());
+    //     month = CLAMP(month, 1, 12);
+    //     day = CLAMP(day, 1, DaysInMonth(year, month));
 
     setValues(year, month, day);
 }
@@ -678,21 +619,6 @@ TYPE lfloor(TYPE a, TYPE b) {
 
 //-------------------------------------------------------------------------
 time_q::CDate& time_q::CDate::setValues(uint32_t y, uint32_t m, uint32_t d) {
-    m_nDays = (uint64_t)LONG_MIN;
-    if (m >= JANUARY && m <= DECEMBER && d <= DaysInMonth(y, m)) {
-        // The following algorithm has been taken from an article in
-        // the March 1993 issue of the Windows / Dos Developers Journal.
-        m_nDays = (y - 1) * 365 + (uint64_t)lfloor((int32_t)(y - 1), 4);
-
-        m_nDays += (uint64_t)lfloor((int32_t)(y - 1), 400) - (uint64_t)lfloor((int32_t)(y - 1), 100);
-
-        --m;
-        while (m) {
-            m_nDays += DaysInMonth(y, m);
-            m--;
-        }
-        m_nDays += (d + 1999422264L);  // ensure all usable date values are positive by adding 2 billion to m_nDays
-    }
     return *this;
 }
 
@@ -734,8 +660,8 @@ CDateStruct time_q::CDate::getDateStruct() const {
     }
 
     ds.m_Month = 1;
-    while (ds.m_Month < 13 && gdn > DaysInMonth(ds.m_Year, ds.m_Month))
-        gdn -= DaysInMonth(ds.m_Year, ds.m_Month++);
+    // while (ds.m_Month < 13 && gdn > DaysInMonth(ds.m_Year, ds.m_Month))
+    //     gdn -= DaysInMonth(ds.m_Year, ds.m_Month++);
 
     if (ds.m_Month == 13) {
         ds.m_Month = 1;
@@ -856,169 +782,130 @@ time_q SubtractOneDay(const time_q& date) {
 }
 
 //---------------------------------------------------------------------------------------------
-time_q AddOneHour(const time_q& date) {
-    if (date.GetHour() == 23) {
-        time_q next = BOD(AddOneDay(date));
-        return time_q(next.GetYear(), next.GetMonth(), next.GetDay(), next.GetHour(), date.GetMinute(),
-                      date.GetSecond());
-    }
-    return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour() + 1, date.GetMinute(),
-                  date.GetSecond());
-}
+// time_q AddOneHour(const time_q& date) {
+//     if (date.GetHour() == 23) {
+//         time_q next = BOD(AddOneDay(date));
+//         return time_q(next.GetYear(), next.GetMonth(), next.GetDay(), next.GetHour(), date.GetMinute(),
+//                       date.GetSecond());
+//     }
+//     return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour() + 1, date.GetMinute(),
+//                   date.GetSecond());
+// }
 
-//---------------------------------------------------------------------------------------------
-time_q SubtractOneHour(const time_q& date) {
-    if (BOH(date).GetHour() == 0) {
-        time_q x = SubtractOneDay(date);  // same time yesterday
-        return time_q(x.GetYear(), x.GetMonth(), x.GetDay(), 23, x.GetMinute(), x.GetSecond());
-    }
-    return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour() - 1, date.GetMinute(),
-                  date.GetSecond());
-}
+// //---------------------------------------------------------------------------------------------
+// time_q SubtractOneHour(const time_q& date) {
+//     if (BOH(date).GetHour() == 0) {
+//         time_q x = SubtractOneDay(date);  // same time yesterday
+//         return time_q(x.GetYear(), x.GetMonth(), x.GetDay(), 23, x.GetMinute(), x.GetSecond());
+//     }
+//     return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour() - 1, date.GetMinute(),
+//                   date.GetSecond());
+// }
 
-//---------------------------------------------------------------------------------------------
-time_q AddOneWeek(const time_q& date) {
-    time_q ret = date;
-    for (size_t i = 0; i < 7; i++)
-        ret = AddOneDay(ret);
-    return ret;
-}
+// //---------------------------------------------------------------------------------------------
+// time_q AddOneWeek(const time_q& date) {
+//     time_q ret = date;
+//     for (size_t i = 0; i < 7; i++)
+//         ret = AddOneDay(ret);
+//     return ret;
+// }
 
-//---------------------------------------------------------------------------------------------
-time_q AddOneMonth(const time_q& date) {
-    if (date.GetMonth() == 12)
-        return time_q(date.GetYear() + 1, 1, date.GetDay(), date.GetHour(), date.GetMinute(), date.GetSecond());
-    return time_q(date.GetYear(), date.GetMonth() + 1, date.GetDay(), date.GetHour(), date.GetMinute(),
-                  date.GetSecond());
-}
+// //---------------------------------------------------------------------------------------------
+// time_q AddOneMonth(const time_q& date) {
+//     if (date.GetMonth() == 12)
+//         return time_q(date.GetYear() + 1, 1, date.GetDay(), date.GetHour(), date.GetMinute(), date.GetSecond());
+//     return time_q(date.GetYear(), date.GetMonth() + 1, date.GetDay(), date.GetHour(), date.GetMinute(),
+//                   date.GetSecond());
+// }
 
-//---------------------------------------------------------------------------------------------
-time_q AddOneQuarter(const time_q& date) {
-    if (date.GetMonth() > 9) {
-        return time_q(date.GetYear() + 1, (date.GetMonth() + 3) % 12, date.GetDay(), date.GetHour(), date.GetMinute(),
-                      date.GetSecond());
-    }
-    return time_q(date.GetYear(), date.GetMonth() + 3, date.GetDay(), date.GetHour(), date.GetMinute(),
-                  date.GetSecond());
-}
+// //---------------------------------------------------------------------------------------------
+// time_q AddOneQuarter(const time_q& date) {
+//     if (date.GetMonth() > 9) {
+//         return time_q(date.GetYear() + 1, (date.GetMonth() + 3) % 12, date.GetDay(), date.GetHour(),
+//         date.GetMinute(),
+//                       date.GetSecond());
+//     }
+//     return time_q(date.GetYear(), date.GetMonth() + 3, date.GetDay(), date.GetHour(), date.GetMinute(),
+//                   date.GetSecond());
+// }
 
-//---------------------------------------------------------------------------------------------
-time_q AddOneYear(const time_q& date) {
-    return time_q(date.GetYear() + 1, date.GetMonth(), date.GetDay(), date.GetHour(), date.GetMinute(),
-                  date.GetSecond());
-}
+// //---------------------------------------------------------------------------------------------
+// time_q AddOneYear(const time_q& date) {
+//     return time_q(date.GetYear() + 1, date.GetMonth(), date.GetDay(), date.GetHour(), date.GetMinute(),
+//                   date.GetSecond());
+// }
 
-//---------------------------------------------------------------------------------------------
-time_q SubtractOneYear(const time_q& date) {
-    return time_q(date.GetYear() - 1, date.GetMonth(), date.GetDay(), date.GetHour(), date.GetMinute(),
-                  date.GetSecond());
-}
-
-//----------------------------------------------------------------------------------------------------
-time_q BOW(const time_q& tm) {
-    time_q ret = BOD(tm);
-    while (getDayOfWeek(ret.getDatePart()) > 1)  // if it equals '1', it's Sunday at 00:00:01
-        ret = SubtractOneDay(ret);
-    return ret;
-}
+// //---------------------------------------------------------------------------------------------
+// time_q SubtractOneYear(const time_q& date) {
+//     return time_q(date.GetYear() - 1, date.GetMonth(), date.GetDay(), date.GetHour(), date.GetMinute(),
+//                   date.GetSecond());
+// }
 
 //----------------------------------------------------------------------------------------------------
-time_q EOW(const time_q& tm) {
-    time_q ret = EOD(tm);
-    while (getDayOfWeek(ret.getDatePart()) < 7)  // if it equals '7', it's Saturday 12:59:59
-        ret = AddOneDay(ret);
-    return ret;
-}
+// time_q BOW(const time_q& tm) {
+//     time_q ret = BOD(tm);
+//     while (getDayOfWeek(ret.getDatePart()) > 1)  // if it equals '1', it's Sunday at 00:00:01
+//         ret = SubtractOneDay(ret);
+//     return ret;
+// }
+
+// //----------------------------------------------------------------------------------------------------
+// time_q EOW(const time_q& tm) {
+//     time_q ret = EOD(tm);
+//     while (getDayOfWeek(ret.getDatePart()) < 7)  // if it equals '7', it's Saturday 12:59:59
+//         ret = AddOneDay(ret);
+//     return ret;
+// }
+
+// //------------------------------------------------------------------------
+
+// //------------------------------------------------------------------------
+// time_q BONQ(const time_q& date) {
+//     return BOQ(earlierOf(latestDate, AddOneQuarter(date)));
+// }
+
+// //------------------------------------------------------------------------
+// typedef time_q (*PTF)(const time_q& date);
+
+// //------------------------------------------------------------------------
+// bool expandTimeArray(CTimeArray& ta, const time_q& startIn, const time_q& stop, PTF pBOP, PTF pBONP) {
+//     ta.push_back(pBOP(startIn));
+//     for (time_q t = pBONP(startIn); t <= pBONP(stop);) {
+//         ta.push_back(t);
+//         t = pBONP(t);
+//     }
+//     return true;
+// }
 
 //------------------------------------------------------------------------
-time_q BOP(period_t per, const time_q& date) {
-    switch (per) {
-        case BY_YEAR:
-            return BOY(date);
-        case BY_QUARTER:
-            return BOQ(date);
-        case BY_MONTH:
-            return BOM(date);
-        case BY_WEEK:
-            return BOW(date);
-        case BY_DAY:
-            return BOD(date);
-        case BY_HOUR:
-            return BOH(date);
-        default: {
-        }  // fall through
-    }
-    return date;
-}
+// bool expandHourly(CTimeArray& ta, const time_q& start, const time_q& stop) {
+//     return expandTimeArray(ta, start, stop, BOH, BONH);
+// }
 
-//------------------------------------------------------------------------
-time_q EOP(period_t per, const time_q& date) {
-    switch (per) {
-        case BY_YEAR:
-            return EOY(date);
-        case BY_QUARTER:
-            return EOQ(date);
-        case BY_MONTH:
-            return EOM(date);
-        case BY_WEEK:
-            return EOW(date);
-        case BY_DAY:
-            return EOD(date);
-        case BY_HOUR:
-            return EOH(date);
-        default: {
-        }  // fall through
-    }
-    return date;
-}
+// //------------------------------------------------------------------------
+// bool expandDaily(CTimeArray& ta, const time_q& start, const time_q& stop) {
+//     return expandTimeArray(ta, start, stop, BOD, BOND);
+// }
 
-//------------------------------------------------------------------------
-time_q BONQ(const time_q& date) {
-    return BOQ(earlierOf(latestDate, AddOneQuarter(date)));
-}
+// //------------------------------------------------------------------------
+// bool expandWeekly(CTimeArray& ta, const time_q& start, const time_q& stop) {
+//     return expandTimeArray(ta, start, stop, BOW, BONW);
+// }
 
-//------------------------------------------------------------------------
-typedef time_q (*PTF)(const time_q& date);
+// //------------------------------------------------------------------------
+// bool expandMonthly(CTimeArray& ta, const time_q& start, const time_q& stop) {
+//     return expandTimeArray(ta, start, stop, BOM, BONM);
+// }
 
-//------------------------------------------------------------------------
-bool expandTimeArray(CTimeArray& ta, const time_q& startIn, const time_q& stop, PTF pBOP, PTF pBONP) {
-    ta.push_back(pBOP(startIn));
-    for (time_q t = pBONP(startIn); t <= pBONP(stop);) {
-        ta.push_back(t);
-        t = pBONP(t);
-    }
-    return true;
-}
+// //------------------------------------------------------------------------
+// bool expandQuarterly(CTimeArray& ta, const time_q& start, const time_q& stop) {
+//     return expandTimeArray(ta, start, stop, BOQ, BONQ);
+// }
 
-//------------------------------------------------------------------------
-bool expandHourly(CTimeArray& ta, const time_q& start, const time_q& stop) {
-    return expandTimeArray(ta, start, stop, BOH, BONH);
-}
-
-//------------------------------------------------------------------------
-bool expandDaily(CTimeArray& ta, const time_q& start, const time_q& stop) {
-    return expandTimeArray(ta, start, stop, BOD, BOND);
-}
-
-//------------------------------------------------------------------------
-bool expandWeekly(CTimeArray& ta, const time_q& start, const time_q& stop) {
-    return expandTimeArray(ta, start, stop, BOW, BONW);
-}
-
-//------------------------------------------------------------------------
-bool expandMonthly(CTimeArray& ta, const time_q& start, const time_q& stop) {
-    return expandTimeArray(ta, start, stop, BOM, BONM);
-}
-
-//------------------------------------------------------------------------
-bool expandQuarterly(CTimeArray& ta, const time_q& start, const time_q& stop) {
-    return expandTimeArray(ta, start, stop, BOQ, BONQ);
-}
-
-//------------------------------------------------------------------------
-bool expandAnnually(CTimeArray& ta, const time_q& start, const time_q& stop) {
-    return expandTimeArray(ta, start, stop, BOY, BONY);
-}
+// //------------------------------------------------------------------------
+// bool expandAnnually(CTimeArray& ta, const time_q& start, const time_q& stop) {
+//     return expandTimeArray(ta, start, stop, BOY, BONY);
+// }
 
 //----------------------------------------------------------------------------------------------------
 time_q fileLastModifyDate(const string_q& filename) {
@@ -1061,119 +948,36 @@ fileInfo getNewestFileInFolder(const string_q& path) {
     return rec;
 }
 
-//----------------------------------------------------------------------------------
-bool isSameYear(const time_q& t1, const time_q& t2) {
-    return BOY(t1) == BOY(t2);
-}
+// //----------------------------------------------------------------------------------
+// bool isSameYear(const time_q& t1, const time_q& t2) {
+//     return BOY(t1) == BOY(t2);
+// }
+
+// //----------------------------------------------------------------------------------
+// bool isSameQuarter(const time_q& t1, const time_q& t2) {
+//     return BOQ(t1) == BOQ(t2);
+// }
+
+// //----------------------------------------------------------------------------------
+// bool isSameMonth(const time_q& t1, const time_q& t2) {
+//     return BOM(t1) == BOM(t2);
+// }
+
+// //----------------------------------------------------------------------------------
+// bool isSameWeek(const time_q& t1, const time_q& t2) {
+//     return BOW(t1) == BOW(t2);
+// }
+
+// //----------------------------------------------------------------------------------
+// bool isSameDay(const time_q& t1, const time_q& t2) {
+//     return BOD(t1) == BOD(t2);
+// }
+
+// //----------------------------------------------------------------------------------
+// bool isSameHour(const time_q& t1, const time_q& t2) {
+//     return BOH(t1) == BOH(t2);
+// }
 
 //----------------------------------------------------------------------------------
-bool isSameQuarter(const time_q& t1, const time_q& t2) {
-    return BOQ(t1) == BOQ(t2);
-}
-
-//----------------------------------------------------------------------------------
-bool isSameMonth(const time_q& t1, const time_q& t2) {
-    return BOM(t1) == BOM(t2);
-}
-
-//----------------------------------------------------------------------------------
-bool isSameWeek(const time_q& t1, const time_q& t2) {
-    return BOW(t1) == BOW(t2);
-}
-
-//----------------------------------------------------------------------------------
-bool isSameDay(const time_q& t1, const time_q& t2) {
-    return BOD(t1) == BOD(t2);
-}
-
-//----------------------------------------------------------------------------------
-bool isSameHour(const time_q& t1, const time_q& t2) {
-    return BOH(t1) == BOH(t2);
-}
-
-//----------------------------------------------------------------------------------
-bool isSamePeriod(period_t period, blknum_t b1, blknum_t b2) {
-    switch (period) {
-        case BY_1:
-        case BY_10:
-        case BY_100:
-        case BY_1000:
-        case BY_10000:
-        case BY_100000:
-        case BY_1000000:
-            if (b1 == 0 && b2 == 1)
-                return false;
-            return ((b1 - 1) / period) == ((b2 - 1) / period);
-        case BY_YEAR:
-        case BY_QUARTER:
-        case BY_MONTH:
-        case BY_WEEK:
-        case BY_DAY:
-        case BY_HOUR:
-        case BY_NOTHING:
-        default:
-            break;
-    }
-    return b1 == b2;
-}
-
-//----------------------------------------------------------------------------------
-bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2) {
-    switch (period) {
-        case BY_YEAR:
-            return isSameYear(t1, t2);
-        case BY_QUARTER:
-            return isSameQuarter(t1, t2);
-        case BY_MONTH:
-            return isSameMonth(t1, t2);
-        case BY_WEEK:
-            return isSameWeek(t1, t2);
-        case BY_DAY:
-            return isSameDay(t1, t2);
-        case BY_HOUR:
-            return isSameHour(t1, t2);
-        case BY_1:
-        case BY_10:
-        case BY_100:
-        case BY_1000:
-        case BY_10000:
-        case BY_100000:
-        case BY_1000000:
-        case BY_NOTHING:
-        default:
-            break;
-    }
-    return t1 == t2;
-}
-
-//----------------------------------------------------------------------------------
-string_q per_2_Str(period_t period) {
-    switch (period) {
-        case BY_YEAR:
-            return "[{YEAR}]";
-        case BY_QUARTER:
-            return "[{QUARTER}]";
-        case BY_MONTH:
-            return "[{MONTH}]";
-        case BY_WEEK:
-            return "[{WEEK}]";
-        case BY_DAY:
-            return "[{DAY}]";
-        case BY_HOUR:
-            return "[{HOUR}]";
-        case BY_1:
-        case BY_10:
-        case BY_100:
-        case BY_1000:
-        case BY_10000:
-        case BY_100000:
-        case BY_1000000:
-            return "";
-        case BY_NOTHING:
-        default:
-            break;
-    }
-    return "[{MONTH}],[{DAY}]";
-}
 
 }  // namespace qblocks
