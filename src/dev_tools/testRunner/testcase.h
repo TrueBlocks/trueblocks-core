@@ -153,7 +153,7 @@ inline CTestCase::CTestCase(const string_q& line, uint32_t id) {
     tool = trim(parts[4]);
     name = trim(parts[5]);
     post = trim(parts[6]);
-    options = trim(parts[7]);
+    options = parts.size() > 7 ? trim(parts[7]) : "";
 
     replaceAll(post, "n", "");
     replaceAll(post, "y", "jq .");
