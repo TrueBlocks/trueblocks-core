@@ -480,4 +480,6 @@ time_q str_2_Date(const string_q& strIn) {
     return time_q(y, m, d, h, mn, s);
 }
 
+uint64_t verbose = false;
+
 }  // namespace qblocks

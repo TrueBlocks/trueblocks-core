@@ -1,41 +1,20 @@
-/*-------------------------------------------------------------------------------------------
- * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
- *
- * This program is free software: you may redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version. This program is
- * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see http://www.gnu.org/licenses/.
- *-------------------------------------------------------------------------------------------*/
-#include "basetypes.h"
-
+#include "utillib.h"
 #include "toml.h"
-#include "conversions.h"
-#include "sfstring.h"
 
-namespace qblocks {
-
-//-------------------------------------------------------------------------
 CToml::CToml(const string_q& fileName) : CSharedResource() {
     setFilename(fileName);
     if (!fileName.empty())
         readFile(fileName);
 }
 
-//-------------------------------------------------------------------------
 CToml::~CToml(void) {
     clear();
 }
 
-//-------------------------------------------------------------------------
 void CToml::clear(void) {
     sections.clear();
 }
 
-//-------------------------------------------------------------------------
 string_q CToml::addSection(const string_q& section) {
     if (findSection(section))
         return section;
@@ -44,7 +23,6 @@ string_q CToml::addSection(const string_q& section) {
     return section;
 }
 
-//-------------------------------------------------------------------------
 CToml::CTomlSection* CToml::findSection(const string_q& section) const {
     for (size_t i = 0; i < sections.size(); i++) {
         if (sections[i].sectionName == section) {
@@ -54,7 +32,6 @@ CToml::CTomlSection* CToml::findSection(const string_q& section) const {
     return NULL;
 }
 
-//-------------------------------------------------------------------------
 void CToml::addKey(const string_q& section, const string_q& key, const string_q& val) {
     CTomlSection* grp = findSection(section);
     if (grp)
@@ -62,7 +39,6 @@ void CToml::addKey(const string_q& section, const string_q& key, const string_q&
     return;
 }
 
-//-------------------------------------------------------------------------
 void CToml::addComment(const string_q& section, const string_q& val) {
     CTomlSection* grp = findSection(section);
     if (grp)
@@ -70,7 +46,6 @@ void CToml::addComment(const string_q& section, const string_q& val) {
     return;
 }
 
-//-------------------------------------------------------------------------
 CToml::CTomlKey* CToml::findKey(const string_q& section, const string_q& keyIn) const {
     CTomlSection* grp = findSection(section);
     if (grp) {
@@ -81,20 +56,17 @@ CToml::CTomlKey* CToml::findKey(const string_q& section, const string_q& keyIn) 
     return NULL;
 }
 
-//-------------------------------------------------------------------------
 uint64_t CToml::getConfigInt(const string_q& section, const string_q& key, uint64_t def) const {
     string_q ret = getConfigStr(section, key, uint_2_Str(def));
     return str_2_Uint(ret);
 }
 
-//-------------------------------------------------------------------------
 bool CToml::getConfigBool(const string_q& section, const string_q& key, bool def) const {
     string_q ret = getConfigStr(section, key, int_2_Str(def ? 1 : 0));
     replaceAny(ret, ";\t\n\r ", "");
     return ((ret == "true" || ret == "1") ? true : false);
 }
 
-//---------------------------------------------------------------------------------------
 string_q foldContinuations(const string_q& strIn) {
     string_q ret = strIn;
     replaceAll(ret, "\\\n ", "\\\n");  // if ends with '\' + '\n' + space, make it just '\' + '\n'
@@ -103,7 +75,6 @@ string_q foldContinuations(const string_q& strIn) {
     return ret;
 }
 
-//---------------------------------------------------------------------------------------
 bool CToml::readFile(const string_q& filename) {
     string_q curSection;
     clear();
@@ -143,7 +114,6 @@ bool CToml::readFile(const string_q& filename) {
     return true;
 }
 
-//---------------------------------------------------------------------------------------
 bool is_str(const string_q& str) {
     if (str.empty())
         return true;
@@ -158,7 +128,6 @@ bool is_str(const string_q& str) {
     return true;
 }
 
-//---------------------------------------------------------------------------------------
 string_q escape_quotes(const string_q& str) {
     string_q res;
     for (auto it = str.begin(); it != str.end(); ++it) {
@@ -169,7 +138,6 @@ string_q escape_quotes(const string_q& str) {
     return res;
 }
 
-//---------------------------------------------------------------------------------------
 bool CToml::writeFile(void) {
     if (!Lock(m_filename, modeWriteCreate, LOCK_CREATE)) {
         LockFailure();
@@ -182,19 +150,16 @@ bool CToml::writeFile(void) {
     return true;
 }
 
-//---------------------------------------------------------------------------------------
 bool CToml::isBackLevel(void) const {
     return false;
 }
 
-//---------------------------------------------------------------------------------------
 void CToml::mergeFile(CToml* tomlIn) {
     for (auto section : tomlIn->sections)
         for (auto key : section.keys)
             setConfigStr(section.sectionName, key.getKey(), "\"" + key.getValue() + "\"");
 }
 
-//---------------------------------------------------------------------------------------
 string_q CToml::getConfigStr(const string_q& section, const string_q& key, const string_q& def) const {
     string_q theKey = toUpper("TB_" + substitute(section, ".", "_") + "_" + key);
     string_q env = getEnvStr(theKey);
@@ -216,23 +181,19 @@ string_q CToml::getConfigStr(const string_q& section, const string_q& key, const
     return def;
 }
 
-//-------------------------------------------------------------------------
 uint64_t CToml::getVersion(void) const {
     // handle older ways of stroring version. Note: after 0.6.0, always stored as [version]current
     return 20000 + 500 + 8;
 }
 
-//-------------------------------------------------------------------------
 void CToml::setConfigInt(const string_q& section, const string_q& key, uint64_t value) {
     setConfigStr(section, key, int_2_Str((int64_t)value));
 }
 
-//-------------------------------------------------------------------------
 void CToml::setConfigBool(const string_q& section, const string_q& key, bool value) {
     setConfigStr(section, key, bool_2_Str(value));
 }
 
-//-------------------------------------------------------------------------
 void CToml::setConfigStr(const string_q& section, const string_q& keyIn, const string_q& value) {
     if (startsWith(keyIn, '#'))
         return;
@@ -254,7 +215,6 @@ void CToml::setConfigStr(const string_q& section, const string_q& keyIn, const s
     }
 }
 
-//-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CToml& tomlIn) {
     bool first = true;
     for (auto section : tomlIn.sections) {
@@ -287,49 +247,40 @@ ostream& operator<<(ostream& os, const CToml& tomlIn) {
     return os;
 }
 
-//-------------------------------------------------------------------------
 CToml::CTomlKey::CTomlKey() {
 }
 
-//-------------------------------------------------------------------------
 CToml::CTomlKey::CTomlKey(const CTomlKey& key) : keyName(key.keyName), value(key.value) {
 }
 
-//-------------------------------------------------------------------------
 CToml::CTomlKey& CToml::CTomlKey::operator=(const CTomlKey& key) {
     keyName = key.keyName;
     value = key.value;
     return *this;
 }
 
-//-------------------------------------------------------------------------
 CToml::CTomlSection::CTomlSection(void) {
     clear();
 }
 
-//-------------------------------------------------------------------------
 CToml::CTomlSection::CTomlSection(const CTomlSection& section) {
     copy(section);
 }
 
-//-------------------------------------------------------------------------
 CToml::CTomlSection::~CTomlSection(void) {
     clear();
 }
 
-//-------------------------------------------------------------------------
 CToml::CTomlSection& CToml::CTomlSection::operator=(const CTomlSection& section) {
     copy(section);
     return *this;
 }
 
-//-------------------------------------------------------------------------
 void CToml::CTomlSection::clear(void) {
     sectionName = "";
     keys.clear();
 }
 
-//-------------------------------------------------------------------------
 void CToml::CTomlSection::copy(const CTomlSection& section) {
     clear();
 
@@ -339,7 +290,6 @@ void CToml::CTomlSection::copy(const CTomlSection& section) {
         keys.push_back(key);
 }
 
-//---------------------------------------------------------------------------------------
 void CToml::CTomlSection::addKey(const string_q& keyName, const string_q& val) {
     string_q str = substitute(val, "\"\"\"", "");
     if (endsWith(str, '\"'))
@@ -353,10 +303,8 @@ void CToml::CTomlSection::addKey(const string_q& keyName, const string_q& val) {
     return;
 }
 
-//---------------------------------------------------------------------------------------
 void CToml::CTomlSection::addComment(const string_q& val) {
     CTomlComment comment(val);
     keys.push_back(comment);
     return;
 }
-}  // namespace qblocks

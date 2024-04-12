@@ -12,6 +12,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "utillib.h"
+#include "toml.h"
 #include "testcase.h"
 
 #define API (1 << 0)
@@ -19,8 +20,9 @@
 #define BOTH (API | CMD)
 
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions {
   public:
+    string_q progName = "trueBlocks";
     string_q chain;
     string_q configPath;
     string_q chainConfigPath;
@@ -33,8 +35,8 @@ class COptions : public COptionsBase {
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(const string_q& command) override;
-    void Init(void) override;
+    bool parseArguments(const string_q& command);
+    void Init(void);
 
     void doTests(vector<CTestCase>& testArray, const string_q& testName, int which);
     void loadEnvironmentPaths(void);

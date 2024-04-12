@@ -213,7 +213,6 @@ with    ,both ,fast  ,export   ,apps/acctExport ,not_withdrawals          ,y    
 with    ,both ,fast  ,export   ,apps/acctExport ,withdrawals              ,y    ,addrs = 0x6193f68d97921f4765d72a3e6964fc990c59e0e5 & withdrawals & first_block = 17013606 & last_block = 17083530 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,withdrawals_fail         ,y    ,addrs = chasewright.eth & withdrawals & logs & first_block = 18345580 & last_block = 18409900 & fmt = json
 
-# Testing general usage
 on      ,both ,fast  ,export   ,apps/acctExport ,invalid_key              ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & fmt = json & from
 on      ,both ,fast  ,export   ,apps/acctExport ,simple_data              ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv
 on      ,both ,fast  ,export   ,apps/acctExport ,simple_prefund1          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 0 & last_block = 1

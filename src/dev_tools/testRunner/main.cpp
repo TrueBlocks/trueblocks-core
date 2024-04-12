@@ -22,7 +22,7 @@ int main(int argc, const char* argv[]) {
     cerr.rdbuf(cout.rdbuf());
 
     if (argc > 0) {
-        COptionsBase::g_progName = CFilename(argv[0]).getFilename();
+        options.progName = CFilename(argv[0]).getFilename();
     }
 
     string_q testFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
@@ -37,8 +37,10 @@ int main(int argc, const char* argv[]) {
         cleanTest(path, testName + "/api_tests");
 
         string_q testFile = testFolder + path + "/" + testName + ".csv";
-        if (!fileExists(testFile))
-            return !options.usage("Cannot find test file " + testFile + ".");
+        if (!fileExists(testFile)) {
+            cerr << "Cannot find test file " + testFile + ".";
+            return EXIT_FAILURE;
+        }
 
         string_q contents = asciiFileToString(testFile) + "\n";
         replaceAll(contents, "\n\n", "\n");

@@ -184,4 +184,6 @@ inline ostream& operator<<(ostream& os, const blkrange_t& range) {
     return os;
 }
 
+extern uint64_t verbose;
+
 }  // namespace qblocks

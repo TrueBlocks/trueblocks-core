@@ -6,7 +6,7 @@
 //     exit(0);
 // }
 // if (g etGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
-//     return usage("[dev]debug_curl is set in config file. All tests will fail.");
+//     return u sage("[dev]debug_curl is set in config file. All tests will fail.");
 // bool hasKey = g etGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
 // bool wantsTest = getEnvStr("TEST_SLURPS") == "true";
 // bool runSlurps = (hasKey && wantsTest);
@@ -112,7 +112,7 @@ const CToml* COptions::getGlobalConfig(const string_q& mergeIn) {
         string_q configFile = configPath + "trueBlocks.toml";
         static CToml theToml(configFile);
         toml = &theToml;
-        string_q name = COptionsBase::g_progName;
+        string_q name = progName;
         string_q fileName = chainConfigPath + name + ".toml";
         if (name == "makeClass" || name == "testRunner")
             fileName = configPath + name + ".toml";

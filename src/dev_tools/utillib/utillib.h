@@ -5,7 +5,6 @@
 #include "sftime.h"
 #include "sfos.h"
 #include "database.h"
-#include "toml.h"
 #include "sfarchive.h"
 #include "options_base.h"
 #include "filenames.h"
