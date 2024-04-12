@@ -14,7 +14,6 @@
 #include "options.h"
 #include "testcase.h"
 
-extern void copyBack(const string_q& path, const string_q& tool, const string_q& fileName);
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
@@ -80,8 +79,6 @@ int main(int argc, const char* argv[]) {
 
             options.doTests(testArray, testName, API);
             options.doTests(testArray, testName, CMD);
-            if (shouldQuit())
-                break;
 
             if (getEnvStr("WAIT_PER_TEST") == "true") {
                 cerr << "Press enter to continue" << endl;
@@ -261,9 +258,6 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
             }
 
             usleep(500);
-            if (shouldQuit()) {
-                break;
-            }
             envLines.clear();
         }
         if (fileExists("/tmp/output_test_with_path.json")) {
@@ -339,4 +333,11 @@ void copyBack(const string_q& path, const string_q& tool, const string_q& fileNa
     if (fileExists(goldPath)) {
         copyFile(goldPath, workPath);
     }
+}
+
+string_q linesToString(const CStringArray& lines, char sep) {
+    ostringstream os;
+    for (auto line : lines)
+        os << line << (sep != 0 ? string_q(1, sep) : "");
+    return os.str();
 }

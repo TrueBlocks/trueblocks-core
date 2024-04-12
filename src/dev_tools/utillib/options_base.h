@@ -15,7 +15,7 @@
 #include "toml.h"
 #include "exportcontext.h"
 #include "option.h"
-#include "config_paths.h"
+#include "configenv.h"
 
 //-----------------------------------------------------------------------------
 namespace qblocks {

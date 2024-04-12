@@ -306,14 +306,6 @@ size_t appendToAsciiFile(const string_q& fileName, const string_q& addContents) 
 }
 
 //----------------------------------------------------------------------
-string_q linesToString(const CStringArray& lines, char sep) {
-    ostringstream os;
-    for (auto line : lines)
-        os << line << (sep != 0 ? string_q(1, sep) : "");
-    return os.str();
-}
-
-//----------------------------------------------------------------------
 size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, char sep) {
     CArchive asciiCache(WRITING_ARCHIVE);
     if (asciiCache.Lock(fileName, modeWriteAppend, LOCK_WAIT)) {

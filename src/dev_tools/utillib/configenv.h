@@ -87,5 +87,6 @@ inline bool operator<(const CConfigEnv& v1, const CConfigEnv& v2) {
 
 extern const CConfigEnv* getConfigEnv(void);
 extern void loadEnvironmentPaths(void);
+extern string_q getPathToCommands(const string_q& _part);
 
 }  // namespace qblocks

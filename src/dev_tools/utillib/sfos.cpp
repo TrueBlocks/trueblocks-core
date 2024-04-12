@@ -27,7 +27,7 @@
 #include "sfstring.h"
 #include "database.h"
 #include "filenames.h"
-#include "config_paths.h"
+#include "configenv.h"
 
 namespace qblocks {
 

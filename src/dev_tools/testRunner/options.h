@@ -39,3 +39,5 @@ class COptions : public COptionsBase {
 extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
 extern bool cleanTest(const string_q& path, const string_q& testName);
 extern string_q relativize(const string_q& path);
+extern void copyBack(const string_q& path, const string_q& tool, const string_q& fileName);
+extern string_q linesToString(const CStringArray& lines, char sep = '\n');
