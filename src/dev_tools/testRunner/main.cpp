@@ -130,7 +130,7 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
 
             if (which & CMD) {
                 string_q envs = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
-                string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
+                string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true ";
                 string_q exe = "chifra" + (contains(test.tool, "chifra") ? "" : " " + test.route);
                 string_q fullCmd = exe + " " + test.options;
                 string_q debugCmd = relativize(fullCmd);

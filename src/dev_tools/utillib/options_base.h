@@ -80,7 +80,7 @@ class COptionsBase {
 
     vector<COption> parameters;
     virtual void Init(void) = 0;
-    void registerOptions(size_t nP, const COption* pP, uint32_t on = NOOPT, uint32_t off = NOOPT);
+    // void registerOptions(size_t nP, const COption* pP, uint32_t on = NOOPT, uint32_t off = NOOPT);
 
   private:
     streambuf* coutSaved;   // saves original cout buffer

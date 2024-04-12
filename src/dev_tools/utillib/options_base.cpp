@@ -21,17 +21,17 @@
 namespace qblocks {
 
 //--------------------------------------------------------------------------------
-void COptionsBase::registerOptions(size_t nP, COption const* pP, uint32_t on, uint32_t off) {
-    arguments.clear();
-    if (parameters.empty()) {
-        for (size_t i = 0; i < nP; i++)
-            parameters.push_back(pP[i]);
-        if (off != NOOPT)
-            optionOff(off);
-        if (on != NOOPT)
-            optionOn(on);
-    }
-}
+// void COptionsBase::registerOptions(size_t nP, COption const* pP, uint32_t on, uint32_t off) {
+//     arguments.clear();
+//     if (parameters.empty()) {
+//         for (size_t i = 0; i < nP; i++)
+//             parameters.push_back(pP[i]);
+//         if (off != NOOPT)
+//             optionOff(off);
+//         if (on != NOOPT)
+//             optionOn(on);
+//     }
+// }
 
 //--------------------------------------------------------------------------------
 string_q COptionsBase::g_progName = "trueBlocks";
@@ -50,12 +50,10 @@ string_q COptionsBase::getProgName(void) const {
 bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCountIn, const char* argvIn[]) {
     if (argCountIn > 0)  // always is, but check anyway
         COptionsBase::g_progName = CFilename(argvIn[0]).getFilename();
-    if (!getEnvStr("PROG_NAME").empty())
-        COptionsBase::g_progName = getEnvStr("PROG_NAME");
 
-    bool isRedir = getEnvStr("REDIR_CERR") == "true";
-    if (isRedir)
-        cerr.rdbuf(cout.rdbuf());
+    // bool isRedir = getEnvStr("REDIR_CERR") == "true";
+    // if (isRedir)
+    //     cerr.rdbuf(cout.rdbuf());
 
     // We allow users to add 'true' or 'false' to boolean options, but the following code works by the
     // presence or absence of the boolean key, so here we spin through, removing 'true' and 'false' and
