@@ -29,14 +29,8 @@ class COptionsBase {
   public:
     CStringArray commandLines;
     CStringArray arguments;
-    CStringArray notes;
     CStringArray configs;
     CStringArray errors;
-
-    uint32_t enableBits;
-    bool isRaw;
-    bool noHeader;
-    bool firstOut;
 
   public:
     COptionsBase(void);
@@ -46,22 +40,10 @@ class COptionsBase {
     static string_q g_progName;
     void setProgName(const string_q& name);
     string_q getProgName(void) const;
-
     virtual bool parseArguments(const string_q& command) = 0;
-    bool builtInCmd(const string_q& arg);
-
-  public:
-    bool isEnabled(uint32_t q) const;
-    void optionOff(uint32_t q);
-    void optionOn(uint32_t q);
-
-    // usage related
     inline bool usage(const string_q& errMsg = "") const {
         return false;
     }
-
-    string_q expandOption(string_q& arg);
-
     bool isRedirected(void) const;
     string_q getOutputFn(void) const {
         return rd_outputFilename;
@@ -69,7 +51,6 @@ class COptionsBase {
 
     vector<COption> parameters;
     virtual void Init(void) = 0;
-    // void registerOptions(size_t nP, const COption* pP, uint32_t on = NOOPT, uint32_t off = NOOPT);
 
   private:
     streambuf* coutSaved;   // saves original cout buffer
@@ -91,10 +72,6 @@ class CDefaultOptions : public COptionsBase {
     }
 };
 
-//--------------------------------------------------------------------------------
-extern int sortParams(const void* c1, const void* c2);
-
-//--------------------------------------------------------------------------------
 extern uint64_t verbose;
 
 //--------------------------------------------------------------------------------

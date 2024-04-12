@@ -21,167 +21,16 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------------
-// void COptionsBase::registerOptions(size_t nP, COption const* pP, uint32_t on, uint32_t off) {
-//     arguments.clear();
-//     if (parameters.empty()) {
-//         for (size_t i = 0; i < nP; i++)
-//             parameters.push_back(pP[i]);
-//         if (off != NOOPT)
-//             optionOff(off);
-//         if (on != NOOPT)
-//             optionOn(on);
-//     }
-// }
-
-//--------------------------------------------------------------------------------
 string_q COptionsBase::g_progName = "trueBlocks";
-
-//--------------------------------------------------------------------------------
 void COptionsBase::setProgName(const string_q& name) {
     g_progName = name;
 }
-
-//--------------------------------------------------------------------------------
 string_q COptionsBase::getProgName(void) const {
     return g_progName;
 }
 
-static const char* CHR_VALID_NAME = "\t\n\r()<>[]{}`|;'!$^*~@?&#+%,:=\"";
-//---------------------------------------------------------------------------------------
-bool isValidName(const string_q& fn) {
-    if (fn.empty() || isdigit(fn[0]))
-        return false;
-    string_q test = fn;
-    replaceAny(test, CHR_VALID_NAME, "");
-    return test == fn;
-}
-
-bool COptionsBase::builtInCmd(const string_q& arg) {
-    if (isEnabled(OPT_HELP) && (arg == "-h" || arg == "--help"))
-        return true;
-
-    if (isEnabled(OPT_VERBOSE)) {
-        if (startsWith(arg, "-v:") || startsWith(arg, "--verbose:"))
-            return true;
-    }
-
-    if (isEnabled(OPT_FMT)) {
-        if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:"))
-            return true;
-    }
-
-    if (isEnabled(OPT_OUTPUT) && (startsWith(arg, "--output:") || startsWith(arg, "--append")))
-        return true;
-    if (isEnabled(OPT_RAW) && arg == "--raw")
-        return true;
-    if (arg == "--version")
-        return true;
-    if (arg == "--nocolor")
-        return true;
-    if (arg == "--noop")
-        return true;
-    return false;
-}
-
-string_q COptionsBase::expandOption(string_q& arg) {
-    string_q ret = arg;
-
-    // Check that we don't have a regular command with a single dash, which
-    // should report an error in client code
-    for (const auto& option : parameters) {
-        if (option.longName == arg) {
-            arg = "";
-            return ret;
-        }
-    }
-
-    // Not an option
-    if (!startsWith(arg, '-') || startsWith(arg, "--")) {
-        arg = "";
-        return ret;
-    }
-
-    // Stdin case
-    if (arg == "-") {
-        arg = "";
-        return ret;
-    }
-
-    // Single option
-    if (arg.length() == 2) {
-        arg = "";
-        return ret;
-    }
-
-    // This may be a command with two -a -b (or more) single options
-    if (arg.length() > 2 && arg[2] == ' ') {
-        ret = extract(arg, 0, 2);
-        arg = extract(arg, 3);
-        return ret;
-    }
-
-    // One of the range commands. These must be alone on
-    // the line (this is a bug for -rf:txt for example)
-    if (contains(arg, ":") || contains(arg, "=")) {
-        arg = "";
-        return ret;
-    }
-
-    // This is a ganged-up option. We need to pull it apart by returning
-    // the first two chars, and saving the rest for later.
-    ret = extract(arg, 0, 2);
-    arg = "-" + extract(arg, 2);
-    return ret;
-}
-
-//--------------------------------------------------------------------------------
-int sortParams(const void* c1, const void* c2) {
-    const COption* p1 = reinterpret_cast<const COption*>(c1);
-    const COption* p2 = reinterpret_cast<const COption*>(c2);
-    if (p1->hotKey == "-h")
-        return 1;
-    else if (p2->hotKey == "-h")
-        return -1;
-    return p1->hotKey.compare(p2->hotKey);
-}
-
-//--------------------------------------------------------------------------------
 uint64_t verbose = false;
 
-//-------------------------------------------------------------------------
-bool COptionsBase::isEnabled(uint32_t q) const {
-    return (enableBits & q);
-}
-
-//-------------------------------------------------------------------------
-void COptionsBase::optionOff(uint32_t q) {
-    enableBits &= (~q);
-}
-
-//-------------------------------------------------------------------------
-void COptionsBase::optionOn(uint32_t q) {
-    enableBits |= q;
-}
-
-//--------------------------------------------------------------------------------
-int sortByBlockNum(const void* v1, const void* v2) {
-    const CNameValue* b1 = reinterpret_cast<const CNameValue*>(v1);
-    const CNameValue* b2 = reinterpret_cast<const CNameValue*>(v2);
-    if (b1->first == "latest")
-        return 1;
-    if (b2->first == "latest")
-        return -1;
-    if (contains(b1->second, "tbd") && contains(b1->second, "tbd"))
-        return b1->second.compare(b2->second);
-    if (contains(b1->second, "tbd"))
-        return 1;
-    if (contains(b2->second, "tbd"))
-        return -1;
-    return static_cast<int>(str_2_Uint(b1->second) - str_2_Uint(b2->second));
-}
-
-//-----------------------------------------------------------------------
 const CToml* getGlobalConfig(const string_q& mergeIn) {
     static CToml* toml = NULL;
     static string_q components = "trueBlocks|";
@@ -218,17 +67,11 @@ const CToml* getGlobalConfig(const string_q& mergeIn) {
 }
 
 COptionsBase::COptionsBase(void) {
-    isRaw = false;
-    firstOut = true;
-    noHeader = false;
-    enableBits = OPT_DEFAULT;
     arguments.clear();
-    notes.clear();
     commandLines.clear();
     coutSaved = NULL;
     rd_outputFilename = "";
     rd_zipOnClose = false;
-    // outputStream
 }
 
 //--------------------------------------------------------------------------------
