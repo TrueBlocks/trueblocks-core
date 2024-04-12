@@ -16,7 +16,6 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "basetypes.h"
-#include "basenode.h"
 #include "sfarchive.h"
 
 namespace qblocks {
