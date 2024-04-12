@@ -32,12 +32,7 @@ class CBaseNode {
 
   public:
     static CRuntimeClass classCBaseNode;
-    static CBaseNode* createObject(void);
     virtual CRuntimeClass* getRuntimeClass(void) const;
-    virtual string_q getValueByName(const string_q& fieldName) const;
-    virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue);
-    virtual void finishParse(void) {
-    }
     virtual const CBaseNode* getObjectAt(const string_q& name, size_t i) const {
         return NULL;
     }

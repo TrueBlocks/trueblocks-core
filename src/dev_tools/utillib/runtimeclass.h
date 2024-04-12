@@ -16,36 +16,21 @@
 namespace qblocks {
 
 class CBaseNode;
-typedef CBaseNode* (*PFNV)(void);
 
 //----------------------------------------------------------------------------
 class CRuntimeClass;
-
-//----------------------------------------------------------------------------
-typedef bool (*FIELDVISITFUNC)(const CFieldData& fld, void* data);
 
 //----------------------------------------------------------------------------
 class CRuntimeClass {
   public:
     char* m_ClassName;
     size_t m_ObjectSize;
-    PFNV m_CreateFunc;
     CRuntimeClass* m_BaseClass;
     CFieldDataArray fieldList;
 
   public:
     CRuntimeClass(void);
     virtual ~CRuntimeClass(void);
-
-    char* getClassNamePtr(void) const;
-    void initialize(const string_q& protoName);
-    CBaseNode* createObject(void);
-
-    void sortFieldList(void);
-    bool forEveryField(FIELDVISITFUNC func, void* data);
 };
-
-//---------------------------------------------------------------------------
-extern string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node);
 
 }  // namespace qblocks

@@ -59,58 +59,6 @@ CRuntimeClass* CBaseNode::getRuntimeClass() const {
     return &CBaseNode::classCBaseNode;
 }
 
-//--------------------------------------------------------------------------------
-bool CBaseNode::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
-    switch (tolower(fieldName[0])) {
-        case 'c':
-            if (fieldName % "cname") {
-                // CRuntimeClass* pClass = getRuntimeClass();
-                // return extract(string_q(pClass->m_ClassName), 1);
-            }
-            break;
-        case 'd':
-            if (fieldName % "deleted") {
-                m_deleted = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
-        case 's':
-            if (fieldName % "schema") {
-                // return uint_2_Str(m_schema);
-            }
-            if (fieldName % "showing") {
-                m_showing = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
-    }
-    return false;
-}
-
-//--------------------------------------------------------------------------------
-string_q CBaseNode::getValueByName(const string_q& fieldName) const {
-    switch (tolower(fieldName[0])) {
-        case 'c':
-            if (fieldName % "cname") {
-                CRuntimeClass* pClass = getRuntimeClass();
-                return extract(string_q(pClass->m_ClassName), 1);
-            }
-            break;
-        case 'd':
-            if (fieldName % "deleted")
-                return bool_2_Str(m_deleted);
-            break;
-        case 's':
-            if (fieldName % "schema")
-                return uint_2_Str(m_schema);
-            if (fieldName % "showing")
-                return bool_2_Str(m_showing);
-            break;
-    }
-
-    return "";
-}
-
 //--------------------------------------------------------------------
 inline bool isWhiteSpace(char c) {
     return (c == '\0' || c == ' ' || c == '\n' || c == '\r' || c == '\t');
@@ -154,43 +102,6 @@ bool isEmptyObj(const string_q& str) {
         s++;
     }
     return startToken && endToken;
-}
-
-//--------------------------------------------------------------------------------
-string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node) {
-    if (node) {
-        string_q className = node->getRuntimeClass()->getClassNamePtr();
-        switch (tolower(fieldIn[0])) {
-            case 'd':
-                if (fieldIn % "deleted")
-                    return int_2_Str(node->isDeleted());
-                break;
-            case 'n':
-                if (fieldIn % "null")
-                    return "<x>";
-                break;
-            case 'p':
-                if (fieldIn % "parsed") {
-                    CRuntimeClass* pClass = node->getRuntimeClass();
-                    if (!pClass || pClass->fieldList.size() == 0) {
-                        return "";
-                    }
-                    ostringstream os;
-                    return os.str();
-                }
-                break;
-            case 's':
-                if (fieldIn % "schema")
-                    return uint_2_Str(node->m_schema);
-                if (fieldIn % "showing")
-                    return uint_2_Str(node->m_showing);
-                break;
-            default:
-                break;
-        }
-    }
-
-    return "";
 }
 
 //---------------------------------------------------------------------------------------------

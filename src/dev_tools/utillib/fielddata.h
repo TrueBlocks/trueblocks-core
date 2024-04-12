@@ -15,47 +15,6 @@
 
 namespace qblocks {
 
-//-------------------------------------------------------------------------
-// Attributes
-#define TS_OMITEMPTY (1 << 22)
-#define TS_NUMERAL (1 << 23)
-#define TS_STRING (1 << 24)
-#define TS_DATE (1 << 25)
-#define TS_ARRAY (1 << 26)
-#define TS_OBJECT (1 << 27)
-#define TS_POINTER (1 << 28)
-#define TS_BIGNUM (1 << 29)
-#define TS_INTEGER (1 << 30)
-
-// Concrete types
-#define T_DATE (5 | TS_DATE)
-#define T_TIME (10 | TS_DATE)
-
-#define T_TIMESTAMP (15 | TS_NUMERAL | TS_INTEGER)
-#define T_BOOL (20 | TS_NUMERAL)
-#define T_NUMBER (25 | TS_NUMERAL)
-#define T_UNUMBER (27 | TS_NUMERAL)
-#define T_BLOCKNUM (28 | TS_NUMERAL | TS_INTEGER)
-#define T_DOUBLE (30 | TS_NUMERAL)
-#define T_WEI (35 | TS_NUMERAL | TS_BIGNUM)
-#define T_GAS (40 | TS_NUMERAL | TS_BIGNUM)
-#define T_ETHER (45 | TS_NUMERAL | TS_BIGNUM)
-#define T_UINT256 (47 | TS_NUMERAL | TS_BIGNUM)
-#define T_INT256 (48 | TS_NUMERAL | TS_BIGNUM)
-
-#define T_TEXT (50 | TS_STRING)
-#define T_JSONVAL (53 | TS_STRING)
-#define T_ADDRESS (55 | TS_STRING)
-#define T_HASH (60 | TS_STRING)
-#define T_IPFSHASH (62 | TS_STRING)
-#define T_BLOOM (65 | TS_STRING)
-
-#define T_POINTER (70 | TS_POINTER)
-#define T_OBJECT (75 | TS_OBJECT)
-
-#define FLD_HIDE false
-#define FLD_SHOW true
-
 class CRuntimeClass;
 //-------------------------------------------------------------------------
 class CFieldData {
@@ -129,14 +88,10 @@ class CFieldData {
     friend bool operator<(const CFieldData& v1, const CFieldData& v2) {
         return v1.getName() < v2.getName();
     }
-    friend ostream& operator<<(ostream& os, const CFieldData& item);
 
     friend class CRuntimeClass;
     friend class CFieldList;
     friend class CBaseNode;
 };
 typedef vector<CFieldData> CFieldDataArray;
-
-//-----------------------------------------------------------------------
-extern string_q fieldTypeName(uint64_t type);
 }  // namespace qblocks
