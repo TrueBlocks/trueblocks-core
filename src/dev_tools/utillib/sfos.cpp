@@ -1,15 +1,3 @@
-/*-------------------------------------------------------------------------------------------
- * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
- *
- * This program is free software: you may redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version. This program is
- * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see http://www.gnu.org/licenses/.
- *-------------------------------------------------------------------------------------------*/
 #include <glob.h>
 #include <libgen.h>
 #include <algorithm>
@@ -21,7 +9,6 @@
 #include <filesystem>
 #endif
 #include "basetypes.h"
-#include "conversions.h"
 #include "sfos.h"
 #include "sfstring.h"
 #include "database.h"
@@ -31,13 +18,11 @@ namespace qblocks {
 
 #define remove unlink
 
-//------------------------------------------------------------------
 static int globErrFunc(const char* epath, int eerrno) {
     //  perror(epath);
     return 0;
 }
 
-//--------------------------------------------------------------------------------
 int cleanFolder(const string_q& path, bool recurse, bool interactive) {
     CStringArray files;
     listFilesInFolder(files, path, true);
@@ -46,7 +31,6 @@ int cleanFolder(const string_q& path, bool recurse, bool interactive) {
     return static_cast<int>(files.size());
 }
 
-//------------------------------------------------------------------
 static string_q escapePath(const string_q& nameIn) {
     string_q name = nameIn;
     replaceAll(name, "&", "\\&");
@@ -56,7 +40,6 @@ static string_q escapePath(const string_q& nameIn) {
     return name;
 }
 
-//------------------------------------------------------------------
 int copyFile(const string_q& fromIn, const string_q& toIn) {
     ifstream src(escapePath(fromIn), ios::binary);
     ofstream dst(escapePath(toIn), ios::binary);
@@ -64,9 +47,6 @@ int copyFile(const string_q& fromIn, const string_q& toIn) {
     return static_cast<int>(fileExists(toIn));
 }
 
-//------------------------------------------------------------------
-// Returns a list of either files or folders, but not both.
-//------------------------------------------------------------------
 void doGlob(size_t& nStrs, string_q* strs, const string_q& maskIn, int wantFiles) {
     glob_t globBuf;
 
@@ -89,50 +69,41 @@ void doGlob(size_t& nStrs, string_q* strs, const string_q& maskIn, int wantFiles
         // if path ends in '/' then this is directory, filter accordingly
 
         bool isDir = ('/' == c);
-        bool listEm = ((isDir) ? !wantFiles : wantFiles);
-        if (wantFiles == ANY_FILETYPE)
-            listEm = true;
+        if (NULL != strs) {
+            string_q path = globBuf.gl_pathv[i];
 
-        if (listEm) {
-            if (NULL != strs) {
-                string_q path = globBuf.gl_pathv[i];
+            // filter specified directories and remove trailing '/'
+            if (endsWith(path, '/'))
+                path = extract(path, 0, path.length() - 1);
 
-                // filter specified directories and remove trailing '/'
-                if (endsWith(path, '/'))
-                    path = extract(path, 0, path.length() - 1);
+            // trim path to last directory / file
+            path = CFilename(path).getFilename();
+            if (startsWith(path, '/'))
+                path = extract(path, 1);
 
-                // trim path to last directory / file
-                path = CFilename(path).getFilename();
-                if (startsWith(path, '/'))
-                    path = extract(path, 1);
+            if (isDir)
+                path = "d-" + path;
+            else
+                path = "f-" + path;
 
-                if (wantFiles == ANY_FILETYPE) {
-                    if (isDir)
-                        path = "d-" + path;
-                    else
-                        path = "f-" + path;
-                }
+            strs[nStrs] = path;
+        }
 
-                strs[nStrs] = path;
-            }
-
-            nStrs++;
-            if (NULL != strs && nStrs >= mx) {
-                break;
-            }
+        nStrs++;
+        if (NULL != strs && nStrs >= mx) {
+            break;
         }
     }
 
     globfree(&globBuf);
 }
 
-//---------------------------------------------------------------------------------------
 static const char* CHR_VALID_NAME =
     "\t\n\r()<>[]{}`\\|; "
     "'!$^*~@"
     "?&#+%"
     ",:/=\"";
-//---------------------------------------------------------------------------------------
+
 string_q makeValidName(const string_q& inOut) {
     string_q ret = inOut;
     replaceAny(ret, CHR_VALID_NAME, "_");
@@ -152,13 +123,11 @@ string_q getCWD(const string_q& filename) {
     return folder + filename;  // may be empty
 }
 
-//------------------------------------------------------------------
 bool fileExists(const string_q& file) {
     struct stat statBuf;
     return !file.empty() && stat(file.c_str(), &statBuf) == 0;
 }
 
-//------------------------------------------------------------------
 bool folderExists(const string_q& folderName) {
     if (folderName.empty())
         return false;
@@ -171,7 +140,6 @@ bool folderExists(const string_q& folderName) {
     string_q mask = folder + "*.*";
     doGlob(nFiles, NULL, mask, true);
 
-    // check to see if it is just folders
     if (!nFiles)
         doGlob(nFiles, NULL, mask, false);
     if (!nFiles) {
@@ -182,36 +150,12 @@ bool folderExists(const string_q& folderName) {
     return (nFiles > 0);
 }
 
-//------------------------------------------------------------------
 uint64_t fileSize(const string_q& filename) {
     if (!fileExists(filename))
         return 0;
-
     struct stat statBuf;
     stat(filename.c_str(), &statBuf);
     return (uint64_t)statBuf.st_size;
-}
-
-//----------------------------------------------------------------------------
-bool establishFolder(const string_q& path, string_q& created) {
-    if (fileExists(path) || folderExists(path))
-        return true;
-
-    CFilename fullPath(path);
-    string_q targetFolder = fullPath.getFullPath();
-    size_t find = targetFolder.rfind('/');
-    targetFolder = extract(targetFolder, 0, find) + "/";
-    string_q folder = targetFolder;
-    string_q curFolder = "/";
-    while (!folder.empty()) {
-        curFolder += nextTokenClear(folder, '/') + "/";
-        if (!folderExists(curFolder)) {
-            mkdir(curFolder.c_str(), (mode_t)0755);
-            if (created.empty())
-                created = curFolder;
-        }
-    }
-    return folderExists(targetFolder);
 }
 
 }  // namespace qblocks

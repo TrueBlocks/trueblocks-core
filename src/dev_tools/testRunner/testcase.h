@@ -96,8 +96,6 @@ inline bool operator<(const CTestCase& v1, const CTestCase& v2) {
 inline void CTestCase::prepareTest(bool cmdLine) {
     goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/", "/test/gold/" + path + "/" + tool + "/");
     workPath = substitute(goldPath, "/gold/", "/working/");
-    establishFolder(goldPath);
-    establishFolder(workPath);
 
     if (cmdLine) {
         CStringArray opts = {"val",   "addrs",     "blocks", "files", "dates",  "transactions",

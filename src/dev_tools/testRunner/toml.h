@@ -79,10 +79,6 @@ class CToml : public CSharedResource {
     vector<CTomlSection> sections;
 
     void clear(void);
-    string_q getType(void) const override {
-        return "CToml";
-    }
-
     bool readFile(const string_q& filename);
 
   public:

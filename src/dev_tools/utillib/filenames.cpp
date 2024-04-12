@@ -67,33 +67,12 @@ bool visitFile(const string_q& path, void* data) {
 }
 };  // namespace filename_local
 
-//------------------------------------------------------------------
 size_t listFilesInFolder(CStringArray& items, const string_q& folder, bool recurse) {
     filename_local::CFileListState state(folder, items, recurse);
     forEveryFileInFolder(folder, filename_local::visitFile, &state);
     return items.size();
 }
 
-//------------------------------------------------------------------------------------------------
-size_t nFilesInFolder(const string& path, bool recurse) {
-    if (recurse) {
-        return 0;
-    }
-
-    DIR* dp = opendir(path.c_str());
-    if (!dp) {
-        return 0;
-    }
-
-    size_t ret = 0;
-    struct dirent* ep = NULL;
-    while ((ep = readdir(dp)) != NULL)
-        ret++;
-    closedir(dp);
-    return ret;
-}
-
-//--------------------------------------------------------------
 string_q getLastFileInFolder(const string_q& folder, bool recurse) {
     CStringArray files;
     listFilesInFolder(files, folder, recurse);
@@ -101,7 +80,6 @@ string_q getLastFileInFolder(const string_q& folder, bool recurse) {
     return (files.size() ? files[files.size() - 1] : "");
 }
 
-//--------------------------------------------------------------------------------
 string_q getHomeFolder(void) {
     struct passwd pd;
     struct passwd* pwdptr = &pd;
@@ -114,7 +92,6 @@ string_q getHomeFolder(void) {
     return "./";
 }
 
-//----------------------------------------------------------------------------------
 CFilename::CFilename(const string_q& fnIn) {
     string_q fn = fnIn;
     if (!startsWith(fn, '/') && !startsWith(fn, '.') && !startsWith(fn, '~'))
@@ -134,25 +111,12 @@ CFilename::CFilename(const string_q& fnIn) {
     }
 }
 
-//----------------------------------------------------------------------------------
 string_q CFilename::getPath(void) const {
     return path;
 }
 
-//----------------------------------------------------------------------------------
 string_q CFilename::getFilename(void) const {
     return fileName;
-}
-
-//----------------------------------------------------------------------------------
-string_q CFilename::getFullPath(void) const {
-    return substitute((path + fileName), "//", "/");
-}
-
-//----------------------------------------------------------------------------------
-string_q CFilename::relativePath(const string_q& relTo) const {
-    string_q rel = (relTo.empty() ? getCWD() : relTo);
-    return substitute(getFullPath(), rel, "./");
 }
 
 }  // namespace qblocks

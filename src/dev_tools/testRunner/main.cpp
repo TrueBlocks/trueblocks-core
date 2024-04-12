@@ -14,7 +14,6 @@
 #include "options.h"
 #include "testcase.h"
 
-//-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     COptions options;
     options.loadEnvironmentPaths();
@@ -204,8 +203,6 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
             replaceAll(contents, "3735928559", "\"0xdeadbeef\"");
             stringToAsciiFile(test.workPath + test.fileName, contents);
 
-            double thisTime = .02;
-            string_q timeRep = double_2_Str(thisTime, 5);
             if (endsWith(test.path, "lib"))
                 replace(test.workPath, "../", "");
 
@@ -248,8 +245,7 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
                 reverse(test.name);
                 test.name = substitute(padLeft(test.name, 30).substr(0, 30), " ", ".");
                 reverse(test.name);
-                cerr << "   " << timeRep << " - " << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : testName)
-                     << " ";
+                cerr << "   - " << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : testName) << " ";
                 cerr << trim(test.name) << " " << result << "  " << trim(test.options).substr(0, 90) << endl;
             } else {
             }
@@ -348,4 +344,18 @@ void COptions::loadEnvironmentPaths(void) {
 #endif
     chainConfigPath = configPath + "config/mainnet/";
     cachePath = configPath + "cache/mainnet/";
+}
+
+//--------------------------------------------------------------------
+string_q padRight(const string_q& str, size_t len, char p) {
+    if (len > str.length())
+        return str + string_q(len - str.length(), p);
+    return str;
+}
+
+//--------------------------------------------------------------------
+string_q padLeft(const string_q& str, size_t len, char p) {
+    if (len > str.length())
+        return string_q(len - str.length(), p) + str;
+    return str;
 }

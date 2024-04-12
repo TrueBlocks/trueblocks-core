@@ -37,19 +37,11 @@ class CSharedResource {
         m_fp = NULL;
         m_error = 0;
         m_ownsLock = false;
-        // m_lockingUser = "";
-        // m_mode = "";
-        // m_errorMsg = "";
     }
 
     virtual ~CSharedResource(void) {
         Release();
     }
-
-    // forces implementation
-    virtual string_q getType(void) const {
-        return "CSharedResource";
-    };
 
     bool Lock(const string_q& fn, const string_q& mode, size_t obeyLock);
     bool ReLock(const string_q& mode);

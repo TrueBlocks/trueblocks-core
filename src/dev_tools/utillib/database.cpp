@@ -18,7 +18,6 @@
 #include "database.h"
 #include "sfos.h"
 #include "filenames.h"
-#include "conversions.h"
 
 namespace qblocks {
 
@@ -443,6 +442,61 @@ string_q manageRemoveList(const string_q& filename) {
         }
     }
     return theList;
+}
+
+size_t asciiFileToBuffer(const string_q& fileName, vector<char>& buffer) {
+    size_t len = fileSize(fileName);
+    buffer.resize(len);
+    CSharedResource archive;
+    if (archive.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
+        archive.Read(buffer.data(), len, 1);
+        archive.Release();
+    }
+    return buffer.size();
+}
+
+//----------------------------------------------------------------------
+size_t asciiFileToString(const string_q& fileName, string_q& contents) {
+    vector<char> buffer;
+    asciiFileToBuffer(fileName, buffer);
+    buffer.push_back('\0');  // not sure if this is needed or not. At worse it's redundant
+    contents = buffer.data();
+    return contents.size();
+}
+
+//----------------------------------------------------------------------
+size_t asciiFileToLines(const string_q& fileName, CStringArray& lines) {
+    string_q contents;
+    asciiFileToString(fileName, contents);
+    explode(lines, contents, '\n');
+    return lines.size();
+}
+
+//----------------------------------------------------------------------
+size_t asciiFileToLines(const string_q& fileName, CUintArray& lines) {
+    string_q contents;
+    asciiFileToString(fileName, contents);
+    explode(lines, contents, '\n');
+    return lines.size();
+}
+
+//----------------------------------------------------------------------
+string_q asciiFileToString(const string_q& filename) {
+    string_q ret;
+    asciiFileToString(filename, ret);
+    return ret;
+}
+
+//----------------------------------------------------------------------
+size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
+    CSharedResource lock;
+    if (lock.Lock(fileName, modeWriteCreate, LOCK_WAIT)) {
+        lock.WriteLine(contents.c_str());
+        lock.Release();
+    } else {
+        return false;
+    }
+    return true;
 }
 
 }  // namespace qblocks

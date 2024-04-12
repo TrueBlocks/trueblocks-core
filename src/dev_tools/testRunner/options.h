@@ -50,3 +50,5 @@ extern bool cleanTest(const string_q& path, const string_q& testName);
 extern void copyBack(const string_q& path, const string_q& tool, const string_q& fileName);
 extern string_q linesToString(const CStringArray& lines, char sep = '\n');
 extern string_q doCommand(const string_q& cmd, bool readStderr = false);
+extern string_q padRight(const string_q& str, size_t len, char p = ' ');
+extern string_q padLeft(const string_q& str, size_t len, char p = ' ');

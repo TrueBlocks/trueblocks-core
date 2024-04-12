@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include <string>
 #include "basetypes.h"
-#include "conversions.h"
+#include "sfstring.h"
 
 namespace qblocks {
 
@@ -54,7 +54,10 @@ size_t explode(CStringArray& result, const string& input, char needle, bool trim
     return result.size();
 }
 
-//--------------------------------------------------------------------------------
+uint64_t str_2_Uint(const string_q& str) {
+    return (uint64_t)strtoul(str.c_str(), NULL, 10);
+}
+
 size_t explode(CUintArray& result, const string& input, char needle, bool trim) {
     result.reserve(result.size() + countOf(input, needle) + 1);  // maybe an append
 
@@ -129,7 +132,6 @@ void replaceAny(string_q& target, const string_q& list, const string_q& with) {
     }
 }
 
-//---------------------------------------------------------------------------------------
 void replaceReverse(string_q& target, const string_q& what, const string_q& with) {
     string_q w1 = what;
     string_q w2 = with;
@@ -140,7 +142,6 @@ void replaceReverse(string_q& target, const string_q& what, const string_q& with
     reverse(target);
 }
 
-//---------------------------------------------------------------------------------------
 void reverse(string_q& target) {
     size_t i, j;
     size_t n = target.length();
@@ -151,38 +152,11 @@ void reverse(string_q& target) {
     }
 }
 
-//----------------------------------------------------------------------------------------
-string_q nextTokenClearReverse(string_q& str, char token) {
-    reverse(str);
-    string_q ret = nextTokenClear(str, token);
-    reverse(ret);
-    reverse(str);
-    return ret;
-}
-
-//---------------------------------------------------------------------------------------
-string_q snagFieldClear(string_q& in, const string_q& field, const string_q& defVal) {
-    string_q f1 = "</" + field + ">";
-    string_q ret = extract(in, 0, in.find(f1));
-
-    string_q f2 = "<" + field + ">";
-    ret = extract(ret, ret.find(f2) + f2.length());
-
-    replace(in, f2 + ret + f1, "");
-
-    if (ret.empty())
-        ret = defVal;
-
-    return ret;
-}
-
-//--------------------------------------------------------------------
 size_t countOf(const string_q& haystack, char needle) {
     string hay = haystack.c_str();
     return (size_t)count(hay.begin(), hay.end(), needle);
 }
 
-//--------------------------------------------------------------------
 bool startsWith(const string_q& haystack, const string_q& needle) {
     string_q hay = haystack.c_str();
     if (hay.empty() || needle.empty())
@@ -190,14 +164,12 @@ bool startsWith(const string_q& haystack, const string_q& needle) {
     return (extract(hay, 0, needle.length()) == needle);
 }
 
-//--------------------------------------------------------------------
 bool startsWith(const string_q& haystack, char ch) {
     string_q ss;
     ss = ch;
     return startsWith(haystack, ss);
 }
 
-//--------------------------------------------------------------------
 bool endsWith(const string_q& haystack, const string_q& needle) {
     string_q hay = haystack.c_str();
     if (hay.empty() || needle.empty())
@@ -205,14 +177,12 @@ bool endsWith(const string_q& haystack, const string_q& needle) {
     return (extract(hay, hay.length() - needle.length(), needle.length()) == needle);
 }
 
-//--------------------------------------------------------------------
 bool endsWith(const string_q& haystack, char ch) {
     string_q ss;
     ss = ch;
     return endsWith(haystack, ss);
 }
 
-//---------------------------------------------------------------------------------------
 bool startsWithAny(const string_q& haystack, const string_q& needles) {
     string need = needles.c_str();
     for (const auto elem : need)
@@ -221,7 +191,6 @@ bool startsWithAny(const string_q& haystack, const string_q& needles) {
     return false;
 }
 
-//---------------------------------------------------------------------------------------
 bool endsWithAny(const string_q& haystack, const string_q& needles) {
     string need = needles.c_str();
     for (const auto elem : need)
@@ -230,23 +199,6 @@ bool endsWithAny(const string_q& haystack, const string_q& needles) {
     return false;
 }
 
-//---------------------------------------------------------------------------------------------------
-string_q firstLower(const string_q& in) {
-    string_q ret = in;
-    if (ret.length())
-        ret[0] = (char)tolower(ret[0]);
-    return ret;
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q firstUpper(const string_q& in) {
-    string_q ret = in;
-    if (ret.length())
-        ret[0] = (char)toupper(ret[0]);
-    return ret;
-}
-
-//--------------------------------------------------------------------
 string_q toLower(const string_q& in) {
     string ret;
     string str = in.c_str();
@@ -255,7 +207,6 @@ string_q toLower(const string_q& in) {
     return ret.c_str();
 }
 
-//--------------------------------------------------------------------
 string_q toUpper(const string_q& in) {
     string ret;
     string str = in.c_str();
@@ -264,14 +215,6 @@ string_q toUpper(const string_q& in) {
     return ret.c_str();
 }
 
-//--------------------------------------------------------------------
-string_q toSingular(const string_q& in) {
-    string_q ret = in;
-    replaceReverse(ret, "s", "");
-    return endsWith(in, "s") ? ret : in;
-}
-
-//--------------------------------------------------------------------
 string_q toProper(const string_q& in) {
     string ret;
     string str = in.c_str();
@@ -286,7 +229,6 @@ string_q toProper(const string_q& in) {
     return ret.c_str();
 }
 
-//---------------------------------------------------------------------------------------------------
 string_q toCamelCase(const string_q& in) {
     string_q ret = substitute(toProper(in), "_", "");
     ret[0] = toLower(ret)[0];
@@ -314,7 +256,6 @@ string_q trimLeading(const string_q& str, char c) {
     return ret.c_str();
 }
 
-//--------------------------------------------------------------------
 string_q trimWhitespace(const string_q& str, const string_q& add) {
     string_q ret = str.c_str();
     string_q any = string_q("\t\r\n ") + add.c_str();
@@ -323,34 +264,6 @@ string_q trimWhitespace(const string_q& str, const string_q& add) {
             ret = trim(ret, any[i]);
     }
     return ret.c_str();
-}
-
-//---------------------------------------------------------------------------
-string_q stripWhitespace(const string_q& str) {
-    return substitute(substitute(substitute(substitute(str, "\"", "\\\""), "\n", " "), "\r", " "), "\t", " ");
-}
-
-//--------------------------------------------------------------------
-string_q padRight(const string_q& str, size_t len, char p) {
-    if (len > str.length())
-        return str + string_q(len - str.length(), p);
-    return str;
-}
-
-//--------------------------------------------------------------------
-string_q padLeft(const string_q& str, size_t len, char p) {
-    if (len > str.length())
-        return string_q(len - str.length(), p) + str;
-    return str;
-}
-
-//--------------------------------------------------------------------
-string_q padCenter(const string_q& str, size_t len, char p) {
-    if (len > str.length()) {
-        size_t padding = (len - str.length()) / 2;
-        return string_q(padding, p) + str + string_q(padding, p);
-    }
-    return str;
 }
 
 string_q extract(const string_q& haystack, size_t pos, size_t len) {
@@ -367,10 +280,4 @@ bool containsAny(const string_q& haystack, const string_q& needle) {
     return false;
 }
 
-string_q substituteAny(const string_q& strIn, const string_q& what, const string_q& with) {
-    string_q ret = strIn;
-    for (auto ch : what)
-        ret = substitute(ret, string_q(1, ch), with);
-    return ret;
-}
 }  // namespace qblocks

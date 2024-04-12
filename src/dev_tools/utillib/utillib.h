@@ -1,10 +1,8 @@
 #pragma once
 #include "basetypes.h"
 #include "sfstring.h"
-#include "conversions.h"
 #include "sfos.h"
 #include "database.h"
-#include "sfarchive.h"
 #include "filenames.h"
 
 using namespace qblocks;  // NOLINT
