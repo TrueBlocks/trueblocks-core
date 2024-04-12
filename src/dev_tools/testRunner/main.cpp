@@ -15,21 +15,18 @@
 #include "testcase.h"
 
 int main(int argc, const char* argv[]) {
-    COptions options;
-    options.loadEnvironmentPaths();
-
     cerr.rdbuf(cout.rdbuf());
-    string_q testFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
-    if (!options.parseArguments(""))
-        return EXIT_FAILURE;
+    cleanFolder(getCachePath() + "tmp/");
 
-    cleanFolder(options.cachePath + "tmp/");
+    COptions options;
+    options.init();
 
     for (auto testName : options.tests) {
         string_q path = nextTokenClear(testName, '/');
         cleanTest(path, testName);
         cleanTest(path, testName + "/api_tests");
 
+        string_q testFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
         string_q testFile = testFolder + path + "/" + testName + ".csv";
         if (!fileExists(testFile)) {
             cerr << "Cannot find test file " + testFile + ".";
@@ -124,7 +121,7 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
                 string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true ";
                 string_q exe = "chifra" + (contains(test.tool, "chifra") ? "" : " " + test.route);
                 string_q fullCmd = exe + " " + test.options;
-                string_q debugCmd = relativize(fullCmd);
+                string_q debugCmd = substitute(fullCmd, getHomeFolder(), "$HOME/");
                 string_q redir = test.workPath + test.fileName;
                 cmd << "echo \"" << debugCmd << "\" >" << redir + " && ";
                 string_q rFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".redir";
@@ -292,17 +289,6 @@ bool cleanTest(const string_q& path, const string_q& testName) {
     return true;
 }
 
-string_q COptions::relativize(const string_q& path) {
-    string_q ret = path;
-    replace(ret, cachePath, "$CACHE/");
-    replace(ret, chainConfigPath, "$CHAIN/");
-    replace(ret, configPath, "$CONFIG/");
-    // replace(ret, getHomeFolder() + ".local/bin/chifra/test/"), "");
-    // replace(ret, getHomeFolder() + ".local/bin/chifra/", "");
-    replace(ret, getHomeFolder(), "$HOME/");
-    return ret;
-}
-
 void copyBack(const string_q& path, const string_q& tool, const string_q& fileName) {
     string_q tr = "/test/gold/dev_tools/testRunner/";
     string_q fn = path + "/" + tool + "/" + fileName;
@@ -328,15 +314,13 @@ string_q linesToString(const CStringArray& lines, char sep) {
     return os.str();
 }
 
-void COptions::loadEnvironmentPaths(void) {
-    chain = "mainnet";
+string_q getCachePath(void) {
 #if defined(__linux) || defined(__linux__) || defined(linux) || defined(__unix) || defined(__unix__)
-    configPath = getHomeFolder() + ".local/share/trueblocks/";
+    string_q configPath = getHomeFolder() + ".local/share/trueblocks/";
 #elif defined(__APPLE__) || defined(__MACH__)
-    configPath = getHomeFolder() + "Library/Application Support/TrueBlocks/";
+    string_q configPath = getHomeFolder() + "Library/Application Support/TrueBlocks/";
 #endif
-    chainConfigPath = configPath + "config/mainnet/";
-    cachePath = configPath + "cache/mainnet/";
+    return configPath + "cache/mainnet/";
 }
 
 //--------------------------------------------------------------------
@@ -356,4 +340,63 @@ string_q padLeft(const string_q& str, size_t len, char p) {
 string_q getEnvStr(const string_q& name) {
     char* sss = getenv(name.c_str());
     return (sss ? string_q(sss) : string_q(""));
+}
+
+static string_q escapePath(const string_q& nameIn) {
+    string_q name = nameIn;
+    replaceAll(name, "&", "\\&");
+    replaceAll(name, "(", "\\(");
+    replaceAll(name, ")", "\\)");
+    replaceAll(name, "'", "\\'");
+    return name;
+}
+
+int copyFile(const string_q& fromIn, const string_q& toIn) {
+    ifstream src(escapePath(fromIn), ios::binary);
+    ofstream dst(escapePath(toIn), ios::binary);
+    dst << src.rdbuf();
+    return static_cast<int>(fileExists(toIn));
+}
+
+namespace qblocks {
+typedef bool (*CONSTAPPLYFUNC)(const string_q& path, void* data);
+extern bool forAllFiles(const string_q& mask, CONSTAPPLYFUNC func, void* data);
+}  // namespace qblocks
+
+namespace filename_local {
+class CFileListState {
+  public:
+    string_q top;
+    CStringArray& list;
+    bool recurse;
+    CFileListState(const string_q& t, CStringArray& l, bool r) : top(t), list(l), recurse(r) {
+    }
+};
+bool visitFile(const string_q& path, void* data) {
+    CFileListState* state = reinterpret_cast<CFileListState*>(data);
+    if (endsWith(path, '/')) {
+        if (path == state->top || state->recurse) {
+            return forAllFiles(path + "*", visitFile, data);
+        } else {
+            state->list.push_back(path);
+        }
+        return true;
+    }
+    state->list.push_back(path);
+    return true;
+}
+};  // namespace filename_local
+
+size_t listFilesInFolder(CStringArray& items, const string_q& folder, bool recurse) {
+    filename_local::CFileListState state(folder, items, recurse);
+    forAllFiles(folder, filename_local::visitFile, &state);
+    return items.size();
+}
+
+int cleanFolder(const string_q& path, bool recurse, bool interactive) {
+    CStringArray files;
+    listFilesInFolder(files, path, true);
+    for (auto file : files)
+        ::remove(file.c_str());
+    return static_cast<int>(files.size());
 }

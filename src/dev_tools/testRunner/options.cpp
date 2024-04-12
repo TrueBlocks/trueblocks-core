@@ -15,10 +15,9 @@
 // }
 #include "options.h"
 
-bool COptions::parseArguments(const string_q& command) {
+void COptions::init(void) {
     ::setenv("NO_USERQUERY", "true", 1);
 
-    Init();
     tests.push_back("tools/ethNames");
     tests.push_back("tools/getBlocks");
     tests.push_back("tools/getLogs");
@@ -90,18 +89,6 @@ bool COptions::parseArguments(const string_q& command) {
     doCommand("chifra abis 0x81f7564e413586f1f99fde55740ac52b43ca99c9");
     doCommand("chifra abis 0x8d12a197cb00d4747a1fe03395095ce2a5cc6819");
     doCommand("chifra abis 0xdbd27635a534a3d3169ef0498beb56fb9c937489");
-
-    return true;
-}
-
-void COptions::Init(void) {
-}
-
-COptions::COptions(void) {
-    Init();
-}
-
-COptions::~COptions(void) {
 }
 
 inline bool waitForCreate(const string_q& filename) {
@@ -142,4 +129,18 @@ string_q doCommand(const string_q& cmd, bool readStderr) {
     asciiFileToString(filename, ret);
     ::remove(filename.c_str());
     return trim(ret, '\n');
+}
+
+static const char* CHR_VALID_NAME =
+    "\t\n\r()<>[]{}`\\|; "
+    "'!$^*~@"
+    "?&#+%"
+    ",:/=\"";
+
+string_q makeValidName(const string_q& inOut) {
+    string_q ret = inOut;
+    replaceAny(ret, CHR_VALID_NAME, "_");
+    if (!ret.empty() && isdigit(ret[0]))
+        ret = "_" + ret;
+    return ret;
 }

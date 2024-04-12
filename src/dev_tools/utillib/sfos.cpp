@@ -23,30 +23,6 @@ static int globErrFunc(const char* epath, int eerrno) {
     return 0;
 }
 
-int cleanFolder(const string_q& path, bool recurse, bool interactive) {
-    CStringArray files;
-    listFilesInFolder(files, path, true);
-    for (auto file : files)
-        ::remove(file.c_str());
-    return static_cast<int>(files.size());
-}
-
-static string_q escapePath(const string_q& nameIn) {
-    string_q name = nameIn;
-    replaceAll(name, "&", "\\&");
-    replaceAll(name, "(", "\\(");
-    replaceAll(name, ")", "\\)");
-    replaceAll(name, "'", "\\'");
-    return name;
-}
-
-int copyFile(const string_q& fromIn, const string_q& toIn) {
-    ifstream src(escapePath(fromIn), ios::binary);
-    ofstream dst(escapePath(toIn), ios::binary);
-    dst << src.rdbuf();
-    return static_cast<int>(fileExists(toIn));
-}
-
 void doGlob(size_t& nStrs, string_q* strs, const string_q& maskIn, int wantFiles) {
     glob_t globBuf;
 
@@ -98,20 +74,6 @@ void doGlob(size_t& nStrs, string_q* strs, const string_q& maskIn, int wantFiles
     globfree(&globBuf);
 }
 
-static const char* CHR_VALID_NAME =
-    "\t\n\r()<>[]{}`\\|; "
-    "'!$^*~@"
-    "?&#+%"
-    ",:/=\"";
-
-string_q makeValidName(const string_q& inOut) {
-    string_q ret = inOut;
-    replaceAny(ret, CHR_VALID_NAME, "_");
-    if (!ret.empty() && isdigit(ret[0]))
-        ret = "_" + ret;
-    return ret;
-}
-
 string_q getCWD(const string_q& filename) {
     string_q folder;
     size_t kMaxPathSize = _POSIX_PATH_MAX;
@@ -126,28 +88,6 @@ string_q getCWD(const string_q& filename) {
 bool fileExists(const string_q& file) {
     struct stat statBuf;
     return !file.empty() && stat(file.c_str(), &statBuf) == 0;
-}
-
-bool folderExists(const string_q& folderName) {
-    if (folderName.empty())
-        return false;
-
-    string_q folder = folderName;
-    if (!endsWith(folder, '/'))
-        folder += '/';
-
-    size_t nFiles = 0;
-    string_q mask = folder + "*.*";
-    doGlob(nFiles, NULL, mask, true);
-
-    if (!nFiles)
-        doGlob(nFiles, NULL, mask, false);
-    if (!nFiles) {
-        mask = folder + ".";
-        doGlob(nFiles, NULL, mask, false);
-    }
-
-    return (nFiles > 0);
 }
 
 uint64_t fileSize(const string_q& filename) {

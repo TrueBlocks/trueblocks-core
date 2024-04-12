@@ -21,10 +21,6 @@
 //-----------------------------------------------------------------------------
 class COptions {
   public:
-    string_q chain;
-    string_q configPath;
-    string_q chainConfigPath;
-    string_q cachePath;
     uint64_t totalTests = 0;
     uint64_t totalPassed = 0;
     CStringArray fails;
@@ -33,15 +29,16 @@ class COptions {
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(const string_q& command);
-    void Init(void);
-
+    void init(void);
     void doTests(vector<CTestCase>& testArray, const string_q& testName, int which);
-    void loadEnvironmentPaths(void);
-    string_q relativize(const string_q& path);
 };
 
-//-----------------------------------------------------------------------
+inline COptions::COptions(void) {
+}
+
+inline COptions::~COptions(void) {
+}
+
 extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
 extern bool cleanTest(const string_q& path, const string_q& testName);
 extern void copyBack(const string_q& path, const string_q& tool, const string_q& fileName);
@@ -50,3 +47,7 @@ extern string_q doCommand(const string_q& cmd, bool readStderr = false);
 extern string_q padRight(const string_q& str, size_t len, char p = ' ');
 extern string_q padLeft(const string_q& str, size_t len, char p = ' ');
 extern string_q getEnvStr(const string_q& name);
+extern int copyFile(const string_q& from, const string_q& to);
+extern int cleanFolder(const string_q& path, bool recurse = false, bool interactive = false);
+extern string_q makeValidName(const string_q& inOut);
+extern string_q getCachePath(void);

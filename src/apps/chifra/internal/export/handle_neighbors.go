@@ -435,7 +435,7 @@ size_t neighbors_Count(CTraverser* trav, void* data) {
 extern bool visitBloom(const string_q& path, void* data);
 //-----------------------------------------------------------------------
 bool getChunkRanges(CBlockRangeArray& ranges) {
-    forEveryFileInFolder(indexFolder_blooms + "*", visitBloom, &ranges);
+    for EveryFileInFolder(indexFolder_blooms + "*", visitBloom, &ranges);
     // LOG_INFO("Found ", ranges.size(), " chunks");
     return true;
 }

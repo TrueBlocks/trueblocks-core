@@ -18,11 +18,16 @@ class CFilename {
     string_q getFilename(void) const;
 };
 
-extern string_q getHomeFolder(void);
-typedef bool (*CONSTAPPLYFUNC)(const string_q& path, void* data);
-extern bool forEveryFileInFolder(const string_q& mask, CONSTAPPLYFUNC func, void* data);
-extern size_t listFilesInFolder(CStringArray& files, const string_q& mask, bool recurse);
-extern string_q getLastFileInFolder(const string_q& folder, bool recurse);
+inline string_q getHomeFolder(void) {
+    struct passwd pd;
+    struct passwd* pwdptr = &pd;
+    struct passwd* tempPwdPtr;
+    char pwdbuffer[200];
+    size_t pwdlinelen = sizeof(pwdbuffer);
+    if (getpwuid_r(getuid(), pwdptr, pwdbuffer, pwdlinelen, &tempPwdPtr) == 0)
+        return string_q(pd.pw_dir) + "/";
+    return "./";
+}
 
 }  // namespace qblocks
 
