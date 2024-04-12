@@ -1,15 +1,3 @@
-/*-------------------------------------------------------------------------------------------
- * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
- *
- * This program is free software: you may redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version. This program is
- * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see http://www.gnu.org/licenses/.
- *-------------------------------------------------------------------------------------------*/
 #include <algorithm>
 #include <string>
 #include "basetypes.h"
@@ -82,159 +70,6 @@ time_q& time_q::operator=(const time_q& d) {
     return *this;
 }
 
-string_q time_q::Format(const string_q& sFormat) const {
-    string_q ret;
-    if (IsValid()) {
-        char sBuffer[512];
-        size_t bSize = sizeof(sBuffer);
-
-        size_t sFmtLength = sFormat.length();
-        for (size_t i = 0; i < sFmtLength; i++) {
-            char c = sFormat.at(i);
-            if (c == '%') {
-                ++i;
-                if (i < sFmtLength) {
-                    c = sFormat.at(i);
-                    switch (c) {
-                        case 'Q': {
-                            uint32_t hour = GetHour();
-                            uint32_t minute = GetMinute();
-                            uint32_t secs = GetSecond();
-                            ret += int_2_Str(hour * 60 * 60 + minute * 60 + secs);
-                            break;
-                        }
-                        case 'H': {
-                            snprintf(sBuffer, bSize, "%.02d", GetHour());
-                            ret += sBuffer;
-                            break;
-                        }
-                        case 'h': {
-                            uint32_t h = GetHour();
-                            if (h > 12)
-                                h -= 12;
-                            if (h == 0)
-                                h = 12;
-                            snprintf(sBuffer, bSize, "%.02d", h);
-                            ret += sBuffer;
-                            break;
-                        }
-                        case 'M': {
-                            snprintf(sBuffer, bSize, "%.02d", GetMinute());
-                            ret += sBuffer;
-                            break;
-                        }
-                        case 'P': {
-                            ret += (GetHour() >= 12 ? "pm" : "am");
-                            break;
-                        }
-                        case 'p': {
-                            ret += (GetHour() >= 12 ? "p" : "a");
-                            break;
-                        }
-                        case 'S': {
-                            snprintf(sBuffer, bSize, "%.02d", GetSecond());
-                            ret += sBuffer;
-                            break;
-                        }
-                        case 'd': {
-                            snprintf(sBuffer, bSize, "%.02d", GetDay());
-                            ret += sBuffer;
-                            break;
-                        }
-                        case 'f': {
-                            ret += "Gregorian Calendar";
-                            break;
-                        }
-                        case 'm': {
-                            snprintf(sBuffer, bSize, "%.02d", GetMonth());
-                            ret += sBuffer;
-                            break;
-                        }
-                        case 'y': {
-                            snprintf(sBuffer, bSize, "%.02d", get2Digit(GetYear()));
-                            ret += sBuffer;
-                            break;
-                        }
-                        case 'Y': {
-                            snprintf(sBuffer, bSize, "%d", GetYear());
-                            ret += sBuffer;
-                            break;
-                        }
-                        case '#': {
-                            if (i < sFmtLength) {
-                                ++i;
-                                c = sFormat.at(i);
-                                switch (c) {
-                                    case 'd': {
-                                        snprintf(sBuffer, bSize, "%d", GetDay());
-                                        ret += sBuffer;
-                                        break;
-                                    }
-                                    case 'm': {
-                                        snprintf(sBuffer, bSize, "%d", GetMonth());
-                                        ret += sBuffer;
-                                        break;
-                                    }
-                                    case 'y': {
-                                        snprintf(sBuffer, bSize, "%d", get2Digit(GetYear()));
-                                        ret += sBuffer;
-                                        break;
-                                    }
-                                    case 'H': {
-                                        snprintf(sBuffer, bSize, "%d", GetHour());
-                                        ret += sBuffer;
-                                        break;
-                                    }
-                                    case 'h': {
-                                        uint32_t h = GetHour();
-                                        if (h > 12)
-                                            h -= 12;
-                                        if (h == 0)
-                                            h = 12;
-                                        snprintf(sBuffer, bSize, "%d", h);
-                                        ret += sBuffer;
-                                        break;
-                                    }
-                                    case 'M': {
-                                        snprintf(sBuffer, bSize, "%d", GetMinute());
-                                        ret += sBuffer;
-                                        break;
-                                    }
-                                    case 'S': {
-                                        snprintf(sBuffer, bSize, "%d", GetSecond());
-                                        ret += sBuffer;
-                                        break;
-                                    }
-                                    default: {
-                                        ret += c;
-                                        break;
-                                    }
-                                }
-                            }
-                            break;
-                        }
-                        default: {
-                            ret += c;
-                            break;
-                        }
-                    }
-                }
-            } else {
-                ret += c;
-            }
-        }
-    }
-
-    return ret;
-}
-
-//----------------------------------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const time_q& x) {
-    os << x.Format(FMT_JSON);
-    return os;
-}
-
-//-------------------------------------------------------------------------
 uint32_t time_q::CTimeOfDay::GetHour() const {
     return (uint32_t)(m_nSeconds / SECS_PER_HOUR);
 }
@@ -288,7 +123,7 @@ uint32_t time_q::GetSecond() const {
 }
 
 //-------------------------------------------------------------------------
-timestamp_t time_q::GetTotalSeconds(void) const {
+int64_t time_q::GetTotalSeconds(void) const {
     return m_nSeconds;
 }
 
@@ -346,17 +181,14 @@ int64_t time_q::operator-(time_q& date) {
     return m_nSeconds - date.m_nSeconds;
 }
 
-//-------------------------------------------------------------------------
 bool time_q::IsValid() const {
     return (m_nSeconds != (int64_t)0xdeadbeef);
 }
 
-//-------------------------------------------------------------------------
 time_q::CDate time_q::getDatePart() const {
     return CDate((m_nSeconds / SECS_PER_DAY) - 2000000000L);
 }
 
-//-------------------------------------------------------------------------
 time_q::CTimeOfDay time_q::getTimePart() const {
     if (m_nSeconds == getDatePart().GetTotalDays())
         return CTimeOfDay(0);  // midnight at start of day
@@ -366,18 +198,10 @@ time_q::CTimeOfDay time_q::getTimePart() const {
     return CTimeOfDay(uint32_t(secs - dateSecs));
 }
 
-//-------------------------------------------------------------------------
-bool time_q::onTheHour(void) const {
-    return (GetMinute() < 5 || GetMinute() > 55);
-}
-
-//-------------------------------------------------------------------------
 time_q::CTimeOfDay::CTimeOfDay() {
-    // create an invalid value (would be the next day otherwise!)
     m_nSeconds = SECS_PER_DAY;
 }
 
-//-------------------------------------------------------------------------
 time_q::CTimeOfDay::CTimeOfDay(const CTimeOfDay& tod) {
     m_nSeconds = tod.m_nSeconds;
 }
@@ -781,133 +605,6 @@ time_q SubtractOneDay(const time_q& date) {
     return time_q(year, month, --day, hour, minute, sec);
 }
 
-//---------------------------------------------------------------------------------------------
-// time_q AddOneHour(const time_q& date) {
-//     if (date.GetHour() == 23) {
-//         time_q next = BOD(AddOneDay(date));
-//         return time_q(next.GetYear(), next.GetMonth(), next.GetDay(), next.GetHour(), date.GetMinute(),
-//                       date.GetSecond());
-//     }
-//     return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour() + 1, date.GetMinute(),
-//                   date.GetSecond());
-// }
-
-// //---------------------------------------------------------------------------------------------
-// time_q SubtractOneHour(const time_q& date) {
-//     if (BOH(date).GetHour() == 0) {
-//         time_q x = SubtractOneDay(date);  // same time yesterday
-//         return time_q(x.GetYear(), x.GetMonth(), x.GetDay(), 23, x.GetMinute(), x.GetSecond());
-//     }
-//     return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour() - 1, date.GetMinute(),
-//                   date.GetSecond());
-// }
-
-// //---------------------------------------------------------------------------------------------
-// time_q AddOneWeek(const time_q& date) {
-//     time_q ret = date;
-//     for (size_t i = 0; i < 7; i++)
-//         ret = AddOneDay(ret);
-//     return ret;
-// }
-
-// //---------------------------------------------------------------------------------------------
-// time_q AddOneMonth(const time_q& date) {
-//     if (date.GetMonth() == 12)
-//         return time_q(date.GetYear() + 1, 1, date.GetDay(), date.GetHour(), date.GetMinute(), date.GetSecond());
-//     return time_q(date.GetYear(), date.GetMonth() + 1, date.GetDay(), date.GetHour(), date.GetMinute(),
-//                   date.GetSecond());
-// }
-
-// //---------------------------------------------------------------------------------------------
-// time_q AddOneQuarter(const time_q& date) {
-//     if (date.GetMonth() > 9) {
-//         return time_q(date.GetYear() + 1, (date.GetMonth() + 3) % 12, date.GetDay(), date.GetHour(),
-//         date.GetMinute(),
-//                       date.GetSecond());
-//     }
-//     return time_q(date.GetYear(), date.GetMonth() + 3, date.GetDay(), date.GetHour(), date.GetMinute(),
-//                   date.GetSecond());
-// }
-
-// //---------------------------------------------------------------------------------------------
-// time_q AddOneYear(const time_q& date) {
-//     return time_q(date.GetYear() + 1, date.GetMonth(), date.GetDay(), date.GetHour(), date.GetMinute(),
-//                   date.GetSecond());
-// }
-
-// //---------------------------------------------------------------------------------------------
-// time_q SubtractOneYear(const time_q& date) {
-//     return time_q(date.GetYear() - 1, date.GetMonth(), date.GetDay(), date.GetHour(), date.GetMinute(),
-//                   date.GetSecond());
-// }
-
-//----------------------------------------------------------------------------------------------------
-// time_q BOW(const time_q& tm) {
-//     time_q ret = BOD(tm);
-//     while (getDayOfWeek(ret.getDatePart()) > 1)  // if it equals '1', it's Sunday at 00:00:01
-//         ret = SubtractOneDay(ret);
-//     return ret;
-// }
-
-// //----------------------------------------------------------------------------------------------------
-// time_q EOW(const time_q& tm) {
-//     time_q ret = EOD(tm);
-//     while (getDayOfWeek(ret.getDatePart()) < 7)  // if it equals '7', it's Saturday 12:59:59
-//         ret = AddOneDay(ret);
-//     return ret;
-// }
-
-// //------------------------------------------------------------------------
-
-// //------------------------------------------------------------------------
-// time_q BONQ(const time_q& date) {
-//     return BOQ(earlierOf(latestDate, AddOneQuarter(date)));
-// }
-
-// //------------------------------------------------------------------------
-// typedef time_q (*PTF)(const time_q& date);
-
-// //------------------------------------------------------------------------
-// bool expandTimeArray(CTimeArray& ta, const time_q& startIn, const time_q& stop, PTF pBOP, PTF pBONP) {
-//     ta.push_back(pBOP(startIn));
-//     for (time_q t = pBONP(startIn); t <= pBONP(stop);) {
-//         ta.push_back(t);
-//         t = pBONP(t);
-//     }
-//     return true;
-// }
-
-//------------------------------------------------------------------------
-// bool expandHourly(CTimeArray& ta, const time_q& start, const time_q& stop) {
-//     return expandTimeArray(ta, start, stop, BOH, BONH);
-// }
-
-// //------------------------------------------------------------------------
-// bool expandDaily(CTimeArray& ta, const time_q& start, const time_q& stop) {
-//     return expandTimeArray(ta, start, stop, BOD, BOND);
-// }
-
-// //------------------------------------------------------------------------
-// bool expandWeekly(CTimeArray& ta, const time_q& start, const time_q& stop) {
-//     return expandTimeArray(ta, start, stop, BOW, BONW);
-// }
-
-// //------------------------------------------------------------------------
-// bool expandMonthly(CTimeArray& ta, const time_q& start, const time_q& stop) {
-//     return expandTimeArray(ta, start, stop, BOM, BONM);
-// }
-
-// //------------------------------------------------------------------------
-// bool expandQuarterly(CTimeArray& ta, const time_q& start, const time_q& stop) {
-//     return expandTimeArray(ta, start, stop, BOQ, BONQ);
-// }
-
-// //------------------------------------------------------------------------
-// bool expandAnnually(CTimeArray& ta, const time_q& start, const time_q& stop) {
-//     return expandTimeArray(ta, start, stop, BOY, BONY);
-// }
-
-//----------------------------------------------------------------------------------------------------
 time_q fileLastModifyDate(const string_q& filename) {
     if (!fileExists(filename))
         return earliestDate;
@@ -947,37 +644,5 @@ fileInfo getNewestFileInFolder(const string_q& path) {
     forEveryFileInFolder(path + "*", getNewestFile, &rec);
     return rec;
 }
-
-// //----------------------------------------------------------------------------------
-// bool isSameYear(const time_q& t1, const time_q& t2) {
-//     return BOY(t1) == BOY(t2);
-// }
-
-// //----------------------------------------------------------------------------------
-// bool isSameQuarter(const time_q& t1, const time_q& t2) {
-//     return BOQ(t1) == BOQ(t2);
-// }
-
-// //----------------------------------------------------------------------------------
-// bool isSameMonth(const time_q& t1, const time_q& t2) {
-//     return BOM(t1) == BOM(t2);
-// }
-
-// //----------------------------------------------------------------------------------
-// bool isSameWeek(const time_q& t1, const time_q& t2) {
-//     return BOW(t1) == BOW(t2);
-// }
-
-// //----------------------------------------------------------------------------------
-// bool isSameDay(const time_q& t1, const time_q& t2) {
-//     return BOD(t1) == BOD(t2);
-// }
-
-// //----------------------------------------------------------------------------------
-// bool isSameHour(const time_q& t1, const time_q& t2) {
-//     return BOH(t1) == BOH(t2);
-// }
-
-//----------------------------------------------------------------------------------
 
 }  // namespace qblocks

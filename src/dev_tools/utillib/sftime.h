@@ -1,21 +1,7 @@
 #pragma once
-/*-------------------------------------------------------------------------------------------
- * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
- *
- * This program is free software: you may redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version. This program is
- * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see http://www.gnu.org/licenses/.
- *-------------------------------------------------------------------------------------------*/
 #include "sfos.h"
 
 namespace qblocks {
-
-using timestamp_t = int64_t;
 
 class time_q;
 struct CDateStruct {
@@ -30,7 +16,6 @@ struct CDateStruct {
 class time_q {
   private:
     class CDate {
-        // Count of days since 15 October 1582 (start of Gregorian Calendar)
         uint64_t m_nDays;
 
         CDate(void);
@@ -64,9 +49,6 @@ class time_q {
         friend uint32_t getDayOfWeek(const CDate& date);
     };
 
-    //----------------------------------------------------------------------------
-    // Used by time_q to hold the time portion of the date
-    //----------------------------------------------------------------------------
     class CTimeOfDay {
       public:
         CTimeOfDay(void);
@@ -122,196 +104,22 @@ class time_q {
     uint32_t GetMinute(void) const;
     uint32_t GetSecond(void) const;
     uint32_t GetDayOfWeek(void) const;
-    timestamp_t GetTotalSeconds(void) const;
-
-    bool onTheHour(void) const;
-
-    string_q Format(const string_q& fmt) const;
-
+    int64_t GetTotalSeconds(void) const;
     CDate getDatePart(void) const;
     CTimeOfDay getTimePart(void) const;
-
-    // Count of seconds from same epoch as CDate uses
     int64_t m_nSeconds;
-
     friend uint32_t getDayOfWeek(const CDate& date);
 };
-typedef vector<time_q> CTimeArray;
 
-//-----------------------------------------------------------------------------------
 extern time_q Now(void);
-
-//---------------------------------------------------------------------------------------------
-extern ostream& operator<<(ostream& os, const time_q& x);
-
-//---------------------------------------------------------------------------------------------
 extern const time_q latestDate;
 extern const time_q earliestDate;
 
-#define FMT_JSON string_q("%Y-%m-%d %H:%M:%S UTC")
-#define FMT_EXPORT string_q("%Y-%m-%dT%H:%M:%S")
-#define FMT_PARTS string_q("%Y|%m|%d|%H|%M|%S")
-#define FMT_SHORT string_q("%Y%m%d")
-
-//---------------------------------------------------------------------------------------------
-// extern time_q AddOneDay(const time_q& date);
-// extern time_q AddOneHour(const time_q& date);
-// extern time_q AddOneWeek(const time_q& date);
-// extern time_q AddOneMonth(const time_q& date);
-// extern time_q AddOneQuarter(const time_q& date);
-// extern time_q AddOneYear(const time_q& date);
-
-// extern time_q SubtractOneDay(const time_q& date);
-// extern time_q SubtractOneHour(const time_q& date);
-// extern time_q SubtractOneWeek(const time_q& date);
-// extern time_q SubtractOneMonth(const time_q& date);
-// extern time_q SubtractOneQuarter(const time_q& date);
-// extern time_q SubtractOneYear(const time_q& date);
-
-// extern uint32_t DaysInMonth(uint32_t year, uint32_t month);
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q BOH(const time_q& date) {
-//     // H:00:00
-//     return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour(), 0, 0);
-// }
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q EOH(const time_q& date) {
-//     // H:59:59
-//     return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour(), 59, 59);
-// }
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q BOD(const time_q& date) {
-//     // 12:00:00 am
-//     return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), 0, 0, 0);
-// }
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q EOD(const time_q& date) {
-//     // 11:59:59 pm
-//     return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), 23, 59, 59);
-// }
-
-// //---------------------------------------------------------------------------------------------
-// extern time_q BOW(const time_q& tm);
-// extern time_q EOW(const time_q& tm);
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q BOM(const time_q& date) {
-//     return time_q(date.GetYear(), date.GetMonth(), 1, 0, 0, 0);
-// }
-// inline time_q EOM(const time_q& date) {
-//     return time_q(date.GetYear(), date.GetMonth(), DaysInMonth(date.GetYear(), date.GetMonth()), 23, 59, 59);
-// }
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q BOQ(const time_q& date) {
-//     uint32_t m = uint32_t((date.GetMonth() - 1) / 3) * 3 + 1;
-//     return time_q(date.GetYear(), m, 1, 0, 0, 0);
-// }
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q EOQ(const time_q& date) {
-//     return EOD(SubtractOneDay(BOQ(AddOneMonth(AddOneMonth(AddOneMonth(date))))));
-// }
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q BOY(const time_q& date) {
-//     return time_q(date.GetYear(), 1, 1, 0, 0, 0);
-// }
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q EOY(const time_q& date) {
-//     return time_q(date.GetYear(), 12, 31, 23, 59, 59);
-// }
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q MIDDAY(const time_q& date) {
-//     // 12:00 noon
-//     return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), 12, 0, 0);
-// }
-
-//---------------------------------------------------------------------------------------------
-inline time_q earlierOf(const time_q& one, const time_q& two) {
-    if (one < two)
-        return one;
-    else if (two < one)
-        return two;
-    return one;
-}
-
-//---------------------------------------------------------------------------------------------
-inline time_q laterOf(const time_q& one, const time_q& two) {
-    if (one > two)
-        return one;
-    else if (two > one)
-        return two;
-    return one;
-}
-
-//---------------------------------------------------------------------------------------------
-inline uint32_t getCentury(uint32_t year) {
-    return ((year / 100) * 100);
-}
-
-//---------------------------------------------------------------------------------------------
-inline uint32_t get2Digit(uint32_t year) {
-    return year - getCentury(year);
-}
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q BONH(const time_q& date) {
-//     return BOH(earlierOf(latestDate, AddOneHour(date)));
-// }
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q BOND(const time_q& date) {
-//     return BOD(earlierOf(latestDate, AddOneDay(date)));
-// }
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q BONW(const time_q& date) {
-//     return BOW(earlierOf(latestDate, AddOneWeek(date)));
-// }
-
-// //---------------------------------------------------------------------------------------------
-// inline time_q BONM(const time_q& date) {
-//     return BOM(earlierOf(latestDate, AddOneMonth(date)));
-// }
-
-// //---------------------------------------------------------------------------------------------
-// extern time_q BONQ(const time_q& date);
-// inline time_q BONY(const time_q& date) {
-//     return BOY(earlierOf(latestDate, AddOneYear(date)));
-// }
-
-//------------------------------------------------------------------
 extern time_q fileLastModifyDate(const string_q& filename);
-
-//------------------------------------------------------------------------
-extern bool expandHourly(CTimeArray& ta, const time_q& start, const time_q& stop);
-extern bool expandDaily(CTimeArray& ta, const time_q& start, const time_q& stop);
-extern bool expandWeekly(CTimeArray& ta, const time_q& start, const time_q& stop);
-extern bool expandMonthly(CTimeArray& ta, const time_q& start, const time_q& stop);
-extern bool expandQuarterly(CTimeArray& ta, const time_q& start, const time_q& stop);
-extern bool expandAnnually(CTimeArray& ta, const time_q& start, const time_q& stop);
-
-//------------------------------------------------------------------------
 typedef struct {
     time_q fileTime;
     string_q fileName;
 } fileInfo;
 extern bool getNewestFile(const string_q& path, void* data);
 extern fileInfo getNewestFileInFolder(const string_q& path);
-
-using blknum_t = uint64_t;
-
-extern bool isSameYear(const time_q& t1, const time_q& t2);
-extern bool isSameQuarter(const time_q& t1, const time_q& t2);
-extern bool isSameMonth(const time_q& t1, const time_q& t2);
-extern bool isSameWeek(const time_q& t1, const time_q& t2);
-extern bool isSameDay(const time_q& t1, const time_q& t2);
-extern bool isSameHour(const time_q& t1, const time_q& t2);
 }  // namespace qblocks

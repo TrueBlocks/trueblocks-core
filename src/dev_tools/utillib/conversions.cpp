@@ -253,7 +253,7 @@ bool isUnsigned(const string_q& in) {
 }
 
 //--------------------------------------------------------------------------------
-timestamp_t str_2_Ts(const string_q& str) {
+int64_t str_2_Ts(const string_q& str) {
     return str_2_Int(str);
 }
 
@@ -269,45 +269,6 @@ blkrange_t str_2_Range(const string_q& str) {
     return blkrange_t{parts[0], parts[1]};
 }
 
-//----------------------------------------------------------------------------------------------------
-timestamp_t date_2_Ts(const time_q& timeIn) {
-    time_q jan1970(1970, 1, 1, 0, 0, 0);
-    if (timeIn < jan1970)
-        return 0;
-
-    int64_t j70 = jan1970.GetTotalSeconds();
-    int64_t t = timeIn.GetTotalSeconds();
-    return (t - j70);
-}
-
-//--------------------------------------------------------------------------------
-string_q ts_2_Str(timestamp_t ts) {
-    return int_2_Str(ts);
-}
-
-//----------------------------------------------------------------------------------------------------
-time_q ts_2_Date(const timestamp_t& tsIn) {
-    time_t utc = tsIn;
-    tm unused;
-    struct tm* ret = gmtime_r(&utc, &unused);
-
-    char retStr[40];
-    strftime(retStr, sizeof(retStr), "%Y-%m-%d %H:%M:%S UTC", ret);
-
-    string_q str = retStr;
-    uint32_t y = (uint32_t)str_2_Uint(nextTokenClear(str, '-'));
-    uint32_t m = (uint32_t)str_2_Uint(nextTokenClear(str, '-'));
-    uint32_t d = (uint32_t)str_2_Uint(nextTokenClear(str, ' '));
-    uint32_t h = (uint32_t)str_2_Uint(nextTokenClear(str, ':'));
-    uint32_t mn = (uint32_t)str_2_Uint(nextTokenClear(str, ':'));
-    uint32_t s = (uint32_t)str_2_Uint(nextTokenClear(str, ' '));
-    return time_q(y, m, d, h, mn, s);
-}
-
-//
-// NOT IN HEADER
-//
-//--------------------------------------------------------------------------------
 uint64_t hex_2_Uint64(const string_q& str) {
     string_q hex = toLower(startsWith(str, "0x") ? extract(str, 2) : str);
     reverse(hex);
@@ -377,107 +338,6 @@ string_q hex_2_Str(const string_q& inHex, size_t nBytes) {
 //----------------------------------------------------------------------------
 bool rangesIntersect(const blkrange_t& r1, const blkrange_t& r2) {
     return !(r1.second < r2.first || r1.first > r2.second);
-}
-
-//--------------------------------------------------------------------------------
-timestamp_t date_2_Ts(const string_q& str) {
-    return date_2_Ts(str_2_Date(str));
-}
-
-//--------------------------------------------------------------------------------
-// Date and time values are ordered from the largest to smallest unit of time: year,
-// month (or week), day, hour, minute, second, and fraction of second. The lexicographical
-// order of the representation thus corresponds to chronological order, except for date
-// representations involving negative years. This allows dates to be naturally sorted by,
-// for example, file systems.
-//
-// Each date and time value has a fixed number of digits that must be padded with leading zeros.
-//
-// Representations can be done in one of two formats – a basic format with a minimal number
-// of separators or an extended format with separators added to enhance human readability.
-// The standard notes that "The basic format should be avoided in plain text."[15] The
-// separator used between date values (year, month, week, and day) is the hyphen, while
-// the colon is used as the separator between time values (hours, minutes, and seconds).
-// For example, the 6th day of the 1st month of the year 2009 may be written as "2009-01-06"
-// in the extended format or simply as "20090106" in the basic format without ambiguity.
-//
-// For reduced accuracy,[16] any number of values may be dropped from any of the date and
-// time representations, but in the order from the least to the most significant. For
-// example, "2004-05" is a valid ISO 8601 date, which indicates May (the fifth month)
-// 2004. This format will never represent the 5th day of an unspecified month in 2004,
-// nor will it represent a time-span extending from 2004 into 2005.
-//
-// If necessary for a particular application, the standard supports the addition of a
-// decimal fraction to the smallest time value in the representation.
-//
-time_q str_2_Date(const string_q& strIn) {
-    if (strIn.empty())
-        return earliestDate;
-
-    string_q str = strIn;
-    str = nextTokenClear(str, '.');
-    string_q check = substitute(str, "UTC", "");
-    string_q valid = "0123456789T:-";
-    for (auto ch : valid)
-        replaceAll(check, string_q(1, ch), "");
-    if (!check.empty()) {
-        return earliestDate;
-    }
-
-    replaceAny(str, "T:-", "");
-    if (str.length() == 4)
-        str += "0101000000";  // YYYY NOLINT
-    else if (str.length() == 6)
-        str += "01000000";  // YYYYMM
-    else if (str.length() == 8)
-        str += "000000";  // YYYYMMDD
-    else if (str.length() == 10)
-        str += "0000";  // YYYYMMDDHH
-    else if (str.length() == 12)
-        str += "00";  // YYYYMMDDHHMM
-    else if (str.length() == 14)
-        str += "";  // YYYYMMDDHHMMSS
-    else {
-    }  // NOLINT
-
-#define NP ((uint32_t)-1)
-#define str_2_Int32u(a) (uint32_t) str_2_Uint((a))
-    uint32_t y, m, d, h, mn, s;
-    y = m = d = h = mn = s = NP;
-    if (isUnsigned(extract(str, 0, 4))) {
-        y = str_2_Int32u(extract(str, 0, 4));
-    }
-    if (isUnsigned(extract(str, 4, 2))) {
-        m = str_2_Int32u(extract(str, 4, 2));
-    }
-    if (isUnsigned(extract(str, 6, 2))) {
-        d = str_2_Int32u(extract(str, 6, 2));
-    }
-    if (isUnsigned(extract(str, 8, 2))) {
-        h = str_2_Int32u(extract(str, 8, 2));
-    }
-    if (isUnsigned(extract(str, 10, 2))) {
-        mn = str_2_Int32u(extract(str, 10, 2));
-    }
-    if (isUnsigned(extract(str, 12, 2))) {
-        s = str_2_Int32u(extract(str, 12, 2));
-    }
-    if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP) {
-        return earliestDate;
-    }
-
-    if (m < 1 || m > 12)
-        return earliestDate;
-    if (d < 1 || d > 31)
-        return earliestDate;
-    if (h > 23)
-        return earliestDate;
-    if (mn > 59)
-        return earliestDate;
-    if (s > 59)
-        return earliestDate;
-
-    return time_q(y, m, d, h, mn, s);
 }
 
 uint64_t verbose = false;

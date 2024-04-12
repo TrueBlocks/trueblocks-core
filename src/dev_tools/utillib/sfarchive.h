@@ -27,7 +27,7 @@ class CArchive : public CSharedResource {
         // This data structure is sometimes written at the head of a
         // file. Don't remove it or change its size;
         uint32_t m_version;
-        timestamp_t m_lastWritten;
+        int64_t m_lastWritten;
     };
 
   public:
@@ -52,7 +52,6 @@ class CArchive : public CSharedResource {
     }
 
     void writeHeader(void);
-    bool needsUpgrade(bool arrayFile);
 
     CArchive& operator<<(bool b);
     CArchive& operator<<(char c);
@@ -68,7 +67,6 @@ class CArchive : public CSharedResource {
     CArchive& operator<<(double f);
     CArchive& operator<<(const string_q& str);
     CArchive& operator<<(const char* str);
-    CArchive& operator<<(const time_q& date);
 
     CArchive& operator>>(bool& b);
     CArchive& operator>>(char& c);
@@ -83,7 +81,6 @@ class CArchive : public CSharedResource {
     CArchive& operator>>(float& f);
     CArchive& operator>>(double& f);
     CArchive& operator>>(string_q& str);
-    CArchive& operator>>(time_q& date);
 };
 
 }  // namespace qblocks

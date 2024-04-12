@@ -19,9 +19,7 @@
 namespace qblocks {
 
 //-------------------------------------------------------------------------
-using timestamp_t = int64_t;
-using blknum_t = uint64_t;
-using blkrange_t = pair<blknum_t, blknum_t>;
+using blkrange_t = pair<uint64_t, uint64_t>;
 using txnum_t = uint64_t;
 using gas_t = uint64_t;
 using address_t = string_q;
@@ -47,7 +45,7 @@ using CStringBoolMap = map<string_q, bool>;
 using CUintBoolMap = map<uint32_t, bool>;
 using CAddressBoolMap = map<address_t, bool>;
 using CErrorStringMap = map<size_t, string_q>;
-using CIndexHashMap = map<blknum_t, string_q>;
+using CIndexHashMap = map<uint64_t, string_q>;
 using CIndexStringMap = CIndexHashMap;
 
 //-------------------------------------------------------------------------
@@ -65,11 +63,11 @@ inline topic_t str_2_Topic(const string_q& str) {
 inline fourbyte_t str_2_Fourbyte(const string_q& str) {
     return str;
 }
-extern timestamp_t str_2_Ts(const string_q& str);
+extern int64_t str_2_Ts(const string_q& str);
 extern blkrange_t str_2_Range(const string_q& str);
 extern string_q range_2_Str(const blkrange_t& r);
 #define str_2_Enum(en, str) (en) str_2_Uint(str)
-inline bool inRange(blknum_t val, blkrange_t range) {
+inline bool inRange(uint64_t val, blkrange_t range) {
     return (val >= range.first && val <= range.second);
 }
 
@@ -85,7 +83,7 @@ extern string_q hash_2_Str(const hash_t& hash);
 inline string_q topic_2_Str(const topic_t& topic) {
     return topic;
 }
-extern string_q ts_2_Str(timestamp_t ts);
+extern string_q ts_2_Str(int64_t ts);
 
 //----------------------------------------------------------------------------
 extern string_q hex_2_Str(const string_q& inHex, size_t nBytes = NOPOS);
@@ -102,14 +100,6 @@ extern string_q chr_2_HexStr(const string_q& str);
 extern string_q uint_2_Hex(uint64_t num);
 extern string_q str_2_Ether(const string_q& str, uint64_t decimals);
 
-//--------------------------------------------------------------------
-class time_q;
-extern timestamp_t date_2_Ts(const time_q& timeIn);
-extern time_q ts_2_Date(const timestamp_t& tsIn);
-extern time_q str_2_Date(const string_q& str);
-extern timestamp_t date_2_Ts(const string_q& str);
-
-//--------------------------------------------------------------------
 extern bool isEtherAddr(const address_t& addr);
 extern bool isNumeral(const string_q& test);
 extern bool isDouble(const string_q& test);

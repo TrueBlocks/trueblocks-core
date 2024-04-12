@@ -149,9 +149,8 @@ inline bool waitForCreate(const string_q& filename) {
 }
 
 string_q doCommand(const string_q& cmd, bool readStderr) {
-    time_q now = Now();
     string_q tmpPath = "/tmp/";
-    string_q filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
+    string_q filename = tmpPath + makeValidName("qb_" + int_2_Str(rand() * 1000));
     string_q theCommand = (cmd + " >" + filename);
     if (readStderr) {
         theCommand = (cmd + " >/dev/null 2>" + filename);
