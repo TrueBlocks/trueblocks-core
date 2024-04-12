@@ -263,17 +263,6 @@ size_t asciiFileToLines(const string_q& fileName, CUintArray& lines) {
 }
 
 //----------------------------------------------------------------------
-size_t asciiFileToMap(const string_q& fileName, CNameValueMap& theMap) {
-    CStringArray lines;
-    asciiFileToLines(fileName, lines);
-    for (auto value : lines) {
-        string_q key = nextTokenClear(value, ',');
-        theMap[key] = value;
-    }
-    return theMap.size();
-}
-
-//----------------------------------------------------------------------
 string_q asciiFileToString(const string_q& filename) {
     string_q ret;
     asciiFileToString(filename, ret);
@@ -282,7 +271,7 @@ string_q asciiFileToString(const string_q& filename) {
 
 //----------------------------------------------------------------------
 size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
-    CAsciiFile lock;
+    CSharedResource lock;
     if (lock.Lock(fileName, modeWriteCreate, LOCK_WAIT)) {
         lock.WriteLine(contents.c_str());
         lock.Release();
@@ -293,27 +282,6 @@ size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
         return false;
     }
     return true;
-}
-
-//----------------------------------------------------------------------
-size_t appendToAsciiFile(const string_q& fileName, const string_q& addContents) {
-    CArchive asciiCache(WRITING_ARCHIVE);
-    if (asciiCache.Lock(fileName, modeWriteAppend, LOCK_WAIT)) {
-        asciiCache.WriteLine(addContents.c_str());
-        asciiCache.Release();
-    }
-    return fileSize(fileName);
-}
-
-//----------------------------------------------------------------------
-size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, char sep) {
-    CArchive asciiCache(WRITING_ARCHIVE);
-    if (asciiCache.Lock(fileName, modeWriteAppend, LOCK_WAIT)) {
-        for (auto line : lines)
-            asciiCache.WriteLine((line + (sep != 0 ? string_q(1, sep) : "")).c_str());
-        asciiCache.Release();
-    }
-    return fileSize(fileName);
 }
 
 //----------------------------------------------------------------------

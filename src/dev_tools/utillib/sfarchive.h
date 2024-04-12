@@ -94,12 +94,4 @@ class CArchive : public CSharedResource {
     CArchive& operator>>(time_q& date);
 };
 
-extern CArchive& operator<<(CArchive& archive, const CStringArray& array);
-extern CArchive& operator<<(CArchive& archive, const CUintArray& array);
-extern CArchive& operator<<(CArchive& archive, const CIntArray& array);
-
-extern CArchive& operator>>(CArchive& archive, CStringArray& array);
-extern CArchive& operator>>(CArchive& archive, CUintArray& array);
-extern CArchive& operator>>(CArchive& archive, CIntArray& array);
-
 }  // namespace qblocks

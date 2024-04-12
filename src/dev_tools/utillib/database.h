@@ -63,7 +63,9 @@ class CSharedResource {
     }
 
     // forces implementation
-    virtual string_q getType(void) const = 0;
+    virtual string_q getType(void) const {
+        return "CSharedResource";
+    };
 
     bool Lock(const string_q& fn, const string_q& mode, size_t obeyLock);
     bool ReLock(const string_q& mode);
@@ -149,10 +151,7 @@ extern string_q asciiFileToString(const string_q& filename);
 extern size_t asciiFileToString(const string_q& filename, string& contents);  // non-copy
 extern size_t asciiFileToLines(const string_q& fileName, CStringArray& lines);
 extern size_t asciiFileToLines(const string_q& fileName, CUintArray& lines);
-extern size_t asciiFileToMap(const string_q& fileName, CNameValueMap& lines);
 extern size_t stringToAsciiFile(const string_q& fileName, const string_q& contents);
-extern size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, char sep = '\n');
-extern size_t appendToAsciiFile(const string_q& fileName, const string_q& addContents);
 
 //----------------------------------------------------------------------
 typedef void (*QUITHANDLER)(int s);
@@ -184,14 +183,6 @@ class CBinFile : public CSharedResource {
   public:
     string_q getType(void) const override {
         return "CBinFile";
-    }
-};
-
-// Generic ascii file
-class CAsciiFile : public CSharedResource {
-  public:
-    string_q getType(void) const override {
-        return "CAsciiFile";
     }
 };
 
