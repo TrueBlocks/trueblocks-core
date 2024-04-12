@@ -148,9 +148,17 @@ inline bool waitForCreate(const string_q& filename) {
     return fileExists(filename);
 }
 
+template <class T>
+T RandomValue(T a, T b) {
+    T range = (a > b ? a - b : b - a);
+    if (range == 0)
+        return a;
+    return min(a, b) + (((T)rand()) % range);
+}
+
 string_q doCommand(const string_q& cmd, bool readStderr) {
     string_q tmpPath = "/tmp/";
-    string_q filename = tmpPath + makeValidName("qb_" + int_2_Str(rand() * 1000));
+    string_q filename = tmpPath + makeValidName("qb_" + int_2_Str(RandomValue(1, 10000)));
     string_q theCommand = (cmd + " >" + filename);
     if (readStderr) {
         theCommand = (cmd + " >/dev/null 2>" + filename);
