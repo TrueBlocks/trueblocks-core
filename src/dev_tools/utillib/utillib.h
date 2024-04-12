@@ -14,7 +14,6 @@
 #include "basetypes.h"
 #include "sfstring.h"
 #include "basenode.h"
-#include "jsonlib.h"
 #include "conversions.h"
 #include "sftime.h"
 #include "sfos.h"

@@ -17,8 +17,6 @@
 #include "conversions.h"
 #include "logging.h"
 #include "runtimeclass.h"
-#include "json_reader.h"
-#include "json_value.h"
 
 namespace qblocks {
 
