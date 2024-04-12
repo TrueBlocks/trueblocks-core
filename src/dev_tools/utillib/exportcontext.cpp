@@ -14,7 +14,7 @@
 // to be conservitive in changing it. It's easier to hide the lint than modify the code
 
 #include "exportcontext.h"
-#include "logging.h"
+// #include "logging.h"
 #include "options_base.h"
 
 namespace qblocks {

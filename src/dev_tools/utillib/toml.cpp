@@ -15,7 +15,7 @@
 #include "toml.h"
 #include "conversions.h"
 #include "sfstring.h"
-#include "logging.h"
+// #include "logging.h"
 
 namespace qblocks {
 
@@ -220,7 +220,7 @@ string_q CToml::getConfigStr(const string_q& section, const string_q& key, const
 //-------------------------------------------------------------------------
 uint64_t CToml::getVersion(void) const {
     // handle older ways of stroring version. Note: after 0.6.0, always stored as [version]current
-    return 20000+500+8;
+    return 20000 + 500 + 8;
 }
 
 //-------------------------------------------------------------------------

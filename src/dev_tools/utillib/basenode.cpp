@@ -15,7 +15,7 @@
 #include "sfarchive.h"
 #include "exportcontext.h"
 #include "conversions.h"
-#include "logging.h"
+// #include "logging.h"
 #include "runtimeclass.h"
 
 namespace qblocks {
@@ -205,8 +205,6 @@ string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node) {
                 if (fieldIn % "parsed") {
                     CRuntimeClass* pClass = node->getRuntimeClass();
                     if (!pClass || pClass->fieldList.size() == 0) {
-                        LOG_WARN("No fieldList in ", node->getRuntimeClass()->m_ClassName,
-                                 ". Did you register the class?");
                         return "";
                     }
                     ostringstream os;

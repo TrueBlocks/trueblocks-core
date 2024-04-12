@@ -24,7 +24,7 @@
 #include "fielddata.h"
 #include "options_base.h"
 #include "filenames.h"
-#include "logging.h"
+// #include "logging.h"
 #include "configenv.h"
 
 using namespace qblocks;  // NOLINT

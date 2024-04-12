@@ -13,7 +13,7 @@
 #include "basetypes.h"
 #include "sfarchive.h"
 #include "filenames.h"
-#include "logging.h"
+// #include "logging.h"
 
 namespace qblocks {
 
@@ -291,7 +291,6 @@ size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
         string_q dName = fileName;
         if (isTestMode())
             dName = "--filename--";
-        LOG_WARN("Could not open file: ", dName);
         return false;
     }
     return true;

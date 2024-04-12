@@ -14,7 +14,7 @@
 #include <dirent.h>
 #include "filenames.h"
 #include "sfos.h"
-#include "logging.h"
+// #include "logging.h"
 
 namespace qblocks {
 
@@ -78,13 +78,11 @@ size_t listFilesInFolder(CStringArray& items, const string_q& folder, bool recur
 //------------------------------------------------------------------------------------------------
 size_t nFilesInFolder(const string& path, bool recurse) {
     if (recurse) {
-        LOG_WARN("recursive counting not implemented.");
         return 0;
     }
 
     DIR* dp = opendir(path.c_str());
     if (!dp) {
-        LOG_WARN("Could not open directory ", path, ".");
         return 0;
     }
 

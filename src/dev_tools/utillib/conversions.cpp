@@ -11,7 +11,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "conversions.h"
-#include "logging.h"
+// #include "logging.h"
 
 namespace qblocks {
 
@@ -422,7 +422,6 @@ time_q str_2_Date(const string_q& strIn) {
     for (auto ch : valid)
         replaceAll(check, string_q(1, ch), "");
     if (!check.empty()) {
-        LOG_WARN("str_2_Date: Invalid date string '", strIn, "'");
         return earliestDate;
     }
 
@@ -440,7 +439,6 @@ time_q str_2_Date(const string_q& strIn) {
     else if (str.length() == 14)
         str += "";  // YYYYMMDDHHMMSS
     else {
-        LOG_WARN("str_2_Date: Invalid date string '", strIn, "'");
     }  // NOLINT
 
 #define NP ((uint32_t)-1)
@@ -466,7 +464,6 @@ time_q str_2_Date(const string_q& strIn) {
         s = str_2_Int32u(extract(str, 12, 2));
     }
     if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP) {
-        LOG_WARN("str_2_Date: Invalid date string '", strIn, "'");
         return earliestDate;
     }
 
