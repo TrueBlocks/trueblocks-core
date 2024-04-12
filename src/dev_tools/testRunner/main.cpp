@@ -18,9 +18,6 @@
 #include "options.h"
 #include "testcase.h"
 
-extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
-extern bool cleanTest(const string_q& path, const string_q& testName);
-extern string_q relativize(const string_q& path);
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
@@ -368,7 +365,6 @@ bool cleanTest(const string_q& path, const string_q& testName) {
 
 string_q relativize(const string_q& path) {
     string_q ret = path;
-    replace(ret, getConfigEnv()->indexPath, "$INDEX/");
     replace(ret, getConfigEnv()->cachePath, "$CACHE/");
     replace(ret, getConfigEnv()->chainConfigPath, "$CHAIN/");
     replace(ret, getConfigEnv()->configPath, "$CONFIG/");

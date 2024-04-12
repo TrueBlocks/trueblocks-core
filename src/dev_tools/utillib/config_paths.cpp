@@ -40,10 +40,6 @@ void loadEnvironmentPaths(void) {
 #endif
     g_configEnv.chainConfigPath = g_configEnv.configPath + "config/mainnet/";
     g_configEnv.cachePath = g_configEnv.configPath + "cache/mainnet/";
-    g_configEnv.indexPath = g_configEnv.configPath + "unchained/mainnet/";
-    g_configEnv.defChain = "mainnet";
-    g_configEnv.rpcProvider =
-        getGlobalConfig("")->getConfigStr("chains.mainnet", "rpcProvider", "http://localhost:8545");
 }
 
 }  // namespace qblocks

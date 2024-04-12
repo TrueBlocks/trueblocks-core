@@ -42,21 +42,6 @@ string_q CConfigEnv::getValueByName(const string_q& fieldName) const {
                 return cachePath;
             }
             break;
-        case 'd':
-            if (fieldName % "defChain") {
-                return defChain;
-            }
-            break;
-        case 'i':
-            if (fieldName % "indexPath") {
-                return indexPath;
-            }
-            break;
-        case 'r':
-            if (fieldName % "rpcProvider") {
-                return rpcProvider;
-            }
-            break;
         default:
             break;
     }
@@ -87,24 +72,6 @@ bool CConfigEnv::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 return true;
             }
             break;
-        case 'd':
-            if (fieldName % "defChain") {
-                defChain = fieldValue;
-                return true;
-            }
-            break;
-        case 'i':
-            if (fieldName % "indexPath") {
-                indexPath = fieldValue;
-                return true;
-            }
-            break;
-        case 'r':
-            if (fieldName % "rpcProvider") {
-                rpcProvider = fieldValue;
-                return true;
-            }
-            break;
         default:
             break;
     }
@@ -127,9 +94,6 @@ void CConfigEnv::registerClass(void) {
     ADD_FIELD(CConfigEnv, "configPath", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CConfigEnv, "chainConfigPath", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CConfigEnv, "cachePath", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CConfigEnv, "indexPath", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CConfigEnv, "defChain", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CConfigEnv, "rpcProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CConfigEnv, "schema");
     HIDE_FIELD(CConfigEnv, "deleted");
     HIDE_FIELD(CConfigEnv, "showing");

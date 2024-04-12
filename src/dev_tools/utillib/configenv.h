@@ -32,9 +32,6 @@ class CConfigEnv : public CBaseNode {
     string_q configPath;
     string_q chainConfigPath;
     string_q cachePath;
-    string_q indexPath;
-    string_q defChain;
-    string_q rpcProvider;
 
   public:
     CConfigEnv(void);
@@ -58,9 +55,6 @@ inline CConfigEnv::CConfigEnv(void) {
     configPath = "";
     chainConfigPath = "";
     cachePath = "";
-    indexPath = "";
-    defChain = "";
-    rpcProvider = "";
 }
 
 inline CConfigEnv::CConfigEnv(const CConfigEnv& co) {
@@ -69,9 +63,6 @@ inline CConfigEnv::CConfigEnv(const CConfigEnv& co) {
     configPath = co.configPath;
     chainConfigPath = co.chainConfigPath;
     cachePath = co.cachePath;
-    indexPath = co.indexPath;
-    defChain = co.defChain;
-    rpcProvider = co.rpcProvider;
 }
 
 inline CConfigEnv::~CConfigEnv(void) {
@@ -83,9 +74,6 @@ inline CConfigEnv& CConfigEnv::operator=(const CConfigEnv& co) {
     configPath = co.configPath;
     chainConfigPath = co.chainConfigPath;
     cachePath = co.cachePath;
-    indexPath = co.indexPath;
-    defChain = co.defChain;
-    rpcProvider = co.rpcProvider;
     return *this;
 }
 
