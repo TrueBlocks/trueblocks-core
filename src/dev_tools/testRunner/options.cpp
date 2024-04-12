@@ -104,41 +104,6 @@ COptions::COptions(void) {
 COptions::~COptions(void) {
 }
 
-const CToml* COptions::getGlobalConfig(const string_q& mergeIn) {
-    static CToml* toml = NULL;
-    static string_q components = "trueBlocks|";
-
-    if (!toml) {
-        string_q configFile = configPath + "trueBlocks.toml";
-        static CToml theToml(configFile);
-        toml = &theToml;
-        string_q name = progName;
-        string_q fileName = chainConfigPath + name + ".toml";
-        if (name == "makeClass" || name == "testRunner")
-            fileName = configPath + name + ".toml";
-        if (fileExists(fileName) && !contains(components, name + "|")) {
-            components += name + "|";
-            CToml custom(fileName);
-            toml->mergeFile(&custom);
-        }
-    }
-
-    // If we're told explicitly to load another config, do that as well
-    if (!mergeIn.empty()) {
-        string_q name = mergeIn;
-        string_q fileName = chainConfigPath + name + ".toml";
-        if (name == "makeClass" || name == "testRunner")
-            fileName = configPath + name + ".toml";
-        if (fileExists(fileName) && !contains(components, name + "|")) {
-            components += name + "|";
-            CToml custom(fileName);
-            toml->mergeFile(&custom);
-        }
-    }
-
-    return toml;
-}
-
 inline bool waitForCreate(const string_q& filename) {
     size_t mx = 1000;
     size_t cnt = 0;

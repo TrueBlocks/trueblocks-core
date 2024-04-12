@@ -19,11 +19,6 @@ int main(int argc, const char* argv[]) {
     options.loadEnvironmentPaths();
 
     cerr.rdbuf(cout.rdbuf());
-
-    if (argc > 0) {
-        options.progName = CFilename(argv[0]).getFilename();
-    }
-
     string_q testFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
     if (!options.parseArguments(""))
         return EXIT_FAILURE;
@@ -163,9 +158,7 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
                 if (has_env)
                     cmd << "-H \"X-TestRunner-Env: " << substitute(linesToString(envLines, '|'), " ", "") << "\" ";
                 cmd << "\"";
-                extern string_q getEnvStr(const string_q& name);
                 string_q port = getEnvStr("TB_TEST_API_SERVER");
-                // getGlobalConfig("testRunner")->getConfigStr("settings", "api_provider", "http://localhost:8080");
                 string_q apiProvider = "http://localhost:" + (port.empty() ? "8080" : port) + "/";
                 cmd << apiProvider;
                 cmd << test.route;
@@ -358,4 +351,9 @@ string_q padLeft(const string_q& str, size_t len, char p) {
     if (len > str.length())
         return string_q(len - str.length(), p) + str;
     return str;
+}
+
+string_q getEnvStr(const string_q& name) {
+    char* sss = getenv(name.c_str());
+    return (sss ? string_q(sss) : string_q(""));
 }

@@ -12,7 +12,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "utillib.h"
-#include "toml.h"
 #include "testcase.h"
 
 #define API (1 << 0)
@@ -22,7 +21,6 @@
 //-----------------------------------------------------------------------------
 class COptions {
   public:
-    string_q progName = "trueBlocks";
     string_q chain;
     string_q configPath;
     string_q chainConfigPath;
@@ -41,7 +39,6 @@ class COptions {
     void doTests(vector<CTestCase>& testArray, const string_q& testName, int which);
     void loadEnvironmentPaths(void);
     string_q relativize(const string_q& path);
-    const CToml* getGlobalConfig(const string_q& name);
 };
 
 //-----------------------------------------------------------------------
@@ -52,3 +49,4 @@ extern string_q linesToString(const CStringArray& lines, char sep = '\n');
 extern string_q doCommand(const string_q& cmd, bool readStderr = false);
 extern string_q padRight(const string_q& str, size_t len, char p = ' ');
 extern string_q padLeft(const string_q& str, size_t len, char p = ' ');
+extern string_q getEnvStr(const string_q& name);

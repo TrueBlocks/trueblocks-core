@@ -356,7 +356,7 @@ CSourceSearch::CSourceSearch(COptions* o) : opt(o) {
         ASSERT(fileExists("./source.toml"));
         ASSERT(fileExists("./whiteList.csv"));
 
-        CToml toml("./source.toml");
+        C Toml toml("./source.toml");
         if (!toml.getConfigBool("settings", "colors", true)) {
             colorsOff();
         }
