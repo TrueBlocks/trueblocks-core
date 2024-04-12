@@ -14,10 +14,10 @@
 #include "options.h"
 #include "testcase.h"
 
+extern void copyBack(const string_q& path, const string_q& tool, const string_q& fileName);
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
-
     cerr.rdbuf(cout.rdbuf());
 
     COptions options;
@@ -47,11 +47,12 @@ int main(int argc, const char* argv[]) {
             CStringArray lines;
             explode(lines, contents, '\n');
 
-            map<string_q, CTestCase> testMap;
+            vector<CTestCase> testArray;
             for (auto line : lines) {
                 if (startsWith(line, "#") || startsWith(line, "enabled") || line.empty()) {
                     continue;
                 }
+
                 CStringArray parts;
                 explode(parts, line, ',');
                 if (parts.size() < 7) {
@@ -59,42 +60,25 @@ int main(int argc, const char* argv[]) {
                     exit(1);
                 }
 
+                CTestCase test(line, testID++);
                 if (!startsWith(line, "on")) {
                     if (trim(line).substr(0, 120).length() > 0) {
                         cerr << "   # " << line.substr(0, 120) << endl;
                     }
-                    CTestCase test(line, 0);
-                    test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
-                                               "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
-                    if (fileExists(test.goldPath)) {
-                        test.workPath =
-                            substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
-                                       "/test/working/" + test.path + "/" + test.tool + "/" + test.fileName);
-                        copyFile(test.goldPath, test.workPath);
-                    }
-                    replace(test.goldPath, "/" + test.tool + "/", "/" + test.tool + "/api_tests/");
-                    if (fileExists(test.goldPath)) {
-                        test.workPath = substitute(
-                            getCWD(), "/test/gold/dev_tools/testRunner/",
-                                "/test/working/" + test.path + "/" + test.tool + "/api_tests/" + test.fileName);
-                        copyFile(test.goldPath, test.workPath);
-                    }
+                    copyBack(test.path, test.tool, test.fileName);
 
                 } else {
-                    CTestCase test(line, testID++);
+                    static map<string_q, CTestCase> testMap;
                     string_q key = test.route + "-" + test.tool + "-" + test.name;
                     if (testMap[key] != CTestCase()) {
                         cerr << "Duplicate test names: " << key << ". Quitting..." << endl;
                         return EXIT_FAILURE;
                     }
                     testMap[key] = test;
+                    testArray.push_back(test);
                 }
             }
-
-            vector<CTestCase> testArray;
-            for (auto t : testMap)
-                testArray.push_back(t.second);
-            sort(testArray.begin(), testArray.end());
+            // sort(testArray.begin(), testArray.end());
 
             options.doTests(testArray, testName, API);
             options.doTests(testArray, testName, CMD);
@@ -369,4 +353,22 @@ string_q relativize(const string_q& path) {
     replace(ret, getPathToCommands(""), "");
     replace(ret, getHomeFolder(), "$HOME/");
     return ret;
+}
+
+void copyBack(const string_q& path, const string_q& tool, const string_q& fileName) {
+    string_q tr = "/test/gold/dev_tools/testRunner/";
+    string_q fn = path + "/" + tool + "/" + fileName;
+    string_q fnA = path + "/" + tool + "/api_tests/" + fileName;
+
+    string_q goldPath = substitute(getCWD(), tr, "/test/gold/" + fn);
+    string_q workPath = substitute(getCWD(), tr, "/test/working/" + fn);
+    if (fileExists(goldPath)) {
+        copyFile(goldPath, workPath);
+    }
+
+    goldPath = substitute(getCWD(), tr, "/test/gold/" + fnA);
+    workPath = substitute(getCWD(), tr, "/test/working/" + fnA);
+    if (fileExists(goldPath)) {
+        copyFile(goldPath, workPath);
+    }
 }
