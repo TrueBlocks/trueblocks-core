@@ -44,8 +44,7 @@ namespace qblocks {
 #define NOOPT ((uint32_t)-1)
 // EXISTING_CODE
 
-//--------------------------------------------------------------------------
-class COption : public CBaseNode {
+class COption {
   public:
     string_q hotKey;
     string_q longName;
@@ -74,7 +73,6 @@ class COption : public CBaseNode {
 
 //--------------------------------------------------------------------------
 inline COption::COption(void) {
-    CBaseNode::initialize();
     hotKey = "";
     longName = "";
     description = "";
@@ -88,7 +86,6 @@ inline COption::COption(void) {
 
 //--------------------------------------------------------------------------
 inline COption::COption(const COption& op) {
-    CBaseNode::duplicate(op);
     hotKey = op.hotKey;
     longName = op.longName;
     description = op.description;
@@ -105,7 +102,6 @@ inline COption::~COption(void) {
 }
 
 inline COption& COption::operator=(const COption& op) {
-    CBaseNode::duplicate(op);
     hotKey = op.hotKey;
     longName = op.longName;
     description = op.description;

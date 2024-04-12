@@ -20,10 +20,6 @@ namespace qblocks {
 #define READING_ARCHIVE true
 #define WRITING_ARCHIVE false
 
-class CBaseNode;
-typedef bool (*VISITARCHIVEFUNC)(CBaseNode& node, void* data);
-
-//-----------------------------------------------------------------------------------------
 class CArchive : public CSharedResource {
   private:
     class CArchiveHeader {
@@ -37,14 +33,10 @@ class CArchive : public CSharedResource {
   public:
     CArchiveHeader m_header;
     bool m_isReading;
-    // VISITARCHIVEFUNC writeMsgFunc;
-    // VISITARCHIVEFUNC readMsgFunc;
 
     explicit CArchive(bool isReading) : CSharedResource() {
         m_isReading = isReading;
         m_header.m_version = 20000 + 500 + 8;
-        // writeMsgFunc     = NULL;
-        // readMsgFunc      = NULL;
     }
 
     string_q getType(void) const override {

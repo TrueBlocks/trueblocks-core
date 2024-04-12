@@ -25,7 +25,7 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CConfigEnv : public CBaseNode {
+class CConfigEnv {
   public:
     string_q chain;
     string_q configPath;
@@ -48,7 +48,6 @@ class CConfigEnv : public CBaseNode {
 };
 
 inline CConfigEnv::CConfigEnv(void) {
-    CBaseNode::initialize();
     chain = "";
     configPath = "";
     chainConfigPath = "";
@@ -56,7 +55,6 @@ inline CConfigEnv::CConfigEnv(void) {
 }
 
 inline CConfigEnv::CConfigEnv(const CConfigEnv& co) {
-    CBaseNode::duplicate(co);
     chain = co.chain;
     configPath = co.configPath;
     chainConfigPath = co.chainConfigPath;
@@ -67,7 +65,6 @@ inline CConfigEnv::~CConfigEnv(void) {
 }
 
 inline CConfigEnv& CConfigEnv::operator=(const CConfigEnv& co) {
-    CBaseNode::duplicate(co);
     chain = co.chain;
     configPath = co.configPath;
     chainConfigPath = co.chainConfigPath;
