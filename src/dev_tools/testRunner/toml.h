@@ -63,7 +63,6 @@ class CToml : public CSharedResource {
 
         CTomlSection& operator=(const CTomlSection& section);
         void addKey(const string_q& keyName, const string_q& val);
-        void addComment(const string_q& val);
 
       private:
         void clear(void);
@@ -73,7 +72,6 @@ class CToml : public CSharedResource {
   protected:
     string_q addSection(const string_q& section);
     void addKey(const string_q& section, const string_q& key, const string_q& val);
-    void addComment(const string_q& section, const string_q& val);
 
     CTomlSection* findSection(const string_q& section) const;
     CTomlKey* findKey(const string_q& section, const string_q& key) const;
@@ -92,17 +90,7 @@ class CToml : public CSharedResource {
     ~CToml(void);
 
     string_q getConfigStr(const string_q& section, const string_q& key, const string_q& def) const;
-    uint64_t getConfigInt(const string_q& section, const string_q& key, uint64_t def) const;
     uint64_t getVersion(void) const;
-    bool getConfigBool(const string_q& section, const string_q& key, bool def) const;
-
     void setConfigStr(const string_q& section, const string_q& key, const string_q& value);
-    void setConfigInt(const string_q& section, const string_q& key, uint64_t value);
-    void setConfigBool(const string_q& section, const string_q& key, bool value);
-
-    bool writeFile(void);
     void mergeFile(CToml* tomlIn);
-
-    bool isBackLevel(void) const;
-    friend ostream& operator<<(ostream& os, const CToml& tomlIn);
 };

@@ -39,13 +39,6 @@ void CToml::addKey(const string_q& section, const string_q& key, const string_q&
     return;
 }
 
-void CToml::addComment(const string_q& section, const string_q& val) {
-    CTomlSection* grp = findSection(section);
-    if (grp)
-        grp->addComment(val);
-    return;
-}
-
 CToml::CTomlKey* CToml::findKey(const string_q& section, const string_q& keyIn) const {
     CTomlSection* grp = findSection(section);
     if (grp) {
@@ -56,45 +49,12 @@ CToml::CTomlKey* CToml::findKey(const string_q& section, const string_q& keyIn) 
     return NULL;
 }
 
-string_q int_2_Str(int64_t i) {
-    ostringstream os;
-    os << i;
-    return os.str();
-}
-string_q uint_2_Str(uint64_t i) {
-    ostringstream os;
-    os << i;
-    return os.str();
-}
-
-uint64_t CToml::getConfigInt(const string_q& section, const string_q& key, uint64_t def) const {
-    string_q ret = getConfigStr(section, key, uint_2_Str(def));
-    return str_2_Uint(ret);
-}
-
-bool CToml::getConfigBool(const string_q& section, const string_q& key, bool def) const {
-    string_q ret = getConfigStr(section, key, int_2_Str(def ? 1 : 0));
-    replaceAny(ret, ";\t\n\r ", "");
-    return ((ret == "true" || ret == "1") ? true : false);
-}
-
-string_q foldContinuations(const string_q& strIn) {
-    string_q ret = strIn;
-    replaceAll(ret, "\\\n ", "\\\n");  // if ends with '\' + '\n' + space, make it just '\' + '\n'
-    replaceAll(ret, "\\\n", "");       // if ends with '\' + '\n', its a continuation, so fold in
-    replaceAll(ret, "\\\r\n", "");     // same for \r\n
-    return ret;
-}
-
 bool CToml::readFile(const string_q& filename) {
     string_q curSection;
     clear();
 
     string_q contents = asciiFileToString(filename);
-    contents = foldContinuations(contents);
-
     if (!contains(contents, "[version]")) {
-        // return unused
         addSection("version");
         addKey("version", "current", "2.5.8-release");
     }
@@ -116,8 +76,6 @@ bool CToml::readFile(const string_q& filename) {
             if (!startsWith(value, '#')) {
                 string_q key = nextTokenClear(value, '=');
                 addKey(curSection, trimWhitespace(key), trimWhitespace(value));
-            } else {
-                addComment(curSection, value);
             }
         }
     }
@@ -125,50 +83,17 @@ bool CToml::readFile(const string_q& filename) {
     return true;
 }
 
-bool is_str(const string_q& str) {
-    if (str.empty())
-        return true;
-    if (startsWith(str, '['))
-        return false;
-    if (isAddress(str))
-        return true;
-    if (isdigit(str[0]))
-        return false;
-    if (str == "true" || str == "false")
-        return false;
-    return true;
-}
-
-string_q escape_quotes(const string_q& str) {
-    string_q res;
-    for (auto it = str.begin(); it != str.end(); ++it) {
-        if (*it == '"')
-            res += "\\";
-        res += *it;
-    }
-    return res;
-}
-
-bool CToml::writeFile(void) {
-    if (!Lock(m_filename, modeWriteCreate, LOCK_CREATE)) {
-        LockFailure();
-        return false;
-    }
-    ostringstream os;
-    os << *this;
-    WriteLine(substitute(os.str(), "\n\n\n", "\n\n").c_str());
-    Release();
-    return true;
-}
-
-bool CToml::isBackLevel(void) const {
-    return false;
-}
-
 void CToml::mergeFile(CToml* tomlIn) {
-    for (auto section : tomlIn->sections)
-        for (auto key : section.keys)
+    for (auto section : tomlIn->sections) {
+        for (auto key : section.keys) {
             setConfigStr(section.sectionName, key.getKey(), "\"" + key.getValue() + "\"");
+        }
+    }
+}
+
+string_q getEnvStr(const string_q& name) {
+    char* sss = getenv(name.c_str());
+    return (sss ? string_q(sss) : string_q(""));
 }
 
 string_q CToml::getConfigStr(const string_q& section, const string_q& key, const string_q& def) const {
@@ -197,14 +122,6 @@ uint64_t CToml::getVersion(void) const {
     return 20000 + 500 + 8;
 }
 
-void CToml::setConfigInt(const string_q& section, const string_q& key, uint64_t value) {
-    setConfigStr(section, key, int_2_Str((int64_t)value));
-}
-
-void CToml::setConfigBool(const string_q& section, const string_q& key, bool value) {
-    setConfigStr(section, key, bool_2_Str(value));
-}
-
 void CToml::setConfigStr(const string_q& section, const string_q& keyIn, const string_q& value) {
     if (startsWith(keyIn, '#'))
         return;
@@ -212,10 +129,8 @@ void CToml::setConfigStr(const string_q& section, const string_q& keyIn, const s
     string_q key = keyIn;
     CTomlSection* grp = findSection(section);
     if (!grp) {
-        // return unused
         addSection(section);
         addKey(section, key, value);
-
     } else {
         CTomlKey* found = findKey(section, key);
         if (found) {
@@ -224,38 +139,6 @@ void CToml::setConfigStr(const string_q& section, const string_q& keyIn, const s
             addKey(section, key, value);
         }
     }
-}
-
-ostream& operator<<(ostream& os, const CToml& tomlIn) {
-    bool first = true;
-    for (auto section : tomlIn.sections) {
-        if (!first)
-            os << endl;
-        os << "[";
-        os << section.sectionName;
-        os << "]";
-        os << endl;
-        for (auto key : section.keys) {
-            string_q value = key.getValue();
-            if ((!value.empty() && isNumeral(value)) || (value == "true" || value == "false")) {
-                os << key.getKey() << " = " << value;
-
-            } else {
-                if (key.getKey().empty()) {
-                    if (value != "#")
-                        os << value;  // a comment
-
-                } else {
-                    string val = substitute(value, "\"", "\\\"");
-                    os << key.getKey() << " = "
-                       << "\"" << val << "\"";
-                }
-            }
-            os << endl;
-        }
-        first = false;
-    }
-    return os;
 }
 
 CToml::CTomlKey::CTomlKey() {
@@ -311,11 +194,5 @@ void CToml::CTomlSection::addKey(const string_q& keyName, const string_q& val) {
     str = substitute(str, "\\#", "#");    // unescape
     CTomlKey key(keyName, str);
     keys.push_back(key);
-    return;
-}
-
-void CToml::CTomlSection::addComment(const string_q& val) {
-    CTomlComment comment(val);
-    keys.push_back(comment);
     return;
 }

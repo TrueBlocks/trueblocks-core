@@ -263,9 +263,6 @@ size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
         lock.WriteLine(contents.c_str());
         lock.Release();
     } else {
-        string_q dName = fileName;
-        if (isTestMode())
-            dName = "--filename--";
         return false;
     }
     return true;

@@ -82,11 +82,6 @@ int main(int argc, const char* argv[]) {
 
         options.doTests(testArray, testName, API);
         options.doTests(testArray, testName, CMD);
-
-        if (getEnvStr("WAIT_PER_TEST") == "true") {
-            cerr << "Press enter to continue" << endl;
-            getchar();
-        }
     }
 
     // We've run through all the tests. We know how many we've run and we know how

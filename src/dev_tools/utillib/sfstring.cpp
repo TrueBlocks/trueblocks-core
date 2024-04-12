@@ -76,25 +76,6 @@ size_t explode(CUintArray& result, const string& input, char needle, bool trim) 
     return result.size();
 }
 
-//--------------------------------------------------------------------------------
-size_t forEveryExplodedItem(const string& input, char needle, APPLYFUNC func, void* data) {
-    if (!func)
-        return 0;
-
-    string_q buffer{""};
-
-    for (auto ch : input) {
-        if (ch != needle) {
-            buffer += ch;
-        } else if (ch == needle) {
-            func(buffer, data);
-            buffer = "";
-        }
-    }
-    return 0;
-}
-
-//---------------------------------------------------------------------------------------
 bool contains(const string_q& haystack, const string_q& needle) {
     return (haystack.find(needle) != string::npos);
 }

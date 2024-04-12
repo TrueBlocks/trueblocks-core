@@ -5,10 +5,10 @@
 //     LOG_ERR(localFile, " found in local folder. Chifra monitor tests will fail.");
 //     exit(0);
 // }
-// if (g etGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
+// if (g etGlobalConfig("")->getC onfigBool("dev", "debug_curl", false))
 //     return u sage("[dev]debug_curl is set in config file. All tests will fail.");
 // bool hasKey = g etGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
-// bool wantsTest = getEnvStr("TEST_SLURPS") == "true";
+// bool wantsTest = g etEnvStr("TEST_SLURPS") == "true";
 // bool runSlurps = (hasKey && wantsTest);
 // if (runSlurps) {
 //     tests.push_back("tools/ethslurp");
