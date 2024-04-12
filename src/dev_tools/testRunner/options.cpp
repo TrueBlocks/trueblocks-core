@@ -156,9 +156,14 @@ T RandomValue(T a, T b) {
     return min(a, b) + (((T)rand()) % range);
 }
 
+string_q int_2_Strxx(int64_t i) {
+    ostringstream os;
+    os << i;
+    return os.str();
+}
 string_q doCommand(const string_q& cmd, bool readStderr) {
     string_q tmpPath = "/tmp/";
-    string_q filename = tmpPath + makeValidName("qb_" + int_2_Str(RandomValue(1, 10000)));
+    string_q filename = tmpPath + makeValidName("qb_" + int_2_Strxx(RandomValue(1, 10000)));
     string_q theCommand = (cmd + " >" + filename);
     if (readStderr) {
         theCommand = (cmd + " >/dev/null 2>" + filename);

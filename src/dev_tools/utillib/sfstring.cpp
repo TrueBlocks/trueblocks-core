@@ -372,136 +372,18 @@ string_q padCenter(const string_q& str, size_t len, char p) {
     return str;
 }
 
-//--------------------------------------------------------------------
 string_q extract(const string_q& haystack, size_t pos, size_t len) {
     if (pos >= haystack.length())
         return "";
     return haystack.substr(pos, len);
 }
 
-//--------------------------------------------------------------------
-string_q escape_string(const string_q& str) {
-    string_q res;
-    for (auto it = str.begin(); it != str.end(); ++it) {
-        if (*it == '\b')
-            res += "\\b";  // NOLINT
-        else if (*it == '\t')
-            res += "\\t";
-        else if (*it == '\n')
-            res += "\\n";
-        else if (*it == '\f')
-            res += "\\f";
-        else if (*it == '\r')
-            res += "\\r";
-        else if (*it == '"')
-            res += "\\\"";
-        else if (*it == '\\')
-            res += "\\\\";
-        else if (static_cast<uint32_t>(*it) <= UINT32_C(0x001f)) {  // NOLINT
-            res += "\\u";
-            stringstream ss;
-            ss << hex << static_cast<uint32_t>(*it);
-            res += ss.str();
-        } else {
-            res += *it;
-        }
-    }
-    return res;
-}
-
-//--------------------------------------------------------------------------------
-string_q removeCharacters_inner(const string_q& str, size_t n, const char* chars) {
-    string_q ret;
-    for (auto ch : str) {
-        bool found = false;
-        for (size_t i = 0; i < n && !found; i++) {
-            if (chars[i] == ch) {
-                found = true;
-            }
-        }
-        if (!found)
-            ret += ch;
-    }
-    return ret;
-}
-
-//--------------------------------------------------------------------------------
-void removeCharacters(string_q& str, size_t n, const char* chars) {
-    str = removeCharacters_inner(str, n, chars);
-}
-
-//-----------------------------------------------------------------------
-void simplifySolidity(string_q& code) {
-    replaceAll(code, "`", "");    // easier
-    replaceAll(code, "*/", "`");  // easier
-    string_q ret;
-    char endChar = '\0';
-    typedef enum { OUT, START, STOP, IN } State;
-    State state = OUT;
-    for (auto ch : code) {
-        if (ch == '\r')
-            ch = '\n';
-        if (ch == '{')
-            ch = ';';
-        switch (state) {
-            case OUT:
-                switch (ch) {
-                    case '/':
-                        state = START;
-                        break;
-                    default:
-                        ret += ch;
-                        break;
-                }
-                break;
-            case START:
-                switch (ch) {
-                    case '*':
-                        state = IN;
-                        endChar = '`';  // easier
-                        break;
-                    case '/':
-                        state = IN;
-                        endChar = '\n';
-                        break;
-                    default:
-                        ret += '/';
-                        state = OUT;
-                        break;
-                }
-                break;
-            case IN:
-                if (ch == endChar) {
-                    state = OUT;
-                }
-                break;
-            default:
-                return;
-        }
-    }
-    code = substitute(substitute(ret, "\t", " "), "  ", " ");
-}
-
-//---------------------------------------------------------------------------------------
 bool containsAny(const string_q& haystack, const string_q& needle) {
     string need = needle.c_str();
     for (const auto elem : need)
         if (contains(haystack, elem))
             return true;
     return false;
-}
-
-//---------------------------------------------------------------------------------------
-inline size_t find_nth(const string& haystack, size_t pos, const string& needle, size_t nth) {
-    size_t found_pos = haystack.find(needle, pos);
-    if (0 == nth || string::npos == found_pos)
-        return found_pos;
-    return find_nth(haystack, found_pos + 1, needle, nth - 1);
-}
-
-//---------------------------------------------------------------------------------------
-size_t find_nth(const string& haystack, const string& needle, size_t nth) {
-    return find_nth(haystack, 0, needle, nth);
 }
 
 string_q substituteAny(const string_q& strIn, const string_q& what, const string_q& with) {

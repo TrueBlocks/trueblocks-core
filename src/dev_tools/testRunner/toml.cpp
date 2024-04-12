@@ -56,6 +56,17 @@ CToml::CTomlKey* CToml::findKey(const string_q& section, const string_q& keyIn) 
     return NULL;
 }
 
+string_q int_2_Str(int64_t i) {
+    ostringstream os;
+    os << i;
+    return os.str();
+}
+string_q uint_2_Str(uint64_t i) {
+    ostringstream os;
+    os << i;
+    return os.str();
+}
+
 uint64_t CToml::getConfigInt(const string_q& section, const string_q& key, uint64_t def) const {
     string_q ret = getConfigStr(section, key, uint_2_Str(def));
     return str_2_Uint(ret);

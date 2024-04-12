@@ -178,12 +178,13 @@ void CSharedResource::Close(void) {
     m_fp = NULL;
 }
 
-//----------------------------------------------------------------------
+string_q uint_2_Strx(uint64_t i) {
+    ostringstream os;
+    os << i;
+    return os.str();
+}
 string_q CSharedResource::LockFailure(void) const {
-    // In some cases (for example when can't open event file because it has not yet
-    // been created) this may not be an error -- Lock should set an error flag
-    // which this guy should read and do right
-    return uint_2_Str(m_error) + ": " + m_errorMsg;
+    return uint_2_Strx(m_error) + ": " + m_errorMsg;
 }
 
 //----------------------------------------------------------------------
