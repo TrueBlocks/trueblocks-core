@@ -20,70 +20,69 @@ int main(int argc, const char* argv[]) {
     cerr.rdbuf(cout.rdbuf());
 
     COptions options;
-    if (!options.prepareArguments(argc, argv))
-        return EXIT_FAILURE;
+    if (argc > 0) {
+        COptionsBase::g_progName = CFilename(argv[0]).getFilename();
+    }
 
     string_q testFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
-    for (auto command : options.commandLines) {
-        if (!options.parseArguments(command))
-            return EXIT_FAILURE;
+    if (!options.parseArguments(""))
+        return EXIT_FAILURE;
 
-        cleanFolder(getConfigEnv()->cachePath + "tmp/");
+    cleanFolder(getConfigEnv()->cachePath + "tmp/");
 
-        for (auto testName : options.tests) {
-            string_q path = nextTokenClear(testName, '/');
-            cleanTest(path, testName);
-            cleanTest(path, testName + "/api_tests");
+    for (auto testName : options.tests) {
+        string_q path = nextTokenClear(testName, '/');
+        cleanTest(path, testName);
+        cleanTest(path, testName + "/api_tests");
 
-            string_q testFile = testFolder + path + "/" + testName + ".csv";
-            if (!fileExists(testFile))
-                return !options.usage("Cannot find test file " + testFile + ".");
+        string_q testFile = testFolder + path + "/" + testName + ".csv";
+        if (!fileExists(testFile))
+            return !options.usage("Cannot find test file " + testFile + ".");
 
-            string_q contents = asciiFileToString(testFile) + "\n";
-            replaceAll(contents, "\n\n", "\n");
+        string_q contents = asciiFileToString(testFile) + "\n";
+        replaceAll(contents, "\n\n", "\n");
 
-            CStringArray lines;
-            explode(lines, contents, '\n');
+        CStringArray lines;
+        explode(lines, contents, '\n');
 
-            vector<CTestCase> testArray;
-            for (auto line : lines) {
-                if (startsWith(line, "#") || startsWith(line, "enabled") || line.empty()) {
-                    continue;
-                }
-
-                CStringArray parts;
-                explode(parts, line, ',');
-                if (parts.size() < 7) {
-                    cerr << "Wrong size in test line: " << testName << ": " << line << endl;
-                    exit(1);
-                }
-
-                CTestCase test(line);
-                if (!startsWith(line, "on")) {
-                    if (trim(line).substr(0, 120).length() > 0) {
-                        cerr << "   # " << line.substr(0, 120) << endl;
-                    }
-                    copyBack(test.path, test.tool, test.fileName);
-
-                } else {
-                    static map<string_q, CTestCase> testMap;
-                    string_q key = test.route + "-" + test.tool + "-" + test.name;
-                    if (testMap[key] != CTestCase()) {
-                        cerr << "Duplicate test names: " << key << ". Quitting..." << endl;
-                        return EXIT_FAILURE;
-                    }
-                    testMap[key] = test;
-                    testArray.push_back(test);
-                }
+        vector<CTestCase> testArray;
+        for (auto line : lines) {
+            if (startsWith(line, "#") || startsWith(line, "enabled") || line.empty()) {
+                continue;
             }
 
-            options.doTests(testArray, testName, API);
-            options.doTests(testArray, testName, CMD);
-
-            if (getEnvStr("WAIT_PER_TEST") == "true") {
-                cerr << "Press enter to continue" << endl;
-                getchar();
+            CStringArray parts;
+            explode(parts, line, ',');
+            if (parts.size() < 7) {
+                cerr << "Wrong size in test line: " << testName << ": " << line << endl;
+                exit(1);
             }
+
+            CTestCase test(line);
+            if (!startsWith(line, "on")) {
+                if (trim(line).substr(0, 120).length() > 0) {
+                    cerr << "   # " << line.substr(0, 120) << endl;
+                }
+                copyBack(test.path, test.tool, test.fileName);
+
+            } else {
+                static map<string_q, CTestCase> testMap;
+                string_q key = test.route + "-" + test.tool + "-" + test.name;
+                if (testMap[key] != CTestCase()) {
+                    cerr << "Duplicate test names: " << key << ". Quitting..." << endl;
+                    return EXIT_FAILURE;
+                }
+                testMap[key] = test;
+                testArray.push_back(test);
+            }
+        }
+
+        options.doTests(testArray, testName, API);
+        options.doTests(testArray, testName, CMD);
+
+        if (getEnvStr("WAIT_PER_TEST") == "true") {
+            cerr << "Press enter to continue" << endl;
+            getchar();
         }
     }
 

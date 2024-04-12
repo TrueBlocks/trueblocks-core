@@ -29,7 +29,7 @@ class COptions : public COptionsBase {
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(string_q& command) override;
+    bool parseArguments(const string_q& command) override;
     void Init(void) override;
 
     void doTests(vector<CTestCase>& testArray, const string_q& testName, int which);

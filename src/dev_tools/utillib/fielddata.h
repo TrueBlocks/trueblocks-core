@@ -91,7 +91,6 @@ class CFieldData {
 
     friend class CRuntimeClass;
     friend class CFieldList;
-    friend class CBaseNode;
 };
 typedef vector<CFieldData> CFieldDataArray;
 }  // namespace qblocks

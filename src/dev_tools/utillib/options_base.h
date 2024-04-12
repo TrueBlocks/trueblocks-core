@@ -33,7 +33,6 @@ class COptionsBase {
     CStringArray configs;
     CStringArray errors;
 
-    uint64_t minArgs;
     uint32_t enableBits;
     bool isRaw;
     bool noHeader;
@@ -48,11 +47,8 @@ class COptionsBase {
     void setProgName(const string_q& name);
     string_q getProgName(void) const;
 
-    virtual bool parseArguments(string_q& command) = 0;
-    bool prepareArguments(int argc, const char* argv[]);
-    bool prePrepareArguments(CStringArray& separatedArgs_, int argCountIn, const char* argvIn[]);
+    virtual bool parseArguments(const string_q& command) = 0;
     bool builtInCmd(const string_q& arg);
-    bool standardOptions(string_q& cmdLine);
 
   public:
     bool isEnabled(uint32_t q) const;
@@ -64,10 +60,7 @@ class COptionsBase {
         return false;
     }
 
-    bool invalid_option(const string_q& arg) const;
-
     string_q expandOption(string_q& arg);
-    bool isBadSingleDash(const string_q& arg) const;
 
     bool isRedirected(void) const;
     string_q getOutputFn(void) const {
@@ -91,7 +84,7 @@ class CDefaultOptions : public COptionsBase {
   public:
     CDefaultOptions() {
     }
-    bool parseArguments(string_q& command) {
+    bool parseArguments(const string_q& command) {
         return true;
     }
     void Init(void) {

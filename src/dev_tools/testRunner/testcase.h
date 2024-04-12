@@ -2,7 +2,7 @@
 
 #include "utillib.h"
 
-class CTestCase : public CBaseNode {
+class CTestCase {
   public:
     string_q origLine;
     string_q onOff;
@@ -34,7 +34,6 @@ class CTestCase : public CBaseNode {
 };
 
 inline CTestCase::CTestCase(void) {
-    CBaseNode::initialize();
     origLine = "";
     onOff = "";
     mode = "";
@@ -51,7 +50,6 @@ inline CTestCase::CTestCase(void) {
 }
 
 inline CTestCase::CTestCase(const CTestCase& te) {
-    CBaseNode::duplicate(te);
     origLine = te.origLine;
     onOff = te.onOff;
     mode = te.mode;
@@ -71,7 +69,6 @@ inline CTestCase::~CTestCase(void) {
 }
 
 inline CTestCase& CTestCase::operator=(const CTestCase& te) {
-    CBaseNode::duplicate(te);
     origLine = te.origLine;
     onOff = te.onOff;
     mode = te.mode;
