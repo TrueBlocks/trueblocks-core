@@ -23,7 +23,6 @@
 #include "basetypes.h"
 #include "conversions.h"
 #include "sfos.h"
-#include "sftime.h"
 #include "sfstring.h"
 #include "database.h"
 #include "filenames.h"

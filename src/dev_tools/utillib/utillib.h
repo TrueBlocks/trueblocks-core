@@ -2,7 +2,6 @@
 #include "basetypes.h"
 #include "sfstring.h"
 #include "conversions.h"
-#include "sftime.h"
 #include "sfos.h"
 #include "database.h"
 #include "sfarchive.h"

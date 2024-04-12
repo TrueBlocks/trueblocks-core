@@ -13,7 +13,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "database.h"
 #include "conversions.h"
-#include "sftime.h"
 
 namespace qblocks {
 

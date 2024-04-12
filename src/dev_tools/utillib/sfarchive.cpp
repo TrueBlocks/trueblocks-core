@@ -104,13 +104,13 @@ CArchive& operator<<(CArchive& archive, const CUintArray& array) {
     return archive;
 }
 
-CArchive& operator<<(CArchive& archive, const CIntArray& array) {
-    uint64_t count = array.size();
-    archive << count;
-    for (size_t i = 0; i < array.size(); i++)
-        archive << array[i];
-    return archive;
-}
+// CArchive& operator<<(CArchive& archive, const CIntArray& array) {
+//     uint64_t count = array.size();
+//     archive << count;
+//     for (size_t i = 0; i < array.size(); i++)
+//         archive << array[i];
+//     return archive;
+// }
 
 ///////////////////////////////////////////////////////////////////
 CArchive& CArchive::operator>>(bool& b) {
@@ -202,16 +202,16 @@ CArchive& operator>>(CArchive& archive, CUintArray& array) {
 }
 
 //----------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CIntArray& array) {
-    uint64_t count;
-    archive >> count;
-    for (size_t i = 0; i < count; i++) {
-        int64_t num;
-        archive >> num;
-        array.push_back(num);
-    }
-    return archive;
-}
+// CArchive& operator>>(CArchive& archive, CIntArray& array) {
+//     uint64_t count;
+//     archive >> count;
+//     for (size_t i = 0; i < count; i++) {
+//         int64_t num;
+//         archive >> num;
+//         array.push_back(num);
+//     }
+//     return archive;
+// }
 
 size_t asciiFileToBuffer(const string_q& fileName, vector<char>& buffer) {
     size_t len = fileSize(fileName);

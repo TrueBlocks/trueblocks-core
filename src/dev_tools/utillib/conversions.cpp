@@ -68,9 +68,9 @@ uint64_t str_2_Uint(const string_q& str) {
 }
 
 //--------------------------------------------------------------------------------
-gas_t str_2_Gas(const string_q& str) {
-    return str_2_Uint(str);
-}
+// gas_t str_2_Gas(const string_q& str) {
+//     return str_2_Uint(str);
+// }
 
 //--------------------------------------------------------------------------------
 double str_2_Double(const string_q& str) {
@@ -121,11 +121,11 @@ inline string_q getMax(size_t bits) {
 // #define NO_STR_CONVERT_FAST
 //--------------------------------------------------------------------------------
 //-----------------------------------------------------------------------
-address_t topic_2_Addr(const topic_t& topic) {
-    if (topic.length() != 66)
-        return "";
-    return "0x" + padLeft(topic.substr(26, 66), 40, '0');
-}
+// address_t topic_2_Addr(const topic_t& topic) {
+//     if (topic.length() != 66)
+//         return "";
+//     return "0x" + padLeft(topic.substr(26, 66), 40, '0');
+// }
 
 //--------------------------------------------------------------------------------
 string_q bool_2_Str(bool num) {
@@ -158,9 +158,9 @@ string_q uint_2_Str(uint64_t i) {
 }
 
 //--------------------------------------------------------------------------------
-string_q gas_2_Str(const gas_t& gas) {
-    return uint_2_Str(gas);
-}
+// string_q gas_2_Str(const gas_t& gas) {
+//     return uint_2_Str(gas);
+// }
 
 //--------------------------------------------------------------------------------
 string_q double_2_Str(double f, size_t nDecimals) {
@@ -183,19 +183,19 @@ string_q double_2_Str(double f, size_t nDecimals) {
 }
 
 //--------------------------------------------------------------------------------
-string_q addr_2_Str(const address_t& addr) {
-    return (addr.empty() ? "0x0" : addr);
-}
+// string_q addr_2_Str(const address_t& addr) {
+//     return (addr.empty() ? "0x0" : addr);
+// }
 
 //--------------------------------------------------------------------------------
-string_q hash_2_Str(const hash_t& hash) {
-    return (hash.empty() ? "0x0" : hash);
-}
+// string_q hash_2_Str(const hash_t& hash) {
+//     return (hash.empty() ? "0x0" : hash);
+// }
 
 //-----------------------------------------------------------------------
-bool isEtherAddr(const address_t& addr) {
-    return toLower(addr) == FAKE_ETH_ADDRESS;
-}
+// bool isEtherAddr(const address_t& addr) {
+//     return toLower(addr) == FAKE_ETH_ADDRESS;
+// }
 
 //--------------------------------------------------------------------------------
 bool isNumeral(const string_q& test) {
@@ -229,14 +229,14 @@ bool isAddress(const string_q& addrIn) {
 }
 
 //--------------------------------------------------------------------------------
-bool isHash(const hash_t& hashIn) {
-    return (hashIn.length() == 66 && isHexStr(hashIn));
-}
+// bool isHash(const hash_t& hashIn) {
+//     return (hashIn.length() == 66 && isHexStr(hashIn));
+// }
 
 //--------------------------------------------------------------------------------
-bool isFourByte(const fourbyte_t& fourByteIn) {
-    return (fourByteIn.length() == 10 && isHexStr(fourByteIn));
-}
+// bool isFourByte(const fourbyte_t& fourByteIn) {
+//     return (fourByteIn.length() == 10 && isHexStr(fourByteIn));
+// }
 
 //--------------------------------------------------------------------------------
 bool isUnsigned(const string_q& in) {
@@ -253,21 +253,21 @@ bool isUnsigned(const string_q& in) {
 }
 
 //--------------------------------------------------------------------------------
-int64_t str_2_Ts(const string_q& str) {
-    return str_2_Int(str);
-}
+// int64_t str_2_Ts(const string_q& str) {
+//     return str_2_Int(str);
+// }
 
 //----------------------------------------------------------------------------------------------------
-string_q range_2_Str(const blkrange_t& r) {
-    return padNum9(r.first) + "-" + padNum9(r.second);
-}
+// string_q range_2_Str(const blkrange_t& r) {
+//     return padNum9(r.first) + "-" + padNum9(r.second);
+// }
 
 //----------------------------------------------------------------------------------------------------
-blkrange_t str_2_Range(const string_q& str) {
-    CUintArray parts;
-    explode(parts, str, '-');
-    return blkrange_t{parts[0], parts[1]};
-}
+// blkrange_t str_2_Range(const string_q& str) {
+//     CUintArray parts;
+//     explode(parts, str, '-');
+//     return blkrange_t{parts[0], parts[1]};
+// }
 
 uint64_t hex_2_Uint64(const string_q& str) {
     string_q hex = toLower(startsWith(str, "0x") ? extract(str, 2) : str);
@@ -288,57 +288,57 @@ uint64_t hex_2_Uint64(const string_q& str) {
 }
 
 //----------------------------------------------------------------
-hashbytes_t hash_2_Bytes(const hash_t& hashIn) {
-    vector<uint8_t> ret;
-    string_q str = substitute(hashIn, "0x", "");
-    for (size_t i = 0; i < str.size(); i += 2)
-        ret.push_back(hex_2_Ascii(str[i], str[i + 1]));
-    return ret;
-}
+// hashbytes_t hash_2_Bytes(const hash_t& hashIn) {
+//     vector<uint8_t> ret;
+//     string_q str = substitute(hashIn, "0x", "");
+//     for (size_t i = 0; i < str.size(); i += 2)
+//         ret.push_back(hex_2_Ascii(str[i], str[i + 1]));
+//     return ret;
+// }
 
 //----------------------------------------------------------------
-addrbytes_t addr_2_Bytes(const address_t& addrIn) {
-    vector<uint8_t> ret;
-    string_q str = substitute(addrIn, "0x", "");
-    for (size_t i = 0; i < str.size(); i += 2)
-        ret.push_back(hex_2_Ascii(str[i], str[i + 1]));
-    return ret;
-}
+// addrbytes_t addr_2_Bytes(const address_t& addrIn) {
+//     vector<uint8_t> ret;
+//     string_q str = substitute(addrIn, "0x", "");
+//     for (size_t i = 0; i < str.size(); i += 2)
+//         ret.push_back(hex_2_Ascii(str[i], str[i + 1]));
+//     return ret;
+// }
 
 //----------------------------------------------------------------------------
-uchar_t hex_2_Ascii(char c1, char c2) {
-    uchar_t c;
-    c = (uchar_t)((c1 >= 'A' ? ((c1 & 0xDF) - 'A') + 10 : (c1 - '0')));
-    c *= 16;
-    c = (uchar_t)(c + (c2 >= 'A' ? ((c2 & 0xDF) - 'A') + 10 : (c2 - '0')));
-    return c;
-}
+// uchar_t hex_2_Ascii(char c1, char c2) {
+//     uchar_t c;
+//     c = (uchar_t)((c1 >= 'A' ? ((c1 & 0xDF) - 'A') + 10 : (c1 - '0')));
+//     c *= 16;
+//     c = (uchar_t)(c + (c2 >= 'A' ? ((c2 & 0xDF) - 'A') + 10 : (c2 - '0')));
+//     return c;
+// }
 
 //---------------------------------------------------------------------------
-string_q hex_2_Pad64(const address_t& inHex) {
-    return padLeft(substitute(inHex, "0x", ""), 64, '0');
-}
+// string_q hex_2_Pad64(const address_t& inHex) {
+//     return padLeft(substitute(inHex, "0x", ""), 64, '0');
+// }
 
 //----------------------------------------------------------------------------
-string_q hex_2_Str(const string_q& inHex, size_t nBytes) {
-    string_q in = (startsWith(inHex, "0x") ? extract(inHex, 2) : inHex);
-    if (nBytes != NOPOS)
-        in = in.substr(0, nBytes * 2);
-    string_q ret;
-    while (!in.empty() && in.size() >= 2) {
-        string_q nibble = extract(in, 0, 2);
-        in = extract(in, 2);
-        char ch = static_cast<char>(hex_2_Ascii(nibble[0], nibble[1]));
-        if (ch != '\"')
-            ret += static_cast<char>(ch);
-    }
-    return ret;
-}
+// string_q hex_2_Str(const string_q& inHex, size_t nBytes) {
+//     string_q in = (startsWith(inHex, "0x") ? extract(inHex, 2) : inHex);
+//     if (nBytes != NOPOS)
+//         in = in.substr(0, nBytes * 2);
+//     string_q ret;
+//     while (!in.empty() && in.size() >= 2) {
+//         string_q nibble = extract(in, 0, 2);
+//         in = extract(in, 2);
+//         char ch = static_cast<char>(hex_2_Ascii(nibble[0], nibble[1]));
+//         if (ch != '\"')
+//             ret += static_cast<char>(ch);
+//     }
+//     return ret;
+// }
 
 //----------------------------------------------------------------------------
-bool rangesIntersect(const blkrange_t& r1, const blkrange_t& r2) {
-    return !(r1.second < r2.first || r1.first > r2.second);
-}
+// bool rangesIntersect(const blkrange_t& r1, const blkrange_t& r2) {
+//     return !(r1.second < r2.first || r1.first > r2.second);
+// }
 
 uint64_t verbose = false;
 
