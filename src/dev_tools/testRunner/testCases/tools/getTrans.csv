@@ -22,7 +22,7 @@ on      ,both ,medi  ,transactions ,tools/getTrans ,articulate_2             ,n 
 on      ,both ,medi  ,transactions ,tools/getTrans ,by_blk_hash_bad          ,y    ,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 & verbose
 on      ,both ,medi  ,transactions ,tools/getTrans ,by_blk_hash_good         ,y    ,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,three_ways               ,n    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79 3657480.79 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad & fmt = txt
-on      ,both ,fast  ,transactions ,tools/getTrans ,bad_blkhash_msg          ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2
+local   ,both ,fast  ,transactions ,tools/getTrans ,bad_blkhash_msg          ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2
 on      ,both ,fast  ,transactions ,tools/getTrans ,source_disabled          ,y    ,transactions = 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a & seed & fmt = json
 
 on      ,cmd  ,medi  ,transactions ,tools/getTrans ,core_dump_bug            ,y    ,@avt & transactions = 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 & fmt = json

@@ -15,7 +15,7 @@
 #include "testcase.h"
 
 int main(int argc, const char* argv[]) {
-    cerr.rdbuf(cout.rdbuf());
+    // cerr.rdbuf(cout.rdbuf());
     cleanFolder(getCachePath() + "tmp/");
 
     COptions options;
