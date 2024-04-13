@@ -59,7 +59,4 @@ extern string_q nextTokenClear(string_q& str, char delim, bool doClear = true);
 extern size_t explode(CStringArray& result, const string& input, char ch, bool trim = true);
 extern size_t explode(CUintArray& result, const string& input, char ch, bool trim = true);
 
-using string_q = std::string;
-using CStringArray = vector<string_q>;
-
 }  // namespace qblocks
