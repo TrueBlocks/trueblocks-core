@@ -72,8 +72,6 @@ int main(int argc, const char* argv[]) {
         options.doTests(testArray, testName, CMD);
     }
 
-    // We've run through all the tests. We know how many we've run and we know how
-    // many have passed, so we know if all of them passed.
     bool allPassed = options.totalTests == options.totalPassed;
     uint64_t nFailed = options.totalTests - options.totalPassed;
 
@@ -88,15 +86,14 @@ int main(int argc, const char* argv[]) {
 }
 
 void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, int which) {
+    bool isCmd = (which & CMD);
+    cerr << "Testing " + testName + " " + (isCmd ? "cmd" : "api") + " mode):" << endl;
+
     uint64_t nTests = 0;
     uint64_t nPassed = 0;
-    cerr << "Testing " + testName + " " + ((which & CMD) ? "cmd" : "api") + " mode):" << endl;
-
     for (auto test : testArray) {
-        test.prepareTest(which & CMD);
-        if ((!(which & CMD) && test.mode == "cmd") || ((which & CMD) && test.mode == "api")) {
-            // do nothing - wrong mode
-        } else {
+        test.prepareTest(isCmd);
+        if ((isCmd && test.mode != "api") || (!isCmd && test.mode != "cmd")) {
             ostringstream cmd;
             ostringstream prepender;
 
@@ -113,7 +110,7 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
                 }
             }
 
-            if (which & CMD) {
+            if (isCmd) {
                 string_q envs = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
                 string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true ";
                 string_q exe = "chifra" + (contains(test.tool, "chifra") ? "" : " " + test.route);
@@ -198,22 +195,6 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
 
             string_q oldFn = test.workPath + test.fileName;
             string_q oldText = asciiFileToString(oldFn);
-            // if (contains(oldText, "The XDG_")) {
-            //     // Weird case where we can't turn off timestamp from logs, so we blow away the timing here
-            //     CStringArray lines;
-            //     explode(lines, oldText, '\n');
-            //     ostringstream os;
-            //     for (auto line : lines) {
-            //         if (contains(line, "The XDG_")) {
-            //             line = substitute(line, "The XDG_", "|The XDG_");
-            //             nextTokenClear(line, '|');
-            //         }
-            //         os << line << endl;
-            //     }
-            //     oldText = os.str();
-            //     stringToAsciiFile(oldFn, oldText);
-            // }
-
             string_q result = "ok";
             if (!newText.empty() && newText == oldText) {
                 nPassed++;
@@ -249,7 +230,7 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& testName, i
     totalPassed += nPassed;
     if (nTests) {
         uint64_t nFailed = nTests - nPassed;
-        cerr << "   " + testName + " " + ((which & CMD) ? "cmd" : "api") + ": " << nTests << " tests ";
+        cerr << "   " + testName + " " + (isCmd ? "cmd" : "api") + ": " << nTests << " tests ";
         cerr << nPassed << " passed ";
         cerr << (nFailed ? "X" : "ok") << " " << nFailed << " failed." << endl;
     }
@@ -320,14 +301,12 @@ string_q getCachePath(void) {
     return configPath + "cache/mainnet/";
 }
 
-//--------------------------------------------------------------------
 string_q padRight(const string_q& str, size_t len, char p) {
     if (len > str.length())
         return str + string_q(len - str.length(), p);
     return str;
 }
 
-//--------------------------------------------------------------------
 string_q padLeft(const string_q& str, size_t len, char p) {
     if (len > str.length())
         return string_q(len - str.length(), p) + str;
@@ -396,4 +375,56 @@ int cleanFolder(const string_q& path, bool recurse, bool interactive) {
     for (auto file : files)
         ::remove(file.c_str());
     return static_cast<int>(files.size());
+}
+
+inline bool waitForCreate(const string_q& filename) {
+    size_t mx = 1000;
+    size_t cnt = 0;
+    while (cnt < mx && !fileExists(filename))
+        cnt++;
+
+    return fileExists(filename);
+}
+
+template <class T>
+T RandomValue(T a, T b) {
+    T range = (a > b ? a - b : b - a);
+    if (range == 0)
+        return a;
+    return min(a, b) + (((T)rand()) % range);
+}
+
+string_q int_2_Strxx(int64_t i) {
+    ostringstream os;
+    os << i;
+    return os.str();
+}
+
+string_q doCommand(const string_q& cmd, bool readStderr) {
+    string_q tmpPath = "/tmp/";
+    string_q filename = tmpPath + makeValidName("qb_" + int_2_Strxx(RandomValue(1, 10000)));
+    string_q theCommand = (cmd + " >" + filename);
+    if (readStderr) {
+        theCommand = (cmd + " >/dev/null 2>" + filename);
+    }
+    if (system(theCommand.c_str())) {
+    }  // Don't remove cruft. Silences compiler warnings
+    waitForCreate(filename);
+    string_q ret = asciiFileToString(filename);
+    ::remove(filename.c_str());
+    return trim(ret, '\n');
+}
+
+static const char* CHR_VALID_NAME =
+    "\t\n\r()<>[]{}`\\|; "
+    "'!$^*~@"
+    "?&#+%"
+    ",:/=\"";
+
+string_q makeValidName(const string_q& inOut) {
+    string_q ret = inOut;
+    replaceAny(ret, CHR_VALID_NAME, "_");
+    if (!ret.empty() && isdigit(ret[0]))
+        ret = "_" + ret;
+    return ret;
 }

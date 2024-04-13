@@ -9,8 +9,7 @@ echo "Running make test-all"
 echo "Home folder: $HOME"
 echo "Whoami:      `whoami`"
 echo "Server port: $SERVER_PORT"
-echo "Pwd: $(pwd)"
-echo "Path: $(pwd)"
+echo "Path:        $(pwd)"
 echo "Ssh sessions:"
 ps -ef | grep autossh
 
