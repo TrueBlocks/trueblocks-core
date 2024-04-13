@@ -32,6 +32,7 @@ class CTestCase {
         return !operator==(it);
     }
     void copyBack(void);
+    string_q outputFileContents(void);
 };
 
 class COptions {

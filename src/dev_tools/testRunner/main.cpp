@@ -81,15 +81,8 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& route, bool
             }
 
             replaceAll(workContents, "3735928559", "\"0xdeadbeef\"");
-            if (isCmd && fileExists(test.outputFile)) {
-                string_q contents = asciiFileToString(test.outputFile);
-                if (!contents.empty()) {
-                    ostringstream os;
-                    os << "----" << endl;
-                    os << "Results in " << substitute(test.outputFile, test.testRoot, "./") << endl;
-                    os << contents << endl;
-                    workContents += os.str();
-                }
+            if (isCmd) {
+                workContents += test.outputFileContents();
             }
             stringToAsciiFile(workFn, workContents);
 
@@ -99,7 +92,7 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& route, bool
 
             // reportOneTest();
             ostringstream os;
-            os << "  " << (goldText == workText ? (cGreen + "ok    ") : (cRed + "failed")) << cOff << " ";
+            os << "    " << (goldText == workText ? (cGreen + "ok    ") : (cRed + "failed")) << cOff << " ";
             os << padRight(test.route, 15, true, '.') << padRight(test.name, 30, true, '.') << " ";
             os << test.options;
             os << cOff;
@@ -382,6 +375,7 @@ string_q makeValidName(const string_q& inOut) {
 // Must read .env files if present and put them in the environment
 // Check for duplicate tests names within a given folder
 
+//-----------------------------------------------------------------------------
 inline CTestCase::CTestCase(const string_q& line) {
     origLine = line;
 
@@ -410,14 +404,9 @@ inline CTestCase::CTestCase(const string_q& line) {
     goldPath = substitute(getCWD(), tr, "/test/gold/" + path + "/" + tool + "/");
     workPath = substitute(getCWD(), tr, "/test/working/" + path + "/" + tool + "/");
     testRoot = substitute(goldPath, "/api_tests", "");
-    if (contains(origLine, "output")) {
-        string_q line = options;
-        replace(line, "output", "|");
-        nextTokenClear(line, '|');
-        outputFile = testRoot + substitute(nextTokenClear(line, '&'), "=", "");
-    }
 }
 
+//-----------------------------------------------------------------------------
 inline void CTestCase::prepareTest(bool isCmd) {
     if (isCmd) {
         CStringArray opts = {"val",   "addrs",     "blocks", "files", "dates",  "transactions",
@@ -520,4 +509,35 @@ void COptions::init(void) {
     doCommand("chifra abis --decache 2>/dev/null");
 
     sourceFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
+}
+
+string_q CTestCase::outputFileContents(void) {
+    if (contains(origLine, "output")) {
+        string_q testRoot = substitute(goldPath, "/api_tests", "");
+        string_q line = substitute(substitute(origLine, "&", "|"), "=", "|");
+        CStringArray parts;
+        explode(parts, line, '|');
+        bool next = false;
+        for (auto part : parts) {
+            part = trim(part);
+            if (next && outputFile.empty()) {
+                outputFile = testRoot + part;
+                break;
+            }
+            if (part == "output") {
+                next = true;
+            }
+        }
+
+        string_q contents = asciiFileToString(outputFile);
+        if (fileExists(outputFile) && !contents.empty()) {
+            ostringstream os;
+            os << "----" << endl;
+            os << "Results in " << substitute(outputFile, testRoot, "./") << endl;
+            os << contents << endl;
+            return os.str();
+        }
+    }
+
+    return "";
 }
