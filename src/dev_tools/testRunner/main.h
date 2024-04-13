@@ -1,5 +1,4 @@
 #pragma once
-
 #include "utillib.h"
 
 class CTestCase {
@@ -24,13 +23,11 @@ class CTestCase {
     CTestCase& operator=(const CTestCase& te);
 
     explicit CTestCase(const string_q& line);
-    void prepareTest(bool cmdLine);
+    void prepareTest(bool isCmd);
     bool operator==(const CTestCase& it) const;
     bool operator!=(const CTestCase& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CTestCase& v1, const CTestCase& v2);
-    friend ostream& operator<<(ostream& os, const CTestCase& it);
 };
 
 inline CTestCase::CTestCase(void) {
@@ -89,15 +86,37 @@ inline bool CTestCase::operator==(const CTestCase& it) const {
     return (route % it.route && tool % it.tool && name % it.name);
 }
 
-inline bool operator<(const CTestCase& v1, const CTestCase& v2) {
-    return true;
+inline CTestCase::CTestCase(const string_q& line) {
+    origLine = line;
+
+    CStringArray parts;
+    explode(parts, line, ',');
+    onOff = parts.size() > 0 ? trim(parts[0]) : "";
+    mode = parts.size() > 1 ? trim(parts[1]) : "";
+    speed = parts.size() > 2 ? trim(parts[2]) : "";
+    route = parts.size() > 3 ? trim(parts[3]) : "";
+    tool = parts.size() > 4 ? trim(parts[4]) : "";
+    name = parts.size() > 5 ? trim(parts[5]) : "";
+    post = parts.size() > 6 ? (trim(parts[6]) == "y" ? "jq ." : "") : "";
+    options = parts.size() > 7 ? trim(parts[7]) : "";
+
+    CStringArray chars = {"=", "&", "@"};
+    for (auto ch : chars) {
+        replaceAll(options, " " + ch, ch);
+        replaceAll(options, ch + " ", ch);
+    }
+    replaceAll(options, "&#44;", ",");
+
+    path = nextTokenClear(tool, '/');
+    fileName = tool + "_" + name + ".txt";
+
+    string_q tr = "/test/gold/dev_tools/testRunner/";
+    goldPath = substitute(getCWD(), tr, "/test/gold/" + path + "/" + tool + "/");
+    workPath = substitute(getCWD(), tr, "/test/working/" + path + "/" + tool + "/");
 }
 
-inline void CTestCase::prepareTest(bool cmdLine) {
-    goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/", "/test/gold/" + path + "/" + tool + "/");
-    workPath = substitute(goldPath, "/gold/", "/working/");
-
-    if (cmdLine) {
+inline void CTestCase::prepareTest(bool isCmd) {
+    if (isCmd) {
         CStringArray opts = {"val",   "addrs",     "blocks", "files", "dates",  "transactions",
                              "terms", "functions", "modes",  "mode",  "topics", "fourbytes"};
         options = "&" + options;
@@ -106,7 +125,7 @@ inline void CTestCase::prepareTest(bool cmdLine) {
         replaceAll(options, "%20", " ");
         replaceAll(options, "@", " -");
         replaceAll(options, "&", " --");
-        replaceAll(options, "\\*", " \"*\"");
+        // replaceAll(options, "\\*", " \"*\"");
         replaceAll(options, "=", " ");
         if (trim(options) == "--" || startsWith(trim(options), "-- "))
             replace(options, "--", "");
@@ -131,31 +150,40 @@ inline void CTestCase::prepareTest(bool cmdLine) {
     }
 }
 
-inline CTestCase::CTestCase(const string_q& line) {
-    origLine = line;
+#define API (1 << 0)
+#define CMD (1 << 1)
+#define BOTH (API | CMD)
 
-    CStringArray parts;
-    explode(parts, line, ',');
-    onOff = parts.size() > 0 ? trim(parts[0]) : "";
-    mode = parts.size() > 1 ? trim(parts[1]) : "";
-    speed = parts.size() > 2 ? trim(parts[2]) : "";
-    route = parts.size() > 3 ? trim(parts[3]) : "";
-    tool = parts.size() > 4 ? trim(parts[4]) : "";
-    name = parts.size() > 5 ? trim(parts[5]) : "";
-    post = parts.size() > 6 ? trim(parts[6]) : "";
-    options = parts.size() > 7 ? trim(parts[7]) : "";
+class COptions {
+  public:
+    string_q sourceFolder;
+    uint64_t totalTests = 0;
+    uint64_t totalPassed = 0;
+    CStringArray fails;
+    CStringArray tests;
 
-    replaceAll(post, "n", "");
-    replaceAll(post, "y", "jq .");
+    COptions(void);
+    ~COptions(void);
 
-    path = nextTokenClear(tool, '/');
-    fileName = tool + "_" + name + ".txt";
+    void init(void);
+    void doTests(vector<CTestCase>& testArray, const string_q& testName, int which);
+};
 
-    replaceAll(options, " = ", "=");
-    replaceAll(options, "= ", "=");
-    replaceAll(options, " & ", "&");
-    replaceAll(options, "& ", "&");
-    replaceAll(options, " @ ", "@");
-    replaceAll(options, "@ ", "@");
-    replaceAll(options, "&#44;", ",");
+inline COptions::COptions(void) {
 }
+
+inline COptions::~COptions(void) {
+}
+
+extern bool rmWorkingTests(const string_q& path, const string_q& testName);
+extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
+extern void copyBack(const string_q& path, const string_q& tool, const string_q& fileName);
+extern string_q linesToString(const CStringArray& lines, char sep = '\n');
+extern string_q doCommand(const string_q& cmd, bool readStderr = false);
+extern string_q padRight(const string_q& str, size_t len, char p = ' ');
+extern string_q padLeft(const string_q& str, size_t len, char p = ' ');
+extern string_q getEnvStr(const string_q& name);
+extern int copyFile(const string_q& from, const string_q& to);
+extern int cleanFolder(const string_q& path, bool recurse = false, bool interactive = false);
+extern string_q makeValidName(const string_q& inOut);
+extern string_q getCachePath(void);
