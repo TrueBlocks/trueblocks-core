@@ -6,15 +6,13 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& route, bool
     uint64_t nTests = 0;
     uint64_t nPassed = 0;
     for (auto test : testArray) {
-        test.prepareTest(isCmd);
-
         bool shouldRun1 = isCmd && test.mode != "api";
         bool shouldRun2 = !isCmd && test.mode != "cmd";
         if (shouldRun1 || shouldRun2) {
-            string_q testRoot = substitute(test.goldPath, "/api_tests", "");
+            test.prepareTest(isCmd);
 
             ostringstream theCmd;
-            theCmd << "cd \"" + testRoot + "\" ; ";
+            theCmd << "cd \"" + test.testRoot + "\" ; ";
 
             ostringstream prepender;
             for (auto e : test.envLines) {
@@ -81,14 +79,15 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& route, bool
             if (!prepender.str().empty()) {
                 workContents = prepender.str() + workContents;
             }
-            replaceAll(workContents, "3735928559", "\"0xdeadbeef\"");
 
-            if (isCmd && contains(test.origLine, "output")) {
-                if (fileExists(test.outputFile())) {
+            replaceAll(workContents, "3735928559", "\"0xdeadbeef\"");
+            if (isCmd && fileExists(test.outputFile)) {
+                string_q contents = asciiFileToString(test.outputFile);
+                if (!contents.empty()) {
                     ostringstream os;
                     os << "----" << endl;
-                    os << "Results in " << substitute(test.outputFile(), testRoot, "./") << endl;
-                    os << asciiFileToString(test.outputFile()) << endl;
+                    os << "Results in " << substitute(test.outputFile, test.testRoot, "./") << endl;
+                    os << contents << endl;
                     workContents += os.str();
                 }
             }
@@ -96,21 +95,16 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& route, bool
 
             string_q goldText = asciiFileToString(goldFn);
             string_q workText = asciiFileToString(workFn);
-            bool passes = !goldText.empty() && goldText == workText;
-            if (passes) {
-                nPassed++;
-            } else {
-                fails.push_back(test);
-            }
+            nPassed += goldText == workText;
 
             // reportOneTest();
             ostringstream os;
-            os << "  " << (passes ? (cGreen + "ok    ") : (cRed + "failed")) << cOff << " ";
-            os << padRight(route, 15, true, '.') << padRight(test.name, 30, true, '.') << " ";
+            os << "  " << (goldText == workText ? (cGreen + "ok    ") : (cRed + "failed")) << cOff << " ";
+            os << padRight(test.route, 15, true, '.') << padRight(test.name, 30, true, '.') << " ";
             os << test.options;
             os << cOff;
             cerr << padRight(os.str(), 135, false, ' ') << "      ";
-            cerr << (passes ? "\r" : "\n");
+            cerr << ((goldText == workText && !isRemoteTesting) ? "\r" : "\n");
             cerr.flush();
         }
     }
@@ -171,93 +165,10 @@ int main(int argc, const char* argv[]) {
     cerr << "  nTests:  " << options.totalTests << endl;
     cerr << "  nPassed: " << options.totalPassed << (nFailed ? " ==> not okay" : " ==> ok") << endl;
     cerr << "  nFailed: " << nFailed << endl;
-    for (auto fail : options.fails) {
-        cerr << "\tFailed: ";
-        cerr << fail.route << " " << fail.name << ".txt ";
-        cerr << "(" << fail.route << " " << trim(fail.options) << ")";
-        cerr << endl;
-    }
     cerr << endl;
 
     bool allPassed = options.totalTests == options.totalPassed;
     return allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
-}
-
-//-----------------------------------------------------------------------------
-void COptions::init(void) {
-    ::setenv("NO_USERQUERY", "true", 1);
-    cleanFolder(getCachePath() + "tmp/");
-    cerr << "Using `jq .` for post processing." << endl;
-
-    if (getEnvStr("TEST_SLURPS") == "true") {
-        tests.push_back("tools/ethslurp");
-    }
-    tests.push_back("tools/ethNames");
-    tests.push_back("tools/getBlocks");
-    tests.push_back("tools/getLogs");
-    tests.push_back("tools/getReceipts");
-    tests.push_back("tools/getState");
-    tests.push_back("tools/getTokens");
-    tests.push_back("tools/getTraces");
-    tests.push_back("tools/getTrans");
-    tests.push_back("tools/grabABI");
-    tests.push_back("tools/whenBlock");
-    tests.push_back("apps/acctExport");
-    tests.push_back("apps/blockScrape");
-    tests.push_back("apps/cacheStatus");
-    tests.push_back("apps/chunkMan");
-    tests.push_back("apps/chifra");
-    tests.push_back("apps/config");
-    tests.push_back("apps/fireStorm");
-    tests.push_back("apps/init");
-    tests.push_back("apps/daemon");
-
-    cerr << "Cleaning monitor caches..." << endl;
-    doCommand("chifra monitors --decache 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2>/dev/null");
-    doCommand("chifra monitors --decache 0x9531c059098e3d194ff87febb587ab07b30b1306 2>/dev/null");
-    doCommand("chifra monitors --decache 0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3 2>/dev/null");
-    doCommand("chifra monitors --decache 0xd0b3462481c33f63a288cd1923e2a261ee65b4ff 2>/dev/null");
-
-    cerr << "Cleaning abi caches..." << endl;
-    CStringArray addrs = {
-        "0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51", "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
-        "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359", "0x226159d592e2b063810a10ebf6dcbada94ed68b8",
-        "0x17996cbddd23c2a912de8477c37d43a1b79770b8", "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
-        "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc", "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
-        "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
-        "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7", "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
-        "0x6d903f6003cca6255d85cca4d3b5e5146dc33925", "0x9ba00d6856a4edf4665bca2c2309936572473b7e",
-        "0x1a9c8182c09f50c8318d769245bea52c32be35bc", "0x729d19f657bd0614b4985cf1d82531c67569197b",
-        "0x81f7564e413586f1f99fde55740ac52b43ca99c9", "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
-        "0xdbd27635a534a3d3169ef0498beb56fb9c937489",
-    };
-    for (auto addr : addrs) {
-        doCommand("chifra abis --decache " + addr + " 2>/dev/null");
-        doCommand("chifra abis " + addr);
-    }
-    doCommand("chifra abis --decache 2>/dev/null");
-
-    sourceFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
-}
-
-//-----------------------------------------------------------------------------
-string_q CTestCase::outputFile() const {
-    string_q testRoot = substitute(goldPath, "/api_tests", "");
-    string_q line = substitute(substitute(origLine, "&", "|"), "=", "|");
-    CStringArray parts;
-    explode(parts, line, '|');
-    bool next = false;
-    string_q ret;
-    for (auto part : parts) {
-        part = trim(part);
-        if (next && ret.empty()) {
-            ret = testRoot + part;
-        }
-        if (part == "output") {
-            next = true;
-        }
-    }
-    return ret;
 }
 
 //-----------------------------------------------------------------------------
@@ -470,3 +381,143 @@ string_q makeValidName(const string_q& inOut) {
 // Make sure both gold and working folders exist
 // Must read .env files if present and put them in the environment
 // Check for duplicate tests names within a given folder
+
+inline CTestCase::CTestCase(const string_q& line) {
+    origLine = line;
+
+    CStringArray parts;
+    explode(parts, line, ',');
+    onOff = parts.size() > 0 ? trim(parts[0]) : "";
+    mode = parts.size() > 1 ? trim(parts[1]) : "";
+    speed = parts.size() > 2 ? trim(parts[2]) : "";
+    route = parts.size() > 3 ? trim(parts[3]) : "";
+    tool = parts.size() > 4 ? trim(parts[4]) : "";
+    name = parts.size() > 5 ? trim(parts[5]) : "";
+    post = parts.size() > 6 ? (trim(parts[6]) == "y" ? "jq ." : "") : "";
+    options = parts.size() > 7 ? trim(parts[7]) : "";
+
+    CStringArray chars = {"=", "&", "@"};
+    for (auto ch : chars) {
+        replaceAll(options, " " + ch, ch);
+        replaceAll(options, ch + " ", ch);
+    }
+    replaceAll(options, "&#44;", ",");
+
+    path = nextTokenClear(tool, '/');
+    fileName = tool + "_" + name + ".txt";
+
+    string_q tr = "/test/gold/dev_tools/testRunner/";
+    goldPath = substitute(getCWD(), tr, "/test/gold/" + path + "/" + tool + "/");
+    workPath = substitute(getCWD(), tr, "/test/working/" + path + "/" + tool + "/");
+    testRoot = substitute(goldPath, "/api_tests", "");
+    if (contains(origLine, "output")) {
+        string_q line = options;
+        replace(line, "output", "|");
+        nextTokenClear(line, '|');
+        outputFile = testRoot + substitute(nextTokenClear(line, '&'), "=", "");
+    }
+}
+
+inline void CTestCase::prepareTest(bool isCmd) {
+    if (isCmd) {
+        CStringArray opts = {"val",   "addrs",     "blocks", "files", "dates",  "transactions",
+                             "terms", "functions", "modes",  "mode",  "topics", "fourbytes"};
+        options = "&" + options;
+        for (auto opt : opts)
+            replaceAll(options, "&" + opt + "=", " ");
+        replaceAll(options, "%20", " ");
+        replaceAll(options, "@", " -");
+        replaceAll(options, "&", " --");
+        // replaceAll(options, "\\*", " \"*\"");
+        replaceAll(options, "=", " ");
+        if (trim(options) == "--" || startsWith(trim(options), "-- "))
+            replace(options, "--", "");
+
+    } else {
+        if (tool == "chifra")
+            nextTokenClear(options, '&');
+        CStringArray parts;
+        explode(parts, options, '&');
+        ostringstream os;
+        for (auto part : parts) {
+            string_q key = nextTokenClear(part, '=');
+            if (!os.str().empty())
+                os << "&";
+            os << toCamelCase(key) << (part.empty() ? "" : "=" + part);
+        }
+        options = os.str();
+        replaceAll(options, "@", "");
+        replaceAll(options, " ", "%20");
+        goldPath += "api_tests/";
+        workPath += "api_tests/";
+    }
+
+    string_q envFile = substitute(goldPath, "/api_tests", "") + name + ".env";
+    if (fileExists(envFile)) {
+        CStringArray fileLines;
+        asciiFileToLines(envFile, fileLines);
+        for (auto f : fileLines) {
+            if (!startsWith(f, "#")) {
+                envLines.push_back(f);
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------
+void COptions::init(void) {
+    ::setenv("NO_USERQUERY", "true", 1);
+    isRemoteTesting = getEnvStr("TB_REMOTE_TESTING") == "true";
+    cleanFolder(getCachePath() + "tmp/");
+    cerr << "Using `jq .` for post processing." << endl;
+
+    if (getEnvStr("TEST_SLURPS") == "true") {
+        tests.push_back("tools/ethslurp");
+    }
+    tests.push_back("tools/ethNames");
+    tests.push_back("tools/getBlocks");
+    tests.push_back("tools/getLogs");
+    tests.push_back("tools/getReceipts");
+    tests.push_back("tools/getState");
+    tests.push_back("tools/getTokens");
+    tests.push_back("tools/getTraces");
+    tests.push_back("tools/getTrans");
+    tests.push_back("tools/grabABI");
+    tests.push_back("tools/whenBlock");
+    tests.push_back("apps/acctExport");
+    tests.push_back("apps/blockScrape");
+    tests.push_back("apps/cacheStatus");
+    tests.push_back("apps/chunkMan");
+    tests.push_back("apps/chifra");
+    tests.push_back("apps/config");
+    tests.push_back("apps/fireStorm");
+    tests.push_back("apps/init");
+    tests.push_back("apps/daemon");
+
+    cerr << "Cleaning monitor caches..." << endl;
+    // doCommand("chifra monitors --decache 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2>/dev/null");
+    // doCommand("chifra monitors --decache 0x9531c059098e3d194ff87febb587ab07b30b1306 2>/dev/null");
+    // doCommand("chifra monitors --decache 0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3 2>/dev/null");
+    // doCommand("chifra monitors --decache 0xd0b3462481c33f63a288cd1923e2a261ee65b4ff 2>/dev/null");
+
+    cerr << "Cleaning abi caches..." << endl;
+    CStringArray addrs = {
+        "0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51", "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
+        "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359", "0x226159d592e2b063810a10ebf6dcbada94ed68b8",
+        "0x17996cbddd23c2a912de8477c37d43a1b79770b8", "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
+        "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc", "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
+        "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
+        "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7", "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+        "0x6d903f6003cca6255d85cca4d3b5e5146dc33925", "0x9ba00d6856a4edf4665bca2c2309936572473b7e",
+        "0x1a9c8182c09f50c8318d769245bea52c32be35bc", "0x729d19f657bd0614b4985cf1d82531c67569197b",
+        "0x81f7564e413586f1f99fde55740ac52b43ca99c9", "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
+        "0xdbd27635a534a3d3169ef0498beb56fb9c937489",
+    };
+    for (auto addr : addrs) {
+        doCommand("chifra abis --decache " + addr + " 2>/dev/null");
+        doCommand("chifra abis " + addr);
+    }
+    doCommand("chifra abis --decache 2>/dev/null");
+
+    sourceFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
+}

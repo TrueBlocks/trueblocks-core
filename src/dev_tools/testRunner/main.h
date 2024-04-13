@@ -15,6 +15,8 @@ class CTestCase {
     string_q path;
     string_q goldPath;
     string_q workPath;
+    string_q testRoot;
+    string_q outputFile;
     string_q fileName;
     CStringArray envLines;
 
@@ -30,15 +32,14 @@ class CTestCase {
         return !operator==(it);
     }
     void copyBack(void);
-    string_q outputFile(void) const;
 };
 
 class COptions {
   public:
+    bool isRemoteTesting = false;
     string_q sourceFolder;
     uint64_t totalTests = 0;
     uint64_t totalPassed = 0;
-    vector<CTestCase> fails;
     CStringArray tests;
 
     COptions(void);
@@ -61,6 +62,8 @@ inline CTestCase::CTestCase(void) {
     path = "";
     goldPath = "";
     workPath = "";
+    testRoot = "";
+    outputFile = "";
     fileName = "";
 }
 
@@ -77,6 +80,8 @@ inline CTestCase::CTestCase(const CTestCase& te) {
     path = te.path;
     goldPath = te.goldPath;
     workPath = te.workPath;
+    testRoot = te.testRoot;
+    outputFile = te.outputFile;
     fileName = te.fileName;
 }
 
@@ -96,87 +101,14 @@ inline CTestCase& CTestCase::operator=(const CTestCase& te) {
     path = te.path;
     goldPath = te.goldPath;
     workPath = te.workPath;
+    testRoot = te.testRoot;
+    outputFile = te.outputFile;
     fileName = te.fileName;
     return *this;
 }
 
 inline bool CTestCase::operator==(const CTestCase& it) const {
     return (route % it.route && tool % it.tool && name % it.name);
-}
-
-inline CTestCase::CTestCase(const string_q& line) {
-    origLine = line;
-
-    CStringArray parts;
-    explode(parts, line, ',');
-    onOff = parts.size() > 0 ? trim(parts[0]) : "";
-    mode = parts.size() > 1 ? trim(parts[1]) : "";
-    speed = parts.size() > 2 ? trim(parts[2]) : "";
-    route = parts.size() > 3 ? trim(parts[3]) : "";
-    tool = parts.size() > 4 ? trim(parts[4]) : "";
-    name = parts.size() > 5 ? trim(parts[5]) : "";
-    post = parts.size() > 6 ? (trim(parts[6]) == "y" ? "jq ." : "") : "";
-    options = parts.size() > 7 ? trim(parts[7]) : "";
-
-    CStringArray chars = {"=", "&", "@"};
-    for (auto ch : chars) {
-        replaceAll(options, " " + ch, ch);
-        replaceAll(options, ch + " ", ch);
-    }
-    replaceAll(options, "&#44;", ",");
-
-    path = nextTokenClear(tool, '/');
-    fileName = tool + "_" + name + ".txt";
-
-    string_q tr = "/test/gold/dev_tools/testRunner/";
-    goldPath = substitute(getCWD(), tr, "/test/gold/" + path + "/" + tool + "/");
-    workPath = substitute(getCWD(), tr, "/test/working/" + path + "/" + tool + "/");
-}
-
-inline void CTestCase::prepareTest(bool isCmd) {
-    if (isCmd) {
-        CStringArray opts = {"val",   "addrs",     "blocks", "files", "dates",  "transactions",
-                             "terms", "functions", "modes",  "mode",  "topics", "fourbytes"};
-        options = "&" + options;
-        for (auto opt : opts)
-            replaceAll(options, "&" + opt + "=", " ");
-        replaceAll(options, "%20", " ");
-        replaceAll(options, "@", " -");
-        replaceAll(options, "&", " --");
-        // replaceAll(options, "\\*", " \"*\"");
-        replaceAll(options, "=", " ");
-        if (trim(options) == "--" || startsWith(trim(options), "-- "))
-            replace(options, "--", "");
-
-    } else {
-        if (tool == "chifra")
-            nextTokenClear(options, '&');
-        CStringArray parts;
-        explode(parts, options, '&');
-        ostringstream os;
-        for (auto part : parts) {
-            string_q key = nextTokenClear(part, '=');
-            if (!os.str().empty())
-                os << "&";
-            os << toCamelCase(key) << (part.empty() ? "" : "=" + part);
-        }
-        options = os.str();
-        replaceAll(options, "@", "");
-        replaceAll(options, " ", "%20");
-        goldPath += "api_tests/";
-        workPath += "api_tests/";
-    }
-
-    string_q envFile = substitute(goldPath, "/api_tests", "") + name + ".env";
-    if (fileExists(envFile)) {
-        CStringArray fileLines;
-        asciiFileToLines(envFile, fileLines);
-        for (auto f : fileLines) {
-            if (!startsWith(f, "#")) {
-                envLines.push_back(f);
-            }
-        }
-    }
 }
 
 extern int copyFile(const string_q& fromIn, const string_q& toIn);

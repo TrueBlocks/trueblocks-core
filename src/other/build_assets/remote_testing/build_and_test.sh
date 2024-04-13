@@ -35,6 +35,7 @@ fi
 
 echo "Running tests..."
 export TB_TEST_API_SERVER=$SERVER_PORT
+export TB_REMOTE_TESTING=true
 make test-all
 RESULT=$?
 
