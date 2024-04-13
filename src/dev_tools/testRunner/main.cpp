@@ -18,25 +18,13 @@ int main(int argc, const char* argv[]) {
 
         vector<CTestCase> testArray;
         for (auto line : testLines) {
-            if (startsWith(line, "#") || startsWith(line, "enabled") || line.empty()) {
-                continue;
-            }
-            CTestCase test(line);
-            if (!startsWith(line, "on")) {
-                if (trim(line).substr(0, 120).length() > 0) {
-                    cerr << "   # " << line.substr(0, 120) << endl;
+            if (!startsWith(line, "#") && !startsWith(line, "enabled") && !line.empty()) {
+                CTestCase test(line);
+                if (!startsWith(line, "on")) {
+                    test.copyBack();
+                } else {
+                    testArray.push_back(test);
                 }
-                copyBack(test.path, test.tool, test.fileName);
-
-            } else {
-                static map<string_q, CTestCase> testMap;
-                string_q key = test.route + "-" + test.tool + "-" + test.name;
-                if (testMap[key] != CTestCase()) {
-                    cerr << "Duplicate test names: " << key << ". Quitting..." << endl;
-                    return EXIT_FAILURE;
-                }
-                testMap[key] = test;
-                testArray.push_back(test);
             }
         }
 
@@ -290,32 +278,13 @@ string_q getOutputFile(const string_q& orig, const string_q& goldApiPath) {
 //-----------------------------------------------------------------------------
 bool rmWorkingTests(const string_q& path, const string_q& testName) {
     ostringstream os;
-    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"" << testName
+    os << "find ../../../working/" << path << "/" << testName << "/ -name \"" << testName
        << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    os << "find ../../../working/" << path << "/" << testName << "/api_tests/ -maxdepth 1 -name \"" << testName
-       << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    // os << "find ../../../working/" << path << "/" << testName << "/api_tests/ -maxdepth 1 -name \"" << testName
+    //    << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
     if (system(os.str().c_str())) {
     }
     return true;
-}
-
-//-----------------------------------------------------------------------------
-void copyBack(const string_q& path, const string_q& tool, const string_q& fileName) {
-    string_q tr = "/test/gold/dev_tools/testRunner/";
-    string_q fn = path + "/" + tool + "/" + fileName;
-    string_q fnA = path + "/" + tool + "/api_tests/" + fileName;
-
-    string_q goldPath = substitute(getCWD(), tr, "/test/gold/" + fn);
-    string_q workPath = substitute(getCWD(), tr, "/test/working/" + fn);
-    if (fileExists(goldPath)) {
-        copyFile(goldPath, workPath);
-    }
-
-    goldPath = substitute(getCWD(), tr, "/test/gold/" + fnA);
-    workPath = substitute(getCWD(), tr, "/test/working/" + fnA);
-    if (fileExists(goldPath)) {
-        copyFile(goldPath, workPath);
-    }
 }
 
 //-----------------------------------------------------------------------------
@@ -509,3 +478,4 @@ string_q makeValidName(const string_q& inOut) {
 // Support --mode both|cmd|api
 // Make sure both gold and working folders exist
 // Must read .env files if present and put them in the environment
+// Check for duplicate tests names within a given folder

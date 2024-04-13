@@ -28,6 +28,7 @@ class CTestCase {
     bool operator!=(const CTestCase& it) const {
         return !operator==(it);
     }
+    void copyBack(void);
 };
 
 inline CTestCase::CTestCase(void) {
@@ -150,6 +151,25 @@ inline void CTestCase::prepareTest(bool isCmd) {
     }
 }
 
+extern int copyFile(const string_q& fromIn, const string_q& toIn);
+inline void CTestCase::copyBack(void) {
+    string_q tr = "/test/gold/dev_tools/testRunner/";
+    string_q fn = path + "/" + tool + "/" + fileName;
+    string_q fnA = path + "/" + tool + "/api_tests/" + fileName;
+
+    string_q goldPath = substitute(getCWD(), tr, "/test/gold/" + fn);
+    string_q workPath = substitute(getCWD(), tr, "/test/working/" + fn);
+    if (fileExists(goldPath)) {
+        copyFile(goldPath, workPath);
+    }
+
+    goldPath = substitute(getCWD(), tr, "/test/gold/" + fnA);
+    workPath = substitute(getCWD(), tr, "/test/working/" + fnA);
+    if (fileExists(goldPath)) {
+        copyFile(goldPath, workPath);
+    }
+}
+
 #define API (1 << 0)
 #define CMD (1 << 1)
 #define BOTH (API | CMD)
@@ -177,7 +197,6 @@ inline COptions::~COptions(void) {
 
 extern bool rmWorkingTests(const string_q& path, const string_q& testName);
 extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
-extern void copyBack(const string_q& path, const string_q& tool, const string_q& fileName);
 extern string_q linesToString(const CStringArray& lines, char sep = '\n');
 extern string_q doCommand(const string_q& cmd, bool readStderr = false);
 extern string_q padRight(const string_q& str, size_t len, char p = ' ');
