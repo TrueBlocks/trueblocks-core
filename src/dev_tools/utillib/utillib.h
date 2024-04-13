@@ -4,5 +4,6 @@
 #include "sfos.h"
 #include "database.h"
 #include "filenames.h"
+#include "colors.h"
 
 using namespace qblocks;  // NOLINT

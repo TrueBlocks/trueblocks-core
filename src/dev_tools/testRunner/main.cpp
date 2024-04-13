@@ -105,10 +105,11 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& route, bool
 
             // reportOneTest();
             ostringstream os;
-            os << "  " << (passes ? "passed" : "failed") << " ";
+            os << "  " << (passes ? (cGreen + "ok    ") : (cRed + "failed")) << cOff << " ";
             os << padRight(route, 15, true, '.') << padRight(test.name, 30, true, '.') << " ";
             os << test.options;
-            cerr << padRight(os.str(), 135, false, ' ');
+            os << cOff;
+            cerr << padRight(os.str(), 135, false, ' ') << "      ";
             cerr << (passes ? "\r" : "\n");
             cerr.flush();
         }
@@ -119,12 +120,14 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& route, bool
     if (nTests) {
         uint64_t nFailed = nTests - nPassed;
         ostringstream os;
+        os << (nFailed ? cRed : cYellow);
         os << padRight(route + " (" + (isCmd ? "cmd" : "api") + " mode)", 25, false, ' ') + " ==> ";
-        os << (!nFailed ? "passed" : "failed");
+        os << (!nFailed ? "ok    " : "failed");
         os << ": " << nPassed;
         os << " of " << nTests;
         os << " passed (" << nFailed << " failed)";
-        cerr << padRight(os.str(), 135, false, ' ');
+        os << cOff;
+        cerr << padRight(os.str(), 135, false, ' ') << "      ";
         cerr << endl;
     }
 
