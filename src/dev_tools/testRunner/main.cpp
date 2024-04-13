@@ -2,104 +2,64 @@
 #include "main.h"
 
 //-----------------------------------------------------------------------------
-void COptions::doTests(vector<CTestCase>& testArray, const string_q& route, bool isCmd) {
+void COptions::doTests(vector<CTestCase>& testArray, const string_q& cppName, bool isCmd) {
     uint64_t nTests = 0;
     uint64_t nPassed = 0;
     for (auto test : testArray) {
-        bool shouldRun1 = isCmd && test.mode != "api";
-        bool shouldRun2 = !isCmd && test.mode != "cmd";
-        if (shouldRun1 || shouldRun2) {
-            test.prepareTest(isCmd);
-
-            ostringstream theCmd;
-            theCmd << "cd \"" + test.testRoot + "\" ; ";
-
-            ostringstream prepender;
-            for (auto e : test.envLines) {
-                prepender << "Env: " << e << endl;
-            }
-
-            string_q goldFn = test.goldPath + test.fileName;
-            string_q workFn = test.workPath + test.fileName;
-            if (isCmd) {
-                string_q envs = substitute(substitute(linesToString(test.envLines, '|'), " ", ""), "|", " ");
-                string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true ";
-                string_q exe = "chifra" + (contains(test.tool, "chifra") ? "" : " " + test.route);
-                string_q fullCmd = exe + " " + test.options;
-                string_q debugCmd = substitute(fullCmd, getHomeFolder(), "$HOME/");
-                string_q redir = workFn;
-                theCmd << "echo \"" << debugCmd << "\" >" << redir + " && ";
-                string_q rFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".redir";
-                if (fileExists(rFile)) {
-                    fullCmd += " --output " + test.name + "_out.file";
-                    test.origLine += " & output = " + test.name + "_out.file";
-                }
-                theCmd << env << fullCmd << " >>" << redir << " 2>&1";
-
-            } else {
-                bool has_options = !test.options.empty();
-                bool has_post = !test.post.empty();
-                bool has_env = (test.envLines.size() > 0);
-
-                // Check if curl configuration file for the given test exists. We can use such
-                // files to send requests other than GET, e.g. when testing CRUD endpoints
-                CStringArray curlFileLines;
-                string_q curlFilePath = substitute(test.goldPath, "/api_tests", "") + test.name + "_curl.txt";
-                if (fileExists(curlFilePath))
-                    asciiFileToLines(curlFilePath, curlFileLines);
-
-                theCmd << "curl -s ";
-                if (curlFileLines.size() > 0) {
-                    theCmd << "--config " << curlFilePath << " ";
-                    for (auto curlArgument : curlFileLines) {
-                        prepender << "CURL: " << curlArgument << endl;
-                    }
-                }
-                theCmd << "-H \"User-Agent: testRunner\" ";
-                if (has_env)
-                    theCmd << "-H \"X-TestRunner-Env: " << substitute(linesToString(test.envLines, '|'), " ", "")
-                           << "\" ";
-                theCmd << "\"";
-                string_q port = getEnvStr("TB_TEST_API_SERVER");
-                string_q apiProvider = "http://localhost:" + (port.empty() ? "8080" : port) + "/";
-                theCmd << apiProvider;
-                theCmd << test.route;
-                theCmd << (has_options ? ("?" + test.options) : "");
-                theCmd << "\"";
-                theCmd << (has_post ? (" | " + test.post + " ") : "");
-                theCmd << " >" << workFn;
-                prepender << test.route << "?" << test.options << endl;
-            }
-
-            nTests++;
-            if (system(theCmd.str().c_str())) {
-            }
-
-            string_q workContents = asciiFileToString(workFn);
-            if (!prepender.str().empty()) {
-                workContents = prepender.str() + workContents;
-            }
-
-            replaceAll(workContents, "3735928559", "\"0xdeadbeef\"");
-            if (isCmd) {
-                workContents += test.outputFileContents();
-            }
-            stringToAsciiFile(workFn, workContents);
-
-            string_q goldText = asciiFileToString(goldFn);
-            string_q workText = asciiFileToString(workFn);
-            nPassed += goldText == workText;
-
-            // reportOneTest();
-            ostringstream os;
-            os << "    " << (goldText == workText ? (cGreen + "ok    ") : (cRed + "failed")) << cOff << " ";
-            os << padRight(test.route, 15, true, '.') << padRight(test.name, 30, true, '.') << " ";
-            os << test.options;
-            os << cOff;
-            cerr << padRight(os.str(), 135, false, ' ') << "      ";
-            cerr << ((goldText == workText && !isRemoteTesting) ? "\r" : "\n");
-            cerr.flush();
+        if (!test.shouldRun(isCmd)) {
+            continue;
         }
+
+        test.prepareTest(isCmd);
+        string_q goldFn = test.goldPath + test.fileName;
+        string_q workFn = test.workPath + test.fileName;
+        string_q curlFilePath = test.testRoot + test.name + "_curl.txt";
+
+        ostringstream theCmd;
+        theCmd << "cd \"" + test.testRoot + "\" ; ";
+        if (isCmd) {
+            string_q fullCmd = (contains(test.tool, "chifra") ? "chifra" : "chifra " + test.route) + " " + test.options;
+            string_q redirFile = test.testRoot + test.name + ".redir";
+            if (fileExists(redirFile)) {
+                fullCmd += " --output " + test.name + "_out.file";
+                test.origLine += " & output = " + test.name + "_out.file";
+            }
+
+            string_q debugCmd = substitute(fullCmd, getHomeFolder(), "$HOME/");
+            theCmd << "echo \"" << debugCmd << "\" >" << workFn + " && ";
+
+            string_q envs = substitute(substitute(linesToString(test.envLines, '|'), " ", ""), "|", " ");
+            string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true ";
+            theCmd << env << fullCmd << " >>" << workFn << " 2>&1";
+
+        } else {
+            theCmd << "curl -s";
+            theCmd << (fileSize(curlFilePath) > 0 ? (" --config " + curlFilePath) : "");
+            theCmd << " -H \"User-Agent: testRunner\"";
+            theCmd << " \"" << test.apiUrl() << "\"";
+            theCmd << (test.post.empty() ? "" : (" | " + test.post + " "));
+            theCmd << " >" << workFn;
+        }
+
+        if (system(theCmd.str().c_str())) {
+        }
+
+        test.cleanWorkFile(isCmd, workFn);
+
+        nTests++;
+        string_q goldText = asciiFileToString(goldFn);
+        string_q workText = asciiFileToString(workFn);
+        nPassed += goldText == workText;
+
+        // reportOneTest();
+        ostringstream os;
+        os << "    " << (goldText == workText ? (cGreen + "ok    ") : (cRed + "failed")) << cOff << " ";
+        os << padRight(test.route, 15, true, '.') << padRight(test.name, 30, true, '.') << " ";
+        os << test.options;
+        os << cOff;
+        cerr << padRight(os.str(), 135, false, ' ') << "      ";
+        cerr << ((goldText == workText && !isRemoteTesting) ? "\r" : "\n");
+        cerr.flush();
     }
 
     totalTests += nTests;
@@ -108,7 +68,7 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& route, bool
         uint64_t nFailed = nTests - nPassed;
         ostringstream os;
         os << (nFailed ? cRed : cYellow);
-        os << padRight(route + " (" + (isCmd ? "cmd" : "api") + " mode)", 25, false, ' ') + " ==> ";
+        os << padRight(cppName + " (" + (isCmd ? "cmd" : "api") + " mode)", 25, false, ' ') + " ==> ";
         os << (!nFailed ? "ok    " : "failed");
         os << ": " << nPassed;
         os << " of " << nTests;
@@ -119,49 +79,6 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& route, bool
     }
 
     return;
-}
-
-//-----------------------------------------------------------------------------
-int main(int argc, const char* argv[]) {
-    COptions options;
-    options.init();
-
-    for (auto route : options.tests) {
-        string_q path = nextTokenClear(route, '/');
-        rmWorkingTests(path, route);
-        rmWorkingTests(path, route + "/api_tests");
-
-        string_q testFile = options.sourceFolder + path + "/" + route + ".csv";
-
-        CStringArray testLines;
-        asciiFileToLines(testFile, testLines);
-
-        vector<CTestCase> testArray;
-        for (auto line : testLines) {
-            if (!startsWith(line, "#") && !startsWith(line, "enabled") && !line.empty()) {
-                CTestCase test(line);
-                if (!startsWith(line, "on")) {
-                    test.copyBack();
-                } else {
-                    testArray.push_back(test);
-                }
-            }
-        }
-
-        options.doTests(testArray, route, false /* isCmd */);
-        options.doTests(testArray, route, true /* isCmd */);
-    }
-
-    uint64_t nFailed = options.totalTests - options.totalPassed;
-
-    cerr << string_q(125, '=') << endl;
-    cerr << "  nTests:  " << options.totalTests << endl;
-    cerr << "  nPassed: " << options.totalPassed << (nFailed ? " ==> not okay" : " ==> ok") << endl;
-    cerr << "  nFailed: " << nFailed << endl;
-    cerr << endl;
-
-    bool allPassed = options.totalTests == options.totalPassed;
-    return allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 //-----------------------------------------------------------------------------
@@ -417,7 +334,6 @@ inline void CTestCase::prepareTest(bool isCmd) {
         replaceAll(options, "%20", " ");
         replaceAll(options, "@", " -");
         replaceAll(options, "&", " --");
-        // replaceAll(options, "\\*", " \"*\"");
         replaceAll(options, "=", " ");
         if (trim(options) == "--" || startsWith(trim(options), "-- "))
             replace(options, "--", "");
@@ -441,7 +357,7 @@ inline void CTestCase::prepareTest(bool isCmd) {
         workPath += "api_tests/";
     }
 
-    string_q envFile = substitute(goldPath, "/api_tests", "") + name + ".env";
+    string_q envFile = testRoot + name + ".env";
     if (fileExists(envFile)) {
         CStringArray fileLines;
         asciiFileToLines(envFile, fileLines);
@@ -511,9 +427,9 @@ void COptions::init(void) {
     sourceFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
 }
 
+//-----------------------------------------------------------------------------
 string_q CTestCase::outputFileContents(void) {
     if (contains(origLine, "output")) {
-        string_q testRoot = substitute(goldPath, "/api_tests", "");
         string_q line = substitute(substitute(origLine, "&", "|"), "=", "|");
         CStringArray parts;
         explode(parts, line, '|');
@@ -540,4 +456,91 @@ string_q CTestCase::outputFileContents(void) {
     }
 
     return "";
+}
+
+//-----------------------------------------------------------------------------
+bool CTestCase::shouldRun(bool isCmd) const {
+    bool shouldRun1 = isCmd && mode != "api";
+    bool shouldRun2 = !isCmd && mode != "cmd";
+    return shouldRun1 || shouldRun2;
+}
+
+//-----------------------------------------------------------------------------
+void CTestCase::cleanWorkFile(bool isCmd, const string_q& workFn) {
+    string_q workContents = asciiFileToString(workFn);
+
+    ostringstream prepender;
+    for (auto e : envLines) {
+        prepender << "Env: " << e << endl;
+    }
+
+    if (isCmd) {
+        workContents += outputFileContents();
+    } else {
+        string_q curlFilePath = testRoot + name + "_curl.txt";
+        if (fileSize(curlFilePath) > 0) {
+            CStringArray curlFileLines;
+            asciiFileToLines(curlFilePath, curlFileLines);
+            for (auto curlArgument : curlFileLines) {
+                prepender << "CURL: " << curlArgument << endl;
+            }
+        }
+        prepender << route << "?" << options << endl;
+    }
+
+    if (!prepender.str().empty()) {
+        workContents = prepender.str() + workContents;
+    }
+
+    stringToAsciiFile(workFn, substitute(workContents, "3735928559", "\"0xdeadbeef\""));
+}
+
+//-----------------------------------------------------------------------------
+string_q CTestCase::apiUrl(void) const {
+    string_q apiOptions = (!options.empty() ? ("?" + options) : "");
+    string_q apiPort = getEnvStr("TB_TEST_API_SERVER").empty() ? "8080" : getEnvStr("TB_TEST_API_SERVER");
+    return "http://localhost:" + apiPort + "/" + route + apiOptions;
+}
+
+//-----------------------------------------------------------------------------
+int main(int argc, const char* argv[]) {
+    COptions options;
+    options.init();
+
+    for (auto cppName : options.tests) {
+        string_q path = nextTokenClear(cppName, '/');
+        rmWorkingTests(path, cppName);
+        rmWorkingTests(path, cppName + "/api_tests");
+
+        string_q testFile = options.sourceFolder + path + "/" + cppName + ".csv";
+
+        CStringArray testLines;
+        asciiFileToLines(testFile, testLines);
+
+        vector<CTestCase> testArray;
+        for (auto line : testLines) {
+            if (!startsWith(line, "#") && !startsWith(line, "enabled") && !line.empty()) {
+                CTestCase test(line);
+                if (startsWith(line, "on")) {
+                    testArray.push_back(test);
+                } else {
+                    test.copyBack();
+                }
+            }
+        }
+
+        options.doTests(testArray, cppName, false /* isCmd */);
+        options.doTests(testArray, cppName, true /* isCmd */);
+    }
+
+    uint64_t nFailed = options.totalTests - options.totalPassed;
+
+    cerr << string_q(125, '=') << endl;
+    cerr << "  nTests:  " << options.totalTests << endl;
+    cerr << "  nPassed: " << options.totalPassed << (nFailed ? " ==> not okay" : " ==> ok") << endl;
+    cerr << "  nFailed: " << nFailed << endl;
+    cerr << endl;
+
+    bool allPassed = options.totalTests == options.totalPassed;
+    return allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }

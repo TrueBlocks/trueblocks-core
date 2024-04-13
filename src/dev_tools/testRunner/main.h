@@ -31,8 +31,12 @@ class CTestCase {
     bool operator!=(const CTestCase& it) const {
         return !operator==(it);
     }
-    void copyBack(void);
+
     string_q outputFileContents(void);
+    void copyBack(void) const;
+    bool shouldRun(bool isCmd) const;
+    void cleanWorkFile(bool isCmd, const string_q& workFn);
+    string_q apiUrl(void) const;
 };
 
 class COptions {
@@ -113,7 +117,7 @@ inline bool CTestCase::operator==(const CTestCase& it) const {
 }
 
 extern int copyFile(const string_q& fromIn, const string_q& toIn);
-inline void CTestCase::copyBack(void) {
+inline void CTestCase::copyBack(void) const {
     string_q tr = "/test/gold/dev_tools/testRunner/";
     string_q fn = path + "/" + tool + "/" + fileName;
     string_q fnA = path + "/" + tool + "/api_tests/" + fileName;
