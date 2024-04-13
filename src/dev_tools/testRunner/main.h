@@ -16,6 +16,7 @@ class CTestCase {
     string_q goldPath;
     string_q workPath;
     string_q fileName;
+    CStringArray envLines;
 
     CTestCase(void);
     CTestCase(const CTestCase& te);
@@ -29,6 +30,22 @@ class CTestCase {
         return !operator==(it);
     }
     void copyBack(void);
+    string_q outputFile(void) const;
+};
+
+class COptions {
+  public:
+    string_q sourceFolder;
+    uint64_t totalTests = 0;
+    uint64_t totalPassed = 0;
+    vector<CTestCase> fails;
+    CStringArray tests;
+
+    COptions(void);
+    ~COptions(void);
+
+    void init(void);
+    void doTests(vector<CTestCase>& testArray, const string_q& testName, bool isCmd);
 };
 
 inline CTestCase::CTestCase(void) {
@@ -149,6 +166,17 @@ inline void CTestCase::prepareTest(bool isCmd) {
         goldPath += "api_tests/";
         workPath += "api_tests/";
     }
+
+    string_q envFile = substitute(goldPath, "/api_tests", "") + name + ".env";
+    if (fileExists(envFile)) {
+        CStringArray fileLines;
+        asciiFileToLines(envFile, fileLines);
+        for (auto f : fileLines) {
+            if (!startsWith(f, "#")) {
+                envLines.push_back(f);
+            }
+        }
+    }
 }
 
 extern int copyFile(const string_q& fromIn, const string_q& toIn);
@@ -170,25 +198,6 @@ inline void CTestCase::copyBack(void) {
     }
 }
 
-#define API (1 << 0)
-#define CMD (1 << 1)
-#define BOTH (API | CMD)
-
-class COptions {
-  public:
-    string_q sourceFolder;
-    uint64_t totalTests = 0;
-    uint64_t totalPassed = 0;
-    CStringArray fails;
-    CStringArray tests;
-
-    COptions(void);
-    ~COptions(void);
-
-    void init(void);
-    void doTests(vector<CTestCase>& testArray, const string_q& testName, int which);
-};
-
 inline COptions::COptions(void) {
 }
 
@@ -196,10 +205,9 @@ inline COptions::~COptions(void) {
 }
 
 extern bool rmWorkingTests(const string_q& path, const string_q& testName);
-extern string_q getOutputFile(const string& orig, const string_q& goldApiPath);
 extern string_q linesToString(const CStringArray& lines, char sep = '\n');
 extern string_q doCommand(const string_q& cmd, bool readStderr = false);
-extern string_q padRight(const string_q& str, size_t len, char p = ' ');
+extern string_q padRight(const string_q& str, size_t len, bool bumpPad, char p = ' ');
 extern string_q padLeft(const string_q& str, size_t len, char p = ' ');
 extern string_q getEnvStr(const string_q& name);
 extern int copyFile(const string_q& from, const string_q& to);
