@@ -1,0 +1,30 @@
+blocks?blocks=32279&uniq&verbose
+Args: [blocks=32279 uniq verbose]
+Opts: {"blocks":["32279"],"uniq":true,"verbose":true}
+Blocks:  [32279]
+Uniq:  true
+Verbose:  true
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "data": [
+    {
+      "address": "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead",
+      "blockNumber": 32279,
+      "date": "2015-08-04 11:34:58 UTC",
+      "reason": "miner",
+      "timestamp": 1438688098,
+      "transactionIndex": 99997
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

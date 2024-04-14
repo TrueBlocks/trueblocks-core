@@ -1,0 +1,3 @@
+explore?terms=trueblocks.eth
+Args: [terms=trueblocks.eth]
+Unknown sdk endpoint: explore

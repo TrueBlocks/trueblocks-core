@@ -1,0 +1,35 @@
+tokens?addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xa25d04fa348f107428708ba19c95d1c79b3744bf&byAcct&blocks=4000000&verbose
+Args: [addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf byAcct blocks=4000000 verbose]
+Opts: {"addrs":["0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf"],"blocks":["4000000"],"byAcct":true,"verbose":true}
+Addrs:  [0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf]
+Blocks:  [4000000]
+ByAcct:  true
+Verbose:  true
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
+      "balance": "435000",
+      "blockNumber": 4000000,
+      "date": "2017-07-09 20:52:47 UTC",
+      "decimals": 18,
+      "holder": "0xa25d04fa348f107428708ba19c95d1c79b3744bf",
+      "name": "Swarm City Token",
+      "symbol": "SWT",
+      "timestamp": 1499633567,
+      "units": "435000000000000000000000"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

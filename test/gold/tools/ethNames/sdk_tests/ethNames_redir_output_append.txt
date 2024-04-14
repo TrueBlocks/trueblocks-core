@@ -1,0 +1,23 @@
+names?terms=0xf503017d7baf7fbc0fff7492b751025c6a78179b&output=output_test_file&append
+Args: [terms=0xf503017d7baf7fbc0fff7492b751025c6a78179b output=output_test_file append]
+Opts: {"terms":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"autoname":"0x0","output":"output_test_file","append":true}
+Terms:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+OutputFn:  output_test_file
+Append:  true
+Format:  json
+{ "outputFilename": "--output_filename--" }
+No known names found for [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Original command: [sdkTester]
+{
+  "data": [],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

@@ -1,0 +1,12 @@
+state?verbose
+Args: [verbose]
+Opts: {"proxyFor":"0x0","verbose":true}
+Blocks:  [17000000]
+Verbose:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "Please specify at least one valid Ethereum address."
+  ]
+}

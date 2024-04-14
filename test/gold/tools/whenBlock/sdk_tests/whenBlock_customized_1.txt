@@ -1,0 +1,11 @@
+when?blocks=myblock
+Args: [blocks=myblock]
+Opts: {"blocks":["myblock"]}
+Blocks:  [myblock]
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "The given value 'myblock' is not a valid identifier."
+  ]
+}

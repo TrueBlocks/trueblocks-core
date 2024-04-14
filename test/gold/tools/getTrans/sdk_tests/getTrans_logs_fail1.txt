@@ -1,0 +1,13 @@
+transactions?transactions=9004225.10&logs&emitter=0xbbbbca6a901c926f240b89eacb641d8aec7aeaf
+Args: [transactions=9004225.10 logs emitter=0xbbbbca6a901c926f240b89eacb641d8aec7aeaf]
+Opts: {"transactions":["9004225.10"],"logs":true,"emitter":["0xbbbbca6a901c926f240b89eacb641d8aec7aeaf"]}
+Transactions:  [9004225.10]
+Logs:  true
+Emitter:  [0xbbbbca6a901c926f240b89eacb641d8aec7aeaf]
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "hex string must be an even length"
+  ]
+}

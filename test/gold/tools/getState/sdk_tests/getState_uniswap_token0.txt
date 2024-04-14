@@ -1,0 +1,36 @@
+state?call='0x0dfe1681()'&addrs=0xbb2b8038a1640196fbe3e38816f3e67cba72d940&blocks=10092000
+Args: [call='0x0dfe1681()' addrs=0xbb2b8038a1640196fbe3e38816f3e67cba72d940 blocks=10092000]
+Opts: {"addrs":["0xbb2b8038a1640196fbe3e38816f3e67cba72d940"],"blocks":["10092000"],"call":"'0x0dfe1681()'","proxyFor":"0x0"}
+Addrs:  [0xbb2b8038a1640196fbe3e38816f3e67cba72d940]
+Blocks:  [10092000]
+Call:  0x0dfe1681()
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
+      "blockNumber": 10092000,
+      "bytes": "",
+      "callResult": {
+        "encoding": "0x0dfe1681",
+        "name": "token0",
+        "outputs": {
+          "val_0": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+        },
+        "signature": "token0()"
+      },
+      "encoding": "0x0dfe1681"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

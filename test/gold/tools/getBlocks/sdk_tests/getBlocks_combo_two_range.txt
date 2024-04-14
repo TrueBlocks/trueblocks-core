@@ -1,0 +1,11 @@
+blocks?blocks=1590000%204000001-4000002%201001001-1001100%201234567
+Args: [blocks=1590000 4000001-4000002 1001001-1001100 1234567]
+Opts: {"blocks":["1590000 4000001-4000002 1001001-1001100 1234567"]}
+Blocks:  [1590000 4000001-4000002 1001001-1001100 1234567]
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "Specify only a single block range at a time."
+  ]
+}

@@ -1,0 +1,63 @@
+export?addrs=trueblocks.eth&balances&firstBlock=13000000&lastBlock=13025000
+Args: [addrs=trueblocks.eth balances firstBlock=13000000 lastBlock=13025000]
+Opts: {"addrs":["trueblocks.eth"],"balances":true,"firstBlock":13000000,"lastBlock":13025000}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Balances:  true
+FirstBlock:  13000000
+LastBlock:  13025000
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "balance": "38.244236609265142365",
+      "blockNumber": 13007494,
+      "date": "2021-08-12 01:57:20 UTC",
+      "diff": "-0.00199415",
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "units": "38244236609265142365"
+    },
+    {
+      "balance": "38.242134134816851577",
+      "blockNumber": 13011313,
+      "date": "2021-08-12 16:01:18 UTC",
+      "diff": "-0.002102474448290788",
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "units": "38242134134816851577"
+    },
+    {
+      "balance": "38.235951656552205569",
+      "blockNumber": 13013953,
+      "date": "2021-08-13 01:55:05 UTC",
+      "diff": "-0.006182478264646008",
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "units": "38235951656552205569"
+    },
+    {
+      "balance": "38.232829325915035418",
+      "blockNumber": 13013969,
+      "date": "2021-08-13 01:57:41 UTC",
+      "diff": "-0.003122330637170151",
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "units": "38232829325915035418"
+    },
+    {
+      "balance": "38.227654560358907118",
+      "blockNumber": 13013976,
+      "date": "2021-08-13 02:00:12 UTC",
+      "diff": "-0.0051747655561283",
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "units": "38227654560358907118"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

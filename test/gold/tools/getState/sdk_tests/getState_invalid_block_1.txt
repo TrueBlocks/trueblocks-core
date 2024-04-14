@@ -1,0 +1,12 @@
+state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359%20fdfsdf
+Args: [addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 fdfsdf]
+Opts: {"addrs":["0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 fdfsdf"],"proxyFor":"0x0"}
+Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 fdfsdf]
+Blocks:  [17000000]
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The value fdfsdf is not a valid address."
+  ]
+}

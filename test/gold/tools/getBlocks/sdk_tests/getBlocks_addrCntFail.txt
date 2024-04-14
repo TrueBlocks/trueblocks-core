@@ -1,0 +1,25 @@
+blocks?blocks=3982128&count
+Args: [blocks=3982128 count]
+Opts: {"blocks":["3982128"],"count":true}
+Blocks:  [3982128]
+Count:  true
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 3982128,
+      "transactionsCnt": 91
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

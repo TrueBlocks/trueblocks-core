@@ -1,0 +1,27 @@
+tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&parts=decimals
+Args: [addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07 parts=decimals]
+Opts: {"addrs":["0xd26114cd6ee289accf82350c8d8487fedb8a0c07"],"parts":8}
+Addrs:  [0xd26114cd6ee289accf82350c8d8487fedb8a0c07]
+Blocks:  [17000000]
+Parts:  [decimals]
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "blockNumber": 17000000,
+      "decimals": 18
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

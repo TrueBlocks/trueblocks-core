@@ -1,0 +1,14 @@
+slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&blocks=0-1500000&source=key
+Args: [addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e blocks=0-1500000 source=key]
+Opts: {"addrs":["0x9519afbc60719a83c470ceec41e32d3e4b8b262e"],"blocks":["0-1500000"],"source":4}
+Addrs:  [0x9519afbc60719a83c470ceec41e32d3e4b8b262e]
+Blocks:  [0-1500000]
+Types:  [ext]
+Source:  key
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "The --source=key option is only available with --appearances or --count."
+  ]
+}

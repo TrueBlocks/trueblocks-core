@@ -1,0 +1,11 @@
+slurp?
+Args: []
+Opts: {}
+Types:  [ext]
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "Please specify at least one valid Ethereum address."
+  ]
+}

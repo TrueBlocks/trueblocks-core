@@ -1,0 +1,88 @@
+list?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&firstBlock=56&lastBlock=2516&firstRecord=3
+Args: [addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f firstBlock=56 lastBlock=2516 firstRecord=3]
+Opts: {"addrs":["0x05a56e2d52c817161883f50c441c3228cfe54d9f"],"firstRecord":3,"publisher":"0x0","firstBlock":56,"lastBlock":2516}
+Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
+FirstRecord:  3
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+FirstBlock:  56
+LastBlock:  2516
+Format:  json
+{
+  "data": [
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 348,
+      "transactionIndex": 99999
+    },
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 500,
+      "transactionIndex": 99998
+    },
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 563,
+      "transactionIndex": 99998
+    },
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 987,
+      "transactionIndex": 99998
+    },
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 1450,
+      "transactionIndex": 99999
+    },
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 1580,
+      "transactionIndex": 99998
+    },
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 1586,
+      "transactionIndex": 99998
+    },
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 1861,
+      "transactionIndex": 99999
+    },
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 1912,
+      "transactionIndex": 99998
+    },
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 2057,
+      "transactionIndex": 99999
+    },
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 2256,
+      "transactionIndex": 99999
+    },
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 2392,
+      "transactionIndex": 99999
+    },
+    {
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "blockNumber": 2516,
+      "transactionIndex": 99998
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

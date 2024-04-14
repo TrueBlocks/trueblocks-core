@@ -1,0 +1,47 @@
+logs?transactions=4279119.46&raw
+Args: [transactions=4279119.46 raw]
+Opts: {"transactions":["4279119.46"],"raw":true}
+Transactions:  [4279119.46]
+ShowRaw:  true
+Caps:  cache,decache,raw
+Format:  json
+{
+  "data": [
+    {
+      "address": "0xe3818504c1b32bf1557b16c238b2e01fd3149c17",
+      "blockHash": "0x6194019535b8e8596ef1f0a0c01e36198694f0eca8ee5f49463ea2911058f56a",
+      "blockNumber": "0x414b4f",
+      "data": "0x000000000000000000000000000000000000000000000051889acfe625dbffad",
+      "logIndex": "0x70",
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000008d12a197cb00d4747a1fe03395095ce2a5cc6819",
+        "0x0000000000000000000000009fe00a70fd9a3a521835bd683297a94f39a6bf8b"
+      ],
+      "transactionHash": "0xe611769659eac98190fadf0a2205bcdac9fa515245fb3a53702c03e9c96c8b48",
+      "transactionIndex": "0x2e"
+    },
+    {
+      "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
+      "blockHash": "0x6194019535b8e8596ef1f0a0c01e36198694f0eca8ee5f49463ea2911058f56a",
+      "blockNumber": "0x414b4f",
+      "data": "0x000000000000000000000000e3818504c1b32bf1557b16c238b2e01fd3149c170000000000000000000000009fe00a70fd9a3a521835bd683297a94f39a6bf8b000000000000000000000000000000000000000000000051889acfe625dbffad0000000000000000000000000000000000000000000000000000000000000000",
+      "logIndex": "0x71",
+      "topics": [
+        "0xf341246adaac6f497bc2a656f546ab9e182111d630394f0c57c710a59a2cb567"
+      ],
+      "transactionHash": "0xe611769659eac98190fadf0a2205bcdac9fa515245fb3a53702c03e9c96c8b48",
+      "transactionIndex": "0x2e"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

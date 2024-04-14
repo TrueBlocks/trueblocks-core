@@ -1,0 +1,14 @@
+blocks?blocks=12&cache&decache
+Args: [blocks=12 cache decache]
+Opts: {"blocks":["12"],"cache":true,"decache":true}
+Blocks:  [12]
+Enabled:  blocks, receipts
+Cache:  true
+Decache:  true
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "The --cache and --decache options are mutually exclusive."
+  ]
+}

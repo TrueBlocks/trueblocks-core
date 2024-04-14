@@ -1,0 +1,10 @@
+config?ether
+Args: [ether]
+Opts: {"ether":true}
+Ether:  true
+Format:  json
+{
+  "errors": [
+    "Invalid key (ether) in config route."
+  ]
+}

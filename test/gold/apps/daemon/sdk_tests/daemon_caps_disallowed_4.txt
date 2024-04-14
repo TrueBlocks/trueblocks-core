@@ -1,0 +1,3 @@
+daemon?append
+Args: [append]
+Unknown sdk endpoint: daemon

@@ -1,0 +1,13 @@
+transactions?transactions=0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3&traces&chain=non-tracing
+Args: [transactions=0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3 traces chain=non-tracing]
+Opts: {"transactions":["0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3"],"traces":true,"chain":"non-tracing"}
+Transactions:  [0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3]
+Traces:  true
+Chain:  non-tracing
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "chain non-tracing is not properly configured."
+  ]
+}

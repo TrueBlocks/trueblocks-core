@@ -1,0 +1,60 @@
+status?modes=blocks&verbose&maxRecords=2
+Args: [modes=blocks verbose maxRecords=2]
+Opts: {"modes":8,"maxRecords":2,"verbose":true}
+Modes:  [blocks]
+MaxRecords:  2
+Verbose:  true
+Format:  json
+{
+  "data": [
+    {
+      "cachePath": "--paths--",
+      "caches": [
+        {
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "blocksCache"
+        }
+      ],
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isApi": false,
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

@@ -1,0 +1,14 @@
+blocks?blocks=17034900&hashes&withdrawals&logs
+Args: [blocks=17034900 hashes withdrawals logs]
+Opts: {"blocks":["17034900"],"hashes":true,"logs":true,"withdrawals":true}
+Blocks:  [17034900]
+Hashes:  true
+Logs:  true
+Withdrawals:  true
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "Please choose only a single mode (--uncles, --logs, --withdrawal, etc.)"
+  ]
+}

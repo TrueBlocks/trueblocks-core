@@ -1,0 +1,3 @@
+scrape?blockCnt=12
+Args: [blockCnt=12]
+Unknown sdk endpoint: scrape

@@ -1,0 +1,12 @@
+when?timestamps&repair
+Args: [timestamps repair]
+Opts: {"timestamps":true,"repair":true}
+Timestamps:  true
+Repair:  true
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "The --repair option requires at least one block identifier."
+  ]
+}

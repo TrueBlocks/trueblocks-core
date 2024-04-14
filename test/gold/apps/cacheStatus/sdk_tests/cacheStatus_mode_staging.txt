@@ -1,0 +1,23 @@
+status?modes=staging&verbose&maxRecords=2
+Args: [modes=staging verbose maxRecords=2]
+Opts: {"modes":32768,"maxRecords":2,"verbose":true}
+Modes:  [staging]
+MaxRecords:  2
+Verbose:  true
+Format:  json
+{
+  "data": [],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  },
+  "errors": [
+    "no files were found in the [staging] caches"
+  ]
+}

@@ -1,0 +1,40 @@
+state?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&blocks=1430957-1430966&changes
+Args: [addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413 blocks=1430957-1430966 changes]
+Opts: {"addrs":["0xbb9bc244d798123fde783fcc1c72d3bb8c189413"],"blocks":["1430957-1430966"],"changes":true,"proxyFor":"0x0"}
+Addrs:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
+Blocks:  [1430957-1430966]
+Changes:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "balance": "956077579120000000000",
+      "blockNumber": 1430957,
+      "ether": "956.07757912"
+    },
+    {
+      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "balance": "976077579120000000000",
+      "blockNumber": 1430958,
+      "ether": "976.07757912"
+    },
+    {
+      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "balance": "981077579120000000000",
+      "blockNumber": 1430961,
+      "ether": "981.07757912"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

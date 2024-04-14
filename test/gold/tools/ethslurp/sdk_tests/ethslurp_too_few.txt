@@ -1,0 +1,14 @@
+slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&blocks=0-1500000&perPage=2
+Args: [addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e blocks=0-1500000 perPage=2]
+Opts: {"addrs":["0x9519afbc60719a83c470ceec41e32d3e4b8b262e"],"blocks":["0-1500000"],"perPage":2}
+Addrs:  [0x9519afbc60719a83c470ceec41e32d3e4b8b262e]
+Blocks:  [0-1500000]
+Types:  [ext]
+PerPage:  2
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "The --per_page option (2) must be at least 10."
+  ]
+}

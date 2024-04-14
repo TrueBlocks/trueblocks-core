@@ -1,0 +1,45 @@
+when?list&chain=sepolia
+Args: [list chain=sepolia]
+Opts: {"list":true,"chain":"sepolia"}
+List:  true
+Chain:  sepolia
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 0,
+      "date": "2021-10-03 13:24:41 UTC",
+      "name": "first",
+      "timestamp": 1633267481
+    },
+    {
+      "blockNumber": 33106,
+      "date": "2021-10-25 15:39:10 UTC",
+      "name": "firstTrans",
+      "timestamp": 1635176350
+    },
+    {
+      "blockNumber": 1450409,
+      "date": "2022-07-06 13:58:36 UTC",
+      "name": "paris_merge",
+      "timestamp": 1657115916
+    },
+    {
+      "blockNumber": 2990908,
+      "date": "2023-02-28 04:04:48 UTC",
+      "name": "shanghai",
+      "timestamp": 1677557088
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 11155111,
+    "networkId": 11155111,
+    "chain": "sepolia"
+  }
+}

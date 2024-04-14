@@ -1,0 +1,3 @@
+monitors?addrs=trueblocks.eth&ether
+Args: [addrs=trueblocks.eth ether]
+Unknown sdk endpoint: monitors

@@ -1,0 +1,21 @@
+names?prefund&terms=etwork
+Args: [prefund terms=etwork]
+Opts: {"terms":["etwork"],"prefund":true,"autoname":"0x0"}
+Terms:  [etwork]
+Prefund:  true
+Format:  json
+No known names found for [etwork]
+Original command: [sdkTester]
+{
+  "data": [],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

@@ -1,0 +1,10 @@
+traces?
+Args: []
+Opts: {}
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "Please supply one or more transaction identifiers or filters."
+  ]
+}

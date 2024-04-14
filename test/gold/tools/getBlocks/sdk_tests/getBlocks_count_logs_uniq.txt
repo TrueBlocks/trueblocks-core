@@ -1,0 +1,21 @@
+blocks?blocks=6001002&count&logs&uniq&fmt=json
+{
+  "data": [
+    {
+      "addressCnt": 389,
+      "blockNumber": 6001002,
+      "logsCnt": 89,
+      "transactionsCnt": 87
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

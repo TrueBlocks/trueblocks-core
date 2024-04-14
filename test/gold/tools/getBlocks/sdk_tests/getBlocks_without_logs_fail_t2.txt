@@ -1,0 +1,12 @@
+blocks?blocks=4012000-4012001&topic=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a
+Args: [blocks=4012000-4012001 topic=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a]
+Opts: {"blocks":["4012000-4012001"],"topic":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a"]}
+Blocks:  [4012000-4012001]
+Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a]
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "The topic option (0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a) must be 32 bytes long."
+  ]
+}

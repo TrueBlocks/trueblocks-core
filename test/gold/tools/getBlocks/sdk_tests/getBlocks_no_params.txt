@@ -1,0 +1,10 @@
+blocks?
+Args: []
+Opts: {}
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "Please supply either a block identifier or the --list_count option."
+  ]
+}

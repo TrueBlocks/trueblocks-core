@@ -1,0 +1,39 @@
+transactions?transactions=9004225.10&logs&emitter=0xbbbbca6a901c926f240b89eacb641d8aec7aeafd&topic=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+Args: [transactions=9004225.10 logs emitter=0xbbbbca6a901c926f240b89eacb641d8aec7aeafd topic=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef]
+Opts: {"transactions":["9004225.10"],"logs":true,"emitter":["0xbbbbca6a901c926f240b89eacb641d8aec7aeafd"],"topic":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"]}
+Transactions:  [9004225.10]
+Logs:  true
+Emitter:  [0xbbbbca6a901c926f240b89eacb641d8aec7aeafd]
+Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef]
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "data": [
+    {
+      "address": "0xbbbbca6a901c926f240b89eacb641d8aec7aeafd",
+      "blockHash": "0xec41ec65f1afbfd0f097330f4a6acaa161aa7aacd81da9d2cdc7a79c81e85457",
+      "blockNumber": 9004225,
+      "data": "0x0000000000000000000000000000000000000000000005880840f5ff35702000",
+      "date": "2019-11-26 12:44:51 UTC",
+      "logIndex": 9,
+      "timestamp": 1574772291,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x00000000000000000000000063825c174ab367968ec60f061753d3bbd36a0d8f",
+        "0x00000000000000000000000044d34a119ba21a42167ff8b77a88f0fc7bb2db90"
+      ],
+      "transactionHash": "0x0e348f258ff677843f754e972fbb587ae2b1d2304a4ca853d40d8bdf9f9e2742",
+      "transactionIndex": 10
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

@@ -1,0 +1,35 @@
+Env: TB_NAME_ADDRESS  = 0x0000000000000000000000000000000010101010
+Env: TB_NAME_NAME     = NAME
+Env: TB_NAME_TAG      = TAGS
+Env: TB_NAME_SOURCE   = SOURCE
+Env: TB_NAME_SYMBOL   = SYMBOL
+Env: TB_NAME_DECIMALS = 11
+Env: TB_NAME_DESCR    = DESCRIPTION
+CURL: -X POST
+CURL: -H "Content-Type: application/x-www-form-urlencoded"
+CURL: -d "address=0x0000000000000000000000000000000010101010&name=NAME&tag=TAGS&source=SOURCE&symbol=SYMBOL&decimals=11&description=DESCRIPTION"
+names?create&fmt=json
+{
+  "data": [
+    {
+      "address": "0x0000000000000000000000000000000010101010",
+      "decimals": 11,
+      "isCustom": true,
+      "name": "NAME",
+      "petname": "abnormally-able-quetzal",
+      "source": "SOURCE",
+      "symbol": "SYMBOL",
+      "tags": "TAGS"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

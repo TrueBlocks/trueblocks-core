@@ -1,0 +1,12 @@
+list?addrs=trueblocks.eth&raw
+Args: [addrs=trueblocks.eth raw]
+Opts: {"addrs":["trueblocks.eth"],"publisher":"0x0","raw":true}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+ShowRaw:  true
+Format:  json
+{
+  "errors": [
+    "Invalid key (raw) in list route."
+  ]
+}
