@@ -1,4 +1,4 @@
-chifra blocks  --file cmd_file2 --cache
+chifra blocks  --file cmd_file2 --cache --output cmd_file2_out.file
 TEST[DATE|TIME] Blocks:  [92590]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks, receipts

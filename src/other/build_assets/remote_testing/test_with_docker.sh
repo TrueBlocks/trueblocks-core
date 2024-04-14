@@ -10,7 +10,6 @@ echo "CONFIG_FILE: " $CONFIG_FILE
 REPO=$1
 COMMIT_SHA=$2
 BRANCH=$3
-TEST_TARGET=$4
 
 if [ -z "$CONFIG_FILE" ]
 then
@@ -22,7 +21,7 @@ fi
 echo "Building image..."
 
 # Build image and save its ID
-IMAGE_ID=`docker build -q --build-arg repo=$REPO --build-arg commit_sha=$COMMIT_SHA --build-arg branch=$BRANCH --build-arg test_target=$TEST_TARGET .`
+IMAGE_ID=`docker build -q --build-arg repo=$REPO --build-arg commit_sha=$COMMIT_SHA --build-arg branch=$BRANCH .`
 
 echo "Done. Running Docker image and tests"
 
