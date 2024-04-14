@@ -14,23 +14,26 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& cppName, bo
         string_q goldFn = test.goldPath + test.fileName;
         string_q workFn = test.workPath + test.fileName;
         string_q curlFilePath = test.testRoot + test.name + "_curl.txt";
+        string_q redirFile = test.testRoot + test.name + ".redir";
+        string_q envs = substitute(substitute(linesToString(test.envLines, '|'), " ", ""), "|", " ");
 
         ostringstream theCmd;
         theCmd << "cd \"" + test.testRoot + "\" ; ";
         if (isCmd) {
-            string_q fullCmd = (contains(test.tool, "chifra") ? "chifra" : "chifra " + test.route) + " " + test.options;
-            string_q redirFile = test.testRoot + test.name + ".redir";
             if (fileExists(redirFile)) {
-                fullCmd += " --output " + test.name + "_out.file";
-                test.origLine += " & output = " + test.name + "_out.file";
+                test.origLine += (fileExists(redirFile) ? " & output = " + test.name + "_out.file" : "");
             }
 
-            string_q debugCmd = substitute(fullCmd, getHomeFolder(), "$HOME/");
-            theCmd << "echo \"" << debugCmd << "\" >" << workFn + " && ";
+            ostringstream os;
+            os << "chifra" << (contains(test.tool, "chifra") ? "" : " " + test.route) << " " << test.options;
+            if (fileExists(redirFile)) {
+                os << (fileExists(redirFile) ? " --output " + test.name + "_out.file" : "");
+            }
 
-            string_q envs = substitute(substitute(linesToString(test.envLines, '|'), " ", ""), "|", " ");
-            string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true ";
-            theCmd << env << fullCmd << " >>" << workFn << " 2>&1";
+            theCmd << "echo \"" << substitute(os.str(), getHomeFolder(), "$HOME/") << "\" >" << workFn + " && ";
+            theCmd << "env " << envs << " TEST_MODE=true NO_COLOR=true ";
+            theCmd << os.str();
+            theCmd << " >>" << workFn << " 2>&1";
 
         } else {
             theCmd << "curl -s";
@@ -205,7 +208,7 @@ int cleanFolder(const string_q& path, bool recurse, bool interactive) {
 }
 
 //-----------------------------------------------------------------------------
-inline bool waitForCreate(const string_q& filename) {
+bool waitForCreate(const string_q& filename) {
     size_t mx = 1000;
     size_t cnt = 0;
     while (cnt < mx && !fileExists(filename))
@@ -293,7 +296,7 @@ string_q makeValidName(const string_q& inOut) {
 // Check for duplicate tests names within a given folder
 
 //-----------------------------------------------------------------------------
-inline CTestCase::CTestCase(const string_q& line) {
+CTestCase::CTestCase(const string_q& line) {
     origLine = line;
 
     CStringArray parts;
@@ -324,7 +327,7 @@ inline CTestCase::CTestCase(const string_q& line) {
 }
 
 //-----------------------------------------------------------------------------
-inline void CTestCase::prepareTest(bool isCmd) {
+void CTestCase::prepareTest(bool isCmd) {
     if (isCmd) {
         CStringArray opts = {"val",   "addrs",     "blocks", "files", "dates",  "transactions",
                              "terms", "functions", "modes",  "mode",  "topics", "fourbytes"};
