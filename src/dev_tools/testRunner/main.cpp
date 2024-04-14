@@ -72,7 +72,7 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& cppName, bo
         os << (!nFailed ? "ok    " : "failed");
         os << ": " << nPassed;
         os << " of " << nTests;
-        os << " passed (" << nFailed << " failed)";
+        os << " passed, " << nFailed << " failed.";
         os << cOff;
         cerr << padRight(os.str(), 135, false, ' ') << "      ";
         cerr << endl;
