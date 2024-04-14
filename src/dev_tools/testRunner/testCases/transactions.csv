@@ -78,13 +78,13 @@ on      ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_2        ,y 
 
 on      ,both ,slow  ,transactions ,tools/getTrans ,articulate_proxy         ,y    ,transactions = 11476466.96 & articulate & fmt = json
 
-on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_1           ,n    ,transactions = 0x028dcd16e00f95a1526186f30b105fd69c89e3d25d42ff8708c9f638b1bfabdd & articulate
-on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_2           ,y    ,transactions = 0x178e2bcd2d2eb05002d4f7b3ae5f47731bddba6c8ef940738a696ae2bd4a0b39 & articulate
-on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_3           ,n    ,transactions = 0x1c7022f25f6a069083f112258ec8a9d2c46f648e563ef05a3eaab3c57f6f8f28 & articulate
-on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_4           ,y    ,transactions = 0x8cd78c1a30f526ca92673f9970701d2be1cdba53384dc31ba05037cabf851993 & articulate
-on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_5           ,n    ,transactions = 0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e30558bd2d8da & articulate
-on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_6           ,y    ,transactions = 0xc12685b2f235e540892f709b09aa5b5e552a328097550b13964aa26609e20ad3 & articulate
-on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_7           ,n    ,transactions = 0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb & articulate & fmt = csv
+local   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_1           ,n    ,transactions = 0x028dcd16e00f95a1526186f30b105fd69c89e3d25d42ff8708c9f638b1bfabdd & articulate
+local   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_2           ,y    ,transactions = 0x178e2bcd2d2eb05002d4f7b3ae5f47731bddba6c8ef940738a696ae2bd4a0b39 & articulate
+local   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_3           ,n    ,transactions = 0x1c7022f25f6a069083f112258ec8a9d2c46f648e563ef05a3eaab3c57f6f8f28 & articulate
+local   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_4           ,y    ,transactions = 0x8cd78c1a30f526ca92673f9970701d2be1cdba53384dc31ba05037cabf851993 & articulate
+local   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_5           ,n    ,transactions = 0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e30558bd2d8da & articulate
+local   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_6           ,y    ,transactions = 0xc12685b2f235e540892f709b09aa5b5e552a328097550b13964aa26609e20ad3 & articulate
+local   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_7           ,n    ,transactions = 0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb & articulate & fmt = csv
 on      ,both ,fast  ,transactions ,tools/getTrans ,message                  ,y    ,transactions = 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 & articulate
 delay   ,both ,fast  ,transactions ,tools/getTrans ,unparsable               ,y    ,transactions = 12596470.26 & articulate & fmt = json
 
