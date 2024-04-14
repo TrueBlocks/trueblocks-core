@@ -47,6 +47,27 @@ func ColorsOff() {
 	BrightBlack = ""
 }
 
+func ColorsOn() {
+	Off = "\033[0m"
+	Red = "\033[31m"
+	Green = "\033[32m"
+	Yellow = "\033[33m"
+	Blue = "\033[34m"
+	Magenta = "\033[35m"
+	Cyan = "\033[36m"
+	White = "\033[37m"
+	Black = "\033[30m"
+	Bright = "\033[1m"
+	BrightRed = (Bright + Red)
+	BrightGreen = (Bright + Green)
+	BrightYellow = (Bright + Yellow)
+	BrightBlue = (Bright + Blue)
+	BrightMagenta = (Bright + Magenta)
+	BrightCyan = (Bright + Cyan)
+	BrightWhite = (Bright + White)
+	BrightBlack = (Bright + Black)
+}
+
 func Colored(s string) string {
 	s = strings.Replace(s, "{", Green, -1)
 	s = strings.Replace(s, "@", BrightYellow, -1)

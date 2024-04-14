@@ -17,7 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var debugging = false
@@ -81,10 +80,10 @@ type TestCase struct {
 }
 
 var cm = map[string]string{
-	"greenCheck":    "\033[32m✓\033[0m",
-	"yellowCaution": "\033[33m!!\033[0m",
-	"redX":          "\033[31mX\033[0m",
-	"whiteStar":     "\033[37m*\033[0m",
+	"greenCheck":    colors.Green + "✓" + colors.Off,
+	"yellowCaution": colors.Yellow + "!!" + colors.Off,
+	"redX":          colors.Red + "X" + colors.Off,
+	"whiteStar":     colors.White + "*" + colors.Off,
 }
 
 func collectCsvFiles(filePath string) []TestCase {
@@ -154,6 +153,20 @@ type TestRun struct {
 	Msg    string `json:"msg"`
 }
 
+func (t *TestRun) Result() string {
+	if t.Passed == t.Total {
+		return "ok"
+	}
+	return "X "
+}
+func (t *TestRun) NameAndMode() string {
+	return t.Route + " (" + t.Mode + " mode)"
+}
+
+func (t *TestRun) Failed() string {
+	return fmt.Sprintf("%d", t.Total-t.Passed)
+}
+
 var order = []string{
 	"slurp",
 	"names",
@@ -191,6 +204,7 @@ func DoSdkTests(testMap map[string][]TestCase) {
 			filtered = append(filtered, testCase)
 		}
 
+		colors.ColorsOff()
 		for i, testCase := range filtered {
 			tested, passed := testCase.RunSdkTest(i, len(filtered))
 			if tested {
@@ -200,53 +214,37 @@ func DoSdkTests(testMap map[string][]TestCase) {
 				nPassed++
 			}
 		}
+		colors.ColorsOn()
 
-		msg := cm["greenCheck"]
-		if nTested != nPassed {
-			msg = cm["redX"]
-		}
-
-		run := TestRun{
-			item,
-			"sdk",
-			nTested,
-			nPassed,
-			msg,
-		}
-
-		tmplCode := `  {{padRight .Result 5 " "}}{{padRight .Route 20 "."}}{{padRight .Mode 30 "."}} {{.Msg}}`
-		// if run.Total == 0 {
-		// 	tmplCode = `  {{padRight .Result 5 " "}}{{padRight .Route 20 "."}}{{padRight .Mode 30 "."}} {{.Msg}}`
-		// }
-
-		// toProper := func(s string) string { return Proper(s) }
-		// toPlural := func(s string) string { return Plural(s) }
-		// toCamel := func(s string) string { return CamelCase(s) }
-		// toLower := func(s string) string { return Lower(s) }
-		// firstLower := func(s string) string { return FirstLower(s) }
-		// firstUpper := func(s string) string { return FirstUpper(s) }
-		padRight := func(str string, len int, pad string) string { return padRight(str, len, false, pad) }
-		funcMap := template.FuncMap{
-			"padRight": padRight,
-			// "toProper":   toProper,
-			// "toCamel":    toCamel,
-			// "toPlural":   toPlural,
-			// "toLower":    toLower,
-			// "firstLower": firstLower,
-			// "firstUpper": firstUpper,
-		}
-
-		tmplParsed, err := template.New("sdk").Funcs(funcMap).Parse(tmplCode)
-		if err != nil {
-			log.Fatalf("parsing template failed: %v", err)
-		}
-		tmpl := template.Must(tmplParsed, nil)
-		var tplBuffer bytes.Buffer
-		if err := tmpl.Execute(&tplBuffer, &run); err != nil {
-			log.Fatalf("executing template failed: %v", err)
-		}
-		fmt.Println(colors.White, tplBuffer.String(), colors.Off, strings.Repeat(" ", utils.Max(0, 90)))
+		tmpl := `  {{padRight .NameAndMode 25 " "}} ==> {{padRight .Result 8 " "}} {{.Passed}} of {{.Total}} passed, {{.Failed}} failed.`
+		fmt.Println(executeTemplate(colors.Yellow, "summary", tmpl, &TestRun{
+			Route:  item,
+			Mode:   "sdk",
+			Total:  nTested,
+			Passed: nPassed,
+		}))
 	}
+}
+
+func executeTemplate(color, tmplName, tmplCode string, data interface{}) string {
+	padRight := func(str string, len int, pad string) string { return padRight(str, len, false, pad) }
+	funcMap := template.FuncMap{
+		"padRight": padRight,
+	}
+	parsed, err := template.New(tmplName).Funcs(funcMap).Parse(tmplCode)
+	if err != nil {
+		log.Fatalf("parsing template failed: %v", err)
+	}
+	var tplBuffer bytes.Buffer
+	if err := parsed.Execute(&tplBuffer, &data); err != nil {
+		log.Fatalf("executing template failed: %v", err)
+	}
+
+	// defer func() {
+	// 	colors.ColorsOff()
+	// }()
+	// colors.ColorsOn()
+	return color + tplBuffer.String() + colors.Off + strings.Repeat(" ", 135-len(tplBuffer.String()))
 }
 
 func preClean(rawURL string) string {
@@ -335,8 +333,6 @@ func (t *TestCase) Clean() string {
 func init() {
 	os.Setenv("NO_USERQUERY", "true")
 	os.Setenv("TEST_MODE", "true")
-	os.Setenv("NO_COLOR", "true")
-	colors.ColorsOff()
 }
 
 func padRight(str string, length int, bumpPad bool, pad string) string {
