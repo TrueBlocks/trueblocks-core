@@ -12,10 +12,8 @@ int main(int argc, const char* argv[]) {
         rmWorkingTests(path, cppName);
         rmWorkingTests(path, cppName + "/api_tests");
 
-        string_q testFile = options.sourceFolder + cppName + ".csv";
-
         CStringArray testLines;
-        asciiFileToLines(testFile, testLines);
+        asciiFileToLines(options.sourceFolder + route + ".csv", testLines);
 
         vector<CTestCase> testArray;
         for (auto line : testLines) {
