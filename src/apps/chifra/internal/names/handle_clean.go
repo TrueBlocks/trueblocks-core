@@ -427,7 +427,7 @@ func cleanNonContract(name *types.SimpleName, wasContract bool) (modified bool) 
 //		'isContract' (is the address a contract at the current block?)
 //		'isAirdrop' (does the account's name contain the word "airdrop"
 
-// static const string_q erc721QueryBytes = "0x" + padRight(substitute(_INTERFACE_ID_ERC721, "0x", ""), 64, '0');
+// static const string_q erc721QueryBytes = "0x" + p adRight(substitute(_INTERFACE_ID_ERC721, "0x", ""), 64, '0');
 // inline bool isErc721(const address_t& addr, const CAbi& abi_spec, blknum_t latest) {
 //     string_q val = get TokenState(addr, "supportsInterface", abi_spec, latest, erc721QueryBytes);
 //     return val == "T" || val == "true";

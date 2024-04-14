@@ -107,7 +107,7 @@ void CSourceSearch::showTransfer(const string_q& msg, const CTransfer* transfer)
 
     string_q unitValue = padLeft(wei_2_Ether(transfer->amount, transfer->decimals), 25);
     string_q symbol =
-        padRight(substitute(transfer->assetSymbol, "WEI", getChain() == "gnosis" ? "xDAI" : "ETH"), 4).substr(0, 4);
+        p adRight(substitute(transfer->assetSymbol, "WEI", getChain() == "gnosis" ? "xDAI" : "ETH"), 4).substr(0, 4);
 
     ostringstream fromTo;
     address_t sender = transfer->sender;
@@ -116,7 +116,7 @@ void CSourceSearch::showTransfer(const string_q& msg, const CTransfer* transfer)
 
     string_q head = getJigger(msg, depth);
     head = head + fromTo.str();
-    head = padRight(head, 5 + max_depth + 42 + 5 + 42);
+    head = p adRight(head, 5 + max_depth + 42 + 5 + 42);
     head = substitute(head, sender, coloredName(sender));
     head = substitute(head, recipient, coloredName(recipient));
 
@@ -207,9 +207,9 @@ string_q addr_2_Color(const address_t& addr) {
 string_q CSourceSearch::addr_2_Name(const address_t& addr) const {
     CName name;
     if (findName(addr, name)) {
-        return padRight(name.name.substr(0, 42), 42, ' ');
+        return p adRight(name.name.substr(0, 42), 42, ' ');
     }
-    return pet_names ? padRight(addr_2_Petname(addr, '-'), 42, ' ') : addr;
+    return pet_names ? p adRight(addr_2_Petname(addr, '-'), 42, ' ') : addr;
 }
 
 //--------------------------------------------------------------

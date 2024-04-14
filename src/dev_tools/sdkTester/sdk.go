@@ -82,12 +82,17 @@ func (t *TestCase) RunSdkTest(i, n int) (bool, bool) {
 			defer func() {
 				logger.ToggleDecoration()
 				logger.SetLoggerWriter(os.Stderr)
-				msg := "[passed " + cm["greenCheck"] + "]"
+
 				eol := "\r"
 				if wasTested && !passedTest {
-					msg = "[failed " + cm["redX"] + "]"
 					eol = "\n"
 				}
+
+				msg := "[passed " + cm["greenCheck"] + "]"
+				if wasTested && !passedTest {
+					msg = "[failed " + cm["redX"] + "]"
+				}
+
 				skip := strings.Repeat(" ", utils.Max(0, 120-len(fn)))
 				fmt.Printf("   Testing %d of %d %s %s%s%s", i, n, msg, fn, skip, eol)
 			}()

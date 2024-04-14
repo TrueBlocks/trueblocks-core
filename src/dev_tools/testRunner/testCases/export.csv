@@ -127,8 +127,8 @@ on      ,both ,fast  ,export   ,apps/acctExport ,balances_decache2        ,y    
 # other reasons for failing
 local   ,both ,fast  ,export   ,apps/acctExport ,by_file_1                ,n    ,file = cmd_file & fmt = csv
 local   ,both ,fast  ,export   ,apps/acctExport ,by_file_v                ,n    ,file = cmd_file_2 & fmt = json
-on      ,both ,fast  ,export   ,apps/acctExport ,redir_output             ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & articulate & output = output_test_file
-on      ,both ,fast  ,export   ,apps/acctExport ,redir_output_append      ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 5 & articulate & output = output_test_file & no_header & append
+local   ,both ,fast  ,export   ,apps/acctExport ,redir_output             ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & articulate & output = output_test_file
+local   ,both ,fast  ,export   ,apps/acctExport ,redir_output_append      ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 5 & articulate & output = output_test_file & no_header & append
 
 # correctly reports an error but should report a not found error instead it reports a not an integer error first_block/last_block should accept hashes
 delay   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2

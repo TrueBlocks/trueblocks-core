@@ -13,14 +13,14 @@ package types
 //     if (member.generate == "config") {
 //         ostringstream dd;
 //         if (!hasConfig) {
-//             dd << "| " << padRight("Item", 18) << " | " << padRight("Type", 12) << " | " << padRight("Default", 12)
+//             dd << "| " << p adRight("Item", 18) << " | " << p adRight("Type", 12) << " | " << p adRight("Default", 12)
 //                << " | Description / Default |" << endl;
 //             dd << "| " << string_q(18, '-') << " | " << string_q(12, '-') << " | " << string_q(12, '-')
 //                << " | --------- |" << endl;
 //         }
 //         string_q x = toCamelCase(member.Format("[{LONGNAME}]"));
-//         dd << "| " << padRight(x, 18) << " | " << padRight(member.Format("[{GO_INTYPE}]"), 12) << " | "
-//            << padRight(member.Format("[{DEF_VAL}]"), 12) << " | " << member.Format("[{DESCRIPTION}]") << " |"
+//         dd << "| " << p adRight(x, 18) << " | " << p adRight(member.Format("[{GO_INTYPE}]"), 12) << " | "
+//            << p adRight(member.Format("[{DEF_VAL}]"), 12) << " | " << member.Format("[{DESCRIPTION}]") << " |"
 //            << endl;
 //         appendToAsciiFile(configDocs, dd.str());
 //         hasConfig = true;

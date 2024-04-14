@@ -33,7 +33,7 @@ on      ,both ,medi  ,blocks ,tools/getBlocks ,count2                ,y    ,bloc
 on      ,both ,medi  ,blocks ,tools/getBlocks ,count5                ,y    ,blocks = 3 & fmt = json & count & traces & fmt = txt
 on      ,both ,medi  ,blocks ,tools/getBlocks ,count6                ,y    ,blocks = 3 & fmt = json & count & traces & uncles & fmt = txt
 on      ,both ,medi  ,blocks ,tools/getBlocks ,count_uncles_uniq     ,y    ,blocks = 3 469 & count & uncles & uniq & fmt = json
-on      ,both ,medi  ,blocks ,tools/getBlocks ,count_logs            ,y    ,blocks = 6001002 & count & traces & uncles & logs & fmt = json
+local   ,both ,medi  ,blocks ,tools/getBlocks ,count_logs            ,y    ,blocks = 6001002 & count & traces & uncles & logs & fmt = json
 slow    ,both ,medi  ,blocks ,tools/getBlocks ,count_logs_uniq       ,y    ,blocks = 6001002 & count & logs & uniq & fmt = json
 slow    ,both ,medi  ,blocks ,tools/getBlocks ,count_traces_uniq     ,y    ,blocks = 6001002 & count & traces & uniq & fmt = json
 slow    ,both ,medi  ,blocks ,tools/getBlocks ,count_all_uniq        ,y    ,blocks = 3 6001002 & count & uncles & logs & traces & uniq & fmt = json

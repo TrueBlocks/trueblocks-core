@@ -154,10 +154,6 @@ type TestRun struct {
 	Msg    string `json:"msg"`
 }
 
-func (r *TestRun) PaddedRoute() string {
-	return padRight(r.Route, 20, false, '.')
-}
-
 var order = []string{
 	"slurp",
 	"names",
@@ -218,11 +214,29 @@ func DoSdkTests(testMap map[string][]TestCase) {
 			msg,
 		}
 
-		tmplCode := "  {{.PaddedRoute}} {{.Mode}} {{.Passed}} of {{.Total}} tests. {{.Msg}}"
-		if run.Total == 0 {
-			tmplCode = "  {{.PaddedRoute}} {{.Mode}} No tests found."
+		tmplCode := `  {{padRight .Result 5 " "}}{{padRight .Route 20 "."}}{{padRight .Mode 30 "."}} {{.Msg}}`
+		// if run.Total == 0 {
+		// 	tmplCode = `  {{padRight .Result 5 " "}}{{padRight .Route 20 "."}}{{padRight .Mode 30 "."}} {{.Msg}}`
+		// }
+
+		// toProper := func(s string) string { return Proper(s) }
+		// toPlural := func(s string) string { return Plural(s) }
+		// toCamel := func(s string) string { return CamelCase(s) }
+		// toLower := func(s string) string { return Lower(s) }
+		// firstLower := func(s string) string { return FirstLower(s) }
+		// firstUpper := func(s string) string { return FirstUpper(s) }
+		padRight := func(str string, len int, pad string) string { return padRight(str, len, false, pad) }
+		funcMap := template.FuncMap{
+			"padRight": padRight,
+			// "toProper":   toProper,
+			// "toCamel":    toCamel,
+			// "toPlural":   toPlural,
+			// "toLower":    toLower,
+			// "firstLower": firstLower,
+			// "firstUpper": firstUpper,
 		}
-		tmplParsed, err := template.New("sdk").Parse(tmplCode)
+
+		tmplParsed, err := template.New("sdk").Funcs(funcMap).Parse(tmplCode)
 		if err != nil {
 			log.Fatalf("parsing template failed: %v", err)
 		}
@@ -325,9 +339,9 @@ func init() {
 	colors.ColorsOff()
 }
 
-func padRight(str string, length int, bumpPad bool, pad rune) string {
+func padRight(str string, length int, bumpPad bool, pad string) string {
 	if len(str) < length {
-		str += strings.Repeat(string(pad), length-len(str))
+		str += strings.Repeat(pad, length-len(str))
 	} else {
 		str = str[:length]
 	}

@@ -144,7 +144,7 @@ inline COptions::~COptions(void) {
 extern bool rmWorkingTests(const string_q& path, const string_q& testName);
 extern string_q linesToString(const CStringArray& lines, char sep = '\n');
 extern string_q doCommand(const string_q& cmd, bool readStderr = false);
-extern string_q padRight(const string_q& str, size_t len, bool bumpPad, char p = ' ');
+extern string_q padRight(const string_q& str, size_t len, bool bumpPad, char p);
 extern string_q padLeft(const string_q& str, size_t len, char p = ' ');
 extern string_q getEnvStr(const string_q& name);
 extern int copyFile(const string_q& from, const string_q& to);
