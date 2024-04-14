@@ -15874,7 +15874,7 @@
     {
       "enabled": "on",
       "mode": "both",
-      "speed": "medu",
+      "speed": "medi",
       "route": "slurp",
       "pathTool": "tools/ethslurp",
       "filename": "type_uncle",
@@ -23991,14 +23991,14 @@
       "sourceFile": "../src/dev_tools/testRunner/testCases/transactions.csv"
     },
     {
-      "enabled": "on",
+      "enabled": "local",
       "mode": "cmd",
       "speed": "medi",
       "route": "transactions",
       "pathTool": "tools/getTrans",
       "filename": "articulate_arrays",
       "post": "y",
-      "isEnabled": true,
+      "isEnabled": false,
       "hasShorthand": false,
       "goldPath": "../test/gold/tools/getTrans/sdk_tests/",
       "workingPath": "../test/working/tools/getTrans/sdk_tests/",

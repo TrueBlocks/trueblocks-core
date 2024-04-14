@@ -70,7 +70,7 @@ on      ,both ,fast  ,transactions ,tools/getTrans ,redir_output_append      ,n 
 
 on      ,both ,fast  ,transactions ,tools/getTrans ,bad_hash                 ,y    ,transactions = 0x0012
 
-on      ,cmd  ,medi  ,transactions ,tools/getTrans ,articulate_arrays        ,y    ,transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & traces & articulate & fmt = json
+local   ,cmd  ,medi  ,transactions ,tools/getTrans ,articulate_arrays        ,y    ,transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & traces & articulate & fmt = json
 
 # probably because of ordering on abiMap
 on      ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_1        ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
