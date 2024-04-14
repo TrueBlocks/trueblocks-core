@@ -20,35 +20,41 @@ import (
 
 var interactiveTests = false
 
-var pathToTests = []string{
-	"../src/dev_tools/testRunner/testCases",
-}
-
-var pathToTestsTesting = []string{
-	"../testRunner/testCases",
-}
-
 func main() {
+	testCases := make([]TestCase, 0)
 	walkFunc := func(path string, info os.FileInfo, err error) error {
 		if err == nil {
 			if !info.IsDir() && strings.HasSuffix(path, ".csv") {
-				processCSVFile(path)
+				testCases = append(testCases, collectCsvFiles(path)...)
+				fmt.Println("Found", len(testCases), "test cases")
 			}
 		}
 		return err
 	}
 
-	thePaths := pathToTests
+	thePath := "../src/dev_tools/testRunner/testCases"
 	if interactiveTests {
-		thePaths = pathToTestsTesting
+		thePath = "../testRunner/testCases"
 	}
 
-	fmt.Println(os.Getwd())
-	for _, rootPath := range thePaths {
-		if err := filepath.Walk(rootPath, walkFunc); err != nil {
-			fmt.Printf("error walking the path %q: %v\n", rootPath, err)
-		}
+	if err := filepath.Walk(thePath, walkFunc); err != nil {
+		fmt.Printf("error walking the path %q: %v\n", thePath, err)
 	}
+
+	fmt.Println("Found", len(testCases), "test cases")
+
+	sdkResults := DoSdkTests(testCases)
+	tmplCode := "  {{.Route}} {{.Mode}} {{.Passed}} of {{.Total}} tests. {{.Msg}}"
+	tmplParsed, err := template.New("sdk").Parse(tmplCode)
+	if err != nil {
+		log.Fatalf("parsing template failed: %v", err)
+	}
+	tmpl := template.Must(tmplParsed, nil)
+	var tplBuffer bytes.Buffer
+	if err := tmpl.Execute(&tplBuffer, &sdkResults); err != nil {
+		log.Fatalf("executing template failed: %v", err)
+	}
+	fmt.Println(colors.White, tplBuffer.String(), colors.Off, strings.Repeat(" ", utils.Max(0, 90)))
 }
 
 type Original struct {
@@ -66,10 +72,10 @@ type TestCase struct {
 	Enabled     bool      `json:"enabled"`
 	Route       string    `json:"route"`
 	PathTool    string    `json:"pathTool"`
-	Options     []string  `json:"options"`
 	GoldPath    string    `json:"goldPath"`
 	WorkingPath string    `json:"workingPath"`
 	Cannonical  string    `json:"cannonical"`
+	Options     []string  `json:"options"`
 	Original    *Original `json:"original"`
 }
 
@@ -80,11 +86,11 @@ var cm = map[string]string{
 	"whiteStar":     "\033[37m*\033[0m",
 }
 
-func processCSVFile(filePath string) {
+func collectCsvFiles(filePath string) []TestCase {
 	ff, err := os.Open(filePath)
 	if err != nil {
 		fmt.Printf("Error opening file: %v\n", err)
-		return
+		return []TestCase{}
 	}
 	defer ff.Close()
 
@@ -92,7 +98,7 @@ func processCSVFile(filePath string) {
 	const requiredFields = 8
 	lineNumber := 0
 
-	testCases := make([]TestCase, 0)
+	testCases := make([]TestCase, 0, 200)
 	for {
 		lineNumber++
 		record, err := reader.Read()
@@ -138,21 +144,10 @@ func processCSVFile(filePath string) {
 				Original:    &orig,
 			}
 			testCases = append(testCases, testCase)
+			fmt.Println("Adding", len(testCases), orig.PathTool+"/"+orig.Filename)
 		}
 	}
-
-	sdkResults := DoSdkTests(testCases)
-	tmplCode := "  {{.Route}} {{.Mode}} {{.Passed}} of {{.Total}} tests. {{.Msg}}"
-	tmplParsed, err := template.New("sdk").Parse(tmplCode)
-	if err != nil {
-		log.Fatalf("parsing template failed: %v", err)
-	}
-	tmpl := template.Must(tmplParsed, nil)
-	var tplBuffer bytes.Buffer
-	if err := tmpl.Execute(&tplBuffer, &sdkResults); err != nil {
-		log.Fatalf("executing template failed: %v", err)
-	}
-	fmt.Println(colors.White, tplBuffer.String(), colors.Off, strings.Repeat(" ", utils.Max(0, 90)))
+	return testCases
 }
 
 type TestRun struct {
