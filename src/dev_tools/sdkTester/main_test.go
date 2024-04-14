@@ -5,6 +5,6 @@ import (
 )
 
 func TestMainFunction(t *testing.T) {
-	interactiveTests = true
+	debugging = true
 	main()
 }

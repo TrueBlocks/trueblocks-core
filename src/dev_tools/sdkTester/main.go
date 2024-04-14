@@ -6,54 +6,58 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
+	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var interactiveTests = false
-
-var pathToTests = []string{
-	"../src/dev_tools/testRunner/testCases/apps",
-	"../src/dev_tools/testRunner/testCases/tools",
-}
-
-var pathToTestsTesting = []string{
-	"../testRunner/testCases/apps",
-	"../testRunner/testCases/tools",
-}
+var debugging = false
 
 func main() {
+	testMap := make(map[string][]TestCase, 100)
 	walkFunc := func(path string, info os.FileInfo, err error) error {
 		if err == nil {
 			if !info.IsDir() && strings.HasSuffix(path, ".csv") {
-				processCSVFile(path)
+				testCases := collectCsvFiles(path)
+				for _, testCase := range testCases {
+					source := testCase.SourceFile
+					if _, ok := testMap[source]; !ok {
+						testMap[source] = []TestCase{}
+					}
+					testMap[source] = append(testMap[source], testCase)
+				}
 			}
 		}
 		return err
 	}
 
-	thePaths := pathToTests
-	if interactiveTests {
-		thePaths = pathToTestsTesting
+	thePath := "../src/dev_tools/testRunner/testCases"
+	if debugging {
+		thePath = "../testRunner/testCases"
 	}
 
-	fmt.Println(os.Getwd())
-	for _, rootPath := range thePaths {
-		if err := filepath.Walk(rootPath, walkFunc); err != nil {
-			fmt.Printf("error walking the path %q: %v\n", rootPath, err)
-		}
+	if err := filepath.Walk(thePath, walkFunc); err != nil {
+		fmt.Printf("error walking the path %q: %v\n", thePath, err)
 	}
+
+	bytes, err := json.MarshalIndent(testMap, "", "  ")
+	if err != nil {
+		fmt.Printf("Error marshalling testCases: %v\n", err)
+	}
+	file.StringToAsciiFile("../src/dev_tools/sdkTester/generated/testCases.json", string(bytes))
+
+	DoSdkTests(testMap)
 }
 
-type Original struct {
+type record struct {
 	Enabled  string `json:"enabled"`
 	Mode     string `json:"mode"`
 	Speed    string `json:"speed"`
@@ -65,41 +69,39 @@ type Original struct {
 }
 
 type TestCase struct {
-	Enabled     bool      `json:"enabled"`
-	Route       string    `json:"route"`
-	PathTool    string    `json:"pathTool"`
-	Options     []string  `json:"options"`
-	GoldPath    string    `json:"goldPath"`
-	WorkingPath string    `json:"workingPath"`
-	Cannonical  string    `json:"cannonical"`
-	Original    *Original `json:"original"`
+	record
+	IsEnabled    bool     `json:"isEnabled"`
+	HasShorthand bool     `json:"hasShorthand"`
+	GoldPath     string   `json:"goldPath"`
+	WorkingPath  string   `json:"workingPath"`
+	Cannonical   string   `json:"cannonical"`
+	OptionArray  []string `json:"options"`
+	SourceFile   string   `json:"sourceFile"`
 }
 
 var cm = map[string]string{
-	"greenCheck":    "\033[32m✓\033[0m",
-	"yellowCaution": "\033[33m!!\033[0m",
-	"redX":          "\033[31mX\033[0m",
-	"whiteStar":     "\033[37m*\033[0m",
+	"greenCheck":    colors.Green + "✓" + colors.Off,
+	"yellowCaution": colors.Yellow + "!!" + colors.Off,
+	"redX":          colors.Red + "X" + colors.Off,
+	"whiteStar":     colors.White + "*" + colors.Off,
 }
 
-func processCSVFile(filePath string) {
+func collectCsvFiles(filePath string) []TestCase {
 	ff, err := os.Open(filePath)
 	if err != nil {
 		fmt.Printf("Error opening file: %v\n", err)
-		return
+		return []TestCase{}
 	}
 	defer ff.Close()
-
-	fmt.Println("Testing", filePath, strings.Repeat(" ", 120-len(filePath)))
 
 	reader := csv.NewReader(ff)
 	const requiredFields = 8
 	lineNumber := 0
 
-	testCases := make([]TestCase, 0)
+	testCases := make([]TestCase, 0, 200)
 	for {
 		lineNumber++
-		record, err := reader.Read()
+		csvRecord, err := reader.Read()
 		if err != nil {
 			if err == io.EOF {
 				break // End of file reached
@@ -107,69 +109,142 @@ func processCSVFile(filePath string) {
 			continue
 		}
 
-		if len(record) == 0 || (len(record[0]) > 0 && record[0][0] == '#') {
+		if len(csvRecord) == 0 || (len(csvRecord[0]) > 0 && csvRecord[0][0] == '#') {
 			continue
 		}
-		if len(record) != requiredFields {
+		if len(csvRecord) != requiredFields {
 			continue
 		}
 
-		if !strings.HasPrefix(record[3], "route") {
-			if strings.Contains(record[7], "@") {
-				continue // skip these weird (hot-key only) single character test cases for the SDK
+		if !strings.HasPrefix(csvRecord[3], "route") {
+			rec := record{
+				Enabled:  strings.Trim(csvRecord[0], " "),
+				Mode:     strings.Trim(csvRecord[1], " "),
+				Speed:    strings.Trim(csvRecord[2], " "),
+				Route:    strings.Trim(csvRecord[3], " "),
+				PathTool: strings.Trim(csvRecord[4], " "),
+				Filename: strings.Trim(csvRecord[5], " "),
+				Post:     strings.Trim(csvRecord[6], " "),
+				Options:  strings.Trim(csvRecord[7], " "),
 			}
 
-			// fmt.Println(strings.Repeat("-", 80))
-			// fmt.Println(record[5])
-			// fmt.Println(strings.Repeat("-", 80))
-
-			orig := Original{
-				Enabled:  strings.Trim(record[0], " "),
-				Mode:     strings.Trim(record[1], " "),
-				Speed:    strings.Trim(record[2], " "),
-				Route:    strings.Trim(record[3], " "),
-				PathTool: strings.Trim(record[4], " "),
-				Filename: strings.Trim(record[5], " "),
-				Post:     strings.Trim(record[6], " "),
-				Options:  strings.Trim(record[7], " "),
-			}
-
-			cannon := canonicalizeURL(orig.Options)
+			cannon := canonicalizeURL(rec.Options)
 			testCase := TestCase{
-				Enabled:     orig.Enabled == "on",
-				Route:       orig.Route,
-				PathTool:    orig.PathTool,
-				GoldPath:    "../src/dev_tools/sdkTester/test/gold/" + orig.PathTool + "/",
-				WorkingPath: "../src/dev_tools/sdkTester/test/working/" + orig.PathTool + "/",
-				Cannonical:  cannon,
-				Options:     strings.Split(strings.Replace(cannon, "%20", " ", -1), "&"),
-				Original:    &orig,
+				record:       rec,
+				IsEnabled:    rec.Enabled == "on",
+				HasShorthand: strings.Contains(rec.Options, "@"),
+				GoldPath:     "../test/gold/" + rec.PathTool + "/sdk_tests/",
+				WorkingPath:  "../test/working/" + rec.PathTool + "/sdk_tests/",
+				Cannonical:   cannon,
+				OptionArray:  strings.Split(strings.Replace(cannon, "%20", " ", -1), "&"),
+				SourceFile:   filePath,
 			}
-
-			// fmt.Println(strings.Repeat("-", 80))
-			// fmt.Println(record[5])
-			// fmt.Println(strings.Repeat("-", 80))
-
 			testCases = append(testCases, testCase)
 		}
 	}
+	return testCases
+}
 
-	nTested, nPassed := 0, 0
-	for i, testCase := range testCases {
-		tested, passed := testCase.RunTest(i, len(testCases))
-		if tested {
-			nTested++
-		}
-		if passed {
-			nPassed++
-		}
+type TestRun struct {
+	Route  string `json:"route"`
+	Mode   string `json:"mode"`
+	Passed int    `json:"passed"`
+	Total  int    `json:"total"`
+	Msg    string `json:"msg"`
+}
+
+func (t *TestRun) Result() string {
+	if t.Passed == t.Total {
+		return "ok"
 	}
-	msg := cm["greenCheck"]
-	if nTested != nPassed {
-		msg = cm["redX"]
+	return "X "
+}
+func (t *TestRun) NameAndMode() string {
+	return t.Route + " (" + t.Mode + " mode)"
+}
+
+func (t *TestRun) Failed() string {
+	return fmt.Sprintf("%d", t.Total-t.Passed)
+}
+
+var order = []string{
+	"slurp",
+	"names",
+	"blocks",
+	"logs",
+	"receipts",
+	"state",
+	"tokens",
+	"traces",
+	"transactions",
+	"abis",
+	"when",
+	"list",
+	"monitors",
+	"export",
+	"scrape",
+	"status",
+	"chunks",
+	"chifra",
+	"config",
+	"explore",
+	"init",
+	"daemon",
+}
+
+func DoSdkTests(testMap map[string][]TestCase) {
+	for _, item := range order {
+		source := "../src/dev_tools/testRunner/testCases/" + item + ".csv"
+		nTested, nPassed := 0, 0
+		filtered := []TestCase{}
+		for _, testCase := range testMap[source] {
+			if !strings.HasSuffix(testCase.SourceFile, item+".csv") || testCase.HasShorthand {
+				continue
+			}
+			filtered = append(filtered, testCase)
+		}
+
+		colors.ColorsOff()
+		for i, testCase := range filtered {
+			tested, passed := testCase.RunSdkTest(i, len(filtered))
+			if tested {
+				nTested++
+			}
+			if passed {
+				nPassed++
+			}
+		}
+		colors.ColorsOn()
+
+		tmpl := `  {{padRight .NameAndMode 25 " "}} ==> {{padRight .Result 8 " "}} {{.Passed}} of {{.Total}} passed, {{.Failed}} failed.`
+		fmt.Println(executeTemplate(colors.Yellow, "summary", tmpl, &TestRun{
+			Route:  item,
+			Mode:   "sdk",
+			Total:  nTested,
+			Passed: nPassed,
+		}))
 	}
-	fmt.Println(colors.White, "    Passed", nPassed, "of", nTested, "tests.", msg, colors.Off, strings.Repeat(" ", utils.Max(0, 90)))
-	fmt.Println()
+}
+
+func executeTemplate(color, tmplName, tmplCode string, data interface{}) string {
+	padRight := func(str string, len int, pad string) string { return padRight(str, len, false, pad) }
+	funcMap := template.FuncMap{
+		"padRight": padRight,
+	}
+	parsed, err := template.New(tmplName).Funcs(funcMap).Parse(tmplCode)
+	if err != nil {
+		log.Fatalf("parsing template failed: %v", err)
+	}
+	var tplBuffer bytes.Buffer
+	if err := parsed.Execute(&tplBuffer, &data); err != nil {
+		log.Fatalf("executing template failed: %v", err)
+	}
+
+	// defer func() {
+	// 	colors.ColorsOff()
+	// }()
+	// colors.ColorsOn()
+	return color + tplBuffer.String() + colors.Off + strings.Repeat(" ", 135-len(tplBuffer.String()))
 }
 
 func preClean(rawURL string) string {
@@ -238,7 +313,7 @@ func camelCase(s string) string {
 
 func (t *TestCase) Clean() string {
 	ret := []string{}
-	for _, option := range t.Options {
+	for _, option := range t.OptionArray {
 		op := "--" + strings.Replace(option, "=", " ", -1)
 		if strings.Contains(option, "@") {
 			op = "-" + strings.Replace(option, "@", "", -1)
@@ -258,121 +333,17 @@ func (t *TestCase) Clean() string {
 func init() {
 	os.Setenv("NO_USERQUERY", "true")
 	os.Setenv("TEST_MODE", "true")
-	os.Setenv("NO_COLOR", "true")
-	colors.ColorsOff()
 }
 
-func (t *TestCase) RunTest(i, n int) (bool, bool) {
-	if !t.Enabled {
-		return false, false
-	}
-
-	testing := []string{
-		"list",
-		"export",
-		"monitors",
-		"config",
-		"status",
-		"daemon",
-		"scrape",
-		"chunks",
-		"init",
-		"explore",
-		"names",
-		// "slurp",
-		"abis",
-		"blocks",
-		"transactions",
-		"receipts",
-		"logs",
-		"state",
-		"tokens",
-		"traces",
-		"when",
-	}
-	interesting := false
-	for _, test := range testing {
-		if test == t.Route && t.PathTool != "apps/chifra" {
-			interesting = true
-			break
-		}
-	}
-	// interesting = t.Route == "init" && t.Original.Filename == "fmt_txt"
-	if !interesting {
-		return false, false
-	}
-
-	parts := strings.Split(t.PathTool, "/")
-	if len(parts) != 2 {
-		fmt.Fprintf(os.Stderr, "Invalid pathTool: %s\n", t.PathTool)
-		return false, false
-	}
-
-	var ff *os.File
-	folder := t.WorkingPath
-	if !file.FolderExists(folder) {
-		file.EstablishFolder(folder)
-	}
-
-	wasTested := false
-	passedTest := false
-
-	fn := filepath.Join(folder, parts[1]+"_"+t.Original.Filename+".txt")
-	if interesting {
-		os.Setenv("TEST_MODE", "true")
-		logger.SetTestMode(true)
-		if !interactiveTests {
-			ff, _ = os.Create(fn)
-			logger.SetLoggerWriter(ff)
-			logger.ToggleDecoration()
-			defer func() {
-				logger.ToggleDecoration()
-				logger.SetLoggerWriter(os.Stderr)
-				msg := "[passed " + cm["greenCheck"] + "]"
-				eol := "\r"
-				if wasTested && !passedTest {
-					msg = "[failed " + cm["redX"] + "]"
-					eol = "\n"
-				}
-				skip := strings.Repeat(" ", utils.Max(0, 120-len(fn)))
-				fmt.Printf("   Testing %d of %d %s %s%s%s", i, n, msg, fn, skip, eol)
-			}()
-		}
-		logger.Info(t.Route + "?" + t.Cannonical)
-
+func padRight(str string, length int, bumpPad bool, pad string) string {
+	if len(str) < length {
+		str += strings.Repeat(pad, length-len(str))
 	} else {
-		logger.Info()
-		logger.Info(strings.Repeat("=", 40), t.Original.Filename, strings.Repeat("=", 40))
-		logger.Info(fmt.Sprintf("Route: %s, PathTool: %s, Enabled: %v, Options: %v", t.Route, t.PathTool, t.Enabled, t.Options))
-		logger.Info("\t" + strings.Trim(fmt.Sprintf("chifra %s %s", t.Route, t.Clean()), " "))
-		return false, false
+		str = str[:length]
 	}
 
-	var buff bytes.Buffer
-	var results string
-	wasTested = true
-	if err := t.SdkTest(&buff); err != nil {
-		type E struct {
-			Errors []string `json:"errors"`
-		}
-		e := E{Errors: []string{err.Error()}}
-		bytes, _ := json.MarshalIndent(e, "", "  ")
-		results = string(bytes)
-	} else {
-		results = strings.Trim(buff.String(), "\n\r")
+	if bumpPad && length >= 3 {
+		str = str[:length-3] + strings.Repeat(string(pad), 3)
 	}
-
-	if len(results) > 0 {
-		// because testRunner does this, we need to do it here
-		results = strings.Replace(results, "3735928559", "\"0xdeadbeef\"", -1)
-		logger.Info(results)
-	}
-
-	if ff != nil {
-		ff.Close()
-		newContents := file.AsciiFileToString(fn)
-		oldContents := file.AsciiFileToString(strings.Replace(fn, "working", "gold", -1))
-		passedTest = newContents == oldContents
-	}
-	return wasTested, passedTest
+	return str
 }
