@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -14,26 +15,33 @@ import (
 	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var interactiveTests = false
+var debugging = false
 
 func main() {
-	testCases := make([]TestCase, 0)
+	testMap := make(map[string][]TestCase, 100)
 	walkFunc := func(path string, info os.FileInfo, err error) error {
 		if err == nil {
 			if !info.IsDir() && strings.HasSuffix(path, ".csv") {
-				testCases = append(testCases, collectCsvFiles(path)...)
-				fmt.Println("Found", len(testCases), "test cases")
+				testCases := collectCsvFiles(path)
+				for _, testCase := range testCases {
+					source := testCase.SourceFile
+					if _, ok := testMap[source]; !ok {
+						testMap[source] = []TestCase{}
+					}
+					testMap[source] = append(testMap[source], testCase)
+				}
 			}
 		}
 		return err
 	}
 
 	thePath := "../src/dev_tools/testRunner/testCases"
-	if interactiveTests {
+	if debugging {
 		thePath = "../testRunner/testCases"
 	}
 
@@ -41,23 +49,16 @@ func main() {
 		fmt.Printf("error walking the path %q: %v\n", thePath, err)
 	}
 
-	fmt.Println("Found", len(testCases), "test cases")
-
-	sdkResults := DoSdkTests(testCases)
-	tmplCode := "  {{.Route}} {{.Mode}} {{.Passed}} of {{.Total}} tests. {{.Msg}}"
-	tmplParsed, err := template.New("sdk").Parse(tmplCode)
+	bytes, err := json.MarshalIndent(testMap, "", "  ")
 	if err != nil {
-		log.Fatalf("parsing template failed: %v", err)
+		fmt.Printf("Error marshalling testCases: %v\n", err)
 	}
-	tmpl := template.Must(tmplParsed, nil)
-	var tplBuffer bytes.Buffer
-	if err := tmpl.Execute(&tplBuffer, &sdkResults); err != nil {
-		log.Fatalf("executing template failed: %v", err)
-	}
-	fmt.Println(colors.White, tplBuffer.String(), colors.Off, strings.Repeat(" ", utils.Max(0, 90)))
+	file.StringToAsciiFile("../src/dev_tools/sdkTester/generated/testCases.json", string(bytes))
+
+	DoSdkTests(testMap)
 }
 
-type Original struct {
+type record struct {
 	Enabled  string `json:"enabled"`
 	Mode     string `json:"mode"`
 	Speed    string `json:"speed"`
@@ -69,14 +70,14 @@ type Original struct {
 }
 
 type TestCase struct {
-	Enabled     bool      `json:"enabled"`
-	Route       string    `json:"route"`
-	PathTool    string    `json:"pathTool"`
-	GoldPath    string    `json:"goldPath"`
-	WorkingPath string    `json:"workingPath"`
-	Cannonical  string    `json:"cannonical"`
-	Options     []string  `json:"options"`
-	Original    *Original `json:"original"`
+	record
+	IsEnabled    bool     `json:"isEnabled"`
+	HasShorthand bool     `json:"hasShorthand"`
+	GoldPath     string   `json:"goldPath"`
+	WorkingPath  string   `json:"workingPath"`
+	Cannonical   string   `json:"cannonical"`
+	OptionArray  []string `json:"options"`
+	SourceFile   string   `json:"sourceFile"`
 }
 
 var cm = map[string]string{
@@ -101,7 +102,7 @@ func collectCsvFiles(filePath string) []TestCase {
 	testCases := make([]TestCase, 0, 200)
 	for {
 		lineNumber++
-		record, err := reader.Read()
+		csvRecord, err := reader.Read()
 		if err != nil {
 			if err == io.EOF {
 				break // End of file reached
@@ -109,42 +110,37 @@ func collectCsvFiles(filePath string) []TestCase {
 			continue
 		}
 
-		if len(record) == 0 || (len(record[0]) > 0 && record[0][0] == '#') {
+		if len(csvRecord) == 0 || (len(csvRecord[0]) > 0 && csvRecord[0][0] == '#') {
 			continue
 		}
-		if len(record) != requiredFields {
+		if len(csvRecord) != requiredFields {
 			continue
 		}
 
-		if !strings.HasPrefix(record[3], "route") {
-			if strings.Contains(record[7], "@") {
-				continue // skip these weird (hot-key only) single character test cases for the SDK
+		if !strings.HasPrefix(csvRecord[3], "route") {
+			rec := record{
+				Enabled:  strings.Trim(csvRecord[0], " "),
+				Mode:     strings.Trim(csvRecord[1], " "),
+				Speed:    strings.Trim(csvRecord[2], " "),
+				Route:    strings.Trim(csvRecord[3], " "),
+				PathTool: strings.Trim(csvRecord[4], " "),
+				Filename: strings.Trim(csvRecord[5], " "),
+				Post:     strings.Trim(csvRecord[6], " "),
+				Options:  strings.Trim(csvRecord[7], " "),
 			}
 
-			orig := Original{
-				Enabled:  strings.Trim(record[0], " "),
-				Mode:     strings.Trim(record[1], " "),
-				Speed:    strings.Trim(record[2], " "),
-				Route:    strings.Trim(record[3], " "),
-				PathTool: strings.Trim(record[4], " "),
-				Filename: strings.Trim(record[5], " "),
-				Post:     strings.Trim(record[6], " "),
-				Options:  strings.Trim(record[7], " "),
-			}
-
-			cannon := canonicalizeURL(orig.Options)
+			cannon := canonicalizeURL(rec.Options)
 			testCase := TestCase{
-				Enabled:     orig.Enabled == "on",
-				Route:       orig.Route,
-				PathTool:    orig.PathTool,
-				GoldPath:    "../test/gold/" + orig.PathTool + "/sdk_tests/",
-				WorkingPath: "../test/working/" + orig.PathTool + "/sdk_tests/",
-				Cannonical:  cannon,
-				Options:     strings.Split(strings.Replace(cannon, "%20", " ", -1), "&"),
-				Original:    &orig,
+				record:       rec,
+				IsEnabled:    rec.Enabled == "on",
+				HasShorthand: strings.Contains(rec.Options, "@"),
+				GoldPath:     "../test/gold/" + rec.PathTool + "/sdk_tests/",
+				WorkingPath:  "../test/working/" + rec.PathTool + "/sdk_tests/",
+				Cannonical:   cannon,
+				OptionArray:  strings.Split(strings.Replace(cannon, "%20", " ", -1), "&"),
+				SourceFile:   filePath,
 			}
 			testCases = append(testCases, testCase)
-			fmt.Println("Adding", len(testCases), orig.PathTool+"/"+orig.Filename)
 		}
 	}
 	return testCases
@@ -158,29 +154,84 @@ type TestRun struct {
 	Msg    string `json:"msg"`
 }
 
-func DoSdkTests(testCases []TestCase) TestRun {
-	nTested, nPassed := 0, 0
-	for i, testCase := range testCases {
-		tested, passed := testCase.RunSdkTest(i, len(testCases))
-		if tested {
-			nTested++
-		}
-		if passed {
-			nPassed++
-		}
-	}
+func (r *TestRun) PaddedRoute() string {
+	return padRight(r.Route, 20, false, '.')
+}
 
-	msg := cm["greenCheck"]
-	if nTested != nPassed {
-		msg = cm["redX"]
-	}
+var order = []string{
+	"slurp",
+	"names",
+	"blocks",
+	"logs",
+	"receipts",
+	"state",
+	"tokens",
+	"traces",
+	"transactions",
+	"abis",
+	"when",
+	"list",
+	"monitors",
+	"export",
+	"scrape",
+	"status",
+	"chunks",
+	"chifra",
+	"config",
+	"explore",
+	"init",
+	"daemon",
+}
 
-	return TestRun{
-		testCases[0].Route,
-		"sdk",
-		nTested,
-		nPassed,
-		msg,
+func DoSdkTests(testMap map[string][]TestCase) {
+	for _, item := range order {
+		source := "../src/dev_tools/testRunner/testCases/" + item + ".csv"
+		nTested, nPassed := 0, 0
+		filtered := []TestCase{}
+		for _, testCase := range testMap[source] {
+			if !strings.HasSuffix(testCase.SourceFile, item+".csv") || testCase.HasShorthand {
+				continue
+			}
+			filtered = append(filtered, testCase)
+		}
+
+		for i, testCase := range filtered {
+			tested, passed := testCase.RunSdkTest(i, len(filtered))
+			if tested {
+				nTested++
+			}
+			if passed {
+				nPassed++
+			}
+		}
+
+		msg := cm["greenCheck"]
+		if nTested != nPassed {
+			msg = cm["redX"]
+		}
+
+		run := TestRun{
+			item,
+			"sdk",
+			nTested,
+			nPassed,
+			msg,
+		}
+
+		tmplCode := "  {{.PaddedRoute}} {{.Mode}} {{.Passed}} of {{.Total}} tests. {{.Msg}}"
+		if run.Total == 0 {
+			tmplCode = "  {{.PaddedRoute}} {{.Mode}} No tests found."
+		}
+		tmplParsed, err := template.New("sdk").Parse(tmplCode)
+		if err != nil {
+			log.Fatalf("parsing template failed: %v", err)
+		}
+		tmpl := template.Must(tmplParsed, nil)
+		var tplBuffer bytes.Buffer
+		if err := tmpl.Execute(&tplBuffer, &run); err != nil {
+			log.Fatalf("executing template failed: %v", err)
+		}
+		fmt.Println(colors.White, tplBuffer.String(), colors.Off, strings.Repeat(" ", utils.Max(0, 90)))
 	}
 }
 
@@ -250,7 +301,7 @@ func camelCase(s string) string {
 
 func (t *TestCase) Clean() string {
 	ret := []string{}
-	for _, option := range t.Options {
+	for _, option := range t.OptionArray {
 		op := "--" + strings.Replace(option, "=", " ", -1)
 		if strings.Contains(option, "@") {
 			op = "-" + strings.Replace(option, "@", "", -1)
@@ -272,4 +323,17 @@ func init() {
 	os.Setenv("TEST_MODE", "true")
 	os.Setenv("NO_COLOR", "true")
 	colors.ColorsOff()
+}
+
+func padRight(str string, length int, bumpPad bool, pad rune) string {
+	if len(str) < length {
+		str += strings.Repeat(string(pad), length-len(str))
+	} else {
+		str = str[:length]
+	}
+
+	if bumpPad && length >= 3 {
+		str = str[:length-3] + strings.Repeat(string(pad), 3)
+	}
+	return str
 }

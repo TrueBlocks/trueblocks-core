@@ -144,6 +144,8 @@ void COptions::init(void) {
     locations.push_back("tools/getTrans/transactions");
     locations.push_back("tools/grabABI/abis");
     locations.push_back("tools/whenBlock/when");
+    locations.push_back("apps/acctExport/list");
+    locations.push_back("apps/acctExport/monitors");
     locations.push_back("apps/acctExport/export");
     locations.push_back("apps/blockScrape/scrape");
     locations.push_back("apps/cacheStatus/status");
@@ -153,12 +155,6 @@ void COptions::init(void) {
     locations.push_back("apps/fireStorm/explore");
     locations.push_back("apps/init/init");
     locations.push_back("apps/daemon/daemon");
-
-    cerr << "Cleaning monitor caches..." << endl;
-    // doCommand("chifra monitors --decache 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2>/dev/null");
-    // doCommand("chifra monitors --decache 0x9531c059098e3d194ff87febb587ab07b30b1306 2>/dev/null");
-    // doCommand("chifra monitors --decache 0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3 2>/dev/null");
-    // doCommand("chifra monitors --decache 0xd0b3462481c33f63a288cd1923e2a261ee65b4ff 2>/dev/null");
 
     cerr << "Cleaning abi caches..." << endl;
     CStringArray addrs = {
@@ -170,8 +166,8 @@ void COptions::init(void) {
         "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7", "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
         "0x6d903f6003cca6255d85cca4d3b5e5146dc33925", "0x9ba00d6856a4edf4665bca2c2309936572473b7e",
         "0x1a9c8182c09f50c8318d769245bea52c32be35bc", "0x729d19f657bd0614b4985cf1d82531c67569197b",
-        "0x81f7564e413586f1f99fde55740ac52b43ca99c9", "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
-        "0xdbd27635a534a3d3169ef0498beb56fb9c937489",
+        // "0x81f7564e413586f1f99fde55740ac52b43ca99c9", "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
+        // "0xdbd27635a534a3d3169ef0498beb56fb9c937489",
     };
     for (auto addr : addrs) {
         doCommand("chifra abis --decache " + addr + " 2>/dev/null");
