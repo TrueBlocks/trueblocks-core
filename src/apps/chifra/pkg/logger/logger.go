@@ -7,7 +7,6 @@ package logger
 import (
 	"fmt"
 	"io"
-	"log"
 	"math"
 	"os"
 	"strings"
@@ -154,11 +153,14 @@ func Error(v ...any) {
 }
 
 func Fatal(v ...any) {
-	log.Fatal(v...)
+	toLog(err, v...)
+	os.Exit(1)
 }
 
 func Panic(v ...any) {
-	log.Panic(v...)
+	s := fmt.Sprint(v...)
+	toLog(err, s)
+	panic(s)
 }
 
 func Progress(tick bool, v ...any) {
