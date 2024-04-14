@@ -1,3 +1,4 @@
 Env: XDG_CONFIG_HOME=NOTAPATH
 chifra names  test
-The XDG_CONFIG_HOME value (NOTAPATH), must be fully qualified.
+EROR[DATE|TIME] [31mThe XDG_CONFIG_HOME value (NOTAPATH), must be fully qualified.
+[0m

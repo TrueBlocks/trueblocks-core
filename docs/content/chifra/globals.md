@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 2200
+weight: 71000
 toc: true
 ---
 ## Global Options
