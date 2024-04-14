@@ -2,7 +2,51 @@
 #include "main.h"
 
 //-----------------------------------------------------------------------------
-void COptions::doTests(vector<CTestCase>& testArray, const string_q& cppName, bool isCmd) {
+int main(int argc, const char* argv[]) {
+    COptions options;
+    options.init();
+
+    for (auto route : options.locations) {
+        string_q path = nextTokenClear(route, '/');
+        string_q cppName = nextTokenClear(route, '/');
+        rmWorkingTests(path, cppName);
+        rmWorkingTests(path, cppName + "/api_tests");
+
+        string_q testFile = options.sourceFolder + cppName + ".csv";
+
+        CStringArray testLines;
+        asciiFileToLines(testFile, testLines);
+
+        vector<CTestCase> testArray;
+        for (auto line : testLines) {
+            if (!startsWith(line, "#") && !startsWith(line, "enabled") && !line.empty()) {
+                CTestCase test(line);
+                if (startsWith(line, "on")) {
+                    testArray.push_back(test);
+                } else {
+                    test.copyBack();
+                }
+            }
+        }
+
+        options.doTests(testArray, route, false /* isCmd */);
+        options.doTests(testArray, route, true /* isCmd */);
+    }
+
+    uint64_t nFailed = options.totalTests - options.totalPassed;
+
+    cerr << string_q(125, '=') << endl;
+    cerr << "  nTests:  " << options.totalTests << endl;
+    cerr << "  nPassed: " << options.totalPassed << (nFailed ? " ==> not okay" : " ==> ok") << endl;
+    cerr << "  nFailed: " << nFailed << endl;
+    cerr << endl;
+
+    bool allPassed = options.totalTests == options.totalPassed;
+    return allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+
+//-----------------------------------------------------------------------------
+void COptions::doTests(vector<CTestCase>& testArray, const string_q& route, bool isCmd) {
     uint64_t nTests = 0;
     uint64_t nPassed = 0;
     for (auto test : testArray) {
@@ -71,7 +115,7 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& cppName, bo
         uint64_t nFailed = nTests - nPassed;
         ostringstream os;
         os << (nFailed ? cRed : cYellow);
-        os << padRight(cppName + " (" + (isCmd ? "cmd" : "api") + " mode)", 25, false, ' ') + " ==> ";
+        os << padRight(route + " (" + (isCmd ? "cmd" : "api") + " mode)", 25, false, ' ') + " ==> ";
         os << (!nFailed ? "ok    " : "failed");
         os << ": " << nPassed;
         os << " of " << nTests;
@@ -85,10 +129,67 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& cppName, bo
 }
 
 //-----------------------------------------------------------------------------
-bool rmWorkingTests(const string_q& path, const string_q& route) {
+void COptions::init(void) {
+    ::setenv("NO_USERQUERY", "true", 1);
+    isRemoteTesting = getEnvStr("TB_REMOTE_TESTING") == "true";
+    cleanFolder(getCachePath() + "tmp/");
+
+    if (getEnvStr("TEST_SLURPS") == "true") {
+        locations.push_back("tools/ethslurp/slurp");
+    }
+    locations.push_back("tools/ethNames/names");
+    locations.push_back("tools/getBlocks/blocks");
+    locations.push_back("tools/getLogs/logs");
+    locations.push_back("tools/getReceipts/receipts");
+    locations.push_back("tools/getState/state");
+    locations.push_back("tools/getTokens/tokens");
+    locations.push_back("tools/getTraces/traces");
+    locations.push_back("tools/getTrans/transactions");
+    locations.push_back("tools/grabABI/abis");
+    locations.push_back("tools/whenBlock/when");
+    locations.push_back("apps/acctExport/export");
+    locations.push_back("apps/blockScrape/scrape");
+    locations.push_back("apps/cacheStatus/status");
+    locations.push_back("apps/chunkMan/chunks");
+    locations.push_back("apps/chifra/chifra");
+    locations.push_back("apps/config/config");
+    locations.push_back("apps/fireStorm/explore");
+    locations.push_back("apps/init/init");
+    locations.push_back("apps/daemon/daemon");
+
+    cerr << "Cleaning monitor caches..." << endl;
+    // doCommand("chifra monitors --decache 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2>/dev/null");
+    // doCommand("chifra monitors --decache 0x9531c059098e3d194ff87febb587ab07b30b1306 2>/dev/null");
+    // doCommand("chifra monitors --decache 0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3 2>/dev/null");
+    // doCommand("chifra monitors --decache 0xd0b3462481c33f63a288cd1923e2a261ee65b4ff 2>/dev/null");
+
+    cerr << "Cleaning abi caches..." << endl;
+    CStringArray addrs = {
+        "0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51", "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
+        "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359", "0x226159d592e2b063810a10ebf6dcbada94ed68b8",
+        "0x17996cbddd23c2a912de8477c37d43a1b79770b8", "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
+        "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc", "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
+        "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
+        "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7", "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+        "0x6d903f6003cca6255d85cca4d3b5e5146dc33925", "0x9ba00d6856a4edf4665bca2c2309936572473b7e",
+        "0x1a9c8182c09f50c8318d769245bea52c32be35bc", "0x729d19f657bd0614b4985cf1d82531c67569197b",
+        "0x81f7564e413586f1f99fde55740ac52b43ca99c9", "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
+        "0xdbd27635a534a3d3169ef0498beb56fb9c937489",
+    };
+    for (auto addr : addrs) {
+        doCommand("chifra abis --decache " + addr + " 2>/dev/null");
+        doCommand("chifra abis " + addr);
+    }
+    doCommand("chifra abis --decache 2>/dev/null");
+
+    sourceFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
+}
+
+//-----------------------------------------------------------------------------
+bool rmWorkingTests(const string_q& path, const string_q& cppName) {
     ostringstream os;
-    os << "find ../../../working/" << path << "/" << route << "/";
-    os << " -name \"" << route << "_*.txt\"";
+    os << "find ../../../working/" << path << "/" << cppName << "/";
+    os << " -name \"" << cppName << "_*.txt\"";
     os << " -exec rm '{}' ';' 2>/dev/null ; ";
     if (system(os.str().c_str())) {
     }
@@ -373,64 +474,6 @@ void CTestCase::prepareTest(bool isCmd) {
 }
 
 //-----------------------------------------------------------------------------
-void COptions::init(void) {
-    ::setenv("NO_USERQUERY", "true", 1);
-    isRemoteTesting = getEnvStr("TB_REMOTE_TESTING") == "true";
-    cleanFolder(getCachePath() + "tmp/");
-    cerr << "Using `jq .` for post processing." << endl;
-
-    if (getEnvStr("TEST_SLURPS") == "true") {
-        tests.push_back("tools/ethslurp");
-    }
-    tests.push_back("tools/ethNames");
-    tests.push_back("tools/getBlocks");
-    tests.push_back("tools/getLogs");
-    tests.push_back("tools/getReceipts");
-    tests.push_back("tools/getState");
-    tests.push_back("tools/getTokens");
-    tests.push_back("tools/getTraces");
-    tests.push_back("tools/getTrans");
-    tests.push_back("tools/grabABI");
-    tests.push_back("tools/whenBlock");
-    tests.push_back("apps/acctExport");
-    tests.push_back("apps/blockScrape");
-    tests.push_back("apps/cacheStatus");
-    tests.push_back("apps/chunkMan");
-    tests.push_back("apps/chifra");
-    tests.push_back("apps/config");
-    tests.push_back("apps/fireStorm");
-    tests.push_back("apps/init");
-    tests.push_back("apps/daemon");
-
-    cerr << "Cleaning monitor caches..." << endl;
-    // doCommand("chifra monitors --decache 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2>/dev/null");
-    // doCommand("chifra monitors --decache 0x9531c059098e3d194ff87febb587ab07b30b1306 2>/dev/null");
-    // doCommand("chifra monitors --decache 0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3 2>/dev/null");
-    // doCommand("chifra monitors --decache 0xd0b3462481c33f63a288cd1923e2a261ee65b4ff 2>/dev/null");
-
-    cerr << "Cleaning abi caches..." << endl;
-    CStringArray addrs = {
-        "0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51", "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
-        "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359", "0x226159d592e2b063810a10ebf6dcbada94ed68b8",
-        "0x17996cbddd23c2a912de8477c37d43a1b79770b8", "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
-        "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc", "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
-        "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
-        "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7", "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
-        "0x6d903f6003cca6255d85cca4d3b5e5146dc33925", "0x9ba00d6856a4edf4665bca2c2309936572473b7e",
-        "0x1a9c8182c09f50c8318d769245bea52c32be35bc", "0x729d19f657bd0614b4985cf1d82531c67569197b",
-        "0x81f7564e413586f1f99fde55740ac52b43ca99c9", "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
-        "0xdbd27635a534a3d3169ef0498beb56fb9c937489",
-    };
-    for (auto addr : addrs) {
-        doCommand("chifra abis --decache " + addr + " 2>/dev/null");
-        doCommand("chifra abis " + addr);
-    }
-    doCommand("chifra abis --decache 2>/dev/null");
-
-    sourceFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
-}
-
-//-----------------------------------------------------------------------------
 string_q CTestCase::outputFileContents(void) {
     if (contains(origLine, "output")) {
         string_q line = substitute(substitute(origLine, "&", "|"), "=", "|");
@@ -503,47 +546,4 @@ string_q CTestCase::apiUrl(void) const {
     string_q apiOptions = (!options.empty() ? ("?" + options) : "");
     string_q apiPort = getEnvStr("TB_TEST_API_SERVER").empty() ? "8080" : getEnvStr("TB_TEST_API_SERVER");
     return "http://localhost:" + apiPort + "/" + route + apiOptions;
-}
-
-//-----------------------------------------------------------------------------
-int main(int argc, const char* argv[]) {
-    COptions options;
-    options.init();
-
-    for (auto cppName : options.tests) {
-        string_q path = nextTokenClear(cppName, '/');
-        rmWorkingTests(path, cppName);
-        rmWorkingTests(path, cppName + "/api_tests");
-
-        string_q testFile = options.sourceFolder + path + "/" + cppName + ".csv";
-
-        CStringArray testLines;
-        asciiFileToLines(testFile, testLines);
-
-        vector<CTestCase> testArray;
-        for (auto line : testLines) {
-            if (!startsWith(line, "#") && !startsWith(line, "enabled") && !line.empty()) {
-                CTestCase test(line);
-                if (startsWith(line, "on")) {
-                    testArray.push_back(test);
-                } else {
-                    test.copyBack();
-                }
-            }
-        }
-
-        options.doTests(testArray, cppName, false /* isCmd */);
-        options.doTests(testArray, cppName, true /* isCmd */);
-    }
-
-    uint64_t nFailed = options.totalTests - options.totalPassed;
-
-    cerr << string_q(125, '=') << endl;
-    cerr << "  nTests:  " << options.totalTests << endl;
-    cerr << "  nPassed: " << options.totalPassed << (nFailed ? " ==> not okay" : " ==> ok") << endl;
-    cerr << "  nFailed: " << nFailed << endl;
-    cerr << endl;
-
-    bool allPassed = options.totalTests == options.totalPassed;
-    return allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }

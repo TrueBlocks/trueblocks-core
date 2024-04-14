@@ -45,7 +45,7 @@ class COptions {
     string_q sourceFolder;
     uint64_t totalTests = 0;
     uint64_t totalPassed = 0;
-    CStringArray tests;
+    CStringArray locations;
 
     COptions(void);
     ~COptions(void);
