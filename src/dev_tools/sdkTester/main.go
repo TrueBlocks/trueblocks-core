@@ -1,14 +1,17 @@
 package main
 
 import (
+	"bytes"
 	"encoding/csv"
 	"fmt"
 	"io"
+	"log"
 	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
+	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -85,8 +88,6 @@ func processCSVFile(filePath string) {
 	}
 	defer ff.Close()
 
-	fmt.Println("Testing", filePath, strings.Repeat(" ", 120-len(filePath)))
-
 	reader := csv.NewReader(ff)
 	const requiredFields = 8
 	lineNumber := 0
@@ -114,10 +115,6 @@ func processCSVFile(filePath string) {
 				continue // skip these weird (hot-key only) single character test cases for the SDK
 			}
 
-			// fmt.Println(strings.Repeat("-", 80))
-			// fmt.Println(record[5])
-			// fmt.Println(strings.Repeat("-", 80))
-
 			orig := Original{
 				Enabled:  strings.Trim(record[0], " "),
 				Mode:     strings.Trim(record[1], " "),
@@ -144,6 +141,29 @@ func processCSVFile(filePath string) {
 		}
 	}
 
+	sdkResults := DoSdkTests(testCases)
+	tmplCode := "  {{.Route}} {{.Mode}} {{.Passed}} of {{.Total}} tests. {{.Msg}}"
+	tmplParsed, err := template.New("sdk").Parse(tmplCode)
+	if err != nil {
+		log.Fatalf("parsing template failed: %v", err)
+	}
+	tmpl := template.Must(tmplParsed, nil)
+	var tplBuffer bytes.Buffer
+	if err := tmpl.Execute(&tplBuffer, &sdkResults); err != nil {
+		log.Fatalf("executing template failed: %v", err)
+	}
+	fmt.Println(colors.White, tplBuffer.String(), colors.Off, strings.Repeat(" ", utils.Max(0, 90)))
+}
+
+type TestRun struct {
+	Route  string `json:"route"`
+	Mode   string `json:"mode"`
+	Passed int    `json:"passed"`
+	Total  int    `json:"total"`
+	Msg    string `json:"msg"`
+}
+
+func DoSdkTests(testCases []TestCase) TestRun {
 	nTested, nPassed := 0, 0
 	for i, testCase := range testCases {
 		tested, passed := testCase.RunSdkTest(i, len(testCases))
@@ -154,12 +174,19 @@ func processCSVFile(filePath string) {
 			nPassed++
 		}
 	}
+
 	msg := cm["greenCheck"]
 	if nTested != nPassed {
 		msg = cm["redX"]
 	}
-	fmt.Println(colors.White, "    Passed", nPassed, "of", nTested, "tests.", msg, colors.Off, strings.Repeat(" ", utils.Max(0, 90)))
-	fmt.Println()
+
+	return TestRun{
+		testCases[0].Route,
+		"sdk",
+		nTested,
+		nPassed,
+		msg,
+	}
 }
 
 func preClean(rawURL string) string {

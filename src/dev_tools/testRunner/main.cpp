@@ -26,7 +26,6 @@ int main(int argc, const char* argv[]) {
                 }
             }
         }
-
         options.doTests(testArray, route, false /* isCmd */);
         options.doTests(testArray, route, true /* isCmd */);
     }
