@@ -53,7 +53,7 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_data_bad2           ,y    ,mode
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,block_not_found         ,y    ,mode = index & belongs = 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9 & blocks = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 
-# Seems to be a lot of 'presistance' issues with this test case
+# Seems to be a lot of presistance issues with this test case
 delay   ,both ,fast  ,chunks ,apps/chunkMan ,check_okay              ,y    ,mode = manifest & check
 
 index   ,both ,fast  ,chunks ,apps/chunkMan ,redir_output            ,y    ,mode = index & blocks = 2000000 & output = output_test_file

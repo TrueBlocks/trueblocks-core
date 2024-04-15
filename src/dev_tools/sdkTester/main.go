@@ -11,8 +11,10 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 	"text/template"
+	"unicode"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -21,19 +23,28 @@ import (
 
 var debugging = false
 
+func init() {
+	os.Setenv("NO_USERQUERY", "true")
+	os.Setenv("TEST_MODE", "true")
+}
+
 func main() {
-	os.Remove(getLogFile("sdk"))
 	testMap := make(map[string][]TestCase, 100)
+	routeMap := make(map[string]bool, 100)
 	walkFunc := func(path string, info os.FileInfo, err error) error {
 		if err == nil {
 			if !info.IsDir() && strings.HasSuffix(path, ".csv") {
-				testCases := collectCsvFiles(path)
+				testCases, err := parseCsv(path)
+				if err != nil {
+					return err
+				}
 				for _, testCase := range testCases {
 					source := testCase.SourceFile
 					if _, ok := testMap[source]; !ok {
 						testMap[source] = []TestCase{}
 					}
 					testMap[source] = append(testMap[source], testCase)
+					routeMap[testCase.Route] = true
 				}
 			}
 		}
@@ -48,57 +59,50 @@ func main() {
 	if err := filepath.Walk(thePath, walkFunc); err != nil {
 		fmt.Printf("error walking the path %q: %v\n", thePath, err)
 	}
+	file.StringToAsciiFile("../src/dev_tools/sdkTester/generated/testCases.json", toJson(testMap))
 
-	bytes, err := json.MarshalIndent(testMap, "", "  ")
-	if err != nil {
-		fmt.Printf("Error marshalling testCases: %v\n", err)
+	order := []string{}
+	for route := range routeMap {
+		if route != "slurp" || os.Getenv("TEST_SLURP") == "true" {
+			order = append(order, "slurp")
+		}
 	}
-	file.StringToAsciiFile("../src/dev_tools/sdkTester/generated/testCases.json", string(bytes))
+	sort.Strings(order)
 
-	DoSdkTests(testMap)
+	modes := []string{
+		"sdk",
+		"api",
+		"cmd",
+	}
+
+	for _, mode := range modes {
+		os.Remove(getLogFile(mode))
+	}
+
+	for _, item := range order {
+		source := "../src/dev_tools/testRunner/testCases/" + item + ".csv"
+		for _, mode := range modes {
+			tr := NewRunner(testMap, item, mode, source)
+			for _, testCase := range testMap[source] {
+				if err := tr.Run(&testCase); err != nil {
+					logger.Error(err) // continue even on goLang error
+				}
+			}
+			tr.Report()
+		}
+	}
 }
 
-type record struct {
-	Enabled  string `json:"enabled"`
-	Mode     string `json:"mode"`
-	Speed    string `json:"speed"`
-	Route    string `json:"route"`
-	PathTool string `json:"pathTool"`
-	Filename string `json:"filename"`
-	Post     string `json:"post"`
-	Options  string `json:"options"`
-}
-
-type TestCase struct {
-	record
-	IsEnabled    bool     `json:"isEnabled"`
-	HasShorthand bool     `json:"hasShorthand"`
-	GoldPath     string   `json:"goldPath"`
-	WorkingPath  string   `json:"workingPath"`
-	Cannonical   string   `json:"cannonical"`
-	OptionArray  []string `json:"options"`
-	SourceFile   string   `json:"sourceFile"`
-}
-
-var cm = map[string]string{
-	"greenCheck":    colors.Green + "✓" + colors.Off,
-	"yellowCaution": colors.Yellow + "!!" + colors.Off,
-	"redX":          colors.Red + "X" + colors.Off,
-	"whiteStar":     colors.White + "*" + colors.Off,
-}
-
-func collectCsvFiles(filePath string) []TestCase {
+func parseCsv(filePath string) ([]TestCase, error) {
 	ff, err := os.Open(filePath)
 	if err != nil {
-		fmt.Printf("Error opening file: %v\n", err)
-		return []TestCase{}
+		return []TestCase{}, err
 	}
 	defer ff.Close()
 
 	reader := csv.NewReader(ff)
 	const requiredFields = 8
 	lineNumber := 0
-
 	testCases := make([]TestCase, 0, 200)
 	for {
 		lineNumber++
@@ -106,6 +110,10 @@ func collectCsvFiles(filePath string) []TestCase {
 		if err != nil {
 			if err == io.EOF {
 				break // End of file reached
+			}
+			if !strings.Contains(err.Error(), "wrong number of fields") {
+				fmt.Printf("Error at %s:%d %v\n", filePath, lineNumber, err)
+				return []TestCase{}, err
 			}
 			continue
 		}
@@ -129,109 +137,28 @@ func collectCsvFiles(filePath string) []TestCase {
 				Options:  strings.Trim(csvRecord[7], " "),
 			}
 
-			cannon := canonicalizeURL(rec.Options)
 			testCase := TestCase{
 				record:       rec,
 				IsEnabled:    rec.Enabled == "on",
 				HasShorthand: strings.Contains(rec.Options, "@"),
 				GoldPath:     "../test/gold/" + rec.PathTool + "/sdk_tests/",
 				WorkingPath:  "../test/working/" + rec.PathTool + "/sdk_tests/",
-				Cannonical:   cannon,
-				OptionArray:  strings.Split(strings.Replace(cannon, "%20", " ", -1), "&"),
+				OrigOptions:  rec.Options,
 				SourceFile:   filePath,
 			}
+
+			// order matters
+			testCase.ApiOptions = testCase.cleanForApi()
+			testCase.OptionArray = strings.Split(testCase.ApiOptions, "&")
+			testCase.CmdOptions = testCase.cleanForCmd()
+			testCase.SdkOptions = testCase.cleanForSdk()
+			testCase.SdkOptionsArray = strings.Split(strings.Replace(testCase.SdkOptions, "%20", " ", -1), "&")
+			// order matters
+
 			testCases = append(testCases, testCase)
 		}
 	}
-	return testCases
-}
-
-type TestRun struct {
-	Route  string `json:"route"`
-	Mode   string `json:"mode"`
-	Passed int    `json:"passed"`
-	Total  int    `json:"total"`
-	Msg    string `json:"msg"`
-}
-
-func (t *TestRun) Result() string {
-	if t.Passed == t.Total {
-		return "ok"
-	}
-	return "X "
-}
-func (t *TestRun) NameAndMode() string {
-	return t.Route + " (" + t.Mode + " mode)"
-}
-
-func (t *TestRun) Failed() string {
-	return fmt.Sprintf("%d", t.Total-t.Passed)
-}
-
-var order = []string{
-	"slurp",
-	"names",
-	"blocks",
-	"logs",
-	"receipts",
-	"state",
-	"tokens",
-	"traces",
-	"transactions",
-	"abis",
-	"when",
-	"list",
-	"monitors",
-	"export",
-	"scrape",
-	"status",
-	"chunks",
-	"chifra",
-	"config",
-	"explore",
-	"init",
-	"daemon",
-}
-
-func DoSdkTests(testMap map[string][]TestCase) {
-	for _, item := range order {
-		source := "../src/dev_tools/testRunner/testCases/" + item + ".csv"
-		nTested, nPassed := 0, 0
-		filtered := []TestCase{}
-		for _, testCase := range testMap[source] {
-			if !strings.HasSuffix(testCase.SourceFile, item+".csv") {
-				continue
-			}
-			if testCase.HasShorthand {
-				continue
-			}
-			if !testCase.IsEnabled {
-				continue
-			}
-			filtered = append(filtered, testCase)
-		}
-
-		colors.ColorsOff()
-		for i, testCase := range filtered {
-			file.AppendToAsciiFile(getLogFile("sdk"), testCase.Log())
-			tested, passed := testCase.RunSdkTest(i, len(filtered))
-			if tested {
-				nTested++
-			}
-			if passed {
-				nPassed++
-			}
-		}
-		colors.ColorsOn()
-
-		tmpl := `  {{padRight .NameAndMode 25 " "}} ==> {{padRight .Result 8 " "}} {{.Passed}} of {{.Total}} passed, {{.Failed}} failed.`
-		fmt.Println(executeTemplate(colors.Yellow, "summary", tmpl, &TestRun{
-			Route:  item,
-			Mode:   "sdk",
-			Total:  nTested,
-			Passed: nPassed,
-		}))
-	}
+	return testCases, nil
 }
 
 func executeTemplate(color, tmplName, tmplCode string, data interface{}) string {
@@ -255,21 +182,18 @@ func executeTemplate(color, tmplName, tmplCode string, data interface{}) string 
 	return color + tplBuffer.String() + colors.Off + strings.Repeat(" ", 135-len(tplBuffer.String()))
 }
 
-func preClean(rawURL string) string {
-	rawURL = regexp.MustCompile(`\s*&\s*`).ReplaceAllString(rawURL, "&")
-	rawURL = regexp.MustCompile(`\s*=\s*`).ReplaceAllString(rawURL, "=")
-	rawURL = regexp.MustCompile(`\s+`).ReplaceAllString(rawURL, "%20")
-	return rawURL
-}
+func (t *TestCase) cleanForSdk() string {
+	rawUrl := t.OrigOptions
+	rawUrl = strings.Replace(rawUrl, ":", "%3A", -1)
+	rawUrl = regexp.MustCompile(`\s*&\s*`).ReplaceAllString(rawUrl, "&")
+	rawUrl = regexp.MustCompile(`\s*=\s*`).ReplaceAllString(rawUrl, "=")
+	rawUrl = regexp.MustCompile(`\s+`).ReplaceAllString(rawUrl, "%20")
 
-var removes = "help,wei,fmt,version,noop,nocolor,no_header,file"
-
-func canonicalizeURL(rawURL string) string {
-	rawURL = preClean(strings.Replace(rawURL, ":", "%3A", -1))
-	cleanURL := strings.Join(strings.Fields(rawURL), "")
+	cleanURL := strings.Join(strings.Fields(rawUrl), "")
 	if parsedURL, err := url.Parse("http://localhost?" + cleanURL); err != nil {
 		logger.Error(err)
 		return ""
+
 	} else {
 		rawQuery := parsedURL.RawQuery
 		var newQuery string
@@ -280,10 +204,11 @@ func canonicalizeURL(rawURL string) string {
 			if len(kv) > 1 {
 				value = kv[1]
 			}
+			removes := "help,wei,fmt,version,noop,nocolor,no_header,file"
 			if strings.Contains(removes, key) {
 				continue
 			} else if strings.Contains(key, "_") {
-				key = camelCase(key)
+				key = toCamelCase(key)
 			}
 			if newQuery != "" {
 				newQuery += "&"
@@ -296,12 +221,49 @@ func canonicalizeURL(rawURL string) string {
 		}
 		canonicalURL := newQuery
 		canonicalURL = strings.Replace(canonicalURL, "%3A", ":", -1)
-		canonicalURL = strings.Replace(canonicalURL, "+", "%20", -1)
 		return canonicalURL
 	}
 }
 
-func camelCase(s string) string {
+func (t *TestCase) cleanForApi() string {
+	ret := t.OrigOptions
+	ret = strings.ReplaceAll(ret, " = ", "=")
+	ret = strings.ReplaceAll(ret, " & ", "&")
+	ret = strings.ReplaceAll(ret, " @ ", "@")
+	ret = strings.ReplaceAll(ret, " ", "%20")
+	if strings.Contains(ret, "_") {
+		parts := strings.Split(ret, "&")
+		for _, part := range parts {
+			kv := strings.Split(part, "=")
+			if strings.Contains(kv[0], "_") {
+				ret = strings.ReplaceAll(ret, kv[0], toCamelCase(kv[0]))
+			}
+		}
+	}
+	return ret
+}
+
+func (t *TestCase) cleanForCmd() string {
+	removes := []string{
+		"addrs", "blocks", "transactions", "modes", "terms", "addrs", "mode", "topics", "fourbytes",
+	}
+
+	ret := []string{}
+	for _, option := range t.OptionArray {
+		op := parseAndConvert(option)
+		op = strings.ReplaceAll(op, "%20", " ")
+		op = "--" + strings.ReplaceAll(op, "=", " ")
+		op = strings.ReplaceAll(option, "@", "-")
+		for _, remove := range removes {
+			op = strings.ReplaceAll(op, "--"+remove+" ", "")
+		}
+		op = strings.ReplaceAll(op, "*", "\\*")
+		ret = append(ret, op)
+	}
+	return strings.Join(ret, " ")
+}
+
+func toCamelCase(s string) string {
 	result := ""
 	toUpper := false
 	for _, c := range s {
@@ -319,32 +281,32 @@ func camelCase(s string) string {
 	return result
 }
 
-func (t *TestCase) Log() string {
-	return fmt.Sprintf("%s\t%s.txt\t%s\n", t.Route, t.Filename, t.Cannonical)
+func toSnakeCase(str string) string {
+	var result []rune
+	for i, r := range str {
+		if unicode.IsUpper(r) && i > 0 {
+			result = append(result, '_')
+		}
+		result = append(result, unicode.ToLower(r))
+	}
+	return string(result)
 }
 
-func (t *TestCase) Clean() string {
-	ret := []string{}
-	for _, option := range t.OptionArray {
-		op := "--" + strings.Replace(option, "=", " ", -1)
-		if strings.Contains(option, "@") {
-			op = "-" + strings.Replace(option, "@", "", -1)
-		}
-		removes := []string{"--blocks", "--transactions", "--modes", "--terms", "--addrs"}
-		for _, remove := range removes {
-			op = strings.Replace(op, remove+" ", "", -1)
-		}
-		if len(option) > 0 {
-			op = strings.Replace(op, "*", "\\*", -1)
-			ret = append(ret, op)
+func parseAndConvert(input string) string {
+	result := []string{}
+	pairs := strings.Split(input, "&")
+	for _, pair := range pairs {
+		kv := strings.SplitN(pair, "=", 2)
+		key := strings.TrimSpace(kv[0])
+		convertedKey := toSnakeCase(key)
+		if len(kv) == 1 {
+			result = append(result, convertedKey)
+		} else if len(kv) == 2 {
+			value := strings.TrimSpace(kv[1])
+			result = append(result, convertedKey+"="+value)
 		}
 	}
-	return strings.Join(ret, " ")
-}
-
-func init() {
-	os.Setenv("NO_USERQUERY", "true")
-	os.Setenv("TEST_MODE", "true")
+	return strings.Join(result, "&")
 }
 
 func padRight(str string, length int, bumpPad bool, pad string) string {
@@ -360,6 +322,17 @@ func padRight(str string, length int, bumpPad bool, pad string) string {
 	return str
 }
 
-func getLogFile(mode string) string {
-	return "../src/dev_tools/sdkTester/generated/test-" + mode + ".log"
+func toJson(structure interface{}) string {
+	var buf bytes.Buffer
+	encoder := json.NewEncoder(&buf)
+	encoder.SetEscapeHTML(false)
+	encoder.SetIndent("", "  ")
+	err := encoder.Encode(structure)
+	if err != nil {
+		fmt.Println("Error encoding JSON:", err)
+		return ""
+	}
+	return buf.String()
 }
+
+var summaryTmpl = `  {{padRight .NameAndMode 25 " "}} ==> {{padRight .Result 8 " "}} {{.NPassed}} of {{.NTested}} passed, {{.Failed}} failed.`

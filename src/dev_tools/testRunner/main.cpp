@@ -9,12 +9,12 @@ int main(int argc, const char* argv[]) {
     ::remove(getLogFile("api").c_str());
     ::remove(getLogFile("cmd").c_str());
     for (auto doRemove : options.locations) {
+        string route = nextTokenClear(doRemove, '-');
         string_q path = nextTokenClear(doRemove, '/');
-        string_q cppName = nextTokenClear(doRemove, '/');
-        string route = nextTokenClear(doRemove, '/');
+        string_q cppName = nextTokenClear(doRemove, '-');
         if (doRemove == "true") {
-            rmWorkingTests(path, cppName);
-            rmWorkingTests(path, cppName + "/api_tests");
+            rmWorkingTests(path, "", cppName);
+            rmWorkingTests(path, "api_tests", cppName);
         }
 
         CStringArray testLines;
@@ -138,36 +138,36 @@ void COptions::init(void) {
     cleanFolder(getCachePath() + "tmp/");
     sourceFolder = getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/");
 
+    locations.push_back("abis-tools/grabABI-true");
+    locations.push_back("blocks-tools/getBlocks-true");
+    locations.push_back("chifra-apps/chifra-true");
+    locations.push_back("chunks-apps/chunkMan-true");
+    locations.push_back("config-apps/config-true");
+    locations.push_back("daemon-apps/daemon-true");
+    locations.push_back("explore-apps/fireStorm-true");
+    locations.push_back("init-apps/init-true");
+    locations.push_back("list-apps/acctExport-true");
+    locations.push_back("monitors-apps/acctExport-false");
+    locations.push_back("export-apps/acctExport-false");
+    locations.push_back("logs-tools/getLogs-true");
+    locations.push_back("names-tools/ethNames-true");
+    locations.push_back("receipts-tools/getReceipts-true");
+    locations.push_back("scrape-apps/blockScrape-true");
+    locations.push_back("state-tools/getState-true");
+    locations.push_back("status-apps/cacheStatus-true");
+    locations.push_back("tokens-tools/getTokens-true");
+    locations.push_back("traces-tools/getTraces-true");
+    locations.push_back("transactions-tools/getTrans-true");
+    locations.push_back("when-tools/whenBlock-true");
     if (getEnvStr("TEST_SLURPS") == "true") {
-        locations.push_back("tools/ethslurp/slurp");
+        locations.push_back("slurp-tools/ethslurp-true");
     }
-    locations.push_back("tools/ethNames/names/true");
-    locations.push_back("tools/getBlocks/blocks/true");
-    locations.push_back("tools/getLogs/logs/true");
-    locations.push_back("tools/getReceipts/receipts/true");
-    locations.push_back("tools/getState/state/true");
-    locations.push_back("tools/getTokens/tokens/true");
-    locations.push_back("tools/getTraces/traces/true");
-    locations.push_back("tools/getTrans/transactions/true");
-    locations.push_back("tools/grabABI/abis/true");
-    locations.push_back("tools/whenBlock/when/true");
-    locations.push_back("apps/acctExport/list/true");
-    locations.push_back("apps/acctExport/monitors/false");
-    locations.push_back("apps/acctExport/export/false");
-    locations.push_back("apps/blockScrape/scrape/true");
-    locations.push_back("apps/cacheStatus/status/true");
-    locations.push_back("apps/chunkMan/chunks/true");
-    locations.push_back("apps/chifra/chifra/true");
-    locations.push_back("apps/config/config/true");
-    locations.push_back("apps/fireStorm/explore/true");
-    locations.push_back("apps/init/init/true");
-    locations.push_back("apps/daemon/daemon/true");
 }
 
 //-----------------------------------------------------------------------------
-bool rmWorkingTests(const string_q& path, const string_q& cppName) {
+bool rmWorkingTests(const string_q& p1, const string_q& p2, const string_q& cppName) {
     ostringstream os;
-    os << "find ../../../working/" << path << "/" << cppName << "/";
+    os << "find ../../../working/" << p1 << "/" << cppName << "/" + p2;
     os << " -name \"" << cppName << "_*.txt\"";
     os << " -maxdepth 1";
     os << " -exec rm '{}' ';' 2>/dev/null ; ";
@@ -536,5 +536,5 @@ string_q CTestCase::apiUrl(void) const {
 
 string_q rootRoot = getCWD() + string_q("../../../../src/dev_tools/sdkTester/generated/test");
 string_q getLogFile(const string_q& mode) {
-    return rootRoot + "-" + mode + ".log";
+    return rootRoot + "_" + mode + ".log";
 }

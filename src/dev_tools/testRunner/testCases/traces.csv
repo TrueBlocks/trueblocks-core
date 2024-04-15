@@ -52,7 +52,7 @@ on      ,cmd  ,fast  ,traces ,tools/getTraces ,by_file             ,n    ,file =
 # This test loads 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b ABI from the local folder (which does not exist in the API mode), so only run against `cmd`
 local   ,cmd  ,slow  ,traces ,tools/getTraces ,articulate_arrays   ,y    ,transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & articulate & fmt = json & verbose
 
-# These two fail because they don't articulate a given function correctly. One of them only runs against `cmd`.
+# These two fail because they do not articulate a given function correctly. One of them only runs against `cmd`.
 delay   ,cmd  ,slow  ,traces ,tools/getTraces ,articulate          ,y    ,transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json
 # Weird change in value for an articulated thing
 delay   ,both ,fast  ,traces ,tools/getTraces ,articulated         ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json & articulate
@@ -65,7 +65,7 @@ on      ,both ,medi  ,traces ,tools/getTraces ,suicidesend_1       ,y    ,transa
 on      ,both ,fast  ,traces ,tools/getTraces ,ddos_supress        ,y    ,transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
 on      ,both ,fast  ,traces ,tools/getTraces ,ddos_show           ,y    ,transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
 
-# These work, but they're slow so we don't run them
+# These work, but they are slow so we do not run them
 on      ,both ,fast  ,traces ,tools/getTraces ,by_filter1          ,y    ,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!1000!100 & cache
 on      ,both ,fast  ,traces ,tools/getTraces ,by_filter2          ,y    ,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!
 local   ,both ,fast  ,traces ,tools/getTraces ,by_filter3          ,y    ,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!1
@@ -78,7 +78,7 @@ on      ,both ,fast  ,traces ,tools/getTraces ,by_filter9          ,y    ,fmt = 
 on      ,both ,fast  ,traces ,tools/getTraces ,by_filter10         ,y    ,fmt = json & filter = 4370000!4370002!!!!1
 on      ,both ,fast  ,traces ,tools/getTraces ,by_filter11         ,y    ,fmt = json & filter = 4370000!4370002!!!1!2
 
-# These don't work because :next and :prev are not parsed in goLang
+# These do not work because :next and :prev are not parsed in goLang
 delay   ,both ,fast  ,traces ,tools/getTraces ,first               ,y    ,transactions = 40500.0:next
 delay   ,both ,fast  ,traces ,tools/getTraces ,nav_prev1           ,y    ,transactions = 1001001.1:prev
 delay   ,both ,medi  ,traces ,tools/getTraces ,nav_prev2           ,y    ,transactions = 1001001.0:prev

@@ -63,14 +63,14 @@ factory ,both ,fast  ,export   ,apps/acctExport ,factory_traces_v         ,y    
 
 # Testing --articulation
 local   ,both ,fast  ,export   ,apps/acctExport ,old_bug2_1               ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & articulate & first_record = 1 & max_records = 1 & fmt = json
-# fails because of mutliple errors concurrently don't sort
+# fails because of mutliple errors concurrently do not sort
 local   ,both ,fast  ,export   ,apps/acctExport ,old_bug2_336             ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & articulate & first_record = 336 & max_records = 2 & fmt = json
 
 # Testing --logs
 on      ,both ,fast  ,export   ,apps/acctExport ,not_logs_topic_fail      ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & topic = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
 on      ,both ,fast  ,export   ,apps/acctExport ,not_logs_relevant_fail   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & relevant & max_records = 100
 on      ,both ,fast  ,export   ,apps/acctExport ,invalid_emitter_fail     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs & emitter = 0x7d655c57f71464b6f83811c55d84009cd9f5221
-on      ,both ,fast  ,export   ,apps/acctExport ,invalid_topic_fail       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs  & topic = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
+on      ,both ,fast  ,export   ,apps/acctExport ,invalid_topic_fail       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs & topic = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_no_topics       ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & max_records = 3 & cache
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_topics          ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & topics = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & max_records = 4
 
@@ -141,7 +141,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,decache_traces           ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,cache_neighbors          ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & neighbors & cache & cache_traces
 on      ,both ,fast  ,export   ,apps/acctExport ,decache_neighbors        ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & neighbors & decache
 
-# This fail because it doesn't report an error in API mode but it does in cmd line mode
+# This fail because it does not report an error in API mode but it does in cmd line mode
 local   ,both ,fast  ,export   ,apps/acctExport ,bug_no_api_error_msg     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 41740.0 & decache
 
 # Testing --accounting

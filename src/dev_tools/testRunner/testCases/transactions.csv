@@ -104,7 +104,7 @@ delay   ,both ,fast  ,transactions ,tools/getTrans ,revert_not_err           ,y 
 # This one is odd - it works on cmd line but not the server. Most likely because the server is not started from the same folder for testing remotely and cannot find the custom abi file
 delay   ,cmd  ,slow  ,transactions ,tools/getTrans ,articulate               ,y    ,transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json & traces
 
-# The don't work because next/prev nav doesn't get parsed
+# The do not work because next/prev nav does not get parsed
 delay   ,both ,fast  ,transactions ,tools/getTrans ,first                    ,n    ,transactions = 40500.0:next & fmt = txt
 delay   ,both ,fast  ,transactions ,tools/getTrans ,first2                   ,n    ,transactions = frontier & fmt = txt
 delay   ,both ,fast  ,transactions ,tools/getTrans ,nav_prev1                ,n    ,transactions = 1001001.1:prev & fmt = txt
