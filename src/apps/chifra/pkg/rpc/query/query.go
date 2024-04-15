@@ -53,6 +53,11 @@ type BatchPayload struct {
 // Query returns a single result for given method and params.
 func Query[T any](chain string, method string, params Params) (*T, error) {
 	url := config.GetChain(chain).RpcProvider
+	return QueryUrl[T](url, method, params)
+}
+
+// QueryUrl is just like Query, but it does not resolve chain to RPC provider URL
+func QueryUrl[T any](url string, method string, params Params) (*T, error) {
 	return QueryWithHeaders[T](url, map[string]string{}, method, params)
 }
 

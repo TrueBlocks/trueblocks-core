@@ -2,83 +2,33 @@ package slurpPkg
 
 import (
 	"context"
-	"fmt"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/provider"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *SlurpOptions) HandleCount() error {
-	testMode := opts.Globals.TestMode
+	// TODO: maybe use []string in Query.Addresses
+	addresses := make([]base.Address, 0, len(opts.Addrs))
+	for _, addr := range opts.Addrs {
+		addresses = append(addresses, base.HexToAddress(addr))
+	}
+
+	esProvider := provider.NewEtherscanProvider(opts.Conn)
+	esProvider.PrintProgress = !opts.Globals.TestMode && !utils.IsTerminal()
+	query := &provider.Query{
+		Addresses: addresses,
+		Resources: opts.Types,
+	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
-		totalFetched := 0
-		totalFiltered := 0
-		for _, addr := range opts.Addrs {
-			for _, tt := range opts.Types {
-				paginator := rpc.NewPageNumberPaginator(opts.FirstPage(), opts.PerPageValue())
-
-				bar := logger.NewBar(logger.BarOptions{
-					Type:    logger.Expanding,
-					Enabled: !testMode, // && !utils.IsTerminal(),
-					Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, addr), tt),
-				})
-
-				done := false
-				for !done {
-					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, opts.Source, addr, tt, paginator)
-					totalFetched += nFetched
-					nextPageErr := paginator.NextPage() // order matters
-					if nextPageErr != nil {
-						errorChan <- nextPageErr
-						return
-					}
-					done = nFetched < paginator.PerPage() // order matters
-					if err != nil {                       // order matters
-						errorChan <- err
-						continue
-					}
-
-					for _, tx := range txs {
-						if ok, err := opts.isInRange(tx.BlockNumber); !ok {
-							if err != nil {
-								errorChan <- err
-							}
-							continue
-						}
-						bar.Tick()
-						totalFiltered++
-					}
-
-					// Without this Etherscan chokes
-					if !done {
-						sleep := opts.Sleep
-						if sleep > 0 {
-							ms := time.Duration(sleep*1000) * time.Millisecond
-							logger.Progress(true, fmt.Sprintf("Sleeping for %g seconds", sleep))
-							time.Sleep(ms)
-						}
-					}
-				}
-				bar.Finish(true /* newLine */)
-			}
-
-			if totalFiltered == 0 {
-				msg := fmt.Sprintf("zero transactions reported, %d fetched", totalFetched)
-				errorChan <- fmt.Errorf(msg)
-			} else {
-				s := types.SimpleMonitor{
-					Address:  base.HexToAddress(addr),
-					NRecords: int64(totalFiltered),
-				}
-				modelChan <- &s
-			}
+		monitorChan := esProvider.Count(ctx, query, errorChan)
+		for monitor := range monitorChan {
+			modelChan <- &monitor
 		}
 	}
 

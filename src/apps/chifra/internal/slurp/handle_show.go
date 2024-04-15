@@ -9,10 +9,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/provider"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *SlurpOptions) HandleShow() error {
-	// testMode := opts.Globals.TestMode
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 
 	// TODO: maybe use []string in Query.Addresses
@@ -22,6 +22,7 @@ func (opts *SlurpOptions) HandleShow() error {
 	}
 
 	esProvider := provider.NewEtherscanProvider(opts.Conn)
+	esProvider.PrintProgress = !opts.Globals.TestMode && !utils.IsTerminal()
 	query := &provider.Query{
 		Addresses: addresses,
 		Resources: opts.Types,
@@ -29,26 +30,14 @@ func (opts *SlurpOptions) HandleShow() error {
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawSlurp], errorChan chan error) {
-		txChan, esErrorChan := esProvider.TransactionsByAddress(ctx, query)
-		for {
-			select {
-			case err, ok := <-esErrorChan:
-				if !ok {
-					continue
+		txChan := esProvider.TransactionsByAddress(ctx, query, errorChan)
+		for tx := range txChan {
+			if opts.Articulate {
+				if err := abiCache.ArticulateSlurp(tx.Transaction); err != nil {
+					errorChan <- err // continue even with an error
 				}
-				errorChan <- err
-			case tx, ok := <-txChan:
-				if !ok {
-					return
-				}
-				if opts.Articulate {
-					if err := abiCache.ArticulateSlurp(tx.Transaction); err != nil {
-						errorChan <- err // continue even with an error
-					}
-				}
-				modelChan <- tx.Transaction
-
 			}
+			modelChan <- tx.Transaction
 		}
 	}
 

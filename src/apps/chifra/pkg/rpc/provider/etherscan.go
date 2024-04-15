@@ -29,8 +29,9 @@ const etherscanMaxPerPage = 3000
 var etherscanBaseUrl = "https://api.etherscan.io"
 
 type EtherscanProvider struct {
-	conn             *rpc.Connection
+	PrintProgress    bool
 	perPage          int
+	conn             *rpc.Connection
 	limiter          *rate.Limiter
 	convertSlurpType func(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error)
 }
@@ -40,28 +41,27 @@ func NewEtherscanProvider(conn *rpc.Connection) *EtherscanProvider {
 		conn:    conn,
 		perPage: etherscanMaxPerPage,
 	}
+	p.PrintProgress = true
 	p.limiter = rate.NewLimiter(etherscanRequestsPerSecond, etherscanRequestsPerSecond)
 	p.convertSlurpType = p.defaultConvertSlurpType
 
 	return p
 }
 
-func (e *EtherscanProvider) TransactionsByAddress(ctx context.Context, query *Query) (txChan chan SlurpedTransaction, errorChan chan error) {
+func (e *EtherscanProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan SlurpedTransaction) {
 	txChan = make(chan SlurpedTransaction, channelBuffer)
-	errorChan = make(chan error)
 
 	totalFetched := 0
 	totalFiltered := 0
 
 	go func() {
 		defer close(txChan)
-		defer close(errorChan)
 
 		for _, address := range query.Addresses {
 			for _, resource := range query.Resources {
 				bar := logger.NewBar(logger.BarOptions{
 					Type:    logger.Expanding,
-					Enabled: true, // !testMode && !utils.IsTerminal(),
+					Enabled: e.PrintProgress,
 					Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, address.String()), resource),
 				})
 
@@ -112,11 +112,11 @@ func (e *EtherscanProvider) TransactionsByAddress(ctx context.Context, query *Qu
 	return
 }
 
-func (e *EtherscanProvider) Appearances(ctx context.Context, query *Query) (appChan chan types.SimpleAppearance, errorChan chan error) {
+func (e *EtherscanProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.SimpleAppearance) {
 	appChan = make(chan types.SimpleAppearance, channelBuffer)
 
 	var slurpedTxChan chan SlurpedTransaction
-	slurpedTxChan, errorChan = e.TransactionsByAddress(ctx, query)
+	slurpedTxChan = e.TransactionsByAddress(ctx, query, errorChan)
 	go func() {
 		defer close(appChan)
 		for {
@@ -140,14 +140,14 @@ func (e *EtherscanProvider) Appearances(ctx context.Context, query *Query) (appC
 	return
 }
 
-func (e *EtherscanProvider) Count(ctx context.Context, query *Query) (monitorChan chan types.SimpleMonitor, errorChan chan error) {
+func (e *EtherscanProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.SimpleMonitor) {
 	monitorChan = make(chan types.SimpleMonitor)
 
 	recordCount := make(map[base.Address]types.SimpleMonitor, len(query.Addresses))
 	var mu sync.Mutex
 
 	var slurpedTxChan chan SlurpedTransaction
-	slurpedTxChan, errorChan = e.TransactionsByAddress(ctx, query)
+	slurpedTxChan = e.TransactionsByAddress(ctx, query, errorChan)
 	go func() {
 		defer close(monitorChan)
 		for {

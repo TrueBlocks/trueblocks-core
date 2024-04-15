@@ -6,9 +6,11 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"golang.org/x/time/rate"
 )
@@ -197,7 +199,8 @@ func TestEtherscanProvider_TransactionsByAddress(t *testing.T) {
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	results, errors := provider.TransactionsByAddress(ctx, query)
+	errors := make(chan error)
+	results := provider.TransactionsByAddress(ctx, query, errors)
 
 	count := 0
 LOOP:
@@ -219,6 +222,22 @@ LOOP:
 
 	if count != 4 {
 		t.Fatal("wrong count:", count)
+	}
+
+	// Filter: all txs filtered out
+
+	query.BlockRange = []identifiers.Identifier{
+		{
+			Orig: "14000000",
+		},
+	}
+	results = provider.TransactionsByAddress(ctx, query, errors)
+	err := <-errors
+	if err == nil {
+		t.Fatal("expected error")
+	}
+	if !strings.Contains(err.Error(), "zero transactions reported") {
+		t.Fatal("expected zero transactions reported error")
 	}
 }
 
@@ -243,7 +262,8 @@ func TestEtherscanProvider_Appearances(t *testing.T) {
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	results, errors := provider.Appearances(ctx, query)
+	errors := make(chan error)
+	results := provider.Appearances(ctx, query, errors)
 
 	count := 0
 LOOP:
@@ -289,7 +309,9 @@ func TestEtherscanProvider_Count(t *testing.T) {
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	results, errors := provider.Count(ctx, query)
+	errors := make(chan error)
+
+	results := provider.Count(ctx, query, errors)
 
 	count := make([]types.SimpleMonitor, 0, 1)
 LOOP:
