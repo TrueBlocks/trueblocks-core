@@ -6,6 +6,8 @@ int main(int argc, const char* argv[]) {
     COptions options;
     options.init();
 
+    ::remove(getLogFile("api").c_str());
+    ::remove(getLogFile("cmd").c_str());
     for (auto doRemove : options.locations) {
         string_q path = nextTokenClear(doRemove, '/');
         string_q cppName = nextTokenClear(doRemove, '/');
@@ -55,6 +57,7 @@ void COptions::doTests(vector<CTestCase>& testArray, const string_q& route, bool
         }
 
         test.prepareTest(isCmd);
+
         string_q goldFn = test.goldPath + test.fileName;
         string_q workFn = test.workPath + test.fileName;
         string_q curlFilePath = test.testRoot + test.name + "_curl.txt";
@@ -448,6 +451,12 @@ void CTestCase::prepareTest(bool isCmd) {
             }
         }
     }
+
+    ostringstream os;
+    string_q fn = fileName;
+    nextTokenClear(fn, '_');
+    os << route << "\t" << fn << "\t" << options << endl;
+    appendToAsciiFile(getLogFile(isCmd ? "cmd" : "api"), os.str());
 }
 
 //-----------------------------------------------------------------------------
@@ -523,4 +532,9 @@ string_q CTestCase::apiUrl(void) const {
     string_q apiOptions = (!options.empty() ? ("?" + options) : "");
     string_q apiPort = getEnvStr("TB_TEST_API_SERVER").empty() ? "8080" : getEnvStr("TB_TEST_API_SERVER");
     return "http://localhost:" + apiPort + "/" + route + apiOptions;
+}
+
+string_q rootRoot = getCWD() + string_q("../../../../src/dev_tools/sdkTester/generated/test");
+string_q getLogFile(const string_q& mode) {
+    return rootRoot + "-" + mode + ".log";
 }

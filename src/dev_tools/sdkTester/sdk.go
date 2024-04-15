@@ -17,10 +17,6 @@ import (
 )
 
 func (t *TestCase) RunSdkTest(i, n int) (bool, bool) {
-	if !t.IsEnabled {
-		return false, false
-	}
-
 	testing := []string{
 		"list",
 		"export",

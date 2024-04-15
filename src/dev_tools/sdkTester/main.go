@@ -22,6 +22,7 @@ import (
 var debugging = false
 
 func main() {
+	os.Remove(getLogFile("sdk"))
 	testMap := make(map[string][]TestCase, 100)
 	walkFunc := func(path string, info os.FileInfo, err error) error {
 		if err == nil {
@@ -198,7 +199,13 @@ func DoSdkTests(testMap map[string][]TestCase) {
 		nTested, nPassed := 0, 0
 		filtered := []TestCase{}
 		for _, testCase := range testMap[source] {
-			if !strings.HasSuffix(testCase.SourceFile, item+".csv") || testCase.HasShorthand {
+			if !strings.HasSuffix(testCase.SourceFile, item+".csv") {
+				continue
+			}
+			if testCase.HasShorthand {
+				continue
+			}
+			if !testCase.IsEnabled {
 				continue
 			}
 			filtered = append(filtered, testCase)
@@ -206,6 +213,7 @@ func DoSdkTests(testMap map[string][]TestCase) {
 
 		colors.ColorsOff()
 		for i, testCase := range filtered {
+			file.AppendToAsciiFile(getLogFile("sdk"), testCase.Log())
 			tested, passed := testCase.RunSdkTest(i, len(filtered))
 			if tested {
 				nTested++
@@ -311,6 +319,10 @@ func camelCase(s string) string {
 	return result
 }
 
+func (t *TestCase) Log() string {
+	return fmt.Sprintf("%s\t%s.txt\t%s\n", t.Route, t.Filename, t.Cannonical)
+}
+
 func (t *TestCase) Clean() string {
 	ret := []string{}
 	for _, option := range t.OptionArray {
@@ -346,4 +358,8 @@ func padRight(str string, length int, bumpPad bool, pad string) string {
 		str = str[:length-3] + strings.Repeat(string(pad), 3)
 	}
 	return str
+}
+
+func getLogFile(mode string) string {
+	return "../src/dev_tools/sdkTester/generated/test-" + mode + ".log"
 }

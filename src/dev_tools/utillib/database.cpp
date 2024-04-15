@@ -181,6 +181,21 @@ size_t asciiFileToLines(const string_q& fileName, CStringArray& lines) {
     return lines.size();
 }
 
+size_t appendToAsciiFile(const string_q& fileName, const string_q& contents) {
+    CSharedResource lock;
+    if (lock.Lock(fileName, modeWriteAppend, LOCK_WAIT)) {
+        fprintf(lock.m_fp, "%s", contents.c_str());
+        if (lock.m_fp) {
+            fflush(lock.m_fp);
+            fclose(lock.m_fp);
+        }
+        lock.m_fp = NULL;
+        return fileSize(fileName);
+    } else {
+        return false;
+    }
+}
+
 size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
     CSharedResource lock;
     if (lock.Lock(fileName, modeWriteCreate, LOCK_WAIT)) {
@@ -190,10 +205,10 @@ size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
             fclose(lock.m_fp);
         }
         lock.m_fp = NULL;
+        return fileSize(fileName);
     } else {
         return false;
     }
-    return true;
 }
 
 }  // namespace qblocks
