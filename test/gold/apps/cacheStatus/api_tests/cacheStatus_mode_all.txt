@@ -229,20 +229,7 @@ status?modes=all&verbose&maxRecords=2
           "type": "tokensCache"
         },
         {
-          "items": [
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "tracesCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "tracesCacheItem",
-              "sizeInBytes": 123456789
-            }
-          ],
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
