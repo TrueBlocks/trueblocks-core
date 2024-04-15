@@ -64,7 +64,7 @@ func main() {
 	order := []string{}
 	for route := range routeMap {
 		if route != "slurp" || os.Getenv("TEST_SLURP") == "true" {
-			order = append(order, "slurp")
+			order = append(order, route)
 		}
 	}
 	sort.Strings(order)
@@ -251,13 +251,18 @@ func (t *TestCase) cleanForCmd() string {
 	ret := []string{}
 	for _, option := range t.OptionArray {
 		op := parseAndConvert(option)
-		op = strings.ReplaceAll(op, "%20", " ")
-		op = "--" + strings.ReplaceAll(op, "=", " ")
-		op = strings.ReplaceAll(option, "@", "-")
-		for _, remove := range removes {
-			op = strings.ReplaceAll(op, "--"+remove+" ", "")
+		if len(op) > 0 {
+			op = strings.ReplaceAll(op, "%20", " ")
+			if strings.Contains(op, "@") {
+				op = "-" + strings.ReplaceAll(op, "@", "")
+			} else {
+				op = "--" + strings.ReplaceAll(op, "=", " ")
+			}
+			for _, remove := range removes {
+				op = strings.ReplaceAll(op, "--"+remove+" ", "")
+			}
+			op = strings.ReplaceAll(op, "*", "\\*")
 		}
-		op = strings.ReplaceAll(op, "*", "\\*")
 		ret = append(ret, op)
 	}
 	return strings.Join(ret, " ")
