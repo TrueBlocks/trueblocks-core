@@ -18,7 +18,7 @@ import (
 
 func (tr *Runner) RunSdkTest(t *TestCase) (bool, bool, error) {
 	tr.AppendLog(t)
-	return true, true, nil
+	// return true, true, nil
 	parts := strings.Split(t.PathTool, "/")
 	if len(parts) != 2 {
 		fmt.Fprintf(os.Stderr, "Invalid pathTool: %s\n", t.PathTool)

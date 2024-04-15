@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -14,6 +15,7 @@ import (
 	"sort"
 	"strings"
 	"text/template"
+	"time"
 	"unicode"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -28,7 +30,32 @@ func init() {
 	os.Setenv("TEST_MODE", "true")
 }
 
+func startServer(ready chan<- bool) {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "I am here and I like it")
+	})
+	go func() {
+		err := http.ListenAndServe(":8080", nil)
+		if err != nil {
+			log.Fatal("Server failed to start: ", err)
+		}
+	}()
+	time.Sleep(1 * time.Second)
+	ready <- true
+}
+
 func main() {
+	ready := make(chan bool)
+	go startServer(ready)
+	<-ready
+	bytes, err := http.Get("http://localhost:8080")
+	if err == nil {
+		fmt.Println(bytes)
+	} else {
+		fmt.Println("Server is not running")
+		return
+	}
+
 	testMap := make(map[string][]TestCase, 100)
 	routeMap := make(map[string]bool, 100)
 	walkFunc := func(path string, info os.FileInfo, err error) error {
@@ -149,9 +176,9 @@ func parseCsv(filePath string) ([]TestCase, error) {
 
 			// order matters
 			testCase.ApiOptions = testCase.cleanForApi()
-			testCase.OptionArray = strings.Split(testCase.ApiOptions, "&")
 			testCase.CmdOptions = testCase.cleanForCmd()
 			testCase.SdkOptions = testCase.cleanForSdk()
+			testCase.OptionArray = strings.Split(testCase.ApiOptions, "&")
 			testCase.SdkOptionsArray = strings.Split(strings.Replace(testCase.SdkOptions, "%20", " ", -1), "&")
 			// order matters
 
@@ -182,84 +209,71 @@ func executeTemplate(color, tmplName, tmplCode string, data interface{}) string 
 	return color + tplBuffer.String() + colors.Off + strings.Repeat(" ", 135-len(tplBuffer.String()))
 }
 
-func (t *TestCase) cleanForSdk() string {
-	rawUrl := t.OrigOptions
-	rawUrl = strings.Replace(rawUrl, ":", "%3A", -1)
-	rawUrl = regexp.MustCompile(`\s*&\s*`).ReplaceAllString(rawUrl, "&")
-	rawUrl = regexp.MustCompile(`\s*=\s*`).ReplaceAllString(rawUrl, "=")
-	rawUrl = regexp.MustCompile(`\s+`).ReplaceAllString(rawUrl, "%20")
-
-	cleanURL := strings.Join(strings.Fields(rawUrl), "")
+func (t *TestCase) clean(removes string) string {
+	ret := t.OrigOptions
+	ret = regexp.MustCompile(`\s*@\s*`).ReplaceAllString(ret, "&")
+	ret = regexp.MustCompile(`\s*&\s*`).ReplaceAllString(ret, "&")
+	ret = regexp.MustCompile(`\s*=\s*`).ReplaceAllString(ret, "=")
+	ret = regexp.MustCompile(`\s+`).ReplaceAllString(ret, "%20")
+	ret = strings.ReplaceAll(ret, ":", "%3A")
+	cleanURL := strings.Join(strings.Fields(ret), "")
 	if parsedURL, err := url.Parse("http://localhost?" + cleanURL); err != nil {
 		logger.Error(err)
 		return ""
 
 	} else {
-		rawQuery := parsedURL.RawQuery
-		var newQuery string
-		for _, part := range strings.Split(rawQuery, "&") {
+		phrases := []string{}
+		for _, part := range strings.Split(parsedURL.RawQuery, "&") {
 			kv := strings.SplitN(part, "=", 2)
 			key := kv[0]
 			value := ""
 			if len(kv) > 1 {
 				value = kv[1]
 			}
-			removes := "help,wei,fmt,version,noop,nocolor,no_header,file"
 			if strings.Contains(removes, key) {
 				continue
 			} else if strings.Contains(key, "_") {
 				key = toCamelCase(key)
 			}
-			if newQuery != "" {
-				newQuery += "&"
-			}
 			if value == "" {
-				newQuery += key
+				phrases = append(phrases, key)
 			} else {
-				newQuery += key + "=" + value
+				phrases = append(phrases, key+"="+value)
 			}
 		}
-		canonicalURL := newQuery
-		canonicalURL = strings.Replace(canonicalURL, "%3A", ":", -1)
-		return canonicalURL
+		return strings.ReplaceAll(strings.Join(phrases, "&"), "%3A", ":")
 	}
+}
+
+func (t *TestCase) cleanForSdk() string {
+	return t.clean("help,wei,fmt,version,noop,nocolor,no_header,file")
 }
 
 func (t *TestCase) cleanForApi() string {
-	ret := t.OrigOptions
-	ret = strings.ReplaceAll(ret, " = ", "=")
-	ret = strings.ReplaceAll(ret, " & ", "&")
-	ret = strings.ReplaceAll(ret, " @ ", "@")
-	ret = strings.ReplaceAll(ret, " ", "%20")
-	if strings.Contains(ret, "_") {
-		parts := strings.Split(ret, "&")
-		for _, part := range parts {
-			kv := strings.Split(part, "=")
-			if strings.Contains(kv[0], "_") {
-				ret = strings.ReplaceAll(ret, kv[0], toCamelCase(kv[0]))
-			}
-		}
-	}
-	return ret
+	return t.clean("")
 }
 
 func (t *TestCase) cleanForCmd() string {
+	apiOptions := t.clean("")
+	options := strings.Split(apiOptions, "&")
 	removes := []string{
 		"addrs", "blocks", "transactions", "modes", "terms", "addrs", "mode", "topics", "fourbytes",
 	}
 
 	ret := []string{}
-	for _, option := range t.OptionArray {
+	for _, option := range options {
 		op := parseAndConvert(option)
 		if len(op) > 0 {
 			op = strings.ReplaceAll(op, "%20", " ")
-			if strings.Contains(op, "@") {
-				op = "-" + strings.ReplaceAll(op, "@", "")
+			hack := "vbe,avt,"
+			if len(op) < 3 || strings.Contains(hack, op+",") {
+				op = "-" + op
 			} else {
 				op = "--" + strings.ReplaceAll(op, "=", " ")
 			}
 			for _, remove := range removes {
 				op = strings.ReplaceAll(op, "--"+remove+" ", "")
+				op = strings.ReplaceAll(op, "--"+remove, "")
 			}
 			op = strings.ReplaceAll(op, "*", "\\*")
 		}
