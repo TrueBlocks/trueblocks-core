@@ -4,7 +4,6 @@ Opts: {"addrs":["0x713b73c3994442b533e6a083ec968e40606810ec"],"proxyFor":"0x0"}
 Addrs:  [0x713b73c3994442b533e6a083ec968e40606810ec]
 Caps:  cache,decache
 Format:  json
-provider responded with: 0x713b73c3994442b533e6a083ec968e40606810ec NOTOK                                         
 {
   "data": [
     {
