@@ -98,6 +98,11 @@ func Logger(silent bool, inner http.Handler, name string) http.Handler {
 			return
 		}
 		start := time.Now()
+		if silent {
+			w := logger.GetLoggerWriter()
+			defer logger.SetLoggerWriter(w)
+			logger.SetLoggerWriter(nil)
+		}
 		inner.ServeHTTP(w, r)
 		if !silent {
 			t := ""

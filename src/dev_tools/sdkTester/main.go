@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -34,14 +33,6 @@ func main() {
 	ready := make(chan bool)
 	go sdk.NewDaemon().Start(ready)
 	<-ready
-
-	bytes, err := http.Get("http://localhost:8080")
-	if err == nil {
-		fmt.Println(bytes)
-	} else {
-		fmt.Println("Server is not running")
-		return
-	}
 
 	testMap := make(map[string][]TestCase, 100)
 	routeMap := make(map[string]bool, 100)

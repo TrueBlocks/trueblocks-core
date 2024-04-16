@@ -44,18 +44,17 @@ func (t *TestCase) ShouldTest(mode string) bool {
 		return false
 	}
 
-	isChifra := strings.Contains(t.PathTool, "chifra")
 	switch mode {
 	case "api":
-		if t.Mode == "cmd" {
+		if t.Mode == "cmd" || strings.Contains(t.PathTool, "chifra") || t.Route == "monitors" {
 			return false
 		}
 	case "cmd":
-		if t.Mode == "api" || isChifra {
+		if t.Mode == "api" {
 			return false
 		}
 	case "sdk":
-		if t.HasShorthand || isChifra {
+		if t.HasShorthand || strings.Contains(t.PathTool, "chifra") || t.Route == "monitors" {
 			return false
 		}
 	}

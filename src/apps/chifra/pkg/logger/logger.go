@@ -93,9 +93,17 @@ func SetLoggerWriter(w io.Writer) {
 	loggerWriter = w
 }
 
+func GetLoggerWriter() io.Writer {
+	return loggerWriter
+}
+
 // toLog prints `a` to stderr with a label corresponding to the severity level
 // prepended (e.g. <INFO>, <EROR>, etc.)
 func toLog(sev severity, a ...interface{}) {
+	if loggerWriter == nil {
+		return
+	}
+
 	timeDatePart := "DATE|TIME"
 	if timingMode {
 		now := time.Now()

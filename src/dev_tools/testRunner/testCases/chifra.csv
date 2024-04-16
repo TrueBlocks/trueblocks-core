@@ -1,34 +1,34 @@
 enabled ,mode ,speed ,route   ,path/tool   ,filename            ,post ,options
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help                ,n    ,@h
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_long           ,n    ,help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_no_params      ,n    ,
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_invalid_option ,n    ,modes = not_a_mode
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_chifra         ,n    ,help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help                ,n    ,@h
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_long           ,n    ,help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_no_params      ,n    ,
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_invalid_option ,n    ,modes = not_a_mode
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_chifra         ,n    ,help
 
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_list           ,n    ,modes = list & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_export         ,n    ,modes = export & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_rm             ,n    ,modes = monitors & delete & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_names          ,n    ,modes = names & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_abis           ,n    ,modes = abis & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_list           ,n    ,modes = list & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_export         ,n    ,modes = export & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_rm             ,n    ,modes = monitors & delete & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_names          ,n    ,modes = names & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_abis           ,n    ,modes = abis & help
 
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_blocks         ,n    ,modes = blocks & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_transactions   ,n    ,modes = transactions & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_receipts       ,n    ,modes = receipts & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_logs           ,n    ,modes = logs & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_traces         ,n    ,modes = traces & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_when           ,n    ,modes = when & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_blocks         ,n    ,modes = blocks & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_transactions   ,n    ,modes = transactions & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_receipts       ,n    ,modes = receipts & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_logs           ,n    ,modes = logs & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_traces         ,n    ,modes = traces & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_when           ,n    ,modes = when & help
 
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_state          ,n    ,modes = state & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_tokens         ,n    ,modes = tokens & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_state          ,n    ,modes = state & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_tokens         ,n    ,modes = tokens & help
 
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_config         ,n    ,modes = config & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_status         ,n    ,modes = status & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_daemon         ,n    ,modes = daemon & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_scrape         ,n    ,modes = scrape & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_chunks         ,n    ,modes = chunks & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_init           ,n    ,modes = init & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_explore        ,n    ,modes = explore & help
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_slurp          ,n    ,modes = slurp & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_config         ,n    ,modes = config & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_status         ,n    ,modes = status & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_daemon         ,n    ,modes = daemon & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_scrape         ,n    ,modes = scrape & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_chunks         ,n    ,modes = chunks & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_init           ,n    ,modes = init & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_explore        ,n    ,modes = explore & help
+on      ,cmd  ,fast  ,chifra  ,apps/chifra ,help_slurp          ,n    ,modes = slurp & help
 
 on      ,both ,fast  ,names   ,apps/chifra ,run_names           ,y    ,modes = names & terms = 50-Tokens & expand
 on      ,both ,fast  ,names   ,apps/chifra ,run_names_tags      ,y    ,modes = names & tags
