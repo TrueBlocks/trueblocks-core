@@ -16,6 +16,7 @@ Flags:
                         One of [ off | blooms | index ]
   -m, --monitor         instruct the node to start the monitors tool (hidden)
   -g, --grpc            run gRPC server to serve names
+      --silent          disable logging (for use in SDK for example)
   -v, --verbose         enable verbose output
   -h, --help            display this help screen
 
