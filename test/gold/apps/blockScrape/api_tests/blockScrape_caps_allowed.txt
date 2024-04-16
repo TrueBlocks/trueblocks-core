@@ -1,6 +1,6 @@
 scrape?chain&nocolor&noop&version&verbose&failOnPurpose
 {
   "errors": [
-    "Invalid key (verbose) in scrape route."
+    "Invalid key (chain) in scrape route."
   ]
 }

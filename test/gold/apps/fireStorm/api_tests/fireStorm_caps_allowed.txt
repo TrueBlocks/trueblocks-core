@@ -1,6 +1,6 @@
 explore?terms=12.0&chain&nocolor&noop&verbose&file&failOnPurpose
 {
   "errors": [
-    "Invalid key (verbose) in explore route."
+    "Invalid key (failOnPurpose) in explore route."
   ]
 }

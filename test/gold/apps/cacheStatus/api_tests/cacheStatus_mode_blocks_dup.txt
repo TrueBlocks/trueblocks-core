@@ -11,30 +11,6 @@ status?modes=blocks&verbose&maxRecords=5&modes=blocks&modes=blocks
               "filename": "$cachePath/data-model/file.bin",
               "itemType": "blocksCacheItem",
               "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
             }
           ],
           "lastCached": "--lastCached--",
