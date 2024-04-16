@@ -120,7 +120,10 @@ func MonitorsFinishParseInternal(w io.Writer, values url.Values) *MonitorsOption
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "monitors")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "monitors")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

@@ -99,7 +99,10 @@ func TokensFinishParseInternal(w io.Writer, values url.Values) *TokensOptions {
 			opts.NoZero = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "tokens")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "tokens")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

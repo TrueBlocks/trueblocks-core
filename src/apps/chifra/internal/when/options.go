@@ -108,7 +108,10 @@ func WhenFinishParseInternal(w io.Writer, values url.Values) *WhenOptions {
 			opts.Deep = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "when")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "when")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

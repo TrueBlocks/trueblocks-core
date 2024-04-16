@@ -84,7 +84,10 @@ func TracesFinishParseInternal(w io.Writer, values url.Values) *TracesOptions {
 			opts.Count = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "traces")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "traces")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

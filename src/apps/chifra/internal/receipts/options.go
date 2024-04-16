@@ -76,7 +76,10 @@ func ReceiptsFinishParseInternal(w io.Writer, values url.Values) *ReceiptsOption
 			opts.Articulate = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "receipts")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "receipts")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

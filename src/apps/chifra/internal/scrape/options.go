@@ -114,7 +114,10 @@ func ScrapeFinishParseInternal(w io.Writer, values url.Values) *ScrapeOptions {
 			configs[key] = value[0]
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
