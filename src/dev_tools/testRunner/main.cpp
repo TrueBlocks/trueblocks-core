@@ -6,8 +6,8 @@ int main(int argc, const char* argv[]) {
     COptions options;
     options.init();
 
-    ::remove(getLogFile("api").c_str());
-    ::remove(getLogFile("cmd").c_str());
+    // ::remove(getLogFile("api").c_str());
+    // ::remove(getLogFile("cmd").c_str());
     for (auto doRemove : options.locations) {
         string route = nextTokenClear(doRemove, '-');
         string_q path = nextTokenClear(doRemove, '/');
@@ -456,7 +456,7 @@ void CTestCase::prepareTest(bool isCmd) {
     string_q fn = fileName;
     nextTokenClear(fn, '_');
     os << route << "\t" << fn << "\t" << options << endl;
-    appendToAsciiFile(getLogFile(isCmd ? "cmd" : "api"), os.str());
+    // appendToAsciiFile(getLogFile(isCmd ? "cmd" : "api"), os.str());
 }
 
 //-----------------------------------------------------------------------------
@@ -534,7 +534,7 @@ string_q CTestCase::apiUrl(void) const {
     return "http://localhost:" + apiPort + "/" + route + apiOptions;
 }
 
-string_q rootRoot = getCWD() + string_q("../../../../src/dev_tools/sdkTester/generated/test");
-string_q getLogFile(const string_q& mode) {
-    return rootRoot + "_" + mode + ".log";
-}
+// string_q rootRoot = getCWD() + string_q("../../../../src/dev_tools/sdkTester/generated/test");
+// string_q getLogFile(const string_q& mode) {
+//     return rootRoot + "_" + mode + ".log";
+// }

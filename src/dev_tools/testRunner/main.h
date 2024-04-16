@@ -151,4 +151,4 @@ extern int copyFile(const string_q& from, const string_q& to);
 extern int cleanFolder(const string_q& path, bool recurse = false, bool interactive = false);
 extern string_q makeValidName(const string_q& inOut);
 extern string_q getCachePath(void);
-extern string_q getLogFile(const string_q& mode);
+// extern string_q getLogFile(const string_q& mode);
