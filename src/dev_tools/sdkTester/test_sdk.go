@@ -73,7 +73,7 @@ func (tr *Runner) RunSdkTest(t *TestCase) (bool, bool, error) {
 	}
 
 	if len(results) > 0 {
-		results = strings.Replace(results, "3735928559", "\"0xdeadbeef\"", -1)
+		results = strings.ReplaceAll(results, "3735928559", "\"0xdeadbeef\"")
 		logger.Info(results)
 	}
 

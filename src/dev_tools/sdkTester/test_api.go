@@ -70,7 +70,8 @@ func (tr *Runner) RunApiTest(t *TestCase) (bool, bool, error) {
 	} else {
 		results = strings.Trim(results, "\n\r")
 		if len(results) > 0 {
-			results = strings.Replace(results, "3735928559", "\"0xdeadbeef\"", -1)
+			results = strings.ReplaceAll(results, "3735928559", "\"0xdeadbeef\"")
+			results = strings.ReplaceAll(results, "\\u0026", "&")
 			logger.Info(results)
 		}
 	}
@@ -87,7 +88,11 @@ func (tr *Runner) RunApiTest(t *TestCase) (bool, bool, error) {
 }
 
 func (t *TestCase) ApiTest() (string, error) {
-	url := "http://localhost:8080/" + t.Route + "?" + t.ApiOptions
+	port := os.Getenv("TB_TEST_API_SERVER")
+	if port == "" {
+		port = "8080"
+	}
+	url := "http://localhost:" + port + "/" + t.Route + "?" + t.ApiOptions
 	if response, err := http.Get(url); err != nil {
 		log.Printf("Failed to query URL %s: %v", url, err)
 	} else {

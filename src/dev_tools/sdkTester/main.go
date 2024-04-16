@@ -11,7 +11,6 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
-	"sort"
 	"strings"
 	"text/template"
 	"unicode"
@@ -30,12 +29,16 @@ func init() {
 }
 
 func main() {
+	port := os.Getenv("TB_TEST_API_SERVER")
+	if port == "" {
+		port = "8080"
+	}
+
 	ready := make(chan bool)
-	go sdk.NewDaemon().Start(ready)
+	go sdk.NewDaemon(port).Start(ready)
 	<-ready
 
 	testMap := make(map[string][]TestCase, 100)
-	routeMap := make(map[string]bool, 100)
 	walkFunc := func(path string, info os.FileInfo, err error) error {
 		if err == nil {
 			if !info.IsDir() && strings.HasSuffix(path, ".csv") {
@@ -49,7 +52,6 @@ func main() {
 						testMap[source] = []TestCase{}
 					}
 					testMap[source] = append(testMap[source], testCase)
-					routeMap[testCase.Route] = true
 				}
 			}
 		}
@@ -67,14 +69,36 @@ func main() {
 	file.StringToAsciiFile("../src/dev_tools/sdkTester/generated/testCases.json", toJson(testMap))
 
 	order := []string{}
-	for route := range routeMap {
-		if route != "slurp" || os.Getenv("TEST_SLURP") == "true" {
-			if len(os.Getenv("TB_WHICH_ROUTE")) == 0 || os.Getenv("TB_WHICH_ROUTE") == route {
-				order = append(order, route)
-			}
-		}
+	if os.Getenv("TEST_SLURP") == "true" {
+		order = append(order, "slurp")
 	}
-	sort.Strings(order)
+	if len(os.Getenv("TB_TEST_ROUTE")) > 0 {
+		order = []string{os.Getenv("TB_TEST_ROUTE")}
+	} else {
+		order = append(order, []string{
+			"names",
+			"blocks",
+			"logs",
+			"receipts",
+			"state",
+			"tokens",
+			"traces",
+			"transactions",
+			"abis",
+			"when",
+			"list",
+			"monitors",
+			"export",
+			"scrape",
+			"status",
+			"chifra",
+			"chunks",
+			"config",
+			"daemon",
+			"explore",
+			"init",
+		}...)
+	}
 
 	modes := []string{
 		"sdk",

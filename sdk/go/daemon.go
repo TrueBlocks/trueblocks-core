@@ -227,9 +227,13 @@ func (opts *DaemonOptions) Start(ready chan<- bool) {
 	ready <- true
 }
 
-func NewDaemon() *DaemonOptions {
+func NewDaemon(port string) *DaemonOptions {
+	if !strings.HasPrefix(port, ":") {
+		port = ":" + port
+	}
 	return &DaemonOptions{
 		Silent: true,
+		Port:   port,
 	}
 }
 

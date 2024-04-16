@@ -1,6 +1,46 @@
 status?modes=traces&verbose&maxRecords=2
 {
-  "data": [],
+  "data": [
+    {
+      "cachePath": "--paths--",
+      "caches": [
+        {
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "tracesCache"
+        }
+      ],
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isApi": true,
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
+    }
+  ],
   "meta": {
     "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
@@ -10,8 +50,5 @@ status?modes=traces&verbose&maxRecords=2
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  },
-  "errors": [
-    "no files were found in the [traces] caches"
-  ]
+  }
 }

@@ -1,4 +1,3 @@
-Env: TB_DEBUG_CURL=testing-off
 blocks?blocks=2768801%201995314%201958017&raw
 {
   "data": [
