@@ -222,15 +222,12 @@ func (opts *SlurpOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-func (opts *SlurpOptions) PerPageValue() int {
-	if opts.Globals.TestMode {
-		return 100
+func (opts *SlurpOptions) Addresses() []base.Address {
+	addresses := make([]base.Address, 0, len(opts.Addrs))
+	for _, addr := range opts.Addrs {
+		addresses = append(addresses, base.HexToAddress(addr))
 	}
-	if opts.Source == "key" && opts.PerPage > 1000 {
-		// 1000 is the current max in Key
-		return 1000
-	}
-	return int(opts.PerPage)
+	return addresses
 }
 
 // EXISTING_CODE

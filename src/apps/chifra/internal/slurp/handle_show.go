@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	providerPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/provider"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -14,16 +13,10 @@ import (
 func (opts *SlurpOptions) HandleShow() error {
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 
-	// TODO: maybe use []string in Query.Addresses
-	addresses := make([]base.Address, 0, len(opts.Addrs))
-	for _, addr := range opts.Addrs {
-		addresses = append(addresses, base.HexToAddress(addr))
-	}
-
 	provider := opts.Provider()
 	provider.SetPrintProgress(!opts.Globals.TestMode && !utils.IsTerminal())
 	query := &providerPkg.Query{
-		Addresses: addresses,
+		Addresses: opts.Addresses(),
 		Resources: opts.Types,
 	}
 
