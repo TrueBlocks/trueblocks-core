@@ -21,6 +21,10 @@ type Runner struct {
 	Logs       map[string][]string `json:"logs"`
 }
 
+func NewSummary() *Runner {
+	return &Runner{}
+}
+
 func NewRunner(testMap map[string][]TestCase, item, mode, source string) *Runner {
 	tr := Runner{
 		Route:     item,
@@ -84,6 +88,12 @@ func (tr *Runner) AppendLog(t *TestCase) {
 
 func (tr *Runner) Report() {
 	file.AppendToAsciiFile(getLogFile(tr.Mode), strings.Join(tr.Logs[tr.Mode], "\n")+"\n")
+	colors.ColorsOn()
+	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
+	colors.ColorsOff()
+}
+
+func (tr *Runner) ReportFinal(t *TestCase, failed bool) {
 	colors.ColorsOn()
 	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
 	colors.ColorsOff()

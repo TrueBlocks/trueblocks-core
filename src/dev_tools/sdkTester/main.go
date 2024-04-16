@@ -110,6 +110,7 @@ func main() {
 		os.Remove(getLogFile(mode))
 	}
 
+	summary := NewSummary()
 	for _, item := range order {
 		source := "../src/dev_tools/testRunner/testCases/" + item + ".csv"
 		for _, mode := range modes {
@@ -120,7 +121,14 @@ func main() {
 				}
 			}
 			tr.Report()
+			summary.NTested += tr.NTested
+			summary.NPassed += tr.NPassed
 		}
+	}
+
+	summary.Report()
+	if summary.NPassed != summary.NTested {
+		os.Exit(1)
 	}
 }
 
