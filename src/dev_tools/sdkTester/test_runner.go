@@ -106,8 +106,10 @@ func (tr *Runner) ReportOne(t *TestCase, failed bool) {
 	}
 
 	mark := "[passed " + cm["greenCheck"] + "]"
+	color := colors.White
 	if failed {
 		mark = "[failed " + cm["redX"] + "]"
+		color = colors.Red
 	}
 
 	colors.ColorsOn()
@@ -115,7 +117,7 @@ func (tr *Runner) ReportOne(t *TestCase, failed bool) {
 	rPadded := padRight(t.Route, 15, false, ".")
 	fPadded := padRight(t.Filename, 30, false, ".")
 	tOpts := t.ApiOptions[:utils.Min(len(t.ApiOptions), 40)]
-	fmt.Printf("    %s %d-%d %s%s%s%s%s", mark, tr.NTested, tr.NFiltered, rPadded, fPadded, tOpts, skip, eol)
+	fmt.Printf("%s    %s %d-%d %s %s%s%s%s%s%s", color, mark, tr.NTested, tr.NFiltered, tr.Mode, rPadded, fPadded, tOpts, skip, colors.Off, eol)
 	colors.ColorsOff()
 }
 
