@@ -16,6 +16,7 @@ import (
 	"io"
 	"log"
 	"strings"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -212,4 +213,21 @@ func enumFromDaemonScrape(values []string) (DaemonScrape, error) {
 }
 
 // EXISTING_CODE
+func (opts *DaemonOptions) Start(ready chan<- bool) {
+	go func() {
+		buffer := bytes.Buffer{}
+		if err := opts.DaemonBytes(&buffer); err != nil {
+			logger.Fatal(err)
+		}
+	}()
+
+	time.Sleep(1 * time.Second)
+	logger.Info("Server started...")
+	ready <- true
+}
+
+func NewDaemon() *DaemonOptions {
+	return &DaemonOptions{}
+}
+
 // EXISTING_CODE

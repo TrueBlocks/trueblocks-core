@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -73,6 +74,9 @@ func getLogFile(mode string) string {
 }
 
 func (tr *Runner) AppendLog(t *TestCase) {
+	if len(os.Getenv("TB_WHICH_ROUTE")) > 0 {
+		return
+	}
 	s := fmt.Sprintf("%s\t%s.txt\t%s", t.Route, t.Filename, t.OptionsForMode(tr.Mode))
 	tr.Logs[tr.Mode] = append(tr.Logs[tr.Mode], s)
 }

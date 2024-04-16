@@ -15,12 +15,12 @@ import (
 	"sort"
 	"strings"
 	"text/template"
-	"time"
 	"unicode"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
 var debugging = false
@@ -30,24 +30,11 @@ func init() {
 	os.Setenv("TEST_MODE", "true")
 }
 
-func startServer(ready chan<- bool) {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "I am here and I like it")
-	})
-	go func() {
-		err := http.ListenAndServe(":8080", nil)
-		if err != nil {
-			log.Fatal("Server failed to start: ", err)
-		}
-	}()
-	time.Sleep(1 * time.Second)
-	ready <- true
-}
-
 func main() {
 	ready := make(chan bool)
-	go startServer(ready)
+	go sdk.NewDaemon().Start(ready)
 	<-ready
+
 	bytes, err := http.Get("http://localhost:8080")
 	if err == nil {
 		fmt.Println(bytes)
@@ -91,7 +78,9 @@ func main() {
 	order := []string{}
 	for route := range routeMap {
 		if route != "slurp" || os.Getenv("TEST_SLURP") == "true" {
-			order = append(order, route)
+			if len(os.Getenv("TB_WHICH_ROUTE")) == 0 || os.Getenv("TB_WHICH_ROUTE") == route {
+				order = append(order, route)
+			}
 		}
 	}
 	sort.Strings(order)

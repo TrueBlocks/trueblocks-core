@@ -1,4 +1,3 @@
-// TODO: This can be auto generated
 package main
 
 import (
@@ -18,50 +17,43 @@ import (
 
 func (tr *Runner) RunSdkTest(t *TestCase) (bool, bool, error) {
 	tr.AppendLog(t)
-	// return true, true, nil
-	parts := strings.Split(t.PathTool, "/")
-	if len(parts) != 2 {
-		fmt.Fprintf(os.Stderr, "Invalid pathTool: %s\n", t.PathTool)
-		return false, false, nil
-	}
 
-	var ff *os.File
-	folder := t.WorkingPath
-	if !file.FolderExists(folder) {
-		file.EstablishFolder(folder)
+	working := t.WorkingPath
+	if !file.FolderExists(working) {
+		file.EstablishFolder(working)
 	}
 
 	wasTested := false
 	passedTest := false
 
-	fn := filepath.Join(folder, parts[1]+"_"+t.Filename+".txt")
 	os.Setenv("TEST_MODE", "true")
 	logger.SetTestMode(true)
-	ff, _ = os.Create(fn)
-	logger.SetLoggerWriter(ff)
+
+	parts := strings.Split(t.PathTool, "/")
+	workFn := filepath.Join(working, parts[1]+"_"+t.Filename+".txt")
+	goldFn := strings.Replace(workFn, "working", "gold", -1)
+
+	workFile, _ := os.Create(workFn)
+	logger.SetLoggerWriter(workFile)
 	logger.ToggleDecoration()
+
 	defer func() {
 		logger.ToggleDecoration()
 		logger.SetLoggerWriter(os.Stderr)
-
 		eol := "\r"
 		if wasTested && !passedTest {
 			eol = "\n"
 		}
 
-		var cm = map[string]string{
-			"greenCheck":    colors.Green + "✓" + colors.Off,
-			"yellowCaution": colors.Yellow + "!!" + colors.Off,
-			"redX":          colors.Red + "X" + colors.Off,
-			"whiteStar":     colors.White + "*" + colors.Off,
-		}
 		msg := "[passed " + cm["greenCheck"] + "]"
 		if wasTested && !passedTest {
 			msg = "[failed " + cm["redX"] + "]"
 		}
 
-		skip := strings.Repeat(" ", utils.Max(0, 120-len(fn)))
-		fmt.Printf("   Testing %d of %d %s %s%s%s", tr.NTested, tr.NFiltered, msg, fn, skip, eol)
+		skip := strings.Repeat(" ", utils.Max(0, 120-len(workFn)))
+		colors.ColorsOn()
+		fmt.Printf("   %sTesting %d of %d %s %s%s%s%s", colors.Green, tr.NTested, tr.NFiltered, msg, workFn, skip, colors.Off, eol)
+		colors.ColorsOff()
 	}()
 
 	logger.Info(t.Route + "?" + t.SdkOptions)
@@ -81,17 +73,17 @@ func (tr *Runner) RunSdkTest(t *TestCase) (bool, bool, error) {
 	}
 
 	if len(results) > 0 {
-		// because testRunner does this, we need to do it here
 		results = strings.Replace(results, "3735928559", "\"0xdeadbeef\"", -1)
 		logger.Info(results)
 	}
 
-	if ff != nil {
-		ff.Close()
-		newContents := file.AsciiFileToString(fn)
-		oldContents := file.AsciiFileToString(strings.Replace(fn, "working", "gold", -1))
+	if workFile != nil {
+		workFile.Close()
+		newContents := file.AsciiFileToString(workFn)
+		oldContents := file.AsciiFileToString(goldFn)
 		passedTest = newContents == oldContents
 	}
+
 	return wasTested, passedTest, nil
 }
 
@@ -252,4 +244,11 @@ func reportOpts(s fmt.Stringer) {
 		return
 	}
 	logger.Info("Opts:", s.String())
+}
+
+var cm = map[string]string{
+	"greenCheck":    colors.Green + "✓" + colors.Off,
+	"yellowCaution": colors.Yellow + "!!" + colors.Off,
+	"redX":          colors.Red + "X" + colors.Off,
+	"whiteStar":     colors.White + "*" + colors.Off,
 }
