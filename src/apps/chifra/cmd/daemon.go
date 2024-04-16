@@ -63,6 +63,7 @@ One of [ off | blooms | index ]`)
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Monitor, "monitor", "m", false, `instruct the node to start the monitors tool (hidden)`)
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Grpc, "grpc", "g", false, `run gRPC server to serve names`)
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", `deprecated please use --url flag instead`)
+	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Silent, "silent", "", false, `disable logging (for use in SDK for example)`)
 	if os.Getenv("TEST_MODE") != "true" {
 		_ = daemonCmd.Flags().MarkHidden("api")
 		_ = daemonCmd.Flags().MarkHidden("scrape")
