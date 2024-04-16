@@ -123,6 +123,7 @@ func main() {
 			tr.Report()
 			summary.NTested += tr.NTested
 			summary.NPassed += tr.NPassed
+			summary.Fails = append(summary.Fails, tr.Fails...)
 		}
 	}
 

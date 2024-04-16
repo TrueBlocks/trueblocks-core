@@ -19,6 +19,7 @@ type Runner struct {
 	NTested    int                 `json:"nTested"`
 	NPassed    int                 `json:"nPassed"`
 	Logs       map[string][]string `json:"logs"`
+	Fails      []string            `json:"fails"`
 }
 
 func NewSummary() *Runner {
@@ -96,6 +97,9 @@ func (tr *Runner) Report() {
 func (tr *Runner) ReportFinal(t *TestCase, failed bool) {
 	colors.ColorsOn()
 	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
+	for _, fail := range tr.Fails {
+		fmt.Printf("%s%s%s\n", colors.Red, fail, colors.Off)
+	}
 	colors.ColorsOff()
 }
 
@@ -110,6 +114,7 @@ func (tr *Runner) ReportOne(t *TestCase, failed bool) {
 	if failed {
 		mark = "[failed " + cm["redX"] + "]"
 		color = colors.Red
+		tr.Fails = append(tr.Fails, t.Mode+"|"+t.Route+"|"+t.Filename)
 	}
 
 	colors.ColorsOn()
