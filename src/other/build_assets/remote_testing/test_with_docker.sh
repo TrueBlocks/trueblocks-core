@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "---------------------------------------------------------"
+echo "Running test_with_docker.sh @"
+echo "---------------------------------------------------------"
+
 # SOME NOTES: I spent a very long time messing around with these test after I removed the entire
 # Unchained Index folder on the testing machine and then did `chifra init --all`. This was finally
 # fixes (after many hours) by changing folder and file permission on the Unchained Index folders.

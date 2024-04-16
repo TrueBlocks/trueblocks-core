@@ -1,11 +1,14 @@
 #!/bin/bash
 
+echo "---------------------------------------------------------"
+echo "Running build_and_test.sh @"
+echo "---------------------------------------------------------"
+
 cd /root/trueblocks-core/build
 export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
 
 SERVER_PORT=`shuf -n 1 -i 8091-10000`
 
-echo "Running make test-all"
 echo "Home folder: $HOME"
 echo "Whoami:      `whoami`"
 echo "Server port: $SERVER_PORT"
