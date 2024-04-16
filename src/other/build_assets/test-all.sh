@@ -18,11 +18,10 @@ cd "$CHIFRA"
 echo "Running go tests..."
 go test --tags integration ./...
 RESULT=$?
+cd $BUILD_FOLDER
 if [ $RESULT -ne 0 ]; then
-   cd $BUILD_FOLDER
    exit $RESULT
 fi
-cd $BUILD_FOLDER
 
 #echo "Making..."
 cd "$BUILD_FOLDER/"
@@ -30,12 +29,16 @@ cmake ../src
 cd dev_tools
 make -j 8
 cd ..
-# make generate
+make generate
 make -j 8
 
-~/.local/bin/chifra/test/test-api.sh --mode both $@
-RESULT=$?
+cd $TEST_FOLDER/gold/dev_tools/testRunner
 
+echo "Calling testRunner"
+testRunner
+RESULT=${PIPESTATUS[0]}
+
+cd $BUILD_FOLDER
 export DEST_FOLDER="$HOME/Library/Application Support/TrueBlocks/config/mainnet"
 if [[ -d $DEST_FOLDER ]]
 then
