@@ -1,0 +1,30 @@
+export?addrs=0x04fe1f0c597fbc65700f4fba6f87501edc20e665&firstBlock=10277780&lastBlock=10278000&neighbors&decache
+Args: [addrs=0x04fe1f0c597fbc65700f4fba6f87501edc20e665 firstBlock=10277780 lastBlock=10278000 neighbors decache]
+Opts: {"addrs":["0x04fe1f0c597fbc65700f4fba6f87501edc20e665"],"neighbors":true,"firstBlock":10277780,"lastBlock":10278000,"decache":true}
+Addrs:  [0x04fe1f0c597fbc65700f4fba6f87501edc20e665]
+Neighbors:  true
+FirstBlock:  10277780
+LastBlock:  10278000
+Decache:  true
+Caps:  cache,decache,ether
+Format:  json
+0 items totaling 0 bytes were removed from the statements cache.
+0 items totaling 0 bytes were removed from the traces cache.
+0 items totaling 0 bytes were removed from the transactions cache.
+{
+  "data": [
+    {
+      "msg": "Monitor for 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 was permanently removed."
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

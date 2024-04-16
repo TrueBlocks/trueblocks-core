@@ -1,0 +1,11 @@
+chunks?mode=pins
+Args: [mode=pins]
+Opts: {"mode":16,"publisher":"0x0"}
+Mode:  pins
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+Format:  json
+{
+  "errors": [
+    "pins mode requires either --list or --unpin."
+  ]
+}

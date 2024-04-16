@@ -1,0 +1,13 @@
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&relevant&maxRecords=100
+Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b relevant maxRecords=100]
+Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"maxRecords":100,"relevant":true}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+MaxRecords:  100
+Relevant:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The --relevant option is only available with the --logs option."
+  ]
+}

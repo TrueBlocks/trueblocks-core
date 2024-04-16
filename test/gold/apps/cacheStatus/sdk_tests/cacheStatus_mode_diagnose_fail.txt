@@ -1,0 +1,11 @@
+status?modes=index&diagnose
+Args: [modes=index diagnose]
+Opts: {"modes":2,"diagnose":true}
+Modes:  [index]
+Diagnose:  true
+Format:  json
+{
+  "errors": [
+    "--diagnose may not be used with index"
+  ]
+}

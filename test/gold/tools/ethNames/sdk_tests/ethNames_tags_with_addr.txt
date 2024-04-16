@@ -1,0 +1,11 @@
+names?tags&addr
+Args: [tags addr]
+Opts: {"addr":true,"tags":true,"autoname":"0x0"}
+Addr:  true
+Tags:  true
+Format:  json
+{
+  "errors": [
+    "The --tags option is not available with the --addr option."
+  ]
+}

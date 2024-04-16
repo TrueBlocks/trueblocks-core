@@ -1,0 +1,48 @@
+transactions?transactions=0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb&articulate
+Args: [transactions=0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb articulate]
+Opts: {"transactions":["0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb"],"articulate":true}
+Transactions:  [0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb]
+Articulate:  true
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "data": [
+    {
+      "blockHash": "0xc8c34df190ece383c514b4cc04c8d56134537cef6a124fc2c28e28b779053f4b",
+      "blockNumber": 1884245,
+      "date": "2016-07-14 15:25:04 UTC",
+      "ether": "0.001",
+      "from": "0x9519afbc60719a83c470ceec41e32d3e4b8b262e",
+      "gas": 132968,
+      "gasCost": 668281740323080,
+      "gasPrice": 20270618185,
+      "gasUsed": 32968,
+      "hash": "0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb",
+      "input": "0x466f7572206e65772070726f706f73616c732073686f776564207570206f6e20746865204461726b2044414f2074686973206d6f726e696e672e204e756d626572732031312c31322c31332c616e642031342e20546865792063616d6520776974682074776f206d657373616765733a202253706c697420666f72204772656174204a7573746963652220616e642022456e64696e6720746869732067616d6520776f756c64206265206e6963652e22",
+      "message": "Four new proposals showed up on the Dark DAO this morning. Numbers 11_12_13_and 14. They came with two messages: 'Split for Great Justice' and 'Ending this game would be nice.'",
+      "nonce": 20,
+      "receipt": {
+        "contractAddress": "0x0",
+        "effectiveGasPrice": 20270618185,
+        "gasUsed": 32968,
+        "logs": [],
+        "status": null
+      },
+      "timestamp": 1468509904,
+      "to": "0xe583ac239693c716ee5567c7da61c96647d691e5",
+      "traces": [],
+      "transactionIndex": 4,
+      "value": "1000000000000000"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

@@ -1,0 +1,3 @@
+explore?junk
+Args: [junk]
+Unknown sdk endpoint: explore

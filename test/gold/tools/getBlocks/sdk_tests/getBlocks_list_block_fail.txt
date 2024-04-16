@@ -1,0 +1,12 @@
+blocks?list=1000&blocks=1000
+Args: [list=1000 blocks=1000]
+Opts: {"blocks":["1000"],"list":1000}
+Blocks:  [1000]
+List:  1000
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "You must supply a non-zero value for the --list_count option with --list."
+  ]
+}

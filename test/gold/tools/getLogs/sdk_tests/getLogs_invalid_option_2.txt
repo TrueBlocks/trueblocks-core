@@ -1,0 +1,8 @@
+logs?other
+Args: [other]
+Opts: null
+{
+  "errors": [
+    "Invalid key (other) in route."
+  ]
+}

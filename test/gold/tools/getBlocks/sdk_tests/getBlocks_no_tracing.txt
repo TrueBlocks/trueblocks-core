@@ -1,0 +1,13 @@
+blocks?blocks=12&traces&chain=non-tracing
+Args: [blocks=12 traces chain=non-tracing]
+Opts: {"blocks":["12"],"traces":true,"chain":"non-tracing"}
+Blocks:  [12]
+Traces:  true
+Chain:  non-tracing
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "chain non-tracing is not properly configured."
+  ]
+}

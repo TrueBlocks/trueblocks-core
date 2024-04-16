@@ -1,0 +1,8 @@
+tokens?addrs=trueblocks.eth&chain&verbose&output&append&cache&decache&failOnPurpose
+Args: [addrs=trueblocks.eth chain verbose output append cache decache failOnPurpose]
+Opts: null
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in route."
+  ]
+}

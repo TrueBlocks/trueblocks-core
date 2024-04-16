@@ -1,0 +1,16 @@
+tokens?addrs=0xa9fe4601811213c340e850ea305481aff02f5b28&blocks=12000000&cache&decache
+Args: [addrs=0xa9fe4601811213c340e850ea305481aff02f5b28 blocks=12000000 cache decache]
+Opts: {"addrs":["0xa9fe4601811213c340e850ea305481aff02f5b28"],"blocks":["12000000"],"cache":true,"decache":true}
+Addrs:  [0xa9fe4601811213c340e850ea305481aff02f5b28]
+Blocks:  [12000000]
+Parts:  [all]
+Enabled:  tokens
+Cache:  true
+Decache:  true
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "The --cache and --decache options are mutually exclusive."
+  ]
+}

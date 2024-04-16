@@ -1,0 +1,28 @@
+blocks?blocks=17034900&hashes&withdrawals&count
+Args: [blocks=17034900 hashes withdrawals count]
+Opts: {"blocks":["17034900"],"hashes":true,"withdrawals":true,"count":true}
+Blocks:  [17034900]
+Hashes:  true
+Withdrawals:  true
+Count:  true
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 17034900,
+      "transactionsCnt": 222,
+      "withdrawalsCnt": 16
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

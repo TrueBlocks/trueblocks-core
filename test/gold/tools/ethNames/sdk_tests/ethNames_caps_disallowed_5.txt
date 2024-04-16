@@ -1,0 +1,11 @@
+names?terms=find_nothing&decache
+Args: [terms=find_nothing decache]
+Opts: {"terms":["find_nothing"],"autoname":"0x0","decache":true}
+Terms:  [find_nothing]
+Decache:  true
+Format:  json
+{
+  "errors": [
+    "Invalid key (decache) in names route."
+  ]
+}

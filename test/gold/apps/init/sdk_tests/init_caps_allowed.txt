@@ -1,0 +1,8 @@
+init?chain&verbose&failOnPurpose
+Args: [chain verbose failOnPurpose]
+Opts: null
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in route."
+  ]
+}

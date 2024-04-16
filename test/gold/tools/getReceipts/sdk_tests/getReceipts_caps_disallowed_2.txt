@@ -1,0 +1,12 @@
+receipts?transactions=12.0&ether
+Args: [transactions=12.0 ether]
+Opts: {"transactions":["12.0"],"ether":true}
+Transactions:  [12.0]
+Ether:  true
+Caps:  cache,decache,raw
+Format:  json
+{
+  "errors": [
+    "Invalid key (ether) in receipts route."
+  ]
+}

@@ -1,0 +1,12 @@
+when?blocks=23123&list
+Args: [blocks=23123 list]
+Opts: {"blocks":["23123"],"list":true}
+Blocks:  [23123]
+List:  true
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "Please supply either block identifiers or the --list option."
+  ]
+}

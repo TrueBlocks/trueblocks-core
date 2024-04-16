@@ -1,0 +1,52 @@
+blocks?listCount=2&list=1030000&blocks=10010
+Args: [listCount=2 list=1030000 blocks=10010]
+Opts: {"blocks":["10010"],"list":1030000,"listCount":2}
+Blocks:  [10010]
+List:  1030000
+ListCount:  2
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "data": [
+    {
+      "baseFeePerGas": 0,
+      "blockNumber": 970100,
+      "date": "2016-02-08 00:27:18 UTC",
+      "difficulty": 11467093517127,
+      "gasLimit": 3141592,
+      "gasUsed": 21000,
+      "hash": "0x58d7e86cdfaec2229bc1e0c787acfc49ccc85ebbaadefeb2b07f2ced0af55d70",
+      "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
+      "parentHash": "0xbbb5717268f9e6550d66a92b450957a9fff92c5b63b96fde2182157734c6f04a",
+      "timestamp": 1454891238,
+      "transactionsCnt": 1,
+      "unclesCnt": 1,
+      "withdrawalsCnt": 0
+    },
+    {
+      "baseFeePerGas": 0,
+      "blockNumber": 970099,
+      "date": "2016-02-08 00:27:16 UTC",
+      "difficulty": 11461497082877,
+      "gasLimit": 3141592,
+      "gasUsed": 0,
+      "hash": "0xbbb5717268f9e6550d66a92b450957a9fff92c5b63b96fde2182157734c6f04a",
+      "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
+      "parentHash": "0xf579e346652cbac8899ae24c7a163e94552efb7b2ea08f022a90b9127b6b623a",
+      "timestamp": 1454891236,
+      "transactionsCnt": 0,
+      "unclesCnt": 0,
+      "withdrawalsCnt": 0
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

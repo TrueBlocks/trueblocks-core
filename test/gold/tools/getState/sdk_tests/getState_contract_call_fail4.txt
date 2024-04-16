@@ -1,0 +1,13 @@
+state?call='0x12065fe01()'&addrs=0xa4f29fc548856180f6b1e319ee4d86715875cce4&blocks=6523977-6540000:2000
+Args: [call='0x12065fe01()' addrs=0xa4f29fc548856180f6b1e319ee4d86715875cce4 blocks=6523977-6540000:2000]
+Opts: {"addrs":["0xa4f29fc548856180f6b1e319ee4d86715875cce4"],"blocks":["6523977-6540000:2000"],"call":"'0x12065fe01()'","proxyFor":"0x0"}
+Addrs:  [0xa4f29fc548856180f6b1e319ee4d86715875cce4]
+Blocks:  [6523977-6540000:2000]
+Call:  0x12065fe01()
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "the --call value provided (0x12065fe01()) was not found: the value provided --call (0x12065fe01()) is invalid"
+  ]
+}

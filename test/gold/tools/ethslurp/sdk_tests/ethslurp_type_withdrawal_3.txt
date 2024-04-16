@@ -1,0 +1,111 @@
+slurp?addrs=0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63&types=withdrawals&blocks=18000000-18200000&ether
+Args: [addrs=0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63 types=withdrawals blocks=18000000-18200000 ether]
+Opts: {"addrs":["0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63"],"blocks":["18000000-18200000"],"types":256,"ether":true}
+Addrs:  [0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63]
+Blocks:  [18000000-18200000]
+Types:  [withdrawals]
+Ether:  true
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 18010752,
+      "date": "2023-08-28 04:27:35 UTC",
+      "from": "0x000000000000000000005769746864726177616c",
+      "timestamp": 1693196855,
+      "to": "0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63",
+      "transactionIndex": 99995,
+      "validatorIndex": 28,
+      "value": "0.000000000015518435",
+      "withdrawalIndex": 15612778
+    },
+    {
+      "blockNumber": 18035146,
+      "date": "2023-08-31 14:26:35 UTC",
+      "from": "0x000000000000000000005769746864726177616c",
+      "timestamp": 1693491995,
+      "to": "0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63",
+      "transactionIndex": 99995,
+      "validatorIndex": 499026,
+      "value": "0.000000000015358976",
+      "withdrawalIndex": 16003078
+    },
+    {
+      "blockNumber": 18057242,
+      "date": "2023-09-03 16:45:35 UTC",
+      "from": "0x000000000000000000005769746864726177616c",
+      "timestamp": 1693759535,
+      "to": "0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63",
+      "transactionIndex": 99995,
+      "validatorIndex": 28,
+      "value": "0.000000000015706545",
+      "withdrawalIndex": 16356575
+    },
+    {
+      "blockNumber": 18081535,
+      "date": "2023-09-07 02:21:23 UTC",
+      "from": "0x000000000000000000005769746864726177616c",
+      "timestamp": 1694053283,
+      "to": "0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63",
+      "transactionIndex": 99995,
+      "validatorIndex": 499026,
+      "value": "0.00000000001571933",
+      "withdrawalIndex": 16745263
+    },
+    {
+      "blockNumber": 18104639,
+      "date": "2023-09-10 07:59:47 UTC",
+      "from": "0x000000000000000000005769746864726177616c",
+      "timestamp": 1694332787,
+      "to": "0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63",
+      "transactionIndex": 99995,
+      "validatorIndex": 28,
+      "value": "0.000000000015963663",
+      "withdrawalIndex": 17114901
+    },
+    {
+      "blockNumber": 18128853,
+      "date": "2023-09-13 17:25:11 UTC",
+      "from": "0x000000000000000000005769746864726177616c",
+      "timestamp": 1694625911,
+      "to": "0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63",
+      "transactionIndex": 99995,
+      "validatorIndex": 499026,
+      "value": "0.000000000015762068",
+      "withdrawalIndex": 17502315
+    },
+    {
+      "blockNumber": 18153053,
+      "date": "2023-09-17 03:16:47 UTC",
+      "from": "0x000000000000000000005769746864726177616c",
+      "timestamp": 1694920607,
+      "to": "0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63",
+      "transactionIndex": 99995,
+      "validatorIndex": 28,
+      "value": "0.00000000001598844",
+      "withdrawalIndex": 17889498
+    },
+    {
+      "blockNumber": 18177137,
+      "date": "2023-09-20 12:35:47 UTC",
+      "from": "0x000000000000000000005769746864726177616c",
+      "timestamp": 1695213347,
+      "to": "0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63",
+      "transactionIndex": 99995,
+      "validatorIndex": 499026,
+      "value": "0.000000000015990975",
+      "withdrawalIndex": 18274842
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

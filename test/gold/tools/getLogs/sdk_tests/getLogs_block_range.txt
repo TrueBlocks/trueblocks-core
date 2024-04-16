@@ -1,0 +1,11 @@
+logs?transactions=1718400-1718420
+Args: [transactions=1718400-1718420]
+Opts: {"transactions":["1718400-1718420"]}
+Transactions:  [1718400-1718420]
+Caps:  cache,decache,raw
+Format:  json
+{
+  "errors": [
+    "The given value '1718400-1718420' is not a valid identifier."
+  ]
+}

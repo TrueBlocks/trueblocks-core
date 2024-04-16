@@ -1,0 +1,72 @@
+export?addrs=0x111111517e4929d3dcbdfa7cce55d30d4b6bc4d6&logs&topic=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef&firstBlock=14353374&maxRecords=3
+Args: [addrs=0x111111517e4929d3dcbdfa7cce55d30d4b6bc4d6 logs topic=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef firstBlock=14353374 maxRecords=3]
+Opts: {"addrs":["0x111111517e4929d3dcbdfa7cce55d30d4b6bc4d6"],"logs":true,"maxRecords":3,"topic":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"],"firstBlock":14353374}
+Addrs:  [0x111111517e4929d3dcbdfa7cce55d30d4b6bc4d6]
+Logs:  true
+MaxRecords:  3
+Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef]
+FirstBlock:  14353374
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "address": "0x111111517e4929d3dcbdfa7cce55d30d4b6bc4d6",
+      "blockHash": "0xfc7fa783603f6e3cf3fa4ded5b9974c928fdcffd2e296687b636bfe73fbe6cc8",
+      "blockNumber": 14353375,
+      "data": "0x0000000000000000000000000000000000000000000000008ac7230489e80000",
+      "date": "2022-03-09 15:26:10 UTC",
+      "logIndex": 417,
+      "timestamp": 1646839570,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000dd4c0c16fff6693e169ef89235cb92f9d8943ee",
+        "0x00000000000000000000000040ec5b33f54e0e8a33a975908c5ba1c14e5bbbdf"
+      ],
+      "transactionHash": "0xca9dbcaa438c14a74b54ae5c2a17cf2d0ce0ba4ea58a8372e78171d842805e54",
+      "transactionIndex": 233
+    },
+    {
+      "address": "0x903bef1736cddf2a537176cf3c64579c3867a881",
+      "blockHash": "0x806b8605e115fe356bed87076feefc89fdbc8288c2b2b6af42a05ec22a50b9da",
+      "blockNumber": 14354071,
+      "data": "0x000000000000000000000000000000000000000000000000000000003b9aca00",
+      "date": "2022-03-09 18:03:11 UTC",
+      "logIndex": 75,
+      "timestamp": 1646848991,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000dd4c0c16fff6693e169ef89235cb92f9d8943ee",
+        "0x000000000000000000000000111111517e4929d3dcbdfa7cce55d30d4b6bc4d6"
+      ],
+      "transactionHash": "0x89e7e6399e7dfdf7c7ae806a65a70e3cb439c95822625e86e309a255d38d1fe4",
+      "transactionIndex": 45
+    },
+    {
+      "address": "0x111111517e4929d3dcbdfa7cce55d30d4b6bc4d6",
+      "blockHash": "0x806b8605e115fe356bed87076feefc89fdbc8288c2b2b6af42a05ec22a50b9da",
+      "blockNumber": 14354071,
+      "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+      "date": "2022-03-09 18:03:11 UTC",
+      "logIndex": 78,
+      "timestamp": 1646848991,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x0000000000000000000000000dd4c0c16fff6693e169ef89235cb92f9d8943ee"
+      ],
+      "transactionHash": "0x89e7e6399e7dfdf7c7ae806a65a70e3cb439c95822625e86e309a255d38d1fe4",
+      "transactionIndex": 45
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

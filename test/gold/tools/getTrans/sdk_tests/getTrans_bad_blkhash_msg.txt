@@ -1,0 +1,72 @@
+transactions?transactions=0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1%200x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5%200x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2
+Args: [transactions=0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2]
+Opts: {"transactions":["0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2"]}
+Transactions:  [0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2]
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "data": [
+    {
+      "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
+      "blockNumber": 1001001,
+      "date": "2016-02-14 03:51:23 UTC",
+      "ether": "2.14841535",
+      "from": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
+      "gas": 90000,
+      "gasCost": 1050000000000000,
+      "gasPrice": 50000000000,
+      "gasUsed": 21000,
+      "hash": "0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a",
+      "nonce": 173040,
+      "receipt": {
+        "contractAddress": "0x0",
+        "effectiveGasPrice": 50000000000,
+        "gasUsed": 21000,
+        "logs": [],
+        "status": null
+      },
+      "timestamp": 1455421883,
+      "to": "0xd77ba7ef37f87d5246f35de898133e09c92ecaca",
+      "traces": [],
+      "transactionIndex": 1,
+      "value": "2148415350000000000"
+    },
+    {
+      "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
+      "blockNumber": 1001001,
+      "date": "2016-02-14 03:51:23 UTC",
+      "ether": "38.12",
+      "from": "0x9d72354fda3e2bcb4d23d1cf9d0c0385d1ab08fd",
+      "gas": 21000,
+      "gasCost": 1050000000000000,
+      "gasPrice": 50000000000,
+      "gasUsed": 21000,
+      "hash": "0x5352c80aa2073e21ce6c4aa5488c38455f3519955ece7dca5af3e326797bcc63",
+      "receipt": {
+        "contractAddress": "0x0",
+        "effectiveGasPrice": 50000000000,
+        "gasUsed": 21000,
+        "logs": [],
+        "status": null
+      },
+      "timestamp": 1455421883,
+      "to": "0x8ce45c9dd072be275a9ab6c3736b086702d77413",
+      "traces": [],
+      "transactionIndex": 2,
+      "value": "38120000000000000000"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  },
+  "errors": [
+    "transaction at 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 returned an error: not found"
+  ]
+}

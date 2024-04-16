@@ -1,0 +1,12 @@
+init?append
+Args: [append]
+Opts: {"publisher":"0x0","append":true}
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+Append:  true
+Caps:  -fmt,-noHeader,-file,-output,-append
+Format:  json
+{
+  "errors": [
+    "Invalid key (append) in init route."
+  ]
+}

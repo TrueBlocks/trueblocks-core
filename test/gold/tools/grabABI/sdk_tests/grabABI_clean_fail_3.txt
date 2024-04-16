@@ -1,0 +1,20 @@
+abis?decache
+Args: [decache]
+Opts: {"proxyFor":"0x0","decache":true}
+Decache:  true
+Caps:  cache,decache
+Format:  json
+Cleaning empty abis is not tested in test mode.
+{
+  "data": [],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

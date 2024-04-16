@@ -1,0 +1,12 @@
+slurp?addrs=0x63c8c29af409bd31ec7ddeea58f
+Args: [addrs=0x63c8c29af409bd31ec7ddeea58f]
+Opts: {"addrs":["0x63c8c29af409bd31ec7ddeea58f"]}
+Addrs:  [0x63c8c29af409bd31ec7ddeea58f]
+Types:  [ext]
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "Please specify at least one valid Ethereum address."
+  ]
+}

@@ -1,0 +1,12 @@
+when?blocks=12345&blocks=54321&blocks=2016-12-01&blocks=2016-12-01T01&timestamps
+Args: [blocks=12345 blocks=54321 blocks=2016-12-01 blocks=2016-12-01T01 timestamps]
+Opts: {"blocks":["12345","54321","2016-12-01","2016-12-01T01"],"timestamps":true}
+Blocks:  [12345 54321 2016-12-01 2016-12-01T01]
+Timestamps:  true
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "--timestamp option not tested in testMode"
+  ]
+}

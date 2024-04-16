@@ -1,0 +1,6 @@
+names?invalid&fmt=json
+{
+  "errors": [
+    "Invalid key (invalid) in names route."
+  ]
+}

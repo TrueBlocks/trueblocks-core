@@ -1,0 +1,12 @@
+blocks?blocks=4102000&flow=to
+Args: [blocks=4102000 flow=to]
+Opts: {"blocks":["4102000"],"flow":4}
+Blocks:  [4102000]
+Flow:  to
+Caps:  cache,decache,raw,ether
+Format:  json
+{
+  "errors": [
+    "The --flow option is only available with the --uniq option"
+  ]
+}

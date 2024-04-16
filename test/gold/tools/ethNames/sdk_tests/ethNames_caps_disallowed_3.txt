@@ -1,0 +1,11 @@
+names?terms=find_nothing&ether
+Args: [terms=find_nothing ether]
+Opts: {"terms":["find_nothing"],"autoname":"0x0","ether":true}
+Terms:  [find_nothing]
+Ether:  true
+Format:  json
+{
+  "errors": [
+    "Invalid key (ether) in names route."
+  ]
+}

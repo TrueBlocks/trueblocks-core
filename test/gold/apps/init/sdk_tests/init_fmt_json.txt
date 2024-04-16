@@ -1,0 +1,13 @@
+init?dryRun&verbose
+Args: [dryRun verbose]
+Opts: {"dryRun":true,"publisher":"0x0","verbose":true}
+DryRun:  true
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+Verbose:  true
+Caps:  -fmt,-noHeader,-file,-output,-append
+Format:  json
+{
+  "errors": [
+    "integration testing was skipped for chifra init"
+  ]
+}

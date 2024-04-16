@@ -1,0 +1,8 @@
+status?modes=config&verbose
+Args: [modes=config verbose]
+Opts: null
+{
+  "errors": [
+    "unknown modes: config"
+  ]
+}

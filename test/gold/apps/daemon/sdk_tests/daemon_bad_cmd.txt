@@ -1,0 +1,3 @@
+daemon?not-an-option
+Args: [not-an-option]
+Unknown sdk endpoint: daemon

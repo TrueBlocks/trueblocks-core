@@ -1,0 +1,6 @@
+slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&blocks=0-1500000&appearances&source=key&count&fmt=json
+{
+  "errors": [
+    "The --source=key option is only available with a valid api key."
+  ]
+}

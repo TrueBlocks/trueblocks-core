@@ -1,0 +1,8 @@
+status?modes=junk
+Args: [modes=junk]
+Opts: null
+{
+  "errors": [
+    "unknown modes: junk"
+  ]
+}

@@ -1,0 +1,21 @@
+names?terms=exchanges&tags&matchCase
+Args: [terms=exchanges tags matchCase]
+Opts: {"terms":["exchanges"],"matchCase":true,"tags":true,"autoname":"0x0"}
+Terms:  [exchanges]
+MatchCase:  true
+Tags:  true
+Format:  json
+No results for [sdkTester]
+{
+  "data": [],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

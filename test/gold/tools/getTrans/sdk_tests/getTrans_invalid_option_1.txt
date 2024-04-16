@@ -1,0 +1,8 @@
+transactions?prot
+Args: [prot]
+Opts: null
+{
+  "errors": [
+    "Invalid key (prot) in route."
+  ]
+}

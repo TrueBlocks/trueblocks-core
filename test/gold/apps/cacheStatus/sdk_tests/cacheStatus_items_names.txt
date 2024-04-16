@@ -1,0 +1,22 @@
+status?modes=names&maxRecords=100
+Args: [modes=names maxRecords=100]
+Opts: {"modes":4096,"maxRecords":100}
+Modes:  [names]
+MaxRecords:  100
+Format:  json
+{
+  "data": [],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  },
+  "errors": [
+    "no files were found in the [names] caches"
+  ]
+}

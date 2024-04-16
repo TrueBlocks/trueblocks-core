@@ -1,0 +1,26 @@
+when?blocks=iceage
+Args: [blocks=iceage]
+Opts: {"blocks":["iceage"]}
+Blocks:  [iceage]
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 200000,
+      "date": "2015-09-07 21:33:09 UTC",
+      "name": "iceage",
+      "timestamp": 1441661589
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}
