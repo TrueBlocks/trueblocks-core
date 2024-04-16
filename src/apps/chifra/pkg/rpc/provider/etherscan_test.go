@@ -107,8 +107,6 @@ func mockEtherscanServer(t *testing.T) (ts *httptest.Server) {
 		w.Write(b)
 	}))
 
-	etherscanBaseUrl = ts.URL
-
 	return ts
 }
 
@@ -139,15 +137,16 @@ func TestEtherscanProvider_fetchData(t *testing.T) {
 
 	provider := EtherscanProvider{
 		perPage: perPage,
+		baseUrl: ts.URL,
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
 	provider.convertSlurpType = mockConvertSlurpType(t)
 	paginator := NewPageNumberPaginator(1, 1, perPage)
 
-	var data []types.SimpleSlurp
+	var data []SlurpedPageItem
 	var count int
 	var err error
-	data, count, err = provider.fetchData(context.TODO(), base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"), "int", paginator)
+	data, count, err = provider.fetchData(context.TODO(), base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"), paginator, "int")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -158,7 +157,7 @@ func TestEtherscanProvider_fetchData(t *testing.T) {
 	if count != perPage {
 		t.Fatal("wrong count", count)
 	}
-	if paginator.Done {
+	if paginator.Done() {
 		t.Fatal("paginator done but it should not be")
 	}
 
@@ -166,14 +165,14 @@ func TestEtherscanProvider_fetchData(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	data, count, err = provider.fetchData(context.TODO(), base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"), "int", paginator)
+	data, count, err = provider.fetchData(context.TODO(), base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"), paginator, "int")
 	if err != nil {
 		t.Fatal(err)
 	}
 	if l := len(data); l != 1 {
 		t.Fatal("wrong len of page 2:", l)
 	}
-	if !paginator.Done {
+	if !paginator.Done() {
 		t.Fatal("paginator should be done")
 	}
 }
@@ -187,6 +186,7 @@ func TestEtherscanProvider_TransactionsByAddress(t *testing.T) {
 
 	provider := EtherscanProvider{
 		perPage: perPage,
+		baseUrl: ts.URL,
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
 	provider.convertSlurpType = mockConvertSlurpType(t)
@@ -250,6 +250,7 @@ func TestEtherscanProvider_Appearances(t *testing.T) {
 
 	provider := EtherscanProvider{
 		perPage: perPage,
+		baseUrl: ts.URL,
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
 	provider.convertSlurpType = mockConvertSlurpType(t)
@@ -297,6 +298,7 @@ func TestEtherscanProvider_Count(t *testing.T) {
 
 	provider := EtherscanProvider{
 		perPage: perPage,
+		baseUrl: ts.URL,
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
 	provider.convertSlurpType = mockConvertSlurpType(t)

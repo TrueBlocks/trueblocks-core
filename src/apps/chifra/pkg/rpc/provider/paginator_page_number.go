@@ -2,13 +2,14 @@ package provider
 
 import "errors"
 
+// PageNumberPaginator is a paginator for providers that use page numbers
 type PageNumberPaginator struct {
 	initialized bool
 
 	firstPage int
 	page      int
 	perPage   int
-	Done      bool
+	done      bool
 }
 
 func NewPageNumberPaginator(page int, firstPage int, perPage int) *PageNumberPaginator {
@@ -29,24 +30,13 @@ func (p *PageNumberPaginator) PerPage() int {
 }
 
 func (p *PageNumberPaginator) NextPage() error {
+	if p.Done() {
+		return ErrPaginatorDone
+	}
 	if p.init() {
 		return nil
-	}
-	if p.Done {
-		return ErrPaginatorDone
 	}
 	p.page++
-	return nil
-}
-
-func (p *PageNumberPaginator) PreviousPage() error {
-	if p.init() {
-		return nil
-	}
-	if p.Done {
-		return ErrPaginatorDone
-	}
-	p.page--
 	return nil
 }
 
@@ -63,8 +53,12 @@ func (p *PageNumberPaginator) SetNextPage(newPage any) error {
 	return errors.New("set next page not implemented for this paginator")
 }
 
-func (p *PageNumberPaginator) SetPreviousPage(newPage any) error {
-	return errors.New("set previous page not implemented for this paginator")
+func (p *PageNumberPaginator) Done() bool {
+	return p.done
+}
+
+func (p *PageNumberPaginator) SetDone(done bool) {
+	p.done = done
 }
 
 func (p *PageNumberPaginator) init() bool {

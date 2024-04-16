@@ -4,28 +4,22 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"strconv"
-	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"golang.org/x/time/rate"
 )
 
 const keyFirstPage = 0
-
-// TODO: add to config
 const keyRequestsPerSecond = 20
 const keyMaxPerPage = 1000
 
 type KeyProvider struct {
-	PrintProgress bool
+	printProgress bool
 	perPage       int
 	conn          *rpc.Connection
 	limiter       *rate.Limiter
@@ -39,37 +33,44 @@ func NewKeyProvider(conn *rpc.Connection, chain string) *KeyProvider {
 		chain:   chain,
 		perPage: keyMaxPerPage,
 	}
-	p.PrintProgress = true
+	p.printProgress = true
 	p.limiter = rate.NewLimiter(keyRequestsPerSecond, keyRequestsPerSecond)
 
 	return p
 }
 
-func (e *KeyProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan SlurpedTransaction) {
-	txChan = make(chan SlurpedTransaction, channelBuffer)
+func (p *KeyProvider) PrintProgress() bool {
+	return p.printProgress
+}
 
-	var appearanceChan chan types.SimpleAppearance
-	appearanceChan = e.Appearances(ctx, query, errorChan)
+func (p *KeyProvider) SetPrintProgress(print bool) {
+	p.printProgress = print
+}
+
+func (p *KeyProvider) NewPaginator() Paginator {
+	return NewPageIdPaginator("", "latest", p.perPage)
+}
+
+func (p *KeyProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.SimpleSlurp) {
+	txChan = make(chan types.SimpleSlurp, providerChannelBufferSize)
+
+	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	go func() {
 		defer close(txChan)
 		for {
 			select {
 			case <-ctx.Done():
-				break
-			case appearance, ok := <-appearanceChan:
+				return
+			case item, ok := <-slurpedChan:
 				if !ok {
 					return
 				}
-				tx, err := e.conn.GetTransactionByAppearance(&appearance, false)
+				tx, err := p.conn.GetTransactionByAppearance(item.Appearance, false)
 				if err != nil {
 					errorChan <- err
 					continue
 				}
-
-				txChan <- SlurpedTransaction{
-					Transaction: simpleTransactionToSimpleSlurp(tx),
-					Address:     &appearance.Address,
-				}
+				txChan <- *(simpleTransactionToSimpleSlurp(tx))
 			}
 		}
 	}()
@@ -107,62 +108,21 @@ func simpleTransactionToSimpleSlurp(tx *types.SimpleTransaction) *types.SimpleSl
 	}
 }
 
-func (e *KeyProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.SimpleAppearance) {
-	appChan = make(chan types.SimpleAppearance, channelBuffer)
+func (p *KeyProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.SimpleAppearance) {
+	appChan = make(chan types.SimpleAppearance, providerChannelBufferSize)
 
-	totalFetched := 0
-	totalFiltered := 0
-
+	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	go func() {
 		defer close(appChan)
-
-		for _, address := range query.Addresses {
-			for _, resource := range query.Resources {
-				bar := logger.NewBar(logger.BarOptions{
-					Type:    logger.Expanding,
-					Enabled: e.PrintProgress,
-					Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, address.String()), resource),
-				})
-
-				paginator := NewPageIdPaginator("", "latest", e.perPage)
-
-				for !paginator.Done {
-					select {
-					case <-ctx.Done():
-						return
-					default:
-						// TODO: Etherscan uses NextPage here. Should paginator only have NextPage and be direction agnostic?
-						// TODO: If so, NextPage context (which page it is) could be set by e.fetchData
-						if err := paginator.PreviousPage(); err != nil {
-							errorChan <- err
-							return
-						}
-						appearances, fetched, err := e.fetchData(ctx, address, paginator)
-						totalFetched += fetched
-						if err != nil {
-							errorChan <- err
-							continue
-						}
-
-						for _, appearance := range appearances {
-							if ok, err := query.InRange(uint64(appearance.BlockNumber)); !ok {
-								if err != nil {
-									errorChan <- err
-								}
-								continue
-							}
-							totalFiltered++
-							bar.Tick()
-
-							appChan <- appearance
-						}
-					}
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case item, ok := <-slurpedChan:
+				if !ok {
+					return
 				}
-				bar.Finish(true /* newLine */)
-			}
-			if totalFiltered == 0 {
-				msg := fmt.Sprintf("zero transactions reported, %d fetched", totalFetched)
-				errorChan <- fmt.Errorf(msg)
+				appChan <- *item.Appearance
 			}
 		}
 	}()
@@ -170,39 +130,9 @@ func (e *KeyProvider) Appearances(ctx context.Context, query *Query, errorChan c
 	return
 }
 
-func (e *KeyProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.SimpleMonitor) {
-	monitorChan = make(chan types.SimpleMonitor)
-
-	recordCount := make(map[base.Address]types.SimpleMonitor, len(query.Addresses))
-	var mu sync.Mutex
-
-	var appsChan chan types.SimpleAppearance
-	appsChan = e.Appearances(ctx, query, errorChan)
-	go func() {
-		defer close(monitorChan)
-		for {
-			select {
-			case <-ctx.Done():
-				break
-			case appearance, ok := <-appsChan:
-				if !ok {
-					for _, monitor := range recordCount {
-						monitorChan <- monitor
-					}
-					return
-				}
-				mu.Lock()
-				monitor := recordCount[appearance.Address]
-				recordCount[appearance.Address] = types.SimpleMonitor{
-					Address:  appearance.Address,
-					NRecords: monitor.NRecords + 1,
-				}
-				mu.Unlock()
-			}
-		}
-	}()
-
-	return
+func (p *KeyProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.SimpleMonitor) {
+	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
+	return countSlurped(ctx, query, slurpedChan)
 }
 
 type keyAppearancesRequestParam struct {
@@ -264,12 +194,11 @@ func (l *lastIndexedBlock) UnmarshalJSON(data []byte) (err error) {
 	return
 }
 
-func (e *KeyProvider) fetchData(ctx context.Context, address base.Address, paginator *PageIdPaginator) (data []types.SimpleAppearance, count int, err error) {
+func (e *KeyProvider) fetchData(ctx context.Context, address base.Address, paginator Paginator, _ string) (data []SlurpedPageItem, count int, err error) {
 	if e.baseUrl == "" {
 		e.baseUrl = config.GetChain(e.chain).KeyEndpoint
 	}
 
-	// TODO: since we don't use Paginator interface, we could just return string here:
 	pageId, ok := paginator.Page().(string)
 	if !ok {
 		err = errors.New("cannot get page id")
@@ -288,18 +217,19 @@ func (e *KeyProvider) fetchData(ctx context.Context, address base.Address, pagin
 		return
 	}
 
-	data = make([]types.SimpleAppearance, 0, len(response.Data))
+	data = make([]SlurpedPageItem, 0, len(response.Data))
 	for _, keyAppearance := range response.Data {
 		appearance, err := keyAppearance.SimpleAppearance(base.HexToAddress(response.Meta.Address))
 		if err != nil {
-			return []types.SimpleAppearance{}, 0, err
+			return []SlurpedPageItem{}, 0, err
 		}
-		data = append(data, appearance)
+		data = append(data, SlurpedPageItem{
+			Appearance: &appearance,
+		})
 	}
 	// update paginator
-	paginator.SetNextPage(response.Meta.NextPageId)
-	paginator.SetPreviousPage(response.Meta.PreviousPageId)
-	paginator.Done = response.Meta.PreviousPageId == ""
+	paginator.SetNextPage(response.Meta.PreviousPageId)
+	paginator.SetDone(response.Meta.PreviousPageId == "")
 
 	count = len(data)
 	return

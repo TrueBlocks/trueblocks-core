@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -19,18 +18,16 @@ import (
 	"golang.org/x/time/rate"
 )
 
-const channelBuffer = 50
 const etherscanFirstPage = 1
-
-// TODO: add to config
 const etherscanRequestsPerSecond = 5
 const etherscanMaxPerPage = 3000
 
 var etherscanBaseUrl = "https://api.etherscan.io"
 
 type EtherscanProvider struct {
-	PrintProgress    bool
+	printProgress    bool
 	perPage          int
+	baseUrl          string
 	conn             *rpc.Connection
 	limiter          *rate.Limiter
 	convertSlurpType func(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error)
@@ -40,71 +37,42 @@ func NewEtherscanProvider(conn *rpc.Connection) *EtherscanProvider {
 	p := &EtherscanProvider{
 		conn:    conn,
 		perPage: etherscanMaxPerPage,
+		baseUrl: etherscanBaseUrl,
 	}
-	p.PrintProgress = true
+	p.printProgress = true
 	p.limiter = rate.NewLimiter(etherscanRequestsPerSecond, etherscanRequestsPerSecond)
 	p.convertSlurpType = p.defaultConvertSlurpType
 
 	return p
 }
 
-func (e *EtherscanProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan SlurpedTransaction) {
-	txChan = make(chan SlurpedTransaction, channelBuffer)
+func (p *EtherscanProvider) PrintProgress() bool {
+	return p.printProgress
+}
 
-	totalFetched := 0
-	totalFiltered := 0
+func (p *EtherscanProvider) SetPrintProgress(print bool) {
+	p.printProgress = print
+}
 
+func (p *EtherscanProvider) NewPaginator() Paginator {
+	return NewPageNumberPaginator(etherscanFirstPage, etherscanFirstPage, p.perPage)
+}
+
+func (p *EtherscanProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.SimpleSlurp) {
+	txChan = make(chan types.SimpleSlurp, providerChannelBufferSize)
+
+	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	go func() {
 		defer close(txChan)
-
-		for _, address := range query.Addresses {
-			for _, resource := range query.Resources {
-				bar := logger.NewBar(logger.BarOptions{
-					Type:    logger.Expanding,
-					Enabled: e.PrintProgress,
-					Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, address.String()), resource),
-				})
-
-				paginator := NewPageNumberPaginator(etherscanFirstPage, etherscanFirstPage, e.perPage)
-
-				for !paginator.Done {
-					select {
-					case <-ctx.Done():
-						return
-					default:
-						if err := paginator.NextPage(); err != nil {
-							errorChan <- err
-							return
-						}
-						data, fetched, err := e.fetchData(ctx, address, resource, paginator)
-						totalFetched += fetched
-						if err != nil {
-							errorChan <- err
-							continue
-						}
-
-						for _, tx := range data {
-							if ok, err := query.InRange(tx.BlockNumber); !ok {
-								if err != nil {
-									errorChan <- err
-								}
-								continue
-							}
-							totalFiltered++
-							bar.Tick()
-
-							txChan <- SlurpedTransaction{
-								Address:     &address,
-								Transaction: &tx,
-							}
-						}
-					}
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case item, ok := <-slurpedChan:
+				if !ok {
+					return
 				}
-				bar.Finish(true /* newLine */)
-			}
-			if totalFiltered == 0 {
-				msg := fmt.Sprintf("zero transactions reported, %d fetched", totalFetched)
-				errorChan <- fmt.Errorf(msg)
+				txChan <- *item.Transaction
 			}
 		}
 	}()
@@ -112,27 +80,21 @@ func (e *EtherscanProvider) TransactionsByAddress(ctx context.Context, query *Qu
 	return
 }
 
-func (e *EtherscanProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.SimpleAppearance) {
-	appChan = make(chan types.SimpleAppearance, channelBuffer)
+func (p *EtherscanProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.SimpleAppearance) {
+	appChan = make(chan types.SimpleAppearance, providerChannelBufferSize)
 
-	var slurpedTxChan chan SlurpedTransaction
-	slurpedTxChan = e.TransactionsByAddress(ctx, query, errorChan)
+	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	go func() {
 		defer close(appChan)
 		for {
 			select {
 			case <-ctx.Done():
-				break
-			case slurpedTx, ok := <-slurpedTxChan:
+				return
+			case item, ok := <-slurpedChan:
 				if !ok {
 					return
 				}
-				appChan <- types.SimpleAppearance{
-					Address:          *slurpedTx.Address,
-					BlockNumber:      uint32(slurpedTx.Transaction.BlockNumber),
-					TransactionIndex: uint32(slurpedTx.Transaction.TransactionIndex),
-					Timestamp:        slurpedTx.Transaction.Timestamp,
-				}
+				appChan <- *item.Appearance
 			}
 		}
 	}()
@@ -140,39 +102,9 @@ func (e *EtherscanProvider) Appearances(ctx context.Context, query *Query, error
 	return
 }
 
-func (e *EtherscanProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.SimpleMonitor) {
-	monitorChan = make(chan types.SimpleMonitor)
-
-	recordCount := make(map[base.Address]types.SimpleMonitor, len(query.Addresses))
-	var mu sync.Mutex
-
-	var slurpedTxChan chan SlurpedTransaction
-	slurpedTxChan = e.TransactionsByAddress(ctx, query, errorChan)
-	go func() {
-		defer close(monitorChan)
-		for {
-			select {
-			case <-ctx.Done():
-				break
-			case slurpedTx, ok := <-slurpedTxChan:
-				if !ok {
-					for _, monitor := range recordCount {
-						monitorChan <- monitor
-					}
-					return
-				}
-				mu.Lock()
-				monitor := recordCount[*slurpedTx.Address]
-				recordCount[*slurpedTx.Address] = types.SimpleMonitor{
-					Address:  *slurpedTx.Address,
-					NRecords: monitor.NRecords + 1,
-				}
-				mu.Unlock()
-			}
-		}
-	}()
-
-	return
+func (p *EtherscanProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.SimpleMonitor) {
+	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
+	return countSlurped(ctx, query, slurpedChan)
 }
 
 type etherscanResponseBody struct {
@@ -181,35 +113,35 @@ type etherscanResponseBody struct {
 	Status  string           `json:"status"`
 }
 
-func (e *EtherscanProvider) fetchData(ctx context.Context, address base.Address, requestType string, paginator *PageNumberPaginator) (data []types.SimpleSlurp, count int, err error) {
-	url, err := e.url(address.String(), paginator, requestType)
+func (p *EtherscanProvider) fetchData(ctx context.Context, address base.Address, paginator Paginator, requestType string) (data []SlurpedPageItem, count int, err error) {
+	url, err := p.url(address.String(), paginator, requestType)
 	if err != nil {
-		return []types.SimpleSlurp{}, 0, err
+		return []SlurpedPageItem{}, 0, err
 	}
 
-	if err = e.limiter.Wait(ctx); err != nil {
+	if err = p.limiter.Wait(ctx); err != nil {
 		return
 	}
 
 	debug.DebugCurlStr(url)
 	resp, err := http.Get(url)
 	if err != nil {
-		return []types.SimpleSlurp{}, 0, err
+		return []SlurpedPageItem{}, 0, err
 	}
 	defer resp.Body.Close()
 
 	// Check server response
 	if resp.StatusCode != http.StatusOK {
-		return []types.SimpleSlurp{}, 0, fmt.Errorf("etherscan API error: %s", resp.Status)
+		return []SlurpedPageItem{}, 0, fmt.Errorf("etherscan API error: %s", resp.Status)
 	}
 
 	decoder := json.NewDecoder(resp.Body)
 	fromEs := etherscanResponseBody{}
 	if err = decoder.Decode(&fromEs); err != nil {
 		if fromEs.Message == "NOTOK" {
-			return []types.SimpleSlurp{}, 0, fmt.Errorf("provider responded with: %s %s", url, fromEs.Message)
+			return []SlurpedPageItem{}, 0, fmt.Errorf("provider responded with: %s %s", url, fromEs.Message)
 		}
-		return []types.SimpleSlurp{}, 0, fmt.Errorf("decoder failed: %w", err)
+		return []SlurpedPageItem{}, 0, fmt.Errorf("decoder failed: %w", err)
 	}
 
 	if fromEs.Message == "NOTOK" {
@@ -217,32 +149,40 @@ func (e *EtherscanProvider) fetchData(ctx context.Context, address base.Address,
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --decache.
 		logger.Warn("provider responded with:", url, fromEs.Message, strings.Repeat(" ", 40))
-		return []types.SimpleSlurp{}, 0, nil
+		return []SlurpedPageItem{}, 0, nil
 		// } else if fromEs.Message != "OK" {
 		// 	logger.Warn("URL:", url)
 		// 	logger.Warn("provider responded with:", url, fromEs.Message)
 	}
 
-	var ret []types.SimpleSlurp
+	var ret []SlurpedPageItem
 	for _, rawTx := range fromEs.Result {
-		if transaction, err := e.rawSlurpToSimple(address.String(), requestType, &rawTx); err != nil {
+		if transaction, err := p.rawSlurpToSimple(address.String(), requestType, &rawTx); err != nil {
 			return nil, 0, err
 		} else {
-			ret = append(ret, transaction)
+			ret = append(ret, SlurpedPageItem{
+				Appearance: &types.SimpleAppearance{
+					Address:          address,
+					BlockNumber:      uint32(transaction.BlockNumber),
+					TransactionIndex: uint32(transaction.TransactionIndex),
+				},
+				Transaction: &transaction,
+			})
 		}
 	}
 
 	fetchedCount := len(ret)
-	paginator.Done = fetchedCount < paginator.PerPage()
+	paginator.SetDone(fetchedCount < paginator.PerPage())
 
 	return ret, fetchedCount, nil
 }
 
-func (e *EtherscanProvider) rawSlurpToSimple(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
-	return e.convertSlurpType(address, requestType, rawTx)
+// rawSlurpToSimple translate RawSlurp to SimpleSlurp. By default it uses `defaultConvertSlurpType`, but this can be changed, e.g. in tests
+func (p *EtherscanProvider) rawSlurpToSimple(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
+	return p.convertSlurpType(address, requestType, rawTx)
 }
 
-func (e *EtherscanProvider) defaultConvertSlurpType(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
+func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
 	s := types.SimpleSlurp{
 		Hash:             base.HexToHash(rawTx.Hash),
 		BlockHash:        base.HexToHash(rawTx.BlockHash),
@@ -265,7 +205,7 @@ func (e *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 	if requestType == "int" {
 		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't
 		// want to make another RPC call. We tried (see commented code), but EtherScan balks with a weird message
-		app, _ := e.conn.GetTransactionAppByHash(s.Hash.Hex())
+		app, _ := p.conn.GetTransactionAppByHash(s.Hash.Hex())
 		s.TransactionIndex = uint64(app.TransactionIndex)
 	} else if requestType == "miner" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
@@ -298,7 +238,7 @@ func (e *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 	return s, nil
 }
 
-func (e *EtherscanProvider) url(value string, paginator *PageNumberPaginator, requestType string) (string, error) {
+func (p *EtherscanProvider) url(value string, paginator Paginator, requestType string) (string, error) {
 	var actions = map[string]string{
 		"ext":         "txlist",
 		"int":         "txlistinternal",
@@ -328,7 +268,7 @@ func (e *EtherscanProvider) url(value string, paginator *PageNumberPaginator, re
 	}
 
 	const str = "[{BASE_URL}]/api?module=[{MODULE}]&sort=asc&action=[{ACTION}]&[{TT}]=[{VALUE}]&page=[{PAGE}]&offset=[{PER_PAGE}]"
-	ret := strings.Replace(str, "[{BASE_URL}]", etherscanBaseUrl, -1)
+	ret := strings.Replace(str, "[{BASE_URL}]", p.baseUrl, -1)
 	ret = strings.Replace(ret, "[{MODULE}]", module, -1)
 	ret = strings.Replace(ret, "[{TT}]", tt, -1)
 	ret = strings.Replace(ret, "[{ACTION}]", actions[requestType], -1)

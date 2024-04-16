@@ -41,9 +41,6 @@ func (opts *SlurpOptions) validateSlurp() error {
 	}
 
 	if opts.Source == "key" {
-		if !opts.Appearances && !opts.Count {
-			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "--appearances or --count")
-		}
 		key := config.GetChain(chain).KeyEndpoint
 		if len(key) == 0 {
 			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "a valid TrueBlocks Key endpoint")
