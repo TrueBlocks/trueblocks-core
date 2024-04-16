@@ -27,7 +27,7 @@ func RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
 }
 
 // NewRouter Creates a new router given the routes array
-func NewRouter() *mux.Router {
+func NewRouter(silent bool) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	router.Use(CorsHandler)
 	router.
@@ -38,7 +38,7 @@ func NewRouter() *mux.Router {
 	for _, route := range routes {
 		var handler http.Handler
 		handler = route.HandlerFunc
-		handler = Logger(handler, route.Name)
+		handler = Logger(silent, handler, route.Name)
 		router.
 			Methods(route.Method).
 			Path(route.Pattern).
@@ -90,7 +90,7 @@ func ContentTypeHandler(next http.Handler) http.Handler {
 var nProcessed int
 
 // Logger sends information to the server's console
-func Logger(inner http.Handler, name string) http.Handler {
+func Logger(silent bool, inner http.Handler, name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var limiter = rate.NewLimiter(1, 3)
 		if !limiter.Allow() {
@@ -99,12 +99,14 @@ func Logger(inner http.Handler, name string) http.Handler {
 		}
 		start := time.Now()
 		inner.ServeHTTP(w, r)
-		t := ""
-		if isTestModeServer(r) {
-			t = "-test"
+		if !silent {
+			t := ""
+			if isTestModeServer(r) {
+				t = "-test"
+			}
+			msg := fmt.Sprintf("%d %s%s %s %s %s", nProcessed, r.Method, t, r.RequestURI, name, time.Since(start))
+			logger.Info(msg)
 		}
-		msg := fmt.Sprintf("%d %s%s %s %s %s", nProcessed, r.Method, t, r.RequestURI, name, time.Since(start))
-		logger.Info(msg)
 		nProcessed++
 	})
 }

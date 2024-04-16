@@ -31,6 +31,7 @@ type DaemonOptions struct {
 	Monitor bool                  `json:"monitor,omitempty"` // Instruct the node to start the monitors tool
 	Grpc    bool                  `json:"grpc,omitempty"`    // Run gRPC server to serve names
 	Port    string                `json:"port,omitempty"`    // Deprecated please use --url flag instead
+	Silent  bool                  `json:"silent,omitempty"`  // Disable logging (for use in SDK for example)
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	Conn    *rpc.Connection       `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
@@ -52,6 +53,7 @@ func (opts *DaemonOptions) testLog() {
 	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
 	logger.TestLog(opts.Grpc, "Grpc: ", opts.Grpc)
 	logger.TestLog(len(opts.Port) > 0 && opts.Port != ":8080", "Port: ", opts.Port)
+	logger.TestLog(opts.Silent, "Silent: ", opts.Silent)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -91,6 +93,8 @@ func DaemonFinishParseInternal(w io.Writer, values url.Values) *DaemonOptions {
 			opts.Grpc = true
 		case "port":
 			opts.Port = value[0]
+		case "silent":
+			opts.Silent = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")

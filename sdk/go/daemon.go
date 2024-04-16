@@ -31,6 +31,7 @@ type DaemonOptions struct {
 	Monitor bool         `json:"monitor,omitempty"`
 	Grpc    bool         `json:"grpc,omitempty"`
 	Port    string       `json:"port,omitempty"`
+	Silent  bool         `json:"silent,omitempty"`
 	Globals
 }
 
@@ -227,7 +228,9 @@ func (opts *DaemonOptions) Start(ready chan<- bool) {
 }
 
 func NewDaemon() *DaemonOptions {
-	return &DaemonOptions{}
+	return &DaemonOptions{
+		Silent: true,
+	}
 }
 
 // EXISTING_CODE
