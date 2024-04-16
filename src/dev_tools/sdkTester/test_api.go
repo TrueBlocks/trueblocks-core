@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -10,10 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (tr *Runner) RunApiTest(t *TestCase) (bool, bool, error) {
@@ -40,20 +37,7 @@ func (tr *Runner) RunApiTest(t *TestCase) (bool, bool, error) {
 	defer func() {
 		logger.ToggleDecoration()
 		logger.SetLoggerWriter(os.Stderr)
-		eol := "\r"
-		if wasTested && !passedTest {
-			eol = "\n"
-		}
-
-		msg := "[passed " + cm["greenCheck"] + "]"
-		if wasTested && !passedTest {
-			msg = "[failed " + cm["redX"] + "]"
-		}
-
-		skip := strings.Repeat(" ", utils.Max(0, 120-len(workFn)))
-		colors.ColorsOn()
-		fmt.Printf("   %sTesting %d of %d %s %s%s%s%s", colors.Green, tr.NTested, tr.NFiltered, msg, workFn, skip, colors.Off, eol)
-		colors.ColorsOff()
+		tr.ReportOne(t, wasTested && !passedTest)
 	}()
 
 	logger.Info(t.Route + "?" + t.ApiOptions)

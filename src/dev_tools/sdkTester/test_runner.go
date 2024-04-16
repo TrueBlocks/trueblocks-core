@@ -7,6 +7,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Runner struct {
@@ -85,6 +86,26 @@ func (tr *Runner) Report() {
 	file.AppendToAsciiFile(getLogFile(tr.Mode), strings.Join(tr.Logs[tr.Mode], "\n")+"\n")
 	colors.ColorsOn()
 	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
+	colors.ColorsOff()
+}
+
+func (tr *Runner) ReportOne(t *TestCase, failed bool) {
+	eol := "\r"
+	if failed || os.Getenv("TB_REMOTE_TESTING") == "true" {
+		eol = "\n"
+	}
+
+	mark := "[passed " + cm["greenCheck"] + "]"
+	if failed {
+		mark = "[failed " + cm["redX"] + "]"
+	}
+
+	colors.ColorsOn()
+	skip := strings.Repeat(" ", utils.Max(0, 120-len(t.ApiOptions)-40))
+	rPadded := padRight(t.Route, 15, false, ".")
+	fPadded := padRight(t.Filename, 30, false, ".")
+	tOpts := t.ApiOptions[:utils.Min(len(t.ApiOptions), 40)]
+	fmt.Printf("    %s %d-%d %s%s%s%s%s", mark, tr.NTested, tr.NFiltered, rPadded, fPadded, tOpts, skip, eol)
 	colors.ColorsOff()
 }
 
