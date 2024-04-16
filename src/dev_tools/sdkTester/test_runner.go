@@ -87,23 +87,9 @@ func (tr *Runner) AppendLog(t *TestCase) {
 	tr.Logs[tr.Mode] = append(tr.Logs[tr.Mode], s)
 }
 
-func (tr *Runner) Report() {
-	file.AppendToAsciiFile(getLogFile(tr.Mode), strings.Join(tr.Logs[tr.Mode], "\n")+"\n")
-	colors.ColorsOn()
-	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
-	colors.ColorsOff()
-}
+var summaryTmpl = `  {{padRight .NameAndMode 25 " "}} ==> {{padRight .Result 8 " "}} {{.NPassed}} of {{.NTested}} passed, {{.Failed}} failed.`
 
-func (tr *Runner) ReportFinal(t *TestCase, failed bool) {
-	colors.ColorsOn()
-	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
-	for _, fail := range tr.Fails {
-		fmt.Printf("%s%s%s\n", colors.Red, fail, colors.Off)
-	}
-	colors.ColorsOff()
-}
-
-func (tr *Runner) ReportOne(t *TestCase, failed bool) {
+func (tr *Runner) ReportOneTest(t *TestCase, failed bool) {
 	eol := "\r"
 	if failed || os.Getenv("TB_REMOTE_TESTING") == "true" {
 		eol = "\n"
@@ -123,6 +109,25 @@ func (tr *Runner) ReportOne(t *TestCase, failed bool) {
 	fPadded := padRight(t.Filename, 30, false, ".")
 	tOpts := t.ApiOptions[:utils.Min(len(t.ApiOptions), 40)]
 	fmt.Printf("%s    %s %d-%d %s %s%s%s%s%s%s", color, mark, tr.NTested, tr.NFiltered, tr.Mode, rPadded, fPadded, tOpts, skip, colors.Off, eol)
+	colors.ColorsOff()
+}
+
+func (tr *Runner) ReportOneMode() {
+	file.AppendToAsciiFile(getLogFile(tr.Mode), strings.Join(tr.Logs[tr.Mode], "\n")+"\n")
+	colors.ColorsOn()
+	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
+	colors.ColorsOff()
+}
+
+func (tr *Runner) ReportFinal() {
+	colors.ColorsOn()
+	tr.Route = "final"
+	tr.Mode = "final"
+	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
+	fmt.Println("nFails:", len(tr.Fails))
+	for _, fail := range tr.Fails {
+		fmt.Printf("%s%s%s\n", colors.Red, fail, colors.Off)
+	}
 	colors.ColorsOff()
 }
 

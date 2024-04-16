@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       -
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
@@ -37,10 +37,10 @@ jobs:
     steps:
       -
         name: Checkout TrueBlocks repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       -
         name: Use a certain version of go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
       -

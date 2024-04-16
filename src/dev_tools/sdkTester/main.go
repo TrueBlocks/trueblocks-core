@@ -120,14 +120,14 @@ func main() {
 					logger.Error(err) // continue even on goLang error
 				}
 			}
-			tr.Report()
+			tr.ReportOneMode()
 			summary.NTested += tr.NTested
 			summary.NPassed += tr.NPassed
 			summary.Fails = append(summary.Fails, tr.Fails...)
 		}
 	}
 
-	summary.Report()
+	summary.ReportFinal()
 	if summary.NPassed != summary.NTested {
 		os.Exit(1)
 	}
@@ -366,5 +366,3 @@ func toJson(structure interface{}) string {
 	}
 	return buf.String()
 }
-
-var summaryTmpl = `  {{padRight .NameAndMode 25 " "}} ==> {{padRight .Result 8 " "}} {{.NPassed}} of {{.NTested}} passed, {{.Failed}} failed.`

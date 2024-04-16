@@ -39,7 +39,7 @@ func (tr *Runner) RunSdkTest(t *TestCase) (bool, bool, error) {
 	defer func() {
 		logger.ToggleDecoration()
 		logger.SetLoggerWriter(os.Stderr)
-		tr.ReportOne(t, wasTested && !passedTest)
+		tr.ReportOneTest(t, wasTested && !passedTest)
 	}()
 
 	logger.Info(t.Route + "?" + t.SdkOptions)
