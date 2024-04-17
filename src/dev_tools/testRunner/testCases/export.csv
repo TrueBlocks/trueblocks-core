@@ -36,7 +36,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,128_export_fb_lb_fr_2    ,n    
 on      ,both ,fast  ,export   ,apps/acctExport ,128_export_fb_lb_fr_3    ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 56 & last_block = 235 & first_record = 4
 on      ,both ,fast  ,export   ,apps/acctExport ,130_export_fb_lb_fr_mr   ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 56 & last_block = 235 & first_record = 1 & max_records = 10
 on      ,both ,fast  ,export   ,apps/acctExport ,export_apps              ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = json & max_records = 1 & verbose
-on      ,both ,fast  ,export   ,apps/acctExport ,simple_data2             ,n    ,addrs = 0x1234567890123456789012345678901234567890 & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 3000000 & last_block = 3375498 & fmt = csv & no_header & max_records = 20
+local   ,both ,fast  ,export   ,apps/acctExport ,simple_data2             ,n    ,addrs = 0x1234567890123456789012345678901234567890 & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 3000000 & last_block = 3375498 & fmt = csv & no_header & max_records = 20
 
 # Testing --receipts
 # This only reports two records, not three as instructed
