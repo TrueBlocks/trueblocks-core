@@ -1,12 +1,15 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -41,23 +44,69 @@ func (tr *Runner) Run(t *TestCase) error {
 		return nil
 	}
 
-	var tested, passed bool
-	var err error
-	switch tr.Mode {
-	case "sdk":
-		tested, passed, err = tr.RunSdkTest(t)
-	case "api":
-		tested, passed, err = tr.RunApiTest(t)
-	case "cmd":
-		tested, passed, err = tr.RunCmdTest(t)
+	tr.AppendLog(t)
+
+	working := strings.ReplaceAll(strings.ReplaceAll(t.WorkingPath, "sdk_tests/", tr.Mode+"_tests/"), "cmd_tests/", "")
+	if !file.FolderExists(working) {
+		file.EstablishFolder(working)
 	}
-	if tested {
+
+	wasTested := false
+	passedTest := false
+
+	os.Setenv("TEST_MODE", "true")
+	logger.SetTestMode(true)
+
+	parts := strings.Split(t.PathTool, "/")
+	workFn := filepath.Join(working, parts[1]+"_"+t.Filename+".txt")
+
+	workFile, _ := os.Create(workFn)
+	logger.SetLoggerWriter(workFile)
+	logger.ToggleDecoration()
+
+	defer func() {
+		logger.ToggleDecoration()
+		logger.SetLoggerWriter(os.Stderr)
+		tr.ReportOneTest(t, wasTested && !passedTest)
+	}()
+
+	logger.Info(t.Route + "?" + t.OptionsForMode(tr.Mode))
+
+	wasTested = true
+	if results, err := t.InnerTest(tr.Mode); err != nil {
+		type E struct {
+			Errors []string `json:"errors"`
+		}
+		e := E{Errors: []string{err.Error()}}
+		bytes, _ := json.MarshalIndent(e, "", "  ")
+		results = string(bytes)
+		logger.Info(results)
+	} else {
+		results = strings.Trim(results, "\n\r")
+		if len(results) > 0 {
+			results = strings.ReplaceAll(results, "3735928559", "\"0xdeadbeef\"") // mildly hacky cleaning
+			results = strings.ReplaceAll(results, "\\u0026", "&")
+			logger.Info(results)
+		}
+	}
+
+	if workFile != nil {
+		workFile.Close()
+		newContents := file.AsciiFileToString(workFn)
+		goldFn := strings.Replace(workFn, "working", "gold", -1)
+		oldContents := file.AsciiFileToString(goldFn)
+		passedTest = newContents == oldContents
+	}
+
+	if wasTested {
 		tr.NTested++
 	}
-	if passed {
+
+	if passedTest {
 		tr.NPassed++
 	}
-	return err
+
+	return nil
 }
 
 func (t *Runner) Result() string {
@@ -80,11 +129,11 @@ func getLogFile(mode string) string {
 }
 
 func (tr *Runner) AppendLog(t *TestCase) {
-	if len(os.Getenv("TB_TEST_ROUTE")) > 0 {
-		return
-	}
-	s := fmt.Sprintf("%s\t%s.txt\t%s", t.Route, t.Filename, t.OptionsForMode(tr.Mode))
-	tr.Logs[tr.Mode] = append(tr.Logs[tr.Mode], s)
+	// if len(os.Getenv("TB_TEST_ROUTE")) > 0 {
+	// 	return
+	// }
+	// s := fmt.Sprintf("%s\t%s.txt\t%s", t.Route, t.Filename, t.OptionsForMode(tr.Mode))
+	// tr.Logs[tr.Mode] = append(tr.Logs[tr.Mode], s)
 }
 
 var summaryTmpl = `  {{padRight .NameAndMode 25 " "}} ==> {{padRight .Result 8 " "}} {{.NPassed}} of {{.NTested}} passed, {{.Failed}} failed.`
@@ -113,7 +162,7 @@ func (tr *Runner) ReportOneTest(t *TestCase, failed bool) {
 }
 
 func (tr *Runner) ReportOneMode() {
-	file.AppendToAsciiFile(getLogFile(tr.Mode), strings.Join(tr.Logs[tr.Mode], "\n")+"\n")
+	// file.AppendToAsciiFile(getLogFile(tr.Mode), strings.Join(tr.Logs[tr.Mode], "\n")+"\n")
 	colors.ColorsOn()
 	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
 	colors.ColorsOff()

@@ -2,79 +2,18 @@ package main
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
-	"os"
-	"path/filepath"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
-func (tr *Runner) RunSdkTest(t *TestCase) (bool, bool, error) {
-	tr.AppendLog(t)
-
-	working := t.WorkingPath
-	if !file.FolderExists(working) {
-		file.EstablishFolder(working)
-	}
-
-	wasTested := false
-	passedTest := false
-
-	os.Setenv("TEST_MODE", "true")
-	logger.SetTestMode(true)
-
-	parts := strings.Split(t.PathTool, "/")
-	workFn := filepath.Join(working, parts[1]+"_"+t.Filename+".txt")
-	goldFn := strings.Replace(workFn, "working", "gold", -1)
-
-	workFile, _ := os.Create(workFn)
-	logger.SetLoggerWriter(workFile)
-	logger.ToggleDecoration()
-
-	defer func() {
-		logger.ToggleDecoration()
-		logger.SetLoggerWriter(os.Stderr)
-		tr.ReportOneTest(t, wasTested && !passedTest)
-	}()
-
-	logger.Info(t.Route + "?" + t.SdkOptions)
-
-	var buff bytes.Buffer
-	var results string
-	wasTested = true
-	if err := t.SdkTest(&buff); err != nil {
-		type E struct {
-			Errors []string `json:"errors"`
-		}
-		e := E{Errors: []string{err.Error()}}
-		bytes, _ := json.MarshalIndent(e, "", "  ")
-		results = string(bytes)
-	} else {
-		results = strings.Trim(buff.String(), "\n\r")
-	}
-
-	if len(results) > 0 {
-		results = strings.ReplaceAll(results, "3735928559", "\"0xdeadbeef\"")
-		logger.Info(results)
-	}
-
-	if workFile != nil {
-		workFile.Close()
-		newContents := file.AsciiFileToString(workFn)
-		oldContents := file.AsciiFileToString(goldFn)
-		passedTest = newContents == oldContents
-	}
-
-	return wasTested, passedTest, nil
-}
-
 // SdkTest runs a test case through the SDK and returns the results in the provided bytes.Buffer
-func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
+func (t *TestCase) SdkTest() (string, error) {
+	var buff bytes.Buffer
+	buf := &buff
+
 	logger.Info("Args:", t.SdkOptionsArray)
 
 	switch t.Route {
@@ -82,137 +21,154 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		opts, err := sdk.GetListOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.ListBytes(buf)
+		err = opts.ListBytes(buf)
+		return buf.String(), err
 
 	case "export":
 		opts, err := sdk.GetExportOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.ExportBytes(buf)
+		err = opts.ExportBytes(buf)
+		return buf.String(), err
 
 	case "config":
 		opts, err := sdk.GetConfigOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.ConfigBytes(buf)
+		err = opts.ConfigBytes(buf)
+		return buf.String(), err
 
 	case "status":
 		opts, err := sdk.GetStatusOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.StatusBytes(buf)
+		err = opts.StatusBytes(buf)
+		return buf.String(), err
 
 	case "chunks":
 		opts, err := sdk.GetChunksOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.ChunksBytes(buf)
+		err = opts.ChunksBytes(buf)
+		return buf.String(), err
 
 	case "init":
 		opts, err := sdk.GetInitOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.InitBytes(buf)
+		err = opts.InitBytes(buf)
+		return buf.String(), err
 
 	case "names":
 		opts, err := sdk.GetNamesOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.NamesBytes(buf)
+		err = opts.NamesBytes(buf)
+		return buf.String(), err
 
 	case "slurp":
 		opts, err := sdk.GetSlurpOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.SlurpBytes(buf)
+		err = opts.SlurpBytes(buf)
+		return buf.String(), err
 
 	case "blocks":
 		opts, err := sdk.GetBlocksOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.BlocksBytes(buf)
+		err = opts.BlocksBytes(buf)
+		return buf.String(), err
 
 	case "transactions":
 		opts, err := sdk.GetTransactionsOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.TransactionsBytes(buf)
+		err = opts.TransactionsBytes(buf)
+		return buf.String(), err
 
 	case "receipts":
 		opts, err := sdk.GetReceiptsOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.ReceiptsBytes(buf)
+		err = opts.ReceiptsBytes(buf)
+		return buf.String(), err
 
 	case "logs":
 		opts, err := sdk.GetLogsOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.LogsBytes(buf)
+		err = opts.LogsBytes(buf)
+		return buf.String(), err
 
 	case "traces":
 		opts, err := sdk.GetTracesOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.TracesBytes(buf)
+		err = opts.TracesBytes(buf)
+		return buf.String(), err
 
 	case "state":
 		opts, err := sdk.GetStateOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.StateBytes(buf)
+		err = opts.StateBytes(buf)
+		return buf.String(), err
 
 	case "tokens":
 		opts, err := sdk.GetTokensOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.TokensBytes(buf)
+		err = opts.TokensBytes(buf)
+		return buf.String(), err
 
 	case "abis":
 		opts, err := sdk.GetAbisOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.AbisBytes(buf)
+		err = opts.AbisBytes(buf)
+		return buf.String(), err
 
 	case "when":
 		opts, err := sdk.GetWhenOptions(t.SdkOptionsArray)
 		reportOpts(opts)
 		if err != nil {
-			return err
+			return "", err
 		}
-		return opts.WhenBytes(buf)
+		err = opts.WhenBytes(buf)
+		return buf.String(), err
 
 	default:
 		// case "monitors":
@@ -222,7 +178,8 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		logger.Info(colors.Red + "Unknown sdk endpoint: " + t.Route + colors.Off)
 
 	}
-	return nil
+
+	return "", nil
 }
 
 func reportOpts(s fmt.Stringer) {

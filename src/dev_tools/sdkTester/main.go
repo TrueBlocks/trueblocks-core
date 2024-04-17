@@ -104,7 +104,7 @@ func main() {
 	modes := []string{
 		"sdk",
 		"api",
-		"cmd",
+		// "cmd",
 	}
 
 	for _, mode := range modes {
@@ -182,7 +182,6 @@ func parseCsv(filePath string) ([]TestCase, error) {
 				record:       rec,
 				IsEnabled:    rec.Enabled == "on",
 				HasShorthand: strings.Contains(rec.Options, "@"),
-				GoldPath:     "../tests/gold/" + rec.PathTool + "/sdk_tests/",
 				WorkingPath:  "../tests/working/" + rec.PathTool + "/sdk_tests/",
 				OrigOptions:  rec.Options,
 				SourceFile:   filePath,

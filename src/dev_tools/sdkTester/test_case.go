@@ -1,6 +1,9 @@
 package main
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type record struct {
 	Enabled  string `json:"enabled"`
@@ -17,7 +20,6 @@ type TestCase struct {
 	record
 	IsEnabled       bool     `json:"isEnabled,omitempty"`
 	HasShorthand    bool     `json:"hasShorthand,omitempty"`
-	GoldPath        string   `json:"goldPath,omitempty"`
 	WorkingPath     string   `json:"workingPath,omitempty"`
 	OrigOptions     string   `json:"origOptions,omitempty"`
 	SourceFile      string   `json:"sourceFile,omitempty"`
@@ -37,6 +39,17 @@ func (t *TestCase) OptionsForMode(mode string) string {
 		return t.SdkOptions
 	}
 	return t.OrigOptions
+}
+
+func (t *TestCase) InnerTest(mode string) (string, error) {
+	if mode == "api" {
+		return t.ApiTest()
+	} else if mode == "cmd" {
+		return t.CmdTest()
+	} else if mode == "sdk" {
+		return t.SdkTest()
+	}
+	return "", fmt.Errorf("Invalid mode:" + mode)
 }
 
 func (t *TestCase) ShouldTest(mode string) bool {
