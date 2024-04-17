@@ -101,8 +101,8 @@ jobs:
             cd  testing/${{ github.sha }}
             git clone --quiet https://github.com/${{ github.repository }}
             cd trueblocks-core
-            git submodule update --init --recursive
             git checkout ${{ github.head_ref }}
+            git submodule update --init --recursive
             cd src/other/build_assets/remote_testing
             CONFIG_FILE=$HOME/trueBlocks.toml bash test_with_docker.sh ${{ github.repository }} ${{ github.sha }} ${{ github.head_ref }}
             docker system prune -af --filter "until=1h"
