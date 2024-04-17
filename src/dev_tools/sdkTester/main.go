@@ -182,8 +182,8 @@ func parseCsv(filePath string) ([]TestCase, error) {
 				record:       rec,
 				IsEnabled:    rec.Enabled == "on",
 				HasShorthand: strings.Contains(rec.Options, "@"),
-				GoldPath:     "../test/gold/" + rec.PathTool + "/sdk_tests/",
-				WorkingPath:  "../test/working/" + rec.PathTool + "/sdk_tests/",
+				GoldPath:     "../tests/gold/" + rec.PathTool + "/sdk_tests/",
+				WorkingPath:  "../tests/working/" + rec.PathTool + "/sdk_tests/",
 				OrigOptions:  rec.Options,
 				SourceFile:   filePath,
 			}

@@ -5,7 +5,7 @@ export QUICKBLOCKS=`pwd`
 export INSTALL=$QUICKBLOCKS/build/other/install
 export CHIFRA=$QUICKBLOCKS/src/apps/chifra
 export BUILD_FOLDER=$QUICKBLOCKS/build/
-export TEST_FOLDER=$QUICKBLOCKS/test/
+export TEST_FOLDER=$QUICKBLOCKS/tests/
 
 # The names.tab file is ours, so we can always replace it for testing
 export NAMES_SOURCE=$QUICKBLOCKS/src/other/install/names/names.tab

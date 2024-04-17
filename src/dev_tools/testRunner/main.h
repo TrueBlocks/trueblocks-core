@@ -118,18 +118,18 @@ inline bool CTestCase::operator==(const CTestCase& it) const {
 
 extern int copyFile(const string_q& fromIn, const string_q& toIn);
 inline void CTestCase::copyBack(void) const {
-    string_q tr = "/test/gold/dev_tools/testRunner/";
+    string_q tr = "/tests/gold/dev_tools/testRunner/";
     string_q fn = path + "/" + tool + "/" + fileName;
     string_q fnA = path + "/" + tool + "/api_tests/" + fileName;
 
-    string_q goldPath = substitute(getCWD(), tr, "/test/gold/" + fn);
-    string_q workPath = substitute(getCWD(), tr, "/test/working/" + fn);
+    string_q goldPath = substitute(getCWD(), tr, "/tests/gold/" + fn);
+    string_q workPath = substitute(getCWD(), tr, "/tests/working/" + fn);
     if (fileExists(goldPath)) {
         copyFile(goldPath, workPath);
     }
 
-    goldPath = substitute(getCWD(), tr, "/test/gold/" + fnA);
-    workPath = substitute(getCWD(), tr, "/test/working/" + fnA);
+    goldPath = substitute(getCWD(), tr, "/tests/gold/" + fnA);
+    workPath = substitute(getCWD(), tr, "/tests/working/" + fnA);
     if (fileExists(goldPath)) {
         copyFile(goldPath, workPath);
     }

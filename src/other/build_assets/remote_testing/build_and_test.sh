@@ -20,7 +20,7 @@ export TB_REMOTE_TESTING=true
 make && make test-sdk
 RESULT=$?
 
-echo "Compressing and saving test/working into $(pwd)"
-tar -cJ --file /root/test_results/working.tar.xz ../test/working/
+echo "Compressing and saving tests/working into $(pwd)"
+tar -cJ --file /root/test_results/working.tar.xz ../tests/working/
 
 exit $RESULT

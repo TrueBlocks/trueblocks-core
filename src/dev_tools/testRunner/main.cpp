@@ -401,9 +401,9 @@ CTestCase::CTestCase(const string_q& line) {
     path = nextTokenClear(tool, '/');
     fileName = tool + "_" + name + ".txt";
 
-    string_q tr = "/test/gold/dev_tools/testRunner/";
-    goldPath = substitute(getCWD(), tr, "/test/gold/" + path + "/" + tool + "/");
-    workPath = substitute(getCWD(), tr, "/test/working/" + path + "/" + tool + "/");
+    string_q tr = "/tests/gold/dev_tools/testRunner/";
+    goldPath = substitute(getCWD(), tr, "/tests/gold/" + path + "/" + tool + "/");
+    workPath = substitute(getCWD(), tr, "/tests/working/" + path + "/" + tool + "/");
     testRoot = substitute(goldPath, "/api_tests", "");
 }
 
@@ -533,8 +533,3 @@ string_q CTestCase::apiUrl(void) const {
     string_q apiPort = getEnvStr("TB_TEST_API_SERVER").empty() ? "8080" : getEnvStr("TB_TEST_API_SERVER");
     return "http://localhost:" + apiPort + "/" + route + apiOptions;
 }
-
-// string_q rootRoot = getCWD() + string_q("../../../../src/dev_tools/sdkTester/generated/test");
-// string_q getLogFile(const string_q& mode) {
-//     return rootRoot + "_" + mode + ".log";
-// }
