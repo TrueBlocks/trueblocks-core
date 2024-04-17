@@ -14,7 +14,7 @@ import (
 	"golang.org/x/time/rate"
 )
 
-const keyFirstPage = 0
+const keyFirstPage = "latest"
 const keyRequestsPerSecond = 20
 const keyMaxPerPage = 1000
 
@@ -48,7 +48,7 @@ func (p *KeyProvider) SetPrintProgress(print bool) {
 }
 
 func (p *KeyProvider) NewPaginator() Paginator {
-	return NewPageIdPaginator("", "latest", p.perPage)
+	return NewPageIdPaginator(keyFirstPage, keyFirstPage, p.perPage)
 }
 
 func (p *KeyProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.SimpleSlurp) {
@@ -228,7 +228,7 @@ func (e *KeyProvider) fetchData(ctx context.Context, address base.Address, pagin
 		})
 	}
 	// update paginator
-	paginator.SetNextPage(response.Meta.PreviousPageId)
+	_ = paginator.SetNextPage(response.Meta.PreviousPageId)
 	paginator.SetDone(response.Meta.PreviousPageId == "")
 
 	count = len(data)
