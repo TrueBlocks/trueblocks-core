@@ -1,6 +1,0 @@
-when?blocks=0-0
-{
-  "errors": [
-    "'stop' must be strictly larger than 'start'"
-  ]
-}

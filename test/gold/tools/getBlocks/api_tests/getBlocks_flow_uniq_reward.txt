@@ -1,3 +1,0 @@
-blocks?blocks=4102000&fmt=txt&uniq&flow=reward
-address	blockNumber	transactionIndex	traceIndex	reason
-0x1e9939daaad6924ad004c2560e90804164900341	4102000	99999		miner

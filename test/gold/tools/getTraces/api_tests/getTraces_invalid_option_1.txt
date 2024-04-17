@@ -1,6 +1,0 @@
-traces?pink
-{
-  "errors": [
-    "Invalid key (pink) in traces route."
-  ]
-}

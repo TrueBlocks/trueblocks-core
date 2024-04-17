@@ -1,3 +1,0 @@
-scrape?ether
-Args: [ether]
-Unknown sdk endpoint: scrape

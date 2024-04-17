@@ -1,8 +1,0 @@
-status?modes=recons&verbose&maxRecords=2
-Args: [modes=recons verbose maxRecords=2]
-Opts: null
-{
-  "errors": [
-    "unknown modes: recons"
-  ]
-}

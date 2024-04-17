@@ -1,3 +1,0 @@
-daemon?verbose&failOnPurpose
-Args: [verbose failOnPurpose]
-Unknown sdk endpoint: daemon

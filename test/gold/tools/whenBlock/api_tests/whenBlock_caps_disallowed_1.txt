@@ -1,6 +1,0 @@
-when?blocks=3000000&raw
-{
-  "errors": [
-    "Invalid key (raw) in when route."
-  ]
-}

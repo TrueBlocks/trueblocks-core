@@ -1,3 +1,0 @@
-scrape?decache
-Args: [decache]
-Unknown sdk endpoint: scrape

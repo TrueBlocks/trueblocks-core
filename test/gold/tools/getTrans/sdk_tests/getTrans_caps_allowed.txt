@@ -1,8 +1,0 @@
-transactions?transactions=12.0&chain&verbose&output&append&cache&decache&raw&ether&failOnPurpose
-Args: [transactions=12.0 chain verbose output append cache decache raw ether failOnPurpose]
-Opts: null
-{
-  "errors": [
-    "Invalid key (failOnPurpose) in route."
-  ]
-}

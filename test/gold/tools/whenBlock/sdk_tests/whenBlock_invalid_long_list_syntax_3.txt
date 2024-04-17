@@ -1,8 +1,0 @@
-when?blocks=2016-03-02&list&k
-Args: [blocks=2016-03-02 list k]
-Opts: null
-{
-  "errors": [
-    "Invalid key (k) in route."
-  ]
-}

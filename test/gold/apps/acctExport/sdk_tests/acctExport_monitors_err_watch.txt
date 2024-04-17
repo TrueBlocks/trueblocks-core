@@ -1,3 +1,0 @@
-monitors?watch&batchSize=0
-Args: [watch batchSize=0]
-Unknown sdk endpoint: monitors

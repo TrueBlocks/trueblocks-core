@@ -1,6 +1,0 @@
-when?blocks=3000000&ether
-{
-  "errors": [
-    "Invalid key (ether) in when route."
-  ]
-}

@@ -1,3 +1,0 @@
-scrape?
-Args: []
-Unknown sdk endpoint: scrape

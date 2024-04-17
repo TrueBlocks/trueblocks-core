@@ -1,8 +1,0 @@
-config?modes=edit
-Args: [modes=edit]
-Opts: null
-{
-  "errors": [
-    "Invalid key (modes) in route."
-  ]
-}

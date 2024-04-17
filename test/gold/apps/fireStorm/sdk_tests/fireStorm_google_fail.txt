@@ -1,3 +1,0 @@
-explore?terms=1001001.0&local&google
-Args: [terms=1001001.0 local google]
-Unknown sdk endpoint: explore

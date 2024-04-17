@@ -1,6 +1,0 @@
-config?wei
-{
-  "errors": [
-    "Invalid key (wei) in config route."
-  ]
-}

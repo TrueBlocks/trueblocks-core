@@ -1,8 +1,0 @@
-transactions?transactions=12.0&failOnPurpose
-Args: [transactions=12.0 failOnPurpose]
-Opts: null
-{
-  "errors": [
-    "Invalid key (failOnPurpose) in route."
-  ]
-}

@@ -1,8 +1,0 @@
-transactions?transactions=4000002.5&trace
-Args: [transactions=4000002.5 trace]
-Opts: null
-{
-  "errors": [
-    "Invalid key (trace) in route."
-  ]
-}

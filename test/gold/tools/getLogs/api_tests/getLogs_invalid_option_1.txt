@@ -1,6 +1,0 @@
-logs?oink
-{
-  "errors": [
-    "Invalid key (oink) in logs route."
-  ]
-}

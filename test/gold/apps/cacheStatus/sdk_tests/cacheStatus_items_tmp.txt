@@ -1,8 +1,0 @@
-status?modes=tmp&maxRecords=100
-Args: [modes=tmp maxRecords=100]
-Opts: null
-{
-  "errors": [
-    "unknown modes: tmp"
-  ]
-}

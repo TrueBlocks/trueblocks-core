@@ -1,8 +1,0 @@
-chunks?mode=header
-Args: [mode=header]
-Opts: null
-{
-  "errors": [
-    "unknown mode: header"
-  ]
-}

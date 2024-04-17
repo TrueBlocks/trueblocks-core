@@ -1,3 +1,0 @@
-scrape?dryRun&appsPerChunk=10000&snapToGrid=10000&firstSnap=10000&unripeDist=10000&channelCount=10000
-Args: [dryRun appsPerChunk=10000 snapToGrid=10000 firstSnap=10000 unripeDist=10000 channelCount=10000]
-Unknown sdk endpoint: scrape

@@ -1,8 +1,0 @@
-blocks?blocks=2222222&trace
-Args: [blocks=2222222 trace]
-Opts: null
-{
-  "errors": [
-    "Invalid key (trace) in route."
-  ]
-}

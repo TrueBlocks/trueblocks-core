@@ -1,6 +1,0 @@
-receipts?file=cmd_file.1&verbose&fmt=txt&transactions=5644782.0
-{
-  "errors": [
-    "The --file option is not available in api mode."
-  ]
-}

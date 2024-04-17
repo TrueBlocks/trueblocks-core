@@ -1,6 +1,0 @@
-list?
-{
-  "errors": [
-    "Please specify at least one valid Ethereum address."
-  ]
-}

@@ -1,8 +1,0 @@
-when?blocks=3000000&chain&verbose&output&append&cache&decache&failOnPurpose
-Args: [blocks=3000000 chain verbose output append cache decache failOnPurpose]
-Opts: null
-{
-  "errors": [
-    "Invalid key (failOnPurpose) in route."
-  ]
-}

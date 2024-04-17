@@ -1,6 +1,0 @@
-chunks?mode=junk
-{
-  "errors": [
-    "The mode option (junk) must be one of [ manifest | index | blooms | pins | addresses | appearances | stats ]"
-  ]
-}

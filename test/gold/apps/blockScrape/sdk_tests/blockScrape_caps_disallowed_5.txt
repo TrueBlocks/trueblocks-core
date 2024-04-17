@@ -1,3 +1,0 @@
-scrape?append
-Args: [append]
-Unknown sdk endpoint: scrape

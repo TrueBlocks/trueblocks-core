@@ -1,4 +1,0 @@
-Env: XDG_CONFIG_HOME=/NOTAPATH_QUALIFIED
-chifra names  test
-EROR[DATE|TIME] [31mThe XDG_CONFIG_HOME folder (/NOTAPATH_QUALIFIED) must exist.
-[0m

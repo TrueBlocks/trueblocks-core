@@ -1,3 +1,0 @@
-daemon?ether
-Args: [ether]
-Unknown sdk endpoint: daemon

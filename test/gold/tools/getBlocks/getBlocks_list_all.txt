@@ -1,9 +1,0 @@
-chifra blocks  --list_count 2 --list 1030000 10010
-TEST[DATE|TIME] Blocks:  [10010]
-TEST[DATE|TIME] List:  1030000
-TEST[DATE|TIME] ListCount:  2
-TEST[DATE|TIME] Caps:  cache,decache,raw,ether
-TEST[DATE|TIME] Format:  txt
-blockNumber	timestamp	date	hash	parentHash	miner	difficulty	baseFeePerGas	gasLimit	gasUsed	transactionsCnt	withdrawalsCnt	unclesCnt
-970100	1454891238	2016-02-08 00:27:18 UTC	0x58d7e86cdfaec2229bc1e0c787acfc49ccc85ebbaadefeb2b07f2ced0af55d70	0xbbb5717268f9e6550d66a92b450957a9fff92c5b63b96fde2182157734c6f04a	0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	11467093517127	0	3141592	21000	1	0	1
-970099	1454891236	2016-02-08 00:27:16 UTC	0xbbb5717268f9e6550d66a92b450957a9fff92c5b63b96fde2182157734c6f04a	0xf579e346652cbac8899ae24c7a163e94552efb7b2ea08f022a90b9127b6b623a	0x2a65aca4d5fc5b5c859090a6c34d164135398226	11461497082877	0	3141592	0	0	0	0

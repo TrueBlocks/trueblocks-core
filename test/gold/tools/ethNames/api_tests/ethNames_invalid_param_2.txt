@@ -1,6 +1,0 @@
-names?pink&fmt=txt
-{
-  "errors": [
-    "Invalid key (pink) in names route."
-  ]
-}

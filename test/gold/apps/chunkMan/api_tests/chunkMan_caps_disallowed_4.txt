@@ -1,6 +1,0 @@
-chunks?mode=blooms&wei
-{
-  "errors": [
-    "Invalid key (wei) in chunks route."
-  ]
-}

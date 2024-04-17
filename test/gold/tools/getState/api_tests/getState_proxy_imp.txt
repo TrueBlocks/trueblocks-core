@@ -1,3 +1,0 @@
-state?call='0xbb82aa5e()'&addrs=0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B&blocks=10092000&fmt=csv
-blockNumber,address,signature,encoding,bytes,compressedResult
-10092000,0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b,comptrollerImplementation(),0xbb82aa5e,,{val_0:0x97bd4cc841fc999194174cd1803c543247a014fe}

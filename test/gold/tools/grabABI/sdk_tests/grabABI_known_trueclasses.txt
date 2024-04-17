@@ -1,8 +1,0 @@
-abis?addrs=truebit&classes
-Args: [addrs=truebit classes]
-Opts: null
-{
-  "errors": [
-    "Invalid key (classes) in route."
-  ]
-}

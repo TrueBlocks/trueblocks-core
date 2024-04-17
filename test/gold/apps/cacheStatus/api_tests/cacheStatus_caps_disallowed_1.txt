@@ -1,6 +1,0 @@
-status?modes=blooms&cache
-{
-  "errors": [
-    "Invalid key (cache) in status route."
-  ]
-}

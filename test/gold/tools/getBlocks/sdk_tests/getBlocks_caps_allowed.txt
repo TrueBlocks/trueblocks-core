@@ -1,8 +1,0 @@
-blocks?blocks=3000000&chain&verbose&output&append&cache&decache&raw&ether&failOnPurpose
-Args: [blocks=3000000 chain verbose output append cache decache raw ether failOnPurpose]
-Opts: null
-{
-  "errors": [
-    "Invalid key (failOnPurpose) in route."
-  ]
-}

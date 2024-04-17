@@ -1,6 +1,0 @@
-chifra receipts  46147.0 --decache
-TEST[DATE|TIME] Transactions:  [46147.0]
-TEST[DATE|TIME] Decache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
-TEST[DATE|TIME] Format:  txt
-EROR[DATE|TIME] Not implemented yet.

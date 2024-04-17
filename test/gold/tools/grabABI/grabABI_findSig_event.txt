@@ -1,3 +1,0 @@
-chifra abis  --find 0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008
-TEST[DATE|TIME] Find:  [0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008]
-TEST[DATE|TIME] Format:  txt

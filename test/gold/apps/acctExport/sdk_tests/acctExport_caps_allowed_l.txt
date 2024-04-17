@@ -1,8 +1,0 @@
-list?addrs=trueblocks.eth&chain&verbose&output&append&failOnPurpose
-Args: [addrs=trueblocks.eth chain verbose output append failOnPurpose]
-Opts: null
-{
-  "errors": [
-    "Invalid key (failOnPurpose) in route."
-  ]
-}

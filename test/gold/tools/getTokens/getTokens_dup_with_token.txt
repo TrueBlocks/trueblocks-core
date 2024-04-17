@@ -1,7 +1,0 @@
-chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 4150000
-TEST[DATE|TIME] Addrs:  [0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xd26114cd6ee289accf82350c8d8487fedb8a0c07]
-TEST[DATE|TIME] Blocks:  [4150000]
-TEST[DATE|TIME] Caps:  cache,decache
-TEST[DATE|TIME] Format:  txt
-blockNumber	holder	address	name	symbol	decimals	balance	units
-4150000	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken	OMG	18	8.90855823	8908558230000000000

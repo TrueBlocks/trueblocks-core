@@ -1,3 +1,0 @@
-daemon?
-Args: []
-Unknown sdk endpoint: daemon

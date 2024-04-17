@@ -1,6 +1,0 @@
-monitors?addrs=trueblocks.eth&chain&fmt&nocolor&noop&version&verbose&noHeader&file&output&append&decache&failOnPurpose
-{
-  "errors": [
-    "Invalid key (failOnPurpose) in monitors route."
-  ]
-}

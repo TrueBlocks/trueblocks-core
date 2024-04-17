@@ -1,7 +1,0 @@
-chifra when  1000000-50000000:35000000
-TEST[DATE|TIME] Blocks:  [1000000-50000000:35000000]
-TEST[DATE|TIME] Caps:  cache,decache
-TEST[DATE|TIME] Format:  txt
-blockNumber	timestamp	date	name
-1000000	1455404053	2016-02-13 22:54:13 UTC	
-EROR[DATE|TIME] block at 36000000 returned an error: not found

@@ -1,3 +1,0 @@
-tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200xb9e7f8568e08d5659f5d29c4997173d84cdf2607&fmt=txt&blocks=2000000
-blockNumber	holder	address	name	symbol	decimals	balance	units
-2000000	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken	OMG	18	0	0

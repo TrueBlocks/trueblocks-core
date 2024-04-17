@@ -1,3 +1,0 @@
-scrape?chain&verbose&failOnPurpose
-Args: [chain verbose failOnPurpose]
-Unknown sdk endpoint: scrape

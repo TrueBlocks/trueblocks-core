@@ -1,6 +1,0 @@
-blocks?blocks=4102000&fmt=txt&flow=to
-{
-  "errors": [
-    "The --flow option is only available with the --uniq option"
-  ]
-}

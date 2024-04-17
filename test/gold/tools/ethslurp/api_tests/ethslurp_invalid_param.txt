@@ -1,6 +1,0 @@
-slurp?junk
-{
-  "errors": [
-    "Invalid key (junk) in slurp route."
-  ]
-}

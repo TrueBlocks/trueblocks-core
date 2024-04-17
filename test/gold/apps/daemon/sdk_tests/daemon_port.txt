@@ -1,3 +1,0 @@
-daemon?not-an-option&port=:8080
-Args: [not-an-option port=:8080]
-Unknown sdk endpoint: daemon

@@ -1,3 +1,0 @@
-daemon?chain
-Args: [chain]
-Unknown sdk endpoint: daemon

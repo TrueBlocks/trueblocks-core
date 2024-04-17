@@ -1,6 +1,0 @@
-blocks?listCount=10&blocks=1000
-{
-  "errors": [
-    "You must supply a non-zero value for the --list option with --list_count."
-  ]
-}

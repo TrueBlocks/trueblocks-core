@@ -1,6 +1,0 @@
-when?count&fmt=txt&timestamps&raw
-{
-  "errors": [
-    "Invalid key (raw) in when route."
-  ]
-}

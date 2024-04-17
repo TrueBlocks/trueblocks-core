@@ -1,6 +1,0 @@
-when?blocks=1301000&check
-{
-  "errors": [
-    "The --check option is only available with the --timestamps option."
-  ]
-}

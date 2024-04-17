@@ -1,6 +1,0 @@
-logs?transactions=3657480.12%203657480.9&output=output_test_file
-{
-  "errors": [
-    "The --output option is not available in api mode."
-  ]
-}

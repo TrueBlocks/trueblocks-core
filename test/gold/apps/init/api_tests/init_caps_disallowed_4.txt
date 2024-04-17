@@ -1,6 +1,0 @@
-init?cache
-{
-  "errors": [
-    "Invalid key (cache) in init route."
-  ]
-}

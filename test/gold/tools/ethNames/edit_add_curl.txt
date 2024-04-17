@@ -1,3 +1,0 @@
--X POST
--H "Content-Type: application/x-www-form-urlencoded"
--d "address=0x0000000000000000000000000000000010101010&name=NAME&tag=TAGS&source=SOURCE&symbol=SYMBOL&decimals=11&description=DESCRIPTION"

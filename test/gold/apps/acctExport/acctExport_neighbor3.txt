@@ -1,8 +1,0 @@
-chifra export  0xffeac0305ede3a915295ec8e61c7f881006f4474 --neighbors --first_block 0 --last_block 10
-TEST[DATE|TIME] Addrs:  [0xffeac0305ede3a915295ec8e61c7f881006f4474]
-TEST[DATE|TIME] Neighbors:  true
-TEST[DATE|TIME] LastBlock:  10
-TEST[DATE|TIME] Caps:  cache,decache,wei,ether
-TEST[DATE|TIME] Format:  txt
-blockNumber	transactionIndex	address	reason
-0	8888	0xffeac0305ede3a915295ec8e61c7f881006f4474	to

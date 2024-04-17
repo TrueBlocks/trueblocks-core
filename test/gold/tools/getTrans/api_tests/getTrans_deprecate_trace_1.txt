@@ -1,6 +1,0 @@
-transactions?transactions=4000002.5&trace
-{
-  "errors": [
-    "Invalid key (trace) in transactions route."
-  ]
-}

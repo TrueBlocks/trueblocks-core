@@ -1,3 +1,0 @@
-explore?terms=12
-Args: [terms=12]
-Unknown sdk endpoint: explore

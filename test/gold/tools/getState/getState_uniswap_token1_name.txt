@@ -1,8 +1,0 @@
-chifra state  --call '0x06fdde03()' 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 10092000
-TEST[DATE|TIME] Addrs:  [0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2]
-TEST[DATE|TIME] Blocks:  [10092000]
-TEST[DATE|TIME] Call:  0x06fdde03()
-TEST[DATE|TIME] Caps:  cache,decache,ether
-TEST[DATE|TIME] Format:  txt
-blockNumber	address	signature	encoding	bytes	compressedResult
-10092000	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	name()	0x06fdde03		{val_0:Wrapped Ether}

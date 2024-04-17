@@ -1,6 +1,0 @@
-explore?terms=12.0&decache
-{
-  "errors": [
-    "Invalid key (decache) in explore route."
-  ]
-}

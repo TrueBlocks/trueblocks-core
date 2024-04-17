@@ -1,3 +1,0 @@
-transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765&fmt=txt
-blockNumber	transactionIndex	timestamp	date	from	to	ether	gasPrice	gasUsed	gasCost	hash	isError	encoding	type
-4000000	68	1499633567	2017-07-09 20:52:47 UTC	0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	0x11b1f00bccf07754e6f1996864531fa162145cde	0.202229176215950944	4000000000	39512	158048000000000	0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765	false	0x	

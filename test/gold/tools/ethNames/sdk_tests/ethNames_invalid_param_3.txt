@@ -1,8 +1,0 @@
-names?terms=0xbf4ed7b27f1d666546e30d74d50d173d20bca754&pink
-Args: [terms=0xbf4ed7b27f1d666546e30d74d50d173d20bca754 pink]
-Opts: null
-{
-  "errors": [
-    "Invalid key (pink) in route."
-  ]
-}

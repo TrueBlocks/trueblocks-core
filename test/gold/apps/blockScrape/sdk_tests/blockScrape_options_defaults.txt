@@ -1,3 +1,0 @@
-scrape?dryRun
-Args: [dryRun]
-Unknown sdk endpoint: scrape

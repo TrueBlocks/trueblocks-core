@@ -1,8 +1,0 @@
-traces?pink
-Args: [pink]
-Opts: null
-{
-  "errors": [
-    "Invalid key (pink) in route."
-  ]
-}

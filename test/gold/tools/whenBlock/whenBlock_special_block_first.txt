@@ -1,7 +1,0 @@
-chifra when  frontier --verbose
-TEST[DATE|TIME] Blocks:  [frontier]
-TEST[DATE|TIME] Verbose:  true
-TEST[DATE|TIME] Caps:  cache,decache
-TEST[DATE|TIME] Format:  txt
-blockNumber	timestamp	date	name	component	description
-0	1438269975	2015-07-30 15:26:15 UTC	frontier	execution	Frontier was a live&#44; but barebone implementation of the Ethereum project. It followed the successful Olympic testing phase. It was intended for technical users&#44; specifically developers. Blocks had a gas limit of 5&#44;000. This ‘thawing’ period enabled miners to start their operations and for early adopters to install their clients without having to ‘rush’.

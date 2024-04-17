@@ -1,6 +1,0 @@
-abis?file=signatures.txt&fmt=txt
-{
-  "errors": [
-    "The --file option is not available in api mode."
-  ]
-}

@@ -1,6 +1,0 @@
-tokens?addrs=a%20b%20c
-{
-  "errors": [
-    "The value a is not a token contract."
-  ]
-}

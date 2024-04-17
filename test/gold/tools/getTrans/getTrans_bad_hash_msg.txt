@@ -1,7 +1,0 @@
-chifra transactions  0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 --fmt csv
-TEST[DATE|TIME] Transactions:  [0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11]
-TEST[DATE|TIME] Caps:  cache,decache,raw,ether
-TEST[DATE|TIME] Format:  csv
-blockNumber,transactionIndex,timestamp,date,from,to,ether,gasPrice,gasUsed,gasCost,hash,isError,encoding,type
-1001001,3,1455421883,2016-02-14 03:51:23 UTC,0x30d285941dfb8bbbe4ec72b02c8d166be01322d2,0x9b0a028eafdecde3afc0fd00b7937098388b7c8a,0.061848232647269079,50000000000,21000,1050000000000000,0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521,false,0x,
-EROR[DATE|TIME] transaction at 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 returned an error: not found

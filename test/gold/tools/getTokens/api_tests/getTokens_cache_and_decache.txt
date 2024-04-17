@@ -1,6 +1,0 @@
-tokens?addrs=0xa9fe4601811213c340e850ea305481aff02f5b28&blocks=12000000&cache&decache
-{
-  "errors": [
-    "The --cache and --decache options are mutually exclusive."
-  ]
-}

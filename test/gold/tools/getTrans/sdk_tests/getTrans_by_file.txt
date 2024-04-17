@@ -1,8 +1,0 @@
-transactions?bad
-Args: [bad]
-Opts: null
-{
-  "errors": [
-    "Invalid key (bad) in route."
-  ]
-}

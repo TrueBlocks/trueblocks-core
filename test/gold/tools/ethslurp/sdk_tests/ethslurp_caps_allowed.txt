@@ -1,8 +1,0 @@
-slurp?addrs=trueblocks.eth&chain&verbose&output&append&cache&decache&raw&ether&failOnPurpose
-Args: [addrs=trueblocks.eth chain verbose output append cache decache raw ether failOnPurpose]
-Opts: null
-{
-  "errors": [
-    "Invalid key (failOnPurpose) in route."
-  ]
-}

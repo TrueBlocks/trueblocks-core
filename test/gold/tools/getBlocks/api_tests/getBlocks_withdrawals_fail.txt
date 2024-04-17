@@ -1,6 +1,0 @@
-blocks?blocks=17034900&hashes&withdrawals&logs
-{
-  "errors": [
-    "Please choose only a single mode (--uncles, --logs, --withdrawal, etc.)"
-  ]
-}

@@ -1,3 +1,0 @@
-monitors?addrs=trueblocks.eth&cache
-Args: [addrs=trueblocks.eth cache]
-Unknown sdk endpoint: monitors
