@@ -17,10 +17,10 @@ import (
 
 func Test_url(t *testing.T) {
 	paginator := NewPageNumberPaginator(1, 1, 10)
-	provider, err := NewEtherscanProvider(nil)
-	if err != nil {
-		t.Fatal(err)
+	provider := &EtherscanProvider{
+		baseUrl: etherscanBaseUrl,
 	}
+	var err error
 	var result string
 	var expected string
 
