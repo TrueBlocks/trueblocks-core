@@ -2,7 +2,11 @@ package main
 
 import (
 	"fmt"
+	"path/filepath"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type record struct {
@@ -45,7 +49,7 @@ func (t *TestCase) InnerTest(mode string) (string, error) {
 	if mode == "api" {
 		return t.ApiTest()
 	} else if mode == "cmd" {
-		return t.CmdTest()
+		return t.CmdTest(mode)
 	} else if mode == "sdk" {
 		return t.SdkTest()
 	}
@@ -73,4 +77,25 @@ func (t *TestCase) ShouldTest(mode string) bool {
 	}
 
 	return true
+}
+
+func (t *TestCase) GetOutputPaths(mode string) (string, string, string) {
+	working := t.WorkingPath
+	if mode != "cmd" {
+		working = filepath.Join(t.WorkingPath, mode+"_tests") + "/"
+	}
+	file.EstablishFolder(working)
+	parts := strings.Split(t.PathTool, "/")
+	if len(parts) < 2 {
+		logger.Fatal(fmt.Sprintf("Invalid pathTool: %s. Need two parts.", t.PathTool))
+	}
+
+	workFn := filepath.Join(working, parts[1]+"_"+t.Filename+".txt")
+	goldFn := strings.Replace(workFn, "working", "gold", -1)
+	envFn := filepath.Join(working, t.Filename+".env")
+	if !file.FileExists(envFn) {
+		envFn = ""
+	}
+
+	return workFn, goldFn, envFn
 }

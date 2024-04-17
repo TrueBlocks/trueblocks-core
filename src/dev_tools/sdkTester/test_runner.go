@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -46,20 +45,13 @@ func (tr *Runner) Run(t *TestCase) error {
 
 	tr.AppendLog(t)
 
-	working := strings.ReplaceAll(strings.ReplaceAll(t.WorkingPath, "sdk_tests/", tr.Mode+"_tests/"), "cmd_tests/", "")
-	if !file.FolderExists(working) {
-		file.EstablishFolder(working)
-	}
-
 	wasTested := false
 	passedTest := false
 
 	os.Setenv("TEST_MODE", "true")
 	logger.SetTestMode(true)
 
-	parts := strings.Split(t.PathTool, "/")
-	workFn := filepath.Join(working, parts[1]+"_"+t.Filename+".txt")
-
+	workFn, goldFn, _ := t.GetOutputPaths(tr.Mode)
 	workFile, _ := os.Create(workFn)
 	logger.SetLoggerWriter(workFile)
 	logger.ToggleDecoration()
@@ -70,7 +62,11 @@ func (tr *Runner) Run(t *TestCase) error {
 		tr.ReportOneTest(t, wasTested && !passedTest)
 	}()
 
-	logger.Info(t.Route + "?" + t.OptionsForMode(tr.Mode))
+	if tr.Mode == "cmd" {
+		logger.Info("chifra " + t.Route + "  " + t.OptionsForMode(tr.Mode))
+	} else {
+		logger.Info(t.Route + "?" + t.OptionsForMode(tr.Mode))
+	}
 
 	wasTested = true
 	if results, err := t.InnerTest(tr.Mode); err != nil {
@@ -93,7 +89,6 @@ func (tr *Runner) Run(t *TestCase) error {
 	if workFile != nil {
 		workFile.Close()
 		newContents := file.AsciiFileToString(workFn)
-		goldFn := strings.Replace(workFn, "working", "gold", -1)
 		oldContents := file.AsciiFileToString(goldFn)
 		passedTest = newContents == oldContents
 	}

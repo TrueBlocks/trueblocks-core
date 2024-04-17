@@ -11,6 +11,13 @@ import (
 
 // SdkTest runs a test case through the SDK and returns the results in the provided bytes.Buffer
 func (t *TestCase) SdkTest() (string, error) {
+	reportFunc := func(s fmt.Stringer) {
+		if s == nil {
+			return
+		}
+		logger.Info("Opts:", s.String())
+	}
+
 	var buff bytes.Buffer
 	buf := &buff
 
@@ -19,7 +26,7 @@ func (t *TestCase) SdkTest() (string, error) {
 	switch t.Route {
 	case "list":
 		opts, err := sdk.GetListOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -28,7 +35,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "export":
 		opts, err := sdk.GetExportOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -37,7 +44,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "config":
 		opts, err := sdk.GetConfigOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -46,7 +53,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "status":
 		opts, err := sdk.GetStatusOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -55,7 +62,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "chunks":
 		opts, err := sdk.GetChunksOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -64,7 +71,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "init":
 		opts, err := sdk.GetInitOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -73,7 +80,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "names":
 		opts, err := sdk.GetNamesOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -82,7 +89,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "slurp":
 		opts, err := sdk.GetSlurpOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -91,7 +98,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "blocks":
 		opts, err := sdk.GetBlocksOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -100,7 +107,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "transactions":
 		opts, err := sdk.GetTransactionsOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -109,7 +116,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "receipts":
 		opts, err := sdk.GetReceiptsOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -118,7 +125,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "logs":
 		opts, err := sdk.GetLogsOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -127,7 +134,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "traces":
 		opts, err := sdk.GetTracesOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -136,7 +143,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "state":
 		opts, err := sdk.GetStateOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -145,7 +152,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "tokens":
 		opts, err := sdk.GetTokensOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -154,7 +161,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "abis":
 		opts, err := sdk.GetAbisOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -163,7 +170,7 @@ func (t *TestCase) SdkTest() (string, error) {
 
 	case "when":
 		opts, err := sdk.GetWhenOptions(t.SdkOptionsArray)
-		reportOpts(opts)
+		reportFunc(opts)
 		if err != nil {
 			return "", err
 		}
@@ -180,13 +187,6 @@ func (t *TestCase) SdkTest() (string, error) {
 	}
 
 	return "", nil
-}
-
-func reportOpts(s fmt.Stringer) {
-	if s == nil {
-		return
-	}
-	logger.Info("Opts:", s.String())
 }
 
 var cm = map[string]string{

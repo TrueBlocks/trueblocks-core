@@ -1,5 +1,11 @@
 package base
 
+import (
+	"os"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+)
+
 type Gas = uint64
 type Blknum = uint64
 type Txnum = uint64
@@ -13,4 +19,10 @@ func IsFinal(latestTs, blockTs Timestamp) bool {
 	var pendingPeriod = min * s
 	var diff = latestTs - blockTs
 	return diff >= pendingPeriod
+}
+
+func init() {
+	if os.Getenv("NO_COLOR") == "true" {
+		colors.ColorsOff()
+	}
 }
