@@ -27,16 +27,23 @@ type KeyProvider struct {
 	chain         string
 }
 
-func NewKeyProvider(conn *rpc.Connection, chain string) *KeyProvider {
-	p := &KeyProvider{
+func NewKeyProvider(conn *rpc.Connection, chain string) (p *KeyProvider, err error) {
+	keyEndpoint := config.GetChain(chain).KeyEndpoint
+	if keyEndpoint == "" {
+		err = errors.New("missing Key endpoint URL")
+		return
+	}
+
+	p = &KeyProvider{
 		conn:    conn,
 		chain:   chain,
 		perPage: keyMaxPerPage,
+		baseUrl: keyEndpoint,
 	}
 	p.printProgress = true
 	p.limiter = rate.NewLimiter(keyRequestsPerSecond, keyRequestsPerSecond)
 
-	return p
+	return
 }
 
 func (p *KeyProvider) PrintProgress() bool {
@@ -195,10 +202,6 @@ func (l *lastIndexedBlock) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (e *KeyProvider) fetchData(ctx context.Context, address base.Address, paginator Paginator, _ string) (data []SlurpedPageItem, count int, err error) {
-	if e.baseUrl == "" {
-		e.baseUrl = config.GetChain(e.chain).KeyEndpoint
-	}
-
 	pageId, ok := paginator.Page().(string)
 	if !ok {
 		err = errors.New("cannot get page id")

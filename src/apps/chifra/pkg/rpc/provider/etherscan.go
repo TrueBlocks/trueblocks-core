@@ -31,19 +31,27 @@ type EtherscanProvider struct {
 	conn             *rpc.Connection
 	limiter          *rate.Limiter
 	convertSlurpType func(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error)
+	apiKey           string
 }
 
-func NewEtherscanProvider(conn *rpc.Connection) *EtherscanProvider {
-	p := &EtherscanProvider{
+func NewEtherscanProvider(conn *rpc.Connection) (p *EtherscanProvider, err error) {
+	apiKey := config.GetKey("etherscan").ApiKey
+	if apiKey == "" {
+		err = errors.New("cannot read Etherscan API key")
+		return
+	}
+
+	p = &EtherscanProvider{
 		conn:    conn,
 		perPage: etherscanMaxPerPage,
 		baseUrl: etherscanBaseUrl,
+		apiKey:  apiKey,
 	}
 	p.printProgress = true
 	p.limiter = rate.NewLimiter(etherscanRequestsPerSecond, etherscanRequestsPerSecond)
 	p.convertSlurpType = p.defaultConvertSlurpType
 
-	return p
+	return
 }
 
 func (p *EtherscanProvider) PrintProgress() bool {
@@ -255,11 +263,6 @@ func (p *EtherscanProvider) url(value string, paginator Paginator, requestType s
 		return "", fmt.Errorf("should not happen (%s) ==> in getEtherscanUrl", requestType)
 	}
 
-	key := config.GetKey("etherscan").ApiKey
-	if key == "" {
-		return "", errors.New("cannot read Etherscan API key")
-	}
-
 	module := "account"
 	tt := "address"
 	if requestType == "byHash" {
@@ -275,7 +278,7 @@ func (p *EtherscanProvider) url(value string, paginator Paginator, requestType s
 	ret = strings.Replace(ret, "[{VALUE}]", value, -1)
 	ret = strings.Replace(ret, "[{PAGE}]", fmt.Sprintf("%d", paginator.Page()), -1)
 	ret = strings.Replace(ret, "[{PER_PAGE}]", fmt.Sprintf("%d", paginator.PerPage()), -1)
-	ret = ret + "&apikey=" + key
+	ret = ret + "&apikey=" + p.apiKey
 
 	return ret, nil
 }

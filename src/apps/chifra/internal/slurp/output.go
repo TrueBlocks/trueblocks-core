@@ -79,7 +79,7 @@ func GetSlurpOptions(args []string, g *globals.GlobalOptions) *SlurpOptions {
 
 // EXISTING_CODE
 // Provider returns 3rd party RPC provider based on --source
-func (opts *SlurpOptions) Provider() provider.Provider {
+func (opts *SlurpOptions) Provider() (provider.Provider, error) {
 	switch opts.Source {
 	case "key":
 		return provider.NewKeyProvider(opts.Conn, opts.Globals.Chain)
