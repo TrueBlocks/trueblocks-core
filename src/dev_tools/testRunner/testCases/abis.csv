@@ -22,7 +22,7 @@ on       ,both ,fast  ,abis  ,tools/grabABI ,fmt_json            ,y    ,addrs = 
 on       ,both ,fast  ,abis  ,tools/grabABI ,fmt_junk            ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = junk
 local    ,both ,fast  ,abis  ,tools/grabABI ,ens_test            ,y    ,addrs = uniswap.eth & fmt = json
 on       ,both ,fast  ,abis  ,tools/grabABI ,proxy_fail          ,y    ,proxy_for = 0xd9db270c1b5e3bd161e8c8503c55ceabee709552 & fmt = json
-on       ,both ,fast  ,abis  ,tools/grabABI ,proxy_no            ,y    ,addrs = 0x99b36fdbc582d113af36a21eba06bfeab7b9be12 & fmt = json
+local    ,both ,fast  ,abis  ,tools/grabABI ,proxy_no            ,y    ,addrs = 0x99b36fdbc582d113af36a21eba06bfeab7b9be12 & fmt = json
 on       ,both ,fast  ,abis  ,tools/grabABI ,proxy_yes           ,y    ,addrs = 0x99b36fdbc582d113af36a21eba06bfeab7b9be12 & proxy_for = 0xd9db270c1b5e3bd161e8c8503c55ceabee709552 & fmt = json
 local    ,both ,fast  ,abis  ,tools/grabABI ,many                ,y    ,addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & addrs = 0x99b36fdbc582d113af36a21eba06bfeab7b9be12 & addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & addrs = 0xd9db270c1b5e3bd161e8c8503c55ceabee709552 & addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7 & addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & addrs = 0xf1aa581f353005ba3765b81bf52d6b1c488c2101 & addrs = 0xffa93aacf49297d51e211817452839052fdfb961 & addrs = uniswap.eth & fmt = json
 
