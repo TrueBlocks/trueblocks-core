@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
@@ -56,8 +58,30 @@ func (t *TestCase) InnerTest(mode string) (string, error) {
 	return "", fmt.Errorf("Invalid mode:" + mode)
 }
 
-func (t *TestCase) ShouldTest(mode string) bool {
+var (
+	routeFilter string
+	modeFilter  string
+)
+
+func init() {
+	val := os.Getenv("TB_TEST_ROUTE")
+	if len(val) > 0 {
+		parts := strings.Split(val, ":")
+		routeFilter = parts[0]
+		if len(parts) > 1 {
+			modeFilter = parts[1]
+		}
+		logger.Info(fmt.Sprintf("%sRoute filter: %s, Mode filter: %s%s", colors.Green, routeFilter, modeFilter, colors.Off))
+	} else {
+		logger.Info(fmt.Sprintf("%sRunning all tests%s", colors.Green, colors.Off))
+	}
+}
+
+func (t *TestCase) ShouldRun(mode string) bool {
 	if !t.IsEnabled {
+		return false
+	}
+	if (len(modeFilter) > 0 && modeFilter != mode) || (len(routeFilter) > 0 && routeFilter != t.Route) {
 		return false
 	}
 

@@ -39,7 +39,7 @@ func NewRunner(testMap map[string][]TestCase, item, mode, source string) *Runner
 }
 
 func (tr *Runner) Run(t *TestCase) error {
-	if !t.ShouldTest(tr.Mode) {
+	if !t.ShouldRun(tr.Mode) {
 		return nil
 	}
 
@@ -124,9 +124,9 @@ func getLogFile(mode string) string {
 }
 
 func (tr *Runner) AppendLog(t *TestCase) {
-	// if len(os.Getenv("TB_TEST_ROUTE")) > 0 {
-	// 	return
-	// }
+	if len(os.Getenv("TB_TEST_ROUTE")) > 0 {
+		return
+	}
 	// s := fmt.Sprintf("%s\t%s.txt\t%s", t.Route, t.Filename, t.OptionsForMode(tr.Mode))
 	// tr.Logs[tr.Mode] = append(tr.Logs[tr.Mode], s)
 }
@@ -158,9 +158,11 @@ func (tr *Runner) ReportOneTest(t *TestCase, failed bool) {
 
 func (tr *Runner) ReportOneMode() {
 	// file.AppendToAsciiFile(getLogFile(tr.Mode), strings.Join(tr.Logs[tr.Mode], "\n")+"\n")
-	colors.ColorsOn()
-	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
-	colors.ColorsOff()
+	if tr.NTested > 0 {
+		colors.ColorsOn()
+		fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
+		colors.ColorsOff()
+	}
 }
 
 func (tr *Runner) ReportFinal() {
@@ -178,7 +180,7 @@ func (tr *Runner) ReportFinal() {
 func countOf(testMap map[string][]TestCase, source, mode string) int {
 	count := 0
 	for _, testCase := range testMap[source] {
-		if testCase.ShouldTest(mode) {
+		if testCase.ShouldRun(mode) {
 			count++
 		}
 	}

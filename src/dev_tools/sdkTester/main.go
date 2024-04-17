@@ -72,38 +72,32 @@ func main() {
 	if os.Getenv("TEST_SLURP") == "true" {
 		order = append(order, "slurp")
 	}
-	if len(os.Getenv("TB_TEST_ROUTE")) > 0 {
-		order = []string{os.Getenv("TB_TEST_ROUTE")}
-	} else {
-		logger.Info(colors.Green+"TB_TEST_ROUTE is empty. Running all tests.", colors.Off)
-		order = append(order, []string{
-			"names",
-			"blocks",
-			"logs",
-			"receipts",
-			"state",
-			"tokens",
-			"traces",
-			"transactions",
-			"abis",
-			"when",
-			"list",
-			"monitors",
-			"export",
-			"scrape",
-			"status",
-			"chifra",
-			"chunks",
-			"config",
-			"daemon",
-			"explore",
-			"init",
-		}...)
-	}
-
+	order = append(order, []string{
+		"names",
+		"blocks",
+		"logs",
+		"receipts",
+		"state",
+		"tokens",
+		"traces",
+		"transactions",
+		"abis",
+		"when",
+		"list",
+		"monitors",
+		"export",
+		"scrape",
+		"status",
+		"chifra",
+		"chunks",
+		"config",
+		"daemon",
+		"explore",
+		"init",
+	}...)
 	modes := []string{
-		// "sdk",
-		// "api",
+		"sdk",
+		"api",
 		"cmd",
 	}
 

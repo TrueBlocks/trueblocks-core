@@ -10,9 +10,11 @@ import (
 )
 
 func (t *TestCase) CmdTest(mode string) (string, error) {
-	tmpFn, goldFn, envFn := t.GetOutputPaths(mode)
-	tmpFn = filepath.Base(tmpFn) + ".tmp"
-	defer os.Remove(tmpFn)
+	_, goldFn, envFn := t.GetOutputPaths(mode)
+	tmpFn := goldFn + ".tmp"
+	defer func() {
+		os.Remove(tmpFn)
+	}()
 
 	cmd := "cd " + filepath.Dir(goldFn) + " && "
 	if file.FileExists(envFn) {
@@ -27,11 +29,8 @@ func (t *TestCase) CmdTest(mode string) (string, error) {
 	cmd += "TEST_MODE=true chifra "
 	cmd += t.Route + " "
 	cmd += t.CmdOptions + " "
-	cmd += ">>" + tmpFn + " "
+	cmd += ">" + (filepath.Base(tmpFn)) + " "
 	cmd += "2>&1"
-
-	// logger.Info(cmd)
-
 	utils.System(cmd)
 	return file.AsciiFileToString(tmpFn), nil
 }
