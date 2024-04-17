@@ -37,7 +37,7 @@ type EtherscanProvider struct {
 func NewEtherscanProvider(conn *rpc.Connection) (p *EtherscanProvider, err error) {
 	apiKey := config.GetKey("etherscan").ApiKey
 	if apiKey == "" {
-		err = errors.New("cannot read Etherscan API key")
+		err = errors.New("missing Etherscan API key")
 		return
 	}
 
