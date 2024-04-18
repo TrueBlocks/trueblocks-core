@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -52,12 +51,7 @@ func (tr *Runner) Run(t *TestCase) error {
 	os.Setenv("TEST_MODE", "true")
 	logger.SetTestMode(true)
 
-	working := strings.ReplaceAll(strings.ReplaceAll(t.WorkingPath+"sdk_tests/", "sdk_tests/", tr.Mode+"_tests/"), "cmd_tests/", "")
-	if !file.FolderExists(working) {
-		file.EstablishFolder(working)
-	}
-	workFn := filepath.Join(working, t.Tool+"_"+t.Filename+".txt")
-	goldFn := strings.Replace(workFn, "working", "gold", -1)
+	workFn, goldFn, _, _ := t.GetOutputPaths(tr.Mode)
 	workFile, _ := os.Create(workFn)
 	logger.SetLoggerWriter(workFile)
 	logger.ToggleDecoration()

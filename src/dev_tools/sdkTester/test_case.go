@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"path/filepath"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 type record struct {
@@ -74,4 +77,22 @@ func (t *TestCase) ShouldRun(mode string) bool {
 	}
 
 	return true
+}
+
+func (t *TestCase) GetOutputPaths(mode string) (string, string, string, string) {
+	working := t.WorkingPath
+	if mode != "cmd" {
+		working = filepath.Join(t.WorkingPath, mode+"_tests") + "/"
+	}
+	gold := strings.ReplaceAll(working, "working", "gold")
+
+	workFn := filepath.Join(working, t.Tool+"_"+t.Filename+".txt")
+	goldFn := filepath.Join(gold, t.Tool+"_"+t.Filename+".txt")
+	envFn := filepath.Join(gold, t.Filename+".env")
+	if !file.FileExists(envFn) {
+		envFn = ""
+	}
+	outputFn := ""
+
+	return workFn, goldFn, envFn, outputFn
 }
