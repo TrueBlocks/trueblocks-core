@@ -13,7 +13,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 2100
+weight: 61000
 toc: true
 ---
 

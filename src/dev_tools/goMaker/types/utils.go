@@ -22,7 +22,10 @@ func shouldProcess(source, tag string) (bool, error) {
 	}
 
 	if strings.Contains(source, "sdk_") {
-		if tag == "explore" || tag == "daemon" || tag == "scrape" {
+		if tag == "explore" || tag == "scrape" {
+			return false, nil
+		}
+		if tag == "daemon" && strings.Contains(source, "python") {
 			return false, nil
 		}
 	}

@@ -1,4 +1,4 @@
-chifra logs  --file cmd_file --verbose --fmt json
+chifra logs  --file cmd_file --verbose --fmt json --output by_file_v_out.file
 TEST[DATE|TIME] Transactions:  [1599319.2]
 TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] Verbose:  true
