@@ -389,6 +389,13 @@ func getRoutesAndModes() ([]string, []string) {
 							if key == "slurp" {
 								on = os.Getenv("TEST_SLURP") == "true"
 							}
+							if key == "status" {
+								on = false
+								if strings.Contains(filter, "status") {
+									fmt.Println("Tests for the status route may not be run seperately.")
+									os.Exit(1)
+								}
+							}
 							routeMap[key] = helper{routeMap[key].path, routeMap[key].order, on}
 						}
 					}

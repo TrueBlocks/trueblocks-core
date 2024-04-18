@@ -28,7 +28,7 @@ func (t *TestCase) CmdTest() (string, error) {
 	cmd += "NO_COLOR=true "
 	cmd += "TEST_MODE=true "
 	cmd += "chifra "
-	if t.Route != "chifra" {
+	if t.Route != "chifra" && t.Tool != "chifra" {
 		cmd += t.Route + " "
 	}
 	cmd += t.CmdOptions + " "

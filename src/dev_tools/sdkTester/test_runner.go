@@ -74,7 +74,7 @@ func (tr *Runner) Run(t *TestCase) error {
 	msg := t.Route + "?"
 	if tr.Mode == "cmd" {
 		msg = "chifra "
-		if t.Route != "chifra" {
+		if t.Route != "chifra" && t.Tool != "chifra" {
 			msg += t.Route + "  "
 		}
 	}
