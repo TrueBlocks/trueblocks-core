@@ -105,6 +105,8 @@ func main() {
 		os.Remove(getLogFile(mode))
 	}
 
+	preTest()
+
 	summary := NewSummary()
 	for _, item := range routeList {
 		source := "../src/dev_tools/testRunner/testCases/" + item + ".csv"
