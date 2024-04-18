@@ -6,12 +6,23 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"golang.org/x/time/rate"
 )
+
+func Test_keyPrepareQuery(t *testing.T) {
+	q := &Query{
+		Resources: []string{"one", "two"},
+	}
+	result := keyPrepareQuery(q)
+	if !reflect.DeepEqual(result.Resources, []string{"key"}) {
+		t.Fatal("wrong query")
+	}
+}
 
 func mockKeyServer(t *testing.T) (ts *httptest.Server) {
 	t.Helper()
