@@ -10,8 +10,8 @@ func preTest() {
 	logger.Info(colors.Yellow + "Downloading ABIs" + colors.Off)
 
 	addrs := []string{
-		"0x7d655c57f71464b6f83811c55d84009cd9f5221c",
 		"0xd9db270c1b5e3bd161e8c8503c55ceabee709552",
+		"0x7d655c57f71464b6f83811c55d84009cd9f5221c",
 	}
 	opts := sdk.AbisOptions{
 		Addrs: addrs,
