@@ -53,7 +53,7 @@ func (t *TestCase) InnerTest(mode string) (string, error) {
 	return "", fmt.Errorf("Invalid mode:" + mode)
 }
 
-func (t *TestCase) ShouldTest(mode string) bool {
+func (t *TestCase) ShouldRun(mode string) bool {
 	if !t.IsEnabled {
 		return false
 	}

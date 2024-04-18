@@ -40,7 +40,7 @@ func NewRunner(testMap map[string][]TestCase, item, mode, source string) *Runner
 }
 
 func (tr *Runner) Run(t *TestCase) error {
-	if !t.ShouldTest(tr.Mode) {
+	if !t.ShouldRun(tr.Mode) {
 		return nil
 	}
 
@@ -182,7 +182,7 @@ func (tr *Runner) ReportFinal() {
 func countOf(testMap map[string][]TestCase, source, mode string) int {
 	count := 0
 	for _, testCase := range testMap[source] {
-		if testCase.ShouldTest(mode) {
+		if testCase.ShouldRun(mode) {
 			count++
 		}
 	}

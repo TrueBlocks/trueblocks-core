@@ -21,8 +21,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
-var debugging = false
-
 func init() {
 	os.Setenv("NO_USERQUERY", "true")
 	os.Setenv("TEST_MODE", "true")
@@ -58,25 +56,21 @@ func main() {
 		return err
 	}
 
-	thePath := "../src/dev_tools/testRunner/testCases"
-	if debugging {
-		thePath = "../testRunner/testCases"
-	}
-
-	if err := filepath.Walk(thePath, walkFunc); err != nil {
-		fmt.Printf("error walking the path %q: %v\n", thePath, err)
+	casesPath := "../src/dev_tools/testRunner/testCases"
+	if err := filepath.Walk(casesPath, walkFunc); err != nil {
+		fmt.Printf("error walking the path %q: %v\n", casesPath, err)
 	}
 	file.StringToAsciiFile("../src/dev_tools/sdkTester/generated/testCases.json", toJson(testMap))
 
-	order := []string{}
+	routeList := []string{}
 	if os.Getenv("TEST_SLURP") == "true" {
-		order = append(order, "slurp")
+		routeList = append(routeList, "slurp")
 	}
 	if len(os.Getenv("TB_TEST_ROUTE")) > 0 {
-		order = []string{os.Getenv("TB_TEST_ROUTE")}
+		routeList = []string{os.Getenv("TB_TEST_ROUTE")}
 	} else {
 		logger.Info(colors.Green+"TB_TEST_ROUTE is empty. Running all tests.", colors.Off)
-		order = append(order, []string{
+		routeList = append(routeList, []string{
 			"names",
 			"blocks",
 			"logs",
@@ -101,20 +95,20 @@ func main() {
 		}...)
 	}
 
-	modes := []string{
+	modeList := []string{
 		"sdk",
 		"api",
 		// "cmd",
 	}
 
-	for _, mode := range modes {
+	for _, mode := range modeList {
 		os.Remove(getLogFile(mode))
 	}
 
 	summary := NewSummary()
-	for _, item := range order {
+	for _, item := range routeList {
 		source := "../src/dev_tools/testRunner/testCases/" + item + ".csv"
-		for _, mode := range modes {
+		for _, mode := range modeList {
 			tr := NewRunner(testMap, item, mode, source)
 			for _, testCase := range testMap[source] {
 				if err := tr.Run(&testCase); err != nil {
@@ -142,7 +136,7 @@ func parseCsv(filePath string) ([]TestCase, error) {
 	defer ff.Close()
 
 	reader := csv.NewReader(ff)
-	const requiredFields = 8
+	const requiredFields = 9
 	lineNumber := 0
 	testCases := make([]TestCase, 0, 200)
 	for {
@@ -173,10 +167,10 @@ func parseCsv(filePath string) ([]TestCase, error) {
 				Speed:    strings.Trim(csvRecord[2], " "),
 				Route:    strings.Trim(csvRecord[3], " "),
 				Path:     strings.Trim(csvRecord[4], " "),
-				Tool:     strings.Trim(csvRecord[4], " "),
-				Filename: strings.Trim(csvRecord[5], " "),
-				Post:     strings.Trim(csvRecord[6], " "),
-				Options:  strings.Trim(csvRecord[7], " "),
+				Tool:     strings.Trim(csvRecord[5], " "),
+				Filename: strings.Trim(csvRecord[6], " "),
+				Post:     strings.Trim(csvRecord[7], " "),
+				Options:  strings.Trim(csvRecord[8], " "),
 			}
 
 			testCase := TestCase{
