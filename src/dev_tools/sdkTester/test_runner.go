@@ -81,7 +81,6 @@ func (tr *Runner) Run(t *TestCase) error {
 		results = string(bytes)
 		logger.Info(results)
 	} else {
-		results = strings.Trim(results, "\n\r")
 		if len(results) > 0 {
 			results = strings.ReplaceAll(results, "3735928559", "\"0xdeadbeef\"") // mildly hacky cleaning
 			results = strings.ReplaceAll(results, "\\u0026", "&")
