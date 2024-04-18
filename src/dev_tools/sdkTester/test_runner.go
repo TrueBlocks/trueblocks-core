@@ -159,9 +159,11 @@ func (tr *Runner) ReportOneTest(t *TestCase, failed bool) {
 
 func (tr *Runner) ReportOneMode() {
 	// file.AppendToAsciiFile(getLogFile(tr.Mode), strings.Join(tr.Logs[tr.Mode], "\n")+"\n")
-	colors.ColorsOn()
-	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
-	colors.ColorsOff()
+	if tr.NTested > 0 {
+		colors.ColorsOn()
+		fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
+		colors.ColorsOff()
+	}
 }
 
 func (tr *Runner) ReportFinal() {
@@ -170,9 +172,9 @@ func (tr *Runner) ReportFinal() {
 	tr.Mode = "final"
 	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
 	fmt.Println("nFails:", len(tr.Fails))
-	for _, fail := range tr.Fails {
-		fmt.Printf("%s%s%s\n", colors.Red, fail, colors.Off)
-	}
+	// for _, fail := range tr.Fails {
+	// 	fmt.Printf("%s%s%s\n", colors.Red, fail, colors.Off)
+	// }
 	colors.ColorsOff()
 }
 

@@ -46,7 +46,7 @@ func (t *TestCase) InnerTest(mode string) (string, error) {
 	if mode == "api" {
 		return t.ApiTest()
 	} else if mode == "cmd" {
-		return t.CmdTest()
+		return t.CmdTest(mode)
 	} else if mode == "sdk" {
 		return t.SdkTest()
 	}

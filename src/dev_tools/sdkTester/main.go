@@ -56,7 +56,7 @@ func main() {
 	if err := filepath.Walk(casesPath, walkFunc); err != nil {
 		fmt.Printf("error walking the path %q: %v\n", casesPath, err)
 	}
-	file.StringToAsciiFile("../src/dev_tools/sdkTester/generated/testCases.json", toJson(testMap))
+	file.StringToAsciiFile(getGeneratedPath()+"testCases.json", toJson(testMap))
 
 	downloadAbis()
 
@@ -375,8 +375,11 @@ func getRepoRoot() string {
 }
 
 func getCasesPath() string {
-	return "../src/dev_tools/testRunner/testCases/"
-	// return filepath.Join(getRepoRoot(), "src/dev_tools/testRunner/testCases") + "/"
+	return filepath.Join(getRepoRoot(), "src/dev_tools/testRunner/testCases") + "/"
+}
+
+func getGeneratedPath() string {
+	return filepath.Join(getRepoRoot(), "src/dev_tools/sdkTester/generated") + "/"
 }
 
 func getApiUrl() string {
