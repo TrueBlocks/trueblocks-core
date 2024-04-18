@@ -27,14 +27,10 @@ func init() {
 }
 
 func main() {
-	port := os.Getenv("TB_TEST_API_SERVER")
-	if port == "" {
-		port = "8080"
-	}
-
 	ready := make(chan bool)
-	go sdk.NewDaemon(port).Start(ready)
+	go sdk.NewDaemon(getApiUrl()).Start(ready)
 	<-ready
+	logger.Info(colors.Yellow + "Server started..." + colors.Off)
 
 	testMap := make(map[string][]TestCase, 100)
 	walkFunc := func(path string, info os.FileInfo, err error) error {
@@ -56,60 +52,23 @@ func main() {
 		return err
 	}
 
-	casesPath := "../src/dev_tools/testRunner/testCases"
+	casesPath := getCasesPath()
 	if err := filepath.Walk(casesPath, walkFunc); err != nil {
 		fmt.Printf("error walking the path %q: %v\n", casesPath, err)
 	}
 	file.StringToAsciiFile("../src/dev_tools/sdkTester/generated/testCases.json", toJson(testMap))
 
-	routeList := []string{}
-	if os.Getenv("TEST_SLURP") == "true" {
-		routeList = append(routeList, "slurp")
-	}
-	if len(os.Getenv("TB_TEST_ROUTE")) > 0 {
-		routeList = []string{os.Getenv("TB_TEST_ROUTE")}
-	} else {
-		logger.Info(colors.Green+"TB_TEST_ROUTE is empty. Running all tests.", colors.Off)
-		routeList = append(routeList, []string{
-			"names",
-			"blocks",
-			"logs",
-			"receipts",
-			"state",
-			"tokens",
-			"traces",
-			"transactions",
-			"abis",
-			"when",
-			"list",
-			"monitors",
-			"export",
-			"scrape",
-			"status",
-			"chifra",
-			"chunks",
-			"config",
-			"daemon",
-			"explore",
-			"init",
-		}...)
-	}
+	downloadAbis()
 
-	modeList := []string{
-		"sdk",
-		"api",
-		// "cmd",
-	}
+	routeList, modeList := getRoutesAndModes()
 
 	for _, mode := range modeList {
 		os.Remove(getLogFile(mode))
 	}
 
-	preTest()
-
 	summary := NewSummary()
 	for _, item := range routeList {
-		source := "../src/dev_tools/testRunner/testCases/" + item + ".csv"
+		source := casesPath + item + ".csv"
 		for _, mode := range modeList {
 			tr := NewRunner(testMap, item, mode, source)
 			for _, testCase := range testMap[source] {
@@ -362,4 +321,68 @@ func toJson(structure interface{}) string {
 		return ""
 	}
 	return buf.String()
+}
+
+func getRoutesAndModes() ([]string, []string) {
+	routeList := []string{}
+	if os.Getenv("TEST_SLURP") == "true" {
+		routeList = append(routeList, "slurp")
+	}
+	if len(os.Getenv("TB_TEST_ROUTE")) > 0 {
+		routeList = []string{os.Getenv("TB_TEST_ROUTE")}
+	} else {
+		logger.Info(colors.Green+"TB_TEST_ROUTE is empty. Running all tests.", colors.Off)
+		routeList = append(routeList, []string{
+			"names",
+			"blocks",
+			"logs",
+			"receipts",
+			"state",
+			"tokens",
+			"traces",
+			"transactions",
+			"abis",
+			"when",
+			"list",
+			"monitors",
+			"export",
+			"scrape",
+			"status",
+			"chifra",
+			"chunks",
+			"config",
+			"daemon",
+			"explore",
+			"init",
+		}...)
+	}
+
+	modeList := []string{
+		"sdk",
+		"api",
+		// "cmd",
+	}
+
+	return routeList, modeList
+}
+
+func getRepoRoot() string {
+	wd, _ := os.Getwd()
+	if !strings.HasSuffix(wd, "/build") {
+		logger.Fatal("Must be run from the build folder")
+	}
+	return filepath.Join(wd, "../")
+}
+
+func getCasesPath() string {
+	return "../src/dev_tools/testRunner/testCases/"
+	// return filepath.Join(getRepoRoot(), "src/dev_tools/testRunner/testCases") + "/"
+}
+
+func getApiUrl() string {
+	port := strings.ReplaceAll(os.Getenv("TB_TEST_API_SERVER"), ":", "")
+	if port == "" {
+		port = "8080"
+	}
+	return "localhost:" + port
 }

@@ -6,8 +6,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
-func preTest() {
-	logger.Info(colors.Yellow + "Downloading ABIs" + colors.Off)
+func downloadAbis() {
+	logger.Info(colors.Yellow + "Downloading Abis..." + colors.Off)
 
 	addrs := []string{
 		"0xd9db270c1b5e3bd161e8c8503c55ceabee709552",
