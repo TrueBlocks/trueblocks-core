@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "---------------------------------------------------------"
-echo "Running test_with_docker.sh @"
+echo "Running test_with_docker.sh $@"
 echo "---------------------------------------------------------"
 
 # SOME NOTES: I spent a very long time messing around with these test after I removed the entire

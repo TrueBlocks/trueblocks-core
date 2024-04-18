@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "---------------------------------------------------------"
-echo "Running build_and_test.sh @"
+echo "Running build_and_test.sh"
 echo "---------------------------------------------------------"
 
 cd /root/trueblocks-core/build
