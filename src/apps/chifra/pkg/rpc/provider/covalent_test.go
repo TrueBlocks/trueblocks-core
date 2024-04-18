@@ -18,7 +18,11 @@ import (
 
 func TestCovalentProvider_url(t *testing.T) {
 	paginator := NewPageNumberPaginator(0, 0, 0)
-	provider, _ := NewCovalentProvider(nil, "mainnet")
+	provider := CovalentProvider{
+		chain:   "mainnet",
+		apiKey:  "fake",
+		baseUrl: covalentBaseUrl,
+	}
 	var err error
 	var result string
 	var expected string
@@ -264,8 +268,6 @@ func TestCovalentProvider_Appearances(t *testing.T) {
 	ts := mockEtherscanServer(t)
 	defer ts.Close()
 
-	etherscanBaseUrl = ts.URL
-
 	provider := EtherscanProvider{
 		perPage: perPage,
 		baseUrl: ts.URL,
@@ -311,8 +313,6 @@ func TestCovalentProvider_Count(t *testing.T) {
 	perPage := 3
 	ts := mockEtherscanServer(t)
 	defer ts.Close()
-
-	etherscanBaseUrl = ts.URL
 
 	provider := EtherscanProvider{
 		perPage: perPage,
