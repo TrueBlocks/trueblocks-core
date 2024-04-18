@@ -10,7 +10,8 @@ type record struct {
 	Mode     string `json:"mode"`
 	Speed    string `json:"speed"`
 	Route    string `json:"route"`
-	PathTool string `json:"pathTool"`
+	Path     string `json:"path"`
+	Tool     string `json:"tool"`
 	Filename string `json:"filename"`
 	Post     string `json:"post"`
 	Options  string `json:"options"`
@@ -59,7 +60,7 @@ func (t *TestCase) ShouldTest(mode string) bool {
 
 	switch mode {
 	case "api":
-		if t.Mode == "cmd" || strings.Contains(t.PathTool, "chifra") || t.Route == "monitors" {
+		if t.Mode == "cmd" || strings.Contains(t.Tool, "chifra") || t.Route == "monitors" {
 			return false
 		}
 	case "cmd":
@@ -67,7 +68,7 @@ func (t *TestCase) ShouldTest(mode string) bool {
 			return false
 		}
 	case "sdk":
-		if t.HasShorthand || strings.Contains(t.PathTool, "chifra") || t.Route == "monitors" {
+		if t.HasShorthand || strings.Contains(t.Tool, "chifra") || t.Route == "monitors" {
 			return false
 		}
 	}

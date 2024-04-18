@@ -1,60 +1,60 @@
-enabled ,mode ,speed ,route ,path/tool     ,filename            ,post ,options
-on      ,cmd  ,fast  ,logs  ,tools/getLogs ,help                ,y    ,@h
-on      ,cmd  ,fast  ,logs  ,tools/getLogs ,help_long           ,y    ,help
-on      ,both ,fast  ,logs  ,tools/getLogs ,no_input            ,y    ,
-on      ,both ,fast  ,logs  ,tools/getLogs ,bad_hash            ,y    ,transactions = 0x0012
-on      ,both ,fast  ,logs  ,tools/getLogs ,invalid_option_1    ,y    ,oink
-on      ,both ,fast  ,logs  ,tools/getLogs ,invalid_option_2    ,y    ,other
-on      ,both ,fast  ,logs  ,tools/getLogs ,invalid_param_1     ,y    ,transactions = .clink
-on      ,both ,fast  ,logs  ,tools/getLogs ,invalid_param_2     ,y    ,transactions = 1233123
-local   ,both ,fast  ,logs  ,tools/getLogs ,bad_hash_msg        ,y    ,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521
-local   ,both ,fast  ,logs  ,tools/getLogs ,bad_blkhash_msg     ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5
-on      ,both ,fast  ,logs  ,tools/getLogs ,default             ,y    ,address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
-on      ,both ,fast  ,logs  ,tools/getLogs ,block_range         ,y    ,transactions = 1718400-1718420
-on      ,both ,fast  ,logs  ,tools/getLogs ,block_range_addr    ,y    ,transactions = 1718400-1718420 transactions = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
-local   ,both ,fast  ,logs  ,tools/getLogs ,three_ways          ,n    ,transactions = 0xbed082f2f6fb5f91924df74eb79ac37ea9490e49dda0b29a01db27d171efb424 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 3657480.36 1001010.12 0xbed082f2f6fb5f91924df74eb79ac37ea9490e49dda0b29a01db27d171efb422 & fmt = txt & no_header
-on      ,both ,fast  ,logs  ,tools/getLogs ,verbose_blk_idx1    ,n    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 & fmt = csv
-on      ,both ,fast  ,logs  ,tools/getLogs ,verbose_blk_idx2    ,y    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 & verbose
-on      ,both ,fast  ,logs  ,tools/getLogs ,verbose_blk_idx3    ,y    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 & fmt = json
-on      ,both ,fast  ,logs  ,tools/getLogs ,by_txhash           ,y    ,transactions = 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765
-on      ,both ,fast  ,logs  ,tools/getLogs ,by_bnun_and_txid    ,y    ,transactions = 4000000.5 & fmt = json
-on      ,both ,medi  ,logs  ,tools/getLogs ,by_blk_hash_good    ,y    ,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & verbose
-on      ,both ,fast  ,logs  ,tools/getLogs ,by_blk_hash_bad     ,y    ,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 & verbose
-local   ,both ,medi  ,logs  ,tools/getLogs ,star                ,y    ,transactions = 1428993.* & fmt = json
-on      ,both ,fast  ,logs  ,tools/getLogs ,fmt_default         ,n    ,transactions = 2222222.0 2332332.0
-on      ,both ,slow  ,logs  ,tools/getLogs ,fmt_txt             ,n    ,transactions = 2222222.0 2332332.0 & fmt = txt
-on      ,both ,fast  ,logs  ,tools/getLogs ,fmt_csv             ,n    ,transactions = 2222222.0 2332332.0 & fmt = csv
-on      ,both ,fast  ,logs  ,tools/getLogs ,fmt_json            ,y    ,transactions = 2222222.0 2332332.0 & fmt = json
-on      ,both ,fast  ,logs  ,tools/getLogs ,fmt_api             ,y    ,transactions = 2222222.0 2332332.0 & fmt = api
-on      ,cmd  ,fast  ,logs  ,tools/getLogs ,fmt_junk            ,y    ,transactions = 2222222.0 2332332.0 & fmt = junk
-local   ,both ,fast  ,logs  ,tools/getLogs ,bad_hash_msg_raw    ,y    ,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & raw
-local   ,both ,fast  ,logs  ,tools/getLogs ,bad_blkhash_msg_raw ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 & raw
-on      ,both ,fast  ,logs  ,tools/getLogs ,from_raw            ,y    ,transactions = 4000000.5 & raw
-on      ,both ,medi  ,logs  ,tools/getLogs ,prev_bug2_2         ,y    ,transactions = 4279119.46 & raw
+enabled ,mode ,speed ,route ,path  ,tool    ,filename            ,post ,options
+on      ,cmd  ,fast  ,logs  ,tools ,getLogs ,help                ,y    ,@h
+on      ,cmd  ,fast  ,logs  ,tools ,getLogs ,help_long           ,y    ,help
+on      ,both ,fast  ,logs  ,tools ,getLogs ,no_input            ,y    ,
+on      ,both ,fast  ,logs  ,tools ,getLogs ,bad_hash            ,y    ,transactions = 0x0012
+on      ,both ,fast  ,logs  ,tools ,getLogs ,invalid_option_1    ,y    ,oink
+on      ,both ,fast  ,logs  ,tools ,getLogs ,invalid_option_2    ,y    ,other
+on      ,both ,fast  ,logs  ,tools ,getLogs ,invalid_param_1     ,y    ,transactions = .clink
+on      ,both ,fast  ,logs  ,tools ,getLogs ,invalid_param_2     ,y    ,transactions = 1233123
+local   ,both ,fast  ,logs  ,tools ,getLogs ,bad_hash_msg        ,y    ,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521
+local   ,both ,fast  ,logs  ,tools ,getLogs ,bad_blkhash_msg     ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5
+on      ,both ,fast  ,logs  ,tools ,getLogs ,default             ,y    ,address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+on      ,both ,fast  ,logs  ,tools ,getLogs ,block_range         ,y    ,transactions = 1718400-1718420
+on      ,both ,fast  ,logs  ,tools ,getLogs ,block_range_addr    ,y    ,transactions = 1718400-1718420 transactions = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+local   ,both ,fast  ,logs  ,tools ,getLogs ,three_ways          ,n    ,transactions = 0xbed082f2f6fb5f91924df74eb79ac37ea9490e49dda0b29a01db27d171efb424 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 3657480.36 1001010.12 0xbed082f2f6fb5f91924df74eb79ac37ea9490e49dda0b29a01db27d171efb422 & fmt = txt & no_header
+on      ,both ,fast  ,logs  ,tools ,getLogs ,verbose_blk_idx1    ,n    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 & fmt = csv
+on      ,both ,fast  ,logs  ,tools ,getLogs ,verbose_blk_idx2    ,y    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 & verbose
+on      ,both ,fast  ,logs  ,tools ,getLogs ,verbose_blk_idx3    ,y    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 & fmt = json
+on      ,both ,fast  ,logs  ,tools ,getLogs ,by_txhash           ,y    ,transactions = 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765
+on      ,both ,fast  ,logs  ,tools ,getLogs ,by_bnun_and_txid    ,y    ,transactions = 4000000.5 & fmt = json
+on      ,both ,medi  ,logs  ,tools ,getLogs ,by_blk_hash_good    ,y    ,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & verbose
+on      ,both ,fast  ,logs  ,tools ,getLogs ,by_blk_hash_bad     ,y    ,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 & verbose
+local   ,both ,medi  ,logs  ,tools ,getLogs ,star                ,y    ,transactions = 1428993.* & fmt = json
+on      ,both ,fast  ,logs  ,tools ,getLogs ,fmt_default         ,n    ,transactions = 2222222.0 2332332.0
+on      ,both ,slow  ,logs  ,tools ,getLogs ,fmt_txt             ,n    ,transactions = 2222222.0 2332332.0 & fmt = txt
+on      ,both ,fast  ,logs  ,tools ,getLogs ,fmt_csv             ,n    ,transactions = 2222222.0 2332332.0 & fmt = csv
+on      ,both ,fast  ,logs  ,tools ,getLogs ,fmt_json            ,y    ,transactions = 2222222.0 2332332.0 & fmt = json
+on      ,both ,fast  ,logs  ,tools ,getLogs ,fmt_api             ,y    ,transactions = 2222222.0 2332332.0 & fmt = api
+on      ,cmd  ,fast  ,logs  ,tools ,getLogs ,fmt_junk            ,y    ,transactions = 2222222.0 2332332.0 & fmt = junk
+local   ,both ,fast  ,logs  ,tools ,getLogs ,bad_hash_msg_raw    ,y    ,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & raw
+local   ,both ,fast  ,logs  ,tools ,getLogs ,bad_blkhash_msg_raw ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 & raw
+on      ,both ,fast  ,logs  ,tools ,getLogs ,from_raw            ,y    ,transactions = 4000000.5 & raw
+on      ,both ,medi  ,logs  ,tools ,getLogs ,prev_bug2_2         ,y    ,transactions = 4279119.46 & raw
 
-on      ,both ,fast  ,logs  ,tools/getLogs ,filter_none         ,y    ,transactions = 15001001.0 15001001.1 & fmt = json
-on      ,both ,fast  ,logs  ,tools/getLogs ,filter_1_emitter    ,y    ,transactions = 15001001.0 15001001.1 & emitter = 0x514910771af9ca656af840dff83e8264ecf986ca & fmt = json
-on      ,both ,fast  ,logs  ,tools/getLogs ,filter_2_emitter    ,y    ,transactions = 15001001.0 15001001.1 & emitter = 0x514910771af9ca656af840dff83e8264ecf986ca & emitter = 0x9194fbb0363c5dc78bc918f888a5b87781bb9d00 & fmt = json
-on      ,both ,fast  ,logs  ,tools/getLogs ,filter_1_topic      ,y    ,transactions = 15001001.0 15001001.1 & topic = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1 & fmt = json
-on      ,both ,fast  ,logs  ,tools/getLogs ,filter_2_topic      ,y    ,transactions = 15001001.0 15001001.1 & topic = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & fmt = json
-on      ,both ,fast  ,logs  ,tools/getLogs ,filter_1_both       ,y    ,transactions = 15001001.0 15001001.1 & emitter = 0xc40d16476380e4037e6b1a2594caf6a6cc8da967 & topic = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1 & fmt = json
-on      ,both ,fast  ,logs  ,tools/getLogs ,filter_2_both       ,y    ,transactions = 15001001.0 15001001.1 & emitter = 0x514910771af9ca656af840dff83e8264ecf986ca & emitter = 0x9194fbb0363c5dc78bc918f888a5b87781bb9d00 & topic = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & fmt = json
+on      ,both ,fast  ,logs  ,tools ,getLogs ,filter_none         ,y    ,transactions = 15001001.0 15001001.1 & fmt = json
+on      ,both ,fast  ,logs  ,tools ,getLogs ,filter_1_emitter    ,y    ,transactions = 15001001.0 15001001.1 & emitter = 0x514910771af9ca656af840dff83e8264ecf986ca & fmt = json
+on      ,both ,fast  ,logs  ,tools ,getLogs ,filter_2_emitter    ,y    ,transactions = 15001001.0 15001001.1 & emitter = 0x514910771af9ca656af840dff83e8264ecf986ca & emitter = 0x9194fbb0363c5dc78bc918f888a5b87781bb9d00 & fmt = json
+on      ,both ,fast  ,logs  ,tools ,getLogs ,filter_1_topic      ,y    ,transactions = 15001001.0 15001001.1 & topic = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1 & fmt = json
+on      ,both ,fast  ,logs  ,tools ,getLogs ,filter_2_topic      ,y    ,transactions = 15001001.0 15001001.1 & topic = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & fmt = json
+on      ,both ,fast  ,logs  ,tools ,getLogs ,filter_1_both       ,y    ,transactions = 15001001.0 15001001.1 & emitter = 0xc40d16476380e4037e6b1a2594caf6a6cc8da967 & topic = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1 & fmt = json
+on      ,both ,fast  ,logs  ,tools ,getLogs ,filter_2_both       ,y    ,transactions = 15001001.0 15001001.1 & emitter = 0x514910771af9ca656af840dff83e8264ecf986ca & emitter = 0x9194fbb0363c5dc78bc918f888a5b87781bb9d00 & topic = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & fmt = json
 
 # This fails for an unknown reason for multiple tools
-delay   ,both ,fast  ,logs  ,tools/getLogs ,multi_articulate    ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
+delay   ,both ,fast  ,logs  ,tools ,getLogs ,multi_articulate    ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 
-on      ,cmd  ,fast  ,logs  ,tools/getLogs ,by_filebad          ,y    ,file = cmd_file & bad
-on      ,cmd  ,slow  ,logs  ,tools/getLogs ,by_file             ,y    ,file = cmd_file
-on      ,cmd  ,fast  ,logs  ,tools/getLogs ,by_file_v           ,y    ,file = cmd_file & verbose & fmt = json
-on      ,both ,fast  ,logs  ,tools/getLogs ,redir_output        ,y    ,transactions = 3657480.12 3657480.9 & output = output_test_file
-on      ,both ,fast  ,logs  ,tools/getLogs ,redir_output_append ,y    ,transactions = 3657480.11 3657480.10 & output = output_test_file & no_header & append
+on      ,cmd  ,fast  ,logs  ,tools ,getLogs ,by_filebad          ,y    ,file = cmd_file & bad
+on      ,cmd  ,slow  ,logs  ,tools ,getLogs ,by_file             ,y    ,file = cmd_file
+on      ,cmd  ,fast  ,logs  ,tools ,getLogs ,by_file_v           ,y    ,file = cmd_file & verbose & fmt = json
+on      ,both ,fast  ,logs  ,tools ,getLogs ,redir_output        ,y    ,transactions = 3657480.12 3657480.9 & output = output_test_file
+on      ,both ,fast  ,logs  ,tools ,getLogs ,redir_output_append ,y    ,transactions = 3657480.11 3657480.10 & output = output_test_file & no_header & append
 
-on      ,both ,fast  ,logs  ,tools/getLogs ,cache_and_decache   ,y    ,transactions = 46147.0 & cache & decache
-on      ,both ,fast  ,logs  ,tools/getLogs ,cache_one           ,y    ,transactions = 46147.0 & cache
-on      ,both ,fast  ,logs  ,tools/getLogs ,decache_one         ,y    ,transactions = 46147.0 & decache
+on      ,both ,fast  ,logs  ,tools ,getLogs ,cache_and_decache   ,y    ,transactions = 46147.0 & cache & decache
+on      ,both ,fast  ,logs  ,tools ,getLogs ,cache_one           ,y    ,transactions = 46147.0 & cache
+on      ,both ,fast  ,logs  ,tools ,getLogs ,decache_one         ,y    ,transactions = 46147.0 & decache
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw
-on      ,both ,fast  ,logs  ,tools/getLogs ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
-on      ,both ,fast  ,logs  ,tools/getLogs ,caps_disallowed_1   ,y    ,transactions = 12.0 & wei
-on      ,both ,fast  ,logs  ,tools/getLogs ,caps_disallowed_2   ,y    ,transactions = 12.0 & ether
+on      ,both ,fast  ,logs  ,tools ,getLogs ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
+on      ,both ,fast  ,logs  ,tools ,getLogs ,caps_disallowed_1   ,y    ,transactions = 12.0 & wei
+on      ,both ,fast  ,logs  ,tools ,getLogs ,caps_disallowed_2   ,y    ,transactions = 12.0 & ether

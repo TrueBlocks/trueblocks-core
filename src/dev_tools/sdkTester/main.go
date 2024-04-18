@@ -172,7 +172,8 @@ func parseCsv(filePath string) ([]TestCase, error) {
 				Mode:     strings.Trim(csvRecord[1], " "),
 				Speed:    strings.Trim(csvRecord[2], " "),
 				Route:    strings.Trim(csvRecord[3], " "),
-				PathTool: strings.Trim(csvRecord[4], " "),
+				Path:     strings.Trim(csvRecord[4], " "),
+				Tool:     strings.Trim(csvRecord[4], " "),
 				Filename: strings.Trim(csvRecord[5], " "),
 				Post:     strings.Trim(csvRecord[6], " "),
 				Options:  strings.Trim(csvRecord[7], " "),
@@ -182,7 +183,7 @@ func parseCsv(filePath string) ([]TestCase, error) {
 				record:       rec,
 				IsEnabled:    rec.Enabled == "on",
 				HasShorthand: strings.Contains(rec.Options, "@"),
-				WorkingPath:  "../tests/working/" + rec.PathTool + "/sdk_tests/",
+				WorkingPath:  "../tests/working/" + rec.Path + "/" + rec.Tool + "/sdk_tests/",
 				OrigOptions:  rec.Options,
 				SourceFile:   filePath,
 			}

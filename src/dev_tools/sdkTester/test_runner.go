@@ -57,8 +57,7 @@ func (tr *Runner) Run(t *TestCase) error {
 	os.Setenv("TEST_MODE", "true")
 	logger.SetTestMode(true)
 
-	parts := strings.Split(t.PathTool, "/")
-	workFn := filepath.Join(working, parts[1]+"_"+t.Filename+".txt")
+	workFn := filepath.Join(working, t.Tool+"_"+t.Filename+".txt")
 
 	workFile, _ := os.Create(workFn)
 	logger.SetLoggerWriter(workFile)
