@@ -1,5 +1,7 @@
 # sdkTester - new GoLang test runner
 
+This tool runs the core's test cases of which there are nearly 1,500.
+
 All tests will be run (in the order shown below) unless you provide a filter.
 
 Provide a filter by running `sdkTester` with the environment variable `TB_TEST_FILTER` exported, thus:
