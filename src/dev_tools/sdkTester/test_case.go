@@ -49,7 +49,7 @@ func (t *TestCase) InnerTest(mode string) (string, error) {
 	if mode == "api" {
 		return t.ApiTest()
 	} else if mode == "cmd" {
-		return t.CmdTest(mode)
+		return t.CmdTest()
 	} else if mode == "sdk" {
 		return t.SdkTest()
 	}
@@ -93,6 +93,35 @@ func (t *TestCase) GetOutputPaths(mode string) (string, string, string, string) 
 		envFn = ""
 	}
 	outputFn := ""
+	if mode == "cmd" {
+		redirFn := filepath.Join(gold, t.Filename+".redir")
+		if file.FileExists(redirFn) {
+			t.OptionArray = append(t.OptionArray, "output="+t.Filename+"_out.file")
+		}
+		for _, option := range t.OptionArray {
+			if strings.HasPrefix(option, "output") {
+				parts := strings.Split(option, "=")
+				if len(parts) < 2 {
+					continue
+				}
+				outputFn = parts[1]
+				break
+			}
+		}
+		if len(outputFn) > 0 {
+			outputFn = filepath.Join(gold, outputFn)
+		}
+	}
 
 	return workFn, goldFn, envFn, outputFn
+}
+
+func (t *TestCase) ProcessRedirFile() {
+	gold := strings.ReplaceAll(t.WorkingPath, "working", "gold")
+	redirFn := filepath.Join(gold, t.Filename+".redir")
+	if file.FileExists(redirFn) {
+		outFn := t.Filename + "_out.file"
+		t.OptionArray = append(t.OptionArray, "output="+outFn)
+		t.CmdOptions += " --output " + outFn
+	}
 }

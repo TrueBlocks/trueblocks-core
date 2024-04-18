@@ -182,7 +182,7 @@ func (t *TestCase) SdkTest() (string, error) {
 		// case "daemon":
 		// case "scrape":
 		// case "explore":
-		logger.Info(colors.Red + "Unknown sdk endpoint: " + t.Route + colors.Off)
+		logger.Info("Unknown sdk endpoint: " + t.Route)
 
 	}
 

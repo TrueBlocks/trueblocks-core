@@ -51,7 +51,7 @@ func (tr *Runner) Run(t *TestCase) error {
 	os.Setenv("TEST_MODE", "true")
 	logger.SetTestMode(true)
 
-	workFn, goldFn, _, _ := t.GetOutputPaths(tr.Mode)
+	workFn, goldFn, envFn, _ := t.GetOutputPaths(tr.Mode)
 	workFile, _ := os.Create(workFn)
 	logger.SetLoggerWriter(workFile)
 	logger.ToggleDecoration()
@@ -62,9 +62,18 @@ func (tr *Runner) Run(t *TestCase) error {
 		tr.ReportOneTest(t, wasTested && !passedTest)
 	}()
 
+	if file.FileExists(envFn) {
+		lines := file.AsciiFileToLines(envFn)
+		for _, line := range lines {
+			if !strings.HasPrefix(line, "#") {
+				logger.Info("Env: " + line)
+			}
+		}
+	}
+
 	msg := t.Route + "?"
 	if tr.Mode == "cmd" {
-		msg := "chifra "
+		msg = "chifra "
 		if t.Route != "chifra" {
 			msg += t.Route + "  "
 		}

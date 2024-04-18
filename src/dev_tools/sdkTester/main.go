@@ -150,6 +150,7 @@ func parseCsv(filePath string) ([]TestCase, error) {
 			testCase.SdkOptions = testCase.cleanForSdk()
 			testCase.OptionArray = strings.Split(testCase.ApiOptions, "&")
 			testCase.SdkOptionsArray = strings.Split(strings.Replace(testCase.SdkOptions, "%20", " ", -1), "&")
+			testCase.ProcessRedirFile()
 			// order matters
 
 			testCases = append(testCases, testCase)
@@ -359,7 +360,7 @@ func getRoutesAndModes() ([]string, []string) {
 	modeMap := map[string]helper{
 		"sdk": {"mode", 1, true},
 		"api": {"mode", 2, true},
-		"cmd": {"mode", 3, false},
+		"cmd": {"mode", 3, true},
 	}
 
 	filter := os.Getenv("TB_TEST_FILTER")
@@ -384,7 +385,11 @@ func getRoutesAndModes() ([]string, []string) {
 				if route == "tools" || route == "apps" {
 					for key, value := range routeMap {
 						if value.path == route {
-							routeMap[key] = helper{routeMap[key].path, routeMap[key].order, true}
+							on := true
+							if key == "slurp" {
+								on = os.Getenv("TEST_SLURP") == "true"
+							}
+							routeMap[key] = helper{routeMap[key].path, routeMap[key].order, on}
 						}
 					}
 				} else {
