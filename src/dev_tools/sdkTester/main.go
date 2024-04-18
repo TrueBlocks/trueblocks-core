@@ -139,7 +139,7 @@ func parseCsv(filePath string) ([]TestCase, error) {
 				record:       rec,
 				IsEnabled:    rec.Enabled == "on",
 				HasShorthand: strings.Contains(rec.Options, "@"),
-				WorkingPath:  "../tests/working/" + rec.Path + "/" + rec.Tool + "/sdk_tests/",
+				WorkingPath:  filepath.Join(getWorkingPath(), rec.Path, rec.Tool) + "/",
 				OrigOptions:  rec.Options,
 				SourceFile:   filePath,
 			}
@@ -468,6 +468,15 @@ func getCasesPath() string {
 
 func getGeneratedPath() string {
 	return filepath.Join(getRepoRoot(), "src/dev_tools/sdkTester/generated") + "/"
+}
+
+func getWorkingPath() string {
+	return "../tests/working/"
+	// return filepath.Join(getRepoRoot(), "tests/working") + "/"
+}
+
+func getLogFile(mode string) string {
+	return "../src/dev_tools/sdkTester/generated/test_" + mode + ".log"
 }
 
 func getApiUrl() string {

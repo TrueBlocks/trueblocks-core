@@ -46,19 +46,18 @@ func (tr *Runner) Run(t *TestCase) error {
 
 	tr.AppendLog(t)
 
-	working := strings.ReplaceAll(strings.ReplaceAll(t.WorkingPath, "sdk_tests/", tr.Mode+"_tests/"), "cmd_tests/", "")
-	if !file.FolderExists(working) {
-		file.EstablishFolder(working)
-	}
-
 	wasTested := false
 	passedTest := false
 
 	os.Setenv("TEST_MODE", "true")
 	logger.SetTestMode(true)
 
+	working := strings.ReplaceAll(strings.ReplaceAll(t.WorkingPath+"sdk_tests/", "sdk_tests/", tr.Mode+"_tests/"), "cmd_tests/", "")
+	if !file.FolderExists(working) {
+		file.EstablishFolder(working)
+	}
 	workFn := filepath.Join(working, t.Tool+"_"+t.Filename+".txt")
-
+	goldFn := strings.Replace(workFn, "working", "gold", -1)
 	workFile, _ := os.Create(workFn)
 	logger.SetLoggerWriter(workFile)
 	logger.ToggleDecoration()
@@ -69,7 +68,14 @@ func (tr *Runner) Run(t *TestCase) error {
 		tr.ReportOneTest(t, wasTested && !passedTest)
 	}()
 
-	logger.Info(t.Route + "?" + t.OptionsForMode(tr.Mode))
+	msg := t.Route + "?"
+	if tr.Mode == "cmd" {
+		msg := "chifra "
+		if t.Route != "chifra" {
+			msg += t.Route + "  "
+		}
+	}
+	logger.Info(msg + t.OptionsForMode(tr.Mode))
 
 	wasTested = true
 	if results, err := t.InnerTest(tr.Mode); err != nil {
@@ -91,10 +97,9 @@ func (tr *Runner) Run(t *TestCase) error {
 
 	if workFile != nil {
 		workFile.Close()
-		newContents := file.AsciiFileToString(workFn)
-		goldFn := strings.Replace(workFn, "working", "gold", -1)
-		oldContents := file.AsciiFileToString(goldFn)
-		passedTest = newContents == oldContents
+		workContents := file.AsciiFileToString(workFn)
+		goldContents := file.AsciiFileToString(goldFn)
+		passedTest = workContents == goldContents
 	}
 
 	if wasTested {
@@ -121,10 +126,6 @@ func (t *Runner) NameAndMode() string {
 
 func (t *Runner) Failed() string {
 	return fmt.Sprintf("%d", t.NTested-t.NPassed)
-}
-
-func getLogFile(mode string) string {
-	return "../src/dev_tools/sdkTester/generated/test_" + mode + ".log"
 }
 
 func (tr *Runner) AppendLog(t *TestCase) {
