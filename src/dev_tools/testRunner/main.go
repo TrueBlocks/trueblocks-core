@@ -19,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
 func init() {
@@ -468,22 +467,6 @@ func getWorkingPath() string {
 
 func getLogFile(mode string) string {
 	return "../src/dev_tools/testRunner/generated/test_" + mode + ".log"
-}
-
-func getApiUrl() string {
-	port := strings.ReplaceAll(os.Getenv("TB_TEST_API_SERVER"), ":", "")
-	if port == "" {
-		port = "8080"
-	}
-	return "localhost:" + port
-}
-
-func startApiServer() error {
-	ready := make(chan bool)
-	go sdk.NewDaemon(getApiUrl()).Start(ready)
-	<-ready
-	logger.Info(colors.Yellow + "Server started..." + colors.Off)
-	return nil
 }
 
 func loadTestCases() (map[string][]TestCase, string, error) {
