@@ -16,7 +16,7 @@ func (opts *SlurpOptions) HandleShow() error {
 
 	provider, err := opts.Provider()
 	if err != nil {
-		logger.Fatal(err)
+		return err
 	}
 	provider.SetPrintProgress(!opts.Globals.TestMode && !utils.IsTerminal())
 	query := &providerPkg.Query{
