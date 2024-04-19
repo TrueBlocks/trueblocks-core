@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
-func downloadAbis() {
+func downloadAbis() error {
 	logger.Info(colors.Yellow + "Downloading Abis..." + colors.Off)
 
 	addrs := []string{
@@ -30,4 +30,6 @@ func downloadAbis() {
 	if _, _, err := opts.Abis(); err != nil {
 		logger.Fatal(err)
 	}
+
+	return nil
 }

@@ -28,65 +28,44 @@ func init() {
 }
 
 func main() {
-	ready := make(chan bool)
-	go sdk.NewDaemon(getApiUrl()).Start(ready)
-	<-ready
-	logger.Info(colors.Yellow + "Server started..." + colors.Off)
+	if err := startApiServer(); err != nil {
+		logger.Fatal(err)
+	}
 
-	testMap := make(map[string][]TestCase, 100)
-	walkFunc := func(path string, info os.FileInfo, err error) error {
-		if err == nil {
-			if !info.IsDir() && strings.HasSuffix(path, ".csv") {
-				testCases, err := parseCsv(path)
-				if err != nil {
-					return err
-				}
-				for _, testCase := range testCases {
-					source := testCase.SourceFile
-					if _, ok := testMap[source]; !ok {
-						testMap[source] = []TestCase{}
-					}
-					testMap[source] = append(testMap[source], testCase)
-				}
-			}
+	if testMap, casesPath, err := loadTestCases(); err != nil {
+		logger.Fatal(err)
+	} else {
+		if err := downloadAbis(); err != nil {
+			logger.Fatal(err)
 		}
-		return err
-	}
 
-	casesPath := getCasesPath()
-	if err := filepath.Walk(casesPath, walkFunc); err != nil {
-		fmt.Printf("error walking the path %q: %v\n", casesPath, err)
-	}
-	file.StringToAsciiFile(getGeneratedPath()+"testCases.json", toJson(testMap))
-
-	downloadAbis()
-
-	routeList, modeList := getRoutesAndModes()
-
-	for _, mode := range modeList {
-		os.Remove(getLogFile(mode))
-	}
-
-	summary := NewSummary()
-	for _, item := range routeList {
-		source := casesPath + item + ".csv"
+		routeList, modeList := getRoutesAndModes()
 		for _, mode := range modeList {
-			tr := NewRunner(testMap, item, mode, source)
-			for _, testCase := range testMap[source] {
-				if err := tr.Run(&testCase); err != nil {
-					logger.Error(err) // continue even on goLang error
-				}
-			}
-			tr.ReportOneMode()
-			summary.NTested += tr.NTested
-			summary.NPassed += tr.NPassed
-			summary.Fails = append(summary.Fails, tr.Fails...)
+			// clean up old log files, they will be replaced
+			os.Remove(getLogFile(mode))
 		}
-	}
 
-	summary.ReportFinal()
-	if summary.NPassed != summary.NTested {
-		os.Exit(1)
+		summary := NewSummary()
+		for _, item := range routeList {
+			source := casesPath + item + ".csv"
+			for _, mode := range modeList {
+				tr := NewRunner(testMap, item, mode, source)
+				for _, testCase := range testMap[source] {
+					if err := tr.Run(&testCase); err != nil {
+						logger.Error(err) // continue even on goLang error
+					}
+				}
+				tr.ReportOneMode()
+				summary.NTested += tr.NTested
+				summary.NPassed += tr.NPassed
+				summary.Fails = append(summary.Fails, tr.Fails...)
+			}
+		}
+
+		summary.ReportFinal()
+		if summary.NPassed != summary.NTested {
+			os.Exit(1)
+		}
 	}
 }
 
@@ -497,4 +476,42 @@ func getApiUrl() string {
 		port = "8080"
 	}
 	return "localhost:" + port
+}
+
+func startApiServer() error {
+	ready := make(chan bool)
+	go sdk.NewDaemon(getApiUrl()).Start(ready)
+	<-ready
+	logger.Info(colors.Yellow + "Server started..." + colors.Off)
+	return nil
+}
+
+func loadTestCases() (map[string][]TestCase, string, error) {
+	testMap := make(map[string][]TestCase, 100)
+	walkFunc := func(path string, info os.FileInfo, err error) error {
+		if err == nil {
+			if !info.IsDir() && strings.HasSuffix(path, ".csv") {
+				testCases, err := parseCsv(path)
+				if err != nil {
+					return err
+				}
+				for _, testCase := range testCases {
+					source := testCase.SourceFile
+					if _, ok := testMap[source]; !ok {
+						testMap[source] = []TestCase{}
+					}
+					testMap[source] = append(testMap[source], testCase)
+				}
+			}
+		}
+		return err
+	}
+
+	casesPath := getCasesPath()
+	if err := filepath.Walk(casesPath, walkFunc); err != nil {
+		return testMap, casesPath, fmt.Errorf("error walking the path %q: %v\n", casesPath, err)
+	}
+
+	file.StringToAsciiFile(getGeneratedPath()+"testCases.json", toJson(testMap))
+	return testMap, casesPath, nil
 }
