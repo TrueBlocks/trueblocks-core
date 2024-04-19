@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/provider"
 	"github.com/spf13/cobra"
 )
 
@@ -55,17 +56,9 @@ func (opts *SlurpOptions) SlurpInternal() error {
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if opts.Count {
-		if opts.Source == "key" {
-			err = opts.HandleCountKey()
-		} else {
-			err = opts.HandleCount()
-		}
+		err = opts.HandleCount()
 	} else if opts.Appearances {
-		if opts.Source == "key" {
-			err = opts.HandleAppearancesKey()
-		} else {
-			err = opts.HandleAppearances()
-		}
+		err = opts.HandleAppearances()
 	} else {
 		err = opts.HandleShow()
 	}
@@ -85,4 +78,18 @@ func GetSlurpOptions(args []string, g *globals.GlobalOptions) *SlurpOptions {
 }
 
 // EXISTING_CODE
+// Provider returns 3rd party RPC provider based on --source
+func (opts *SlurpOptions) Provider() (provider.Provider, error) {
+	switch opts.Source {
+	case "key":
+		return provider.NewKeyProvider(opts.Conn, opts.Globals.Chain)
+	case "covalent":
+		return provider.NewCovalentProvider(opts.Conn, opts.Globals.Chain)
+	case "etherscan":
+		fallthrough
+	default:
+		return provider.NewEtherscanProvider(opts.Conn)
+	}
+}
+
 // EXISTING_CODE

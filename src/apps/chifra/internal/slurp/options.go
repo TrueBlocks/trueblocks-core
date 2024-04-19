@@ -225,4 +225,12 @@ func (opts *SlurpOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
+func (opts *SlurpOptions) Addresses() []base.Address {
+	addresses := make([]base.Address, 0, len(opts.Addrs))
+	for _, addr := range opts.Addrs {
+		addresses = append(addresses, base.HexToAddress(addr))
+	}
+	return addresses
+}
+
 // EXISTING_CODE
