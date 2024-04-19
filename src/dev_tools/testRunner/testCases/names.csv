@@ -1,95 +1,95 @@
-enabled ,mode ,speed ,route ,path/tool      ,filename               ,post ,options
-on      ,cmd  ,fast  ,names ,tools/ethNames ,help                   ,n    ,@h
-on      ,cmd  ,fast  ,names ,tools/ethNames ,help_long              ,n    ,help
-on      ,both ,medi  ,names ,tools/ethNames ,no_params              ,y    ,
-on      ,both ,fast  ,names ,tools/ethNames ,invalid_param_2        ,n    ,pink & fmt = txt
-on      ,both ,fast  ,names ,tools/ethNames ,invalid_param_3        ,n    ,terms = 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & fmt = txt
-on      ,both ,medi  ,names ,tools/ethNames ,fmt_default            ,y    ,terms = tip
-on      ,both ,medi  ,names ,tools/ethNames ,fmt_txt                ,n    ,terms = tip & fmt = txt
-on      ,both ,medi  ,names ,tools/ethNames ,fmt_csv                ,n    ,terms = tip & fmt = csv
-on      ,both ,medi  ,names ,tools/ethNames ,fmt_csv_expand         ,n    ,terms = tip & fmt = csv & expand
-on      ,both ,medi  ,names ,tools/ethNames ,fmt_api                ,y    ,terms = tip & fmt = api
-on      ,both ,medi  ,names ,tools/ethNames ,fmt_json               ,y    ,terms = tip & fmt = json
-on      ,both ,fast  ,names ,tools/ethNames ,fmt_junk               ,y    ,terms = tip & fmt = junk
-on      ,both ,fast  ,names ,tools/ethNames ,simple                 ,y    ,terms = etwork
-on      ,both ,fast  ,names ,tools/ethNames ,simple_no_case         ,y    ,terms = network
-on      ,both ,fast  ,names ,tools/ethNames ,simple_case            ,y    ,terms = network & match_case
-on      ,both ,fast  ,names ,tools/ethNames ,simple_expanded        ,y    ,terms = etwork & expand & no_header
-on      ,both ,fast  ,names ,tools/ethNames ,simple_verbose         ,y    ,terms = etwork & verbose
-on      ,both ,fast  ,names ,tools/ethNames ,simple_two_terms       ,y    ,terms = etwork & terms = one
-on      ,both ,fast  ,names ,tools/ethNames ,simple_four_terms      ,y    ,terms = etwork & terms = one & terms = 88897 & terms = torj
-on      ,both ,fast  ,names ,tools/ethNames ,prefund                ,y    ,prefund
-on      ,both ,fast  ,names ,tools/ethNames ,prefund_expand_no      ,y    ,prefund & terms = 0x1
-on      ,both ,fast  ,names ,tools/ethNames ,prefund_expand_yes     ,y    ,prefund & expand & terms = 0x1
-on      ,both ,fast  ,names ,tools/ethNames ,prefund_search1        ,y    ,prefund & terms = 004
-on      ,both ,fast  ,names ,tools/ethNames ,prefund_search2        ,y    ,prefund & terms = _004
-on      ,both ,fast  ,names ,tools/ethNames ,prefund_search3        ,y    ,prefund & terms = etwork
+enabled ,mode ,speed ,route ,path  ,tool     ,filename               ,post ,options
+on      ,cmd  ,fast  ,names ,tools ,ethNames ,help                   ,n    ,@h
+on      ,cmd  ,fast  ,names ,tools ,ethNames ,help_long              ,n    ,help
+on      ,both ,medi  ,names ,tools ,ethNames ,no_params              ,y    ,
+on      ,both ,fast  ,names ,tools ,ethNames ,invalid_param_2        ,n    ,pink & fmt = txt
+on      ,both ,fast  ,names ,tools ,ethNames ,invalid_param_3        ,n    ,terms = 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & fmt = txt
+on      ,both ,medi  ,names ,tools ,ethNames ,fmt_default            ,y    ,terms = tip
+on      ,both ,medi  ,names ,tools ,ethNames ,fmt_txt                ,n    ,terms = tip & fmt = txt
+on      ,both ,medi  ,names ,tools ,ethNames ,fmt_csv                ,n    ,terms = tip & fmt = csv
+on      ,both ,medi  ,names ,tools ,ethNames ,fmt_csv_expand         ,n    ,terms = tip & fmt = csv & expand
+on      ,both ,medi  ,names ,tools ,ethNames ,fmt_api                ,y    ,terms = tip & fmt = api
+on      ,both ,medi  ,names ,tools ,ethNames ,fmt_json               ,y    ,terms = tip & fmt = json
+on      ,both ,fast  ,names ,tools ,ethNames ,fmt_junk               ,y    ,terms = tip & fmt = junk
+on      ,both ,fast  ,names ,tools ,ethNames ,simple                 ,y    ,terms = etwork
+on      ,both ,fast  ,names ,tools ,ethNames ,simple_no_case         ,y    ,terms = network
+on      ,both ,fast  ,names ,tools ,ethNames ,simple_case            ,y    ,terms = network & match_case
+on      ,both ,fast  ,names ,tools ,ethNames ,simple_expanded        ,y    ,terms = etwork & expand & no_header
+on      ,both ,fast  ,names ,tools ,ethNames ,simple_verbose         ,y    ,terms = etwork & verbose
+on      ,both ,fast  ,names ,tools ,ethNames ,simple_two_terms       ,y    ,terms = etwork & terms = one
+on      ,both ,fast  ,names ,tools ,ethNames ,simple_four_terms      ,y    ,terms = etwork & terms = one & terms = 88897 & terms = torj
+on      ,both ,fast  ,names ,tools ,ethNames ,prefund                ,y    ,prefund
+on      ,both ,fast  ,names ,tools ,ethNames ,prefund_expand_no      ,y    ,prefund & terms = 0x1
+on      ,both ,fast  ,names ,tools ,ethNames ,prefund_expand_yes     ,y    ,prefund & expand & terms = 0x1
+on      ,both ,fast  ,names ,tools ,ethNames ,prefund_search1        ,y    ,prefund & terms = 004
+on      ,both ,fast  ,names ,tools ,ethNames ,prefund_search2        ,y    ,prefund & terms = _004
+on      ,both ,fast  ,names ,tools ,ethNames ,prefund_search3        ,y    ,prefund & terms = etwork
 
-delay   ,both ,fast  ,names ,tools/ethNames ,custom                 ,n    ,custom & fmt = txt
-delay   ,both ,fast  ,names ,tools/ethNames ,custom_search1         ,y    ,custom & terms = Account_1
-delay   ,both ,fast  ,names ,tools/ethNames ,custom_search2         ,y    ,custom & terms = Account_1 & match_case
-delay   ,both ,fast  ,names ,tools/ethNames ,custom_search3         ,y    ,custom & terms = account_1 & match_case
-delay   ,both ,fast  ,names ,tools/ethNames ,prefund_custom         ,y    ,prefund & custom
-delay   ,both ,fast  ,names ,tools/ethNames ,prefund_custom_search  ,y    ,prefund & custom & terms = 0001 & verbose
-delay   ,both ,fast  ,names ,tools/ethNames ,prefund_custom_search2 ,y    ,prefund & custom & terms = 0001 & terms = Genesis & expand
-delay   ,both ,fast  ,names ,tools/ethNames ,prefund_custom_named   ,y    ,prefund & custom & all
-delay   ,both ,fast  ,names ,tools/ethNames ,tags_custom            ,y    ,tags & custom
-delay   ,both ,fast  ,names ,tools/ethNames ,tags_custom_2          ,y    ,terms = 81 & tags & custom
-delay   ,both ,fast  ,names ,tools/ethNames ,simple_addr_all_custom ,y    ,addr & custom
-delay   ,both ,fast  ,names ,tools/ethNames ,edit_custom_delete     ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & to_custom & all
-delay   ,both ,fast  ,names ,tools/ethNames ,edit_custom_undelete   ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & to_custom & all
+delay   ,both ,fast  ,names ,tools ,ethNames ,custom                 ,n    ,custom & fmt = txt
+delay   ,both ,fast  ,names ,tools ,ethNames ,custom_search1         ,y    ,custom & terms = Account_1
+delay   ,both ,fast  ,names ,tools ,ethNames ,custom_search2         ,y    ,custom & terms = Account_1 & match_case
+delay   ,both ,fast  ,names ,tools ,ethNames ,custom_search3         ,y    ,custom & terms = account_1 & match_case
+delay   ,both ,fast  ,names ,tools ,ethNames ,prefund_custom         ,y    ,prefund & custom
+delay   ,both ,fast  ,names ,tools ,ethNames ,prefund_custom_search  ,y    ,prefund & custom & terms = 0001 & verbose
+delay   ,both ,fast  ,names ,tools ,ethNames ,prefund_custom_search2 ,y    ,prefund & custom & terms = 0001 & terms = Genesis & expand
+delay   ,both ,fast  ,names ,tools ,ethNames ,prefund_custom_named   ,y    ,prefund & custom & all
+delay   ,both ,fast  ,names ,tools ,ethNames ,tags_custom            ,y    ,tags & custom
+delay   ,both ,fast  ,names ,tools ,ethNames ,tags_custom_2          ,y    ,terms = 81 & tags & custom
+delay   ,both ,fast  ,names ,tools ,ethNames ,simple_addr_all_custom ,y    ,addr & custom
+delay   ,both ,fast  ,names ,tools ,ethNames ,edit_custom_delete     ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & to_custom & all
+delay   ,both ,fast  ,names ,tools ,ethNames ,edit_custom_undelete   ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & to_custom & all
 
-on      ,both ,fast  ,names ,tools/ethNames ,named                  ,y    ,
-delay   ,both ,fast  ,names ,tools/ethNames ,all                    ,y    ,all
-on      ,both ,medi  ,names ,tools/ethNames ,upgrade_fail           ,y    ,fmt = json
-on      ,both ,medi  ,names ,tools/ethNames ,name_match             ,n    ,noop & terms = torj & fmt = csv
-on      ,cmd  ,fast  ,names ,tools/ethNames ,show_version           ,n    ,version
+on      ,both ,fast  ,names ,tools ,ethNames ,named                  ,y    ,
+delay   ,both ,fast  ,names ,tools ,ethNames ,all                    ,y    ,all
+on      ,both ,medi  ,names ,tools ,ethNames ,upgrade_fail           ,y    ,fmt = json
+on      ,both ,medi  ,names ,tools ,ethNames ,name_match             ,n    ,noop & terms = torj & fmt = csv
+on      ,cmd  ,fast  ,names ,tools ,ethNames ,show_version           ,n    ,version
 
-on      ,both ,fast  ,names ,tools/ethNames ,ens_test               ,y    ,terms = wolfofethereum.eth
-on      ,both ,fast  ,names ,tools/ethNames ,ens_test_fail          ,y    ,terms = notathingy.eth
-on      ,both ,fast  ,names ,tools/ethNames ,ens_not_in_db          ,y    ,terms = nick.eth
+on      ,both ,fast  ,names ,tools ,ethNames ,ens_test               ,y    ,terms = wolfofethereum.eth
+on      ,both ,fast  ,names ,tools ,ethNames ,ens_test_fail          ,y    ,terms = notathingy.eth
+on      ,both ,fast  ,names ,tools ,ethNames ,ens_not_in_db          ,y    ,terms = nick.eth
 
-on      ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail1              ,y    ,terms = test
-on      ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail2              ,y    ,terms = test
-on      ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail3              ,y    ,terms = test
-on      ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail4              ,y    ,terms = test
+on      ,cmd  ,fast  ,names ,tools ,ethNames ,xdg_fail1              ,y    ,terms = test
+on      ,cmd  ,fast  ,names ,tools ,ethNames ,xdg_fail2              ,y    ,terms = test
+on      ,cmd  ,fast  ,names ,tools ,ethNames ,xdg_fail3              ,y    ,terms = test
+on      ,cmd  ,fast  ,names ,tools ,ethNames ,xdg_fail4              ,y    ,terms = test
 
-on      ,cmd  ,slow  ,names ,tools/ethNames ,fromFile               ,n    ,file = names.txt
-on      ,both ,fast  ,names ,tools/ethNames ,redir_output           ,y    ,prefund & output = output_test_file
-on      ,both ,fast  ,names ,tools/ethNames ,redir_output_append    ,n    ,terms = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & output = output_test_file & no_header & append
-on      ,both ,fast  ,names ,tools/ethNames ,redir_output_json      ,y    ,terms = 0x1234 & output = output_file.json
-on      ,both ,fast  ,names ,tools/ethNames ,redir_output_txt       ,y    ,terms = 0x1234 & output = output_file.txt
-on      ,both ,fast  ,names ,tools/ethNames ,redir_output_csv       ,y    ,terms = 0x1234 & output = output_file.csv
+on      ,cmd  ,slow  ,names ,tools ,ethNames ,fromFile               ,n    ,file = names.txt
+on      ,both ,fast  ,names ,tools ,ethNames ,redir_output           ,y    ,prefund & output = output_test_file
+on      ,both ,fast  ,names ,tools ,ethNames ,redir_output_append    ,n    ,terms = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & output = output_test_file & no_header & append
+on      ,both ,fast  ,names ,tools ,ethNames ,redir_output_json      ,y    ,terms = 0x1234 & output = output_file.json
+on      ,both ,fast  ,names ,tools ,ethNames ,redir_output_txt       ,y    ,terms = 0x1234 & output = output_file.txt
+on      ,both ,fast  ,names ,tools ,ethNames ,redir_output_csv       ,y    ,terms = 0x1234 & output = output_file.csv
 
-on      ,both ,fast  ,names ,tools/ethNames ,tags                   ,y    ,tags
-on      ,both ,fast  ,names ,tools/ethNames ,tags_with_addr         ,y    ,tags & addr
-on      ,both ,fast  ,names ,tools/ethNames ,tags_with_term         ,y    ,terms = Exchanges & tags
-on      ,both ,fast  ,names ,tools/ethNames ,tags_with_term_case_1  ,y    ,terms = Exchanges & tags & match_case
-on      ,both ,fast  ,names ,tools/ethNames ,tags_with_term_case_2  ,y    ,terms = exchanges & tags & match_case
-on      ,both ,fast  ,names ,tools/ethNames ,tags_prefund_1         ,y    ,terms = Prefund & tags
-on      ,both ,fast  ,names ,tools/ethNames ,tags_prefund_2         ,y    ,terms = Prefund & tags & prefund
-on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_all        ,y    ,addr
-on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_only       ,y    ,terms = 0xb6 & addr
-on      ,both ,medi  ,names ,tools/ethNames ,duplicated_option_1    ,n    ,terms = 0xb6 & terms = torj & addr & addr & addr & addr
+on      ,both ,fast  ,names ,tools ,ethNames ,tags                   ,y    ,tags
+on      ,both ,fast  ,names ,tools ,ethNames ,tags_with_addr         ,y    ,tags & addr
+on      ,both ,fast  ,names ,tools ,ethNames ,tags_with_term         ,y    ,terms = Exchanges & tags
+on      ,both ,fast  ,names ,tools ,ethNames ,tags_with_term_case_1  ,y    ,terms = Exchanges & tags & match_case
+on      ,both ,fast  ,names ,tools ,ethNames ,tags_with_term_case_2  ,y    ,terms = exchanges & tags & match_case
+on      ,both ,fast  ,names ,tools ,ethNames ,tags_prefund_1         ,y    ,terms = Prefund & tags
+on      ,both ,fast  ,names ,tools ,ethNames ,tags_prefund_2         ,y    ,terms = Prefund & tags & prefund
+on      ,both ,fast  ,names ,tools ,ethNames ,simple_addr_all        ,y    ,addr
+on      ,both ,fast  ,names ,tools ,ethNames ,simple_addr_only       ,y    ,terms = 0xb6 & addr
+on      ,both ,medi  ,names ,tools ,ethNames ,duplicated_option_1    ,n    ,terms = 0xb6 & terms = torj & addr & addr & addr & addr
 
 # Various parts of editing names does not work
-delay   ,both ,fast  ,names ,tools/ethNames ,edit_invalid           ,y    ,invalid & fmt = json
-delay   ,both ,fast  ,names ,tools/ethNames ,edit_add               ,y    ,create & fmt = json
-delay   ,both ,fast  ,names ,tools/ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
-delay   ,both ,fast  ,names ,tools/ethNames ,edit_edit              ,y    ,update & fmt = json
-delay   ,both ,fast  ,names ,tools/ethNames ,show_edit              ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
-delay   ,both ,fast  ,names ,tools/ethNames ,edit_delete            ,y    ,delete & terms = 0x0000000000000000000000000000000010101010 & fmt = json
-delay   ,both ,fast  ,names ,tools/ethNames ,show_delete            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
-delay   ,both ,fast  ,names ,tools/ethNames ,edit_undelete          ,y    ,undelete & terms = 0x0000000000000000000000000000000010101010 & fmt = json
-delay   ,both ,fast  ,names ,tools/ethNames ,show_undelete          ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
-delay   ,both ,fast  ,names ,tools/ethNames ,edit_remove            ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & fmt = json
-delay   ,both ,fast  ,names ,tools/ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
+on      ,both ,fast  ,names ,tools ,ethNames ,edit_invalid           ,y    ,invalid & fmt = json
+delay2  ,both ,fast  ,names ,tools ,ethNames ,edit_add               ,y    ,create & fmt = json
+delay   ,both ,fast  ,names ,tools ,ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
+delay2  ,both ,fast  ,names ,tools ,ethNames ,edit_edit              ,y    ,update & fmt = json
+delay   ,both ,fast  ,names ,tools ,ethNames ,show_edit              ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
+delay2  ,both ,fast  ,names ,tools ,ethNames ,edit_delete            ,y    ,delete & terms = 0x0000000000000000000000000000000010101010 & fmt = json
+delay   ,both ,fast  ,names ,tools ,ethNames ,show_delete            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
+delay2  ,both ,fast  ,names ,tools ,ethNames ,edit_undelete          ,y    ,undelete & terms = 0x0000000000000000000000000000000010101010 & fmt = json
+delay2  ,both ,fast  ,names ,tools ,ethNames ,show_undelete          ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
+delay2  ,both ,fast  ,names ,tools ,ethNames ,edit_remove            ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & fmt = json
+delay   ,both ,fast  ,names ,tools ,ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
-on      ,both ,fast  ,names ,tools/ethNames ,caps_allowed           ,y    ,terms = find_nothing & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
-on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_1      ,y    ,terms = find_nothing & cache
-on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_2      ,y    ,terms = find_nothing & raw
-on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_3      ,y    ,terms = find_nothing & ether
-on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_4      ,y    ,terms = find_nothing & wei
-on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_5      ,y    ,terms = find_nothing & decache
+on      ,both ,fast  ,names ,tools ,ethNames ,caps_allowed           ,y    ,terms = find_nothing & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+on      ,both ,fast  ,names ,tools ,ethNames ,caps_disallowed_1      ,y    ,terms = find_nothing & cache
+on      ,both ,fast  ,names ,tools ,ethNames ,caps_disallowed_2      ,y    ,terms = find_nothing & raw
+on      ,both ,fast  ,names ,tools ,ethNames ,caps_disallowed_3      ,y    ,terms = find_nothing & ether
+on      ,both ,fast  ,names ,tools ,ethNames ,caps_disallowed_4      ,y    ,terms = find_nothing & wei
+on      ,both ,fast  ,names ,tools ,ethNames ,caps_disallowed_5      ,y    ,terms = find_nothing & decache

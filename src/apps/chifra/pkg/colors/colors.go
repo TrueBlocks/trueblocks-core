@@ -4,7 +4,16 @@
 
 package colors
 
-import "strings"
+import (
+	"os"
+	"strings"
+)
+
+func init() {
+	if os.Getenv("NO_COLOR") == "true" {
+		ColorsOff()
+	}
+}
 
 var None = ""
 var Off = "\033[0m"

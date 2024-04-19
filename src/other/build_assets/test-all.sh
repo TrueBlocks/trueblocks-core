@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+#-------- test-all.sh ----------------
+
 cd ..
 export QUICKBLOCKS=`pwd`
 export INSTALL=$QUICKBLOCKS/build/other/install
@@ -32,7 +34,8 @@ cd ..
 make generate
 make -j 8
 
-cd $TEST_FOLDER/gold/dev_tools/testRunner
+cd "$BUILD_FOLDER/"
+export TEST_MODE=true
 
 echo "Calling testRunner"
 testRunner

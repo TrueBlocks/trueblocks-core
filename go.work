@@ -5,7 +5,7 @@ use (
     ./sdk/go
     ./src/apps/chifra
     ./src/dev_tools/goMaker
-    ./src/dev_tools/sdkTester
+    ./src/dev_tools/testRunner
     ./src/examples/usesSDK
     ./src/examples/balanceChart
     ./src/examples/optimism1

@@ -2,13 +2,10 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type record struct {
@@ -16,7 +13,8 @@ type record struct {
 	Mode     string `json:"mode"`
 	Speed    string `json:"speed"`
 	Route    string `json:"route"`
-	PathTool string `json:"pathTool"`
+	Path     string `json:"path"`
+	Tool     string `json:"tool"`
 	Filename string `json:"filename"`
 	Post     string `json:"post"`
 	Options  string `json:"options"`
@@ -51,43 +49,21 @@ func (t *TestCase) InnerTest(mode string) (string, error) {
 	if mode == "api" {
 		return t.ApiTest()
 	} else if mode == "cmd" {
-		return t.CmdTest(mode)
+		return t.CmdTest()
 	} else if mode == "sdk" {
 		return t.SdkTest()
 	}
 	return "", fmt.Errorf("Invalid mode:" + mode)
 }
 
-var (
-	routeFilter string
-	modeFilter  string
-)
-
-func init() {
-	val := os.Getenv("TB_TEST_ROUTE")
-	if len(val) > 0 {
-		parts := strings.Split(val, ":")
-		routeFilter = parts[0]
-		if len(parts) > 1 {
-			modeFilter = parts[1]
-		}
-		logger.Info(fmt.Sprintf("%sRoute filter: %s, Mode filter: %s%s", colors.Green, routeFilter, modeFilter, colors.Off))
-	} else {
-		logger.Info(fmt.Sprintf("%sRunning all tests%s", colors.Green, colors.Off))
-	}
-}
-
 func (t *TestCase) ShouldRun(mode string) bool {
 	if !t.IsEnabled {
-		return false
-	}
-	if (len(modeFilter) > 0 && modeFilter != mode) || (len(routeFilter) > 0 && routeFilter != t.Route) {
 		return false
 	}
 
 	switch mode {
 	case "api":
-		if t.Mode == "cmd" || strings.Contains(t.PathTool, "chifra") || t.Route == "monitors" {
+		if t.Mode == "cmd" || strings.Contains(t.Tool, "chifra") || t.Route == "monitors" {
 			return false
 		}
 	case "cmd":
@@ -95,7 +71,7 @@ func (t *TestCase) ShouldRun(mode string) bool {
 			return false
 		}
 	case "sdk":
-		if t.HasShorthand || strings.Contains(t.PathTool, "chifra") || t.Route == "monitors" {
+		if t.HasShorthand || strings.Contains(t.Tool, "chifra") || t.Route == "monitors" {
 			return false
 		}
 	}
@@ -103,23 +79,49 @@ func (t *TestCase) ShouldRun(mode string) bool {
 	return true
 }
 
-func (t *TestCase) GetOutputPaths(mode string) (string, string, string) {
+func (t *TestCase) GetOutputPaths(mode string) (string, string, string, string) {
 	working := t.WorkingPath
 	if mode != "cmd" {
 		working = filepath.Join(t.WorkingPath, mode+"_tests") + "/"
 	}
-	file.EstablishFolder(working)
-	parts := strings.Split(t.PathTool, "/")
-	if len(parts) < 2 {
-		logger.Fatal(fmt.Sprintf("Invalid pathTool: %s. Need two parts.", t.PathTool))
-	}
+	gold := strings.ReplaceAll(working, "working", "gold")
 
-	workFn := filepath.Join(working, parts[1]+"_"+t.Filename+".txt")
-	goldFn := strings.Replace(workFn, "working", "gold", -1)
-	envFn := filepath.Join(working, t.Filename+".env")
+	workFn := filepath.Join(working, t.Tool+"_"+t.Filename+".txt")
+	goldFn := filepath.Join(gold, t.Tool+"_"+t.Filename+".txt")
+	envFn := filepath.Join(gold, t.Filename+".env")
 	if !file.FileExists(envFn) {
 		envFn = ""
 	}
+	outputFn := ""
+	if mode == "cmd" {
+		redirFn := filepath.Join(gold, t.Filename+".redir")
+		if file.FileExists(redirFn) {
+			t.OptionArray = append(t.OptionArray, "output="+t.Filename+"_out.file")
+		}
+		for _, option := range t.OptionArray {
+			if strings.HasPrefix(option, "output") {
+				parts := strings.Split(option, "=")
+				if len(parts) < 2 {
+					continue
+				}
+				outputFn = parts[1]
+				break
+			}
+		}
+		if len(outputFn) > 0 {
+			outputFn = filepath.Join(gold, outputFn)
+		}
+	}
 
-	return workFn, goldFn, envFn
+	return workFn, goldFn, envFn, outputFn
+}
+
+func (t *TestCase) ProcessRedirFile() {
+	gold := strings.ReplaceAll(t.WorkingPath, "working", "gold")
+	redirFn := filepath.Join(gold, t.Filename+".redir")
+	if file.FileExists(redirFn) {
+		outFn := t.Filename + "_out.file"
+		t.OptionArray = append(t.OptionArray, "output="+outFn)
+		t.CmdOptions += " --output " + outFn
+	}
 }

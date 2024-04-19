@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "---------------------------------------------------------"
-echo "Running build_and_test.sh @"
+echo "Running build_and_test.sh"
 echo "---------------------------------------------------------"
 
 cd /root/trueblocks-core/build
@@ -17,7 +17,7 @@ echo "Pwd:         $(pwd)"
 # starts the API server and runs the tests
 export TB_TEST_API_SERVER=$SERVER_PORT
 export TB_REMOTE_TESTING=true
-make && make test-sdk
+make test-all
 RESULT=$?
 
 echo "Compressing and saving tests/working into $(pwd)"

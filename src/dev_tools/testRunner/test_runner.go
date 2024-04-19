@@ -51,7 +51,7 @@ func (tr *Runner) Run(t *TestCase) error {
 	os.Setenv("TEST_MODE", "true")
 	logger.SetTestMode(true)
 
-	workFn, goldFn, _ := t.GetOutputPaths(tr.Mode)
+	workFn, goldFn, envFn, _ := t.GetOutputPaths(tr.Mode)
 	workFile, _ := os.Create(workFn)
 	logger.SetLoggerWriter(workFile)
 	logger.ToggleDecoration()
@@ -62,11 +62,23 @@ func (tr *Runner) Run(t *TestCase) error {
 		tr.ReportOneTest(t, wasTested && !passedTest)
 	}()
 
-	if tr.Mode == "cmd" {
-		logger.Info("chifra " + t.Route + "  " + t.OptionsForMode(tr.Mode))
-	} else {
-		logger.Info(t.Route + "?" + t.OptionsForMode(tr.Mode))
+	if file.FileExists(envFn) {
+		lines := file.AsciiFileToLines(envFn)
+		for _, line := range lines {
+			if !strings.HasPrefix(line, "#") {
+				logger.Info("Env: " + line)
+			}
+		}
 	}
+
+	msg := t.Route + "?"
+	if tr.Mode == "cmd" {
+		msg = "chifra "
+		if t.Route != "chifra" && t.Tool != "chifra" {
+			msg += t.Route + "  "
+		}
+	}
+	logger.Info(msg + t.OptionsForMode(tr.Mode))
 
 	wasTested = true
 	if results, err := t.InnerTest(tr.Mode); err != nil {
@@ -78,19 +90,21 @@ func (tr *Runner) Run(t *TestCase) error {
 		results = string(bytes)
 		logger.Info(results)
 	} else {
-		results = strings.Trim(results, "\n\r")
 		if len(results) > 0 {
 			results = strings.ReplaceAll(results, "3735928559", "\"0xdeadbeef\"") // mildly hacky cleaning
 			results = strings.ReplaceAll(results, "\\u0026", "&")
+			results = strings.ReplaceAll(results, "\\u003c", "<")
+			results = strings.ReplaceAll(results, "\\u003d", "=")
+			results = strings.ReplaceAll(results, "\\u003e", ">")
 			logger.Info(results)
 		}
 	}
 
 	if workFile != nil {
 		workFile.Close()
-		newContents := file.AsciiFileToString(workFn)
-		oldContents := file.AsciiFileToString(goldFn)
-		passedTest = newContents == oldContents
+		workContents := file.AsciiFileToString(workFn)
+		goldContents := file.AsciiFileToString(goldFn)
+		passedTest = workContents == goldContents
 	}
 
 	if wasTested {
@@ -119,14 +133,7 @@ func (t *Runner) Failed() string {
 	return fmt.Sprintf("%d", t.NTested-t.NPassed)
 }
 
-func getLogFile(mode string) string {
-	return "../src/dev_tools/sdkTester/generated/test_" + mode + ".log"
-}
-
 func (tr *Runner) AppendLog(t *TestCase) {
-	if len(os.Getenv("TB_TEST_ROUTE")) > 0 {
-		return
-	}
 	// s := fmt.Sprintf("%s\t%s.txt\t%s", t.Route, t.Filename, t.OptionsForMode(tr.Mode))
 	// tr.Logs[tr.Mode] = append(tr.Logs[tr.Mode], s)
 }
@@ -171,9 +178,9 @@ func (tr *Runner) ReportFinal() {
 	tr.Mode = "final"
 	fmt.Println(executeTemplate(colors.Yellow, "summary", summaryTmpl, &tr))
 	fmt.Println("nFails:", len(tr.Fails))
-	for _, fail := range tr.Fails {
-		fmt.Printf("%s%s%s\n", colors.Red, fail, colors.Off)
-	}
+	// for _, fail := range tr.Fails {
+	// 	fmt.Printf("%s%s%s\n", colors.Red, fail, colors.Off)
+	// }
 	colors.ColorsOff()
 }
 

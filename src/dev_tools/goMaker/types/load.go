@@ -223,5 +223,10 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 	if current == cb.String() {
 		return nil
 	}
+
+	if os.Getenv("TB_REMOTE_TESTING") == "true" {
+		return nil
+	}
+
 	return fmt.Errorf("protective measure - not an error, but codebase.json has changed")
 }
