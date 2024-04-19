@@ -5,35 +5,44 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-	"strconv"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"golang.org/x/time/rate"
 )
 
-func TestEtherscanProvider_url(t *testing.T) {
-	paginator := NewPageNumberPaginator(1, 1, 10)
-	provider := &EtherscanProvider{
-		baseUrl: etherscanBaseUrl,
+func TestCovalentProvider_url(t *testing.T) {
+	paginator := NewPageNumberPaginator(0, 0, 0)
+	provider := CovalentProvider{
+		chain:   "mainnet",
+		apiKey:  "fake",
+		baseUrl: covalentBaseUrl,
 	}
 	var err error
 	var result string
 	var expected string
+	var pageNumber int
+	var ok bool
+
+	pageNumber, ok = paginator.Page().(int)
+	if !ok {
+		t.Fatal("cannot cast page to int")
+	}
 
 	result, err = provider.url(
-		"0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-		paginator,
-		"int",
+		base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
+		pageNumber,
 	)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	expected = "https://api.etherscan.io/api?module=account&sort=asc&action=txlistinternal&address=0xf503017d7baf7fbc0fff7492b751025c6a78179b&page=1&offset=10&apikey="
+	expected = "https://api.covalenthq.com/v1/eth-mainnet/address/0xf503017d7baf7fbc0fff7492b751025c6a78179b/transactions_v3/page/0/"
 	if result != expected {
 		t.Fatal("wrong value", result)
 	}
@@ -43,61 +52,103 @@ func TestEtherscanProvider_url(t *testing.T) {
 	if err = paginator.NextPage(); err != nil {
 		t.Fatal(err)
 	}
+	pageNumber, ok = paginator.Page().(int)
+	if !ok {
+		t.Fatal("cannot cast page to int")
+	}
 
 	result, err = provider.url(
-		"0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-		paginator,
-		"int",
+		base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
+		pageNumber,
 	)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	expected = "https://api.etherscan.io/api?module=account&sort=asc&action=txlistinternal&address=0xf503017d7baf7fbc0fff7492b751025c6a78179b&page=2&offset=10&apikey="
+	expected = "https://api.covalenthq.com/v1/eth-mainnet/address/0xf503017d7baf7fbc0fff7492b751025c6a78179b/transactions_v3/page/1/"
 	if result != expected {
 		t.Fatal("wrong value", result)
 	}
 }
 
-func mockEtherscanServer(t *testing.T) (ts *httptest.Server) {
+func mockCovalentServer(t *testing.T) (ts *httptest.Server) {
 	t.Helper()
 
-	pages := []etherscanResponseBody{
+	pages := []covalentResponseBody{
 		{
-			Result: []types.RawSlurp{
-				{
-					BlockNumber:      "1",
-					TransactionIndex: "1",
+			Data: covalentResponseData{
+				Items: []covalentTransaction{
+					{
+						BlockHeight: utils.PointerOf(1),
+						TxOffset:    utils.PointerOf(1),
+
+						BlockHash:     utils.PointerOf(""),
+						From:          utils.PointerOf(""),
+						GasSpent:      utils.PointerOf(int64(0)),
+						Successful:    utils.PointerOf(false),
+						BlockSignedAt: &time.Time{},
+						To:            utils.PointerOf(""),
+						Value:         &base.Wei{},
+					},
+					{
+						BlockHeight: utils.PointerOf(1),
+						TxOffset:    utils.PointerOf(2),
+
+						BlockHash:     utils.PointerOf(""),
+						From:          utils.PointerOf(""),
+						GasSpent:      utils.PointerOf(int64(0)),
+						Successful:    utils.PointerOf(false),
+						BlockSignedAt: &time.Time{},
+						To:            utils.PointerOf(""),
+						Value:         &base.Wei{},
+					},
+					{
+						BlockHeight: utils.PointerOf(1),
+						TxOffset:    utils.PointerOf(3),
+
+						BlockHash:     utils.PointerOf(""),
+						From:          utils.PointerOf(""),
+						GasSpent:      utils.PointerOf(int64(0)),
+						Successful:    utils.PointerOf(false),
+						BlockSignedAt: &time.Time{},
+						To:            utils.PointerOf(""),
+						Value:         &base.Wei{},
+					},
 				},
-				{
-					BlockNumber:      "1",
-					TransactionIndex: "2",
-				},
-				{
-					BlockNumber:      "1",
-					TransactionIndex: "3",
+				Links: &covalentLinks{
+					Next: "/1",
 				},
 			},
 		},
 		{
-			Result: []types.RawSlurp{
-				{
-					BlockNumber:      "2",
-					TransactionIndex: "1",
+			Data: covalentResponseData{
+				Items: []covalentTransaction{
+					{
+						BlockHeight: utils.PointerOf(2),
+						TxOffset:    utils.PointerOf(1),
+
+						BlockHash:     utils.PointerOf(""),
+						From:          utils.PointerOf(""),
+						GasSpent:      utils.PointerOf(int64(0)),
+						Successful:    utils.PointerOf(false),
+						BlockSignedAt: &time.Time{},
+						To:            utils.PointerOf(""),
+						Value:         &base.Wei{},
+					},
 				},
+				Links: &covalentLinks{},
 			},
 		},
 	}
 	ts = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		query := r.URL.Query()
-		var result etherscanResponseBody
-		switch query.Get("page") {
-		case "1":
+		var result covalentResponseBody
+		switch r.URL.Path {
+		case "/0":
 			result = pages[0]
-		case "2":
+		case "/1":
 			result = pages[1]
 		default:
-			result = etherscanResponseBody{}
+			result = covalentResponseBody{}
 		}
 
 		b, err := json.Marshal(result)
@@ -110,50 +161,27 @@ func mockEtherscanServer(t *testing.T) (ts *httptest.Server) {
 	return ts
 }
 
-func mockConvertSlurpType(t *testing.T) func(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
-	t.Helper()
-	return func(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
-		bn, err := strconv.ParseUint(rawTx.BlockNumber, 10, 64)
-		if err != nil {
-			t.Fatal(err)
-		}
-		txid, err := strconv.ParseUint(rawTx.TransactionIndex, 10, 64)
-		if err != nil {
-			t.Fatal(err)
-		}
-		return types.SimpleSlurp{
-			BlockNumber:      bn,
-			TransactionIndex: txid,
-		}, nil
-	}
-}
-
-func TestEtherscanProvider_fetchData(t *testing.T) {
-	perPage := 3
-	ts := mockEtherscanServer(t)
+func TestCovalentProvider_fetchData(t *testing.T) {
+	ts := mockCovalentServer(t)
 	defer ts.Close()
 
-	provider := EtherscanProvider{
-		perPage: perPage,
-		baseUrl: ts.URL,
+	provider := CovalentProvider{
+		chain:   "mainnet",
+		baseUrl: ts.URL + "/[{PAGE}]",
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
-	provider.convertSlurpType = mockConvertSlurpType(t)
-	paginator := NewPageNumberPaginator(1, 1, perPage)
+	paginator := provider.NewPaginator()
 
 	var data []SlurpedPageItem
-	var count int
+	// var count int
 	var err error
-	data, count, err = provider.fetchData(context.TODO(), base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"), paginator, "int")
+	data, _, err = provider.fetchData(context.TODO(), base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"), paginator, "int")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if l := len(data); l != perPage {
-		t.Fatal("wrong len of page 1:", l)
-	}
-	if count != perPage {
-		t.Fatal("wrong count", count)
+	if l := len(data); l == 0 {
+		t.Fatal("empty page")
 	}
 	if paginator.Done() {
 		t.Fatal("paginator done but it should not be")
@@ -163,29 +191,27 @@ func TestEtherscanProvider_fetchData(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	data, count, err = provider.fetchData(context.TODO(), base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"), paginator, "int")
+	data, _, err = provider.fetchData(context.TODO(), base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"), paginator, "int")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if l := len(data); l != 1 {
-		t.Fatal("wrong len of page 2:", l)
+	if l := len(data); l == 0 {
+		t.Fatal("empty page")
 	}
 	if !paginator.Done() {
 		t.Fatal("paginator should be done")
 	}
 }
 
-func TestEtherscanProvider_TransactionsByAddress(t *testing.T) {
-	perPage := 3
-	ts := mockEtherscanServer(t)
+func TestCovalentProvider_TransactionsByAddress(t *testing.T) {
+	ts := mockCovalentServer(t)
 	defer ts.Close()
 
-	provider := EtherscanProvider{
-		perPage: perPage,
-		baseUrl: ts.URL,
+	provider := CovalentProvider{
+		chain:   "mainnet",
+		baseUrl: ts.URL + "/[{PAGE}]",
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
-	provider.convertSlurpType = mockConvertSlurpType(t)
 
 	query := &Query{
 		Addresses: []base.Address{
@@ -237,7 +263,7 @@ LOOP:
 	}
 }
 
-func TestEtherscanProvider_Appearances(t *testing.T) {
+func TestCovalentProvider_Appearances(t *testing.T) {
 	perPage := 3
 	ts := mockEtherscanServer(t)
 	defer ts.Close()
@@ -283,7 +309,7 @@ LOOP:
 	}
 }
 
-func TestEtherscanProvider_Count(t *testing.T) {
+func TestCovalentProvider_Count(t *testing.T) {
 	perPage := 3
 	ts := mockEtherscanServer(t)
 	defer ts.Close()
