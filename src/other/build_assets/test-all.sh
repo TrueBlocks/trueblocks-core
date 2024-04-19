@@ -28,7 +28,10 @@ fi
 #echo "Making..."
 cd "$BUILD_FOLDER/"
 cmake ../src
-cd dev_tools
+cd ..
+echo "Processing tests against this tests commit"
+git submodule status tests
+cd build/dev_tools
 make -j 8
 cd ..
 make generate
