@@ -39,7 +39,7 @@ local   ,both ,fast  ,scrape ,apps ,blockScrape ,options_combo                ,n
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
-local   ,both ,fast  ,scrape ,apps ,blockScrape ,caps_allowed                 ,y    ,chain & nocolor & noop & version & verbose & fail_on_purpose
+on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_allowed                 ,y    ,chain & nocolor & noop & version & verbose & fail_on_purpose
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_1            ,y    ,fmt = json
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_3            ,y    ,no_header
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_4            ,y    ,output

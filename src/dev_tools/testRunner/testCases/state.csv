@@ -51,40 +51,39 @@ on      ,both ,fast  ,state ,tools ,getState ,fmt_api                        ,y 
 on      ,both ,fast  ,state ,tools ,getState ,fmt_json                       ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = json & blocks = 2000000 & dollars
 on      ,both ,fast  ,state ,tools ,getState ,fmt_junk                       ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = junk & blocks = 2000000
 on      ,both ,fast  ,state ,tools ,getState ,get_range                      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1428000-1438000:200
-
 on      ,both ,fast  ,state ,tools ,getState ,ens_test                       ,y    ,addrs = trueblocks.eth & blocks = 8854700-8854900:20
 
-golang  ,both ,fast  ,state ,tools ,getState ,contract_call_fail1            ,y    ,call = 0x12065fe0() & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875 & blocks = 6523977-6540000:2000
-golang  ,both ,fast  ,state ,tools ,getState ,contract_call_fail2            ,y    ,call = 12065fe0() & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
-golang  ,both ,fast  ,state ,tools ,getState ,contract_call_fail4            ,y    ,call = 0x12065fe01() & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
-golang  ,both ,fast  ,state ,tools ,getState ,contract_call                  ,y    ,call = 0x12065fe0() & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
-golang  ,api  ,fast  ,state ,tools ,getState ,contract_call2_api             ,y    ,"call = manifestHashMap(0xf503017d7baf7fbc0fff7492b751025c6a78179b,""mainnet"") & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
-golang  ,cmd  ,fast  ,state ,tools ,getState ,contract_call2_cmd             ,y    ,"call = manifestHashMap(0xf503017d7baf7fbc0fff7492b751025c6a78179b,""mainnet"") & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
-golang  ,api  ,fast  ,state ,tools ,getState ,contract_call2_api_ens         ,y    ,"call = manifestHashMap(trueblocks.eth,""mainnet"") & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
-golang  ,cmd  ,fast  ,state ,tools ,getState ,contract_call2_cmd_ens         ,y    ,"call = manifestHashMap(trueblocks.eth,""mainnet"") & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
-golang  ,both ,fast  ,state ,tools ,getState ,uniswap_factory_getPair        ,n    ,call = 0xe6a439050000000000000000000000002260fac5e5542a773aa44fbcfedf7c193bc2c599000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 & addrs = 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f & blocks = 10092000 & fmt = csv
-golang  ,both ,fast  ,state ,tools ,getState ,uniswap_token0                 ,y    ,call = 0x0dfe1681() & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
-golang  ,both ,fast  ,state ,tools ,getState ,uniswap_token0_name            ,n    ,call = 0x06fdde03() & addrs = 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599 & blocks = 10092000 & fmt = txt
-golang  ,both ,fast  ,state ,tools ,getState ,uniswap_token1                 ,y    ,call = 0xd21220a7() & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
-golang  ,both ,fast  ,state ,tools ,getState ,uniswap_token1_name            ,y    ,call = 0x06fdde03() & addrs = 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 & blocks = 10092000
-golang  ,both ,fast  ,state ,tools ,getState ,uniswap_name                   ,y    ,call = 0x06fdde03() & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
-golang  ,both ,fast  ,state ,tools ,getState ,uniswap_reserve                ,n    ,call = 0x0902f1ac() & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000 & fmt = csv
-golang  ,both ,fast  ,state ,tools ,getState ,uniswap_fail                   ,y    ,call = 0x0902f1ad() & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
-golang  ,both ,fast  ,state ,tools ,getState ,proxy_fail                     ,y    ,call = 0x0902f1ac() & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & blocks = 10092000
-golang  ,both ,fast  ,state ,tools ,getState ,proxy_call_direct              ,y    ,call = 0x0902f1ac() & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
-golang  ,both ,fast  ,state ,tools ,getState ,proxy_for                      ,y    ,call = 0x0902f1ac() & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & proxy_for = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,contract_call_fail1            ,y    ,call = '0x12065fe0()' & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875 & blocks = 6523977-6540000:2000
+on      ,both ,fast  ,state ,tools ,getState ,contract_call_fail2            ,y    ,call = '12065fe0()' & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
+on      ,both ,fast  ,state ,tools ,getState ,contract_call_fail4            ,y    ,call = '0x12065fe01()' & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
+on      ,both ,fast  ,state ,tools ,getState ,contract_call                  ,y    ,call = '0x12065fe0()' & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
+on      ,api  ,fast  ,state ,tools ,getState ,contract_call2_api             ,y    ,"call = 'manifestHashMap(0xf503017d7baf7fbc0fff7492b751025c6a78179b,""mainnet"")' & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
+on      ,cmd  ,fast  ,state ,tools ,getState ,contract_call2_cmd             ,y    ,"call = 'manifestHashMap(0xf503017d7baf7fbc0fff7492b751025c6a78179b,""mainnet"")' & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
+on      ,api  ,fast  ,state ,tools ,getState ,contract_call2_api_ens         ,y    ,"call = 'manifestHashMap(trueblocks.eth,""mainnet"")' & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
+on      ,cmd  ,fast  ,state ,tools ,getState ,contract_call2_cmd_ens         ,y    ,"call = 'manifestHashMap(trueblocks.eth,""mainnet"")' & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_factory_getPair        ,n    ,call = 0xe6a439050000000000000000000000002260fac5e5542a773aa44fbcfedf7c193bc2c599000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 & addrs = 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f & blocks = 10092000 & fmt = csv
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_token0                 ,y    ,call = '0x0dfe1681()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_token0_name            ,n    ,call = '0x06fdde03()' & addrs = 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599 & blocks = 10092000 & fmt = txt
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_token1                 ,y    ,call = '0xd21220a7()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_token1_name            ,y    ,call = '0x06fdde03()' & addrs = 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_name                   ,y    ,call = '0x06fdde03()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_reserve                ,n    ,call = '0x0902f1ac()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000 & fmt = csv
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_fail                   ,y    ,call = '0x0902f1ad()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,proxy_fail                     ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,proxy_call_direct              ,y    ,call = '0x0902f1ac()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,proxy_for                      ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & proxy_for = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
 on      ,both ,fast  ,state ,tools ,getState ,proxy_2                        ,y    ,parts = all & addrs = 0x7cfb89D6DF1b89A678Dcaf42B9c262593e881E22 & fmt = json & blocks = 14000000
 on      ,both ,fast  ,state ,tools ,getState ,fail_art_not_call              ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = accttype & blocks = 2500000 & articulate
 
 # Not sure why this fails...
-golang  ,both ,fast  ,state ,tools ,getState ,contract_call_fail3            ,y    ,call =  & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
+on      ,both ,fast  ,state ,tools ,getState ,contract_call_fail3            ,y    ,call & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
 
 # This started failing when we went to sync.Map for the abiMap and at the same time started using IterateOverMap. Possibly ordering changes in the map?
-golang  ,both ,fast  ,state ,tools ,getState ,proxy_imp                      ,n    ,call = 0xbb82aa5e() & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & blocks = 10092000 & fmt = csv
+on      ,both ,fast  ,state ,tools ,getState ,proxy_imp                      ,n    ,call = '0xbb82aa5e()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & blocks = 10092000 & fmt = csv
 
-golang  ,both ,fast  ,state ,tools ,getState ,not_call_and_parts             ,y    ,call = 0x0902f1ac() & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & parts = some
-golang  ,both ,fast  ,state ,tools ,getState ,not_call_and_changes           ,y    ,call = 0x0902f1ac() & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & changes
-golang  ,both ,fast  ,state ,tools ,getState ,not_call_and_nozero            ,y    ,call = 0x0902f1ac() & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & no_zero
+on      ,both ,fast  ,state ,tools ,getState ,not_call_and_parts             ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & parts = some
+on      ,both ,fast  ,state ,tools ,getState ,not_call_and_changes           ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & changes
+on      ,both ,fast  ,state ,tools ,getState ,not_call_and_nozero            ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & no_zero
 on      ,both ,fast  ,state ,tools ,getState ,with_no_block                  ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
 
 on      ,both ,fast  ,state ,tools ,getState ,not_not_call_and_proxy         ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & proxy_for = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940
