@@ -475,7 +475,7 @@ func getRepoRoot() string {
 }
 
 func getCasesPath() string {
-	return filepath.Join(getRepoRoot(), "src/dev_tools/testRunner/testCases") + "/"
+	return filepath.Join(getRepoRoot(), "src/dev_tools/sdkTester/testCases") + "/"
 }
 
 func getGeneratedPath() string {

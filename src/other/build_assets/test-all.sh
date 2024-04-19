@@ -35,7 +35,7 @@ make -j 8
 cd $TEST_FOLDER/gold/dev_tools/testRunner
 
 echo "Calling testRunner"
-testRunner
+sdkTester
 RESULT=${PIPESTATUS[0]}
 
 cd $BUILD_FOLDER

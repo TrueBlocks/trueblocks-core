@@ -1,17 +1,6 @@
 cmake_minimum_required (VERSION 3.5)
 
 # ----------------------------------------------------------------------------------------
-# C++17 required
-if(NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 17)
-elseif(CMAKE_CXX_STANDARD LESS 17)
-    message(WARNING "CMAKE_CXX_STANDARD has been set to '${CMAKE_CXX_STANDARD}' which is lower than the minimum required standard (c++17).")
-endif()
-
-message(STATUS "Using c++ standard c++${CMAKE_CXX_STANDARD}")
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# ----------------------------------------------------------------------------------------
 # folder project
 project(trueBlocks)
 
@@ -30,15 +19,6 @@ find_package(Python COMPONENTS Interpreter Development)
 message(STATUS "======== LOOKING FOR CURL ========================")
 find_package(CURL REQUIRED)
 include_directories(${CURL_INCLUDE_DIRS})
-
-# ----------------------------------------------------------------------------------------
-# Globally available C++ settings
-set(DL_LIB "-ldl")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wall -O2 -fPIC")
-if(APPLE)
-    set(DL_LIB "")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wconversion -Wall -O2 -fPIC")
-endif()
 
 # ----------------------------------------------------------------------------------------
 set(BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
