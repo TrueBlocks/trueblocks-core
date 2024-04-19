@@ -29,13 +29,13 @@ cmake ../src
 cd dev_tools
 make -j 8
 cd ..
-make generate
 make -j 8
 
-cd $TEST_FOLDER/gold/dev_tools/testRunner
+cd "$BUILD_FOLDER/"
+export TEST_MODE=true
 
 echo "Calling testRunner"
-sdkTester
+testRunner
 RESULT=${PIPESTATUS[0]}
 
 cd $BUILD_FOLDER

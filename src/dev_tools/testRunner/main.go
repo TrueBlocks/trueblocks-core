@@ -469,17 +469,17 @@ func getRoutesAndModes() ([]string, []string) {
 func getRepoRoot() string {
 	wd, _ := os.Getwd()
 	if !strings.HasSuffix(wd, "/build") {
-		logger.Fatal("Must be run from the build folder")
+		logger.Fatal("testRunner must be run from the build folder, not from", wd)
 	}
 	return filepath.Join(wd, "../")
 }
 
 func getCasesPath() string {
-	return filepath.Join(getRepoRoot(), "src/dev_tools/sdkTester/testCases") + "/"
+	return filepath.Join(getRepoRoot(), "src/dev_tools/testRunner/testCases") + "/"
 }
 
 func getGeneratedPath() string {
-	return filepath.Join(getRepoRoot(), "src/dev_tools/sdkTester/generated") + "/"
+	return filepath.Join(getRepoRoot(), "src/dev_tools/testRunner/generated") + "/"
 }
 
 func getWorkingPath() string {
@@ -488,7 +488,7 @@ func getWorkingPath() string {
 }
 
 func getLogFile(mode string) string {
-	return "../src/dev_tools/sdkTester/generated/test_" + mode + ".log"
+	return "../src/dev_tools/testRunner/generated/test_" + mode + ".log"
 }
 
 func getApiUrl() string {
