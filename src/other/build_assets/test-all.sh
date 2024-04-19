@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+#-------- test-all.sh ----------------
+
 cd ..
 export QUICKBLOCKS=`pwd`
 export INSTALL=$QUICKBLOCKS/build/other/install
@@ -29,6 +31,7 @@ cmake ../src
 cd dev_tools
 make -j 8
 cd ..
+make generate
 make -j 8
 
 cd "$BUILD_FOLDER/"

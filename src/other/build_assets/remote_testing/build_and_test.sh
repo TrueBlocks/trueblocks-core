@@ -18,7 +18,8 @@ echo "Pwd:         $(pwd)"
 export TB_TEST_API_SERVER=$SERVER_PORT
 export TB_REMOTE_TESTING=true
 
-cd .. && make generate && cd - && make test-all
+#cd .. && make generate && cd - && make test-all
+make test-all
 RESULT=$?
 
 echo "Compressing and saving tests/working into $(pwd)"
