@@ -12,12 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        name: Debug
-        run: |
-          echo "---------------------------------------------------------"
-          echo "Running linter"
-          echo "---------------------------------------------------------"
-      -
         uses: actions/checkout@v4
       -
         uses: actions/setup-go@v5
@@ -41,12 +35,6 @@ jobs:
     needs: golangci
     runs-on: ubuntu-20.04
     steps:
-      -
-        name: Debug
-        run: |
-          echo "---------------------------------------------------------"
-          echo "Running unit tests"
-          echo "---------------------------------------------------------"
       -
         name: Checkout TrueBlocks repo
         uses: actions/checkout@v4
@@ -79,12 +67,6 @@ jobs:
     needs: Build
     runs-on: ubuntu-latest
     steps:
-      - 
-        name: Debug
-        run: |
-          echo "---------------------------------------------------------"
-          echo "Running tests"
-          echo "---------------------------------------------------------"
       -
         name: Run tests remotely
         uses: appleboy/ssh-action@master

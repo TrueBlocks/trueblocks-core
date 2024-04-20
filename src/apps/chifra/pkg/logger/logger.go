@@ -25,7 +25,6 @@ const (
 	test
 	warning
 	err
-	dump // no newline
 )
 
 var severityToLabel = map[severity]string{
@@ -35,7 +34,6 @@ var severityToLabel = map[severity]string{
 	test:     "TEST",
 	warning:  "WARN",
 	err:      "EROR",
-	dump:     "INFO",
 }
 
 var (
@@ -141,9 +139,6 @@ func toLog(sev severity, a ...interface{}) {
 		fmt.Fprint(loggerWriter, colors.Red)
 		fmt.Fprintln(loggerWriter, a...)
 
-	} else if sev == dump {
-		fmt.Fprint(loggerWriter, a...)
-
 	} else {
 		fmt.Fprintln(loggerWriter, a...)
 	}
@@ -168,10 +163,6 @@ func Error(v ...any) {
 func Fatal(v ...any) {
 	toLog(err, v...)
 	os.Exit(1)
-}
-
-func Dump(v ...any) {
-	toLog(dump, v...)
 }
 
 func Panic(v ...any) {

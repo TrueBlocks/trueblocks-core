@@ -1,9 +1,5 @@
 #!/bin/bash
 
-echo "---------------------------------------------------------"
-echo "Running build_and_test.sh"
-echo "---------------------------------------------------------"
-
 cd /root/trueblocks-core/build
 export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-#-------- test-all.sh ----------------
-
 cd ..
 export QUICKBLOCKS=`pwd`
 export INSTALL=$QUICKBLOCKS/build/other/install
