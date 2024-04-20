@@ -98,7 +98,10 @@ func AbisFinishParseInternal(w io.Writer, values url.Values) *AbisOptions {
 			opts.Encode = value[0]
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

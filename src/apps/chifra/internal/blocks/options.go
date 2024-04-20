@@ -145,7 +145,10 @@ func BlocksFinishParseInternal(w io.Writer, values url.Values) *BlocksOptions {
 			opts.ListCount = globals.ToUint64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

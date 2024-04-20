@@ -97,7 +97,10 @@ func DaemonFinishParseInternal(w io.Writer, values url.Values) *DaemonOptions {
 			opts.Silent = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

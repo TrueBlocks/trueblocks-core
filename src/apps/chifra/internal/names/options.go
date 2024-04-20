@@ -137,7 +137,10 @@ func NamesFinishParseInternal(w io.Writer, values url.Values) *NamesOptions {
 			opts.Remove = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "names")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "names")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

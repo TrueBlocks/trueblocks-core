@@ -70,7 +70,10 @@ func ConfigFinishParseInternal(w io.Writer, values url.Values) *ConfigOptions {
 			opts.Paths = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "config")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "config")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
