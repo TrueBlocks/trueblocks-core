@@ -1,3 +1,0 @@
-slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&types=token&blocks=0-1500000&appearances&fmt=csv
-address,blockNumber,transactionIndex
-0x9519afbc60719a83c470ceec41e32d3e4b8b262e,1434022,2

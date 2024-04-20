@@ -1,8 +1,0 @@
-chifra blocks  4102000 --fmt txt --uniq --flow reward
-TEST[DATE|TIME] Blocks:  [4102000]
-TEST[DATE|TIME] Uniq:  true
-TEST[DATE|TIME] Flow:  reward
-TEST[DATE|TIME] Caps:  cache,decache,raw
-TEST[DATE|TIME] Format:  txt
-address	blockNumber	transactionIndex	traceIndex	reason
-0x1e9939daaad6924ad004c2560e90804164900341	4102000	99999		miner

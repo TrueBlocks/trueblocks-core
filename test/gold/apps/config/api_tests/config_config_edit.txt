@@ -1,6 +1,0 @@
-config?modes=edit
-{
-  "errors": [
-    "Invalid key (modes) in config route."
-  ]
-}

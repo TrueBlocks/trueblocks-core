@@ -1,6 +1,0 @@
-chifra names  exchanges --tags --match_case
-TEST[DATE|TIME] Terms:  [exchanges]
-TEST[DATE|TIME] MatchCase:  true
-TEST[DATE|TIME] Tags:  true
-TEST[DATE|TIME] Format:  txt
-WARN[DATE|TIME] No results for [chifra names exchanges --tags --match_case]

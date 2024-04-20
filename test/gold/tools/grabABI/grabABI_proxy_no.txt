@@ -1,7 +1,0 @@
-chifra abis  0x99b36fdbc582d113af36a21eba06bfeab7b9be12 --fmt json
-TEST[DATE|TIME] Addrs:  [0x99b36fdbc582d113af36a21eba06bfeab7b9be12]
-TEST[DATE|TIME] Caps:  cache,decache
-TEST[DATE|TIME] Format:  json
-{
-  "data": []
-}

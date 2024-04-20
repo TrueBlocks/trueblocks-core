@@ -1,6 +1,0 @@
-status?modes=index&output=output_test_file&noHeader&append&maxRecords=2
-{
-  "errors": [
-    "The --output option is not available in api mode."
-  ]
-}

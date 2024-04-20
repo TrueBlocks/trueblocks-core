@@ -1,6 +1,0 @@
-logs?transactions=12.0&ether
-{
-  "errors": [
-    "Invalid key (ether) in logs route."
-  ]
-}

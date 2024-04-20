@@ -1,6 +1,0 @@
-monitors?addrs=trueblocks.eth&cache
-{
-  "errors": [
-    "Please provide either --clean or one of the CRUD commands."
-  ]
-}

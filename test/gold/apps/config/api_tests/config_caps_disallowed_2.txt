@@ -1,6 +1,0 @@
-config?raw
-{
-  "errors": [
-    "Invalid key (raw) in config route."
-  ]
-}

@@ -1,3 +1,0 @@
-transactions?transactions=0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb&articulate&fmt=csv
-blockNumber,transactionIndex,timestamp,date,from,to,ether,gasPrice,gasUsed,gasCost,hash,isError,encoding,type
-1884245,4,1468509904,2016-07-14 15:25:04 UTC,0x9519afbc60719a83c470ceec41e32d3e4b8b262e,0xe583ac239693c716ee5567c7da61c96647d691e5,0.001,20270618185,32968,668281740323080,0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb,false,,

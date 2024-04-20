@@ -1,6 +1,0 @@
-when?blocks=2015-03-02
-{
-  "errors": [
-    "The given value '2015-03-02' is before the first block."
-  ]
-}

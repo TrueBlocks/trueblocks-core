@@ -1,6 +1,0 @@
-chunks?mode=pins&list
-{
-  "errors": [
-    "The pins mode is not available in api mode."
-  ]
-}

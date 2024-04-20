@@ -1,6 +1,0 @@
-receipts?pink
-{
-  "errors": [
-    "Invalid key (pink) in receipts route."
-  ]
-}

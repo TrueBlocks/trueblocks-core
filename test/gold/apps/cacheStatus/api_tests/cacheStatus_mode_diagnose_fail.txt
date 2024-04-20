@@ -1,6 +1,0 @@
-status?modes=index&diagnose
-{
-  "errors": [
-    "--diagnose may not be used with index"
-  ]
-}

@@ -1,6 +1,0 @@
-config?ether
-{
-  "errors": [
-    "Invalid key (ether) in config route."
-  ]
-}

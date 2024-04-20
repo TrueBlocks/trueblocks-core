@@ -1,6 +1,0 @@
-receipts?transactions=12.0&ether
-{
-  "errors": [
-    "Invalid key (ether) in receipts route."
-  ]
-}

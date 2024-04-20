@@ -1,6 +1,0 @@
-abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&fmt=txt&output=output_test_file&append
-{
-  "errors": [
-    "The --output option is not available in api mode."
-  ]
-}

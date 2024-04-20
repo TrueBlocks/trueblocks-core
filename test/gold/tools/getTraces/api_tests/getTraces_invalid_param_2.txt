@@ -1,6 +1,0 @@
-traces?transactions=.whatever
-{
-  "errors": [
-    "The given value '.whatever' is not a valid identifier."
-  ]
-}

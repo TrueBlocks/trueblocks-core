@@ -1,3 +1,0 @@
-state?call='0x06fdde03()'&addrs=0x2260fac5e5542a773aa44fbcfedf7c193bc2c599&blocks=10092000&fmt=txt
-blockNumber	address	signature	encoding	bytes	compressedResult
-10092000	0x2260fac5e5542a773aa44fbcfedf7c193bc2c599	name()	0x06fdde03		{val_0:Wrapped BTC}

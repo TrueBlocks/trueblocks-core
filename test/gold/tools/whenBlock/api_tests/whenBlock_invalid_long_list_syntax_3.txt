@@ -1,6 +1,0 @@
-when?blocks=2016-03-02&list&k
-{
-  "errors": [
-    "Invalid key (k) in when route."
-  ]
-}

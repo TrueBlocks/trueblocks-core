@@ -1,6 +1,0 @@
-chunks?mode=index&tag=not.a.tag
-{
-  "errors": [
-    "The --tag option is not available in api mode."
-  ]
-}

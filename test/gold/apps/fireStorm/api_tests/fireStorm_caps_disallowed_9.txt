@@ -1,6 +1,0 @@
-explore?terms=12.0&cache
-{
-  "errors": [
-    "Invalid key (cache) in explore route."
-  ]
-}

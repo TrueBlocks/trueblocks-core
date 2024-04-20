@@ -1,6 +1,0 @@
-chifra when  0
-TEST[DATE|TIME] Blocks:  [0]
-TEST[DATE|TIME] Caps:  cache,decache
-TEST[DATE|TIME] Format:  txt
-blockNumber	timestamp	date	name
-0	1438269975	2015-07-30 15:26:15 UTC	frontier

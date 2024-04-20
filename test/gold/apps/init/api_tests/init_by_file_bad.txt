@@ -1,6 +1,0 @@
-init?file=cmd_file_2
-{
-  "errors": [
-    "integration testing was skipped for chifra init"
-  ]
-}

@@ -1,6 +1,0 @@
-when?list&fmt=txt&chain=sepolia
-blockNumber	timestamp	date	name
-0	1633267481	2021-10-03 13:24:41 UTC	first
-33106	1635176350	2021-10-25 15:39:10 UTC	firstTrans
-1450409	1657115916	2022-07-06 13:58:36 UTC	paris_merge
-2990908	1677557088	2023-02-28 04:04:48 UTC	shanghai

@@ -1,8 +1,0 @@
-chifra blocks  32279 --uniq --verbose
-TEST[DATE|TIME] Blocks:  [32279]
-TEST[DATE|TIME] Uniq:  true
-TEST[DATE|TIME] Verbose:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw,ether
-TEST[DATE|TIME] Format:  txt
-address	blockNumber	transactionIndex	traceIndex	reason	timestamp	date
-0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead	32279	99997		miner	1438688098	2015-08-04 11:34:58 UTC

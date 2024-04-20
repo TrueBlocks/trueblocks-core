@@ -1,7 +1,0 @@
-chifra when  daohack -v
-TEST[DATE|TIME] Blocks:  [daohack]
-TEST[DATE|TIME] Verbose:  true
-TEST[DATE|TIME] Caps:  cache,decache
-TEST[DATE|TIME] Format:  txt
-blockNumber	timestamp	date	name	component	description
-1718497	1466134488	2016-06-17 03:34:48 UTC	daohack	execution	The first blocks of the DAO hack.

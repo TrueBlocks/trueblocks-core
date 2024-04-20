@@ -1,3 +1,0 @@
-list?addrs=trueblocks.eth&fmt=txt&firstBlock=8854723&lastBlock=9000000&bounds
-address	count	firstApp	firstTs	firstDate	latestApp	latestTs	latestDate	blockSpan	blockFreq
-0xf503017d7baf7fbc0fff7492b751025c6a78179b	14	8854723.61	1572639538	2019-11-01 20:18:58 UTC	8876232.84	1572938328	2019-11-05 07:18:48 UTC	21509	1536

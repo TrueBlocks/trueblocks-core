@@ -1,8 +1,0 @@
-chifra monitors  0x001d14804b399c6ef80e64576f657660804fec0b --delete --remove --fmt json
-TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
-TEST[DATE|TIME] Delete:  true
-TEST[DATE|TIME] Remove:  true
-TEST[DATE|TIME] Caps:  cache,decache
-TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] Monitor 0x001d14804b399c6ef80e64576f657660804fec0b was deleted but not removed.
-INFO[DATE|TIME] Monitor for 0x001d14804b399c6ef80e64576f657660804fec0b was permanently removed.

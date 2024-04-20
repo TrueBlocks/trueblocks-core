@@ -1,6 +1,0 @@
-tokens?addrs=trueblocks.eth&raw
-{
-  "errors": [
-    "Invalid key (raw) in tokens route."
-  ]
-}

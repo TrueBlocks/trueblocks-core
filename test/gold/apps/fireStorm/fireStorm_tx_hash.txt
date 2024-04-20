@@ -1,5 +1,0 @@
-chifra explore  0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f
-TEST[DATE|TIME] Terms:  [0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f]
-TEST[DATE|TIME] Caps:  -fmt,-noHeader,-output,-append
-TEST[DATE|TIME] Format:  txt
-INFO[DATE|TIME] Not opening https://etherscan.io/tx/0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f in test mode

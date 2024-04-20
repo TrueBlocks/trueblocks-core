@@ -1,6 +1,0 @@
-chifra tokens  0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
-TEST[DATE|TIME] Addrs:  [0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf]
-TEST[DATE|TIME] Blocks:  [0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2]
-TEST[DATE|TIME] Format:  txt
-blockNumber	holder	address	name	symbol	decimals	balance
-TIME ~ CLOCK - <WARN> : Block hash '0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2' does not appear to be a valid block hash.

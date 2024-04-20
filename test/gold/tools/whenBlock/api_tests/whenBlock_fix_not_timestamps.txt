@@ -1,6 +1,0 @@
-when?blocks=1301000&fix
-{
-  "errors": [
-    "Invalid key (fix) in when route."
-  ]
-}

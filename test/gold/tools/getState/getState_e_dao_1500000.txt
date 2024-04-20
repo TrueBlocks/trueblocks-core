@@ -1,8 +1,0 @@
-chifra state  0xbb9bc244d798123fde783fcc1c72d3bb8c189413 1500000 --ether --fmt txt
-TEST[DATE|TIME] Addrs:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
-TEST[DATE|TIME] Blocks:  [1500000]
-TEST[DATE|TIME] Ether:  true
-TEST[DATE|TIME] Caps:  cache,decache,ether
-TEST[DATE|TIME] Format:  txt
-blockNumber	address	ether
-1500000	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	4420466.920675732108465682

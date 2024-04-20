@@ -1,7 +1,0 @@
-chifra when  tangerine_whistle --verbose
-TEST[DATE|TIME] Blocks:  [tangerine_whistle]
-TEST[DATE|TIME] Verbose:  true
-TEST[DATE|TIME] Caps:  cache,decache
-TEST[DATE|TIME] Format:  txt
-blockNumber	timestamp	date	name	component	description
-2463000	1476796771	2016-10-18 13:19:31 UTC	tangerine_whistle	execution	The Tangerine Whistle fork was the first response to the denial of service (DoS) attacks on the network (September/October 2016) including: addressing urgent network health issues concerning underpriced operation codes.

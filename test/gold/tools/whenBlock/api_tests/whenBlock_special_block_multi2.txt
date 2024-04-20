@@ -1,6 +1,0 @@
-when?blocks=stateclear%20iceage%204001001%20junk&verbose
-{
-  "errors": [
-    "The given value 'junk' is not a valid identifier."
-  ]
-}

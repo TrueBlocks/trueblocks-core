@@ -1,6 +1,0 @@
-when?blocks=1ppppppp
-{
-  "errors": [
-    "The given value '1ppppppp' is not a valid identifier."
-  ]
-}

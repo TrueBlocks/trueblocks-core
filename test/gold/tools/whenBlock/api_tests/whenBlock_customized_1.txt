@@ -1,6 +1,0 @@
-when?blocks=myblock
-{
-  "errors": [
-    "The given value 'myblock' is not a valid identifier."
-  ]
-}

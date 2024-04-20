@@ -1,6 +1,0 @@
-when?blocks=1301000&count
-{
-  "errors": [
-    "The --count option is only available with the --timestamps option."
-  ]
-}

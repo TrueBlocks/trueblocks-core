@@ -1,6 +1,0 @@
-chunks?mode=manifest&pin&rewrite
-{
-  "errors": [
-    "The --pin option requires a locally running IPFS daemon."
-  ]
-}

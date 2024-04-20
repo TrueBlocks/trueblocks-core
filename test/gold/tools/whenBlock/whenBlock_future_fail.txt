@@ -1,5 +1,0 @@
-chifra when  50000000
-TEST[DATE|TIME] Blocks:  [50000000]
-TEST[DATE|TIME] Caps:  cache,decache
-TEST[DATE|TIME] Format:  txt
-EROR[DATE|TIME] block at 50000000 returned an error: not found

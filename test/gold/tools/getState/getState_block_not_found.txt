@@ -1,7 +1,0 @@
-chifra state  0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
-TEST[DATE|TIME] Addrs:  [0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98]
-TEST[DATE|TIME] Blocks:  [0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2]
-TEST[DATE|TIME] Caps:  cache,decache,ether
-TEST[DATE|TIME] Format:  txt
-EROR[DATE|TIME] block hash 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2 not found
-EROR[DATE|TIME] no state results were reported

@@ -1,6 +1,0 @@
-names?terms=find_nothing&cache
-{
-  "errors": [
-    "Invalid key (cache) in names route."
-  ]
-}

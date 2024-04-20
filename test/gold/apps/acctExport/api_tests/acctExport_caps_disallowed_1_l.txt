@@ -1,6 +1,0 @@
-list?addrs=trueblocks.eth&cache
-{
-  "errors": [
-    "Invalid key (cache) in list route."
-  ]
-}
