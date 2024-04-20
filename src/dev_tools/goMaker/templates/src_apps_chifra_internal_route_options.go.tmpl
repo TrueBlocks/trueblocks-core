@@ -51,7 +51,10 @@ func {{toProper .Route}}FinishParseInternal(w io.Writer, values url.Values) *{{t
 		switch key {
 {{.RequestOpts}}		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "{{.Route}}")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "{{.Route}}")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

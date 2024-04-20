@@ -21,12 +21,12 @@ func TestUnmarshalEther(t *testing.T) {
 		Float float64    `json:"float"`
 	}
 
-	type TestCase struct {
+	type testCase struct {
 		input    string
 		expected string
 	}
 
-	var tests = []TestCase{
+	var tests = []testCase{
 		{
 			input:    "1",
 			expected: "1",

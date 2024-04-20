@@ -18,10 +18,6 @@ import (
 
 // Initialize makes sure everything is ready to run. These routines don't return if they aren't
 func Initialize() bool {
-	if os.Getenv("NO_COLOR") == "true" {
-		colors.ColorsOff()
-	}
-
 	VerifyOs()
 	VerifyMigrations()
 

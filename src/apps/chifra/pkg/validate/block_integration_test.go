@@ -66,13 +66,13 @@ func Test_BlockRanges(t *testing.T) {
 	}
 }
 
-type TestCase struct {
+type testCase struct {
 	input    string
 	expected string
 	enabled  bool
 }
 
-var testBlocks = []TestCase{
+var testBlocks = []testCase{
 	{
 		input:    "1001001.0",
 		expected: "1001001.0",
