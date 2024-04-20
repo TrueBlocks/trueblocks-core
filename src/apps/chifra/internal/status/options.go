@@ -91,7 +91,10 @@ func StatusFinishParseInternal(w io.Writer, values url.Values) *StatusOptions {
 			opts.Chains = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "status")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "status")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

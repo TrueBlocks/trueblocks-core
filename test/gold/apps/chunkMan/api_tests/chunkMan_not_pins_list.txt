@@ -1,6 +1,0 @@
-chunks?mode=index&list
-{
-  "errors": [
-    "The --list option is only available in pins mode."
-  ]
-}

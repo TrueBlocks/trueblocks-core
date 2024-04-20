@@ -78,7 +78,10 @@ func ExploreFinishParseInternal(w io.Writer, values url.Values) *ExploreOptions 
 			opts.Google = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "explore")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "explore")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

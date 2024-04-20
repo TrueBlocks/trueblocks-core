@@ -1,6 +1,0 @@
-when?timestamps
-{
-  "errors": [
-    "--timestamp option not tested in testMode"
-  ]
-}

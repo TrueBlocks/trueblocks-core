@@ -1,6 +1,0 @@
-when?x
-{
-  "errors": [
-    "Invalid key (x) in when route."
-  ]
-}

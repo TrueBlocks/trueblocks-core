@@ -1,6 +1,0 @@
-when?blocks=1001001-1001005&output=output_test_file
-{
-  "errors": [
-    "The --output option is not available in api mode."
-  ]
-}

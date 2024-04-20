@@ -1,6 +1,0 @@
-chunks?mode=addresses&pin
-{
-  "errors": [
-    "The --pin option is not available in addresses mode."
-  ]
-}

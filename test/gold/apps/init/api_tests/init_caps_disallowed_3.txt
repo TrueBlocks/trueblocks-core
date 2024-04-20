@@ -1,6 +1,0 @@
-init?append
-{
-  "errors": [
-    "Invalid key (append) in init route."
-  ]
-}

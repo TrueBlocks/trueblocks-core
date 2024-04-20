@@ -1,6 +1,0 @@
-chifra explore  0xf503017D7baF7FBC0fff7492b751025c6A78179b --local
-TEST[DATE|TIME] Terms:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
-TEST[DATE|TIME] Local:  true
-TEST[DATE|TIME] Caps:  -fmt,-noHeader,-output,-append
-TEST[DATE|TIME] Format:  txt
-INFO[DATE|TIME] Not opening http://localhost:1234/address/0xf503017d7baf7fbc0fff7492b751025c6a78179b in test mode

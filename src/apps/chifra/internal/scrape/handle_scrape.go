@@ -79,7 +79,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// Another rare case, but here the user has reset his/her node but not removed
 		// the index. In this case, the index is ahead of the chain. We go to sleep and
 		// try again later in the hopes that the chain catches up.
-		if bm.meta.NextIndexHeight() > bm.meta.ChainHeight()+1 {
+		if !opts.DryRun && bm.meta.NextIndexHeight() > bm.meta.ChainHeight()+1 {
 			var ErrIndexAhead = fmt.Errorf(
 				"index (%d) is ahead of chain (%d)",
 				bm.meta.NextIndexHeight(),

@@ -1,6 +1,0 @@
-scrape?junk
-{
-  "errors": [
-    "Invalid key (junk) in scrape route."
-  ]
-}

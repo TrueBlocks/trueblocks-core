@@ -1,6 +1,0 @@
-blocks?blocks=2222222&trace
-{
-  "errors": [
-    "Invalid key (trace) in blocks route."
-  ]
-}

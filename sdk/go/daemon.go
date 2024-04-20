@@ -223,13 +223,13 @@ func (opts *DaemonOptions) Start(ready chan<- bool) {
 	}()
 
 	time.Sleep(1 * time.Second)
-	logger.Info("Server started...")
 	ready <- true
 }
 
-func NewDaemon() *DaemonOptions {
+func NewDaemon(url string) *DaemonOptions {
 	return &DaemonOptions{
 		Silent: true,
+		Url:    url,
 	}
 }
 

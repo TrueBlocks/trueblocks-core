@@ -1,38 +1,38 @@
-enabled ,mode ,speed ,route   ,path/tool      ,filename           ,post ,options
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,help               ,n    ,@h
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,help_long          ,n    ,help
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,no_params          ,n    ,
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,invalid_param_1    ,n    ,junk
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,bad_hash           ,n    ,terms = 0xf503017D7baF7FBC0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,address            ,n    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,address_ens        ,n    ,terms = trueblocks.eth
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,tx_hash            ,n    ,terms = 0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,tx_id              ,n    ,terms = 46147.0
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,block_hash         ,n    ,terms = 0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,block_id           ,n    ,terms = 12
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,address_local      ,n    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b & local
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,address_local_rink ,n    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b & local & chain = sepolia
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,address_ens_local  ,n    ,terms = trueblocks.eth & local
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,tx_hash_local      ,n    ,terms = 0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f & local
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,tx_id_local        ,n    ,terms = 46147.0 & local
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,block_hash_local   ,n    ,terms = 0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0 & local
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,block_id_local     ,n    ,terms = 12 & local
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,google_fail        ,n    ,terms = 1001001.0 & local & google
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,google_fail2       ,n    ,terms = 1001001.0 & google
-on      ,cmd  ,fast  ,explore ,apps/fireStorm ,google             ,n    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b & google
-on      ,both ,fast  ,explore ,apps/fireStorm ,failApi            ,y    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b
-on      ,both ,fast  ,explore ,apps/fireStorm ,block_not_found    ,y    ,terms = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
+enabled ,mode ,speed ,route   ,path ,tool      ,filename           ,post ,options
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,help               ,n    ,@h
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,help_long          ,n    ,help
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,no_params          ,n    ,
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,invalid_param_1    ,n    ,junk
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,bad_hash           ,n    ,terms = 0xf503017D7baF7FBC0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,address            ,n    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,address_ens        ,n    ,terms = trueblocks.eth
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,tx_hash            ,n    ,terms = 0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,tx_id              ,n    ,terms = 46147.0
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,block_hash         ,n    ,terms = 0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,block_id           ,n    ,terms = 12
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,address_local      ,n    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b & local
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,address_local_rink ,n    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b & local & chain = sepolia
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,address_ens_local  ,n    ,terms = trueblocks.eth & local
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,tx_hash_local      ,n    ,terms = 0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f & local
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,tx_id_local        ,n    ,terms = 46147.0 & local
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,block_hash_local   ,n    ,terms = 0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0 & local
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,block_id_local     ,n    ,terms = 12 & local
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,google_fail        ,n    ,terms = 1001001.0 & local & google
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,google_fail2       ,n    ,terms = 1001001.0 & google
+on      ,cmd  ,fast  ,explore ,apps ,fireStorm ,google             ,n    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b & google
+on      ,both ,fast  ,explore ,apps ,fireStorm ,failApi            ,y    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b
+on      ,both ,fast  ,explore ,apps ,fireStorm ,block_not_found    ,y    ,terms = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
-on      ,both ,fast  ,explore ,apps/fireStorm ,caps_allowed       ,y    ,terms = 12.0 & chain & nocolor & noop & verbose & file & fail_on_purpose
-on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_1  ,y    ,terms = 12.0 & fmt = json
-on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_3  ,y    ,terms = 12.0 & no_header
-on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_4  ,y    ,terms = 12.0 & output
-on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_5  ,y    ,terms = 12.0 & append
-on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_6  ,y    ,terms = 12.0 & raw
-on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_7  ,y    ,terms = 12.0 & ether
-on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_8  ,y    ,terms = 12.0 & wei
-on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_9  ,y    ,terms = 12.0 & cache
-on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_10 ,y    ,terms = 12.0 & decache
+on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_allowed       ,y    ,terms = 12.0 & chain & nocolor & noop & verbose & file & fail_on_purpose
+on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_1  ,y    ,terms = 12.0 & fmt = json
+on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_3  ,y    ,terms = 12.0 & no_header
+on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_4  ,y    ,terms = 12.0 & output
+on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_5  ,y    ,terms = 12.0 & append
+on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_6  ,y    ,terms = 12.0 & raw
+on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_7  ,y    ,terms = 12.0 & ether
+on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_8  ,y    ,terms = 12.0 & wei
+on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_9  ,y    ,terms = 12.0 & cache
+on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_10 ,y    ,terms = 12.0 & decache
 # skipped: version

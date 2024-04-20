@@ -1,6 +1,0 @@
-blocks?blocks=12&traces&chain=non-tracing
-{
-  "errors": [
-    "chain non-tracing is not properly configured."
-  ]
-}

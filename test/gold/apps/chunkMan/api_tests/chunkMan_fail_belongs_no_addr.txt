@@ -1,6 +1,0 @@
-chunks?mode=index&belongs&blocks=2287625
-{
-  "errors": [
-    "Please specify at least one valid Ethereum address."
-  ]
-}

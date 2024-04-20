@@ -1,6 +1,0 @@
-export?addrs=chasewright.eth&withdrawals&logs&firstBlock=18345580&lastBlock=18409900&fmt=json
-{
-  "errors": [
-    "Please choose only a single mode (--appearances, --logs, etc.)"
-  ]
-}

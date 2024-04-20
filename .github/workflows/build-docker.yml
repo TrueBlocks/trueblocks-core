@@ -13,7 +13,7 @@ jobs:
     steps:
       -
         name: Start trueblocks-docker publish workflow
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           # We need a token to authorize
           github-token: ${{ secrets.PAT_DOCKER_TRIGGER }}

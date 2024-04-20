@@ -1,6 +1,0 @@
-when?verbose
-{
-  "errors": [
-    "Please supply one or more block identifiers or one or more dates."
-  ]
-}

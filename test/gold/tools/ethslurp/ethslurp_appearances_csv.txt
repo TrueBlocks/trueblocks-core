@@ -1,9 +1,0 @@
-chifra slurp  0x9519afbc60719a83c470ceec41e32d3e4b8b262e --types token 0-1500000 --appearances --fmt csv
-TEST[DATE|TIME] Addrs:  [0x9519afbc60719a83c470ceec41e32d3e4b8b262e]
-TEST[DATE|TIME] Blocks:  [0-1500000]
-TEST[DATE|TIME] Types:  [token]
-TEST[DATE|TIME] Appearances:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw,ether
-TEST[DATE|TIME] Format:  csv
-address,blockNumber,transactionIndex
-0x9519afbc60719a83c470ceec41e32d3e4b8b262e,1434022,2

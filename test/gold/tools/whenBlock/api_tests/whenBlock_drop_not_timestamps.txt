@@ -1,6 +1,0 @@
-when?blocks=1301000&repair
-{
-  "errors": [
-    "The --repair option is only available with the --timestamps option."
-  ]
-}

@@ -1,6 +1,0 @@
-scrape?fmt=json
-{
-  "errors": [
-    "chifra scrape is not available in API mode"
-  ]
-}

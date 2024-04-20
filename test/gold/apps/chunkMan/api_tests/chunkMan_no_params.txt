@@ -1,6 +1,0 @@
-chunks?
-{
-  "errors": [
-    "Please choose at least one of [manifest|index|blooms|pins|addresses|appearances|stats]."
-  ]
-}

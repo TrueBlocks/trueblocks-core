@@ -6,6 +6,6 @@ import (
 )
 
 func TestMain(t *testing.T) {
-	os.Setenv("TB_DEBUG_CURL", "test")
+	os.Setenv("TB_DEBUG_CURL", "true")
 	main()
 }

@@ -1,6 +1,0 @@
-scrape?decache
-{
-  "errors": [
-    "Invalid key (decache) in scrape route."
-  ]
-}

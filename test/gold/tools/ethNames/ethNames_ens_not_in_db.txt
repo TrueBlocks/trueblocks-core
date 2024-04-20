@@ -1,5 +1,0 @@
-chifra names  nick.eth
-TEST[DATE|TIME] Terms:  [0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5]
-TEST[DATE|TIME] Format:  txt
-WARN[DATE|TIME] No known names found for [0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5]
-WARN[DATE|TIME] Original command: [chifra names nick.eth]

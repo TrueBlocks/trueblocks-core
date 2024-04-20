@@ -1,9 +1,0 @@
-chifra state  0xa1e4380a3b1f749673e270229993ee55f35663b4 12000000 --cache
-TEST[DATE|TIME] Addrs:  [0xa1e4380a3b1f749673e270229993ee55f35663b4]
-TEST[DATE|TIME] Blocks:  [12000000]
-TEST[DATE|TIME] Enabled:  state
-TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,ether
-TEST[DATE|TIME] Format:  txt
-blockNumber	address	balance
-12000000	0xa1e4380a3b1f749673e270229993ee55f35663b4	258843698360318482

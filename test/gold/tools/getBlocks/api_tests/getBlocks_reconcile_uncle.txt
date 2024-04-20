@@ -1,6 +1,0 @@
-blocks?blocks=3&fmt=json&accountFor=0xc8ebccc5f5689fa8659d83713341e5ad19349448
-{
-  "errors": [
-    "Invalid key (accountFor) in blocks route."
-  ]
-}

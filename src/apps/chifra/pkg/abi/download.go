@@ -67,7 +67,7 @@ func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) e
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --clean.
-		if !perfTiming {
+		if !perfTiming && os.Getenv("TEST_MODE") != "true" {
 			logger.Warn("provider responded with:", address.Hex(), data["message"], ss)
 		}
 

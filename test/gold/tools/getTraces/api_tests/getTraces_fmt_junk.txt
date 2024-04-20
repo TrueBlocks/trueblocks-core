@@ -1,6 +1,0 @@
-traces?transactions=2222222.0%202332332.0&fmt=junk
-{
-  "errors": [
-    "The --fmt option (junk) must be one of [ json | txt | csv ]"
-  ]
-}

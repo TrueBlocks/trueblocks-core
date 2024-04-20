@@ -1,7 +1,0 @@
-chifra abis  0x713b73c3994442b533e6a083ec968e40606810ec
-TEST[DATE|TIME] Addrs:  [0x713b73c3994442b533e6a083ec968e40606810ec]
-TEST[DATE|TIME] Caps:  cache,decache
-TEST[DATE|TIME] Format:  txt
-WARN[DATE|TIME] provider responded with: 0x713b73c3994442b533e6a083ec968e40606810ec NOTOK                                         
-encoding	type	name	signature
-0x08b2745a	function	AbiNotFound	AbiNotFound()

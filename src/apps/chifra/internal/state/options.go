@@ -108,7 +108,10 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 			opts.ProxyFor = value[0]
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "state")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "state")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}

@@ -1,6 +1,0 @@
-explore?terms=0xf503017D7baF7FBC0fff7492b751025c6A78179b
-{
-  "errors": [
-    "The explore option is not available in api mode."
-  ]
-}

@@ -1,3 +1,0 @@
-slurp?addrs=0xdefae2ee3146e258a4383c15bb90239e85ba3cad&types=withdrawals&blocks=17034900-17034910&fmt=csv
-blockNumber,validatorIndex,withdrawalIndex,timestamp,date,from,to,value
-17034904,154891,449,1681338983,2023-04-12 22:36:23 UTC,0x000000000000000000005769746864726177616c,0xdefae2ee3146e258a4383c15bb90239e85ba3cad,2899644110

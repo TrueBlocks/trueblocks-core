@@ -1,6 +1,0 @@
-chunks?mode=blooms&cache
-{
-  "errors": [
-    "Invalid key (cache) in chunks route."
-  ]
-}

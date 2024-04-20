@@ -1,8 +1,0 @@
-chifra traces  46147.0 --cache
-TEST[DATE|TIME] Transactions:  [46147.0]
-TEST[DATE|TIME] Enabled:  traces, transactions
-TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw,ether
-TEST[DATE|TIME] Format:  txt
-blockNumber	transactionIndex	timestamp	date	error	action::callType	action::from	action::to	action::value	action::ether	action::gas	result::gasUsed	action::input	result::output
-46147	0	1438918233	2015-08-07 03:30:33 UTC		call	0xa1e4380a3b1f749673e270229993ee55f35663b4	0x5df9b87991262f6ba471f09758cde1c0fc1de734	31337	0.000000000000031337	0	0	0x	0x

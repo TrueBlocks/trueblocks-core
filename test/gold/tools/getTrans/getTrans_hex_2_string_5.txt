@@ -1,7 +1,0 @@
-chifra transactions  0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e30558bd2d8da --articulate
-TEST[DATE|TIME] Transactions:  [0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e30558bd2d8da]
-TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw,ether
-TEST[DATE|TIME] Format:  txt
-blockNumber	transactionIndex	timestamp	date	from	to	ether	gasPrice	gasUsed	gasCost	hash	isError	encoding	compressedTx	type
-13050078	385	1629301081	2021-08-18 15:38:01 UTC	0x4c0a466df0628fe8699051b3ac6506653191cc21	0xdbd27635a534a3d3169ef0498beb56fb9c937489	0	45826195333	388323	17795365650296559	0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e30558bd2d8da	false	0xda95691a	{name:propose|inputs:{calldatas:[0x000000000000000000000000a7ac9f7087d7197e0047db9a90562a1364bf897d00000000000000000000000000000000000000000000098774738bc822200000]|description:Public Goods Workstream Allocation [n]Through this proposal_ the Public Goods Funding workstream is requesting to ratify and execute its approved budget of 45_000 GTC to be deployed over Q3 2021 to help further the mission of GitcoinDAO by executing on the objectives in the proposal from Snapshot linked below:[n][n]https://snapshot.org/#/gitcoindao.eth/proposal/QmQWucgbue8uemNHXTDKvvEhRxfEcoB6B6Ci51TANkKaGU|signatures:[transfer(address_uint256)]|targets:[0xde30da39c46104798bb5aa3fe8b9e0e1f348163f]|values:[0]}|outputs:{val_0:}}	0x2

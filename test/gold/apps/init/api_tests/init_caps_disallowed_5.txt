@@ -1,6 +1,0 @@
-init?raw
-{
-  "errors": [
-    "Invalid key (raw) in init route."
-  ]
-}

@@ -1,6 +1,0 @@
-scrape?chain=non-tracing
-{
-  "errors": [
-    "chain non-tracing is not properly configured."
-  ]
-}

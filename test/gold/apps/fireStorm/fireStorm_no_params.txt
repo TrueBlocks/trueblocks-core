@@ -1,4 +1,0 @@
-chifra explore  
-TEST[DATE|TIME] Caps:  -fmt,-noHeader,-output,-append
-TEST[DATE|TIME] Format:  txt
-INFO[DATE|TIME] Not opening https://etherscan.io/ in test mode

@@ -1,6 +1,0 @@
-scrape?file=cmd_file_2
-{
-  "errors": [
-    "chifra scrape is not available in API mode"
-  ]
-}

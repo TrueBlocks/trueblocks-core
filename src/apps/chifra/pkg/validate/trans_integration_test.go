@@ -74,7 +74,7 @@ func Test_TransactionIds(t *testing.T) {
 	}
 }
 
-var testTxs = []TestCase{
+var testTxs = []testCase{
 	{
 		input:    "1001001.0",
 		expected: "1001001.0",

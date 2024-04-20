@@ -1,6 +1,0 @@
-receipts?
-{
-  "errors": [
-    "Please supply one or more transaction identifiers."
-  ]
-}

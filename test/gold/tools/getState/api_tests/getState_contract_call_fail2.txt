@@ -1,6 +1,0 @@
-state?call='12065fe0()'&addrs=0xa4f29fc548856180f6b1e319ee4d86715875cce4&blocks=6523977-6540000:2000
-{
-  "errors": [
-    "the --call value provided (12065fe0()) was not found: the value provided --call (12065fe0()) is invalid"
-  ]
-}

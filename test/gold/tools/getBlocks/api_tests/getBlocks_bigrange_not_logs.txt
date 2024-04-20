@@ -1,6 +1,0 @@
-blocks?blocks=4012000-4012001&bigRange=100
-{
-  "errors": [
-    "The --big_range option is only available with the --logs option."
-  ]
-}

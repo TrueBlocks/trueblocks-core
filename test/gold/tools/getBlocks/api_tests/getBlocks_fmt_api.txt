@@ -1,6 +1,0 @@
-blocks?blocks=2222222%202332332&fmt=api
-{
-  "errors": [
-    "The --fmt option (api) must be one of [ json | txt | csv ]"
-  ]
-}

@@ -84,14 +84,14 @@ func TestFormattedValue(t *testing.T) {
 }
 
 func TestToEther(t *testing.T) {
-	type TestCase struct {
+	type testCase struct {
 		input    *Wei
 		expected string
 	}
 
 	v1, _ := new(Wei).SetString("123456789012345678", 10)
 	v2, _ := new(Wei).SetString("1234567890123456789", 10)
-	var tests = []TestCase{
+	var tests = []testCase{
 		{NewWei(0), "0"},
 		{NewWei(1), "0.000000000000000001"},
 		{v1, "0.123456789012345678"},

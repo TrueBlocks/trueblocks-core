@@ -1,46 +1,46 @@
-enabled ,mode ,speed ,route    ,path/tool       ,filename                 ,post ,options
-on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_help            ,n    ,@h
-on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_long_help       ,n    ,help
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_no_params       ,y    ,
+enabled ,mode ,speed ,route    ,path ,tool       ,filename                 ,post ,options
+on      ,cmd  ,fast  ,monitors ,apps ,acctExport ,monitors_help            ,n    ,@h
+on      ,cmd  ,fast  ,monitors ,apps ,acctExport ,monitors_long_help       ,n    ,help
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_no_params       ,y    ,
 
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_err_not_both1   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & remove & undelete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_err_not_both2   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & delete & undelete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_err_sleep       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & sleep
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_err_batch_size2 ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & batch_size = 1
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_err_run_once    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & run_count = 1
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_err_watch       ,y    ,watch & batch_size = 0 & fmt = json
-local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_watch           ,y    ,watch & commands = ./command.fil & watchlist = ./watches.txt & run_count = 1 & fmt = json
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_err_not_both1   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & remove & undelete
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_err_not_both2   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & delete & undelete
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_err_sleep       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & sleep
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_err_batch_size2 ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & batch_size = 1
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_err_run_once    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & run_count = 1
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_err_watch       ,y    ,watch & batch_size = 0 & fmt = json
+local   ,both ,fast  ,monitors ,apps ,acctExport ,monitors_watch           ,y    ,watch & commands = ./command.fil & watchlist = ./watches.txt & run_count = 1 & fmt = json
 
-on      ,both ,fast  ,list     ,apps/acctExport ,list_prepare_1           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json & last_block = 1501460
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_clean           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & clean
+on      ,both ,fast  ,list     ,apps ,acctExport ,list_prepare_1           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json & last_block = 1501460
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_clean           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & clean
 
-on      ,both ,fast  ,list     ,apps/acctExport ,list_prepare_2           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json & last_block = 1501460
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_1        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_1_fail   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_undelete        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_undelete_fail   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_remove_fail     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & remove
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_2        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_remove          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & remove
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_undelete2       ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_clean_2         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & clean
+on      ,both ,fast  ,list     ,apps ,acctExport ,list_prepare_2           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json & last_block = 1501460
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_delete_1        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_delete_1_fail   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_undelete        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_undelete_fail   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_remove_fail     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & remove
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_delete_2        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_remove          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & remove
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_undelete2       ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_clean_2         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & clean
 
-on      ,both ,fast  ,list     ,apps/acctExport ,list_prepare_3           ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & fmt = json & last_block = 2873700
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list1           ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = json
-names   ,both ,fast  ,monitors ,apps/acctExport ,monitors_list1_v         ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = json & verbose
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_decache         ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_decache_again   ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list2           ,n    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = csv
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list2_v         ,n    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = csv & verbose
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list_not_in     ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 & list
+on      ,both ,fast  ,list     ,apps ,acctExport ,list_prepare_3           ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & fmt = json & last_block = 2873700
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list1           ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = json
+names   ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list1_v         ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = json & verbose
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_decache         ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_decache_again   ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list2           ,n    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = csv
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list2_v         ,n    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = csv & verbose
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list_not_in     ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 & list
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
-on      ,both ,fast  ,monitors ,apps/acctExport ,caps_allowed_m           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & decache & fail_on_purpose
-on      ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_1_m      ,y    ,addrs = trueblocks.eth & cache
-on      ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_2_m      ,y    ,addrs = trueblocks.eth & raw
-on      ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_3_m      ,y    ,addrs = trueblocks.eth & ether
-on      ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_4_m      ,y    ,addrs = trueblocks.eth & wei
+on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_allowed_m           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & decache & fail_on_purpose
+on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_disallowed_1_m      ,y    ,addrs = trueblocks.eth & cache
+on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_disallowed_2_m      ,y    ,addrs = trueblocks.eth & raw
+on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_disallowed_3_m      ,y    ,addrs = trueblocks.eth & ether
+on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_disallowed_4_m      ,y    ,addrs = trueblocks.eth & wei
 
 # Not tested for chifra monitors...
 # chifra monitors --watch
