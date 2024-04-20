@@ -461,12 +461,15 @@ func getGeneratedPath() string {
 }
 
 func getWorkingPath() string {
-	return "../tests/working/"
-	// return filepath.Join(getRepoRoot(), "tests/working") + "/"
+	return filepath.Join(getRepoRoot(), "tests/working") + "/"
+}
+
+func getTempFilePath(goldFn string) string {
+	return filepath.Join(getRepoRoot(), "build", filepath.Base(goldFn)) + ".tmp"
 }
 
 func getLogFile(mode string) string {
-	return "../src/dev_tools/testRunner/generated/test_" + mode + ".log"
+	return getGeneratedPath() + "test_" + mode + ".log"
 }
 
 func loadTestCases() (map[string][]TestCase, string, error) {
