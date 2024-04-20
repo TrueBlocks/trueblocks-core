@@ -26,7 +26,7 @@ type RawChunkAddress struct {
 	// EXISTING_CODE
 }
 
-type SimpleChunkAddress struct {
+type ChunkAddress struct {
 	Address base.Address     `json:"address"`
 	Count   uint64           `json:"count"`
 	Offset  uint64           `json:"offset"`
@@ -36,20 +36,20 @@ type SimpleChunkAddress struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleChunkAddress) String() string {
+func (s *ChunkAddress) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleChunkAddress) Raw() *RawChunkAddress {
+func (s *ChunkAddress) Raw() *RawChunkAddress {
 	return s.raw
 }
 
-func (s *SimpleChunkAddress) SetRaw(raw *RawChunkAddress) {
+func (s *ChunkAddress) SetRaw(raw *RawChunkAddress) {
 	s.raw = raw
 }
 
-func (s *SimpleChunkAddress) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -75,7 +75,7 @@ func (s *SimpleChunkAddress) Model(chain, format string, verbose bool, extraOpti
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleChunkAddress) FinishUnmarshal() {
+func (s *ChunkAddress) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

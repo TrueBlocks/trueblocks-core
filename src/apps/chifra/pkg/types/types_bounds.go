@@ -29,7 +29,7 @@ type RawBounds struct {
 	// EXISTING_CODE
 }
 
-type SimpleBounds struct {
+type Bounds struct {
 	Count     uint64         `json:"count"`
 	FirstApp  RawAppearance  `json:"firstApp"`
 	FirstTs   base.Timestamp `json:"firstTs"`
@@ -40,20 +40,20 @@ type SimpleBounds struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleBounds) String() string {
+func (s *Bounds) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleBounds) Raw() *RawBounds {
+func (s *Bounds) Raw() *RawBounds {
 	return s.raw
 }
 
-func (s *SimpleBounds) SetRaw(raw *RawBounds) {
+func (s *Bounds) SetRaw(raw *RawBounds) {
 	s.raw = raw
 }
 
-func (s *SimpleBounds) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Bounds) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -91,7 +91,7 @@ func (s *SimpleBounds) Model(chain, format string, verbose bool, extraOptions ma
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleBounds) FinishUnmarshal() {
+func (s *Bounds) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

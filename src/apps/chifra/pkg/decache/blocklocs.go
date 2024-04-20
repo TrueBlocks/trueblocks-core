@@ -18,14 +18,14 @@ func LocationsFromBlockIds(conn *rpc.Connection, ids []identifiers.Identifier, l
 		}
 		for _, bn := range blockNums {
 			if logs {
-				logGroup := &types.SimpleLogGroup{
+				logGroup := &types.LogGroup{
 					BlockNumber:      bn,
 					TransactionIndex: utils.NOPOS,
 				}
 				locations = append(locations, logGroup)
 
 			} else if trace {
-				traceGroup := &types.SimpleTraceGroup{
+				traceGroup := &types.TraceGroup{
 					BlockNumber:      bn,
 					TransactionIndex: utils.NOPOS,
 				}
@@ -36,16 +36,16 @@ func LocationsFromBlockIds(conn *rpc.Connection, ids []identifiers.Identifier, l
 				if err != nil {
 					return nil, err
 				}
-				locations = append(locations, &types.SimpleBlock[string]{
+				locations = append(locations, &types.Block[string]{
 					BlockNumber: bn,
 				})
 				for index := range rawBlock.Transactions {
-					txToRemove := &types.SimpleTransaction{
+					txToRemove := &types.Transaction{
 						BlockNumber:      bn,
 						TransactionIndex: uint64(index),
 					}
 					locations = append(locations, txToRemove)
-					locations = append(locations, &types.SimpleTraceGroup{
+					locations = append(locations, &types.TraceGroup{
 						BlockNumber:      bn,
 						TransactionIndex: base.Txnum(index),
 					})

@@ -18,14 +18,14 @@ var transferTopic = base.HexToHash(
 var ErrNonIndexedTransfer = fmt.Errorf("non-indexed transfer")
 
 // getStatementsFromLog returns a statement from a given log
-func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleLog) (types.SimpleStatement, error) {
+func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (types.Statement, error) {
 	if logIn.Topics[0] != transferTopic {
 		// Not a transfer
-		return types.SimpleStatement{}, nil
+		return types.Statement{}, nil
 	}
 
 	if log, err := l.normalizeTransfer(logIn); err != nil {
-		return types.SimpleStatement{}, err
+		return types.Statement{}, err
 
 	} else {
 		sym := log.Address.Prefix(6)
@@ -62,7 +62,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleL
 			ofInterest = true
 		}
 
-		s := types.SimpleStatement{
+		s := types.Statement{
 			AccountedFor:     l.AccountFor,
 			Sender:           sender,
 			Recipient:        recipient,
@@ -117,7 +117,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleL
 	}
 }
 
-func (l *Ledger) normalizeTransfer(log *types.SimpleLog) (*types.SimpleLog, error) {
+func (l *Ledger) normalizeTransfer(log *types.Log) (*types.Log, error) {
 	if len(log.Topics) < 3 {
 		// Transfer(address _from, address _to, uint256 _tokenId) - no indexed topics
 		// Transfer(address indexed _from, address indexed _to, uint256 _value) - two indexed topics

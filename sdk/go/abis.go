@@ -80,7 +80,7 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 }
 
 type abisGeneric interface {
-	types.SimpleFunction
+	types.Function
 }
 
 func queryAbis[T abisGeneric](opts *AbisOptions) ([]T, *types.MetaData, error) {
@@ -98,8 +98,8 @@ func queryAbis[T abisGeneric](opts *AbisOptions) ([]T, *types.MetaData, error) {
 }
 
 // Abis implements the chifra abis command.
-func (opts *AbisOptions) Abis() ([]types.SimpleFunction, *types.MetaData, error) {
-	return queryAbis[types.SimpleFunction](opts)
+func (opts *AbisOptions) Abis() ([]types.Function, *types.MetaData, error) {
+	return queryAbis[types.Function](opts)
 }
 
 // No enums

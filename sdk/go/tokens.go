@@ -84,7 +84,7 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 }
 
 type tokensGeneric interface {
-	types.SimpleToken
+	types.Token
 }
 
 func queryTokens[T tokensGeneric](opts *TokensOptions) ([]T, *types.MetaData, error) {
@@ -102,8 +102,8 @@ func queryTokens[T tokensGeneric](opts *TokensOptions) ([]T, *types.MetaData, er
 }
 
 // Tokens implements the chifra tokens command.
-func (opts *TokensOptions) Tokens() ([]types.SimpleToken, *types.MetaData, error) {
-	return queryTokens[types.SimpleToken](opts)
+func (opts *TokensOptions) Tokens() ([]types.Token, *types.MetaData, error) {
+	return queryTokens[types.Token](opts)
 }
 
 type TokensParts int

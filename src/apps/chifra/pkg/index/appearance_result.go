@@ -12,7 +12,7 @@ import (
 type AppearanceResult struct {
 	Address    base.Address
 	Range      base.FileRange
-	AppRecords *[]types.SimpleAppRecord
+	AppRecords *[]types.AppRecord
 	Err        error
 }
 
@@ -32,7 +32,7 @@ func (chunk *Index) ReadAppearances(address base.Address) *AppearanceResult {
 		return &ret
 	}
 
-	addressRecord := types.SimpleAddrRecord{}
+	addressRecord := types.AddrRecord{}
 	if err := binary.Read(chunk.File, binary.LittleEndian, &addressRecord); err != nil {
 		ret.Err = err
 		return &ret

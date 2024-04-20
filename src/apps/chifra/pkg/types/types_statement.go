@@ -60,7 +60,7 @@ type RawStatement struct {
 	// EXISTING_CODE
 }
 
-type SimpleStatement struct {
+type Statement struct {
 	AccountedFor        base.Address   `json:"accountedFor"`
 	AmountIn            base.Wei       `json:"amountIn,omitempty"`
 	AmountOut           base.Wei       `json:"amountOut,omitempty"`
@@ -99,20 +99,20 @@ type SimpleStatement struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleStatement) String() string {
+func (s *Statement) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleStatement) Raw() *RawStatement {
+func (s *Statement) Raw() *RawStatement {
 	return s.raw
 }
 
-func (s *SimpleStatement) SetRaw(raw *RawStatement) {
+func (s *Statement) SetRaw(raw *RawStatement) {
 	s.raw = raw
 }
 
-func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Statement) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -186,26 +186,26 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 	}
 }
 
-func (s *SimpleStatement) Date() string {
+func (s *Statement) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-type SimpleStatementGroup struct {
+type StatementGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
 	Address          base.Address
-	Statements       []SimpleStatement
+	Statements       []Statement
 }
 
-func (s *SimpleStatementGroup) CacheName() string {
+func (s *StatementGroup) CacheName() string {
 	return "Statement"
 }
 
-func (s *SimpleStatementGroup) CacheId() string {
+func (s *StatementGroup) CacheId() string {
 	return fmt.Sprintf("%s-%09d-%05d", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)
 }
 
-func (s *SimpleStatementGroup) CacheLocation() (directory string, extension string) {
+func (s *StatementGroup) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -219,15 +219,15 @@ func (s *SimpleStatementGroup) CacheLocation() (directory string, extension stri
 	return
 }
 
-func (s *SimpleStatementGroup) MarshalCache(writer io.Writer) (err error) {
+func (s *StatementGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Statements)
 }
 
-func (s *SimpleStatementGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *StatementGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	return cache.ReadValue(reader, &s.Statements, version)
 }
 
-func (s *SimpleStatement) MarshalCache(writer io.Writer) (err error) {
+func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 	// AccountedFor
 	if err = cache.WriteValue(writer, s.AccountedFor); err != nil {
 		return err
@@ -386,7 +386,7 @@ func (s *SimpleStatement) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleStatement) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Statement) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// AccountedFor
 	if err = cache.ReadValue(reader, &s.AccountedFor, version); err != nil {
 		return err
@@ -548,7 +548,7 @@ func (s *SimpleStatement) UnmarshalCache(version uint64, reader io.Reader) (err 
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleStatement) FinishUnmarshal() {
+func (s *Statement) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -556,7 +556,7 @@ func (s *SimpleStatement) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleStatement) TotalIn() *base.Wei {
+func (s *Statement) TotalIn() *base.Wei {
 	vals := []base.Wei{
 		s.AmountIn,
 		s.InternalIn,
@@ -577,7 +577,7 @@ func (s *SimpleStatement) TotalIn() *base.Wei {
 	return sum
 }
 
-func (s *SimpleStatement) TotalOut() *base.Wei {
+func (s *Statement) TotalOut() *base.Wei {
 	vals := []base.Wei{
 		s.AmountOut,
 		s.InternalOut,
@@ -594,20 +594,20 @@ func (s *SimpleStatement) TotalOut() *base.Wei {
 	return sum
 }
 
-func (s *SimpleStatement) IsMaterial() bool {
+func (s *Statement) IsMaterial() bool {
 	return s.TotalIn().Cmp(new(base.Wei)) != 0 || s.TotalOut().Cmp(new(base.Wei)) != 0
 }
 
-func (s *SimpleStatement) AmountNet() *base.Wei {
+func (s *Statement) AmountNet() *base.Wei {
 	return new(base.Wei).Sub(s.TotalIn(), s.TotalOut())
 }
 
-func (s *SimpleStatement) TotalOutLessGas() *base.Wei {
+func (s *Statement) TotalOutLessGas() *base.Wei {
 	val := s.TotalOut()
 	return new(base.Wei).Sub(val, &s.GasOut)
 }
 
-func (s *SimpleStatement) BegBalDiff() *base.Wei {
+func (s *Statement) BegBalDiff() *base.Wei {
 	val := &base.Wei{}
 
 	if s.BlockNumber == 0 {
@@ -619,20 +619,20 @@ func (s *SimpleStatement) BegBalDiff() *base.Wei {
 	return val
 }
 
-func (s *SimpleStatement) EndBalCalc() *base.Wei {
+func (s *Statement) EndBalCalc() *base.Wei {
 	return new(base.Wei).Add(&s.BegBal, s.AmountNet())
 }
 
-func (s *SimpleStatement) EndBalDiff() *base.Wei {
+func (s *Statement) EndBalDiff() *base.Wei {
 	return new(base.Wei).Sub(s.EndBalCalc(), &s.EndBal)
 }
 
-func (s *SimpleStatement) Reconciled() bool {
+func (s *Statement) Reconciled() bool {
 	zero := new(base.Wei).SetInt64(0)
 	return (s.EndBalDiff().Cmp(zero) == 0 && s.BegBalDiff().Cmp(zero) == 0)
 }
 
-func (s *SimpleStatement) IsEth() bool {
+func (s *Statement) IsEth() bool {
 	return s.AssetAddr == base.FAKE_ETH_ADDRESS
 }
 
@@ -643,7 +643,7 @@ var (
 	usdt = base.HexToAddress("0xdac17f958d2ee523a2206206994597c13d831ec7")
 )
 
-func (s *SimpleStatement) IsStableCoin() bool {
+func (s *Statement) IsStableCoin() bool {
 	stables := map[base.Address]bool{
 		sai:  true,
 		dai:  true,
@@ -653,7 +653,7 @@ func (s *SimpleStatement) IsStableCoin() bool {
 	return stables[s.AssetAddr]
 }
 
-func (s *SimpleStatement) isNullTransfer(tx *SimpleTransaction) bool {
+func (s *Statement) isNullTransfer(tx *Transaction) bool {
 	lotsOfLogs := len(tx.Receipt.Logs) > 10
 	mayBeAirdrop := s.Sender.IsZero() || s.Sender == tx.To
 	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.IsMaterial()
@@ -679,7 +679,7 @@ func (s *SimpleStatement) isNullTransfer(tx *SimpleTransaction) bool {
 	return ret
 }
 
-func (s *SimpleStatement) CorrectForNullTransfer(tx *SimpleTransaction) bool {
+func (s *Statement) CorrectForNullTransfer(tx *Transaction) bool {
 	if !s.IsEth() {
 		if s.isNullTransfer(tx) {
 			logger.TestLog(true, "Correcting token transfer for a null transfer")
@@ -698,7 +698,7 @@ func (s *SimpleStatement) CorrectForNullTransfer(tx *SimpleTransaction) bool {
 	return s.Reconciled()
 }
 
-func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
+func (s *Statement) CorrectForSomethingElse(tx *Transaction) bool {
 	if s.IsEth() {
 		if s.AssetType == "trace-eth" && s.ReconType&First != 0 && s.ReconType&Last != 0 {
 			if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
@@ -747,7 +747,7 @@ type Ledgerer interface {
 	Next() base.Blknum
 }
 
-func (s *SimpleStatement) DebugStatement(ctx Ledgerer) {
+func (s *Statement) DebugStatement(ctx Ledgerer) {
 	logger.TestLog(true, "===================================================")
 	logger.TestLog(true, fmt.Sprintf("====> %s", s.AssetType))
 	logger.TestLog(true, "===================================================")

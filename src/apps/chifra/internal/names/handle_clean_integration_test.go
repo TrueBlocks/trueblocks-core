@@ -21,26 +21,26 @@ import (
 func Test_cleanName(t *testing.T) {
 	type args struct {
 		chain string
-		name  *types.SimpleName
+		name  *types.Name
 	}
 	tests := []struct {
 		name         string
 		args         args
 		wantModified bool
 		wantErr      bool
-		expectedName *types.SimpleName
+		expectedName *types.Name
 	}{
 		{
 			name: "was contract",
 			args: args{
 				chain: "mainnet",
-				name: &types.SimpleName{
+				name: &types.Name{
 					IsContract: true,
 					Address:    base.HexToAddress("0x139e20773accc72ef75765fdff158244845c3888"),
 				},
 			},
 			wantModified: true,
-			expectedName: &types.SimpleName{
+			expectedName: &types.Name{
 				Address:    base.HexToAddress("0x139e20773accc72ef75765fdff158244845c3888"),
 				Petname:    "remarkably-solid-cardinal",
 				IsContract: true,
@@ -51,13 +51,13 @@ func Test_cleanName(t *testing.T) {
 			name: "was NOT contract",
 			args: args{
 				chain: "mainnet",
-				name: &types.SimpleName{
+				name: &types.Name{
 					IsContract: false,
 					Address:    base.HexToAddress("0x139e20773accc72ef75765fdff158244845c3888"),
 				},
 			},
 			wantModified: true,
-			expectedName: &types.SimpleName{
+			expectedName: &types.Name{
 				Address: base.HexToAddress("0x139e20773accc72ef75765fdff158244845c3888"),
 				Petname: "remarkably-solid-cardinal",
 				Tags:    "90-Individuals:Other",
@@ -67,7 +67,7 @@ func Test_cleanName(t *testing.T) {
 			name: "not modified",
 			args: args{
 				chain: "mainnet",
-				name: &types.SimpleName{
+				name: &types.Name{
 					Address:    base.HexToAddress("0xe77d387b4be1076891868060c32e81bc3b89c730"),
 					Decimals:   18,
 					IsContract: false,
@@ -100,20 +100,20 @@ func Test_cleanName(t *testing.T) {
 func Test_cleanName_edgeCases(t *testing.T) {
 	type args struct {
 		chain string
-		name  *types.SimpleName
+		name  *types.Name
 	}
 	tests := []struct {
 		name         string
 		args         args
 		wantModified bool
 		wantErr      bool
-		expectedName *types.SimpleName
+		expectedName *types.Name
 	}{
 		{
 			name: "was contract",
 			args: args{
 				chain: "mainnet",
-				name: &types.SimpleName{
+				name: &types.Name{
 					IsContract: true,
 					IsErc20:    true,
 					IsErc721:   true,
@@ -132,7 +132,7 @@ func Test_cleanName_edgeCases(t *testing.T) {
 			name: "was contract",
 			args: args{
 				chain: "mainnet",
-				name: &types.SimpleName{
+				name: &types.Name{
 					IsContract: true,
 					IsErc20:    true,
 					IsErc721:   true,
@@ -151,7 +151,7 @@ func Test_cleanName_edgeCases(t *testing.T) {
 			name: "name fourbyte collision",
 			args: args{
 				chain: "mainnet",
-				name: &types.SimpleName{
+				name: &types.Name{
 					IsContract: true,
 					Petname:    "solely-caring-basilisk",
 					Tags:       "90-Individuals:Twitter",
@@ -165,7 +165,7 @@ func Test_cleanName_edgeCases(t *testing.T) {
 			name: "double space",
 			args: args{
 				chain: "mainnet",
-				name: &types.SimpleName{
+				name: &types.Name{
 					Address:    base.HexToAddress("0x3591ac25cd3dc66ed67eed87c8507c965f167258"),
 					Decimals:   18,
 					IsContract: true,
@@ -261,7 +261,7 @@ func BenchmarkCleanConcurrent(b *testing.B) {
 			b.Fatal(err)
 		}
 
-		appMap := make(map[base.Address]types.SimpleName, benchmarkLimit)
+		appMap := make(map[base.Address]types.Name, benchmarkLimit)
 		count := 0
 		for addr, name := range allNames {
 			if count == benchmarkLimit {
@@ -273,7 +273,7 @@ func BenchmarkCleanConcurrent(b *testing.B) {
 
 		b.StartTimer()
 
-		iterFunc := func(key base.Address, name types.SimpleName) error {
+		iterFunc := func(key base.Address, name types.Name) error {
 			modified, err := cleanName("mainnet", &name)
 			if err != nil {
 				panic(err)

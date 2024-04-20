@@ -17,7 +17,7 @@ func FromBnToName(chain string, bn uint64) (string, error) {
 }
 
 // FromBnToNamedBlock returns the block's chain-specific name (if found) given its block number
-func FromBnToNamedBlock(chain string, bn uint64) (*types.SimpleNamedBlock, error) {
+func FromBnToNamedBlock(chain string, bn uint64) (*types.NamedBlock, error) {
 	specials, _ := GetSpecials(chain)
 	for _, value := range specials {
 		if value.BlockNumber == bn {

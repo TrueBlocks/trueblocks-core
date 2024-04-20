@@ -47,8 +47,8 @@ const (
 )
 
 // LoadNamesArray loads the names from the cache and returns an array of names
-func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) ([]types.SimpleName, error) {
-	var names []types.SimpleName
+func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) ([]types.Name, error) {
+	var names []types.Name
 	if namesMap, err := LoadNamesMap(chain, parts, terms); err != nil {
 		return nil, err
 	} else {
@@ -85,8 +85,8 @@ func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) ([
 }
 
 // LoadNamesMap loads the names from the cache and returns a map of names
-func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]types.SimpleName, error) {
-	namesMap := map[base.Address]types.SimpleName{}
+func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]types.Name, error) {
+	namesMap := map[base.Address]types.Name{}
 
 	// Load the prefund names first...
 	if parts&Prefund != 0 {
@@ -123,8 +123,8 @@ func ClearCache() {
 	loadedCustomNamesMutex.Lock()
 	defer loadedCustomNamesMutex.Unlock()
 
-	loadedRegularNames = make(map[base.Address]types.SimpleName)
-	loadedCustomNames = make(map[base.Address]types.SimpleName)
+	loadedRegularNames = make(map[base.Address]types.Name)
+	loadedCustomNames = make(map[base.Address]types.Name)
 }
 
 var requiredColumns = []string{
@@ -142,16 +142,16 @@ type NameReader struct {
 	csvReader csv.Reader
 }
 
-func (gr *NameReader) Read() (types.SimpleName, error) {
+func (gr *NameReader) Read() (types.Name, error) {
 	record, err := gr.csvReader.Read()
 	if err == io.EOF {
 		gr.file.Close()
 	}
 	if err != nil {
-		return types.SimpleName{}, err
+		return types.Name{}, err
 	}
 
-	return types.SimpleName{
+	return types.Name{
 		Tags:       record[gr.header["tags"]],
 		Address:    base.HexToAddress(strings.ToLower(record[gr.header["address"]])),
 		Name:       record[gr.header["name"]],

@@ -28,7 +28,7 @@ type RawNamedBlock struct {
 	// EXISTING_CODE
 }
 
-type SimpleNamedBlock struct {
+type NamedBlock struct {
 	BlockNumber base.Blknum    `json:"blockNumber"`
 	Component   string         `json:"component,omitempty"`
 	Description string         `json:"description,omitempty"`
@@ -39,20 +39,20 @@ type SimpleNamedBlock struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleNamedBlock) String() string {
+func (s *NamedBlock) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleNamedBlock) Raw() *RawNamedBlock {
+func (s *NamedBlock) Raw() *RawNamedBlock {
 	return s.raw
 }
 
-func (s *SimpleNamedBlock) SetRaw(raw *RawNamedBlock) {
+func (s *NamedBlock) SetRaw(raw *RawNamedBlock) {
 	s.raw = raw
 }
 
-func (s *SimpleNamedBlock) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *NamedBlock) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -103,12 +103,12 @@ func (s *SimpleNamedBlock) Model(chain, format string, verbose bool, extraOption
 	}
 }
 
-func (s *SimpleNamedBlock) Date() string {
+func (s *NamedBlock) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleNamedBlock) FinishUnmarshal() {
+func (s *NamedBlock) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

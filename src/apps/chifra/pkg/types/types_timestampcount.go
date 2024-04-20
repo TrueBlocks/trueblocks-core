@@ -21,27 +21,27 @@ type RawTimestampCount struct {
 	// EXISTING_CODE
 }
 
-type SimpleTimestampCount struct {
+type TimestampCount struct {
 	Count uint64             `json:"count"`
 	raw   *RawTimestampCount `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleTimestampCount) String() string {
+func (s *TimestampCount) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleTimestampCount) Raw() *RawTimestampCount {
+func (s *TimestampCount) Raw() *RawTimestampCount {
 	return s.raw
 }
 
-func (s *SimpleTimestampCount) SetRaw(raw *RawTimestampCount) {
+func (s *TimestampCount) SetRaw(raw *RawTimestampCount) {
 	s.raw = raw
 }
 
-func (s *SimpleTimestampCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *TimestampCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -61,7 +61,7 @@ func (s *SimpleTimestampCount) Model(chain, format string, verbose bool, extraOp
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleTimestampCount) FinishUnmarshal() {
+func (s *TimestampCount) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

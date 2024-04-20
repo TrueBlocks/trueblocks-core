@@ -748,7 +748,7 @@ func (op *Option) executeTemplate(name, tmplCode string) string {
 func (op *Option) RetType() string {
 	v := op.ReturnType
 	if v != "string" && v != "base.Address" && v != "bool" {
-		v = "types.Simple" + FirstUpper(v)
+		v = "types." + FirstUpper(v)
 	}
 	return v
 }

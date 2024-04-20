@@ -156,7 +156,7 @@ func TestKeyProvider_Count(t *testing.T) {
 
 	results := provider.Count(ctx, query, errors)
 
-	count := make([]types.SimpleMonitor, 0, 1)
+	count := make([]types.Monitor, 0, 1)
 LOOP:
 	for {
 		select {

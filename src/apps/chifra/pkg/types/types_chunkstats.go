@@ -31,7 +31,7 @@ type RawChunkStats struct {
 	// EXISTING_CODE
 }
 
-type SimpleChunkStats struct {
+type ChunkStats struct {
 	AddrsPerBlock float64        `json:"addrsPerBlock"`
 	AppsPerAddr   float64        `json:"appsPerAddr"`
 	AppsPerBlock  float64        `json:"appsPerBlock"`
@@ -50,20 +50,20 @@ type SimpleChunkStats struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleChunkStats) String() string {
+func (s *ChunkStats) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleChunkStats) Raw() *RawChunkStats {
+func (s *ChunkStats) Raw() *RawChunkStats {
 	return s.raw
 }
 
-func (s *SimpleChunkStats) SetRaw(raw *RawChunkStats) {
+func (s *ChunkStats) SetRaw(raw *RawChunkStats) {
 	s.raw = raw
 }
 
-func (s *SimpleChunkStats) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *ChunkStats) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -107,7 +107,7 @@ func (s *SimpleChunkStats) Model(chain, format string, verbose bool, extraOption
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleChunkStats) FinishUnmarshal() {
+func (s *ChunkStats) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

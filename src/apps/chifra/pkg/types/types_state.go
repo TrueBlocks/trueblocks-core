@@ -37,7 +37,7 @@ type RawState struct {
 	// EXISTING_CODE
 }
 
-type SimpleState struct {
+type State struct {
 	AccountType string         `json:"accountType"`
 	Address     base.Address   `json:"address"`
 	Balance     base.Wei       `json:"balance"`
@@ -52,20 +52,20 @@ type SimpleState struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleState) String() string {
+func (s *State) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleState) Raw() *RawState {
+func (s *State) Raw() *RawState {
 	return s.raw
 }
 
-func (s *SimpleState) SetRaw(raw *RawState) {
+func (s *State) SetRaw(raw *RawState) {
 	s.raw = raw
 }
 
-func (s *SimpleState) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *State) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -126,19 +126,19 @@ func (s *SimpleState) Model(chain, format string, verbose bool, extraOptions map
 	}
 }
 
-func (s *SimpleState) Date() string {
+func (s *State) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-func (s *SimpleState) CacheName() string {
+func (s *State) CacheName() string {
 	return "State"
 }
 
-func (s *SimpleState) CacheId() string {
+func (s *State) CacheId() string {
 	return fmt.Sprintf("%s-%09d", s.Address.Hex()[2:], s.BlockNumber)
 }
 
-func (s *SimpleState) CacheLocation() (directory string, extension string) {
+func (s *State) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -152,7 +152,7 @@ func (s *SimpleState) CacheLocation() (directory string, extension string) {
 	return
 }
 
-func (s *SimpleState) MarshalCache(writer io.Writer) (err error) {
+func (s *State) MarshalCache(writer io.Writer) (err error) {
 	// AccountType
 	if err = cache.WriteValue(writer, s.AccountType); err != nil {
 		return err
@@ -201,7 +201,7 @@ func (s *SimpleState) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleState) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *State) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// AccountType
 	if err = cache.ReadValue(reader, &s.AccountType, version); err != nil {
 		return err
@@ -253,7 +253,7 @@ func (s *SimpleState) UnmarshalCache(version uint64, reader io.Reader) (err erro
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleState) FinishUnmarshal() {
+func (s *State) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

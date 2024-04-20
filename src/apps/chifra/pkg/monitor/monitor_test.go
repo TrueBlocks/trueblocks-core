@@ -50,25 +50,25 @@ func Test_Monitor_ReadApp(t *testing.T) {
 		RemoveTestMonitor(&mon, t)
 	}()
 
-	var got types.SimpleAppRecord
+	var got types.AppRecord
 	err := mon.ReadAppearanceAt(0, &got)
 	if err == nil {
 		t.Error("Should have been 'index out of range in ReadAppearanceAt[0]' error")
 	}
 
-	expected := types.SimpleAppRecord{BlockNumber: 1001001, TransactionIndex: 0}
+	expected := types.AppRecord{BlockNumber: 1001001, TransactionIndex: 0}
 	err = mon.ReadAppearanceAt(1, &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
 	}
 
-	expected = types.SimpleAppRecord{BlockNumber: 1001002, TransactionIndex: 1}
+	expected = types.AppRecord{BlockNumber: 1001002, TransactionIndex: 1}
 	err = mon.ReadAppearanceAt(2, &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
 	}
 
-	expected = types.SimpleAppRecord{BlockNumber: 1001003, TransactionIndex: 2}
+	expected = types.AppRecord{BlockNumber: 1001003, TransactionIndex: 2}
 	err = mon.ReadAppearanceAt(mon.Count(), &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
@@ -228,7 +228,7 @@ func RemoveTestMonitor(mon *Monitor, t *testing.T) {
 
 const nTests = 3
 
-var testApps = []types.SimpleAppRecord{
+var testApps = []types.AppRecord{
 	{BlockNumber: 1001001, TransactionIndex: 0},
 	{BlockNumber: 1001002, TransactionIndex: 1},
 	{BlockNumber: 1001003, TransactionIndex: 2},
@@ -241,7 +241,7 @@ func testClean(s string) string {
 // TODO: ...and this - making this the String and the above ToTxt?
 // toJson returns a JSON object from a Monitor
 func (mon Monitor) toJson() string {
-	sm := types.SimpleMonitor{
+	sm := types.Monitor{
 		Address:     mon.Address,
 		NRecords:    mon.Count(),
 		FileSize:    file.FileSize(mon.Path()),

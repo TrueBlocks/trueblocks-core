@@ -25,10 +25,10 @@ func (mon *Monitor) RemoveDups() (int64, int64, error) {
 		cntBefore := mon.Count()
 		cntAfter := cntBefore
 
-		var prev types.SimpleAppRecord
-		deDupped := make([]types.SimpleAppRecord, 0, mon.Count())
+		var prev types.AppRecord
+		deDupped := make([]types.AppRecord, 0, mon.Count())
 		for i, app := range apps {
-			iApp := types.SimpleAppRecord{
+			iApp := types.AppRecord{
 				BlockNumber:      app.BlockNumber,
 				TransactionIndex: app.TransactionIndex,
 			}

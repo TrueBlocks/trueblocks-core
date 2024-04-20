@@ -70,7 +70,7 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 		return err
 	}
 
-	newChunks := []types.SimpleChunkRecord{}
+	newChunks := []types.ChunkRecord{}
 	for _, chunk := range man.Chunks {
 		chunkRange := base.RangeFromRangeString(chunk.Range)
 		if chunkRange.EarlierThan(removedRange) {

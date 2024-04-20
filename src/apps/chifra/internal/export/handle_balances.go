@@ -48,7 +48,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 				continue
 
 			} else {
-				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.SimpleToken](apps, filter.Reversed); err != nil {
+				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Token](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					cancel()
 
@@ -68,10 +68,10 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						}
 
 						for app := range thisMap {
-							thisMap[app] = new(types.SimpleToken)
+							thisMap[app] = new(types.Token)
 						}
 
-						iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {
+						iterFunc := func(app types.Appearance, value *types.Token) error {
 							var balance *base.Wei
 							if balance, err = opts.Conn.GetBalanceAt(mon.Address, uint64(app.BlockNumber)); err != nil {
 								return err
@@ -97,7 +97,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 							}
 						}
 
-						items := make([]*types.SimpleToken, 0, len(thisMap))
+						items := make([]*types.Token, 0, len(thisMap))
 						for _, tx := range thisMap {
 							items = append(items, tx)
 						}
@@ -110,7 +110,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						})
 
 						for idx, item := range items {
-							visitToken := func(idx int, item *types.SimpleToken) error {
+							visitToken := func(idx int, item *types.Token) error {
 								item.PriorBalance = *prevBalance
 								if item.BlockNumber == 0 || item.BlockNumber != currentBn || item.Timestamp == 0xdeadbeef {
 									item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)

@@ -9,7 +9,7 @@ import (
 
 func TestTypes(t *testing.T) {
 	chain := utils.GetTestChain()
-	s := SimpleReceipt{
+	s := Receipt{
 		BlockHash:   base.HexToHash("0x1"),
 		BlockNumber: 100,
 	}

@@ -31,33 +31,33 @@ type RawParameter struct {
 	// EXISTING_CODE
 }
 
-type SimpleParameter struct {
-	Components    []SimpleParameter `json:"components,omitempty"`
-	Indexed       bool              `json:"indexed,omitempty"`
-	InternalType  string            `json:"internalType,omitempty"`
-	Name          string            `json:"name"`
-	StrDefault    string            `json:"strDefault,omitempty"`
-	ParameterType string            `json:"type"`
-	Value         any               `json:"value,omitempty"`
-	raw           *RawParameter     `json:"-"`
+type Parameter struct {
+	Components    []Parameter   `json:"components,omitempty"`
+	Indexed       bool          `json:"indexed,omitempty"`
+	InternalType  string        `json:"internalType,omitempty"`
+	Name          string        `json:"name"`
+	StrDefault    string        `json:"strDefault,omitempty"`
+	ParameterType string        `json:"type"`
+	Value         any           `json:"value,omitempty"`
+	raw           *RawParameter `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleParameter) String() string {
+func (s *Parameter) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleParameter) Raw() *RawParameter {
+func (s *Parameter) Raw() *RawParameter {
 	return s.raw
 }
 
-func (s *SimpleParameter) SetRaw(raw *RawParameter) {
+func (s *Parameter) SetRaw(raw *RawParameter) {
 	s.raw = raw
 }
 
-func (s *SimpleParameter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Parameter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -94,7 +94,7 @@ func (s *SimpleParameter) Model(chain, format string, verbose bool, extraOptions
 	}
 }
 
-func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
+func (s *Parameter) MarshalCache(writer io.Writer) (err error) {
 	// Components
 	components := make([]cache.Marshaler, 0, len(s.Components))
 	for _, component := range s.Components {
@@ -141,9 +141,9 @@ func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleParameter) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Parameter) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// Components
-	s.Components = make([]SimpleParameter, 0)
+	s.Components = make([]Parameter, 0)
 	if err = cache.ReadValue(reader, &s.Components, version); err != nil {
 		return err
 	}
@@ -188,7 +188,7 @@ func (s *SimpleParameter) UnmarshalCache(version uint64, reader io.Reader) (err 
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleParameter) FinishUnmarshal() {
+func (s *Parameter) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -197,14 +197,14 @@ func (s *SimpleParameter) FinishUnmarshal() {
 //
 
 // DisplayName returns parameter name if defined, or a default name "val_" + index
-func (s *SimpleParameter) DisplayName(index int) string {
+func (s *Parameter) DisplayName(index int) string {
 	if s.Name != "" {
 		return s.Name
 	}
 	return "val_" + fmt.Sprint(index)
 }
 
-func parametersToMap(params []SimpleParameter) (result map[string]any) {
+func parametersToMap(params []Parameter) (result map[string]any) {
 	// This produces `null` in JSON instead of an empty object (`{}`)
 	if len(params) == 0 {
 		return nil

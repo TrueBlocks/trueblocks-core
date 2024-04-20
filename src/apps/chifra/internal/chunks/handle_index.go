@@ -46,7 +46,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 				return false, err
 			}
 
-			s := types.SimpleChunkIndex{
+			s := types.ChunkIndex{
 				Range:        rng.String(),
 				Magic:        fmt.Sprintf("0x%x", indexChunk.Header.Magic),
 				Hash:         indexChunk.Header.Hash,

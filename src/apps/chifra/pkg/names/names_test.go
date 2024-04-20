@@ -33,7 +33,7 @@ func TestNewNameReader(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	expected := []types.SimpleName{
+	expected := []types.Name{
 		{
 			Tags:    "55-Defi",
 			Address: base.HexToAddress("0x000000000000000000000000000000000000dead"),
@@ -74,7 +74,7 @@ func TestNewNameReader(t *testing.T) {
 			IsContract: true,
 		},
 	}
-	result := make([]types.SimpleName, 0, len(expected))
+	result := make([]types.Name, 0, len(expected))
 
 	for {
 		read, err := r.Read()

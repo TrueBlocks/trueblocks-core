@@ -23,14 +23,14 @@ func main() {
 	bar.Finish(true /* newLine */)
 }
 
-func visitTrace(trace *types.SimpleTrace, data *any) error {
+func visitTrace(trace *types.Trace, data *any) error {
 	if trace.Result != nil && !trace.Result.Address.IsZero() {
 		fmt.Println(trace.Result.Address, trace.Result.GasUsed)
 	}
 	return nil
 }
 
-func forEveryTrace(from, to base.Blknum, visitor func(*types.SimpleTrace, *any) error) error {
+func forEveryTrace(from, to base.Blknum, visitor func(*types.Trace, *any) error) error {
 	chain := "mainnet"
 	conn := rpc.TempConnection(chain)
 	for blknum := from; blknum <= to; blknum++ {

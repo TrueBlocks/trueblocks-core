@@ -43,7 +43,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 				continue
 
 			} else {
-				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, filter.Reversed); err != nil {
+				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					cancel()
 
@@ -62,10 +62,10 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 						}
 
 						for app := range thisMap {
-							thisMap[app] = new(types.SimpleTransaction)
+							thisMap[app] = new(types.Transaction)
 						}
 
-						iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+						iterFunc := func(app types.Appearance, value *types.Transaction) error {
 							if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
 								return err
 							} else {
@@ -90,7 +90,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 							return
 						}
 
-						txArray := make([]*types.SimpleTransaction, 0, len(thisMap))
+						txArray := make([]*types.Transaction, 0, len(thisMap))
 						for _, tx := range thisMap {
 							txArray = append(txArray, tx)
 						}
@@ -102,9 +102,9 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 							return txArray[i].BlockNumber < txArray[j].BlockNumber
 						})
 
-						apps := make([]types.SimpleAppearance, 0, len(thisMap))
+						apps := make([]types.Appearance, 0, len(thisMap))
 						for _, tx := range txArray {
-							apps = append(apps, types.SimpleAppearance{
+							apps = append(apps, types.Appearance{
 								BlockNumber:      uint32(tx.BlockNumber),
 								TransactionIndex: uint32(tx.TransactionIndex),
 							})
@@ -124,7 +124,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 						)
 						_ = ledgers.SetContexts(chain, apps)
 
-						items := make([]types.SimpleStatement, 0, len(thisMap))
+						items := make([]types.Statement, 0, len(thisMap))
 						for _, tx := range txArray {
 							if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
 								errorChan <- err

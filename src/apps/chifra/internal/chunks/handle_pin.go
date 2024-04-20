@@ -54,7 +54,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawChunkPinReport], errorChan chan error) {
 		hash := base.BytesToHash(config.HeaderHash(config.ExpectedVersion()))
-		report := types.SimpleChunkPinReport{
+		report := types.ChunkPinReport{
 			Version:  config.VersionTags[hash.Hex()],
 			Chain:    chain,
 			SpecHash: base.IpfsHash(manifest.Specification()),
@@ -169,7 +169,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 }
 
 // matches returns true if the Result has both local and remote hashes for both the index and the bloom and they match
-func matches(local, remote *types.SimpleChunkRecord) (bool, bool) {
+func matches(local, remote *types.ChunkRecord) (bool, bool) {
 	return local.BloomHash == remote.BloomHash, local.IndexHash == remote.IndexHash
 }
 

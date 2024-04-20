@@ -38,7 +38,7 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 				if err != nil {
 					errorChan <- err
 				}
-				s := types.SimpleTimestamp{
+				s := types.Timestamp{
 					BlockNumber: uint64(ts.Bn),
 					Timestamp:   base.Timestamp(ts.Ts),
 					Diff:        base.Timestamp(ts.Ts) - prev,

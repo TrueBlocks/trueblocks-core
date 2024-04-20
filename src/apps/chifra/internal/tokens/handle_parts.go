@@ -38,7 +38,7 @@ func (opts *TokensOptions) HandleParts() error {
 					if state, err := opts.Conn.GetTokenState(addr, fmt.Sprintf("0x%x", bn)); err != nil {
 						errorChan <- err
 					} else {
-						s := &types.SimpleToken{
+						s := &types.Token{
 							Address:     state.Address,
 							BlockNumber: bn,
 							TotalSupply: state.TotalSupply,

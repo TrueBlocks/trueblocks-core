@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func CreateName(dbType DatabaseType, chain string, name *types.SimpleName) (err error) {
+func CreateName(dbType DatabaseType, chain string, name *types.Name) (err error) {
 	switch dbType {
 	case DatabaseCustom:
 		return customCreateName(chain, name)
@@ -19,7 +19,7 @@ func CreateName(dbType DatabaseType, chain string, name *types.SimpleName) (err 
 	return
 }
 
-func customCreateName(chain string, name *types.SimpleName) (err error) {
+func customCreateName(chain string, name *types.Name) (err error) {
 	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
 	if err != nil {
 		return
@@ -33,7 +33,7 @@ func customCreateName(chain string, name *types.SimpleName) (err error) {
 	return writeCustomNames(db)
 }
 
-func regularCreateName(chain string, name *types.SimpleName) (err error) {
+func regularCreateName(chain string, name *types.Name) (err error) {
 	loadedRegularNamesMutex.Lock()
 	defer loadedRegularNamesMutex.Unlock()
 

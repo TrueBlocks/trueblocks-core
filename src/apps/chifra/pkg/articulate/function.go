@@ -13,7 +13,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func ArticulateFunction(function *types.SimpleFunction, inputData string, outputData string) (err error) {
+func ArticulateFunction(function *types.Function, inputData string, outputData string) (err error) {
 	abiMethod, err := function.GetAbiMethod()
 	if err != nil {
 		return
@@ -34,7 +34,7 @@ func ArticulateFunction(function *types.SimpleFunction, inputData string, output
 	return
 }
 
-func articulateArguments(args abi.Arguments, data string, topics []base.Hash, abiMap []types.SimpleParameter) (err error) {
+func articulateArguments(args abi.Arguments, data string, topics []base.Hash, abiMap []types.Parameter) (err error) {
 	dataBytes, err := hex.DecodeString(data)
 	if err != nil {
 		return

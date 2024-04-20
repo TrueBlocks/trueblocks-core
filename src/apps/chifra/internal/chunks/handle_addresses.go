@@ -69,12 +69,12 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 						continue
 					}
 
-					obj := types.SimpleAddrRecord{}
+					obj := types.AddrRecord{}
 					if err := binary.Read(indexChunk.File, binary.LittleEndian, &obj); err != nil {
 						return false, err
 					}
 
-					s := types.SimpleChunkAddress{
+					s := types.ChunkAddress{
 						Address: obj.Address,
 						Range:   indexChunk.Range.String(),
 						Offset:  uint64(obj.Offset),

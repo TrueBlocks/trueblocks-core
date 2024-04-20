@@ -22,7 +22,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 			Enabled: !testMode,
 			Total:   250, // estimate since we have no idea how many there are
 		})
-		procFunc := func(s *types.SimpleAppearance) error {
+		procFunc := func(s *types.Appearance) error {
 			bar.Tick()
 			modelChan <- s
 			return nil
@@ -36,7 +36,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 			}
 
 			for _, raw := range txIds {
-				app := types.SimpleAppearance{
+				app := types.Appearance{
 					BlockNumber:      raw.BlockNumber,
 					TransactionIndex: raw.TransactionIndex,
 				}

@@ -33,7 +33,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Transaction](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -49,12 +49,12 @@ func (opts *BlocksOptions) HandleLogs() error {
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.SimpleTransaction)
+					thisMap[app] = new(types.Transaction)
 				}
 
-				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+				iterFunc := func(app types.Appearance, value *types.Transaction) error {
 					if value.Receipt == nil {
-						value.Receipt = &types.SimpleReceipt{}
+						value.Receipt = &types.Receipt{}
 					}
 
 					bn := uint64(app.BlockNumber)
@@ -68,7 +68,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 						return fmt.Errorf("block at %d has no logs", bn)
 
 					} else {
-						l := make([]types.SimpleLog, 0, len(logs))
+						l := make([]types.Log, 0, len(logs))
 						for index := range logs {
 							if opts.Articulate {
 								if err = abiCache.ArticulateLog(&logs[index]); err != nil {
@@ -94,7 +94,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 					}
 				}
 
-				items := make([]types.SimpleLog, 0, len(thisMap))
+				items := make([]types.Log, 0, len(thisMap))
 				for _, tx := range thisMap {
 					items = append(items, tx.Receipt.Logs...)
 				}

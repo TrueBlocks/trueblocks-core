@@ -19,7 +19,7 @@ var ErrAbiNotFound = errors.New("abi not found ")
 type ContractCall struct {
 	Conn        *rpc.Connection
 	Address     base.Address
-	Method      *types.SimpleFunction
+	Method      *types.Function
 	Arguments   []any
 	BlockNumber uint64
 	encoded     string
@@ -32,7 +32,7 @@ func NewContractCallWithAbi(conn *rpc.Connection, callAddress base.Address, theC
 		return nil, []string{}, err
 	}
 
-	var function *types.SimpleFunction
+	var function *types.Function
 	var callArguments []*parser.ContractArgument
 	suggestions := make([]string, 0)
 	if parsed.Encoded != "" {
@@ -104,7 +104,7 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 		return nil, []string{}, err
 	}
 
-	var function *types.SimpleFunction
+	var function *types.Function
 	var callArguments []*parser.ContractArgument
 	suggestions := make([]string, 0)
 	if parsed.Encoded != "" {
@@ -161,7 +161,7 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 	return contactCall, suggestions, nil
 }
 
-func convertArguments(callArguments []*parser.ContractArgument, function *types.SimpleFunction) (args []any, err error) {
+func convertArguments(callArguments []*parser.ContractArgument, function *types.Function) (args []any, err error) {
 	abiMethod, err := function.GetAbiMethod()
 	if err != nil {
 		return
@@ -186,14 +186,14 @@ func (call *ContractCall) forceEncoding(encoding string) {
 	call.encoded = encoding
 }
 
-func (call *ContractCall) Call(artFunc func(string, *types.SimpleFunction) error) (results *types.SimpleResult, err error) {
+func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (results *types.Result, err error) {
 	if artFunc == nil {
 		logger.Fatal("should not happen ==> implementation error: artFunc is nil")
 	}
 
 	blockTs := base.Timestamp(0)
 	if call.Conn.StoreReadable() {
-		results = &types.SimpleResult{
+		results = &types.Result{
 			Address:     call.Address,
 			BlockNumber: call.BlockNumber,
 			Encoding:    call.Method.Encoding,
@@ -251,7 +251,7 @@ func (call *ContractCall) Call(artFunc func(string, *types.SimpleFunction) error
 		}
 	}
 
-	results = &types.SimpleResult{
+	results = &types.Result{
 		BlockNumber:      call.BlockNumber,
 		Timestamp:        blockTs,
 		Address:          call.Address,

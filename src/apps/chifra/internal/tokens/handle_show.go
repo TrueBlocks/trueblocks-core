@@ -45,7 +45,7 @@ func (opts *TokensOptions) HandleShow() error {
 							}
 							currentBn = bn
 						}
-						s := &types.SimpleToken{
+						s := &types.Token{
 							Holder:      addr,
 							Address:     tokenAddr,
 							Balance:     *bal,

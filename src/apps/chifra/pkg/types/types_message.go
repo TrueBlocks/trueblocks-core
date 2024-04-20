@@ -12,16 +12,16 @@ package types
 
 // EXISTING_CODE
 
-type SimpleMessage struct {
+type Message struct {
 	Msg string `json:"msg,omitempty"`
 	Num int    `json:"num,omitempty"`
 }
 
-func (s *SimpleMessage) Raw() *RawModeler {
+func (s *Message) Raw() *RawModeler {
 	return nil
 }
 
-func (s *SimpleMessage) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Message) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -43,7 +43,7 @@ func (s *SimpleMessage) Model(chain, format string, verbose bool, extraOptions m
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleMessage) FinishUnmarshal() {
+func (s *Message) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

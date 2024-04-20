@@ -20,7 +20,7 @@ func LocationsFromAddressEncodingAndBlockIds(conn *rpc.Connection, address base.
 		}
 		for _, bn := range blockNums {
 			// Any type that returns this type of location will work
-			locations = append(locations, &types.SimpleResult{
+			locations = append(locations, &types.Result{
 				BlockNumber: bn,
 				Encoding:    encoding,
 				Address:     address,
@@ -30,7 +30,7 @@ func LocationsFromAddressEncodingAndBlockIds(conn *rpc.Connection, address base.
 	return locations, nil
 }
 
-func LocationsFromAddrAppsAndCacheType(conn *rpc.Connection, address base.Address, apps []types.SimpleAppearance, cT walk.CacheType) ([]cache.Locator, error) {
+func LocationsFromAddrAppsAndCacheType(conn *rpc.Connection, address base.Address, apps []types.Appearance, cT walk.CacheType) ([]cache.Locator, error) {
 	locations := make([]cache.Locator, 0)
 	for _, app := range apps {
 		switch cT {
@@ -41,39 +41,39 @@ func LocationsFromAddrAppsAndCacheType(conn *rpc.Connection, address base.Addres
 			continue
 
 		case walk.Cache_Logs:
-			logGroup := &types.SimpleLogGroup{
+			logGroup := &types.LogGroup{
 				BlockNumber:      uint64(app.BlockNumber),
 				TransactionIndex: utils.NOPOS,
 			}
 			locations = append(locations, logGroup)
 
 		case walk.Cache_Blocks:
-			locations = append(locations, &types.SimpleBlock[string]{
+			locations = append(locations, &types.Block[string]{
 				BlockNumber: uint64(app.BlockNumber),
 			})
 
 		case walk.Cache_Results:
-			locations = append(locations, &types.SimpleResult{
+			locations = append(locations, &types.Result{
 				BlockNumber: uint64(app.BlockNumber),
 				Encoding:    "*",
 				Address:     address,
 			})
 
 		case walk.Cache_Statements:
-			locations = append(locations, &types.SimpleStatementGroup{
+			locations = append(locations, &types.StatementGroup{
 				Address:          address,
 				BlockNumber:      uint64(app.BlockNumber),
 				TransactionIndex: uint64(app.TransactionIndex),
 			})
 
 		case walk.Cache_Traces:
-			locations = append(locations, &types.SimpleTraceGroup{
+			locations = append(locations, &types.TraceGroup{
 				BlockNumber:      uint64(app.BlockNumber),
 				TransactionIndex: uint64(app.TransactionIndex),
 			})
 
 		case walk.Cache_Transactions:
-			locations = append(locations, &types.SimpleTransaction{
+			locations = append(locations, &types.Transaction{
 				BlockNumber:      uint64(app.BlockNumber),
 				TransactionIndex: uint64(app.TransactionIndex),
 			})

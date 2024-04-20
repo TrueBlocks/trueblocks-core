@@ -40,41 +40,41 @@ type RawTrace struct {
 	// EXISTING_CODE
 }
 
-type SimpleTrace struct {
-	Action           *SimpleTraceAction `json:"action"`
-	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace,omitempty"`
-	BlockHash        base.Hash          `json:"blockHash"`
-	BlockNumber      base.Blknum        `json:"blockNumber"`
-	CompressedTrace  string             `json:"compressedTrace,omitempty"`
-	Error            string             `json:"error,omitempty"`
-	Result           *SimpleTraceResult `json:"result"`
-	Subtraces        uint64             `json:"subtraces"`
-	Timestamp        base.Timestamp     `json:"timestamp"`
-	TraceAddress     []uint64           `json:"traceAddress"`
-	TransactionHash  base.Hash          `json:"transactionHash"`
-	TransactionIndex uint64             `json:"transactionIndex"`
-	TraceType        string             `json:"type,omitempty"`
-	raw              *RawTrace          `json:"-"`
+type Trace struct {
+	Action           *TraceAction   `json:"action"`
+	ArticulatedTrace *Function      `json:"articulatedTrace,omitempty"`
+	BlockHash        base.Hash      `json:"blockHash"`
+	BlockNumber      base.Blknum    `json:"blockNumber"`
+	CompressedTrace  string         `json:"compressedTrace,omitempty"`
+	Error            string         `json:"error,omitempty"`
+	Result           *TraceResult   `json:"result"`
+	Subtraces        uint64         `json:"subtraces"`
+	Timestamp        base.Timestamp `json:"timestamp"`
+	TraceAddress     []uint64       `json:"traceAddress"`
+	TransactionHash  base.Hash      `json:"transactionHash"`
+	TransactionIndex uint64         `json:"transactionIndex"`
+	TraceType        string         `json:"type,omitempty"`
+	raw              *RawTrace      `json:"-"`
 	// EXISTING_CODE
 	TraceIndex base.Blknum `json:"-"`
 	sortString string      `json:"-"`
 	// EXISTING_CODE
 }
 
-func (s *SimpleTrace) String() string {
+func (s *Trace) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleTrace) Raw() *RawTrace {
+func (s *Trace) Raw() *RawTrace {
 	return s.raw
 }
 
-func (s *SimpleTrace) SetRaw(raw *RawTrace) {
+func (s *Trace) SetRaw(raw *RawTrace) {
 	s.raw = raw
 }
 
-func (s *SimpleTrace) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Trace) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -199,25 +199,25 @@ func (s *SimpleTrace) Model(chain, format string, verbose bool, extraOptions map
 	}
 }
 
-func (s *SimpleTrace) Date() string {
+func (s *Trace) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-type SimpleTraceGroup struct {
+type TraceGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
-	Traces           []SimpleTrace
+	Traces           []Trace
 }
 
-func (s *SimpleTraceGroup) CacheName() string {
+func (s *TraceGroup) CacheName() string {
 	return "Trace"
 }
 
-func (s *SimpleTraceGroup) CacheId() string {
+func (s *TraceGroup) CacheId() string {
 	return fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
 }
 
-func (s *SimpleTraceGroup) CacheLocation() (directory string, extension string) {
+func (s *TraceGroup) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -231,17 +231,17 @@ func (s *SimpleTraceGroup) CacheLocation() (directory string, extension string) 
 	return
 }
 
-func (s *SimpleTraceGroup) MarshalCache(writer io.Writer) (err error) {
+func (s *TraceGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Traces)
 }
 
-func (s *SimpleTraceGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *TraceGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	return cache.ReadValue(reader, &s.Traces, version)
 }
 
-func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
+func (s *Trace) MarshalCache(writer io.Writer) (err error) {
 	// Action
-	optAction := &cache.Optional[SimpleTraceAction]{
+	optAction := &cache.Optional[TraceAction]{
 		Value: s.Action,
 	}
 	if err = cache.WriteValue(writer, optAction); err != nil {
@@ -249,7 +249,7 @@ func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
 	}
 
 	// ArticulatedTrace
-	optArticulatedTrace := &cache.Optional[SimpleFunction]{
+	optArticulatedTrace := &cache.Optional[Function]{
 		Value: s.ArticulatedTrace,
 	}
 	if err = cache.WriteValue(writer, optArticulatedTrace); err != nil {
@@ -277,7 +277,7 @@ func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
 	}
 
 	// Result
-	optResult := &cache.Optional[SimpleTraceResult]{
+	optResult := &cache.Optional[TraceResult]{
 		Value: s.Result,
 	}
 	if err = cache.WriteValue(writer, optResult); err != nil {
@@ -317,9 +317,9 @@ func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Trace) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// Action
-	optAction := &cache.Optional[SimpleTraceAction]{
+	optAction := &cache.Optional[TraceAction]{
 		Value: s.Action,
 	}
 	if err = cache.ReadValue(reader, optAction, version); err != nil {
@@ -328,7 +328,7 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 	s.Action = optAction.Get()
 
 	// ArticulatedTrace
-	optArticulatedTrace := &cache.Optional[SimpleFunction]{
+	optArticulatedTrace := &cache.Optional[Function]{
 		Value: s.ArticulatedTrace,
 	}
 	if err = cache.ReadValue(reader, optArticulatedTrace, version); err != nil {
@@ -357,7 +357,7 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 	}
 
 	// Result
-	optResult := &cache.Optional[SimpleTraceResult]{
+	optResult := &cache.Optional[TraceResult]{
 		Value: s.Result,
 	}
 	if err = cache.ReadValue(reader, optResult, version); err != nil {
@@ -402,7 +402,7 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleTrace) FinishUnmarshal() {
+func (s *Trace) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -410,7 +410,7 @@ func (s *SimpleTrace) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleTrace) GetSortString() string {
+func (s *Trace) GetSortString() string {
 	if len(s.sortString) > 0 {
 		return s.sortString
 	}

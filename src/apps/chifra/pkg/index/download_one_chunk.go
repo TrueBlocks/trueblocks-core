@@ -32,7 +32,7 @@ func DownloadOneChunk(chain string, man *manifest.Manifest, fileRange base.FileR
 
 	// Start downloading the filter
 	matchedPin.BloomHash = "" // we want to download only the index chunk
-	chunks := []types.SimpleChunkRecord{*matchedPin}
+	chunks := []types.ChunkRecord{*matchedPin}
 	progressChannel := make(chan *progress.ProgressMsg)
 
 	go func() {

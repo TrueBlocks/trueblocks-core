@@ -37,7 +37,7 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 			} else if cnt > 0 {
 				firstTs, _ := tslib.FromBnToTs(chain, uint64(apps[0].BlockNumber))
 				latestTs, _ := tslib.FromBnToTs(chain, uint64(apps[len(apps)-1].BlockNumber))
-				s := types.SimpleBounds{
+				s := types.Bounds{
 					Count: uint64(cnt),
 					FirstApp: types.RawAppearance{
 						Address:          mon.Address.Hex(),

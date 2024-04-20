@@ -81,8 +81,8 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 
 type monitorsGeneric interface {
 	bool |
-		types.SimpleMonitorClean |
-		types.SimpleMonitor
+		types.MonitorClean |
+		types.Monitor
 }
 
 func queryMonitors[T monitorsGeneric](opts *MonitorsOptions) ([]T, *types.MetaData, error) {
@@ -105,13 +105,13 @@ func (opts *MonitorsOptions) Monitors() ([]bool, *types.MetaData, error) {
 }
 
 // MonitorsClean implements the chifra monitors --clean command.
-func (opts *MonitorsOptions) MonitorsClean() ([]types.SimpleMonitorClean, *types.MetaData, error) {
-	return queryMonitors[types.SimpleMonitorClean](opts)
+func (opts *MonitorsOptions) MonitorsClean() ([]types.MonitorClean, *types.MetaData, error) {
+	return queryMonitors[types.MonitorClean](opts)
 }
 
 // MonitorsList implements the chifra monitors --list command.
-func (opts *MonitorsOptions) MonitorsList() ([]types.SimpleMonitor, *types.MetaData, error) {
-	return queryMonitors[types.SimpleMonitor](opts)
+func (opts *MonitorsOptions) MonitorsList() ([]types.Monitor, *types.MetaData, error) {
+	return queryMonitors[types.Monitor](opts)
 }
 
 // No enums

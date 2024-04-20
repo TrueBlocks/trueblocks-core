@@ -27,7 +27,7 @@ type RawLogFilter struct {
 	// EXISTING_CODE
 }
 
-type SimpleLogFilter struct {
+type LogFilter struct {
 	BlockHash base.Hash      `json:"blockHash"`
 	Emitters  []base.Address `json:"emitters"`
 	FromBlock base.Blknum    `json:"fromBlock"`
@@ -38,20 +38,20 @@ type SimpleLogFilter struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleLogFilter) String() string {
+func (s *LogFilter) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleLogFilter) Raw() *RawLogFilter {
+func (s *LogFilter) Raw() *RawLogFilter {
 	return s.raw
 }
 
-func (s *SimpleLogFilter) SetRaw(raw *RawLogFilter) {
+func (s *LogFilter) SetRaw(raw *RawLogFilter) {
 	s.raw = raw
 }
 
-func (s *SimpleLogFilter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *LogFilter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -65,14 +65,14 @@ func (s *SimpleLogFilter) Model(chain, format string, verbose bool, extraOptions
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleLogFilter) FinishUnmarshal() {
+func (s *LogFilter) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 // EXISTING_CODE
-func NewLogFilter(emitters []string, topics []string) *SimpleLogFilter {
-	logFilter := &SimpleLogFilter{}
+func NewLogFilter(emitters []string, topics []string) *LogFilter {
+	logFilter := &LogFilter{}
 	for _, e := range emitters {
 		logFilter.Emitters = append(logFilter.Emitters, base.HexToAddress(e))
 	}
@@ -82,7 +82,7 @@ func NewLogFilter(emitters []string, topics []string) *SimpleLogFilter {
 	return logFilter
 }
 
-func (filter *SimpleLogFilter) PassesFilter(log *SimpleLog) bool {
+func (filter *LogFilter) PassesFilter(log *Log) bool {
 	foundEmitter := false
 	for _, e := range filter.Emitters {
 		if e == log.Address {

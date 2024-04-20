@@ -26,7 +26,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, walk.Cache_Transactions); err != nil {
 			errorChan <- err
 		} else {
-			s := types.SimpleMessage{
+			s := types.Message{
 				Msg: msg,
 			}
 			modelChan <- &s

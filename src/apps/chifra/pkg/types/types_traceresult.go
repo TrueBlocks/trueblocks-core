@@ -30,7 +30,7 @@ type RawTraceResult struct {
 	// EXISTING_CODE
 }
 
-type SimpleTraceResult struct {
+type TraceResult struct {
 	Address base.Address    `json:"address,omitempty"`
 	Code    string          `json:"code,omitempty"`
 	GasUsed base.Gas        `json:"gasUsed,omitempty"`
@@ -40,20 +40,20 @@ type SimpleTraceResult struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleTraceResult) String() string {
+func (s *TraceResult) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleTraceResult) Raw() *RawTraceResult {
+func (s *TraceResult) Raw() *RawTraceResult {
 	return s.raw
 }
 
-func (s *SimpleTraceResult) SetRaw(raw *RawTraceResult) {
+func (s *TraceResult) SetRaw(raw *RawTraceResult) {
 	s.raw = raw
 }
 
-func (s *SimpleTraceResult) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *TraceResult) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -102,7 +102,7 @@ func (s *SimpleTraceResult) Model(chain, format string, verbose bool, extraOptio
 	}
 }
 
-func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
+func (s *TraceResult) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
@@ -126,7 +126,7 @@ func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleTraceResult) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *TraceResult) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// Address
 	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
 		return err
@@ -153,7 +153,7 @@ func (s *SimpleTraceResult) UnmarshalCache(version uint64, reader io.Reader) (er
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleTraceResult) FinishUnmarshal() {
+func (s *TraceResult) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

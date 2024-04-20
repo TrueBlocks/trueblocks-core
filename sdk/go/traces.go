@@ -72,8 +72,8 @@ func GetTracesOptions(args []string) (*TracesOptions, error) {
 }
 
 type tracesGeneric interface {
-	types.SimpleTrace |
-		types.SimpleTraceCount
+	types.Trace |
+		types.TraceCount
 }
 
 func queryTraces[T tracesGeneric](opts *TracesOptions) ([]T, *types.MetaData, error) {
@@ -91,13 +91,13 @@ func queryTraces[T tracesGeneric](opts *TracesOptions) ([]T, *types.MetaData, er
 }
 
 // Traces implements the chifra traces command.
-func (opts *TracesOptions) Traces() ([]types.SimpleTrace, *types.MetaData, error) {
-	return queryTraces[types.SimpleTrace](opts)
+func (opts *TracesOptions) Traces() ([]types.Trace, *types.MetaData, error) {
+	return queryTraces[types.Trace](opts)
 }
 
 // TracesCount implements the chifra traces --count command.
-func (opts *TracesOptions) TracesCount() ([]types.SimpleTraceCount, *types.MetaData, error) {
-	return queryTraces[types.SimpleTraceCount](opts)
+func (opts *TracesOptions) TracesCount() ([]types.TraceCount, *types.MetaData, error) {
+	return queryTraces[types.TraceCount](opts)
 }
 
 // No enums

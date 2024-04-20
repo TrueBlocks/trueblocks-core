@@ -44,48 +44,48 @@ type RawStatus struct {
 	// EXISTING_CODE
 }
 
-type SimpleStatus struct {
-	CachePath     string            `json:"cachePath,omitempty"`
-	Caches        []SimpleCacheItem `json:"caches"`
-	Chain         string            `json:"chain,omitempty"`
-	ChainConfig   string            `json:"chainConfig,omitempty"`
-	ChainId       string            `json:"chainId,omitempty"`
-	Chains        []SimpleChain     `json:"chains"`
-	ClientVersion string            `json:"clientVersion,omitempty"`
-	HasEsKey      bool              `json:"hasEsKey,omitempty"`
-	HasPinKey     bool              `json:"hasPinKey,omitempty"`
-	IndexPath     string            `json:"indexPath,omitempty"`
-	IsApi         bool              `json:"isApi,omitempty"`
-	IsArchive     bool              `json:"isArchive,omitempty"`
-	IsScraping    bool              `json:"isScraping,omitempty"`
-	IsTesting     bool              `json:"isTesting,omitempty"`
-	IsTracing     bool              `json:"isTracing,omitempty"`
-	NetworkId     string            `json:"networkId,omitempty"`
-	Progress      string            `json:"progress,omitempty"`
-	RootConfig    string            `json:"rootConfig,omitempty"`
-	RpcProvider   string            `json:"rpcProvider,omitempty"`
-	Version       string            `json:"version,omitempty"`
-	raw           *RawStatus        `json:"-"`
+type Status struct {
+	CachePath     string      `json:"cachePath,omitempty"`
+	Caches        []CacheItem `json:"caches"`
+	Chain         string      `json:"chain,omitempty"`
+	ChainConfig   string      `json:"chainConfig,omitempty"`
+	ChainId       string      `json:"chainId,omitempty"`
+	Chains        []Chain     `json:"chains"`
+	ClientVersion string      `json:"clientVersion,omitempty"`
+	HasEsKey      bool        `json:"hasEsKey,omitempty"`
+	HasPinKey     bool        `json:"hasPinKey,omitempty"`
+	IndexPath     string      `json:"indexPath,omitempty"`
+	IsApi         bool        `json:"isApi,omitempty"`
+	IsArchive     bool        `json:"isArchive,omitempty"`
+	IsScraping    bool        `json:"isScraping,omitempty"`
+	IsTesting     bool        `json:"isTesting,omitempty"`
+	IsTracing     bool        `json:"isTracing,omitempty"`
+	NetworkId     string      `json:"networkId,omitempty"`
+	Progress      string      `json:"progress,omitempty"`
+	RootConfig    string      `json:"rootConfig,omitempty"`
+	RpcProvider   string      `json:"rpcProvider,omitempty"`
+	Version       string      `json:"version,omitempty"`
+	raw           *RawStatus  `json:"-"`
 	// EXISTING_CODE
 	Meta  *MetaData `json:"meta,omitempty"`
 	Diffs *MetaData `json:"diffs,omitempty"`
 	// EXISTING_CODE
 }
 
-func (s *SimpleStatus) String() string {
+func (s *Status) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleStatus) Raw() *RawStatus {
+func (s *Status) Raw() *RawStatus {
 	return s.raw
 }
 
-func (s *SimpleStatus) SetRaw(raw *RawStatus) {
+func (s *Status) SetRaw(raw *RawStatus) {
 	s.raw = raw
 }
 
-func (s *SimpleStatus) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Status) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -142,9 +142,9 @@ func (s *SimpleStatus) Model(chain, format string, verbose bool, extraOptions ma
 	}
 
 	if extraOptions["chains"] == true {
-		var chains []SimpleChain
+		var chains []Chain
 		if extraOptions["testMode"] == true {
-			ch := SimpleChain{
+			ch := Chain{
 				Chain:         "testChain",
 				ChainId:       12345,
 				LocalExplorer: "http://localhost:8080",
@@ -155,7 +155,7 @@ func (s *SimpleStatus) Model(chain, format string, verbose bool, extraOptions ma
 		} else {
 			chainArray := config.GetChains()
 			for _, chain := range chainArray {
-				ch := SimpleChain{
+				ch := Chain{
 					Chain:          chain.Chain,
 					ChainId:        utils.MustParseUint(chain.ChainId),
 					LocalExplorer:  chain.LocalExplorer,
@@ -185,7 +185,7 @@ func (s *SimpleStatus) Model(chain, format string, verbose bool, extraOptions ma
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleStatus) FinishUnmarshal() {
+func (s *Status) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

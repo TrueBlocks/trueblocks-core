@@ -42,7 +42,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 				return false, err
 			}
 
-			s := types.SimpleChunkBloom{
+			s := types.ChunkBloom{
 				Magic:     fmt.Sprintf("0x%x", bl.Header.Magic),
 				Hash:      bl.Header.Hash,
 				Size:      stats.BloomSz,

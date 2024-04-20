@@ -30,7 +30,7 @@ type EtherscanProvider struct {
 	baseUrl          string
 	conn             *rpc.Connection
 	limiter          *rate.Limiter
-	convertSlurpType func(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error)
+	convertSlurpType func(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error)
 	apiKey           string
 }
 
@@ -66,8 +66,8 @@ func (p *EtherscanProvider) NewPaginator() Paginator {
 	return NewPageNumberPaginator(etherscanFirstPage, etherscanFirstPage, p.perPage)
 }
 
-func (p *EtherscanProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.SimpleSlurp) {
-	txChan = make(chan types.SimpleSlurp, providerChannelBufferSize)
+func (p *EtherscanProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.Slurp) {
+	txChan = make(chan types.Slurp, providerChannelBufferSize)
 
 	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	go func() {
@@ -88,8 +88,8 @@ func (p *EtherscanProvider) TransactionsByAddress(ctx context.Context, query *Qu
 	return
 }
 
-func (p *EtherscanProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.SimpleAppearance) {
-	appChan = make(chan types.SimpleAppearance, providerChannelBufferSize)
+func (p *EtherscanProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.Appearance) {
+	appChan = make(chan types.Appearance, providerChannelBufferSize)
 
 	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	go func() {
@@ -110,7 +110,7 @@ func (p *EtherscanProvider) Appearances(ctx context.Context, query *Query, error
 	return
 }
 
-func (p *EtherscanProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.SimpleMonitor) {
+func (p *EtherscanProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.Monitor) {
 	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	return countSlurped(ctx, query, slurpedChan)
 }
@@ -165,11 +165,11 @@ func (p *EtherscanProvider) fetchData(ctx context.Context, address base.Address,
 
 	var ret []SlurpedPageItem
 	for _, rawTx := range fromEs.Result {
-		if transaction, err := p.rawSlurpToSimple(address.String(), requestType, &rawTx); err != nil {
+		if transaction, err := p.rawSlurpTo(address.String(), requestType, &rawTx); err != nil {
 			return nil, 0, err
 		} else {
 			ret = append(ret, SlurpedPageItem{
-				Appearance: &types.SimpleAppearance{
+				Appearance: &types.Appearance{
 					Address:          address,
 					BlockNumber:      uint32(transaction.BlockNumber),
 					TransactionIndex: uint32(transaction.TransactionIndex),
@@ -185,13 +185,13 @@ func (p *EtherscanProvider) fetchData(ctx context.Context, address base.Address,
 	return ret, fetchedCount, nil
 }
 
-// rawSlurpToSimple translate RawSlurp to SimpleSlurp. By default it uses `defaultConvertSlurpType`, but this can be changed, e.g. in tests
-func (p *EtherscanProvider) rawSlurpToSimple(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
+// rawSlurpTo translate RawSlurp to Slurp. By default it uses `defaultConvertSlurpType`, but this can be changed, e.g. in tests
+func (p *EtherscanProvider) rawSlurpTo(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
 	return p.convertSlurpType(address, requestType, rawTx)
 }
 
-func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
-	s := types.SimpleSlurp{
+func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
+	s := types.Slurp{
 		Hash:             base.HexToHash(rawTx.Hash),
 		BlockHash:        base.HexToHash(rawTx.BlockHash),
 		BlockNumber:      utils.MustParseUint(rawTx.BlockNumber),
@@ -231,14 +231,14 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		s.To = base.HexToAddress(address)
 	} else if requestType == "withdrawals" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
-		s.TransactionIndex = types.Withdrawal
+		s.TransactionIndex = types.WithdrawalAmt
 		s.From = base.WithdrawalSender
 		s.ValidatorIndex = utils.MustParseUint(rawTx.ValidatorIndex)
 		s.WithdrawalIndex = utils.MustParseUint(rawTx.WithdrawalIndex)
 		s.Value.SetString(rawTx.Amount, 0)
 		s.To = base.HexToAddress(address)
 		if s.To != base.HexToAddress(rawTx.Address) {
-			logger.Fatal("should not happen ==> in rawSlurpToSimple", s.To, rawTx.Address)
+			logger.Fatal("should not happen ==> in rawSlurpTo", s.To, rawTx.Address)
 		}
 	}
 

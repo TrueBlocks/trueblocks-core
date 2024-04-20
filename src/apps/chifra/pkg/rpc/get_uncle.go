@@ -15,15 +15,15 @@ import (
 )
 
 // GetUncleBodiesByNumber returns the number of uncles in a block.
-func (conn *Connection) GetUncleBodiesByNumber(bn uint64) ([]types.SimpleBlock[types.SimpleTransaction], error) {
+func (conn *Connection) GetUncleBodiesByNumber(bn uint64) ([]types.Block[types.Transaction], error) {
 	if count, err := conn.GetUnclesCountInBlock(bn); err != nil {
 		return nil, err
 
 	} else if count == 0 {
-		return []types.SimpleBlock[types.SimpleTransaction]{}, nil
+		return []types.Block[types.Transaction]{}, nil
 
 	} else {
-		ret := make([]types.SimpleBlock[types.SimpleTransaction], 0, count)
+		ret := make([]types.Block[types.Transaction], 0, count)
 		for i := uint64(0); i < count; i++ {
 			method := "eth_getUncleByBlockNumberAndIndex"
 			params := query.Params{
@@ -35,7 +35,7 @@ func (conn *Connection) GetUncleBodiesByNumber(bn uint64) ([]types.SimpleBlock[t
 				return ret, err
 			} else {
 				// TODO: expand other fields if we ever need them (probably not)
-				ret = append(ret, types.SimpleBlock[types.SimpleTransaction]{
+				ret = append(ret, types.Block[types.Transaction]{
 					BlockNumber: utils.MustParseUint(rawUncle.BlockNumber),
 					Hash:        base.HexToHash(rawUncle.Hash),
 					Miner:       base.HexToAddress(rawUncle.Miner),

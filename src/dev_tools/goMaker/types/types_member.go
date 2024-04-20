@@ -200,7 +200,7 @@ func (m *Member) GoType() string {
 	ret := m.Type
 	if m.IsObject() {
 		if m.GoName() != "TokenType" {
-			ret = "Simple" + ret
+			ret = "" + ret
 		}
 	} else {
 		if m.GoName() == "Value" && m.Container() == "Parameter" {
@@ -247,8 +247,8 @@ func (m *Member) GoType() string {
 	if m.IsArray {
 		ret = "[]" + ret
 	}
-	if strings.HasPrefix(ret, "SimpleRaw") {
-		ret = strings.Replace(ret, "SimpleRaw", "Raw", -1)
+	if strings.HasPrefix(ret, "Raw") {
+		ret = strings.Replace(ret, "Raw", "Raw", -1)
 	}
 
 	return ret
@@ -278,7 +278,7 @@ func (m *Member) MarshalCode() string {
 	switch v := any(s.Transactions).(type) {
 	case []string:
 		txHashes = v
-	case []SimpleTransaction:
+	case []Transaction:
 		txHashes = make([]string, 0, len(s.Transactions))
 		for _, tx := range v {
 			txHashes = append(txHashes, tx.Hash.Hex())
@@ -316,7 +316,7 @@ func (m *Member) MarshalCode() string {
 	} else if m.IsObject() {
 		tmplName += "4"
 		tmpl = `// {{.GoName}}
-	opt{{.GoName}} := &cache.Optional[Simple{{.Type}}]{
+	opt{{.GoName}} := &cache.Optional[{{.Type}}]{
 		Value: s.{{.GoName}},
 	}
 	if err = cache.WriteValue(writer, opt{{.GoName}}); err != nil {
@@ -381,7 +381,7 @@ func (m *Member) UnmarshalCode() string {
 	} else if m.IsObject() {
 		tmplName += "4"
 		tmpl = `// {{.GoName}}
-	opt{{.GoName}} := &cache.Optional[Simple{{.Type}}]{
+	opt{{.GoName}} := &cache.Optional[{{.Type}}]{
 		Value: s.{{.GoName}},
 	}
 	if err = cache.ReadValue(reader, opt{{.GoName}}, version); err != nil {

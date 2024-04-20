@@ -79,7 +79,7 @@ func (opts *InitOptions) HandleInit() error {
 		// The download finished...
 		if len(failedChunks) > 0 {
 			// ...if there were failed downloads, try them again (3 times if necessary)...
-			retry(failedChunks, 3, func(items []types.SimpleChunkRecord) ([]types.SimpleChunkRecord, bool) {
+			retry(failedChunks, 3, func(items []types.ChunkRecord) ([]types.ChunkRecord, bool) {
 				logger.Info("Retrying", len(items), "bloom(s)")
 				return opts.downloadAndReportProgress(items, chunkType, nToDownload)
 			})

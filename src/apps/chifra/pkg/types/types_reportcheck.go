@@ -28,7 +28,7 @@ type RawReportCheck struct {
 	// EXISTING_CODE
 }
 
-type SimpleReportCheck struct {
+type ReportCheck struct {
 	CheckedCnt uint32          `json:"checkedCnt"`
 	FailedCnt  uint32          `json:"failedCnt"`
 	MsgStrings []string        `json:"msgStrings"`
@@ -42,20 +42,20 @@ type SimpleReportCheck struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleReportCheck) String() string {
+func (s *ReportCheck) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleReportCheck) Raw() *RawReportCheck {
+func (s *ReportCheck) Raw() *RawReportCheck {
 	return s.raw
 }
 
-func (s *SimpleReportCheck) SetRaw(raw *RawReportCheck) {
+func (s *ReportCheck) SetRaw(raw *RawReportCheck) {
 	s.raw = raw
 }
 
-func (s *SimpleReportCheck) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *ReportCheck) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -99,7 +99,7 @@ func (s *SimpleReportCheck) Model(chain, format string, verbose bool, extraOptio
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleReportCheck) FinishUnmarshal() {
+func (s *ReportCheck) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

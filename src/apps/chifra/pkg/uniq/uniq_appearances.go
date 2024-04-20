@@ -18,16 +18,16 @@ func AddMiner(chain string, miner base.Address, bn base.Blknum, addrMap AddressB
 }
 
 // UniqFromWithdrawals extracts addresses from an array of receipts
-func UniqFromWithdrawals(chain string, withdrawals []types.SimpleWithdrawal, bn base.Blknum, addrMap AddressBooleanMap) (err error) {
+func UniqFromWithdrawals(chain string, withdrawals []types.Withdrawal, bn base.Blknum, addrMap AddressBooleanMap) (err error) {
 	for _, withdrawal := range withdrawals {
 		// #WITHDRAWALS
-		addAddressToMaps(withdrawal.Address.Hex(), bn, types.Withdrawal, addrMap)
+		addAddressToMaps(withdrawal.Address.Hex(), bn, types.WithdrawalAmt, addrMap)
 	}
 	return nil
 }
 
 // UniqFromReceipts extracts addresses from an array of receipts
-func UniqFromReceipts(chain string, receipts []types.SimpleReceipt, addrMap AddressBooleanMap) (err error) {
+func UniqFromReceipts(chain string, receipts []types.Receipt, addrMap AddressBooleanMap) (err error) {
 	for _, receipt := range receipts {
 		created := receipt.ContractAddress
 		addAddressToMaps(created.Hex(), receipt.BlockNumber, receipt.TransactionIndex, addrMap)
@@ -39,7 +39,7 @@ func UniqFromReceipts(chain string, receipts []types.SimpleReceipt, addrMap Addr
 }
 
 // uniqFromLogs extracts addresses from the logs
-func uniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMap) (err error) {
+func uniqFromLogs(chain string, logs []types.Log, addrMap AddressBooleanMap) (err error) {
 	for _, log := range logs {
 		for _, topic := range log.Topics {
 			str := string(topic.Hex()[2:])
@@ -63,7 +63,7 @@ func uniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMa
 }
 
 // UniqFromTraces extracts addresses from traces
-func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBooleanMap) (err error) {
+func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMap) (err error) {
 	conn := rpc.TempConnection(chain)
 
 	for _, trace := range traces {

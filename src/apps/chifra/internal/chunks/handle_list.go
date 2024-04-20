@@ -32,7 +32,7 @@ func (opts *ChunksOptions) HandleList(unused []uint64) error {
 			for _, line := range array {
 				parts := strings.Split(line, "\t")
 				if len(parts) == 5 {
-					s := types.SimpleIpfsPin{
+					s := types.IpfsPin{
 						Cid:        base.IpfsHash(parts[0]),
 						DatePinned: parts[1],
 						FileName:   parts[2],

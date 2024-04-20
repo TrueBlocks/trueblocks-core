@@ -29,7 +29,7 @@ func TestGetState(t *testing.T) {
 	tests := []struct {
 		name      string
 		args      args
-		wantState *types.SimpleState
+		wantState *types.State
 		wantErr   bool
 	}{
 		{
@@ -40,7 +40,7 @@ func TestGetState(t *testing.T) {
 				address:     base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 				blockNumber: uint64(15531843),
 			},
-			wantState: &types.SimpleState{
+			wantState: &types.State{
 				Address:     base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 				BlockNumber: uint64(15531843),
 				Balance:     func() base.Wei { b, _ := base.NewWei(0).SetString("57006123709077586392", 10); return *b }(),
@@ -55,7 +55,7 @@ func TestGetState(t *testing.T) {
 				address:     base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"),
 				blockNumber: uint64(15531843),
 			},
-			wantState: &types.SimpleState{
+			wantState: &types.State{
 				Address:     base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"),
 				BlockNumber: uint64(15531843),
 				Balance: func() base.Wei {
@@ -87,7 +87,7 @@ func TestGetState(t *testing.T) {
 				address:     base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"),
 				blockNumber: uint64(15531843),
 			},
-			wantState: &types.SimpleState{
+			wantState: &types.State{
 				Address:     base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"),
 				BlockNumber: uint64(15531843),
 				Deployed:    988725,
@@ -101,7 +101,7 @@ func TestGetState(t *testing.T) {
 				address:     base.HexToAddress("0x4Fabb145d64652a948d72533023f6E7A623C7C53"),
 				blockNumber: uint64(15531843),
 			},
-			wantState: &types.SimpleState{
+			wantState: &types.State{
 				Address:     base.HexToAddress("0x4Fabb145d64652a948d72533023f6E7A623C7C53"),
 				BlockNumber: uint64(15531843),
 				Proxy:       base.HexToAddress("0x5864c777697bf9881220328bf2f16908c9afcd7e"),

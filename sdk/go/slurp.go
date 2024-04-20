@@ -97,9 +97,9 @@ func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 }
 
 type slurpGeneric interface {
-	types.SimpleSlurp |
-		types.SimpleAppearance |
-		types.SimpleSlurpCount
+	types.Slurp |
+		types.Appearance |
+		types.SlurpCount
 }
 
 func querySlurp[T slurpGeneric](opts *SlurpOptions) ([]T, *types.MetaData, error) {
@@ -117,18 +117,18 @@ func querySlurp[T slurpGeneric](opts *SlurpOptions) ([]T, *types.MetaData, error
 }
 
 // Slurp implements the chifra slurp command.
-func (opts *SlurpOptions) Slurp() ([]types.SimpleSlurp, *types.MetaData, error) {
-	return querySlurp[types.SimpleSlurp](opts)
+func (opts *SlurpOptions) Slurp() ([]types.Slurp, *types.MetaData, error) {
+	return querySlurp[types.Slurp](opts)
 }
 
 // SlurpAppearances implements the chifra slurp --appearances command.
-func (opts *SlurpOptions) SlurpAppearances() ([]types.SimpleAppearance, *types.MetaData, error) {
-	return querySlurp[types.SimpleAppearance](opts)
+func (opts *SlurpOptions) SlurpAppearances() ([]types.Appearance, *types.MetaData, error) {
+	return querySlurp[types.Appearance](opts)
 }
 
 // SlurpCount implements the chifra slurp --count command.
-func (opts *SlurpOptions) SlurpCount() ([]types.SimpleSlurpCount, *types.MetaData, error) {
-	return querySlurp[types.SimpleSlurpCount](opts)
+func (opts *SlurpOptions) SlurpCount() ([]types.SlurpCount, *types.MetaData, error) {
+	return querySlurp[types.SlurpCount](opts)
 }
 
 type SlurpTypes int

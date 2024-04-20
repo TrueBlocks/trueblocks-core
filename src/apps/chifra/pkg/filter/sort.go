@@ -14,7 +14,7 @@ const (
 	Reversed
 )
 
-func (f *AppearanceFilter) Sort(fromDisc []types.SimpleAppRecord) {
+func (f *AppearanceFilter) Sort(fromDisc []types.AppRecord) {
 	if f.sortBy == Sorted || f.sortBy == Reversed {
 		sort.Slice(fromDisc, func(i, j int) bool {
 			if f.sortBy == Reversed {

@@ -17,7 +17,7 @@ import (
 // for allow_missing chains where gaps are allowed.) It also makes sure than snap-to-grids
 // happen where they should and that non-snaps have at least appsPerChunks records and
 // snaps have exactly appsPerChunks records or less.
-func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []string, allowMissing bool, report *types.SimpleReportCheck) error {
+func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []string, allowMissing bool, report *types.ReportCheck) error {
 	if err := opts.checkSequential("disc", fnArray, allowMissing, report); err != nil {
 		return err
 	}
@@ -34,7 +34,7 @@ func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []st
 }
 
 // TODO: Can this be made concurrent?
-func (opts *ChunksOptions) checkSequential(which string, array []string, allowMissing bool, report *types.SimpleReportCheck) error {
+func (opts *ChunksOptions) checkSequential(which string, array []string, allowMissing bool, report *types.ReportCheck) error {
 	prev := base.NotARange
 	for _, item := range array {
 		var fR base.FileRange

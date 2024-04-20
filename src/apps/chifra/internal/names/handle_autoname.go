@@ -33,7 +33,7 @@ func (opts *NamesOptions) HandleAutoname() error {
 
 	if opts.Globals.IsApiMode() {
 		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-			modelChan <- &types.SimpleMessage{
+			modelChan <- &types.Message{
 				Msg: message,
 			}
 		}, opts.Globals.OutputOpts())
@@ -42,10 +42,10 @@ func (opts *NamesOptions) HandleAutoname() error {
 }
 
 // readContractAndClean will read contract data and call `cleanName` for the given address
-func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err error) {
+func (opts *NamesOptions) readContractAndClean() (name *types.Name, err error) {
 	chain := opts.Globals.Chain
 
-	name = &types.SimpleName{
+	name = &types.Name{
 		Address:  opts.AutonameAddr,
 		Name:     base.AddrToPetname(opts.AutonameAddr.Hex(), "-"),
 		Source:   "TrueBlocks.io",

@@ -31,7 +31,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 			}
 
 			for _, bn := range blockNums {
-				var block types.SimpleBlock[string]
+				var block types.Block[string]
 				if block, err = opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -41,7 +41,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 					return
 				}
 
-				blockCount := types.SimpleBlockCount{
+				blockCount := types.BlockCount{
 					BlockNumber:     block.BlockNumber,
 					Timestamp:       block.Timestamp,
 					TransactionsCnt: uint64(len(block.Transactions)),
@@ -82,7 +82,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Uniq {
-					countFunc := func(s *types.SimpleAppearance) error {
+					countFunc := func(s *types.Appearance) error {
 						blockCount.AddressCnt++
 						return nil
 					}

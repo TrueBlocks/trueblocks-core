@@ -89,7 +89,7 @@ const maxTestingBlock = 17000000
 // SetContexts visits the list of appearances and notes the block numbers of the next and previous
 // appearance's and if they are the same or different. Because balances are only available per block,
 // we must know this information to be able to calculate the correct post-tx balance.
-func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance) error {
+func (l *Ledger) SetContexts(chain string, apps []types.Appearance) error {
 	for i := 0; i < len(apps); i++ {
 		cur := apps[i].BlockNumber
 		prev := uint64(apps[utils.Max(1, i)-1].BlockNumber)

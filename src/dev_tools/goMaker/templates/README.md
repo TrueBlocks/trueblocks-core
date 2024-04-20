@@ -18,28 +18,28 @@ List of types that support the Modeler interface
 | ./internal/when     | types_timestamp.go       | simpleTimestamp       | timestamp         |         |        |
 | ./internal/when     | types_timestampCount.go  | simpleTimestampCount  | timestampCount    |         |        |
 |                     |                          |                       |                   |         |        |
-| ./pkg/types         | types_appearance.go      | SimpleAppearance      | appearance        | x       |        | not turned on |
-| ./pkg/types         | types_block.go           | SimpleBlock           | block             | x       | x      |
-| ./pkg/types         | types_chain.go           | SimpleChain           | chain             | x       | x      |
-| ./pkg/types         | types_chunkrecord.go     | SimpleChunkRecord     | chunkRecord       |         | x      |
-| ./pkg/types         | types_ethcall.go         | SimpleEthCall         | ethCall           | x       | x      |
-| ./pkg/types         | types_slurp.go           | SimpleSlurp           | slurp             |         | x      |
-| ./pkg/types         | types_ethstate.go        | SimpleState           | ethState          | x       | x      |
-| ./pkg/types         | types_function.go        | SimpleFunction        | function          | x       | x      |
-| ./pkg/types         | types_log.go             | SimpleLog             | log               | x       | x      |
-| ./pkg/types         | types_manifest.go        | SimpleManifest        | manifest          |         | x      |
-| ./pkg/types         | types_monitor.go         | SimpleMonitor         | monitor           | x       |        | not turned on |
-| ./pkg/types         | types_name.go            | SimpleName            | name              | x       | x      |
-| ./pkg/types         | types_namedblock.go      | SimpleNamedBlock      | namedBlock        |         | x      |
-| ./pkg/types         | types_parameter.go       | SimpleParameter       | parameter         | x       | x      |
-| ./pkg/types         | types_receipt.go         | SimpleReceipt         | receipt           | x       | x      |
-| ./pkg/types         | types_reconciliation.go  | SimpleReconciliation  | reconciliation    | x       | x      |
-| ./pkg/types         | types_tokenbalance.go    | SimpleTokenBalance    | tokenBalance      | x       | x      |
-| ./pkg/types         | types_trace.go           | SimpleTrace           | trace             | x       | x      |
-| ./pkg/types         | types_traceaction.go     | SimpleTraceAction     | traceAction       | x       | x      |
-| ./pkg/types         | types_tracefilter.go     | SimpleTraceFilter     | traceFilter       |         | x      |
-| ./pkg/types         | types_traceresult.go     | SimpleTraceResult     | traceResult       | x       | x      |
-| ./pkg/types         | types_transaction.go     | SimpleTransaction     | transaction       | x       | x      |
+| ./pkg/types         | types_appearance.go      | Appearance            | appearance        | x       |        | not turned on |
+| ./pkg/types         | types_block.go           | Block                 | block             | x       | x      |
+| ./pkg/types         | types_chain.go           | Chain                 | chain             | x       | x      |
+| ./pkg/types         | types_chunkrecord.go     | ChunkRecord           | chunkRecord       |         | x      |
+| ./pkg/types         | types_ethcall.go         | EthCall               | ethCall           | x       | x      |
+| ./pkg/types         | types_slurp.go           | Slurp                 | slurp             |         | x      |
+| ./pkg/types         | types_ethstate.go        | State                 | ethState          | x       | x      |
+| ./pkg/types         | types_function.go        | Function              | function          | x       | x      |
+| ./pkg/types         | types_log.go             | Log                   | log               | x       | x      |
+| ./pkg/types         | types_manifest.go        | Manifest              | manifest          |         | x      |
+| ./pkg/types         | types_monitor.go         | Monitor               | monitor           | x       |        | not turned on |
+| ./pkg/types         | types_name.go            | Name                  | name              | x       | x      |
+| ./pkg/types         | types_namedblock.go      | NamedBlock            | namedBlock        |         | x      |
+| ./pkg/types         | types_parameter.go       | Parameter             | parameter         | x       | x      |
+| ./pkg/types         | types_receipt.go         | Receipt               | receipt           | x       | x      |
+| ./pkg/types         | types_reconciliation.go  | Reconciliation        | reconciliation    | x       | x      |
+| ./pkg/types         | types_tokenbalance.go    | TokenBalance          | tokenBalance      | x       | x      |
+| ./pkg/types         | types_trace.go           | Trace                 | trace             | x       | x      |
+| ./pkg/types         | types_traceaction.go     | TraceAction           | traceAction       | x       | x      |
+| ./pkg/types         | types_tracefilter.go     | TraceFilter           | traceFilter       |         | x      |
+| ./pkg/types         | types_traceresult.go     | TraceResult           | traceResult       | x       | x      |
+| ./pkg/types         | types_transaction.go     | Transaction           | transaction       | x       | x      |
 |                     |                          |                       |                   |         |        |
 | ./api               | openapi.yaml             | <--- missing --->     | abi               |         |        |
 | ./api               | openapi.yaml             | <--- missing --->     | appearanceCount   |         |        |

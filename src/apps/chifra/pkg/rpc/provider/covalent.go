@@ -64,8 +64,8 @@ func (p *CovalentProvider) NewPaginator() Paginator {
 	return NewPageNumberPaginator(covalentFirstPage, covalentFirstPage, 0)
 }
 
-func (p *CovalentProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.SimpleSlurp) {
-	txChan = make(chan types.SimpleSlurp, providerChannelBufferSize)
+func (p *CovalentProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.Slurp) {
+	txChan = make(chan types.Slurp, providerChannelBufferSize)
 
 	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	go func() {
@@ -86,8 +86,8 @@ func (p *CovalentProvider) TransactionsByAddress(ctx context.Context, query *Que
 	return
 }
 
-func (p *CovalentProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.SimpleAppearance) {
-	appChan = make(chan types.SimpleAppearance, providerChannelBufferSize)
+func (p *CovalentProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.Appearance) {
+	appChan = make(chan types.Appearance, providerChannelBufferSize)
 
 	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	go func() {
@@ -108,7 +108,7 @@ func (p *CovalentProvider) Appearances(ctx context.Context, query *Query, errorC
 	return
 }
 
-func (p *CovalentProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.SimpleMonitor) {
+func (p *CovalentProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.Monitor) {
 	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	return countSlurped(ctx, query, slurpedChan)
 }
@@ -136,8 +136,8 @@ type covalentTransaction struct {
 	BlockSignedAt *time.Time `json:"block_signed_at,omitempty"`
 }
 
-func (c *covalentTransaction) SimpleSlurp() (s types.SimpleSlurp) {
-	s = types.SimpleSlurp{
+func (c *covalentTransaction) Slurp() (s types.Slurp) {
+	s = types.Slurp{
 		BlockHash:        base.HexToHash(*c.BlockHash),
 		BlockNumber:      uint64(*c.BlockHeight),
 		From:             base.HexToAddress(*c.From),
@@ -152,8 +152,8 @@ func (c *covalentTransaction) SimpleSlurp() (s types.SimpleSlurp) {
 	return
 }
 
-func (c *covalentTransaction) SimpleAppearance(address base.Address) (a types.SimpleAppearance) {
-	return types.SimpleAppearance{
+func (c *covalentTransaction) Appearance(address base.Address) (a types.Appearance) {
+	return types.Appearance{
 		Address:          address,
 		BlockNumber:      uint32(*c.BlockHeight),
 		TransactionIndex: uint32(*c.TxOffset),
@@ -209,8 +209,8 @@ func (e *CovalentProvider) fetchData(ctx context.Context, address base.Address, 
 
 	data = make([]SlurpedPageItem, 0, len(response.Data.Items))
 	for _, covalentTx := range response.Data.Items {
-		appearance := covalentTx.SimpleAppearance(address)
-		slurpedTx := covalentTx.SimpleSlurp()
+		appearance := covalentTx.Appearance(address)
+		slurpedTx := covalentTx.Slurp()
 		data = append(data, SlurpedPageItem{
 			Appearance:  &appearance,
 			Transaction: &slurpedTx,

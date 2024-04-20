@@ -24,7 +24,7 @@ func (opts *TracesOptions) HandleFilter() error {
 	nErrors := 0
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
-	traceFilter := types.SimpleTraceFilter{}
+	traceFilter := types.TraceFilter{}
 	_, br := traceFilter.ParseBangString(chain, opts.Filter)
 
 	ids := make([]identifiers.Identifier, 0)
@@ -41,7 +41,7 @@ func (opts *TracesOptions) HandleFilter() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Transaction](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -57,10 +57,10 @@ func (opts *TracesOptions) HandleFilter() error {
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.SimpleTransaction)
+					thisMap[app] = new(types.Transaction)
 				}
 
-				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+				iterFunc := func(app types.Appearance, value *types.Transaction) error {
 					if block, err := opts.Conn.GetBlockBodyByNumber(uint64(app.BlockNumber)); err != nil {
 						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
 						return nil
@@ -76,7 +76,7 @@ func (opts *TracesOptions) HandleFilter() error {
 								return fmt.Errorf("block at %s has no traces", app.Orig())
 
 							} else {
-								tr := make([]types.SimpleTrace, 0, len(traces))
+								tr := make([]types.Trace, 0, len(traces))
 								for index := range traces {
 									if opts.Articulate {
 										if err = abiCache.ArticulateTrace(&traces[index]); err != nil {
@@ -105,7 +105,7 @@ func (opts *TracesOptions) HandleFilter() error {
 					}
 				}
 
-				items := make([]types.SimpleTrace, 0, len(thisMap))
+				items := make([]types.Trace, 0, len(thisMap))
 				for _, tx := range thisMap {
 					items = append(items, tx.Traces...)
 				}

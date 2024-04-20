@@ -10,7 +10,7 @@ import (
 	"gonum.org/v1/plot/vg"
 )
 
-func LineChart(data []types.SimpleState, title string, filename string) {
+func LineChart(data []types.State, title string, filename string) {
 	// Manually define a color palette
 	colorPalette := []color.Color{
 		color.RGBA{R: 255, G: 0, B: 0, A: 255},   // Red
@@ -21,7 +21,7 @@ func LineChart(data []types.SimpleState, title string, filename string) {
 	}
 
 	// Group data by address
-	groupedByAddress := make(map[string][]types.SimpleState)
+	groupedByAddress := make(map[string][]types.State)
 	for _, d := range data {
 		groupedByAddress[d.Address.Hex()] = append(groupedByAddress[d.Address.Hex()], d)
 	}

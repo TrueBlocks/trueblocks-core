@@ -13,7 +13,7 @@ func (opts *StatusOptions) HandleDiagnose() error {
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawStatus], errorChan chan error) {
-		s, err := opts.GetSimpleStatus(opts.Diagnose)
+		s, err := opts.GetStatus(opts.Diagnose)
 		if err != nil {
 			errorChan <- err
 			return

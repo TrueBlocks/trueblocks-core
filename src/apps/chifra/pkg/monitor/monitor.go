@@ -22,7 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// Header is the header of the Monitor file. Note that it's the same width as an types.SimpleAppRecord
+// Header is the header of the Monitor file. Note that it's the same width as an types.AppRecord
 // therefor one should not change its size
 type Header struct {
 	Magic       uint16 `json:"-"`

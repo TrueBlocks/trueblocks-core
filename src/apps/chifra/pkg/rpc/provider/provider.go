@@ -18,21 +18,21 @@ const providerChannelBufferSize = 50
 // about Transaction, like Address). Either Transaction or Appearance comes from 3rd party
 // RPC provider. For example, from Etherscan we get Transaction, but from Key - Appearance.
 type SlurpedPageItem struct {
-	Appearance  *types.SimpleAppearance
-	Transaction *types.SimpleSlurp
+	Appearance  *types.Appearance
+	Transaction *types.Slurp
 }
 
 // Provider is an abstraction over different RPC services, like Etherscan or Key
 type Provider interface {
 	// TransactionsByAddress returns a channel that will be populated with transactions
-	TransactionsByAddress(context.Context, *Query, chan error) chan types.SimpleSlurp
+	TransactionsByAddress(context.Context, *Query, chan error) chan types.Slurp
 
 	// Appearances returns a channel that will be populated with appearances
-	Appearances(context.Context, *Query, chan error) chan types.SimpleAppearance
+	Appearances(context.Context, *Query, chan error) chan types.Appearance
 
 	// Count returns a channel that will be populated with monitors, one for each address.
 	// These monitors will only have NRecords set.
-	Count(context.Context, *Query, chan error) chan types.SimpleMonitor
+	Count(context.Context, *Query, chan error) chan types.Monitor
 
 	// NewPaginator creates and returns Paginator that should be used for given service
 	NewPaginator() Paginator
@@ -110,12 +110,12 @@ func fetchAndFilterData(ctx context.Context, provider Provider, query *Query, er
 	return
 }
 
-// countSlurped turns a channel of SlurpedPageItem into a channel of SimpleMonitors.
+// countSlurped turns a channel of SlurpedPageItem into a channel of Monitors.
 // It is a helper that encapsulates logic shared by multiple providers
-func countSlurped(ctx context.Context, query *Query, slurpedChan chan SlurpedPageItem) (monitorChan chan types.SimpleMonitor) {
-	monitorChan = make(chan types.SimpleMonitor)
+func countSlurped(ctx context.Context, query *Query, slurpedChan chan SlurpedPageItem) (monitorChan chan types.Monitor) {
+	monitorChan = make(chan types.Monitor)
 
-	recordCount := make(map[base.Address]types.SimpleMonitor, len(query.Addresses))
+	recordCount := make(map[base.Address]types.Monitor, len(query.Addresses))
 	var mu sync.Mutex
 
 	go func() {
@@ -134,7 +134,7 @@ func countSlurped(ctx context.Context, query *Query, slurpedChan chan SlurpedPag
 				mu.Lock()
 				address := slurpedTx.Appearance.Address
 				monitor := recordCount[address]
-				recordCount[address] = types.SimpleMonitor{
+				recordCount[address] = types.Monitor{
 					Address:  address,
 					NRecords: monitor.NRecords + 1,
 				}

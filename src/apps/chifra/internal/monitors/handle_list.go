@@ -46,7 +46,7 @@ func (opts *MonitorsOptions) HandleList() error {
 
 		for _, mon := range monArray {
 			if len(addrMap) == 0 || addrMap[mon.Address] {
-				s := types.SimpleMonitor{
+				s := types.Monitor{
 					Address:     mon.Address,
 					NRecords:    mon.Count(),
 					FileSize:    file.FileSize(mon.Path()),

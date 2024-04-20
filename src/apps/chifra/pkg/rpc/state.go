@@ -35,8 +35,8 @@ type StateFilters struct {
 }
 
 // GetState returns account state
-func (conn *Connection) GetState(fieldBits StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (state *types.SimpleState, err error) {
-	state = &types.SimpleState{
+func (conn *Connection) GetState(fieldBits StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (state *types.State, err error) {
+	state = &types.State{
 		Address:     address,
 		BlockNumber: blockNumber,
 		Deployed:    utils.NOPOS,

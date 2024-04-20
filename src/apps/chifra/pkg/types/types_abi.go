@@ -24,28 +24,28 @@ type RawAbi struct {
 	// EXISTING_CODE
 }
 
-type SimpleAbi struct {
-	Address   base.Address     `json:"address"`
-	Functions []SimpleFunction `json:"functions"`
-	raw       *RawAbi          `json:"-"`
+type Abi struct {
+	Address   base.Address `json:"address"`
+	Functions []Function   `json:"functions"`
+	raw       *RawAbi      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleAbi) String() string {
+func (s *Abi) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleAbi) Raw() *RawAbi {
+func (s *Abi) Raw() *RawAbi {
 	return s.raw
 }
 
-func (s *SimpleAbi) SetRaw(raw *RawAbi) {
+func (s *Abi) SetRaw(raw *RawAbi) {
 	s.raw = raw
 }
 
-func (s *SimpleAbi) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Abi) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -61,7 +61,7 @@ func (s *SimpleAbi) Model(chain, format string, verbose bool, extraOptions map[s
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleAbi) FinishUnmarshal() {
+func (s *Abi) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

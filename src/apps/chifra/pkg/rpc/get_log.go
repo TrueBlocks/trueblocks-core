@@ -11,14 +11,14 @@ import (
 )
 
 // GetLogsByFilter returns the logs given a filter
-func (conn *Connection) GetLogsByFilter(filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
-	return conn.getLogsSimple(filter)
+func (conn *Connection) GetLogsByFilter(filter types.LogFilter) ([]types.Log, error) {
+	return conn.getLogs(filter)
 }
 
 // GetLogsByNumber returns the logs of a block
-func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.SimpleLog, error) {
+func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.Log, error) {
 	if conn.StoreReadable() {
-		logGroup := &types.SimpleLogGroup{
+		logGroup := &types.LogGroup{
 			BlockNumber:      bn,
 			TransactionIndex: utils.NOPOS,
 		}
@@ -27,16 +27,16 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 		}
 	}
 
-	filter := types.SimpleLogFilter{
+	filter := types.LogFilter{
 		FromBlock: bn,
 		ToBlock:   bn,
 	}
 
-	if logs, err := conn.getLogsSimple(filter); err != nil {
+	if logs, err := conn.getLogs(filter); err != nil {
 		return logs, err
 	} else {
 		if conn.StoreWritable() && conn.EnabledMap["logs"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
-			logGroup := &types.SimpleLogGroup{
+			logGroup := &types.LogGroup{
 				Logs:             logs,
 				BlockNumber:      bn,
 				TransactionIndex: utils.NOPOS,
@@ -58,7 +58,7 @@ func (conn *Connection) GetLogsCountInBlock(bn base.Blknum, ts base.Timestamp) (
 	}
 }
 
-func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
+func (conn *Connection) getLogs(filter types.LogFilter) ([]types.Log, error) {
 	p := struct {
 		FromBlock string   `json:"fromBlock"`
 		ToBlock   string   `json:"toBlock"`
@@ -79,15 +79,15 @@ func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.Sim
 	params := query.Params{p}
 
 	if rawLogs, err := query.Query[[]types.RawLog](conn.Chain, method, params); err != nil {
-		return []types.SimpleLog{}, err
+		return []types.Log{}, err
 
 	} else if rawLogs == nil || len(*rawLogs) == 0 {
-		return []types.SimpleLog{}, nil
+		return []types.Log{}, nil
 
 	} else {
 		curBlock := utils.NOPOS
 		curTs := utils.NOPOSI
-		var ret []types.SimpleLog
+		var ret []types.Log
 		for _, rawLog := range *rawLogs {
 			bn := utils.MustParseUint(rawLog.BlockNumber)
 			if bn != curBlock {
@@ -95,11 +95,11 @@ func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.Sim
 				curBlock = bn
 			}
 			txHash := base.HexToHash(rawLog.TransactionHash)
-			simpleLog, _ := rawLog.RawToSimple(map[string]any{
+			log, _ := rawLog.RawTo(map[string]any{
 				"hash":      txHash,
 				"timestamp": curTs,
 			})
-			ret = append(ret, simpleLog)
+			ret = append(ret, log)
 		}
 		return ret, nil
 	}

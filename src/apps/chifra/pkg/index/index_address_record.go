@@ -33,7 +33,7 @@ func (chunk *Index) searchForAddressRecord(address base.Address) int {
 			return false
 		}
 
-		addressRec := types.SimpleAddrRecord{}
+		addressRec := types.AddrRecord{}
 		if err = binary.Read(chunk.File, binary.LittleEndian, &addressRec); err != nil {
 			fmt.Println(err)
 			return false
@@ -46,7 +46,7 @@ func (chunk *Index) searchForAddressRecord(address base.Address) int {
 
 	readLocation := int64(HeaderWidth + pos*AddrRecordWidth)
 	_, _ = chunk.File.Seek(readLocation, io.SeekStart)
-	rec := types.SimpleAddrRecord{}
+	rec := types.AddrRecord{}
 	if err := binary.Read(chunk.File, binary.LittleEndian, &rec); err != nil {
 		return -1
 	}

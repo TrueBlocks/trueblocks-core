@@ -22,7 +22,7 @@ type RawMonitor struct {
 	// EXISTING_CODE
 }
 
-type SimpleMonitor struct {
+type Monitor struct {
 	Address     base.Address `json:"address"`
 	Deleted     bool         `json:"deleted"`
 	FileSize    int64        `json:"fileSize"`
@@ -33,20 +33,20 @@ type SimpleMonitor struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleMonitor) String() string {
+func (s *Monitor) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleMonitor) Raw() *RawMonitor {
+func (s *Monitor) Raw() *RawMonitor {
 	return s.raw
 }
 
-func (s *SimpleMonitor) SetRaw(raw *RawMonitor) {
+func (s *Monitor) SetRaw(raw *RawMonitor) {
 	s.raw = raw
 }
 
-func (s *SimpleMonitor) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Monitor) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -74,7 +74,7 @@ func (s *SimpleMonitor) Model(chain, format string, verbose bool, extraOptions m
 		order = append(order, "lastScanned")
 		order = append(order, "deleted")
 		if extraOptions["namesMap"] != nil {
-			name := extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
+			name := extraOptions["namesMap"].(map[base.Address]Name)[s.Address]
 			if name.Address.Hex() != "0x0" {
 				model["name"] = name
 				order = append(order, "name")
@@ -90,7 +90,7 @@ func (s *SimpleMonitor) Model(chain, format string, verbose bool, extraOptions m
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleMonitor) FinishUnmarshal() {
+func (s *Monitor) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

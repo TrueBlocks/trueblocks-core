@@ -141,7 +141,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 			msg1 := fmt.Sprintf("Truncated index to block %d (the latest full chunk).", latestChunk)
 			msg2 := fmt.Sprintf("%d chunks removed, %d monitors truncated%s", nChunksRemoved, nMonitorsTruncated, fin)
 			if opts.Globals.Format == "json" {
-				s := types.SimpleMessage{
+				s := types.Message{
 					Msg: msg1 + " " + msg2,
 				}
 				modelChan <- &s

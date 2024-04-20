@@ -8,12 +8,12 @@ import (
 )
 
 // getStatementsFromReceipt returns a statement from a given receipt
-func (l *Ledger) getStatementsFromReceipt(conn *rpc.Connection, filter *filter.AppearanceFilter, receipt *types.SimpleReceipt) ([]types.SimpleStatement, error) {
+func (l *Ledger) getStatementsFromReceipt(conn *rpc.Connection, filter *filter.AppearanceFilter, receipt *types.Receipt) ([]types.Statement, error) {
 	if receipt == nil {
-		return []types.SimpleStatement{}, nil
+		return []types.Statement{}, nil
 	}
 
-	statements := make([]types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
+	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 	for _, log := range receipt.Logs {
 		addrArray := []base.Address{l.AccountFor}
 		if filter.ApplyLogFilter(&log, addrArray) && l.assetOfInterest(log.Address) {

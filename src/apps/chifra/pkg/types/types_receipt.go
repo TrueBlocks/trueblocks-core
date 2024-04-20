@@ -42,7 +42,7 @@ type RawReceipt struct {
 	// EXISTING_CODE
 }
 
-type SimpleReceipt struct {
+type Receipt struct {
 	BlockHash         base.Hash    `json:"blockHash,omitempty"`
 	BlockNumber       base.Blknum  `json:"blockNumber"`
 	ContractAddress   base.Address `json:"contractAddress,omitempty"`
@@ -51,7 +51,7 @@ type SimpleReceipt struct {
 	From              base.Address `json:"from,omitempty"`
 	GasUsed           base.Gas     `json:"gasUsed"`
 	IsError           bool         `json:"isError,omitempty"`
-	Logs              []SimpleLog  `json:"logs"`
+	Logs              []Log        `json:"logs"`
 	Status            uint32       `json:"status"`
 	To                base.Address `json:"to,omitempty"`
 	TransactionHash   base.Hash    `json:"transactionHash"`
@@ -61,20 +61,20 @@ type SimpleReceipt struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleReceipt) String() string {
+func (s *Receipt) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleReceipt) Raw() *RawReceipt {
+func (s *Receipt) Raw() *RawReceipt {
 	return s.raw
 }
 
-func (s *SimpleReceipt) SetRaw(raw *RawReceipt) {
+func (s *Receipt) SetRaw(raw *RawReceipt) {
 	s.raw = raw
 }
 
-func (s *SimpleReceipt) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Receipt) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -106,7 +106,7 @@ func (s *SimpleReceipt) Model(chain, format string, verbose bool, extraOptions m
 		}
 
 		if s.Logs == nil {
-			model["logs"] = []SimpleLog{}
+			model["logs"] = []Log{}
 		} else {
 			logs := make([]map[string]any, 0, len(s.Logs))
 			for _, log := range s.Logs {
@@ -150,21 +150,21 @@ func (s *SimpleReceipt) Model(chain, format string, verbose bool, extraOptions m
 	}
 }
 
-type SimpleReceiptGroup struct {
+type ReceiptGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
-	Receipts         []SimpleReceipt
+	Receipts         []Receipt
 }
 
-func (s *SimpleReceiptGroup) CacheName() string {
+func (s *ReceiptGroup) CacheName() string {
 	return "Receipt"
 }
 
-func (s *SimpleReceiptGroup) CacheId() string {
+func (s *ReceiptGroup) CacheId() string {
 	return fmt.Sprintf("%09d", s.BlockNumber)
 }
 
-func (s *SimpleReceiptGroup) CacheLocation() (directory string, extension string) {
+func (s *ReceiptGroup) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -178,15 +178,15 @@ func (s *SimpleReceiptGroup) CacheLocation() (directory string, extension string
 	return
 }
 
-func (s *SimpleReceiptGroup) MarshalCache(writer io.Writer) (err error) {
+func (s *ReceiptGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Receipts)
 }
 
-func (s *SimpleReceiptGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *ReceiptGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	return cache.ReadValue(reader, &s.Receipts, version)
 }
 
-func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
+func (s *Receipt) MarshalCache(writer io.Writer) (err error) {
 	// BlockHash
 	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
@@ -259,7 +259,7 @@ func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleReceipt) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Receipt) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// BlockHash
 	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
 		return err
@@ -301,7 +301,7 @@ func (s *SimpleReceipt) UnmarshalCache(version uint64, reader io.Reader) (err er
 	}
 
 	// Logs
-	s.Logs = make([]SimpleLog, 0)
+	s.Logs = make([]Log, 0)
 	if err = cache.ReadValue(reader, &s.Logs, version); err != nil {
 		return err
 	}
@@ -332,7 +332,7 @@ func (s *SimpleReceipt) UnmarshalCache(version uint64, reader io.Reader) (err er
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleReceipt) FinishUnmarshal() {
+func (s *Receipt) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -340,7 +340,7 @@ func (s *SimpleReceipt) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleReceipt) IsDefault() bool {
+func (s *Receipt) IsDefault() bool {
 	a := s.ContractAddress.IsZero()
 	b := s.EffectiveGasPrice == 0
 	c := s.GasUsed == 0
@@ -348,19 +348,19 @@ func (s *SimpleReceipt) IsDefault() bool {
 	return a && b && c && d
 }
 
-func (r *RawReceipt) RawToSimple(vals map[string]any) (SimpleReceipt, error) {
-	logs := []SimpleLog{}
+func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
+	logs := []Log{}
 	for _, rawLog := range r.Logs {
-		simpleLog, _ := rawLog.RawToSimple(vals)
-		logs = append(logs, simpleLog)
+		log, _ := rawLog.RawTo(vals)
+		logs = append(logs, log)
 	}
 
 	cumulativeGasUsed, err := hexutil.DecodeUint64(r.CumulativeGasUsed)
 	if err != nil {
-		return SimpleReceipt{}, err
+		return Receipt{}, err
 	}
 
-	receipt := SimpleReceipt{
+	receipt := Receipt{
 		BlockHash:         base.HexToHash(r.BlockHash),
 		BlockNumber:       utils.MustParseUint(r.BlockNumber),
 		ContractAddress:   base.HexToAddress(r.ContractAddress),

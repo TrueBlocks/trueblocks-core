@@ -78,9 +78,9 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 }
 
 type whenGeneric interface {
-	types.SimpleNamedBlock |
-		types.SimpleTimestamp |
-		types.SimpleTimestampCount
+	types.NamedBlock |
+		types.Timestamp |
+		types.TimestampCount
 }
 
 func queryWhen[T whenGeneric](opts *WhenOptions) ([]T, *types.MetaData, error) {
@@ -98,18 +98,18 @@ func queryWhen[T whenGeneric](opts *WhenOptions) ([]T, *types.MetaData, error) {
 }
 
 // When implements the chifra when command.
-func (opts *WhenOptions) When() ([]types.SimpleNamedBlock, *types.MetaData, error) {
-	return queryWhen[types.SimpleNamedBlock](opts)
+func (opts *WhenOptions) When() ([]types.NamedBlock, *types.MetaData, error) {
+	return queryWhen[types.NamedBlock](opts)
 }
 
 // WhenTimestamps implements the chifra when --timestamps command.
-func (opts *WhenOptions) WhenTimestamps() ([]types.SimpleTimestamp, *types.MetaData, error) {
-	return queryWhen[types.SimpleTimestamp](opts)
+func (opts *WhenOptions) WhenTimestamps() ([]types.Timestamp, *types.MetaData, error) {
+	return queryWhen[types.Timestamp](opts)
 }
 
 // WhenCount implements the chifra when --count command.
-func (opts *WhenOptions) WhenCount() ([]types.SimpleTimestampCount, *types.MetaData, error) {
-	return queryWhen[types.SimpleTimestampCount](opts)
+func (opts *WhenOptions) WhenCount() ([]types.TimestampCount, *types.MetaData, error) {
+	return queryWhen[types.TimestampCount](opts)
 }
 
 // No enums

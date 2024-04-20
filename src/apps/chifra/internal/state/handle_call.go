@@ -24,7 +24,7 @@ func (opts *StateOptions) HandleCall() error {
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
-	artFunc := func(str string, function *types.SimpleFunction) error {
+	artFunc := func(str string, function *types.Function) error {
 		return articulate.ArticulateFunction(function, "", str[2:])
 	}
 
@@ -42,7 +42,7 @@ func (opts *StateOptions) HandleCall() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleResult](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Result](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -58,10 +58,10 @@ func (opts *StateOptions) HandleCall() error {
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.SimpleResult)
+					thisMap[app] = new(types.Result)
 				}
 
-				iterFunc := func(app types.SimpleAppearance, value *types.SimpleResult) error {
+				iterFunc := func(app types.Appearance, value *types.Result) error {
 					bn := uint64(app.BlockNumber)
 					if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
 						delete(thisMap, app)
@@ -92,7 +92,7 @@ func (opts *StateOptions) HandleCall() error {
 					}
 				}
 
-				items := make([]types.SimpleResult, 0, len(thisMap))
+				items := make([]types.Result, 0, len(thisMap))
 				for _, v := range thisMap {
 					items = append(items, *v)
 				}

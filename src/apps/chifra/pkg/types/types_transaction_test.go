@@ -10,7 +10,7 @@ import (
 )
 
 func TestTransactionCache(t *testing.T) {
-	expected := &SimpleTransaction{
+	expected := &Transaction{
 		BlockHash:   base.HexToHash("0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39"),
 		BlockNumber: 4000001,
 		From:        base.HexToAddress("0xea674fdde714fd979de3edf0f56aa9716b898ec8"),
@@ -20,11 +20,11 @@ func TestTransactionCache(t *testing.T) {
 		Hash:        base.HexToHash("0x62974c8152c87e14880c54007260e0d5fe9d182c2cd22c58797735a9ae88370a"),
 		Input:       "0x",
 		Nonce:       2377519,
-		Receipt: &SimpleReceipt{
+		Receipt: &Receipt{
 			ContractAddress:   base.ZeroAddr,
 			EffectiveGasPrice: 21000000000,
 			GasUsed:           22966,
-			Logs: []SimpleLog{
+			Logs: []Log{
 				{
 					Address:  base.HexToAddress("0x68c4dc84382822d4ebaf4d2fbbafdc5fde80279b"),
 					Data:     "0x00000000000000000000000000000000000000000000000000b7c59b8fd3edff",
@@ -53,7 +53,7 @@ func TestTransactionCache(t *testing.T) {
 	}
 
 	// Read
-	readBack := &SimpleTransaction{
+	readBack := &Transaction{
 		BlockNumber:      expected.BlockNumber,
 		TransactionIndex: 10,
 	}
@@ -68,10 +68,10 @@ func TestTransactionCache(t *testing.T) {
 }
 
 func TestTransactionCacheArticulated(t *testing.T) {
-	expected := &SimpleTransaction{
-		ArticulatedTx: &SimpleFunction{
+	expected := &Transaction{
+		ArticulatedTx: &Function{
 			Name: "publishHash",
-			Inputs: []SimpleParameter{
+			Inputs: []Parameter{
 				{
 					Name:  "chain",
 					Value: "sepolia-ts",
@@ -91,11 +91,11 @@ func TestTransactionCacheArticulated(t *testing.T) {
 		Hash:        base.HexToHash("0x7b0dd622b0de6448937d564be16e08fb885895383391b890448cd284ce33f993"),
 		Input:       "0x1fee5cd200000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000a7365706f6c69612d747300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002e516d5441623866625233674d6f777876624e466f584339337a6762386f66395567756d3363554b564366414e3172000000000000000000000000000000000000",
 		Nonce:       551,
-		Receipt: &SimpleReceipt{
+		Receipt: &Receipt{
 			ContractAddress:   base.ZeroAddr,
 			EffectiveGasPrice: 0,
 			GasUsed:           41738,
-			Logs: []SimpleLog{
+			Logs: []Log{
 				{
 					Address:  base.HexToAddress("0x0c316b7042b419d07d343f2f4f5bd54ff731183d"),
 					Data:     "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000000a7365706f6c69612d747300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002e516d5441623866625233674d6f777876624e466f584339337a6762386f66395567756d3363554b564366414e3172000000000000000000000000000000000000",
@@ -123,7 +123,7 @@ func TestTransactionCacheArticulated(t *testing.T) {
 	}
 
 	// Read
-	readBack := &SimpleTransaction{
+	readBack := &Transaction{
 		BlockNumber:      expected.BlockNumber,
 		TransactionIndex: 44,
 	}

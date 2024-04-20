@@ -31,12 +31,12 @@ var nProcessed int
 var nStarted int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
-func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRecord, chunkType walk.CacheType, nTotal int) ([]types.SimpleChunkRecord, bool) {
+func (opts *InitOptions) downloadAndReportProgress(chunks []types.ChunkRecord, chunkType walk.CacheType, nTotal int) ([]types.ChunkRecord, bool) {
 	chain := opts.Globals.Chain
 	sleep := utils.Max(.0125, opts.Sleep)
 	successCount := 0
 
-	failed := []types.SimpleChunkRecord{}
+	failed := []types.ChunkRecord{}
 	cancelled := false
 
 	// Establish a channel to listen for progress messages
@@ -50,7 +50,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRec
 	go index.DownloadChunks(chain, chunks, chunkType, poolSize, progressChannel)
 
 	for event := range progressChannel {
-		chunk, ok := event.Payload.(*types.SimpleChunkRecord)
+		chunk, ok := event.Payload.(*types.ChunkRecord)
 		var rng string
 		if ok {
 			rng = chunk.Range
@@ -137,7 +137,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRec
 // TODO: we want to re-process failed downloads on the stop. In that way, we can do progressive backoff per chunk (as opposed
 // TODO: to globally). We want to back-off on single chunks instead of every chunk. The backoff routine carries an 'attempts'
 // TODO: value and we wait after each failure 2^nAttempts (double the wait each time it fails). Max 10 tries or something.
-func retry(failedChunks []types.SimpleChunkRecord, nTimes int, downloadChunksFunc func(chunks []types.SimpleChunkRecord) (failed []types.SimpleChunkRecord, cancelled bool)) int {
+func retry(failedChunks []types.ChunkRecord, nTimes int, downloadChunksFunc func(chunks []types.ChunkRecord) (failed []types.ChunkRecord, cancelled bool)) int {
 	count := 0
 
 	chunksToRetry := failedChunks

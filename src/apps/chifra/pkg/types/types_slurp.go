@@ -53,51 +53,51 @@ type RawSlurp struct {
 	// EXISTING_CODE
 }
 
-type SimpleSlurp struct {
-	ArticulatedTx     *SimpleFunction `json:"articulatedTx"`
-	BlockHash         base.Hash       `json:"blockHash"`
-	BlockNumber       base.Blknum     `json:"blockNumber"`
-	CompressedTx      string          `json:"compressedTx"`
-	ContractAddress   base.Address    `json:"contractAddress"`
-	CumulativeGasUsed string          `json:"cumulativeGasUsed"`
-	Ether             string          `json:"ether"`
-	From              base.Address    `json:"from"`
-	FunctionName      string          `json:"functionName"`
-	Gas               base.Gas        `json:"gas"`
-	GasPrice          base.Gas        `json:"gasPrice"`
-	GasUsed           base.Gas        `json:"gasUsed"`
-	HasToken          bool            `json:"hasToken"`
-	Hash              base.Hash       `json:"hash"`
-	Input             string          `json:"input"`
-	IsError           bool            `json:"isError"`
-	MethodId          string          `json:"methodId"`
-	Nonce             uint64          `json:"nonce"`
-	Timestamp         base.Timestamp  `json:"timestamp"`
-	To                base.Address    `json:"to"`
-	TransactionIndex  base.Blknum     `json:"transactionIndex"`
-	TxReceiptStatus   string          `json:"txReceiptStatus"`
-	ValidatorIndex    uint64          `json:"validatorIndex"`
-	Value             base.Wei        `json:"value"`
-	WithdrawalIndex   uint64          `json:"withdrawalIndex"`
-	raw               *RawSlurp       `json:"-"`
+type Slurp struct {
+	ArticulatedTx     *Function      `json:"articulatedTx"`
+	BlockHash         base.Hash      `json:"blockHash"`
+	BlockNumber       base.Blknum    `json:"blockNumber"`
+	CompressedTx      string         `json:"compressedTx"`
+	ContractAddress   base.Address   `json:"contractAddress"`
+	CumulativeGasUsed string         `json:"cumulativeGasUsed"`
+	Ether             string         `json:"ether"`
+	From              base.Address   `json:"from"`
+	FunctionName      string         `json:"functionName"`
+	Gas               base.Gas       `json:"gas"`
+	GasPrice          base.Gas       `json:"gasPrice"`
+	GasUsed           base.Gas       `json:"gasUsed"`
+	HasToken          bool           `json:"hasToken"`
+	Hash              base.Hash      `json:"hash"`
+	Input             string         `json:"input"`
+	IsError           bool           `json:"isError"`
+	MethodId          string         `json:"methodId"`
+	Nonce             uint64         `json:"nonce"`
+	Timestamp         base.Timestamp `json:"timestamp"`
+	To                base.Address   `json:"to"`
+	TransactionIndex  base.Blknum    `json:"transactionIndex"`
+	TxReceiptStatus   string         `json:"txReceiptStatus"`
+	ValidatorIndex    uint64         `json:"validatorIndex"`
+	Value             base.Wei       `json:"value"`
+	WithdrawalIndex   uint64         `json:"withdrawalIndex"`
+	raw               *RawSlurp      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleSlurp) String() string {
+func (s *Slurp) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleSlurp) Raw() *RawSlurp {
+func (s *Slurp) Raw() *RawSlurp {
 	return s.raw
 }
 
-func (s *SimpleSlurp) SetRaw(raw *RawSlurp) {
+func (s *Slurp) SetRaw(raw *RawSlurp) {
 	s.raw = raw
 }
 
-func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -259,26 +259,26 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 	}
 }
 
-func (s *SimpleSlurp) Date() string {
+func (s *Slurp) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-type SimpleSlurpGroup struct {
+type SlurpGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
 	Address          base.Address
-	Slurps           []SimpleSlurp
+	Slurps           []Slurp
 }
 
-func (s *SimpleSlurpGroup) CacheName() string {
+func (s *SlurpGroup) CacheName() string {
 	return "Slurp"
 }
 
-func (s *SimpleSlurpGroup) CacheId() string {
+func (s *SlurpGroup) CacheId() string {
 	return fmt.Sprintf("%s-%09d-%05d", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)
 }
 
-func (s *SimpleSlurpGroup) CacheLocation() (directory string, extension string) {
+func (s *SlurpGroup) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -292,17 +292,17 @@ func (s *SimpleSlurpGroup) CacheLocation() (directory string, extension string) 
 	return
 }
 
-func (s *SimpleSlurpGroup) MarshalCache(writer io.Writer) (err error) {
+func (s *SlurpGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Slurps)
 }
 
-func (s *SimpleSlurpGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *SlurpGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	return cache.ReadValue(reader, &s.Slurps, version)
 }
 
-func (s *SimpleSlurp) MarshalCache(writer io.Writer) (err error) {
+func (s *Slurp) MarshalCache(writer io.Writer) (err error) {
 	// ArticulatedTx
-	optArticulatedTx := &cache.Optional[SimpleFunction]{
+	optArticulatedTx := &cache.Optional[Function]{
 		Value: s.ArticulatedTx,
 	}
 	if err = cache.WriteValue(writer, optArticulatedTx); err != nil {
@@ -432,9 +432,9 @@ func (s *SimpleSlurp) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleSlurp) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Slurp) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// ArticulatedTx
-	optArticulatedTx := &cache.Optional[SimpleFunction]{
+	optArticulatedTx := &cache.Optional[Function]{
 		Value: s.ArticulatedTx,
 	}
 	if err = cache.ReadValue(reader, optArticulatedTx, version); err != nil {
@@ -568,7 +568,7 @@ func (s *SimpleSlurp) UnmarshalCache(version uint64, reader io.Reader) (err erro
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleSlurp) FinishUnmarshal() {
+func (s *Slurp) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -576,7 +576,7 @@ func (s *SimpleSlurp) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleSlurp) GasCost() base.Gas {
+func (s *Slurp) GasCost() base.Gas {
 	return s.GasPrice * s.GasUsed
 }
 

@@ -17,7 +17,7 @@ var (
 	makerDeployment = base.Blknum(3684349)
 )
 
-func priceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
+func priceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.Statement) (price float64, source string, err error) {
 	if statement.BlockNumber <= makerDeployment {
 		msg := fmt.Sprintf("Block %d is prior to deployment (%d) of Maker. No fallback pricing method", statement.BlockNumber, makerDeployment)
 		logger.TestLog(true, msg)
@@ -35,7 +35,7 @@ func priceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleS
 	}
 
 	contractCall.BlockNumber = statement.BlockNumber
-	artFunc := func(str string, function *types.SimpleFunction) error {
+	artFunc := func(str string, function *types.Function) error {
 		return articulate.ArticulateFunction(function, "", str[2:])
 	}
 	result, err := contractCall.Call(artFunc)

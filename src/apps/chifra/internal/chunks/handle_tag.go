@@ -92,7 +92,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 				msg += colors.Yellow + "Finishing work. please wait..." + colors.Off
 			}
 			if opts.Globals.Format == "json" {
-				s := types.SimpleMessage{
+				s := types.Message{
 					Msg: msg,
 				}
 				modelChan <- &s

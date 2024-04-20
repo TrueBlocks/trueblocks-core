@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func UpdateName(dbType DatabaseType, chain string, name *types.SimpleName) (err error) {
+func UpdateName(dbType DatabaseType, chain string, name *types.Name) (err error) {
 	switch dbType {
 	case DatabaseCustom:
 		return updateCustomName(chain, name)
@@ -19,7 +19,7 @@ func UpdateName(dbType DatabaseType, chain string, name *types.SimpleName) (err 
 	return
 }
 
-func updateCustomName(chain string, name *types.SimpleName) (err error) {
+func updateCustomName(chain string, name *types.Name) (err error) {
 	loadedCustomNamesMutex.Lock()
 	defer loadedCustomNamesMutex.Unlock()
 
@@ -33,7 +33,7 @@ func updateCustomName(chain string, name *types.SimpleName) (err error) {
 	return
 }
 
-func updateRegularName(chain string, name *types.SimpleName) (err error) {
+func updateRegularName(chain string, name *types.Name) (err error) {
 	if _, ok := loadedRegularNames[name.Address]; !ok {
 		err = fmt.Errorf("no name for address: %s", name.Address)
 		return

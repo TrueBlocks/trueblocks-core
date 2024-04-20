@@ -44,7 +44,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 				continue
 
 			} else {
-				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.SimpleBlock[string]](apps, filter.Reversed); err != nil {
+				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Block[string]](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					cancel()
 
@@ -63,16 +63,16 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 						}
 
 						for app := range thisMap {
-							thisMap[app] = new(types.SimpleBlock[string])
+							thisMap[app] = new(types.Block[string])
 						}
 
-						iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[string]) error {
-							var block types.SimpleBlock[string]
+						iterFunc := func(app types.Appearance, value *types.Block[string]) error {
+							var block types.Block[string]
 							if block, err = opts.Conn.GetBlockHeaderByNumber(uint64(app.BlockNumber)); err != nil {
 								return err
 							}
 
-							withdrawals := make([]types.SimpleWithdrawal, 0, 16)
+							withdrawals := make([]types.Withdrawal, 0, 16)
 							for _, w := range block.Withdrawals {
 								if w.Address == mon.Address {
 									withdrawals = append(withdrawals, w)
@@ -99,7 +99,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 						}
 
 						// Sort the items back into an ordered array by block number
-						items := make([]*types.SimpleWithdrawal, 0, len(thisMap))
+						items := make([]*types.Withdrawal, 0, len(thisMap))
 						for _, block := range thisMap {
 							for _, with := range block.Withdrawals {
 								items = append(items, &with)

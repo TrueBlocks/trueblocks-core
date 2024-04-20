@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func doSearch(name *types.SimpleName, terms []string, parts Parts) bool {
+func doSearch(name *types.Name, terms []string, parts Parts) bool {
 	if len(terms) == 0 {
 		return true
 	}

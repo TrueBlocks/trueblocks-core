@@ -47,7 +47,7 @@ type solcNodeParameters struct {
 	} `json:"typeName"`
 }
 
-func GenerateFromCombinedAst(reader io.Reader) (result []types.SimpleFunction, err error) {
+func GenerateFromCombinedAst(reader io.Reader) (result []types.Function, err error) {
 	decoder := json.NewDecoder(reader)
 	cf := &SolcCombinedFile{}
 	if err = decoder.Decode(cf); err != nil {
@@ -56,7 +56,7 @@ func GenerateFromCombinedAst(reader io.Reader) (result []types.SimpleFunction, e
 	return fromCombinedAst(cf), nil
 }
 
-func fromCombinedAst(cf *SolcCombinedFile) (result []types.SimpleFunction) {
+func fromCombinedAst(cf *SolcCombinedFile) (result []types.Function) {
 	// for _, entry := range cf.Sources {
 	for _, node := range cf.AST.Nodes {
 		result = append(result, visitNodes(&node)...)
@@ -65,33 +65,33 @@ func fromCombinedAst(cf *SolcCombinedFile) (result []types.SimpleFunction) {
 	return
 }
 
-func visitNodes(node *solcNode) (result []types.SimpleFunction) {
+func visitNodes(node *solcNode) (result []types.Function) {
 	switch node.NodeType {
 	case "FunctionDefinition":
 		fallthrough
 	case "EventDefinition":
 		inputs := make([]string, len(node.Parameters.Parameters))
-		inputParams := make([]types.SimpleParameter, len(node.Parameters.Parameters))
+		inputParams := make([]types.Parameter, len(node.Parameters.Parameters))
 		for index, input := range node.Parameters.Parameters {
 			inputs[index] = input.TypeName.Name
-			inputParams[index] = types.SimpleParameter{
+			inputParams[index] = types.Parameter{
 				ParameterType: input.TypeName.Name,
 				Name:          input.Name,
 				Indexed:       input.Indexed,
 				// TODO: is this correct?
 				InternalType: input.TypeName.Name,
-				// Components    []SimpleParameter `json:"components"`
+				// Components    []Parameter `json:"components"`
 			}
 		}
-		outputParams := make([]types.SimpleParameter, len(node.ReturnParameters.Parameters))
+		outputParams := make([]types.Parameter, len(node.ReturnParameters.Parameters))
 		for index, output := range node.ReturnParameters.Parameters {
-			outputParams[index] = types.SimpleParameter{
+			outputParams[index] = types.Parameter{
 				ParameterType: output.TypeName.Name,
 				Name:          output.Name,
 				Indexed:       output.Indexed,
 				// TODO: is this correct?
 				InternalType: output.TypeName.Name,
-				// Components    []SimpleParameter `json:"components"`
+				// Components    []Parameter `json:"components"`
 			}
 		}
 
@@ -112,7 +112,7 @@ func visitNodes(node *solcNode) (result []types.SimpleFunction) {
 			fnType = "event"
 		}
 
-		result = append(result, types.SimpleFunction{
+		result = append(result, types.Function{
 			Encoding:        base.Bytes2Hex(selector),
 			Signature:       sig,
 			Name:            node.Name,

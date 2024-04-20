@@ -18,7 +18,7 @@ var approvalTopic = base.HexToHash(
 	"0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
 )
 
-func parseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
+func parseTransferEvent(log *types.Log) (function *types.Function) {
 	if len(log.Topics) < 3 || log.Topics[0] != transferTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
@@ -26,11 +26,11 @@ func parseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 		return nil
 	}
 
-	function = &types.SimpleFunction{}
+	function = &types.Function{}
 	function.Name = "Transfer"
 	function.FunctionType = "event"
 	function.Encoding = transferTopic.Hex()
-	function.Inputs = []types.SimpleParameter{
+	function.Inputs = []types.Parameter{
 		{
 			Name:          "_from",
 			ParameterType: "address",
@@ -50,7 +50,7 @@ func parseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 	return
 }
 
-func parseEnsTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
+func parseEnsTransferEvent(log *types.Log) (function *types.Function) {
 	if len(log.Topics) < 2 || log.Topics[0] != ensTransferTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
@@ -58,11 +58,11 @@ func parseEnsTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction
 		return nil
 	}
 
-	function = &types.SimpleFunction{}
+	function = &types.Function{}
 	function.Name = "Transfer"
 	function.FunctionType = "event"
 	function.Encoding = ensTransferTopic.Hex()
-	function.Inputs = []types.SimpleParameter{
+	function.Inputs = []types.Parameter{
 		{
 			Name:          "_node",
 			ParameterType: "bytes32",
@@ -77,7 +77,7 @@ func parseEnsTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction
 	return
 }
 
-func parseApprovalEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
+func parseApprovalEvent(log *types.Log) (function *types.Function) {
 	if len(log.Topics) < 3 || log.Topics[0] != approvalTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
@@ -85,11 +85,11 @@ func parseApprovalEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 		return nil
 	}
 
-	function = &types.SimpleFunction{}
+	function = &types.Function{}
 	function.Name = "Approval"
 	function.FunctionType = "event"
 	function.Encoding = approvalTopic.Hex()
-	function.Inputs = []types.SimpleParameter{
+	function.Inputs = []types.Parameter{
 		{
 			Name:          "_owner",
 			ParameterType: "address",
