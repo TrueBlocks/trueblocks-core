@@ -95,11 +95,11 @@ func (conn *Connection) getLogs(filter types.LogFilter) ([]types.Log, error) {
 				curBlock = bn
 			}
 			txHash := base.HexToHash(rawLog.TransactionHash)
-			simpleLog, _ := rawLog.RawTo(map[string]any{
+			log, _ := rawLog.RawTo(map[string]any{
 				"hash":      txHash,
 				"timestamp": curTs,
 			})
-			ret = append(ret, simpleLog)
+			ret = append(ret, log)
 		}
 		return ret, nil
 	}

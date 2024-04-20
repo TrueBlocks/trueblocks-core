@@ -77,7 +77,7 @@ func (p *KeyProvider) TransactionsByAddress(ctx context.Context, query *Query, e
 					errorChan <- err
 					continue
 				}
-				txChan <- *(simpleTransactionToSlurp(tx))
+				txChan <- *(transactionToSlurp(tx))
 			}
 		}
 	}()
@@ -85,7 +85,7 @@ func (p *KeyProvider) TransactionsByAddress(ctx context.Context, query *Query, e
 	return
 }
 
-func simpleTransactionToSlurp(tx *types.Transaction) *types.Slurp {
+func transactionToSlurp(tx *types.Transaction) *types.Slurp {
 	return &types.Slurp{
 		// ArticulatedTx:     tx.ArticulatedTx,
 		BlockHash:    tx.BlockHash,

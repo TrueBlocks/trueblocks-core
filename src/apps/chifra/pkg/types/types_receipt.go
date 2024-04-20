@@ -351,8 +351,8 @@ func (s *Receipt) IsDefault() bool {
 func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 	logs := []Log{}
 	for _, rawLog := range r.Logs {
-		simpleLog, _ := rawLog.RawTo(vals)
-		logs = append(logs, simpleLog)
+		log, _ := rawLog.RawTo(vals)
+		logs = append(logs, log)
 	}
 
 	cumulativeGasUsed, err := hexutil.DecodeUint64(r.CumulativeGasUsed)
