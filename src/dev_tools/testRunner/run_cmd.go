@@ -11,7 +11,9 @@ import (
 
 func (t *TestCase) CmdTest() (string, error) {
 	_, goldFn, envFn, outputFn := t.GetOutputPaths("cmd")
-	tmpFn := goldFn + ".tmp"
+	// tmpFn := goldFn + ".tmp"
+	tmpFn := getTempFilePath(goldFn)
+	// fmt.Println(tmpFn)
 	defer func() {
 		os.Remove(tmpFn)
 	}()
@@ -32,7 +34,7 @@ func (t *TestCase) CmdTest() (string, error) {
 		cmd += t.Route + " "
 	}
 	cmd += t.CmdOptions + " "
-	cmd += ">" + (filepath.Base(tmpFn)) + " "
+	cmd += ">" + tmpFn + " "
 	cmd += "2>&1"
 	utils.System(cmd)
 	contents := file.AsciiFileToString(tmpFn)
