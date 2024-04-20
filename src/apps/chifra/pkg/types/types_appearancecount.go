@@ -25,7 +25,7 @@ type RawAppearanceCount struct {
 	// EXISTING_CODE
 }
 
-type SimpleAppearanceCount struct {
+type AppearanceCount struct {
 	Address  base.Address        `json:"address"`
 	FileSize uint64              `json:"fileSize"`
 	NRecords uint64              `json:"nRecords"`
@@ -34,20 +34,20 @@ type SimpleAppearanceCount struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleAppearanceCount) String() string {
+func (s *AppearanceCount) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleAppearanceCount) Raw() *RawAppearanceCount {
+func (s *AppearanceCount) Raw() *RawAppearanceCount {
 	return s.raw
 }
 
-func (s *SimpleAppearanceCount) SetRaw(raw *RawAppearanceCount) {
+func (s *AppearanceCount) SetRaw(raw *RawAppearanceCount) {
 	s.raw = raw
 }
 
-func (s *SimpleAppearanceCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *AppearanceCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -61,7 +61,7 @@ func (s *SimpleAppearanceCount) Model(chain, format string, verbose bool, extraO
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleAppearanceCount) FinishUnmarshal() {
+func (s *AppearanceCount) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

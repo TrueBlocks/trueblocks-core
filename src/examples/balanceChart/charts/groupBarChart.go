@@ -16,7 +16,7 @@ import (
 )
 
 // GroupedBarChart creates a grouped bar chart from an array of State objects
-func GroupedBarChart(data []types.SimpleState, names []types.SimpleName, title string, filename string) {
+func GroupedBarChart(data []types.State, names []types.Name, title string, filename string) {
 	var err error
 	var p *plot.Plot
 	if p, err = plot.New(); err != nil {
@@ -45,7 +45,7 @@ func GroupedBarChart(data []types.SimpleState, names []types.SimpleName, title s
 	p.Y.Tick.Color = color.Black
 	p.Y.LineStyle.Color = color.Black
 
-	namesMap := make(map[string]types.SimpleName, len(names))
+	namesMap := make(map[string]types.Name, len(names))
 	for _, n := range names {
 		namesMap[small(n.Address)] = n
 	}

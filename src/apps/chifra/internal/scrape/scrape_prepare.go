@@ -46,10 +46,10 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 		return false, err
 	}
 
-	appMap := make(map[string][]types.SimpleAppRecord, len(prefunds))
+	appMap := make(map[string][]types.AppRecord, len(prefunds))
 	for i, prefund := range prefunds {
 		addr := prefund.Address.Hex()
-		appMap[addr] = append(appMap[addr], types.SimpleAppRecord{
+		appMap[addr] = append(appMap[addr], types.AppRecord{
 			BlockNumber:      0,
 			TransactionIndex: uint32(i),
 		})

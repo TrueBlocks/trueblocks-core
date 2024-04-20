@@ -81,9 +81,9 @@ func GetListOptions(args []string) (*ListOptions, error) {
 }
 
 type listGeneric interface {
-	types.SimpleAppearance |
-		types.SimpleAppearanceCount |
-		types.SimpleBounds
+	types.Appearance |
+		types.AppearanceCount |
+		types.Bounds
 }
 
 func queryList[T listGeneric](opts *ListOptions) ([]T, *types.MetaData, error) {
@@ -101,18 +101,18 @@ func queryList[T listGeneric](opts *ListOptions) ([]T, *types.MetaData, error) {
 }
 
 // List implements the chifra list command.
-func (opts *ListOptions) List() ([]types.SimpleAppearance, *types.MetaData, error) {
-	return queryList[types.SimpleAppearance](opts)
+func (opts *ListOptions) List() ([]types.Appearance, *types.MetaData, error) {
+	return queryList[types.Appearance](opts)
 }
 
 // ListCount implements the chifra list --count command.
-func (opts *ListOptions) ListCount() ([]types.SimpleAppearanceCount, *types.MetaData, error) {
-	return queryList[types.SimpleAppearanceCount](opts)
+func (opts *ListOptions) ListCount() ([]types.AppearanceCount, *types.MetaData, error) {
+	return queryList[types.AppearanceCount](opts)
 }
 
 // ListBounds implements the chifra list --bounds command.
-func (opts *ListOptions) ListBounds() ([]types.SimpleBounds, *types.MetaData, error) {
-	return queryList[types.SimpleBounds](opts)
+func (opts *ListOptions) ListBounds() ([]types.Bounds, *types.MetaData, error) {
+	return queryList[types.Bounds](opts)
 }
 
 // No enums

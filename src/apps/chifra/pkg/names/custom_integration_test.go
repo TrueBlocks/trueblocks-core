@@ -37,10 +37,10 @@ func TestCrudIntegration(t *testing.T) {
 		return tempFile
 	}
 	tempFile := loadTestDatabase()
-	loadedCustomNames = map[base.Address]types.SimpleName{}
+	loadedCustomNames = map[base.Address]types.Name{}
 	addrStr := "0x1f9090aae28b8a3dceadf281b0f12828e676c326"
 	addr := base.HexToAddress(addrStr)
-	expected := types.SimpleName{
+	expected := types.Name{
 		Name:    "test name",
 		Address: addr,
 	}
@@ -80,7 +80,7 @@ func TestCrudIntegration(t *testing.T) {
 	}
 
 	// Update
-	updated, err := setIfExists(tempFile, &types.SimpleName{
+	updated, err := setIfExists(tempFile, &types.Name{
 		Name:    "new name",
 		Address: addr,
 	})
@@ -144,7 +144,7 @@ func TestCrudIntegration(t *testing.T) {
 
 	// Check what was written to the file
 	tempFile = loadTestDatabase()
-	testDb, err := unmarshallCustomNames(tempFile, nil, Parts(Custom), &map[base.Address]types.SimpleName{})
+	testDb, err := unmarshallCustomNames(tempFile, nil, Parts(Custom), &map[base.Address]types.Name{})
 	if err != nil && !errors.Is(err, io.EOF) {
 		t.Fatal("remove: unmarshallCustomNames:", err)
 	}
@@ -153,7 +153,7 @@ func TestCrudIntegration(t *testing.T) {
 	}
 }
 
-func setIfExists(output *os.File, name *types.SimpleName) (result *types.SimpleName, err error) {
+func setIfExists(output *os.File, name *types.Name) (result *types.Name, err error) {
 	if _, ok := loadedCustomNames[name.Address]; !ok {
 		return nil, fmt.Errorf("no custom name for address %s", name.Address.Hex())
 	}
@@ -165,7 +165,7 @@ func setIfExists(output *os.File, name *types.SimpleName) (result *types.SimpleN
 	return name, writeCustomNames(output)
 }
 
-func removeIfExists(output *os.File, address base.Address) (name *types.SimpleName, err error) {
+func removeIfExists(output *os.File, address base.Address) (name *types.Name, err error) {
 	found, ok := loadedCustomNames[address]
 	if !ok {
 		return nil, fmt.Errorf("no custom name for address %s", address.Hex())

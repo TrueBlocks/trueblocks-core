@@ -26,7 +26,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, opts.getCacheType()); err != nil {
 			errorChan <- err
 		} else {
-			s := types.SimpleMessage{
+			s := types.Message{
 				Msg: msg,
 			}
 			modelChan <- &s

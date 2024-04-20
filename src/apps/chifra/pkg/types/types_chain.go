@@ -25,7 +25,7 @@ type RawChain struct {
 	// EXISTING_CODE
 }
 
-type SimpleChain struct {
+type Chain struct {
 	Chain          string    `json:"chain"`
 	ChainId        uint64    `json:"chainId"`
 	IpfsGateway    string    `json:"ipfsGateway"`
@@ -38,20 +38,20 @@ type SimpleChain struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleChain) String() string {
+func (s *Chain) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleChain) Raw() *RawChain {
+func (s *Chain) Raw() *RawChain {
 	return s.raw
 }
 
-func (s *SimpleChain) SetRaw(raw *RawChain) {
+func (s *Chain) SetRaw(raw *RawChain) {
 	s.raw = raw
 }
 
-func (s *SimpleChain) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Chain) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -83,7 +83,7 @@ func (s *SimpleChain) Model(chain, format string, verbose bool, extraOptions map
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleChain) FinishUnmarshal() {
+func (s *Chain) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

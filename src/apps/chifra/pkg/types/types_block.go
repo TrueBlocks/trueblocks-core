@@ -51,38 +51,38 @@ type RawBlock struct {
 	// EXISTING_CODE
 }
 
-type SimpleBlock[Tx string | SimpleTransaction] struct {
-	BaseFeePerGas base.Wei           `json:"baseFeePerGas"`
-	BlockNumber   base.Blknum        `json:"blockNumber"`
-	Difficulty    uint64             `json:"difficulty"`
-	GasLimit      base.Gas           `json:"gasLimit"`
-	GasUsed       base.Gas           `json:"gasUsed"`
-	Hash          base.Hash          `json:"hash"`
-	Miner         base.Address       `json:"miner"`
-	ParentHash    base.Hash          `json:"parentHash"`
-	Timestamp     base.Timestamp     `json:"timestamp"`
-	Transactions  []Tx               `json:"transactions"`
-	Uncles        []base.Hash        `json:"uncles,omitempty"`
-	Withdrawals   []SimpleWithdrawal `json:"withdrawals,omitempty"`
-	raw           *RawBlock          `json:"-"`
+type Block[Tx string | Transaction] struct {
+	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
+	BlockNumber   base.Blknum    `json:"blockNumber"`
+	Difficulty    uint64         `json:"difficulty"`
+	GasLimit      base.Gas       `json:"gasLimit"`
+	GasUsed       base.Gas       `json:"gasUsed"`
+	Hash          base.Hash      `json:"hash"`
+	Miner         base.Address   `json:"miner"`
+	ParentHash    base.Hash      `json:"parentHash"`
+	Timestamp     base.Timestamp `json:"timestamp"`
+	Transactions  []Tx           `json:"transactions"`
+	Uncles        []base.Hash    `json:"uncles,omitempty"`
+	Withdrawals   []Withdrawal   `json:"withdrawals,omitempty"`
+	raw           *RawBlock      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleBlock[Tx]) String() string {
+func (s *Block[Tx]) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleBlock[Tx]) Raw() *RawBlock {
+func (s *Block[Tx]) Raw() *RawBlock {
 	return s.raw
 }
 
-func (s *SimpleBlock[Tx]) SetRaw(raw *RawBlock) {
+func (s *Block[Tx]) SetRaw(raw *RawBlock) {
 	s.raw = raw
 }
 
-func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Block[Tx]) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -91,7 +91,7 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 		txHashes := make([]string, 0, len(s.Transactions))
 		// Check what type Tx is
 		switch txs := any(s.Transactions).(type) {
-		case []SimpleTransaction:
+		case []Transaction:
 			for _, tx := range txs {
 				txHashes = append(txHashes, tx.Hash.String())
 			}
@@ -171,7 +171,7 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 		} else {
 			// If we wanted just transactions' hashes, we would return earlier. So here we know that we
 			// have transactions as objects and want to load models for them to be able to display them
-			txs, ok := any(s.Transactions).([]SimpleTransaction)
+			txs, ok := any(s.Transactions).([]Transaction)
 			if ok {
 				items := make([]map[string]interface{}, 0, len(txs))
 				for _, txObject := range txs {
@@ -196,7 +196,7 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 				model["withdrawals"] = withs
 				order = append(order, "withdrawals")
 			} else {
-				model["withdrawals"] = []SimpleWithdrawal{}
+				model["withdrawals"] = []Withdrawal{}
 			}
 		}
 	} else {
@@ -217,19 +217,19 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 	}
 }
 
-func (s *SimpleBlock[Tx]) Date() string {
+func (s *Block[Tx]) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-func (s *SimpleBlock[Tx]) CacheName() string {
+func (s *Block[Tx]) CacheName() string {
 	return "Block"
 }
 
-func (s *SimpleBlock[Tx]) CacheId() string {
+func (s *Block[Tx]) CacheId() string {
 	return fmt.Sprintf("%09d", s.BlockNumber)
 }
 
-func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
+func (s *Block[Tx]) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -243,7 +243,7 @@ func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
 	return
 }
 
-func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
+func (s *Block[Tx]) MarshalCache(writer io.Writer) (err error) {
 	// BaseFeePerGas
 	if err = cache.WriteValue(writer, &s.BaseFeePerGas); err != nil {
 		return err
@@ -294,7 +294,7 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 	switch v := any(s.Transactions).(type) {
 	case []string:
 		txHashes = v
-	case []SimpleTransaction:
+	case []Transaction:
 		txHashes = make([]string, 0, len(s.Transactions))
 		for _, tx := range v {
 			txHashes = append(txHashes, tx.Hash.Hex())
@@ -321,7 +321,7 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Block[string]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// BaseFeePerGas
 	if err = cache.ReadValue(reader, &s.BaseFeePerGas, version); err != nil {
 		return err
@@ -380,7 +380,7 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 	}
 
 	// Withdrawals
-	s.Withdrawals = make([]SimpleWithdrawal, 0)
+	s.Withdrawals = make([]Withdrawal, 0)
 	if err = cache.ReadValue(reader, &s.Withdrawals, version); err != nil {
 		return err
 	}
@@ -391,7 +391,7 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleBlock[Tx]) FinishUnmarshal() {
+func (s *Block[Tx]) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -400,7 +400,7 @@ func (s *SimpleBlock[Tx]) FinishUnmarshal() {
 //
 
 // Dup duplicates all fields but Transactions into target
-func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
+func (s *Block[string]) Dup(target *Block[Transaction]) {
 	target.BaseFeePerGas = s.BaseFeePerGas
 	target.BlockNumber = s.BlockNumber
 	target.Difficulty = s.Difficulty

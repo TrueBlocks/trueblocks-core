@@ -57,7 +57,7 @@ func (opts *WhenOptions) HandleShow() error {
 
 				nb, _ := tslib.FromBnToNamedBlock(chain, block.BlockNumber)
 				if nb == nil {
-					modelChan <- &types.SimpleNamedBlock{
+					modelChan <- &types.NamedBlock{
 						BlockNumber: block.BlockNumber,
 						Timestamp:   block.Timestamp,
 					}

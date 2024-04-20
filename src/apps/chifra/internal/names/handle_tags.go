@@ -28,7 +28,7 @@ func (opts *NamesOptions) HandleTags() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
 		for _, name := range namesArray {
 			if len(name.Tags) > 0 && !tagsMap[name.Tags] {
-				s := types.SimpleName{
+				s := types.Name{
 					Tags: name.Tags,
 				}
 				modelChan <- &s

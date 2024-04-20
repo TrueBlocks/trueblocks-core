@@ -19,10 +19,10 @@ func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
 		return false, nil
 
 	} else {
-		var keep []types.SimpleAppRecord
+		var keep []types.AppRecord
 		for _, app := range apps {
 			if app.BlockNumber <= num {
-				keep = append(keep, types.SimpleAppRecord{
+				keep = append(keep, types.AppRecord{
 					BlockNumber:      app.BlockNumber,
 					TransactionIndex: app.TransactionIndex,
 				})

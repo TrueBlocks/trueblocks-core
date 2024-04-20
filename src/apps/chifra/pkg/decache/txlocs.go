@@ -18,12 +18,12 @@ func LocationsFromTransactionIds(conn *rpc.Connection, ids []identifiers.Identif
 			continue
 		}
 		for _, app := range txIds {
-			tx := &types.SimpleTransaction{
+			tx := &types.Transaction{
 				BlockNumber:      uint64(app.BlockNumber),
 				TransactionIndex: uint64(app.TransactionIndex),
 			}
 			locations = append(locations, tx)
-			locations = append(locations, &types.SimpleTraceGroup{
+			locations = append(locations, &types.TraceGroup{
 				BlockNumber:      tx.BlockNumber,
 				TransactionIndex: tx.TransactionIndex,
 			})

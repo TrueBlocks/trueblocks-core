@@ -28,10 +28,10 @@ func (opts *StatusOptions) HandleCaches() error {
 		filenameChan := make(chan walk.CacheFileInfo)
 		var nRoutines int
 
-		counterMap := make(map[walk.CacheType]*types.SimpleCacheItem)
+		counterMap := make(map[walk.CacheType]*types.CacheItem)
 		nRoutines = len(opts.ModeTypes)
 		for _, mT := range opts.ModeTypes {
-			counterMap[mT] = &types.SimpleCacheItem{
+			counterMap[mT] = &types.CacheItem{
 				CacheItemType: walk.CacheName(mT),
 				Items:         make([]any, 0),
 				LastCached:    now.Format("2006-01-02 15:04:05"),
@@ -112,7 +112,7 @@ func (opts *StatusOptions) HandleCaches() error {
 			}
 		}
 
-		status, err := opts.GetSimpleStatus(false)
+		status, err := opts.GetStatus(false)
 		if err != nil {
 			errorChan <- err
 			return

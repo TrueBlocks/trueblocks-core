@@ -88,10 +88,10 @@ func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 }
 
 type transactionsGeneric interface {
-	types.SimpleTransaction |
-		types.SimpleTrace |
-		types.SimpleAppearance |
-		types.SimpleLog
+	types.Transaction |
+		types.Trace |
+		types.Appearance |
+		types.Log
 }
 
 func queryTransactions[T transactionsGeneric](opts *TransactionsOptions) ([]T, *types.MetaData, error) {
@@ -109,23 +109,23 @@ func queryTransactions[T transactionsGeneric](opts *TransactionsOptions) ([]T, *
 }
 
 // Transactions implements the chifra transactions command.
-func (opts *TransactionsOptions) Transactions() ([]types.SimpleTransaction, *types.MetaData, error) {
-	return queryTransactions[types.SimpleTransaction](opts)
+func (opts *TransactionsOptions) Transactions() ([]types.Transaction, *types.MetaData, error) {
+	return queryTransactions[types.Transaction](opts)
 }
 
 // TransactionsTraces implements the chifra transactions --traces command.
-func (opts *TransactionsOptions) TransactionsTraces() ([]types.SimpleTrace, *types.MetaData, error) {
-	return queryTransactions[types.SimpleTrace](opts)
+func (opts *TransactionsOptions) TransactionsTraces() ([]types.Trace, *types.MetaData, error) {
+	return queryTransactions[types.Trace](opts)
 }
 
 // TransactionsUniq implements the chifra transactions --uniq command.
-func (opts *TransactionsOptions) TransactionsUniq() ([]types.SimpleAppearance, *types.MetaData, error) {
-	return queryTransactions[types.SimpleAppearance](opts)
+func (opts *TransactionsOptions) TransactionsUniq() ([]types.Appearance, *types.MetaData, error) {
+	return queryTransactions[types.Appearance](opts)
 }
 
 // TransactionsLogs implements the chifra transactions --logs command.
-func (opts *TransactionsOptions) TransactionsLogs() ([]types.SimpleLog, *types.MetaData, error) {
-	return queryTransactions[types.SimpleLog](opts)
+func (opts *TransactionsOptions) TransactionsLogs() ([]types.Log, *types.MetaData, error) {
+	return queryTransactions[types.Log](opts)
 }
 
 type TransactionsFlow int

@@ -13,9 +13,9 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64) (tx *types.SimpleTransaction, err error) {
+func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64) (tx *types.Transaction, err error) {
 	if conn.StoreReadable() {
-		tx = &types.SimpleTransaction{
+		tx = &types.Transaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
@@ -37,7 +37,7 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64)
 		return
 	}
 
-	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
+	tx = types.NewTransaction(rawTx, &receipt, blockTs)
 	if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
 		_ = conn.Store.Write(tx, nil)
 	}
@@ -47,7 +47,7 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64)
 
 // TODO: See #3361
 
-func (conn *Connection) GetTransactionByAppearance(app *types.SimpleAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
+func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchTraces bool) (tx *types.Transaction, err error) {
 	raw := types.RawAppearance{
 		BlockNumber:      app.BlockNumber,
 		TransactionIndex: app.TransactionIndex,
@@ -60,7 +60,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.SimpleAppearance, 
 	txid := uint64(raw.TransactionIndex)
 
 	if conn.StoreReadable() {
-		tx = &types.SimpleTransaction{
+		tx = &types.Transaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
@@ -91,8 +91,8 @@ func (conn *Connection) GetTransactionByAppearance(app *types.SimpleAppearance, 
 		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.UncleReward, &raw); err != nil {
 			return nil, err
 		}
-	} else if txid == types.Withdrawal {
-		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.Withdrawal, &raw); err != nil {
+	} else if txid == types.WithdrawalAmt {
+		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.WithdrawalAmt, &raw); err != nil {
 			return nil, err
 		}
 	}
@@ -116,7 +116,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.SimpleAppearance, 
 		return
 	}
 
-	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
+	tx = types.NewTransaction(rawTx, &receipt, blockTs)
 
 	if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
 		_ = conn.Store.Write(tx, nil)
@@ -197,7 +197,7 @@ func (conn *Connection) GetTransactionHashByHashAndID(hash string, txId uint64) 
 	}
 }
 
-func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
+func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx *types.Transaction, err error) {
 	// TODO: performance - This loads and then drops the file every time it's called. Quite slow.
 	// TODO: performance - in the old C++ we stored these values in a pre fundAddrMap so that given a txid in block zero
 	// TODO: performance - we knew which address was granted allocation at that transaction.
@@ -216,7 +216,7 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 
 		entry := (*prefundMap)[base.HexToAddress(raw.Address)]
 		if entry.Address.Hex() == raw.Address {
-			ret := types.SimpleTransaction{
+			ret := types.Transaction{
 				BlockHash:        blockHash,
 				BlockNumber:      uint64(raw.BlockNumber),
 				TransactionIndex: uint64(raw.TransactionIndex),
@@ -233,12 +233,12 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 
 // TODO: This is not cross-chain correct nor does it work properly for post-merge
 
-func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *types.RawAppearance) (*types.SimpleTransaction, error) {
+func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *types.RawAppearance) (*types.Transaction, error) {
 	if block, err := conn.GetBlockBodyByNumber(uint64(raw.BlockNumber)); err != nil {
 		return nil, err
 	} else {
-		if rt == types.Withdrawal {
-			tx := &types.SimpleTransaction{
+		if rt == types.WithdrawalAmt {
+			tx := &types.Transaction{
 				BlockNumber:      uint64(raw.BlockNumber),
 				TransactionIndex: uint64(raw.TransactionIndex),
 				Timestamp:        block.Timestamp,
@@ -309,7 +309,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 			}
 
 			rewards, total := types.NewReward(blockReward, nephewReward, feeReward, uncleReward)
-			tx := &types.SimpleTransaction{
+			tx := &types.Transaction{
 				BlockNumber:      uint64(raw.BlockNumber),
 				TransactionIndex: uint64(raw.TransactionIndex),
 				BlockHash:        block.Hash,

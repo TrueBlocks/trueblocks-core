@@ -35,7 +35,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 		return err
 	}
 
-	prev := types.SimpleNamedBlock{
+	prev := types.NamedBlock{
 		BlockNumber: utils.NOPOS,
 		Timestamp:   utils.NOPOSI,
 	}
@@ -59,7 +59,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	return nil
 }
 
-func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.SimpleNamedBlock, bn uint64) error {
+func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.NamedBlock, bn uint64) error {
 	chain := opts.Globals.Chain
 
 	// The i'th item in the timestamp array on disc
@@ -69,12 +69,12 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 	}
 
 	// This just simplifies the code below by removing the need to type cast
-	onDisc := types.SimpleNamedBlock{
+	onDisc := types.NamedBlock{
 		BlockNumber: uint64(itemOnDisc.Bn),
 		Timestamp:   base.Timestamp(itemOnDisc.Ts),
 	}
 
-	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: onDisc.Timestamp}
+	expected := types.Block[string]{BlockNumber: bn, Timestamp: onDisc.Timestamp}
 	if opts.Deep {
 		// If we're going deep, we need to query the node
 		expected, _ = opts.Conn.GetBlockHeaderByNumber(bn)

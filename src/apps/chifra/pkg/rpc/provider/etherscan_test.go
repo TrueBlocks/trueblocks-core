@@ -110,9 +110,9 @@ func mockEtherscanServer(t *testing.T) (ts *httptest.Server) {
 	return ts
 }
 
-func mockConvertSlurpType(t *testing.T) func(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
+func mockConvertSlurpType(t *testing.T) func(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
 	t.Helper()
-	return func(address string, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
+	return func(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
 		bn, err := strconv.ParseUint(rawTx.BlockNumber, 10, 64)
 		if err != nil {
 			t.Fatal(err)
@@ -121,7 +121,7 @@ func mockConvertSlurpType(t *testing.T) func(address string, requestType string,
 		if err != nil {
 			t.Fatal(err)
 		}
-		return types.SimpleSlurp{
+		return types.Slurp{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}, nil
@@ -307,7 +307,7 @@ func TestEtherscanProvider_Count(t *testing.T) {
 
 	results := provider.Count(ctx, query, errors)
 
-	count := make([]types.SimpleMonitor, 0, 1)
+	count := make([]types.Monitor, 0, 1)
 LOOP:
 	for {
 		select {

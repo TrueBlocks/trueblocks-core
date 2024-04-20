@@ -250,8 +250,8 @@ func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 type scrapedData struct {
 	bn          base.Blknum
 	ts          tslib.TimestampRecord
-	traces      []types.SimpleTrace
-	receipts    []types.SimpleReceipt
-	withdrawals []types.SimpleWithdrawal
+	traces      []types.Trace
+	receipts    []types.Receipt
+	withdrawals []types.Withdrawal
 	miner       base.Address
 }

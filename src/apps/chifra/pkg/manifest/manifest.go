@@ -24,11 +24,11 @@ type Manifest struct {
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
 	Config config.ScrapeSettings `json:"config"`
 
-	// A list of pinned chunks (see types.SimpleChunkRecord) detailing the location of all chunks in the index and associated bloom filters
-	Chunks []types.SimpleChunkRecord `json:"chunks"`
+	// A list of pinned chunks (see types.ChunkRecord) detailing the location of all chunks in the index and associated bloom filters
+	Chunks []types.ChunkRecord `json:"chunks"`
 
 	// A map to make set membership easier
-	ChunkMap map[string]*types.SimpleChunkRecord `json:"-"`
+	ChunkMap map[string]*types.ChunkRecord `json:"-"`
 }
 
 type Source int

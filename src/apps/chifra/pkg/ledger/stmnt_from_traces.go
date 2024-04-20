@@ -7,8 +7,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.SimpleTransaction, s *types.SimpleStatement) ([]types.SimpleStatement, error) {
-	statements := make([]types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
+func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
+	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
 	ret := *s
 	// clear all the internal accounting values. Keeps AmountIn, AmountOut and GasOut because

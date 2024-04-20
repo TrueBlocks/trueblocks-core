@@ -24,7 +24,7 @@ type RawSlurpCount struct {
 	// EXISTING_CODE
 }
 
-type SimpleSlurpCount struct {
+type SlurpCount struct {
 	Address base.Address   `json:"address,omitempty"`
 	Count   uint64         `json:"count,omitempty"`
 	raw     *RawSlurpCount `json:"-"`
@@ -32,20 +32,20 @@ type SimpleSlurpCount struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleSlurpCount) String() string {
+func (s *SlurpCount) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleSlurpCount) Raw() *RawSlurpCount {
+func (s *SlurpCount) Raw() *RawSlurpCount {
 	return s.raw
 }
 
-func (s *SimpleSlurpCount) SetRaw(raw *RawSlurpCount) {
+func (s *SlurpCount) SetRaw(raw *RawSlurpCount) {
 	s.raw = raw
 }
 
-func (s *SimpleSlurpCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *SlurpCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -59,7 +59,7 @@ func (s *SimpleSlurpCount) Model(chain, format string, verbose bool, extraOption
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleSlurpCount) FinishUnmarshal() {
+func (s *SlurpCount) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

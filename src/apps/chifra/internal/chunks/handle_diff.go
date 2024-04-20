@@ -103,9 +103,9 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 		return false, err
 	}
 
-	apps := make([]types.SimpleAppearance, 0, 500000)
+	apps := make([]types.Appearance, 0, 500000)
 	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-		s := types.SimpleAppearanceTable{}
+		s := types.AppearanceTable{}
 		if err := binary.Read(indexChunk.File, binary.LittleEndian, &s.AddressRecord); err != nil {
 			return false, err
 		}
@@ -114,7 +114,7 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 		}
 		s.AddressRecord.Count = uint32(len(s.Appearances))
 		for _, app := range s.Appearances {
-			apps = append(apps, types.SimpleAppearance{
+			apps = append(apps, types.Appearance{
 				Address:          s.AddressRecord.Address,
 				BlockNumber:      app.BlockNumber,
 				TransactionIndex: app.TransactionIndex,
@@ -132,8 +132,8 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 		return apps[i].BlockNumber < apps[j].BlockNumber
 	})
 
-	filtered := func(app types.SimpleAppearance) bool {
-		return uint64(app.TransactionIndex) == types.Withdrawal
+	filtered := func(app types.Appearance) bool {
+		return uint64(app.TransactionIndex) == types.WithdrawalAmt
 		// return false
 	}
 

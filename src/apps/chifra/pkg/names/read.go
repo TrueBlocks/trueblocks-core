@@ -5,7 +5,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func ReadName(dbType DatabaseType, chain string, address base.Address) (name *types.SimpleName) {
+func ReadName(dbType DatabaseType, chain string, address base.Address) (name *types.Name) {
 	switch dbType {
 	case DatabaseCustom:
 		return customReadName(address)
@@ -16,7 +16,7 @@ func ReadName(dbType DatabaseType, chain string, address base.Address) (name *ty
 	}
 }
 
-func customReadName(address base.Address) (name *types.SimpleName) {
+func customReadName(address base.Address) (name *types.Name) {
 	found, ok := loadedCustomNames[address]
 	if ok {
 		return &found
@@ -24,7 +24,7 @@ func customReadName(address base.Address) (name *types.SimpleName) {
 	return nil
 }
 
-func regularReadName(address base.Address) (name *types.SimpleName) {
+func regularReadName(address base.Address) (name *types.Name) {
 	found, ok := loadedRegularNames[address]
 	if ok {
 		return &found

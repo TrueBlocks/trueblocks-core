@@ -67,7 +67,7 @@ func fastWay(conn *rpc.Connection) {
 		fmt.Println(err)
 	}
 
-	if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleBlock[string]](apps, false); err != nil {
+	if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Block[string]](apps, false); err != nil {
 		fmt.Println(err)
 
 	} else if cnt != 0 {
@@ -84,12 +84,12 @@ func fastWay(conn *rpc.Connection) {
 
 		for _, thisMap := range sliceOfMaps {
 			for app := range thisMap {
-				thisMap[app] = new(types.SimpleBlock[string])
+				thisMap[app] = new(types.Block[string])
 			}
 
-			var firstBlock types.SimpleBlock[string]
+			var firstBlock types.Block[string]
 			firstBlock.BlockNumber = utils.NOPOS
-			iterateFunc := func(key types.SimpleAppearance, value *types.SimpleBlock[string]) error {
+			iterateFunc := func(key types.Appearance, value *types.Block[string]) error {
 				bn := uint64(key.BlockNumber)
 				if theBlock, err := conn.GetBlockHeaderByNumber(base.Blknum(key.BlockNumber)); err != nil {
 					return err

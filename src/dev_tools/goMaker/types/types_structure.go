@@ -98,7 +98,7 @@ func (s *Structure) GroupName() string {
 func (s *Structure) ModelName(which string) string {
 	if s.GoModel != "" {
 		if which == "simple" {
-			return strings.Replace(s.GoModel, "Block[Tx]", "Block[Tx string | SimpleTransaction]", -1)
+			return strings.Replace(s.GoModel, "Block[Tx]", "Block[Tx string | Transaction]", -1)
 		} else if which == "cache" {
 			return strings.Replace(s.GoModel, "Block[Tx]", "Block[string]", -1)
 		}

@@ -43,7 +43,7 @@ func (opts *TracesOptions) validateTraces() error {
 		if len(opts.Filter) > 0 {
 			// TODO: Check validity of the filter string
 			if opts.Globals.TestMode {
-				v := types.SimpleTraceFilter{}
+				v := types.TraceFilter{}
 				logger.Info(v.ParseBangString(chain, opts.Filter))
 			}
 		}

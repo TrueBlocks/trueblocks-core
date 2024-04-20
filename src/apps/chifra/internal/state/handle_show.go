@@ -60,7 +60,7 @@ func (opts *StateOptions) HandleShow() error {
 
 				for _, bn := range blockNums {
 					if none {
-						modelChan <- &types.SimpleState{
+						modelChan <- &types.State{
 							Address:     address,
 							BlockNumber: bn,
 						}

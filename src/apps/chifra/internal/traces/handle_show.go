@@ -31,7 +31,7 @@ func (opts *TracesOptions) HandleShow() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Transaction](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -47,10 +47,10 @@ func (opts *TracesOptions) HandleShow() error {
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.SimpleTransaction)
+					thisMap[app] = new(types.Transaction)
 				}
 
-				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+				iterFunc := func(app types.Appearance, value *types.Transaction) error {
 					if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
 						delete(thisMap, app)
 						return fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
@@ -84,7 +84,7 @@ func (opts *TracesOptions) HandleShow() error {
 					}
 				}
 
-				items := make([]types.SimpleTrace, 0, len(thisMap))
+				items := make([]types.Trace, 0, len(thisMap))
 				for _, receipt := range thisMap {
 					items = append(items, receipt.Traces...)
 				}

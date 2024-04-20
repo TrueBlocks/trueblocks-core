@@ -35,7 +35,7 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
 		fetchData := func(modelChan chan types.Modeler[types.RawChunkRecord], errorChan chan error) {
 			for _, chunk := range man.Chunks {
-				s := types.SimpleChunkRecord{
+				s := types.ChunkRecord{
 					Range:     chunk.Range,
 					BloomHash: chunk.BloomHash,
 					BloomSize: chunk.BloomSize,
@@ -50,13 +50,13 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 
 	} else {
 		fetchData := func(modelChan chan types.Modeler[types.RawManifest], errorChan chan error) {
-			s := types.SimpleManifest{
+			s := types.Manifest{
 				Version:       man.Version,
 				Chain:         man.Chain,
 				Specification: man.Specification,
 			}
 			for _, chunk := range man.Chunks {
-				s.Chunks = append(s.Chunks, types.SimpleChunkRecord{
+				s.Chunks = append(s.Chunks, types.ChunkRecord{
 					Range:     chunk.Range,
 					BloomHash: chunk.BloomHash,
 					BloomSize: chunk.BloomSize,

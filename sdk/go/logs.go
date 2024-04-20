@@ -72,7 +72,7 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 }
 
 type logsGeneric interface {
-	types.SimpleLog
+	types.Log
 }
 
 func queryLogs[T logsGeneric](opts *LogsOptions) ([]T, *types.MetaData, error) {
@@ -90,8 +90,8 @@ func queryLogs[T logsGeneric](opts *LogsOptions) ([]T, *types.MetaData, error) {
 }
 
 // Logs implements the chifra logs command.
-func (opts *LogsOptions) Logs() ([]types.SimpleLog, *types.MetaData, error) {
-	return queryLogs[types.SimpleLog](opts)
+func (opts *LogsOptions) Logs() ([]types.Log, *types.MetaData, error) {
+	return queryLogs[types.Log](opts)
 }
 
 // No enums

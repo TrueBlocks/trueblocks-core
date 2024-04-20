@@ -38,7 +38,7 @@ type jobResult struct {
 	rng      string
 	fileSize int64
 	contents io.Reader
-	theChunk *types.SimpleChunkRecord
+	theChunk *types.ChunkRecord
 }
 
 type progressChan chan<- *progress.ProgressMsg
@@ -77,7 +77,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 	progressChannel := workerArgs.progressChannel
 
 	return func(param interface{}) {
-		chunk := param.(types.SimpleChunkRecord)
+		chunk := param.(types.ChunkRecord)
 
 		defer workerArgs.downloadWg.Done()
 
@@ -230,7 +230,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType wal
 
 // DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
 // for each chunk in chunks. ProgressMsg is reported to progressChannel.
-func DownloadChunks(chain string, chunksToDownload []types.SimpleChunkRecord, chunkType walk.CacheType, poolSize int, progressChannel progressChan) {
+func DownloadChunks(chain string, chunksToDownload []types.ChunkRecord, chunkType walk.CacheType, poolSize int, progressChannel progressChan) {
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
 	defer func() {

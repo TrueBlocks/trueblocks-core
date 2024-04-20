@@ -7,7 +7,7 @@ import (
 )
 
 // trialBalance returns true of the reconciliation balances, false otherwise. It also prints the trial balance to the console.
-func (l *Ledger) trialBalance(reason string, s *types.SimpleStatement) bool {
+func (l *Ledger) trialBalance(reason string, s *types.Statement) bool {
 	key := l.ctxKey(s.BlockNumber, s.TransactionIndex)
 	ctx := l.Contexts[key]
 

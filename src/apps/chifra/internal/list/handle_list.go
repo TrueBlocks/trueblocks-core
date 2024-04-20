@@ -31,7 +31,7 @@ func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		currentBn := uint32(0)
 		currentTs := base.Timestamp(0)
-		visitAppearance := func(app *types.SimpleAppearance) error {
+		visitAppearance := func(app *types.Appearance) error {
 			if opts.Globals.Verbose {
 				if app.BlockNumber == 0 || app.BlockNumber != currentBn {
 					currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))

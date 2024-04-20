@@ -30,7 +30,7 @@ const tokenStateBalanceOf tokenStateSelector = "0x70a08231"
 
 // GetTokenState returns token state for given block. `hexBlockNo` can be "latest" or "" for the latest
 // block or decimal number or hex number with 0x prefix.
-func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo string) (token *types.SimpleToken, err error) {
+func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo string) (token *types.Token, err error) {
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
 		hexBlockNo = fmt.Sprintf("0x%x", utils.MustParseUint(hexBlockNo))
 	}
@@ -132,7 +132,7 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo stri
 		tokenType = types.TokenErc721
 	}
 
-	token = &types.SimpleToken{
+	token = &types.Token{
 		Address:     tokenAddress,
 		Decimals:    decimals,
 		Name:        name,

@@ -70,7 +70,7 @@ func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 }
 
 type receiptsGeneric interface {
-	types.SimpleReceipt
+	types.Receipt
 }
 
 func queryReceipts[T receiptsGeneric](opts *ReceiptsOptions) ([]T, *types.MetaData, error) {
@@ -88,8 +88,8 @@ func queryReceipts[T receiptsGeneric](opts *ReceiptsOptions) ([]T, *types.MetaDa
 }
 
 // Receipts implements the chifra receipts command.
-func (opts *ReceiptsOptions) Receipts() ([]types.SimpleReceipt, *types.MetaData, error) {
-	return queryReceipts[types.SimpleReceipt](opts)
+func (opts *ReceiptsOptions) Receipts() ([]types.Receipt, *types.MetaData, error) {
+	return queryReceipts[types.Receipt](opts)
 }
 
 // No enums

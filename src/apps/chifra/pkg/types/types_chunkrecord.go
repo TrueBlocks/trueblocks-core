@@ -27,7 +27,7 @@ type RawChunkRecord struct {
 	// EXISTING_CODE
 }
 
-type SimpleChunkRecord struct {
+type ChunkRecord struct {
 	BloomHash base.IpfsHash   `json:"bloomHash"`
 	BloomSize int64           `json:"bloomSize"`
 	IndexHash base.IpfsHash   `json:"indexHash"`
@@ -38,20 +38,20 @@ type SimpleChunkRecord struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleChunkRecord) String() string {
+func (s *ChunkRecord) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleChunkRecord) Raw() *RawChunkRecord {
+func (s *ChunkRecord) Raw() *RawChunkRecord {
 	return s.raw
 }
 
-func (s *SimpleChunkRecord) SetRaw(raw *RawChunkRecord) {
+func (s *ChunkRecord) SetRaw(raw *RawChunkRecord) {
 	s.raw = raw
 }
 
-func (s *SimpleChunkRecord) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -79,7 +79,7 @@ func (s *SimpleChunkRecord) Model(chain, format string, verbose bool, extraOptio
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleChunkRecord) FinishUnmarshal() {
+func (s *ChunkRecord) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

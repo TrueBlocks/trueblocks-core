@@ -378,13 +378,13 @@ const (
 	endOfTxId           = 42 + 1 + 9 + 1 + 5
 )
 
-func getAppearances(addrStr string, lines []string, lastVisited uint32, found int) *[]types.SimpleAppRecord {
-	results := make([]types.SimpleAppRecord, 0, 1000)
+func getAppearances(addrStr string, lines []string, lastVisited uint32, found int) *[]types.AppRecord {
+	results := make([]types.AppRecord, 0, 1000)
 	for idx := found; idx < len(lines); idx++ {
 		if !strings.HasPrefix(lines[idx], addrStr) {
 			break
 		}
-		r := types.SimpleAppRecord{
+		r := types.AppRecord{
 			BlockNumber:      uint32(globals.ToUint64(lines[idx][startOfBlockNum:endOfBlockNum])),
 			TransactionIndex: uint32(globals.ToUint64(lines[idx][startOfTxId:endOfTxId])),
 		}

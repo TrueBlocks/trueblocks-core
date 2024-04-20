@@ -50,7 +50,7 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 				continue
 
 			} else {
-				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, filter.Reversed); err != nil {
+				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					cancel()
 
@@ -69,10 +69,10 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 						}
 
 						for app := range thisMap {
-							thisMap[app] = new(types.SimpleTransaction)
+							thisMap[app] = new(types.Transaction)
 						}
 
-						iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+						iterFunc := func(app types.Appearance, value *types.Transaction) error {
 							if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
 								return err
 							} else {
@@ -97,12 +97,12 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 							return
 						}
 
-						items := make([]*types.SimpleReceipt, 0, len(thisMap))
+						items := make([]*types.Receipt, 0, len(thisMap))
 						for _, tx := range thisMap {
 							if tx.Receipt == nil {
 								continue
 							}
-							filteredLogs := make([]types.SimpleLog, 0, len(tx.Receipt.Logs))
+							filteredLogs := make([]types.Log, 0, len(tx.Receipt.Logs))
 							for _, log := range tx.Receipt.Logs {
 								if filter.ApplyLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
 									if opts.Articulate {

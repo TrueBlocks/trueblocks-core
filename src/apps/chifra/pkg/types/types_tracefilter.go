@@ -31,7 +31,7 @@ type RawTraceFilter struct {
 	// EXISTING_CODE
 }
 
-type SimpleTraceFilter struct {
+type TraceFilter struct {
 	After       uint64          `json:"after,omitempty"`
 	Count       uint64          `json:"count,omitempty"`
 	FromAddress base.Address    `json:"fromAddress,omitempty"`
@@ -43,20 +43,20 @@ type SimpleTraceFilter struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleTraceFilter) String() string {
+func (s *TraceFilter) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleTraceFilter) Raw() *RawTraceFilter {
+func (s *TraceFilter) Raw() *RawTraceFilter {
 	return s.raw
 }
 
-func (s *SimpleTraceFilter) SetRaw(raw *RawTraceFilter) {
+func (s *TraceFilter) SetRaw(raw *RawTraceFilter) {
 	s.raw = raw
 }
 
-func (s *SimpleTraceFilter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *TraceFilter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -87,7 +87,7 @@ func (s *SimpleTraceFilter) Model(chain, format string, verbose bool, extraOptio
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleTraceFilter) FinishUnmarshal() {
+func (s *TraceFilter) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -95,7 +95,7 @@ func (s *SimpleTraceFilter) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleTraceFilter) PassesBasic(trace *SimpleTrace, nTested uint64, nPassed uint64) (bool, string) {
+func (s *TraceFilter) PassesBasic(trace *Trace, nTested uint64, nPassed uint64) (bool, string) {
 	if s.FromBlock != 0 && trace.BlockNumber < s.FromBlock {
 		reason := fmt.Sprintf("block number (%d) less than fromBlock (%d)", trace.BlockNumber, s.FromBlock)
 		return false, reason
@@ -115,7 +115,7 @@ func (s *SimpleTraceFilter) PassesBasic(trace *SimpleTrace, nTested uint64, nPas
 	return true, ""
 }
 
-func (s *SimpleTraceFilter) ParseBangString(chain, filter string) (ret map[string]interface{}, br base.BlockRange) {
+func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]interface{}, br base.BlockRange) {
 	parts := strings.Split(filter, "!")
 	for {
 		if len(parts) >= 6 {

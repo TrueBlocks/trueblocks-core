@@ -86,7 +86,7 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 }
 
 type namesGeneric interface {
-	types.SimpleName |
+	types.Name |
 		base.Address |
 		string
 }
@@ -106,8 +106,8 @@ func queryNames[T namesGeneric](opts *NamesOptions) ([]T, *types.MetaData, error
 }
 
 // Names implements the chifra names command.
-func (opts *NamesOptions) Names() ([]types.SimpleName, *types.MetaData, error) {
-	return queryNames[types.SimpleName](opts)
+func (opts *NamesOptions) Names() ([]types.Name, *types.MetaData, error) {
+	return queryNames[types.Name](opts)
 }
 
 // NamesAddr implements the chifra names --addr command.

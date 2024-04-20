@@ -35,36 +35,36 @@ type RawResult struct {
 	// EXISTING_CODE
 }
 
-type SimpleResult struct {
-	Address          base.Address    `json:"address"`
-	ArticulatedOut   *SimpleFunction `json:"articulatedOut"`
-	BlockNumber      base.Blknum     `json:"blockNumber"`
-	EncodedArguments string          `json:"encodedArguments"`
-	Encoding         string          `json:"encoding"`
-	Name             string          `json:"name"`
-	Signature        string          `json:"signature"`
-	Timestamp        base.Timestamp  `json:"timestamp"`
-	raw              *RawResult      `json:"-"`
+type Result struct {
+	Address          base.Address   `json:"address"`
+	ArticulatedOut   *Function      `json:"articulatedOut"`
+	BlockNumber      base.Blknum    `json:"blockNumber"`
+	EncodedArguments string         `json:"encodedArguments"`
+	Encoding         string         `json:"encoding"`
+	Name             string         `json:"name"`
+	Signature        string         `json:"signature"`
+	Timestamp        base.Timestamp `json:"timestamp"`
+	raw              *RawResult     `json:"-"`
 	// EXISTING_CODE
 	Values        map[string]string `json:"values"`
 	ReturnedBytes string
 	// EXISTING_CODE
 }
 
-func (s *SimpleResult) String() string {
+func (s *Result) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleResult) Raw() *RawResult {
+func (s *Result) Raw() *RawResult {
 	return s.raw
 }
 
-func (s *SimpleResult) SetRaw(raw *RawResult) {
+func (s *Result) SetRaw(raw *RawResult) {
 	s.raw = raw
 }
 
-func (s *SimpleResult) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Result) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -136,19 +136,19 @@ func (s *SimpleResult) Model(chain, format string, verbose bool, extraOptions ma
 	}
 }
 
-func (s *SimpleResult) Date() string {
+func (s *Result) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-func (s *SimpleResult) CacheName() string {
+func (s *Result) CacheName() string {
 	return "Result"
 }
 
-func (s *SimpleResult) CacheId() string {
+func (s *Result) CacheId() string {
 	return fmt.Sprintf("%s-%s-%09d", s.Address.Hex()[2:], s.Encoding[2:], s.BlockNumber)
 }
 
-func (s *SimpleResult) CacheLocation() (directory string, extension string) {
+func (s *Result) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -162,14 +162,14 @@ func (s *SimpleResult) CacheLocation() (directory string, extension string) {
 	return
 }
 
-func (s *SimpleResult) MarshalCache(writer io.Writer) (err error) {
+func (s *Result) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
 	// ArticulatedOut
-	optArticulatedOut := &cache.Optional[SimpleFunction]{
+	optArticulatedOut := &cache.Optional[Function]{
 		Value: s.ArticulatedOut,
 	}
 	if err = cache.WriteValue(writer, optArticulatedOut); err != nil {
@@ -209,14 +209,14 @@ func (s *SimpleResult) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleResult) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Result) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// Address
 	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
 		return err
 	}
 
 	// ArticulatedOut
-	optArticulatedOut := &cache.Optional[SimpleFunction]{
+	optArticulatedOut := &cache.Optional[Function]{
 		Value: s.ArticulatedOut,
 	}
 	if err = cache.ReadValue(reader, optArticulatedOut, version); err != nil {
@@ -260,7 +260,7 @@ func (s *SimpleResult) UnmarshalCache(version uint64, reader io.Reader) (err err
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleResult) FinishUnmarshal() {
+func (s *Result) FinishUnmarshal() {
 	// EXISTING_CODE
 	s.Values = make(map[string]string)
 	for index, output := range s.ArticulatedOut.Outputs {

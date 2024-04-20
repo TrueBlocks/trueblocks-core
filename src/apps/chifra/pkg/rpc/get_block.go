@@ -21,14 +21,14 @@ import (
 )
 
 // GetBlockBodyByNumber fetches the block with transactions from the RPC.
-func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types.SimpleTransaction], error) {
+func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.Block[types.Transaction], error) {
 	if conn.StoreReadable() {
 		// We only cache blocks with transaction hashes
-		cachedBlock := types.SimpleBlock[string]{BlockNumber: bn}
+		cachedBlock := types.Block[string]{BlockNumber: bn}
 		if err := conn.Store.Read(&cachedBlock, nil); err == nil {
 			// Success, we now have to fill in transaction objects
-			result := types.SimpleBlock[types.SimpleTransaction]{}
-			result.Transactions = make([]types.SimpleTransaction, 0, len(cachedBlock.Transactions))
+			result := types.Block[types.Transaction]{}
+			result.Transactions = make([]types.Transaction, 0, len(cachedBlock.Transactions))
 			success := true
 			for index := range cachedBlock.Transactions {
 				tx, err := conn.GetTransactionByNumberAndId(cachedBlock.BlockNumber, uint64(index))
@@ -45,14 +45,14 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		}
 	}
 
-	block, rawBlock, err := loadBlock[types.SimpleTransaction](conn, bn, true)
+	block, rawBlock, err := loadBlock[types.Transaction](conn, bn, true)
 	block.SetRaw(rawBlock) // may have failed, but it's ok
 	if err != nil {
 		return block, err
 	}
 
 	ts, _ := strconv.ParseInt(rawBlock.Timestamp, 0, 64)
-	block.Transactions = make([]types.SimpleTransaction, 0, len(rawBlock.Transactions))
+	block.Transactions = make([]types.Transaction, 0, len(rawBlock.Transactions))
 	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, ts)
 	for _, rawTx := range rawBlock.Transactions {
 		// cast transaction to a concrete type
@@ -65,7 +65,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 
 		// Get the receipt
 		idx := utils.MustParseUint(raw.TransactionIndex)
-		var receipt types.SimpleReceipt
+		var receipt types.Receipt
 		if receiptMap[idx] == nil {
 			receipt, err = conn.GetReceipt(bn, idx, ts)
 			if err != nil {
@@ -75,7 +75,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 			receipt = *receiptMap[idx]
 		}
 
-		tx := types.NewSimpleTransaction(raw, &receipt, ts)
+		tx := types.NewTransaction(raw, &receipt, ts)
 		block.Transactions = append(block.Transactions, *tx)
 
 		if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, tx.Timestamp) {
@@ -91,7 +91,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 }
 
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
-func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlock[string], err error) {
+func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.Block[string], err error) {
 	if conn.StoreReadable() {
 		block.BlockNumber = bn
 		if err := conn.Store.Read(&block, nil); err == nil {
@@ -192,7 +192,7 @@ func (conn *Connection) GetBlockHashByNumber(bn uint64) (base.Hash, error) {
 
 // loadBlock fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
 // more specialized functions and makes loadBlock generic.
-func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64, withTxs bool) (block types.SimpleBlock[Tx], rawBlock *types.RawBlock, err error) {
+func loadBlock[Tx string | types.Transaction](conn *Connection, bn uint64, withTxs bool) (block types.Block[Tx], rawBlock *types.RawBlock, err error) {
 	rawBlock, err = conn.getBlockRaw(bn, withTxs)
 	if err != nil {
 		return
@@ -228,7 +228,7 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 		uncles = append(uncles, base.HexToHash(uncle))
 	}
 
-	block = types.SimpleBlock[Tx]{
+	block = types.Block[Tx]{
 		BlockNumber: blockNumber,
 		Timestamp:   base.Timestamp(ts), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
 		Hash:        base.HexToHash(rawBlock.Hash),
@@ -241,11 +241,11 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 	}
 
 	if len(rawBlock.Withdrawals) > 0 {
-		block.Withdrawals = make([]types.SimpleWithdrawal, 0, len(rawBlock.Withdrawals))
+		block.Withdrawals = make([]types.Withdrawal, 0, len(rawBlock.Withdrawals))
 		for _, withdrawal := range rawBlock.Withdrawals {
 			amt := base.NewWei(0)
 			amt.SetString(withdrawal.Amount, 0)
-			s := types.SimpleWithdrawal{
+			s := types.Withdrawal{
 				Address:        base.HexToAddress(withdrawal.Address),
 				Amount:         *amt,
 				BlockNumber:    blockNumber,

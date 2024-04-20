@@ -12,7 +12,7 @@ const (
 	AppRecordWidth = 8
 )
 
-func (chunk *Index) ReadAppearancesAndReset(addrRecord *types.SimpleAddrRecord) (apps []types.SimpleAppRecord, err error) {
+func (chunk *Index) ReadAppearancesAndReset(addrRecord *types.AddrRecord) (apps []types.AppRecord, err error) {
 	offset, err := chunk.File.Seek(0, io.SeekCurrent)
 	if err != nil {
 		return apps, err
@@ -31,7 +31,7 @@ func (chunk *Index) ReadAppearancesAndReset(addrRecord *types.SimpleAddrRecord) 
 	return apps, nil
 }
 
-func (chunk *Index) readAppearanceRecords(addrRecord *types.SimpleAddrRecord) (apps []types.SimpleAppRecord, err error) {
+func (chunk *Index) readAppearanceRecords(addrRecord *types.AddrRecord) (apps []types.AppRecord, err error) {
 	readLocation := int64(HeaderWidth + AddrRecordWidth*chunk.Header.AddressCount + AppRecordWidth*addrRecord.Offset)
 
 	_, err = chunk.File.Seek(readLocation, io.SeekStart)
@@ -39,7 +39,7 @@ func (chunk *Index) readAppearanceRecords(addrRecord *types.SimpleAddrRecord) (a
 		return
 	}
 
-	apps = make([]types.SimpleAppRecord, addrRecord.Count)
+	apps = make([]types.AppRecord, addrRecord.Count)
 	err = binary.Read(chunk.File, binary.LittleEndian, &apps)
 
 	return

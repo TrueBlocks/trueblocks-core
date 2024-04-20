@@ -12,12 +12,12 @@ import (
 )
 
 // GetStatements returns a statement from a given transaction
-func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFilter, trans *types.SimpleTransaction) ([]types.SimpleStatement, error) {
+func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	// We need this below...
 	l.theTx = trans
 
 	if false && conn.StoreReadable() {
-		statementGroup := &types.SimpleStatementGroup{
+		statementGroup := &types.StatementGroup{
 			Address:          l.AccountFor,
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
@@ -28,7 +28,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	}
 
 	// make room for our results
-	statements := make([]types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
+	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
 	key := l.ctxKey(trans.BlockNumber, trans.TransactionIndex)
 	ctx := l.Contexts[key]
@@ -43,7 +43,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		begBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock-1)
 		endBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock)
 
-		ret := types.SimpleStatement{
+		ret := types.Statement{
 			AccountedFor:     l.AccountFor,
 			Sender:           trans.From,
 			Recipient:        trans.To,
@@ -126,7 +126,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	}
 
 	if false && l.Conn.StoreWritable() && l.Conn.EnabledMap["statements"] && base.IsFinal(l.Conn.LatestBlockTimestamp, trans.Timestamp) {
-		statementGroup := &types.SimpleStatementGroup{
+		statementGroup := &types.StatementGroup{
 			Address:          l.AccountFor,
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,

@@ -36,7 +36,7 @@ func main() {
 		return f1.Cmp(&f2) > 0
 	})
 
-	filtered := make([]types.SimpleName, 0, len(names))
+	filtered := make([]types.Name, 0, len(names))
 	for i, name := range names {
 		names[i].Name = name.Address.Hex()
 		if len(filtered) < 25 && base.ToEther(&name.Prefund).Cmp(base.NewEther(30000)) < 0 {
@@ -45,7 +45,7 @@ func main() {
 	}
 	names = filtered
 
-	// names := []types.SimpleName{
+	// names := []types.Name{
 	// 	{Name: "trueblocks.eth"},
 	// 	{Name: "rotki.eth"},
 	// 	{Name: "scopelift.eth"},
@@ -68,7 +68,7 @@ func main() {
 	}
 }
 
-func getBalances(names []types.SimpleName, chain string, start, end gostradamus.DateTime, freq string) ([]types.SimpleState, error) {
+func getBalances(names []types.Name, chain string, start, end gostradamus.DateTime, freq string) ([]types.State, error) {
 	clamp := sdk.WhenOptions{
 		BlockIds: []string{"0", "latest"},
 		Globals: sdk.Globals{
@@ -94,7 +94,7 @@ func getBalances(names []types.SimpleName, chain string, start, end gostradamus.
 
 	if blocks, _, err := whenOpts.When(); err != nil {
 		logger.Error(err)
-		return []types.SimpleState{}, err
+		return []types.State{}, err
 	} else {
 		addrs := make([]string, 0, len(names))
 		for i := 0; i < len(names); i++ {
@@ -125,7 +125,7 @@ func getBalances(names []types.SimpleName, chain string, start, end gostradamus.
 
 		if state, meta, err := stateOpts.State(); err != nil {
 			logger.Error(err)
-			return []types.SimpleState{}, err
+			return []types.State{}, err
 		} else {
 			fmt.Println("Got", len(state), "states to block", meta.Latest)
 			return state, nil

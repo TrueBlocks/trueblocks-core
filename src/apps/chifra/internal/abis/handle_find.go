@@ -35,7 +35,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
-		var results []types.SimpleFunction
+		var results []types.Function
 		var wg sync.WaitGroup
 		mutex := sync.Mutex{}
 		checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2, func(testSig interface{}) {
@@ -50,7 +50,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 				if bytes.Equal(sigBytes[:len(str)], str) {
 					scanBar.Found++
 					logger.Progress(len(opts.Find) < 2, "Found", scanBar.Found, "of", scanBar.Wanted, arg, testSig)
-					found := types.SimpleFunction{Encoding: arg, Signature: testSig.(string)}
+					found := types.Function{Encoding: arg, Signature: testSig.(string)}
 					if testMode {
 						mutex.Lock()
 						results = append(results, found)

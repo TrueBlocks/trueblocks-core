@@ -18,7 +18,7 @@ var (
 )
 
 // priceUsdUniswap returns the price of the given asset in USD as of the given block number.
-func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
+func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Statement) (price float64, source string, err error) {
 	multiplier := float64(1.0)
 	var first base.Address
 	var second base.Address
@@ -54,7 +54,7 @@ func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 	}
 	contractCall.BlockNumber = statement.BlockNumber
 
-	artFunc := func(str string, function *types.SimpleFunction) error {
+	artFunc := func(str string, function *types.Function) error {
 		return articulate.ArticulateFunction(function, "", str[2:])
 	}
 	result, err := contractCall.Call(artFunc)

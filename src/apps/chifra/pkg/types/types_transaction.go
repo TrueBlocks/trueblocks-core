@@ -68,8 +68,8 @@ type RawTransaction struct {
 	// EXISTING_CODE
 }
 
-type SimpleTransaction struct {
-	ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
+type Transaction struct {
+	ArticulatedTx        *Function       `json:"articulatedTx"`
 	BlockHash            base.Hash       `json:"blockHash"`
 	BlockNumber          base.Blknum     `json:"blockNumber"`
 	CompressedTx         string          `json:"compressedTx"`
@@ -84,35 +84,35 @@ type SimpleTransaction struct {
 	MaxFeePerGas         base.Gas        `json:"maxFeePerGas"`
 	MaxPriorityFeePerGas base.Gas        `json:"maxPriorityFeePerGas"`
 	Nonce                uint64          `json:"nonce"`
-	Receipt              *SimpleReceipt  `json:"receipt"`
+	Receipt              *Receipt        `json:"receipt"`
 	Timestamp            base.Timestamp  `json:"timestamp"`
 	To                   base.Address    `json:"to"`
-	Traces               []SimpleTrace   `json:"traces"`
+	Traces               []Trace         `json:"traces"`
 	TransactionIndex     base.Blknum     `json:"transactionIndex"`
 	TransactionType      string          `json:"type"`
 	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
-	Message    string             `json:"-"`
-	Rewards    *Rewards           `json:"-"`
-	Statements *[]SimpleStatement `json:"statements"`
+	Message    string       `json:"-"`
+	Rewards    *Rewards     `json:"-"`
+	Statements *[]Statement `json:"statements"`
 	// EXISTING_CODE
 }
 
-func (s *SimpleTransaction) String() string {
+func (s *Transaction) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleTransaction) Raw() *RawTransaction {
+func (s *Transaction) Raw() *RawTransaction {
 	return s.raw
 }
 
-func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
+func (s *Transaction) SetRaw(raw *RawTransaction) {
 	s.raw = raw
 }
 
-func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -154,7 +154,7 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 
 	model["gasCost"] = s.GasCost()
 
-	// TODO: Shouldn't this use the SimpleFunction model - the answer is yes?
+	// TODO: Shouldn't this use the Function model - the answer is yes?
 	var articulatedTx map[string]interface{}
 	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTx != nil
 	if isArticulated && format != "json" {
@@ -319,19 +319,19 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 	}
 }
 
-func (s *SimpleTransaction) Date() string {
+func (s *Transaction) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-func (s *SimpleTransaction) CacheName() string {
+func (s *Transaction) CacheName() string {
 	return "Transaction"
 }
 
-func (s *SimpleTransaction) CacheId() string {
+func (s *Transaction) CacheId() string {
 	return fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
 }
 
-func (s *SimpleTransaction) CacheLocation() (directory string, extension string) {
+func (s *Transaction) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -345,9 +345,9 @@ func (s *SimpleTransaction) CacheLocation() (directory string, extension string)
 	return
 }
 
-func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
+func (s *Transaction) MarshalCache(writer io.Writer) (err error) {
 	// ArticulatedTx
-	optArticulatedTx := &cache.Optional[SimpleFunction]{
+	optArticulatedTx := &cache.Optional[Function]{
 		Value: s.ArticulatedTx,
 	}
 	if err = cache.WriteValue(writer, optArticulatedTx); err != nil {
@@ -420,7 +420,7 @@ func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
 	}
 
 	// Receipt
-	optReceipt := &cache.Optional[SimpleReceipt]{
+	optReceipt := &cache.Optional[Receipt]{
 		Value: s.Receipt,
 	}
 	if err = cache.WriteValue(writer, optReceipt); err != nil {
@@ -455,9 +455,9 @@ func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Transaction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// ArticulatedTx
-	optArticulatedTx := &cache.Optional[SimpleFunction]{
+	optArticulatedTx := &cache.Optional[Function]{
 		Value: s.ArticulatedTx,
 	}
 	if err = cache.ReadValue(reader, optArticulatedTx, version); err != nil {
@@ -531,7 +531,7 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 	}
 
 	// Receipt
-	optReceipt := &cache.Optional[SimpleReceipt]{
+	optReceipt := &cache.Optional[Receipt]{
 		Value: s.Receipt,
 	}
 	if err = cache.ReadValue(reader, optReceipt, version); err != nil {
@@ -570,7 +570,7 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleTransaction) FinishUnmarshal() {
+func (s *Transaction) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -606,11 +606,11 @@ func NewRawTransactionFromMap(input map[string]any) (r *RawTransaction) {
 	return
 }
 
-// NewSimpleTransaction builds SimpleTransaction using data from raw and receipt. Receipt can be nil.
+// NewTransaction builds Transaction using data from raw and receipt. Receipt can be nil.
 // Transaction timestamp and HasToken flag will be set to timestamp and hasToken.
-func NewSimpleTransaction(raw *RawTransaction, receipt *SimpleReceipt, timestamp base.Timestamp) (s *SimpleTransaction) {
+func NewTransaction(raw *RawTransaction, receipt *Receipt, timestamp base.Timestamp) (s *Transaction) {
 	hasToken := isTokenFunction(raw.Input)
-	s = &SimpleTransaction{}
+	s = &Transaction{}
 
 	// TODO: use RawTransaction methods
 	s.Hash = base.HexToHash(raw.Hash)
@@ -675,7 +675,7 @@ func isTokenFunction(needle string) bool {
 	return tokenRelated[needle] || tokenRelated[needle[:10]]
 }
 
-func (s *SimpleTransaction) GasCost() base.Gas {
+func (s *Transaction) GasCost() base.Gas {
 	if s.Receipt == nil {
 		return 0
 	}

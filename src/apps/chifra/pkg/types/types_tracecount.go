@@ -28,7 +28,7 @@ type RawTraceCount struct {
 	// EXISTING_CODE
 }
 
-type SimpleTraceCount struct {
+type TraceCount struct {
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TracesCnt        uint64         `json:"tracesCnt"`
@@ -39,20 +39,20 @@ type SimpleTraceCount struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleTraceCount) String() string {
+func (s *TraceCount) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleTraceCount) Raw() *RawTraceCount {
+func (s *TraceCount) Raw() *RawTraceCount {
 	return s.raw
 }
 
-func (s *SimpleTraceCount) SetRaw(raw *RawTraceCount) {
+func (s *TraceCount) SetRaw(raw *RawTraceCount) {
 	s.raw = raw
 }
 
-func (s *SimpleTraceCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *TraceCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -79,12 +79,12 @@ func (s *SimpleTraceCount) Model(chain, format string, verbose bool, extraOption
 	}
 }
 
-func (s *SimpleTraceCount) Date() string {
+func (s *TraceCount) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleTraceCount) FinishUnmarshal() {
+func (s *TraceCount) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

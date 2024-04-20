@@ -40,18 +40,18 @@ type RawFunction struct {
 	// EXISTING_CODE
 }
 
-type SimpleFunction struct {
-	Anonymous       bool              `json:"anonymous,omitempty"`
-	Constant        bool              `json:"constant,omitempty"`
-	Encoding        string            `json:"encoding"`
-	Inputs          []SimpleParameter `json:"inputs"`
-	Message         string            `json:"message,omitempty"`
-	Name            string            `json:"name"`
-	Outputs         []SimpleParameter `json:"outputs"`
-	Signature       string            `json:"signature,omitempty"`
-	StateMutability string            `json:"stateMutability,omitempty"`
-	FunctionType    string            `json:"type"`
-	raw             *RawFunction      `json:"-"`
+type Function struct {
+	Anonymous       bool         `json:"anonymous,omitempty"`
+	Constant        bool         `json:"constant,omitempty"`
+	Encoding        string       `json:"encoding"`
+	Inputs          []Parameter  `json:"inputs"`
+	Message         string       `json:"message,omitempty"`
+	Name            string       `json:"name"`
+	Outputs         []Parameter  `json:"outputs"`
+	Signature       string       `json:"signature,omitempty"`
+	StateMutability string       `json:"stateMutability,omitempty"`
+	FunctionType    string       `json:"type"`
+	raw             *RawFunction `json:"-"`
 	// EXISTING_CODE
 	payable   bool
 	abiMethod *abi.Method
@@ -59,20 +59,20 @@ type SimpleFunction struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleFunction) String() string {
+func (s *Function) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleFunction) Raw() *RawFunction {
+func (s *Function) Raw() *RawFunction {
 	return s.raw
 }
 
-func (s *SimpleFunction) SetRaw(raw *RawFunction) {
+func (s *Function) SetRaw(raw *RawFunction) {
 	s.raw = raw
 }
 
-func (s *SimpleFunction) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Function) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -102,7 +102,7 @@ func (s *SimpleFunction) Model(chain, format string, verbose bool, extraOptions 
 	}
 
 	if format == "json" {
-		getParameterModels := func(params []SimpleParameter) []map[string]any {
+		getParameterModels := func(params []Parameter) []map[string]any {
 			result := make([]map[string]any, 0, len(params))
 			for index, param := range params {
 				result[index] = param.Model(chain, format, verbose, extraOptions).Data
@@ -133,7 +133,7 @@ func (s *SimpleFunction) Model(chain, format string, verbose bool, extraOptions 
 	}
 }
 
-func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
+func (s *Function) MarshalCache(writer io.Writer) (err error) {
 	// Anonymous
 	if err = cache.WriteValue(writer, s.Anonymous); err != nil {
 		return err
@@ -195,7 +195,7 @@ func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleFunction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Function) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// Anonymous
 	if err = cache.ReadValue(reader, &s.Anonymous, version); err != nil {
 		return err
@@ -212,7 +212,7 @@ func (s *SimpleFunction) UnmarshalCache(version uint64, reader io.Reader) (err e
 	}
 
 	// Inputs
-	s.Inputs = make([]SimpleParameter, 0)
+	s.Inputs = make([]Parameter, 0)
 	if err = cache.ReadValue(reader, &s.Inputs, version); err != nil {
 		return err
 	}
@@ -228,7 +228,7 @@ func (s *SimpleFunction) UnmarshalCache(version uint64, reader io.Reader) (err e
 	}
 
 	// Outputs
-	s.Outputs = make([]SimpleParameter, 0)
+	s.Outputs = make([]Parameter, 0)
 	if err = cache.ReadValue(reader, &s.Outputs, version); err != nil {
 		return err
 	}
@@ -254,7 +254,7 @@ func (s *SimpleFunction) UnmarshalCache(version uint64, reader io.Reader) (err e
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleFunction) FinishUnmarshal() {
+func (s *Function) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -262,20 +262,20 @@ func (s *SimpleFunction) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleFunction) Clone() *SimpleFunction {
+func (s *Function) Clone() *Function {
 	shallowCopy := *s
-	shallowCopy.Inputs = make([]SimpleParameter, len(s.Inputs))
-	shallowCopy.Outputs = make([]SimpleParameter, len(s.Outputs))
+	shallowCopy.Inputs = make([]Parameter, len(s.Inputs))
+	shallowCopy.Outputs = make([]Parameter, len(s.Outputs))
 	copy(shallowCopy.Inputs, s.Inputs)
 	copy(shallowCopy.Outputs, s.Outputs)
 	return &shallowCopy
 }
 
-func FunctionFromAbiEvent(ethEvent *abi.Event) *SimpleFunction {
+func FunctionFromAbiEvent(ethEvent *abi.Event) *Function {
 	// ID is encoded signature
 	encSig := strings.ToLower(ethEvent.ID.Hex())
-	inputs := argumentsToSimpleParameters(ethEvent.Inputs)
-	function := &SimpleFunction{
+	inputs := argumentsToParameters(ethEvent.Inputs)
+	function := &Function{
 		Encoding:     encSig,
 		Signature:    ethEvent.Sig,
 		Name:         ethEvent.RawName,
@@ -287,8 +287,8 @@ func FunctionFromAbiEvent(ethEvent *abi.Event) *SimpleFunction {
 	return function
 }
 
-// FunctionFromAbiMethod converts go-ethereum's abi.Method to our SimpleFunction
-func FunctionFromAbiMethod(ethMethod *abi.Method) *SimpleFunction {
+// FunctionFromAbiMethod converts go-ethereum's abi.Method to our Function
+func FunctionFromAbiMethod(ethMethod *abi.Method) *Function {
 	// method.ID is our "four-byte"
 	fourByte := "0x" + base.Bytes2Hex(ethMethod.ID)
 
@@ -304,15 +304,15 @@ func FunctionFromAbiMethod(ethMethod *abi.Method) *SimpleFunction {
 		functionType = "function"
 	}
 
-	inputs := argumentsToSimpleParameters(ethMethod.Inputs)
-	outputs := argumentsToSimpleParameters(ethMethod.Outputs)
+	inputs := argumentsToParameters(ethMethod.Inputs)
+	outputs := argumentsToParameters(ethMethod.Outputs)
 	stateMutability := "nonpayable"
 	if ethMethod.StateMutability != "" && ethMethod.StateMutability != "nonpayable" && ethMethod.StateMutability != "view" {
 		stateMutability = ethMethod.StateMutability
 	} else if ethMethod.Payable {
 		stateMutability = "payable"
 	}
-	function := &SimpleFunction{
+	function := &Function{
 		Encoding:        fourByte,
 		Signature:       ethMethod.Sig,
 		Name:            ethMethod.RawName,
@@ -326,17 +326,17 @@ func FunctionFromAbiMethod(ethMethod *abi.Method) *SimpleFunction {
 	return function
 }
 
-// argumentsToSimpleParameters converts slice of go-ethereum's Argument to slice of
-// SimpleParameter
-func argumentsToSimpleParameters(args []abi.Argument) (result []SimpleParameter) {
-	result = make([]SimpleParameter, len(args))
+// argumentsToParameters converts slice of go-ethereum's Argument to slice of
+// Parameter
+func argumentsToParameters(args []abi.Argument) (result []Parameter) {
+	result = make([]Parameter, len(args))
 	for index, arg := range args {
-		result[index] = SimpleParameter{
+		result[index] = Parameter{
 			ParameterType: arg.Type.String(),
 			Name:          arg.Name,
 			Indexed:       arg.Indexed,
 			InternalType:  getInternalType(&arg.Type),
-			Components:    argumentTypesToSimpleParameters(arg.Type.TupleElems),
+			Components:    argumentTypesToParameters(arg.Type.TupleElems),
 		}
 	}
 	return
@@ -350,21 +350,21 @@ func getInternalType(abiType *abi.Type) (result string) {
 	return
 }
 
-// argumentTypesToSimpleParameters is similar to argumentsToSimpleParameters, but for
+// argumentTypesToParameters is similar to argumentsToParameters, but for
 // recursive types
-func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParameter) {
-	result = make([]SimpleParameter, len(argTypes))
+func argumentTypesToParameters(argTypes []*abi.Type) (result []Parameter) {
+	result = make([]Parameter, len(argTypes))
 	for index, argType := range argTypes {
-		result[index] = SimpleParameter{
+		result[index] = Parameter{
 			ParameterType: argType.String(),
 			InternalType:  getInternalType(argType),
-			Components:    argumentTypesToSimpleParameters(argType.TupleElems),
+			Components:    argumentTypesToParameters(argType.TupleElems),
 		}
 	}
 	return
 }
 
-func (s *SimpleFunction) AbiMethodFromFunction() (ethMethod *abi.Method, err error) {
+func (s *Function) AbiMethodFromFunction() (ethMethod *abi.Method, err error) {
 	if !s.IsMethod() {
 		err = fmt.Errorf("FunctionToAbiMethod called for an event")
 		return
@@ -388,7 +388,7 @@ func (s *SimpleFunction) AbiMethodFromFunction() (ethMethod *abi.Method, err err
 	return
 }
 
-func (s *SimpleFunction) AbiEventFromFunction() (ethMethod *abi.Event, err error) {
+func (s *Function) AbiEventFromFunction() (ethMethod *abi.Event, err error) {
 	if s.IsMethod() {
 		err = fmt.Errorf("functionToAbiEvent called for a method")
 		return
@@ -415,8 +415,8 @@ func (s *SimpleFunction) AbiEventFromFunction() (ethMethod *abi.Event, err error
 // removeUnknownTuples replaces unknown tuple type with `bytes` type.
 // A tuple is unknown if we don't know its components (this can happen for
 // inputs/outputs of internal methods)
-func removeUnknownTuples(function *SimpleFunction) {
-	remove := func(params []SimpleParameter) {
+func removeUnknownTuples(function *Function) {
+	remove := func(params []Parameter) {
 		for i := 0; i < len(params); i++ {
 			param := params[i]
 			parameterType := param.ParameterType
@@ -431,15 +431,15 @@ func removeUnknownTuples(function *SimpleFunction) {
 	remove(function.Outputs)
 }
 
-func (s *SimpleFunction) IsMethod() bool {
+func (s *Function) IsMethod() bool {
 	return s.FunctionType != "event"
 }
 
-func (s *SimpleFunction) SetAbiMethod(method *abi.Method) {
+func (s *Function) SetAbiMethod(method *abi.Method) {
 	s.abiMethod = method
 }
 
-func (s *SimpleFunction) GetAbiMethod() (abiMethod *abi.Method, err error) {
+func (s *Function) GetAbiMethod() (abiMethod *abi.Method, err error) {
 	if s.abiMethod == nil {
 		abiMethod, err = s.AbiMethodFromFunction()
 		if err != nil {
@@ -451,11 +451,11 @@ func (s *SimpleFunction) GetAbiMethod() (abiMethod *abi.Method, err error) {
 	return s.abiMethod, nil
 }
 
-func (s *SimpleFunction) SetAbiEvent(event *abi.Event) {
+func (s *Function) SetAbiEvent(event *abi.Event) {
 	s.abiEvent = event
 }
 
-func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
+func (s *Function) GetAbiEvent() (abiEvent *abi.Event, err error) {
 	if s.abiEvent == nil {
 		abiEvent, err = s.AbiEventFromFunction()
 		if err != nil {
@@ -470,7 +470,7 @@ func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
 // Normalize sets StateMutability from `payable` field. It is only useful when
 // reading ABIs generated before Solidity 0.5.0, which use `payable` field:
 // https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
-func (s *SimpleFunction) Normalize() {
+func (s *Function) Normalize() {
 	// if StateMutability is already set, we don't have to do anything
 	if s.StateMutability != "nonpayable" {
 		return
@@ -483,7 +483,7 @@ func (s *SimpleFunction) Normalize() {
 }
 
 // Pack encodes function call
-func (s *SimpleFunction) Pack(callArguments []any) (packed []byte, err error) {
+func (s *Function) Pack(callArguments []any) (packed []byte, err error) {
 	abiMethod, err := s.GetAbiMethod()
 	if err != nil {
 		return

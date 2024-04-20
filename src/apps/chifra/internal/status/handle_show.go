@@ -23,7 +23,7 @@ func (opts *StatusOptions) HandleShow() error {
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawStatus], errorChan chan error) {
-		s, err := opts.GetSimpleStatus(opts.Diagnose)
+		s, err := opts.GetStatus(opts.Diagnose)
 		if err != nil {
 			errorChan <- err
 			return
@@ -52,7 +52,7 @@ func ToProgress(chain string, diagnose bool, meta *types.MetaData) string {
 	return fmt.Sprintf(format, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
 }
 
-func (opts *StatusOptions) GetSimpleStatus(diagnose bool) (*types.SimpleStatus, error) {
+func (opts *StatusOptions) GetStatus(diagnose bool) (*types.Status, error) {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
@@ -74,7 +74,7 @@ func (opts *StatusOptions) GetSimpleStatus(diagnose bool) (*types.SimpleStatus, 
 	}
 
 	provider := config.GetChain(chain).RpcProvider
-	s := &types.SimpleStatus{
+	s := &types.Status{
 		ClientVersion: vers,
 		Version:       version.LibraryVersion,
 		RpcProvider:   provider,
@@ -115,7 +115,7 @@ func (opts *StatusOptions) GetSimpleStatus(diagnose bool) (*types.SimpleStatus, 
 	return s, nil
 }
 
-func toTemplate(s *types.SimpleStatus, w io.Writer, testMode, diagnose, logTimerOn bool, format string) bool {
+func toTemplate(s *types.Status, w io.Writer, testMode, diagnose, logTimerOn bool, format string) bool {
 	if format == "json" {
 		return false
 	}
@@ -168,7 +168,7 @@ func getIdTemplate() string {
 	return networkId + "/" + chainId
 }
 
-func getProgress(s *types.SimpleStatus, testMode, diagnose bool) string {
+func getProgress(s *types.Status, testMode, diagnose bool) string {
 	if diagnose {
 		if testMode {
 			return "--diagnostics--"

@@ -15,13 +15,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-type SimpleAddrRecord struct {
+type AddrRecord struct {
 	Address base.Address `json:"address"`
 	Offset  uint32       `json:"offset"`
 	Count   uint32       `json:"count"`
 }
 
-type SimpleAppRecord struct {
+type AppRecord struct {
 	BlockNumber      uint32 `json:"blockNumber"`
 	TransactionIndex uint32 `json:"transactionIndex"`
 }
@@ -35,28 +35,28 @@ type RawAppearanceTable struct {
 	// EXISTING_CODE
 }
 
-type SimpleAppearanceTable struct {
-	AddressRecord SimpleAddrRecord    `json:"AddressRecord"`
-	Appearances   []SimpleAppRecord   `json:"Appearances"`
+type AppearanceTable struct {
+	AddressRecord AddrRecord          `json:"AddressRecord"`
+	Appearances   []AppRecord         `json:"Appearances"`
 	raw           *RawAppearanceTable `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleAppearanceTable) String() string {
+func (s *AppearanceTable) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleAppearanceTable) Raw() *RawAppearanceTable {
+func (s *AppearanceTable) Raw() *RawAppearanceTable {
 	return s.raw
 }
 
-func (s *SimpleAppearanceTable) SetRaw(raw *RawAppearanceTable) {
+func (s *AppearanceTable) SetRaw(raw *RawAppearanceTable) {
 	s.raw = raw
 }
 
-func (s *SimpleAppearanceTable) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *AppearanceTable) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -82,7 +82,7 @@ func (s *SimpleAppearanceTable) Model(chain, format string, verbose bool, extraO
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleAppearanceTable) FinishUnmarshal() {
+func (s *AppearanceTable) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

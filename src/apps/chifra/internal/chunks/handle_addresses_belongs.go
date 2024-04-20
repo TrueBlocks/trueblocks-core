@@ -75,7 +75,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 			continue
 		}
 
-		s := types.SimpleAppearanceTable{}
+		s := types.AppearanceTable{}
 		if err := binary.Read(indexChunk.File, binary.LittleEndian, &s.AddressRecord); err != nil {
 			return false, err
 		}
@@ -90,7 +90,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 			}
 			s.AddressRecord.Count = uint32(len(s.Appearances))
 			if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {
-				good := []types.SimpleAppRecord{}
+				good := []types.AppRecord{}
 				for _, app := range s.Appearances {
 					if uint64(app.BlockNumber) >= opts.FirstBlock && uint64(app.BlockNumber) <= opts.LastBlock {
 						good = append(good, app)
@@ -141,7 +141,7 @@ func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[t
 			continue
 		}
 
-		s := types.SimpleAppearanceTable{}
+		s := types.AppearanceTable{}
 		if err := binary.Read(indexChunk.File, binary.LittleEndian, &s.AddressRecord); err != nil {
 			return false, err
 		}
@@ -156,7 +156,7 @@ func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[t
 			}
 			s.AddressRecord.Count = uint32(len(s.Appearances))
 			if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {
-				good := []types.SimpleAppRecord{}
+				good := []types.AppRecord{}
 				for _, app := range s.Appearances {
 					if uint64(app.BlockNumber) >= opts.FirstBlock && uint64(app.BlockNumber) <= opts.LastBlock {
 						good = append(good, app)
@@ -168,7 +168,7 @@ func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[t
 			if len(s.Appearances) == 0 {
 				continue
 			}
-			ss := types.SimpleChunkAddress{
+			ss := types.ChunkAddress{
 				Address: s.AddressRecord.Address,
 				Count:   uint64(s.AddressRecord.Count),
 				Offset:  uint64(s.AddressRecord.Offset),

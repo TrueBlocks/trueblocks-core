@@ -64,7 +64,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 						}
 
 						neighbors := make([]Reason, 0)
-						iterFunc := func(app types.SimpleAppearance, unused *bool) error {
+						iterFunc := func(app types.Appearance, unused *bool) error {
 							if theseNeighbors, err := GetNeighbors(&app); err != nil {
 								return err
 							} else {
@@ -84,9 +84,9 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 							}
 						}
 
-						items := make([]types.SimpleAppearance, 0, len(thisMap))
+						items := make([]types.Appearance, 0, len(thisMap))
 						for _, neighbor := range neighbors {
-							app := types.SimpleAppearance{
+							app := types.Appearance{
 								Address:          *neighbor.Address,
 								BlockNumber:      neighbor.App.BlockNumber,
 								TransactionIndex: neighbor.App.TransactionIndex,
@@ -624,14 +624,14 @@ class CIndexArchiveWithNeighborMaps : public CIndexArchive {
 
 */
 
-func GetNeighbors(app *types.SimpleAppearance) ([]Reason, error) {
+func GetNeighbors(app *types.Appearance) ([]Reason, error) {
 	reasons := make([]Reason, 0)
 	reasons = append(reasons, Reason{App: app, Address: &app.Address, Reason: "self"})
 	return reasons, nil
 }
 
 type Reason struct {
-	App     *types.SimpleAppearance
+	App     *types.Appearance
 	Address *base.Address
 	Reason  string
 }

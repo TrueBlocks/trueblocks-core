@@ -27,7 +27,7 @@ type RawCacheItem struct {
 	// EXISTING_CODE
 }
 
-type SimpleCacheItem struct {
+type CacheItem struct {
 	Items         []any         `json:"items"`
 	LastCached    string        `json:"lastCached,omitempty"`
 	NFiles        uint64        `json:"nFiles"`
@@ -40,20 +40,20 @@ type SimpleCacheItem struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleCacheItem) String() string {
+func (s *CacheItem) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleCacheItem) Raw() *RawCacheItem {
+func (s *CacheItem) Raw() *RawCacheItem {
 	return s.raw
 }
 
-func (s *SimpleCacheItem) SetRaw(raw *RawCacheItem) {
+func (s *CacheItem) SetRaw(raw *RawCacheItem) {
 	s.raw = raw
 }
 
-func (s *SimpleCacheItem) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *CacheItem) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -67,7 +67,7 @@ func (s *SimpleCacheItem) Model(chain, format string, verbose bool, extraOptions
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleCacheItem) FinishUnmarshal() {
+func (s *CacheItem) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

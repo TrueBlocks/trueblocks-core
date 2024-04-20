@@ -41,7 +41,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 data models
 
-- Added `ReconType` and `AssetType` to `SimpleReconciliation` data models.
+- Added `ReconType` and `AssetType` to `Reconciliation` data models.
 
 ## v2.1.0 (2023/11/25)
 
@@ -1002,7 +1002,7 @@ The following existing data models were either added, removed, or modified by ha
 - #3148 Fixes query package
 - #3139 Feature/decache for all
 - #3138 Update cmake
-- #3137 Move token package to rpcClient, removes separate Token type in favor of SimpleToken
+- #3137 Move token package to rpcClient, removes separate Token type in favor of Token
 - #3131 Moved linter job to build workflow
 - #3124 Removes chain from most methods on rpcClient.Options
 - #3129 concurrent access to map core dumps
@@ -1624,7 +1624,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
   - Removed `unclesCnt`.
 - `TraceResult` data model:
   - Renamed `newContract` to `address` in order to agree with the RPC.
-- Renamed `VerboseAppearance` data model to `SimpleAppearance` to be consistent with other tools.
+- Renamed `VerboseAppearance` data model to `Appearance` to be consistent with other tools.
 - Renamed `TokenBalanceRecord` data model to `TokenBalance`.
 - New data models:
   - `BlockCount`

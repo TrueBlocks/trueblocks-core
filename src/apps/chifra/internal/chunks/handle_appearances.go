@@ -48,12 +48,12 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 				if opts.Globals.TestMode && i > walker.MaxTests() {
 					continue
 				}
-				rec := types.SimpleAppRecord{}
+				rec := types.AppRecord{}
 				if err := binary.Read(indexChunk.File, binary.LittleEndian, &rec); err != nil {
 					return false, err
 				}
 
-				s := types.SimpleAppearance{
+				s := types.Appearance{
 					BlockNumber:      rec.BlockNumber,
 					TransactionIndex: rec.TransactionIndex,
 				}

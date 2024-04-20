@@ -676,41 +676,41 @@ func (c *Command) ReturnTypeFunc() string {
 func (c *Command) ReturnTypeInner() string {
 	switch c.Route {
 	case "abis":
-		return "types.SimpleFunction"
+		return "types.Function"
 	case "blocks":
-		return "types.SimpleBlock[types.SimpleTransaction]"
+		return "types.Block[types.Transaction]"
 	case "chunks":
 		return "bool"
 	case "config":
 		return "bool"
 	case "export":
-		return "types.SimpleTransaction"
+		return "types.Transaction"
 	case "init":
 		return "bool"
 	case "list":
-		return "types.SimpleAppearance"
+		return "types.Appearance"
 	case "logs":
-		return "types.SimpleLog"
+		return "types.Log"
 	case "monitors":
-		return "types.SimpleMonitor"
+		return "types.Monitor"
 	case "names":
-		return "types.SimpleName"
+		return "types.Name"
 	case "receipts":
-		return "types.SimpleReceipt"
+		return "types.Receipt"
 	case "slurp":
-		return "types.SimpleSlurp"
+		return "types.Slurp"
 	case "state":
-		return "types.SimpleState"
+		return "types.State"
 	case "status":
 		return "bool"
 	case "tokens":
 		return "bool"
 	case "traces":
-		return "types.SimpleTrace"
+		return "types.Trace"
 	case "transactions":
-		return "types.SimpleTransaction"
+		return "types.Transaction"
 	case "when":
-		return "types.SimpleNamedBlock"
+		return "types.NamedBlock"
 	default:
 		return "unknown return type"
 	}

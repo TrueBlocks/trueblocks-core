@@ -28,7 +28,7 @@ func TestGenerateFromCombinedAst(t *testing.T) {
 	os.WriteFile("/tmp/result.json", j, 0666)
 
 	function := result[0]
-	expected := types.SimpleFunction{
+	expected := types.Function{
 		Encoding:        "52d1902d",
 		Signature:       "proxiableUUID()",
 		Name:            "proxiableUUID",
@@ -36,8 +36,8 @@ func TestGenerateFromCombinedAst(t *testing.T) {
 		Anonymous:       false,
 		Constant:        false,
 		StateMutability: "view",
-		Inputs:          []types.SimpleParameter{},
-		Outputs: []types.SimpleParameter{
+		Inputs:          []types.Parameter{},
+		Outputs: []types.Parameter{
 			{
 				ParameterType: "bytes32",
 				Name:          "",
@@ -51,7 +51,7 @@ func TestGenerateFromCombinedAst(t *testing.T) {
 	}
 
 	event := result[1]
-	expected = types.SimpleFunction{
+	expected = types.Function{
 		Encoding:        "7e644d79",
 		Signature:       "AdminChanged(address,address)",
 		Name:            "AdminChanged",
@@ -59,7 +59,7 @@ func TestGenerateFromCombinedAst(t *testing.T) {
 		Anonymous:       false,
 		Constant:        false,
 		StateMutability: "nonpayable",
-		Inputs: []types.SimpleParameter{
+		Inputs: []types.Parameter{
 			{
 				ParameterType: "address",
 				Name:          "previousAdmin",
@@ -73,7 +73,7 @@ func TestGenerateFromCombinedAst(t *testing.T) {
 				InternalType:  "address",
 			},
 		},
-		Outputs: []types.SimpleParameter{},
+		Outputs: []types.Parameter{},
 	}
 	if !reflect.DeepEqual(event, expected) {
 		t.Fatalf("got %v, expected %v", event, expected)

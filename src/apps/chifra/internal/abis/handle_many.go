@@ -39,7 +39,7 @@ func (opts *AbisOptions) HandleMany() (err error) {
 				// TODO: We need to copy the proxied-to ABI to the proxy (replacing)
 			}
 
-			abi := types.SimpleAbi{}
+			abi := types.Abi{}
 			abi.Address = address
 			names := abiCache.AbiMap.Keys()
 			sort.Strings(names)

@@ -11,11 +11,11 @@ import (
 )
 
 // TODO: Test if there's a performance differnce between using an array here (which would work just as well) and a map
-var loadedRegularNames map[base.Address]types.SimpleName = map[base.Address]types.SimpleName{}
+var loadedRegularNames map[base.Address]types.Name = map[base.Address]types.Name{}
 var loadedRegularNamesMutex sync.Mutex
 
 // loadRegularMap loads the regular names from the cache
-func loadRegularMap(chain string, thePath string, terms []string, parts Parts, ret *map[base.Address]types.SimpleName) error {
+func loadRegularMap(chain string, thePath string, terms []string, parts Parts, ret *map[base.Address]types.Name) error {
 	if len(loadedRegularNames) != 0 {
 		// We have already loaded the data
 		for _, name := range loadedRegularNames {
@@ -62,8 +62,8 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 }
 
 // loadKnownBadresses loads the known bad addresses from the cache
-func loadKnownBadresses(terms []string, parts Parts, ret *map[base.Address]types.SimpleName) {
-	knownBadAddresses := []types.SimpleName{
+func loadKnownBadresses(terms []string, parts Parts, ret *map[base.Address]types.Name) {
+	knownBadAddresses := []types.Name{
 		{
 			Address: base.PrefundSender,
 			Name:    "PrefundSender",

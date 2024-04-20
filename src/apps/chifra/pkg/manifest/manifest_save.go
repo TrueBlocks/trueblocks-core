@@ -51,7 +51,7 @@ func (m *Manifest) SaveManifest(chain, fileName string) error {
 // to store unique chunks. It then sorts the slice and updates the manifest's chunks.
 func (m *Manifest) removeDuplicatesAndSort() {
 	seen := make(map[string]bool)
-	chunks := make([]types.SimpleChunkRecord, 0, len(m.Chunks))
+	chunks := make([]types.ChunkRecord, 0, len(m.Chunks))
 
 	for i := len(m.Chunks) - 1; i >= 0; i-- {
 		if !seen[m.Chunks[i].Range] {

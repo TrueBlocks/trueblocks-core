@@ -37,37 +37,37 @@ type RawLog struct {
 	// EXISTING_CODE
 }
 
-type SimpleLog struct {
-	Address          base.Address    `json:"address"`
-	ArticulatedLog   *SimpleFunction `json:"articulatedLog,omitempty"`
-	BlockHash        base.Hash       `json:"blockHash"`
-	BlockNumber      base.Blknum     `json:"blockNumber"`
-	CompressedLog    string          `json:"compressedLog,omitempty"`
-	Data             string          `json:"data,omitempty"`
-	LogIndex         uint64          `json:"logIndex"`
-	Timestamp        base.Timestamp  `json:"timestamp,omitempty"`
-	Topics           []base.Hash     `json:"topics,omitempty"`
-	TransactionHash  base.Hash       `json:"transactionHash"`
-	TransactionIndex uint64          `json:"transactionIndex"`
-	raw              *RawLog         `json:"-"`
+type Log struct {
+	Address          base.Address   `json:"address"`
+	ArticulatedLog   *Function      `json:"articulatedLog,omitempty"`
+	BlockHash        base.Hash      `json:"blockHash"`
+	BlockNumber      base.Blknum    `json:"blockNumber"`
+	CompressedLog    string         `json:"compressedLog,omitempty"`
+	Data             string         `json:"data,omitempty"`
+	LogIndex         uint64         `json:"logIndex"`
+	Timestamp        base.Timestamp `json:"timestamp,omitempty"`
+	Topics           []base.Hash    `json:"topics,omitempty"`
+	TransactionHash  base.Hash      `json:"transactionHash"`
+	TransactionIndex uint64         `json:"transactionIndex"`
+	raw              *RawLog        `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleLog) String() string {
+func (s *Log) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleLog) Raw() *RawLog {
+func (s *Log) Raw() *RawLog {
 	return s.raw
 }
 
-func (s *SimpleLog) SetRaw(raw *RawLog) {
+func (s *Log) SetRaw(raw *RawLog) {
 	s.raw = raw
 }
 
-func (s *SimpleLog) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Log) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -156,25 +156,25 @@ func (s *SimpleLog) Model(chain, format string, verbose bool, extraOptions map[s
 	}
 }
 
-func (s *SimpleLog) Date() string {
+func (s *Log) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-type SimpleLogGroup struct {
+type LogGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
-	Logs             []SimpleLog
+	Logs             []Log
 }
 
-func (s *SimpleLogGroup) CacheName() string {
+func (s *LogGroup) CacheName() string {
 	return "Log"
 }
 
-func (s *SimpleLogGroup) CacheId() string {
+func (s *LogGroup) CacheId() string {
 	return fmt.Sprintf("%09d", s.BlockNumber)
 }
 
-func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
+func (s *LogGroup) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -188,22 +188,22 @@ func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
 	return
 }
 
-func (s *SimpleLogGroup) MarshalCache(writer io.Writer) (err error) {
+func (s *LogGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Logs)
 }
 
-func (s *SimpleLogGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *LogGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	return cache.ReadValue(reader, &s.Logs, version)
 }
 
-func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
+func (s *Log) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
 	// ArticulatedLog
-	optArticulatedLog := &cache.Optional[SimpleFunction]{
+	optArticulatedLog := &cache.Optional[Function]{
 		Value: s.ArticulatedLog,
 	}
 	if err = cache.WriteValue(writer, optArticulatedLog); err != nil {
@@ -258,14 +258,14 @@ func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Log) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// Address
 	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
 		return err
 	}
 
 	// ArticulatedLog
-	optArticulatedLog := &cache.Optional[SimpleFunction]{
+	optArticulatedLog := &cache.Optional[Function]{
 		Value: s.ArticulatedLog,
 	}
 	if err = cache.ReadValue(reader, optArticulatedLog, version); err != nil {
@@ -325,7 +325,7 @@ func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleLog) FinishUnmarshal() {
+func (s *Log) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -333,13 +333,13 @@ func (s *SimpleLog) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (r *RawLog) RawToSimple(vals map[string]any) (SimpleLog, error) {
+func (r *RawLog) RawTo(vals map[string]any) (Log, error) {
 	hash, ok := vals["hash"].(base.Hash)
 	if !ok {
 		logger.Fatal("should not happen ==> hash not found in raw log values")
 	}
 
-	log := SimpleLog{
+	log := Log{
 		Address:          base.HexToAddress(r.Address),
 		BlockNumber:      utils.MustParseUint(r.BlockNumber),
 		BlockHash:        base.HexToHash(r.BlockHash),

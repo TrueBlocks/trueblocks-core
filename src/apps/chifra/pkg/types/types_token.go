@@ -36,7 +36,7 @@ type RawToken struct {
 	// EXISTING_CODE
 }
 
-type SimpleToken struct {
+type Token struct {
 	Address          base.Address   `json:"address"`
 	Balance          base.Wei       `json:"balance"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
@@ -55,28 +55,28 @@ type SimpleToken struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleToken) String() string {
+func (s *Token) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleToken) Raw() *RawToken {
+func (s *Token) Raw() *RawToken {
 	return s.raw
 }
 
-func (s *SimpleToken) SetRaw(raw *RawToken) {
+func (s *Token) SetRaw(raw *RawToken) {
 	s.raw = raw
 }
 
-func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Token) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	name := SimpleName{}
+	name := Name{}
 	name.Name = "Unknown"
 	if extraOptions["namesMap"] != nil {
-		name = extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
+		name = extraOptions["namesMap"].(map[base.Address]Name)[s.Address]
 	}
 	if name.Decimals == 0 {
 		name.Decimals = 18
@@ -155,12 +155,12 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 	}
 }
 
-func (s *SimpleToken) Date() string {
+func (s *Token) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleToken) FinishUnmarshal() {
+func (s *Token) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -168,11 +168,11 @@ func (s *SimpleToken) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleToken) IsErc20() bool {
+func (s *Token) IsErc20() bool {
 	return s.TokenType.IsErc20()
 }
 
-func (s *SimpleToken) IsErc721() bool {
+func (s *Token) IsErc721() bool {
 	return s.TokenType.IsErc721()
 }
 

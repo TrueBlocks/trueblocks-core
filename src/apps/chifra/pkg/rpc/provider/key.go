@@ -58,8 +58,8 @@ func (p *KeyProvider) NewPaginator() Paginator {
 	return NewPageIdPaginator(keyFirstPage, keyFirstPage, p.perPage)
 }
 
-func (p *KeyProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.SimpleSlurp) {
-	txChan = make(chan types.SimpleSlurp, providerChannelBufferSize)
+func (p *KeyProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.Slurp) {
+	txChan = make(chan types.Slurp, providerChannelBufferSize)
 
 	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	go func() {
@@ -77,7 +77,7 @@ func (p *KeyProvider) TransactionsByAddress(ctx context.Context, query *Query, e
 					errorChan <- err
 					continue
 				}
-				txChan <- *(simpleTransactionToSimpleSlurp(tx))
+				txChan <- *(simpleTransactionToSlurp(tx))
 			}
 		}
 	}()
@@ -85,8 +85,8 @@ func (p *KeyProvider) TransactionsByAddress(ctx context.Context, query *Query, e
 	return
 }
 
-func simpleTransactionToSimpleSlurp(tx *types.SimpleTransaction) *types.SimpleSlurp {
-	return &types.SimpleSlurp{
+func simpleTransactionToSlurp(tx *types.Transaction) *types.Slurp {
+	return &types.Slurp{
 		// ArticulatedTx:     tx.ArticulatedTx,
 		BlockHash:    tx.BlockHash,
 		BlockNumber:  tx.BlockNumber,
@@ -115,8 +115,8 @@ func simpleTransactionToSimpleSlurp(tx *types.SimpleTransaction) *types.SimpleSl
 	}
 }
 
-func (p *KeyProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.SimpleAppearance) {
-	appChan = make(chan types.SimpleAppearance, providerChannelBufferSize)
+func (p *KeyProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.Appearance) {
+	appChan = make(chan types.Appearance, providerChannelBufferSize)
 
 	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	go func() {
@@ -137,7 +137,7 @@ func (p *KeyProvider) Appearances(ctx context.Context, query *Query, errorChan c
 	return
 }
 
-func (p *KeyProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.SimpleMonitor) {
+func (p *KeyProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.Monitor) {
 	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
 	return countSlurped(ctx, query, slurpedChan)
 }
@@ -158,8 +158,8 @@ type KeyAppearance struct {
 	TransactionIndex string `json:"transactionIndex"`
 }
 
-func (k *KeyAppearance) SimpleSlurp() (s types.SimpleSlurp, err error) {
-	s = types.SimpleSlurp{}
+func (k *KeyAppearance) Slurp() (s types.Slurp, err error) {
+	s = types.Slurp{}
 	if err = json.Unmarshal([]byte(k.BlockNumber), &s.BlockNumber); err != nil {
 		return
 	}
@@ -167,8 +167,8 @@ func (k *KeyAppearance) SimpleSlurp() (s types.SimpleSlurp, err error) {
 	return
 }
 
-func (k *KeyAppearance) SimpleAppearance(address base.Address) (a types.SimpleAppearance, err error) {
-	a = types.SimpleAppearance{
+func (k *KeyAppearance) Appearance(address base.Address) (a types.Appearance, err error) {
+	a = types.Appearance{
 		Address: address,
 	}
 	if err = json.Unmarshal([]byte(k.BlockNumber), &a.BlockNumber); err != nil {
@@ -222,7 +222,7 @@ func (e *KeyProvider) fetchData(ctx context.Context, address base.Address, pagin
 
 	data = make([]SlurpedPageItem, 0, len(response.Data))
 	for _, keyAppearance := range response.Data {
-		appearance, err := keyAppearance.SimpleAppearance(base.HexToAddress(response.Meta.Address))
+		appearance, err := keyAppearance.Appearance(base.HexToAddress(response.Meta.Address))
 		if err != nil {
 			return []SlurpedPageItem{}, 0, err
 		}

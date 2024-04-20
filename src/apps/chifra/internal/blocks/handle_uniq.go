@@ -30,7 +30,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleAppearance](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Appearance](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -46,13 +46,13 @@ func (opts *BlocksOptions) HandleUniq() error {
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.SimpleAppearance)
+					thisMap[app] = new(types.Appearance)
 				}
 
-				apps := make([]types.SimpleAppearance, 0, len(thisMap))
-				iterFunc := func(app types.SimpleAppearance, value *types.SimpleAppearance) error {
+				apps := make([]types.Appearance, 0, len(thisMap))
+				iterFunc := func(app types.Appearance, value *types.Appearance) error {
 					bn := uint64(app.BlockNumber)
-					procFunc := func(s *types.SimpleAppearance) error {
+					procFunc := func(s *types.Appearance) error {
 						apps = append(apps, *s)
 						return nil
 					}
@@ -76,7 +76,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 					}
 				}
 
-				items := make([]types.SimpleAppearance, 0, len(thisMap))
+				items := make([]types.Appearance, 0, len(thisMap))
 				items = append(items, apps...)
 
 				sort.Slice(items, func(i, j int) bool {

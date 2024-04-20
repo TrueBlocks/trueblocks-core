@@ -28,7 +28,7 @@ type priceDebugger struct {
 	source      string
 }
 
-// TODO: Much of this reporting could be removed by using a String function on the types.SimpleStatement
+// TODO: Much of this reporting could be removed by using a String function on the types.Statement
 func (r *priceDebugger) report(msg string, testMode bool) {
 	isStable := strings.Contains(msg, "stable-coin")
 	if isStable {

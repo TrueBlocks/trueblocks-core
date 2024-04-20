@@ -12,7 +12,7 @@ import (
 func (opts *ConfigOptions) HandlePaths() error {
 	chain := opts.Globals.Chain
 
-	// TODO: This needs to be a SimpleType and use StreamMany
+	// TODO: This needs to be a Type and use StreamMany
 	dateStr := gostradamus.Now().Format("02-01|15:04:05.000")
 	fmt.Printf("\nchifra status --paths:\n")
 	fmt.Println(dateStr, colors.Green+"Config Path: "+colors.Off, config.PathToRootConfig())

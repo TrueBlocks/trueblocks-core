@@ -25,7 +25,7 @@ func (opts *MonitorsOptions) HandleDecache() error {
 	logger.Info(message)
 	if opts.Globals.IsApiMode() {
 		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-			modelChan <- &types.SimpleMessage{
+			modelChan <- &types.Message{
 				Msg: message,
 			}
 		}, opts.Globals.OutputOpts())

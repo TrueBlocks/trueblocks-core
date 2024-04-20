@@ -133,7 +133,7 @@ func GetChunksOptions(args []string, g *globals.GlobalOptions) *ChunksOptions {
 }
 
 // EXISTING_CODE
-func (opts *ChunksOptions) shouldShow(obj types.SimpleAddrRecord) bool {
+func (opts *ChunksOptions) shouldShow(obj types.AddrRecord) bool {
 	if opts.Mode == "addresses" || opts.Mode == "appearances" {
 		return opts.Globals.Verbose
 	}
@@ -146,7 +146,7 @@ func (opts *ChunksOptions) shouldShow(obj types.SimpleAddrRecord) bool {
 	return false
 }
 
-func GetChunkStats(chain, path string) (s types.SimpleChunkStats, err error) {
+func GetChunkStats(chain, path string) (s types.ChunkStats, err error) {
 	chunk, err := index.OpenChunk(path, true /* check */)
 	if err != nil && !os.IsNotExist(err) {
 		return s, err
@@ -154,7 +154,7 @@ func GetChunkStats(chain, path string) (s types.SimpleChunkStats, err error) {
 	defer chunk.Close()
 
 	ts, _ := tslib.FromBnToTs(chain, chunk.Range.Last)
-	s = types.SimpleChunkStats{
+	s = types.ChunkStats{
 		Range:    chunk.Range.String(),
 		RangeEnd: utils.FormattedDate(ts),
 		NBlocks:  chunk.Range.Last - chunk.Range.First + 1,

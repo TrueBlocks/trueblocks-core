@@ -30,7 +30,7 @@ func (opts *BlocksOptions) HandleTraces() error {
 			}
 
 			for _, bn := range blockNums {
-				var traces []types.SimpleTrace
+				var traces []types.Trace
 				traces, err = opts.Conn.GetTracesByBlockNumber(bn)
 				if err != nil {
 					errorChan <- err

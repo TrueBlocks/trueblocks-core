@@ -38,7 +38,7 @@ type RawName struct {
 	// EXISTING_CODE
 }
 
-type SimpleName struct {
+type Name struct {
 	Address    base.Address `json:"address"`
 	Decimals   uint64       `json:"decimals"`
 	Deleted    bool         `json:"deleted,omitempty"`
@@ -58,20 +58,20 @@ type SimpleName struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleName) String() string {
+func (s *Name) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleName) Raw() *RawName {
+func (s *Name) Raw() *RawName {
 	return s.raw
 }
 
-func (s *SimpleName) SetRaw(raw *RawName) {
+func (s *Name) SetRaw(raw *RawName) {
 	s.raw = raw
 }
 
-func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Name) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -215,7 +215,7 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleName) FinishUnmarshal() {
+func (s *Name) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -223,7 +223,7 @@ func (s *SimpleName) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleName) ToMessage() *proto.Name {
+func (s *Name) ToMessage() *proto.Name {
 	return &proto.Name{
 		Address:    s.Address.Hex(),
 		Decimals:   utils.PointerOf(s.Decimals),
@@ -241,12 +241,12 @@ func (s *SimpleName) ToMessage() *proto.Name {
 	}
 }
 
-func (s *SimpleName) Send(stream proto.Names_SearchStreamServer) error {
+func (s *Name) Send(stream proto.Names_SearchStreamServer) error {
 	return stream.Send(s.ToMessage())
 }
 
-func NewNameFromGrpc(gRpcName *proto.Name) *SimpleName {
-	return &SimpleName{
+func NewNameFromGrpc(gRpcName *proto.Name) *Name {
+	return &Name{
 		Address:    base.HexToAddress(gRpcName.GetAddress()),
 		Decimals:   gRpcName.GetDecimals(),
 		Deleted:    gRpcName.GetDeleted(),

@@ -12,8 +12,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, withCount bool) (apps []types.SimpleAppearance, cnt int, err error) {
-	readAppearances := func(apps *[]types.SimpleAppRecord) (err error) {
+func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, withCount bool) (apps []types.Appearance, cnt int, err error) {
+	readAppearances := func(apps *[]types.AppRecord) (err error) {
 		if int64(len(*apps)) > mon.Count() {
 			err = fmt.Errorf("array is larger than the size of the file (%d,%d)", len(*apps), mon.Count())
 			return
@@ -48,7 +48,7 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, with
 		return nil, 0, nil
 	}
 
-	fromDisc := make([]types.SimpleAppRecord, mon.Count())
+	fromDisc := make([]types.AppRecord, mon.Count())
 	if err := readAppearances(&fromDisc); err != nil {
 		mon.Close()
 		return nil, 0, err
@@ -59,7 +59,7 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, with
 	filt.Sort(fromDisc)
 
 	prev := fromDisc[0]
-	apps = make([]types.SimpleAppearance, 0, len(fromDisc))
+	apps = make([]types.Appearance, 0, len(fromDisc))
 	for _, app := range fromDisc {
 		var passes bool
 		var finished bool
@@ -76,7 +76,7 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, with
 				filt.OuterBounds.First = uint64(prev.BlockNumber)
 			}
 			filt.OuterBounds.Last = uint64(app.BlockNumber + 1)
-			s := types.SimpleAppearance{
+			s := types.Appearance{
 				Address:          mon.Address,
 				BlockNumber:      app.BlockNumber,
 				TransactionIndex: app.TransactionIndex,

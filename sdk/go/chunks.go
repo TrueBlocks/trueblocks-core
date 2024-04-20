@@ -186,38 +186,38 @@ func enumFromChunksMode(values []string) (ChunksMode, error) {
 
 // EXISTING_CODE
 // ChunksManifest implements the chifra chunks manifest command.
-func (opts *ChunksOptions) ChunksManifest() ([]types.SimpleChunkRecord, *types.MetaData, error) {
-	return queryChunks[types.SimpleChunkRecord](opts)
+func (opts *ChunksOptions) ChunksManifest() ([]types.ChunkRecord, *types.MetaData, error) {
+	return queryChunks[types.ChunkRecord](opts)
 }
 
 // ChunksIndex implements the chifra chunks index command.
-func (opts *ChunksOptions) ChunksIndex() ([]types.SimpleChunkIndex, *types.MetaData, error) {
-	return queryChunks[types.SimpleChunkIndex](opts)
+func (opts *ChunksOptions) ChunksIndex() ([]types.ChunkIndex, *types.MetaData, error) {
+	return queryChunks[types.ChunkIndex](opts)
 }
 
 // ChunksBlooms implements the chifra chunks blooms command.
-func (opts *ChunksOptions) ChunksBlooms() ([]types.SimpleChunkBloom, *types.MetaData, error) {
-	return queryChunks[types.SimpleChunkBloom](opts)
+func (opts *ChunksOptions) ChunksBlooms() ([]types.ChunkBloom, *types.MetaData, error) {
+	return queryChunks[types.ChunkBloom](opts)
 }
 
 // ChunksPins implements the chifra chunks pins command.
-func (opts *ChunksOptions) ChunksPins() ([]types.SimpleChunkPinReport, *types.MetaData, error) {
-	return queryChunks[types.SimpleChunkPinReport](opts)
+func (opts *ChunksOptions) ChunksPins() ([]types.ChunkPinReport, *types.MetaData, error) {
+	return queryChunks[types.ChunkPinReport](opts)
 }
 
 // ChunksAddresses implements the chifra chunks addresses command.
-func (opts *ChunksOptions) ChunksAddresses() ([]types.SimpleChunkAddress, *types.MetaData, error) {
-	return queryChunks[types.SimpleChunkAddress](opts)
+func (opts *ChunksOptions) ChunksAddresses() ([]types.ChunkAddress, *types.MetaData, error) {
+	return queryChunks[types.ChunkAddress](opts)
 }
 
 // // ChunksAppearances implements the chifra chunks appearance command.
-// func (opts *ChunksOptions) ChunksAppearances() ([]types.SimpleChunkAppearance, *types.MetaData, error) {
-// 	return queryChunks[types.SimpleChunkAppearance](opts)
+// func (opts *ChunksOptions) ChunksAppearances() ([]types.ChunkAppearance, *types.MetaData, error) {
+// 	return queryChunks[types.ChunkAppearance](opts)
 // }
 
 // ChunkStats implements the chifra chunks stats command.
-func (opts *ChunksOptions) ChunkStats() ([]types.SimpleChunkStats, *types.MetaData, error) {
-	return queryChunks[types.SimpleChunkStats](opts)
+func (opts *ChunksOptions) ChunkStats() ([]types.ChunkStats, *types.MetaData, error) {
+	return queryChunks[types.ChunkStats](opts)
 }
 
 // EXISTING_CODE

@@ -24,7 +24,7 @@ const (
 	UncleReward     base.Txnum = 99998
 	MisconfigReward base.Txnum = 99997
 	ExternalReward  base.Txnum = 99996
-	Withdrawal      base.Txnum = 99995
+	WithdrawalAmt   base.Txnum = 99995
 	// above are stored in cache, do not change
 	NephewReward base.Txnum = 99994
 	TxFeeReward  base.Txnum = 99993
@@ -40,7 +40,7 @@ type RawAppearance struct {
 	// EXISTING_CODE
 }
 
-type SimpleAppearance struct {
+type Appearance struct {
 	Address          base.Address   `json:"address"`
 	BlockNumber      uint32         `json:"blockNumber"`
 	Reason           string         `json:"reason,omitempty"`
@@ -52,20 +52,20 @@ type SimpleAppearance struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleAppearance) String() string {
+func (s *Appearance) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleAppearance) Raw() *RawAppearance {
+func (s *Appearance) Raw() *RawAppearance {
 	return s.raw
 }
 
-func (s *SimpleAppearance) SetRaw(raw *RawAppearance) {
+func (s *Appearance) SetRaw(raw *RawAppearance) {
 	s.raw = raw
 }
 
-func (s *SimpleAppearance) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Appearance) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -98,7 +98,7 @@ func (s *SimpleAppearance) Model(chain, format string, verbose bool, extraOption
 	}
 
 	if extraOptions["namesMap"] != nil {
-		name := extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
+		name := extraOptions["namesMap"].(map[base.Address]Name)[s.Address]
 		if name.Address.Hex() != "0x0" {
 			model["name"] = name
 			order = append(order, "name")
@@ -133,7 +133,7 @@ func (s *SimpleAppearance) Model(chain, format string, verbose bool, extraOption
 			model["date"] = s.Date()
 		}
 		if extraOptions["namesMap"] != nil {
-			name := extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
+			name := extraOptions["namesMap"].(map[base.Address]Name)[s.Address]
 			if name.Address.Hex() != "0x0" {
 				model["name"] = name.Name
 				order = append(order, "name")
@@ -167,12 +167,12 @@ func (s *SimpleAppearance) Model(chain, format string, verbose bool, extraOption
 	}
 }
 
-func (s *SimpleAppearance) Date() string {
+func (s *Appearance) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleAppearance) FinishUnmarshal() {
+func (s *Appearance) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -180,29 +180,29 @@ func (s *SimpleAppearance) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleAppearance) GetKey() string {
+func (s *Appearance) GetKey() string {
 	return fmt.Sprintf("%s\t%09d\t%05d", s.Address, s.BlockNumber, s.TransactionIndex)
 }
 
-func (s *SimpleAppearance) Orig() string {
+func (s *Appearance) Orig() string {
 	return s.Reason // when converted from an Identifier, this is the original string
 }
 
 type MappedType interface {
-	SimpleTransaction |
-		SimpleBlock[string] |
-		SimpleBlock[SimpleTransaction] |
-		SimpleAppearance |
-		SimpleWithdrawal |
-		SimpleResult |
-		SimpleToken |
+	Transaction |
+		Block[string] |
+		Block[Transaction] |
+		Appearance |
+		Withdrawal |
+		Result |
+		Token |
 		bool
 }
 
 // TODO: Do we want this to be configurable? Maybe, maybe not
 var AppMapSize int = 20
 
-func AsSliceOfMaps[T MappedType](apps []SimpleAppearance, reversed bool) ([]map[SimpleAppearance]*T, int, error) {
+func AsSliceOfMaps[T MappedType](apps []Appearance, reversed bool) ([]map[Appearance]*T, int, error) {
 	sort.Slice(apps, func(i, j int) bool {
 		if reversed {
 			i, j = j, i
@@ -213,13 +213,13 @@ func AsSliceOfMaps[T MappedType](apps []SimpleAppearance, reversed bool) ([]map[
 		return apps[i].BlockNumber < apps[j].BlockNumber
 	})
 
-	arrayOfMaps := make([]map[SimpleAppearance]*T, 0, len(apps))
-	curMap := make(map[SimpleAppearance]*T)
+	arrayOfMaps := make([]map[Appearance]*T, 0, len(apps))
+	curMap := make(map[Appearance]*T)
 	for i := 0; i < len(apps); i++ {
 		// TODO: Do we want this to be configurable? Maybe, maybe not
 		if len(curMap) == AppMapSize {
 			arrayOfMaps = append(arrayOfMaps, curMap)
-			curMap = make(map[SimpleAppearance]*T)
+			curMap = make(map[Appearance]*T)
 		}
 		curMap[apps[i]] = nil
 	}

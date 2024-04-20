@@ -66,7 +66,7 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 					logger.Info("Abi " + abiPath + " file removed.")
 				}
 
-				modelChan <- &types.SimpleMessage{
+				modelChan <- &types.Message{
 					Msg: opts.RemoveMonitor(mon),
 				}
 			}

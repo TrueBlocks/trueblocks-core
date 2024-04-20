@@ -34,7 +34,7 @@ type RawWithdrawal struct {
 	// EXISTING_CODE
 }
 
-type SimpleWithdrawal struct {
+type Withdrawal struct {
 	Address        base.Address   `json:"address"`
 	Amount         base.Wei       `json:"amount"`
 	BlockNumber    base.Blknum    `json:"blockNumber"`
@@ -46,20 +46,20 @@ type SimpleWithdrawal struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleWithdrawal) String() string {
+func (s *Withdrawal) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleWithdrawal) Raw() *RawWithdrawal {
+func (s *Withdrawal) Raw() *RawWithdrawal {
 	return s.raw
 }
 
-func (s *SimpleWithdrawal) SetRaw(raw *RawWithdrawal) {
+func (s *Withdrawal) SetRaw(raw *RawWithdrawal) {
 	s.raw = raw
 }
 
-func (s *SimpleWithdrawal) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Withdrawal) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -92,25 +92,25 @@ func (s *SimpleWithdrawal) Model(chain, format string, verbose bool, extraOption
 	}
 }
 
-func (s *SimpleWithdrawal) Date() string {
+func (s *Withdrawal) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-type SimpleWithdrawalGroup struct {
+type WithdrawalGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
-	Withdrawals      []SimpleWithdrawal
+	Withdrawals      []Withdrawal
 }
 
-func (s *SimpleWithdrawalGroup) CacheName() string {
+func (s *WithdrawalGroup) CacheName() string {
 	return "Withdrawal"
 }
 
-func (s *SimpleWithdrawalGroup) CacheId() string {
+func (s *WithdrawalGroup) CacheId() string {
 	return fmt.Sprintf("%09d", s.BlockNumber)
 }
 
-func (s *SimpleWithdrawalGroup) CacheLocation() (directory string, extension string) {
+func (s *WithdrawalGroup) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -124,15 +124,15 @@ func (s *SimpleWithdrawalGroup) CacheLocation() (directory string, extension str
 	return
 }
 
-func (s *SimpleWithdrawalGroup) MarshalCache(writer io.Writer) (err error) {
+func (s *WithdrawalGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Withdrawals)
 }
 
-func (s *SimpleWithdrawalGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *WithdrawalGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	return cache.ReadValue(reader, &s.Withdrawals, version)
 }
 
-func (s *SimpleWithdrawal) MarshalCache(writer io.Writer) (err error) {
+func (s *Withdrawal) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
@@ -166,7 +166,7 @@ func (s *SimpleWithdrawal) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleWithdrawal) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Withdrawal) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// Address
 	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
 		return err
@@ -203,7 +203,7 @@ func (s *SimpleWithdrawal) UnmarshalCache(version uint64, reader io.Reader) (err
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleWithdrawal) FinishUnmarshal() {
+func (s *Withdrawal) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

@@ -85,7 +85,7 @@ func TestArticulateArgumentsMixedIndexed(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	argNameToResultParam := make(map[string]types.SimpleParameter)
+	argNameToResultParam := make(map[string]types.Parameter)
 	for _, param := range result.Inputs {
 		argNameToResultParam[param.Name] = param
 	}
@@ -108,14 +108,14 @@ type myBig = big.Int
 
 func newMyBig(v int64) *myBig { return big.NewInt(v) }
 
-func TestArticulateArgumentsSimpleData(t *testing.T) {
+func TestArticulateArgumentsData(t *testing.T) {
 	parsedAbi, err := abi.JSON(strings.NewReader(ensRegistrar))
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	var abiMethod abi.Method
-	var result *types.SimpleFunction
+	var result *types.Function
 	var expected any
 	var packed []byte
 

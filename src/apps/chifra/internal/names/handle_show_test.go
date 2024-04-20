@@ -20,7 +20,7 @@ type chifraRpcServer struct {
 
 func (g *chifraRpcServer) SearchStream(request *proto.SearchRequest, stream proto.Names_SearchStreamServer) error {
 	for i := 0; i < 13662; i++ {
-		name := &types.SimpleName{
+		name := &types.Name{
 			Name: fmt.Sprint(i),
 		}
 		if err := name.Send(stream); err != nil {

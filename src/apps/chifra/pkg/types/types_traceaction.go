@@ -38,7 +38,7 @@ type RawTraceAction struct {
 	// EXISTING_CODE
 }
 
-type SimpleTraceAction struct {
+type TraceAction struct {
 	Address        base.Address    `json:"address,omitempty"`
 	Author         base.Address    `json:"author,omitempty"`
 	Balance        base.Wei        `json:"balance,omitempty"`
@@ -57,20 +57,20 @@ type SimpleTraceAction struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleTraceAction) String() string {
+func (s *TraceAction) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleTraceAction) Raw() *RawTraceAction {
+func (s *TraceAction) Raw() *RawTraceAction {
 	return s.raw
 }
 
-func (s *SimpleTraceAction) SetRaw(raw *RawTraceAction) {
+func (s *TraceAction) SetRaw(raw *RawTraceAction) {
 	s.raw = raw
 }
 
-func (s *SimpleTraceAction) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *TraceAction) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -133,7 +133,7 @@ func (s *SimpleTraceAction) Model(chain, format string, verbose bool, extraOptio
 	}
 }
 
-func (s *SimpleTraceAction) MarshalCache(writer io.Writer) (err error) {
+func (s *TraceAction) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
@@ -202,7 +202,7 @@ func (s *SimpleTraceAction) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleTraceAction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *TraceAction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// Address
 	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
 		return err
@@ -274,7 +274,7 @@ func (s *SimpleTraceAction) UnmarshalCache(version uint64, reader io.Reader) (er
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleTraceAction) FinishUnmarshal() {
+func (s *TraceAction) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

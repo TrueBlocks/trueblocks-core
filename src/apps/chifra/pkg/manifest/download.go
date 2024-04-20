@@ -45,7 +45,7 @@ func ReadUnchainedIndex(chain string, publisher base.Address, database string) (
 		return "", wrapped
 	} else {
 		contractCall.BlockNumber = conn.GetLatestBlockNumber()
-		artFunc := func(str string, function *types.SimpleFunction) error {
+		artFunc := func(str string, function *types.Function) error {
 			return articulate.ArticulateFunction(function, "", str[2:])
 		}
 		if result, err := contractCall.Call(artFunc); err != nil {

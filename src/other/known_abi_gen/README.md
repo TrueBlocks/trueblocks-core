@@ -2,7 +2,7 @@ Known ABI File Generator (WIP)
 =============================
 
 This tool downloads repositories containing well-known smart contracts, unzips them,
-compiles `.sol` files into combined ASTs and parses them to generate slices of `types.SimpleFunction`.
+compiles `.sol` files into combined ASTs and parses them to generate slices of `types.Function`.
 Finally, it marshals the slices into JSON.
 
 TO DO

@@ -31,7 +31,7 @@ type RawBlockCount struct {
 	// EXISTING_CODE
 }
 
-type SimpleBlockCount struct {
+type BlockCount struct {
 	AddressCnt      uint64         `json:"addressCnt,omitempty"`
 	BlockNumber     base.Blknum    `json:"blockNumber"`
 	LogsCnt         uint64         `json:"logsCnt,omitempty"`
@@ -45,20 +45,20 @@ type SimpleBlockCount struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleBlockCount) String() string {
+func (s *BlockCount) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleBlockCount) Raw() *RawBlockCount {
+func (s *BlockCount) Raw() *RawBlockCount {
 	return s.raw
 }
 
-func (s *SimpleBlockCount) SetRaw(raw *RawBlockCount) {
+func (s *BlockCount) SetRaw(raw *RawBlockCount) {
 	s.raw = raw
 }
 
-func (s *SimpleBlockCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *BlockCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -133,12 +133,12 @@ func (s *SimpleBlockCount) Model(chain, format string, verbose bool, extraOption
 	}
 }
 
-func (s *SimpleBlockCount) Date() string {
+func (s *BlockCount) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleBlockCount) FinishUnmarshal() {
+func (s *BlockCount) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

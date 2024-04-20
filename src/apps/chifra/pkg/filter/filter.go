@@ -68,7 +68,7 @@ func (f *AppearanceFilter) GetOuterBounds() base.BlockRange {
 }
 
 // ApplyFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
-func (f *AppearanceFilter) ApplyFilter(app *types.SimpleAppRecord) (passed, finished bool) {
+func (f *AppearanceFilter) ApplyFilter(app *types.AppRecord) (passed, finished bool) {
 	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)} // --first_block/--last_block
 	if !appRange.Intersects(base.FileRange(f.exportRange)) {
 		return false, false
@@ -77,7 +77,7 @@ func (f *AppearanceFilter) ApplyFilter(app *types.SimpleAppRecord) (passed, fini
 }
 
 // ApplyRangeFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
-func (f *AppearanceFilter) ApplyRangeFilter(app *types.SimpleAppRecord) (passed, finished bool) {
+func (f *AppearanceFilter) ApplyRangeFilter(app *types.AppRecord) (passed, finished bool) {
 	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)} // --first_block/--last_block
 	return appRange.Intersects(base.FileRange(f.exportRange)), false
 }
@@ -99,7 +99,7 @@ func (f *AppearanceFilter) ApplyCountFilter() (passed, finished bool) {
 }
 
 // ApplyTxFilters applies other filters such as the four byte and reverted filters.
-func (f *AppearanceFilter) ApplyTxFilters(tx *types.SimpleTransaction) (passed, finished bool) {
+func (f *AppearanceFilter) ApplyTxFilters(tx *types.Transaction) (passed, finished bool) {
 	matchesReverted := !f.reverted || tx.IsError
 	matchesFourbyte := len(f.fourBytes) == 0
 	for _, fourBytes := range f.fourBytes {
@@ -112,7 +112,7 @@ func (f *AppearanceFilter) ApplyTxFilters(tx *types.SimpleTransaction) (passed, 
 	return matchesFourbyte && matchesReverted, false
 }
 
-func (f *AppearanceFilter) ApplyLogFilter(log *types.SimpleLog, addrArray []base.Address) bool {
+func (f *AppearanceFilter) ApplyLogFilter(log *types.Log, addrArray []base.Address) bool {
 	haystack := make([]byte, 66*len(log.Topics)+len(log.Data))
 	haystack = append(haystack, log.Address.Hex()[2:]...)
 	for _, topic := range log.Topics {

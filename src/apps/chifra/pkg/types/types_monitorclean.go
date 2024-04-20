@@ -26,7 +26,7 @@ type RawMonitorClean struct {
 	// EXISTING_CODE
 }
 
-type SimpleMonitorClean struct {
+type MonitorClean struct {
 	Address  base.Address     `json:"address"`
 	Dups     int64            `json:"dups"`
 	SizeNow  int64            `json:"sizeNow"`
@@ -36,20 +36,20 @@ type SimpleMonitorClean struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleMonitorClean) String() string {
+func (s *MonitorClean) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleMonitorClean) Raw() *RawMonitorClean {
+func (s *MonitorClean) Raw() *RawMonitorClean {
 	return s.raw
 }
 
-func (s *SimpleMonitorClean) SetRaw(raw *RawMonitorClean) {
+func (s *MonitorClean) SetRaw(raw *RawMonitorClean) {
 	s.raw = raw
 }
 
-func (s *SimpleMonitorClean) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *MonitorClean) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -75,7 +75,7 @@ func (s *SimpleMonitorClean) Model(chain, format string, verbose bool, extraOpti
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleMonitorClean) FinishUnmarshal() {
+func (s *MonitorClean) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

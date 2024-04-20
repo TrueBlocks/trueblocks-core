@@ -16,7 +16,7 @@ import (
 
 var AppearanceFmt = "%s\t%09d\t%05d"
 
-type UniqProcFunc func(s *types.SimpleAppearance) error
+type UniqProcFunc func(s *types.Appearance) error
 type AddressBooleanMap map[string]bool
 
 // Insert generates item's key according to `AppearanceFmt` and adds the item to the map
@@ -88,7 +88,7 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 	return nil
 }
 
-func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow string, trans *types.SimpleTransaction, ts int64, addrMap AddressBooleanMap, conn *rpc.Connection) error {
+func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow string, trans *types.Transaction, ts int64, addrMap AddressBooleanMap, conn *rpc.Connection) error {
 	bn := trans.BlockNumber
 	txid := trans.TransactionIndex
 	traceid := utils.NOPOS
@@ -129,7 +129,7 @@ func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow str
 }
 
 // uniqFromLogsDetails extracts addresses from the logs
-func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs []types.SimpleLog, ts int64, addrMap AddressBooleanMap) (err error) {
+func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs []types.Log, ts int64, addrMap AddressBooleanMap) (err error) {
 	traceid := utils.NOPOS
 	for l, log := range logs {
 		generator := log.Address.Hex()
@@ -159,7 +159,7 @@ func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs 
 	return
 }
 
-func traceReason(i uint64, trace *types.SimpleTrace, r string) string {
+func traceReason(i uint64, trace *types.Trace, r string) string {
 	switch r {
 	case "from":
 		fallthrough
@@ -196,7 +196,7 @@ func traceReason(i uint64, trace *types.SimpleTrace, r string) string {
 }
 
 // uniqFromTracesDetails extracts addresses from traces
-func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.SimpleTrace, ts int64, addrMap AddressBooleanMap, conn *rpc.Connection) (err error) {
+func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.Trace, ts int64, addrMap AddressBooleanMap, conn *rpc.Connection) (err error) {
 	for _, trace := range traces {
 		traceid := trace.TraceIndex
 		bn := base.Blknum(trace.BlockNumber)
@@ -364,7 +364,7 @@ func streamAppearance(procFunc UniqProcFunc, flow string, reason string, address
 		addrMap[key] = true
 		mapSync2.Unlock()
 
-		s := &types.SimpleAppearance{
+		s := &types.Appearance{
 			Address:          base.HexToAddress(address),
 			BlockNumber:      uint32(bn),
 			TransactionIndex: uint32(txid),

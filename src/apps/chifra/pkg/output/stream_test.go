@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var input = types.SimpleReceipt{
+var input = types.Receipt{
 	BlockHash:         base.HexToHash("0x123"),
 	BlockNumber:       123,
 	ContractAddress:   base.HexToAddress("0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5"),
@@ -23,7 +23,7 @@ var input = types.SimpleReceipt{
 	From:              base.HexToAddress("0xfd4536dd5a81ecfd1a4b30111a01d129e7567ff8"),
 	GasUsed:           500,
 	EffectiveGasPrice: 500,
-	Logs: []types.SimpleLog{
+	Logs: []types.Log{
 		{
 			Address:          base.HexToAddress("0x02ef66278c3c88ff929a5c84c46fbfb83614382e"),
 			LogIndex:         0,
@@ -148,7 +148,7 @@ func TestStreamMany(t *testing.T) {
 	}
 
 	renderData := func(models chan types.Modeler[types.RawReceipt], errorChan chan error) {
-		models <- &types.SimpleReceipt{
+		models <- &types.Receipt{
 			BlockNumber:      uint64(123),
 			TransactionIndex: 1,
 			TransactionHash:  base.HexToHash("0xdeadbeef"),
@@ -157,7 +157,7 @@ func TestStreamMany(t *testing.T) {
 			IsError:          false,
 		}
 
-		models <- &types.SimpleReceipt{
+		models <- &types.Receipt{
 			BlockNumber:      uint64(124),
 			TransactionIndex: 5,
 			TransactionHash:  base.HexToHash("0xdeadbeef2"),
@@ -176,7 +176,7 @@ func TestStreamMany(t *testing.T) {
 	jw.Close()
 
 	type R = struct {
-		Data []types.SimpleReceipt `json:"data"`
+		Data []types.Receipt `json:"data"`
 	}
 	var result R
 	err := json.Unmarshal(buffer.Bytes(), &result)
@@ -196,7 +196,7 @@ func TestStreamMany(t *testing.T) {
 func TestApiFormat(t *testing.T) {
 	outputBuffer := &bytes.Buffer{}
 	renderData := func(models chan types.Modeler[types.RawReceipt], errorChan chan error) {
-		models <- &types.SimpleReceipt{
+		models <- &types.Receipt{
 			BlockNumber:      uint64(123),
 			TransactionIndex: 1,
 			TransactionHash:  base.HexToHash("0xdeadbeef"),

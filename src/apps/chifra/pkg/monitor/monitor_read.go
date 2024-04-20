@@ -32,7 +32,7 @@ func (mon *Monitor) ReadMonitorHeader() (err error) {
 }
 
 // ReadAppearanceAt returns the appearance at the one-based index. The file remains open.
-func (mon *Monitor) ReadAppearanceAt(idx int64, app *types.SimpleAppRecord) (err error) {
+func (mon *Monitor) ReadAppearanceAt(idx int64, app *types.AppRecord) (err error) {
 	if idx == 0 || idx > mon.Count() {
 		// the file contains a header one record wide, so a one-based index eases caller code
 		err = fmt.Errorf("index out of range in ReadAppearanceAt[%d]", idx)

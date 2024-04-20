@@ -26,30 +26,30 @@ type RawManifest struct {
 	// EXISTING_CODE
 }
 
-type SimpleManifest struct {
-	Chain         string              `json:"chain"`
-	Chunks        []SimpleChunkRecord `json:"chunks"`
-	Specification base.IpfsHash       `json:"specification"`
-	Version       string              `json:"version"`
-	raw           *RawManifest        `json:"-"`
+type Manifest struct {
+	Chain         string        `json:"chain"`
+	Chunks        []ChunkRecord `json:"chunks"`
+	Specification base.IpfsHash `json:"specification"`
+	Version       string        `json:"version"`
+	raw           *RawManifest  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleManifest) String() string {
+func (s *Manifest) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleManifest) Raw() *RawManifest {
+func (s *Manifest) Raw() *RawManifest {
 	return s.raw
 }
 
-func (s *SimpleManifest) SetRaw(raw *RawManifest) {
+func (s *Manifest) SetRaw(raw *RawManifest) {
 	s.raw = raw
 }
 
-func (s *SimpleManifest) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Manifest) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -75,7 +75,7 @@ func (s *SimpleManifest) Model(chain, format string, verbose bool, extraOptions 
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleManifest) FinishUnmarshal() {
+func (s *Manifest) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

@@ -16,7 +16,7 @@ import (
 
 // GetReceipt retrieves a single receipt by block number and transaction id. If suggested is provided,
 // it will be used for the timestamp of the logs.
-func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested base.Timestamp) (receipt types.SimpleReceipt, err error) {
+func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested base.Timestamp) (receipt types.Receipt, err error) {
 	receipt, err = conn.GetReceiptNoTimestamp(bn, txid) // note that the logs do not yet have timestamp...
 
 	if suggested == 0 {
@@ -31,9 +31,9 @@ func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested ba
 
 // GetReceiptNoTimestamp fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
-func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (receipt types.SimpleReceipt, err error) {
+func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (receipt types.Receipt, err error) {
 	if conn.StoreReadable() {
-		tx := &types.SimpleTransaction{
+		tx := &types.Transaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
@@ -51,7 +51,7 @@ func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (
 		return
 	}
 
-	return rawReceipt.RawToSimple(map[string]any{
+	return rawReceipt.RawTo(map[string]any{
 		"hash":      txHash,
 		"timestmap": utils.NOPOSI,
 	})
@@ -75,14 +75,14 @@ func (conn *Connection) getReceiptRaw(bn uint64, txid uint64) (receipt *types.Ra
 }
 
 // GetReceiptsByNumber returns all receipts in a blocks along with their logs
-func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.SimpleReceipt, map[base.Txnum]*types.SimpleReceipt, error) {
+func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.Receipt, map[base.Txnum]*types.Receipt, error) {
 	if conn.StoreReadable() {
-		receiptGroup := &types.SimpleReceiptGroup{
+		receiptGroup := &types.ReceiptGroup{
 			BlockNumber:      bn,
 			TransactionIndex: utils.NOPOS,
 		}
 		if err := conn.Store.Read(receiptGroup, nil); err == nil {
-			receiptMap := make(map[base.Txnum]*types.SimpleReceipt, len(receiptGroup.Receipts))
+			receiptMap := make(map[base.Txnum]*types.Receipt, len(receiptGroup.Receipts))
 			for index := 0; index < len(receiptGroup.Receipts); index++ {
 				pReceipt := &receiptGroup.Receipts[index]
 				receiptMap[pReceipt.TransactionIndex] = pReceipt
@@ -91,11 +91,11 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 		}
 	}
 
-	if receipts, err := conn.getReceiptsSimple(bn); err != nil {
+	if receipts, err := conn.getReceipts(bn); err != nil {
 		return receipts, nil, err
 	} else {
 		if conn.StoreWritable() && conn.EnabledMap["receipts"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
-			receiptGroup := &types.SimpleReceiptGroup{
+			receiptGroup := &types.ReceiptGroup{
 				Receipts:         receipts,
 				BlockNumber:      bn,
 				TransactionIndex: utils.NOPOS,
@@ -105,7 +105,7 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 			}
 		}
 
-		receiptMap := make(map[base.Txnum]*types.SimpleReceipt, len(receipts))
+		receiptMap := make(map[base.Txnum]*types.Receipt, len(receipts))
 		for index := 0; index < len(receipts); index++ {
 			pReceipt := &receipts[index]
 			receiptMap[pReceipt.TransactionIndex] = pReceipt
@@ -114,29 +114,29 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 	}
 }
 
-// getReceiptsSimple fetches receipts from the RPC using eth_getBlockReceipts. It returns
-// an array of SimpleReceipts with the timestamp set to the block timestamp.
-func (conn *Connection) getReceiptsSimple(bn base.Blknum) ([]types.SimpleReceipt, error) {
+// getReceipts fetches receipts from the RPC using eth_getBlockReceipts. It returns
+// an array of Receipts with the timestamp set to the block timestamp.
+func (conn *Connection) getReceipts(bn base.Blknum) ([]types.Receipt, error) {
 	method := "eth_getBlockReceipts"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
 	if rawReceipts, err := query.Query[[]types.RawReceipt](conn.Chain, method, params); err != nil {
-		return []types.SimpleReceipt{}, err
+		return []types.Receipt{}, err
 
 	} else if rawReceipts == nil || len(*rawReceipts) == 0 {
-		return []types.SimpleReceipt{}, nil
+		return []types.Receipt{}, nil
 
 	} else {
 		curBlock := utils.NOPOS
 		curTs := utils.NOPOSI
-		var ret []types.SimpleReceipt
+		var ret []types.Receipt
 		for _, rawReceipt := range *rawReceipts {
 			bn := utils.MustParseUint(rawReceipt.BlockNumber)
 			if bn != curBlock {
 				curTs = conn.GetBlockTimestamp(bn)
 				curBlock = bn
 			}
-			if simp, err := rawReceipt.RawToSimple(map[string]any{
+			if simp, err := rawReceipt.RawTo(map[string]any{
 				"hash":      base.Hash{},
 				"timestamp": curTs,
 			}); err != nil {

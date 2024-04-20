@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func SetDeleted(dbType DatabaseType, chain string, address base.Address, deleted bool) (name *types.SimpleName, err error) {
+func SetDeleted(dbType DatabaseType, chain string, address base.Address, deleted bool) (name *types.Name, err error) {
 	switch dbType {
 	case DatabaseCustom:
 		return customSetDeleted(chain, address, deleted)
@@ -22,7 +22,7 @@ func SetDeleted(dbType DatabaseType, chain string, address base.Address, deleted
 	return
 }
 
-func customSetDeleted(chain string, address base.Address, deleted bool) (name *types.SimpleName, err error) {
+func customSetDeleted(chain string, address base.Address, deleted bool) (name *types.Name, err error) {
 	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
 	if err != nil {
 		return
@@ -32,7 +32,7 @@ func customSetDeleted(chain string, address base.Address, deleted bool) (name *t
 	return changeDeleted(db, address, deleted)
 }
 
-func changeDeleted(output *os.File, address base.Address, deleted bool) (*types.SimpleName, error) {
+func changeDeleted(output *os.File, address base.Address, deleted bool) (*types.Name, error) {
 	name, ok := loadedCustomNames[address]
 	if !ok {
 		return nil, fmt.Errorf("no custom name for address %s", address.Hex())

@@ -27,7 +27,7 @@ type RawChunkPinReport struct {
 	// EXISTING_CODE
 }
 
-type SimpleChunkPinReport struct {
+type ChunkPinReport struct {
 	Chain         string             `json:"chain"`
 	ManifestHash  base.IpfsHash      `json:"manifestHash"`
 	SpecHash      base.IpfsHash      `json:"specHash"`
@@ -38,20 +38,20 @@ type SimpleChunkPinReport struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleChunkPinReport) String() string {
+func (s *ChunkPinReport) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *SimpleChunkPinReport) Raw() *RawChunkPinReport {
+func (s *ChunkPinReport) Raw() *RawChunkPinReport {
 	return s.raw
 }
 
-func (s *SimpleChunkPinReport) SetRaw(raw *RawChunkPinReport) {
+func (s *ChunkPinReport) SetRaw(raw *RawChunkPinReport) {
 	s.raw = raw
 }
 
-func (s *SimpleChunkPinReport) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *ChunkPinReport) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -79,7 +79,7 @@ func (s *SimpleChunkPinReport) Model(chain, format string, verbose bool, extraOp
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *SimpleChunkPinReport) FinishUnmarshal() {
+func (s *ChunkPinReport) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

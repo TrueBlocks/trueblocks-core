@@ -9,7 +9,7 @@ import (
 	goEthAbi "github.com/ethereum/go-ethereum/accounts/abi"
 )
 
-func (abiCache *AbiCache) ArticulateTrace(trace *types.SimpleTrace) (err error) {
+func (abiCache *AbiCache) ArticulateTrace(trace *types.Trace) (err error) {
 	found, err := articulateTrace(trace, &abiCache.AbiMap)
 	if err != nil {
 		return err
@@ -42,7 +42,7 @@ func (abiCache *AbiCache) ArticulateTrace(trace *types.SimpleTrace) (err error) 
 	}
 }
 
-func articulateTrace(trace *types.SimpleTrace, abiMap *abi.SelectorSyncMap) (articulated *types.SimpleFunction, err error) {
+func articulateTrace(trace *types.Trace, abiMap *abi.SelectorSyncMap) (articulated *types.Function, err error) {
 	input := trace.Action.Input
 	if len(input) < 10 {
 		return

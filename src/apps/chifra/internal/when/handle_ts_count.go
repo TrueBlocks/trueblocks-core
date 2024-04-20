@@ -27,7 +27,7 @@ func (opts *WhenOptions) HandleTimestampCount() error {
 				count = 5000000
 			}
 
-			s := types.SimpleTimestampCount{
+			s := types.TimestampCount{
 				Count: count,
 			}
 
