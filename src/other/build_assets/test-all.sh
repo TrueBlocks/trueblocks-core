@@ -5,7 +5,7 @@ export QUICKBLOCKS=`pwd`
 export INSTALL=$QUICKBLOCKS/build/other/install
 export CHIFRA=$QUICKBLOCKS/src/apps/chifra
 export BUILD_FOLDER=$QUICKBLOCKS/build/
-export TEST_FOLDER=$QUICKBLOCKS/test/
+export TEST_FOLDER=$QUICKBLOCKS/tests/
 
 # The names.tab file is ours, so we can always replace it for testing
 export NAMES_SOURCE=$QUICKBLOCKS/src/other/install/names/names.tab
@@ -18,24 +18,31 @@ cd "$CHIFRA"
 echo "Running go tests..."
 go test --tags integration ./...
 RESULT=$?
+cd $BUILD_FOLDER
 if [ $RESULT -ne 0 ]; then
-   cd $BUILD_FOLDER
    exit $RESULT
 fi
-cd $BUILD_FOLDER
 
 #echo "Making..."
 cd "$BUILD_FOLDER/"
 cmake ../src
-cd dev_tools
+cd ..
+echo "Processing tests against this tests commit"
+git submodule status tests
+cd build/dev_tools
 make -j 8
 cd ..
-# make generate
+make generate
 make -j 8
 
-~/.local/bin/chifra/test/test-api.sh --mode both $@
-RESULT=$?
+cd "$BUILD_FOLDER/"
+export TEST_MODE=true
 
+echo "Calling testRunner"
+testRunner
+RESULT=${PIPESTATUS[0]}
+
+cd $BUILD_FOLDER
 export DEST_FOLDER="$HOME/Library/Application Support/TrueBlocks/config/mainnet"
 if [[ -d $DEST_FOLDER ]]
 then

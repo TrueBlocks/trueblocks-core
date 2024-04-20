@@ -22,6 +22,7 @@ RUN cp $HOME/.local/bin/protoc /usr/local/bin
 RUN git clone --progress https://github.com/$repo.git /root/trueblocks-core && \
         cd /root/trueblocks-core && \
         git checkout $branch && \
+        git submodule update --init --recursive && \
         mkdir -v build && \
         cd build && \
         cmake ../src && \
