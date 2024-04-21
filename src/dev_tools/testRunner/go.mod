@@ -1,4 +1,4 @@
-module github.com/TrueBlocks/trueblocks-core/v0/sdk/tester
+module github.com/TrueBlocks/trueblocks-core/testRunner
 
 go 1.22
 
