@@ -3,4 +3,4 @@
 	url = https://github.com/TrueBlocks/trueblocks-tests
 [submodule "examples"]
 	path = examples
-	url = git@github.com:TrueBlocks/trueblocks-examples.git
+	url = https://github.com/TrueBlocks/trueblocks-examples
