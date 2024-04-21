@@ -1,4 +1,4 @@
-module github.com/TrueBlocks/usesSDK
+module github.com/TrueBlocks/examples/usesSDK
 
 // Go Version
 go 1.22

@@ -1,8 +1,0 @@
-{
-  "error": {
-    "code": -32003,
-    "message": "nonce too low"
-  },
-  "id": "1",
-  "jsonrpc": "2.0"
-}

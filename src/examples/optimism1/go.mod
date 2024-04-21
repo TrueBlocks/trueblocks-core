@@ -1,4 +1,4 @@
-module github.com/TrueBlocks/examples
+module github.com/TrueBlocks/examples/optimism1
 
 // Go Version
 go 1.22
