@@ -43,11 +43,25 @@ function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC DEST_DIR)
 endfunction(ADD_GO_INSTALLABLE_PROGRAM)
 
 # ----------------------------------------------------------------------------------------
+# Examples
+set(REPO_DIR ${CMAKE_SOURCE_DIR}/..)
+set(SCRIPTS_DIR ${REPO_DIR}/scripts)
+message(STATUS "REPO_DIR: ${REPO_DIR}")
+message(STATUS "SCRIPTS_DIR: ${SCRIPTS_DIR}")
+message(STATUS "CMAKE_COMMAND: ${CMAKE_COMMAND}")
+
+# ----------------------------------------------------------------------------------------
 # Enable testing
 # enable_testing()
 add_custom_target(lint COMMAND "golangci-lint" "run" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra")
 add_custom_target(generate COMMAND "${BIN_DIR}/goMaker" "" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/..")
 add_custom_target(test-all COMMAND "${BIN_TEST_DIR}/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(examples
+  COMMAND ${CMAKE_COMMAND} -E echo "Building Go examples..."
+  COMMAND ${SCRIPTS_DIR}/build_examples.sh
+  WORKING_DIRECTORY ${REPO_DIR}
+  COMMENT "Go examples have been built."
+)
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
