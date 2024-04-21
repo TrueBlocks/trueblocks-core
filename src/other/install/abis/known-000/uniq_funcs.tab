@@ -8664,7 +8664,7 @@ calculateDividendTokens
 calculatedTo
 calculateEarnings
 calculateEggBuy
-calculateEggBuy
+calculateEggBuySimple
 calculateEggSell
 calculateEmissionTokens
 calculateEndTime
