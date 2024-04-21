@@ -3,8 +3,6 @@ module github.com/TrueBlocks/examples/balanceChart
 // Go Version
 go 1.22
 
-replace github.com/TrueBlocks/trueblocks-core/ => ../../../
-
 require gonum.org/v1/plot v0.0.0-20190515093506-e2840ee46a6b
 
 require (

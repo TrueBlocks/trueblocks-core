@@ -2,8 +2,6 @@ module github.com/TrueBlocks/trueblocks-core/goMaker
 
 go 1.22
 
-replace github.com/TrueBlocks/trueblocks-core/v0/sdk => ../sdk
-
 require (
 	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240314004354-24be97c22535
 	github.com/gocarina/gocsv v0.0.0-20230123225133-763e25b40669
