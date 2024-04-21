@@ -1,4 +1,4 @@
-module github.com/TrueBlocks/balanceChart
+module github.com/TrueBlocks/examples/balanceChart
 
 // Go Version
 go 1.22
