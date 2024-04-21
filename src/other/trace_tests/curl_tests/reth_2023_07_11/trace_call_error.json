@@ -1,9 +1,0 @@
-{
-  "error": {
-    "code": -32602,
-    "data": "unknown variant `invalid`, expected one of `trace`, `vmTrace`, `stateDiff` at line 1 column 10",
-    "message": "Invalid params"
-  },
-  "id": "1",
-  "jsonrpc": "2.0"
-}
