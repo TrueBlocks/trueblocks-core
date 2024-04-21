@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/sdk/v2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
 // SdkTest runs a test case through the SDK and returns the results in the provided bytes.Buffer

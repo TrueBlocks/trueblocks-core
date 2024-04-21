@@ -6,7 +6,4 @@ use (
 	./src/apps/chifra
 	./src/dev_tools/goMaker
 	./src/dev_tools/testRunner
-	./src/examples/balanceChart
-	./src/examples/optimism1
-	./src/examples/usesSDK
 )
