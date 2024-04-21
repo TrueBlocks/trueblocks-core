@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/sdk/v2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
 func downloadAbis() error {

@@ -495,7 +495,7 @@ func loadTestCases() (map[string][]TestCase, string, error) {
 
 	casesPath := getCasesPath()
 	if err := filepath.Walk(casesPath, walkFunc); err != nil {
-		return testMap, casesPath, fmt.Errorf("error walking the path %q: %v\n", casesPath, err)
+		return testMap, casesPath, fmt.Errorf("error walking the path %q: %v", casesPath, err)
 	}
 
 	file.StringToAsciiFile(getGeneratedPath()+"testCases.json", toJson(testMap))

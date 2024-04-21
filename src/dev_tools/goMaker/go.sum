@@ -46,8 +46,8 @@ github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240314004354-24be97c22535 h1:kiJVq0Yhsk0P8kMo0pDawbkUrJqHXG6hhcBs5Yxw3J0=
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240314004354-24be97c22535/go.mod h1:Iv96WyE9UCDvcDUxgQds8M4NrXv8Y/exv4cvyJcawUg=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240419175527-3f8eaf44105d h1:zRcMnMIoTO0CMIA8G7HfbHxd4+yeKJEzgA62aFekVDk=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240419175527-3f8eaf44105d/go.mod h1:RvdZJxvZ79EdxqPDR1MytskxtDzRZEQ/mXZgTjPFKTo=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/armon/circbuf v0.0.0-20150827004946-bbbad097214e/go.mod h1:3U/XgcO3hCbHZ8TKRvWD2dDTCfh9M9ya+I9JpbB7O8o=
 github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da/go.mod h1:Q73ZrmVTwzkszR9V5SSuryQ31EELlFMUz1kKyl939pY=
