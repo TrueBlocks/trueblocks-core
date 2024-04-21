@@ -2,7 +2,7 @@
 go 1.22
 
 use (
-	./sdk/go
+	./sdk
 	./src/apps/chifra
 	./src/dev_tools/goMaker
 	./src/dev_tools/testRunner
