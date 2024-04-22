@@ -7,5 +7,6 @@ use (
 	./src/dev_tools/goMaker
 	./src/dev_tools/testRunner
 	./examples/simple
+	./examples/findFirst
 	./examples/balanceChart
 )
