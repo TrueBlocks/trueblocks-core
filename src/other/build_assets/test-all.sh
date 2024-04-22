@@ -32,8 +32,8 @@ git submodule status tests
 cd build/dev_tools
 make -j 8
 cd ..
-#npm install -g prettier
-#make generate
+# npm install -g prettier
+# make generate
 make -j 8
 
 cd "$BUILD_FOLDER/"
