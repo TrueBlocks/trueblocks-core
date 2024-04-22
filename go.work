@@ -6,5 +6,4 @@ use (
 	./src/apps/chifra
 	./src/dev_tools/goMaker
 	./src/dev_tools/testRunner
-	./examples/example1
 )
