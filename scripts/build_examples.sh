@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Building examples"
+pwd
 cd examples
+pwd
 go build -o ../bin/examples/example1 example1/main.go
-# go build -o ../bin/examples/example2 example2/main.go
+ls -l ../bin/examples/
