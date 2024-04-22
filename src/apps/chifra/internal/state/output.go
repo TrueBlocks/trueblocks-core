@@ -23,7 +23,6 @@ import (
 // RunState handles the state command for the command line. Returns error only as per cobra.
 func RunState(cmd *cobra.Command, args []string) error {
 	opts := stateFinishParse(args)
-	outputHelpers.EnableCommand("state", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("state", &opts.Globals)
@@ -33,7 +32,6 @@ func RunState(cmd *cobra.Command, args []string) error {
 // ServeState handles the state command for the API. Returns an error.
 func ServeState(w http.ResponseWriter, r *http.Request) error {
 	opts := stateFinishParseApi(w, r)
-	outputHelpers.EnableCommand("state", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("state", w, &opts.Globals)

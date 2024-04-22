@@ -20,7 +20,6 @@ import (
 func Traces(w io.Writer, values url.Values) error {
 	traces.ResetOptions(sdkTestMode)
 	opts := traces.TracesFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("traces", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("traces", w, &opts.Globals)

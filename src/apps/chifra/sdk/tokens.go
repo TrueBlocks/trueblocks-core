@@ -20,7 +20,6 @@ import (
 func Tokens(w io.Writer, values url.Values) error {
 	tokens.ResetOptions(sdkTestMode)
 	opts := tokens.TokensFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("tokens", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("tokens", w, &opts.Globals)

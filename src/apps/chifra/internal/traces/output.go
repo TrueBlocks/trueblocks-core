@@ -23,7 +23,6 @@ import (
 // RunTraces handles the traces command for the command line. Returns error only as per cobra.
 func RunTraces(cmd *cobra.Command, args []string) error {
 	opts := tracesFinishParse(args)
-	outputHelpers.EnableCommand("traces", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("traces", &opts.Globals)
@@ -33,7 +32,6 @@ func RunTraces(cmd *cobra.Command, args []string) error {
 // ServeTraces handles the traces command for the API. Returns an error.
 func ServeTraces(w http.ResponseWriter, r *http.Request) error {
 	opts := tracesFinishParseApi(w, r)
-	outputHelpers.EnableCommand("traces", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("traces", w, &opts.Globals)

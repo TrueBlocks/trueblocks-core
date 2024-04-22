@@ -24,7 +24,6 @@ import (
 // RunExport handles the export command for the command line. Returns error only as per cobra.
 func RunExport(cmd *cobra.Command, args []string) error {
 	opts := exportFinishParse(args)
-	outputHelpers.EnableCommand("export", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("export", &opts.Globals)
@@ -34,7 +33,6 @@ func RunExport(cmd *cobra.Command, args []string) error {
 // ServeExport handles the export command for the API. Returns an error.
 func ServeExport(w http.ResponseWriter, r *http.Request) error {
 	opts := exportFinishParseApi(w, r)
-	outputHelpers.EnableCommand("export", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("export", w, &opts.Globals)

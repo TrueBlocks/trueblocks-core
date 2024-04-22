@@ -20,7 +20,6 @@ import (
 func When(w io.Writer, values url.Values) error {
 	when.ResetOptions(sdkTestMode)
 	opts := when.WhenFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("when", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("when", w, &opts.Globals)

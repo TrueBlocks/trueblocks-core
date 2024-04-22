@@ -24,7 +24,6 @@ import (
 // RunWhen handles the when command for the command line. Returns error only as per cobra.
 func RunWhen(cmd *cobra.Command, args []string) error {
 	opts := whenFinishParse(args)
-	outputHelpers.EnableCommand("when", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("when", &opts.Globals)
@@ -34,7 +33,6 @@ func RunWhen(cmd *cobra.Command, args []string) error {
 // ServeWhen handles the when command for the API. Returns an error.
 func ServeWhen(w http.ResponseWriter, r *http.Request) error {
 	opts := whenFinishParseApi(w, r)
-	outputHelpers.EnableCommand("when", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("when", w, &opts.Globals)
