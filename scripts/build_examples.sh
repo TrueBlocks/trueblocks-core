@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# Function to build a Go program
+build_target() {
+    echo "Build target $1"
+    go build -o "../bin/examples/$1" "$1/main.go"
+}
+
+# Change to the examples directory
 cd examples
-go build -o ../bin/examples/simple simple/main.go
-go build -o ../bin/examples/balanceChart balanceChart/main.go
+
+# Build each target using the build_target function
+build_target simple
+build_target findFirst
+build_target balanceChart
