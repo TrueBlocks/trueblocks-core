@@ -7,11 +7,11 @@
 
 #------------------------------------------------
 # Navigate to the build folder and set the PATH
-export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
 if ! cd /root/trueblocks-core/build; then
     echo "Failed to change to directory /root/trueblocks-core/build."
     exit 1
 fi
+export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
 
 #------------------------------------------------
 # Get an unused port for the API server
