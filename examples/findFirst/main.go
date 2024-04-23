@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"sync"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func main() {
@@ -16,6 +18,17 @@ func main() {
 		10, 20, 30, 40, 50, 60, 70, 80, 90,
 		100, 200, // 300, 400, 500, 600, 700, 800, 900, 1000,
 	}
+
+	if len(os.Args) > 1 {
+		workers = []int{}
+		for _, arg := range os.Args[1:] {
+			v := int(utils.MustParseInt(arg))
+			if v > 0 {
+				workers = append(workers, v)
+			}
+		}
+	}
+
 	for numWorkers := len(workers) - 1; numWorkers >= 0; numWorkers-- {
 		oneTest(workers[numWorkers])
 	}
