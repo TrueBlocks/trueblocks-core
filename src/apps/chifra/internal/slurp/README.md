@@ -17,22 +17,6 @@ Currently supported API providers:
 - Covalent
 - Alchemy
 
-### Adding provider API key
-Call `chifra config edit` to edit the configuration file.
-
-For TrueBlocks Key, add `keyEndpoint = "your-key-endpoint-url"` to `chains.mainnet` section.
-
-For all other providers add an entry to `keys` section like this:
-```toml
-[keys]
-  [keys.etherscan]
-    apiKey = "etherscan-apikey"
-  [keys.covalent]
-    apiKey = "covalent-apikey"
-  [keys.alchemy]
-    apiKey = "alchemy-apikey"
-```
-
 ```[plaintext]
 Purpose:
   Fetch data from Etherscan and other APIs for any address.
@@ -73,6 +57,22 @@ Data models produced by this tool:
 
 - [slurp](/data-model/other/#slurp)
 - [slurpcount](/data-model/other/#slurpcount)
+
+### Adding provider API key
+Call `chifra config edit` to edit the configuration file.
+
+For TrueBlocks Key, add `keyEndpoint = "your-key-endpoint-url"` to `chains.mainnet` section.
+
+For all other providers add an entry to `keys` section like this:
+```toml
+[keys]
+  [keys.etherscan]
+    apiKey = "etherscan-apikey"
+  [keys.covalent]
+    apiKey = "covalent-apikey"
+  [keys.alchemy]
+    apiKey = "alchemy-apikey"
+```
 
 ### Other Options
 
