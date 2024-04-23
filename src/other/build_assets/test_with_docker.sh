@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # SOME NOTES: I spent a very long time messing around with these test after I removed the entire
 # Unchained Index folder on the testing machine and then did `chifra init --all`. This was finally
