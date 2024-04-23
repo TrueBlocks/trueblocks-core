@@ -28,4 +28,4 @@ RUN git clone --progress https://github.com/$repo.git /root/trueblocks-core && \
         cmake ../src && \
         make -j 4
 
-ENTRYPOINT bash /root/trueblocks-core/src/other/build_assets/remote_testing/build_and_test.sh
+ENTRYPOINT bash /root/trueblocks-core/src/other/build_assets/build_and_test.sh
