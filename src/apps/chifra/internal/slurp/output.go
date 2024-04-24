@@ -83,6 +83,8 @@ func (opts *SlurpOptions) Provider() (provider.Provider, error) {
 		return provider.NewKeyProvider(opts.Conn, opts.Globals.Chain)
 	case "covalent":
 		return provider.NewCovalentProvider(opts.Conn, opts.Globals.Chain)
+	case "alchemy":
+		return provider.NewAlchemyProvider(opts.Conn, opts.Globals.Chain)
 	case "etherscan":
 		fallthrough
 	default:

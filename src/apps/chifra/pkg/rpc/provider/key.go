@@ -18,6 +18,12 @@ const keyFirstPage = "latest"
 const keyRequestsPerSecond = 20
 const keyMaxPerPage = 1000
 
+func keyPrepareQuery(q *Query) (result *Query) {
+	result = q.Dup()
+	result.Resources = []string{"key"}
+	return
+}
+
 type KeyProvider struct {
 	printProgress bool
 	perPage       int
@@ -61,7 +67,9 @@ func (p *KeyProvider) NewPaginator() Paginator {
 func (p *KeyProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.Slurp) {
 	txChan = make(chan types.Slurp, providerChannelBufferSize)
 
-	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
+	// Key supports only 1 resource
+	prepQuery := keyPrepareQuery(query)
+	slurpedChan := fetchAndFilterData(ctx, p, prepQuery, errorChan, p.fetchData)
 	go func() {
 		defer close(txChan)
 		for {
@@ -118,7 +126,9 @@ func transactionToSlurp(tx *types.Transaction) *types.Slurp {
 func (p *KeyProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.Appearance) {
 	appChan = make(chan types.Appearance, providerChannelBufferSize)
 
-	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
+	// Key supports only 1 resource
+	prepQuery := keyPrepareQuery(query)
+	slurpedChan := fetchAndFilterData(ctx, p, prepQuery, errorChan, p.fetchData)
 	go func() {
 		defer close(appChan)
 		for {
@@ -138,7 +148,9 @@ func (p *KeyProvider) Appearances(ctx context.Context, query *Query, errorChan c
 }
 
 func (p *KeyProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.Monitor) {
-	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
+	// Key supports only 1 resource
+	prepQuery := keyPrepareQuery(query)
+	slurpedChan := fetchAndFilterData(ctx, p, prepQuery, errorChan, p.fetchData)
 	return countSlurped(ctx, query, slurpedChan)
 }
 
