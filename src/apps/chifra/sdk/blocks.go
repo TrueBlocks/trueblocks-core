@@ -20,7 +20,6 @@ import (
 func Blocks(w io.Writer, values url.Values) error {
 	blocks.ResetOptions(sdkTestMode)
 	opts := blocks.BlocksFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("blocks", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("blocks", w, &opts.Globals)

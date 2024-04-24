@@ -20,7 +20,6 @@ import (
 func List(w io.Writer, values url.Values) error {
 	list.ResetOptions(sdkTestMode)
 	opts := list.ListFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("list", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("list", w, &opts.Globals)

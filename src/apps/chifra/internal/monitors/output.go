@@ -25,9 +25,7 @@ import (
 // RunMonitors handles the monitors command for the command line. Returns error only as per cobra.
 func RunMonitors(cmd *cobra.Command, args []string) error {
 	opts := monitorsFinishParse(args)
-	outputHelpers.EnableCommand("monitors", true)
 	// EXISTING_CODE
-	outputHelpers.EnableCommand("monitors", opts.List || opts.Clean || opts.Globals.Decache)
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("monitors", &opts.Globals)
 	return opts.MonitorsInternal()
@@ -36,11 +34,9 @@ func RunMonitors(cmd *cobra.Command, args []string) error {
 // ServeMonitors handles the monitors command for the API. Returns an error.
 func ServeMonitors(w http.ResponseWriter, r *http.Request) error {
 	opts := monitorsFinishParseApi(w, r)
-	outputHelpers.EnableCommand("monitors", true)
 	// EXISTING_CODE
 	// TODO: can we move this to Validate?
 	var err1 error
-	outputHelpers.EnableCommand("monitors", opts.List || opts.Clean || opts.Globals.Decache)
 	if !opts.Globals.TestMode { // our test harness does not use DELETE
 		delOptions := "--delete, --undelete, or --remove"
 		if r.Method == "DELETE" {

@@ -20,7 +20,6 @@ import (
 func Init(w io.Writer, values url.Values) error {
 	initPkg.ResetOptions(sdkTestMode)
 	opts := initPkg.InitFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("init", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("init", w, &opts.Globals)

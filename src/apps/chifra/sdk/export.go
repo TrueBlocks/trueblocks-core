@@ -20,7 +20,6 @@ import (
 func Export(w io.Writer, values url.Values) error {
 	export.ResetOptions(sdkTestMode)
 	opts := export.ExportFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("export", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("export", w, &opts.Globals)

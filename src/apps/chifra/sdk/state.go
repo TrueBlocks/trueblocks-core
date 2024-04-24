@@ -20,7 +20,6 @@ import (
 func State(w io.Writer, values url.Values) error {
 	state.ResetOptions(sdkTestMode)
 	opts := state.StateFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("state", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("state", w, &opts.Globals)

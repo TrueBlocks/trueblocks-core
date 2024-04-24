@@ -23,7 +23,6 @@ import (
 // RunTransactions handles the transactions command for the command line. Returns error only as per cobra.
 func RunTransactions(cmd *cobra.Command, args []string) error {
 	opts := transactionsFinishParse(args)
-	outputHelpers.EnableCommand("transactions", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("transactions", &opts.Globals)
@@ -33,7 +32,6 @@ func RunTransactions(cmd *cobra.Command, args []string) error {
 // ServeTransactions handles the transactions command for the API. Returns an error.
 func ServeTransactions(w http.ResponseWriter, r *http.Request) error {
 	opts := transactionsFinishParseApi(w, r)
-	outputHelpers.EnableCommand("transactions", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("transactions", w, &opts.Globals)

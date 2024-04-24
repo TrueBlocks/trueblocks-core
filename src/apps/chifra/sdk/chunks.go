@@ -20,7 +20,6 @@ import (
 func Chunks(w io.Writer, values url.Values) error {
 	chunks.ResetOptions(sdkTestMode)
 	opts := chunks.ChunksFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("chunks", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("chunks", w, &opts.Globals)

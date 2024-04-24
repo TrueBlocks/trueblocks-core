@@ -24,7 +24,6 @@ import (
 // RunList handles the list command for the command line. Returns error only as per cobra.
 func RunList(cmd *cobra.Command, args []string) error {
 	opts := listFinishParse(args)
-	outputHelpers.EnableCommand("list", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("list", &opts.Globals)
@@ -34,7 +33,6 @@ func RunList(cmd *cobra.Command, args []string) error {
 // ServeList handles the list command for the API. Returns an error.
 func ServeList(w http.ResponseWriter, r *http.Request) error {
 	opts := listFinishParseApi(w, r)
-	outputHelpers.EnableCommand("list", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("list", w, &opts.Globals)

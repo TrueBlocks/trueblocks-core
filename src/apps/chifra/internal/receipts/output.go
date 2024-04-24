@@ -23,7 +23,6 @@ import (
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
 func RunReceipts(cmd *cobra.Command, args []string) error {
 	opts := receiptsFinishParse(args)
-	outputHelpers.EnableCommand("receipts", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("receipts", &opts.Globals)
@@ -33,7 +32,6 @@ func RunReceipts(cmd *cobra.Command, args []string) error {
 // ServeReceipts handles the receipts command for the API. Returns an error.
 func ServeReceipts(w http.ResponseWriter, r *http.Request) error {
 	opts := receiptsFinishParseApi(w, r)
-	outputHelpers.EnableCommand("receipts", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("receipts", w, &opts.Globals)
