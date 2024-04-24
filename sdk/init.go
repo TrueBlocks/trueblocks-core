@@ -25,6 +25,7 @@ import (
 
 type InitOptions struct {
 	All        bool         `json:"all,omitempty"`
+	Example    string       `json:"example,omitempty"`
 	DryRun     bool         `json:"dryRun,omitempty"`
 	Publisher  base.Address `json:"publisher,omitempty"`
 	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
