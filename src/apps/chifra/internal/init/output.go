@@ -23,7 +23,6 @@ import (
 // RunInit handles the init command for the command line. Returns error only as per cobra.
 func RunInit(cmd *cobra.Command, args []string) error {
 	opts := initFinishParse(args)
-	outputHelpers.EnableCommand("init", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("init", &opts.Globals)
@@ -33,7 +32,6 @@ func RunInit(cmd *cobra.Command, args []string) error {
 // ServeInit handles the init command for the API. Returns an error.
 func ServeInit(w http.ResponseWriter, r *http.Request) error {
 	opts := initFinishParseApi(w, r)
-	outputHelpers.EnableCommand("init", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("init", w, &opts.Globals)

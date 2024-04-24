@@ -20,7 +20,6 @@ import (
 func Abis(w io.Writer, values url.Values) error {
 	abis.ResetOptions(sdkTestMode)
 	opts := abis.AbisFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("abis", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("abis", w, &opts.Globals)

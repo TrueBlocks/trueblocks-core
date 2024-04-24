@@ -1,4 +1,4 @@
-module github.com/TrueBlocks/trueblocks-core/example1
+module github.com/TrueBlocks/trueblocks-core/examples/simple
 
 // Go Version
 go 1.22

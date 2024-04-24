@@ -27,7 +27,6 @@ import (
 // RunNames handles the names command for the command line. Returns error only as per cobra.
 func RunNames(cmd *cobra.Command, args []string) error {
 	opts := namesFinishParse(args)
-	outputHelpers.EnableCommand("names", true)
 	// EXISTING_CODE
 	var err1 error
 	if err1 = opts.loadCrudDataIfNeeded(nil); err1 != nil {
@@ -41,7 +40,6 @@ func RunNames(cmd *cobra.Command, args []string) error {
 // ServeNames handles the names command for the API. Returns an error.
 func ServeNames(w http.ResponseWriter, r *http.Request) error {
 	opts := namesFinishParseApi(w, r)
-	outputHelpers.EnableCommand("names", true)
 	// EXISTING_CODE
 	var err1 error
 	if err1 = opts.loadCrudDataIfNeeded(r); err1 != nil {

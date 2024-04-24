@@ -20,7 +20,6 @@ import (
 func Daemon(w io.Writer, values url.Values) error {
 	daemon.ResetOptions(sdkTestMode)
 	opts := daemon.DaemonFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("daemon", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)

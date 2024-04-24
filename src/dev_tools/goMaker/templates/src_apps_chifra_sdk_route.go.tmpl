@@ -20,7 +20,6 @@ import (
 func {{toProper .Route}}(w io.Writer, values url.Values) error {
 	{{.Pkg}}.ResetOptions(sdkTestMode)
 	opts := {{.Pkg}}.{{toProper .Route}}FinishParseInternal(w, values)
-	outputHelpers.EnableCommand("{{toLower .Route}}", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("{{toLower .Route}}", w, &opts.Globals)

@@ -14,7 +14,6 @@ package {{.Route}}Pkg
 // Run{{toProper .Route}} handles the {{.Route}} command for the command line. Returns error only as per cobra.
 func Run{{toProper .Route}}(cmd *cobra.Command, args []string) error {
 	opts := {{toLower .Route}}FinishParse(args)
-	outputHelpers.EnableCommand("{{.Route}}", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("{{.Route}}", &opts.Globals)
@@ -24,7 +23,6 @@ func Run{{toProper .Route}}(cmd *cobra.Command, args []string) error {
 // Serve{{toProper .Route}} handles the {{.Route}} command for the API. Returns an error.
 func Serve{{toProper .Route}}(w http.ResponseWriter, r *http.Request) error {
 	opts := {{toLower .Route}}FinishParseApi(w, r)
-	outputHelpers.EnableCommand("{{.Route}}", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("{{.Route}}", w, &opts.Globals)

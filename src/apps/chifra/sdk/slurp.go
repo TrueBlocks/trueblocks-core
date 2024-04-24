@@ -20,7 +20,6 @@ import (
 func Slurp(w io.Writer, values url.Values) error {
 	slurp.ResetOptions(sdkTestMode)
 	opts := slurp.SlurpFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("slurp", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("slurp", w, &opts.Globals)

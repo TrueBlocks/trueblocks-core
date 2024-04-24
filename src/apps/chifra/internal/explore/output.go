@@ -25,7 +25,6 @@ import (
 // RunExplore handles the explore command for the command line. Returns error only as per cobra.
 func RunExplore(cmd *cobra.Command, args []string) error {
 	opts := exploreFinishParse(args)
-	outputHelpers.EnableCommand("explore", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("explore", &opts.Globals)
@@ -35,7 +34,6 @@ func RunExplore(cmd *cobra.Command, args []string) error {
 // ServeExplore handles the explore command for the API. Returns an error.
 func ServeExplore(w http.ResponseWriter, r *http.Request) error {
 	opts := exploreFinishParseApi(w, r)
-	outputHelpers.EnableCommand("explore", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("explore", w, &opts.Globals)

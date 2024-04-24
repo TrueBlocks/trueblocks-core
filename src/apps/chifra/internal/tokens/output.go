@@ -23,7 +23,6 @@ import (
 // RunTokens handles the tokens command for the command line. Returns error only as per cobra.
 func RunTokens(cmd *cobra.Command, args []string) error {
 	opts := tokensFinishParse(args)
-	outputHelpers.EnableCommand("tokens", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("tokens", &opts.Globals)
@@ -33,7 +32,6 @@ func RunTokens(cmd *cobra.Command, args []string) error {
 // ServeTokens handles the tokens command for the API. Returns an error.
 func ServeTokens(w http.ResponseWriter, r *http.Request) error {
 	opts := tokensFinishParseApi(w, r)
-	outputHelpers.EnableCommand("tokens", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("tokens", w, &opts.Globals)
