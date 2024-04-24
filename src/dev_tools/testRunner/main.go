@@ -342,13 +342,17 @@ func getRoutesAndModes() ([]string, []string) {
 	}
 
 	filter := os.Getenv("TB_TEST_FILTER")
+	if len(filter) == 0 && len(os.Args) > 1 {
+		filter = os.Args[1]
+		os.Args = []string{os.Args[0]}
+	}
 	if len(filter) > 0 {
 		if !strings.Contains(filter, ":") {
 			filter += ":"
 		}
 		parts := strings.Split(filter, ":")
 		if len(parts) != 2 {
-			logger.Error("TB_TEST_FILTER must be in the form of 'route:mode'")
+			logger.Error("filter must be in the form of 'route:mode'")
 			os.Exit(1)
 		}
 
