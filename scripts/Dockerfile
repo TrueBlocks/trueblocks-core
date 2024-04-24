@@ -24,6 +24,7 @@ RUN git clone --progress https://github.com/$repo.git /root/trueblocks-core && \
         git submodule update --init --recursive && \
         mkdir -v build && \
         cd build && \
+        ../scripts/make-go-work.sh \
         cmake ../src && \
         make -j 4
 

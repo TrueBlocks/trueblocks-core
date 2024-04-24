@@ -32,6 +32,7 @@
     git clone --branch develop https://github.com/TrueBlocks/trueblocks-core
     cd trueblocks-core
     mkdir build && cd build
+    ../scripts/make-go-work.sh
     cmake ../src
     make
 ```
