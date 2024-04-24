@@ -4,12 +4,7 @@
 
 package initPkg
 
-import (
-	"fmt"
-)
-
 // HandleExample initializes local copy of UnchainedIndex by downloading manifests and chunks
 func (opts *InitOptions) HandleExample() error {
-	fmt.Println("HandleExample")
 	return nil
 }
