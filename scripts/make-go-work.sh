@@ -37,5 +37,8 @@ done
 echo ")" >> $GO_WORK_FILE
 go work sync
 
-cd -
+#------------------------------------------------
+echo "Created go.work with these contents."
+cat go.work
+cd - 2>&1 > /dev/null
 exit 0
