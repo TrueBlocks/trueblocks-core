@@ -63,11 +63,10 @@ func isValidEnvironment() error {
 		filter += ":"
 	}
 	parts := strings.Split(filter, ":")
-	var err error
 	if len(parts) != 2 || (len(routeMap[parts[0]].path) == 0 && len(modeMap[parts[1]].path) == 0) {
-		err = fmt.Errorf("Invalid filter: %s", filter)
+		return fmt.Errorf("invalid filter: %s", filter)
 	}
-	return err
+	return nil
 }
 
 func getRoutesAndModes() ([]string, []string) {
