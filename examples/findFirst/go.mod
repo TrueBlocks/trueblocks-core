@@ -1,4 +1,4 @@
-module github.com/TrueBlocks/trueblocks-core/examples/simple
+module github.com/TrueBlocks/trueblocks-core/examples/findFirst
 
 // Go Version
 go 1.22

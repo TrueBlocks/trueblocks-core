@@ -1,2 +1,3 @@
-# trueblocks-examples
-Examples repo for TrueBlocks core
+# Examples
+
+Examples for TrueBlocks core sdk
