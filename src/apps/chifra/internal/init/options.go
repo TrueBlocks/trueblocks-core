@@ -28,7 +28,7 @@ import (
 // InitOptions provides all command options for the chifra init command.
 type InitOptions struct {
 	All        bool                  `json:"all,omitempty"`        // In addition to Bloom filters, download full index chunks (recommended)
-	Example    string                `json:"example,omitempty"`    // Create an SDK example with the given name in a subfolder of the current folder
+	Example    string                `json:"example,omitempty"`    // Create an example for the SDK with the given name
 	DryRun     bool                  `json:"dryRun,omitempty"`     // Display the results of the download without actually downloading
 	Publisher  string                `json:"publisher,omitempty"`  // The publisher of the index to download
 	FirstBlock uint64                `json:"firstBlock,omitempty"` // Do not download any chunks earlier than this block
