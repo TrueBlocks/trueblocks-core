@@ -51,6 +51,11 @@ func (opts *InitOptions) validateInit() error {
 		} else if !valid {
 			return usage.Usage("{0} is not a valid folder name", opts.Example)
 		}
+		// if len(opts.Template) > 0 {
+		// must exist
+		// }
+		// } else if len(opts.Template) > 0 {
+		// 	return validate.Usage("The {0} option requires the {1} flag.", "--template", "--example")
 	}
 
 	historyFile := config.PathToCache(chain) + "tmp/history.txt"
