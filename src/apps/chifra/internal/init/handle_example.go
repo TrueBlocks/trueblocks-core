@@ -41,6 +41,6 @@ func copyOne(fn, exName, tmplFolder string) {
 	contents = strings.ReplaceAll(contents, "[{NAME}]", utils.MakeFirstUpperCase(exName))
 	contents = strings.ReplaceAll(contents, "[{LOWER}]", exName)
 	fn = "./" + exName + "/" + fn
-	file.StringToAsciiFile(fn, contents)
+	_ = file.StringToAsciiFile(fn, contents)
 	logger.Info("\t==> " + fn)
 }
