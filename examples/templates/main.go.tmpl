@@ -1,0 +1,23 @@
+package main
+
+import (
+	"fmt"
+
+	"github.com/TrueBlocks/trueblocks-core/sdk"
+)
+
+func main() {
+	opts := sdk.BlocksOptions{
+		BlockIds: []string{"latest"},
+	}
+
+	hashes, _, err := opts.BlocksHashes()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for _, tx_hash := range hashes {
+		fmt.Printf("%s\n", tx_hash)
+	}
+}
