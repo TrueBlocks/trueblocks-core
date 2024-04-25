@@ -58,11 +58,13 @@ func init() {
 	initCmd.Flags().SortFlags = false
 
 	initCmd.Flags().BoolVarP(&initPkg.GetOptions().All, "all", "a", false, `in addition to Bloom filters, download full index chunks (recommended)`)
+	initCmd.Flags().StringVarP(&initPkg.GetOptions().Example, "example", "e", "", `create an example for the SDK with the given name (hidden)`)
 	initCmd.Flags().BoolVarP(&initPkg.GetOptions().DryRun, "dry_run", "d", false, `display the results of the download without actually downloading`)
 	initCmd.Flags().StringVarP(&initPkg.GetOptions().Publisher, "publisher", "P", "", `the publisher of the index to download (hidden)`)
 	initCmd.Flags().Uint64VarP(&initPkg.GetOptions().FirstBlock, "first_block", "F", 0, `do not download any chunks earlier than this block`)
 	initCmd.Flags().Float64VarP(&initPkg.GetOptions().Sleep, "sleep", "s", 0.0, `seconds to sleep between downloads`)
 	if os.Getenv("TEST_MODE") != "true" {
+		_ = initCmd.Flags().MarkHidden("example")
 		_ = initCmd.Flags().MarkHidden("publisher")
 	}
 	globals.InitGlobals("init", initCmd, &initPkg.GetOptions().Globals, capabilities)

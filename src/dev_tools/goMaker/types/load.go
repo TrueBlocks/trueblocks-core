@@ -228,5 +228,5 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 		return nil
 	}
 
-	return fmt.Errorf("protective measure - not an error, but codebase.json has changed")
+	return fmt.Errorf("Quitting: codebase.json has changed. Rerun the command to ignore this warning.")
 }

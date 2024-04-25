@@ -5,9 +5,11 @@
 package file
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func IsFolderEmpty(folder string) (bool, error) {
@@ -37,4 +39,22 @@ func CleanFolder(chain, rootFolder string, subFolders []string) error {
 	}
 
 	return nil
+}
+
+// IsValidFolderName checks if the folder name is valid and does not exist in the current directory.
+func IsValidFolderName(folderName string) (bool, error) {
+	// Check for invalid characters (example for a simple Unix-like rule)
+	// You might need a more specific check depending on your OS requirements.
+	if strings.ContainsAny(folderName, "/<>:\"\\|?*") {
+		return false, fmt.Errorf("folder name contains invalid characters")
+	}
+
+	// Check if folder exists
+	if _, err := os.Stat(folderName); err == nil {
+		return false, fmt.Errorf("folder already exists")
+	} else if !os.IsNotExist(err) {
+		return false, err // some other error occurred when checking the folder
+	}
+
+	return true, nil
 }

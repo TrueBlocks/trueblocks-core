@@ -5,8 +5,14 @@
 package initPkg
 
 import (
+	"fmt"
+	"os"
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -31,6 +37,19 @@ func (opts *InitOptions) validateInit() error {
 		err := validate.ValidateExactlyOneAddr([]string{opts.Publisher})
 		if err != nil {
 			return err
+		}
+	}
+
+	if len(opts.Example) > 0 {
+		cwd, _ := os.Getwd()
+		if !strings.HasSuffix(cwd, "examples") {
+			return fmt.Errorf("must be in the ./examples directory to run this command")
+		}
+
+		if valid, err := file.IsValidFolderName(opts.Example); err != nil {
+			return usage.Usage("{0} {1}", opts.Example, fmt.Sprintf("%v", err))
+		} else if !valid {
+			return usage.Usage("{0} is not a valid folder name", opts.Example)
 		}
 	}
 

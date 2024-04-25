@@ -305,6 +305,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 #
 47000,apps,Admin,init,init,,,,visible|docs,command,,,Initialize index,[flags],verbose|version|noop|noColor|chain|,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
 47020,apps,Admin,init,init,all,a,,visible|docs,switch,<boolean>,bool,,,,in addition to Bloom filters&#44; download full index chunks (recommended)
+47025,apps,Admin,init,init,example,e,,visible,flag,<string>,,,,,create an example for the SDK with the given name
 47030,apps,Admin,init,init,dry_run,d,,visible|docs,switch,<boolean>,,,,,display the results of the download without actually downloading
 47040,apps,Admin,init,init,publisher,P,,,flag,<address>,,,,,the publisher of the index to download
 47050,apps,Admin,init,init,first_block,F,,visible|docs,flag,<blknum>,,,,,do not download any chunks earlier than this block
