@@ -38,6 +38,13 @@ func (h Hash) MarshalText() ([]byte, error) {
 	return []byte(h.Hex()), nil
 }
 
+func (h *Hash) UnmarshalJSON(data []byte) error {
+	if string(data) == "\"0x0\"" {
+		return nil
+	}
+	return h.Hash.UnmarshalJSON(data)
+}
+
 // SetHex sets the hash based on the provided string
 func (h *Hash) SetHex(hexStr string) {
 	h.Hash = common.HexToHash(hexStr)

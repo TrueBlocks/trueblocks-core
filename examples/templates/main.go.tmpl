@@ -11,13 +11,18 @@ func main() {
 		BlockIds: []string{"latest"},
 	}
 
-	hashes, _, err := opts.BlocksHashes()
+	blocks, _, err := opts.Blocks()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	for _, tx_hash := range hashes {
-		fmt.Printf("%s\n", tx_hash)
+	fmt.Println("[")
+	for i, block := range blocks {
+		if i > 0 {
+			fmt.Println(",")
+		}
+		fmt.Println(block.String())
 	}
+	fmt.Println("]")
 }

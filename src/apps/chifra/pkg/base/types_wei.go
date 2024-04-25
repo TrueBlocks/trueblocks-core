@@ -107,6 +107,7 @@ func (w *Wei) MarshalCache(writer io.Writer) error {
 func (w *Wei) UnmarshalText(text []byte) error {
 	return (*big.Int)(w).UnmarshalText(text)
 }
+
 // TODO: BOGUS - THIS NAME SUCKS
 
 func FormattedValue(in *Wei, asEther bool, decimals int) string {

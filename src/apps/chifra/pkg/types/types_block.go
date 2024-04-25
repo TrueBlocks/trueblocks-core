@@ -147,7 +147,7 @@ func (s *Block[Tx]) Model(chain, format string, verbose bool, extraOptions map[s
 		"difficulty":    s.Difficulty,
 		"timestamp":     s.Timestamp,
 		"date":          s.Date(),
-		"baseFeePerGas": s.BaseFeePerGas.Uint64(),
+		"baseFeePerGas": base.FormattedValue(&s.BaseFeePerGas, false, 18),
 	}
 
 	order = []string{
