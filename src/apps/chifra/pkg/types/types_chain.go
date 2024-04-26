@@ -38,7 +38,7 @@ type Chain struct {
 	// EXISTING_CODE
 }
 
-func (s *Chain) String() string {
+func (s Chain) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

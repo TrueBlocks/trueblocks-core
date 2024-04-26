@@ -28,7 +28,7 @@ type TimestampCount struct {
 	// EXISTING_CODE
 }
 
-func (s *TimestampCount) String() string {
+func (s TimestampCount) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

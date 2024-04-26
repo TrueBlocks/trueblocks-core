@@ -43,7 +43,7 @@ type AppearanceTable struct {
 	// EXISTING_CODE
 }
 
-func (s *AppearanceTable) String() string {
+func (s AppearanceTable) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

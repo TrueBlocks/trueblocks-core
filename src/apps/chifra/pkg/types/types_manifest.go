@@ -36,7 +36,7 @@ type Manifest struct {
 	// EXISTING_CODE
 }
 
-func (s *Manifest) String() string {
+func (s Manifest) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

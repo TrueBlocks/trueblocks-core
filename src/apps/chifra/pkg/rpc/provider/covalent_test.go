@@ -155,7 +155,7 @@ func mockCovalentServer(t *testing.T) (ts *httptest.Server) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		w.Write(b)
+		_, _ = w.Write(b)
 	}))
 
 	return ts
@@ -253,7 +253,7 @@ LOOP:
 			Orig: "14000000",
 		},
 	}
-	results = provider.TransactionsByAddress(ctx, query, errors)
+	_ = provider.TransactionsByAddress(ctx, query, errors)
 	err := <-errors
 	if err == nil {
 		t.Fatal("expected error")

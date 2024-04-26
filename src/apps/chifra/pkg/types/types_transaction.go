@@ -99,7 +99,7 @@ type Transaction struct {
 	// EXISTING_CODE
 }
 
-func (s *Transaction) String() string {
+func (s Transaction) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

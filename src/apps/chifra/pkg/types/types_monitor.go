@@ -33,7 +33,7 @@ type Monitor struct {
 	// EXISTING_CODE
 }
 
-func (s *Monitor) String() string {
+func (s Monitor) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

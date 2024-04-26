@@ -40,7 +40,7 @@ type TraceResult struct {
 	// EXISTING_CODE
 }
 
-func (s *TraceResult) String() string {
+func (s TraceResult) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

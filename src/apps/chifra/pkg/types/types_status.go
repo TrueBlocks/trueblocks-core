@@ -72,7 +72,7 @@ type Status struct {
 	// EXISTING_CODE
 }
 
-func (s *Status) String() string {
+func (s Status) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

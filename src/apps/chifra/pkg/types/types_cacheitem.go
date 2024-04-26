@@ -40,7 +40,7 @@ type CacheItem struct {
 	// EXISTING_CODE
 }
 
-func (s *CacheItem) String() string {
+func (s CacheItem) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

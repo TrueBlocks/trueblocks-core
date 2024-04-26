@@ -44,7 +44,7 @@ type Parameter struct {
 	// EXISTING_CODE
 }
 
-func (s *Parameter) String() string {
+func (s Parameter) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

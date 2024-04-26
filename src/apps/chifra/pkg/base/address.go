@@ -67,6 +67,13 @@ func (a *Address) IsZero() bool {
 	return v == "0x0000000000000000000000000000000000000000"
 }
 
+func (e *Address) UnmarshalJSON(data []byte) error {
+	if string(data) == "\"0x0\"" {
+		return nil
+	}
+	return e.Address.UnmarshalJSON(data)
+}
+
 func (a *Address) Common() common.Address {
 	return common.BytesToAddress(a.Bytes())
 }

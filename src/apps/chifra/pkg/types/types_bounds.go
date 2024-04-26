@@ -40,7 +40,7 @@ type Bounds struct {
 	// EXISTING_CODE
 }
 
-func (s *Bounds) String() string {
+func (s Bounds) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

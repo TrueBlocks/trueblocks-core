@@ -1,0 +1,28 @@
+package main
+
+import (
+	"fmt"
+
+	"github.com/TrueBlocks/trueblocks-core/sdk"
+)
+
+func main() {
+	opts := sdk.BlocksOptions{
+		BlockIds: []string{"latest"},
+	}
+
+	blocks, _, err := opts.Blocks()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println("[")
+	for i, block := range blocks {
+		if i > 0 {
+			fmt.Println(",")
+		}
+		fmt.Println(block.String())
+	}
+	fmt.Println("]")
+}

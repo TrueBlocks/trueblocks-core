@@ -32,7 +32,7 @@ type SlurpCount struct {
 	// EXISTING_CODE
 }
 
-func (s *SlurpCount) String() string {
+func (s SlurpCount) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

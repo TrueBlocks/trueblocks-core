@@ -61,7 +61,7 @@ type Receipt struct {
 	// EXISTING_CODE
 }
 
-func (s *Receipt) String() string {
+func (s Receipt) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

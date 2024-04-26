@@ -34,7 +34,7 @@ type AppearanceCount struct {
 	// EXISTING_CODE
 }
 
-func (s *AppearanceCount) String() string {
+func (s AppearanceCount) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

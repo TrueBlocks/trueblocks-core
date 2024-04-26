@@ -59,7 +59,7 @@ type Function struct {
 	// EXISTING_CODE
 }
 
-func (s *Function) String() string {
+func (s Function) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
