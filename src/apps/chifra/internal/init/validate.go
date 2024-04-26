@@ -56,11 +56,11 @@ func (opts *InitOptions) validateInit() error {
 		// }
 		// } else if len(opts.Template) > 0 {
 		// 	return validate.Usage("The {0} option requires the {1} flag.", "--template", "--example")
-	}
-
-	historyFile := config.PathToCache(chain) + "tmp/history.txt"
-	if history.FromHistoryBool(historyFile, "init") && !opts.All {
-		return validate.Usage("You previously called chifra init --all. You must continue to do so.")
+	} else {
+		historyFile := config.PathToCache(chain) + "tmp/history.txt"
+		if history.FromHistoryBool(historyFile, "init") && !opts.All {
+			return validate.Usage("You previously called chifra init --all. You must continue to do so.")
+		}
 	}
 
 	return opts.Globals.Validate()
