@@ -8,34 +8,41 @@ import (
 
 // DoBlocks tests the Blocks sdk function
 func DoBlocks() {
-	logger.Info("DoBlocks")
-
 	opts := sdk.BlocksOptions{
-		BlockIds: testBlocks,
-		Globals: sdk.Globals{
-			Cache: true,
-		},
+		BlockIds:    testBlocks,
+		CacheTxs:    true,
+		CacheTraces: true,
 	}
+	opts.Caching(sdk.CacheOn)
 
 	if blocks, _, err := opts.Blocks(); err != nil {
 		logger.Fatal(err)
 	} else {
-		SaveToFile[types.Block[types.Transaction]]("usesSDK/blocks.json", blocks)
+		SaveAndClean[types.Block[types.Transaction]]("usesSDK/blocks.json", blocks, &opts, func() error {
+			_, _, err := opts.Blocks()
+			return err
+		})
 	}
 
 	opts.Hashes = true
-	if blocks, _, err := opts.BlocksHashes(); err != nil {
+	if blocksHashes, _, err := opts.BlocksHashes(); err != nil {
 		logger.Fatal(err)
 	} else {
-		SaveToFile[types.Block[string]]("usesSDK/blocks-hashes.json", blocks)
+		SaveAndClean[types.Block[string]]("usesSDK/blocksHashes.json", blocksHashes, &opts, func() error {
+			_, _, err := opts.BlocksHashes()
+			return err
+		})
 	}
 
 	opts.Hashes = false
 	opts.Traces = true
-	if traces, _, err := opts.BlocksTraces(); err != nil {
+	if blockTraces, _, err := opts.BlocksTraces(); err != nil {
 		logger.Fatal(err)
 	} else {
-		SaveToFile[types.Trace]("usesSDK/blocks-traces.json", traces)
+		SaveAndClean[types.Trace]("usesSDK/blockTraces.json", blockTraces, &opts, func() error {
+			_, _, err := opts.BlocksTraces()
+			return err
+		})
 	}
 
 	opts.Traces = false
@@ -44,29 +51,45 @@ func DoBlocks() {
 	// 	logger.Fatal(err)
 	// } else {
 	// 	SaveToFile[types.Appearance]("usesSDK/blocks-uniq.json", apps)
+	// opts.Caching(sdk.Decache)
+	// if _, _, err := opts.Blocks(); err != nil {
+	// 	logger.Fatal(err)
+	// }
+	// opts.Caching(sdk.CacheOn)
+	// fmt.Println("Decache worked?")
+	// usage.Wait()
 	// }
 
 	opts.Uniq = false
 	opts.Logs = true
-	if logs, _, err := opts.BlocksLogs(); err != nil {
+	if blocksLogs, _, err := opts.BlocksLogs(); err != nil {
 		logger.Fatal(err)
 	} else {
-		SaveToFile[types.Log]("usesSDK/blocks-logs.json", logs)
+		SaveAndClean[types.Log]("usesSDK/blocksLogs.json", blocksLogs, &opts, func() error {
+			_, _, err := opts.BlocksLogs()
+			return err
+		})
 	}
 
 	opts.Logs = false
 	opts.Withdrawals = true
-	if withdrawals, _, err := opts.BlocksWithdrawals(); err != nil {
+	if blocksWithdrawals, _, err := opts.BlocksWithdrawals(); err != nil {
 		logger.Fatal(err)
 	} else {
-		SaveToFile[types.Withdrawal]("usesSDK/blocks-withdrawals.json", withdrawals)
+		SaveAndClean[types.Withdrawal]("usesSDK/blocksWithdrawals.json", blocksWithdrawals, &opts, func() error {
+			_, _, err := opts.BlocksWithdrawals()
+			return err
+		})
 	}
 
 	opts.Withdrawals = false
 	opts.Count = false
-	if counts, _, err := opts.BlocksCount(); err != nil {
+	if blocksCounts, _, err := opts.BlocksCount(); err != nil {
 		logger.Fatal(err)
 	} else {
-		SaveToFile[types.BlockCount]("usesSDK/blocks-count.json", counts)
+		SaveAndClean[types.BlockCount]("usesSDK/blocksCounts.json", blocksCounts, &opts, func() error {
+			_, _, err := opts.BlocksCount()
+			return err
+		})
 	}
 }

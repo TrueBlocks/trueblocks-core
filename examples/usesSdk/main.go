@@ -5,15 +5,15 @@ import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 func main() {
 	// DoSlurp()
 	// DoNames()
-	DoBlocks()
+	//- DoBlocks()
 	// DoTransactions()
 	// DoReceipts()
 	// DoLogs()
 	// DoTraces()
-	// DoState()
+	DoState()
 	// DoTokens()
-	DoAbis()
-	// DoWhen()
+	//- DoAbis()
+	//- DoWhen()
 	// DoList()
 	// DoExport()
 	// DoMonitors()
@@ -27,7 +27,7 @@ func main() {
 }
 
 var testBlocks = []string{
-	"5001001",
+	"46147",
 }
 
 var testAddrs = []string{
