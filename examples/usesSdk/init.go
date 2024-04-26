@@ -25,3 +25,4 @@ func DoInit() {
 	file.StringToAsciiFile("usesSDK/init.json", buf.String())
 	fmt.Println(buf.String())
 }
+// func (opts *InitOptions) InitAll() ([]bool, *types.MetaData, error) {

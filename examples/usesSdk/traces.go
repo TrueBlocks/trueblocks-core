@@ -25,3 +25,5 @@ func DoTraces() {
 	file.StringToAsciiFile("usesSDK/traces.json", buf.String())
 	fmt.Println(buf.String())
 }
+// func (opts *TracesOptions) Traces() ([]types.Trace, *types.MetaData, error) {
+// func (opts *TracesOptions) TracesCount() ([]types.TraceCount, *types.MetaData, error) {

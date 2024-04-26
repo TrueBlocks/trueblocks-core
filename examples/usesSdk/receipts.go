@@ -25,3 +25,4 @@ func DoReceipts() {
 	file.StringToAsciiFile("usesSDK/receipts.json", buf.String())
 	fmt.Println(buf.String())
 }
+// func (opts *ReceiptsOptions) Receipts() ([]types.Receipt, *types.MetaData, error) {

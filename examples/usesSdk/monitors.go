@@ -26,3 +26,6 @@ func DoMonitors() {
 	file.StringToAsciiFile("usesSDK/monitors.json", buf.String())
 	fmt.Println(buf.String())
 }
+// func (opts *MonitorsOptions) Monitors() ([]bool, *types.MetaData, error) {
+// func (opts *MonitorsOptions) MonitorsClean() ([]types.MonitorClean, *types.MetaData, error) {
+// func (opts *MonitorsOptions) MonitorsList() ([]types.Monitor, *types.MetaData, error) {

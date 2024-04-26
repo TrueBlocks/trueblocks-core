@@ -29,3 +29,6 @@ func DoWhen() {
 	file.StringToAsciiFile("usesSDK/when.json", buf.String())
 	fmt.Println(buf.String())
 }
+// func (opts *WhenOptions) When() ([]types.NamedBlock, *types.MetaData, error) {
+// func (opts *WhenOptions) WhenTimestamps() ([]types.Timestamp, *types.MetaData, error) {
+// func (opts *WhenOptions) WhenCount() ([]types.TimestampCount, *types.MetaData, error) {

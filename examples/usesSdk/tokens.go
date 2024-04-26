@@ -25,3 +25,4 @@ func DoTokens() {
 	file.StringToAsciiFile("usesSDK/tokens.json", buf.String())
 	fmt.Println(buf.String())
 }
+// func (opts *TokensOptions) Tokens() ([]types.Token, *types.MetaData, error) {

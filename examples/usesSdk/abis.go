@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoAbis tests the When sdk function
@@ -17,11 +14,9 @@ func DoAbis() {
 		Addrs: []string{"uniswap.eth"},
 	}
 
-	buf := bytes.Buffer{}
-	if err := opts.AbisBytes(&buf); err != nil {
+	if functions, _, err := opts.Abis(); err != nil {
 		logger.Fatal(err)
+	} else {
+		SaveToFile[types.Function]("usesSDK/abis.json", functions)
 	}
-
-	file.StringToAsciiFile("usesSDK/abis.json", buf.String())
-	fmt.Println(buf.String())
 }

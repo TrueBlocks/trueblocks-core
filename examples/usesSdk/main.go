@@ -4,31 +4,30 @@ import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 
 func main() {
 	// DoSlurp()
-	DoNames()
+	// DoNames()
 	DoBlocks()
-	DoTransactions()
-	DoReceipts()
-	DoLogs()
-	DoTraces()
-	DoState()
-	DoTokens()
+	// DoTransactions()
+	// DoReceipts()
+	// DoLogs()
+	// DoTraces()
+	// DoState()
+	// DoTokens()
 	DoAbis()
-	DoWhen()
-	DoList()
-	DoExport()
-	DoMonitors()
-	DoConfig()
-	DoStatus()
-	// DoDaemon()
-	// DoScrape()
-	DoChunks()
-	// DoInit()
-	DoExplore()
+	// DoWhen()
+	// DoList()
+	// DoExport()
+	// DoMonitors()
+	// DoConfig()
+	// DoStatus()
+	// // DoDaemon()
+	// // DoScrape()
+	// DoChunks()
+	// // DoInit()
+	// DoExplore()
 }
 
 var testBlocks = []string{
-	"13800-1000000:monthly",
-	"14011011",
+	"5001001",
 }
 
 var testAddrs = []string{

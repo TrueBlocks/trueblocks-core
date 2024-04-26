@@ -30,3 +30,5 @@ func DoState() {
 	file.StringToAsciiFile("usesSDK/state.json", buf.String())
 	fmt.Println(buf.String())
 }
+// func (opts *StateOptions) State() ([]types.State, *types.MetaData, error) {
+// func (opts *StateOptions) StateCall() ([]types.Result, *types.MetaData, error) {

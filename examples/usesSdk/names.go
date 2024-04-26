@@ -26,3 +26,6 @@ func DoNames() {
 	file.StringToAsciiFile("usesSDK/names.json", buf.String())
 	fmt.Println(buf.String())
 }
+// func (opts *NamesOptions) Names() ([]types.Name, *types.MetaData, error) {
+// func (opts *NamesOptions) NamesAddr() ([]base.Address, *types.MetaData, error) {
+// func (opts *NamesOptions) NamesTags() ([]string, *types.MetaData, error) {

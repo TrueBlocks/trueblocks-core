@@ -25,3 +25,6 @@ func DoList() {
 	file.StringToAsciiFile("usesSDK/list.json", buf.String())
 	fmt.Println(buf.String())
 }
+// func (opts *ListOptions) List() ([]types.Appearance, *types.MetaData, error) {
+// func (opts *ListOptions) ListCount() ([]types.AppearanceCount, *types.MetaData, error) {
+// func (opts *ListOptions) ListBounds() ([]types.Bounds, *types.MetaData, error) {

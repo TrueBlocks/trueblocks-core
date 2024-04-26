@@ -25,3 +25,7 @@ func DoTransactions() {
 	file.StringToAsciiFile("usesSDK/transactions.json", buf.String())
 	fmt.Println(buf.String())
 }
+// func (opts *TransactionsOptions) Transactions() ([]types.Transaction, *types.MetaData, error) {
+// func (opts *TransactionsOptions) TransactionsTraces() ([]types.Trace, *types.MetaData, error) {
+// func (opts *TransactionsOptions) TransactionsUniq() ([]types.Appearance, *types.MetaData, error) {
+// func (opts *TransactionsOptions) TransactionsLogs() ([]types.Log, *types.MetaData, error) {

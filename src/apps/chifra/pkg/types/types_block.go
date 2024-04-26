@@ -69,7 +69,7 @@ type Block[Tx string | Transaction] struct {
 	// EXISTING_CODE
 }
 
-func (s *Block[Tx]) String() string {
+func (s Block[Tx]) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

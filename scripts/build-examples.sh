@@ -22,5 +22,10 @@ cd "$SCRIPT_DIR/../examples" || exit 1  # Exit if changing directory fails
 
 # Find directories containing a 'go.mod' file, search only direct children
 find . -maxdepth 2 -type f -name 'go.mod' -exec dirname {} \; | while read -r dir; do
-    build_target "$(basename "$dir")"
+    # Check for the presence of a '.skip' file in the directory
+    if [[ ! -f "$dir/.skip" ]]; then
+        build_target "$(basename "$dir")"
+    else
+        echo "Skipping $dir due to .skip file"
+    fi
 done

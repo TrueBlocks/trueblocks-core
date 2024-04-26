@@ -26,3 +26,6 @@ func DoSlurp() {
 	file.StringToAsciiFile("usesSDK/slurp.json", buf.String())
 	fmt.Println(buf.String())
 }
+// func (opts *SlurpOptions) Slurp() ([]types.Slurp, *types.MetaData, error) {
+// func (opts *SlurpOptions) SlurpAppearances() ([]types.Appearance, *types.MetaData, error) {
+// func (opts *SlurpOptions) SlurpCount() ([]types.SlurpCount, *types.MetaData, error) {

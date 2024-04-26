@@ -25,3 +25,4 @@ func DoLogs() {
 	file.StringToAsciiFile("usesSDK/logs.json", buf.String())
 	fmt.Println(buf.String())
 }
+// func (opts *LogsOptions) Logs() ([]types.Log, *types.MetaData, error) {
