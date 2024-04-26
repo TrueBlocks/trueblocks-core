@@ -48,9 +48,10 @@ const longSlurp = `Purpose:
 const notesSlurp = `
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
-  - Portions of this software are Powered by Etherscan.io APIs.
+  - Portions of this software are Powered by Etherscan.io, Covalent, Alchemy, TrueBlocks Key APIs.
+  - See slurp/README on how to configure keys for API providers
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
-  - If the value of --source is key, --types is ignored and only appearances or counts are returned.`
+  - If the value of --source is key, --types is ignored.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra slurp

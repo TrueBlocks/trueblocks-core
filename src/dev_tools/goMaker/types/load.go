@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
+	"path"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -15,8 +16,7 @@ import (
 // LoadCodebase loads the two csv files and returns the codebase which
 // contains all the commands (each with its own set of options).
 func LoadCodebase() (CodeBase, error) {
-	cwd, _ := os.Getwd()
-	if !strings.HasSuffix(strings.Trim(cwd, "/"), "trueblocks-core") {
+	if !checkRootDirectory() {
 		return CodeBase{}, fmt.Errorf("this program must be run from the ./trueblocks-core folder")
 	}
 
@@ -61,6 +61,13 @@ func LoadCodebase() (CodeBase, error) {
 	}
 
 	return cb, nil
+}
+
+func checkRootDirectory() bool {
+	cwd, _ := os.Getwd()
+	test := path.Join(cwd, "src/apps/chifra")
+	_, err := os.Stat(test)
+	return err == nil
 }
 
 func (cb *CodeBase) LoadStructures(thePath string, callBack func(*Structure, *any) (bool, error), structMap map[string]Structure) error {

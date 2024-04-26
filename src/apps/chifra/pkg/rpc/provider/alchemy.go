@@ -71,7 +71,6 @@ func NewAlchemyProvider(conn *rpc.Connection, chain string) (p *AlchemyProvider,
 	p = &AlchemyProvider{
 		conn:    conn,
 		chain:   chain,
-		perPage: keyMaxPerPage,
 		baseUrl: alchemyBaseUrl + apiKey,
 	}
 	p.printProgress = true
@@ -89,8 +88,13 @@ func (p *AlchemyProvider) SetPrintProgress(print bool) {
 	p.printProgress = print
 }
 
-func (p *AlchemyProvider) NewPaginator() Paginator {
-	return NewPageIdPaginator(alchemyFirstPage, alchemyFirstPage, p.perPage)
+func (p *AlchemyProvider) NewPaginator(firstPage any, perPage int) Paginator {
+	pageId, ok := firstPage.(string)
+	if !ok {
+		pageId = alchemyFirstPage
+	}
+
+	return NewPageIdPaginator(pageId, pageId, perPage)
 }
 
 func (p *AlchemyProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.Slurp) {
