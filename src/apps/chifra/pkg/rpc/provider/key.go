@@ -60,8 +60,17 @@ func (p *KeyProvider) SetPrintProgress(print bool) {
 	p.printProgress = print
 }
 
-func (p *KeyProvider) NewPaginator() Paginator {
-	return NewPageIdPaginator(keyFirstPage, keyFirstPage, p.perPage)
+func (p *KeyProvider) NewPaginator(firstPage any, perPage int) Paginator {
+	pageId, ok := firstPage.(string)
+	if !ok {
+		pageId = keyFirstPage
+	}
+	perPageValue := perPage
+	if perPageValue == 0 {
+		perPageValue = keyMaxPerPage
+	}
+
+	return NewPageIdPaginator(pageId, pageId, perPageValue)
 }
 
 func (p *KeyProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.Slurp) {

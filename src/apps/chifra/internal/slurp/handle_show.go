@@ -21,6 +21,8 @@ func (opts *SlurpOptions) HandleShow() error {
 	query := &providerPkg.Query{
 		Addresses: opts.Addresses(),
 		Resources: opts.Types,
+		PerPage:   uint(opts.PerPage),
+		StartPage: uint(opts.Page),
 	}
 
 	ctx := context.Background()

@@ -170,7 +170,7 @@ func TestCovalentProvider_fetchData(t *testing.T) {
 		baseUrl: ts.URL + "/[{PAGE}]",
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
-	paginator := provider.NewPaginator()
+	paginator := provider.NewPaginator(0, 0)
 
 	var data []SlurpedPageItem
 	// var count int
@@ -265,21 +265,21 @@ LOOP:
 
 func TestCovalentProvider_Appearances(t *testing.T) {
 	perPage := 3
-	ts := mockEtherscanServer(t)
+	ts := mockCovalentServer(t)
 	defer ts.Close()
 
-	provider := EtherscanProvider{
-		perPage: perPage,
-		baseUrl: ts.URL,
+	provider := CovalentProvider{
+		chain:   "mainnet",
+		baseUrl: ts.URL + "/[{PAGE}]",
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
-	provider.convertSlurpType = mockConvertSlurpType(t)
 
 	query := &Query{
 		Addresses: []base.Address{
 			base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 		},
 		Resources: []string{"int"},
+		PerPage:   uint(perPage),
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -311,21 +311,21 @@ LOOP:
 
 func TestCovalentProvider_Count(t *testing.T) {
 	perPage := 3
-	ts := mockEtherscanServer(t)
+	ts := mockCovalentServer(t)
 	defer ts.Close()
 
-	provider := EtherscanProvider{
-		perPage: perPage,
-		baseUrl: ts.URL,
+	provider := CovalentProvider{
+		chain:   "mainnet",
+		baseUrl: ts.URL + "/[{PAGE}]",
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
-	provider.convertSlurpType = mockConvertSlurpType(t)
 
 	query := &Query{
 		Addresses: []base.Address{
 			base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 		},
 		Resources: []string{"int"},
+		PerPage:   uint(perPage),
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
