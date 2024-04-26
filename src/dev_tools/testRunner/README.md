@@ -1,16 +1,24 @@
-# testRunner - new GoLang test runner
+# testRunner
 
-This tool runs the core's test cases of which there are nearly 1,500.
+The `testRunner` tool runs the core's test cases of which there are nearly 1,500.
 
-All tests will be run (in the order shown below) unless you provide a filter.
+All tests are run (in the order shown below) unless you provide a filter. You may provide a filter in two ways: (1) export an environment variable with the name `TB_TEST_FILTER`, or (2) provide as the first argument on the tool's command line.
 
-Provide a filter by running `testRunner` with the environment variable `TB_TEST_FILTER` exported, thus:
+The filter takes the following format:
 
 ```[bash]
-TB_TEST_FILTER=routeList:modeList testRunner
+TB_TEST_FILTER=<routeList>:<modeList> testRunner
 ```
 
-If you provide a filter, the tests will be run in the order you provide. Either of the two lists may be empty in which case all tests of that type will run. Seperate the two lists with a colon (:).
+or
+
+```[bash]
+testRunner <routeList>:<modeList>
+```
+
+## Format of the filter
+
+The filter consists of two lists `<routeList>` and `<modeList>` separated by a colon (:). If either of the lists is empty, the given filter is disabled. The tests proceed in the following order, unless you provide a filter, in which case they run in the order you provide. The special `tools` and `apps` routes are used as shorthand for all tests of that type.
 
 `routeList` may be empty or one or more (comma seperated) items from:
 
@@ -48,3 +56,35 @@ If you provide a filter, the tests will be run in the order you provide. Either 
 - cmd
 - sdk
 ```
+
+## Examples
+
+```[bash]
+TB_TEST_FILTER=tools:cmd testRunner
+```
+
+runs the `cmd` tests for all the `tools`.
+
+```[bash]
+testRunner export:api
+```
+
+runs the `api` tests for the `export` command.
+
+```[bash]
+testRunner blocks,traces,export:sdk,cmd
+```
+
+runs the `sdk` and `cmd` tests for the `blocks`, `traces`, and `export` commands as does
+
+```[bash]
+TB_TEST_FILTER=blocks,traces,export:sdk,cmd testRunner
+```
+
+Finally,
+
+```[bash]
+testRunner
+```
+
+runs all tests.

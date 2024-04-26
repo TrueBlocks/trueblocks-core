@@ -46,7 +46,7 @@ type Withdrawal struct {
 	// EXISTING_CODE
 }
 
-func (s *Withdrawal) String() string {
+func (s Withdrawal) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

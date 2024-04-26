@@ -45,7 +45,7 @@ type BlockCount struct {
 	// EXISTING_CODE
 }
 
-func (s *BlockCount) String() string {
+func (s BlockCount) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

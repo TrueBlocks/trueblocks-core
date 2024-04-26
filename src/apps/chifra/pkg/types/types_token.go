@@ -55,7 +55,7 @@ type Token struct {
 	// EXISTING_CODE
 }
 
-func (s *Token) String() string {
+func (s Token) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

@@ -43,7 +43,7 @@ type TraceFilter struct {
 	// EXISTING_CODE
 }
 
-func (s *TraceFilter) String() string {
+func (s TraceFilter) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

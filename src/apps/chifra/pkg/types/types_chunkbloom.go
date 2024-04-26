@@ -44,7 +44,7 @@ type ChunkBloom struct {
 	// EXISTING_CODE
 }
 
-func (s *ChunkBloom) String() string {
+func (s ChunkBloom) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

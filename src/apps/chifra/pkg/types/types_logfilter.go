@@ -38,7 +38,7 @@ type LogFilter struct {
 	// EXISTING_CODE
 }
 
-func (s *LogFilter) String() string {
+func (s LogFilter) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

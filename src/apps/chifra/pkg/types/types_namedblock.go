@@ -39,7 +39,7 @@ type NamedBlock struct {
 	// EXISTING_CODE
 }
 
-func (s *NamedBlock) String() string {
+func (s NamedBlock) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

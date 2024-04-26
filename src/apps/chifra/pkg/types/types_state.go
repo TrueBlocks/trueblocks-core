@@ -52,7 +52,7 @@ type State struct {
 	// EXISTING_CODE
 }
 
-func (s *State) String() string {
+func (s State) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

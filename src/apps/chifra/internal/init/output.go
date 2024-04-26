@@ -52,6 +52,8 @@ func (opts *InitOptions) InitInternal() error {
 	// EXISTING_CODE
 	if opts.DryRun {
 		err = opts.HandleDryRun()
+	} else if len(opts.Example) > 0 {
+		err = opts.HandleExample()
 	} else {
 		err = opts.HandleInit()
 	}

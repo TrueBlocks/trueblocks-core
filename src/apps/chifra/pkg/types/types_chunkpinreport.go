@@ -38,7 +38,7 @@ type ChunkPinReport struct {
 	// EXISTING_CODE
 }
 
-func (s *ChunkPinReport) String() string {
+func (s ChunkPinReport) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

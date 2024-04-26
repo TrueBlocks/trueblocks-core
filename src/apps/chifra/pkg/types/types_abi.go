@@ -32,7 +32,7 @@ type Abi struct {
 	// EXISTING_CODE
 }
 
-func (s *Abi) String() string {
+func (s Abi) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

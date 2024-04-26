@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #------------------------------------------------
 # Name:    make-go-work.sh
@@ -6,8 +6,11 @@
 #          to a go.work file, and runs go work sync
 
 #------------------------------------------------
+# Get the directory where the script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Navigate to the root of the repo
-cd "$(dirname "$0")/.."
+cd "$SCRIPT_DIR/.."
 
 #------------------------------------------------
 # Check if the go.work file already exists
@@ -37,5 +40,8 @@ done
 echo ")" >> $GO_WORK_FILE
 go work sync
 
-cd -
+#------------------------------------------------
+echo "Created go.work with these contents."
+cat go.work
+cd - 2>&1 > /dev/null
 exit 0

@@ -57,7 +57,7 @@ type TraceAction struct {
 	// EXISTING_CODE
 }
 
-func (s *TraceAction) String() string {
+func (s TraceAction) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

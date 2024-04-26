@@ -36,7 +36,7 @@ type ChunkAddress struct {
 	// EXISTING_CODE
 }
 
-func (s *ChunkAddress) String() string {
+func (s ChunkAddress) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
