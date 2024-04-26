@@ -1,5 +1,5 @@
 run:
-  skip-files:
+  exlude-files:
     - ".*_test.go"
 linters:
   disable:

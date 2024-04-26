@@ -1,7 +1,6 @@
 package base
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -107,8 +106,7 @@ func TestToEther(t *testing.T) {
 		if got != test.expected {
 			t.Errorf("ToEther(%v) want %v, got %v", test.input, test.expected, got)
 		}
-		//lint:ignore S1025 sorry
-		got = fmt.Sprintf("%s", ToEther(test.input))
+		got = ToEther(test.input).String()
 		if got != test.expected {
 			t.Errorf("ToEther(%v) want %v, got %v", test.input, test.expected, got)
 		}
