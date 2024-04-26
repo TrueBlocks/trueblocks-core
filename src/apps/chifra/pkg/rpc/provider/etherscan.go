@@ -64,7 +64,7 @@ func (p *EtherscanProvider) SetPrintProgress(print bool) {
 
 func (p *EtherscanProvider) NewPaginator(firstPage any, perPage int) Paginator {
 	pageNumber, ok := firstPage.(uint)
-	if !ok {
+	if !ok || pageNumber == 0 {
 		pageNumber = etherscanFirstPage
 	}
 	perPageValue := perPage
