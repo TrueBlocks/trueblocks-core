@@ -36,7 +36,7 @@ type MonitorClean struct {
 	// EXISTING_CODE
 }
 
-func (s *MonitorClean) String() string {
+func (s MonitorClean) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

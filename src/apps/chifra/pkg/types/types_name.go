@@ -58,7 +58,7 @@ type Name struct {
 	// EXISTING_CODE
 }
 
-func (s *Name) String() string {
+func (s Name) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

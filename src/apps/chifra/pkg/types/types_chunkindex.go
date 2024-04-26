@@ -40,7 +40,7 @@ type ChunkIndex struct {
 	// EXISTING_CODE
 }
 
-func (s *ChunkIndex) String() string {
+func (s ChunkIndex) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

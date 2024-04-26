@@ -99,7 +99,7 @@ type Statement struct {
 	// EXISTING_CODE
 }
 
-func (s *Statement) String() string {
+func (s Statement) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

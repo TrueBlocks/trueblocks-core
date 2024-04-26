@@ -50,7 +50,7 @@ type ChunkStats struct {
 	// EXISTING_CODE
 }
 
-func (s *ChunkStats) String() string {
+func (s ChunkStats) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

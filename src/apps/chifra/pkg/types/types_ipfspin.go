@@ -39,7 +39,7 @@ type IpfsPin struct {
 	// EXISTING_CODE
 }
 
-func (s *IpfsPin) String() string {
+func (s IpfsPin) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

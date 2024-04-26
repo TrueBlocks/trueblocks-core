@@ -38,7 +38,7 @@ type ChunkRecord struct {
 	// EXISTING_CODE
 }
 
-func (s *ChunkRecord) String() string {
+func (s ChunkRecord) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }

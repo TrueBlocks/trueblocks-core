@@ -24,7 +24,7 @@ type {{.ModelName "simple"}} struct {
 	// EXISTING_CODE
 }
 
-func (s *{{.ModelName ""}}) String() string {
+func (s {{.ModelName ""}}) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
