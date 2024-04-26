@@ -40,11 +40,11 @@ func DoBlocks() {
 
 	opts.Traces = false
 	opts.Uniq = true
-	if apps, _, err := opts.BlocksUniq(); err != nil {
-		logger.Fatal(err)
-	} else {
-		SaveToFile[types.Appearance]("usesSDK/blocks-uniq.json", apps)
-	}
+	// if apps, _, err := opts.BlocksUniq(); err != nil {
+	// 	logger.Fatal(err)
+	// } else {
+	// 	SaveToFile[types.Appearance]("usesSDK/blocks-uniq.json", apps)
+	// }
 
 	opts.Uniq = false
 	opts.Logs = true

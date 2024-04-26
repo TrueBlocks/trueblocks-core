@@ -40,7 +40,7 @@ var input = types.Receipt{
 
 func helperStreamFormats(w csv.Writer, outputBuffer *bytes.Buffer, chain, format string, expectKeys bool) error {
 	buffer := new(bytes.Buffer)
-	StreamModel(buffer, input.Model(chain, format, false, nil), OutputOptions{
+	_ = StreamModel(buffer, input.Model(chain, format, false, nil), OutputOptions{
 		Format:   format,
 		NoHeader: !expectKeys,
 	})
@@ -52,9 +52,9 @@ func helperStreamFormats(w csv.Writer, outputBuffer *bytes.Buffer, chain, format
 		expectedItems = append(expectedItems, fmt.Sprint(data[key]))
 	}
 	if expectKeys {
-		w.Write(input.Model(chain, format, false, nil).Order)
+		_ = w.Write(input.Model(chain, format, false, nil).Order)
 	}
-	w.Write(expectedItems)
+	_ = w.Write(expectedItems)
 	w.Flush()
 	expected := outputBuffer.String()
 
@@ -94,7 +94,7 @@ func TestStreamJson(t *testing.T) {
 	outputBuffer := &bytes.Buffer{}
 	w := NewJsonWriter(outputBuffer)
 	w.DefaultField = DefaultField{Key: "Data", FieldType: FieldArray}
-	StreamModel(w, input.Model(chain, "json", false, nil), OutputOptions{
+	_ = StreamModel(w, input.Model(chain, "json", false, nil), OutputOptions{
 		Format:     "json",
 		JsonIndent: "  ",
 	})
@@ -169,7 +169,7 @@ func TestStreamMany(t *testing.T) {
 
 	// Print the values and try to re-parse them to check if
 	// we get the same data
-	StreamMany(context.Background(), renderData, OutputOptions{
+	_ = StreamMany(context.Background(), renderData, OutputOptions{
 		Writer: jw,
 		Format: "json",
 	})

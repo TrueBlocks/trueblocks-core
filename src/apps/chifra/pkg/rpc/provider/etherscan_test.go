@@ -104,7 +104,7 @@ func mockEtherscanServer(t *testing.T) (ts *httptest.Server) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		w.Write(b)
+		_, _ = w.Write(b)
 	}))
 
 	return ts
@@ -163,7 +163,7 @@ func TestEtherscanProvider_fetchData(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	data, count, err = provider.fetchData(context.TODO(), base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"), paginator, "int")
+	data, _, err = provider.fetchData(context.TODO(), base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"), paginator, "int")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -227,7 +227,7 @@ LOOP:
 			Orig: "14000000",
 		},
 	}
-	results = provider.TransactionsByAddress(ctx, query, errors)
+	_ = provider.TransactionsByAddress(ctx, query, errors)
 	err := <-errors
 	if err == nil {
 		t.Fatal("expected error")
