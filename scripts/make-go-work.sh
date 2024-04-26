@@ -15,6 +15,9 @@ cd "$SCRIPT_DIR/.."
 #------------------------------------------------
 # Check if the go.work file already exists
 GO_WORK_FILE="go.work"
+if [ ! -f "$GO_WORK_FILE" ]; then
+    touch "$GO_WORK_FILE"
+fi
 
 #------------------------------------------------
 # Find all go.mod files in the src directory and
