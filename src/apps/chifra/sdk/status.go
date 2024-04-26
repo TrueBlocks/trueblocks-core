@@ -20,7 +20,6 @@ import (
 func Status(w io.Writer, values url.Values) error {
 	status.ResetOptions(sdkTestMode)
 	opts := status.StatusFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("status", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("status", w, &opts.Globals)

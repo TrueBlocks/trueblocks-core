@@ -23,7 +23,6 @@ import (
 // RunConfig handles the config command for the command line. Returns error only as per cobra.
 func RunConfig(cmd *cobra.Command, args []string) error {
 	opts := configFinishParse(args)
-	outputHelpers.EnableCommand("config", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("config", &opts.Globals)
@@ -33,7 +32,6 @@ func RunConfig(cmd *cobra.Command, args []string) error {
 // ServeConfig handles the config command for the API. Returns an error.
 func ServeConfig(w http.ResponseWriter, r *http.Request) error {
 	opts := configFinishParseApi(w, r)
-	outputHelpers.EnableCommand("config", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("config", w, &opts.Globals)

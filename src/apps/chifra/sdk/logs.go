@@ -20,7 +20,6 @@ import (
 func Logs(w io.Writer, values url.Values) error {
 	logs.ResetOptions(sdkTestMode)
 	opts := logs.LogsFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("logs", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("logs", w, &opts.Globals)

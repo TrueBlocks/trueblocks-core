@@ -20,7 +20,6 @@ import (
 func Receipts(w io.Writer, values url.Values) error {
 	receipts.ResetOptions(sdkTestMode)
 	opts := receipts.ReceiptsFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("receipts", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("receipts", w, &opts.Globals)

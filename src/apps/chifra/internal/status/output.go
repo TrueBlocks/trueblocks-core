@@ -23,7 +23,6 @@ import (
 // RunStatus handles the status command for the command line. Returns error only as per cobra.
 func RunStatus(cmd *cobra.Command, args []string) error {
 	opts := statusFinishParse(args)
-	outputHelpers.EnableCommand("status", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("status", &opts.Globals)
@@ -33,7 +32,6 @@ func RunStatus(cmd *cobra.Command, args []string) error {
 // ServeStatus handles the status command for the API. Returns an error.
 func ServeStatus(w http.ResponseWriter, r *http.Request) error {
 	opts := statusFinishParseApi(w, r)
-	outputHelpers.EnableCommand("status", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("status", w, &opts.Globals)

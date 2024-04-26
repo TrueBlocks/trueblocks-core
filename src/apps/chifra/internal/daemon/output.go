@@ -27,7 +27,6 @@ import (
 // RunDaemon handles the daemon command for the command line. Returns error only as per cobra.
 func RunDaemon(cmd *cobra.Command, args []string) error {
 	opts := daemonFinishParse(args)
-	outputHelpers.EnableCommand("daemon", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("daemon", &opts.Globals)
@@ -37,7 +36,6 @@ func RunDaemon(cmd *cobra.Command, args []string) error {
 // ServeDaemon handles the daemon command for the API. Returns an error.
 func ServeDaemon(w http.ResponseWriter, r *http.Request) error {
 	opts := daemonFinishParseApi(w, r)
-	outputHelpers.EnableCommand("daemon", true)
 	// EXISTING_CODE
 	if true { // defeats linter
 		logger.Fatal("should not happen ==> Daemon is an invalid route for server")

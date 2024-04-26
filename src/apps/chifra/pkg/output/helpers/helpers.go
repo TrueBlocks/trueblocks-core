@@ -3,7 +3,6 @@ package outputHelpers
 import (
 	"io"
 	"os"
-	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -20,15 +19,6 @@ func init() {
 	}
 }
 
-var enabledForCmds = map[string]bool{}
-var enabledForCmdsMutex sync.RWMutex
-
-func EnableCommand(cmd string, enabled bool) {
-	enabledForCmdsMutex.Lock()
-	defer enabledForCmdsMutex.Unlock()
-	enabledForCmds[cmd] = enabled
-}
-
 func PreRunWithJsonWriter(cmdName string, getOptions func() *globals.GlobalOptions) func(cmd *cobra.Command, args []string) {
 	return func(cmd *cobra.Command, args []string) {
 		opts := getOptions()
@@ -42,7 +32,7 @@ func PreRunWithJsonWriter(cmdName string, getOptions func() *globals.GlobalOptio
 		}
 
 		// If we need to output JSON, init JsonWriter...
-		if enabledForCmds[cmdName] && (opts.Format == "json" || opts.ShowRaw) {
+		if opts.Format == "json" || opts.ShowRaw {
 			jw := output.NewDefaultJsonWriter(outputWriter, !opts.ShowRaw)
 			opts.Writer = jw
 		} else {
@@ -71,12 +61,6 @@ func PostRunWithJsonWriter(getOptions func() *globals.GlobalOptions) func(cmd *c
 // SetWriterForCommand sets the writer for currently running command, but only if
 // we are running with --file
 func SetWriterForCommand(cmdName string, opts *globals.GlobalOptions) {
-	// This function should be only enabled for commands using output.Stream*
-	// functions for producing their output
-	if !enabledForCmds[cmdName] {
-		return
-	}
-
 	// Try to cast the default writer to JsonWriter
 	jw, ok := opts.Writer.(*output.JsonWriter)
 	wantsJson := (opts.Format == "json" || opts.ShowRaw)
@@ -111,9 +95,7 @@ func SetWriterForCommand(cmdName string, opts *globals.GlobalOptions) {
 // InitJsonWriterApi inits JsonWriter for API responses
 func InitJsonWriterApi(cmdName string, w io.Writer, opts *globals.GlobalOptions) {
 	_, ok := opts.Writer.(*output.JsonWriter)
-	enabledForCmdsMutex.RLock()
-	defer enabledForCmdsMutex.RUnlock()
-	if enabledForCmds[cmdName] && opts.Format == "json" && !ok {
+	if opts.Format == "json" && !ok {
 		jw := output.NewDefaultJsonWriter(w, false)
 		jw.ShouldWriteMeta = true
 		jw.GetMeta = func() (*types.MetaData, error) {
@@ -127,7 +109,7 @@ func InitJsonWriterApi(cmdName string, w io.Writer, opts *globals.GlobalOptions)
 
 // CloseJsonWriterIfNeededApi will close JsonWriter if the format is json
 func CloseJsonWriterIfNeededApi(cmdName string, err error, opts *globals.GlobalOptions) {
-	if enabledForCmds[cmdName] && opts.Format == "json" && err == nil {
+	if opts.Format == "json" && err == nil {
 		opts.Writer.(*output.JsonWriter).Close()
 	}
 }

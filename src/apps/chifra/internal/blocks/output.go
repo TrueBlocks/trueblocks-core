@@ -23,7 +23,6 @@ import (
 // RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
 func RunBlocks(cmd *cobra.Command, args []string) error {
 	opts := blocksFinishParse(args)
-	outputHelpers.EnableCommand("blocks", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("blocks", &opts.Globals)
@@ -33,7 +32,6 @@ func RunBlocks(cmd *cobra.Command, args []string) error {
 // ServeBlocks handles the blocks command for the API. Returns an error.
 func ServeBlocks(w http.ResponseWriter, r *http.Request) error {
 	opts := blocksFinishParseApi(w, r)
-	outputHelpers.EnableCommand("blocks", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("blocks", w, &opts.Globals)

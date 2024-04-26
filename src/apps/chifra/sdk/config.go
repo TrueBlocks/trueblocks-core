@@ -20,7 +20,6 @@ import (
 func Config(w io.Writer, values url.Values) error {
 	config.ResetOptions(sdkTestMode)
 	opts := config.ConfigFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("config", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("config", w, &opts.Globals)

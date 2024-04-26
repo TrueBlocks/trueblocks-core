@@ -1,9 +1,0 @@
-// Go Version
-go 1.22
-
-use (
-	./sdk
-	./src/apps/chifra
-	./src/dev_tools/goMaker
-	./src/dev_tools/testRunner
-)

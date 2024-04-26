@@ -23,7 +23,6 @@ import (
 // RunLogs handles the logs command for the command line. Returns error only as per cobra.
 func RunLogs(cmd *cobra.Command, args []string) error {
 	opts := logsFinishParse(args)
-	outputHelpers.EnableCommand("logs", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("logs", &opts.Globals)
@@ -33,7 +32,6 @@ func RunLogs(cmd *cobra.Command, args []string) error {
 // ServeLogs handles the logs command for the API. Returns an error.
 func ServeLogs(w http.ResponseWriter, r *http.Request) error {
 	opts := logsFinishParseApi(w, r)
-	outputHelpers.EnableCommand("logs", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("logs", w, &opts.Globals)

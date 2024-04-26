@@ -20,7 +20,6 @@ import (
 func Monitors(w io.Writer, values url.Values) error {
 	monitors.ResetOptions(sdkTestMode)
 	opts := monitors.MonitorsFinishParseInternal(w, values)
-	outputHelpers.EnableCommand("monitors", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("monitors", w, &opts.Globals)
