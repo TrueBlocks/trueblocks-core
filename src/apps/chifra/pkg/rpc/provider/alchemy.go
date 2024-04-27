@@ -53,7 +53,7 @@ func alchemyCategory(requestType string) (category string) {
 
 type AlchemyProvider struct {
 	printProgress            bool
-	perPage                  int
+	perPage                  int //nolint:unused
 	conn                     *rpc.Connection
 	limiter                  *rate.Limiter
 	baseUrl                  string
