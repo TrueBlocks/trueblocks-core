@@ -12,10 +12,10 @@ type PageNumberPaginator struct {
 	done      bool
 }
 
-func NewPageNumberPaginator(page int, firstPage int, perPage int) *PageNumberPaginator {
+func NewPageNumberPaginator(page uint, firstPage uint, perPage int) *PageNumberPaginator {
 	return &PageNumberPaginator{
-		firstPage: firstPage,
-		page:      page,
+		firstPage: int(firstPage),
+		page:      int(page),
 		perPage:   perPage,
 	}
 }

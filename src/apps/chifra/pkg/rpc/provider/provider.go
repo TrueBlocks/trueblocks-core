@@ -35,7 +35,7 @@ type Provider interface {
 	Count(context.Context, *Query, chan error) chan types.Monitor
 
 	// NewPaginator creates and returns Paginator that should be used for given service
-	NewPaginator() Paginator
+	NewPaginator(startPage any, perPage int) Paginator
 
 	// PrintProgress returns true if Provider should print progress bar
 	PrintProgress() bool
@@ -65,7 +65,7 @@ func fetchAndFilterData(ctx context.Context, provider Provider, query *Query, er
 				})
 
 				// Get a paginator so we can iterate
-				paginator := provider.NewPaginator()
+				paginator := provider.NewPaginator(query.StartPage, int(query.PerPage))
 
 				for !paginator.Done() {
 					select {

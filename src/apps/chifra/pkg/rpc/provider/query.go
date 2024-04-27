@@ -13,6 +13,8 @@ type Query struct {
 	BlockRange []identifiers.Identifier
 	// Etherscan calls them "modules"
 	Resources []string
+	StartPage uint
+	PerPage   uint
 }
 
 func (q *Query) InRange(bn base.Blknum) (bool, error) {

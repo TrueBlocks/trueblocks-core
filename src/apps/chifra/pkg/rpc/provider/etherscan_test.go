@@ -181,7 +181,6 @@ func TestEtherscanProvider_TransactionsByAddress(t *testing.T) {
 	defer ts.Close()
 
 	provider := EtherscanProvider{
-		perPage: perPage,
 		baseUrl: ts.URL,
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
@@ -192,6 +191,7 @@ func TestEtherscanProvider_TransactionsByAddress(t *testing.T) {
 			base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 		},
 		Resources: []string{"int"},
+		PerPage:   uint(perPage),
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -243,7 +243,6 @@ func TestEtherscanProvider_Appearances(t *testing.T) {
 	defer ts.Close()
 
 	provider := EtherscanProvider{
-		perPage: perPage,
 		baseUrl: ts.URL,
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
@@ -254,6 +253,7 @@ func TestEtherscanProvider_Appearances(t *testing.T) {
 			base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 		},
 		Resources: []string{"int"},
+		PerPage:   uint(perPage),
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -289,7 +289,6 @@ func TestEtherscanProvider_Count(t *testing.T) {
 	defer ts.Close()
 
 	provider := EtherscanProvider{
-		perPage: perPage,
 		baseUrl: ts.URL,
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
@@ -300,6 +299,7 @@ func TestEtherscanProvider_Count(t *testing.T) {
 			base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 		},
 		Resources: []string{"int"},
+		PerPage:   uint(perPage),
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

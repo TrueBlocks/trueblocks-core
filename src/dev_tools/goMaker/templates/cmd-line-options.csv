@@ -333,6 +333,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 53100,tools,Other,slurp,ethslurp,per_page,P,3000,,flag,<uint64>,,,,,the number of records to request on each page
 53110,tools,Other,slurp,ethslurp,sleep,s,.25,visible|docs,flag,<double>,,,,,seconds to sleep between requests
 53120,tools,Other,slurp,ethslurp,n1,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
-53130,tools,Other,slurp,ethslurp,n2,,,,note,,,,,,Portions of this software are Powered by Etherscan.io APIs.
+53130,tools,Other,slurp,ethslurp,n2,,,,note,,,,,,Portions of this software are Powered by Etherscan.io&#44; Covalent&#44; Alchemy&#44; TrueBlocks Key APIs.
+53131,tools,Other,slurp,ethslurp,n3,,,,note,,,,,,See slurp/README on how to configure keys for API providers
 53140,tools,Other,slurp,ethslurp,n3,,,,note,,,,,,The withdrawals option is only available on certain chains. It is ignored otherwise.
-53150,tools,Other,slurp,ethslurp,n4,,,,note,,,,,,If the value of --source is key&#44; --types is ignored and only appearances or counts are returned.
+53150,tools,Other,slurp,ethslurp,n4,,,,note,,,,,,If the value of --source is key&#44; --types is ignored.
