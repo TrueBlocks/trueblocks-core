@@ -14,9 +14,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -48,7 +46,7 @@ func (opts *MonitorsOptions) String() string {
 func (opts *MonitorsOptions) MonitorsBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting monitors struct to URL values: %v", err)
+		return fmt.Errorf("error converting monitors struct to URL values: %v", err)
 	}
 
 	return monitors.Monitors(w, values)
@@ -88,7 +86,7 @@ type monitorsGeneric interface {
 func queryMonitors[T monitorsGeneric](opts *MonitorsOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.MonitorsBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

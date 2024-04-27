@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoState tests the state sdk function
@@ -14,21 +11,35 @@ func DoState() {
 	logger.Info("DoState")
 
 	opts := sdk.StateOptions{
+		BlockIds: []string{"18000000"},
+		Addrs:    []string{"unchainedindex.eth"},
 		Globals: sdk.Globals{
 			Verbose: true,
-			Cache:   true,
 		},
-		BlockIds: testBlocks,
-		Addrs:    testAddrs,
+	}
+	opts.Caching(sdk.CacheOn)
+
+	if state, _, err := opts.State(); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveAndClean[types.State]("usesSDK/state.json", state, &opts, func() error {
+			_, _, err := opts.State()
+			return err
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
 
-	buf := bytes.Buffer{}
-	if err := opts.StateBytes(&buf); err != nil {
-		logger.Fatal(err)
+	opts.Articulate = true
+	opts.Call = "manifestHashMap(0x02f2b09b33fdbd406ead954a31f98bd29a2a3492,\"mainnet\")"
+	if stateResult, _, err := opts.StateCall(); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveAndClean[types.Result]("usesSDK/stateResult.json", stateResult, &opts, func() error {
+			_, _, err := opts.StateCall()
+			return err
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
-
-	file.StringToAsciiFile("usesSDK/state.json", buf.String())
-	fmt.Println(buf.String())
 }
-// func (opts *StateOptions) State() ([]types.State, *types.MetaData, error) {
-// func (opts *StateOptions) StateCall() ([]types.Result, *types.MetaData, error) {

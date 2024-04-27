@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+
+	"github.com/TrueBlocks/trueblocks-core/sdk"
 )
 
 // SaveToFile writes the content of the slice to a file specified by fn.
@@ -33,9 +35,27 @@ func SaveToFile[T fmt.Stringer](fn string, slice []T) error {
 		return err
 	}
 
-	if writer.Flush(); err != nil {
+	if err = writer.Flush(); err != nil {
 		return err
 	}
+
+	return nil
+}
+
+func SaveAndClean[T fmt.Stringer](fn string, slice []T, g sdk.Cacher, cleanFunc func() error) error {
+	if err := SaveToFile(fn, slice); err != nil {
+		return err
+	}
+
+	g.Caching(sdk.Decache)
+	defer g.Caching(sdk.CacheOn)
+	// fmt.Println("Is it there?")
+	// usage.Wait()
+	if err := cleanFunc(); err != nil {
+		return err
+	}
+	// fmt.Println("Is it gone?")
+	// usage.Wait()
 
 	return nil
 }

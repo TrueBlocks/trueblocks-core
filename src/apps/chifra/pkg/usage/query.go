@@ -10,9 +10,9 @@ import (
 )
 
 func QueryUser(prompt, noResponse string) bool {
-	if os.Getenv("NO_USERQUERY") == "true" {
+	if os.Getenv("TB_NO_USERQUERY") == "true" {
 		return true
-	} else if len(os.Getenv("NO_USERQUERY")) > 0 {
+	} else if len(os.Getenv("TB_NO_USERQUERY")) > 0 {
 		return false
 	}
 

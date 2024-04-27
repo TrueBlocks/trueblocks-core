@@ -14,10 +14,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -54,7 +52,7 @@ func (opts *NamesOptions) String() string {
 func (opts *NamesOptions) NamesBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting names struct to URL values: %v", err)
+		return fmt.Errorf("error converting names struct to URL values: %v", err)
 	}
 
 	return names.Names(w, values)
@@ -94,7 +92,7 @@ type namesGeneric interface {
 func queryNames[T namesGeneric](opts *NamesOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.NamesBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

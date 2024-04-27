@@ -13,7 +13,7 @@ func TestPageIdPaginator_NextPage(t *testing.T) {
 	if paginator.page != "latest" {
 		t.Fatal("wrong page after initialization:", paginator.page)
 	}
-	_ = paginator.SetNextPage("next")
+	paginator.SetNextPage("next")
 
 	err = paginator.NextPage()
 	if err != nil {

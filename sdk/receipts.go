@@ -14,9 +14,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -38,7 +36,7 @@ func (opts *ReceiptsOptions) String() string {
 func (opts *ReceiptsOptions) ReceiptsBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting receipts struct to URL values: %v", err)
+		return fmt.Errorf("error converting receipts struct to URL values: %v", err)
 	}
 
 	return receipts.Receipts(w, values)
@@ -76,7 +74,7 @@ type receiptsGeneric interface {
 func queryReceipts[T receiptsGeneric](opts *ReceiptsOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ReceiptsBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

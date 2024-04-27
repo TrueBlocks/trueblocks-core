@@ -14,11 +14,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	chunks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -58,7 +56,7 @@ func (opts *ChunksOptions) String() string {
 func (opts *ChunksOptions) ChunksBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting chunks struct to URL values: %v", err)
+		return fmt.Errorf("error converting chunks struct to URL values: %v", err)
 	}
 
 	return chunks.Chunks(w, values)
@@ -104,7 +102,7 @@ type chunksGeneric interface {
 func queryChunks[T chunksGeneric](opts *ChunksOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ChunksBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

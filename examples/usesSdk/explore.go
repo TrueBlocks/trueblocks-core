@@ -15,7 +15,7 @@ func DoExplore() {
 
 	// buf := bytes.Buffer{}
 	// if err := opts.Explore(&buf); err != nil {
-	// 	logger.Fatal(err)
+	// 	logger.Error(err)
 	// }
 
 	file.StringToAsciiFile("usesSDK/explore.json", "explore is not an SDK option")

@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoTokens tests the When sdk function
@@ -17,12 +14,14 @@ func DoTokens() {
 		Addrs: []string{"ens.eth", "trueblocks.eth"},
 	}
 
-	buf := bytes.Buffer{}
-	if err := opts.TokensBytes(&buf); err != nil {
-		logger.Fatal(err)
+	if tokens, _, err := opts.Tokens(); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveAndClean[types.Token]("usesSDK/tokens.json", tokens, &opts, func() error {
+			_, _, err := opts.Tokens()
+			return err
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
-
-	file.StringToAsciiFile("usesSDK/tokens.json", buf.String())
-	fmt.Println(buf.String())
 }
-// func (opts *TokensOptions) Tokens() ([]types.Token, *types.MetaData, error) {

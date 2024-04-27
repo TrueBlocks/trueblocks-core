@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoMonitors tests the When sdk function
@@ -18,14 +15,37 @@ func DoMonitors() {
 		List:  true,
 	}
 
-	buf := bytes.Buffer{}
-	if err := opts.MonitorsBytes(&buf); err != nil {
-		logger.Fatal(err)
+	if monitors, _, err := opts.MonitorsList(); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveAndClean[types.Monitor]("usesSDK/monitors.json", monitors, &opts, func() error {
+			_, _, err := opts.MonitorsList()
+			return err
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
 
-	file.StringToAsciiFile("usesSDK/monitors.json", buf.String())
-	fmt.Println(buf.String())
+	// opts.List = false
+	// if monitors, _, err := opts.Monitors(); err != nil {
+	// 	logger.Error(err)
+	// } else {
+	// 	if err := SaveAndClean[bool]("usesSDK/monitors.json", monitors, &opts, func() error {
+	// 		_, _, err := opts.Monitors()
+	// 		return err
+	// 	}); err != nil {
+	// 		logger.Error(err)
+	// 	}
+	// }
+
+	// if monitors, _, err := opts.MonitorsClean(); err != nil {
+	// 	logger.Error(err)
+	// } else {
+	// 	if err := SaveAndClean[types.MonitorClean]("usesSDK/monitors.json", monitors, &opts, func() error {
+	// 		_, _, err := opts.MonitorsClean()
+	// 		return err
+	// 	}); err != nil {
+	// 		logger.Error(err)
+	// 	}
+	// }
 }
-// func (opts *MonitorsOptions) Monitors() ([]bool, *types.MetaData, error) {
-// func (opts *MonitorsOptions) MonitorsClean() ([]types.MonitorClean, *types.MetaData, error) {
-// func (opts *MonitorsOptions) MonitorsList() ([]types.Monitor, *types.MetaData, error) {

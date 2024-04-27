@@ -14,7 +14,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"strings"
 	"time"
 
@@ -45,7 +44,7 @@ func (opts *DaemonOptions) String() string {
 func (opts *DaemonOptions) DaemonBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting daemon struct to URL values: %v", err)
+		return fmt.Errorf("error converting daemon struct to URL values: %v", err)
 	}
 
 	return daemon.Daemon(w, values)
@@ -100,7 +99,7 @@ type daemonGeneric interface {
 func queryDaemon[T daemonGeneric](opts *DaemonOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.DaemonBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

@@ -19,12 +19,13 @@ func DoExport() {
 
 	buf := bytes.Buffer{}
 	if err := opts.ExportBytes(&buf); err != nil {
-		logger.Fatal(err)
+		logger.Error(err)
 	}
 
 	file.StringToAsciiFile("usesSDK/export.json", buf.String())
 	fmt.Println(buf.String())
 }
+
 // func (opts *ExportOptions) Export() ([]types.Transaction, *types.MetaData, error) {
 // func (opts *ExportOptions) ExportAppearances() ([]types.Appearance, *types.MetaData, error) {
 // func (opts *ExportOptions) ExportReceipts() ([]types.Receipt, *types.MetaData, error) {

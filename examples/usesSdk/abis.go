@@ -15,8 +15,13 @@ func DoAbis() {
 	}
 
 	if functions, _, err := opts.Abis(); err != nil {
-		logger.Fatal(err)
+		logger.Error(err)
 	} else {
-		SaveToFile[types.Function]("usesSDK/abis.json", functions)
+		if err := SaveAndClean[types.Function]("usesSDK/abis.json", functions, &opts, func() error {
+			_, _, err := opts.Abis()
+			return err
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
 }

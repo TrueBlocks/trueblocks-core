@@ -21,7 +21,7 @@ import (
 )
 
 func init() {
-	os.Setenv("NO_USERQUERY", "true")
+	os.Setenv("TB_NO_USERQUERY", "true")
 }
 
 func main() {

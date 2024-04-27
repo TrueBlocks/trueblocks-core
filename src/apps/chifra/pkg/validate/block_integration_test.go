@@ -15,7 +15,7 @@ import (
 )
 
 func Test_BlockRanges(t *testing.T) {
-	_ = config.GetRootConfig()
+	config.GetRootConfig()
 	for _, item := range testBlocks {
 		if !item.enabled {
 			continue

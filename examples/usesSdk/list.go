@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoList tests the When sdk function
@@ -17,14 +14,36 @@ func DoList() {
 		Addrs: []string{testAddrs[0]},
 	}
 
-	buf := bytes.Buffer{}
-	if err := opts.ListBytes(&buf); err != nil {
-		logger.Fatal(err)
+	if appearances, _, err := opts.List(); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveAndClean[types.Appearance]("usesSDK/list.json", appearances, &opts, func() error {
+			_, _, err := opts.List()
+			return err
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
 
-	file.StringToAsciiFile("usesSDK/list.json", buf.String())
-	fmt.Println(buf.String())
+	if appearancesCount, _, err := opts.ListCount(); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveAndClean[types.AppearanceCount]("usesSDK/listCount.json", appearancesCount, &opts, func() error {
+			_, _, err := opts.ListCount()
+			return err
+		}); err != nil {
+			logger.Error(err)
+		}
+	}
+
+	if bounds, _, err := opts.ListBounds(); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveAndClean[types.Bounds]("usesSDK/listBounds.json", bounds, &opts, func() error {
+			_, _, err := opts.ListBounds()
+			return err
+		}); err != nil {
+			logger.Error(err)
+		}
+	}
 }
-// func (opts *ListOptions) List() ([]types.Appearance, *types.MetaData, error) {
-// func (opts *ListOptions) ListCount() ([]types.AppearanceCount, *types.MetaData, error) {
-// func (opts *ListOptions) ListBounds() ([]types.Bounds, *types.MetaData, error) {

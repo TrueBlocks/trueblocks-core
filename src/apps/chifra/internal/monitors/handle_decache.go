@@ -17,7 +17,7 @@ func (opts *MonitorsOptions) HandleDecache() error {
 		if !opts.Globals.IsApiMode() && !usage.QueryUser(getWarning(addr), "Not decaching") {
 			return nil
 		}
-		os.Setenv("NO_USERQUERY", "true")
+		os.Setenv("TB_NO_USERQUERY", "true")
 		_ = utils.System("chifra export --decache " + addr)
 	}
 

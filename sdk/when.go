@@ -14,10 +14,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -46,7 +44,7 @@ func (opts *WhenOptions) String() string {
 func (opts *WhenOptions) WhenBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting when struct to URL values: %v", err)
+		return fmt.Errorf("error converting when struct to URL values: %v", err)
 	}
 
 	return when.When(w, values)
@@ -86,7 +84,7 @@ type whenGeneric interface {
 func queryWhen[T whenGeneric](opts *WhenOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.WhenBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

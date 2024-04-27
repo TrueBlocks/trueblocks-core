@@ -14,10 +14,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -47,7 +45,7 @@ func (opts *SlurpOptions) String() string {
 func (opts *SlurpOptions) SlurpBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting slurp struct to URL values: %v", err)
+		return fmt.Errorf("error converting slurp struct to URL values: %v", err)
 	}
 
 	return slurp.Slurp(w, values)
@@ -105,7 +103,7 @@ type slurpGeneric interface {
 func querySlurp[T slurpGeneric](opts *SlurpOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.SlurpBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

@@ -18,7 +18,7 @@ import (
 )
 
 func Test_FreshenMonitors(t *testing.T) {
-	_ = config.GetRootConfig()
+	config.GetRootConfig()
 	addrs := []string{"0x846a9cb5593483b59bb386f5a878fbb2a0d1d8dc"}
 
 	// This is an address that we use for testing...early transactor but not for long so unlikely to be used for real

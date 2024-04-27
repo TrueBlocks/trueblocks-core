@@ -147,24 +147,3 @@ func (bl *Bloom) addressToBits(addr base.Address) (bits [5]uint32) {
 
 	return
 }
-
-func (bl *Bloom) getStats() (nBlooms uint64, nInserted uint64, nBitsLit uint64, nBitsNotLit uint64, sz uint64, bitsLit []uint64) {
-	bitsLit = []uint64{}
-	sz += 4
-	nBlooms = uint64(bl.Count)
-	for _, bf := range bl.Blooms {
-		nInserted += uint64(bf.NInserted)
-		sz += 4 + uint64(len(bf.Bytes))
-		for bitPos := 0; bitPos < len(bf.Bytes)*8; bitPos++ {
-			tester := bitChecker{bit: uint32(bitPos), bytes: bf.Bytes}
-			if bl.isBitLit(&tester) {
-				nBitsLit++
-				bitsLit = append(bitsLit, uint64(bitPos))
-			} else {
-				nBitsNotLit++
-				// fmt.Printf("%d", b)
-			}
-		}
-	}
-	return
-}

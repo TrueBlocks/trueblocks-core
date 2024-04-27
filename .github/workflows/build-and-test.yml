@@ -24,13 +24,13 @@ jobs:
         uses: golangci/golangci-lint-action@v3
         with:
           # Optional: version of golangci-lint to use in form of v1.2 or v1.2.3 or `latest` to use the latest version
-          version: latest
+          version: v1.54.2
 
           # Optional: working directory, useful for monorepos
           working-directory: ${{ env.CHIFRA_PATH }}
 
           # Optional: set location of the config file (if it is not in the root directory)
-          args: --timeout=5m --verbose
+          args: --timeout=5m --verbose --out-format=colored-line-number
   Build:
     needs: golangci
     runs-on: ubuntu-20.04
