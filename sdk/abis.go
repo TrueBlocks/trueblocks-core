@@ -14,10 +14,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -43,7 +41,7 @@ func (opts *AbisOptions) String() string {
 func (opts *AbisOptions) AbisBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting abis struct to URL values: %v", err)
+		return fmt.Errorf("error converting abis struct to URL values: %v", err)
 	}
 
 	return abis.Abis(w, values)
@@ -86,7 +84,7 @@ type abisGeneric interface {
 func queryAbis[T abisGeneric](opts *AbisOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.AbisBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]
