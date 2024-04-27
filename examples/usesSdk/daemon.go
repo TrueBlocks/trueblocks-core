@@ -15,7 +15,7 @@ func DoDaemon() {
 
 	// buf := bytes.Buffer{}
 	// if err := opts.Daemon(&buf); err != nil {
-	// 	logger.Fatal(err)
+	// 	logger.Error(err)
 	// }
 
 	file.StringToAsciiFile("usesSDK/daemon.json", "daemon is not an sdk option")

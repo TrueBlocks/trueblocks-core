@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoNames tests the When sdk function
@@ -18,14 +15,35 @@ func DoNames() {
 		MatchCase: true,
 	}
 
-	buf := bytes.Buffer{}
-	if err := opts.NamesBytes(&buf); err != nil {
-		logger.Fatal(err)
+	if names, _, err := opts.Names(); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveAndClean[types.Name]("usesSDK/names.json", names, &opts, func() error {
+			_, _, err := opts.Names()
+			return err
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
 
-	file.StringToAsciiFile("usesSDK/names.json", buf.String())
-	fmt.Println(buf.String())
+	// opts.Addr = true
+	// if addrs, _, err := opts.NamesAddr(); err != nil {
+	// 	logger.Error(err)
+	// } else {
+	// 	if err := SaveAndClean[base.Address]("usesSDK/names-addr.json", addrs, &opts, func() error {
+	// 		_, _, err := opts.NamesAddr()
+	// 		return err
+	// 	})
+	// }
+
+	// opts.Addr = false
+	// opts.Tags = true
+	// if tags, _, err := opts.NamesTags(); err != nil {
+	// 	logger.Error(err)
+	// } else {
+	// 	if err := SaveAndClean[string]("usesSDK/names-tags.json", tags, &opts, func() error {
+	// 		_, _, err := opts.NamesTags()
+	// 		return err
+	// 	})
+	// }
 }
-// func (opts *NamesOptions) Names() ([]types.Name, *types.MetaData, error) {
-// func (opts *NamesOptions) NamesAddr() ([]base.Address, *types.MetaData, error) {
-// func (opts *NamesOptions) NamesTags() ([]string, *types.MetaData, error) {
