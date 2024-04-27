@@ -41,8 +41,8 @@ func TestJsonWriter_EmptyField(t *testing.T) {
 	b := make([]byte, 0, 1024)
 	buf := bytes.NewBuffer(b)
 	w := NewJsonWriter(buf)
-	_, _ = w.OpenField("data", FieldArray)
-	_, _ = w.CloseField(FieldArray)
+	w.OpenField("data", FieldArray)
+	w.CloseField(FieldArray)
 	w.Close()
 
 	result := buf.String()
@@ -62,10 +62,10 @@ func TestJsonWriter_EmptySubField(t *testing.T) {
 	b := make([]byte, 0, 1024)
 	buf := bytes.NewBuffer(b)
 	w := NewJsonWriter(buf)
-	_, _ = w.OpenField("data", FieldArray)
-	_, _ = w.OpenField("", FieldObject)
-	_, _ = w.CloseField(FieldObject)
-	_, _ = w.CloseField(FieldArray)
+	w.OpenField("data", FieldArray)
+	w.OpenField("", FieldObject)
+	w.CloseField(FieldObject)
+	w.CloseField(FieldArray)
 	w.Close()
 
 	result := buf.String()
@@ -87,11 +87,11 @@ func TestJsonWriter_SingleKey(t *testing.T) {
 	b := make([]byte, 0, 1024)
 	buf := bytes.NewBuffer(b)
 	w := NewJsonWriter(buf)
-	_, _ = w.OpenField("data", FieldArray)
-	_, _ = w.OpenField("", FieldObject)
-	_, _ = w.Write([]byte(`"key": true`))
-	_, _ = w.CloseField(FieldObject)
-	_, _ = w.CloseField(FieldArray)
+	w.OpenField("data", FieldArray)
+	w.OpenField("", FieldObject)
+	w.Write([]byte(`"key": true`))
+	w.CloseField(FieldObject)
+	w.CloseField(FieldArray)
 	w.Close()
 
 	result := buf.String()
@@ -113,12 +113,12 @@ func TestJsonWriter_SingleEmptySubkey(t *testing.T) {
 	b := make([]byte, 0, 1024)
 	buf := bytes.NewBuffer(b)
 	w := NewJsonWriter(buf)
-	_, _ = w.OpenField("data", FieldArray)
-	_, _ = w.OpenField("", FieldObject)
-	_, _ = w.OpenField("subkey", FieldObject)
-	_, _ = w.CloseField(FieldObject)
-	_, _ = w.CloseField(FieldObject)
-	_, _ = w.CloseField(FieldArray)
+	w.OpenField("data", FieldArray)
+	w.OpenField("", FieldObject)
+	w.OpenField("subkey", FieldObject)
+	w.CloseField(FieldObject)
+	w.CloseField(FieldObject)
+	w.CloseField(FieldArray)
 	w.Close()
 
 	result := buf.String()
@@ -142,13 +142,13 @@ func TestJsonWriter_SingleNonEmptySubkey(t *testing.T) {
 	b := make([]byte, 0, 1024)
 	buf := bytes.NewBuffer(b)
 	w := NewJsonWriter(buf)
-	_, _ = w.OpenField("data", FieldArray)
-	_, _ = w.OpenField("", FieldObject)
-	_, _ = w.OpenField("subkey", FieldObject)
-	_, _ = w.Write([]byte(`"key": true`))
-	_, _ = w.CloseField(FieldObject)
-	_, _ = w.CloseField(FieldObject)
-	_, _ = w.CloseField(FieldArray)
+	w.OpenField("data", FieldArray)
+	w.OpenField("", FieldObject)
+	w.OpenField("subkey", FieldObject)
+	w.Write([]byte(`"key": true`))
+	w.CloseField(FieldObject)
+	w.CloseField(FieldObject)
+	w.CloseField(FieldArray)
 	w.Close()
 
 	result := buf.String()
@@ -173,14 +173,14 @@ func TestJsonWriter_SingleNonEmptySubkeyMultipleChildren(t *testing.T) {
 	b := make([]byte, 0, 1024)
 	buf := bytes.NewBuffer(b)
 	w := NewJsonWriter(buf)
-	_, _ = w.OpenField("data", FieldArray)
-	_, _ = w.OpenField("", FieldObject)
-	_, _ = w.OpenField("subkey", FieldObject)
-	_, _ = w.Write([]byte(`"key1": true`))
-	_, _ = w.Write([]byte(`"key2": false`))
-	_, _ = w.CloseField(FieldObject)
-	_, _ = w.CloseField(FieldObject)
-	_, _ = w.CloseField(FieldArray)
+	w.OpenField("data", FieldArray)
+	w.OpenField("", FieldObject)
+	w.OpenField("subkey", FieldObject)
+	w.Write([]byte(`"key1": true`))
+	w.Write([]byte(`"key2": false`))
+	w.CloseField(FieldObject)
+	w.CloseField(FieldObject)
+	w.CloseField(FieldArray)
 	w.Close()
 
 	result := buf.String()
@@ -239,14 +239,14 @@ func TestJsonWriter_MultipleItemsWithSubitems(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, _ = w.CloseField(FieldObject)
-	_, _ = w.CloseField(FieldArray)
+	w.CloseField(FieldObject)
+	w.CloseField(FieldArray)
 
-	_, _ = w.OpenField("errors", FieldArray)
-	_, _ = w.CloseField(FieldArray)
+	w.OpenField("errors", FieldArray)
+	w.CloseField(FieldArray)
 
-	_, _ = w.OpenField("meta", FieldObject)
-	_, _ = w.CloseField(FieldObject)
+	w.OpenField("meta", FieldObject)
+	w.CloseField(FieldObject)
 
 	w.Close()
 
@@ -263,7 +263,7 @@ func TestJsonWriter_openRoot(t *testing.T) {
 	b := make([]byte, 0, 1024)
 	buf := bytes.NewBuffer(b)
 	w := NewJsonWriter(buf)
-	_, _ = w.Write([]byte(""))
+	w.Write([]byte(""))
 
 	result := buf.String()
 
@@ -311,8 +311,8 @@ func TestJsonWriter_CloseApiResponse(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, _ = w.CloseField(FieldObject)
-	_, _ = w.CloseField(FieldArray)
+	w.CloseField(FieldObject)
+	w.CloseField(FieldArray)
 
 	w.WriteError(errors.New("error1"))
 	w.WriteError(errors.New("error2"))
@@ -341,7 +341,7 @@ func TestJsonWriter_WriteCompound(t *testing.T) {
 		Key:       "data",
 		FieldType: FieldArray,
 	}
-	_, _ = w.WriteCompoundItem("", map[string]bool{"key": true})
+	w.WriteCompoundItem("", map[string]bool{"key": true})
 	w.Close()
 
 	result := buf.String()
@@ -369,8 +369,8 @@ func TestJsonWriter_WriteCompoundTwice(t *testing.T) {
 		Key:       "data",
 		FieldType: FieldArray,
 	}
-	_, _ = w.WriteCompoundItem("", map[string]bool{"first": true})
-	_, _ = w.WriteCompoundItem("", map[string]bool{"second": true})
+	w.WriteCompoundItem("", map[string]bool{"first": true})
+	w.WriteCompoundItem("", map[string]bool{"second": true})
 	w.Close()
 
 	result := buf.String()
@@ -395,10 +395,10 @@ func TestJsonWriter_DefaultField(t *testing.T) {
 		Key:       "data",
 		FieldType: FieldArray,
 	}
-	_, _ = w.OpenField("", FieldObject)
-	_, _ = w.OpenField("subkey", FieldObject)
-	_, _ = w.CloseField(FieldObject)
-	_, _ = w.CloseField(FieldObject)
+	w.OpenField("", FieldObject)
+	w.OpenField("subkey", FieldObject)
+	w.CloseField(FieldObject)
+	w.CloseField(FieldObject)
 	w.Close()
 
 	result := buf.String()
@@ -441,7 +441,7 @@ func TestJsonWriter_DefaultFieldCompound(t *testing.T) {
 		Key:       "data",
 		FieldType: FieldArray,
 	}
-	_, _ = w.WriteCompoundItem("", map[string]string{})
+	w.WriteCompoundItem("", map[string]string{})
 	w.Close()
 
 	result := buf.String()

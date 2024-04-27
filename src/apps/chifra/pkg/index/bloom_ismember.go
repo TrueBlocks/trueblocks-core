@@ -8,17 +8,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-func (bl *Bloom) isMemberBytes(addr base.Address) bool {
-	whichBits := bl.addressToBits(addr)
-	for _, bb := range bl.Blooms {
-		var tester = bitChecker{bytes: bb.Bytes, whichBits: whichBits}
-		if bl.isMember(&tester) {
-			return true
-		}
-	}
-	return false
-}
-
 func (bl *Bloom) IsMember(addr base.Address) bool {
 	whichBits := bl.addressToBits(addr)
 	offset := uint32(bl.HeaderSize) + 4 // the end of Count

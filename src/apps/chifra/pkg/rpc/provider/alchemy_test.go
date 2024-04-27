@@ -100,7 +100,7 @@ func mockAlchemyServer(t *testing.T) (ts *httptest.Server) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		_, _ = w.Write(b)
+		w.Write(b)
 	}))
 
 	return ts
