@@ -31,3 +31,29 @@ func (g *Globals) String() string {
 	bytes, _ := json.Marshal(g)
 	return string(bytes)
 }
+
+type CacheOp uint8
+
+const (
+	CacheOn CacheOp = iota
+	CacheOff
+	Decache
+)
+
+func (g *Globals) Caching(op CacheOp) {
+	switch op {
+	case CacheOn:
+		g.Cache = true
+		g.Decache = false
+	case CacheOff:
+		g.Cache = false
+		g.Decache = false
+	case Decache:
+		g.Cache = false
+		g.Decache = true
+	}
+}
+
+type Cacher interface {
+	Caching(op CacheOp)
+}
