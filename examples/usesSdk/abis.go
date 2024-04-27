@@ -8,16 +8,20 @@ import (
 
 // DoAbis tests the When sdk function
 func DoAbis() {
+	logger.Info("DoAbis")
+
 	opts := sdk.AbisOptions{
 		Addrs: []string{"uniswap.eth"},
 	}
 
 	if functions, _, err := opts.Abis(); err != nil {
-		logger.Fatal(err)
+		logger.Error(err)
 	} else {
-		SaveAndClean[types.Function]("usesSDK/abis.json", functions, &opts, func() error {
+		if err := SaveAndClean[types.Function]("usesSDK/abis.json", functions, &opts, func() error {
 			_, _, err := opts.Abis()
 			return err
-		})
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
 }

@@ -14,11 +14,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -68,7 +66,7 @@ func (opts *ExportOptions) String() string {
 func (opts *ExportOptions) ExportBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting export struct to URL values: %v", err)
+		return fmt.Errorf("error converting export struct to URL values: %v", err)
 	}
 
 	return export.Export(w, values)
@@ -123,7 +121,7 @@ type exportGeneric interface {
 func queryExport[T exportGeneric](opts *ExportOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ExportBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

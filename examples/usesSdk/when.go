@@ -8,38 +8,46 @@ import (
 
 // DoWhen tests the When sdk function
 func DoWhen() {
+	logger.Info("DoWhen")
+
 	opts := sdk.WhenOptions{
 		BlockIds: testBlocks,
 	}
 	opts.Caching(sdk.CacheOn)
 
 	if when, _, err := opts.When(); err != nil {
-		logger.Fatal(err)
+		logger.Error(err)
 	} else {
-		SaveAndClean[types.NamedBlock]("usesSDK/when.json", when, &opts, func() error {
+		if err := SaveAndClean[types.NamedBlock]("usesSDK/when.json", when, &opts, func() error {
 			_, _, err := opts.When()
 			return err
-		})
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
 
 	opts.Timestamps = true
 	if whenTimestamps, _, err := opts.WhenTimestamps(); err != nil {
-		logger.Fatal(err)
+		logger.Error(err)
 	} else {
-		SaveAndClean[types.Timestamp]("usesSDK/whenTimestamps.json", whenTimestamps, &opts, func() error {
+		if err := SaveAndClean[types.Timestamp]("usesSDK/whenTimestamps.json", whenTimestamps, &opts, func() error {
 			_, _, err := opts.WhenTimestamps()
 			return err
-		})
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
 
 	// opts.Timestamps = false
 	opts.Count = true
 	if whenCount, _, err := opts.WhenCount(); err != nil {
-		logger.Fatal(err)
+		logger.Error(err)
 	} else {
-		SaveAndClean[types.TimestampCount]("usesSDK/whenCount.json", whenCount, &opts, func() error {
+		if err := SaveAndClean[types.TimestampCount]("usesSDK/whenCount.json", whenCount, &opts, func() error {
 			_, _, err := opts.WhenCount()
 			return err
-		})
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
 }

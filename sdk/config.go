@@ -14,10 +14,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -39,7 +37,7 @@ func (opts *ConfigOptions) String() string {
 func (opts *ConfigOptions) ConfigBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting config struct to URL values: %v", err)
+		return fmt.Errorf("error converting config struct to URL values: %v", err)
 	}
 
 	return config.Config(w, values)
@@ -85,7 +83,7 @@ type configGeneric interface {
 func queryConfig[T configGeneric](opts *ConfigOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ConfigBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

@@ -14,9 +14,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -40,7 +38,7 @@ func (opts *LogsOptions) String() string {
 func (opts *LogsOptions) LogsBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting logs struct to URL values: %v", err)
+		return fmt.Errorf("error converting logs struct to URL values: %v", err)
 	}
 
 	return logs.Logs(w, values)
@@ -78,7 +76,7 @@ type logsGeneric interface {
 func queryLogs[T logsGeneric](opts *LogsOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.LogsBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

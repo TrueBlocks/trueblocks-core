@@ -19,10 +19,11 @@ func DoInit() {
 
 	buf := bytes.Buffer{}
 	if err := opts.InitBytes(&buf); err != nil {
-		logger.Fatal(err)
+		logger.Error(err)
 	}
 
 	file.StringToAsciiFile("usesSDK/init.json", buf.String())
 	fmt.Println(buf.String())
 }
+
 // func (opts *InitOptions) InitAll() ([]bool, *types.MetaData, error) {

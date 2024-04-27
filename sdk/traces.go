@@ -14,9 +14,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -40,7 +38,7 @@ func (opts *TracesOptions) String() string {
 func (opts *TracesOptions) TracesBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting traces struct to URL values: %v", err)
+		return fmt.Errorf("error converting traces struct to URL values: %v", err)
 	}
 
 	return traces.Traces(w, values)
@@ -79,7 +77,7 @@ type tracesGeneric interface {
 func queryTraces[T tracesGeneric](opts *TracesOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.TracesBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

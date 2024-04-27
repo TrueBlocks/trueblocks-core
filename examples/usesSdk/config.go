@@ -1,11 +1,6 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-
-	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -13,15 +8,18 @@ import (
 func DoConfig() {
 	logger.Info("DoConfig")
 
-	opts := sdk.ConfigOptions{
-		Mode: sdk.CMShow,
-	}
+	// opts := sdk.ConfigOptions{
+	// 	Mode: sdk.CMShow,
+	// }
 
-	buf := bytes.Buffer{}
-	if err := opts.ConfigBytes(&buf); err != nil {
-		logger.Fatal(err)
-	}
-
-	file.StringToAsciiFile("usesSDK/config.json", buf.String())
-	fmt.Println(buf.String())
+	// if config, _, err := opts.Config(); err != nil {
+	// 	logger.Error(err)
+	// } else {
+	// 	if err := SaveAndClean[types.Config]("usesSDK/config.json", config, &opts, func() error {
+	// 		_, _, err := opts.Config()
+	// 		return err
+	// 	}); err != nil {
+	// 		logger.Error(err)
+	// 	}
+	// }
 }

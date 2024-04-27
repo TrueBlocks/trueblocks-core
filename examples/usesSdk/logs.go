@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoLogs tests the When sdk function
@@ -17,12 +14,14 @@ func DoLogs() {
 		TransactionIds: []string{"10001002.0"},
 	}
 
-	buf := bytes.Buffer{}
-	if err := opts.LogsBytes(&buf); err != nil {
-		logger.Fatal(err)
+	if logs, _, err := opts.Logs(); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveAndClean[types.Log]("usesSDK/logs.json", logs, &opts, func() error {
+			_, _, err := opts.Logs()
+			return err
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
-
-	file.StringToAsciiFile("usesSDK/logs.json", buf.String())
-	fmt.Println(buf.String())
 }
-// func (opts *LogsOptions) Logs() ([]types.Log, *types.MetaData, error) {

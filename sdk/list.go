@@ -14,10 +14,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -49,7 +47,7 @@ func (opts *ListOptions) String() string {
 func (opts *ListOptions) ListBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting list struct to URL values: %v", err)
+		return fmt.Errorf("error converting list struct to URL values: %v", err)
 	}
 
 	return list.List(w, values)
@@ -89,7 +87,7 @@ type listGeneric interface {
 func queryList[T listGeneric](opts *ListOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ListBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

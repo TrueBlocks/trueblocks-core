@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoReceipts tests the When sdk function
@@ -14,15 +11,18 @@ func DoReceipts() {
 	logger.Info("DoReceipts")
 
 	opts := sdk.ReceiptsOptions{
-		TransactionIds: []string{"10001002.0"},
+		TransactionIds: testTransactions,
 	}
 
-	buf := bytes.Buffer{}
-	if err := opts.ReceiptsBytes(&buf); err != nil {
-		logger.Fatal(err)
+	opts.Articulate = true
+	if receipts, _, err := opts.Receipts(); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveAndClean[types.Receipt]("usesSDK/receipts.json", receipts, &opts, func() error {
+			_, _, err := opts.Receipts()
+			return err
+		}); err != nil {
+			logger.Error(err)
+		}
 	}
-
-	file.StringToAsciiFile("usesSDK/receipts.json", buf.String())
-	fmt.Println(buf.String())
 }
-// func (opts *ReceiptsOptions) Receipts() ([]types.Receipt, *types.MetaData, error) {

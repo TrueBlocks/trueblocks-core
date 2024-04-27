@@ -14,10 +14,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -43,7 +41,7 @@ func (opts *TokensOptions) String() string {
 func (opts *TokensOptions) TokensBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting tokens struct to URL values: %v", err)
+		return fmt.Errorf("error converting tokens struct to URL values: %v", err)
 	}
 
 	return tokens.Tokens(w, values)
@@ -90,7 +88,7 @@ type tokensGeneric interface {
 func queryTokens[T tokensGeneric](opts *TokensOptions) ([]T, *types.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.TokensBytes(&buffer); err != nil {
-		logger.Fatal(err)
+		return nil, nil, err
 	}
 
 	var result Result[T]

@@ -16,7 +16,8 @@ cd "$SCRIPT_DIR/.."
 # Check if the go.work file already exists
 GO_WORK_FILE="go.work"
 if [ ! -f "$GO_WORK_FILE" ]; then
-    touch "$GO_WORK_FILE"
+    echo "// Go Version" > "$GO_WORK_FILE"
+    echo "go 1.22" >> "$GO_WORK_FILE"
 fi
 
 #------------------------------------------------
