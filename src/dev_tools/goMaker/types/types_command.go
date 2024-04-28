@@ -636,6 +636,24 @@ func (c *Command) BaseTypes() string {
 	return MarkdownTable([]string{"Type", "Description", "Notes"}, ret)
 }
 
+func (c *Command) ReturnTypes() string {
+	present := map[string]bool{}
+	ret := []string{}
+	for _, op := range c.Options {
+		if len(op.ReturnType) > 0 {
+			if !present[op.RetType()] {
+				if op.IsMode() {
+					ret = append(ret, op.EnumTypes()...)
+				} else {
+					ret = append(ret, op.RetType())
+				}
+			}
+			present[op.RetType()] = true
+		}
+	}
+	return strings.Join(ret, "|\n")
+}
+
 func (c *Command) HasSdkEndpoints() bool {
 	for _, op := range c.Options {
 		if len(op.ReturnType) > 0 {
@@ -643,20 +661,6 @@ func (c *Command) HasSdkEndpoints() bool {
 		}
 	}
 	return false
-}
-
-func (c *Command) ReturnTypes() string {
-	present := map[string]bool{}
-	ret := []string{}
-	for _, op := range c.Options {
-		if len(op.ReturnType) > 0 {
-			if !present[op.RetType()] {
-				ret = append(ret, op.RetType())
-			}
-			present[op.RetType()] = true
-		}
-	}
-	return strings.Join(ret, "|\n")
 }
 
 func (c *Command) SdkEndpoints() string {

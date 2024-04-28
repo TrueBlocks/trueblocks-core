@@ -13,15 +13,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type StatusOptions struct {
-	Modes       StatusModes `json:"modes,omitempty"`
-	Diagnose    bool        `json:"diagnose,omitempty"`
-	FirstRecord uint64      `json:"firstRecord,omitempty"`
-	MaxRecords  uint64      `json:"maxRecords,omitempty"`
-	Chains      bool        `json:"chains,omitempty"`
+	FirstRecord uint64 `json:"firstRecord,omitempty"`
+	MaxRecords  uint64 `json:"maxRecords,omitempty"`
+	Chains      bool   `json:"chains,omitempty"`
 	Globals
 }
 
@@ -29,6 +29,13 @@ type StatusOptions struct {
 func (opts *StatusOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
+}
+
+// StatusDiagnose implements the chifra status --diagnose command.
+func (opts *StatusOptions) StatusDiagnose() ([]bool, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Diagnose = true
+	return queryStatus[bool](in)
 }
 
 type StatusModes int

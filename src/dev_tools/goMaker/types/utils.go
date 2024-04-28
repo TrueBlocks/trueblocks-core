@@ -127,6 +127,13 @@ func Proper(s string) string {
 	return titleCaser.String(s)
 }
 
+func Singular(s string) string {
+	if s != "Status" && strings.HasSuffix(s, "s") {
+		return s[:len(s)-1]
+	}
+	return s
+}
+
 func Lower(s string) string {
 	return strings.ToLower(s)
 }

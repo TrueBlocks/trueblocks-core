@@ -372,6 +372,14 @@ func (op *Option) SomeCases() string {
 	return op.executeTemplate(tmplName, tmpl)
 }
 
+func (op *Option) EnumTypes() []string {
+	ret := []string{}
+	for _, e := range op.Enums {
+		ret = append(ret, "types."+Singular(Proper(op.Route))+Proper(e))
+	}
+	return ret
+}
+
 func (op *Option) EnumCases() string {
 	ret := []string{}
 	for _, e := range op.Enums {
@@ -826,5 +834,10 @@ func (opts *{{.Route}}Options) {{.Route}}{{.Tool}}({{.ToolParameters}}) ([]{{.Re
 }
 
 func (op *Option) IsPublicEndpoint() bool {
-	return len(op.ReturnType) == 0 || op.IsPositional()
+	return len(op.ReturnType) == 0 || (op.IsPositional() && op.LongName != op.ReturnType)
+}
+
+func (op *Option) IsMode() bool {
+	return (op.LongName == "mode" && op.ReturnType == "mode") ||
+		(op.LongName == "modes" && op.ReturnType == "modes")
 }

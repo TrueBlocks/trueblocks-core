@@ -20,7 +20,6 @@ import (
 )
 
 type ChunksOptions struct {
-	Mode       ChunksMode   `json:"mode,omitempty"`
 	BlockIds   []string     `json:"blocks,omitempty"`
 	Check      bool         `json:"check,omitempty"`
 	Pin        bool         `json:"pin,omitempty"`
@@ -47,6 +46,55 @@ type ChunksOptions struct {
 func (opts *ChunksOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
+}
+
+// ChunksManifest implements the chifra chunks manifest command.
+func (opts *ChunksOptions) ChunksManifest() ([]types.ChunkManifest, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMManifest
+	return queryChunks[types.ChunkManifest](in)
+}
+
+// ChunksIndex implements the chifra chunks index command.
+func (opts *ChunksOptions) ChunksIndex() ([]types.ChunkIndex, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMIndex
+	return queryChunks[types.ChunkIndex](in)
+}
+
+// ChunksBlooms implements the chifra chunks blooms command.
+func (opts *ChunksOptions) ChunksBlooms() ([]types.ChunkBloom, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMBlooms
+	return queryChunks[types.ChunkBloom](in)
+}
+
+// ChunksPins implements the chifra chunks pins command.
+func (opts *ChunksOptions) ChunksPins() ([]types.ChunkPin, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMPins
+	return queryChunks[types.ChunkPin](in)
+}
+
+// ChunksAddresses implements the chifra chunks addresses command.
+func (opts *ChunksOptions) ChunksAddresses() ([]types.ChunkAddress, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMAddresses
+	return queryChunks[types.ChunkAddress](in)
+}
+
+// ChunksAppearances implements the chifra chunks appearance command.
+func (opts *ChunksOptions) ChunksAppearances() ([]types.ChunkAppearance, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMAppearances
+	return queryChunks[types.ChunkAppearance](in)
+}
+
+// ChunkStats implements the chifra chunks stats command.
+func (opts *ChunksOptions) ChunkStats() ([]types.ChunkStats, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMStats
+	return queryChunks[types.ChunkStats](in)
 }
 
 type ChunksMode int
@@ -119,53 +167,4 @@ func enumFromChunksMode(values []string) (ChunksMode, error) {
 }
 
 // EXISTING_CODE
-// ChunksManifest implements the chifra chunks manifest command.
-func (opts *ChunksOptions) ChunksManifest() ([]types.ChunkRecord, *types.MetaData, error) {
-	in := opts.toInternal()
-	in.Mode = CMManifest
-	return queryChunks[types.ChunkRecord](in)
-}
-
-// ChunksIndex implements the chifra chunks index command.
-func (opts *ChunksOptions) ChunksIndex() ([]types.ChunkIndex, *types.MetaData, error) {
-	in := opts.toInternal()
-	in.Mode = CMIndex
-	return queryChunks[types.ChunkIndex](in)
-}
-
-// ChunksBlooms implements the chifra chunks blooms command.
-func (opts *ChunksOptions) ChunksBlooms() ([]types.ChunkBloom, *types.MetaData, error) {
-	in := opts.toInternal()
-	in.Mode = CMBlooms
-	return queryChunks[types.ChunkBloom](in)
-}
-
-// ChunksPins implements the chifra chunks pins command.
-func (opts *ChunksOptions) ChunksPins() ([]types.ChunkPinReport, *types.MetaData, error) {
-	in := opts.toInternal()
-	in.Mode = CMPins
-	return queryChunks[types.ChunkPinReport](in)
-}
-
-// ChunksAddresses implements the chifra chunks addresses command.
-func (opts *ChunksOptions) ChunksAddresses() ([]types.ChunkAddress, *types.MetaData, error) {
-	in := opts.toInternal()
-	in.Mode = CMAddresses
-	return queryChunks[types.ChunkAddress](in)
-}
-
-// // ChunksAppearances implements the chifra chunks appearance command.
-// func (opts *ChunksOptions) ChunksAppearances() ([]types.ChunkAppearance, *types.MetaData, error) {
-// 	in := opts.toInternal()
-// 	in.Mode = CMAppearances
-// 	return queryChunks[types.ChunkAppearance](in)
-// }
-
-// ChunkStats implements the chifra chunks stats command.
-func (opts *ChunksOptions) ChunkStats() ([]types.ChunkStats, *types.MetaData, error) {
-	in := opts.toInternal()
-	in.Mode = CMStats
-	return queryChunks[types.ChunkStats](in)
-}
-
 // EXISTING_CODE

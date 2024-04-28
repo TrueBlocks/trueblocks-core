@@ -15,6 +15,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
+type ChunkManifest = Manifest
+
 // EXISTING_CODE
 
 type RawManifest struct {

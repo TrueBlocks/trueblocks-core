@@ -11,11 +11,13 @@ package sdk
 import (
 	// EXISTING_CODE
 
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -77,6 +79,33 @@ func GetStatusOptions(args []string) (*statusOptionsInternal, error) {
 	}
 
 	return &opts, nil
+}
+
+type statusGeneric interface {
+}
+
+func queryStatus[T statusGeneric](opts *statusOptionsInternal) ([]T, *types.MetaData, error) {
+	buffer := bytes.Buffer{}
+	if err := opts.StatusBytes(&buffer); err != nil {
+		return nil, nil, err
+	}
+
+	var result Result[T]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
+		return nil, nil, err
+	} else {
+		return result.Data, &result.Meta, nil
+	}
+}
+
+// toInternal converts the SDK options to the internal options format.
+func (opts *StatusOptions) toInternal() *statusOptionsInternal {
+	return &statusOptionsInternal{
+		FirstRecord: opts.FirstRecord,
+		MaxRecords:  opts.MaxRecords,
+		Chains:      opts.Chains,
+		Globals:     opts.Globals,
+	}
 }
 
 // EXISTING_CODE
