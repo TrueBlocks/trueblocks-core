@@ -52,9 +52,9 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawChunkPinReport], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawChunkPin], errorChan chan error) {
 		hash := base.BytesToHash(config.HeaderHash(config.ExpectedVersion()))
-		report := types.ChunkPinReport{
+		report := types.ChunkPin{
 			Version:  config.VersionTags[hash.Hex()],
 			Chain:    chain,
 			SpecHash: base.IpfsHash(manifest.Specification()),

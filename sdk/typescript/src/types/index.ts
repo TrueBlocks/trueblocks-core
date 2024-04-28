@@ -10,7 +10,7 @@ export * from './chain';
 export * from './chunkAddress';
 export * from './chunkBloom';
 export * from './chunkIndex';
-export * from './chunkPinReport';
+export * from './chunkPin';
 export * from './chunkRecord';
 export * from './chunkStats';
 export * from './config';
@@ -41,4 +41,3 @@ export * from './traceResult';
 export * from './transaction';
 export * from './withdrawal';
 export * from './upgrades';
-

@@ -821,7 +821,7 @@ The following existing data models were either added, removed, or modified by ha
   - For any data model with a `Timestamp`, that data model now also has an (automatically-generated) `Date` field.
 
 ### New data models:
-- `ChunkPinReport`: Added `ChunkPinReport` data model. Used by the `chifra chunks` command.
+- `ChunkPin`: Added `ChunkPin` data model. Used by the `chifra chunks` command.
 - `Slurp`: Added `Slurp` data model. Used by the `chifra slurp` command.
 
 ### Remove data models

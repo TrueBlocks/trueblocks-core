@@ -96,8 +96,14 @@ func GetChunksOptions(args []string) (*chunksOptionsInternal, error) {
 	return &opts, nil
 }
 
-// EXISTING_CODE
 type chunksGeneric interface {
+	types.ChunkManifest |
+		types.ChunkIndex |
+		types.ChunkBloom |
+		types.ChunkPin |
+		types.ChunkAddress |
+		types.ChunkAppearance |
+		types.ChunkStats
 }
 
 func queryChunks[T chunksGeneric](opts *chunksOptionsInternal) ([]T, *types.MetaData, error) {
@@ -140,4 +146,5 @@ func (opts *ChunksOptions) toInternal() *chunksOptionsInternal {
 	}
 }
 
+// EXISTING_CODE
 // EXISTING_CODE
