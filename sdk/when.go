@@ -36,13 +36,14 @@ func (opts *WhenOptions) String() string {
 // When implements the chifra when command.
 func (opts *WhenOptions) When() ([]types.NamedBlock, *types.MetaData, error) {
 	in := opts.toInternal()
-	in.List = true
 	return queryWhen[types.NamedBlock](in)
 }
 
 // WhenList implements the chifra when --list command.
 func (opts *WhenOptions) WhenList() ([]types.NamedBlock, *types.MetaData, error) {
-	return queryWhen[types.NamedBlock](opts)
+	in := opts.toInternal()
+	in.List = true
+	return queryWhen[types.NamedBlock](in)
 }
 
 // WhenTimestamps implements the chifra when --timestamps command.
