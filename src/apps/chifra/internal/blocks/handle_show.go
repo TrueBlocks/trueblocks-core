@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"sort"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -15,6 +16,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
+
+var errMutex sync.Mutex
 
 func (opts *BlocksOptions) HandleShow() error {
 	chain := opts.Globals.Chain
@@ -52,6 +55,8 @@ func (opts *BlocksOptions) HandleShow() error {
 				iterFunc := func(app types.Appearance, value *types.Block[types.Transaction]) error {
 					bn := uint64(app.BlockNumber)
 					if block, err := opts.Conn.GetBlockBodyByNumber(bn); err != nil {
+						errMutex.Lock()
+						defer errMutex.Unlock()
 						delete(thisMap, app)
 						return err
 					} else {

@@ -235,5 +235,5 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 		return nil
 	}
 
-	return fmt.Errorf("Quitting: codebase.json has changed. Rerun the command to ignore this warning.")
+	return fmt.Errorf("quitting: codebase.json has changed. Rerun the command to ignore this warning")
 }
