@@ -88,6 +88,7 @@ func queryTraces[T tracesGeneric](opts *tracesOptionsInternal) ([]T, *types.Meta
 	}
 }
 
+// toInternal converts the SDK options to the internal options format.
 func (opts *TracesOptions) toInternal() *tracesOptionsInternal {
 	return &tracesOptionsInternal{
 		TransactionIds: opts.TransactionIds,

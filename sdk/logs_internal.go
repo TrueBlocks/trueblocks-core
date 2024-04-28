@@ -87,6 +87,7 @@ func queryLogs[T logsGeneric](opts *logsOptionsInternal) ([]T, *types.MetaData, 
 	}
 }
 
+// toInternal converts the SDK options to the internal options format.
 func (opts *LogsOptions) toInternal() *logsOptionsInternal {
 	return &logsOptionsInternal{
 		TransactionIds: opts.TransactionIds,

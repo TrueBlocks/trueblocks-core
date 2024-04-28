@@ -10,8 +10,8 @@ package sdk
 
 import (
 	// EXISTING_CODE
-
 	"encoding/json"
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -79,6 +79,38 @@ func (v TokensParts) String() string {
 	}
 
 	return strings.Join(ret, ",")
+}
+
+func enumFromTokensParts(values []string) (TokensParts, error) {
+	if len(values) == 0 {
+		return NoTP, fmt.Errorf("no value provided for parts option")
+	}
+
+	if len(values) == 1 && values[0] == "all" {
+		return TPAll, nil
+	} else if len(values) == 1 && values[0] == "some" {
+		return TPSome, nil
+	}
+
+	var result TokensParts
+	for _, val := range values {
+		switch val {
+		case "name":
+			result |= TPName
+		case "symbol":
+			result |= TPSymbol
+		case "decimals":
+			result |= TPDecimals
+		case "totalSupply":
+			result |= TPTotalSupply
+		case "version":
+			result |= TPVersion
+		default:
+			return NoTP, fmt.Errorf("unknown parts: %s", val)
+		}
+	}
+
+	return result, nil
 }
 
 // EXISTING_CODE

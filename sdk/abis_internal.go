@@ -95,7 +95,7 @@ func queryAbis[T abisGeneric](opts *abisOptionsInternal) ([]T, *types.MetaData, 
 	}
 }
 
-// toInternal converts a BlocksOptions instance to a blocksOptionsInternal instance.
+// toInternal converts the SDK options to the internal options format.
 func (opts *AbisOptions) toInternal() *abisOptionsInternal {
 	return &abisOptionsInternal{
 		Addrs:    opts.Addrs,

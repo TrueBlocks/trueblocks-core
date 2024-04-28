@@ -318,7 +318,6 @@ func (c *Command) AddCaps() string {
 	return strings.Replace(strings.Replace(str, "[{CAPS}]", strings.Join(ret, "\n"), -1), "[{ROUTE}]", c.Route, -1)
 }
 
-// src_apps_chifra_internal_route_options.go
 // DefaultsApi for tag {{.DefaultsApi}}
 func (c *Command) DefaultsApi() string {
 	ret := []string{}
@@ -647,10 +646,14 @@ func (c *Command) HasSdkEndpoints() bool {
 }
 
 func (c *Command) ReturnTypes() string {
+	present := map[string]bool{}
 	ret := []string{}
 	for _, op := range c.Options {
 		if len(op.ReturnType) > 0 {
-			ret = append(ret, op.RetType())
+			if !present[op.RetType()] {
+				ret = append(ret, op.RetType())
+			}
+			present[op.RetType()] = true
 		}
 	}
 	return strings.Join(ret, "|\n")
@@ -667,51 +670,4 @@ func (c *Command) SdkEndpoints() string {
 		}
 	}
 	return strings.Join(ret, "\n")
-}
-
-func (c *Command) ReturnTypeFunc() string {
-	return c.ReturnTypeInner()
-}
-
-func (c *Command) ReturnTypeInner() string {
-	switch c.Route {
-	case "abis":
-		return "types.Function"
-	case "blocks":
-		return "types.Block[types.Transaction]"
-	case "chunks":
-		return "bool"
-	case "config":
-		return "bool"
-	case "export":
-		return "types.Transaction"
-	case "init":
-		return "bool"
-	case "list":
-		return "types.Appearance"
-	case "logs":
-		return "types.Log"
-	case "monitors":
-		return "types.Monitor"
-	case "names":
-		return "types.Name"
-	case "receipts":
-		return "types.Receipt"
-	case "slurp":
-		return "types.Slurp"
-	case "state":
-		return "types.State"
-	case "status":
-		return "bool"
-	case "tokens":
-		return "bool"
-	case "traces":
-		return "types.Trace"
-	case "transactions":
-		return "types.Transaction"
-	case "when":
-		return "types.NamedBlock"
-	default:
-		return "unknown return type"
-	}
 }

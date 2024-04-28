@@ -113,37 +113,7 @@ func queryChunks[T chunksGeneric](opts *chunksOptionsInternal) ([]T, *types.Meta
 	}
 }
 
-func enumFromChunksMode(values []string) (ChunksMode, error) {
-	if len(values) == 0 {
-		return NoCHM, fmt.Errorf("no value provided for mode option")
-	}
-
-	var result ChunksMode
-	for _, val := range values {
-		switch val {
-		case "manifest":
-			result |= CMManifest
-		case "index":
-			result |= CMIndex
-		case "blooms":
-			result |= CMBlooms
-		case "pins":
-			result |= CMPins
-		case "addresses":
-			result |= CMAddresses
-		case "appearances":
-			result |= CMAppearances
-		case "stats":
-			result |= CMStats
-		default:
-			return NoCHM, fmt.Errorf("unknown mode: %s", val)
-		}
-	}
-
-	return result, nil
-}
-
-// EXISTING_CODE
+// toInternal converts the SDK options to the internal options format.
 func (opts *ChunksOptions) toInternal() *chunksOptionsInternal {
 	return &chunksOptionsInternal{
 		BlockIds:   opts.BlockIds,
@@ -165,7 +135,9 @@ func (opts *ChunksOptions) toInternal() *chunksOptionsInternal {
 		Count:      opts.Count,
 		Tag:        opts.Tag,
 		Sleep:      opts.Sleep,
+		Globals:    opts.Globals,
 	}
 }
 
+// EXISTING_CODE
 // EXISTING_CODE

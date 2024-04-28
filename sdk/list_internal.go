@@ -98,6 +98,7 @@ func queryList[T listGeneric](opts *listOptionsInternal) ([]T, *types.MetaData, 
 	}
 }
 
+// toInternal converts the SDK options to the internal options format.
 func (opts *ListOptions) toInternal() *listOptionsInternal {
 	return &listOptionsInternal{
 		Addrs:       opts.Addrs,
@@ -110,6 +111,7 @@ func (opts *ListOptions) toInternal() *listOptionsInternal {
 		Publisher:   opts.Publisher,
 		FirstBlock:  opts.FirstBlock,
 		LastBlock:   opts.LastBlock,
+		Globals:     opts.Globals,
 	}
 }
 

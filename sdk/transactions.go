@@ -10,8 +10,8 @@ package sdk
 
 import (
 	// EXISTING_CODE
-
 	"encoding/json"
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -95,6 +95,26 @@ func (v TransactionsFlow) String() string {
 	}
 
 	return strings.Join(ret, ",")
+}
+
+func enumFromTransactionsFlow(values []string) (TransactionsFlow, error) {
+	if len(values) == 0 {
+		return NoTF, fmt.Errorf("no value provided for flow option")
+	}
+
+	var result TransactionsFlow
+	for _, val := range values {
+		switch val {
+		case "from":
+			result |= TFFrom
+		case "to":
+			result |= TFTo
+		default:
+			return NoTF, fmt.Errorf("unknown flow: %s", val)
+		}
+	}
+
+	return result, nil
 }
 
 // EXISTING_CODE

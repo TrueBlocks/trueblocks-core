@@ -99,39 +99,7 @@ func queryTokens[T tokensGeneric](opts *tokensOptionsInternal) ([]T, *types.Meta
 	}
 }
 
-func enumFromTokensParts(values []string) (TokensParts, error) {
-	if len(values) == 0 {
-		return NoTP, fmt.Errorf("no value provided for parts option")
-	}
-
-	if len(values) == 1 && values[0] == "all" {
-		return TPAll, nil
-	} else if len(values) == 1 && values[0] == "some" {
-		return TPSome, nil
-	}
-
-	var result TokensParts
-	for _, val := range values {
-		switch val {
-		case "name":
-			result |= TPName
-		case "symbol":
-			result |= TPSymbol
-		case "decimals":
-			result |= TPDecimals
-		case "totalSupply":
-			result |= TPTotalSupply
-		case "version":
-			result |= TPVersion
-		default:
-			return NoTP, fmt.Errorf("unknown parts: %s", val)
-		}
-	}
-
-	return result, nil
-}
-
-// Tokens implements the chifra tokens command.
+// toInternal converts the SDK options to the internal options format.
 func (opts *TokensOptions) toInternal() *tokensOptionsInternal {
 	return &tokensOptionsInternal{
 		Addrs:    opts.Addrs,

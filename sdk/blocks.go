@@ -10,8 +10,8 @@ package sdk
 
 import (
 	// EXISTING_CODE
-
 	"encoding/json"
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -49,6 +49,13 @@ func (opts *BlocksOptions) Blocks() ([]types.Block[types.Transaction], *types.Me
 func (opts *BlocksOptions) BlocksHashes() ([]types.Block[string], *types.MetaData, error) {
 	in := opts.toInternal()
 	in.Hashes = true
+	return queryBlocks[types.Block[string]](in)
+}
+
+// BlocksUncles implements the chifra blocks --uncles command.
+func (opts *BlocksOptions) BlocksUncles() ([]types.Block[string], *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Uncles = true
 	return queryBlocks[types.Block[string]](in)
 }
 
@@ -116,6 +123,28 @@ func (v BlocksFlow) String() string {
 	}
 
 	return strings.Join(ret, ",")
+}
+
+func enumFromBlocksFlow(values []string) (BlocksFlow, error) {
+	if len(values) == 0 {
+		return NoBF, fmt.Errorf("no value provided for flow option")
+	}
+
+	var result BlocksFlow
+	for _, val := range values {
+		switch val {
+		case "from":
+			result |= BFFrom
+		case "to":
+			result |= BFTo
+		case "reward":
+			result |= BFReward
+		default:
+			return NoBF, fmt.Errorf("unknown flow: %s", val)
+		}
+	}
+
+	return result, nil
 }
 
 // EXISTING_CODE

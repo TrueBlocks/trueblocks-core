@@ -90,6 +90,7 @@ func queryInit[T initGeneric](opts *initOptionsInternal) ([]T, *types.MetaData, 
 	}
 }
 
+// toInternal converts the SDK options to the internal options format.
 func (opts *InitOptions) toInternal() *initOptionsInternal {
 	return &initOptionsInternal{
 		Publisher:  opts.Publisher,

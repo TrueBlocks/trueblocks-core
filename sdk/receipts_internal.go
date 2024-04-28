@@ -85,7 +85,7 @@ func queryReceipts[T receiptsGeneric](opts *receiptsOptionsInternal) ([]T, *type
 	}
 }
 
-// toInternal converts the public options to the internal options
+// toInternal converts the SDK options to the internal options format.
 func (opts *ReceiptsOptions) toInternal() *receiptsOptionsInternal {
 	return &receiptsOptionsInternal{
 		TransactionIds: opts.TransactionIds,

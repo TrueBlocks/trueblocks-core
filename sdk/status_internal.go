@@ -10,13 +10,12 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
+
 	"encoding/json"
 	"fmt"
 	"io"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -78,89 +77,6 @@ func GetStatusOptions(args []string) (*statusOptionsInternal, error) {
 	}
 
 	return &opts, nil
-}
-
-type statusGeneric interface {
-}
-
-func queryStatus[T statusGeneric](opts *statusOptionsInternal) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.StatusBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
-}
-
-func enumFromStatusModes(values []string) (StatusModes, error) {
-	if len(values) == 0 {
-		return NoSM, fmt.Errorf("no value provided for modes option")
-	}
-
-	if len(values) == 1 && values[0] == "all" {
-		return SMAll, nil
-	} else if len(values) == 1 && values[0] == "some" {
-		return SMSome, nil
-	}
-
-	var result StatusModes
-	for _, val := range values {
-		switch val {
-		case "index":
-			result |= SMIndex
-		case "blooms":
-			result |= SMBlooms
-		case "blocks":
-			result |= SMBlocks
-		case "transactions":
-			result |= SMTransactions
-		case "traces":
-			result |= SMTraces
-		case "logs":
-			result |= SMLogs
-		case "statements":
-			result |= SMStatements
-		case "results":
-			result |= SMResults
-		case "state":
-			result |= SMState
-		case "tokens":
-			result |= SMTokens
-		case "monitors":
-			result |= SMMonitors
-		case "names":
-			result |= SMNames
-		case "abis":
-			result |= SMAbis
-		case "slurps":
-			result |= SMSlurps
-		case "staging":
-			result |= SMStaging
-		case "unripe":
-			result |= SMUnripe
-		case "maps":
-			result |= SMMaps
-		default:
-			return NoSM, fmt.Errorf("unknown modes: %s", val)
-		}
-	}
-
-	return result, nil
-}
-
-func (opts *StatusOptions) toInternal() *statusOptionsInternal {
-	return &statusOptionsInternal{
-		Modes:       opts.Modes,
-		Diagnose:    opts.Diagnose,
-		FirstRecord: opts.FirstRecord,
-		MaxRecords:  opts.MaxRecords,
-		Chains:      opts.Chains,
-	}
 }
 
 // EXISTING_CODE

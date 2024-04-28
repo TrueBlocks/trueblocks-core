@@ -103,6 +103,7 @@ func queryNames[T namesGeneric](opts *namesOptionsInternal) ([]T, *types.MetaDat
 	}
 }
 
+// toInternal converts the SDK options to the internal options format.
 func (opts *NamesOptions) toInternal() *namesOptionsInternal {
 	return &namesOptionsInternal{
 		Terms:     opts.Terms,

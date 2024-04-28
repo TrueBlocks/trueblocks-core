@@ -10,8 +10,8 @@ package sdk
 
 import (
 	// EXISTING_CODE
-
 	"encoding/json"
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -90,6 +90,40 @@ func (v StateParts) String() string {
 	}
 
 	return strings.Join(ret, ",")
+}
+
+func enumFromStateParts(values []string) (StateParts, error) {
+	if len(values) == 0 {
+		return NoSP, fmt.Errorf("no value provided for parts option")
+	}
+
+	if len(values) == 1 && values[0] == "all" {
+		return SPAll, nil
+	} else if len(values) == 1 && values[0] == "some" {
+		return SPSome, nil
+	}
+
+	var result StateParts
+	for _, val := range values {
+		switch val {
+		case "balance":
+			result |= SPBalance
+		case "nonce":
+			result |= SPNonce
+		case "code":
+			result |= SPCode
+		case "proxy":
+			result |= SPProxy
+		case "deployed":
+			result |= SPDeployed
+		case "accttype":
+			result |= SPAccttype
+		default:
+			return NoSP, fmt.Errorf("unknown parts: %s", val)
+		}
+	}
+
+	return result, nil
 }
 
 // EXISTING_CODE

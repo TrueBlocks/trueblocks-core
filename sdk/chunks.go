@@ -10,8 +10,8 @@ package sdk
 
 import (
 	// EXISTING_CODE
-
 	"encoding/json"
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -48,46 +48,6 @@ func (opts *ChunksOptions) String() string {
 	return string(bytes)
 }
 
-type ChunksMode int
-
-const (
-	NoCHM      ChunksMode = 0
-	CMManifest            = 1 << iota
-	CMIndex
-	CMBlooms
-	CMPins
-	CMAddresses
-	CMAppearances
-	CMStats
-)
-
-func (v ChunksMode) String() string {
-	switch v {
-	case NoCHM:
-		return "none"
-	}
-
-	var m = map[ChunksMode]string{
-		CMManifest:    "manifest",
-		CMIndex:       "index",
-		CMBlooms:      "blooms",
-		CMPins:        "pins",
-		CMAddresses:   "addresses",
-		CMAppearances: "appearances",
-		CMStats:       "stats",
-	}
-
-	var ret []string
-	for _, val := range []ChunksMode{CMManifest, CMIndex, CMBlooms, CMPins, CMAddresses, CMAppearances, CMStats} {
-		if v&val != 0 {
-			ret = append(ret, m[val])
-		}
-	}
-
-	return strings.Join(ret, ",")
-}
-
-// EXISTING_CODE
 // ChunksManifest implements the chifra chunks manifest command.
 func (opts *ChunksOptions) ChunksManifest() ([]types.ChunkRecord, *types.MetaData, error) {
 	in := opts.toInternal()
@@ -137,4 +97,74 @@ func (opts *ChunksOptions) ChunkStats() ([]types.ChunkStats, *types.MetaData, er
 	return queryChunks[types.ChunkStats](in)
 }
 
+type ChunksMode int
+
+const (
+	NoCHM      ChunksMode = 0
+	CMManifest            = 1 << iota
+	CMIndex
+	CMBlooms
+	CMPins
+	CMAddresses
+	CMAppearances
+	CMStats
+)
+
+func (v ChunksMode) String() string {
+	switch v {
+	case NoCHM:
+		return "none"
+	}
+
+	var m = map[ChunksMode]string{
+		CMManifest:    "manifest",
+		CMIndex:       "index",
+		CMBlooms:      "blooms",
+		CMPins:        "pins",
+		CMAddresses:   "addresses",
+		CMAppearances: "appearances",
+		CMStats:       "stats",
+	}
+
+	var ret []string
+	for _, val := range []ChunksMode{CMManifest, CMIndex, CMBlooms, CMPins, CMAddresses, CMAppearances, CMStats} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
+}
+
+func enumFromChunksMode(values []string) (ChunksMode, error) {
+	if len(values) == 0 {
+		return NoCHM, fmt.Errorf("no value provided for mode option")
+	}
+
+	var result ChunksMode
+	for _, val := range values {
+		switch val {
+		case "manifest":
+			result |= CMManifest
+		case "index":
+			result |= CMIndex
+		case "blooms":
+			result |= CMBlooms
+		case "pins":
+			result |= CMPins
+		case "addresses":
+			result |= CMAddresses
+		case "appearances":
+			result |= CMAppearances
+		case "stats":
+			result |= CMStats
+		default:
+			return NoCHM, fmt.Errorf("unknown mode: %s", val)
+		}
+	}
+
+	return result, nil
+}
+
+// EXISTING_CODE
 // EXISTING_CODE

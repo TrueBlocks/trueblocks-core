@@ -10,8 +10,8 @@ package sdk
 
 import (
 	// EXISTING_CODE
-
 	"encoding/json"
+	"fmt"
 	"strings"
 	// EXISTING_CODE
 )
@@ -94,6 +94,62 @@ func (v StatusModes) String() string {
 	}
 
 	return strings.Join(ret, ",")
+}
+
+func enumFromStatusModes(values []string) (StatusModes, error) {
+	if len(values) == 0 {
+		return NoSM, fmt.Errorf("no value provided for modes option")
+	}
+
+	if len(values) == 1 && values[0] == "all" {
+		return SMAll, nil
+	} else if len(values) == 1 && values[0] == "some" {
+		return SMSome, nil
+	}
+
+	var result StatusModes
+	for _, val := range values {
+		switch val {
+		case "index":
+			result |= SMIndex
+		case "blooms":
+			result |= SMBlooms
+		case "blocks":
+			result |= SMBlocks
+		case "transactions":
+			result |= SMTransactions
+		case "traces":
+			result |= SMTraces
+		case "logs":
+			result |= SMLogs
+		case "statements":
+			result |= SMStatements
+		case "results":
+			result |= SMResults
+		case "state":
+			result |= SMState
+		case "tokens":
+			result |= SMTokens
+		case "monitors":
+			result |= SMMonitors
+		case "names":
+			result |= SMNames
+		case "abis":
+			result |= SMAbis
+		case "slurps":
+			result |= SMSlurps
+		case "staging":
+			result |= SMStaging
+		case "unripe":
+			result |= SMUnripe
+		case "maps":
+			result |= SMMaps
+		default:
+			return NoSM, fmt.Errorf("unknown modes: %s", val)
+		}
+	}
+
+	return result, nil
 }
 
 // EXISTING_CODE

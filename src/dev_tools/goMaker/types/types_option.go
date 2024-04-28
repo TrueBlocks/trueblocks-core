@@ -777,8 +777,20 @@ func (op *Option) SdkEndpoint() string {
 	tmplName := "returnTypes"
 	tmpl := `	// {{.Route}}{{.Tool}} implements the chifra {{toLower .Route}} {{.ToolTurd}}command.
 func (opts *{{.Route}}Options) {{.Route}}{{.Tool}}() ([]{{.ReturnType}}, *types.MetaData, error) {
-	return query{{.Route}}[{{.ReturnType}}](opts)
+	in := opts.toInternal()
+	in.{{firstUpper .Tool}} = true
+	return query{{.Route}}[{{.ReturnType}}](in)
 }
 `
-	return opp.executeTemplate(tmplName, tmpl)
+	if op.OptionType == "positional" {
+		tmpl = strings.ReplaceAll(tmpl, `	in.{{firstUpper .Tool}} = true
+`, "")
+		return opp.executeTemplate(tmplName+"x", tmpl)
+	} else {
+		return opp.executeTemplate(tmplName, tmpl)
+	}
+}
+
+func (op *Option) IsPublicEndpoint() bool {
+	return len(op.ReturnType) == 0 || op.IsPositional()
 }

@@ -117,29 +117,7 @@ func queryBlocks[T blocksGeneric](opts *blocksOptionsInternal) ([]T, *types.Meta
 	}
 }
 
-func enumFromBlocksFlow(values []string) (BlocksFlow, error) {
-	if len(values) == 0 {
-		return NoBF, fmt.Errorf("no value provided for flow option")
-	}
-
-	var result BlocksFlow
-	for _, val := range values {
-		switch val {
-		case "from":
-			result |= BFFrom
-		case "to":
-			result |= BFTo
-		case "reward":
-			result |= BFReward
-		default:
-			return NoBF, fmt.Errorf("unknown flow: %s", val)
-		}
-	}
-
-	return result, nil
-}
-
-// toInternal converts a BlocksOptions instance to a blocksOptionsInternal instance.
+// toInternal converts the SDK options to the internal options format.
 func (opts *BlocksOptions) toInternal() *blocksOptionsInternal {
 	return &blocksOptionsInternal{
 		BlockIds:    opts.BlockIds,

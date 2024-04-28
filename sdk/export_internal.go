@@ -132,28 +132,7 @@ func queryExport[T exportGeneric](opts *exportOptionsInternal) ([]T, *types.Meta
 	}
 }
 
-func enumFromExportFlow(values []string) (ExportFlow, error) {
-	if len(values) == 0 {
-		return NoEF, fmt.Errorf("no value provided for flow option")
-	}
-
-	var result ExportFlow
-	for _, val := range values {
-		switch val {
-		case "in":
-			result |= EFIn
-		case "out":
-			result |= EFOut
-		case "zero":
-			result |= EFZero
-		default:
-			return NoEF, fmt.Errorf("unknown flow: %s", val)
-		}
-	}
-
-	return result, nil
-}
-
+// toInternal converts the SDK options to the internal options format.
 func (opts *ExportOptions) toInternal() *exportOptionsInternal {
 	return &exportOptionsInternal{
 		Addrs:       opts.Addrs,
@@ -176,6 +155,7 @@ func (opts *ExportOptions) toInternal() *exportOptionsInternal {
 		NoZero:      opts.NoZero,
 		FirstBlock:  opts.FirstBlock,
 		LastBlock:   opts.LastBlock,
+		Globals:     opts.Globals,
 	}
 }
 

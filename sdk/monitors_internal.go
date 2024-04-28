@@ -97,6 +97,7 @@ func queryMonitors[T monitorsGeneric](opts *monitorsOptionsInternal) ([]T, *type
 	}
 }
 
+// toInternal converts the SDK options to the internal options format.
 func (opts *MonitorsOptions) toInternal() *monitorsOptionsInternal {
 	return &monitorsOptionsInternal{
 		Addrs:     opts.Addrs,

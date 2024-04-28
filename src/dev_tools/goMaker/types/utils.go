@@ -47,6 +47,7 @@ func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) strin
 	dest := strings.Replace(source, templateFolder, "", -1)
 	dest = strings.Replace(dest, ".tmpl", "", -1)
 	dest = strings.Replace(dest, "_route_", "/"+routeTag+"/", -1)
+	dest = strings.Replace(dest, "route+internal", routeTag+"+internal", -1)
 	dest = strings.Replace(dest, "route.go", routeTag+".go", -1)
 	dest = strings.Replace(dest, "route.md", routeTag+".md", -1)
 	dest = strings.Replace(dest, "route.py", routeTag+".py", -1)

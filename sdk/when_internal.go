@@ -95,6 +95,7 @@ func queryWhen[T whenGeneric](opts *whenOptionsInternal) ([]T, *types.MetaData, 
 	}
 }
 
+// toInternal converts the SDK options to the internal options format.
 func (opts *WhenOptions) toInternal() *whenOptionsInternal {
 	return &whenOptionsInternal{
 		BlockIds: opts.BlockIds,

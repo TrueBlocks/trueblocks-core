@@ -106,26 +106,7 @@ func queryTransactions[T transactionsGeneric](opts *transactionsOptionsInternal)
 	}
 }
 
-func enumFromTransactionsFlow(values []string) (TransactionsFlow, error) {
-	if len(values) == 0 {
-		return NoTF, fmt.Errorf("no value provided for flow option")
-	}
-
-	var result TransactionsFlow
-	for _, val := range values {
-		switch val {
-		case "from":
-			result |= TFFrom
-		case "to":
-			result |= TFTo
-		default:
-			return NoTF, fmt.Errorf("unknown flow: %s", val)
-		}
-	}
-
-	return result, nil
-}
-
+// toInternal converts the SDK options to the internal options format.
 func (opts *TransactionsOptions) toInternal() *transactionsOptionsInternal {
 	return &transactionsOptionsInternal{
 		TransactionIds: opts.TransactionIds,

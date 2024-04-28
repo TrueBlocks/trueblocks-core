@@ -10,8 +10,8 @@ package sdk
 
 import (
 	// EXISTING_CODE
-
 	"encoding/json"
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -140,6 +140,28 @@ func (v ExportFlow) String() string {
 	}
 
 	return strings.Join(ret, ",")
+}
+
+func enumFromExportFlow(values []string) (ExportFlow, error) {
+	if len(values) == 0 {
+		return NoEF, fmt.Errorf("no value provided for flow option")
+	}
+
+	var result ExportFlow
+	for _, val := range values {
+		switch val {
+		case "in":
+			result |= EFIn
+		case "out":
+			result |= EFOut
+		case "zero":
+			result |= EFZero
+		default:
+			return NoEF, fmt.Errorf("unknown flow: %s", val)
+		}
+	}
+
+	return result, nil
 }
 
 // EXISTING_CODE
