@@ -647,10 +647,14 @@ func (c *Command) HasSdkEndpoints() bool {
 }
 
 func (c *Command) ReturnTypes() string {
+	present := map[string]bool{}
 	ret := []string{}
 	for _, op := range c.Options {
 		if len(op.ReturnType) > 0 {
-			ret = append(ret, op.RetType())
+			if !present[op.RetType()] {
+				ret = append(ret, op.RetType())
+			}
+			present[op.RetType()] = true
 		}
 	}
 	return strings.Join(ret, "|\n")
