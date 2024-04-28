@@ -184,7 +184,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 #
 27000,tools,Chain Data,when,whenBlock,,,,visible|docs,command,,,Get block dates,[flags] < block | date > [ block... | date... ],default|caching|,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 27020,tools,Chain Data,when,whenBlock,blocks,,,visible|docs,positional,list<string>,namedBlock,,,,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
-27030,tools,Chain Data,when,whenBlock,list,l,,visible|docs,switch,<boolean>,,,,,export a list of the 'special' blocks
+27030,tools,Chain Data,when,whenBlock,list,l,,visible|docs,switch,<boolean>,namedBlock,,,,export a list of the 'special' blocks
 27040,tools,Chain Data,when,whenBlock,timestamps,t,,visible|docs,switch,<boolean>,timestamp,,,,display or process timestamps
 27050,tools,Chain Data,when,whenBlock,count,U,,visible|docs,switch,<boolean>,timestampCount,,,,with --timestamps only&#44; returns the number of timestamps in the cache
 27060,tools,Chain Data,when,whenBlock,truncate,n,NOPOS,,flag,<blknum>,,,,,with --timestamps only&#44; truncates the timestamp file at this block
