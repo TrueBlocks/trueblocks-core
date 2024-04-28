@@ -25,6 +25,10 @@ func (opts *WhenOptions) validateWhen() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
+	if opts.Count {
+		opts.Timestamps = true
+	}
+
 	if opts.Timestamps {
 		if opts.List {
 			return validate.Usage("Please choose only one of {0}.", "--timestamps or --list")
@@ -48,10 +52,6 @@ func (opts *WhenOptions) validateWhen() error {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--deep", "--timestamps --check")
 		}
 
-		if opts.Count {
-			return validate.Usage("The {0} option is only available with the {1} option.", "--count", "--timestamps")
-		}
-
 		if opts.Update {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--update", "--timestamps")
 		}
@@ -66,9 +66,8 @@ func (opts *WhenOptions) validateWhen() error {
 	}
 
 	if len(opts.Blocks) == 0 {
-		// If no identifier, then must be either --list or --timestamps
-		if !opts.List && !opts.Timestamps {
-			return validate.Usage("Please supply one or more block identifiers or one or more dates.")
+		if !opts.Timestamps {
+			opts.List = true
 		}
 
 	} else {
