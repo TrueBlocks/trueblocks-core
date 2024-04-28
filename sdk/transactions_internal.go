@@ -89,7 +89,8 @@ type transactionsGeneric interface {
 	types.Transaction |
 		types.Trace |
 		types.Appearance |
-		types.Log
+		types.Log |
+		bool
 }
 
 func queryTransactions[T transactionsGeneric](opts *transactionsOptionsInternal) ([]T, *types.MetaData, error) {

@@ -96,6 +96,7 @@ func GetChunksOptions(args []string) (*chunksOptionsInternal, error) {
 	return &opts, nil
 }
 
+// EXISTING_CODE
 type chunksGeneric interface {
 }
 
@@ -139,5 +140,4 @@ func (opts *ChunksOptions) toInternal() *chunksOptionsInternal {
 	}
 }
 
-// EXISTING_CODE
 // EXISTING_CODE

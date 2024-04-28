@@ -61,11 +61,11 @@ func (opts *TransactionsOptions) TransactionsLogs() ([]types.Log, *types.MetaDat
 	return queryTransactions[types.Log](in)
 }
 
-// TransactionsSeed implements the chifra transactions --logs command.
-func (opts *TransactionsOptions) TransactionsSeed() ([]types.Log, *types.MetaData, error) {
+// TransactionsSeed implements the chifra transactions --seed command.
+func (opts *TransactionsOptions) TransactionsSeed() ([]bool, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.Seed = true
-	return queryTransactions[types.Log](in)
+	return queryTransactions[bool](in)
 }
 
 type TransactionsFlow int

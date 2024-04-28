@@ -23,6 +23,7 @@ type ExportOptions struct {
 	Addrs       []string    `json:"addrs,omitempty"`
 	Topics      []string    `json:"topics,omitempty"`
 	Fourbytes   []string    `json:"fourbytes,omitempty"`
+	Accounting  bool        `json:"accounting,omitempty"`
 	Articulate  bool        `json:"articulate,omitempty"`
 	CacheTraces bool        `json:"cacheTraces,omitempty"`
 	FirstRecord uint64      `json:"firstRecord,omitempty"`
@@ -81,6 +82,13 @@ func (opts *ExportOptions) ExportTraces() ([]types.Trace, *types.MetaData, error
 	in := opts.toInternal()
 	in.Traces = true
 	return queryExport[types.Trace](in)
+}
+
+// ExportNeighbors implements the chifra export --neighbors command.
+func (opts *ExportOptions) ExportNeighbors() ([]bool, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Neighbors = true
+	return queryExport[bool](in)
 }
 
 // ExportStatements implements the chifra export --statements command.

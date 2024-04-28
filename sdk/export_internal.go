@@ -112,6 +112,7 @@ type exportGeneric interface {
 		types.Receipt |
 		types.Log |
 		types.Trace |
+		bool |
 		types.Statement |
 		types.State |
 		types.Withdrawal |
@@ -138,6 +139,7 @@ func (opts *ExportOptions) toInternal() *exportOptionsInternal {
 		Addrs:       opts.Addrs,
 		Topics:      opts.Topics,
 		Fourbytes:   opts.Fourbytes,
+		Accounting:  opts.Accounting,
 		Articulate:  opts.Articulate,
 		CacheTraces: opts.CacheTraces,
 		FirstRecord: opts.FirstRecord,

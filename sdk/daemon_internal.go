@@ -89,6 +89,7 @@ func GetDaemonOptions(args []string) (*daemonOptionsInternal, error) {
 	return &opts, nil
 }
 
+// EXISTING_CODE
 func (opts *DaemonOptions) toInternal() *daemonOptionsInternal {
 	return &daemonOptionsInternal{
 		Url:     opts.Url,
@@ -102,5 +103,4 @@ func (opts *DaemonOptions) toInternal() *daemonOptionsInternal {
 	}
 }
 
-// EXISTING_CODE
 // EXISTING_CODE

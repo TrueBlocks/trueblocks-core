@@ -30,12 +30,6 @@ func (opts *InitOptions) String() string {
 	return string(bytes)
 }
 
-// Init implements the chifra init command.
-func (opts *InitOptions) Init() ([]bool, *types.MetaData, error) {
-	in := opts.toInternal()
-	return queryInit[bool](in)
-}
-
 // InitAll implements the chifra init --all command.
 func (opts *InitOptions) InitAll() ([]bool, *types.MetaData, error) {
 	in := opts.toInternal()
@@ -43,15 +37,15 @@ func (opts *InitOptions) InitAll() ([]bool, *types.MetaData, error) {
 	return queryInit[bool](in)
 }
 
-// InitExample implements the chifra init --all command.
-func (opts *InitOptions) InitExample(name string) ([]bool, *types.MetaData, error) {
+// InitExample implements the chifra init --example command.
+func (opts *InitOptions) InitExample(val string) ([]bool, *types.MetaData, error) {
 	in := opts.toInternal()
-	in.Example = name
+	in.Example = val
 	return queryInit[bool](in)
 }
 
-// InitDryRun implements the chifra init --all command.
-func (opts *InitOptions) InitDryRun() ([]bool, *types.MetaData, error) {
+// InitDryRun implements the chifra init --dry_run command.
+func (opts *InitOptions) InitDry_run() ([]bool, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.DryRun = true
 	return queryInit[bool](in)

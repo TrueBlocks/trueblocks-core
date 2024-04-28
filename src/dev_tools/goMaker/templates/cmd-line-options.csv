@@ -25,7 +25,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 13060,apps,Accounts,export,acctExport,receipts,r,,visible|docs,switch,<boolean>,receipt,,,,export receipts instead of transactional data
 13070,apps,Accounts,export,acctExport,logs,l,,visible|docs,switch,<boolean>,log,,,,export logs instead of transactional data
 13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,switch,<boolean>,trace,,,,export traces instead of transactional data
-13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,switch,<boolean>,,,,,export the neighbors of the given address
+13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,switch,<boolean>,bool,,,,export the neighbors of the given address
 13100,apps,Accounts,export,acctExport,accounting,C,,visible|docs,switch,<boolean>,,,,,attach accounting records to the exported data (applies to transactions export only)
 13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,switch,<boolean>,statement,,,,for the accounting options only&#44; export only statements
 13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,switch,<boolean>,state,,,,traverse the transaction history and show each change in ETH balances
@@ -149,7 +149,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 23080,tools,Chain Data,transactions,getTrans,emitter,m,,visible|docs,flag,list<addr>,,,,,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 23090,tools,Chain Data,transactions,getTrans,topic,B,,visible|docs,flag,list<topic>,,,,,for the --logs option only&#44; filter logs to show only those with this topic(s)
 23100,tools,Chain Data,transactions,getTrans,cache_traces,,,,switch,<boolean>,,,,,force the transaction's traces into the cache
-23110,tools,Chain Data,transactions,getTrans,seed,S,,,switch,<boolean>,,,,,find the source of the funds sent to the receiver
+23110,tools,Chain Data,transactions,getTrans,seed,S,,,switch,<boolean>,bool,,,,find the source of the funds sent to the receiver
 23120,tools,Chain Data,transactions,getTrans,n1,,,,note,,,,,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 23130,tools,Chain Data,transactions,getTrans,n2,,,,note,,,,,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 23140,tools,Chain Data,transactions,getTrans,n3,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
@@ -305,8 +305,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 #
 47000,apps,Admin,init,init,,,,visible|docs,command,,,Initialize index,[flags],verbose|version|noop|noColor|chain|,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
 47020,apps,Admin,init,init,all,a,,visible|docs,switch,<boolean>,bool,,,,in addition to Bloom filters&#44; download full index chunks (recommended)
-47025,apps,Admin,init,init,example,e,,visible,flag,<string>,,,,,create an example for the SDK with the given name
-47030,apps,Admin,init,init,dry_run,d,,visible|docs,switch,<boolean>,,,,,display the results of the download without actually downloading
+47025,apps,Admin,init,init,example,e,,visible,flag,<string>,bool,,,,create an example for the SDK with the given name
+47030,apps,Admin,init,init,dry_run,d,,visible|docs,switch,<boolean>,bool,,,,display the results of the download without actually downloading
 47040,apps,Admin,init,init,publisher,P,,,flag,<address>,,,,,the publisher of the index to download
 47050,apps,Admin,init,init,first_block,F,,visible|docs,flag,<blknum>,,,,,do not download any chunks earlier than this block
 47060,apps,Admin,init,init,sleep,s,,visible|docs,flag,<double>,,,,,seconds to sleep between downloads

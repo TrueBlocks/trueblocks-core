@@ -780,6 +780,16 @@ func (op *Option) ToolAssignment() string {
 	}
 }
 
+func (op *Option) SdkEndpointName() string {
+	if len(op.ReturnType) == 0 {
+		return ""
+	} else if op.OptionType == "positional" {
+		return ""
+	} else {
+		return op.GoName
+	}
+}
+
 func (op *Option) SdkEndpoint() string {
 	if len(op.ReturnType) == 0 {
 		return ""
@@ -793,18 +803,20 @@ func (op *Option) SdkEndpoint() string {
 		Route:      FirstUpper(op.Route),
 		Tool:       longName,
 		ReturnType: op.RetType(),
+		OptionType: op.OptionType,
 		DataType:   op.DataType,
+		GoName:     op.GoName,
 	}
 	tmplName := "returnTypes"
-	tmpl := `	// {{.Route}}{{.Tool}} implements the chifra {{toLower .Route}} {{.ToolTurd}}command.
+	tmpl := `	// {{.Route}}{{.SdkEndpointName}} implements the chifra {{toLower .Route}} {{.ToolTurd}}command.
 func (opts *{{.Route}}Options) {{.Route}}{{.Tool}}({{.ToolParameters}}) ([]{{.ReturnType}}, *types.MetaData, error) {
 	in := opts.toInternal()
-	in.{{firstUpper .Tool}} = {{.ToolAssignment}}
+	in.{{.SdkEndpointName}} = {{.ToolAssignment}}
 	return query{{.Route}}[{{.ReturnType}}](in)
 }
 `
 	if op.OptionType == "positional" {
-		tmpl = strings.ReplaceAll(tmpl, `	in.{{firstUpper .Tool}} = {{.ToolAssignment}}
+		tmpl = strings.ReplaceAll(tmpl, `	in.{{.SdkEndpointName}} = {{.ToolAssignment}}
 `, "")
 		tmpl = strings.ReplaceAll(tmpl, "{{.ToolParameters}}", "")
 		return opp.executeTemplate(tmplName+"x", tmpl)
