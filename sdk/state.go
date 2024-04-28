@@ -43,9 +43,9 @@ func (opts *StateOptions) State() ([]types.State, *types.MetaData, error) {
 }
 
 // StateCall implements the chifra state --call command.
-func (opts *StateOptions) StateCall(call string) ([]types.Result, *types.MetaData, error) {
+func (opts *StateOptions) StateCall(val string) ([]types.Result, *types.MetaData, error) {
 	in := opts.toInternal()
-	in.Call = call
+	in.Call = val
 	return queryState[types.Result](in)
 }
 

@@ -760,6 +760,26 @@ func (op *Option) ToolTurd() string {
 	return "--" + Lower(op.Tool) + " "
 }
 
+func (op *Option) ToolParameters() string {
+	if len(op.ReturnType) == 0 {
+		return ""
+	} else if strings.Contains(op.DataType, "string") {
+		return "val string"
+	} else {
+		return ""
+	}
+}
+
+func (op *Option) ToolAssignment() string {
+	if len(op.ReturnType) == 0 {
+		return ""
+	} else if strings.Contains(op.DataType, "string") {
+		return "val"
+	} else {
+		return "true"
+	}
+}
+
 func (op *Option) SdkEndpoint() string {
 	if len(op.ReturnType) == 0 {
 		return ""
@@ -773,18 +793,20 @@ func (op *Option) SdkEndpoint() string {
 		Route:      FirstUpper(op.Route),
 		Tool:       longName,
 		ReturnType: op.RetType(),
+		DataType:   op.DataType,
 	}
 	tmplName := "returnTypes"
 	tmpl := `	// {{.Route}}{{.Tool}} implements the chifra {{toLower .Route}} {{.ToolTurd}}command.
-func (opts *{{.Route}}Options) {{.Route}}{{.Tool}}() ([]{{.ReturnType}}, *types.MetaData, error) {
+func (opts *{{.Route}}Options) {{.Route}}{{.Tool}}({{.ToolParameters}}) ([]{{.ReturnType}}, *types.MetaData, error) {
 	in := opts.toInternal()
-	in.{{firstUpper .Tool}} = true
+	in.{{firstUpper .Tool}} = {{.ToolAssignment}}
 	return query{{.Route}}[{{.ReturnType}}](in)
 }
 `
 	if op.OptionType == "positional" {
-		tmpl = strings.ReplaceAll(tmpl, `	in.{{firstUpper .Tool}} = true
+		tmpl = strings.ReplaceAll(tmpl, `	in.{{firstUpper .Tool}} = {{.ToolAssignment}}
 `, "")
+		tmpl = strings.ReplaceAll(tmpl, "{{.ToolParameters}}", "")
 		return opp.executeTemplate(tmplName+"x", tmpl)
 	} else {
 		return opp.executeTemplate(tmplName, tmpl)

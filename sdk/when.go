@@ -56,7 +56,6 @@ func (opts *WhenOptions) WhenTimestamps() ([]types.Timestamp, *types.MetaData, e
 // WhenCount implements the chifra when --count command.
 func (opts *WhenOptions) WhenCount() ([]types.TimestampCount, *types.MetaData, error) {
 	in := opts.toInternal()
-	in.Timestamps = true
 	in.Count = true
 	return queryWhen[types.TimestampCount](in)
 }
