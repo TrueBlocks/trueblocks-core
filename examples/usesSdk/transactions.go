@@ -25,7 +25,6 @@ func DoTransactions() {
 		}
 	}
 
-	opts.Traces = true
 	if transactionsTraces, _, err := opts.TransactionsTraces(); err != nil {
 		logger.Error(err)
 	} else {
@@ -37,8 +36,6 @@ func DoTransactions() {
 		}
 	}
 
-	opts.Traces = false
-	opts.Uniq = true
 	if transactionsUniq, _, err := opts.TransactionsUniq(); err != nil {
 		logger.Error(err)
 	} else {
@@ -50,8 +47,6 @@ func DoTransactions() {
 		}
 	}
 
-	opts.Uniq = false
-	opts.Logs = true
 	opts.Articulate = true
 	if transactionsLogs, _, err := opts.TransactionsLogs(); err != nil {
 		logger.Error(err)

@@ -10,28 +10,21 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
+
 	"encoding/json"
-	"fmt"
-	"io"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type TransactionsOptions struct {
 	TransactionIds []string         `json:"transactions,omitempty"`
 	Articulate     bool             `json:"articulate,omitempty"`
-	Traces         bool             `json:"traces,omitempty"`
-	Uniq           bool             `json:"uniq,omitempty"`
 	Flow           TransactionsFlow `json:"flow,omitempty"`
-	Logs           bool             `json:"logs,omitempty"`
 	Emitter        []string         `json:"emitter,omitempty"`
 	Topic          []string         `json:"topic,omitempty"`
 	CacheTraces    bool             `json:"cacheTraces,omitempty"`
-	Seed           bool             `json:"seed,omitempty"`
 	Globals
 }
 
@@ -41,89 +34,38 @@ func (opts *TransactionsOptions) String() string {
 	return string(bytes)
 }
 
-// TransactionsBytes implements the chifra transactions command for the SDK.
-func (opts *TransactionsOptions) TransactionsBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting transactions struct to URL values: %v", err)
-	}
-
-	return transactions.Transactions(w, values)
-}
-
-// transactionsParseFunc handles special cases such as structs and enums (if any).
-func transactionsParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	opts, ok := target.(*TransactionsOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(transactions): target is not of correct type")
-	}
-
-	if key == "flow" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.Flow, err = enumFromTransactionsFlow(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetTransactionsOptions returns a filled-in options instance given a string array of arguments.
-func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
-	var opts TransactionsOptions
-	if err := assignValuesFromArgs(args, transactionsParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type transactionsGeneric interface {
-	types.Transaction |
-		types.Trace |
-		types.Appearance |
-		types.Log
-}
-
-func queryTransactions[T transactionsGeneric](opts *TransactionsOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.TransactionsBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
-}
-
 // Transactions implements the chifra transactions command.
 func (opts *TransactionsOptions) Transactions() ([]types.Transaction, *types.MetaData, error) {
-	return queryTransactions[types.Transaction](opts)
+	in := opts.toInternal()
+	return queryTransactions[types.Transaction](in)
 }
 
 // TransactionsTraces implements the chifra transactions --traces command.
 func (opts *TransactionsOptions) TransactionsTraces() ([]types.Trace, *types.MetaData, error) {
-	return queryTransactions[types.Trace](opts)
+	in := opts.toInternal()
+	in.Traces = true
+	return queryTransactions[types.Trace](in)
 }
 
 // TransactionsUniq implements the chifra transactions --uniq command.
 func (opts *TransactionsOptions) TransactionsUniq() ([]types.Appearance, *types.MetaData, error) {
-	return queryTransactions[types.Appearance](opts)
+	in := opts.toInternal()
+	in.Uniq = true
+	return queryTransactions[types.Appearance](in)
 }
 
 // TransactionsLogs implements the chifra transactions --logs command.
 func (opts *TransactionsOptions) TransactionsLogs() ([]types.Log, *types.MetaData, error) {
-	return queryTransactions[types.Log](opts)
+	in := opts.toInternal()
+	in.Logs = true
+	return queryTransactions[types.Log](in)
+}
+
+// TransactionsSeed implements the chifra transactions --logs command.
+func (opts *TransactionsOptions) TransactionsSeed() ([]types.Log, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Seed = true
+	return queryTransactions[types.Log](in)
 }
 
 type TransactionsFlow int
@@ -153,26 +95,6 @@ func (v TransactionsFlow) String() string {
 	}
 
 	return strings.Join(ret, ",")
-}
-
-func enumFromTransactionsFlow(values []string) (TransactionsFlow, error) {
-	if len(values) == 0 {
-		return NoTF, fmt.Errorf("no value provided for flow option")
-	}
-
-	var result TransactionsFlow
-	for _, val := range values {
-		switch val {
-		case "from":
-			result |= TFFrom
-		case "to":
-			result |= TFTo
-		default:
-			return NoTF, fmt.Errorf("unknown flow: %s", val)
-		}
-	}
-
-	return result, nil
 }
 
 // EXISTING_CODE

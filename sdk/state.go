@@ -10,15 +10,12 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
+
 	"encoding/json"
-	"fmt"
-	"io"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
@@ -28,7 +25,6 @@ type StateOptions struct {
 	Parts      StateParts   `json:"parts,omitempty"`
 	Changes    bool         `json:"changes,omitempty"`
 	NoZero     bool         `json:"noZero,omitempty"`
-	Call       string       `json:"call,omitempty"`
 	Articulate bool         `json:"articulate,omitempty"`
 	ProxyFor   base.Address `json:"proxyFor,omitempty"`
 	Globals
@@ -40,81 +36,17 @@ func (opts *StateOptions) String() string {
 	return string(bytes)
 }
 
-// StateBytes implements the chifra state command for the SDK.
-func (opts *StateOptions) StateBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting state struct to URL values: %v", err)
-	}
-
-	return state.State(w, values)
-}
-
-// stateParseFunc handles special cases such as structs and enums (if any).
-func stateParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	opts, ok := target.(*StateOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(state): target is not of correct type")
-	}
-
-	if key == "parts" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.Parts, err = enumFromStateParts(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-
-	// EXISTING_CODE
-	if key == "proxyFor" {
-		opts.ProxyFor = base.HexToAddress(value)
-		return base.IsValidAddress(value), nil
-	}
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetStateOptions returns a filled-in options instance given a string array of arguments.
-func GetStateOptions(args []string) (*StateOptions, error) {
-	var opts StateOptions
-	if err := assignValuesFromArgs(args, stateParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type stateGeneric interface {
-	types.State |
-		types.Result
-}
-
-func queryState[T stateGeneric](opts *StateOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.StateBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
-}
-
 // State implements the chifra state command.
 func (opts *StateOptions) State() ([]types.State, *types.MetaData, error) {
-	return queryState[types.State](opts)
+	in := opts.toInternal()
+	return queryState[types.State](in)
 }
 
 // StateCall implements the chifra state --call command.
-func (opts *StateOptions) StateCall() ([]types.Result, *types.MetaData, error) {
-	return queryState[types.Result](opts)
+func (opts *StateOptions) StateCall(call string) ([]types.Result, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Call = call
+	return queryState[types.Result](in)
 }
 
 type StateParts int
@@ -158,40 +90,6 @@ func (v StateParts) String() string {
 	}
 
 	return strings.Join(ret, ",")
-}
-
-func enumFromStateParts(values []string) (StateParts, error) {
-	if len(values) == 0 {
-		return NoSP, fmt.Errorf("no value provided for parts option")
-	}
-
-	if len(values) == 1 && values[0] == "all" {
-		return SPAll, nil
-	} else if len(values) == 1 && values[0] == "some" {
-		return SPSome, nil
-	}
-
-	var result StateParts
-	for _, val := range values {
-		switch val {
-		case "balance":
-			result |= SPBalance
-		case "nonce":
-			result |= SPNonce
-		case "code":
-			result |= SPCode
-		case "proxy":
-			result |= SPProxy
-		case "deployed":
-			result |= SPDeployed
-		case "accttype":
-			result |= SPAccttype
-		default:
-			return NoSP, fmt.Errorf("unknown parts: %s", val)
-		}
-	}
-
-	return result, nil
 }
 
 // EXISTING_CODE

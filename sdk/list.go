@@ -10,22 +10,17 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
+
 	"encoding/json"
-	"fmt"
-	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type ListOptions struct {
 	Addrs       []string     `json:"addrs,omitempty"`
-	Count       bool         `json:"count,omitempty"`
 	NoZero      bool         `json:"noZero,omitempty"`
-	Bounds      bool         `json:"bounds,omitempty"`
 	Unripe      bool         `json:"unripe,omitempty"`
 	Silent      bool         `json:"silent,omitempty"`
 	FirstRecord uint64       `json:"firstRecord,omitempty"`
@@ -43,74 +38,24 @@ func (opts *ListOptions) String() string {
 	return string(bytes)
 }
 
-// ListBytes implements the chifra list command for the SDK.
-func (opts *ListOptions) ListBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting list struct to URL values: %v", err)
-	}
-
-	return list.List(w, values)
-}
-
-// listParseFunc handles special cases such as structs and enums (if any).
-func listParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	_, ok := target.(*ListOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(list): target is not of correct type")
-	}
-
-	// No enums
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetListOptions returns a filled-in options instance given a string array of arguments.
-func GetListOptions(args []string) (*ListOptions, error) {
-	var opts ListOptions
-	if err := assignValuesFromArgs(args, listParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type listGeneric interface {
-	types.Appearance |
-		types.AppearanceCount |
-		types.Bounds
-}
-
-func queryList[T listGeneric](opts *ListOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.ListBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
-}
-
 // List implements the chifra list command.
 func (opts *ListOptions) List() ([]types.Appearance, *types.MetaData, error) {
-	return queryList[types.Appearance](opts)
+	in := opts.toInternal()
+	return queryList[types.Appearance](in)
 }
 
 // ListCount implements the chifra list --count command.
 func (opts *ListOptions) ListCount() ([]types.AppearanceCount, *types.MetaData, error) {
-	return queryList[types.AppearanceCount](opts)
+	in := opts.toInternal()
+	in.Count = true
+	return queryList[types.AppearanceCount](in)
 }
 
 // ListBounds implements the chifra list --bounds command.
 func (opts *ListOptions) ListBounds() ([]types.Bounds, *types.MetaData, error) {
-	return queryList[types.Bounds](opts)
+	in := opts.toInternal()
+	in.Bounds = true
+	return queryList[types.Bounds](in)
 }
 
 // No enums

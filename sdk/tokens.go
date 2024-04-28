@@ -10,14 +10,11 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
+
 	"encoding/json"
-	"fmt"
-	"io"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
@@ -37,71 +34,10 @@ func (opts *TokensOptions) String() string {
 	return string(bytes)
 }
 
-// TokensBytes implements the chifra tokens command for the SDK.
-func (opts *TokensOptions) TokensBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting tokens struct to URL values: %v", err)
-	}
-
-	return tokens.Tokens(w, values)
-}
-
-// tokensParseFunc handles special cases such as structs and enums (if any).
-func tokensParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	opts, ok := target.(*TokensOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(tokens): target is not of correct type")
-	}
-
-	if key == "parts" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.Parts, err = enumFromTokensParts(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetTokensOptions returns a filled-in options instance given a string array of arguments.
-func GetTokensOptions(args []string) (*TokensOptions, error) {
-	var opts TokensOptions
-	if err := assignValuesFromArgs(args, tokensParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type tokensGeneric interface {
-	types.Token
-}
-
-func queryTokens[T tokensGeneric](opts *TokensOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.TokensBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
-}
-
 // Tokens implements the chifra tokens command.
 func (opts *TokensOptions) Tokens() ([]types.Token, *types.MetaData, error) {
-	return queryTokens[types.Token](opts)
+	in := opts.toInternal()
+	return queryTokens[types.Token](in)
 }
 
 type TokensParts int
@@ -143,38 +79,6 @@ func (v TokensParts) String() string {
 	}
 
 	return strings.Join(ret, ",")
-}
-
-func enumFromTokensParts(values []string) (TokensParts, error) {
-	if len(values) == 0 {
-		return NoTP, fmt.Errorf("no value provided for parts option")
-	}
-
-	if len(values) == 1 && values[0] == "all" {
-		return TPAll, nil
-	} else if len(values) == 1 && values[0] == "some" {
-		return TPSome, nil
-	}
-
-	var result TokensParts
-	for _, val := range values {
-		switch val {
-		case "name":
-			result |= TPName
-		case "symbol":
-			result |= TPSymbol
-		case "decimals":
-			result |= TPDecimals
-		case "totalSupply":
-			result |= TPTotalSupply
-		case "version":
-			result |= TPVersion
-		default:
-			return NoTP, fmt.Errorf("unknown parts: %s", val)
-		}
-	}
-
-	return result, nil
 }
 
 // EXISTING_CODE

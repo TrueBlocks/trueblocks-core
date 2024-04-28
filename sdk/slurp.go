@@ -10,28 +10,23 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
+
 	"encoding/json"
-	"fmt"
-	"io"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type SlurpOptions struct {
-	Addrs       []string    `json:"addrs,omitempty"`
-	BlockIds    []string    `json:"blocks,omitempty"`
-	Types       SlurpTypes  `json:"types,omitempty"`
-	Appearances bool        `json:"appearances,omitempty"`
-	Articulate  bool        `json:"articulate,omitempty"`
-	Source      SlurpSource `json:"source,omitempty"`
-	Count       bool        `json:"count,omitempty"`
-	Page        uint64      `json:"page,omitempty"`
-	PerPage     uint64      `json:"perPage,omitempty"`
-	Sleep       float64     `json:"sleep,omitempty"`
+	Addrs      []string    `json:"addrs,omitempty"`
+	BlockIds   []string    `json:"blocks,omitempty"`
+	Types      SlurpTypes  `json:"types,omitempty"`
+	Articulate bool        `json:"articulate,omitempty"`
+	Source     SlurpSource `json:"source,omitempty"`
+	Page       uint64      `json:"page,omitempty"`
+	PerPage    uint64      `json:"perPage,omitempty"`
+	Sleep      float64     `json:"sleep,omitempty"`
 	Globals
 }
 
@@ -41,92 +36,24 @@ func (opts *SlurpOptions) String() string {
 	return string(bytes)
 }
 
-// SlurpBytes implements the chifra slurp command for the SDK.
-func (opts *SlurpOptions) SlurpBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting slurp struct to URL values: %v", err)
-	}
-
-	return slurp.Slurp(w, values)
-}
-
-// slurpParseFunc handles special cases such as structs and enums (if any).
-func slurpParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	opts, ok := target.(*SlurpOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(slurp): target is not of correct type")
-	}
-
-	if key == "types" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.Types, err = enumFromSlurpTypes(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-	if key == "source" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.Source, err = enumFromSlurpSource(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetSlurpOptions returns a filled-in options instance given a string array of arguments.
-func GetSlurpOptions(args []string) (*SlurpOptions, error) {
-	var opts SlurpOptions
-	if err := assignValuesFromArgs(args, slurpParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type slurpGeneric interface {
-	types.Slurp |
-		types.Appearance |
-		types.SlurpCount
-}
-
-func querySlurp[T slurpGeneric](opts *SlurpOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.SlurpBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
-}
-
 // Slurp implements the chifra slurp command.
 func (opts *SlurpOptions) Slurp() ([]types.Slurp, *types.MetaData, error) {
-	return querySlurp[types.Slurp](opts)
+	in := opts.toInternal()
+	return querySlurp[types.Slurp](in)
 }
 
 // SlurpAppearances implements the chifra slurp --appearances command.
 func (opts *SlurpOptions) SlurpAppearances() ([]types.Appearance, *types.MetaData, error) {
-	return querySlurp[types.Appearance](opts)
+	in := opts.toInternal()
+	in.Appearances = true
+	return querySlurp[types.Appearance](in)
 }
 
 // SlurpCount implements the chifra slurp --count command.
 func (opts *SlurpOptions) SlurpCount() ([]types.SlurpCount, *types.MetaData, error) {
-	return querySlurp[types.SlurpCount](opts)
+	in := opts.toInternal()
+	in.Count = true
+	return querySlurp[types.SlurpCount](in)
 }
 
 type SlurpTypes int
@@ -176,44 +103,6 @@ func (v SlurpTypes) String() string {
 	return strings.Join(ret, ",")
 }
 
-func enumFromSlurpTypes(values []string) (SlurpTypes, error) {
-	if len(values) == 0 {
-		return NoST, fmt.Errorf("no value provided for types option")
-	}
-
-	if len(values) == 1 && values[0] == "all" {
-		return STAll, nil
-	} else if len(values) == 1 && values[0] == "some" {
-		return STSome, nil
-	}
-
-	var result SlurpTypes
-	for _, val := range values {
-		switch val {
-		case "ext":
-			result |= STExt
-		case "int":
-			result |= STInt
-		case "token":
-			result |= STToken
-		case "nfts":
-			result |= STNfts
-		case "1155":
-			result |= ST1155
-		case "miner":
-			result |= STMiner
-		case "uncles":
-			result |= STUncles
-		case "withdrawals":
-			result |= STWithdrawals
-		default:
-			return NoST, fmt.Errorf("unknown types: %s", val)
-		}
-	}
-
-	return result, nil
-}
-
 type SlurpSource int
 
 const (
@@ -241,26 +130,6 @@ func (v SlurpSource) String() string {
 	}
 
 	return strings.Join(ret, ",")
-}
-
-func enumFromSlurpSource(values []string) (SlurpSource, error) {
-	if len(values) == 0 {
-		return NoSS, fmt.Errorf("no value provided for source option")
-	}
-
-	var result SlurpSource
-	for _, val := range values {
-		switch val {
-		case "etherscan":
-			result |= SSEtherscan
-		case "key":
-			result |= SSKey
-		default:
-			return NoSS, fmt.Errorf("unknown source: %s", val)
-		}
-	}
-
-	return result, nil
 }
 
 // EXISTING_CODE

@@ -10,15 +10,12 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
+
 	"encoding/json"
-	"fmt"
-	"io"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
@@ -26,18 +23,8 @@ type ExportOptions struct {
 	Addrs       []string    `json:"addrs,omitempty"`
 	Topics      []string    `json:"topics,omitempty"`
 	Fourbytes   []string    `json:"fourbytes,omitempty"`
-	Appearances bool        `json:"appearances,omitempty"`
-	Receipts    bool        `json:"receipts,omitempty"`
-	Logs        bool        `json:"logs,omitempty"`
-	Traces      bool        `json:"traces,omitempty"`
-	Neighbors   bool        `json:"neighbors,omitempty"`
-	Accounting  bool        `json:"accounting,omitempty"`
-	Statements  bool        `json:"statements,omitempty"`
-	Balances    bool        `json:"balances,omitempty"`
-	Withdrawals bool        `json:"withdrawals,omitempty"`
 	Articulate  bool        `json:"articulate,omitempty"`
 	CacheTraces bool        `json:"cacheTraces,omitempty"`
-	Count       bool        `json:"count,omitempty"`
 	FirstRecord uint64      `json:"firstRecord,omitempty"`
 	MaxRecords  uint64      `json:"maxRecords,omitempty"`
 	Relevant    bool        `json:"relevant,omitempty"`
@@ -62,119 +49,66 @@ func (opts *ExportOptions) String() string {
 	return string(bytes)
 }
 
-// ExportBytes implements the chifra export command for the SDK.
-func (opts *ExportOptions) ExportBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting export struct to URL values: %v", err)
-	}
-
-	return export.Export(w, values)
-}
-
-// exportParseFunc handles special cases such as structs and enums (if any).
-func exportParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	opts, ok := target.(*ExportOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(export): target is not of correct type")
-	}
-
-	if key == "flow" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.Flow, err = enumFromExportFlow(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetExportOptions returns a filled-in options instance given a string array of arguments.
-func GetExportOptions(args []string) (*ExportOptions, error) {
-	var opts ExportOptions
-	if err := assignValuesFromArgs(args, exportParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type exportGeneric interface {
-	types.Transaction |
-		types.Appearance |
-		types.Receipt |
-		types.Log |
-		types.Trace |
-		types.Statement |
-		types.State |
-		types.Withdrawal |
-		types.AppearanceCount
-}
-
-func queryExport[T exportGeneric](opts *ExportOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.ExportBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
-}
-
 // Export implements the chifra export command.
 func (opts *ExportOptions) Export() ([]types.Transaction, *types.MetaData, error) {
-	return queryExport[types.Transaction](opts)
+	in := opts.toInternal()
+	return queryExport[types.Transaction](in)
 }
 
 // ExportAppearances implements the chifra export --appearances command.
 func (opts *ExportOptions) ExportAppearances() ([]types.Appearance, *types.MetaData, error) {
-	return queryExport[types.Appearance](opts)
+	in := opts.toInternal()
+	in.Appearances = true
+	return queryExport[types.Appearance](in)
 }
 
 // ExportReceipts implements the chifra export --receipts command.
 func (opts *ExportOptions) ExportReceipts() ([]types.Receipt, *types.MetaData, error) {
-	return queryExport[types.Receipt](opts)
+	in := opts.toInternal()
+	in.Receipts = true
+	return queryExport[types.Receipt](in)
 }
 
 // ExportLogs implements the chifra export --logs command.
 func (opts *ExportOptions) ExportLogs() ([]types.Log, *types.MetaData, error) {
-	return queryExport[types.Log](opts)
+	in := opts.toInternal()
+	in.Logs = true
+	return queryExport[types.Log](in)
 }
 
 // ExportTraces implements the chifra export --traces command.
 func (opts *ExportOptions) ExportTraces() ([]types.Trace, *types.MetaData, error) {
-	return queryExport[types.Trace](opts)
+	in := opts.toInternal()
+	in.Traces = true
+	return queryExport[types.Trace](in)
 }
 
 // ExportStatements implements the chifra export --statements command.
 func (opts *ExportOptions) ExportStatements() ([]types.Statement, *types.MetaData, error) {
-	return queryExport[types.Statement](opts)
+	in := opts.toInternal()
+	in.Statements = true
+	return queryExport[types.Statement](in)
 }
 
 // ExportBalances implements the chifra export --balances command.
 func (opts *ExportOptions) ExportBalances() ([]types.State, *types.MetaData, error) {
-	return queryExport[types.State](opts)
+	in := opts.toInternal()
+	in.Balances = true
+	return queryExport[types.State](in)
 }
 
 // ExportWithdrawals implements the chifra export --withdrawals command.
 func (opts *ExportOptions) ExportWithdrawals() ([]types.Withdrawal, *types.MetaData, error) {
-	return queryExport[types.Withdrawal](opts)
+	in := opts.toInternal()
+	in.Withdrawals = true
+	return queryExport[types.Withdrawal](in)
 }
 
 // ExportCount implements the chifra export --count command.
 func (opts *ExportOptions) ExportCount() ([]types.AppearanceCount, *types.MetaData, error) {
-	return queryExport[types.AppearanceCount](opts)
+	in := opts.toInternal()
+	in.Count = true
+	return queryExport[types.AppearanceCount](in)
 }
 
 type ExportFlow int
@@ -206,28 +140,6 @@ func (v ExportFlow) String() string {
 	}
 
 	return strings.Join(ret, ",")
-}
-
-func enumFromExportFlow(values []string) (ExportFlow, error) {
-	if len(values) == 0 {
-		return NoEF, fmt.Errorf("no value provided for flow option")
-	}
-
-	var result ExportFlow
-	for _, val := range values {
-		switch val {
-		case "in":
-			result |= EFIn
-		case "out":
-			result |= EFOut
-		case "zero":
-			result |= EFZero
-		default:
-			return NoEF, fmt.Errorf("unknown flow: %s", val)
-		}
-	}
-
-	return result, nil
 }
 
 // EXISTING_CODE

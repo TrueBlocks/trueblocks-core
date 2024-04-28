@@ -10,21 +10,15 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
+
 	"encoding/json"
-	"fmt"
-	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type InitOptions struct {
-	All        bool         `json:"all,omitempty"`
-	Example    string       `json:"example,omitempty"`
-	DryRun     bool         `json:"dryRun,omitempty"`
 	Publisher  base.Address `json:"publisher,omitempty"`
 	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
 	Sleep      float64      `json:"sleep,omitempty"`
@@ -37,62 +31,31 @@ func (opts *InitOptions) String() string {
 	return string(bytes)
 }
 
-// InitBytes implements the chifra init command for the SDK.
-func (opts *InitOptions) InitBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting init struct to URL values: %v", err)
-	}
-
-	return initPkg.Init(w, values)
-}
-
-// initParseFunc handles special cases such as structs and enums (if any).
-func initParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	_, ok := target.(*InitOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(init): target is not of correct type")
-	}
-
-	// No enums
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetInitOptions returns a filled-in options instance given a string array of arguments.
-func GetInitOptions(args []string) (*InitOptions, error) {
-	var opts InitOptions
-	if err := assignValuesFromArgs(args, initParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type initGeneric interface {
-	bool
-}
-
-func queryInit[T initGeneric](opts *InitOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.InitBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
+// Init implements the chifra init command.
+func (opts *InitOptions) Init() ([]bool, *types.MetaData, error) {
+	in := opts.toInternal()
+	return queryInit[bool](in)
 }
 
 // InitAll implements the chifra init --all command.
 func (opts *InitOptions) InitAll() ([]bool, *types.MetaData, error) {
-	return queryInit[bool](opts)
+	in := opts.toInternal()
+	in.All = true
+	return queryInit[bool](in)
+}
+
+// InitExample implements the chifra init --all command.
+func (opts *InitOptions) InitExample(name string) ([]bool, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Example = name
+	return queryInit[bool](in)
+}
+
+// InitDryRun implements the chifra init --all command.
+func (opts *InitOptions) InitDryRun() ([]bool, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.DryRun = true
+	return queryInit[bool](in)
 }
 
 // No enums

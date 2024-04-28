@@ -10,13 +10,10 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
+
 	"encoding/json"
-	"fmt"
-	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
@@ -34,62 +31,10 @@ func (opts *LogsOptions) String() string {
 	return string(bytes)
 }
 
-// LogsBytes implements the chifra logs command for the SDK.
-func (opts *LogsOptions) LogsBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting logs struct to URL values: %v", err)
-	}
-
-	return logs.Logs(w, values)
-}
-
-// logsParseFunc handles special cases such as structs and enums (if any).
-func logsParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	_, ok := target.(*LogsOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(logs): target is not of correct type")
-	}
-
-	// No enums
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetLogsOptions returns a filled-in options instance given a string array of arguments.
-func GetLogsOptions(args []string) (*LogsOptions, error) {
-	var opts LogsOptions
-	if err := assignValuesFromArgs(args, logsParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type logsGeneric interface {
-	types.Log
-}
-
-func queryLogs[T logsGeneric](opts *LogsOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.LogsBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
-}
-
 // Logs implements the chifra logs command.
 func (opts *LogsOptions) Logs() ([]types.Log, *types.MetaData, error) {
-	return queryLogs[types.Log](opts)
+	in := opts.toInternal()
+	return queryLogs[types.Log](in)
 }
 
 // No enums

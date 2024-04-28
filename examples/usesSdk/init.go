@@ -1,11 +1,6 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-
-	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -13,17 +8,16 @@ import (
 func DoInit() {
 	logger.Info("DoInit")
 
-	opts := sdk.InitOptions{
-		All: true,
-	}
+	// opts := sdk.InitOptions{
+	// }
 
-	buf := bytes.Buffer{}
-	if err := opts.InitBytes(&buf); err != nil {
-		logger.Error(err)
-	}
+	// buf := bytes.Buffer{}
+	// if err := opts.InitBytes(&buf); err != nil {
+	// 	logger.Error(err)
+	// }
 
-	file.StringToAsciiFile("usesSDK/init.json", buf.String())
-	fmt.Println(buf.String())
+	// file.StringToAsciiFile("usesSDK/init.json", buf.String())
+	// fmt.Println(buf.String())
 }
 
 // func (opts *InitOptions) InitAll() ([]bool, *types.MetaData, error) {
