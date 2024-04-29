@@ -18,7 +18,7 @@ func main() {
 	//- DoAbis()
 	//- DoWhen()
 	//- DoList()
-	// DoExport()
+	DoExport()
 	// DoMonitors()
 	//- DoConfig()
 	//- DoStatus()
