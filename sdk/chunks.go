@@ -199,8 +199,8 @@ func (opts *ChunksOptions) ChunksBlooms() ([]types.ChunkBloom, *types.MetaData, 
 }
 
 // ChunksPins implements the chifra chunks pins command.
-func (opts *ChunksOptions) ChunksPins() ([]types.ChunkPinReport, *types.MetaData, error) {
-	return queryChunks[types.ChunkPinReport](opts)
+func (opts *ChunksOptions) ChunksPins() ([]types.ChunkPin, *types.MetaData, error) {
+	return queryChunks[types.ChunkPin](opts)
 }
 
 // ChunksAddresses implements the chifra chunks addresses command.

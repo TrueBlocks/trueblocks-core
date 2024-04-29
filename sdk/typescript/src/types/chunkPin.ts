@@ -5,11 +5,10 @@
  */
 import { ipfshash } from '.';
 
-export type ChunkPinReport = {
+export type ChunkPin = {
   version: string
   chain: string
   timestampHash: ipfshash
   manifestHash: ipfshash
   specHash: ipfshash
 }
-

@@ -174,13 +174,13 @@ The following commands produce and manage IpfsPins:
 
 IpfsPins consist of the following fields:
 
-| Field      | Description                                                   | Type     |
-| ---------- | ------------------------------------------------------------- | -------- |
-| cid        | the CID of the file                                           | ipfshash |
-| datePinned | the date the CID was first created                            | string   |
-| status     | the status of the file (one of [all|pinned|unpinned|pending]) | string   |
-| size       | the size of the file in bytes                                 | int64    |
-| fileName   | the metadata name of the pinned file                          | string   |
+| Field      | Description                          | Type     |
+| ---------- | ------------------------------------ | -------- |
+| cid        | the CID of the file                  | ipfshash |
+| datePinned | the date the CID was first created   | string   |
+| status     | the status of the file (one of [all  | pinned   | unpinned | pending]) | string |
+| size       | the size of the file in bytes        | int64    |
+| fileName   | the metadata name of the pinned file | string   |
 
 ## ChunkStats
 
@@ -268,15 +268,15 @@ ReportChecks consist of the following fields:
 | msgStrings | an array of messages explaining failed checks | string[] |
 | reason     | the reason for the test                       | string   |
 
-## ChunkPinReport
+## ChunkPin
 
 Reports on the result of the command `chifra chunks manifest --pin [--deep]`.
 
-The following commands produce and manage ChunkPinReports:
+The following commands produce and manage ChunkPins:
 
 - [chifra chunks](/chifra/admin/#chifra-chunks)
 
-ChunkPinReports consist of the following fields:
+ChunkPins consist of the following fields:
 
 | Field         | Description                                             | Type     |
 | ------------- | ------------------------------------------------------- | -------- |
