@@ -10,14 +10,10 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
 	"encoding/json"
-	"fmt"
-	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
@@ -28,8 +24,6 @@ type NamesOptions struct {
 	All       bool         `json:"all,omitempty"`
 	Custom    bool         `json:"custom,omitempty"`
 	Prefund   bool         `json:"prefund,omitempty"`
-	Addr      bool         `json:"addr,omitempty"`
-	Tags      bool         `json:"tags,omitempty"`
 	Clean     bool         `json:"clean,omitempty"`
 	Regular   bool         `json:"regular,omitempty"`
 	DryRun    bool         `json:"dryRun,omitempty"`
@@ -48,74 +42,24 @@ func (opts *NamesOptions) String() string {
 	return string(bytes)
 }
 
-// NamesBytes implements the chifra names command for the SDK.
-func (opts *NamesOptions) NamesBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting names struct to URL values: %v", err)
-	}
-
-	return names.Names(w, values)
-}
-
-// namesParseFunc handles special cases such as structs and enums (if any).
-func namesParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	_, ok := target.(*NamesOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(names): target is not of correct type")
-	}
-
-	// No enums
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetNamesOptions returns a filled-in options instance given a string array of arguments.
-func GetNamesOptions(args []string) (*NamesOptions, error) {
-	var opts NamesOptions
-	if err := assignValuesFromArgs(args, namesParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type namesGeneric interface {
-	types.Name |
-		base.Address |
-		string
-}
-
-func queryNames[T namesGeneric](opts *NamesOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.NamesBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
-}
-
 // Names implements the chifra names command.
 func (opts *NamesOptions) Names() ([]types.Name, *types.MetaData, error) {
-	return queryNames[types.Name](opts)
+	in := opts.toInternal()
+	return queryNames[types.Name](in)
 }
 
 // NamesAddr implements the chifra names --addr command.
 func (opts *NamesOptions) NamesAddr() ([]base.Address, *types.MetaData, error) {
-	return queryNames[base.Address](opts)
+	in := opts.toInternal()
+	in.Addr = true
+	return queryNames[base.Address](in)
 }
 
 // NamesTags implements the chifra names --tags command.
 func (opts *NamesOptions) NamesTags() ([]string, *types.MetaData, error) {
-	return queryNames[string](opts)
+	in := opts.toInternal()
+	in.Tags = true
+	return queryNames[string](in)
 }
 
 // No enums

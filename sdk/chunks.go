@@ -10,20 +10,16 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	chunks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type ChunksOptions struct {
-	Mode       ChunksMode   `json:"mode,omitempty"`
 	BlockIds   []string     `json:"blocks,omitempty"`
 	Check      bool         `json:"check,omitempty"`
 	Pin        bool         `json:"pin,omitempty"`
@@ -52,65 +48,53 @@ func (opts *ChunksOptions) String() string {
 	return string(bytes)
 }
 
-// ChunksBytes implements the chifra chunks command for the SDK.
-func (opts *ChunksOptions) ChunksBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting chunks struct to URL values: %v", err)
-	}
-
-	return chunks.Chunks(w, values)
+// ChunksManifest implements the chifra chunks manifest command.
+func (opts *ChunksOptions) ChunksManifest() ([]types.ChunkManifest, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMManifest
+	return queryChunks[types.ChunkManifest](in)
 }
 
-// chunksParseFunc handles special cases such as structs and enums (if any).
-func chunksParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	opts, ok := target.(*ChunksOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(chunks): target is not of correct type")
-	}
-
-	if key == "mode" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.Mode, err = enumFromChunksMode(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
+// ChunksIndex implements the chifra chunks index command.
+func (opts *ChunksOptions) ChunksIndex() ([]types.ChunkIndex, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMIndex
+	return queryChunks[types.ChunkIndex](in)
 }
 
-// GetChunksOptions returns a filled-in options instance given a string array of arguments.
-func GetChunksOptions(args []string) (*ChunksOptions, error) {
-	var opts ChunksOptions
-	if err := assignValuesFromArgs(args, chunksParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
+// ChunksBlooms implements the chifra chunks blooms command.
+func (opts *ChunksOptions) ChunksBlooms() ([]types.ChunkBloom, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMBlooms
+	return queryChunks[types.ChunkBloom](in)
 }
 
-type chunksGeneric interface {
+// ChunksPins implements the chifra chunks pins command.
+func (opts *ChunksOptions) ChunksPins() ([]types.ChunkPin, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMPins
+	return queryChunks[types.ChunkPin](in)
 }
 
-func queryChunks[T chunksGeneric](opts *ChunksOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.ChunksBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
+// ChunksAddresses implements the chifra chunks addresses command.
+func (opts *ChunksOptions) ChunksAddresses() ([]types.ChunkAddress, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMAddresses
+	return queryChunks[types.ChunkAddress](in)
+}
 
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
+// ChunksAppearances implements the chifra chunks appearances command.
+func (opts *ChunksOptions) ChunksAppearances() ([]types.ChunkAppearance, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMAppearances
+	return queryChunks[types.ChunkAppearance](in)
+}
+
+// ChunksStats implements the chifra chunks stats command.
+func (opts *ChunksOptions) ChunksStats() ([]types.ChunkStats, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Mode = CMStats
+	return queryChunks[types.ChunkStats](in)
 }
 
 type ChunksMode int
@@ -183,39 +167,4 @@ func enumFromChunksMode(values []string) (ChunksMode, error) {
 }
 
 // EXISTING_CODE
-// ChunksManifest implements the chifra chunks manifest command.
-func (opts *ChunksOptions) ChunksManifest() ([]types.ChunkRecord, *types.MetaData, error) {
-	return queryChunks[types.ChunkRecord](opts)
-}
-
-// ChunksIndex implements the chifra chunks index command.
-func (opts *ChunksOptions) ChunksIndex() ([]types.ChunkIndex, *types.MetaData, error) {
-	return queryChunks[types.ChunkIndex](opts)
-}
-
-// ChunksBlooms implements the chifra chunks blooms command.
-func (opts *ChunksOptions) ChunksBlooms() ([]types.ChunkBloom, *types.MetaData, error) {
-	return queryChunks[types.ChunkBloom](opts)
-}
-
-// ChunksPins implements the chifra chunks pins command.
-func (opts *ChunksOptions) ChunksPins() ([]types.ChunkPinReport, *types.MetaData, error) {
-	return queryChunks[types.ChunkPinReport](opts)
-}
-
-// ChunksAddresses implements the chifra chunks addresses command.
-func (opts *ChunksOptions) ChunksAddresses() ([]types.ChunkAddress, *types.MetaData, error) {
-	return queryChunks[types.ChunkAddress](opts)
-}
-
-// // ChunksAppearances implements the chifra chunks appearance command.
-// func (opts *ChunksOptions) ChunksAppearances() ([]types.ChunkAppearance, *types.MetaData, error) {
-// 	return queryChunks[types.ChunkAppearance](opts)
-// }
-
-// ChunkStats implements the chifra chunks stats command.
-func (opts *ChunksOptions) ChunkStats() ([]types.ChunkStats, *types.MetaData, error) {
-	return queryChunks[types.ChunkStats](opts)
-}
-
 // EXISTING_CODE

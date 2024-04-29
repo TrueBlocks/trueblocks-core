@@ -10,32 +10,22 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type BlocksOptions struct {
 	BlockIds    []string    `json:"blocks,omitempty"`
-	Hashes      bool        `json:"hashes,omitempty"`
-	Uncles      bool        `json:"uncles,omitempty"`
-	Traces      bool        `json:"traces,omitempty"`
-	Uniq        bool        `json:"uniq,omitempty"`
 	Flow        BlocksFlow  `json:"flow,omitempty"`
-	Logs        bool        `json:"logs,omitempty"`
 	Emitter     []string    `json:"emitter,omitempty"`
 	Topic       []string    `json:"topic,omitempty"`
-	Withdrawals bool        `json:"withdrawals,omitempty"`
 	Articulate  bool        `json:"articulate,omitempty"`
 	BigRange    uint64      `json:"bigRange,omitempty"`
-	Count       bool        `json:"count,omitempty"`
 	CacheTxs    bool        `json:"cacheTxs,omitempty"`
 	CacheTraces bool        `json:"cacheTraces,omitempty"`
 	List        base.Blknum `json:"list,omitempty"`
@@ -49,107 +39,59 @@ func (opts *BlocksOptions) String() string {
 	return string(bytes)
 }
 
-// BlocksBytes implements the chifra blocks command for the SDK.
-func (opts *BlocksOptions) BlocksBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting blocks struct to URL values: %v", err)
-	}
-
-	return blocks.Blocks(w, values)
-}
-
-// blocksParseFunc handles special cases such as structs and enums (if any).
-func blocksParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	opts, ok := target.(*BlocksOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(blocks): target is not of correct type")
-	}
-
-	if key == "flow" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.Flow, err = enumFromBlocksFlow(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetBlocksOptions returns a filled-in options instance given a string array of arguments.
-func GetBlocksOptions(args []string) (*BlocksOptions, error) {
-	var opts BlocksOptions
-	if err := assignValuesFromArgs(args, blocksParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type blocksGeneric interface {
-	types.Block[types.Transaction] |
-		types.Block[string] |
-		types.Trace |
-		types.Appearance |
-		types.Log |
-		types.Withdrawal |
-		types.BlockCount
-}
-
-func queryBlocks[T blocksGeneric](opts *BlocksOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.BlocksBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
-}
-
 // Blocks implements the chifra blocks command.
 func (opts *BlocksOptions) Blocks() ([]types.Block[types.Transaction], *types.MetaData, error) {
-	return queryBlocks[types.Block[types.Transaction]](opts)
+	in := opts.toInternal()
+	return queryBlocks[types.Block[types.Transaction]](in)
 }
 
 // BlocksHashes implements the chifra blocks --hashes command.
 func (opts *BlocksOptions) BlocksHashes() ([]types.Block[string], *types.MetaData, error) {
-	return queryBlocks[types.Block[string]](opts)
+	in := opts.toInternal()
+	in.Hashes = true
+	return queryBlocks[types.Block[string]](in)
+}
+
+// BlocksUncles implements the chifra blocks --uncles command.
+func (opts *BlocksOptions) BlocksUncles() ([]types.Block[string], *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Uncles = true
+	return queryBlocks[types.Block[string]](in)
 }
 
 // BlocksTraces implements the chifra blocks --traces command.
 func (opts *BlocksOptions) BlocksTraces() ([]types.Trace, *types.MetaData, error) {
-	return queryBlocks[types.Trace](opts)
+	in := opts.toInternal()
+	in.Traces = true
+	return queryBlocks[types.Trace](in)
 }
 
 // BlocksUniq implements the chifra blocks --uniq command.
 func (opts *BlocksOptions) BlocksUniq() ([]types.Appearance, *types.MetaData, error) {
-	return queryBlocks[types.Appearance](opts)
+	in := opts.toInternal()
+	in.Uniq = true
+	return queryBlocks[types.Appearance](in)
 }
 
 // BlocksLogs implements the chifra blocks --logs command.
 func (opts *BlocksOptions) BlocksLogs() ([]types.Log, *types.MetaData, error) {
-	return queryBlocks[types.Log](opts)
+	in := opts.toInternal()
+	in.Logs = true
+	return queryBlocks[types.Log](in)
 }
 
 // BlocksWithdrawals implements the chifra blocks --withdrawals command.
 func (opts *BlocksOptions) BlocksWithdrawals() ([]types.Withdrawal, *types.MetaData, error) {
-	return queryBlocks[types.Withdrawal](opts)
+	in := opts.toInternal()
+	in.Withdrawals = true
+	return queryBlocks[types.Withdrawal](in)
 }
 
 // BlocksCount implements the chifra blocks --count command.
 func (opts *BlocksOptions) BlocksCount() ([]types.BlockCount, *types.MetaData, error) {
-	return queryBlocks[types.BlockCount](opts)
+	in := opts.toInternal()
+	in.Count = true
+	return queryBlocks[types.BlockCount](in)
 }
 
 type BlocksFlow int

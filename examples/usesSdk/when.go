@@ -26,7 +26,6 @@ func DoWhen() {
 		}
 	}
 
-	opts.Timestamps = true
 	if whenTimestamps, _, err := opts.WhenTimestamps(); err != nil {
 		logger.Error(err)
 	} else {
@@ -38,8 +37,6 @@ func DoWhen() {
 		}
 	}
 
-	// opts.Timestamps = false
-	opts.Count = true
 	if whenCount, _, err := opts.WhenCount(); err != nil {
 		logger.Error(err)
 	} else {

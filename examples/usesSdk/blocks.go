@@ -28,7 +28,6 @@ func DoBlocks() {
 		}
 	}
 
-	opts.Hashes = true
 	if blocksHashes, _, err := opts.BlocksHashes(); err != nil {
 		logger.Error(err)
 	} else {
@@ -40,8 +39,6 @@ func DoBlocks() {
 		}
 	}
 
-	opts.Hashes = false
-	opts.Traces = true
 	if blockTraces, _, err := opts.BlocksTraces(); err != nil {
 		logger.Error(err)
 	} else {
@@ -53,8 +50,6 @@ func DoBlocks() {
 		}
 	}
 
-	opts.Traces = false
-	opts.Uniq = true
 	// if blockApps, _, err := opts.BlocksUniq(); err != nil {
 	// 	logger.Error(err)
 	// } else {
@@ -66,8 +61,6 @@ func DoBlocks() {
 	// }
 	// }
 
-	opts.Uniq = false
-	opts.Logs = true
 	if blocksLogs, _, err := opts.BlocksLogs(); err != nil {
 		logger.Error(err)
 	} else {
@@ -79,8 +72,6 @@ func DoBlocks() {
 		}
 	}
 
-	opts.Logs = false
-	opts.Withdrawals = true
 	if blocksWithdrawals, _, err := opts.BlocksWithdrawals(); err != nil {
 		logger.Error(err)
 	} else {
@@ -92,8 +83,6 @@ func DoBlocks() {
 		}
 	}
 
-	opts.Withdrawals = false
-	opts.Count = false
 	if blocksCounts, _, err := opts.BlocksCount(); err != nil {
 		logger.Error(err)
 	} else {

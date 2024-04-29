@@ -12,7 +12,6 @@ func DoMonitors() {
 
 	opts := sdk.MonitorsOptions{
 		Addrs: []string{testAddrs[0]},
-		List:  true,
 	}
 
 	if monitors, _, err := opts.MonitorsList(); err != nil {

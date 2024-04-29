@@ -343,7 +343,7 @@ Data models produced by this tool:
 - [chunkaddress](/data-model/admin/#chunkaddress)
 - [chunkbloom](/data-model/admin/#chunkbloom)
 - [chunkindex](/data-model/admin/#chunkindex)
-- [chunkpinreport](/data-model/admin/#chunkpinreport)
+- [chunkpin](/data-model/admin/#chunkpin)
 - [chunkrecord](/data-model/admin/#chunkrecord)
 - [chunkstats](/data-model/admin/#chunkstats)
 - [ipfspin](/data-model/admin/#ipfspin)

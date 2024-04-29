@@ -30,6 +30,8 @@ const (
 	TxFeeReward  base.Txnum = 99993
 )
 
+type ChunkAppearance = Appearance
+
 // EXISTING_CODE
 
 type RawAppearance struct {

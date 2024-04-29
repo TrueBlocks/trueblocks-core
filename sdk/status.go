@@ -10,23 +10,18 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type StatusOptions struct {
-	Modes       StatusModes `json:"modes,omitempty"`
-	Diagnose    bool        `json:"diagnose,omitempty"`
-	FirstRecord uint64      `json:"firstRecord,omitempty"`
-	MaxRecords  uint64      `json:"maxRecords,omitempty"`
-	Chains      bool        `json:"chains,omitempty"`
+	FirstRecord uint64 `json:"firstRecord,omitempty"`
+	MaxRecords  uint64 `json:"maxRecords,omitempty"`
+	Chains      bool   `json:"chains,omitempty"`
 	Globals
 }
 
@@ -36,65 +31,144 @@ func (opts *StatusOptions) String() string {
 	return string(bytes)
 }
 
-// StatusBytes implements the chifra status command for the SDK.
-func (opts *StatusOptions) StatusBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting status struct to URL values: %v", err)
-	}
-
-	return status.Status(w, values)
+// StatusIndex implements the chifra status index command.
+func (opts *StatusOptions) StatusIndex() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMIndex
+	return queryStatus[types.Status](in)
 }
 
-// statusParseFunc handles special cases such as structs and enums (if any).
-func statusParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	opts, ok := target.(*StatusOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(status): target is not of correct type")
-	}
-
-	if key == "modes" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.Modes, err = enumFromStatusModes(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
+// StatusBlooms implements the chifra status blooms command.
+func (opts *StatusOptions) StatusBlooms() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMBlooms
+	return queryStatus[types.Status](in)
 }
 
-// GetStatusOptions returns a filled-in options instance given a string array of arguments.
-func GetStatusOptions(args []string) (*StatusOptions, error) {
-	var opts StatusOptions
-	if err := assignValuesFromArgs(args, statusParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
+// StatusBlocks implements the chifra status blocks command.
+func (opts *StatusOptions) StatusBlocks() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMBlocks
+	return queryStatus[types.Status](in)
 }
 
-type statusGeneric interface {
+// StatusTransactions implements the chifra status transactions command.
+func (opts *StatusOptions) StatusTransactions() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMTransactions
+	return queryStatus[types.Status](in)
 }
 
-func queryStatus[T statusGeneric](opts *StatusOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.StatusBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
+// StatusTraces implements the chifra status traces command.
+func (opts *StatusOptions) StatusTraces() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMTraces
+	return queryStatus[types.Status](in)
+}
 
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
+// StatusLogs implements the chifra status logs command.
+func (opts *StatusOptions) StatusLogs() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMLogs
+	return queryStatus[types.Status](in)
+}
+
+// StatusStatements implements the chifra status statements command.
+func (opts *StatusOptions) StatusStatements() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMStatements
+	return queryStatus[types.Status](in)
+}
+
+// StatusResults implements the chifra status results command.
+func (opts *StatusOptions) StatusResults() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMResults
+	return queryStatus[types.Status](in)
+}
+
+// StatusState implements the chifra status state command.
+func (opts *StatusOptions) StatusState() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMState
+	return queryStatus[types.Status](in)
+}
+
+// StatusTokens implements the chifra status tokens command.
+func (opts *StatusOptions) StatusTokens() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMTokens
+	return queryStatus[types.Status](in)
+}
+
+// StatusMonitors implements the chifra status monitors command.
+func (opts *StatusOptions) StatusMonitors() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMMonitors
+	return queryStatus[types.Status](in)
+}
+
+// StatusNames implements the chifra status names command.
+func (opts *StatusOptions) StatusNames() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMNames
+	return queryStatus[types.Status](in)
+}
+
+// StatusAbis implements the chifra status abis command.
+func (opts *StatusOptions) StatusAbis() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMAbis
+	return queryStatus[types.Status](in)
+}
+
+// StatusSlurps implements the chifra status slurps command.
+func (opts *StatusOptions) StatusSlurps() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMSlurps
+	return queryStatus[types.Status](in)
+}
+
+// StatusStaging implements the chifra status staging command.
+func (opts *StatusOptions) StatusStaging() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMStaging
+	return queryStatus[types.Status](in)
+}
+
+// StatusUnripe implements the chifra status unripe command.
+func (opts *StatusOptions) StatusUnripe() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMUnripe
+	return queryStatus[types.Status](in)
+}
+
+// StatusMaps implements the chifra status maps command.
+func (opts *StatusOptions) StatusMaps() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMMaps
+	return queryStatus[types.Status](in)
+}
+
+// StatusSome implements the chifra status some command.
+func (opts *StatusOptions) StatusSome() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMSome
+	return queryStatus[types.Status](in)
+}
+
+// StatusAll implements the chifra status all command.
+func (opts *StatusOptions) StatusAll() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Modes = SMAll
+	return queryStatus[types.Status](in)
+}
+
+// StatusDiagnose implements the chifra status --diagnose command.
+func (opts *StatusOptions) StatusDiagnose() ([]bool, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Diagnose = true
+	return queryStatus[bool](in)
 }
 
 type StatusModes int

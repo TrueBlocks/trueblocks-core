@@ -17,7 +17,7 @@ import (
 
 // EXISTING_CODE
 
-type RawChunkPinReport struct {
+type RawChunkPin struct {
 	Chain         string `json:"chain"`
 	ManifestHash  string `json:"manifestHash"`
 	SpecHash      string `json:"specHash"`
@@ -27,31 +27,31 @@ type RawChunkPinReport struct {
 	// EXISTING_CODE
 }
 
-type ChunkPinReport struct {
-	Chain         string             `json:"chain"`
-	ManifestHash  base.IpfsHash      `json:"manifestHash"`
-	SpecHash      base.IpfsHash      `json:"specHash"`
-	TimestampHash base.IpfsHash      `json:"timestampHash"`
-	Version       string             `json:"version"`
-	raw           *RawChunkPinReport `json:"-"`
+type ChunkPin struct {
+	Chain         string        `json:"chain"`
+	ManifestHash  base.IpfsHash `json:"manifestHash"`
+	SpecHash      base.IpfsHash `json:"specHash"`
+	TimestampHash base.IpfsHash `json:"timestampHash"`
+	Version       string        `json:"version"`
+	raw           *RawChunkPin  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s ChunkPinReport) String() string {
+func (s ChunkPin) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *ChunkPinReport) Raw() *RawChunkPinReport {
+func (s *ChunkPin) Raw() *RawChunkPin {
 	return s.raw
 }
 
-func (s *ChunkPinReport) SetRaw(raw *RawChunkPinReport) {
+func (s *ChunkPin) SetRaw(raw *RawChunkPin) {
 	s.raw = raw
 }
 
-func (s *ChunkPinReport) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *ChunkPin) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -79,7 +79,7 @@ func (s *ChunkPinReport) Model(chain, format string, verbose bool, extraOptions 
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *ChunkPinReport) FinishUnmarshal() {
+func (s *ChunkPin) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

@@ -10,13 +10,11 @@ func DoChunks() {
 	logger.Info("DoChunks")
 
 	opts := sdk.ChunksOptions{
-		Mode:       sdk.CMManifest,
 		FirstBlock: 1000,
 		LastBlock:  2000,
 	}
 
 	logger.Info("ChunksManifest")
-	opts.Mode = sdk.CMManifest
 	if chunksManifest, _, err := opts.ChunksManifest(); err != nil {
 		logger.Error(err)
 	} else {
@@ -26,7 +24,6 @@ func DoChunks() {
 	}
 
 	logger.Info("ChunksIndex")
-	opts.Mode = sdk.CMIndex
 	if chunksIndex, _, err := opts.ChunksIndex(); err != nil {
 		logger.Error(err)
 	} else {
@@ -36,7 +33,6 @@ func DoChunks() {
 	}
 
 	logger.Info("ChunksBlooms")
-	opts.Mode = sdk.CMBlooms
 	if chunksBlooms, _, err := opts.ChunksBlooms(); err != nil {
 		logger.Error(err)
 	} else {
@@ -47,7 +43,6 @@ func DoChunks() {
 
 	logger.Info("ChunksPins")
 	opts.List = true
-	opts.Mode = sdk.CMPins
 	if chunksPins, _, err := opts.ChunksPins(); err != nil {
 		logger.Error(err)
 	} else {
@@ -58,7 +53,6 @@ func DoChunks() {
 
 	logger.Info("ChunksAddresses")
 	opts.List = false
-	opts.Mode = sdk.CMAddresses
 	// if chunksAddresses, _, err := opts.ChunksAddresses(); err != nil {
 	// 	logger.Error(err)
 	// } else {
@@ -68,7 +62,6 @@ func DoChunks() {
 	// }
 
 	logger.Info("ChunksAppearances")
-	opts.Mode = sdk.CMAppearances
 	// if chunksAppearances, _, err := opts.ChunksAppearances(); err != nil {
 	// 	logger.Error(err)
 	// } else {
@@ -81,8 +74,7 @@ func DoChunks() {
 	// }
 
 	logger.Info("ChunksStats")
-	opts.Mode = sdk.CMStats
-	if chunkStats, _, err := opts.ChunkStats(); err != nil {
+	if chunkStats, _, err := opts.ChunksStats(); err != nil {
 		logger.Error(err)
 	} else {
 		if err := SaveToFile("usesSDK/chunkStats.json", chunkStats); err != nil {

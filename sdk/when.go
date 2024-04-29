@@ -10,27 +10,20 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
 	"encoding/json"
-	"fmt"
-	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type WhenOptions struct {
-	BlockIds   []string    `json:"blocks,omitempty"`
-	List       bool        `json:"list,omitempty"`
-	Timestamps bool        `json:"timestamps,omitempty"`
-	Count      bool        `json:"count,omitempty"`
-	Truncate   base.Blknum `json:"truncate,omitempty"`
-	Repair     bool        `json:"repair,omitempty"`
-	Check      bool        `json:"check,omitempty"`
-	Update     bool        `json:"update,omitempty"`
-	Deep       bool        `json:"deep,omitempty"`
+	BlockIds []string    `json:"blocks,omitempty"`
+	Truncate base.Blknum `json:"truncate,omitempty"`
+	Repair   bool        `json:"repair,omitempty"`
+	Check    bool        `json:"check,omitempty"`
+	Update   bool        `json:"update,omitempty"`
+	Deep     bool        `json:"deep,omitempty"`
 	Globals
 }
 
@@ -40,79 +33,31 @@ func (opts *WhenOptions) String() string {
 	return string(bytes)
 }
 
-// WhenBytes implements the chifra when command for the SDK.
-func (opts *WhenOptions) WhenBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting when struct to URL values: %v", err)
-	}
-
-	return when.When(w, values)
-}
-
-// whenParseFunc handles special cases such as structs and enums (if any).
-func whenParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	_, ok := target.(*WhenOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(when): target is not of correct type")
-	}
-
-	// No enums
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetWhenOptions returns a filled-in options instance given a string array of arguments.
-func GetWhenOptions(args []string) (*WhenOptions, error) {
-	var opts WhenOptions
-	if err := assignValuesFromArgs(args, whenParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type whenGeneric interface {
-	types.NamedBlock |
-		types.Timestamp |
-		types.TimestampCount
-}
-
-func queryWhen[T whenGeneric](opts *WhenOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.WhenBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
-}
-
 // When implements the chifra when command.
 func (opts *WhenOptions) When() ([]types.NamedBlock, *types.MetaData, error) {
-	return queryWhen[types.NamedBlock](opts)
+	in := opts.toInternal()
+	return queryWhen[types.NamedBlock](in)
 }
 
 // WhenList implements the chifra when --list command.
 func (opts *WhenOptions) WhenList() ([]types.NamedBlock, *types.MetaData, error) {
-	return queryWhen[types.NamedBlock](opts)
+	in := opts.toInternal()
+	in.List = true
+	return queryWhen[types.NamedBlock](in)
 }
 
 // WhenTimestamps implements the chifra when --timestamps command.
 func (opts *WhenOptions) WhenTimestamps() ([]types.Timestamp, *types.MetaData, error) {
-	return queryWhen[types.Timestamp](opts)
+	in := opts.toInternal()
+	in.Timestamps = true
+	return queryWhen[types.Timestamp](in)
 }
 
 // WhenCount implements the chifra when --count command.
 func (opts *WhenOptions) WhenCount() ([]types.TimestampCount, *types.MetaData, error) {
-	return queryWhen[types.TimestampCount](opts)
+	in := opts.toInternal()
+	in.Count = true
+	return queryWhen[types.TimestampCount](in)
 }
 
 // No enums

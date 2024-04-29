@@ -1,11 +1,6 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-
-	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -13,17 +8,17 @@ import (
 func DoExport() {
 	logger.Info("DoExport")
 
-	opts := sdk.ExportOptions{
-		Addrs: []string{testAddrs[0]},
-	}
+	// opts := sdk.ExportOptions{
+	// 	Addrs: []string{testAddrs[0]},
+	// }
 
-	buf := bytes.Buffer{}
-	if err := opts.ExportBytes(&buf); err != nil {
-		logger.Error(err)
-	}
+	// buf := bytes.Buffer{}
+	// if err := opts.ExportBytes(&buf); err != nil {
+	// 	logger.Error(err)
+	// }
 
-	file.StringToAsciiFile("usesSDK/export.json", buf.String())
-	fmt.Println(buf.String())
+	// file.StringToAsciiFile("usesSDK/export.json", buf.String())
+	// fmt.Println(buf.String())
 }
 
 // func (opts *ExportOptions) Export() ([]types.Transaction, *types.MetaData, error) {
