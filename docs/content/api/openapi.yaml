@@ -561,7 +561,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#appearancecount">AppearanceCount</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/chainstate/#state">State</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a> or <a href="/data-model/chaindata/#transaction">Transaction</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#appearancecount">AppearanceCount</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a>, <a href="/data-model/chaindata/#transaction">Transaction</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -569,16 +569,17 @@ paths:
                         - $ref: "#/components/schemas/appearanceCount"
                         - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/log"
+                        - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/monitor"
                         - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/receipt"
-                        - $ref: "#/components/schemas/state"
                         - $ref: "#/components/schemas/statement"
                         - $ref: "#/components/schemas/token"
                         - $ref: "#/components/schemas/trace"
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
                         - $ref: "#/components/schemas/transaction"
+                        - $ref: "#/components/schemas/withdrawal"
                 example:
                   {
                     "data":
@@ -765,10 +766,11 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#monitor">Monitor</a> or <a href="/data-model/admin/#monitorclean">MonitorClean</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
+                    description: Produces <a href="/data-model/other/#message">Message</a>, <a href="/data-model/accounts/#monitor">Monitor</a> or <a href="/data-model/admin/#monitorclean">MonitorClean</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
                     type: array
                     items:
                       oneOf:
+                        - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/monitor"
                         - $ref: "#/components/schemas/monitorClean"
         "400":
@@ -1324,7 +1326,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#blockcount">BlockCount</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#logfilter">LogFilter</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#blockcount">BlockCount</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#logfilter">LogFilter</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1333,6 +1335,7 @@ paths:
                         - $ref: "#/components/schemas/blockCount"
                         - $ref: "#/components/schemas/log"
                         - $ref: "#/components/schemas/logFilter"
+                        - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/trace"
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
@@ -1494,10 +1497,16 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chaindata/#transaction">Transaction</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/other/#parameter">Parameter</a> or <a href="/data-model/chaindata/#transaction">Transaction</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
                     type: array
                     items:
-                      $ref: "#/components/schemas/transaction"
+                      oneOf:
+                        - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/log"
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/parameter"
+                        - $ref: "#/components/schemas/transaction"
         "400":
           description: bad input parameter
   /receipts:
@@ -1583,10 +1592,13 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chaindata/#receipt">Receipt</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-receipts">chifra receipts</a> command line.
+                    description: Produces <a href="/data-model/other/#function">Function</a>, <a href="/data-model/other/#parameter">Parameter</a> or <a href="/data-model/chaindata/#receipt">Receipt</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-receipts">chifra receipts</a> command line.
                     type: array
                     items:
-                      $ref: "#/components/schemas/receipt"
+                      oneOf:
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/parameter"
+                        - $ref: "#/components/schemas/receipt"
         "400":
           description: bad input parameter
   /logs:
@@ -1694,12 +1706,15 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chaindata/#log">Log</a> or <a href="/data-model/chaindata/#logfilter">LogFilter</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
+                    description: Produces <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#logfilter">LogFilter</a>, <a href="/data-model/other/#message">Message</a> or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
                     type: array
                     items:
                       oneOf:
+                        - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/log"
                         - $ref: "#/components/schemas/logFilter"
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/parameter"
         "400":
           description: bad input parameter
   /traces:
@@ -1809,10 +1824,13 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#tracecount">TraceCount</a>, <a href="/data-model/chaindata/#tracefilter">TraceFilter</a> or <a href="/data-model/chaindata/#traceresult">TraceResult</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
+                    description: Produces <a href="/data-model/other/#function">Function</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#tracecount">TraceCount</a>, <a href="/data-model/chaindata/#tracefilter">TraceFilter</a> or <a href="/data-model/chaindata/#traceresult">TraceResult</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
                     type: array
                     items:
                       oneOf:
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/trace"
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceCount"
@@ -1943,11 +1961,11 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#namedblock">NamedBlock</a>, <a href="/data-model/chaindata/#timestamp">Timestamp</a> or <a href="/data-model/chaindata/#timestampcount">TimestampCount</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-when">chifra when</a> command line.
+                    description: Produces <a href="/data-model/other/#message">Message</a>, <a href="/data-model/chaindata/#namedblock">NamedBlock</a>, <a href="/data-model/chaindata/#timestamp">Timestamp</a> or <a href="/data-model/chaindata/#timestampcount">TimestampCount</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-when">chifra when</a> command line.
                     type: array
                     items:
                       oneOf:
-                        - $ref: "#/components/schemas/block"
+                        - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/namedBlock"
                         - $ref: "#/components/schemas/timestamp"
                         - $ref: "#/components/schemas/timestampCount"
@@ -2099,10 +2117,13 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chainstate/#result">Result</a> or <a href="/data-model/chainstate/#state">State</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
+                    description: Produces <a href="/data-model/other/#function">Function</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chainstate/#result">Result</a> or <a href="/data-model/chainstate/#state">State</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
                     type: array
                     items:
                       oneOf:
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/result"
                         - $ref: "#/components/schemas/state"
                 example:
@@ -2693,7 +2714,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#appearancetable">AppearanceTable</a>, <a href="/data-model/admin/#chunkaddress">ChunkAddress</a>, <a href="/data-model/admin/#chunkbloom">ChunkBloom</a>, <a href="/data-model/admin/#chunkindex">ChunkIndex</a>, <a href="/data-model/admin/#chunkpin">ChunkPin</a>, <a href="/data-model/admin/#chunkrecord">ChunkRecord</a>, <a href="/data-model/admin/#chunkstats">ChunkStats</a>, <a href="/data-model/admin/#ipfspin">IpfsPin</a>, <a href="/data-model/admin/#manifest">Manifest</a> or <a href="/data-model/admin/#reportcheck">ReportCheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#appearancetable">AppearanceTable</a>, <a href="/data-model/admin/#chunkaddress">ChunkAddress</a>, <a href="/data-model/admin/#chunkbloom">ChunkBloom</a>, <a href="/data-model/admin/#chunkindex">ChunkIndex</a>, <a href="/data-model/admin/#chunkpin">ChunkPin</a>, <a href="/data-model/admin/#chunkrecord">ChunkRecord</a>, <a href="/data-model/admin/#chunkstats">ChunkStats</a>, <a href="/data-model/admin/#ipfspin">IpfsPin</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/other/#message">Message</a> or <a href="/data-model/admin/#reportcheck">ReportCheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -2707,6 +2728,7 @@ paths:
                         - $ref: "#/components/schemas/chunkStats"
                         - $ref: "#/components/schemas/ipfsPin"
                         - $ref: "#/components/schemas/manifest"
+                        - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/reportCheck"
                 example:
                   {
@@ -2952,10 +2974,14 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/other/#slurp">Slurp</a> or <a href="/data-model/other/#slurpcount">SlurpCount</a> data. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/other/#slurp">Slurp</a> or <a href="/data-model/other/#slurpcount">SlurpCount</a> data. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
                     type: array
                     items:
                       oneOf:
+                        - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/monitor"
+                        - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/slurp"
                         - $ref: "#/components/schemas/slurpCount"
                 example:

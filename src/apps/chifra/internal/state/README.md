@@ -45,6 +45,9 @@ Notes:
 
 Data models produced by this tool:
 
+- [function](/data-model/other/#function)
+- [message](/data-model/other/#message)
+- [parameter](/data-model/other/#parameter)
 - [result](/data-model/chainstate/#result)
 - [state](/data-model/chainstate/#state)
 

@@ -82,16 +82,17 @@ Data models produced by this tool:
 - [appearancecount](/data-model/accounts/#appearancecount)
 - [function](/data-model/other/#function)
 - [log](/data-model/chaindata/#log)
+- [message](/data-model/other/#message)
 - [monitor](/data-model/accounts/#monitor)
 - [parameter](/data-model/other/#parameter)
 - [receipt](/data-model/chaindata/#receipt)
-- [state](/data-model/chainstate/#state)
 - [statement](/data-model/accounts/#statement)
 - [token](/data-model/chainstate/#token)
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
 - [transaction](/data-model/chaindata/#transaction)
+- [withdrawal](/data-model/chaindata/#withdrawal)
 
 ### Other Options
 

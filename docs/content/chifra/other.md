@@ -113,6 +113,10 @@ Notes:
 
 Data models produced by this tool:
 
+- [appearance](/data-model/accounts/#appearance)
+- [function](/data-model/other/#function)
+- [monitor](/data-model/accounts/#monitor)
+- [parameter](/data-model/other/#parameter)
 - [slurp](/data-model/other/#slurp)
 - [slurpcount](/data-model/other/#slurpcount)
 

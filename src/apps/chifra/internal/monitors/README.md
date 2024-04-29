@@ -78,6 +78,7 @@ Notes:
 
 Data models produced by this tool:
 
+- [message](/data-model/other/#message)
 - [monitor](/data-model/accounts/#monitor)
 - [monitorclean](/data-model/admin/#monitorclean)
 

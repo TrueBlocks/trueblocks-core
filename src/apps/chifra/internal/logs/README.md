@@ -36,8 +36,11 @@ Notes:
 
 Data models produced by this tool:
 
+- [function](/data-model/other/#function)
 - [log](/data-model/chaindata/#log)
 - [logfilter](/data-model/chaindata/#logfilter)
+- [message](/data-model/other/#message)
+- [parameter](/data-model/other/#parameter)
 
 ### Other Options
 

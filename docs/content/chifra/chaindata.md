@@ -86,6 +86,7 @@ Data models produced by this tool:
 - [blockcount](/data-model/chaindata/#blockcount)
 - [log](/data-model/chaindata/#log)
 - [logfilter](/data-model/chaindata/#logfilter)
+- [message](/data-model/other/#message)
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
@@ -146,6 +147,11 @@ Notes:
 
 Data models produced by this tool:
 
+- [appearance](/data-model/accounts/#appearance)
+- [function](/data-model/other/#function)
+- [log](/data-model/chaindata/#log)
+- [message](/data-model/other/#message)
+- [parameter](/data-model/other/#parameter)
 - [transaction](/data-model/chaindata/#transaction)
 
 Links:
@@ -192,6 +198,8 @@ Notes:
 
 Data models produced by this tool:
 
+- [function](/data-model/other/#function)
+- [parameter](/data-model/other/#parameter)
 - [receipt](/data-model/chaindata/#receipt)
 
 Links:
@@ -237,8 +245,11 @@ Notes:
 
 Data models produced by this tool:
 
+- [function](/data-model/other/#function)
 - [log](/data-model/chaindata/#log)
 - [logfilter](/data-model/chaindata/#logfilter)
+- [message](/data-model/other/#message)
+- [parameter](/data-model/other/#parameter)
 
 Links:
 
@@ -287,6 +298,9 @@ Notes:
 
 Data models produced by this tool:
 
+- [function](/data-model/other/#function)
+- [message](/data-model/other/#message)
+- [parameter](/data-model/other/#parameter)
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [tracecount](/data-model/chaindata/#tracecount)
@@ -344,7 +358,7 @@ Notes:
 
 Data models produced by this tool:
 
-- [block](/data-model/chaindata/#block)
+- [message](/data-model/other/#message)
 - [namedblock](/data-model/chaindata/#namedblock)
 - [timestamp](/data-model/chaindata/#timestamp)
 - [timestampcount](/data-model/chaindata/#timestampcount)
