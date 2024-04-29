@@ -121,8 +121,8 @@ type exportGeneric interface {
 
 func queryExport[T exportGeneric](opts *exportOptionsInternal) ([]T, *types.MetaData, error) {
 	// EXISTING_CODE
-	if in.Statements {
-		in.Accounting = true
+	if opts.Statements {
+		opts.Accounting = true
 	}
 	// EXISTING_CODE
 

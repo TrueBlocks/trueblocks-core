@@ -5,6 +5,6 @@
     doc_descr = "transaction data as returned from the RPC (with slight enhancements)"
     doc_route = "206-transaction"
     produced_by = "transactions, export"
-    contains = "storageslot, trace, statement"
+    contains = "receipt, statement, trace, function"
     cache_type = "cacheable"
     cache_by = "tx"
