@@ -317,6 +317,7 @@ Notes:
 
 Data models produced by this tool:
 
+- [message](/data-model/other/#message)
 - [name](/data-model/accounts/#name)
 
 Links:

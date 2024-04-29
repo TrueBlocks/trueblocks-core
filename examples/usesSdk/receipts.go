@@ -14,7 +14,6 @@ func DoReceipts() {
 		TransactionIds: testTransactions,
 	}
 
-	opts.Articulate = true
 	if receipts, _, err := opts.Receipts(); err != nil {
 		logger.Error(err)
 	} else {

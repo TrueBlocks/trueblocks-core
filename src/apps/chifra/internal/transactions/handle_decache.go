@@ -22,7 +22,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawMessage], errorChan chan error) {
 		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, walk.Cache_Transactions); err != nil {
 			errorChan <- err
 		} else {

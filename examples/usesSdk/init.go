@@ -8,16 +8,16 @@ import (
 func DoInit() {
 	logger.Info("DoInit")
 
-	// opts := sdk.InitOptions{
-	// }
+	// opts := sdk.InitOptions{}
 
-	// buf := bytes.Buffer{}
-	// if err := opts.InitBytes(&buf); err != nil {
+	// if init, _, err := opts.InitAll(); err != nil {
 	// 	logger.Error(err)
+	// } else {
+	// 	if err := SaveAndClean[bool]("usesSDK/init.json", init, &opts, func() error {
+	// 		_, _, err := opts.InitAll()
+	// 		return err
+	// 	}); err != nil {
+	// 		logger.Error(err)
+	// 	}
 	// }
-
-	// file.StringToAsciiFile("usesSDK/init.json", buf.String())
-	// fmt.Println(buf.String())
 }
-
-// func (opts *InitOptions) InitAll() ([]bool, *types.MetaData, error) {

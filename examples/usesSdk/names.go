@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -18,32 +19,33 @@ func DoNames() {
 	if names, _, err := opts.Names(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.Name]("usesSDK/names.json", names, &opts, func() error {
-			_, _, err := opts.Names()
-			return err
-		}); err != nil {
+		if err := SaveToFile[types.Name]("usesSDK/names.json", names); err != nil {
 			logger.Error(err)
 		}
 	}
 
-	// opts.Addr = true
-	// if addrs, _, err := opts.NamesAddr(); err != nil {
-	// 	logger.Error(err)
-	// } else {
-	// 	if err := SaveAndClean[base.Address]("usesSDK/names-addr.json", addrs, &opts, func() error {
-	// 		_, _, err := opts.NamesAddr()
-	// 		return err
-	// 	})
-	// }
+	if addrs, _, err := opts.NamesAddr(); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveToFile[types.Name]("usesSDK/names-addr.json", addrs); err != nil {
+			logger.Error(err)
+		}
+	}
 
-	// opts.Addr = false
-	// opts.Tags = true
-	// if tags, _, err := opts.NamesTags(); err != nil {
-	// 	logger.Error(err)
-	// } else {
-	// 	if err := SaveAndClean[string]("usesSDK/names-tags.json", tags, &opts, func() error {
-	// 		_, _, err := opts.NamesTags()
-	// 		return err
-	// 	})
-	// }
+	if tags, _, err := opts.NamesTags(); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveToFile[types.Name]("usesSDK/names-tags.json", tags); err != nil {
+			logger.Error(err)
+		}
+	}
+
+	addr := base.HexToAddress(testAddrs[0])
+	if autonames, _, err := opts.NamesAutoname(addr); err != nil {
+		logger.Error(err)
+	} else {
+		if err := SaveToFile[types.Message]("usesSDK/namesAutonames.json", autonames); err != nil {
+			logger.Error(err)
+		}
+	}
 }

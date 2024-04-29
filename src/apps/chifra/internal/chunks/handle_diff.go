@@ -28,7 +28,7 @@ func (opts *ChunksOptions) HandleDiff(blockNums []uint64) error {
 	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawMessage], errorChan chan error) {
 		walker := walk.NewCacheWalker(
 			chain,
 			testMode,
