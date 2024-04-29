@@ -74,7 +74,7 @@ func DoChunks() {
 	// }
 
 	logger.Info("ChunksStats")
-	if chunkStats, _, err := opts.ChunkStats(); err != nil {
+	if chunkStats, _, err := opts.ChunksStats(); err != nil {
 		logger.Error(err)
 	} else {
 		if err := SaveToFile("usesSDK/chunkStats.json", chunkStats); err != nil {

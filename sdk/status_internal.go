@@ -82,6 +82,8 @@ func GetStatusOptions(args []string) (*statusOptionsInternal, error) {
 }
 
 type statusGeneric interface {
+	types.Status |
+		bool
 }
 
 func queryStatus[T statusGeneric](opts *statusOptionsInternal) ([]T, *types.MetaData, error) {

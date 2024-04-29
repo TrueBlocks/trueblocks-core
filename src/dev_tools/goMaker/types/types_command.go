@@ -642,7 +642,7 @@ func (c *Command) ReturnTypes() string {
 	for _, op := range c.Options {
 		if len(op.ReturnType) > 0 {
 			if !present[op.RetType()] {
-				if op.IsMode() {
+				if op.LongName == "mode" {
 					ret = append(ret, op.EnumTypes()...)
 				} else {
 					ret = append(ret, op.RetType())

@@ -83,15 +83,15 @@ func (opts *ChunksOptions) ChunksAddresses() ([]types.ChunkAddress, *types.MetaD
 	return queryChunks[types.ChunkAddress](in)
 }
 
-// ChunksAppearances implements the chifra chunks appearance command.
+// ChunksAppearances implements the chifra chunks appearances command.
 func (opts *ChunksOptions) ChunksAppearances() ([]types.ChunkAppearance, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.Mode = CMAppearances
 	return queryChunks[types.ChunkAppearance](in)
 }
 
-// ChunkStats implements the chifra chunks stats command.
-func (opts *ChunksOptions) ChunkStats() ([]types.ChunkStats, *types.MetaData, error) {
+// ChunksStats implements the chifra chunks stats command.
+func (opts *ChunksOptions) ChunksStats() ([]types.ChunkStats, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.Mode = CMStats
 	return queryChunks[types.ChunkStats](in)

@@ -128,9 +128,14 @@ func Proper(s string) string {
 }
 
 func Singular(s string) string {
-	if s != "Status" && strings.HasSuffix(s, "s") {
+	if s == "Addresses" {
+		return "Address"
+	}
+
+	if s != "Status" && s != "Stats" && strings.HasSuffix(s, "s") {
 		return s[:len(s)-1]
 	}
+
 	return s
 }
 
