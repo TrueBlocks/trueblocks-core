@@ -25,7 +25,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 13060,apps,Accounts,export,acctExport,receipts,r,,visible|docs,switch,<boolean>,receipt,,,,export receipts instead of transactional data
 13070,apps,Accounts,export,acctExport,logs,l,,visible|docs,switch,<boolean>,log,,,,export logs instead of transactional data
 13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,switch,<boolean>,trace,,,,export traces instead of transactional data
-13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,switch,<boolean>,,,,,export the neighbors of the given address
+13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,switch,<boolean>,bool,,,,export the neighbors of the given address
 13100,apps,Accounts,export,acctExport,accounting,C,,visible|docs,switch,<boolean>,,,,,attach accounting records to the exported data (applies to transactions export only)
 13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,switch,<boolean>,statement,,,,for the accounting options only&#44; export only statements
 13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,switch,<boolean>,state,,,,traverse the transaction history and show each change in ETH balances
@@ -114,7 +114,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 22000,tools,Chain Data,blocks,getBlocks,,,,visible|docs,command,,,Get blocks,[flags] <block> [block...],default|caching|ether|raw|,Retrieve one or more blocks from the chain or local cache.
 22020,tools,Chain Data,blocks,getBlocks,blocks,,,required|visible|docs,positional,list<blknum>,block[types.Transaction],,,,a space-separated list of one or more block identifiers
 22030,tools,Chain Data,blocks,getBlocks,hashes,e,,visible|docs,switch,<boolean>,block[string],,,,display only transaction hashes&#44; default is to display full transaction detail
-22040,tools,Chain Data,blocks,getBlocks,uncles,c,,visible|docs,switch,<boolean>,,,,,display uncle blocks (if any) instead of the requested block
+22040,tools,Chain Data,blocks,getBlocks,uncles,c,,visible|docs,switch,<boolean>,block[string],,,,display uncle blocks (if any) instead of the requested block
 22050,tools,Chain Data,blocks,getBlocks,traces,t,,visible|docs,switch,<boolean>,trace,,,,export the traces from the block as opposed to the block data
 22060,tools,Chain Data,blocks,getBlocks,uniq,u,,visible|docs,switch,<boolean>,appearance,,,,display a list of uniq address appearances per transaction
 22070,tools,Chain Data,blocks,getBlocks,flow,f,,visible|docs,flag,enum[from|to|reward],,,,,for the --uniq option only&#44; export only from or to (including trace from or to)
@@ -149,7 +149,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 23080,tools,Chain Data,transactions,getTrans,emitter,m,,visible|docs,flag,list<addr>,,,,,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 23090,tools,Chain Data,transactions,getTrans,topic,B,,visible|docs,flag,list<topic>,,,,,for the --logs option only&#44; filter logs to show only those with this topic(s)
 23100,tools,Chain Data,transactions,getTrans,cache_traces,,,,switch,<boolean>,,,,,force the transaction's traces into the cache
-23110,tools,Chain Data,transactions,getTrans,seed,S,,,switch,<boolean>,,,,,find the source of the funds sent to the receiver
+23110,tools,Chain Data,transactions,getTrans,seed,S,,,switch,<boolean>,bool,,,,find the source of the funds sent to the receiver
 23120,tools,Chain Data,transactions,getTrans,n1,,,,note,,,,,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 23130,tools,Chain Data,transactions,getTrans,n2,,,,note,,,,,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 23140,tools,Chain Data,transactions,getTrans,n3,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
@@ -236,8 +236,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 42030,apps,Admin,config,config,paths,a,,visible|docs,switch,<boolean>,,,,,show the configuration paths for the system
 #
 43000,apps,Admin,status,cacheStatus,,,,visible|docs,command,,,Get status on caches,<mode> [mode...] [flags],default|,Report on the state of the internal binary caches.
-43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,,,,,the (optional) name of the binary cache to report on&#44; terse otherwise
-43030,apps,Admin,status,cacheStatus,diagnose,d,,visible|docs,switch,<boolean>,,,,,same as the default but with additional diagnostics
+43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,Status,,,,the (optional) name of the binary cache to report on&#44; terse otherwise
+43030,apps,Admin,status,cacheStatus,diagnose,d,,visible|docs,switch,<boolean>,bool,,,,same as the default but with additional diagnostics
 43040,apps,Admin,status,cacheStatus,first_record,c,,visible|docs,flag,<uint64>,,,,,the first record to process
 43050,apps,Admin,status,cacheStatus,max_records,e,10000,visible|docs,flag,<uint64>,,,,,the maximum number of records to process
 43060,apps,Admin,status,cacheStatus,chains,a,,visible|docs,switch,<boolean>,,,,,include a list of chain configurations in the output
@@ -272,7 +272,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 45140,apps,Admin,scrape,blockScrape,n1,,,,note,,,,,,The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
 #
 46000,apps,Admin,chunks,chunkMan,,,,visible|docs,command,,,Manage chunks,<mode> [flags] [blocks...] [address...],default|,Manage&#44; investigate&#44; and display the Unchained Index.
-46020,apps,Admin,chunks,chunkMan,mode,,,required|visible|docs,positional,enum[manifest|index|blooms|pins|addresses|appearances|stats],,,,,the type of data to process
+46020,apps,Admin,chunks,chunkMan,mode,,,required|visible|docs,positional,enum[manifest|index|blooms|pins|addresses|appearances|stats],mode,,,,the type of data to process
 46030,apps,Admin,chunks,chunkMan,blocks,,,visible|docs,positional,list<blknum>,,,,,an optional list of blocks to intersect with chunk ranges
 46040,apps,Admin,chunks,chunkMan,check,c,,visible|docs,switch,<boolean>,,,,,check the manifest&#44; index&#44; or blooms for internal consistency
 46050,apps,Admin,chunks,chunkMan,pin,i,,visible|docs,switch,<boolean>,,,,,pin the manifest or each index chunk and bloom
@@ -305,8 +305,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 #
 47000,apps,Admin,init,init,,,,visible|docs,command,,,Initialize index,[flags],verbose|version|noop|noColor|chain|,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
 47020,apps,Admin,init,init,all,a,,visible|docs,switch,<boolean>,bool,,,,in addition to Bloom filters&#44; download full index chunks (recommended)
-47025,apps,Admin,init,init,example,e,,visible,flag,<string>,,,,,create an example for the SDK with the given name
-47030,apps,Admin,init,init,dry_run,d,,visible|docs,switch,<boolean>,,,,,display the results of the download without actually downloading
+47025,apps,Admin,init,init,example,e,,visible,flag,<string>,bool,,,,create an example for the SDK with the given name
+47030,apps,Admin,init,init,dry_run,d,,visible|docs,switch,<boolean>,bool,,,,display the results of the download without actually downloading
 47040,apps,Admin,init,init,publisher,P,,,flag,<address>,,,,,the publisher of the index to download
 47050,apps,Admin,init,init,first_block,F,,visible|docs,flag,<blknum>,,,,,do not download any chunks earlier than this block
 47060,apps,Admin,init,init,sleep,s,,visible|docs,flag,<double>,,,,,seconds to sleep between downloads

@@ -88,7 +88,6 @@ func worker(blknumChan <-chan uint64, wg *sync.WaitGroup, mu *sync.Mutex, minBlo
 	for blknum := range blknumChan {
 		opts := sdk.BlocksOptions{
 			BlockIds: []string{fmt.Sprintf("%d", blknum)},
-			Count:    true,
 		}
 
 		blocks, _, err := opts.BlocksCount()

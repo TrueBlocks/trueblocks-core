@@ -34,6 +34,7 @@ var cbTemplates = []types.Generator{
 		Templates: []string{
 			"src_dev+tools_goMaker_generated_readme+route.md.tmpl",
 			"sdk_route.go.tmpl",
+			"sdk_route+internal.go.tmpl",
 			"sdk_python_src_+route.py.tmpl",
 			// "sdk_typescript_src_paths_route.ts.tmpl",
 			"src_apps_chifra_cmd_route.go.tmpl",

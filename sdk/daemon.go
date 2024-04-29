@@ -13,13 +13,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"strings"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	daemon "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
@@ -38,76 +35,6 @@ type DaemonOptions struct {
 func (opts *DaemonOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
-}
-
-// DaemonBytes implements the chifra daemon command for the SDK.
-func (opts *DaemonOptions) DaemonBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting daemon struct to URL values: %v", err)
-	}
-
-	return daemon.Daemon(w, values)
-}
-
-// daemonParseFunc handles special cases such as structs and enums (if any).
-func daemonParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	opts, ok := target.(*DaemonOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(daemon): target is not of correct type")
-	}
-
-	if key == "api" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.Api, err = enumFromDaemonApi(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-	if key == "scrape" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.Scrape, err = enumFromDaemonScrape(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetDaemonOptions returns a filled-in options instance given a string array of arguments.
-func GetDaemonOptions(args []string) (*DaemonOptions, error) {
-	var opts DaemonOptions
-	if err := assignValuesFromArgs(args, daemonParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type daemonGeneric interface {
-}
-
-func queryDaemon[T daemonGeneric](opts *DaemonOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.DaemonBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
 }
 
 type DaemonApi int
@@ -215,8 +142,9 @@ func enumFromDaemonScrape(values []string) (DaemonScrape, error) {
 // EXISTING_CODE
 func (opts *DaemonOptions) Start(ready chan<- bool) {
 	go func() {
+		in := opts.toInternal()
 		buffer := bytes.Buffer{}
-		if err := opts.DaemonBytes(&buffer); err != nil {
+		if err := in.DaemonBytes(&buffer); err != nil {
 			logger.Fatal(err)
 		}
 	}()

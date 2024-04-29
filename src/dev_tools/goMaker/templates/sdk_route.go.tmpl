@@ -14,67 +14,14 @@ import (
 )
 
 type {{toProper .Route}}Options struct {
-{{range .Options}}	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
-{{end}}	Globals
+{{range .Options}}{{if .IsPublicEndpoint}}	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
+{{end}}{{end}}	Globals
 }
 
 // String implements the stringer interface
 func (opts *{{toProper .Route}}Options) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
-}
-
-// {{toProper .Route}}Bytes implements the chifra {{toLower .Route}} command for the SDK.
-func (opts *{{toProper .Route}}Options) {{toProper .Route}}Bytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting {{toLower .Route}} struct to URL values: %v", err)
-	}
-
-	return {{.Pkg}}.{{toProper .Route}}(w, values)
-}
-
-// {{toLower .Route}}ParseFunc handles special cases such as structs and enums (if any).
-func {{toLower .Route}}ParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	{{.Enums3}}, ok := target.(*{{toProper .Route}}Options)
-	if !ok {
-		return false, fmt.Errorf("parseFunc({{toLower .Route}}): target is not of correct type")
-	}
-
-{{.Enums1}}
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// Get{{toProper .Route}}Options returns a filled-in options instance given a string array of arguments.
-func Get{{toProper .Route}}Options(args []string) (*{{toProper .Route}}Options, error) {
-	var opts {{toProper .Route}}Options
-	if err := assignValuesFromArgs(args, {{toLower .Route}}ParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type {{toCamel .Route}}Generic interface {
-	{{.ReturnTypes}}
-}
-
-func query{{toProper .Route}}[T {{toCamel .Route}}Generic](opts *{{toProper .Route}}Options) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.{{toProper .Route}}Bytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
 }
 
 {{if .HasSdkEndpoints}}{{.SdkEndpoints}}{{end}}

@@ -26,7 +26,6 @@ func DoSlurp() {
 		}
 	}
 
-	opts.Appearances = true
 	if appearances, _, err := opts.SlurpAppearances(); err != nil {
 		logger.Error(err)
 	} else {
@@ -38,8 +37,6 @@ func DoSlurp() {
 		}
 	}
 
-	opts.Appearances = true
-	opts.Count = true
 	if counts, _, err := opts.SlurpCount(); err != nil {
 		logger.Error(err)
 	} else {

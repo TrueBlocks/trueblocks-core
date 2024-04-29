@@ -10,13 +10,9 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"bytes"
 	"encoding/json"
-	"fmt"
-	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
@@ -32,62 +28,10 @@ func (opts *ReceiptsOptions) String() string {
 	return string(bytes)
 }
 
-// ReceiptsBytes implements the chifra receipts command for the SDK.
-func (opts *ReceiptsOptions) ReceiptsBytes(w io.Writer) error {
-	values, err := structToValues(*opts)
-	if err != nil {
-		return fmt.Errorf("error converting receipts struct to URL values: %v", err)
-	}
-
-	return receipts.Receipts(w, values)
-}
-
-// receiptsParseFunc handles special cases such as structs and enums (if any).
-func receiptsParseFunc(target interface{}, key, value string) (bool, error) {
-	var found bool
-	_, ok := target.(*ReceiptsOptions)
-	if !ok {
-		return false, fmt.Errorf("parseFunc(receipts): target is not of correct type")
-	}
-
-	// No enums
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	return found, nil
-}
-
-// GetReceiptsOptions returns a filled-in options instance given a string array of arguments.
-func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
-	var opts ReceiptsOptions
-	if err := assignValuesFromArgs(args, receiptsParseFunc, &opts, &opts.Globals); err != nil {
-		return nil, err
-	}
-
-	return &opts, nil
-}
-
-type receiptsGeneric interface {
-	types.Receipt
-}
-
-func queryReceipts[T receiptsGeneric](opts *ReceiptsOptions) ([]T, *types.MetaData, error) {
-	buffer := bytes.Buffer{}
-	if err := opts.ReceiptsBytes(&buffer); err != nil {
-		return nil, nil, err
-	}
-
-	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
-		return nil, nil, err
-	} else {
-		return result.Data, &result.Meta, nil
-	}
-}
-
 // Receipts implements the chifra receipts command.
 func (opts *ReceiptsOptions) Receipts() ([]types.Receipt, *types.MetaData, error) {
-	return queryReceipts[types.Receipt](opts)
+	in := opts.toInternal()
+	return queryReceipts[types.Receipt](in)
 }
 
 // No enums
