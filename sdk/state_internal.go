@@ -94,6 +94,9 @@ type stateGeneric interface {
 }
 
 func queryState[T stateGeneric](opts *stateOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.StateBytes(&buffer); err != nil {
 		return nil, nil, err

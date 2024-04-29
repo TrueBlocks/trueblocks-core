@@ -87,6 +87,9 @@ type statusGeneric interface {
 }
 
 func queryStatus[T statusGeneric](opts *statusOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.StatusBytes(&buffer); err != nil {
 		return nil, nil, err

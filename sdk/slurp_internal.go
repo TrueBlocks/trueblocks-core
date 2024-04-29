@@ -101,6 +101,9 @@ type slurpGeneric interface {
 }
 
 func querySlurp[T slurpGeneric](opts *slurpOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.SlurpBytes(&buffer); err != nil {
 		return nil, nil, err

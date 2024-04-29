@@ -89,6 +89,9 @@ type namesGeneric interface {
 }
 
 func queryNames[T namesGeneric](opts *namesOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.NamesBytes(&buffer); err != nil {
 		return nil, nil, err

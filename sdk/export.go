@@ -94,7 +94,6 @@ func (opts *ExportOptions) ExportNeighbors() ([]bool, *types.MetaData, error) {
 // ExportStatements implements the chifra export --statements command.
 func (opts *ExportOptions) ExportStatements() ([]types.Statement, *types.MetaData, error) {
 	in := opts.toInternal()
-	in.Accounting = true
 	in.Statements = true
 	return queryExport[types.Statement](in)
 }

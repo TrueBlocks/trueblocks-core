@@ -64,6 +64,9 @@ func Get{{toProper .Route}}Options(args []string) (*{{toCamel .Route}}OptionsInt
 }
 
 func query{{toProper .Route}}[T {{toCamel .Route}}Generic](opts *{{toCamel .Route}}OptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.{{toProper .Route}}Bytes(&buffer); err != nil {
 		return nil, nil, err

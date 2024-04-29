@@ -108,6 +108,9 @@ type chunksGeneric interface {
 }
 
 func queryChunks[T chunksGeneric](opts *chunksOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.ChunksBytes(&buffer); err != nil {
 		return nil, nil, err

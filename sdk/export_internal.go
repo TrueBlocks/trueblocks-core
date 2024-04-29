@@ -120,6 +120,12 @@ type exportGeneric interface {
 }
 
 func queryExport[T exportGeneric](opts *exportOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	if in.Statements {
+		in.Accounting = true
+	}
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.ExportBytes(&buffer); err != nil {
 		return nil, nil, err
