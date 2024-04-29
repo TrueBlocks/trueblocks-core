@@ -45,12 +45,15 @@ func (opts *NamesOptions) HandleClean() error {
 		message = fmt.Sprintf("The %s names database was not cleaned", label)
 		logger.Warn(message)
 	} else {
-		message = fmt.Sprintf("The %s names database was cleaned. %d name(s) has been modified", label, modifiedCount)
+		message = fmt.Sprintf("The %s names database was cleaned. %d names have been modified", label, modifiedCount)
+		if modifiedCount == 1 {
+			message = strings.Replace(message, "names have been", "name has been", 1)
+		}
 		logger.Info(message)
 	}
 
 	if opts.Globals.IsApiMode() {
-		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawMessage], errorChan chan error) {
 			modelChan <- &types.Message{
 				Msg: message,
 			}

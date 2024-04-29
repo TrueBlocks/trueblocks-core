@@ -147,6 +147,21 @@ SlurpCounts consist of the following fields:
 | address | the address used to query the API                       | address |
 | count   | the number of records known by the API for this address | uint64  |
 
+## Message
+
+The Message type is used in various places to return information about a command. For example, when using the `chifra names --autoname` feature in the SDK, a Message type is returned.
+
+The following commands produce and manage Messages:
+
+- [chifra names](/chifra/accounts/#chifra-names)
+
+Messages consist of the following fields:
+
+| Field | Description        | Type   |
+| ----- | ------------------ | ------ |
+| msg   | the message        | string |
+| num   | a number if needed | int    |
+
 ## Base types
 
 This documentation mentions the following basic data types.

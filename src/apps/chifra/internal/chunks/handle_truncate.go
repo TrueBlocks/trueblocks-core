@@ -46,7 +46,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	})
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawMessage], errorChan chan error) {
 
 		// First, we will remove the chunks and update the manifest. We do this separately for
 		// each chunk, so that if we get interrupted, we have a relatively sane state (although,
