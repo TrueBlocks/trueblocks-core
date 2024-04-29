@@ -52,6 +52,8 @@ func (opts *BlocksOptions) HandleHashes() error {
 				iterFunc := func(app types.Appearance, value *types.Block[string]) error {
 					bn := uint64(app.BlockNumber)
 					if block, err := opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
+						errMutex.Lock()
+						defer errMutex.Unlock()
 						delete(thisMap, app)
 						return err
 					} else {
