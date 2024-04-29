@@ -953,10 +953,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#name">Name</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
+                    description: Produces <a href="/data-model/other/#message">Message</a> or <a href="/data-model/accounts/#name">Name</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
                     type: array
                     items:
-                      $ref: "#/components/schemas/name"
+                      oneOf:
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/name"
                 example:
                   [
                     {
@@ -4611,6 +4613,18 @@ components:
           type: number
           format: uint64
           description: "the number of records known by the API for this address"
+    message:
+      description: "used for various responses when no real data is generated"
+      type: object
+      properties:
+        msg:
+          type: string
+          format: string
+          description: "the message"
+        num:
+          type: string
+          format: int
+          description: "a number if needed"
     response:
       required:
         - result

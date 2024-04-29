@@ -1,24 +1,44 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
 package types
 
 // EXISTING_CODE
+import "encoding/json"
 
 // EXISTING_CODE
 
-type Message struct {
-	Msg string `json:"msg,omitempty"`
-	Num int    `json:"num,omitempty"`
+type RawMessage struct {
+	Msg string `json:"msg"`
+	Num string `json:"num"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
-func (s *Message) Raw() *RawModeler {
-	return nil
+type Message struct {
+	Msg string      `json:"msg,omitempty"`
+	Num int         `json:"num,omitempty"`
+	raw *RawMessage `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s Message) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
+}
+
+func (s *Message) Raw() *RawMessage {
+	return s.raw
+}
+
+func (s *Message) SetRaw(raw *RawMessage) {
+	s.raw = raw
 }
 
 func (s *Message) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

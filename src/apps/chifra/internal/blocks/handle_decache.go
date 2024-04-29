@@ -22,7 +22,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawMessage], errorChan chan error) {
 		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, opts.getCacheType()); err != nil {
 			errorChan <- err
 		} else {
