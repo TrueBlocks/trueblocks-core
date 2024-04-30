@@ -37,7 +37,7 @@ type NamesOptions struct {
 }
 
 // String implements the stringer interface
-func (opts *NamesOptions) String() string {
+func (opts NamesOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }

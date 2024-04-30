@@ -25,7 +25,7 @@ type LogsOptions struct {
 }
 
 // String implements the stringer interface
-func (opts *LogsOptions) String() string {
+func (opts LogsOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }

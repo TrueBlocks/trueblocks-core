@@ -24,7 +24,7 @@ type TracesOptions struct {
 }
 
 // String implements the stringer interface
-func (opts *TracesOptions) String() string {
+func (opts TracesOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }

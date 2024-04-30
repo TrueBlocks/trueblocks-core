@@ -32,7 +32,7 @@ type DaemonOptions struct {
 }
 
 // String implements the stringer interface
-func (opts *DaemonOptions) String() string {
+func (opts DaemonOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }

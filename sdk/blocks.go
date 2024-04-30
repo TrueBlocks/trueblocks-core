@@ -34,7 +34,7 @@ type BlocksOptions struct {
 }
 
 // String implements the stringer interface
-func (opts *BlocksOptions) String() string {
+func (opts BlocksOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }

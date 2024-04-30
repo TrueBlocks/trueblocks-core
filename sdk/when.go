@@ -28,7 +28,7 @@ type WhenOptions struct {
 }
 
 // String implements the stringer interface
-func (opts *WhenOptions) String() string {
+func (opts WhenOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }
