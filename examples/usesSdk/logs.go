@@ -15,24 +15,33 @@ func DoLogs() {
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
 	}
 
-	// TransactionIds []string `json:"transactions,omitempty"`
-	// Emitter        []string `json:"emitter,omitempty"`
-	// Topic          []string `json:"topic,omitempty"`
-	// Articulate     bool     `json:"articulate,omitempty"`
-
-	fns := map[bool]string{
-		false: "logs",
-		true:  "logs-articulated",
-	}
-
+	emitters := []string{"", "0x5564886ca2c518d1964e5fcea4f423b41db9f561"}
+	topics := []string{"", "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc"}
 	art := []bool{false, true}
-	for _, a := range art {
-		opts.Articulate = a
-		states := noRaw(noEther(globals))
-		for _, g := range states {
-			opts.Globals = g
-			fn := getFilename(fns[opts.Articulate], &opts.Globals)
-			TestLogs(fn, &opts)
+
+	for _, t := range topics {
+		for _, e := range emitters {
+			for _, a := range art {
+				baseFn := "logs/logs"
+				if a {
+					baseFn += "-articulate"
+				}
+				if len(e) > 0 {
+					opts.Emitter = []string{e}
+					baseFn += "-emitter"
+				}
+				if len(t) > 0 {
+					opts.Topic = []string{t}
+					baseFn += "-topic"
+				}
+				opts.Articulate = a
+				states := noRaw(noEther(globals))
+				for _, g := range states {
+					opts.Globals = g
+					fn := getFilename(baseFn, &opts.Globals)
+					TestLogs(fn, &opts)
+				}
+			}
 		}
 	}
 }

@@ -26,7 +26,7 @@ type StatusOptions struct {
 }
 
 // String implements the stringer interface
-func (opts *StatusOptions) String() string {
+func (opts StatusOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }

@@ -19,7 +19,7 @@ type {{toProper .Route}}Options struct {
 }
 
 // String implements the stringer interface
-func (opts *{{toProper .Route}}Options) String() string {
+func (opts {{toProper .Route}}Options) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }

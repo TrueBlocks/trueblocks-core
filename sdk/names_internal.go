@@ -116,11 +116,6 @@ func (opts *NamesOptions) toInternal() *namesOptionsInternal {
 		Prefund:   opts.Prefund,
 		Regular:   opts.Regular,
 		DryRun:    opts.DryRun,
-		Create:    opts.Create,
-		Update:    opts.Update,
-		Delete:    opts.Delete,
-		Undelete:  opts.Undelete,
-		Remove:    opts.Remove,
 		Globals:   opts.Globals,
 	}
 }

@@ -7,12 +7,12 @@ import (
 )
 
 func main() {
-	// DoNames()
+	//
+	DoNames()
 	// DoBlocks()
 	// DoTransactions()
 	//+ DoReceipts()
-	//+
-	DoLogs()
+	//+ DoLogs()
 	// DoTraces()
 	// DoState()
 	// DoTokens()
@@ -48,6 +48,7 @@ var firsts = []string{"46147.0", "50111.0", "52029.0"}
 func init() {
 	// These test cases drop files in the usesSDK folder. This line
 	// creates the folder in the cwd.
-	file.EstablishFolder("usesSDK")
+	file.EstablishFolder("usesSDK/logs")
+	file.EstablishFolder("usesSDK/receipts")
 	os.Setenv("TB_NO_USERQUERY", "true")
 }

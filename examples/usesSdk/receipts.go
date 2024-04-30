@@ -15,18 +15,18 @@ func DoReceipts() {
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
 	}
 
-	fns := map[bool]string{
-		false: "receipts",
-		true:  "receipts-articulated",
-	}
-
 	art := []bool{false, true}
+
 	for _, a := range art {
+		baseFn := "receipts/receipts"
+		if a {
+			baseFn += "-articulate"
+		}
 		opts.Articulate = a
 		states := noRaw(noEther(globals))
 		for _, g := range states {
 			opts.Globals = g
-			fn := getFilename(fns[opts.Articulate], &opts.Globals)
+			fn := getFilename(baseFn, &opts.Globals)
 			TestReceipts(fn, &opts)
 		}
 	}

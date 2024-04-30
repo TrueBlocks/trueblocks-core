@@ -23,7 +23,7 @@ func getFilename(baseName string, g *sdk.Globals) string {
 		app += "-verbose"
 	}
 
-	return baseName + app
+	return "usesSdk/" + baseName + app + ".json"
 }
 
 func Report(fn string) {

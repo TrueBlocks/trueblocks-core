@@ -92,11 +92,11 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 15110,tools,Accounts,names,ethNames,regular,r,,visible|docs,switch,<boolean>,,,,,only available with --clean&#44; cleans regular names database
 15120,tools,Accounts,names,ethNames,dry_run,d,,visible|docs,switch,<boolean>,,,,,only available with --clean or --autoname&#44; outputs changes to stdout instead of updating databases
 15130,tools,Accounts,names,ethNames,autoname,A,,visible|docs,flag,<address>,message,,,,an address assumed to be a token&#44; added automatically to names database if true
-15140,tools,Accounts,names,ethNames,create,,,docs,switch,<boolean>,,,,,create a new name record
-15150,tools,Accounts,names,ethNames,update,,,docs,switch,<boolean>,,,,,edit an existing name
-15160,tools,Accounts,names,ethNames,delete,,,docs,switch,<boolean>,,,,,delete a name&#44; but do not remove it
-15170,tools,Accounts,names,ethNames,undelete,,,docs,switch,<boolean>,,,,,undelete a previously deleted name
-15180,tools,Accounts,names,ethNames,remove,,,docs,switch,<boolean>,,,,,remove a previously deleted name
+15140,tools,Accounts,names,ethNames,create,,,docs,switch,<boolean>,name,,,,create a new name record
+15150,tools,Accounts,names,ethNames,update,,,docs,switch,<boolean>,name,,,,edit an existing name
+15160,tools,Accounts,names,ethNames,delete,,,docs,switch,<boolean>,name,,,,delete a name&#44; but do not remove it
+15170,tools,Accounts,names,ethNames,undelete,,,docs,switch,<boolean>,name,,,,undelete a previously deleted name
+15180,tools,Accounts,names,ethNames,remove,,,docs,switch,<boolean>,name,,,,remove a previously deleted name
 15190,tools,Accounts,names,ethNames,n1,,,,note,,,,,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 15200,tools,Accounts,names,ethNames,n2,,,,note,,,,,,The `--match_case` option enables case sensitive matching.
 #

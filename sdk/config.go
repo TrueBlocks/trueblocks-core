@@ -23,7 +23,7 @@ type ConfigOptions struct {
 }
 
 // String implements the stringer interface
-func (opts *ConfigOptions) String() string {
+func (opts ConfigOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }

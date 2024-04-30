@@ -259,7 +259,7 @@ bool CIndexArchiveWithNeighborMaps::LoadReverseMaps(const blkrange_t& range) {
 
     uint32_t nAppsHere = header.nApps;
 
-    string_q mapFile = substitute(getFilename(), indexFolder_finalized, indexFolder_map);
+    string_q mapFile = substitute(get Filename(), indexFolder_finalized, indexFolder_map);
     if (fileExists(mapFile)) {
         CArchive archive(READING_ARCHIVE);
         if (!archive.Lock(mapFile, modeReadOnly, LOCK_NOWAIT)) {
@@ -317,7 +317,7 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
     string_q fn = range_2_Str(range);
     string_q chunkPath = indexFolder_finalized + fn + ".bin";
 
-    if (!theIndex || theIndex->getFilename() != chunkPath) {
+    if (!theIndex || theIndex->get Filename() != chunkPath) {
         if (theIndex) {
             delete theIndex;
             theIndex = nullptr;
@@ -409,7 +409,7 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
     }
 
     if (opt->theIndex) {
-        // LOG_INFO(bYellow, "Clearing the reverse map for ", opt->theIndex->getFilename(), cOff);
+        // LOG_INFO(bYellow, "Clearing the reverse map for ", opt->theIndex->get Filename(), cOff);
         delete opt->theIndex;
         opt->theIndex = nullptr;
     } else {

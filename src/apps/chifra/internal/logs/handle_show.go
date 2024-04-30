@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"sort"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
@@ -16,6 +17,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
+
+var mMutex = sync.Mutex{}
 
 func (opts *LogsOptions) HandleShow() error {
 	chain := opts.Globals.Chain
@@ -54,10 +57,14 @@ func (opts *LogsOptions) HandleShow() error {
 
 				iterFunc := func(app types.Appearance, value *types.Transaction) error {
 					if tx, err := opts.Conn.GetTransactionByAppearance(&app, false /* needsTraces */); err != nil {
+						mMutex.Lock()
+						defer mMutex.Unlock()
 						delete(thisMap, app)
 						return fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
 
 					} else if tx == nil || tx.Receipt == nil || len(tx.Receipt.Logs) == 0 {
+						mMutex.Lock()
+						defer mMutex.Unlock()
 						delete(thisMap, app)
 						return fmt.Errorf("transaction at %s has no logs", app.Orig())
 

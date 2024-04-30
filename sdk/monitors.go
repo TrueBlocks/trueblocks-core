@@ -31,7 +31,7 @@ type MonitorsOptions struct {
 }
 
 // String implements the stringer interface
-func (opts *MonitorsOptions) String() string {
+func (opts MonitorsOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }
