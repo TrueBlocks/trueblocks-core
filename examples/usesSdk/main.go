@@ -7,12 +7,13 @@ import (
 )
 
 func main() {
-	//
-	DoNames()
+	// DoNames()
 	// DoBlocks()
 	// DoTransactions()
-	//+ DoReceipts()
-	//+ DoLogs()
+	//+
+	DoReceipts()
+	//+
+	DoLogs()
 	// DoTraces()
 	// DoState()
 	// DoTokens()
