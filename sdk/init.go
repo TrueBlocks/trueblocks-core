@@ -25,7 +25,7 @@ type InitOptions struct {
 }
 
 // String implements the stringer interface
-func (opts *InitOptions) String() string {
+func (opts InitOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }

@@ -85,6 +85,9 @@ type listGeneric interface {
 }
 
 func queryList[T listGeneric](opts *listOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.ListBytes(&buffer); err != nil {
 		return nil, nil, err

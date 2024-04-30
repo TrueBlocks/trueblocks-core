@@ -31,7 +31,7 @@ type SlurpOptions struct {
 }
 
 // String implements the stringer interface
-func (opts *SlurpOptions) String() string {
+func (opts SlurpOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }

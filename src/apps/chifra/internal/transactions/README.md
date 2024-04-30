@@ -48,6 +48,11 @@ Notes:
 
 Data models produced by this tool:
 
+- [appearance](/data-model/accounts/#appearance)
+- [function](/data-model/other/#function)
+- [log](/data-model/chaindata/#log)
+- [message](/data-model/other/#message)
+- [parameter](/data-model/other/#parameter)
 - [transaction](/data-model/chaindata/#transaction)
 
 ### Other Options

@@ -40,6 +40,9 @@ Notes:
 
 Data models produced by this tool:
 
+- [function](/data-model/other/#function)
+- [message](/data-model/other/#message)
+- [parameter](/data-model/other/#parameter)
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [tracecount](/data-model/chaindata/#tracecount)

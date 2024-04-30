@@ -5,6 +5,7 @@
     doc_descr = "trace data as returned from the RPC (with slight enhancements)"
     doc_route = "221-trace"
     produced_by = "traces, export, blocks"
+    contains = "traceaction, traceresult, function"
     cache_type = "cacheable"
     cache_by = "tx"
     cache_as = "group"

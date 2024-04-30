@@ -25,10 +25,8 @@ type ChunksOptions struct {
 	Pin        bool         `json:"pin,omitempty"`
 	Publish    bool         `json:"publish,omitempty"`
 	Publisher  base.Address `json:"publisher,omitempty"`
-	Truncate   base.Blknum  `json:"truncate,omitempty"`
 	Remote     bool         `json:"remote,omitempty"`
 	Belongs    []string     `json:"belongs,omitempty"`
-	Diff       bool         `json:"diff,omitempty"`
 	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
 	LastBlock  base.Blknum  `json:"lastBlock,omitempty"`
 	MaxAddrs   base.Blknum  `json:"maxAddrs,omitempty"`
@@ -37,13 +35,12 @@ type ChunksOptions struct {
 	List       bool         `json:"list,omitempty"`
 	Unpin      bool         `json:"unpin,omitempty"`
 	Count      bool         `json:"count,omitempty"`
-	Tag        string       `json:"tag,omitempty"`
 	Sleep      float64      `json:"sleep,omitempty"`
 	Globals
 }
 
 // String implements the stringer interface
-func (opts *ChunksOptions) String() string {
+func (opts ChunksOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }
@@ -95,6 +92,27 @@ func (opts *ChunksOptions) ChunksStats() ([]types.ChunkStats, *types.MetaData, e
 	in := opts.toInternal()
 	in.Mode = CMStats
 	return queryChunks[types.ChunkStats](in)
+}
+
+// ChunksTruncate implements the chifra chunks --truncate command.
+func (opts *ChunksOptions) ChunksTruncate(val base.Blknum) ([]types.Message, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Truncate = val
+	return queryChunks[types.Message](in)
+}
+
+// ChunksDiff implements the chifra chunks --diff command.
+func (opts *ChunksOptions) ChunksDiff() ([]types.Message, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Diff = true
+	return queryChunks[types.Message](in)
+}
+
+// ChunksTag implements the chifra chunks --tag command.
+func (opts *ChunksOptions) ChunksTag(val string) ([]types.Message, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Tag = val
+	return queryChunks[types.Message](in)
 }
 
 type ChunksMode int

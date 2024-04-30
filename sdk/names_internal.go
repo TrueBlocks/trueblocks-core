@@ -85,11 +85,13 @@ func GetNamesOptions(args []string) (*namesOptionsInternal, error) {
 
 type namesGeneric interface {
 	types.Name |
-		base.Address |
-		string
+		types.Message
 }
 
 func queryNames[T namesGeneric](opts *namesOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.NamesBytes(&buffer); err != nil {
 		return nil, nil, err
@@ -112,15 +114,8 @@ func (opts *NamesOptions) toInternal() *namesOptionsInternal {
 		All:       opts.All,
 		Custom:    opts.Custom,
 		Prefund:   opts.Prefund,
-		Clean:     opts.Clean,
 		Regular:   opts.Regular,
 		DryRun:    opts.DryRun,
-		Autoname:  opts.Autoname,
-		Create:    opts.Create,
-		Update:    opts.Update,
-		Delete:    opts.Delete,
-		Undelete:  opts.Undelete,
-		Remove:    opts.Remove,
 		Globals:   opts.Globals,
 	}
 }

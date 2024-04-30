@@ -5,6 +5,7 @@
     doc_descr = "receipt data as returned from the RPC (with slight enhancements)"
     doc_route = "212-receipt"
     produced_by = "receipts, export"
+    contains = "log, function"
     cache_type = "cacheable"
     cache_by = "block"
     cache_as = "group"

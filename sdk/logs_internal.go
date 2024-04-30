@@ -74,6 +74,9 @@ type logsGeneric interface {
 }
 
 func queryLogs[T logsGeneric](opts *logsOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.LogsBytes(&buffer); err != nil {
 		return nil, nil, err

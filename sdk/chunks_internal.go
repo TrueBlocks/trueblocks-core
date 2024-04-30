@@ -103,10 +103,14 @@ type chunksGeneric interface {
 		types.ChunkPin |
 		types.ChunkAddress |
 		types.ChunkAppearance |
-		types.ChunkStats
+		types.ChunkStats |
+		types.Message
 }
 
 func queryChunks[T chunksGeneric](opts *chunksOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.ChunksBytes(&buffer); err != nil {
 		return nil, nil, err
@@ -128,10 +132,8 @@ func (opts *ChunksOptions) toInternal() *chunksOptionsInternal {
 		Pin:        opts.Pin,
 		Publish:    opts.Publish,
 		Publisher:  opts.Publisher,
-		Truncate:   opts.Truncate,
 		Remote:     opts.Remote,
 		Belongs:    opts.Belongs,
-		Diff:       opts.Diff,
 		FirstBlock: opts.FirstBlock,
 		LastBlock:  opts.LastBlock,
 		MaxAddrs:   opts.MaxAddrs,
@@ -140,7 +142,6 @@ func (opts *ChunksOptions) toInternal() *chunksOptionsInternal {
 		List:       opts.List,
 		Unpin:      opts.Unpin,
 		Count:      opts.Count,
-		Tag:        opts.Tag,
 		Sleep:      opts.Sleep,
 		Globals:    opts.Globals,
 	}

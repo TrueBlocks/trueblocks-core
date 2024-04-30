@@ -29,7 +29,7 @@ type AbisOptions struct {
 }
 
 // String implements the stringer interface
-func (opts *AbisOptions) String() string {
+func (opts AbisOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }

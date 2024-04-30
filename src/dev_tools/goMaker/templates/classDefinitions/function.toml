@@ -1,8 +1,9 @@
 [settings]
     class = "Function"
-    contained_by = "abi, log, result, slurp, trace, transaction"
+    contained_by = "abi, log, receipt, result, slurp, trace, transaction"
     doc_group = "05-Other"
     doc_descr = "a human-readable representation of a Solidity function call or event"
     doc_route = "506-function"
-    produced_by = "abis, export"
+    produced_by = "abis, export, transactions, receipts, logs, traces, state, slurp"
+    contains = "parameter"
     cache_type = "marshal_only"

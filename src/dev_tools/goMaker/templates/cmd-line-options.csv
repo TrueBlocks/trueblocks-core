@@ -86,17 +86,17 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 15050,tools,Accounts,names,ethNames,all,a,,visible|docs,switch,<boolean>,,,,,include all (including custom) names in the search
 15060,tools,Accounts,names,ethNames,custom,c,,visible|docs,switch,<boolean>,,,,,include only custom named accounts in the search
 15070,tools,Accounts,names,ethNames,prefund,p,,visible|docs,switch,<boolean>,,,,,include prefund accounts in the search
-15080,tools,Accounts,names,ethNames,addr,s,,visible|docs,switch,<boolean>,base.Address,,,,display only addresses in the results (useful for scripting&#44; assumes --no_header)
-15090,tools,Accounts,names,ethNames,tags,g,,visible|docs,switch,<boolean>,string,,,,export the list of tags and subtags only
-15100,tools,Accounts,names,ethNames,clean,C,,visible|docs,switch,<boolean>,,,,,clean the data (addrs to lower case&#44; sort by addr)
+15080,tools,Accounts,names,ethNames,addr,s,,visible|docs,switch,<boolean>,name,,,,display only addresses in the results (useful for scripting&#44; assumes --no_header)
+15090,tools,Accounts,names,ethNames,tags,g,,visible|docs,switch,<boolean>,name,,,,export the list of tags and subtags only
+15100,tools,Accounts,names,ethNames,clean,C,,visible|docs,switch,<boolean>,message,,,,clean the data (addrs to lower case&#44; sort by addr)
 15110,tools,Accounts,names,ethNames,regular,r,,visible|docs,switch,<boolean>,,,,,only available with --clean&#44; cleans regular names database
 15120,tools,Accounts,names,ethNames,dry_run,d,,visible|docs,switch,<boolean>,,,,,only available with --clean or --autoname&#44; outputs changes to stdout instead of updating databases
-15130,tools,Accounts,names,ethNames,autoname,A,,visible|docs,flag,<address>,,,,,an address assumed to be a token&#44; added automatically to names database if true
-15140,tools,Accounts,names,ethNames,create,,,docs,switch,<boolean>,,,,,create a new name record
-15150,tools,Accounts,names,ethNames,update,,,docs,switch,<boolean>,,,,,edit an existing name
-15160,tools,Accounts,names,ethNames,delete,,,docs,switch,<boolean>,,,,,delete a name&#44; but do not remove it
-15170,tools,Accounts,names,ethNames,undelete,,,docs,switch,<boolean>,,,,,undelete a previously deleted name
-15180,tools,Accounts,names,ethNames,remove,,,docs,switch,<boolean>,,,,,remove a previously deleted name
+15130,tools,Accounts,names,ethNames,autoname,A,,visible|docs,flag,<address>,message,,,,an address assumed to be a token&#44; added automatically to names database if true
+15140,tools,Accounts,names,ethNames,create,,,docs,switch,<boolean>,name,,,,create a new name record
+15150,tools,Accounts,names,ethNames,update,,,docs,switch,<boolean>,name,,,,edit an existing name
+15160,tools,Accounts,names,ethNames,delete,,,docs,switch,<boolean>,name,,,,delete a name&#44; but do not remove it
+15170,tools,Accounts,names,ethNames,undelete,,,docs,switch,<boolean>,name,,,,undelete a previously deleted name
+15180,tools,Accounts,names,ethNames,remove,,,docs,switch,<boolean>,name,,,,remove a previously deleted name
 15190,tools,Accounts,names,ethNames,n1,,,,note,,,,,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 15200,tools,Accounts,names,ethNames,n2,,,,note,,,,,,The `--match_case` option enables case sensitive matching.
 #
@@ -278,10 +278,10 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 46050,apps,Admin,chunks,chunkMan,pin,i,,visible|docs,switch,<boolean>,,,,,pin the manifest or each index chunk and bloom
 46060,apps,Admin,chunks,chunkMan,publish,p,,visible|docs,switch,<boolean>,,,,,publish the manifest to the Unchained Index smart contract
 46070,apps,Admin,chunks,chunkMan,publisher,P,,,flag,<address>,,,,,for some query options&#44; the publisher of the index
-46080,apps,Admin,chunks,chunkMan,truncate,n,NOPOS,,flag,<blknum>,,,,,truncate the entire index at this block (requires a block identifier)
+46080,apps,Admin,chunks,chunkMan,truncate,n,NOPOS,,flag,<blknum>,message,,,,truncate the entire index at this block (requires a block identifier)
 46090,apps,Admin,chunks,chunkMan,remote,r,,visible|docs,switch,<boolean>,,,,,prior to processing&#44; retrieve the manifest from the Unchained Index smart contract
 46100,apps,Admin,chunks,chunkMan,belongs,b,,visible|docs,flag,list<addr>,,,,,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
-46110,apps,Admin,chunks,chunkMan,diff,f,,,switch,<boolean>,,,,,compare two index portions (see notes)
+46110,apps,Admin,chunks,chunkMan,diff,f,,,switch,<boolean>,message,,,,compare two index portions (see notes)
 46120,apps,Admin,chunks,chunkMan,first_block,F,,visible|docs,flag,<blknum>,,,,,first block to process (inclusive)
 46130,apps,Admin,chunks,chunkMan,last_block,L,NOPOS,visible|docs,flag,<blknum>,,,,,last block to process (inclusive)
 46140,apps,Admin,chunks,chunkMan,max_addrs,m,NOPOS,visible|docs,flag,<blknum>,,,,,the max number of addresses to process in a given chunk
@@ -290,7 +290,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 46170,apps,Admin,chunks,chunkMan,list,l,,,switch,<boolean>,,,,,for the pins mode only&#44; list the remote pins
 46180,apps,Admin,chunks,chunkMan,unpin,u,,,switch,<boolean>,,,,,for the pins mode only&#44; if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs)
 46190,apps,Admin,chunks,chunkMan,count,U,,visible|docs,switch,<boolean>,,,,,for the pins mode only&#44; display only the count of records
-46200,apps,Admin,chunks,chunkMan,tag,t,,,flag,<string>,,,,,visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
+46200,apps,Admin,chunks,chunkMan,tag,t,,,flag,<string>,message,,,,visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
 46210,apps,Admin,chunks,chunkMan,sleep,s,,visible|docs,flag,<double>,,,,,for --remote pinning only&#44; seconds to sleep between API calls
 46220,apps,Admin,chunks,chunkMan,n1,,,,note,,,,,,Mode determines which type of data to display or process.
 46230,apps,Admin,chunks,chunkMan,n2,,,,note,,,,,,Certain options are only available in certain modes.

@@ -1,10 +1,10 @@
 [settings]
     class = "Log"
-    contained_by = "receipt"
+    contained_by = "receipt, function"
     doc_group = "02-Chain Data"
     doc_descr = "log data as returned from the RPC (with slight enhancements)"
     doc_route = "215-log"
-    produced_by = "logs, export, blocks"
+    produced_by = "logs, export, blocks, transactions"
     cache_type = "cacheable"
     cache_by = "block"
     cache_as = "group"

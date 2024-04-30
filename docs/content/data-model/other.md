@@ -64,6 +64,12 @@ The following commands produce and manage Functions:
 
 - [chifra abis](/chifra/accounts/#chifra-abis)
 - [chifra export](/chifra/accounts/#chifra-export)
+- [chifra transactions](/chifra/chaindata/#chifra-transactions)
+- [chifra receipts](/chifra/chaindata/#chifra-receipts)
+- [chifra logs](/chifra/chaindata/#chifra-logs)
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+- [chifra state](/chifra/chainstate/#chifra-state)
+- [chifra slurp](/chifra/other/#chifra-slurp)
 
 Functions consist of the following fields:
 
@@ -89,6 +95,12 @@ The following commands produce and manage Parameters:
 
 - [chifra abis](/chifra/accounts/#chifra-abis)
 - [chifra export](/chifra/accounts/#chifra-export)
+- [chifra transactions](/chifra/chaindata/#chifra-transactions)
+- [chifra receipts](/chifra/chaindata/#chifra-receipts)
+- [chifra logs](/chifra/chaindata/#chifra-logs)
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+- [chifra state](/chifra/chainstate/#chifra-state)
+- [chifra slurp](/chifra/other/#chifra-slurp)
 
 Parameters consist of the following fields:
 
@@ -153,7 +165,16 @@ The Message type is used in various places to return information about a command
 
 The following commands produce and manage Messages:
 
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra chunks](/chifra/admin/#chifra-chunks)
+- [chifra export](/chifra/accounts/#chifra-export)
+- [chifra logs](/chifra/chaindata/#chifra-logs)
+- [chifra monitors](/chifra/accounts/#chifra-monitors)
 - [chifra names](/chifra/accounts/#chifra-names)
+- [chifra state](/chifra/chainstate/#chifra-state)
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+- [chifra transactions](/chifra/chaindata/#chifra-transactions)
+- [chifra when](/chifra/chaindata/#chifra-when)
 
 Messages consist of the following fields:
 

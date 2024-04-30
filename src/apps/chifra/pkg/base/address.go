@@ -42,7 +42,7 @@ func (a *Address) Encoded32() string {
 	return "000000000000000000000000" + a.Hex()[2:]
 }
 
-func (a *Address) String() string {
+func (a Address) String() string {
 	return a.Hex()
 }
 
@@ -68,7 +68,7 @@ func (a *Address) IsZero() bool {
 }
 
 func (e *Address) UnmarshalJSON(data []byte) error {
-	if string(data) == "\"0x0\"" {
+	if string(data) == "\"0x0\"" || string(data) == "\"\"" {
 		return nil
 	}
 	return e.Address.UnmarshalJSON(data)

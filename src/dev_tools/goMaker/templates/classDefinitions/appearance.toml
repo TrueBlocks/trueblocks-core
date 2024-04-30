@@ -1,7 +1,7 @@
 [settings]
     class = "Appearance"
-    contained_by = "monitor"
+    contained_by = "monitor, bounds"
     doc_group = "01-Accounts"
     doc_descr = "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain (note that in some cases, not all fields will appear depending on the command)"
     doc_route = "103-appearance"
-    produced_by = "list, export, blocks, chunks"
+    produced_by = "list, export, blocks, chunks, slurp, transactions"

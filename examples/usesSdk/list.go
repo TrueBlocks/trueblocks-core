@@ -17,10 +17,7 @@ func DoList() {
 	if appearances, _, err := opts.List(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.Appearance]("usesSDK/list.json", appearances, &opts, func() error {
-			_, _, err := opts.List()
-			return err
-		}); err != nil {
+		if err := SaveToFile[types.Appearance]("usesSDK/list.json", appearances); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -28,10 +25,7 @@ func DoList() {
 	if appearancesCount, _, err := opts.ListCount(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.AppearanceCount]("usesSDK/listCount.json", appearancesCount, &opts, func() error {
-			_, _, err := opts.ListCount()
-			return err
-		}); err != nil {
+		if err := SaveToFile[types.AppearanceCount]("usesSDK/listCount.json", appearancesCount); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -39,10 +33,7 @@ func DoList() {
 	if bounds, _, err := opts.ListBounds(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.Bounds]("usesSDK/listBounds.json", bounds, &opts, func() error {
-			_, _, err := opts.ListBounds()
-			return err
-		}); err != nil {
+		if err := SaveToFile[types.Bounds]("usesSDK/listBounds.json", bounds); err != nil {
 			logger.Error(err)
 		}
 	}

@@ -18,26 +18,19 @@ import (
 )
 
 type NamesOptions struct {
-	Terms     []string     `json:"terms,omitempty"`
-	Expand    bool         `json:"expand,omitempty"`
-	MatchCase bool         `json:"matchCase,omitempty"`
-	All       bool         `json:"all,omitempty"`
-	Custom    bool         `json:"custom,omitempty"`
-	Prefund   bool         `json:"prefund,omitempty"`
-	Clean     bool         `json:"clean,omitempty"`
-	Regular   bool         `json:"regular,omitempty"`
-	DryRun    bool         `json:"dryRun,omitempty"`
-	Autoname  base.Address `json:"autoname,omitempty"`
-	Create    bool         `json:"create,omitempty"`
-	Update    bool         `json:"update,omitempty"`
-	Delete    bool         `json:"delete,omitempty"`
-	Undelete  bool         `json:"undelete,omitempty"`
-	Remove    bool         `json:"remove,omitempty"`
+	Terms     []string `json:"terms,omitempty"`
+	Expand    bool     `json:"expand,omitempty"`
+	MatchCase bool     `json:"matchCase,omitempty"`
+	All       bool     `json:"all,omitempty"`
+	Custom    bool     `json:"custom,omitempty"`
+	Prefund   bool     `json:"prefund,omitempty"`
+	Regular   bool     `json:"regular,omitempty"`
+	DryRun    bool     `json:"dryRun,omitempty"`
 	Globals
 }
 
 // String implements the stringer interface
-func (opts *NamesOptions) String() string {
+func (opts NamesOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }
@@ -49,17 +42,66 @@ func (opts *NamesOptions) Names() ([]types.Name, *types.MetaData, error) {
 }
 
 // NamesAddr implements the chifra names --addr command.
-func (opts *NamesOptions) NamesAddr() ([]base.Address, *types.MetaData, error) {
+func (opts *NamesOptions) NamesAddr() ([]types.Name, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.Addr = true
-	return queryNames[base.Address](in)
+	return queryNames[types.Name](in)
 }
 
 // NamesTags implements the chifra names --tags command.
-func (opts *NamesOptions) NamesTags() ([]string, *types.MetaData, error) {
+func (opts *NamesOptions) NamesTags() ([]types.Name, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.Tags = true
-	return queryNames[string](in)
+	return queryNames[types.Name](in)
+}
+
+// NamesClean implements the chifra names --clean command.
+func (opts *NamesOptions) NamesClean() ([]types.Message, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Clean = true
+	return queryNames[types.Message](in)
+}
+
+// NamesAutoname implements the chifra names --autoname command.
+func (opts *NamesOptions) NamesAutoname(val base.Address) ([]types.Message, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Autoname = val
+	return queryNames[types.Message](in)
+}
+
+// NamesCreate implements the chifra names --create command.
+func (opts *NamesOptions) NamesCreate() ([]types.Name, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Create = true
+	return queryNames[types.Name](in)
+}
+
+// NamesUpdate implements the chifra names --update command.
+func (opts *NamesOptions) NamesUpdate() ([]types.Name, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Update = true
+	return queryNames[types.Name](in)
+}
+
+// NamesDelete implements the chifra names --delete command.
+func (opts *NamesOptions) NamesDelete() ([]types.Name, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Delete = true
+	return queryNames[types.Name](in)
+}
+
+// NamesUndelete implements the chifra names --undelete command.
+func (opts *NamesOptions) NamesUndelete() ([]types.Name, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Undelete = true
+	return queryNames[types.Name](in)
+}
+
+// NamesRemove implements the chifra names --remove command.
+func (opts *NamesOptions) NamesRemove() ([]types.Name, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Remove = true
+	return queryNames[types.Name](in)
 }
 
 // No enums
