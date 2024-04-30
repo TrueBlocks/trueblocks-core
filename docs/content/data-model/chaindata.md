@@ -27,7 +27,6 @@ blocks' transactions.
 The following commands produce and manage Blocks:
 
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
-- [chifra when](/chifra/chaindata/#chifra-when)
 
 Blocks consist of the following fields:
 
@@ -91,6 +90,7 @@ Transactions consist of the following fields:
 The following commands produce and manage Withdrawals:
 
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 Withdrawals consist of the following fields:
 
@@ -144,6 +144,7 @@ The following commands produce and manage Logs:
 - [chifra logs](/chifra/chaindata/#chifra-logs)
 - [chifra export](/chifra/accounts/#chifra-export)
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra transactions](/chifra/chaindata/#chifra-transactions)
 
 Logs consist of the following fields:
 

@@ -45,6 +45,8 @@ The following commands produce and manage Appearances:
 - [chifra export](/chifra/accounts/#chifra-export)
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
 - [chifra chunks](/chifra/admin/#chifra-chunks)
+- [chifra slurp](/chifra/other/#chifra-slurp)
+- [chifra transactions](/chifra/chaindata/#chifra-transactions)
 
 Appearances consist of the following fields:
 
@@ -75,6 +77,7 @@ The following commands produce and manage Monitors:
 - [chifra monitors](/chifra/accounts/#chifra-monitors)
 - [chifra list](/chifra/accounts/#chifra-list)
 - [chifra export](/chifra/accounts/#chifra-export)
+- [chifra slurp](/chifra/other/#chifra-slurp)
 
 Monitors consist of the following fields:
 

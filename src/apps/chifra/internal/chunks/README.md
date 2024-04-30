@@ -60,6 +60,7 @@ Data models produced by this tool:
 - [chunkstats](/data-model/admin/#chunkstats)
 - [ipfspin](/data-model/admin/#ipfspin)
 - [manifest](/data-model/admin/#manifest)
+- [message](/data-model/other/#message)
 - [reportcheck](/data-model/admin/#reportcheck)
 
 ### Other Options

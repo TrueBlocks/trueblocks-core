@@ -5,3 +5,4 @@
     doc_descr = "an appearance table for an address"
     doc_route = "121-appearanceTable"
     produced_by = "chunks"
+    contains = "addrrecord, apprecord"

@@ -62,6 +62,7 @@ Data models produced by this tool:
 - [blockcount](/data-model/chaindata/#blockcount)
 - [log](/data-model/chaindata/#log)
 - [logfilter](/data-model/chaindata/#logfilter)
+- [message](/data-model/other/#message)
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
