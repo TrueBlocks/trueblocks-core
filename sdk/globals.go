@@ -27,7 +27,7 @@ type Globals struct {
 	// --no_header
 }
 
-func (g *Globals) String() string {
+func (g Globals) String() string {
 	bytes, _ := json.Marshal(g)
 	return string(bytes)
 }

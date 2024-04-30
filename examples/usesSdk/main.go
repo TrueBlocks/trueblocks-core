@@ -7,11 +7,12 @@ import (
 )
 
 func main() {
-	DoNames()
+	// DoNames()
 	// DoBlocks()
 	// DoTransactions()
-	// DoReceipts()
-	// DoLogs()
+	//+ DoReceipts()
+	//+
+	DoLogs()
 	// DoTraces()
 	// DoState()
 	// DoTokens()
@@ -41,6 +42,8 @@ var testAddrs = []string{
 var testTransactions = []string{
 	"1718497.*",
 }
+
+var firsts = []string{"46147.0", "50111.0", "52029.0"}
 
 func init() {
 	// These test cases drop files in the usesSDK folder. This line

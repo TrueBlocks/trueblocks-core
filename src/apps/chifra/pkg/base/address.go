@@ -68,7 +68,7 @@ func (a *Address) IsZero() bool {
 }
 
 func (e *Address) UnmarshalJSON(data []byte) error {
-	if string(data) == "\"0x0\"" {
+	if string(data) == "\"0x0\"" || string(data) == "\"\"" {
 		return nil
 	}
 	return e.Address.UnmarshalJSON(data)
