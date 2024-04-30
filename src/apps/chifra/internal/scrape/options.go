@@ -77,6 +77,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 
 func ScrapeFinishParseInternal(w io.Writer, values url.Values) *ScrapeOptions {
 	copy := defaultScrapeOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.BlockCnt = 2000
 	opts.Sleep = 14
@@ -175,13 +176,7 @@ func GetOptions() *ScrapeOptions {
 	return &defaultScrapeOptions
 }
 
-func ResetOptions(testMode bool) {
-	// We want to keep writer between command file calls
-	w := GetOptions().Globals.Writer
-	defaultScrapeOptions = ScrapeOptions{}
-	globals.SetDefaults(&defaultScrapeOptions.Globals)
-	defaultScrapeOptions.Globals.TestMode = testMode
-	defaultScrapeOptions.Globals.Writer = w
+func getCaps() caps.Capability {
 	var capabilities caps.Capability // capabilities for chifra scrape
 	capabilities = capabilities.Add(caps.Verbose)
 	capabilities = capabilities.Add(caps.Version)
@@ -190,7 +185,19 @@ func ResetOptions(testMode bool) {
 	capabilities = capabilities.Add(caps.Chain)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultScrapeOptions.Globals.Caps = capabilities
+	return capabilities
+}
+
+func ResetOptions(testMode bool) {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultScrapeOptions = ScrapeOptions{}
+	globals.SetDefaults(&defaultScrapeOptions.Globals)
+	defaultScrapeOptions.Globals.TestMode = testMode
+	defaultScrapeOptions.Globals.Writer = w
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultScrapeOptions.Globals.Caps = getCaps()
 }
 
 func (opts *ScrapeOptions) getCaches() (m map[string]bool) {

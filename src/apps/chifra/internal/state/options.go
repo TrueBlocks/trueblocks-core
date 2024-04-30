@@ -78,6 +78,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 
 func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 	copy := defaultStateOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	for key, value := range values {
 		switch key {
@@ -186,6 +187,16 @@ func GetOptions() *StateOptions {
 	return &defaultStateOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra state
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -193,13 +204,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultStateOptions.Globals)
 	defaultStateOptions.Globals.TestMode = testMode
 	defaultStateOptions.Globals.Writer = w
-	var capabilities caps.Capability // capabilities for chifra state
-	capabilities = capabilities.Add(caps.Default)
-	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Ether)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultStateOptions.Globals.Caps = capabilities
+	defaultStateOptions.Globals.Caps = getCaps()
 }
 
 func (opts *StateOptions) getCaches() (m map[string]bool) {

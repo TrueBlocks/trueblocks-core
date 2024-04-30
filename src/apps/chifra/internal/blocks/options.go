@@ -96,6 +96,7 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 
 func BlocksFinishParseInternal(w io.Writer, values url.Values) *BlocksOptions {
 	copy := defaultBlocksOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.BigRange = 500
 	for key, value := range values {
@@ -200,13 +201,7 @@ func GetOptions() *BlocksOptions {
 	return &defaultBlocksOptions
 }
 
-func ResetOptions(testMode bool) {
-	// We want to keep writer between command file calls
-	w := GetOptions().Globals.Writer
-	defaultBlocksOptions = BlocksOptions{}
-	globals.SetDefaults(&defaultBlocksOptions.Globals)
-	defaultBlocksOptions.Globals.TestMode = testMode
-	defaultBlocksOptions.Globals.Writer = w
+func getCaps() caps.Capability {
 	var capabilities caps.Capability // capabilities for chifra blocks
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
@@ -214,7 +209,19 @@ func ResetOptions(testMode bool) {
 	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultBlocksOptions.Globals.Caps = capabilities
+	return capabilities
+}
+
+func ResetOptions(testMode bool) {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultBlocksOptions = BlocksOptions{}
+	globals.SetDefaults(&defaultBlocksOptions.Globals)
+	defaultBlocksOptions.Globals.TestMode = testMode
+	defaultBlocksOptions.Globals.Writer = w
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultBlocksOptions.Globals.Caps = getCaps()
 }
 
 func (opts *BlocksOptions) getCaches() (m map[string]bool) {

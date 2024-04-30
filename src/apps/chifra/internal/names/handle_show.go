@@ -21,6 +21,7 @@ func (opts *NamesOptions) HandleShow() error {
 	var fetchData func(modelChan chan types.Modeler[types.RawName], errorChan chan error)
 
 	apiMode := opts.Globals.IsApiMode()
+	testMode := opts.Globals.TestMode
 
 	var conn *grpc.ClientConn
 	var client proto.NamesClient
@@ -52,9 +53,11 @@ func (opts *NamesOptions) HandleShow() error {
 		}
 		if len(namesArray) == 0 {
 			logger.Warn("No known names found for", opts.Terms)
-			args := os.Args
-			args[0] = filepath.Base(args[0])
-			logger.Warn("Original command:", args)
+			if !testMode {
+				args := os.Args
+				args[0] = filepath.Base(args[0])
+				logger.Warn("Original command:", args)
+			}
 			return nil
 		}
 

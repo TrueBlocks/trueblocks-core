@@ -113,6 +113,8 @@ func (tr *Runner) Run(t *TestCase) error {
 
 	if passedTest {
 		tr.NPassed++
+	} else if os.Getenv("TB_TEST_HALT") == "true" {
+		os.Exit(1)
 	}
 
 	return nil

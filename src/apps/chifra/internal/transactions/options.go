@@ -82,6 +82,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 
 func TransactionsFinishParseInternal(w io.Writer, values url.Values) *TransactionsOptions {
 	copy := defaultTransactionsOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	for key, value := range values {
 		switch key {
@@ -168,13 +169,7 @@ func GetOptions() *TransactionsOptions {
 	return &defaultTransactionsOptions
 }
 
-func ResetOptions(testMode bool) {
-	// We want to keep writer between command file calls
-	w := GetOptions().Globals.Writer
-	defaultTransactionsOptions = TransactionsOptions{}
-	globals.SetDefaults(&defaultTransactionsOptions.Globals)
-	defaultTransactionsOptions.Globals.TestMode = testMode
-	defaultTransactionsOptions.Globals.Writer = w
+func getCaps() caps.Capability {
 	var capabilities caps.Capability // capabilities for chifra transactions
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
@@ -182,7 +177,19 @@ func ResetOptions(testMode bool) {
 	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultTransactionsOptions.Globals.Caps = capabilities
+	return capabilities
+}
+
+func ResetOptions(testMode bool) {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultTransactionsOptions = TransactionsOptions{}
+	globals.SetDefaults(&defaultTransactionsOptions.Globals)
+	defaultTransactionsOptions.Globals.TestMode = testMode
+	defaultTransactionsOptions.Globals.Writer = w
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultTransactionsOptions.Globals.Caps = getCaps()
 }
 
 func (opts *TransactionsOptions) getCaches() (m map[string]bool) {

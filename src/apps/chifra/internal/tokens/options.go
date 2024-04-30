@@ -73,6 +73,7 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 
 func TokensFinishParseInternal(w io.Writer, values url.Values) *TokensOptions {
 	copy := defaultTokensOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	for key, value := range values {
 		switch key {
@@ -188,6 +189,15 @@ func GetOptions() *TokensOptions {
 	return &defaultTokensOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra tokens
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -195,12 +205,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultTokensOptions.Globals)
 	defaultTokensOptions.Globals.TestMode = testMode
 	defaultTokensOptions.Globals.Writer = w
-	var capabilities caps.Capability // capabilities for chifra tokens
-	capabilities = capabilities.Add(caps.Default)
-	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultTokensOptions.Globals.Caps = capabilities
+	defaultTokensOptions.Globals.Caps = getCaps()
 }
 
 func (opts *TokensOptions) getCaches() (m map[string]bool) {
