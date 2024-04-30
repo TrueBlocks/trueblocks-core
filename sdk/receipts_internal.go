@@ -72,6 +72,9 @@ type receiptsGeneric interface {
 }
 
 func queryReceipts[T receiptsGeneric](opts *receiptsOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.ReceiptsBytes(&buffer); err != nil {
 		return nil, nil, err

@@ -82,6 +82,9 @@ type whenGeneric interface {
 }
 
 func queryWhen[T whenGeneric](opts *whenOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.WhenBytes(&buffer); err != nil {
 		return nil, nil, err

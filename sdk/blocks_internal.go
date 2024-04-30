@@ -104,6 +104,9 @@ type blocksGeneric interface {
 }
 
 func queryBlocks[T blocksGeneric](opts *blocksOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.BlocksBytes(&buffer); err != nil {
 		return nil, nil, err

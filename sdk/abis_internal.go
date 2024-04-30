@@ -82,6 +82,9 @@ type abisGeneric interface {
 }
 
 func queryAbis[T abisGeneric](opts *abisOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.AbisBytes(&buffer); err != nil {
 		return nil, nil, err

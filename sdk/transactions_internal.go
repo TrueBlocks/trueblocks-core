@@ -94,6 +94,9 @@ type transactionsGeneric interface {
 }
 
 func queryTransactions[T transactionsGeneric](opts *transactionsOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.TransactionsBytes(&buffer); err != nil {
 		return nil, nil, err

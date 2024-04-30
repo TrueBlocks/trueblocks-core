@@ -84,6 +84,9 @@ type monitorsGeneric interface {
 }
 
 func queryMonitors[T monitorsGeneric](opts *monitorsOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	buffer := bytes.Buffer{}
 	if err := opts.MonitorsBytes(&buffer); err != nil {
 		return nil, nil, err
