@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/signal"
 	"sync"
+	"syscall"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 )
@@ -20,9 +21,11 @@ type CleanupFunction func()
 
 // Enable enables the trap, by blocking control-C. It returns
 // a channel that will get a value when user presses ctrl-C.
+// It also blocks SIGTERM, which is sent by Docker when user
+// turns it off.
 func Enable(ctx context.Context, cancel context.CancelFunc, cleanUp CleanupFunction) chan os.Signal {
 	signals := make(chan os.Signal, 1)
-	signal.Notify(signals, os.Interrupt)
+	signal.Notify(signals, os.Interrupt, syscall.SIGTERM)
 
 	go func() {
 		for {
