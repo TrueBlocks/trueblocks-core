@@ -68,6 +68,7 @@ func logsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
 
 func LogsFinishParseInternal(w io.Writer, values url.Values) *LogsOptions {
 	copy := defaultLogsOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	for key, value := range values {
 		switch key {
@@ -142,6 +143,16 @@ func GetOptions() *LogsOptions {
 	return &defaultLogsOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra logs
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -149,13 +160,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultLogsOptions.Globals)
 	defaultLogsOptions.Globals.TestMode = testMode
 	defaultLogsOptions.Globals.Writer = w
-	var capabilities caps.Capability // capabilities for chifra logs
-	capabilities = capabilities.Add(caps.Default)
-	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultLogsOptions.Globals.Caps = capabilities
+	defaultLogsOptions.Globals.Caps = getCaps()
 }
 
 func (opts *LogsOptions) getCaches() (m map[string]bool) {

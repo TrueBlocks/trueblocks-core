@@ -10,6 +10,6 @@ import (
 
 func (opts *ReceiptsOptions) HandleDecache() error {
 	// TODO: implement
-	logger.Error("Not implemented yet.")
+	logger.Error("chifra receipts --decache not yet implemented")
 	return nil
 }

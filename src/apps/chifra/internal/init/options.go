@@ -72,6 +72,7 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 
 func InitFinishParseInternal(w io.Writer, values url.Values) *InitOptions {
 	copy := defaultInitOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	for key, value := range values {
 		switch key {
@@ -145,13 +146,7 @@ func GetOptions() *InitOptions {
 	return &defaultInitOptions
 }
 
-func ResetOptions(testMode bool) {
-	// We want to keep writer between command file calls
-	w := GetOptions().Globals.Writer
-	defaultInitOptions = InitOptions{}
-	globals.SetDefaults(&defaultInitOptions.Globals)
-	defaultInitOptions.Globals.TestMode = testMode
-	defaultInitOptions.Globals.Writer = w
+func getCaps() caps.Capability {
 	var capabilities caps.Capability // capabilities for chifra init
 	capabilities = capabilities.Add(caps.Verbose)
 	capabilities = capabilities.Add(caps.Version)
@@ -160,7 +155,19 @@ func ResetOptions(testMode bool) {
 	capabilities = capabilities.Add(caps.Chain)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultInitOptions.Globals.Caps = capabilities
+	return capabilities
+}
+
+func ResetOptions(testMode bool) {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultInitOptions = InitOptions{}
+	globals.SetDefaults(&defaultInitOptions.Globals)
+	defaultInitOptions.Globals.TestMode = testMode
+	defaultInitOptions.Globals.Writer = w
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultInitOptions.Globals.Caps = getCaps()
 }
 
 func (opts *InitOptions) getCaches() (m map[string]bool) {

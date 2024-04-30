@@ -72,6 +72,7 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 
 func AbisFinishParseInternal(w io.Writer, values url.Values) *AbisOptions {
 	copy := defaultAbisOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	for key, value := range values {
 		switch key {
@@ -158,6 +159,15 @@ func GetOptions() *AbisOptions {
 	return &defaultAbisOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra abis
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -165,12 +175,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultAbisOptions.Globals)
 	defaultAbisOptions.Globals.TestMode = testMode
 	defaultAbisOptions.Globals.Writer = w
-	var capabilities caps.Capability // capabilities for chifra abis
-	capabilities = capabilities.Add(caps.Default)
-	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultAbisOptions.Globals.Caps = capabilities
+	defaultAbisOptions.Globals.Caps = getCaps()
 }
 
 func (opts *AbisOptions) getCaches() (m map[string]bool) {

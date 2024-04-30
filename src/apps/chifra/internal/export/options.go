@@ -122,6 +122,7 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 
 func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 	copy := defaultExportOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.MaxRecords = 250
 	opts.LastBlock = utils.NOPOS
@@ -286,6 +287,16 @@ func GetOptions() *ExportOptions {
 	return &defaultExportOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra export
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -293,13 +304,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultExportOptions.Globals)
 	defaultExportOptions.Globals.TestMode = testMode
 	defaultExportOptions.Globals.Writer = w
-	var capabilities caps.Capability // capabilities for chifra export
-	capabilities = capabilities.Add(caps.Default)
-	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Ether)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultExportOptions.Globals.Caps = capabilities
+	defaultExportOptions.Globals.Caps = getCaps()
 }
 
 func (opts *ExportOptions) getCaches() (m map[string]bool) {

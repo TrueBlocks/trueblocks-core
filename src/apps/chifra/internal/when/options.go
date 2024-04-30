@@ -81,6 +81,7 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 
 func WhenFinishParseInternal(w io.Writer, values url.Values) *WhenOptions {
 	copy := defaultWhenOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.Truncate = utils.NOPOS
 	for key, value := range values {
@@ -161,6 +162,15 @@ func GetOptions() *WhenOptions {
 	return &defaultWhenOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra when
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -168,12 +178,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultWhenOptions.Globals)
 	defaultWhenOptions.Globals.TestMode = testMode
 	defaultWhenOptions.Globals.Writer = w
-	var capabilities caps.Capability // capabilities for chifra when
-	capabilities = capabilities.Add(caps.Default)
-	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultWhenOptions.Globals.Caps = capabilities
+	defaultWhenOptions.Globals.Caps = getCaps()
 }
 
 func (opts *WhenOptions) getCaches() (m map[string]bool) {

@@ -61,6 +61,7 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 
 func ConfigFinishParseInternal(w io.Writer, values url.Values) *ConfigOptions {
 	copy := defaultConfigOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	for key, value := range values {
 		switch key {
@@ -128,6 +129,14 @@ func GetOptions() *ConfigOptions {
 	return &defaultConfigOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra config
+	capabilities = capabilities.Add(caps.Default)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -135,11 +144,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultConfigOptions.Globals)
 	defaultConfigOptions.Globals.TestMode = testMode
 	defaultConfigOptions.Globals.Writer = w
-	var capabilities caps.Capability // capabilities for chifra config
-	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultConfigOptions.Globals.Caps = capabilities
+	defaultConfigOptions.Globals.Caps = getCaps()
 }
 
 func (opts *ConfigOptions) getCaches() (m map[string]bool) {
