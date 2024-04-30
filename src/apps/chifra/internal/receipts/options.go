@@ -64,6 +64,7 @@ func receiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOpt
 
 func ReceiptsFinishParseInternal(w io.Writer, values url.Values) *ReceiptsOptions {
 	copy := defaultReceiptsOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	for key, value := range values {
 		switch key {
@@ -126,6 +127,16 @@ func GetOptions() *ReceiptsOptions {
 	return &defaultReceiptsOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra receipts
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -133,13 +144,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultReceiptsOptions.Globals)
 	defaultReceiptsOptions.Globals.TestMode = testMode
 	defaultReceiptsOptions.Globals.Writer = w
-	var capabilities caps.Capability // capabilities for chifra receipts
-	capabilities = capabilities.Add(caps.Default)
-	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultReceiptsOptions.Globals.Caps = capabilities
+	defaultReceiptsOptions.Globals.Caps = getCaps()
 }
 
 func (opts *ReceiptsOptions) getCaches() (m map[string]bool) {

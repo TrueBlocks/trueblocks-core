@@ -85,6 +85,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 
 func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 	copy := defaultSlurpOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.Source = "etherscan"
 	opts.PerPage = 3000
@@ -198,13 +199,7 @@ func GetOptions() *SlurpOptions {
 	return &defaultSlurpOptions
 }
 
-func ResetOptions(testMode bool) {
-	// We want to keep writer between command file calls
-	w := GetOptions().Globals.Writer
-	defaultSlurpOptions = SlurpOptions{}
-	globals.SetDefaults(&defaultSlurpOptions.Globals)
-	defaultSlurpOptions.Globals.TestMode = testMode
-	defaultSlurpOptions.Globals.Writer = w
+func getCaps() caps.Capability {
 	var capabilities caps.Capability // capabilities for chifra slurp
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
@@ -212,7 +207,19 @@ func ResetOptions(testMode bool) {
 	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultSlurpOptions.Globals.Caps = capabilities
+	return capabilities
+}
+
+func ResetOptions(testMode bool) {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultSlurpOptions = SlurpOptions{}
+	globals.SetDefaults(&defaultSlurpOptions.Globals)
+	defaultSlurpOptions.Globals.TestMode = testMode
+	defaultSlurpOptions.Globals.Writer = w
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultSlurpOptions.Globals.Caps = getCaps()
 }
 
 func (opts *SlurpOptions) getCaches() (m map[string]bool) {

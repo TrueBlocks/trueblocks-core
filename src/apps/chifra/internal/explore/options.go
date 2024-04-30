@@ -64,6 +64,7 @@ func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 
 func ExploreFinishParseInternal(w io.Writer, values url.Values) *ExploreOptions {
 	copy := defaultExploreOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	for key, value := range values {
 		switch key {
@@ -130,13 +131,7 @@ func GetOptions() *ExploreOptions {
 	return &defaultExploreOptions
 }
 
-func ResetOptions(testMode bool) {
-	// We want to keep writer between command file calls
-	w := GetOptions().Globals.Writer
-	defaultExploreOptions = ExploreOptions{}
-	globals.SetDefaults(&defaultExploreOptions.Globals)
-	defaultExploreOptions.Globals.TestMode = testMode
-	defaultExploreOptions.Globals.Writer = w
+func getCaps() caps.Capability {
 	var capabilities caps.Capability // capabilities for chifra explore
 	capabilities = capabilities.Add(caps.Verbose)
 	capabilities = capabilities.Add(caps.Version)
@@ -146,7 +141,19 @@ func ResetOptions(testMode bool) {
 	capabilities = capabilities.Add(caps.File)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultExploreOptions.Globals.Caps = capabilities
+	return capabilities
+}
+
+func ResetOptions(testMode bool) {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultExploreOptions = ExploreOptions{}
+	globals.SetDefaults(&defaultExploreOptions.Globals)
+	defaultExploreOptions.Globals.TestMode = testMode
+	defaultExploreOptions.Globals.Writer = w
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultExploreOptions.Globals.Caps = getCaps()
 }
 
 func (opts *ExploreOptions) getCaches() (m map[string]bool) {

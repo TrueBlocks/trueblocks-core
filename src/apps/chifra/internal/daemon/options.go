@@ -75,6 +75,7 @@ func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions
 
 func DaemonFinishParseInternal(w io.Writer, values url.Values) *DaemonOptions {
 	copy := defaultDaemonOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.Url = "localhost:8080"
 	opts.Api = "on"
@@ -156,13 +157,7 @@ func GetOptions() *DaemonOptions {
 	return &defaultDaemonOptions
 }
 
-func ResetOptions(testMode bool) {
-	// We want to keep writer between command file calls
-	w := GetOptions().Globals.Writer
-	defaultDaemonOptions = DaemonOptions{}
-	globals.SetDefaults(&defaultDaemonOptions.Globals)
-	defaultDaemonOptions.Globals.TestMode = testMode
-	defaultDaemonOptions.Globals.Writer = w
+func getCaps() caps.Capability {
 	var capabilities caps.Capability // capabilities for chifra daemon
 	capabilities = capabilities.Add(caps.Verbose)
 	capabilities = capabilities.Add(caps.Version)
@@ -170,7 +165,19 @@ func ResetOptions(testMode bool) {
 	capabilities = capabilities.Add(caps.NoColor)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultDaemonOptions.Globals.Caps = capabilities
+	return capabilities
+}
+
+func ResetOptions(testMode bool) {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultDaemonOptions = DaemonOptions{}
+	globals.SetDefaults(&defaultDaemonOptions.Globals)
+	defaultDaemonOptions.Globals.TestMode = testMode
+	defaultDaemonOptions.Globals.Writer = w
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultDaemonOptions.Globals.Caps = getCaps()
 }
 
 func (opts *DaemonOptions) getCaches() (m map[string]bool) {

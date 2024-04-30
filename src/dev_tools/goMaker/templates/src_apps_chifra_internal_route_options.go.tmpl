@@ -46,6 +46,7 @@ func {{toLower .Route}}FinishParseApi(w http.ResponseWriter, r *http.Request) *{
 
 func {{toProper .Route}}FinishParseInternal(w io.Writer, values url.Values) *{{toProper .Route}}Options {
 	copy := default{{toProper .Route}}Options
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 {{.DefaultsApi}}	for key, value := range values {
 		switch key {
@@ -100,6 +101,12 @@ func GetOptions() *{{toProper .Route}}Options {
 	return &default{{toProper .Route}}Options
 }
 
+func getCaps() caps.Capability {
+	{{.AddCaps}}	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -107,9 +114,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&default{{toProper .Route}}Options.Globals)
 	default{{toProper .Route}}Options.Globals.TestMode = testMode
 	default{{toProper .Route}}Options.Globals.Writer = w
-	{{.AddCaps}}	// EXISTING_CODE
 	// EXISTING_CODE
-	default{{toProper .Route}}Options.Globals.Caps = capabilities
+	// EXISTING_CODE
+	default{{toProper .Route}}Options.Globals.Caps = getCaps()
 }
 
 func (opts *{{toProper .Route}}Options) getCaches() (m map[string]bool) {

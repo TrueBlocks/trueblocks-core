@@ -89,6 +89,7 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 
 func ListFinishParseInternal(w io.Writer, values url.Values) *ListOptions {
 	copy := defaultListOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.MaxRecords = 250
 	opts.LastBlock = utils.NOPOS
@@ -183,6 +184,14 @@ func GetOptions() *ListOptions {
 	return &defaultListOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra list
+	capabilities = capabilities.Add(caps.Default)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -190,11 +199,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultListOptions.Globals)
 	defaultListOptions.Globals.TestMode = testMode
 	defaultListOptions.Globals.Writer = w
-	var capabilities caps.Capability // capabilities for chifra list
-	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultListOptions.Globals.Caps = capabilities
+	defaultListOptions.Globals.Caps = getCaps()
 }
 
 func (opts *ListOptions) getCaches() (m map[string]bool) {

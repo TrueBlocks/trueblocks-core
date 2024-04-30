@@ -95,6 +95,7 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 
 func NamesFinishParseInternal(w io.Writer, values url.Values) *NamesOptions {
 	copy := defaultNamesOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	for key, value := range values {
 		switch key {
@@ -193,6 +194,14 @@ func GetOptions() *NamesOptions {
 	return &defaultNamesOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra names
+	capabilities = capabilities.Add(caps.Default)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -200,11 +209,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultNamesOptions.Globals)
 	defaultNamesOptions.Globals.TestMode = testMode
 	defaultNamesOptions.Globals.Writer = w
-	var capabilities caps.Capability // capabilities for chifra names
-	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultNamesOptions.Globals.Caps = capabilities
+	defaultNamesOptions.Globals.Caps = getCaps()
 }
 
 func (opts *NamesOptions) getCaches() (m map[string]bool) {

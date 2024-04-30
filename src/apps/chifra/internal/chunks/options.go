@@ -108,6 +108,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 
 func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 	copy := defaultChunksOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.Truncate = utils.NOPOS
 	opts.LastBlock = utils.NOPOS
@@ -245,6 +246,14 @@ func GetOptions() *ChunksOptions {
 	return &defaultChunksOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra chunks
+	capabilities = capabilities.Add(caps.Default)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -252,11 +261,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultChunksOptions.Globals)
 	defaultChunksOptions.Globals.TestMode = testMode
 	defaultChunksOptions.Globals.Writer = w
-	var capabilities caps.Capability // capabilities for chifra chunks
-	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultChunksOptions.Globals.Caps = capabilities
+	defaultChunksOptions.Globals.Caps = getCaps()
 }
 
 func (opts *ChunksOptions) getCaches() (m map[string]bool) {

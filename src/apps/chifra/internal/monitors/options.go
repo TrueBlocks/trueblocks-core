@@ -86,6 +86,7 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 
 func MonitorsFinishParseInternal(w io.Writer, values url.Values) *MonitorsOptions {
 	copy := defaultMonitorsOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.BatchSize = 8
 	opts.Sleep = 14
@@ -176,6 +177,15 @@ func GetOptions() *MonitorsOptions {
 	return &defaultMonitorsOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra monitors
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
@@ -183,12 +193,9 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultMonitorsOptions.Globals)
 	defaultMonitorsOptions.Globals.TestMode = testMode
 	defaultMonitorsOptions.Globals.Writer = w
-	var capabilities caps.Capability // capabilities for chifra monitors
-	capabilities = capabilities.Add(caps.Default)
-	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	defaultMonitorsOptions.Globals.Caps = capabilities
+	defaultMonitorsOptions.Globals.Caps = getCaps()
 }
 
 func (opts *MonitorsOptions) getCaches() (m map[string]bool) {
