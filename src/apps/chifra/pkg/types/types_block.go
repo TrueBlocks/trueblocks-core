@@ -321,67 +321,67 @@ func (s *Block[Tx]) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Block[string]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Block[string]) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	// BaseFeePerGas
-	if err = cache.ReadValue(reader, &s.BaseFeePerGas, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BaseFeePerGas, vers); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
 	// Difficulty
-	if err = cache.ReadValue(reader, &s.Difficulty, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Difficulty, vers); err != nil {
 		return err
 	}
 
 	// GasLimit
-	if err = cache.ReadValue(reader, &s.GasLimit, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasLimit, vers); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasUsed, vers); err != nil {
 		return err
 	}
 
 	// Hash
-	if err = cache.ReadValue(reader, &s.Hash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Hash, vers); err != nil {
 		return err
 	}
 
 	// Miner
-	if err = cache.ReadValue(reader, &s.Miner, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Miner, vers); err != nil {
 		return err
 	}
 
 	// ParentHash
-	if err = cache.ReadValue(reader, &s.ParentHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.ParentHash, vers); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
 		return err
 	}
 
 	// Transactions
 	s.Transactions = make([]string, 0)
-	if err = cache.ReadValue(reader, &s.Transactions, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Transactions, vers); err != nil {
 		return err
 	}
 
 	// Uncles
 	s.Uncles = make([]base.Hash, 0)
-	if err = cache.ReadValue(reader, &s.Uncles, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Uncles, vers); err != nil {
 		return err
 	}
 
 	// Withdrawals
 	s.Withdrawals = make([]Withdrawal, 0)
-	if err = cache.ReadValue(reader, &s.Withdrawals, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Withdrawals, vers); err != nil {
 		return err
 	}
 

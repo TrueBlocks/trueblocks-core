@@ -195,56 +195,56 @@ func (s *Function) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Function) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Function) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	// Anonymous
-	if err = cache.ReadValue(reader, &s.Anonymous, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Anonymous, vers); err != nil {
 		return err
 	}
 
 	// Constant
-	if err = cache.ReadValue(reader, &s.Constant, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Constant, vers); err != nil {
 		return err
 	}
 
 	// Encoding
-	if err = cache.ReadValue(reader, &s.Encoding, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Encoding, vers); err != nil {
 		return err
 	}
 
 	// Inputs
 	s.Inputs = make([]Parameter, 0)
-	if err = cache.ReadValue(reader, &s.Inputs, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Inputs, vers); err != nil {
 		return err
 	}
 
 	// Message
-	if err = cache.ReadValue(reader, &s.Message, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Message, vers); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Name, vers); err != nil {
 		return err
 	}
 
 	// Outputs
 	s.Outputs = make([]Parameter, 0)
-	if err = cache.ReadValue(reader, &s.Outputs, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Outputs, vers); err != nil {
 		return err
 	}
 
 	// Signature
-	if err = cache.ReadValue(reader, &s.Signature, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Signature, vers); err != nil {
 		return err
 	}
 
 	// StateMutability
-	if err = cache.ReadValue(reader, &s.StateMutability, version); err != nil {
+	if err = cache.ReadValue(reader, &s.StateMutability, vers); err != nil {
 		return err
 	}
 
 	// FunctionType
-	if err = cache.ReadValue(reader, &s.FunctionType, version); err != nil {
+	if err = cache.ReadValue(reader, &s.FunctionType, vers); err != nil {
 		return err
 	}
 

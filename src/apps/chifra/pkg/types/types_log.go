@@ -192,8 +192,8 @@ func (s *LogGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Logs)
 }
 
-func (s *LogGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Logs, version)
+func (s *LogGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Logs, vers)
 }
 
 func (s *Log) MarshalCache(writer io.Writer) (err error) {
@@ -258,9 +258,9 @@ func (s *Log) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Log) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Log) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
 		return err
 	}
 
@@ -268,54 +268,54 @@ func (s *Log) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	optArticulatedLog := &cache.Optional[Function]{
 		Value: s.ArticulatedLog,
 	}
-	if err = cache.ReadValue(reader, optArticulatedLog, version); err != nil {
+	if err = cache.ReadValue(reader, optArticulatedLog, vers); err != nil {
 		return err
 	}
 	s.ArticulatedLog = optArticulatedLog.Get()
 
 	// BlockHash
-	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockHash, vers); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
 	// CompressedLog
-	if err = cache.ReadValue(reader, &s.CompressedLog, version); err != nil {
+	if err = cache.ReadValue(reader, &s.CompressedLog, vers); err != nil {
 		return err
 	}
 
 	// Data
-	if err = cache.ReadValue(reader, &s.Data, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Data, vers); err != nil {
 		return err
 	}
 
 	// LogIndex
-	if err = cache.ReadValue(reader, &s.LogIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.LogIndex, vers); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
 		return err
 	}
 
 	// Topics
 	s.Topics = make([]base.Hash, 0)
-	if err = cache.ReadValue(reader, &s.Topics, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Topics, vers); err != nil {
 		return err
 	}
 
 	// TransactionHash
-	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionHash, vers); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionIndex, vers); err != nil {
 		return err
 	}
 

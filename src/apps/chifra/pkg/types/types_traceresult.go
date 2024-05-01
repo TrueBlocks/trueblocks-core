@@ -126,24 +126,24 @@ func (s *TraceResult) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *TraceResult) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *TraceResult) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
 		return err
 	}
 
 	// Code
-	if err = cache.ReadValue(reader, &s.Code, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Code, vers); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasUsed, vers); err != nil {
 		return err
 	}
 
 	// Output
-	if err = cache.ReadValue(reader, &s.Output, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Output, vers); err != nil {
 		return err
 	}
 

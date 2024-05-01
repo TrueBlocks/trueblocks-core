@@ -352,7 +352,7 @@ func (m *Member) UnmarshalCode() string {
 		tmplName += "1"
 		tmpl = `		// Transactions
 	s.Transactions = make([]string, 0)
-	if err = cache.ReadValue(reader, &s.Transactions, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Transactions, vers); err != nil {
 		return err
 	}
 
@@ -361,7 +361,7 @@ func (m *Member) UnmarshalCode() string {
 		tmplName += "2"
 		tmpl = `// {{.GoName}}
 	var {{.Lower}} string
-	if err = cache.ReadValue(reader, &{{.Lower}}, version); err != nil {
+	if err = cache.ReadValue(reader, &{{.Lower}}, vers); err != nil {
 		return err
 	}
 	if err = json.Unmarshal([]byte({{.Lower}}), &s.{{.GoName}}); err != nil {
@@ -373,7 +373,7 @@ func (m *Member) UnmarshalCode() string {
 		tmplName += "3"
 		tmpl = `// {{.GoName}}
 	s.{{.GoName}} = make({{.GoType}}, 0)
-	if err = cache.ReadValue(reader, &s.{{.GoName}}, version); err != nil {
+	if err = cache.ReadValue(reader, &s.{{.GoName}}, vers); err != nil {
 		return err
 	}
 
@@ -384,7 +384,7 @@ func (m *Member) UnmarshalCode() string {
 	opt{{.GoName}} := &cache.Optional[{{.Type}}]{
 		Value: s.{{.GoName}},
 	}
-	if err = cache.ReadValue(reader, opt{{.GoName}}, version); err != nil {
+	if err = cache.ReadValue(reader, opt{{.GoName}}, vers); err != nil {
 		return err
 	}
 	s.{{.GoName}} = opt{{.GoName}}.Get()
@@ -394,7 +394,7 @@ func (m *Member) UnmarshalCode() string {
 	} else {
 		tmplName += "5"
 		tmpl = `// {{.GoName}}
-	if err = cache.ReadValue(reader, &s.{{.GoName}}, version); err != nil {
+	if err = cache.ReadValue(reader, &s.{{.GoName}}, vers); err != nil {
 		return err
 	}
 

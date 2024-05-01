@@ -209,9 +209,9 @@ func (s *Result) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Result) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Result) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
 		return err
 	}
 
@@ -219,38 +219,38 @@ func (s *Result) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	optArticulatedOut := &cache.Optional[Function]{
 		Value: s.ArticulatedOut,
 	}
-	if err = cache.ReadValue(reader, optArticulatedOut, version); err != nil {
+	if err = cache.ReadValue(reader, optArticulatedOut, vers); err != nil {
 		return err
 	}
 	s.ArticulatedOut = optArticulatedOut.Get()
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
 	// EncodedArguments
-	if err = cache.ReadValue(reader, &s.EncodedArguments, version); err != nil {
+	if err = cache.ReadValue(reader, &s.EncodedArguments, vers); err != nil {
 		return err
 	}
 
 	// Encoding
-	if err = cache.ReadValue(reader, &s.Encoding, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Encoding, vers); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Name, vers); err != nil {
 		return err
 	}
 
 	// Signature
-	if err = cache.ReadValue(reader, &s.Signature, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Signature, vers); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
 		return err
 	}
 
