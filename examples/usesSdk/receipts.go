@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -23,7 +22,7 @@ func DoReceipts() {
 			baseFn += "-articulate"
 		}
 		opts.Articulate = a
-		states := noRaw(noEther(globals))
+		states := noEther(globals)
 		for _, g := range states {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)
@@ -33,15 +32,13 @@ func DoReceipts() {
 }
 
 func TestReceipts(fn string, opts *sdk.ReceiptsOptions) {
-	Report(fn) //, opts)
 	if receipts, _, err := opts.Receipts(); err != nil {
-		logger.Error(err)
+		ReportError(fn, err)
 	} else {
 		if err := SaveToFile[types.Receipt](fn, receipts); err != nil {
-			logger.Error(err)
+			ReportError(fn, err)
 		} else {
-			logger.Info(colors.Green, "Ok", colors.Off)
+			ReportOkay(fn)
 		}
 	}
-	logger.Info()
 }

@@ -14,7 +14,8 @@ func main() {
 	DoReceipts()
 	//+
 	DoLogs()
-	// DoTraces()
+	//+
+	DoTraces()
 	// DoState()
 	// DoTokens()
 	// DoAbis()
@@ -51,5 +52,6 @@ func init() {
 	// creates the folder in the cwd.
 	file.EstablishFolder("usesSDK/logs")
 	file.EstablishFolder("usesSDK/receipts")
+	file.EstablishFolder("usesSDK/traces")
 	os.Setenv("TB_NO_USERQUERY", "true")
 }
