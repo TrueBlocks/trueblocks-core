@@ -120,10 +120,11 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo stri
 
 	totalSupply := base.HexToWei(*results["totalSupply"])
 
-	// According to ERC-20, name, symbol and decimals are optional, but such a token
-	// would be of no use to us
+	// TODO: Maybe reconcsider this
+	// TODO: According to ERC-20, name, symbol and decimals are optional, but such a token
+	// TODO: would be of no use to us
 	if name == "" && symbol == "" && decimals == 0 {
-		return nil, errors.New("address is not token")
+		return nil, errors.New(tokenAddress.Hex() + " address is not token")
 	}
 
 	tokenType := types.TokenErc20
