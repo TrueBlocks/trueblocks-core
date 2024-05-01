@@ -142,6 +142,10 @@ func (s *Parameter) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *Parameter) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// Components
 	s.Components = make([]Parameter, 0)
 	if err = cache.ReadValue(reader, &s.Components, vers); err != nil {

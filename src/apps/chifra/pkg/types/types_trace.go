@@ -318,6 +318,10 @@ func (s *Trace) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *Trace) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// Action
 	optAction := &cache.Optional[TraceAction]{
 		Value: s.Action,

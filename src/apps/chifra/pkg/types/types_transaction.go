@@ -456,6 +456,10 @@ func (s *Transaction) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *Transaction) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// ArticulatedTx
 	optArticulatedTx := &cache.Optional[Function]{
 		Value: s.ArticulatedTx,

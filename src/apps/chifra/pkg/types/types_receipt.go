@@ -260,6 +260,10 @@ func (s *Receipt) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *Receipt) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// BlockHash
 	if err = cache.ReadValue(reader, &s.BlockHash, vers); err != nil {
 		return err

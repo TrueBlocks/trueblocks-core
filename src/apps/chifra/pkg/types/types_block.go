@@ -322,6 +322,10 @@ func (s *Block[Tx]) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *Block[string]) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// BaseFeePerGas
 	if err = cache.ReadValue(reader, &s.BaseFeePerGas, vers); err != nil {
 		return err

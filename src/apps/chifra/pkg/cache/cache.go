@@ -41,7 +41,7 @@ type Locator interface {
 // Unmarshaler is a struct implementing Unmarshaler can be read from binary by
 // calling UnmarshalCache
 type Unmarshaler interface {
-	UnmarshalCache(version uint64, reader io.Reader) error
+	UnmarshalCache(vers uint64, reader io.Reader) error
 }
 
 // Marshaler is a struct implementing the Marshaler interface. It can be

@@ -14,7 +14,7 @@ const HeaderByteSize = 4 + 8
 const Magic uint32 = 3735928559 // 0xdeadbeef
 
 var ErrInvalidMagic = errors.New("invalid magic number")
-var ErrBackwardIncompatible = errors.New("backwards incompatible")
+var ErrIncompatibleVersion = errors.New("incompatible version")
 
 type header struct {
 	Magic   uint32
@@ -61,11 +61,6 @@ func (i *Item) readHeader() (h *header, err error) {
 		// This should be silently ignored
 		return nil, ErrInvalidMagic
 	}
-
-	// TODO: #3346 We need all cachable items to implement `func (i *Item) NeedsUpgrade() bool`
-	// if i.NeedsUpgrade() {
-	// 	return nil, ErrBackwardIncompatible
-	// }
 
 	return
 }
