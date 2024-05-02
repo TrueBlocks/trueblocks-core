@@ -84,6 +84,8 @@ func queryLogs[T logsGeneric](opts *logsOptionsInternal) ([]T, *types.MetaData, 
 
 	str := buffer.String()
 	// EXISTING_CODE
+	str = convertObjectToArray("inputs", str)
+	str = convertObjectToArray("outputs", str)
 	// EXISTING_CODE
 
 	var result Result[T]

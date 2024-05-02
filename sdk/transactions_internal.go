@@ -104,6 +104,8 @@ func queryTransactions[T transactionsGeneric](opts *transactionsOptionsInternal)
 
 	str := buffer.String()
 	// EXISTING_CODE
+	str = convertObjectToArray("inputs", str)
+	str = convertObjectToArray("outputs", str)
 	// EXISTING_CODE
 
 	var result Result[T]

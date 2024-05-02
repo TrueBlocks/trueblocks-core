@@ -111,6 +111,8 @@ func querySlurp[T slurpGeneric](opts *slurpOptionsInternal) ([]T, *types.MetaDat
 
 	str := buffer.String()
 	// EXISTING_CODE
+	str = convertObjectToArray("inputs", str)
+	str = convertObjectToArray("outputs", str)
 	// EXISTING_CODE
 
 	var result Result[T]

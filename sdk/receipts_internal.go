@@ -82,6 +82,8 @@ func queryReceipts[T receiptsGeneric](opts *receiptsOptionsInternal) ([]T, *type
 
 	str := buffer.String()
 	// EXISTING_CODE
+	str = convertObjectToArray("inputs", str)
+	str = convertObjectToArray("outputs", str)
 	// EXISTING_CODE
 
 	var result Result[T]
