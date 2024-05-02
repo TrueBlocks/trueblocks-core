@@ -11,7 +11,7 @@ import (
 func TestBlockCache(t *testing.T) {
 	expected := &Block[string]{
 		BlockNumber:   4000001,
-		BaseFeePerGas: *(base.NewWei(0)),
+		BaseFeePerGas: 0,
 		Difficulty:    uint64(1097113993909745),
 		GasLimit:      uint64(6712392),
 		GasUsed:       uint64(337966),

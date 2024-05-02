@@ -128,8 +128,8 @@ func (s *WithdrawalGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Withdrawals)
 }
 
-func (s *WithdrawalGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Withdrawals, version)
+func (s *WithdrawalGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Withdrawals, vers)
 }
 
 func (s *Withdrawal) MarshalCache(writer io.Writer) (err error) {
@@ -166,34 +166,38 @@ func (s *Withdrawal) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Withdrawal) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Withdrawal) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
 		return err
 	}
 
 	// Amount
-	if err = cache.ReadValue(reader, &s.Amount, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Amount, vers); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
 	// Index
-	if err = cache.ReadValue(reader, &s.Index, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Index, vers); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
 		return err
 	}
 
 	// ValidatorIndex
-	if err = cache.ReadValue(reader, &s.ValidatorIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.ValidatorIndex, vers); err != nil {
 		return err
 	}
 

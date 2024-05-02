@@ -201,49 +201,53 @@ func (s *State) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *State) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *State) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// AccountType
-	if err = cache.ReadValue(reader, &s.AccountType, version); err != nil {
+	if err = cache.ReadValue(reader, &s.AccountType, vers); err != nil {
 		return err
 	}
 
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
 		return err
 	}
 
 	// Balance
-	if err = cache.ReadValue(reader, &s.Balance, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Balance, vers); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
 	// Code
-	if err = cache.ReadValue(reader, &s.Code, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Code, vers); err != nil {
 		return err
 	}
 
 	// Deployed
-	if err = cache.ReadValue(reader, &s.Deployed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Deployed, vers); err != nil {
 		return err
 	}
 
 	// Nonce
-	if err = cache.ReadValue(reader, &s.Nonce, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Nonce, vers); err != nil {
 		return err
 	}
 
 	// Proxy
-	if err = cache.ReadValue(reader, &s.Proxy, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Proxy, vers); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
 		return err
 	}
 

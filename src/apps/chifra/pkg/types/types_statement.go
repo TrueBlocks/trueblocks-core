@@ -223,8 +223,8 @@ func (s *StatementGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Statements)
 }
 
-func (s *StatementGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Statements, version)
+func (s *StatementGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Statements, vers)
 }
 
 func (s *Statement) MarshalCache(writer io.Writer) (err error) {
@@ -386,159 +386,163 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Statement) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// AccountedFor
-	if err = cache.ReadValue(reader, &s.AccountedFor, version); err != nil {
+	if err = cache.ReadValue(reader, &s.AccountedFor, vers); err != nil {
 		return err
 	}
 
 	// AmountIn
-	if err = cache.ReadValue(reader, &s.AmountIn, version); err != nil {
+	if err = cache.ReadValue(reader, &s.AmountIn, vers); err != nil {
 		return err
 	}
 
 	// AmountOut
-	if err = cache.ReadValue(reader, &s.AmountOut, version); err != nil {
+	if err = cache.ReadValue(reader, &s.AmountOut, vers); err != nil {
 		return err
 	}
 
 	// AssetAddr
-	if err = cache.ReadValue(reader, &s.AssetAddr, version); err != nil {
+	if err = cache.ReadValue(reader, &s.AssetAddr, vers); err != nil {
 		return err
 	}
 
 	// AssetSymbol
-	if err = cache.ReadValue(reader, &s.AssetSymbol, version); err != nil {
+	if err = cache.ReadValue(reader, &s.AssetSymbol, vers); err != nil {
 		return err
 	}
 
 	// BegBal
-	if err = cache.ReadValue(reader, &s.BegBal, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BegBal, vers); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
 	// CorrectingIn
-	if err = cache.ReadValue(reader, &s.CorrectingIn, version); err != nil {
+	if err = cache.ReadValue(reader, &s.CorrectingIn, vers); err != nil {
 		return err
 	}
 
 	// CorrectingOut
-	if err = cache.ReadValue(reader, &s.CorrectingOut, version); err != nil {
+	if err = cache.ReadValue(reader, &s.CorrectingOut, vers); err != nil {
 		return err
 	}
 
 	// CorrectingReason
-	if err = cache.ReadValue(reader, &s.CorrectingReason, version); err != nil {
+	if err = cache.ReadValue(reader, &s.CorrectingReason, vers); err != nil {
 		return err
 	}
 
 	// Decimals
-	if err = cache.ReadValue(reader, &s.Decimals, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Decimals, vers); err != nil {
 		return err
 	}
 
 	// EndBal
-	if err = cache.ReadValue(reader, &s.EndBal, version); err != nil {
+	if err = cache.ReadValue(reader, &s.EndBal, vers); err != nil {
 		return err
 	}
 
 	// GasOut
-	if err = cache.ReadValue(reader, &s.GasOut, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasOut, vers); err != nil {
 		return err
 	}
 
 	// InternalIn
-	if err = cache.ReadValue(reader, &s.InternalIn, version); err != nil {
+	if err = cache.ReadValue(reader, &s.InternalIn, vers); err != nil {
 		return err
 	}
 
 	// InternalOut
-	if err = cache.ReadValue(reader, &s.InternalOut, version); err != nil {
+	if err = cache.ReadValue(reader, &s.InternalOut, vers); err != nil {
 		return err
 	}
 
 	// LogIndex
-	if err = cache.ReadValue(reader, &s.LogIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.LogIndex, vers); err != nil {
 		return err
 	}
 
 	// MinerBaseRewardIn
-	if err = cache.ReadValue(reader, &s.MinerBaseRewardIn, version); err != nil {
+	if err = cache.ReadValue(reader, &s.MinerBaseRewardIn, vers); err != nil {
 		return err
 	}
 
 	// MinerNephewRewardIn
-	if err = cache.ReadValue(reader, &s.MinerNephewRewardIn, version); err != nil {
+	if err = cache.ReadValue(reader, &s.MinerNephewRewardIn, vers); err != nil {
 		return err
 	}
 
 	// MinerTxFeeIn
-	if err = cache.ReadValue(reader, &s.MinerTxFeeIn, version); err != nil {
+	if err = cache.ReadValue(reader, &s.MinerTxFeeIn, vers); err != nil {
 		return err
 	}
 
 	// MinerUncleRewardIn
-	if err = cache.ReadValue(reader, &s.MinerUncleRewardIn, version); err != nil {
+	if err = cache.ReadValue(reader, &s.MinerUncleRewardIn, vers); err != nil {
 		return err
 	}
 
 	// PrefundIn
-	if err = cache.ReadValue(reader, &s.PrefundIn, version); err != nil {
+	if err = cache.ReadValue(reader, &s.PrefundIn, vers); err != nil {
 		return err
 	}
 
 	// PrevBal
-	if err = cache.ReadValue(reader, &s.PrevBal, version); err != nil {
+	if err = cache.ReadValue(reader, &s.PrevBal, vers); err != nil {
 		return err
 	}
 
 	// PriceSource
-	if err = cache.ReadValue(reader, &s.PriceSource, version); err != nil {
+	if err = cache.ReadValue(reader, &s.PriceSource, vers); err != nil {
 		return err
 	}
 
 	// Recipient
-	if err = cache.ReadValue(reader, &s.Recipient, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Recipient, vers); err != nil {
 		return err
 	}
 
 	// SelfDestructIn
-	if err = cache.ReadValue(reader, &s.SelfDestructIn, version); err != nil {
+	if err = cache.ReadValue(reader, &s.SelfDestructIn, vers); err != nil {
 		return err
 	}
 
 	// SelfDestructOut
-	if err = cache.ReadValue(reader, &s.SelfDestructOut, version); err != nil {
+	if err = cache.ReadValue(reader, &s.SelfDestructOut, vers); err != nil {
 		return err
 	}
 
 	// Sender
-	if err = cache.ReadValue(reader, &s.Sender, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Sender, vers); err != nil {
 		return err
 	}
 
 	// SpotPrice
-	if err = cache.ReadValue(reader, &s.SpotPrice, version); err != nil {
+	if err = cache.ReadValue(reader, &s.SpotPrice, vers); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
 		return err
 	}
 
 	// TransactionHash
-	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionHash, vers); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionIndex, vers); err != nil {
 		return err
 	}
 

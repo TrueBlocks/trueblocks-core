@@ -93,8 +93,8 @@ func (s *{{.ModelName ""}}Group) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.{{.Class}}s)
 }
 
-func (s *{{.ModelName ""}}Group) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.{{.Class}}s, version)
+func (s *{{.ModelName ""}}Group) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.{{.Class}}s, vers)
 }
 
 {{end}}
@@ -105,7 +105,11 @@ func (s *{{.ModelName ""}}) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *{{.ModelName "cache"}}) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *{{.ModelName "cache"}}) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	{{range .Members}}{{.UnmarshalCode}}{{end}}
 
 	s.FinishUnmarshal()

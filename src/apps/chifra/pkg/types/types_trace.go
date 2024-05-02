@@ -235,8 +235,8 @@ func (s *TraceGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Traces)
 }
 
-func (s *TraceGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Traces, version)
+func (s *TraceGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Traces, vers)
 }
 
 func (s *Trace) MarshalCache(writer io.Writer) (err error) {
@@ -317,12 +317,16 @@ func (s *Trace) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Trace) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Trace) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// Action
 	optAction := &cache.Optional[TraceAction]{
 		Value: s.Action,
 	}
-	if err = cache.ReadValue(reader, optAction, version); err != nil {
+	if err = cache.ReadValue(reader, optAction, vers); err != nil {
 		return err
 	}
 	s.Action = optAction.Get()
@@ -331,28 +335,28 @@ func (s *Trace) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	optArticulatedTrace := &cache.Optional[Function]{
 		Value: s.ArticulatedTrace,
 	}
-	if err = cache.ReadValue(reader, optArticulatedTrace, version); err != nil {
+	if err = cache.ReadValue(reader, optArticulatedTrace, vers); err != nil {
 		return err
 	}
 	s.ArticulatedTrace = optArticulatedTrace.Get()
 
 	// BlockHash
-	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockHash, vers); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
 	// CompressedTrace
-	if err = cache.ReadValue(reader, &s.CompressedTrace, version); err != nil {
+	if err = cache.ReadValue(reader, &s.CompressedTrace, vers); err != nil {
 		return err
 	}
 
 	// Error
-	if err = cache.ReadValue(reader, &s.Error, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Error, vers); err != nil {
 		return err
 	}
 
@@ -360,39 +364,39 @@ func (s *Trace) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	optResult := &cache.Optional[TraceResult]{
 		Value: s.Result,
 	}
-	if err = cache.ReadValue(reader, optResult, version); err != nil {
+	if err = cache.ReadValue(reader, optResult, vers); err != nil {
 		return err
 	}
 	s.Result = optResult.Get()
 
 	// Subtraces
-	if err = cache.ReadValue(reader, &s.Subtraces, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Subtraces, vers); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
 		return err
 	}
 
 	// TraceAddress
 	s.TraceAddress = make([]uint64, 0)
-	if err = cache.ReadValue(reader, &s.TraceAddress, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TraceAddress, vers); err != nil {
 		return err
 	}
 
 	// TransactionHash
-	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionHash, vers); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionIndex, vers); err != nil {
 		return err
 	}
 
 	// TraceType
-	if err = cache.ReadValue(reader, &s.TraceType, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TraceType, vers); err != nil {
 		return err
 	}
 

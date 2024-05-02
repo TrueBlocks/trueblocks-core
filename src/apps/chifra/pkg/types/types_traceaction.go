@@ -202,69 +202,73 @@ func (s *TraceAction) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *TraceAction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *TraceAction) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
 		return err
 	}
 
 	// Author
-	if err = cache.ReadValue(reader, &s.Author, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Author, vers); err != nil {
 		return err
 	}
 
 	// Balance
-	if err = cache.ReadValue(reader, &s.Balance, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Balance, vers); err != nil {
 		return err
 	}
 
 	// CallType
-	if err = cache.ReadValue(reader, &s.CallType, version); err != nil {
+	if err = cache.ReadValue(reader, &s.CallType, vers); err != nil {
 		return err
 	}
 
 	// From
-	if err = cache.ReadValue(reader, &s.From, version); err != nil {
+	if err = cache.ReadValue(reader, &s.From, vers); err != nil {
 		return err
 	}
 
 	// Gas
-	if err = cache.ReadValue(reader, &s.Gas, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Gas, vers); err != nil {
 		return err
 	}
 
 	// Init
-	if err = cache.ReadValue(reader, &s.Init, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Init, vers); err != nil {
 		return err
 	}
 
 	// Input
-	if err = cache.ReadValue(reader, &s.Input, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Input, vers); err != nil {
 		return err
 	}
 
 	// RefundAddress
-	if err = cache.ReadValue(reader, &s.RefundAddress, version); err != nil {
+	if err = cache.ReadValue(reader, &s.RefundAddress, vers); err != nil {
 		return err
 	}
 
 	// RewardType
-	if err = cache.ReadValue(reader, &s.RewardType, version); err != nil {
+	if err = cache.ReadValue(reader, &s.RewardType, vers); err != nil {
 		return err
 	}
 
 	// SelfDestructed
-	if err = cache.ReadValue(reader, &s.SelfDestructed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.SelfDestructed, vers); err != nil {
 		return err
 	}
 
 	// To
-	if err = cache.ReadValue(reader, &s.To, version); err != nil {
+	if err = cache.ReadValue(reader, &s.To, vers); err != nil {
 		return err
 	}
 
 	// Value
-	if err = cache.ReadValue(reader, &s.Value, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Value, vers); err != nil {
 		return err
 	}
 
