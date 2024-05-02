@@ -7,13 +7,15 @@ import (
 )
 
 func main() {
-	//
-	DoNames()
+	// DoNames()
 	// DoBlocks()
 	// DoTransactions()
-	//+ DoReceipts()
-	//+ DoLogs()
-	// DoTraces()
+	//+
+	DoReceipts()
+	//+
+	DoLogs()
+	//+
+	DoTraces()
 	// DoState()
 	// DoTokens()
 	// DoAbis()
@@ -50,5 +52,6 @@ func init() {
 	// creates the folder in the cwd.
 	file.EstablishFolder("usesSDK/logs")
 	file.EstablishFolder("usesSDK/receipts")
+	file.EstablishFolder("usesSDK/traces")
 	os.Setenv("TB_NO_USERQUERY", "true")
 }
