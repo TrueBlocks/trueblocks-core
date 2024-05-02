@@ -408,6 +408,7 @@ This documentation mentions the following basic data types.
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | topic     | an '0x'-prefixed 32-byte hex string | lowercase      |
+| uint256   | a 256-bit unsigned integer          |                |
 | uint32    | a 32-bit unsigned integer           |                |
 | uint64    | a 64-bit unsigned integer           |                |
 | uint8     | an alias for the boolean type       |                |

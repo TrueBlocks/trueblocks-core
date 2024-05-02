@@ -9,7 +9,7 @@ receiptsRoot     ,hash          ,           ,rawonly    ,          ,         ,
 sha3Uncles       ,hash          ,           ,rawonly    ,          ,         ,
 size             ,uint64        ,           ,rawonly    ,          ,         ,
 stateRoot        ,hash          ,           ,rawonly    ,          ,         ,
-totalDifficulty  ,wei           ,           ,rawonly    ,          ,         ,
+totalDifficulty  ,uint256       ,           ,rawonly    ,          ,         ,
 miner            ,address       ,           ,           ,          ,       5 ,address of block's winning miner
 difficulty       ,uint64        ,           ,           ,          ,       6 ,the computational difficulty at this block
 extraData        ,string        ,           ,rawonly    ,          ,         ,
