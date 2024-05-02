@@ -11,14 +11,5 @@ action           ,*TraceAction ,           ,                   ,      10 ,the tr
 result           ,*TraceResult ,           ,                   ,      11 ,the trace result of this trace
 articulatedTrace ,*Function    ,           ,omitempty|simponly ,      12 ,human readable version of the trace action input data
 compressedTrace  ,string       ,           ,omitempty|simponly ,      13 ,a compressed string version of the articulated trace
-action::callType ,string       ,           ,                   ,         ,
-action::from     ,string       ,           ,                   ,         ,
-action::to       ,string       ,           ,                   ,         ,
-action::value    ,string       ,           ,                   ,         ,
-action::ether    ,string       ,           ,                   ,         ,
-action::gas      ,string       ,           ,                   ,         ,
-result::gasUsed  ,string       ,           ,                   ,         ,
-action::input    ,string       ,           ,                   ,         ,
-result::output   ,string       ,           ,                   ,         ,
 timestamp        ,timestamp    ,           ,simponly           ,       3 ,the timestamp of the block
 date             ,datetime     ,           ,omitempty|calc     ,       4 ,the timestamp as a date

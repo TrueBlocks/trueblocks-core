@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // EXISTING_CODE
@@ -52,7 +53,7 @@ type RawBlock struct {
 }
 
 type Block[Tx string | Transaction] struct {
-	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
+	BaseFeePerGas base.Gas       `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum    `json:"blockNumber"`
 	Difficulty    uint64         `json:"difficulty"`
 	GasLimit      base.Gas       `json:"gasLimit"`
@@ -147,7 +148,7 @@ func (s *Block[Tx]) Model(chain, format string, verbose bool, extraOptions map[s
 		"difficulty":    s.Difficulty,
 		"timestamp":     s.Timestamp,
 		"date":          s.Date(),
-		"baseFeePerGas": base.FormattedValue(&s.BaseFeePerGas, false, 18),
+		"baseFeePerGas": s.BaseFeePerGas,
 	}
 
 	order = []string{
@@ -245,7 +246,7 @@ func (s *Block[Tx]) CacheLocation() (directory string, extension string) {
 
 func (s *Block[Tx]) MarshalCache(writer io.Writer) (err error) {
 	// BaseFeePerGas
-	if err = cache.WriteValue(writer, &s.BaseFeePerGas); err != nil {
+	if err = cache.WriteValue(writer, s.BaseFeePerGas); err != nil {
 		return err
 	}
 
@@ -327,8 +328,18 @@ func (s *Block[string]) UnmarshalCache(vers uint64, reader io.Reader) (err error
 	// EXISTING_CODE
 
 	// BaseFeePerGas
-	if err = cache.ReadValue(reader, &s.BaseFeePerGas, vers); err != nil {
-		return err
+	v1 := version.NewVersion("2.5.8")
+	if vers <= v1.Uint64() {
+		var val base.Wei
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
+			return err
+		}
+		s.BaseFeePerGas = wei2gas(val)
+	} else {
+		// BaseFeePerGas
+		if err = cache.ReadValue(reader, &s.BaseFeePerGas, vers); err != nil {
+			return err
+		}
 	}
 
 	// BlockNumber
@@ -418,6 +429,10 @@ func (s *Block[string]) Dup(target *Block[Transaction]) {
 	target.Uncles = s.Uncles
 	target.Withdrawals = s.Withdrawals
 	target.raw = s.raw
+}
+
+func wei2gas(w base.Wei) base.Gas {
+	return w.Uint64()
 }
 
 // EXISTING_CODE

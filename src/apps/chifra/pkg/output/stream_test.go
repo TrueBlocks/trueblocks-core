@@ -19,7 +19,7 @@ var input = types.Receipt{
 	BlockHash:         base.HexToHash("0x123"),
 	BlockNumber:       123,
 	ContractAddress:   base.HexToAddress("0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5"),
-	CumulativeGasUsed: "500",
+	CumulativeGasUsed: 500,
 	From:              base.HexToAddress("0xfd4536dd5a81ecfd1a4b30111a01d129e7567ff8"),
 	GasUsed:           500,
 	EffectiveGasPrice: 500,

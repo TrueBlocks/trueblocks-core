@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -46,7 +47,7 @@ type Receipt struct {
 	BlockHash         base.Hash    `json:"blockHash,omitempty"`
 	BlockNumber       base.Blknum  `json:"blockNumber"`
 	ContractAddress   base.Address `json:"contractAddress,omitempty"`
-	CumulativeGasUsed string       `json:"cumulativeGasUsed,omitempty"`
+	CumulativeGasUsed base.Gas     `json:"cumulativeGasUsed,omitempty"`
 	EffectiveGasPrice base.Gas     `json:"effectiveGasPrice,omitempty"`
 	From              base.Address `json:"from,omitempty"`
 	GasUsed           base.Gas     `json:"gasUsed"`
@@ -280,8 +281,18 @@ func (s *Receipt) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	}
 
 	// CumulativeGasUsed
-	if err = cache.ReadValue(reader, &s.CumulativeGasUsed, vers); err != nil {
-		return err
+	v1 := version.NewVersion("2.5.8")
+	if vers <= v1.Uint64() {
+		var val string
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
+			return err
+		}
+		s.CumulativeGasUsed = string2gas(val)
+	} else {
+		// CumulativeGasUsed
+		if err = cache.ReadValue(reader, &s.CumulativeGasUsed, vers); err != nil {
+			return err
+		}
 	}
 
 	// EffectiveGasPrice
@@ -368,7 +379,7 @@ func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 		BlockHash:         base.HexToHash(r.BlockHash),
 		BlockNumber:       utils.MustParseUint(r.BlockNumber),
 		ContractAddress:   base.HexToAddress(r.ContractAddress),
-		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
+		CumulativeGasUsed: cumulativeGasUsed,
 		EffectiveGasPrice: utils.MustParseUint(r.EffectiveGasPrice),
 		GasUsed:           utils.MustParseUint(r.GasUsed),
 		Status:            uint32(utils.MustParseUint(r.Status)),
@@ -380,6 +391,10 @@ func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 	}
 
 	return receipt, nil
+}
+
+func string2gas(str string) base.Gas {
+	return base.Gas(utils.MustParseUint(str))
 }
 
 // EXISTING_CODE
