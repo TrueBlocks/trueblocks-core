@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 2.5.8-release
+  version: 2.5.9-release
   description: >
     A REST layer over the TrueBlocks chifra command line. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
@@ -3397,8 +3397,8 @@ components:
             $ref: "#/components/schemas/transaction"
           description: "a possibly empty array of transactions or transaction hashes"
         baseFeePerGas:
-          type: string
-          format: wei
+          type: number
+          format: gas
           description: "the base fee for this block"
         uncles:
           type: array
@@ -3643,6 +3643,10 @@ components:
       description: "trace data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
+        blockHash:
+          type: string
+          format: hash
+          description: "the hash of the block containing this trace"
         blockNumber:
           type: number
           format: blknum
@@ -3651,6 +3655,10 @@ components:
           type: number
           format: timestamp
           description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
         transactionHash:
           type: string
           format: hash
@@ -3672,14 +3680,6 @@ components:
           type: string
           format: string
           description: "the type of the trace"
-        blockHash:
-          type: string
-          format: hash
-          description: "the hash of the block containing this trace"
-        date:
-          type: string
-          format: datetime
-          description: "the timestamp as a date (calculated)"
         action:
           type: object
           items:

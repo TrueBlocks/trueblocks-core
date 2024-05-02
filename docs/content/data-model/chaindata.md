@@ -41,7 +41,7 @@ Blocks consist of the following fields:
 | timestamp     | the Unix timestamp of the object                              | timestamp                                           |
 | date          | the timestamp as a date (calculated)                          | datetime                                            |
 | transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
-| baseFeePerGas | the base fee for this block                                   | wei                                                 |
+| baseFeePerGas | the base fee for this block                                   | gas                                                 |
 | uncles        | a possibly empty array of uncle hashes                        | hash[]                                              |
 | withdrawals   | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal)   |
 

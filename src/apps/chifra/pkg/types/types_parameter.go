@@ -141,41 +141,45 @@ func (s *Parameter) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Parameter) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Parameter) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// Components
 	s.Components = make([]Parameter, 0)
-	if err = cache.ReadValue(reader, &s.Components, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Components, vers); err != nil {
 		return err
 	}
 
 	// Indexed
-	if err = cache.ReadValue(reader, &s.Indexed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Indexed, vers); err != nil {
 		return err
 	}
 
 	// InternalType
-	if err = cache.ReadValue(reader, &s.InternalType, version); err != nil {
+	if err = cache.ReadValue(reader, &s.InternalType, vers); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Name, vers); err != nil {
 		return err
 	}
 
 	// StrDefault
-	if err = cache.ReadValue(reader, &s.StrDefault, version); err != nil {
+	if err = cache.ReadValue(reader, &s.StrDefault, vers); err != nil {
 		return err
 	}
 
 	// ParameterType
-	if err = cache.ReadValue(reader, &s.ParameterType, version); err != nil {
+	if err = cache.ReadValue(reader, &s.ParameterType, vers); err != nil {
 		return err
 	}
 
 	// Value
 	var value string
-	if err = cache.ReadValue(reader, &value, version); err != nil {
+	if err = cache.ReadValue(reader, &value, vers); err != nil {
 		return err
 	}
 	if err = json.Unmarshal([]byte(value), &s.Value); err != nil {

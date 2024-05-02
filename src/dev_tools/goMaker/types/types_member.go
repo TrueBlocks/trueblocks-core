@@ -12,6 +12,7 @@ type Member struct {
 	StrDefault  string     `json:"strDefault,omitempty" csv:"strDefault"`
 	Attributes  string     `json:"attributes,omitempty" csv:"attributes"`
 	DocOrder    int        `json:"docOrder,omitempty" csv:"docOrder"`
+	Upgrades    string     `json:"upgrades,omitempty" csv:"upgrades"`
 	Description string     `json:"description,omitempty" csv:"description"`
 	Num         int        `json:"num"`
 	IsArray     bool       `json:"isArray,omitempty"`
@@ -68,20 +69,20 @@ func (m *Member) IsSimpOnly() bool {
 
 }
 
-func (m *Member) IsSubField() bool {
-	return strings.Contains(m.Name, "::")
-}
-
 func (m *Member) IsCalc() bool {
 	return strings.Contains(m.Attributes, "calc")
 }
 
+func (m *Member) HasUpgrade() bool {
+	return len(m.Upgrades) > 0
+}
+
 func (m *Member) IsRawField() bool {
-	return !m.IsCalc() && !m.IsSimpOnly() && !m.IsSubField()
+	return !m.IsCalc() && !m.IsSimpOnly()
 }
 
 func (m *Member) IsSimpField() bool {
-	return !m.IsCalc() && !m.IsRawOnly() && !m.IsSubField()
+	return !m.IsCalc() && !m.IsRawOnly()
 }
 
 func (m *Member) SortName() string {
@@ -205,8 +206,6 @@ func (m *Member) GoType() string {
 	} else {
 		if m.GoName() == "Value" && m.Container() == "Parameter" {
 			ret = "any"
-		} else if m.GoName() == "CumulativeGasUsed" && m.Container() == "Receipt" {
-			ret = "string"
 		} else {
 			switch m.Type {
 			case "address":
@@ -261,8 +260,7 @@ func (m *Member) NeedsPtr() bool {
 }
 
 func (m *Member) MarshalCode() string {
-	if strings.Contains(m.GoName(), "::") ||
-		m.IsCalc() ||
+	if m.IsCalc() ||
 		m.IsRawOnly() ||
 		(m.Container() == "Transaction" &&
 			(m.GoName() == "CompressedTx" || m.GoName() == "Traces")) {
@@ -338,8 +336,7 @@ func (m *Member) MarshalCode() string {
 }
 
 func (m *Member) UnmarshalCode() string {
-	if strings.Contains(m.GoName(), "::") ||
-		m.IsCalc() ||
+	if m.IsCalc() ||
 		m.IsRawOnly() ||
 		(m.Container() == "Transaction" &&
 			(m.GoName() == "CompressedTx" || m.GoName() == "Traces")) {
@@ -352,7 +349,7 @@ func (m *Member) UnmarshalCode() string {
 		tmplName += "1"
 		tmpl = `		// Transactions
 	s.Transactions = make([]string, 0)
-	if err = cache.ReadValue(reader, &s.Transactions, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Transactions, vers); err != nil {
 		return err
 	}
 
@@ -361,7 +358,7 @@ func (m *Member) UnmarshalCode() string {
 		tmplName += "2"
 		tmpl = `// {{.GoName}}
 	var {{.Lower}} string
-	if err = cache.ReadValue(reader, &{{.Lower}}, version); err != nil {
+	if err = cache.ReadValue(reader, &{{.Lower}}, vers); err != nil {
 		return err
 	}
 	if err = json.Unmarshal([]byte({{.Lower}}), &s.{{.GoName}}); err != nil {
@@ -373,7 +370,7 @@ func (m *Member) UnmarshalCode() string {
 		tmplName += "3"
 		tmpl = `// {{.GoName}}
 	s.{{.GoName}} = make({{.GoType}}, 0)
-	if err = cache.ReadValue(reader, &s.{{.GoName}}, version); err != nil {
+	if err = cache.ReadValue(reader, &s.{{.GoName}}, vers); err != nil {
 		return err
 	}
 
@@ -384,7 +381,7 @@ func (m *Member) UnmarshalCode() string {
 	opt{{.GoName}} := &cache.Optional[{{.Type}}]{
 		Value: s.{{.GoName}},
 	}
-	if err = cache.ReadValue(reader, opt{{.GoName}}, version); err != nil {
+	if err = cache.ReadValue(reader, opt{{.GoName}}, vers); err != nil {
 		return err
 	}
 	s.{{.GoName}} = opt{{.GoName}}.Get()
@@ -394,14 +391,50 @@ func (m *Member) UnmarshalCode() string {
 	} else {
 		tmplName += "5"
 		tmpl = `// {{.GoName}}
-	if err = cache.ReadValue(reader, &s.{{.GoName}}, version); err != nil {
+	if err = cache.ReadValue(reader, &s.{{.GoName}}, vers); err != nil {
 		return err
 	}
 
 `
 	}
 
-	return m.executeTemplate(tmplName, tmpl)
+	code := m.executeTemplate(tmplName, tmpl)
+
+	if m.HasUpgrade() {
+		tmplName := "upgrage"
+		tmpl := `	// {{.GoName}}
+	v1 := version.NewVersion("++VERS++")
+	if vers <= v1.Uint64() {
+		var val ++PRIOR_TYPE++
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
+			return err
+		}
+		s.{{.GoName}} = ++PRIOR++2{{.Type}}(val)
+	} else {
+		++CODE++
+	}
+
+`
+		cc := strings.Trim(code, "\n")
+		parts := strings.Split(m.Upgrades, ":")
+		if len(parts) != 2 {
+			panic("invalid upgrade spec: " + m.Upgrades)
+		}
+		code = m.executeTemplate(tmplName, tmpl)
+		code = strings.ReplaceAll(code, "++VERS++", parts[0])
+		convert := func(s string) string {
+			switch s {
+			case "wei":
+				return "base.Wei"
+			}
+			return s
+		}
+		code = strings.ReplaceAll(code, "++PRIOR_TYPE++", convert(parts[1]))
+		code = strings.ReplaceAll(code, "++PRIOR++", parts[1])
+		code = strings.ReplaceAll(code, "++CODE++", cc)
+	}
+
+	return code
 }
 
 func (m *Member) YamlType() string {
@@ -428,6 +461,7 @@ func readMember(m *Member, data *any) (bool, error) {
 	// trim spaces read from the file (if any)
 	m.Name = strings.Trim(m.Name, " ")
 	m.Type = strings.Trim(m.Type, " ")
+	m.Upgrades = strings.Trim(m.Upgrades, " ")
 	m.StrDefault = strings.Trim(m.StrDefault, " ")
 	m.Attributes = strings.Trim(m.Attributes, " ")
 	m.Description = strings.Trim(m.Description, " ")
