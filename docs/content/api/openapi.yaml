@@ -3503,6 +3503,10 @@ components:
           type: string
           format: wei
           description: "a nonzero amount of ether given in gwei (1e9 wei)"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the amount in ether (calculated)"
         blockNumber:
           type: number
           format: blknum

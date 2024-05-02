@@ -64,10 +64,9 @@ func (s *Withdrawal) Model(chain, format string, verbose bool, extraOptions map[
 	var order = []string{}
 
 	// EXISTING_CODE
-	asEther := extraOptions["ether"] == true
 	model = map[string]interface{}{
 		"address":        s.Address,
-		"amount":         base.FormattedValue(&s.Amount, asEther, 18),
+		"amount":         s.Amount.String(),
 		"blockNumber":    s.BlockNumber,
 		"date":           s.Date(),
 		"index":          s.Index,
@@ -84,6 +83,13 @@ func (s *Withdrawal) Model(chain, format string, verbose bool, extraOptions map[
 		"date",
 		"amount",
 	}
+
+	asEther := extraOptions["ether"] == true
+	if asEther {
+		model["ether"] = base.FormattedValue(&s.Amount, true, 18)
+		order = append(order, "ether")
+	}
+
 	// EXISTING_CODE
 
 	return Model{

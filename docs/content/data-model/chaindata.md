@@ -98,6 +98,7 @@ Withdrawals consist of the following fields:
 | -------------- | -------------------------------------------------------------------------------------------------------------------- | --------- |
 | address        | the recipient for the withdrawn ether                                                                                | address   |
 | amount         | a nonzero amount of ether given in gwei (1e9 wei)                                                                    | wei       |
+| ether          | if --ether is specified, the amount in ether (calculated)                                                            | ether     |
 | blockNumber    | the number of this block                                                                                             | blknum    |
 | index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | uint64    |
 | timestamp      | the timestamp for this block                                                                                         | timestamp |
@@ -402,6 +403,7 @@ This documentation mentions the following basic data types.
 | bool      | either `true`, `false`, `1`, or `0` |                |
 | bytes     | an arbitrarily long string of bytes |                |
 | datetime  | a JSON formatted date               | as a string    |
+| ether     | a big number float                  | as a string    |
 | gas       | a 64-bit unsigned integer           |                |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | int64     | a 64-bit signed integer             |                |
