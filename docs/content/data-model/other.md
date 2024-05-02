@@ -194,7 +194,7 @@ This documentation mentions the following basic data types.
 | bool      | either `true`, `false`, `1`, or `0` |                |
 | bytes     | an arbitrarily long string of bytes |                |
 | datetime  | a JSON formatted date               | as a string    |
-| gas       | an unsigned big number              | as a string    |
+| gas       | a 64-bit unsigned integer           |                |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |

@@ -8,7 +8,7 @@ date                ,datetime  ,           ,calc           ,       6 ,the timest
 assetAddr           ,address   ,           ,               ,       7 ,0xeeee...eeee for ETH reconciliations&#44; the token address otherwise
 assetSymbol         ,string    ,           ,               ,       8 ,either ETH&#44; WEI&#44; or the symbol of the asset being reconciled as extracted from the chain
 decimals            ,uint64    ,      18   ,               ,       9 ,the value of `decimals` from an ERC20 contract or&#44; if ETH or WEI&#44; then 18
-spotPrice           ,double    ,       1.0 ,               ,      10 ,the on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction
+spotPrice           ,float64   ,       1.0 ,               ,      10 ,the on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction
 priceSource         ,string    ,           ,               ,      11 ,the on-chain source from which the spot price was taken
 accountedFor        ,address   ,           ,               ,      12 ,the address being accounted for in this reconciliation
 sender              ,address   ,           ,               ,      13 ,the initiator of the transfer (the sender)

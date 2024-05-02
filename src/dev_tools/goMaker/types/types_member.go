@@ -216,6 +216,8 @@ func (m *Member) GoType() string {
 				ret = "string"
 			case "wei":
 				ret = "base.Wei"
+			case "ether":
+				ret = "base.Ether"
 			case "uint8":
 				ret = "bool"
 			case "gas":
@@ -224,8 +226,6 @@ func (m *Member) GoType() string {
 				ret = "base.Wei"
 			case "datetime":
 				ret = "string"
-			case "double":
-				ret = "float64"
 			case "ipfshash":
 				ret = "base.IpfsHash"
 			case "blknum":
@@ -445,16 +445,18 @@ func (m *Member) YamlType() string {
 	}
 	if m.IsObject() {
 		return "object" + o
-	} else if m.Type == "blknum" || m.Type == "timestamp" || m.Type == "double" ||
-		m.Type == "gas" || m.Type == "uint64" || m.Type == "int64" || m.Type == "uint32" {
+	} else if m.Type == "blknum" || m.Type == "timestamp" || m.Type == "float64" || m.Type == "gas" ||
+		m.Type == "uint64" || m.Type == "int64" || m.Type == "uint32" || m.Type == "int" {
 		return "number" + f
 	} else if m.Type == "address" || m.Type == "datetime" || m.Type == "hash" || m.Type == "ipfshash" || m.Type == "blkrange" ||
-		m.Type == "topic" || m.Type == "int256" || m.Type == "uint256" || m.Type == "wei" || m.Type == "bytes" {
+		m.Type == "topic" || m.Type == "int256" || m.Type == "uint256" || m.Type == "wei" || m.Type == "bytes" ||
+		m.Type == "string" || m.Type == "ether" {
 		return "string" + f
 	} else if m.Type == "bool" || m.Type == "uint8" {
 		return "boolean\n          format: boolean"
+	} else {
+		return "unknown" + f
 	}
-	return "string" + f
 }
 
 func readMember(m *Member, data *any) (bool, error) {

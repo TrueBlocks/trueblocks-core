@@ -34,5 +34,9 @@ func readStructure(st *Structure, data *any) (bool, error) {
 	st.DocDescr = strings.ReplaceAll(st.DocDescr, "&#44;", ",")
 	st.ProducedBy = strings.Replace(st.ProducedBy, " ", "", -1)
 	st.Producers = strings.Split(st.ProducedBy, ",")
+	st.Class = strings.Trim(st.Class, " ")
+	st.DocGroup = strings.Trim(st.DocGroup, " ")
+	st.DocDescr = strings.Trim(st.DocDescr, " ")
+	st.DocNotes = strings.Trim(st.DocNotes, " ")
 	return true, nil
 }

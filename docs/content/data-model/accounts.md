@@ -200,7 +200,7 @@ Statements consist of the following fields:
 | assetAddr           | 0xeeee...eeee for ETH reconciliations, the token address otherwise                                                                    | address   |
 | assetSymbol         | either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain                                              | string    |
 | decimals            | the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                             | uint64    |
-| spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                              | double    |
+| spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                              | float64   |
 | priceSource         | the on-chain source from which the spot price was taken                                                                               | string    |
 | accountedFor        | the address being accounted for in this reconciliation                                                                                | address   |
 | sender              | the initiator of the transfer (the sender)                                                                                            | address   |
@@ -258,7 +258,7 @@ This documentation mentions the following basic data types.
 | blknum    | an alias for a uint64               |                |
 | bool      | either `true`, `false`, `1`, or `0` |                |
 | datetime  | a JSON formatted date               | as a string    |
-| double    | a double precision float            | 64 bits        |
+| float64   | a double precision float            | 64 bits        |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | int64     | a 64-bit signed integer             |                |
 | int256    | a signed big number                 | as a string    |
