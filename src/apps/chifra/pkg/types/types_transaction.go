@@ -122,7 +122,6 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
-	asEther := extraOptions["ether"] == true
 	model = map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
 		"from":             s.From,
@@ -133,7 +132,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		"date":             s.Date(),
 		"to":               to,
 		"transactionIndex": s.TransactionIndex,
-		"value":            base.FormattedValue(&s.Value, asEther, 18),
+		"value":            s.Value.String(),
 	}
 
 	order = []string{
@@ -143,7 +142,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		"date",
 		"from",
 		"to",
-		"ether",
+		"value",
 		"gasPrice",
 		"gasUsed",
 		"gasCost",
@@ -190,10 +189,8 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		if s.Nonce > 0 {
 			model["nonce"] = s.Nonce
 		}
-		model["value"] = base.FormattedValue(&s.Value, asEther, 18)
 		model["gas"] = s.Gas
 
-		model["ether"] = base.FormattedValue(&s.Value, true, 18)
 		if s.MaxFeePerGas > 0 {
 			model["maxFeePerGas"] = s.MaxFeePerGas
 		}
@@ -283,7 +280,6 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 			model["type"] = ""
 		}
 		order = append(order, "type")
-		model["ether"] = base.FormattedValue(&s.Value, true, 18)
 		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(s.GasPrice), true, 18)
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
@@ -311,6 +307,13 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 			order = append(order, "nTraces")
 		}
 	}
+
+	asEther := true // special case for transactions, we always show --ether -- extraOptions["ether"] == true
+	if asEther {
+		model["ether"] = base.FormattedValue(&s.Value, true, 18)
+		order = append(order, "ether")
+	}
+
 	// EXISTING_CODE
 
 	return Model{

@@ -73,6 +73,7 @@ Transactions consist of the following fields:
 | from             | address from which the transaction was sent                                                           | address                                        |
 | to               | address to which the transaction was sent                                                             | address                                        |
 | value            | the amount of wei sent with this transactions                                                         | wei                                            |
+| ether            | if --ether is specified, the value in ether (calculated)                                              | ether                                          |
 | gas              | the maximum number of gas allowed for this transaction                                                | gas                                            |
 | gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                            |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                          |

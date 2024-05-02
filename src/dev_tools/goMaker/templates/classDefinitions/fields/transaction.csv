@@ -11,17 +11,18 @@ from                 ,address       ,           ,              ,       8 ,addres
 to                   ,address       ,           ,              ,       9 ,address to which the transaction was sent
 nonce                ,uint64        ,           ,              ,       5 ,sequence number of the transactions sent by the sender
 value                ,wei           ,           ,              ,      10 ,the amount of wei sent with this transactions
-gas                  ,gas           ,           ,              ,      11 ,the maximum number of gas allowed for this transaction
-gasPrice             ,gas           ,           ,              ,      12 ,the number of wei per unit of gas the sender is willing to spend
+ether                ,ether         ,           ,calc          ,      11 ,if --ether is specified&#44; the value in ether
+gas                  ,gas           ,           ,              ,      12 ,the maximum number of gas allowed for this transaction
+gasPrice             ,gas           ,           ,              ,      13 ,the number of wei per unit of gas the sender is willing to spend
 maxFeePerGas         ,gas           ,           ,              ,         ,
 maxPriorityFeePerGas ,gas           ,           ,              ,         ,
-input                ,bytes         ,           ,              ,      13 ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
-isError              ,uint8         ,           ,simponly      ,      18 ,`true` if the transaction ended in error&#44; `false` otherwise
-hasToken             ,uint8         ,           ,simponly      ,      17 ,`true` if the transaction is token related&#44; `false` otherwise
-receipt              ,*Receipt      ,           ,simponly      ,      14 ,
+input                ,bytes         ,           ,              ,      14 ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
+isError              ,uint8         ,           ,simponly      ,      19 ,`true` if the transaction ended in error&#44; `false` otherwise
+hasToken             ,uint8         ,           ,simponly      ,      18 ,`true` if the transaction is token related&#44; `false` otherwise
+receipt              ,*Receipt      ,           ,simponly      ,      15 ,
 traces               ,[]Trace       ,           ,simponly      ,         ,
-articulatedTx        ,*Function     ,           ,simponly      ,      16 ,
-compressedTx         ,string        ,           ,simponly      ,      19 ,truncated&#44; more readable version of the articulation
-statements           ,[]Statement   ,           ,simponly|calc ,      15 ,array of reconciliations
+articulatedTx        ,*Function     ,           ,simponly      ,      17 ,
+compressedTx         ,string        ,           ,simponly      ,      20 ,truncated&#44; more readable version of the articulation
+statements           ,[]Statement   ,           ,simponly|calc ,      16 ,array of reconciliations
 gasUsed              ,gas           ,           ,simponly      ,         ,
 type                 ,string        ,           ,              ,         ,

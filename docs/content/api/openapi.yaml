@@ -3454,14 +3454,18 @@ components:
           type: string
           format: wei
           description: "the amount of wei sent with this transactions"
-        gas:
-          type: number
-          format: gas
-          description: "the maximum number of gas allowed for this transaction"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the value in ether (calculated)"
         gasPrice:
           type: number
           format: gas
           description: "the number of wei per unit of gas the sender is willing to spend"
+        gas:
+          type: number
+          format: gas
+          description: "the maximum number of gas allowed for this transaction"
         input:
           type: string
           format: bytes
@@ -3470,14 +3474,6 @@ components:
           type: object
           items:
             $ref: "#/components/schemas/receipt"
-        hasToken:
-          type: boolean
-          format: boolean
-          description: "`true` if the transaction is token related, `false` otherwise"
-        isError:
-          type: boolean
-          format: boolean
-          description: "`true` if the transaction ended in error, `false` otherwise"
         statements:
           type: array
           items:
@@ -3487,6 +3483,14 @@ components:
           type: object
           items:
             $ref: "#/components/schemas/function"
+        hasToken:
+          type: boolean
+          format: boolean
+          description: "`true` if the transaction is token related, `false` otherwise"
+        isError:
+          type: boolean
+          format: boolean
+          description: "`true` if the transaction ended in error, `false` otherwise"
         compressedTx:
           type: string
           format: string
