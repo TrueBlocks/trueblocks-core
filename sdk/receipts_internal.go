@@ -80,8 +80,12 @@ func queryReceipts[T receiptsGeneric](opts *receiptsOptionsInternal) ([]T, *type
 		return nil, nil, err
 	}
 
+	str := buffer.String()
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	var result Result[T]
-	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
+	if err := json.Unmarshal([]byte(str), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
