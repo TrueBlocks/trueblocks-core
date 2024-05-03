@@ -207,9 +207,9 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		Timestamp:        utils.MustParseInt(rawTx.Timestamp),
 		From:             base.HexToAddress(rawTx.From),
 		To:               base.HexToAddress(rawTx.To),
-		Gas:              base.MustParseGas(rawTx.Gas),
-		GasPrice:         base.MustParseGas(rawTx.GasPrice),
-		GasUsed:          base.MustParseGas(rawTx.GasUsed),
+		Gas:              base.MustParseNumeral(rawTx.Gas),
+		GasPrice:         base.MustParseNumeral(rawTx.GasPrice),
+		GasUsed:          base.MustParseNumeral(rawTx.GasUsed),
 		Input:            rawTx.Input,
 	}
 

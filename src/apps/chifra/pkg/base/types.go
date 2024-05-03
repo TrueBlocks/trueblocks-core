@@ -22,13 +22,8 @@ func MustParseNumeral(input any) Numeral {
 	return Numeral(result)
 }
 
-type Gas = Numeral
-
-func MustParseGas(input any) Gas {
-	return MustParseNumeral(input)
-}
-
 type Blknum = uint64
+type Gas = Numeral
 type Txnum = uint64
 type Lognum = uint64
 type Topic = string

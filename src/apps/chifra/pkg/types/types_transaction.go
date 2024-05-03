@@ -629,10 +629,10 @@ func NewTransaction(raw *RawTransaction, receipt *Receipt, timestamp base.Timest
 	s.From = base.HexToAddress(raw.From)
 	s.To = base.HexToAddress(raw.To)
 	s.Value.SetString(raw.Value, 0)
-	s.Gas = base.MustParseGas(raw.Gas)
-	s.GasPrice = base.MustParseGas(raw.GasPrice)
-	s.MaxFeePerGas = base.MustParseGas(raw.MaxFeePerGas)
-	s.MaxPriorityFeePerGas = base.MustParseGas(raw.MaxPriorityFeePerGas)
+	s.Gas = base.MustParseNumeral(raw.Gas)
+	s.GasPrice = base.MustParseNumeral(raw.GasPrice)
+	s.MaxFeePerGas = base.MustParseNumeral(raw.MaxFeePerGas)
+	s.MaxPriorityFeePerGas = base.MustParseNumeral(raw.MaxPriorityFeePerGas)
 	s.Input = raw.Input
 	s.TransactionType = raw.TransactionType
 
