@@ -3739,6 +3739,10 @@ components:
           type: string
           format: string
           description: "the type of reward"
+        value:
+          type: string
+          format: wei
+          description: "the value (in wei) of this trace action"
     traceResult:
       description: "trace result data as returned from the RPC (with slight enhancements)"
       type: object

@@ -9,6 +9,6 @@ input          ,bytes   ,           ,omitempty      ,       4 ,an encoded versio
 refundAddress  ,address ,           ,omitempty      ,       6 ,if the call type is self-destruct&#44; the address to which the refund is sent
 rewardType     ,string  ,           ,omitempty      ,       7 ,the type of reward
 to             ,address ,           ,               ,       2 ,address to which the trace was sent
-value          ,wei     ,           ,               ,         ,the value (in wei) of this trace action
+value          ,wei     ,           ,               ,       8 ,the value (in wei) of this trace action
 address        ,address ,           ,omitempty      ,         ,
 author         ,address ,           ,omitempty      ,         ,
