@@ -76,9 +76,9 @@ type Slurp struct {
 	To                base.Address   `json:"to"`
 	TransactionIndex  base.Txnum     `json:"transactionIndex"`
 	TxReceiptStatus   string         `json:"txReceiptStatus"`
-	ValidatorIndex    uint64         `json:"validatorIndex"`
+	ValidatorIndex    base.Numeral   `json:"validatorIndex"`
 	Value             base.Wei       `json:"value"`
-	WithdrawalIndex   uint64         `json:"withdrawalIndex"`
+	WithdrawalIndex   base.Numeral   `json:"withdrawalIndex"`
 	raw               *RawSlurp      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE

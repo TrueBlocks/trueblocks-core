@@ -182,7 +182,7 @@ Messages consist of the following fields:
 | Field | Description        | Type   |
 | ----- | ------------------ | ------ |
 | msg   | the message        | string |
-| num   | a number if needed | int    |
+| num   | a number if needed | int64  |
 
 ## Base types
 
@@ -198,6 +198,8 @@ This documentation mentions the following basic data types.
 | ether     | a big number float                  | as a string    |
 | gas       | a 64-bit unsigned integer           |                |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
+| int64     | a 64-bit signed integer             |                |
+| numeral   | an alias for a uint64               |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | txnum     | an alias for a uint64               |                |

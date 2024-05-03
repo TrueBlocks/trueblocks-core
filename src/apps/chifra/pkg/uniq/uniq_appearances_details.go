@@ -80,7 +80,7 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 			}
 
 			for _, withdrawal := range block.Withdrawals {
-				streamAppearance(procFunc, flow, "withdrawal", withdrawal.Address.Hex(), bn, withdrawal.Index, utils.NOPOS, ts, addrMap)
+				streamAppearance(procFunc, flow, "withdrawal", withdrawal.Address.Hex(), bn, uint64(withdrawal.Index), utils.NOPOS, ts, addrMap)
 			}
 		}
 	}

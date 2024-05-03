@@ -250,8 +250,8 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn uint64, withT
 				Amount:         *amt,
 				BlockNumber:    blockNumber,
 				Timestamp:      base.Timestamp(ts),
-				Index:          utils.MustParseUint(withdrawal.Index),
-				ValidatorIndex: utils.MustParseUint(withdrawal.ValidatorIndex),
+				Index:          base.MustParseNumeral(withdrawal.Index),
+				ValidatorIndex: base.MustParseNumeral(withdrawal.ValidatorIndex),
 			}
 			block.Withdrawals = append(block.Withdrawals, s)
 		}

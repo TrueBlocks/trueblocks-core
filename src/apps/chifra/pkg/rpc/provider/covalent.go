@@ -198,7 +198,7 @@ func (e *CovalentProvider) fetchData(ctx context.Context, address base.Address, 
 		return
 	}
 	if resp.StatusCode != http.StatusOK {
-		err = fmt.Errorf("Covalent responded with: %s", resp.Status)
+		err = fmt.Errorf("covalent responded with: %s", resp.Status)
 		paginator.SetDone(true)
 		return
 	}

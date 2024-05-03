@@ -38,9 +38,9 @@ type Withdrawal struct {
 	Address        base.Address   `json:"address"`
 	Amount         base.Wei       `json:"amount"`
 	BlockNumber    base.Blknum    `json:"blockNumber"`
-	Index          uint64         `json:"index"`
+	Index          base.Numeral   `json:"index"`
 	Timestamp      base.Timestamp `json:"timestamp"`
-	ValidatorIndex uint64         `json:"validatorIndex"`
+	ValidatorIndex base.Numeral   `json:"validatorIndex"`
 	raw            *RawWithdrawal `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
