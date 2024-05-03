@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoAbis tests the When sdk function
+// DoAbis tests the abi sdk function
 func DoAbis() {
 	logger.Info("DoAbis")
 

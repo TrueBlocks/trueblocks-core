@@ -66,13 +66,14 @@ Transactions consist of the following fields:
 | hash             | the hash of the transaction                                                                           | hash                                           |
 | blockHash        | the hash of the block containing this transaction                                                     | hash                                           |
 | blockNumber      | the number of the block                                                                               | blknum                                         |
-| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                         |
+| transactionIndex | the zero-indexed position of the transaction in the block                                             | txnum                                          |
 | nonce            | sequence number of the transactions sent by the sender                                                | uint64                                         |
 | timestamp        | the Unix timestamp of the object                                                                      | timestamp                                      |
 | date             | the timestamp as a date (calculated)                                                                  | datetime                                       |
 | from             | address from which the transaction was sent                                                           | address                                        |
 | to               | address to which the transaction was sent                                                             | address                                        |
 | value            | the amount of wei sent with this transactions                                                         | wei                                            |
+| ether            | if --ether is specified, the value in ether (calculated)                                              | ether                                          |
 | gas              | the maximum number of gas allowed for this transaction                                                | gas                                            |
 | gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                            |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                          |
@@ -98,11 +99,12 @@ Withdrawals consist of the following fields:
 | -------------- | -------------------------------------------------------------------------------------------------------------------- | --------- |
 | address        | the recipient for the withdrawn ether                                                                                | address   |
 | amount         | a nonzero amount of ether given in gwei (1e9 wei)                                                                    | wei       |
+| ether          | if --ether is specified, the amount in ether (calculated)                                                            | ether     |
 | blockNumber    | the number of this block                                                                                             | blknum    |
-| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | uint64    |
+| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | numeral   |
 | timestamp      | the timestamp for this block                                                                                         | timestamp |
 | date           | the timestamp as a date (calculated)                                                                                 | datetime  |
-| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | uint64    |
+| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | numeral   |
 
 ## Receipt
 
@@ -130,7 +132,7 @@ Receipts consist of the following fields:
 | logs             | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
 | status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
 | transactionHash  |                                                                            | hash                                |
-| transactionIndex |                                                                            | blknum                              |
+| transactionIndex |                                                                            | txnum                               |
 
 ## Log
 
@@ -151,8 +153,8 @@ Logs consist of the following fields:
 | Field            | Description                                                                                       | Type                                    |
 | ---------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------- |
 | blockNumber      | the number of the block                                                                           | blknum                                  |
-| transactionIndex | the zero-indexed position of the transaction in the block                                         | uint64                                  |
-| logIndex         | the zero-indexed position of this log relative to the block                                       | uint64                                  |
+| transactionIndex | the zero-indexed position of the transaction in the block                                         | txnum                                   |
+| logIndex         | the zero-indexed position of this log relative to the block                                       | lognum                                  |
 | timestamp        | the timestamp of the block this log appears in                                                    | timestamp                               |
 | date             | the timestamp as a date (calculated)                                                              | datetime                                |
 | address          | the smart contract that emitted this log                                                          | address                                 |
@@ -208,7 +210,7 @@ Traces consist of the following fields:
 | timestamp        | the timestamp of the block                                | timestamp                                         |
 | date             | the timestamp as a date (calculated)                      | datetime                                          |
 | transactionHash  | the transaction's hash containing this trace              | hash                                              |
-| transactionIndex | the zero-indexed position of the transaction in the block | uint64                                            |
+| transactionIndex | the zero-indexed position of the transaction in the block | txnum                                             |
 | traceAddress     | a particular trace's address in the trace tree            | uint64[]                                          |
 | subtraces        | the number of children traces that the trace hash         | uint64                                            |
 | type             | the type of the trace                                     | string                                            |
@@ -247,15 +249,20 @@ The following commands produce and manage TraceActions:
 
 TraceActions consist of the following fields:
 
-| Field         | Description                                                                | Type    |
-| ------------- | -------------------------------------------------------------------------- | ------- |
-| from          | address from which the trace was sent                                      | address |
-| to            | address to which the trace was sent                                        | address |
-| gas           | the maximum number of gas allowed for this trace                           | gas     |
-| input         | an encoded version of the function call                                    | bytes   |
-| callType      | the type of call                                                           | string  |
-| refundAddress | if the call type is self-destruct, the address to which the refund is sent | address |
-| rewardType    | the type of reward                                                         | string  |
+| Field          | Description                                                                | Type    |
+| -------------- | -------------------------------------------------------------------------- | ------- |
+| from           | address from which the trace was sent                                      | address |
+| to             | address to which the trace was sent                                        | address |
+| gas            | the maximum number of gas allowed for this trace                           | gas     |
+| input          | an encoded version of the function call                                    | bytes   |
+| callType       | the type of call                                                           | string  |
+| refundAddress  | if the call type is self-destruct, the address to which the refund is sent | address |
+| rewardType     | the type of reward                                                         | string  |
+| value          | the value (in wei) of this trace action                                    | wei     |
+| ether          | if --ether is specified, the value in ether (calculated)                   | ether   |
+| selfDestructed | `true` if the contract self-destructed, `false` otherwise                  | address |
+| balance        | if self-destructed, the balance of the contract at that time               | wei     |
+| balanceEth     | if --ether is specified, the balance in ether (calculated)                 | ether   |
 
 ## TraceResult
 
@@ -290,7 +297,7 @@ TraceCounts consist of the following fields:
 | Field            | Description                             | Type      |
 | ---------------- | --------------------------------------- | --------- |
 | blockNumber      | the block number                        | blknum    |
-| transactionIndex | the transaction index                   | blknum    |
+| transactionIndex | the transaction index                   | txnum     |
 | transactionHash  | the transaction's hash                  | hash      |
 | timestamp        | the timestamp of the block              | timestamp |
 | date             | the timestamp as a date (calculated)    | datetime  |
@@ -402,12 +409,17 @@ This documentation mentions the following basic data types.
 | bool      | either `true`, `false`, `1`, or `0` |                |
 | bytes     | an arbitrarily long string of bytes |                |
 | datetime  | a JSON formatted date               | as a string    |
-| gas       | an unsigned big number              | as a string    |
+| ether     | a big number float                  | as a string    |
+| gas       | a 64-bit unsigned integer           |                |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | int64     | a 64-bit signed integer             |                |
+| lognum    | an alias for a uint64               |                |
+| numeral   | an alias for a uint64               |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | topic     | an '0x'-prefixed 32-byte hex string | lowercase      |
+| txnum     | an alias for a uint64               |                |
+| uint256   | a 256-bit unsigned integer          |                |
 | uint32    | a 32-bit unsigned integer           |                |
 | uint64    | a 64-bit unsigned integer           |                |
 | uint8     | an alias for the boolean type       |                |

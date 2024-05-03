@@ -123,7 +123,7 @@ func mockConvertSlurpType(t *testing.T) func(address string, requestType string,
 		}
 		return types.Slurp{
 			BlockNumber:      bn,
-			TransactionIndex: txid,
+			TransactionIndex: base.Txnum(txid),
 		}, nil
 	}
 }

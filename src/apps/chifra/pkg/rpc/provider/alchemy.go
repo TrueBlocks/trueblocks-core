@@ -237,7 +237,7 @@ func (e *AlchemyProvider) fetchData(ctx context.Context, address base.Address, p
 		if err != nil {
 			return []SlurpedPageItem{}, 0, err
 		}
-		tx.TransactionIndex = uint64(app.TransactionIndex)
+		tx.TransactionIndex = base.Txnum(app.TransactionIndex)
 		data = append(data, SlurpedPageItem{
 			Appearance: &types.Appearance{
 				TransactionIndex: app.TransactionIndex,

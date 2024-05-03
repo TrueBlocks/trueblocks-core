@@ -60,7 +60,7 @@ type Slurp struct {
 	CompressedTx      string         `json:"compressedTx"`
 	ContractAddress   base.Address   `json:"contractAddress"`
 	CumulativeGasUsed string         `json:"cumulativeGasUsed"`
-	Ether             string         `json:"ether"`
+	Ether             base.Ether     `json:"ether"`
 	From              base.Address   `json:"from"`
 	FunctionName      string         `json:"functionName"`
 	Gas               base.Gas       `json:"gas"`
@@ -74,11 +74,11 @@ type Slurp struct {
 	Nonce             uint64         `json:"nonce"`
 	Timestamp         base.Timestamp `json:"timestamp"`
 	To                base.Address   `json:"to"`
-	TransactionIndex  base.Blknum    `json:"transactionIndex"`
+	TransactionIndex  base.Txnum     `json:"transactionIndex"`
 	TxReceiptStatus   string         `json:"txReceiptStatus"`
-	ValidatorIndex    uint64         `json:"validatorIndex"`
+	ValidatorIndex    base.Numeral   `json:"validatorIndex"`
 	Value             base.Wei       `json:"value"`
-	WithdrawalIndex   uint64         `json:"withdrawalIndex"`
+	WithdrawalIndex   base.Numeral   `json:"withdrawalIndex"`
 	raw               *RawSlurp      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -107,14 +107,13 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[strin
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
-	asEther := extraOptions["ether"] == true
 	model = map[string]interface{}{
 		"blockNumber": s.BlockNumber,
 		"from":        s.From,
 		"timestamp":   s.Timestamp,
 		"date":        s.Date(),
 		"to":          s.To,
-		"value":       base.FormattedValue(&s.Value, asEther, 18),
+		"value":       s.Value.String(),
 	}
 
 	if s.From == base.BlockRewardSender || s.From == base.UncleRewardSender {
@@ -249,6 +248,12 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[strin
 			// 	model["encoding"] = ""
 			// 	model["compressedTx"] = s.Message
 		}
+	}
+
+	asEther := true // like transactions, we always export ether for slurps -- extraOptions["ether"] == true
+	if asEther {
+		model["ether"] = base.FormattedValue(&s.Value, true, 18)
+		order = append(order, "ether")
 	}
 
 	// EXISTING_CODE

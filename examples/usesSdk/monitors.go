@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoMonitors tests the When sdk function
+// DoMonitors tests the monitors sdk function
 func DoMonitors() {
 	logger.Info("DoMonitors")
 

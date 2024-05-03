@@ -432,7 +432,7 @@ func (s *Block[string]) Dup(target *Block[Transaction]) {
 }
 
 func wei2gas(w base.Wei) base.Gas {
-	return w.Uint64()
+	return base.Gas(w.Uint64())
 }
 
 // EXISTING_CODE

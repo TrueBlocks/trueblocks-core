@@ -18,7 +18,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
@@ -38,7 +37,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	firstBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
 	lastBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINLASTBLOCK"))
 	if lastBlock == 0 {
-		lastBlock = utils.NOPOS
+		lastBlock = base.NOPOS
 	}
 
 	outPath := filepath.Join(config.PathToCache(chain), "tmp", "manifest.json")
@@ -137,7 +136,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			}
 		}
 
-		if len(blockNums) == 0 && firstBlock == 0 && lastBlock == utils.NOPOS {
+		if len(blockNums) == 0 && firstBlock == 0 && lastBlock == base.NOPOS {
 			tsPath := config.PathToTimestamps(chain)
 			if localHash, remoteHash, err := pinning.PinOneFile(chain, "timestamps", tsPath, opts.Remote); err != nil {
 				errorChan <- err

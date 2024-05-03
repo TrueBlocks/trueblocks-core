@@ -203,13 +203,13 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		Hash:             base.HexToHash(rawTx.Hash),
 		BlockHash:        base.HexToHash(rawTx.BlockHash),
 		BlockNumber:      utils.MustParseUint(rawTx.BlockNumber),
-		TransactionIndex: utils.MustParseUint(rawTx.TransactionIndex),
+		TransactionIndex: base.MustParseNumeral(rawTx.TransactionIndex),
 		Timestamp:        utils.MustParseInt(rawTx.Timestamp),
 		From:             base.HexToAddress(rawTx.From),
 		To:               base.HexToAddress(rawTx.To),
-		Gas:              utils.MustParseUint(rawTx.Gas),
-		GasPrice:         utils.MustParseUint(rawTx.GasPrice),
-		GasUsed:          utils.MustParseUint(rawTx.GasUsed),
+		Gas:              base.MustParseNumeral(rawTx.Gas),
+		GasPrice:         base.MustParseNumeral(rawTx.GasPrice),
+		GasUsed:          base.MustParseNumeral(rawTx.GasUsed),
 		Input:            rawTx.Input,
 	}
 
@@ -222,7 +222,7 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't
 		// want to make another RPC call. We tried (see commented code), but EtherScan balks with a weird message
 		app, _ := p.conn.GetTransactionAppByHash(s.Hash.Hex())
-		s.TransactionIndex = uint64(app.TransactionIndex)
+		s.TransactionIndex = base.Txnum(app.TransactionIndex)
 	} else if requestType == "miner" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.BlockReward
@@ -241,8 +241,8 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.WithdrawalAmt
 		s.From = base.WithdrawalSender
-		s.ValidatorIndex = utils.MustParseUint(rawTx.ValidatorIndex)
-		s.WithdrawalIndex = utils.MustParseUint(rawTx.WithdrawalIndex)
+		s.ValidatorIndex = base.MustParseNumeral(rawTx.ValidatorIndex)
+		s.WithdrawalIndex = base.MustParseNumeral(rawTx.WithdrawalIndex)
 		s.Value.SetString(rawTx.Amount, 0)
 		s.To = base.HexToAddress(address)
 		if s.To != base.HexToAddress(rawTx.Address) {

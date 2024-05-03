@@ -44,11 +44,11 @@ type Log struct {
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	CompressedLog    string         `json:"compressedLog,omitempty"`
 	Data             string         `json:"data,omitempty"`
-	LogIndex         uint64         `json:"logIndex"`
+	LogIndex         base.Lognum    `json:"logIndex"`
 	Timestamp        base.Timestamp `json:"timestamp,omitempty"`
 	Topics           []base.Hash    `json:"topics,omitempty"`
 	TransactionHash  base.Hash      `json:"transactionHash"`
-	TransactionIndex uint64         `json:"transactionIndex"`
+	TransactionIndex base.Txnum     `json:"transactionIndex"`
 	raw              *RawLog        `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -347,9 +347,9 @@ func (r *RawLog) RawTo(vals map[string]any) (Log, error) {
 		Address:          base.HexToAddress(r.Address),
 		BlockNumber:      utils.MustParseUint(r.BlockNumber),
 		BlockHash:        base.HexToHash(r.BlockHash),
-		TransactionIndex: utils.MustParseUint(r.TransactionIndex),
+		TransactionIndex: base.MustParseNumeral(r.TransactionIndex),
 		TransactionHash:  hash,
-		LogIndex:         utils.MustParseUint(r.LogIndex),
+		LogIndex:         base.MustParseNumeral(r.LogIndex),
 		Data:             r.Data,
 		raw:              r,
 	}
@@ -357,7 +357,7 @@ func (r *RawLog) RawTo(vals map[string]any) (Log, error) {
 		log.Topics = append(log.Topics, base.HexToHash(topic))
 	}
 
-	if ts, ok := vals["timestamp"].(base.Timestamp); ok && ts != utils.NOPOSI {
+	if ts, ok := vals["timestamp"].(base.Timestamp); ok && ts != base.NOPOSI {
 		log.Timestamp = ts
 	}
 

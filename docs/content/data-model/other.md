@@ -129,13 +129,14 @@ Slurps consist of the following fields:
 | hash             | the hash of the transaction                                                                           | hash                                    |
 | blockHash        | the hash of the block containing this transaction                                                     | hash                                    |
 | blockNumber      | the number of the block                                                                               | blknum                                  |
-| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                  |
+| transactionIndex | the zero-indexed position of the transaction in the block                                             | txnum                                   |
 | nonce            | sequence number of the transactions sent by the sender                                                | uint64                                  |
 | timestamp        | the Unix timestamp of the object                                                                      | timestamp                               |
 | date             | the timestamp as a date (calculated)                                                                  | datetime                                |
 | from             | address from which the transaction was sent                                                           | address                                 |
 | to               | address to which the transaction was sent                                                             | address                                 |
 | value            | the amount of wei sent with this transactions                                                         | wei                                     |
+| ether            | if --ether is specified, the value in ether                                                           | ether                                   |
 | gas              | the maximum number of gas allowed for this transaction                                                | gas                                     |
 | gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                     |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                   |
@@ -181,7 +182,7 @@ Messages consist of the following fields:
 | Field | Description        | Type   |
 | ----- | ------------------ | ------ |
 | msg   | the message        | string |
-| num   | a number if needed | int    |
+| num   | a number if needed | int64  |
 
 ## Base types
 
@@ -194,10 +195,14 @@ This documentation mentions the following basic data types.
 | bool      | either `true`, `false`, `1`, or `0` |                |
 | bytes     | an arbitrarily long string of bytes |                |
 | datetime  | a JSON formatted date               | as a string    |
-| gas       | an unsigned big number              | as a string    |
+| ether     | a big number float                  | as a string    |
+| gas       | a 64-bit unsigned integer           |                |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
+| int64     | a 64-bit signed integer             |                |
+| numeral   | an alias for a uint64               |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
+| txnum     | an alias for a uint64               |                |
 | uint64    | a 64-bit unsigned integer           |                |
 | wei       | an unsigned big number              | as a string    |
 

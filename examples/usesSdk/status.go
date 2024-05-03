@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoStatus tests the When sdk function
+// DoStatus tests the status sdk function
 func DoStatus() {
 	logger.Info("DoStatus")
 

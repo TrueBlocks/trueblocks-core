@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoTransactions tests the When sdk function
+// DoTransactions tests the transactions sdk function
 func DoTransactions() {
 	logger.Info("DoTransactions")
 

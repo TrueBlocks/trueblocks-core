@@ -273,8 +273,8 @@ bool COptions::extractBlocksFromFilter(blknum_t& b1, const string_q& p1, blknum_
 }
 
 name        ,type    ,strDefault ,array ,omitempty ,doc ,example ,description
-fromBlock   ,blknum  ,           ,      ,          ,    ,        ,
-toBlock     ,blknum  ,           ,      ,          ,    ,        ,
+fromBlock   ,blk num  ,           ,      ,          ,    ,        ,
+toBlock     ,blk num  ,           ,      ,          ,    ,        ,
 fromAddress ,address ,           ,true  ,          ,    ,        ,
 toAddress   ,address ,           ,true  ,          ,    ,        ,
 after       ,uint64  ,           ,      ,          ,    ,        ,
@@ -835,7 +835,7 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
 }
 
 //--------------------------------------------------------------------------------
-bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg) {
+bool getDirectionalTxId(blknum_t bn, tx num_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg) {
     blknum_t lastBlock = getLatestBlock_client();
 
     if (bn < firstTransactionBlock()) {
@@ -847,7 +847,7 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
     getBlock(block, bn);
 
     argOut = "";
-    txnum_t nextid = txid + 1;
+    tx num_t nextid = txid + 1;
     while (argOut.empty() && bn >= firstTransactionBlock() && bn <= lastBlock) {
         if (dir == "next") {
             if (nextid < block.transactions.size()) {

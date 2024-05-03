@@ -4,7 +4,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-// DoConfig tests the When sdk function
+// DoConfig tests the config sdk function
 func DoConfig() {
 	logger.Info("DoConfig")
 

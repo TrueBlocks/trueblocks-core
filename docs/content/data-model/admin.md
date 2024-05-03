@@ -204,10 +204,10 @@ ChunkStats consist of the following fields:
 | recWid        | the record width of a single bloom filter         | uint64   |
 | bloomSz       | the size of the bloom filters on disc in bytes    | uint64   |
 | chunkSz       | the size of the chunks on disc in bytes           | uint64   |
-| addrsPerBlock | the average number of addresses per block         | double   |
-| appsPerBlock  | the average number of appearances per block       | double   |
-| appsPerAddr   | the average number of appearances per address     | double   |
-| ratio         | the ratio of appearances to addresses             | double   |
+| addrsPerBlock | the average number of addresses per block         | float64  |
+| appsPerBlock  | the average number of appearances per block       | float64  |
+| appsPerAddr   | the average number of appearances per address     | float64  |
+| ratio         | the ratio of appearances to addresses             | float64  |
 
 ## MonitorClean
 
@@ -260,11 +260,11 @@ ReportChecks consist of the following fields:
 | Field      | Description                                   | Type     |
 | ---------- | --------------------------------------------- | -------- |
 | result     | the result of the check                       | string   |
-| visitedCnt | the number of visited items in the cache      | uint32   |
-| checkedCnt | the number of checks                          | uint32   |
-| skippedCnt | the number of skipped checks                  | uint32   |
-| passedCnt  | the number of passed checks                   | uint32   |
-| failedCnt  | the number of failed checks                   | uint32   |
+| visitedCnt | the number of visited items in the cache      | uint64   |
+| checkedCnt | the number of checks                          | uint64   |
+| skippedCnt | the number of skipped checks                  | uint64   |
+| passedCnt  | the number of passed checks                   | uint64   |
+| failedCnt  | the number of failed checks                   | uint64   |
 | msgStrings | an array of messages explaining failed checks | string[] |
 | reason     | the reason for the test                       | string   |
 
@@ -318,12 +318,11 @@ This documentation mentions the following basic data types.
 | blkrange | a pair of nine-digit block numbers  | zero padded |
 | bool     | either `true`, `false`, `1`, or `0` |             |
 | datetime | a JSON formatted date               | as a string |
-| double   | a double precision float            | 64 bits     |
+| float64  | a double precision float            | 64 bits     |
 | hash     | an '0x'-prefixed 32-byte hex string | lowercase   |
 | int64    | a 64-bit signed integer             |             |
 | ipfshash | a multi-hash produced by IPFS       | mixed-case  |
 | string   | a normal character string           |             |
-| uint32   | a 32-bit unsigned integer           |             |
 | uint64   | a 64-bit unsigned integer           |             |
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

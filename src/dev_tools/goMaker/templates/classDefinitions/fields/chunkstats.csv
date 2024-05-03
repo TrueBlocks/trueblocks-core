@@ -8,7 +8,7 @@ nBlooms       ,uint64   ,           ,           ,       6 ,the number of bloom f
 recWid        ,uint64   ,           ,           ,       7 ,the record width of a single bloom filter
 bloomSz       ,uint64   ,           ,           ,       8 ,the size of the bloom filters on disc in bytes
 chunkSz       ,uint64   ,           ,           ,       9 ,the size of the chunks on disc in bytes
-addrsPerBlock ,double   ,           ,           ,      10 ,the average number of addresses per block
-appsPerBlock  ,double   ,           ,           ,      11 ,the average number of appearances per block
-appsPerAddr   ,double   ,           ,           ,      12 ,the average number of appearances per address
-ratio         ,double   ,           ,           ,      13 ,the ratio of appearances to addresses
+addrsPerBlock ,float64  ,           ,           ,      10 ,the average number of addresses per block
+appsPerBlock  ,float64  ,           ,           ,      11 ,the average number of appearances per block
+appsPerAddr   ,float64  ,           ,           ,      12 ,the average number of appearances per address
+ratio         ,float64  ,           ,           ,      13 ,the ratio of appearances to addresses

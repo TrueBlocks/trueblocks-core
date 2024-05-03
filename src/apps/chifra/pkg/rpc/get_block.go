@@ -31,7 +31,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.Block[types.Trans
 			result.Transactions = make([]types.Transaction, 0, len(cachedBlock.Transactions))
 			success := true
 			for index := range cachedBlock.Transactions {
-				tx, err := conn.GetTransactionByNumberAndId(cachedBlock.BlockNumber, uint64(index))
+				tx, err := conn.GetTransactionByNumberAndId(cachedBlock.BlockNumber, base.Txnum(index))
 				if err != nil {
 					success = false
 					break
@@ -64,7 +64,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.Block[types.Trans
 		raw := types.NewRawTransactionFromMap(rawData)
 
 		// Get the receipt
-		idx := utils.MustParseUint(raw.TransactionIndex)
+		idx := base.MustParseNumeral(raw.TransactionIndex)
 		var receipt types.Receipt
 		if receiptMap[idx] == nil {
 			receipt, err = conn.GetReceipt(bn, idx, ts)
@@ -233,8 +233,8 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn uint64, withT
 		Timestamp:   base.Timestamp(ts), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
 		Hash:        base.HexToHash(rawBlock.Hash),
 		ParentHash:  base.HexToHash(rawBlock.ParentHash),
-		GasLimit:    gasLimit,
-		GasUsed:     gasUsed,
+		GasLimit:    base.Gas(gasLimit),
+		GasUsed:     base.Gas(gasUsed),
 		Miner:       base.HexToAddress(rawBlock.Miner),
 		Difficulty:  difficulty,
 		Uncles:      uncles,
@@ -250,8 +250,8 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn uint64, withT
 				Amount:         *amt,
 				BlockNumber:    blockNumber,
 				Timestamp:      base.Timestamp(ts),
-				Index:          utils.MustParseUint(withdrawal.Index),
-				ValidatorIndex: utils.MustParseUint(withdrawal.ValidatorIndex),
+				Index:          base.MustParseNumeral(withdrawal.Index),
+				ValidatorIndex: base.MustParseNumeral(withdrawal.ValidatorIndex),
 			}
 			block.Withdrawals = append(block.Withdrawals, s)
 		}

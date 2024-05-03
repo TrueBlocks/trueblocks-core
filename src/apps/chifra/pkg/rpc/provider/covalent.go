@@ -145,11 +145,11 @@ func (c *covalentTransaction) Slurp() (s types.Slurp) {
 		BlockHash:        base.HexToHash(*c.BlockHash),
 		BlockNumber:      uint64(*c.BlockHeight),
 		From:             base.HexToAddress(*c.From),
-		Gas:              uint64(*c.GasSpent),
+		Gas:              base.Gas(*c.GasSpent),
 		IsError:          !(*c.Successful),
 		Timestamp:        c.BlockSignedAt.Unix(),
 		To:               base.HexToAddress(*c.To),
-		TransactionIndex: uint64(*c.TxOffset),
+		TransactionIndex: base.Txnum(*c.TxOffset),
 		Value:            *c.Value,
 	}
 
@@ -198,7 +198,7 @@ func (e *CovalentProvider) fetchData(ctx context.Context, address base.Address, 
 		return
 	}
 	if resp.StatusCode != http.StatusOK {
-		err = fmt.Errorf("Covalent responded with: %s", resp.Status)
+		err = fmt.Errorf("covalent responded with: %s", resp.Status)
 		paginator.SetDone(true)
 		return
 	}

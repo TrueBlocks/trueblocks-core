@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoNames tests the When sdk function
+// DoNames tests the names sdk function
 func DoNames() {
 	logger.Info("DoNames")
 

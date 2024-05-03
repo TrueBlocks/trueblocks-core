@@ -192,15 +192,15 @@ Statements consist of the following fields:
 | Field               | Description                                                                                                                           | Type      |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------- |
 | blockNumber         | the number of the block                                                                                                               | blknum    |
-| transactionIndex    | the zero-indexed position of the transaction in the block                                                                             | blknum    |
-| logIndex            | the zero-indexed position the log in the block, if applicable                                                                         | blknum    |
+| transactionIndex    | the zero-indexed position of the transaction in the block                                                                             | txnum     |
+| logIndex            | the zero-indexed position the log in the block, if applicable                                                                         | lognum    |
 | transactionHash     | the hash of the transaction that triggered this reconciliation                                                                        | hash      |
 | timestamp           | the Unix timestamp of the object                                                                                                      | timestamp |
 | date                | the timestamp as a date (calculated)                                                                                                  | datetime  |
 | assetAddr           | 0xeeee...eeee for ETH reconciliations, the token address otherwise                                                                    | address   |
 | assetSymbol         | either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain                                              | string    |
 | decimals            | the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                             | uint64    |
-| spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                              | double    |
+| spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                              | float64   |
 | priceSource         | the on-chain source from which the spot price was taken                                                                               | string    |
 | accountedFor        | the address being accounted for in this reconciliation                                                                                | address   |
 | sender              | the initiator of the transfer (the sender)                                                                                            | address   |
@@ -258,12 +258,14 @@ This documentation mentions the following basic data types.
 | blknum    | an alias for a uint64               |                |
 | bool      | either `true`, `false`, `1`, or `0` |                |
 | datetime  | a JSON formatted date               | as a string    |
-| double    | a double precision float            | 64 bits        |
+| float64   | a double precision float            | 64 bits        |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
-| int64     | a 64-bit signed integer             |                |
 | int256    | a signed big number                 | as a string    |
+| int64     | a 64-bit signed integer             |                |
+| lognum    | an alias for a uint64               |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
+| txnum     | an alias for a uint64               |                |
 | uint32    | a 32-bit unsigned integer           |                |
 | uint64    | a 64-bit unsigned integer           |                |
 

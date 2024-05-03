@@ -10,6 +10,7 @@ package rpc
 import (
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -51,7 +52,7 @@ func Test_Client(t *testing.T) {
 func Test_TxFromNumberAndId(t *testing.T) {
 	conn := TempConnection(utils.GetTestChain())
 
-	txId := uint64(0)
+	txId := base.Txnum(0)
 	_, err := conn.GetTransactionHashByNumberAndID(uint64(1424623), txId)
 	if err != nil {
 		t.Fatal(err)

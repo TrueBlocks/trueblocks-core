@@ -44,7 +44,7 @@ func TestGetState(t *testing.T) {
 				Address:     base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 				BlockNumber: uint64(15531843),
 				Balance:     func() base.Wei { b, _ := base.NewWei(0).SetString("57006123709077586392", 10); return *b }(),
-				Deployed:    utils.NOPOS,
+				Deployed:    base.NOPOS,
 			},
 		},
 		{
@@ -106,7 +106,7 @@ func TestGetState(t *testing.T) {
 				BlockNumber: uint64(15531843),
 				Proxy:       base.HexToAddress("0x5864c777697bf9881220328bf2f16908c9afcd7e"),
 				AccountType: "Proxy",
-				Deployed:    utils.NOPOS,
+				Deployed:    base.NOPOS,
 			},
 		},
 		{

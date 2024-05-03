@@ -3183,11 +3183,11 @@ components:
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
-          format: blknum
+          format: lognum
           description: "the zero-indexed position the log in the block, if applicable"
         transactionHash:
           type: string
@@ -3215,7 +3215,7 @@ components:
           description: "the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18"
         spotPrice:
           type: number
-          format: double
+          format: float64
           description: "the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
         priceSource:
           type: string
@@ -3428,7 +3428,7 @@ components:
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
           description: "the zero-indexed position of the transaction in the block"
         nonce:
           type: number
@@ -3454,14 +3454,18 @@ components:
           type: string
           format: wei
           description: "the amount of wei sent with this transactions"
-        gas:
-          type: number
-          format: gas
-          description: "the maximum number of gas allowed for this transaction"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the value in ether (calculated)"
         gasPrice:
           type: number
           format: gas
           description: "the number of wei per unit of gas the sender is willing to spend"
+        gas:
+          type: number
+          format: gas
+          description: "the maximum number of gas allowed for this transaction"
         input:
           type: string
           format: bytes
@@ -3470,14 +3474,6 @@ components:
           type: object
           items:
             $ref: "#/components/schemas/receipt"
-        hasToken:
-          type: boolean
-          format: boolean
-          description: "`true` if the transaction is token related, `false` otherwise"
-        isError:
-          type: boolean
-          format: boolean
-          description: "`true` if the transaction ended in error, `false` otherwise"
         statements:
           type: array
           items:
@@ -3487,6 +3483,14 @@ components:
           type: object
           items:
             $ref: "#/components/schemas/function"
+        hasToken:
+          type: boolean
+          format: boolean
+          description: "`true` if the transaction is token related, `false` otherwise"
+        isError:
+          type: boolean
+          format: boolean
+          description: "`true` if the transaction ended in error, `false` otherwise"
         compressedTx:
           type: string
           format: string
@@ -3503,13 +3507,17 @@ components:
           type: string
           format: wei
           description: "a nonzero amount of ether given in gwei (1e9 wei)"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the amount in ether (calculated)"
         blockNumber:
           type: number
           format: blknum
           description: "the number of this block"
         index:
           type: number
-          format: uint64
+          format: numeral
           description: "a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal"
         timestamp:
           type: number
@@ -3521,7 +3529,7 @@ components:
           description: "the timestamp as a date (calculated)"
         validatorIndex:
           type: number
-          format: uint64
+          format: numeral
           description: "the validator_index of the validator on the consensus layer the withdrawal corresponds to"
     receipt:
       description: "receipt data as returned from the RPC (with slight enhancements)"
@@ -3558,7 +3566,7 @@ components:
           format: hash
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
     log:
       description: "log data as returned from the RPC (with slight enhancements)"
       type: object
@@ -3569,11 +3577,11 @@ components:
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: uint64
+          format: txnum
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
-          format: uint64
+          format: lognum
           description: "the zero-indexed position of this log relative to the block"
         timestamp:
           type: number
@@ -3665,7 +3673,7 @@ components:
           description: "the transaction's hash containing this trace"
         transactionIndex:
           type: number
-          format: uint64
+          format: txnum
           description: "the zero-indexed position of the transaction in the block"
         traceAddress:
           type: array
@@ -3731,6 +3739,26 @@ components:
           type: string
           format: string
           description: "the type of reward"
+        value:
+          type: string
+          format: wei
+          description: "the value (in wei) of this trace action"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the value in ether (calculated)"
+        selfDestructed:
+          type: string
+          format: address
+          description: "`true` if the contract self-destructed, `false` otherwise"
+        balance:
+          type: string
+          format: wei
+          description: "if self-destructed, the balance of the contract at that time"
+        balanceEth:
+          type: string
+          format: ether
+          description: "if --ether is specified, the balance in ether (calculated)"
     traceResult:
       description: "trace result data as returned from the RPC (with slight enhancements)"
       type: object
@@ -3761,7 +3789,7 @@ components:
           description: "the block number"
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
           description: "the transaction index"
         transactionHash:
           type: string
@@ -3927,6 +3955,10 @@ components:
           type: string
           format: wei
           description: "the balance of the account at the given block"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the balance in ether (calculated)"
         code:
           type: string
           format: string
@@ -3953,7 +3985,7 @@ components:
           description: "the block at which the report is made"
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
           description: "the transaction index (if applicable) at which the report is made"
         timestamp:
           type: number
@@ -3986,7 +4018,7 @@ components:
         diff:
           type: string
           format: int256
-          description: "the difference#&44; if any#&44; between the prior and current balance"
+          description: "the difference, if any, between the prior and current balance (calculated)"
         name:
           type: string
           format: string
@@ -4322,19 +4354,19 @@ components:
           description: "the size of the chunks on disc in bytes"
         addrsPerBlock:
           type: number
-          format: double
+          format: float64
           description: "the average number of addresses per block"
         appsPerBlock:
           type: number
-          format: double
+          format: float64
           description: "the average number of appearances per block"
         appsPerAddr:
           type: number
-          format: double
+          format: float64
           description: "the average number of appearances per address"
         ratio:
           type: number
-          format: double
+          format: float64
           description: "the ratio of appearances to addresses"
     monitorClean:
       description: "report on cleaning dups out of monitors"
@@ -4399,23 +4431,23 @@ components:
           description: "the result of the check"
         visitedCnt:
           type: number
-          format: uint32
+          format: uint64
           description: "the number of visited items in the cache"
         checkedCnt:
           type: number
-          format: uint32
+          format: uint64
           description: "the number of checks"
         skippedCnt:
           type: number
-          format: uint32
+          format: uint64
           description: "the number of skipped checks"
         passedCnt:
           type: number
-          format: uint32
+          format: uint64
           description: "the number of passed checks"
         failedCnt:
           type: number
-          format: uint32
+          format: uint64
           description: "the number of failed checks"
         msgStrings:
           type: array
@@ -4572,7 +4604,7 @@ components:
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
           description: "the zero-indexed position of the transaction in the block"
         nonce:
           type: number
@@ -4598,6 +4630,10 @@ components:
           type: string
           format: wei
           description: "the amount of wei sent with this transactions"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the value in ether"
         gas:
           type: number
           format: gas
@@ -4648,8 +4684,8 @@ components:
           format: string
           description: "the message"
         num:
-          type: string
-          format: int
+          type: number
+          format: int64
           description: "a number if needed"
     response:
       required:

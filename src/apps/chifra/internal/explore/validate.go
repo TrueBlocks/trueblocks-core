@@ -177,6 +177,6 @@ func (opts *ExploreOptions) idToTxHash(chain, arg string, isBlockHash func(arg s
 		return "", nil
 	}
 
-	hash, err := opts.Conn.GetTransactionHashByNumberAndID(blockNum, txId)
+	hash, err := opts.Conn.GetTransactionHashByNumberAndID(blockNum, base.Txnum(txId))
 	return hash.Hex(), err
 }

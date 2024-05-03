@@ -79,7 +79,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 							value.Address = base.FAKE_ETH_ADDRESS
 							value.Holder = mon.Address
 							value.BlockNumber = uint64(app.BlockNumber)
-							value.TransactionIndex = uint64(app.TransactionIndex)
+							value.TransactionIndex = base.Txnum(app.TransactionIndex)
 							value.Balance = *balance
 							value.Timestamp = app.Timestamp
 							bar.Tick()
@@ -117,7 +117,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 								}
 								currentBn = item.BlockNumber
 								if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
-									item.Diff = *base.NewWei(0).Sub(&item.Balance, &item.PriorBalance)
 									var passes bool
 									passes, finished = filter.ApplyCountFilter()
 									if passes {

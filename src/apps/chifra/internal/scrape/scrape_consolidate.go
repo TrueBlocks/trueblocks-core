@@ -180,7 +180,7 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 	os.Remove(fn) // It's okay to remove this. If it fails, we'll just start over.
 
 	appMap := make(map[string][]types.AppRecord, len(appearances))
-	fileRange := base.FileRange{First: utils.NOPOS, Last: 0}
+	fileRange := base.FileRange{First: base.NOPOS, Last: 0}
 
 	if len(appearances) == 0 {
 		return appMap, base.FileRange{First: 0, Last: 0}, 0
@@ -192,7 +192,7 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 		if len(parts) == 3 { // shouldn't be needed, but just in case...
 			addr := strings.ToLower(parts[0])
 			bn := utils.MustParseUint(strings.TrimLeft(parts[1], "0"))
-			txid := utils.MustParseUint(strings.TrimLeft(parts[2], "0"))
+			txid := base.MustParseNumeral(strings.TrimLeft(parts[2], "0"))
 			// See #3252
 			if addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
 				continue

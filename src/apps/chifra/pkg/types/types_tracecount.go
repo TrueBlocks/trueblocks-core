@@ -33,7 +33,7 @@ type TraceCount struct {
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TracesCnt        uint64         `json:"tracesCnt"`
 	TransactionHash  base.Hash      `json:"transactionHash"`
-	TransactionIndex base.Blknum    `json:"transactionIndex"`
+	TransactionIndex base.Txnum     `json:"transactionIndex"`
 	raw              *RawTraceCount `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE

@@ -38,7 +38,7 @@ func (id *Identifier) ResolveBlocks(chain string) ([]uint64, error) {
 // GetBounds returns the earliest and latest blocks for an array of identifiers
 func GetBounds(chain string, ids *[]Identifier) (ret base.BlockRange, err error) {
 	ret = base.BlockRange{
-		First: utils.NOPOS,
+		First: base.NOPOS,
 		Last:  0,
 	}
 
@@ -64,7 +64,7 @@ func (id *Identifier) getBounds(chain string) (ret base.BlockRange, err error) {
 		// do nothing
 	}
 	ret.Last = id.End.resolvePoint(chain)
-	if ret.Last == utils.NOPOS || ret.Last == 0 {
+	if ret.Last == base.NOPOS || ret.Last == 0 {
 		ret.Last = ret.First + 1
 	}
 
@@ -325,7 +325,7 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
 }
 
 //--------------------------------------------------------------------------------
-bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg) {
+bool getDirectionalTxId(blknum_t bn, tx num_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg) {
     blknum_t lastBlock = getLatestBlock_client();
 
     if (bn < firstTransactionBlock()) {
@@ -337,7 +337,7 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
     getBlock(block, bn);
 
     argOut = "";
-    txnum_t nextid = txid + 1;
+    tx num_t nextid = txid + 1;
     while (argOut.empty() && bn >= firstTransactionBlock() && bn <= lastBlock) {
         if (dir == "next") {
             if (nextid < block.transactions.size()) {

@@ -7,7 +7,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
@@ -43,7 +42,7 @@ func LocationsFromAddrAppsAndCacheType(conn *rpc.Connection, address base.Addres
 		case walk.Cache_Logs:
 			logGroup := &types.LogGroup{
 				BlockNumber:      uint64(app.BlockNumber),
-				TransactionIndex: utils.NOPOS,
+				TransactionIndex: base.NOPOSN,
 			}
 			locations = append(locations, logGroup)
 
@@ -63,19 +62,19 @@ func LocationsFromAddrAppsAndCacheType(conn *rpc.Connection, address base.Addres
 			locations = append(locations, &types.StatementGroup{
 				Address:          address,
 				BlockNumber:      uint64(app.BlockNumber),
-				TransactionIndex: uint64(app.TransactionIndex),
+				TransactionIndex: base.Txnum(app.TransactionIndex),
 			})
 
 		case walk.Cache_Traces:
 			locations = append(locations, &types.TraceGroup{
 				BlockNumber:      uint64(app.BlockNumber),
-				TransactionIndex: uint64(app.TransactionIndex),
+				TransactionIndex: base.Txnum(app.TransactionIndex),
 			})
 
 		case walk.Cache_Transactions:
 			locations = append(locations, &types.Transaction{
 				BlockNumber:      uint64(app.BlockNumber),
-				TransactionIndex: uint64(app.TransactionIndex),
+				TransactionIndex: base.Txnum(app.TransactionIndex),
 			})
 		}
 	}

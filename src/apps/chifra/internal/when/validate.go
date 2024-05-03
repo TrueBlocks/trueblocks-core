@@ -7,8 +7,8 @@ package whenPkg
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -56,7 +56,7 @@ func (opts *WhenOptions) validateWhen() error {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--update", "--timestamps")
 		}
 
-		if opts.Truncate != utils.NOPOS {
+		if opts.Truncate != base.NOPOS {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--truncate", "--timestamps")
 		}
 

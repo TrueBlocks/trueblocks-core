@@ -2,6 +2,7 @@ package sdk
 
 import (
 	"encoding/json"
+	"strings"
 )
 
 // Globals is a subset of globally available options from the command line
@@ -56,4 +57,77 @@ func (g *Globals) Caching(op CacheOp) {
 
 type Cacher interface {
 	Caching(op CacheOp)
+}
+
+func convertObjectToArray(field, strIn string) string {
+	convertToArray := func(field, str string) (string, bool) {
+		find := "\"" + field + "\": {"
+		start := strings.Index(str, find)
+		if start == -1 {
+			return str, false
+		}
+
+		braceCount := 0
+		end := start + len(find)
+		for i := end; i < len(str); i++ {
+			if str[i] == '{' {
+				braceCount++
+			} else if str[i] == '}' {
+				if braceCount == 0 {
+					end = i + 1
+					break
+				}
+				braceCount--
+			}
+		}
+
+		beforeB := str[:start+len(find)-1]      // Adjust to include '{'
+		afterB := str[end:]                     // after "}"
+		objectB := str[start+len(find)-1 : end] // Adjust to start from '{'
+		return beforeB + "[" + objectB + "]" + afterB, strings.Contains(str, find)
+	}
+
+	str := strIn
+	for {
+		var more bool
+		str, more = convertToArray(field, str)
+		if !more {
+			break
+		}
+	}
+
+	return str
+}
+
+func convertEmptyStrToZero(field, strIn string) string {
+	convertToZero := func(field, str string) (string, bool) {
+		find := "\"" + field + "\": \"\""
+		start := strings.Index(str, find)
+		if start == -1 {
+			return str, false
+		}
+
+		end := start + len(find)
+		for i := end; i < len(str); i++ {
+			if str[i] == ',' || str[i] == '}' {
+				end = i
+				break
+			}
+		}
+
+		beforeB := str[:start+len(find)-2] // Adjust to include '""'
+		afterB := str[end:]                // after ","
+		return beforeB + "\"0\"" + afterB, strings.Contains(str, find)
+	}
+
+	str := strIn
+	for {
+		var more bool
+		str, more = convertToZero(field, str)
+		if !more {
+			break
+		}
+	}
+
+	return str
 }

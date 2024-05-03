@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // StatePart is a bit mask for querying various parts an address's state
@@ -39,7 +38,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	state = &types.State{
 		Address:     address,
 		BlockNumber: blockNumber,
-		Deployed:    utils.NOPOS,
+		Deployed:    base.NOPOS,
 	}
 
 	rpcPayload := []query.BatchPayload{
@@ -171,15 +170,10 @@ func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*base.Wei, e
 }
 
 // GetFieldsFromParts converts a string array of part names to a bit mask of parts and returns the corresponding output field names or none if no valid parts are present
-func (conn *Connection) GetFieldsFromParts(parts []string, asEther bool) (stateFields StatePart, outputFields []string, none bool) {
-	balanceOutputField := "balance"
-	if asEther {
-		balanceOutputField = "ether"
-	}
-
+func (conn *Connection) GetFieldsFromParts(parts []string) (stateFields StatePart, outputFields []string, none bool) {
 	if len(parts) == 0 {
 		stateFields = Balance
-		outputFields = []string{balanceOutputField}
+		outputFields = []string{"balance"}
 		return
 	}
 
@@ -215,7 +209,7 @@ func (conn *Connection) GetFieldsFromParts(parts []string, asEther bool) (stateF
 
 	// Always show balance for non-none parts
 	stateFields |= Balance
-	outputFields = append(outputFields, balanceOutputField)
+	outputFields = append(outputFields, "balance")
 
 	if (stateFields & Nonce) != 0 {
 		outputFields = append(outputFields, "nonce")

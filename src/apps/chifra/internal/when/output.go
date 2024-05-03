@@ -13,9 +13,9 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -65,7 +65,7 @@ func (opts *WhenOptions) WhenInternal() error {
 		} else if opts.Count {
 			err = opts.HandleTimestampCount()
 
-		} else if opts.Truncate != utils.NOPOS {
+		} else if opts.Truncate != base.NOPOS {
 			err = opts.HandleTimestampsTruncate()
 
 		} else {

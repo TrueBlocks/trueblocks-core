@@ -14,6 +14,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -88,7 +89,7 @@ func (opts *ChunksOptions) ChunksInternal() error {
 	} else if opts.Publish {
 		err = opts.HandlePublish(blockNums)
 
-	} else if opts.Truncate != utils.NOPOS {
+	} else if opts.Truncate != base.NOPOS {
 		err = opts.HandleTruncate(blockNums)
 
 	} else {

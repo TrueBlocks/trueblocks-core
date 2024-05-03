@@ -69,7 +69,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				return false, err
 			}
 
-			testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
+			testRange := base.FileRange{First: opts.Truncate, Last: base.NOPOS}
 			if rng.Intersects(testRange) {
 				if err = manifest.RemoveChunk(chain, opts.PublisherAddr, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
 					return false, err

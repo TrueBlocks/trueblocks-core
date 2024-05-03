@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
@@ -67,14 +66,14 @@ func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
 func (opts *ListOptions) IsMax(cnt uint64) bool {
 	max := opts.MaxRecords
 	if max == 250 && !opts.Globals.IsApiMode() {
-		max = utils.NOPOS
+		max = base.NOPOS
 	}
 	return cnt >= max
 }
 
 func (opts *ListOptions) GetMax() uint64 {
 	if opts.MaxRecords == 250 && !opts.Globals.IsApiMode() {
-		return utils.NOPOS
+		return base.NOPOS
 	}
 	return opts.MaxRecords
 }

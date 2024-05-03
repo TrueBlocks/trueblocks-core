@@ -28,7 +28,7 @@ type TimestampRange struct {
 	Last  Timestamp
 }
 
-var NotARange = FileRange{First: utils.NOPOS, Last: utils.NOPOS}
+var NotARange = FileRange{First: NOPOS, Last: NOPOS}
 
 // RangeFromFilename returns a FileRange and ignore any errors
 func RangeFromFilename(path string) (blkRange FileRange) {

@@ -88,7 +88,7 @@ type Transaction struct {
 	Timestamp            base.Timestamp  `json:"timestamp"`
 	To                   base.Address    `json:"to"`
 	Traces               []Trace         `json:"traces"`
-	TransactionIndex     base.Blknum     `json:"transactionIndex"`
+	TransactionIndex     base.Txnum      `json:"transactionIndex"`
 	TransactionType      string          `json:"type"`
 	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
@@ -122,7 +122,6 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
-	asEther := extraOptions["ether"] == true
 	model = map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
 		"from":             s.From,
@@ -133,7 +132,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		"date":             s.Date(),
 		"to":               to,
 		"transactionIndex": s.TransactionIndex,
-		"value":            base.FormattedValue(&s.Value, asEther, 18),
+		"value":            s.Value.String(),
 	}
 
 	order = []string{
@@ -143,7 +142,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		"date",
 		"from",
 		"to",
-		"ether",
+		"value",
 		"gasPrice",
 		"gasUsed",
 		"gasCost",
@@ -190,10 +189,8 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		if s.Nonce > 0 {
 			model["nonce"] = s.Nonce
 		}
-		model["value"] = base.FormattedValue(&s.Value, asEther, 18)
 		model["gas"] = s.Gas
 
-		model["ether"] = base.FormattedValue(&s.Value, true, 18)
 		if s.MaxFeePerGas > 0 {
 			model["maxFeePerGas"] = s.MaxFeePerGas
 		}
@@ -283,8 +280,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 			model["type"] = ""
 		}
 		order = append(order, "type")
-		model["ether"] = base.FormattedValue(&s.Value, true, 18)
-		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(s.GasPrice), true, 18)
+		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(s.GasPrice.Uint64()), true, 18)
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 
@@ -311,6 +307,13 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 			order = append(order, "nTraces")
 		}
 	}
+
+	asEther := true // special case for transactions, we always show --ether -- extraOptions["ether"] == true
+	if asEther {
+		model["ether"] = base.FormattedValue(&s.Value, true, 18)
+		order = append(order, "ether")
+	}
+
 	// EXISTING_CODE
 
 	return Model{
@@ -620,16 +623,16 @@ func NewTransaction(raw *RawTransaction, receipt *Receipt, timestamp base.Timest
 	s.Hash = base.HexToHash(raw.Hash)
 	s.BlockHash = base.HexToHash(raw.BlockHash)
 	s.BlockNumber = utils.MustParseUint(raw.BlockNumber)
-	s.TransactionIndex = utils.MustParseUint(raw.TransactionIndex)
+	s.TransactionIndex = base.MustParseNumeral(raw.TransactionIndex)
 	s.Nonce = utils.MustParseUint(raw.Nonce)
 	s.Timestamp = timestamp
 	s.From = base.HexToAddress(raw.From)
 	s.To = base.HexToAddress(raw.To)
 	s.Value.SetString(raw.Value, 0)
-	s.Gas = utils.MustParseUint(raw.Gas)
-	s.GasPrice = utils.MustParseUint(raw.GasPrice)
-	s.MaxFeePerGas = utils.MustParseUint(raw.MaxFeePerGas)
-	s.MaxPriorityFeePerGas = utils.MustParseUint(raw.MaxPriorityFeePerGas)
+	s.Gas = base.MustParseNumeral(raw.Gas)
+	s.GasPrice = base.MustParseNumeral(raw.GasPrice)
+	s.MaxFeePerGas = base.MustParseNumeral(raw.MaxFeePerGas)
+	s.MaxPriorityFeePerGas = base.MustParseNumeral(raw.MaxPriorityFeePerGas)
 	s.Input = raw.Input
 	s.TransactionType = raw.TransactionType
 

@@ -8,7 +8,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -16,7 +15,7 @@ var ErrNotAContract = errors.New("not a contract")
 
 // IsContractAtLatest checks if an account is a contract at the latest block
 func (conn *Connection) IsContractAtLatest(address base.Address) error {
-	return conn.IsContractAt(address, utils.NOPOS)
+	return conn.IsContractAt(address, base.NOPOS)
 }
 
 // IsContractAt checks if an account is a contract

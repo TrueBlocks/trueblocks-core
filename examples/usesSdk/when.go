@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoWhen tests the When sdk function
+// DoWhen tests the when sdk function
 func DoWhen() {
 	logger.Info("DoWhen")
 

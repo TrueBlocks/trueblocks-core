@@ -56,7 +56,7 @@ type Receipt struct {
 	Status            uint32       `json:"status"`
 	To                base.Address `json:"to,omitempty"`
 	TransactionHash   base.Hash    `json:"transactionHash"`
-	TransactionIndex  base.Blknum  `json:"transactionIndex"`
+	TransactionIndex  base.Txnum   `json:"transactionIndex"`
 	raw               *RawReceipt  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -379,13 +379,13 @@ func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 		BlockHash:         base.HexToHash(r.BlockHash),
 		BlockNumber:       utils.MustParseUint(r.BlockNumber),
 		ContractAddress:   base.HexToAddress(r.ContractAddress),
-		CumulativeGasUsed: cumulativeGasUsed,
-		EffectiveGasPrice: utils.MustParseUint(r.EffectiveGasPrice),
-		GasUsed:           utils.MustParseUint(r.GasUsed),
+		CumulativeGasUsed: base.Gas(cumulativeGasUsed),
+		EffectiveGasPrice: base.MustParseNumeral(r.EffectiveGasPrice),
+		GasUsed:           base.MustParseNumeral(r.GasUsed),
 		Status:            uint32(utils.MustParseUint(r.Status)),
 		IsError:           utils.MustParseUint(r.Status) == 0,
 		TransactionHash:   base.HexToHash(r.TransactionHash),
-		TransactionIndex:  utils.MustParseUint(r.TransactionIndex),
+		TransactionIndex:  base.MustParseNumeral(r.TransactionIndex),
 		Logs:              logs,
 		raw:               r,
 	}

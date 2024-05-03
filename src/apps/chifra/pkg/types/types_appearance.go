@@ -129,7 +129,7 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOptions map[
 		}
 	} else if extraOptions["export"] == true && format == "json" {
 		if verbose {
-			if s.Timestamp != utils.NOPOSI {
+			if s.Timestamp != base.NOPOSI {
 				model["timestamp"] = s.Timestamp
 			}
 			model["date"] = s.Date()

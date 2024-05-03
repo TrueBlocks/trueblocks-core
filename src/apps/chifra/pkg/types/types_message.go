@@ -22,7 +22,7 @@ type RawMessage struct {
 
 type Message struct {
 	Msg string      `json:"msg,omitempty"`
-	Num int         `json:"num,omitempty"`
+	Num int64       `json:"num,omitempty"`
 	raw *RawMessage `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE

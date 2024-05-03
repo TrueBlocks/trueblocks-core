@@ -1,7 +1,10 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -26,11 +29,12 @@ func getFilename(baseName string, g *sdk.Globals) string {
 	return "usesSdk/" + baseName + app + ".json"
 }
 
-func Report(fn string) {
-	logger.Info("----------------------------------------------------")
-	logger.Info(fn)
-	// logger.Info(opts.String())
-	// logger.Info("----------------------------------------------------")
+func ReportError(fn string, err error) {
+	logger.Error(fmt.Errorf("NO %s: %v", fn, err))
+}
+
+func ReportOkay(fn string) {
+	logger.Error(colors.Green, "OK ", fn, colors.Off)
 }
 
 func doCache(on bool, in []sdk.Globals) []sdk.Globals {

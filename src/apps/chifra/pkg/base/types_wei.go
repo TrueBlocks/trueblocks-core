@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // Wei is a type in its own right. This means we can extend it by
@@ -28,6 +27,14 @@ func (w *Wei) Bytes() []byte {
 
 func (w *Wei) String() string {
 	return (*big.Int)(w).String()
+}
+
+func (w *Wei) BigInt() *big.Int {
+	return (*big.Int)(w)
+}
+
+func (w *Wei) IsZero() bool {
+	return w.String() == "0"
 }
 
 func (w *Wei) SetUint64(x uint64) *Wei {
@@ -107,6 +114,7 @@ func (w *Wei) MarshalCache(writer io.Writer) error {
 func (w *Wei) UnmarshalText(text []byte) error {
 	return (*big.Int)(w).UnmarshalText(text)
 }
+
 // TODO: BOGUS - THIS NAME SUCKS
 
 func FormattedValue(in *Wei, asEther bool, decimals int) string {
@@ -123,7 +131,7 @@ func ToEther(wei *Wei) *Ether {
 }
 
 func BiFromUint64(bn uint64) *big.Int {
-	if bn == utils.NOPOS {
+	if bn == NOPOS {
 		return nil
 	}
 	return new(big.Int).SetUint64(bn)

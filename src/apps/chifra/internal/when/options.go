@@ -17,11 +17,11 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	// EXISTING_CODE
 )
@@ -46,7 +46,7 @@ type WhenOptions struct {
 }
 
 var defaultWhenOptions = WhenOptions{
-	Truncate: utils.NOPOS,
+	Truncate: base.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -55,7 +55,7 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
+	logger.TestLog(opts.Truncate != base.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Repair, "Repair: ", opts.Repair)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
@@ -83,7 +83,7 @@ func WhenFinishParseInternal(w io.Writer, values url.Values) *WhenOptions {
 	copy := defaultWhenOptions
 	copy.Globals.Caps = getCaps()
 	opts := &copy
-	opts.Truncate = utils.NOPOS
+	opts.Truncate = base.NOPOS
 	for key, value := range values {
 		switch key {
 		case "blocks":
@@ -146,7 +146,7 @@ func whenFinishParse(args []string) *WhenOptions {
 	// EXISTING_CODE
 	opts.Blocks = args
 	if opts.Truncate == 0 {
-		opts.Truncate = utils.NOPOS
+		opts.Truncate = base.NOPOS
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
