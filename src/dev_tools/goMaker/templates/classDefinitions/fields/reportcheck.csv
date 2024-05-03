@@ -1,9 +1,9 @@
 name       ,type     ,strDefault ,attributes ,docOrder ,description
 result     ,string   ,           ,           ,       1 ,the result of the check
-visitedCnt ,uint32   ,           ,           ,       2 ,the number of visited items in the cache
-checkedCnt ,uint32   ,           ,           ,       3 ,the number of checks
-skippedCnt ,uint32   ,           ,           ,       4 ,the number of skipped checks
-passedCnt  ,uint32   ,           ,           ,       5 ,the number of passed checks
-failedCnt  ,uint32   ,           ,           ,       6 ,the number of failed checks
+visitedCnt ,uint64   ,           ,           ,       2 ,the number of visited items in the cache
+checkedCnt ,uint64   ,           ,           ,       3 ,the number of checks
+skippedCnt ,uint64   ,           ,           ,       4 ,the number of skipped checks
+passedCnt  ,uint64   ,           ,           ,       5 ,the number of passed checks
+failedCnt  ,uint64   ,           ,           ,       6 ,the number of failed checks
 msgStrings ,[]string ,           ,           ,       7 ,an array of messages explaining failed checks
 reason     ,string   ,           ,           ,       8 ,the reason for the test

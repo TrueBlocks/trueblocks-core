@@ -29,14 +29,14 @@ type RawReportCheck struct {
 }
 
 type ReportCheck struct {
-	CheckedCnt uint32          `json:"checkedCnt"`
-	FailedCnt  uint32          `json:"failedCnt"`
+	CheckedCnt uint64          `json:"checkedCnt"`
+	FailedCnt  uint64          `json:"failedCnt"`
 	MsgStrings []string        `json:"msgStrings"`
-	PassedCnt  uint32          `json:"passedCnt"`
+	PassedCnt  uint64          `json:"passedCnt"`
 	Reason     string          `json:"reason"`
 	Result     string          `json:"result"`
-	SkippedCnt uint32          `json:"skippedCnt"`
-	VisitedCnt uint32          `json:"visitedCnt"`
+	SkippedCnt uint64          `json:"skippedCnt"`
+	VisitedCnt uint64          `json:"visitedCnt"`
 	raw        *RawReportCheck `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE

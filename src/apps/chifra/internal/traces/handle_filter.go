@@ -273,8 +273,8 @@ bool COptions::extractBlocksFromFilter(blknum_t& b1, const string_q& p1, blknum_
 }
 
 name        ,type    ,strDefault ,array ,omitempty ,doc ,example ,description
-fromBlock   ,blknum  ,           ,      ,          ,    ,        ,
-toBlock     ,blknum  ,           ,      ,          ,    ,        ,
+fromBlock   ,blk num  ,           ,      ,          ,    ,        ,
+toBlock     ,blk num  ,           ,      ,          ,    ,        ,
 fromAddress ,address ,           ,true  ,          ,    ,        ,
 toAddress   ,address ,           ,true  ,          ,    ,        ,
 after       ,uint64  ,           ,      ,          ,    ,        ,

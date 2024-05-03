@@ -4,7 +4,7 @@ blockNumber      ,blknum       ,           ,                   ,       2 ,the nu
 subtraces        ,uint64       ,           ,                   ,       8 ,the number of children traces that the trace hash
 traceAddress     ,[]uint64     ,           ,                   ,       7 ,a particular trace's address in the trace tree
 transactionHash  ,hash         ,           ,                   ,       5 ,the transaction's hash containing this trace
-transactionIndex ,uint64       ,           ,                   ,       6 ,the zero-indexed position of the transaction in the block
+transactionIndex ,blknum       ,           ,                   ,       6 ,the zero-indexed position of the transaction in the block
 type             ,string       ,           ,omitempty          ,       9 ,the type of the trace
 error            ,string       ,           ,omitempty          ,         ,
 action           ,*TraceAction ,           ,                   ,      10 ,the trace action for this trace

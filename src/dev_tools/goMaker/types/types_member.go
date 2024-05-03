@@ -160,6 +160,8 @@ func (m *Member) RawType() string {
 			case "BlockHash":
 				return "string"
 			case "BlockNumber":
+				fallthrough
+			case "TransactionIndex":
 				return "base.Blknum"
 			case "TraceAddress":
 				return "[]uint64"

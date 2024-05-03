@@ -260,11 +260,11 @@ ReportChecks consist of the following fields:
 | Field      | Description                                   | Type     |
 | ---------- | --------------------------------------------- | -------- |
 | result     | the result of the check                       | string   |
-| visitedCnt | the number of visited items in the cache      | uint32   |
-| checkedCnt | the number of checks                          | uint32   |
-| skippedCnt | the number of skipped checks                  | uint32   |
-| passedCnt  | the number of passed checks                   | uint32   |
-| failedCnt  | the number of failed checks                   | uint32   |
+| visitedCnt | the number of visited items in the cache      | uint64   |
+| checkedCnt | the number of checks                          | uint64   |
+| skippedCnt | the number of skipped checks                  | uint64   |
+| passedCnt  | the number of passed checks                   | uint64   |
+| failedCnt  | the number of failed checks                   | uint64   |
 | msgStrings | an array of messages explaining failed checks | string[] |
 | reason     | the reason for the test                       | string   |
 
@@ -323,7 +323,6 @@ This documentation mentions the following basic data types.
 | int64    | a 64-bit signed integer             |             |
 | ipfshash | a multi-hash produced by IPFS       | mixed-case  |
 | string   | a normal character string           |             |
-| uint32   | a 32-bit unsigned integer           |             |
 | uint64   | a 64-bit unsigned integer           |             |
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

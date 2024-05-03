@@ -153,8 +153,8 @@ Logs consist of the following fields:
 | Field            | Description                                                                                       | Type                                    |
 | ---------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------- |
 | blockNumber      | the number of the block                                                                           | blknum                                  |
-| transactionIndex | the zero-indexed position of the transaction in the block                                         | uint64                                  |
-| logIndex         | the zero-indexed position of this log relative to the block                                       | uint64                                  |
+| transactionIndex | the zero-indexed position of the transaction in the block                                         | blknum                                  |
+| logIndex         | the zero-indexed position of this log relative to the block                                       | blknum                                  |
 | timestamp        | the timestamp of the block this log appears in                                                    | timestamp                               |
 | date             | the timestamp as a date (calculated)                                                              | datetime                                |
 | address          | the smart contract that emitted this log                                                          | address                                 |
@@ -210,7 +210,7 @@ Traces consist of the following fields:
 | timestamp        | the timestamp of the block                                | timestamp                                         |
 | date             | the timestamp as a date (calculated)                      | datetime                                          |
 | transactionHash  | the transaction's hash containing this trace              | hash                                              |
-| transactionIndex | the zero-indexed position of the transaction in the block | uint64                                            |
+| transactionIndex | the zero-indexed position of the transaction in the block | blknum                                            |
 | traceAddress     | a particular trace's address in the trace tree            | uint64[]                                          |
 | subtraces        | the number of children traces that the trace hash         | uint64                                            |
 | type             | the type of the trace                                     | string                                            |

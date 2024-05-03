@@ -44,11 +44,11 @@ type Log struct {
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	CompressedLog    string         `json:"compressedLog,omitempty"`
 	Data             string         `json:"data,omitempty"`
-	LogIndex         uint64         `json:"logIndex"`
+	LogIndex         base.Blknum    `json:"logIndex"`
 	Timestamp        base.Timestamp `json:"timestamp,omitempty"`
 	Topics           []base.Hash    `json:"topics,omitempty"`
 	TransactionHash  base.Hash      `json:"transactionHash"`
-	TransactionIndex uint64         `json:"transactionIndex"`
+	TransactionIndex base.Blknum    `json:"transactionIndex"`
 	raw              *RawLog        `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE

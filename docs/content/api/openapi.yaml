@@ -3577,11 +3577,11 @@ components:
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: uint64
+          format: blknum
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
-          format: uint64
+          format: blknum
           description: "the zero-indexed position of this log relative to the block"
         timestamp:
           type: number
@@ -3673,7 +3673,7 @@ components:
           description: "the transaction's hash containing this trace"
         transactionIndex:
           type: number
-          format: uint64
+          format: blknum
           description: "the zero-indexed position of the transaction in the block"
         traceAddress:
           type: array
@@ -4431,23 +4431,23 @@ components:
           description: "the result of the check"
         visitedCnt:
           type: number
-          format: uint32
+          format: uint64
           description: "the number of visited items in the cache"
         checkedCnt:
           type: number
-          format: uint32
+          format: uint64
           description: "the number of checks"
         skippedCnt:
           type: number
-          format: uint32
+          format: uint64
           description: "the number of skipped checks"
         passedCnt:
           type: number
-          format: uint32
+          format: uint64
           description: "the number of passed checks"
         failedCnt:
           type: number
-          format: uint32
+          format: uint64
           description: "the number of failed checks"
         msgStrings:
           type: array
