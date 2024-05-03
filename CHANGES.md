@@ -2,6 +2,11 @@
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
+## v2.5.9 (2024/04/05)
+
+- Bumped version to 2.5.9.
+- Separates out tests into its own submodule.
+
 ## v2.5.8 (2024/02/09)
 
 - Bumped version number to v2.5.8.
