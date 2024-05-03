@@ -136,6 +136,7 @@ Slurps consist of the following fields:
 | from             | address from which the transaction was sent                                                           | address                                 |
 | to               | address to which the transaction was sent                                                             | address                                 |
 | value            | the amount of wei sent with this transactions                                                         | wei                                     |
+| ether            | if --ether is specified, the value in ether                                                           | ether                                   |
 | gas              | the maximum number of gas allowed for this transaction                                                | gas                                     |
 | gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                     |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                   |
@@ -194,6 +195,7 @@ This documentation mentions the following basic data types.
 | bool      | either `true`, `false`, `1`, or `0` |                |
 | bytes     | an arbitrarily long string of bytes |                |
 | datetime  | a JSON formatted date               | as a string    |
+| ether     | a big number float                  | as a string    |
 | gas       | a 64-bit unsigned integer           |                |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | string    | a normal character string           |                |

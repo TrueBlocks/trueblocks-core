@@ -4606,6 +4606,10 @@ components:
           type: string
           format: wei
           description: "the amount of wei sent with this transactions"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the value in ether"
         gas:
           type: number
           format: gas
