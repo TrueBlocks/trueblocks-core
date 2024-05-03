@@ -3743,6 +3743,22 @@ components:
           type: string
           format: wei
           description: "the value (in wei) of this trace action"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the value in ether (calculated)"
+        selfDestructed:
+          type: string
+          format: address
+          description: "`true` if the contract self-destructed, `false` otherwise"
+        balance:
+          type: string
+          format: wei
+          description: "if self-destructed, the balance of the contract at that time"
+        balanceEth:
+          type: string
+          format: ether
+          description: "if --ether is specified, the balance in ether (calculated)"
     traceResult:
       description: "trace result data as returned from the RPC (with slight enhancements)"
       type: object

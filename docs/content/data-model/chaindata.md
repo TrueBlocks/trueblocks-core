@@ -249,16 +249,20 @@ The following commands produce and manage TraceActions:
 
 TraceActions consist of the following fields:
 
-| Field         | Description                                                                | Type    |
-| ------------- | -------------------------------------------------------------------------- | ------- |
-| from          | address from which the trace was sent                                      | address |
-| to            | address to which the trace was sent                                        | address |
-| gas           | the maximum number of gas allowed for this trace                           | gas     |
-| input         | an encoded version of the function call                                    | bytes   |
-| callType      | the type of call                                                           | string  |
-| refundAddress | if the call type is self-destruct, the address to which the refund is sent | address |
-| rewardType    | the type of reward                                                         | string  |
-| value         | the value (in wei) of this trace action                                    | wei     |
+| Field          | Description                                                                | Type    |
+| -------------- | -------------------------------------------------------------------------- | ------- |
+| from           | address from which the trace was sent                                      | address |
+| to             | address to which the trace was sent                                        | address |
+| gas            | the maximum number of gas allowed for this trace                           | gas     |
+| input          | an encoded version of the function call                                    | bytes   |
+| callType       | the type of call                                                           | string  |
+| refundAddress  | if the call type is self-destruct, the address to which the refund is sent | address |
+| rewardType     | the type of reward                                                         | string  |
+| value          | the value (in wei) of this trace action                                    | wei     |
+| ether          | if --ether is specified, the value in ether (calculated)                   | ether   |
+| selfDestructed | `true` if the contract self-destructed, `false` otherwise                  | address |
+| balance        | if self-destructed, the balance of the contract at that time               | wei     |
+| balanceEth     | if --ether is specified, the balance in ether (calculated)                 | ether   |
 
 ## TraceResult
 
