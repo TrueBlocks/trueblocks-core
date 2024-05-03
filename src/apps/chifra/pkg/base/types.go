@@ -24,7 +24,7 @@ func MustParseNumeral(input any) Numeral {
 
 type Blknum = uint64
 type Gas = Numeral
-type Txnum = uint64
+type Txnum = Numeral
 type Lognum = uint64
 type Topic = string
 type Timestamp = int64
@@ -34,7 +34,7 @@ type Timestamp = int64
 
 const NOPOS = uint64(^uint64(0))
 const NOPOSI = int64(0xdeadbeef)
-const NOPOSN = uint64(^uint64(0))
+const NOPOSN = Numeral(^uint64(0))
 
 func IsFinal(latestTs, blockTs Timestamp) bool {
 	// TODO: This is not consistent with they way we determine unripe in the scraper, for example.

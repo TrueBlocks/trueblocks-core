@@ -149,7 +149,7 @@ func (c *covalentTransaction) Slurp() (s types.Slurp) {
 		IsError:          !(*c.Successful),
 		Timestamp:        c.BlockSignedAt.Unix(),
 		To:               base.HexToAddress(*c.To),
-		TransactionIndex: uint64(*c.TxOffset),
+		TransactionIndex: base.Txnum(*c.TxOffset),
 		Value:            *c.Value,
 	}
 

@@ -62,19 +62,19 @@ func LocationsFromAddrAppsAndCacheType(conn *rpc.Connection, address base.Addres
 			locations = append(locations, &types.StatementGroup{
 				Address:          address,
 				BlockNumber:      uint64(app.BlockNumber),
-				TransactionIndex: uint64(app.TransactionIndex),
+				TransactionIndex: base.Txnum(app.TransactionIndex),
 			})
 
 		case walk.Cache_Traces:
 			locations = append(locations, &types.TraceGroup{
 				BlockNumber:      uint64(app.BlockNumber),
-				TransactionIndex: uint64(app.TransactionIndex),
+				TransactionIndex: base.Txnum(app.TransactionIndex),
 			})
 
 		case walk.Cache_Transactions:
 			locations = append(locations, &types.Transaction{
 				BlockNumber:      uint64(app.BlockNumber),
-				TransactionIndex: uint64(app.TransactionIndex),
+				TransactionIndex: base.Txnum(app.TransactionIndex),
 			})
 		}
 	}

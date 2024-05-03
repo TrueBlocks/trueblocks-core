@@ -623,7 +623,7 @@ func NewTransaction(raw *RawTransaction, receipt *Receipt, timestamp base.Timest
 	s.Hash = base.HexToHash(raw.Hash)
 	s.BlockHash = base.HexToHash(raw.BlockHash)
 	s.BlockNumber = utils.MustParseUint(raw.BlockNumber)
-	s.TransactionIndex = utils.MustParseUint(raw.TransactionIndex)
+	s.TransactionIndex = base.MustParseNumeral(raw.TransactionIndex)
 	s.Nonce = utils.MustParseUint(raw.Nonce)
 	s.Timestamp = timestamp
 	s.From = base.HexToAddress(raw.From)

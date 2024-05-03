@@ -3,6 +3,7 @@ package decache
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -20,7 +21,7 @@ func LocationsFromTransactionIds(conn *rpc.Connection, ids []identifiers.Identif
 		for _, app := range txIds {
 			tx := &types.Transaction{
 				BlockNumber:      uint64(app.BlockNumber),
-				TransactionIndex: uint64(app.TransactionIndex),
+				TransactionIndex: base.Txnum(app.TransactionIndex),
 			}
 			locations = append(locations, tx)
 			locations = append(locations, &types.TraceGroup{

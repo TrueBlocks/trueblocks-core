@@ -16,7 +16,7 @@ import (
 
 func TestGetStatementFromLog(t *testing.T) {
 	bn := uint64(9279453)
-	txid := uint64(208)
+	txid := base.Txnum(208)
 	log := types.Log{
 		Address: base.HexToAddress("0x6b175474e89094c44da98b954eedeac495271d0f"),
 		Topics: []base.Hash{

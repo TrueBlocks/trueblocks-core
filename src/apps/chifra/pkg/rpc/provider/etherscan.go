@@ -203,7 +203,7 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		Hash:             base.HexToHash(rawTx.Hash),
 		BlockHash:        base.HexToHash(rawTx.BlockHash),
 		BlockNumber:      utils.MustParseUint(rawTx.BlockNumber),
-		TransactionIndex: utils.MustParseUint(rawTx.TransactionIndex),
+		TransactionIndex: base.MustParseNumeral(rawTx.TransactionIndex),
 		Timestamp:        utils.MustParseInt(rawTx.Timestamp),
 		From:             base.HexToAddress(rawTx.From),
 		To:               base.HexToAddress(rawTx.To),
@@ -222,7 +222,7 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't
 		// want to make another RPC call. We tried (see commented code), but EtherScan balks with a weird message
 		app, _ := p.conn.GetTransactionAppByHash(s.Hash.Hex())
-		s.TransactionIndex = uint64(app.TransactionIndex)
+		s.TransactionIndex = base.Txnum(app.TransactionIndex)
 	} else if requestType == "miner" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.BlockReward

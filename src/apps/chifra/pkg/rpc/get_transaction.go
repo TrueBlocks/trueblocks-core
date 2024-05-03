@@ -13,7 +13,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64) (tx *types.Transaction, err error) {
+func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Txnum) (tx *types.Transaction, err error) {
 	if conn.StoreReadable() {
 		tx = &types.Transaction{
 			BlockNumber:      bn,
@@ -57,7 +57,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 	}
 
 	bn := uint64(raw.BlockNumber)
-	txid := uint64(raw.TransactionIndex)
+	txid := base.Txnum(raw.TransactionIndex)
 
 	if conn.StoreReadable() {
 		tx = &types.Transaction{
@@ -145,7 +145,7 @@ func (conn *Connection) GetTransactionAppByHash(hash string) (types.RawAppearanc
 }
 
 // GetTransactionHashByNumberAndID returns a transaction's hash if it's a valid transaction
-func (conn *Connection) GetTransactionHashByNumberAndID(bn, txId uint64) (base.Hash, error) {
+func (conn *Connection) GetTransactionHashByNumberAndID(bn uint64, txId base.Txnum) (base.Hash, error) {
 	if ec, err := conn.getClient(); err != nil {
 		return base.Hash{}, err
 	} else {
@@ -219,7 +219,7 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 			ret := types.Transaction{
 				BlockHash:        blockHash,
 				BlockNumber:      uint64(raw.BlockNumber),
-				TransactionIndex: uint64(raw.TransactionIndex),
+				TransactionIndex: base.Txnum(raw.TransactionIndex),
 				Timestamp:        ts,
 				From:             base.PrefundSender,
 				To:               base.HexToAddress(raw.Address),
@@ -240,7 +240,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 		if rt == types.WithdrawalAmt {
 			tx := &types.Transaction{
 				BlockNumber:      uint64(raw.BlockNumber),
-				TransactionIndex: uint64(raw.TransactionIndex),
+				TransactionIndex: base.Txnum(raw.TransactionIndex),
 				Timestamp:        block.Timestamp,
 				From:             base.WithdrawalSender,
 				To:               base.HexToAddress(raw.Address),
@@ -311,7 +311,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 			rewards, total := types.NewReward(blockReward, nephewReward, feeReward, uncleReward)
 			tx := &types.Transaction{
 				BlockNumber:      uint64(raw.BlockNumber),
-				TransactionIndex: uint64(raw.TransactionIndex),
+				TransactionIndex: base.Txnum(raw.TransactionIndex),
 				BlockHash:        block.Hash,
 				Timestamp:        block.Timestamp,
 				From:             sender,
@@ -346,7 +346,7 @@ var (
 	notAHash = base.Hash{}
 )
 
-func (conn *Connection) getTransactionRaw(blkHash base.Hash, txHash base.Hash, bn base.Blknum, txid uint64) (raw *types.RawTransaction, err error) {
+func (conn *Connection) getTransactionRaw(blkHash base.Hash, txHash base.Hash, bn base.Blknum, txid base.Txnum) (raw *types.RawTransaction, err error) {
 	method := "eth_getTransactionByBlockNumberAndIndex"
 	params := query.Params{fmt.Sprintf("0x%x", bn), fmt.Sprintf("0x%x", txid)}
 	if txHash != notAHash {

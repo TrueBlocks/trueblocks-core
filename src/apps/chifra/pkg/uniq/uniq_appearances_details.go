@@ -19,7 +19,7 @@ type UniqProcFunc func(s *types.Appearance) error
 type AddressBooleanMap map[string]bool
 
 // Insert generates item's key according to `AppearanceFmt` and adds the item to the map
-func (a *AddressBooleanMap) Insert(address string, bn uint64, txid uint64) string {
+func (a *AddressBooleanMap) Insert(address string, bn uint64, txid base.Txnum) string {
 	key := fmt.Sprintf(AppearanceFmt, address, bn, txid)
 	v := *a
 	v[key] = true
@@ -34,8 +34,9 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 			return err
 		} else {
 			for i, name := range namesArray {
+				tx_id := base.Txnum(i)
 				address := name.Address.Hex()
-				streamAppearance(procFunc, flow, "genesis", address, bn, uint64(i), base.NOPOS, ts, addrMap)
+				streamAppearance(procFunc, flow, "genesis", address, bn, tx_id, base.NOPOS, ts, addrMap)
 			}
 		}
 
@@ -79,7 +80,7 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 			}
 
 			for _, withdrawal := range block.Withdrawals {
-				streamAppearance(procFunc, flow, "withdrawal", withdrawal.Address.Hex(), bn, uint64(withdrawal.Index), base.NOPOS, ts, addrMap)
+				streamAppearance(procFunc, flow, "withdrawal", withdrawal.Address.Hex(), bn, withdrawal.Index, base.NOPOS, ts, addrMap)
 			}
 		}
 	}
@@ -199,7 +200,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 	for _, trace := range traces {
 		traceid := trace.TraceIndex
 		bn := base.Blknum(trace.BlockNumber)
-		txid := uint64(trace.TransactionIndex)
+		txid := trace.TransactionIndex
 
 		from := trace.Action.From.Hex()
 		streamAppearance(procFunc, flow, traceReason(traceid, &trace, "from"), from, bn, txid, traceid, ts, addrMap)
@@ -324,7 +325,7 @@ var mapSync2 sync.Mutex
 
 // streamAppearance streams an appearance to the model channel if we've not seen this appearance before. We
 // keep track of appearances we've seen with `appsMap`.
-func streamAppearance(procFunc UniqProcFunc, flow string, reason string, address string, bn, txid, traceid uint64, ts int64, addrMap AddressBooleanMap) {
+func streamAppearance(procFunc UniqProcFunc, flow string, reason string, address string, bn uint64, txid base.Numeral, traceid uint64, ts int64, addrMap AddressBooleanMap) {
 	if base.IsPrecompile(address) {
 		return
 	}

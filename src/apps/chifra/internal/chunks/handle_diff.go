@@ -133,7 +133,7 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 	})
 
 	filtered := func(app types.Appearance) bool {
-		return uint64(app.TransactionIndex) == types.WithdrawalAmt
+		return base.Txnum(app.TransactionIndex) == types.WithdrawalAmt
 		// return false
 	}
 
@@ -142,7 +142,7 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 	post := make([]string, 0, len(apps))
 	for _, app := range apps {
 		if !filtered(app) &&
-			(app.Address != base.SentinalAddr || uint64(app.TransactionIndex) != types.MisconfigReward) {
+			(app.Address != base.SentinalAddr || base.Txnum(app.TransactionIndex) != types.MisconfigReward) {
 			line := fmt.Sprintf("%d\t%d\t%s", app.BlockNumber, app.TransactionIndex, app.Address)
 			bn := uint64(app.BlockNumber)
 			if bn < rd.In {

@@ -31,7 +31,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.Block[types.Trans
 			result.Transactions = make([]types.Transaction, 0, len(cachedBlock.Transactions))
 			success := true
 			for index := range cachedBlock.Transactions {
-				tx, err := conn.GetTransactionByNumberAndId(cachedBlock.BlockNumber, uint64(index))
+				tx, err := conn.GetTransactionByNumberAndId(cachedBlock.BlockNumber, base.Txnum(index))
 				if err != nil {
 					success = false
 					break
@@ -64,7 +64,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.Block[types.Trans
 		raw := types.NewRawTransactionFromMap(rawData)
 
 		// Get the receipt
-		idx := utils.MustParseUint(raw.TransactionIndex)
+		idx := base.MustParseNumeral(raw.TransactionIndex)
 		var receipt types.Receipt
 		if receiptMap[idx] == nil {
 			receipt, err = conn.GetReceipt(bn, idx, ts)

@@ -78,7 +78,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.Trace, error)
 				Action:           &traceAction,
 				Result:           &traceResult,
 			}
-			if trace.TransactionIndex != uint64(curApp.TransactionIndex) {
+			if trace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
 				curApp = types.Appearance{
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
@@ -104,7 +104,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.Trace, error)
 }
 
 // GetTracesByTransactionId returns a slice of traces in a given transaction
-func (conn *Connection) GetTracesByTransactionId(bn, txid uint64) ([]types.Trace, error) {
+func (conn *Connection) GetTracesByTransactionId(bn uint64, txid base.Txnum) ([]types.Trace, error) {
 	if conn.StoreReadable() {
 		traceGroup := &types.TraceGroup{
 			BlockNumber:      bn,
@@ -200,7 +200,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			if transaction != nil {
 				trace.Timestamp = transaction.Timestamp
 			}
-			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != uint64(curApp.TransactionIndex) {
+			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
 				curApp = types.Appearance{
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
@@ -302,7 +302,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 				curTs = conn.GetBlockTimestamp(trace.BlockNumber)
 			}
 
-			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != uint64(curApp.TransactionIndex) {
+			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
 				curApp = types.Appearance{
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),

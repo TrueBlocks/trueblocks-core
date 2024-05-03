@@ -385,7 +385,7 @@ func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 		Status:            uint32(utils.MustParseUint(r.Status)),
 		IsError:           utils.MustParseUint(r.Status) == 0,
 		TransactionHash:   base.HexToHash(r.TransactionHash),
-		TransactionIndex:  utils.MustParseUint(r.TransactionIndex),
+		TransactionIndex:  base.MustParseNumeral(r.TransactionIndex),
 		Logs:              logs,
 		raw:               r,
 	}

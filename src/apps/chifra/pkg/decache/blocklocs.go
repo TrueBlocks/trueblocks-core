@@ -41,7 +41,7 @@ func LocationsFromBlockIds(conn *rpc.Connection, ids []identifiers.Identifier, l
 				for index := range rawBlock.Transactions {
 					txToRemove := &types.Transaction{
 						BlockNumber:      bn,
-						TransactionIndex: uint64(index),
+						TransactionIndex: base.Txnum(index),
 					}
 					locations = append(locations, txToRemove)
 					locations = append(locations, &types.TraceGroup{

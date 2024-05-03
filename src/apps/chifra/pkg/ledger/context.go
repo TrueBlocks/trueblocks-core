@@ -78,7 +78,7 @@ func (c *ledgerContext) Next() base.Blknum {
 	return c.NextBlock
 }
 
-func (l *Ledger) ctxKey(bn, txid uint64) ledgerContextKey {
+func (l *Ledger) ctxKey(bn uint64, txid base.Txnum) ledgerContextKey {
 	// TODO: Is having the context per asset necessary?
 	// return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
 	return ledgerContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
@@ -94,7 +94,7 @@ func (l *Ledger) SetContexts(chain string, apps []types.Appearance) error {
 		cur := apps[i].BlockNumber
 		prev := uint64(apps[utils.Max(1, i)-1].BlockNumber)
 		next := uint64(apps[utils.Min(i+1, len(apps)-1)].BlockNumber)
-		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
+		key := l.ctxKey(uint64(apps[i].BlockNumber), base.Txnum(apps[i].TransactionIndex))
 		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.Reversed)
 	}
 	l.debugContext()

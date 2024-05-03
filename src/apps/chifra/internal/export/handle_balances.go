@@ -79,7 +79,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 							value.Address = base.FAKE_ETH_ADDRESS
 							value.Holder = mon.Address
 							value.BlockNumber = uint64(app.BlockNumber)
-							value.TransactionIndex = uint64(app.TransactionIndex)
+							value.TransactionIndex = base.Txnum(app.TransactionIndex)
 							value.Balance = *balance
 							value.Timestamp = app.Timestamp
 							bar.Tick()
