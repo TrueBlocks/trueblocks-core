@@ -12,4 +12,4 @@ logsBloom         ,string  ,           ,omitempty|rawonly  ,             ,      
 status            ,uint32  ,NO_STATUS  ,                   ,             ,       7 ,`1` on transaction suceess&#44; `null` if tx preceeds Byzantium&#44; `0` otherwise
 to                ,address ,           ,omitempty          ,             ,         ,
 transactionHash   ,hash    ,           ,                   ,             ,       8 ,
-transactionIndex  ,blknum  ,           ,                   ,             ,       9 ,
+transactionIndex  ,txnum   ,           ,                   ,             ,       9 ,

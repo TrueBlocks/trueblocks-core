@@ -1,6 +1,6 @@
 name             ,type      ,strDefault ,attributes     ,docOrder ,description
 blockNumber      ,blknum    ,           ,               ,       1 ,the block at which the report is made
-transactionIndex ,blknum    ,           ,omitempty      ,       2 ,the transaction index (if applicable) at which the report is made
+transactionIndex ,txnum     ,           ,omitempty      ,       2 ,the transaction index (if applicable) at which the report is made
 timestamp        ,timestamp ,           ,               ,       3 ,the timestamp of the block
 date             ,datetime  ,           ,calc           ,       4 ,the timestamp as a date
 totalSupply      ,int256    ,           ,               ,       5 ,the total supply of the token contract

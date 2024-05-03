@@ -3183,7 +3183,7 @@ components:
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
@@ -3428,7 +3428,7 @@ components:
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
           description: "the zero-indexed position of the transaction in the block"
         nonce:
           type: number
@@ -3566,7 +3566,7 @@ components:
           format: hash
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
     log:
       description: "log data as returned from the RPC (with slight enhancements)"
       type: object
@@ -3577,7 +3577,7 @@ components:
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
@@ -3673,7 +3673,7 @@ components:
           description: "the transaction's hash containing this trace"
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
           description: "the zero-indexed position of the transaction in the block"
         traceAddress:
           type: array
@@ -3789,7 +3789,7 @@ components:
           description: "the block number"
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
           description: "the transaction index"
         transactionHash:
           type: string
@@ -3985,7 +3985,7 @@ components:
           description: "the block at which the report is made"
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
           description: "the transaction index (if applicable) at which the report is made"
         timestamp:
           type: number
@@ -4604,7 +4604,7 @@ components:
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: blknum
+          format: txnum
           description: "the zero-indexed position of the transaction in the block"
         nonce:
           type: number

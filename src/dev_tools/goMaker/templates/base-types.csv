@@ -17,6 +17,7 @@ base      ,string    ,a normal character string                       ,
 base      ,[]string  ,an array of strings                             ,
 base      ,timestamp ,a 64-bit unsigned integer                       ,Unix timestamp
 base      ,topic     ,an '0x'-prefixed 32-byte hex string             ,lowercase
+base      ,txnum     ,an alias for a uint64                           ,
 base      ,uint256   ,a 256-bit unsigned integer                      ,
 base      ,uint32    ,a 32-bit unsigned integer                       ,
 base      ,uint64    ,a 64-bit unsigned integer                       ,

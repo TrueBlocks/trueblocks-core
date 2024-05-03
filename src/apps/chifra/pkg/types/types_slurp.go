@@ -74,7 +74,7 @@ type Slurp struct {
 	Nonce             uint64         `json:"nonce"`
 	Timestamp         base.Timestamp `json:"timestamp"`
 	To                base.Address   `json:"to"`
-	TransactionIndex  base.Blknum    `json:"transactionIndex"`
+	TransactionIndex  base.Txnum     `json:"transactionIndex"`
 	TxReceiptStatus   string         `json:"txReceiptStatus"`
 	ValidatorIndex    uint64         `json:"validatorIndex"`
 	Value             base.Wei       `json:"value"`

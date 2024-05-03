@@ -66,7 +66,7 @@ Transactions consist of the following fields:
 | hash             | the hash of the transaction                                                                           | hash                                           |
 | blockHash        | the hash of the block containing this transaction                                                     | hash                                           |
 | blockNumber      | the number of the block                                                                               | blknum                                         |
-| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                         |
+| transactionIndex | the zero-indexed position of the transaction in the block                                             | txnum                                          |
 | nonce            | sequence number of the transactions sent by the sender                                                | uint64                                         |
 | timestamp        | the Unix timestamp of the object                                                                      | timestamp                                      |
 | date             | the timestamp as a date (calculated)                                                                  | datetime                                       |
@@ -132,7 +132,7 @@ Receipts consist of the following fields:
 | logs             | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
 | status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
 | transactionHash  |                                                                            | hash                                |
-| transactionIndex |                                                                            | blknum                              |
+| transactionIndex |                                                                            | txnum                               |
 
 ## Log
 
@@ -153,7 +153,7 @@ Logs consist of the following fields:
 | Field            | Description                                                                                       | Type                                    |
 | ---------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------- |
 | blockNumber      | the number of the block                                                                           | blknum                                  |
-| transactionIndex | the zero-indexed position of the transaction in the block                                         | blknum                                  |
+| transactionIndex | the zero-indexed position of the transaction in the block                                         | txnum                                   |
 | logIndex         | the zero-indexed position of this log relative to the block                                       | blknum                                  |
 | timestamp        | the timestamp of the block this log appears in                                                    | timestamp                               |
 | date             | the timestamp as a date (calculated)                                                              | datetime                                |
@@ -210,7 +210,7 @@ Traces consist of the following fields:
 | timestamp        | the timestamp of the block                                | timestamp                                         |
 | date             | the timestamp as a date (calculated)                      | datetime                                          |
 | transactionHash  | the transaction's hash containing this trace              | hash                                              |
-| transactionIndex | the zero-indexed position of the transaction in the block | blknum                                            |
+| transactionIndex | the zero-indexed position of the transaction in the block | txnum                                             |
 | traceAddress     | a particular trace's address in the trace tree            | uint64[]                                          |
 | subtraces        | the number of children traces that the trace hash         | uint64                                            |
 | type             | the type of the trace                                     | string                                            |
@@ -297,7 +297,7 @@ TraceCounts consist of the following fields:
 | Field            | Description                             | Type      |
 | ---------------- | --------------------------------------- | --------- |
 | blockNumber      | the block number                        | blknum    |
-| transactionIndex | the transaction index                   | blknum    |
+| transactionIndex | the transaction index                   | txnum     |
 | transactionHash  | the transaction's hash                  | hash      |
 | timestamp        | the timestamp of the block              | timestamp |
 | date             | the timestamp as a date (calculated)    | datetime  |
@@ -416,6 +416,7 @@ This documentation mentions the following basic data types.
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | topic     | an '0x'-prefixed 32-byte hex string | lowercase      |
+| txnum     | an alias for a uint64               |                |
 | uint256   | a 256-bit unsigned integer          |                |
 | uint32    | a 32-bit unsigned integer           |                |
 | uint64    | a 64-bit unsigned integer           |                |

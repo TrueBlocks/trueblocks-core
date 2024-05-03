@@ -192,7 +192,7 @@ Statements consist of the following fields:
 | Field               | Description                                                                                                                           | Type      |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------- |
 | blockNumber         | the number of the block                                                                                                               | blknum    |
-| transactionIndex    | the zero-indexed position of the transaction in the block                                                                             | blknum    |
+| transactionIndex    | the zero-indexed position of the transaction in the block                                                                             | txnum     |
 | logIndex            | the zero-indexed position the log in the block, if applicable                                                                         | blknum    |
 | transactionHash     | the hash of the transaction that triggered this reconciliation                                                                        | hash      |
 | timestamp           | the Unix timestamp of the object                                                                                                      | timestamp |
@@ -264,6 +264,7 @@ This documentation mentions the following basic data types.
 | int256    | a signed big number                 | as a string    |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
+| txnum     | an alias for a uint64               |                |
 | uint32    | a 32-bit unsigned integer           |                |
 | uint64    | a 64-bit unsigned integer           |                |
 

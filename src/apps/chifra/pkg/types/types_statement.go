@@ -91,7 +91,7 @@ type Statement struct {
 	SpotPrice           float64        `json:"spotPrice"`
 	Timestamp           base.Timestamp `json:"timestamp"`
 	TransactionHash     base.Hash      `json:"transactionHash"`
-	TransactionIndex    base.Blknum    `json:"transactionIndex"`
+	TransactionIndex    base.Txnum     `json:"transactionIndex"`
 	raw                 *RawStatement  `json:"-"`
 	// EXISTING_CODE
 	ReconType ReconType `json:"-"`

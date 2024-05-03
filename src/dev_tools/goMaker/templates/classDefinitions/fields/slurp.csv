@@ -2,7 +2,7 @@ name              ,type      ,strDefault ,attributes ,docOrder ,description
 hash              ,hash      ,           ,           ,       1 ,the hash of the transaction
 blockHash         ,hash      ,           ,           ,       2 ,the hash of the block containing this transaction
 blockNumber       ,blknum    ,           ,           ,       3 ,the number of the block
-transactionIndex  ,blknum    ,           ,           ,       4 ,the zero-indexed position of the transaction in the block
+transactionIndex  ,txnum     ,           ,           ,       4 ,the zero-indexed position of the transaction in the block
 nonce             ,uint64    ,           ,           ,       5 ,sequence number of the transactions sent by the sender
 timestamp         ,timestamp ,           ,           ,       6 ,the Unix timestamp of the object
 date              ,datetime  ,           ,calc       ,       7 ,the timestamp as a date

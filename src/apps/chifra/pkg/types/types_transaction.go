@@ -88,7 +88,7 @@ type Transaction struct {
 	Timestamp            base.Timestamp  `json:"timestamp"`
 	To                   base.Address    `json:"to"`
 	Traces               []Trace         `json:"traces"`
-	TransactionIndex     base.Blknum     `json:"transactionIndex"`
+	TransactionIndex     base.Txnum      `json:"transactionIndex"`
 	TransactionType      string          `json:"type"`
 	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`

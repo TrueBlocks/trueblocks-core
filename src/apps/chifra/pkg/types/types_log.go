@@ -48,7 +48,7 @@ type Log struct {
 	Timestamp        base.Timestamp `json:"timestamp,omitempty"`
 	Topics           []base.Hash    `json:"topics,omitempty"`
 	TransactionHash  base.Hash      `json:"transactionHash"`
-	TransactionIndex base.Blknum    `json:"transactionIndex"`
+	TransactionIndex base.Txnum     `json:"transactionIndex"`
 	raw              *RawLog        `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE

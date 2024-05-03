@@ -61,7 +61,7 @@ Tokens consist of the following fields:
 | Field            | Description                                                                | Type      |
 | ---------------- | -------------------------------------------------------------------------- | --------- |
 | blockNumber      | the block at which the report is made                                      | blknum    |
-| transactionIndex | the transaction index (if applicable) at which the report is made          | blknum    |
+| transactionIndex | the transaction index (if applicable) at which the report is made          | txnum     |
 | timestamp        | the timestamp of the block                                                 | timestamp |
 | date             | the timestamp as a date (calculated)                                       | datetime  |
 | totalSupply      | the total supply of the token contract                                     | int256    |
@@ -111,6 +111,7 @@ This documentation mentions the following basic data types.
 | int256    | a signed big number                 | as a string    |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
+| txnum     | an alias for a uint64               |                |
 | uint64    | a 64-bit unsigned integer           |                |
 | wei       | an unsigned big number              | as a string    |
 

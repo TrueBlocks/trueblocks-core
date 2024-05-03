@@ -56,7 +56,7 @@ type Receipt struct {
 	Status            uint32       `json:"status"`
 	To                base.Address `json:"to,omitempty"`
 	TransactionHash   base.Hash    `json:"transactionHash"`
-	TransactionIndex  base.Blknum  `json:"transactionIndex"`
+	TransactionIndex  base.Txnum   `json:"transactionIndex"`
 	raw               *RawReceipt  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE

@@ -47,7 +47,7 @@ type Token struct {
 	Symbol           string         `json:"symbol"`
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TotalSupply      base.Wei       `json:"totalSupply"`
-	TransactionIndex base.Blknum    `json:"transactionIndex,omitempty"`
+	TransactionIndex base.Txnum     `json:"transactionIndex,omitempty"`
 	TokenType        TokenType      `json:"type"`
 	raw              *RawToken      `json:"-"`
 	// EXISTING_CODE
