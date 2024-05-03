@@ -9,7 +9,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type AppearanceFilter struct {
@@ -35,7 +34,7 @@ func NewFilter(reversed, reverted bool, fourBytes []string, exportRange base.Blo
 	return &AppearanceFilter{
 		exportRange: exportRange,
 		recordRange: recordRange,
-		OuterBounds: base.BlockRange{First: 0, Last: utils.NOPOS},
+		OuterBounds: base.BlockRange{First: 0, Last: base.NOPOS},
 		sortBy:      sortBy,
 		Reversed:    reversed,
 		reverted:    reverted,
@@ -49,8 +48,8 @@ func NewEmptyFilter() *AppearanceFilter {
 		false,
 		false,
 		[]string{},
-		base.BlockRange{First: 0, Last: utils.NOPOS},
-		base.RecordRange{First: 0, Last: utils.NOPOS},
+		base.BlockRange{First: 0, Last: base.NOPOS},
+		base.RecordRange{First: 0, Last: base.NOPOS},
 	)
 }
 

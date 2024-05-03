@@ -8,7 +8,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // GetMinerAndWithdrawals returns the miner and withdrawals for a block
@@ -37,7 +36,7 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 	if conn.StoreReadable() {
 		withdrawalGroup := &types.WithdrawalGroup{
 			BlockNumber:      bn,
-			TransactionIndex: utils.NOPOS,
+			TransactionIndex: base.NOPOSN,
 		}
 		if err := conn.Store.Read(withdrawalGroup, nil); err == nil {
 			return withdrawalGroup.Withdrawals, nil
@@ -51,7 +50,7 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 			withdrawalGroup := &types.WithdrawalGroup{
 				Withdrawals:      withdrawals,
 				BlockNumber:      bn,
-				TransactionIndex: utils.NOPOS,
+				TransactionIndex: base.NOPOSN,
 			}
 			if err = conn.Store.Write(withdrawalGroup, nil); err != nil {
 				logger.Warn("Failed to write withdrawals to cache", err)
@@ -65,7 +64,7 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 // getWithdrawals fetches the withdrawals from a block
 func (conn *Connection) getWithdrawals(bn base.Blknum) ([]types.Withdrawal, base.Timestamp, error) {
 	if block, err := conn.GetBlockHeaderByNumber(bn); err != nil {
-		return []types.Withdrawal{}, utils.NOPOSI, err
+		return []types.Withdrawal{}, base.NOPOSI, err
 	} else {
 		return block.Withdrawals, block.Timestamp, nil
 	}

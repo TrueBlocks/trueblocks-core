@@ -19,7 +19,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.Trace, error)
 	if conn.StoreReadable() {
 		traceGroup := &types.TraceGroup{
 			BlockNumber:      bn,
-			TransactionIndex: utils.NOPOS,
+			TransactionIndex: base.NOPOSN,
 		}
 		if err := conn.Store.Read(traceGroup, nil); err == nil {
 			return traceGroup.Traces, nil
@@ -95,7 +95,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.Trace, error)
 			traceGroup := &types.TraceGroup{
 				Traces:           ret,
 				BlockNumber:      bn,
-				TransactionIndex: utils.NOPOS,
+				TransactionIndex: base.NOPOSN,
 			}
 			_ = conn.Store.Write(traceGroup, nil)
 		}
@@ -323,7 +323,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 // GetTracesCountInBlock returns the number of traces in a block
 func (conn *Connection) GetTracesCountInBlock(bn uint64) (uint64, error) {
 	if traces, err := conn.GetTracesByBlockNumber(bn); err != nil {
-		return utils.NOPOS, err
+		return base.NOPOS, err
 	} else {
 		return uint64(len(traces)), nil
 	}

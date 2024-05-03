@@ -6,10 +6,10 @@ import (
 	"io"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, withCount bool) (apps []types.Appearance, cnt int, err error) {
@@ -80,7 +80,7 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, with
 				Address:          mon.Address,
 				BlockNumber:      app.BlockNumber,
 				TransactionIndex: app.TransactionIndex,
-				Timestamp:        utils.NOPOSI,
+				Timestamp:        base.NOPOSI,
 			}
 			apps = append(apps, s)
 		}

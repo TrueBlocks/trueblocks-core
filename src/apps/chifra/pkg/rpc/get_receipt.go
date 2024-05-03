@@ -53,7 +53,7 @@ func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (
 
 	return rawReceipt.RawTo(map[string]any{
 		"hash":      txHash,
-		"timestmap": utils.NOPOSI,
+		"timestmap": base.NOPOSI,
 	})
 }
 
@@ -79,7 +79,7 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 	if conn.StoreReadable() {
 		receiptGroup := &types.ReceiptGroup{
 			BlockNumber:      bn,
-			TransactionIndex: utils.NOPOS,
+			TransactionIndex: base.NOPOSN,
 		}
 		if err := conn.Store.Read(receiptGroup, nil); err == nil {
 			receiptMap := make(map[base.Txnum]*types.Receipt, len(receiptGroup.Receipts))
@@ -98,7 +98,7 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 			receiptGroup := &types.ReceiptGroup{
 				Receipts:         receipts,
 				BlockNumber:      bn,
-				TransactionIndex: utils.NOPOS,
+				TransactionIndex: base.NOPOSN,
 			}
 			if err = conn.Store.Write(receiptGroup, nil); err != nil {
 				logger.Warn("Failed to write receipts to cache", err)
@@ -127,8 +127,8 @@ func (conn *Connection) getReceipts(bn base.Blknum) ([]types.Receipt, error) {
 		return []types.Receipt{}, nil
 
 	} else {
-		curBlock := utils.NOPOS
-		curTs := utils.NOPOSI
+		curBlock := base.NOPOS
+		curTs := base.NOPOSI
 		var ret []types.Receipt
 		for _, rawReceipt := range *rawReceipts {
 			bn := utils.MustParseUint(rawReceipt.BlockNumber)

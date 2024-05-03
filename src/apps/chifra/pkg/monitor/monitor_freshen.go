@@ -24,7 +24,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -44,7 +43,7 @@ type MonitorUpdate struct {
 func NewUpdater(chain string, testMode, silent bool, addrs []string) MonitorUpdate {
 	return MonitorUpdate{
 		MaxTasks:      12,
-		FirstBlock:    utils.NOPOS,
+		FirstBlock:    base.NOPOS,
 		Chain:         chain,
 		PublisherAddr: base.Address{},
 		TestMode:      testMode,

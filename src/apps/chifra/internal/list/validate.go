@@ -8,10 +8,10 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -29,7 +29,7 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	if opts.LastBlock == 0 {
-		opts.LastBlock = utils.NOPOS
+		opts.LastBlock = base.NOPOS
 	}
 
 	if opts.MaxRecords == 0 {
@@ -41,7 +41,7 @@ func (opts *ListOptions) validateList() error {
 		return validate.Usage(msg)
 	}
 
-	if opts.LastBlock != utils.NOPOS && !opts.Globals.TestMode {
+	if opts.LastBlock != base.NOPOS && !opts.Globals.TestMode {
 		latest := opts.Conn.GetLatestBlockNumber()
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)

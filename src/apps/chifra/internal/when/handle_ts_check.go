@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // HandleTimestampsCheck handles chifra when --timestamps --check
@@ -36,8 +35,8 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	}
 
 	prev := types.NamedBlock{
-		BlockNumber: utils.NOPOS,
-		Timestamp:   utils.NOPOSI,
+		BlockNumber: base.NOPOS,
+		Timestamp:   base.NOPOSI,
 	}
 
 	if len(blockNums) > 0 {
@@ -80,7 +79,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Na
 		expected, _ = opts.Conn.GetBlockHeaderByNumber(bn)
 	}
 
-	if prev.Timestamp != utils.NOPOSI {
+	if prev.Timestamp != base.NOPOSI {
 		status := "Okay"
 
 		bnSequential := prev.BlockNumber < onDisc.BlockNumber

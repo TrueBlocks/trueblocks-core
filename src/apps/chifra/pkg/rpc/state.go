@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // StatePart is a bit mask for querying various parts an address's state
@@ -39,7 +38,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	state = &types.State{
 		Address:     address,
 		BlockNumber: blockNumber,
-		Deployed:    utils.NOPOS,
+		Deployed:    base.NOPOS,
 	}
 
 	rpcPayload := []query.BatchPayload{

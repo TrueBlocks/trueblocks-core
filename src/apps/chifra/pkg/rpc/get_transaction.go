@@ -135,7 +135,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 
 func (conn *Connection) GetTransactionAppByHash(hash string) (types.RawAppearance, error) {
 	var ret types.RawAppearance
-	if rawTx, err := conn.getTransactionRaw(notAHash, base.HexToHash(hash), notAnInt, notAnInt); err != nil {
+	if rawTx, err := conn.getTransactionRaw(notAHash, base.HexToHash(hash), notAnInt, base.NOPOSN); err != nil {
 		return ret, err
 	} else {
 		ret.BlockNumber = uint32(utils.MustParseUint(rawTx.BlockNumber))
@@ -342,7 +342,7 @@ func (conn *Connection) GetTransactionCountInBlock(bn uint64) (uint64, error) {
 }
 
 var (
-	notAnInt = utils.NOPOS
+	notAnInt = base.NOPOS
 	notAHash = base.Hash{}
 )
 

@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // Wei is a type in its own right. This means we can extend it by
@@ -132,7 +131,7 @@ func ToEther(wei *Wei) *Ether {
 }
 
 func BiFromUint64(bn uint64) *big.Int {
-	if bn == utils.NOPOS {
+	if bn == NOPOS {
 		return nil
 	}
 	return new(big.Int).SetUint64(bn)

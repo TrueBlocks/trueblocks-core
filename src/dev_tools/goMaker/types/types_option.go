@@ -94,7 +94,7 @@ func readCmdOption(op *Option, data *any) (bool, error) {
 	op.Description = strings.ReplaceAll(op.Description, "&#39;", "'")
 	op.Description = strings.ReplaceAll(op.Description, "`", "")
 
-	op.DefVal = strings.Replace(op.DefVal, "NOPOS", "utils.NOPOS", -1)
+	op.DefVal = strings.Replace(op.DefVal, "NOPOS", "base.NOPOS", -1)
 
 	return true, nil
 }
@@ -213,7 +213,7 @@ func (op *Option) PyHotKey() string {
 }
 
 func (op *Option) CmdDefault() string {
-	return strings.Replace(op.Default(), "utils.NOPOS", "0", -1)
+	return strings.Replace(op.Default(), "base.NOPOS", "0", -1)
 }
 
 func (op *Option) IsFlag() bool {

@@ -3,7 +3,7 @@ package types
 // handle_gocmds_docfile
 // verifyGoEnumValidators
 // verifyDescriptions
-// replaceAll(source, "opts.LastBlock != utils.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS");
+// replaceAll(source, "opts.LastBlock != base.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != base.NOPOS");
 // string_q n = "readme-intros/" + substitute(toLower(cmd.group), " ", "") + "-" + cmd.a pi_route + ".config.md";
 // string_q configDocs = getDocsPathTemplates(n);
 // ::remove(configDocs.c_str());  // remove it if it exists, we will replace it

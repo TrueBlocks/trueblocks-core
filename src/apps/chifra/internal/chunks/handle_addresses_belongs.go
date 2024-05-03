@@ -10,11 +10,11 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
@@ -89,7 +89,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 				return false, err
 			}
 			s.AddressRecord.Count = uint32(len(s.Appearances))
-			if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {
+			if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOS {
 				good := []types.AppRecord{}
 				for _, app := range s.Appearances {
 					if uint64(app.BlockNumber) >= opts.FirstBlock && uint64(app.BlockNumber) <= opts.LastBlock {
@@ -155,7 +155,7 @@ func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[t
 				return false, err
 			}
 			s.AddressRecord.Count = uint32(len(s.Appearances))
-			if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {
+			if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOS {
 				good := []types.AppRecord{}
 				for _, app := range s.Appearances {
 					if uint64(app.BlockNumber) >= opts.FirstBlock && uint64(app.BlockNumber) <= opts.LastBlock {

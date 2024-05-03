@@ -6,7 +6,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func LocationsFromBlockIds(conn *rpc.Connection, ids []identifiers.Identifier, logs, trace bool) ([]cache.Locator, error) {
@@ -20,14 +19,14 @@ func LocationsFromBlockIds(conn *rpc.Connection, ids []identifiers.Identifier, l
 			if logs {
 				logGroup := &types.LogGroup{
 					BlockNumber:      bn,
-					TransactionIndex: utils.NOPOS,
+					TransactionIndex: base.NOPOSN,
 				}
 				locations = append(locations, logGroup)
 
 			} else if trace {
 				traceGroup := &types.TraceGroup{
 					BlockNumber:      bn,
-					TransactionIndex: utils.NOPOS,
+					TransactionIndex: base.NOPOSN,
 				}
 				locations = append(locations, traceGroup)
 

@@ -357,7 +357,7 @@ func (r *RawLog) RawTo(vals map[string]any) (Log, error) {
 		log.Topics = append(log.Topics, base.HexToHash(topic))
 	}
 
-	if ts, ok := vals["timestamp"].(base.Timestamp); ok && ts != utils.NOPOSI {
+	if ts, ok := vals["timestamp"].(base.Timestamp); ok && ts != base.NOPOSI {
 		log.Timestamp = ts
 	}
 

@@ -29,6 +29,13 @@ type Lognum = uint64
 type Topic = string
 type Timestamp = int64
 
+// TODO: Might be nice if the below two values were the same so we could cast between them.
+// TODO: Trouble is that these values may be stored on disc.
+
+const NOPOS = uint64(^uint64(0))
+const NOPOSI = int64(0xdeadbeef)
+const NOPOSN = uint64(^uint64(0))
+
 func IsFinal(latestTs, blockTs Timestamp) bool {
 	// TODO: This is not consistent with they way we determine unripe in the scraper, for example.
 	var min = Timestamp(5)

@@ -38,7 +38,7 @@ func (id *Identifier) ResolveBlocks(chain string) ([]uint64, error) {
 // GetBounds returns the earliest and latest blocks for an array of identifiers
 func GetBounds(chain string, ids *[]Identifier) (ret base.BlockRange, err error) {
 	ret = base.BlockRange{
-		First: utils.NOPOS,
+		First: base.NOPOS,
 		Last:  0,
 	}
 
@@ -64,7 +64,7 @@ func (id *Identifier) getBounds(chain string) (ret base.BlockRange, err error) {
 		// do nothing
 	}
 	ret.Last = id.End.resolvePoint(chain)
-	if ret.Last == utils.NOPOS || ret.Last == 0 {
+	if ret.Last == base.NOPOS || ret.Last == 0 {
 		ret.Last = ret.First + 1
 	}
 

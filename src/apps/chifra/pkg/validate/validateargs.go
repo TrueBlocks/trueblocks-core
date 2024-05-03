@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // ValidArgumentType is a bitmask used to make it easier to validate multiple
@@ -40,7 +39,7 @@ const ValidBlockIdWithRangeAndDate = ValidBlockIdWithRange | ValidArgumentDate
 // ValidateIdentifiersWithBounds Is a helper function to return bounds in addition to validating identifiers
 func ValidateIdentifiersWithBounds(chain string, ids []string, validTypes ValidArgumentType, maxRanges int, results *[]identifiers.Identifier) (base.BlockRange, error) {
 	if err := ValidateIdentifiers(chain, ids, validTypes, maxRanges, results); err != nil {
-		return base.BlockRange{First: 0, Last: utils.NOPOS}, err
+		return base.BlockRange{First: 0, Last: base.NOPOS}, err
 	}
 	return identifiers.GetBounds(chain, results)
 }

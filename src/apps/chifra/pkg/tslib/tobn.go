@@ -5,7 +5,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -40,7 +39,7 @@ func FromNameToBn(chain, name string) (uint64, error) {
 		}
 	}
 
-	return uint64(utils.NOPOS), fmt.Errorf("block at %s returned an error: %w", name, ethereum.NotFound)
+	return uint64(base.NOPOS), fmt.Errorf("block at %s returned an error: %w", name, ethereum.NotFound)
 }
 
 // FromTsToBn returns a chain-specific block number given a Linux timestamp.

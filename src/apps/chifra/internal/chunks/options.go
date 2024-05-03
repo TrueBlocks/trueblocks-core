@@ -23,7 +23,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	// EXISTING_CODE
 )
@@ -60,9 +59,9 @@ type ChunksOptions struct {
 }
 
 var defaultChunksOptions = ChunksOptions{
-	Truncate:  utils.NOPOS,
-	LastBlock: utils.NOPOS,
-	MaxAddrs:  utils.NOPOS,
+	Truncate:  base.NOPOS,
+	LastBlock: base.NOPOS,
+	MaxAddrs:  base.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -73,13 +72,13 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
 	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
-	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
+	logger.TestLog(opts.Truncate != base.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
 	logger.TestLog(opts.Diff, "Diff: ", opts.Diff)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != utils.NOPOS && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
-	logger.TestLog(opts.MaxAddrs != utils.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
+	logger.TestLog(opts.LastBlock != base.NOPOS && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.MaxAddrs != base.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.Rewrite, "Rewrite: ", opts.Rewrite)
 	logger.TestLog(opts.List, "List: ", opts.List)
@@ -110,9 +109,9 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 	copy := defaultChunksOptions
 	copy.Globals.Caps = getCaps()
 	opts := &copy
-	opts.Truncate = utils.NOPOS
-	opts.LastBlock = utils.NOPOS
-	opts.MaxAddrs = utils.NOPOS
+	opts.Truncate = base.NOPOS
+	opts.LastBlock = base.NOPOS
+	opts.MaxAddrs = base.NOPOS
 	for key, value := range values {
 		switch key {
 		case "mode":
@@ -216,16 +215,16 @@ func chunksFinishParse(args []string) *ChunksOptions {
 		}
 	}
 	if opts.Truncate == 0 {
-		opts.Truncate = utils.NOPOS
+		opts.Truncate = base.NOPOS
 	}
 	if opts.LastBlock == 0 {
-		opts.LastBlock = utils.NOPOS
+		opts.LastBlock = base.NOPOS
 	}
 	if opts.MaxAddrs == 0 {
-		opts.MaxAddrs = utils.NOPOS
+		opts.MaxAddrs = base.NOPOS
 	}
 	getDef := func(def string) string {
-		if opts.Truncate != utils.NOPOS || len(opts.Belongs) > 0 || opts.Pin {
+		if opts.Truncate != base.NOPOS || len(opts.Belongs) > 0 || opts.Pin {
 			return "json"
 		}
 		return def

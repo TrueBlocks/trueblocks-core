@@ -20,7 +20,7 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 	if conn.StoreReadable() {
 		logGroup := &types.LogGroup{
 			BlockNumber:      bn,
-			TransactionIndex: utils.NOPOS,
+			TransactionIndex: base.NOPOSN,
 		}
 		if err := conn.Store.Read(logGroup, nil); err == nil {
 			return logGroup.Logs, nil
@@ -39,7 +39,7 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 			logGroup := &types.LogGroup{
 				Logs:             logs,
 				BlockNumber:      bn,
-				TransactionIndex: utils.NOPOS,
+				TransactionIndex: base.NOPOSN,
 			}
 			if err = conn.Store.Write(logGroup, nil); err != nil {
 				logger.Warn("Failed to write logs to cache", err)
@@ -85,8 +85,8 @@ func (conn *Connection) getLogs(filter types.LogFilter) ([]types.Log, error) {
 		return []types.Log{}, nil
 
 	} else {
-		curBlock := utils.NOPOS
-		curTs := utils.NOPOSI
+		curBlock := base.NOPOS
+		curTs := base.NOPOSI
 		var ret []types.Log
 		for _, rawLog := range *rawLogs {
 			bn := utils.MustParseUint(rawLog.BlockNumber)

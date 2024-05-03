@@ -17,10 +17,10 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	// EXISTING_CODE
 )
@@ -66,7 +66,7 @@ type ExportOptions struct {
 
 var defaultExportOptions = ExportOptions{
 	MaxRecords: 250,
-	LastBlock:  utils.NOPOS,
+	LastBlock:  base.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -100,7 +100,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != utils.NOPOS && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != base.NOPOS && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -125,7 +125,7 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.MaxRecords = 250
-	opts.LastBlock = utils.NOPOS
+	opts.LastBlock = base.NOPOS
 	for key, value := range values {
 		switch key {
 		case "addrs":
