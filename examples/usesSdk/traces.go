@@ -9,7 +9,7 @@ import (
 // DoTraces tests the When sdk function
 func DoTraces() {
 	opts := sdk.TracesOptions{
-		TransactionIds: []string{"17100101.1"},
+		TransactionIds: []string{"17100101.1", "3189962.7"},
 	}
 	logger.Info("DoTraces", opts)
 
@@ -33,7 +33,7 @@ func DoTraces() {
 			}
 			opts.Articulate = a
 			opts.Filter = f
-			states := noEther(globals)
+			states := noRaw(globals)
 			for _, g := range states {
 				opts.Globals = g
 				fn := getFilename(baseFn, &opts.Globals)

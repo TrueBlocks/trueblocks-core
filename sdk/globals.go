@@ -98,3 +98,24 @@ func convertObjectToArray(field, strIn string) string {
 
 	return str
 }
+
+func convertEmptyStrToZero(field, strIn string) string {
+	str := strIn
+	find := "\"" + field + "\": \"\""
+	start := strings.Index(str, find)
+	if start == -1 {
+		return str
+	}
+
+	end := start + len(find)
+	for i := end; i < len(str); i++ {
+		if str[i] == ',' || str[i] == '}' {
+			end = i
+			break
+		}
+	}
+
+	beforeB := str[:start+len(find)-2] // Adjust to include '""'
+	afterB := str[end:]                // after ","
+	return beforeB + "\"0\"" + afterB
+}
