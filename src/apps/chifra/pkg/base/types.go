@@ -25,7 +25,7 @@ func MustParseNumeral(input any) Numeral {
 type Blknum = uint64
 type Gas = Numeral
 type Txnum = Numeral
-type Lognum = uint64
+type Lognum = Numeral
 type Topic = string
 type Timestamp = int64
 
