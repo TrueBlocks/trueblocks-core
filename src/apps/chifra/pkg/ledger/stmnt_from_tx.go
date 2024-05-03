@@ -71,9 +71,9 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		if l.AccountFor == ret.Sender {
 			gasUsed := new(base.Wei)
 			if trans.Receipt != nil {
-				gasUsed.SetUint64(trans.Receipt.GasUsed)
+				gasUsed.SetUint64(trans.Receipt.GasUsed.Uint64())
 			}
-			gasPrice := new(base.Wei).SetUint64(trans.GasPrice)
+			gasPrice := new(base.Wei).SetUint64(trans.GasPrice.Uint64())
 			gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
 
 			ret.AmountOut = trans.Value

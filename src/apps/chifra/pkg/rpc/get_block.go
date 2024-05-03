@@ -233,8 +233,8 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn uint64, withT
 		Timestamp:   base.Timestamp(ts), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
 		Hash:        base.HexToHash(rawBlock.Hash),
 		ParentHash:  base.HexToHash(rawBlock.ParentHash),
-		GasLimit:    gasLimit,
-		GasUsed:     gasUsed,
+		GasLimit:    base.Gas(gasLimit),
+		GasUsed:     base.Gas(gasUsed),
 		Miner:       base.HexToAddress(rawBlock.Miner),
 		Difficulty:  difficulty,
 		Uncles:      uncles,

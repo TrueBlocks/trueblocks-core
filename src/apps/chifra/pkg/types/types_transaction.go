@@ -280,7 +280,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 			model["type"] = ""
 		}
 		order = append(order, "type")
-		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(s.GasPrice), true, 18)
+		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(s.GasPrice.Uint64()), true, 18)
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 
@@ -629,10 +629,10 @@ func NewTransaction(raw *RawTransaction, receipt *Receipt, timestamp base.Timest
 	s.From = base.HexToAddress(raw.From)
 	s.To = base.HexToAddress(raw.To)
 	s.Value.SetString(raw.Value, 0)
-	s.Gas = utils.MustParseUint(raw.Gas)
-	s.GasPrice = utils.MustParseUint(raw.GasPrice)
-	s.MaxFeePerGas = utils.MustParseUint(raw.MaxFeePerGas)
-	s.MaxPriorityFeePerGas = utils.MustParseUint(raw.MaxPriorityFeePerGas)
+	s.Gas = base.MustParseGas(raw.Gas)
+	s.GasPrice = base.MustParseGas(raw.GasPrice)
+	s.MaxFeePerGas = base.MustParseGas(raw.MaxFeePerGas)
+	s.MaxPriorityFeePerGas = base.MustParseGas(raw.MaxPriorityFeePerGas)
 	s.Input = raw.Input
 	s.TransactionType = raw.TransactionType
 
