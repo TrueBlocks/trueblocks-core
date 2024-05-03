@@ -85,10 +85,8 @@ func (s *State) Model(chain, format string, verbose bool, extraOptions map[strin
 			if fields, ok := fields.([]string); ok {
 				for _, field := range fields {
 					switch field {
-					case "ether":
-						model["ether"] = base.FormattedValue(&s.Balance, true, 18)
 					case "balance":
-						model["balance"] = base.FormattedValue(&s.Balance, false, 18)
+						model["balance"] = s.Balance.String()
 					case "nonce":
 						model["nonce"] = s.Nonce
 					case "code":
@@ -104,20 +102,20 @@ func (s *State) Model(chain, format string, verbose bool, extraOptions map[strin
 					case "accttype":
 						model["accttype"] = s.AccountType
 					}
+					order = append(order, field)
 				}
-				order = append(order, fields...)
 			}
 		}
 	}
-	if format == "json" {
-		// In JSON format we display both balances
-		if _, ok := model["ether"]; !ok {
-			model["ether"] = base.FormattedValue(&s.Balance, true, 18)
-		}
-		if _, ok := model["balance"]; !ok {
-			model["balance"] = base.FormattedValue(&s.Balance, false, 18)
+
+	if _, ok := model["balance"]; ok {
+		model["ether"] = base.FormattedValue(&s.Balance, true, 18)
+		asEther := extraOptions["ether"] == true
+		if asEther {
+			order = append(order, "ether")
 		}
 	}
+
 	// EXISTING_CODE
 
 	return Model{

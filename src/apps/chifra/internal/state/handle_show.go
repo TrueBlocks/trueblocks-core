@@ -38,7 +38,7 @@ func (opts *StateOptions) HandleShow() error {
 		}
 	}
 
-	stateFields, outputFields, none := opts.Conn.GetFieldsFromParts(opts.Parts, opts.Globals.Ether)
+	stateFields, outputFields, none := opts.Conn.GetFieldsFromParts(opts.Parts)
 
 	cnt := 0
 	ctx, cancel := context.WithCancel(context.Background())
@@ -103,5 +103,6 @@ func (opts *StateOptions) HandleShow() error {
 	extra := map[string]interface{}{
 		"fields": outputFields,
 	}
+
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

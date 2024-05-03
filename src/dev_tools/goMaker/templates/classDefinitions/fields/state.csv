@@ -5,7 +5,8 @@ date        ,datetime  ,           ,calc       ,       3 ,the timestamp as a dat
 address     ,address   ,           ,           ,       4 ,the address of contract being called
 accountType ,string    ,           ,           ,       5 ,the type of account at the given block
 balance     ,wei       ,           ,           ,       6 ,the balance of the account at the given block
-code        ,string    ,           ,           ,       7 ,the code of the account
-deployed    ,blknum    ,           ,           ,       8 ,for smart contracts only&#44; the block number at which the contract was deployed
-nonce       ,uint64    ,           ,           ,       9 ,the nonce of the account at the given block
-proxy       ,address   ,           ,           ,      10 ,the proxy address of the account at the given block
+ether       ,ether     ,           ,calc       ,       7 ,if --ether is specified&#44; the balance in ether
+code        ,string    ,           ,           ,       8 ,the code of the account
+deployed    ,blknum    ,           ,           ,       9 ,for smart contracts only&#44; the block number at which the contract was deployed
+nonce       ,uint64    ,           ,           ,      10 ,the nonce of the account at the given block
+proxy       ,address   ,           ,           ,      11 ,the proxy address of the account at the given block

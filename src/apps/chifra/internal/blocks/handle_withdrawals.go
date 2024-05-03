@@ -94,9 +94,5 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 		}
 	}
 
-	extra := map[string]interface{}{
-		"ether": opts.Globals.Ether,
-	}
-
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }

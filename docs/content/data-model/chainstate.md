@@ -40,6 +40,7 @@ States consist of the following fields:
 | address     | the address of contract being called                                          | address   |
 | accountType | the type of account at the given block                                        | string    |
 | balance     | the balance of the account at the given block                                 | wei       |
+| ether       | if --ether is specified, the balance in ether (calculated)                    | ether     |
 | code        | the code of the account                                                       | string    |
 | deployed    | for smart contracts only, the block number at which the contract was deployed | blknum    |
 | nonce       | the nonce of the account at the given block                                   | uint64    |
@@ -106,6 +107,7 @@ This documentation mentions the following basic data types.
 | address   | an '0x'-prefixed 20-byte hex string | lowercase      |
 | blknum    | an alias for a uint64               |                |
 | datetime  | a JSON formatted date               | as a string    |
+| ether     | a big number float                  | as a string    |
 | int256    | a signed big number                 | as a string    |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |

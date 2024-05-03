@@ -3935,6 +3935,10 @@ components:
           type: string
           format: wei
           description: "the balance of the account at the given block"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the balance in ether (calculated)"
         code:
           type: string
           format: string
