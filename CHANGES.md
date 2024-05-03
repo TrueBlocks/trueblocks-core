@@ -6,6 +6,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 - Bumped version to 2.5.9.
 - Separates out tests into its own submodule.
+- Grabbed control of all the base types - Blknum, Txnum, LogIndex, etc.
 
 ## v2.5.8 (2024/02/09)
 
