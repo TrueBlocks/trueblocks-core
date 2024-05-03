@@ -58,22 +58,22 @@ The following commands produce and manage Tokens:
 
 Tokens consist of the following fields:
 
-| Field            | Description                                                           | Type      |
-| ---------------- | --------------------------------------------------------------------- | --------- |
-| blockNumber      | the block at which the report is made                                 | blknum    |
-| transactionIndex | the transaction index (if applicable) at which the report is made     | blknum    |
-| timestamp        | the timestamp of the block                                            | timestamp |
-| date             | the timestamp as a date (calculated)                                  | datetime  |
-| totalSupply      | the total supply of the token contract                                | int256    |
-| address          | the address of the token contract                                     | address   |
-| holder           | the holder address for which we are reporting                         | address   |
-| priorBalance     | the holder's asset balance at its prior appearance                    | int256    |
-| balance          | the holder's asset balance at the given block height                  | int256    |
-| diff             | the difference#&44; if any#&44; between the prior and current balance | int256    |
-| name             | the name of the token contract, if available                          | string    |
-| symbol           | the symbol of the token contract                                      | string    |
-| decimals         | the number of decimals for the token contract                         | uint64    |
-| type             | the type of token (ERC20 or ERC721) or none                           | TokenType |
+| Field            | Description                                                                | Type      |
+| ---------------- | -------------------------------------------------------------------------- | --------- |
+| blockNumber      | the block at which the report is made                                      | blknum    |
+| transactionIndex | the transaction index (if applicable) at which the report is made          | blknum    |
+| timestamp        | the timestamp of the block                                                 | timestamp |
+| date             | the timestamp as a date (calculated)                                       | datetime  |
+| totalSupply      | the total supply of the token contract                                     | int256    |
+| address          | the address of the token contract                                          | address   |
+| holder           | the holder address for which we are reporting                              | address   |
+| priorBalance     | the holder's asset balance at its prior appearance                         | int256    |
+| balance          | the holder's asset balance at the given block height                       | int256    |
+| diff             | the difference, if any, between the prior and current balance (calculated) | int256    |
+| name             | the name of the token contract, if available                               | string    |
+| symbol           | the symbol of the token contract                                           | string    |
+| decimals         | the number of decimals for the token contract                              | uint64    |
+| type             | the type of token (ERC20 or ERC721) or none                                | TokenType |
 
 ## Result
 

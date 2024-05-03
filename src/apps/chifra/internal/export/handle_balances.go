@@ -117,7 +117,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 								}
 								currentBn = item.BlockNumber
 								if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
-									item.Diff = *base.NewWei(0).Sub(&item.Balance, &item.PriorBalance)
 									var passes bool
 									passes, finished = filter.ApplyCountFilter()
 									if passes {

@@ -3998,7 +3998,7 @@ components:
         diff:
           type: string
           format: int256
-          description: "the difference#&44; if any#&44; between the prior and current balance"
+          description: "the difference, if any, between the prior and current balance (calculated)"
         name:
           type: string
           format: string

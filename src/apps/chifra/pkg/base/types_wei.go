@@ -30,6 +30,10 @@ func (w *Wei) String() string {
 	return (*big.Int)(w).String()
 }
 
+func (w *Wei) BigInt() *big.Int {
+	return (*big.Int)(w)
+}
+
 func (w *Wei) IsZero() bool {
 	return w.String() == "0"
 }

@@ -11,6 +11,7 @@ package types
 // EXISTING_CODE
 import (
 	"encoding/json"
+	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -23,7 +24,6 @@ type RawToken struct {
 	Balance          string `json:"balance"`
 	BlockNumber      string `json:"blockNumber"`
 	Decimals         string `json:"decimals"`
-	Diff             string `json:"diff"`
 	Holder           string `json:"holder"`
 	Name             string `json:"name"`
 	PriorBalance     string `json:"priorBalance"`
@@ -41,7 +41,6 @@ type Token struct {
 	Balance          base.Wei       `json:"balance"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	Decimals         uint64         `json:"decimals"`
-	Diff             base.Wei       `json:"diff,omitempty"`
 	Holder           base.Address   `json:"holder"`
 	Name             string         `json:"name"`
 	PriorBalance     base.Wei       `json:"priorBalance,omitempty"`
@@ -128,7 +127,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOptions map[strin
 		case "decimals":
 			model["decimals"] = name.Decimals
 		case "diff":
-			model["diff"] = base.FormattedValue(&s.Diff, true, int(name.Decimals))
+			model["diff"] = s.formattedDiff(name.Decimals)
 		case "holder":
 			model["holder"] = s.Holder
 		case "name":
@@ -174,6 +173,17 @@ func (s *Token) IsErc20() bool {
 
 func (s *Token) IsErc721() bool {
 	return s.TokenType.IsErc721()
+}
+
+func (s *Token) formattedDiff(dec uint64) string {
+	b := s.Balance.BigInt()
+	pB := s.PriorBalance.BigInt()
+	diff := new(big.Int).Sub(b, pB)
+	if diff.Sign() == -1 {
+		diff = diff.Neg(diff)
+		return "-" + base.FormattedValue((*base.Wei)(diff), true, int(dec))
+	}
+	return base.FormattedValue((*base.Wei)(diff), true, int(dec))
 }
 
 type TokenType int
