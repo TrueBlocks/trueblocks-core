@@ -44,7 +44,7 @@ type Log struct {
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	CompressedLog    string         `json:"compressedLog,omitempty"`
 	Data             string         `json:"data,omitempty"`
-	LogIndex         base.Blknum    `json:"logIndex"`
+	LogIndex         base.Lognum    `json:"logIndex"`
 	Timestamp        base.Timestamp `json:"timestamp,omitempty"`
 	Topics           []base.Hash    `json:"topics,omitempty"`
 	TransactionHash  base.Hash      `json:"transactionHash"`

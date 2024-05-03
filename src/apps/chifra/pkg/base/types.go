@@ -30,6 +30,7 @@ func MustParseGas(input any) Gas {
 
 type Blknum = uint64
 type Txnum = uint64
+type Lognum = uint64
 type Topic = string
 type Timestamp = int64
 

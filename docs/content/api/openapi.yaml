@@ -3187,7 +3187,7 @@ components:
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
-          format: blknum
+          format: lognum
           description: "the zero-indexed position the log in the block, if applicable"
         transactionHash:
           type: string
@@ -3581,7 +3581,7 @@ components:
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
-          format: blknum
+          format: lognum
           description: "the zero-indexed position of this log relative to the block"
         timestamp:
           type: number

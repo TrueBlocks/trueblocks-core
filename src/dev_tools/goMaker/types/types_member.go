@@ -234,6 +234,8 @@ func (m *Member) GoType() string {
 				ret = "base.Blknum"
 			case "txnum":
 				ret = "base.Txnum"
+			case "lognum":
+				ret = "base.Lognum"
 			case "timestamp":
 				ret = "base.Timestamp"
 			case "topic":
@@ -449,8 +451,9 @@ func (m *Member) YamlType() string {
 	}
 	if m.IsObject() {
 		return "object" + o
-	} else if m.Type == "blknum" || m.Type == "txnum" || m.Type == "timestamp" || m.Type == "float64" ||
-		m.Type == "gas" || m.Type == "uint64" || m.Type == "int64" || m.Type == "uint32" || m.Type == "int" {
+	} else if m.Type == "blknum" || m.Type == "txnum" || m.Type == "lognum" ||
+		m.Type == "timestamp" || m.Type == "float64" || m.Type == "gas" || m.Type == "uint64" ||
+		m.Type == "int64" || m.Type == "uint32" || m.Type == "int" {
 		return "number" + f
 	} else if m.Type == "address" || m.Type == "datetime" || m.Type == "hash" || m.Type == "ipfshash" || m.Type == "blkrange" ||
 		m.Type == "topic" || m.Type == "int256" || m.Type == "uint256" || m.Type == "wei" || m.Type == "bytes" ||

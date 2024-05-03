@@ -193,7 +193,7 @@ Statements consist of the following fields:
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------- |
 | blockNumber         | the number of the block                                                                                                               | blknum    |
 | transactionIndex    | the zero-indexed position of the transaction in the block                                                                             | txnum     |
-| logIndex            | the zero-indexed position the log in the block, if applicable                                                                         | blknum    |
+| logIndex            | the zero-indexed position the log in the block, if applicable                                                                         | lognum    |
 | transactionHash     | the hash of the transaction that triggered this reconciliation                                                                        | hash      |
 | timestamp           | the Unix timestamp of the object                                                                                                      | timestamp |
 | date                | the timestamp as a date (calculated)                                                                                                  | datetime  |
@@ -260,8 +260,9 @@ This documentation mentions the following basic data types.
 | datetime  | a JSON formatted date               | as a string    |
 | float64   | a double precision float            | 64 bits        |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
-| int64     | a 64-bit signed integer             |                |
 | int256    | a signed big number                 | as a string    |
+| int64     | a 64-bit signed integer             |                |
+| lognum    | an alias for a uint64               |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | txnum     | an alias for a uint64               |                |

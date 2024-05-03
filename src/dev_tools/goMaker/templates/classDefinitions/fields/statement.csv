@@ -1,7 +1,7 @@
 name                ,type      ,strDefault ,attributes     ,docOrder ,description
 blockNumber         ,blknum    ,           ,               ,       1 ,the number of the block
 transactionIndex    ,txnum     ,           ,               ,       2 ,the zero-indexed position of the transaction in the block
-logIndex            ,blknum    ,           ,               ,       3 ,the zero-indexed position the log in the block&#44; if applicable
+logIndex            ,lognum    ,           ,               ,       3 ,the zero-indexed position the log in the block&#44; if applicable
 transactionHash     ,hash      ,           ,               ,       4 ,the hash of the transaction that triggered this reconciliation
 timestamp           ,timestamp ,           ,               ,       5 ,the Unix timestamp of the object
 date                ,datetime  ,           ,calc           ,       6 ,the timestamp as a date
