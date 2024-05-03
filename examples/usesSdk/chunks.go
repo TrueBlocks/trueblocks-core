@@ -5,7 +5,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-// DoChunks tests the When sdk function
+// DoChunks tests the chunks sdk function
 func DoChunks() {
 	logger.Info("DoChunks")
 

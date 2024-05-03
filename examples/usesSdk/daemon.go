@@ -5,7 +5,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-// DoDaemon tests the When sdk function
+// DoDaemon tests the daemon sdk function
 func DoDaemon() {
 	logger.Info("DoDaemon")
 

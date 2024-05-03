@@ -16,7 +16,8 @@ func main() {
 	DoLogs()
 	//+
 	DoTraces()
-	// DoState()
+	//+
+	DoState()
 	// DoTokens()
 	// DoAbis()
 	// DoWhen()
@@ -53,5 +54,6 @@ func init() {
 	file.EstablishFolder("usesSDK/logs")
 	file.EstablishFolder("usesSDK/receipts")
 	file.EstablishFolder("usesSDK/traces")
+	file.EstablishFolder("usesSDK/state")
 	os.Setenv("TB_NO_USERQUERY", "true")
 }

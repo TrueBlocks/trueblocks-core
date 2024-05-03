@@ -5,7 +5,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-// DoExplore tests the When sdk function
+// DoExplore tests the explore sdk function
 func DoExplore() {
 	logger.Info("DoExplore")
 

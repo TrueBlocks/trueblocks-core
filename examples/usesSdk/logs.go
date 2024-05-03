@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoLogs tests the When sdk function
+// DoLogs tests the logs sdk function
 func DoLogs() {
 	opts := sdk.LogsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
@@ -39,8 +39,8 @@ func DoLogs() {
 					baseFn += "-topic"
 				}
 				opts.Articulate = a
-				states := noRaw(noEther(globals))
-				for _, g := range states {
+				globs := noRaw(noEther(globals))
+				for _, g := range globs {
 					opts.Globals = g
 					fn := getFilename(baseFn, &opts.Globals)
 					TestLogs(fn, &opts)

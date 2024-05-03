@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoExport tests the When sdk function
+// DoExport tests the export sdk function
 func DoExport() {
 	logger.Info("DoExport")
 

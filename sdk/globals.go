@@ -84,7 +84,7 @@ func convertObjectToArray(field, strIn string) string {
 		beforeB := str[:start+len(find)-1]      // Adjust to include '{'
 		afterB := str[end:]                     // after "}"
 		objectB := str[start+len(find)-1 : end] // Adjust to start from '{'
-		return beforeB + "[" + objectB + "]" + afterB, strings.Index(str, find) != -1
+		return beforeB + "[" + objectB + "]" + afterB, strings.Contains(str, find)
 	}
 
 	str := strIn
@@ -100,22 +100,34 @@ func convertObjectToArray(field, strIn string) string {
 }
 
 func convertEmptyStrToZero(field, strIn string) string {
-	str := strIn
-	find := "\"" + field + "\": \"\""
-	start := strings.Index(str, find)
-	if start == -1 {
-		return str
+	convertToZero := func(field, str string) (string, bool) {
+		find := "\"" + field + "\": \"\""
+		start := strings.Index(str, find)
+		if start == -1 {
+			return str, false
+		}
+
+		end := start + len(find)
+		for i := end; i < len(str); i++ {
+			if str[i] == ',' || str[i] == '}' {
+				end = i
+				break
+			}
+		}
+
+		beforeB := str[:start+len(find)-2] // Adjust to include '""'
+		afterB := str[end:]                // after ","
+		return beforeB + "\"0\"" + afterB, strings.Contains(str, find)
 	}
 
-	end := start + len(find)
-	for i := end; i < len(str); i++ {
-		if str[i] == ',' || str[i] == '}' {
-			end = i
+	str := strIn
+	for {
+		var more bool
+		str, more = convertToZero(field, str)
+		if !more {
 			break
 		}
 	}
 
-	beforeB := str[:start+len(find)-2] // Adjust to include '""'
-	afterB := str[end:]                // after ","
-	return beforeB + "\"0\"" + afterB
+	return str
 }

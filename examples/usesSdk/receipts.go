@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoReceipts tests the When sdk function
+// DoReceipts tests the receipts sdk function
 func DoReceipts() {
 	opts := sdk.ReceiptsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
@@ -25,8 +25,8 @@ func DoReceipts() {
 			baseFn += "-articulate"
 		}
 		opts.Articulate = a
-		states := noEther(globals)
-		for _, g := range states {
+		globs := noEther(globals)
+		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)
 			TestReceipts(fn, &opts)

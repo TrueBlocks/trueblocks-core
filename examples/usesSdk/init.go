@@ -4,7 +4,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-// DoInit tests the When sdk function
+// DoInit tests the init sdk function
 func DoInit() {
 	logger.Info("DoInit")
 

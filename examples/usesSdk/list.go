@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoList tests the When sdk function
+// DoList tests the list sdk function
 func DoList() {
 	logger.Info("DoList")
 

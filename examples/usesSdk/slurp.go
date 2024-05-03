@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoSlurp tests the When sdk function
+// DoSlurp tests the slurp sdk function
 func DoSlurp() {
 	logger.Info("DoSlurp")
 

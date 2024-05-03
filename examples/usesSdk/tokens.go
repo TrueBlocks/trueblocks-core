@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoTokens tests the When sdk function
+// DoTokens tests the tokens sdk function
 func DoTokens() {
 	logger.Info("DoTokens")
 

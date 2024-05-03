@@ -88,6 +88,7 @@ func queryTraces[T tracesGeneric](opts *tracesOptionsInternal) ([]T, *types.Meta
 	str = convertObjectToArray("inputs", str)
 	str = convertObjectToArray("outputs", str)
 	str = convertEmptyStrToZero("balance", str)
+	str = convertEmptyStrToZero("value", str)
 	// EXISTING_CODE
 
 	var result Result[T]

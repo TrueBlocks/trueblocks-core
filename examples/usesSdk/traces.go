@@ -1,12 +1,14 @@
 package main
 
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoTraces tests the When sdk function
+// DoTraces tests the traces sdk function
 func DoTraces() {
 	opts := sdk.TracesOptions{
 		TransactionIds: []string{"17100101.1", "3189962.7"},
@@ -33,11 +35,12 @@ func DoTraces() {
 			}
 			opts.Articulate = a
 			opts.Filter = f
-			states := noRaw(globals)
-			for _, g := range states {
+			globs := globals
+			for _, g := range globs {
 				opts.Globals = g
 				fn := getFilename(baseFn, &opts.Globals)
 				TestTraces(fn, &opts)
+				TestTracesCount(fn, &opts)
 			}
 		}
 	}
@@ -55,13 +58,15 @@ func TestTraces(fn string, opts *sdk.TracesOptions) {
 	}
 }
 
-// if tracesCount, _, err := opts.TracesCount(); err != nil {
-// 	logger.Error(err)
-// } else {
-// 	if err := SaveAndClean[types.TraceCount]("usesSDK/tracesCount.json", tracesCount, &opts, func() error {
-// 		_, _, err := opts.TracesCount()
-// 		return err
-// 	}); err != nil {
-// 		logger.Error(err)
-// 	}
-// }
+func TestTracesCount(fn string, opts *sdk.TracesOptions) {
+	fn = strings.ReplaceAll(fn, ".json", "-count.json")
+	if tracesCounts, _, err := opts.TracesCount(); err != nil {
+		ReportError(fn, err)
+	} else {
+		if err := SaveToFile[types.TraceCount](fn, tracesCounts); err != nil {
+			ReportError(fn, err)
+		} else {
+			ReportOkay(fn)
+		}
+	}
+}
