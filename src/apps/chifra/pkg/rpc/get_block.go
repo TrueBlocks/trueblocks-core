@@ -21,7 +21,7 @@ import (
 )
 
 // GetBlockBodyByNumber fetches the block with transactions from the RPC.
-func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.Block[types.Transaction], error) {
+func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block[types.Transaction], error) {
 	if conn.StoreReadable() {
 		// We only cache blocks with transaction hashes
 		cachedBlock := types.Block[string]{BlockNumber: bn}
@@ -91,7 +91,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.Block[types.Trans
 }
 
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
-func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.Block[string], err error) {
+func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (block types.Block[string], err error) {
 	if conn.StoreReadable() {
 		block.BlockNumber = bn
 		if err := conn.Store.Read(&block, nil); err == nil {
@@ -175,7 +175,7 @@ func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
 }
 
 // GetBlockHashByNumber returns a block's hash if it's a valid block
-func (conn *Connection) GetBlockHashByNumber(bn uint64) (base.Hash, error) {
+func (conn *Connection) GetBlockHashByNumber(bn base.Blknum) (base.Hash, error) {
 	if ec, err := conn.getClient(); err != nil {
 		return base.Hash{}, err
 	} else {
@@ -192,7 +192,7 @@ func (conn *Connection) GetBlockHashByNumber(bn uint64) (base.Hash, error) {
 
 // loadBlock fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
 // more specialized functions and makes loadBlock generic.
-func loadBlock[Tx string | types.Transaction](conn *Connection, bn uint64, withTxs bool) (block types.Block[Tx], rawBlock *types.RawBlock, err error) {
+func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, withTxs bool) (block types.Block[Tx], rawBlock *types.RawBlock, err error) {
 	rawBlock, err = conn.getBlockRaw(bn, withTxs)
 	if err != nil {
 		return
@@ -261,7 +261,7 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn uint64, withT
 }
 
 // getBlockRaw returns the raw block as received from the node
-func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, error) {
+func (conn *Connection) getBlockRaw(bn base.Blknum, withTxs bool) (*types.RawBlock, error) {
 	method := "eth_getBlockByNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn), withTxs}
 
@@ -283,7 +283,7 @@ func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, e
 // anything about the Known blocks.
 
 // getBlockReward returns the block reward for a given block number
-func (conn *Connection) getBlockReward(bn uint64) *base.Wei {
+func (conn *Connection) getBlockReward(bn base.Blknum) *base.Wei {
 	if bn == 0 {
 		return base.NewWei(0)
 	} else if bn < base.KnownBlock(conn.Chain, base.Byzantium) {

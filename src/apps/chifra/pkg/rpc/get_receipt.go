@@ -58,7 +58,7 @@ func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (
 }
 
 // getReceiptRaw fetches raw transaction given blockNumber and transactionIndex
-func (conn *Connection) getReceiptRaw(bn uint64, txid base.Txnum) (receipt *types.RawReceipt, hash base.Hash, err error) {
+func (conn *Connection) getReceiptRaw(bn base.Blknum, txid base.Txnum) (receipt *types.RawReceipt, hash base.Hash, err error) {
 	if txHash, err := conn.GetTransactionHashByNumberAndID(bn, txid); err != nil {
 		return nil, base.Hash{}, err
 

@@ -41,19 +41,19 @@ func LocationsFromAddrAppsAndCacheType(conn *rpc.Connection, address base.Addres
 
 		case walk.Cache_Logs:
 			logGroup := &types.LogGroup{
-				BlockNumber:      uint64(app.BlockNumber),
+				BlockNumber:      base.Blknum(app.BlockNumber),
 				TransactionIndex: base.NOPOSN,
 			}
 			locations = append(locations, logGroup)
 
 		case walk.Cache_Blocks:
 			locations = append(locations, &types.Block[string]{
-				BlockNumber: uint64(app.BlockNumber),
+				BlockNumber: base.Blknum(app.BlockNumber),
 			})
 
 		case walk.Cache_Results:
 			locations = append(locations, &types.Result{
-				BlockNumber: uint64(app.BlockNumber),
+				BlockNumber: base.Blknum(app.BlockNumber),
 				Encoding:    "*",
 				Address:     address,
 			})
@@ -61,19 +61,19 @@ func LocationsFromAddrAppsAndCacheType(conn *rpc.Connection, address base.Addres
 		case walk.Cache_Statements:
 			locations = append(locations, &types.StatementGroup{
 				Address:          address,
-				BlockNumber:      uint64(app.BlockNumber),
+				BlockNumber:      base.Blknum(app.BlockNumber),
 				TransactionIndex: base.Txnum(app.TransactionIndex),
 			})
 
 		case walk.Cache_Traces:
 			locations = append(locations, &types.TraceGroup{
-				BlockNumber:      uint64(app.BlockNumber),
+				BlockNumber:      base.Blknum(app.BlockNumber),
 				TransactionIndex: base.Txnum(app.TransactionIndex),
 			})
 
 		case walk.Cache_Transactions:
 			locations = append(locations, &types.Transaction{
-				BlockNumber:      uint64(app.BlockNumber),
+				BlockNumber:      base.Blknum(app.BlockNumber),
 				TransactionIndex: base.Txnum(app.TransactionIndex),
 			})
 		}

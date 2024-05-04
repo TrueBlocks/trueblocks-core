@@ -19,14 +19,14 @@ type UniqProcFunc func(s *types.Appearance) error
 type AddressBooleanMap map[string]bool
 
 // Insert generates item's key according to `AppearanceFmt` and adds the item to the map
-func (a *AddressBooleanMap) Insert(address string, bn uint64, txid base.Txnum) string {
+func (a *AddressBooleanMap) Insert(address string, bn base.Blknum, txid base.Txnum) string {
 	key := fmt.Sprintf(AppearanceFmt, address, bn, txid)
 	v := *a
 	v[key] = true
 	return key
 }
 
-func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc UniqProcFunc, bn uint64) error {
+func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc UniqProcFunc, bn base.Blknum) error {
 	ts := conn.GetBlockTimestamp(bn)
 	addrMap := AddressBooleanMap{}
 	if bn == 0 {
@@ -325,7 +325,7 @@ var mapSync2 sync.Mutex
 
 // streamAppearance streams an appearance to the model channel if we've not seen this appearance before. We
 // keep track of appearances we've seen with `appsMap`.
-func streamAppearance(procFunc UniqProcFunc, flow string, reason string, address string, bn uint64, txid base.Numeral, traceid uint64, ts int64, addrMap AddressBooleanMap) {
+func streamAppearance(procFunc UniqProcFunc, flow string, reason string, address string, bn base.Blknum, txid base.Txnum, traceid uint64, ts int64, addrMap AddressBooleanMap) {
 	if base.IsPrecompile(address) {
 		return
 	}

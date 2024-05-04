@@ -1148,7 +1148,7 @@ void ::Init(void) {
 }
 
 //--------------------------------------------------------------------------------
-bool ::forEveryBlockNumber(UINT64VISITFUNC func, void* data) const {
+bool ::forEveryBlock Number(UINT64VISITFUNC func, void* data) const {
     if (!func)
         return false;
 
@@ -1200,7 +1200,7 @@ class  {
     (const COptionsBase* o);
     void Init(void);
     string_q parseBlockList_inner(const string_q& arg, blknum_t latest);
-    bool forEveryBlockNumber(UINT64VISITFUNC func, void*) const;
+    bool forEveryBlock Number(UINT64VISITFUNC func, void*) const;
     bool empty(void) const {
         return !(hashList.size() || numList.size() || (start != stop));
     }

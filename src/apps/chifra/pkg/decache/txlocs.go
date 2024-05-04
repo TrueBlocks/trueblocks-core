@@ -20,7 +20,7 @@ func LocationsFromTransactionIds(conn *rpc.Connection, ids []identifiers.Identif
 		}
 		for _, app := range txIds {
 			tx := &types.Transaction{
-				BlockNumber:      uint64(app.BlockNumber),
+				BlockNumber:      base.Blknum(app.BlockNumber),
 				TransactionIndex: base.Txnum(app.TransactionIndex),
 			}
 			locations = append(locations, tx)

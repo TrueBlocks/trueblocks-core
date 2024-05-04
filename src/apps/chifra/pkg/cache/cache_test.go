@@ -7,12 +7,13 @@ import (
 	"io"
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // Here we define a struct that we want to write or read from the cache
 type ExampleBlock struct {
-	BlockNumber uint64
+	BlockNumber base.Blknum
 	Date        string
 	Name        string
 	Timestamp   uint64

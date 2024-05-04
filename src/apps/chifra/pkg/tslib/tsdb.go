@@ -131,7 +131,7 @@ func ClearCache(chain string) {
 
 // FromBn is a local function that returns a Timestamp record given a blockNum. It
 // loads the timestamp file into memory if it isn't already loaded
-func FromBn(chain string, bn uint64) (*TimestampRecord, error) {
+func FromBn(chain string, bn base.Blknum) (*TimestampRecord, error) {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return &TimestampRecord{}, err

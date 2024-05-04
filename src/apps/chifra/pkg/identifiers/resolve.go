@@ -71,7 +71,7 @@ func (id *Identifier) getBounds(chain string) (ret base.BlockRange, err error) {
 	return ret, nil
 }
 
-func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
+func snapBnToPeriod(bn base.Blknum, chain, period string) (base.Blknum, error) {
 	conn := rpc.TempConnection(chain)
 
 	dt, err := tslib.FromBnToDate(chain, bn)
@@ -364,7 +364,7 @@ bool getDirectionalTxId(blknum_t bn, tx num_t txid, const string_q& dir, string_
 }
 */
 
-func GetBlockNumberMap(chain string, ids []Identifier) (map[uint64]bool, error) {
+func GetBlockNumberMap(chain string, ids []Identifier) (map[base.Blknum]bool, error) {
 	numMap := make(map[uint64]bool, 1000)
 	for _, br := range ids {
 		blockNums, err := br.ResolveBlocks(chain)
@@ -378,7 +378,7 @@ func GetBlockNumberMap(chain string, ids []Identifier) (map[uint64]bool, error) 
 	return numMap, nil
 }
 
-func GetBlockNumbers(chain string, ids []Identifier) ([]uint64, error) {
+func GetBlockNumbers(chain string, ids []Identifier) ([]base.Blknum, error) {
 	var nums []uint64
 	for _, br := range ids {
 		blockNums, err := br.ResolveBlocks(chain)

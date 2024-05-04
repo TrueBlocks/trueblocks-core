@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -48,7 +49,7 @@ func oneTest(numWorkers int) {
 
 	var wg sync.WaitGroup
 	blknumChan := make(chan uint64)
-	minBlockNumber := uint64(^uint64(0)) // Initialize to the maximum uint64 value
+	minBlockNumber := base.NOPOS
 	var mu sync.Mutex
 
 	// Start multiple worker goroutines
@@ -74,7 +75,7 @@ func oneTest(numWorkers int) {
 	// Wait until all the block numbers are processed
 	wg.Wait()
 
-	if minBlockNumber != uint64(^uint64(0)) {
+	if minBlockNumber != base.NOPOS {
 		fmt.Printf("Smallest BlockNumber with TransactionCount > 0 is: %d\n", minBlockNumber)
 	} else {
 		fmt.Println("No blocks with TransactionCount > 0 found.")

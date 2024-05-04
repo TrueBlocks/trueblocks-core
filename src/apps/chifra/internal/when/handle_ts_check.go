@@ -58,7 +58,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	return nil
 }
 
-func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.NamedBlock, bn uint64) error {
+func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.NamedBlock, bn base.Blknum) error {
 	chain := opts.Globals.Chain
 
 	// The i'th item in the timestamp array on disc
@@ -69,7 +69,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Na
 
 	// This just simplifies the code below by removing the need to type cast
 	onDisc := types.NamedBlock{
-		BlockNumber: uint64(itemOnDisc.Bn),
+		BlockNumber: base.Blknum(itemOnDisc.Bn),
 		Timestamp:   base.Timestamp(itemOnDisc.Ts),
 	}
 

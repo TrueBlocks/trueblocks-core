@@ -19,7 +19,7 @@ func (conn *Connection) IsContractAtLatest(address base.Address) error {
 }
 
 // IsContractAt checks if an account is a contract
-func (conn *Connection) IsContractAt(address base.Address, bn uint64) error {
+func (conn *Connection) IsContractAt(address base.Address, bn base.Blknum) error {
 	if ec, err := conn.getClient(); err != nil {
 		return err
 	} else {
@@ -38,7 +38,7 @@ func (conn *Connection) IsContractAt(address base.Address, bn uint64) error {
 }
 
 // GetContractCodeAt returns a code (if any) for an address at a block
-func (conn *Connection) GetContractCodeAt(addr base.Address, bn uint64) ([]byte, error) {
+func (conn *Connection) GetContractCodeAt(addr base.Address, bn base.Blknum) ([]byte, error) {
 	if ec, err := conn.getClient(); err != nil {
 		return []byte{}, err
 	} else {

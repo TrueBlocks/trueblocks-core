@@ -149,7 +149,7 @@ func TestStreamMany(t *testing.T) {
 
 	renderData := func(models chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		models <- &types.Receipt{
-			BlockNumber:      uint64(123),
+			BlockNumber:      123,
 			TransactionIndex: 1,
 			TransactionHash:  base.HexToHash("0xdeadbeef"),
 			GasUsed:          100,
@@ -158,7 +158,7 @@ func TestStreamMany(t *testing.T) {
 		}
 
 		models <- &types.Receipt{
-			BlockNumber:      uint64(124),
+			BlockNumber:      124,
 			TransactionIndex: 5,
 			TransactionHash:  base.HexToHash("0xdeadbeef2"),
 			GasUsed:          200,
@@ -185,10 +185,10 @@ func TestStreamMany(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if result.Data[0].BlockNumber != uint64(123) {
+	if result.Data[0].BlockNumber != 123 {
 		t.Fatal("mismatched data")
 	}
-	if result.Data[1].BlockNumber != uint64(124) {
+	if result.Data[1].BlockNumber != 124 {
 		t.Fatal("mismatched data")
 	}
 }
@@ -197,7 +197,7 @@ func TestApiFormat(t *testing.T) {
 	outputBuffer := &bytes.Buffer{}
 	renderData := func(models chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		models <- &types.Receipt{
-			BlockNumber:      uint64(123),
+			BlockNumber:      123,
 			TransactionIndex: 1,
 			TransactionHash:  base.HexToHash("0xdeadbeef"),
 			GasUsed:          100,

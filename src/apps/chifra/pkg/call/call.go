@@ -21,7 +21,7 @@ type ContractCall struct {
 	Address     base.Address
 	Method      *types.Function
 	Arguments   []any
-	BlockNumber uint64
+	BlockNumber base.Blknum
 	encoded     string
 }
 

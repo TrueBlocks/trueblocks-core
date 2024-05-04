@@ -92,7 +92,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 			if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOS {
 				good := []types.AppRecord{}
 				for _, app := range s.Appearances {
-					if uint64(app.BlockNumber) >= opts.FirstBlock && uint64(app.BlockNumber) <= opts.LastBlock {
+					if base.Blknum(app.BlockNumber) >= opts.FirstBlock && base.Blknum(app.BlockNumber) <= opts.LastBlock {
 						good = append(good, app)
 					}
 				}
@@ -158,7 +158,7 @@ func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[t
 			if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOS {
 				good := []types.AppRecord{}
 				for _, app := range s.Appearances {
-					if uint64(app.BlockNumber) >= opts.FirstBlock && uint64(app.BlockNumber) <= opts.LastBlock {
+					if base.Blknum(app.BlockNumber) >= opts.FirstBlock && base.Blknum(app.BlockNumber) <= opts.LastBlock {
 						good = append(good, app)
 					}
 				}

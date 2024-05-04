@@ -78,7 +78,7 @@ func (c *ledgerContext) Next() base.Blknum {
 	return c.NextBlock
 }
 
-func (l *Ledger) ctxKey(bn uint64, txid base.Txnum) ledgerContextKey {
+func (l *Ledger) ctxKey(bn base.Blknum, txid base.Txnum) ledgerContextKey {
 	// TODO: Is having the context per asset necessary?
 	// return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
 	return ledgerContextKey(fmt.Sprintf("%09d-%05d", bn, txid))

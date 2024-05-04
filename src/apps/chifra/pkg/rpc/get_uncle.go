@@ -15,7 +15,7 @@ import (
 )
 
 // GetUncleBodiesByNumber returns the number of uncles in a block.
-func (conn *Connection) GetUncleBodiesByNumber(bn uint64) ([]types.Block[types.Transaction], error) {
+func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block[types.Transaction], error) {
 	if count, err := conn.GetUnclesCountInBlock(bn); err != nil {
 		return nil, err
 
@@ -54,7 +54,7 @@ func (conn *Connection) GetUncleBodiesByNumber(bn uint64) ([]types.Block[types.T
 }
 
 // GetUnclesHashesByNumber returns the uncle hashes in a block.
-func (conn *Connection) GetUnclesHashesByNumber(bn uint64) ([]base.Hash, error) {
+func (conn *Connection) GetUnclesHashesByNumber(bn base.Blknum) ([]base.Hash, error) {
 	if count, err := conn.GetUnclesCountInBlock(bn); err != nil {
 		return nil, err
 	} else if count == 0 {
@@ -80,7 +80,7 @@ func (conn *Connection) GetUnclesHashesByNumber(bn uint64) ([]base.Hash, error) 
 }
 
 // GetUnclesCountInBlock returns the number of uncles in a block.
-func (conn *Connection) GetUnclesCountInBlock(bn uint64) (uint64, error) {
+func (conn *Connection) GetUnclesCountInBlock(bn base.Blknum) (uint64, error) {
 	if bn >= base.KnownBlock(conn.Chain, base.Merge) {
 		return 0, nil
 	}

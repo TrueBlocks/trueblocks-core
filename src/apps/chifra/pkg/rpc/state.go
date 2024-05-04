@@ -158,7 +158,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 }
 
 // GetBalanceAt returns a balance for an address at a block
-func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*base.Wei, error) {
+func (conn *Connection) GetBalanceAt(addr base.Address, bn base.Blknum) (*base.Wei, error) {
 	if ec, err := conn.getClient(); err != nil {
 		var zero base.Wei
 		return &zero, err

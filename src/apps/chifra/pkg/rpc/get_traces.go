@@ -15,7 +15,7 @@ import (
 )
 
 // GetTracesByBlockNumber returns a slice of traces in the given block
-func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.Trace, error) {
+func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, error) {
 	if conn.StoreReadable() {
 		traceGroup := &types.TraceGroup{
 			BlockNumber:      bn,
@@ -104,7 +104,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.Trace, error)
 }
 
 // GetTracesByTransactionId returns a slice of traces in a given transaction
-func (conn *Connection) GetTracesByTransactionId(bn uint64, txid base.Txnum) ([]types.Trace, error) {
+func (conn *Connection) GetTracesByTransactionId(bn base.Blknum, txid base.Txnum) ([]types.Trace, error) {
 	if conn.StoreReadable() {
 		traceGroup := &types.TraceGroup{
 			BlockNumber:      bn,
@@ -200,7 +200,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			if transaction != nil {
 				trace.Timestamp = transaction.Timestamp
 			}
-			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
+			if trace.BlockNumber != base.Blknum(curApp.BlockNumber) || trace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
 				curApp = types.Appearance{
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
@@ -298,11 +298,11 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 				Result:           result,
 			}
 
-			if trace.BlockNumber != uint64(curApp.BlockNumber) {
+			if trace.BlockNumber != base.Blknum(curApp.BlockNumber) {
 				curTs = conn.GetBlockTimestamp(trace.BlockNumber)
 			}
 
-			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
+			if trace.BlockNumber != base.Blknum(curApp.BlockNumber) || trace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
 				curApp = types.Appearance{
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
@@ -321,7 +321,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 }
 
 // GetTracesCountInBlock returns the number of traces in a block
-func (conn *Connection) GetTracesCountInBlock(bn uint64) (uint64, error) {
+func (conn *Connection) GetTracesCountInBlock(bn base.Blknum) (uint64, error) {
 	if traces, err := conn.GetTracesByBlockNumber(bn); err != nil {
 		return base.NOPOS, err
 	} else {

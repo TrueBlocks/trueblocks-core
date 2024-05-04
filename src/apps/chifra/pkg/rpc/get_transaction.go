@@ -145,7 +145,7 @@ func (conn *Connection) GetTransactionAppByHash(hash string) (types.RawAppearanc
 }
 
 // GetTransactionHashByNumberAndID returns a transaction's hash if it's a valid transaction
-func (conn *Connection) GetTransactionHashByNumberAndID(bn uint64, txId base.Txnum) (base.Hash, error) {
+func (conn *Connection) GetTransactionHashByNumberAndID(bn base.Blknum, txId base.Txnum) (base.Hash, error) {
 	if ec, err := conn.getClient(); err != nil {
 		return base.Hash{}, err
 	} else {
@@ -218,7 +218,7 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 		if entry.Address.Hex() == raw.Address {
 			ret := types.Transaction{
 				BlockHash:        blockHash,
-				BlockNumber:      uint64(raw.BlockNumber),
+				BlockNumber:      base.Blknum(raw.BlockNumber),
 				TransactionIndex: base.Txnum(raw.TransactionIndex),
 				Timestamp:        ts,
 				From:             base.PrefundSender,
@@ -239,7 +239,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 	} else {
 		if rt == types.WithdrawalAmt {
 			tx := &types.Transaction{
-				BlockNumber:      uint64(raw.BlockNumber),
+				BlockNumber:      base.Blknum(raw.BlockNumber),
 				TransactionIndex: base.Txnum(raw.TransactionIndex),
 				Timestamp:        block.Timestamp,
 				From:             base.WithdrawalSender,
@@ -310,7 +310,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 
 			rewards, total := types.NewReward(blockReward, nephewReward, feeReward, uncleReward)
 			tx := &types.Transaction{
-				BlockNumber:      uint64(raw.BlockNumber),
+				BlockNumber:      base.Blknum(raw.BlockNumber),
 				TransactionIndex: base.Txnum(raw.TransactionIndex),
 				BlockHash:        block.Hash,
 				Timestamp:        block.Timestamp,
@@ -325,7 +325,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 }
 
 // GetTransactionCountInBlock returns the number of transactions in a block
-func (conn *Connection) GetTransactionCountInBlock(bn uint64) (uint64, error) {
+func (conn *Connection) GetTransactionCountInBlock(bn base.Blknum) (uint64, error) {
 	if ec, err := conn.getClient(); err != nil {
 		return 0, err
 	} else {

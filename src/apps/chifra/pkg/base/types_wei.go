@@ -130,7 +130,7 @@ func ToEther(wei *Wei) *Ether {
 	return f.Quo(new(Ether).SetWei(wei), e)
 }
 
-func BiFromUint64(bn uint64) *big.Int {
+func BiFromUint64(bn Blknum) *big.Int {
 	if bn == NOPOS {
 		return nil
 	}
