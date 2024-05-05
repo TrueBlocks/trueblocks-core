@@ -56,7 +56,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 		raw.Address = app.Address.Hex()
 	}
 
-	bn := uint64(raw.BlockNumber)
+	bn := base.Blknum(raw.BlockNumber)
 	txid := base.Txnum(raw.TransactionIndex)
 
 	if conn.StoreReadable() {
@@ -135,10 +135,10 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 
 func (conn *Connection) GetTransactionAppByHash(hash string) (types.RawAppearance, error) {
 	var ret types.RawAppearance
-	if rawTx, err := conn.getTransactionRaw(notAHash, base.HexToHash(hash), notAnInt, base.NOPOSN); err != nil {
+	if rawTx, err := conn.getTransactionRaw(notAHash, base.HexToHash(hash), base.NOPOSN2, base.NOPOSN); err != nil {
 		return ret, err
 	} else {
-		ret.BlockNumber = uint32(utils.MustParseUint(rawTx.BlockNumber))
+		ret.BlockNumber = uint32(base.MustParseBlknum(rawTx.BlockNumber))
 		ret.TransactionIndex = uint32(utils.MustParseUint(rawTx.TransactionIndex))
 		return ret, nil
 	}
@@ -207,7 +207,7 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 	} else {
 		var blockHash base.Hash
 		var ts int64
-		if block, err := conn.GetBlockHeaderByNumber(uint64(0)); err != nil {
+		if block, err := conn.GetBlockHeaderByNumber(0); err != nil {
 			return nil, err
 		} else {
 			blockHash = block.Hash
@@ -234,7 +234,7 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 // TODO: This is not cross-chain correct nor does it work properly for post-merge
 
 func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *types.RawAppearance) (*types.Transaction, error) {
-	if block, err := conn.GetBlockBodyByNumber(uint64(raw.BlockNumber)); err != nil {
+	if block, err := conn.GetBlockBodyByNumber(base.Blknum(raw.BlockNumber)); err != nil {
 		return nil, err
 	} else {
 		if rt == types.WithdrawalAmt {
@@ -248,7 +248,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 			return tx, nil
 		}
 
-		if uncles, err := conn.GetUncleBodiesByNumber(uint64(raw.BlockNumber)); err != nil {
+		if uncles, err := conn.GetUncleBodiesByNumber(base.Blknum(raw.BlockNumber)); err != nil {
 			return nil, err
 		} else {
 			var blockReward = base.NewWei(0)
@@ -257,7 +257,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 			var uncleReward = base.NewWei(0)
 
 			sender := base.HexToAddress(raw.Address)
-			bn := uint64(raw.BlockNumber)
+			bn := base.Blknum(raw.BlockNumber)
 			blockReward = conn.getBlockReward(bn)
 			switch rt {
 			case types.BlockReward:
@@ -342,7 +342,6 @@ func (conn *Connection) GetTransactionCountInBlock(bn base.Blknum) (uint64, erro
 }
 
 var (
-	notAnInt = base.NOPOS
 	notAHash = base.Hash{}
 )
 

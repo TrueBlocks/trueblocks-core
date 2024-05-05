@@ -36,7 +36,7 @@ func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block[ty
 			} else {
 				// TODO: expand other fields if we ever need them (probably not)
 				ret = append(ret, types.Block[types.Transaction]{
-					BlockNumber: utils.MustParseUint(rawUncle.BlockNumber),
+					BlockNumber: base.MustParseBlknum(rawUncle.BlockNumber),
 					Hash:        base.HexToHash(rawUncle.Hash),
 					Miner:       base.HexToAddress(rawUncle.Miner),
 					ParentHash:  base.HexToHash(rawUncle.ParentHash),

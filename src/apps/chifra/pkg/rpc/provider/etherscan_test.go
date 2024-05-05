@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-	"strconv"
 	"strings"
 	"testing"
 
@@ -113,17 +112,9 @@ func mockEtherscanServer(t *testing.T) (ts *httptest.Server) {
 func mockConvertSlurpType(t *testing.T) func(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
 	t.Helper()
 	return func(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
-		bn, err := strconv.ParseUint(rawTx.BlockNumber, 10, 64)
-		if err != nil {
-			t.Fatal(err)
-		}
-		txid, err := strconv.ParseUint(rawTx.TransactionIndex, 10, 64)
-		if err != nil {
-			t.Fatal(err)
-		}
 		return types.Slurp{
-			BlockNumber:      bn,
-			TransactionIndex: base.Txnum(txid),
+			BlockNumber:      base.MustParseBlknum(rawTx.BlockNumber),
+			TransactionIndex: base.MustParseNumeral(rawTx.TransactionIndex),
 		}, nil
 	}
 }

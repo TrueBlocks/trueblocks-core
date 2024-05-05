@@ -38,7 +38,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	state = &types.State{
 		Address:     address,
 		BlockNumber: blockNumber,
-		Deployed:    base.NOPOS,
+		Deployed:    base.NOPOSN2,
 	}
 
 	rpcPayload := []query.BatchPayload{

@@ -6,7 +6,6 @@ package rpc
 import (
 	"fmt"
 	"reflect"
-	"strconv"
 	"strings"
 	"testing"
 
@@ -44,7 +43,7 @@ func TestGetState(t *testing.T) {
 				Address:     base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 				BlockNumber: 15531843,
 				Balance:     func() base.Wei { b, _ := base.NewWei(0).SetString("57006123709077586392", 10); return *b }(),
-				Deployed:    base.NOPOS,
+				Deployed:    base.NOPOSN2,
 			},
 		},
 		{
@@ -64,7 +63,7 @@ func TestGetState(t *testing.T) {
 				}(),
 				Nonce: 0,
 				Code: func() string {
-					code, err := conn.GetContractCodeAt(base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"), uint64(15531843))
+					code, err := conn.GetContractCodeAt(base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"), 15531843)
 					if err != nil {
 						t.Fatal("error when fetching code for smart contract:", err)
 					}
@@ -73,9 +72,8 @@ func TestGetState(t *testing.T) {
 					}
 					return "0x" + base.Bytes2Hex(code)
 				}(),
-				Deployed: func() uint64 {
-					n, _ := strconv.ParseUint("18446744073709551615", 10, 64)
-					return n
+				Deployed: func() base.Blknum {
+					return base.MustParseBlknum("18446744073709551615")
 				}(),
 			},
 		},
@@ -106,7 +104,7 @@ func TestGetState(t *testing.T) {
 				BlockNumber: 15531843,
 				Proxy:       base.HexToAddress("0x5864c777697bf9881220328bf2f16908c9afcd7e"),
 				AccountType: "Proxy",
-				Deployed:    base.NOPOS,
+				Deployed:    base.NOPOSN2,
 			},
 		},
 		{

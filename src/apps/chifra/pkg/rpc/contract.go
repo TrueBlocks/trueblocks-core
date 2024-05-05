@@ -15,7 +15,7 @@ var ErrNotAContract = errors.New("not a contract")
 
 // IsContractAtLatest checks if an account is a contract at the latest block
 func (conn *Connection) IsContractAtLatest(address base.Address) error {
-	return conn.IsContractAt(address, base.NOPOS)
+	return conn.IsContractAt(address, base.NOPOSN2)
 }
 
 // IsContractAt checks if an account is a contract
@@ -129,7 +129,7 @@ func (conn *Connection) GetContractDeployBlock(address base.Address) (block base
 	}
 
 	found := sort.Search(int(latest)+1, func(bn int) bool {
-		err := conn.IsContractAt(address, uint64(bn))
+		err := conn.IsContractAt(address, base.Blknum(bn))
 		return err == nil
 	})
 

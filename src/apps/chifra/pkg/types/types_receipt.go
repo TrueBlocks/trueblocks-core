@@ -377,7 +377,7 @@ func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 
 	receipt := Receipt{
 		BlockHash:         base.HexToHash(r.BlockHash),
-		BlockNumber:       utils.MustParseUint(r.BlockNumber),
+		BlockNumber:       base.MustParseBlknum(r.BlockNumber),
 		ContractAddress:   base.HexToAddress(r.ContractAddress),
 		CumulativeGasUsed: base.Gas(cumulativeGasUsed),
 		EffectiveGasPrice: base.MustParseNumeral(r.EffectiveGasPrice),

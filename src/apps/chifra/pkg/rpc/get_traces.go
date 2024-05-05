@@ -38,7 +38,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 	} else {
 		curApp := types.Appearance{BlockNumber: uint32(^uint32(0))}
 		curTs := conn.GetBlockTimestamp(bn)
-		var traceid base.TraceId
+		var traceIndex base.TraceId
 
 		// TODO: This could be loadTrace in the same way load Blocks works
 		var ret []types.Trace
@@ -83,10 +83,10 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				traceid = 0
+				traceIndex = 0
 			}
-			trace.TraceIndex = traceid
-			traceid++
+			trace.TraceIndex = traceIndex
+			traceIndex++
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
 		}
@@ -148,7 +148,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 
 	} else {
 		curApp := types.Appearance{BlockNumber: uint32(^uint32(0))}
-		var traceid base.TraceId
+		var traceIndex base.TraceId
 
 		for _, rawTrace := range *rawTraces {
 			value := base.NewWei(0)
@@ -205,10 +205,10 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				traceid = 0
+				traceIndex = 0
 			}
-			trace.TraceIndex = traceid
-			traceid++
+			trace.TraceIndex = traceIndex
+			traceIndex++
 
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
@@ -247,7 +247,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 	} else {
 		curApp := types.Appearance{BlockNumber: uint32(^uint32(0))}
 		curTs := conn.GetBlockTimestamp(f.FromBlock)
-		var traceid base.TraceId
+		var traceIndex base.TraceId
 
 		// TODO: This could be loadTrace in the same way load Blocks works
 		for _, rawTrace := range *rawTraces {
@@ -307,11 +307,11 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				traceid = 0
+				traceIndex = 0
 			}
 
-			trace.TraceIndex = traceid
-			traceid++
+			trace.TraceIndex = traceIndex
+			traceIndex++
 
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)

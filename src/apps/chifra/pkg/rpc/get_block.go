@@ -17,7 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // GetBlockBodyByNumber fetches the block with transactions from the RPC.
@@ -170,7 +169,7 @@ func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
 			return 0, err
 		}
 
-		return ethBlock.NumberU64(), nil
+		return base.Blknum(ethBlock.NumberU64()), nil
 	}
 }
 
@@ -198,46 +197,21 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, 
 		return
 	}
 
-	ts, err := hexutil.DecodeUint64(rawBlock.Timestamp)
-	if err != nil {
-		return
-	}
-
-	blockNumber, err := hexutil.DecodeUint64(rawBlock.BlockNumber)
-	if err != nil {
-		return
-	}
-
-	gasLimit, err := hexutil.DecodeUint64(rawBlock.GasLimit)
-	if err != nil {
-		return
-	}
-
-	gasUsed, err := hexutil.DecodeUint64(rawBlock.GasUsed)
-	if err != nil {
-		return
-	}
-
-	difficulty, err := hexutil.DecodeUint64(rawBlock.Difficulty)
-	if err != nil {
-		return
-	}
-
-	uncles := make([]base.Hash, 0, len(rawBlock.Uncles))
+	uncleHashes := make([]base.Hash, 0, len(rawBlock.Uncles))
 	for _, uncle := range rawBlock.Uncles {
-		uncles = append(uncles, base.HexToHash(uncle))
+		uncleHashes = append(uncleHashes, base.HexToHash(uncle))
 	}
 
 	block = types.Block[Tx]{
-		BlockNumber: blockNumber,
-		Timestamp:   base.Timestamp(ts), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
+		BlockNumber: base.MustParseBlknum(rawBlock.BlockNumber),
+		Timestamp:   base.Timestamp(utils.MustParseInt(rawBlock.Timestamp)), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
 		Hash:        base.HexToHash(rawBlock.Hash),
 		ParentHash:  base.HexToHash(rawBlock.ParentHash),
-		GasLimit:    base.Gas(gasLimit),
-		GasUsed:     base.Gas(gasUsed),
+		GasLimit:    base.MustParseNumeral(rawBlock.GasLimit),
+		GasUsed:     base.MustParseNumeral(rawBlock.GasUsed),
 		Miner:       base.HexToAddress(rawBlock.Miner),
-		Difficulty:  difficulty,
-		Uncles:      uncles,
+		Difficulty:  utils.MustParseUint(rawBlock.Difficulty),
+		Uncles:      uncleHashes,
 	}
 
 	if len(rawBlock.Withdrawals) > 0 {
@@ -248,8 +222,8 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, 
 			s := types.Withdrawal{
 				Address:        base.HexToAddress(withdrawal.Address),
 				Amount:         *amt,
-				BlockNumber:    blockNumber,
-				Timestamp:      base.Timestamp(ts),
+				BlockNumber:    block.BlockNumber,
+				Timestamp:      block.Timestamp,
 				Index:          base.MustParseNumeral(withdrawal.Index),
 				ValidatorIndex: base.MustParseNumeral(withdrawal.ValidatorIndex),
 			}
@@ -270,7 +244,7 @@ func (conn *Connection) getBlockRaw(bn base.Blknum, withTxs bool) (*types.RawBlo
 	} else {
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
-			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(uint64(0)))
+			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(0))
 		} else if utils.MustParseUint(block.Timestamp) == 0 {
 			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}

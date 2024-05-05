@@ -7,7 +7,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // GetLogsByFilter returns the logs given a filter
@@ -85,11 +84,11 @@ func (conn *Connection) getLogs(filter types.LogFilter) ([]types.Log, error) {
 		return []types.Log{}, nil
 
 	} else {
-		curBlock := base.NOPOS
+		curBlock := base.NOPOSN2
 		curTs := base.NOPOSI
 		var ret []types.Log
 		for _, rawLog := range *rawLogs {
-			bn := utils.MustParseUint(rawLog.BlockNumber)
+			bn := base.MustParseBlknum(rawLog.BlockNumber)
 			if bn != curBlock {
 				curTs = conn.GetBlockTimestamp(bn)
 				curBlock = bn

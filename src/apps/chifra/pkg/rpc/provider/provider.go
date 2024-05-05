@@ -85,7 +85,7 @@ func fetchAndFilterData(ctx context.Context, provider Provider, query *Query, er
 
 						for _, slurpedItem := range page {
 							// Make sure we want this block
-							if ok, err := query.InRange(uint64(slurpedItem.Appearance.BlockNumber)); !ok {
+							if ok, err := query.InRange(base.Blknum(slurpedItem.Appearance.BlockNumber)); !ok {
 								if err != nil {
 									errorChan <- err
 								}

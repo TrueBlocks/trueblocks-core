@@ -59,13 +59,12 @@ func (conn *Connection) GetLatestBlockNumber() base.Blknum {
 	} else {
 		defer ec.Close()
 
-		r, err := ec.BlockNumber(context.Background())
+		bn, err := ec.BlockNumber(context.Background())
 		if err != nil {
 			logger.Error("Could not connect to RPC client", err)
 			return 0
 		}
-
-		return r
+		return base.Blknum(bn)
 	}
 }
 

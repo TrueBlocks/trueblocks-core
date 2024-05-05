@@ -14,7 +14,6 @@ import (
 	"fmt"
 	"io"
 	"path/filepath"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -428,11 +427,6 @@ func (s *Trace) GetSortString() string {
 	}
 
 	return s.sortString
-}
-
-func mustParseUint(input any) (result uint64) {
-	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
-	return
 }
 
 // EXISTING_CODE

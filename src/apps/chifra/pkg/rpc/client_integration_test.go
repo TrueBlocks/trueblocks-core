@@ -10,7 +10,6 @@ package rpc
 import (
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -22,7 +21,7 @@ func Test_Client(t *testing.T) {
 		t.Error("provider chain id is 1")
 	}
 
-	ts := conn.GetBlockTimestamp(uint64(1))
+	ts := conn.GetBlockTimestamp(1)
 	blockOneTimestamp := int64(1438269988)
 	if ts != blockOneTimestamp {
 		t.Error("timestamp for block 1 is not correct")
@@ -51,9 +50,7 @@ func Test_Client(t *testing.T) {
 
 func Test_TxFromNumberAndId(t *testing.T) {
 	conn := TempConnection(utils.GetTestChain())
-
-	txId := base.Txnum(0)
-	_, err := conn.GetTransactionHashByNumberAndID(uint64(1424623), txId)
+	_, err := conn.GetTransactionHashByNumberAndID(1424623, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
