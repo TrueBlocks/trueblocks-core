@@ -165,7 +165,6 @@ func (op *Option) toGoOptionsType() string {
 	}
 	ret := op.toGoSdkType()
 	ret = strings.Replace(ret, "base.Address", "string", -1)
-	ret = strings.Replace(ret, "base.Blknum", "uint64", -1)
 	return ret
 }
 
@@ -213,7 +212,10 @@ func (op *Option) PyHotKey() string {
 }
 
 func (op *Option) CmdDefault() string {
-	return strings.Replace(op.Default(), "base.NOPOS", "0", -1)
+	ret := op.Default()
+	ret = strings.Replace(ret, "base.NOPOSN", "0", -1)
+	ret = strings.Replace(ret, "base.NOPOS", "0", -1)
+	return ret
 }
 
 func (op *Option) IsFlag() bool {
@@ -461,7 +463,10 @@ func (op *Option) DocType() string {
             items:
               type: string
               format: tx_id`
-	} else if op.DataType == "uint64" || op.DataType == "<uint64>" || op.DataType == "<blknum>" {
+	} else if op.DataType == "uint64" || op.DataType == "<uint64>" {
+		return `number
+            format: uint64`
+	} else if op.DataType == "<blknum>" {
 		return `number
             format: blknum`
 	} else if op.DataType == "<string>" {
@@ -634,6 +639,18 @@ func (op *Option) TestLog() string {
 	return op.executeTemplate(tmplName, tmpl)
 }
 
+func (op *Option) CobraPart() string {
+	if op.DataType == "<blknum>" {
+		tmplName := "cobraPart1"
+		tmpl := `(*uint64)(&{{.Route}}Pkg.GetOptions().{{.GoName}})`
+		return op.executeTemplate(tmplName, tmpl)
+	} else {
+		tmplName := "cobraPart2"
+		tmpl := `&{{.Route}}Pkg.GetOptions().{{.GoName}}`
+		return op.executeTemplate(tmplName, tmpl)
+	}
+}
+
 func (op *Option) CobraType() string {
 	m := map[string]string{
 		"<address>":    "String",
@@ -685,9 +702,11 @@ func (op *Option) OptField() string {
 	if strings.Contains(op.toGoName(), "Settings.") {
 		return ""
 	}
+
 	tmplName := "optFields"
 	tmpl := `	{{.GoName}} {{.GoOptionsType}} {{.JsonTag}} // {{.DescrCaps}}`
 	ret := op.executeTemplate(tmplName, tmpl)
+
 	if op.LongName == "blocks" {
 		tmplName := "optFields3"
 		tmpl := `

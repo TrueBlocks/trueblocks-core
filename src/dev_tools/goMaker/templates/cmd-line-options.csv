@@ -13,7 +13,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 12100,apps,Accounts,list,acctExport,reversed,E,,visible|docs,switch,<boolean>,,,,,produce results in reverse chronological order
 12110,apps,Accounts,list,acctExport,publisher,P,,,flag,<address>,,,,,for some query options&#44; the publisher of the index
 12120,apps,Accounts,list,acctExport,first_block,F,,visible|docs,flag,<blknum>,,,,,first block to export (inclusive&#44; ignored when freshening)
-12130,apps,Accounts,list,acctExport,last_block,L,NOPOS,visible|docs,flag,<blknum>,,,,,last block to export (inclusive&#44; ignored when freshening)
+12130,apps,Accounts,list,acctExport,last_block,L,NOPOSN,visible|docs,flag,<blknum>,,,,,last block to export (inclusive&#44; ignored when freshening)
 12140,apps,Accounts,list,acctExport,n1,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 12150,apps,Accounts,list,acctExport,n2,,,,note,,,,,,No other options are permitted when --silent is selected.
 #
@@ -47,7 +47,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 13280,apps,Accounts,export,acctExport,reversed,E,,visible|docs,switch,<boolean>,,,,,produce results in reverse chronological order
 13290,apps,Accounts,export,acctExport,no_zero,z,,visible|docs,switch,<boolean>,,,,,for the --count option only&#44; suppress the display of zero appearance accounts
 13300,apps,Accounts,export,acctExport,first_block,F,,visible|docs,flag,<blknum>,,,,,first block to process (inclusive)
-13310,apps,Accounts,export,acctExport,last_block,L,NOPOS,visible|docs,flag,<blknum>,,,,,last block to process (inclusive)
+13310,apps,Accounts,export,acctExport,last_block,L,NOPOSN,visible|docs,flag,<blknum>,,,,,last block to process (inclusive)
 13320,apps,Accounts,export,acctExport,n1,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 13330,apps,Accounts,export,acctExport,n2,,,,note,,,,,,Articulating the export means turn the EVM's byte data into human-readable text (if possible).
 13340,apps,Accounts,export,acctExport,n3,,,,note,,,,,,For the --logs option&#44; you may optionally specify one or more --emitter&#44; one or more --topics&#44; or both.
@@ -187,7 +187,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 27030,tools,Chain Data,when,whenBlock,list,l,,visible|docs,switch,<boolean>,namedBlock,,,,export a list of the 'special' blocks
 27040,tools,Chain Data,when,whenBlock,timestamps,t,,visible|docs,switch,<boolean>,timestamp,,,,display or process timestamps
 27050,tools,Chain Data,when,whenBlock,count,U,,visible|docs,switch,<boolean>,timestampCount,,,,with --timestamps only&#44; returns the number of timestamps in the cache
-27060,tools,Chain Data,when,whenBlock,truncate,n,NOPOS,,flag,<blknum>,,,,,with --timestamps only&#44; truncates the timestamp file at this block
+27060,tools,Chain Data,when,whenBlock,truncate,n,NOPOSN,,flag,<blknum>,,,,,with --timestamps only&#44; truncates the timestamp file at this block
 27070,tools,Chain Data,when,whenBlock,repair,r,,visible|docs,switch,<boolean>,,,,,with --timestamps only&#44; repairs block(s) in the block range by re-querying from the chain
 27080,tools,Chain Data,when,whenBlock,check,c,,visible|docs,switch,<boolean>,,,,,with --timestamps only&#44; checks the validity of the timestamp data
 27090,tools,Chain Data,when,whenBlock,update,u,,visible|docs,switch,<boolean>,,,,,with --timestamps only&#44; bring the timestamp database forward to the latest block
@@ -259,7 +259,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 45000,apps,Admin,scrape,blockScrape,,,,visible|docs,command,,,Scrape index,[flags],verbose|version|noop|noColor|chain|,Scan the chain and update the TrueBlocks index of appearances.
 45020,apps,Admin,scrape,blockScrape,block_cnt,n,2000,visible|docs,flag,<uint64>,,,,,maximum number of blocks to process per pass
 45030,apps,Admin,scrape,blockScrape,sleep,s,14,visible|docs,flag,<double>,,,,,seconds to sleep between scraper passes
-45040,apps,Admin,scrape,blockScrape,touch,l,,visible|docs,flag,<uint64>,,,,,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+45040,apps,Admin,scrape,blockScrape,touch,l,,visible|docs,flag,<blknum>,,,,,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
 45050,apps,Admin,scrape,blockScrape,run_count,u,,,flag,<uint64>,,,,,run the scraper this many times&#44; then quit
 45060,apps,Admin,scrape,blockScrape,publisher,P,,,flag,<address>,,,,,for some query options&#44; the publisher of the index
 45070,apps,Admin,scrape,blockScrape,dry_run,d,,,switch,<boolean>,,,,,show the configuration that would be applied if run&#44;no changes are made
@@ -278,13 +278,13 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 46050,apps,Admin,chunks,chunkMan,pin,i,,visible|docs,switch,<boolean>,,,,,pin the manifest or each index chunk and bloom
 46060,apps,Admin,chunks,chunkMan,publish,p,,visible|docs,switch,<boolean>,,,,,publish the manifest to the Unchained Index smart contract
 46070,apps,Admin,chunks,chunkMan,publisher,P,,,flag,<address>,,,,,for some query options&#44; the publisher of the index
-46080,apps,Admin,chunks,chunkMan,truncate,n,NOPOS,,flag,<blknum>,message,,,,truncate the entire index at this block (requires a block identifier)
+46080,apps,Admin,chunks,chunkMan,truncate,n,NOPOSN,,flag,<blknum>,message,,,,truncate the entire index at this block (requires a block identifier)
 46090,apps,Admin,chunks,chunkMan,remote,r,,visible|docs,switch,<boolean>,,,,,prior to processing&#44; retrieve the manifest from the Unchained Index smart contract
 46100,apps,Admin,chunks,chunkMan,belongs,b,,visible|docs,flag,list<addr>,,,,,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
 46110,apps,Admin,chunks,chunkMan,diff,f,,,switch,<boolean>,message,,,,compare two index portions (see notes)
 46120,apps,Admin,chunks,chunkMan,first_block,F,,visible|docs,flag,<blknum>,,,,,first block to process (inclusive)
-46130,apps,Admin,chunks,chunkMan,last_block,L,NOPOS,visible|docs,flag,<blknum>,,,,,last block to process (inclusive)
-46140,apps,Admin,chunks,chunkMan,max_addrs,m,NOPOS,visible|docs,flag,<blknum>,,,,,the max number of addresses to process in a given chunk
+46130,apps,Admin,chunks,chunkMan,last_block,L,NOPOSN,visible|docs,flag,<blknum>,,,,,last block to process (inclusive)
+46140,apps,Admin,chunks,chunkMan,max_addrs,m,NOPOS,visible|docs,flag,<uint64>,,,,,the max number of addresses to process in a given chunk
 46150,apps,Admin,chunks,chunkMan,deep,d,,visible|docs,switch,<boolean>,,,,,if true&#44; dig more deeply during checking (manifest only)
 46160,apps,Admin,chunks,chunkMan,rewrite,e,,visible|docs,switch,<boolean>,,,,,for the --pin --deep mode only&#44; writes the manifest back to the index folder (see notes)
 46170,apps,Admin,chunks,chunkMan,list,l,,,switch,<boolean>,,,,,for the pins mode only&#44; list the remote pins

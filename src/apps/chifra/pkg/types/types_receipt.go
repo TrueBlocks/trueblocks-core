@@ -280,8 +280,8 @@ func (s *Receipt) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	}
 
 	// CumulativeGasUsed
-	v1 := version.NewVersion("2.5.8")
-	if vers <= v1.Uint64() {
+	vCumulativeGasUsed := version.NewVersion("2.5.8")
+	if vers <= vCumulativeGasUsed.Uint64() {
 		var val string
 		if err = cache.ReadValue(reader, &val, vers); err != nil {
 			return err
@@ -321,8 +321,8 @@ func (s *Receipt) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	}
 
 	// Status
-	v2 := version.NewVersion("2.5.9")
-	if vers <= v2.Uint64() {
+	vStatus := version.NewVersion("2.5.9")
+	if vers <= vStatus.Uint64() {
 		var val uint32
 		if err = cache.ReadValue(reader, &val, vers); err != nil {
 			return err

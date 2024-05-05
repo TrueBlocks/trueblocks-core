@@ -85,9 +85,9 @@ func oneTest(numWorkers int) {
 // the smallest block with transactions.
 func worker(blknumChan <-chan base.Blknum, wg *sync.WaitGroup, mu *sync.Mutex, minBlockNumber *base.Blknum) {
 	defer wg.Done()
-	for blknum := range blknumChan {
+	for bn := range blknumChan {
 		opts := sdk.BlocksOptions{
-			BlockIds: []string{fmt.Sprintf("%d", blknum)},
+			BlockIds: []string{fmt.Sprintf("%d", bn)},
 		}
 
 		blocks, _, err := opts.BlocksCount()

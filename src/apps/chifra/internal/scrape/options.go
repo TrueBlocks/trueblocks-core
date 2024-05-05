@@ -29,7 +29,7 @@ import (
 type ScrapeOptions struct {
 	BlockCnt  uint64                `json:"blockCnt,omitempty"`  // Maximum number of blocks to process per pass
 	Sleep     float64               `json:"sleep,omitempty"`     // Seconds to sleep between scraper passes
-	Touch     uint64                `json:"touch,omitempty"`     // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
+	Touch     base.Blknum           `json:"touch,omitempty"`     // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
 	RunCount  uint64                `json:"runCount,omitempty"`  // Run the scraper this many times, then quit
 	Publisher string                `json:"publisher,omitempty"` // For some query options, the publisher of the index
 	DryRun    bool                  `json:"dryRun,omitempty"`    // Show the configuration that would be applied if run,no changes are made
@@ -94,7 +94,7 @@ func ScrapeFinishParseInternal(w io.Writer, values url.Values) *ScrapeOptions {
 		case "sleep":
 			opts.Sleep = base.MustParseFloat(value[0])
 		case "touch":
-			opts.Touch = base.MustParseUint(value[0])
+			opts.Touch = base.MustParseBlknum(value[0])
 		case "runCount":
 			opts.RunCount = base.MustParseUint(value[0])
 		case "publisher":
