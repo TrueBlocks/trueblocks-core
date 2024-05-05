@@ -127,7 +127,7 @@ func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]inte
 	s.FromBlock = base.MustParseBlknum(parts[0])
 	s.ToBlock = base.MustParseBlknum(parts[1])
 	if s.ToBlock < s.FromBlock || s.ToBlock < 1 {
-		s.ToBlock = base.NOPOSN2
+		s.ToBlock = base.NOPOSN
 	}
 	if base.IsValidAddress(parts[2]) {
 		s.FromAddress = base.HexToAddress(parts[2])

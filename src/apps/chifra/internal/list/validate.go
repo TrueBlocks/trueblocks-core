@@ -29,7 +29,7 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	if opts.LastBlock == 0 {
-		opts.LastBlock = base.NOPOSN2
+		opts.LastBlock = base.NOPOSN
 	}
 
 	if opts.MaxRecords == 0 {
@@ -41,7 +41,7 @@ func (opts *ListOptions) validateList() error {
 		return validate.Usage(msg)
 	}
 
-	if opts.LastBlock != base.NOPOSN2 && !opts.Globals.TestMode {
+	if opts.LastBlock != base.NOPOSN && !opts.Globals.TestMode {
 		latest := opts.Conn.GetLatestBlockNumber()
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)

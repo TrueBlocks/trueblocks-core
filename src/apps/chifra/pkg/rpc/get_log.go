@@ -84,7 +84,7 @@ func (conn *Connection) getLogs(filter types.LogFilter) ([]types.Log, error) {
 		return []types.Log{}, nil
 
 	} else {
-		curBlock := base.NOPOSN2
+		curBlock := base.NOPOSN
 		curTs := base.NOPOSI
 		var ret []types.Log
 		for _, rawLog := range *rawLogs {

@@ -134,7 +134,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 
 func (conn *Connection) GetTransactionAppByHash(hash string) (types.RawAppearance, error) {
 	var ret types.RawAppearance
-	if rawTx, err := conn.getTransactionRaw(notAHash, base.HexToHash(hash), base.NOPOSN2, base.NOPOSN); err != nil {
+	if rawTx, err := conn.getTransactionRaw(notAHash, base.HexToHash(hash), base.NOPOSN, base.NOPOSN); err != nil {
 		return ret, err
 	} else {
 		ret.BlockNumber = uint32(base.MustParseBlknum(rawTx.BlockNumber))

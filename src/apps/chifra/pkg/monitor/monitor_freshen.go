@@ -41,7 +41,7 @@ type MonitorUpdate struct {
 func NewUpdater(chain string, testMode, silent bool, addrs []string) MonitorUpdate {
 	return MonitorUpdate{
 		MaxTasks:      12,
-		FirstBlock:    base.NOPOSN2,
+		FirstBlock:    base.NOPOSN,
 		Chain:         chain,
 		PublisherAddr: base.Address{},
 		TestMode:      testMode,

@@ -26,7 +26,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.LastBlock == 0 {
-		opts.LastBlock = base.NOPOSN2
+		opts.LastBlock = base.NOPOSN
 	}
 
 	if opts.MaxRecords == 0 {
@@ -90,7 +90,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.LastBlock == 0 {
-		opts.LastBlock = base.NOPOSN2
+		opts.LastBlock = base.NOPOSN
 	}
 
 	if opts.FirstBlock >= opts.LastBlock {
@@ -98,7 +98,7 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage(msg)
 	}
 
-	if opts.LastBlock != base.NOPOSN2 {
+	if opts.LastBlock != base.NOPOSN {
 		latest := opts.Conn.GetLatestBlockNumber()
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)

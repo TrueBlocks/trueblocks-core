@@ -94,7 +94,7 @@ func (s *State) Model(chain, format string, verbose bool, extraOptions map[strin
 					case "proxy":
 						model["proxy"] = s.Proxy
 					case "deployed":
-						if s.Deployed == base.NOPOSN2 {
+						if s.Deployed == base.NOPOSN {
 							model["deployed"] = ""
 						} else {
 							model["deployed"] = s.Deployed

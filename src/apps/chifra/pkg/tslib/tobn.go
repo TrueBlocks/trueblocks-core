@@ -39,7 +39,7 @@ func FromNameToBn(chain, name string) (base.Blknum, error) {
 		}
 	}
 
-	return base.NOPOSN2, fmt.Errorf("block at %s returned an error: %w", name, ethereum.NotFound)
+	return base.NOPOSN, fmt.Errorf("block at %s returned an error: %w", name, ethereum.NotFound)
 }
 
 // FromTsToBn returns a chain-specific block number given a Linux timestamp.

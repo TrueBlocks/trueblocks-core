@@ -59,8 +59,8 @@ type ChunksOptions struct {
 }
 
 var defaultChunksOptions = ChunksOptions{
-	Truncate:  base.NOPOSN2,
-	LastBlock: base.NOPOSN2,
+	Truncate:  base.NOPOSN,
+	LastBlock: base.NOPOSN,
 	MaxAddrs:  base.NOPOS,
 }
 
@@ -72,12 +72,12 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
 	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
-	logger.TestLog(opts.Truncate != base.NOPOSN2, "Truncate: ", opts.Truncate)
+	logger.TestLog(opts.Truncate != base.NOPOSN, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
 	logger.TestLog(opts.Diff, "Diff: ", opts.Diff)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != base.NOPOSN2 && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != base.NOPOSN && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
 	logger.TestLog(opts.MaxAddrs != base.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.Rewrite, "Rewrite: ", opts.Rewrite)
@@ -109,8 +109,8 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 	copy := defaultChunksOptions
 	copy.Globals.Caps = getCaps()
 	opts := &copy
-	opts.Truncate = base.NOPOSN2
-	opts.LastBlock = base.NOPOSN2
+	opts.Truncate = base.NOPOSN
+	opts.LastBlock = base.NOPOSN
 	opts.MaxAddrs = base.NOPOS
 	for key, value := range values {
 		switch key {
@@ -215,16 +215,16 @@ func chunksFinishParse(args []string) *ChunksOptions {
 		}
 	}
 	if opts.Truncate == 0 {
-		opts.Truncate = base.NOPOSN2
+		opts.Truncate = base.NOPOSN
 	}
 	if opts.LastBlock == 0 {
-		opts.LastBlock = base.NOPOSN2
+		opts.LastBlock = base.NOPOSN
 	}
 	if opts.MaxAddrs == 0 {
 		opts.MaxAddrs = base.NOPOS
 	}
 	getDef := func(def string) string {
-		if opts.Truncate != base.NOPOSN2 || len(opts.Belongs) > 0 || opts.Pin {
+		if opts.Truncate != base.NOPOSN || len(opts.Belongs) > 0 || opts.Pin {
 			return "json"
 		}
 		return def

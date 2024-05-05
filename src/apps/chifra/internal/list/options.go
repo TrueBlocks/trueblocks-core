@@ -50,7 +50,7 @@ type ListOptions struct {
 
 var defaultListOptions = ListOptions{
 	MaxRecords: 250,
-	LastBlock:  base.NOPOSN2,
+	LastBlock:  base.NOPOSN,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -66,7 +66,7 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != base.NOPOSN2 && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != base.NOPOSN && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -91,7 +91,7 @@ func ListFinishParseInternal(w io.Writer, values url.Values) *ListOptions {
 	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.MaxRecords = 250
-	opts.LastBlock = base.NOPOSN2
+	opts.LastBlock = base.NOPOSN
 	for key, value := range values {
 		switch key {
 		case "addrs":

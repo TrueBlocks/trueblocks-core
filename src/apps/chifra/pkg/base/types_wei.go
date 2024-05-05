@@ -131,7 +131,7 @@ func ToEther(wei *Wei) *Ether {
 }
 
 func BiFromBn(bn Blknum) *big.Int {
-	if bn == NOPOSN2 {
+	if bn == NOPOSN {
 		return nil
 	}
 	return new(big.Int).SetUint64(uint64(bn))

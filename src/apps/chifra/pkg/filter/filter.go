@@ -34,7 +34,7 @@ func NewFilter(reversed, reverted bool, fourBytes []string, exportRange base.Blo
 	return &AppearanceFilter{
 		exportRange: exportRange,
 		recordRange: recordRange,
-		OuterBounds: base.BlockRange{First: 0, Last: base.NOPOSN2},
+		OuterBounds: base.BlockRange{First: 0, Last: base.NOPOSN},
 		sortBy:      sortBy,
 		Reversed:    reversed,
 		reverted:    reverted,
@@ -48,7 +48,7 @@ func NewEmptyFilter() *AppearanceFilter {
 		false,
 		false,
 		[]string{},
-		base.BlockRange{First: 0, Last: base.NOPOSN2},
+		base.BlockRange{First: 0, Last: base.NOPOSN},
 		base.RecordRange{First: 0, Last: base.NOPOS},
 	)
 }

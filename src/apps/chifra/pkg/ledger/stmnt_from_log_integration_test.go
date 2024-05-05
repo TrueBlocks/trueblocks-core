@@ -33,7 +33,7 @@ func TestGetStatementFromLog(t *testing.T) {
 		conn,
 		base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 		0,
-		base.NOPOSN2,
+		base.NOPOSN,
 		true,
 		false,
 		false,

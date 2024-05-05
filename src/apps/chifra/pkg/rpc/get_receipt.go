@@ -126,7 +126,7 @@ func (conn *Connection) getReceipts(bn base.Blknum) ([]types.Receipt, error) {
 		return []types.Receipt{}, nil
 
 	} else {
-		curBlock := base.NOPOSN2
+		curBlock := base.NOPOSN
 		curTs := base.NOPOSI
 		var ret []types.Receipt
 		for _, rawReceipt := range *rawReceipts {

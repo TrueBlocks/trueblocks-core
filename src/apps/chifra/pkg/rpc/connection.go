@@ -72,7 +72,7 @@ func (settings settings) GetRpcConnection() *Connection {
 	}
 
 	if store != nil && !store.ReadOnly() {
-		ret.LatestBlockTimestamp = ret.GetBlockTimestamp(base.NOPOSN2)
+		ret.LatestBlockTimestamp = ret.GetBlockTimestamp(base.NOPOSN)
 	}
 
 	return ret

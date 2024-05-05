@@ -27,7 +27,6 @@ type Timestamp = int64
 const NOPOS = uint64(^uint64(0))
 const NOPOSI = int64(0xdeadbeef)
 const NOPOSN = Numeral(^uint64(0))
-const NOPOSN2 = NOPOSN
 
 func MustParseNumeral(input string) Numeral {
 	ret, _ := strconv.ParseUint(input, 0, 64)

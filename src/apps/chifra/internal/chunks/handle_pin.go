@@ -37,7 +37,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 	firstBlock := base.MustParseBlknum(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
 	lastBlock := base.MustParseBlknum(os.Getenv("TB_CHUNKS_PINLASTBLOCK"))
 	if lastBlock == 0 {
-		lastBlock = base.NOPOSN2
+		lastBlock = base.NOPOSN
 	}
 
 	outPath := filepath.Join(config.PathToCache(chain), "tmp", "manifest.json")
@@ -136,7 +136,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 			}
 		}
 
-		if len(blockNums) == 0 && firstBlock == 0 && lastBlock == base.NOPOSN2 {
+		if len(blockNums) == 0 && firstBlock == 0 && lastBlock == base.NOPOSN {
 			tsPath := config.PathToTimestamps(chain)
 			if localHash, remoteHash, err := pinning.PinOneFile(chain, "timestamps", tsPath, opts.Remote); err != nil {
 				errorChan <- err

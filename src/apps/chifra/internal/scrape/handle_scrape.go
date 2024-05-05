@@ -108,7 +108,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// }
 
 		// user supplied, but not so many to pass the chain tip.
-		bm.blockCount = base.Min2(opts.BlockCnt, bm.meta.ChainHeight()-bm.StartBlock()+1)
+		bm.blockCount = base.Min2(base.Blknum(opts.BlockCnt), bm.meta.ChainHeight()-bm.StartBlock()+1)
 		// Unripe_dist behind the chain tip.
 		bm.ripeBlock = bm.meta.ChainHeight() - base.Blknum(opts.Settings.UnripeDist)
 

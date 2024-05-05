@@ -179,7 +179,7 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 	os.Remove(fn) // It's okay to remove this. If it fails, we'll just start over.
 
 	appMap := make(map[string][]types.AppRecord, len(appearances))
-	fileRange := base.FileRange{First: base.NOPOSN2, Last: 0}
+	fileRange := base.FileRange{First: base.NOPOSN, Last: 0}
 
 	if len(appearances) == 0 {
 		return appMap, base.FileRange{First: 0, Last: 0}, 0

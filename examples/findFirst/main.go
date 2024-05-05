@@ -48,7 +48,7 @@ func oneTest(numWorkers int) {
 
 	var wg sync.WaitGroup
 	blknumChan := make(chan base.Blknum)
-	minBlockNumber := base.NOPOSN2
+	minBlockNumber := base.NOPOSN
 	var mu sync.Mutex
 
 	// Start multiple worker goroutines
@@ -74,7 +74,7 @@ func oneTest(numWorkers int) {
 	// Wait until all the block numbers are processed
 	wg.Wait()
 
-	if minBlockNumber != base.NOPOSN2 {
+	if minBlockNumber != base.NOPOSN {
 		fmt.Printf("Smallest BlockNumber with TransactionCount > 0 is: %d\n", minBlockNumber)
 	} else {
 		fmt.Println("No blocks with TransactionCount > 0 found.")

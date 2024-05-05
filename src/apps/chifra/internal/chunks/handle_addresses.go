@@ -28,7 +28,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []base.Blknum) error {
 		var showAddresses func(walker *walk.CacheWalker, path string, first bool) (bool, error)
 		if opts.Globals.Verbose {
 			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
-				return opts.handleResolvedRecords1(modelChan, walker, path, first)
+				return opts.handleResolvedRecords1(modelChan, walker, path)
 			}
 		} else {
 			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {

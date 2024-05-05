@@ -89,7 +89,7 @@ func (opts *ChunksOptions) ChunksInternal() error {
 	} else if opts.Publish {
 		err = opts.HandlePublish(blockNums)
 
-	} else if opts.Truncate != base.NOPOSN2 {
+	} else if opts.Truncate != base.NOPOSN {
 		err = opts.HandleTruncate(blockNums)
 
 	} else {

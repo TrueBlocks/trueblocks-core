@@ -36,7 +36,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	}
 
 	prev := types.NamedBlock{
-		BlockNumber: base.NOPOSN2,
+		BlockNumber: base.NOPOSN,
 		Timestamp:   base.NOPOSI,
 	}
 

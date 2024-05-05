@@ -15,7 +15,7 @@ var ErrNotAContract = errors.New("not a contract")
 
 // IsContractAtLatest checks if an account is a contract at the latest block
 func (conn *Connection) IsContractAtLatest(address base.Address) error {
-	return conn.IsContractAt(address, base.NOPOSN2)
+	return conn.IsContractAt(address, base.NOPOSN)
 }
 
 // IsContractAt checks if an account is a contract
