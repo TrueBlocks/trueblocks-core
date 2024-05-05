@@ -110,17 +110,17 @@ func ListFinishParseInternal(w io.Writer, values url.Values) *ListOptions {
 		case "silent":
 			opts.Silent = true
 		case "firstRecord":
-			opts.FirstRecord = globals.ToUint64(value[0])
+			opts.FirstRecord = base.MustParseUint(value[0])
 		case "maxRecords":
-			opts.MaxRecords = globals.ToUint64(value[0])
+			opts.MaxRecords = base.MustParseUint(value[0])
 		case "reversed":
 			opts.Reversed = true
 		case "publisher":
 			opts.Publisher = value[0]
 		case "firstBlock":
-			opts.FirstBlock = globals.ToBlknum(value[0])
+			opts.FirstBlock = base.MustParseBlknum(value[0])
 		case "lastBlock":
-			opts.LastBlock = globals.ToBlknum(value[0])
+			opts.LastBlock = base.MustParseBlknum(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "list")

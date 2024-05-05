@@ -181,7 +181,7 @@ func (conn *Connection) GetTransactionHashByHash(hash string) (string, error) {
 }
 
 // GetTransactionHashByHashAndID returns a transaction's hash if it's a valid transaction
-func (conn *Connection) GetTransactionHashByHashAndID(hash string, txId uint64) (string, error) {
+func (conn *Connection) GetTransactionHashByHashAndID(hash string, txId base.Txnum) (string, error) {
 	if ec, err := conn.getClient(); err != nil {
 		return "", err
 	} else {

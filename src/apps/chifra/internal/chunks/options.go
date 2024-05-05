@@ -130,7 +130,7 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 		case "publisher":
 			opts.Publisher = value[0]
 		case "truncate":
-			opts.Truncate = globals.ToBlknum(value[0])
+			opts.Truncate = base.MustParseBlknum(value[0])
 		case "remote":
 			opts.Remote = true
 		case "belongs":
@@ -141,11 +141,11 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 		case "diff":
 			opts.Diff = true
 		case "firstBlock":
-			opts.FirstBlock = globals.ToBlknum(value[0])
+			opts.FirstBlock = base.MustParseBlknum(value[0])
 		case "lastBlock":
-			opts.LastBlock = globals.ToBlknum(value[0])
+			opts.LastBlock = base.MustParseBlknum(value[0])
 		case "maxAddrs":
-			opts.MaxAddrs = globals.ToUint64(value[0])
+			opts.MaxAddrs = base.MustParseUint(value[0])
 		case "deep":
 			opts.Deep = true
 		case "rewrite":
@@ -159,7 +159,7 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 		case "tag":
 			opts.Tag = value[0]
 		case "sleep":
-			opts.Sleep = globals.ToFloat64(value[0])
+			opts.Sleep = base.MustParseFloat(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")

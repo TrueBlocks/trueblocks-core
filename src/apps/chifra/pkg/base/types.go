@@ -16,20 +16,22 @@ func (g *Numeral) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type Gas = Numeral
+type Blknum = Numeral
 type Txnum = Numeral
 type TraceId = Numeral
 type Lognum = Numeral
+type Gas = Numeral
 type Topic = string
 type Timestamp = int64
 
-type Blknum = uint64
-
-const NOPOSN2 = NOPOS
+const NOPOS = uint64(^uint64(0))
+const NOPOSI = int64(0xdeadbeef)
+const NOPOSN = Numeral(^uint64(0))
+const NOPOSN2 = NOPOSN
 
 func MustParseNumeral(input string) Numeral {
-	result, _ := strconv.ParseUint(input, 0, 64)
-	return Numeral(result)
+	ret, _ := strconv.ParseUint(input, 0, 64)
+	return Numeral(ret)
 }
 
 // TODO: This is here to avoid circular imports
@@ -43,21 +45,20 @@ func MustParseInt(input string) int64 {
 	return ret
 }
 
-func MustParseUint(input string) (result uint64) {
-	result, _ = strconv.ParseUint(input, 0, 64)
-	return
+func MustParseUint(input string) uint64 {
+	ret, _ := strconv.ParseUint(input, 0, 64)
+	return ret
 }
 
 func MustParseWei(input string) Wei {
-	return *NewWei(0).SetUint64(MustParseUint(input))
+	i := MustParseUint(input)
+	return *NewWei(0).SetUint64(i)
 }
 
-// TODO: Might be nice if the below two values were the same so we could cast between them.
-// TODO: Trouble is that these values may be stored on disc.
-
-const NOPOS = uint64(^uint64(0))
-const NOPOSI = int64(0xdeadbeef)
-const NOPOSN = Numeral(^uint64(0))
+func MustParseFloat(val string) float64 {
+	f, _ := strconv.ParseFloat(val, 64)
+	return f
+}
 
 func IsFinal(latestTs, blockTs Timestamp) bool {
 	// TODO: This is not consistent with they way we determine unripe in the scraper, for example.

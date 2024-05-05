@@ -85,9 +85,9 @@ func InitFinishParseInternal(w io.Writer, values url.Values) *InitOptions {
 		case "publisher":
 			opts.Publisher = value[0]
 		case "firstBlock":
-			opts.FirstBlock = globals.ToBlknum(value[0])
+			opts.FirstBlock = base.MustParseBlknum(value[0])
 		case "sleep":
-			opts.Sleep = globals.ToFloat64(value[0])
+			opts.Sleep = base.MustParseFloat(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "init")

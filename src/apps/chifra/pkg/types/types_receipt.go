@@ -52,7 +52,7 @@ type Receipt struct {
 	GasUsed           base.Gas     `json:"gasUsed"`
 	IsError           bool         `json:"isError,omitempty"`
 	Logs              []Log        `json:"logs"`
-	Status            uint32       `json:"status"`
+	Status            uint64       `json:"status"`
 	To                base.Address `json:"to,omitempty"`
 	TransactionHash   base.Hash    `json:"transactionHash"`
 	TransactionIndex  base.Txnum   `json:"transactionIndex"`
@@ -280,8 +280,8 @@ func (s *Receipt) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	}
 
 	// CumulativeGasUsed
-	v1 := version.NewVersion("2.5.8")
-	if vers <= v1.Uint64() {
+	vc1 := version.NewVersion("2.5.8")
+	if vers <= vc1.Uint64() {
 		var val string
 		if err = cache.ReadValue(reader, &val, vers); err != nil {
 			return err
@@ -321,8 +321,18 @@ func (s *Receipt) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	}
 
 	// Status
-	if err = cache.ReadValue(reader, &s.Status, vers); err != nil {
-		return err
+	vS := version.NewVersion("2.5.8")
+	if vers <= vS.Uint64() {
+		var val uint32
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
+			return err
+		}
+		s.Status = uint64(val)
+	} else {
+		// Status
+		if err = cache.ReadValue(reader, &s.Status, vers); err != nil {
+			return err
+		}
 	}
 
 	// To
@@ -381,7 +391,7 @@ func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 		CumulativeGasUsed: base.Gas(cumulativeGasUsed),
 		EffectiveGasPrice: base.MustParseNumeral(r.EffectiveGasPrice),
 		GasUsed:           base.MustParseNumeral(r.GasUsed),
-		Status:            uint32(base.MustParseUint(r.Status)),
+		Status:            base.MustParseUint(r.Status),
 		IsError:           base.MustParseUint(r.Status) == 0,
 		TransactionHash:   base.HexToHash(r.TransactionHash),
 		TransactionIndex:  base.MustParseNumeral(r.TransactionIndex),

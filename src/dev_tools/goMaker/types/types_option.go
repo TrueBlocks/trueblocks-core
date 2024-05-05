@@ -729,18 +729,23 @@ func (op *Option) RequestOpt() string {
 			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = true`
 			ret = op.executeTemplate(tmplName, tmpl)
-		} else if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
+		} else if op.DataType == "<uint64>" {
 			tmplName := "requestOpts4"
 			tmpl := `		case "{{toCamel .LongName}}":
-			opts.{{.GoName}} = globals.ToUint64(value[0])`
+			opts.{{.GoName}} = base.MustParseUint(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
-		} else if op.DataType == "<double>" {
+		} else if op.DataType == "<blknum>" {
 			tmplName := "requestOpts5"
 			tmpl := `		case "{{toCamel .LongName}}":
-			opts.{{.GoName}} = globals.ToFloat64(value[0])`
+			opts.{{.GoName}} = base.MustParseBlknum(value[0])`
+			ret = op.executeTemplate(tmplName, tmpl)
+		} else if op.DataType == "<double>" {
+			tmplName := "requestOpts6"
+			tmpl := `		case "{{toCamel .LongName}}":
+			opts.{{.GoName}} = base.MustParseFloat(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else {
-			tmplName := "requestOpts6"
+			tmplName := "requestOpts7"
 			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = value[0]`
 			ret = op.executeTemplate(tmplName, tmpl)

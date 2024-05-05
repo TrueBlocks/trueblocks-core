@@ -98,7 +98,7 @@ func WhenFinishParseInternal(w io.Writer, values url.Values) *WhenOptions {
 		case "count":
 			opts.Count = true
 		case "truncate":
-			opts.Truncate = globals.ToBlknum(value[0])
+			opts.Truncate = base.MustParseBlknum(value[0])
 		case "repair":
 			opts.Repair = true
 		case "check":

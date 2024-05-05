@@ -168,9 +168,9 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 		case "count":
 			opts.Count = true
 		case "firstRecord":
-			opts.FirstRecord = globals.ToUint64(value[0])
+			opts.FirstRecord = base.MustParseUint(value[0])
 		case "maxRecords":
-			opts.MaxRecords = globals.ToUint64(value[0])
+			opts.MaxRecords = base.MustParseUint(value[0])
 		case "relevant":
 			opts.Relevant = true
 		case "emitter":
@@ -203,9 +203,9 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 		case "noZero":
 			opts.NoZero = true
 		case "firstBlock":
-			opts.FirstBlock = globals.ToBlknum(value[0])
+			opts.FirstBlock = base.MustParseBlknum(value[0])
 		case "lastBlock":
-			opts.LastBlock = globals.ToBlknum(value[0])
+			opts.LastBlock = base.MustParseBlknum(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "export")

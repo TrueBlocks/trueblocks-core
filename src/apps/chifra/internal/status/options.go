@@ -17,6 +17,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -85,9 +86,9 @@ func StatusFinishParseInternal(w io.Writer, values url.Values) *StatusOptions {
 		case "diagnose":
 			opts.Diagnose = true
 		case "firstRecord":
-			opts.FirstRecord = globals.ToUint64(value[0])
+			opts.FirstRecord = base.MustParseUint(value[0])
 		case "maxRecords":
-			opts.MaxRecords = globals.ToUint64(value[0])
+			opts.MaxRecords = base.MustParseUint(value[0])
 		case "chains":
 			opts.Chains = true
 		default:

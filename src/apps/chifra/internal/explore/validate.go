@@ -6,7 +6,6 @@ package explorePkg
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -75,7 +74,7 @@ func (opts *ExploreOptions) validateExplore() error {
 
 		valid, _ := validate.IsValidTransId(chain, []string{arg}, validate.ValidTransId)
 		if valid {
-			txHash, err := opts.idToTxHash(chain, arg, validate.IsBlockHash)
+			txHash, err := opts.idToTxHash(arg, validate.IsBlockHash)
 			if err == nil {
 				urls = append(urls, ExploreUrl{txHash, ExploreTx})
 				continue
@@ -141,7 +140,7 @@ func (opts *ExploreOptions) idToBlockHash(chain, arg string, isBlockHash func(ar
 // idToTxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
 // and returns the transaction hash represented by that identifier. (If it's a valid transaction.
 // It may not be because transaction hashes and block hashes are both 32-byte hex)
-func (opts *ExploreOptions) idToTxHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
+func (opts *ExploreOptions) idToTxHash(arg string, isBlockHash func(arg string) bool) (string, error) {
 	// simple case first
 	if !strings.Contains(arg, ".") {
 		// We know it's a hash, but we want to know if it's a legitimate tx on chain
@@ -154,11 +153,7 @@ func (opts *ExploreOptions) idToTxHash(chain, arg string, isBlockHash func(arg s
 	}
 
 	if isBlockHash(parts[0]) {
-		txId, err := strconv.ParseUint(parts[1], 10, 64)
-		if err != nil {
-			return "", nil
-		}
-		return opts.Conn.GetTransactionHashByHashAndID(parts[0], txId)
+		return opts.Conn.GetTransactionHashByHashAndID(parts[0], base.MustParseNumeral(parts[1]))
 	}
 
 	blockNum := base.MustParseBlknum(parts[0])

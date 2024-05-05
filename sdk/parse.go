@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/url"
 	"reflect"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -61,11 +60,7 @@ func assignValuesFromArgs(args []string, parseFunc ParseFunc, target interface{}
 					case reflect.String:
 						field.SetString(value)
 					case reflect.Uint64:
-						if num, err := strconv.ParseUint(value, 10, 64); err != nil {
-							return fmt.Errorf("error parsing uint64 for option %s: %v", option, err)
-						} else {
-							field.SetUint(num)
-						}
+						field.SetUint(base.MustParseUint(value))
 					default:
 						return fmt.Errorf("unsupported field kind %s for option %s", kind, option)
 					}

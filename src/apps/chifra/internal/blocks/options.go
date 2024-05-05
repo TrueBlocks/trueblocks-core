@@ -134,7 +134,7 @@ func BlocksFinishParseInternal(w io.Writer, values url.Values) *BlocksOptions {
 		case "articulate":
 			opts.Articulate = true
 		case "bigRange":
-			opts.BigRange = globals.ToUint64(value[0])
+			opts.BigRange = base.MustParseUint(value[0])
 		case "count":
 			opts.Count = true
 		case "cacheTxs":
@@ -142,9 +142,9 @@ func BlocksFinishParseInternal(w io.Writer, values url.Values) *BlocksOptions {
 		case "cacheTraces":
 			opts.CacheTraces = true
 		case "list":
-			opts.List = globals.ToBlknum(value[0])
+			opts.List = base.MustParseBlknum(value[0])
 		case "listCount":
-			opts.ListCount = globals.ToBlknum(value[0])
+			opts.ListCount = base.MustParseBlknum(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")

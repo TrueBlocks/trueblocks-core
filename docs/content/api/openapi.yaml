@@ -3559,7 +3559,7 @@ components:
           description: "a possibly empty array of logs"
         status:
           type: number
-          format: uint32
+          format: uint64
           description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
         transactionHash:
           type: string

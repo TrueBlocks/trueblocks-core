@@ -130,7 +130,7 @@ Receipts consist of the following fields:
 | gasUsed          | the amount of gas actually used by the transaction                         | gas                                 |
 | isError          |                                                                            | bool                                |
 | logs             | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
-| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
+| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint64                              |
 | transactionHash  |                                                                            | hash                                |
 | transactionIndex |                                                                            | txnum                               |
 
@@ -420,7 +420,6 @@ This documentation mentions the following basic data types.
 | topic     | an '0x'-prefixed 32-byte hex string | lowercase      |
 | txnum     | an alias for a uint64               |                |
 | uint256   | a 256-bit unsigned integer          |                |
-| uint32    | a 32-bit unsigned integer           |                |
 | uint64    | a 64-bit unsigned integer           |                |
 | uint8     | an alias for the boolean type       |                |
 | wei       | an unsigned big number              | as a string    |
