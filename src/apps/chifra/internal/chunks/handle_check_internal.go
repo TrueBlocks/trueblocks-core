@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // CheckInternal reads the header of each chunk on disc looking for the Magic number and
@@ -61,9 +60,9 @@ func (opts *ChunksOptions) checkSnaps(fileName string, indexChunk *index.Index, 
 	}
 
 	chain := opts.Globals.Chain
-	firstSnap := utils.MustParseUint(config.GetScrape(chain).FirstSnap)
-	snapMarker := utils.MustParseUint(config.GetScrape(chain).SnapToGrid)
-	appsPer := uint32(utils.MustParseUint(config.GetScrape(chain).AppsPerChunk))
+	firstSnap := config.GetScrape(chain).FirstSnap
+	snapMarker := config.GetScrape(chain).SnapToGrid
+	appsPer := uint32(config.GetScrape(chain).AppsPerChunk)
 	if fR, err := base.RangeFromFilenameE(fileName); err != nil {
 		report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: %s", err, fileName))
 	} else {

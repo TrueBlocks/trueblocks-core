@@ -73,9 +73,9 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, with
 			return apps, len(apps), nil
 		} else if passes {
 			if len(apps) == 0 {
-				filt.OuterBounds.First = uint64(prev.BlockNumber)
+				filt.OuterBounds.First = base.Blknum(prev.BlockNumber)
 			}
-			filt.OuterBounds.Last = uint64(app.BlockNumber + 1)
+			filt.OuterBounds.Last = base.Blknum(app.BlockNumber + 1)
 			s := types.Appearance{
 				Address:          mon.Address,
 				BlockNumber:      app.BlockNumber,

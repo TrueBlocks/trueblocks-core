@@ -48,8 +48,8 @@ func oneTest(numWorkers int) {
 	}()
 
 	var wg sync.WaitGroup
-	blknumChan := make(chan uint64)
-	minBlockNumber := base.NOPOS
+	blknumChan := make(chan base.Blknum)
+	minBlockNumber := base.NOPOSN2
 	var mu sync.Mutex
 
 	// Start multiple worker goroutines
@@ -62,7 +62,7 @@ func oneTest(numWorkers int) {
 	// Send blknums into the channel
 	go func() {
 		for i := first; i >= last; i-- {
-			blknumChan <- uint64(i)
+			blknumChan <- base.Blknum(i)
 			if i%10 == 0 {
 				file.StringToAsciiFile(
 					"/Users/jrush/Development/trueblocks-core/build/shit",
@@ -75,7 +75,7 @@ func oneTest(numWorkers int) {
 	// Wait until all the block numbers are processed
 	wg.Wait()
 
-	if minBlockNumber != base.NOPOS {
+	if minBlockNumber != base.NOPOSN2 {
 		fmt.Printf("Smallest BlockNumber with TransactionCount > 0 is: %d\n", minBlockNumber)
 	} else {
 		fmt.Println("No blocks with TransactionCount > 0 found.")
@@ -84,7 +84,7 @@ func oneTest(numWorkers int) {
 
 // worker listens on a channel for blknums and processes each block by looking for
 // the smallest block with transactions.
-func worker(blknumChan <-chan uint64, wg *sync.WaitGroup, mu *sync.Mutex, minBlockNumber *uint64) {
+func worker(blknumChan <-chan base.Blknum, wg *sync.WaitGroup, mu *sync.Mutex, minBlockNumber *base.Blknum) {
 	defer wg.Done()
 	for blknum := range blknumChan {
 		opts := sdk.BlocksOptions{

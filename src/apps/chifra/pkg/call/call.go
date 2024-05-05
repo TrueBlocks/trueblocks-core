@@ -3,7 +3,6 @@ package call
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -207,12 +206,8 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 		blockTs = call.Conn.GetBlockTimestamp(call.BlockNumber)
 	}
 
-	blockNumberHex := "0x" + strconv.FormatUint(call.BlockNumber, 16)
-	if err != nil {
-		return
-	}
-
 	var packed []byte
+	blockNumberHex := fmt.Sprintf("0x%x", call.BlockNumber)
 	if call.encoded != "" {
 		packed = base.Hex2Bytes(call.encoded[2:])
 	} else {

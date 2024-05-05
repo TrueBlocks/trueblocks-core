@@ -172,13 +172,13 @@ func PointerOf[T any](value T) *T {
 	return &value
 }
 
-func MustParseUint(input any) (result uint64) {
-	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
+func MustParseUint(input string) (result uint64) {
+	result, _ = strconv.ParseUint(input, 0, 64)
 	return
 }
 
-func MustParseInt(input any) (result int64) {
-	result, _ = strconv.ParseInt(fmt.Sprint(input), 0, 64)
+func MustParseInt(input string) (result int64) {
+	result, _ = strconv.ParseInt(input, 0, 64)
 	return
 }
 

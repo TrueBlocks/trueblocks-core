@@ -94,7 +94,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 						items := make([]*types.Trace, 0, len(thisMap))
 						for _, tx := range thisMap {
 							for index, trace := range tx.Traces {
-								trace.TraceIndex = uint64(index)
+								trace.TraceIndex = base.TraceId(index)
 								isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
 								if !opts.Factory || isCreate {
 									if opts.Articulate {

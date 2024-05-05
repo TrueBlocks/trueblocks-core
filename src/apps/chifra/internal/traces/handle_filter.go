@@ -10,6 +10,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -83,7 +84,7 @@ func (opts *TracesOptions) HandleFilter() error {
 											errorChan <- err // continue even with an error
 										}
 									}
-									traces[index].TraceIndex = uint64(index)
+									traces[index].TraceIndex = base.TraceId(index)
 									tr = append(tr, traces[index])
 								}
 								value.Traces = append(value.Traces, tr...)

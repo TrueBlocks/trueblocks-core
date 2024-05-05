@@ -56,8 +56,8 @@ type Trace struct {
 	TraceType        string         `json:"type,omitempty"`
 	raw              *RawTrace      `json:"-"`
 	// EXISTING_CODE
-	TraceIndex base.Blknum `json:"-"`
-	sortString string      `json:"-"`
+	TraceIndex base.TraceId `json:"-"`
+	sortString string       `json:"-"`
 	// EXISTING_CODE
 }
 
