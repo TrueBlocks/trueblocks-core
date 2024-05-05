@@ -4,11 +4,13 @@ import (
 	"strconv"
 )
 
-type Numeral uint64
+// make -j 12 && time make test-all shows:
+// 306.71 and 353.82 when Numeral is its own type
+// 375.40 and 332.51 when Numeral is an alias
+// Conclusion: Minimal difference, but concrete type is slightly faster
+// and more useful because it supports Json parsing and future needs
 
-func (g Numeral) Uint64() uint64 {
-	return uint64(g)
-}
+type Numeral uint64
 
 func (g *Numeral) UnmarshalJSON(data []byte) error {
 	result, _ := strconv.ParseUint(string(data), 0, 64)

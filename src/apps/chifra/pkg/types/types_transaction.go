@@ -280,7 +280,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 			model["type"] = ""
 		}
 		order = append(order, "type")
-		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(s.GasPrice.Uint64()), true, 18)
+		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(uint64(s.GasPrice)), true, 18)
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 

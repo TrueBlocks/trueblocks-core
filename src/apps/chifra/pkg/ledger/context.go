@@ -23,6 +23,8 @@ type ledgerContext struct {
 }
 
 func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *ledgerContext {
+	_ = reversed // Silences unused parameter warning
+
 	if prev > cur || cur > next {
 		return &ledgerContext{
 			ReconType: types.Invalid,
