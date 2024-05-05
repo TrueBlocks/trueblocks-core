@@ -72,7 +72,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 14100,apps,Accounts,monitors,acctExport,commands,c,,visible|docs,flag,<string>,,,,,available with --watch option only&#44; the file containing the list of commands to apply to each watched address
 14110,apps,Accounts,monitors,acctExport,batch_size,b,8,visible|docs,flag,<uint64>,,,,,available with --watch option only&#44; the number of monitors to process in each batch
 14120,apps,Accounts,monitors,acctExport,run_count,u,,,flag,<uint64>,,,,,available with --watch option only&#44; run the monitor this many times&#44; then quit
-14130,apps,Accounts,monitors,acctExport,sleep,s,14,visible|docs,flag,<double>,,,,,available with --watch option only&#44; the number of seconds to sleep between runs
+14130,apps,Accounts,monitors,acctExport,sleep,s,14,visible|docs,flag,<float64>,,,,,available with --watch option only&#44; the number of seconds to sleep between runs
 14140,apps,Accounts,monitors,acctExport,n1,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 14150,apps,Accounts,monitors,acctExport,n2,,,,note,,,,,,If no address is presented to the --clean command&#44; all existing monitors will be cleaned.
 14160,apps,Accounts,monitors,acctExport,n3,,,,note,,,,,,The --watch option requires two additional parameters to be specified: `--watchlist` and `--commands`.
@@ -258,7 +258,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 #
 45000,apps,Admin,scrape,blockScrape,,,,visible|docs,command,,,Scrape index,[flags],verbose|version|noop|noColor|chain|,Scan the chain and update the TrueBlocks index of appearances.
 45020,apps,Admin,scrape,blockScrape,block_cnt,n,2000,visible|docs,flag,<uint64>,,,,,maximum number of blocks to process per pass
-45030,apps,Admin,scrape,blockScrape,sleep,s,14,visible|docs,flag,<double>,,,,,seconds to sleep between scraper passes
+45030,apps,Admin,scrape,blockScrape,sleep,s,14,visible|docs,flag,<float64>,,,,,seconds to sleep between scraper passes
 45040,apps,Admin,scrape,blockScrape,touch,l,,visible|docs,flag,<blknum>,,,,,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
 45050,apps,Admin,scrape,blockScrape,run_count,u,,,flag,<uint64>,,,,,run the scraper this many times&#44; then quit
 45060,apps,Admin,scrape,blockScrape,publisher,P,,,flag,<address>,,,,,for some query options&#44; the publisher of the index
@@ -291,7 +291,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 46180,apps,Admin,chunks,chunkMan,unpin,u,,,switch,<boolean>,,,,,for the pins mode only&#44; if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs)
 46190,apps,Admin,chunks,chunkMan,count,U,,visible|docs,switch,<boolean>,,,,,for the pins mode only&#44; display only the count of records
 46200,apps,Admin,chunks,chunkMan,tag,t,,,flag,<string>,message,,,,visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
-46210,apps,Admin,chunks,chunkMan,sleep,s,,visible|docs,flag,<double>,,,,,for --remote pinning only&#44; seconds to sleep between API calls
+46210,apps,Admin,chunks,chunkMan,sleep,s,,visible|docs,flag,<float64>,,,,,for --remote pinning only&#44; seconds to sleep between API calls
 46220,apps,Admin,chunks,chunkMan,n1,,,,note,,,,,,Mode determines which type of data to display or process.
 46230,apps,Admin,chunks,chunkMan,n2,,,,note,,,,,,Certain options are only available in certain modes.
 46240,apps,Admin,chunks,chunkMan,n3,,,,note,,,,,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
@@ -309,7 +309,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 47030,apps,Admin,init,init,dry_run,d,,visible|docs,switch,<boolean>,bool,,,,display the results of the download without actually downloading
 47040,apps,Admin,init,init,publisher,P,,,flag,<address>,,,,,the publisher of the index to download
 47050,apps,Admin,init,init,first_block,F,,visible|docs,flag,<blknum>,,,,,do not download any chunks earlier than this block
-47060,apps,Admin,init,init,sleep,s,,visible|docs,flag,<double>,,,,,seconds to sleep between downloads
+47060,apps,Admin,init,init,sleep,s,,visible|docs,flag,<float64>,,,,,seconds to sleep between downloads
 47070,apps,Admin,init,init,n1,,,,note,,,,,,If run with no options&#44; this tool will download or freshen only the Bloom filters.
 47080,apps,Admin,init,init,n2,,,,note,,,,,,The --first_block option will fall back to the start of the containing chunk.
 47090,apps,Admin,init,init,n3,,,,note,,,,,,You may re-run the tool as often as you wish. It will repair or freshen the index.
@@ -331,7 +331,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 53080,tools,Other,slurp,ethslurp,count,U,,visible|docs,switch,<boolean>,slurpCount,,,,for --appearances mode only&#44; display only the count of records
 53090,tools,Other,slurp,ethslurp,page,g,,,flag,<uint64>,,,,,the page to retrieve
 53100,tools,Other,slurp,ethslurp,per_page,P,3000,,flag,<uint64>,,,,,the number of records to request on each page
-53110,tools,Other,slurp,ethslurp,sleep,s,.25,visible|docs,flag,<double>,,,,,seconds to sleep between requests
+53110,tools,Other,slurp,ethslurp,sleep,s,.25,visible|docs,flag,<float64>,,,,,seconds to sleep between requests
 53120,tools,Other,slurp,ethslurp,n1,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 53130,tools,Other,slurp,ethslurp,n2,,,,note,,,,,,Portions of this software are Powered by Etherscan.io&#44; Covalent&#44; Alchemy&#44; TrueBlocks Key APIs.
 53131,tools,Other,slurp,ethslurp,n3,,,,note,,,,,,See slurp/README on how to configure keys for API providers

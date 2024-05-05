@@ -80,8 +80,8 @@ Transactions consist of the following fields:
 | receipt          |                                                                                                       | [Receipt](/data-model/chaindata/#receipt)      |
 | statements       | array of reconciliations (calculated)                                                                 | [Statement[]](/data-model/accounts/#statement) |
 | articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)        |
-| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                                          |
-| isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                                          |
+| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | bool                                           |
+| isError          | `true` if the transaction ended in error, `false` otherwise                                           | bool                                           |
 | compressedTx     | truncated, more readable version of the articulation                                                  | string                                         |
 
 ## Withdrawal
@@ -421,7 +421,6 @@ This documentation mentions the following basic data types.
 | txnum     | an alias for a uint64               |                |
 | uint256   | a 256-bit unsigned integer          |                |
 | uint64    | a 64-bit unsigned integer           |                |
-| uint8     | an alias for the boolean type       |                |
 | wei       | an unsigned big number              | as a string    |
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

@@ -717,7 +717,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: double
+            format: float64
         - name: chain
           description: the chain to use
           required: false
@@ -2510,7 +2510,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: double
+            format: float64
         - name: touch
           description: first block to visit when scraping (snapped back to most recent snap_to_grid mark)
           required: false
@@ -2681,7 +2681,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: double
+            format: float64
         - name: chain
           description: the chain to use
           required: false
@@ -2790,7 +2790,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: double
+            format: float64
         - name: chain
           description: the chain to use
           required: false
@@ -2909,7 +2909,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: double
+            format: float64
         - name: chain
           description: the chain to use
           required: false

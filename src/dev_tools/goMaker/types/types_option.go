@@ -129,7 +129,7 @@ func (op *Option) toGoType() string {
 			"<address>":  "base.Address",
 			"<blknum>":   "base.Blknum",
 			"<boolean>":  "bool",
-			"<double>":   "float64",
+			"<float64>":  "float64",
 			"<fourbyte>": "base.Fourbyte",
 			"<string>":   "string",
 			"<topic>":    "base.Hash",
@@ -186,7 +186,7 @@ func (op *Option) toGoSdkType() string {
 		"<address>":  "base.Address",
 		"<blknum>":   "base.Blknum",
 		"<boolean>":  "bool",
-		"<double>":   "float64",
+		"<float64>":  "float64",
 		"<fourbyte>": "string",
 		"<string>":   "string",
 		"<topic>":    "string",
@@ -238,7 +238,7 @@ func (op *Option) Default() string {
 		if op.DataType == "<boolean>" {
 			return "false"
 		}
-		if op.DataType == "<double>" {
+		if op.DataType == "<float64>" {
 			return "0.0"
 		}
 		if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
@@ -474,9 +474,9 @@ func (op *Option) DocType() string {
 	} else if op.DataType == "<address>" {
 		return `string
             format: address`
-	} else if op.DataType == "<double>" {
+	} else if op.DataType == "<float64>" {
 		return `number
-            format: double`
+            format: float64`
 	} else if op.DataType == "enum" {
 		ret := `string
             enum:
@@ -599,7 +599,7 @@ func (op *Option) IsBool() bool {
 }
 
 func (op *Option) IsFloat() bool {
-	return op.DataType == "<double>"
+	return op.DataType == "<float64>"
 }
 
 func (op *Option) TestLog() string {
@@ -656,7 +656,7 @@ func (op *Option) CobraType() string {
 		"<address>":    "String",
 		"<blknum>":     "Uint64",
 		"<boolean>":    "Bool",
-		"<double>":     "Float64",
+		"<float64>":    "Float64",
 		"<string>":     "String",
 		"<uint64>":     "Uint64",
 		"enum":         "String",
@@ -758,7 +758,7 @@ func (op *Option) RequestOpt() string {
 			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = base.MustParseBlknum(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
-		} else if op.DataType == "<double>" {
+		} else if op.DataType == "<float64>" {
 			tmplName := "requestOpts6"
 			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = base.MustParseFloat(value[0])`

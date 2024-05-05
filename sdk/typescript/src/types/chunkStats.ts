@@ -3,7 +3,7 @@
 /*
  * This file was generated with makeClass --sdk. Do not edit it.
  */
-import { blkrange, datetime, double, uint64 } from '.';
+import { blkrange, datetime, float64, uint64 } from '.';
 
 export type ChunkStats = {
   range: blkrange
@@ -15,9 +15,8 @@ export type ChunkStats = {
   recWid: uint64
   bloomSz: uint64
   chunkSz: uint64
-  addrsPerBlock: double
-  appsPerBlock: double
-  appsPerAddr: double
-  ratio: double
+  addrsPerBlock: float64
+  appsPerBlock: float64
+  appsPerAddr: float64
+  ratio: float64
 }
-
