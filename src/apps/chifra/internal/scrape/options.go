@@ -27,7 +27,7 @@ import (
 
 // ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	BlockCnt  base.Blknum           `json:"blockCnt,omitempty"`  // Maximum number of blocks to process per pass
+	BlockCnt  uint64                `json:"blockCnt,omitempty"`  // Maximum number of blocks to process per pass
 	Sleep     float64               `json:"sleep,omitempty"`     // Seconds to sleep between scraper passes
 	Touch     uint64                `json:"touch,omitempty"`     // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
 	RunCount  uint64                `json:"runCount,omitempty"`  // Run the scraper this many times, then quit
