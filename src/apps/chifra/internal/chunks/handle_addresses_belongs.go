@@ -19,7 +19,7 @@ import (
 )
 
 // HandleIndexBelongs displays the resolved records in a chunk given a single address
-func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleIndexBelongs(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -89,7 +89,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 				return false, err
 			}
 			s.AddressRecord.Count = uint32(len(s.Appearances))
-			if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOS {
+			if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOSN2 {
 				good := []types.AppRecord{}
 				for _, app := range s.Appearances {
 					if base.Blknum(app.BlockNumber) >= opts.FirstBlock && base.Blknum(app.BlockNumber) <= opts.LastBlock {
@@ -155,7 +155,7 @@ func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[t
 				return false, err
 			}
 			s.AddressRecord.Count = uint32(len(s.Appearances))
-			if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOS {
+			if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOSN2 {
 				good := []types.AppRecord{}
 				for _, app := range s.Appearances {
 					if base.Blknum(app.BlockNumber) >= opts.FirstBlock && base.Blknum(app.BlockNumber) <= opts.LastBlock {

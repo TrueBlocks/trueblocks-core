@@ -21,7 +21,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
+func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	if opts.Globals.TestMode {
 		logger.Warn("Pinning option not tested.")
@@ -34,10 +34,10 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 		}
 	}
 
-	firstBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
-	lastBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINLASTBLOCK"))
+	firstBlock := base.MustParseBlknum(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
+	lastBlock := base.MustParseBlknum(os.Getenv("TB_CHUNKS_PINLASTBLOCK"))
 	if lastBlock == 0 {
-		lastBlock = base.NOPOS
+		lastBlock = base.NOPOSN2
 	}
 
 	outPath := filepath.Join(config.PathToCache(chain), "tmp", "manifest.json")
@@ -136,7 +136,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			}
 		}
 
-		if len(blockNums) == 0 && firstBlock == 0 && lastBlock == base.NOPOS {
+		if len(blockNums) == 0 && firstBlock == 0 && lastBlock == base.NOPOSN2 {
 			tsPath := config.PathToTimestamps(chain)
 			if localHash, remoteHash, err := pinning.PinOneFile(chain, "timestamps", tsPath, opts.Remote); err != nil {
 				errorChan <- err
@@ -184,7 +184,7 @@ func (opts *ChunksOptions) matchReport(matches bool, localHash, remoteHash base.
 	}
 }
 
-func (opts *ChunksOptions) doCheck(blockNums []uint64) error {
+func (opts *ChunksOptions) doCheck(blockNums []base.Blknum) error {
 	if err, ok := opts.check(blockNums, false /* silent */); err != nil {
 		return err
 	} else if !ok {

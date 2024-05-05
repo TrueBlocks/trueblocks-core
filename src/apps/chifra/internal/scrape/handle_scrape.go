@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // HandleScrape enters a forever loop and continually scrapes --block_cnt blocks
@@ -72,7 +71,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// This only happens if the chain and the index scraper are both started at the
 		// same time (rarely). This protects against the case where the chain has no ripe blocks.
 		// Report no error and sleep for a while.
-		if bm.meta.ChainHeight() < opts.Settings.UnripeDist {
+		if bm.meta.ChainHeight() < base.Blknum(opts.Settings.UnripeDist) {
 			goto PAUSE
 		}
 
@@ -109,9 +108,9 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// }
 
 		// user supplied, but not so many to pass the chain tip.
-		bm.blockCount = utils.Min(opts.BlockCnt, bm.meta.ChainHeight()-bm.StartBlock()+1)
+		bm.blockCount = base.Min2(opts.BlockCnt, bm.meta.ChainHeight()-bm.StartBlock()+1)
 		// Unripe_dist behind the chain tip.
-		bm.ripeBlock = bm.meta.ChainHeight() - opts.Settings.UnripeDist
+		bm.ripeBlock = bm.meta.ChainHeight() - base.Blknum(opts.Settings.UnripeDist)
 
 		// These are the blocks we're going to process this round
 		blocks = make([]base.Blknum, 0, bm.BlockCount())

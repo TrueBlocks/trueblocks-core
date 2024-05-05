@@ -32,7 +32,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		if len(opts.Tag) > 0 {
 			return validate.Usage("The {0} option is not available {1}.", "--tag", "in api mode")
 		}
-		if opts.Truncate != base.NOPOS {
+		if opts.Truncate != base.NOPOSN2 {
 			return validate.Usage("The {0} option is not available {1}.", "--truncate", "in api mode")
 		}
 		if opts.Mode == "pins" {
@@ -161,7 +161,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		if len(opts.Tag) > 0 {
 			return validate.Usage("The {0} option is only available {1}.", "--tag", "in index mode")
 		}
-		if opts.Truncate != base.NOPOS {
+		if opts.Truncate != base.NOPOSN2 {
 			return validate.Usage("The {0} option is only available {1}.", "--truncate", "in index mode")
 		}
 		if len(opts.Belongs) > 0 {
@@ -222,7 +222,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		return validate.Usage("The {0} option requires exactly one block identifier.", "--diff")
 	}
 
-	if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOS || opts.MaxAddrs != base.NOPOS {
+	if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOSN2 || opts.MaxAddrs != base.NOPOS {
 		if opts.FirstBlock >= opts.LastBlock {
 			msg := fmt.Sprintf("first_block (%d) must be strictly earlier than last_block (%d).", opts.FirstBlock, opts.LastBlock)
 			return validate.Usage(msg)
@@ -263,7 +263,7 @@ func (opts *ChunksOptions) isDisallowed(test bool, mode string) error {
 		if opts.Remote {
 			return validate.Usage("The {0} option is not available in {1} mode.", "--remote", mode)
 		}
-		if opts.Truncate != base.NOPOS {
+		if opts.Truncate != base.NOPOSN2 {
 			return validate.Usage("The {0} option is not available in {1} mode.", "--truncate", mode)
 		}
 	}

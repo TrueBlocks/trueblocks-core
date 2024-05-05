@@ -70,18 +70,18 @@ func (bm *BlazeManager) AllowMissing() bool {
 }
 
 // PerChunk returns the number of blocks to process per chunk.
-func (bm *BlazeManager) PerChunk() base.Blknum {
+func (bm *BlazeManager) PerChunk() uint64 {
 	return config.GetScrape(bm.chain).AppsPerChunk
 }
 
 // FirstSnap returns the first block to process.
 func (bm *BlazeManager) FirstSnap() base.Blknum {
-	return config.GetScrape(bm.chain).FirstSnap
+	return base.Blknum(config.GetScrape(bm.chain).FirstSnap)
 }
 
 // SnapTo returns the number of blocks to process per chunk.
 func (bm *BlazeManager) SnapTo() base.Blknum {
-	return config.GetScrape(bm.chain).SnapToGrid
+	return base.Blknum(config.GetScrape(bm.chain).SnapToGrid)
 }
 
 // IsSnap returns true if the block is a snap point.

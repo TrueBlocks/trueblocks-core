@@ -17,7 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 const asciiAppearanceSize = 59
@@ -142,7 +141,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 			for _, app := range apps {
 				record := fmt.Sprintf("%s\t%09d\t%05d", addr, app.BlockNumber, app.TransactionIndex)
 				appearances = append(appearances, record)
-				newRange.Last = utils.Max(newRange.Last, uint64(app.BlockNumber))
+				newRange.Last = base.Max2(newRange.Last, base.Blknum(app.BlockNumber))
 			}
 		}
 
@@ -180,7 +179,7 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 	os.Remove(fn) // It's okay to remove this. If it fails, we'll just start over.
 
 	appMap := make(map[string][]types.AppRecord, len(appearances))
-	fileRange := base.FileRange{First: base.NOPOS, Last: 0}
+	fileRange := base.FileRange{First: base.NOPOSN2, Last: 0}
 
 	if len(appearances) == 0 {
 		return appMap, base.FileRange{First: 0, Last: 0}, 0
@@ -191,14 +190,14 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 		parts := strings.Split(line, "\t")
 		if len(parts) == 3 { // shouldn't be needed, but just in case...
 			addr := strings.ToLower(parts[0])
-			bn := utils.MustParseUint(strings.TrimLeft(parts[1], "0"))
+			bn := base.MustParseBlknum(strings.TrimLeft(parts[1], "0"))
 			txid := base.MustParseNumeral(strings.TrimLeft(parts[2], "0"))
 			// See #3252
 			if addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
 				continue
 			}
-			fileRange.First = utils.Min(fileRange.First, bn)
-			fileRange.Last = utils.Max(fileRange.Last, bn)
+			fileRange.First = base.Min2(fileRange.First, bn)
+			fileRange.Last = base.Max2(fileRange.Last, bn)
 			appMap[addr] = append(appMap[addr], types.AppRecord{
 				BlockNumber:      uint32(bn),
 				TransactionIndex: uint32(txid),

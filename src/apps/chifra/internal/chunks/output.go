@@ -89,7 +89,7 @@ func (opts *ChunksOptions) ChunksInternal() error {
 	} else if opts.Publish {
 		err = opts.HandlePublish(blockNums)
 
-	} else if opts.Truncate != base.NOPOS {
+	} else if opts.Truncate != base.NOPOSN2 {
 		err = opts.HandleTruncate(blockNums)
 
 	} else {
@@ -156,7 +156,7 @@ func GetChunkStats(chain, path string) (s types.ChunkStats, err error) {
 	s = types.ChunkStats{
 		Range:    chunk.Range.String(),
 		RangeEnd: utils.FormattedDate(ts),
-		NBlocks:  chunk.Range.Last - chunk.Range.First + 1,
+		NBlocks:  uint64(chunk.Range.Last - chunk.Range.First + 1),
 		NAddrs:   uint64(chunk.Index.Header.AddressCount),
 		NApps:    uint64(chunk.Index.Header.AppearanceCount),
 		NBlooms:  uint64(chunk.Bloom.Count),

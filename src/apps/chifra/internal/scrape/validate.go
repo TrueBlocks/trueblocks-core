@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -60,7 +61,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	if err != nil {
 		return err
 	}
-	m := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized)) + 1
+	m := base.Max2(meta.Ripe, base.Max2(meta.Staging, meta.Finalized)) + 1
 	if !opts.DryRun && m > meta.Latest {
 		fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", meta.Latest)))
 	}

@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleIndex(blockNums []base.Blknum) error {
 	if len(opts.Belongs) > 0 {
 		return opts.HandleIndexBelongs(blockNums)
 	}
