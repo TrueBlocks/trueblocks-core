@@ -35,7 +35,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
-		currentBn := uint64(0)
+		currentBn := base.Blknum(0)
 		prevBalance := base.NewWei(0)
 
 		for _, mon := range monitorArray {
@@ -73,7 +73,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 
 						iterFunc := func(app types.Appearance, value *types.Token) error {
 							var balance *base.Wei
-							if balance, err = opts.Conn.GetBalanceAt(mon.Address, uint64(app.BlockNumber)); err != nil {
+							if balance, err = opts.Conn.GetBalanceAt(mon.Address, base.Blknum(app.BlockNumber)); err != nil {
 								return err
 							}
 							value.Address = base.FAKE_ETH_ADDRESS

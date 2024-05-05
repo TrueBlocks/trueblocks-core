@@ -31,7 +31,7 @@ type InitOptions struct {
 	Example    string                `json:"example,omitempty"`    // Create an example for the SDK with the given name
 	DryRun     bool                  `json:"dryRun,omitempty"`     // Display the results of the download without actually downloading
 	Publisher  string                `json:"publisher,omitempty"`  // The publisher of the index to download
-	FirstBlock uint64                `json:"firstBlock,omitempty"` // Do not download any chunks earlier than this block
+	FirstBlock base.Blknum           `json:"firstBlock,omitempty"` // Do not download any chunks earlier than this block
 	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between downloads
 	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
 	Conn       *rpc.Connection       `json:"conn,omitempty"`       // The connection to the RPC server
@@ -85,7 +85,7 @@ func InitFinishParseInternal(w io.Writer, values url.Values) *InitOptions {
 		case "publisher":
 			opts.Publisher = value[0]
 		case "firstBlock":
-			opts.FirstBlock = globals.ToUint64(value[0])
+			opts.FirstBlock = globals.ToBlknum(value[0])
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:

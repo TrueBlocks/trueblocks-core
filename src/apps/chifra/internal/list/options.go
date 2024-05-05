@@ -38,8 +38,8 @@ type ListOptions struct {
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
 	Publisher   string                `json:"publisher,omitempty"`   // For some query options, the publisher of the index
-	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to export (inclusive, ignored when freshening)
-	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to export (inclusive, ignored when freshening)
+	FirstBlock  base.Blknum           `json:"firstBlock,omitempty"`  // First block to export (inclusive, ignored when freshening)
+	LastBlock   base.Blknum           `json:"lastBlock,omitempty"`   // Last block to export (inclusive, ignored when freshening)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
@@ -50,7 +50,7 @@ type ListOptions struct {
 
 var defaultListOptions = ListOptions{
 	MaxRecords: 250,
-	LastBlock:  base.NOPOS,
+	LastBlock:  base.NOPOSN2,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -66,7 +66,7 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != base.NOPOS && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != base.NOPOSN2 && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -91,7 +91,7 @@ func ListFinishParseInternal(w io.Writer, values url.Values) *ListOptions {
 	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.MaxRecords = 250
-	opts.LastBlock = base.NOPOS
+	opts.LastBlock = base.NOPOSN2
 	for key, value := range values {
 		switch key {
 		case "addrs":
@@ -118,9 +118,9 @@ func ListFinishParseInternal(w io.Writer, values url.Values) *ListOptions {
 		case "publisher":
 			opts.Publisher = value[0]
 		case "firstBlock":
-			opts.FirstBlock = globals.ToUint64(value[0])
+			opts.FirstBlock = globals.ToBlknum(value[0])
 		case "lastBlock":
-			opts.LastBlock = globals.ToUint64(value[0])
+			opts.LastBlock = globals.ToBlknum(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "list")

@@ -38,7 +38,7 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 				for _, app := range apps {
 					if opts.Globals.Verbose {
 						if app.BlockNumber == 0 || app.BlockNumber != currentBn {
-							app.Timestamp, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
+							app.Timestamp, _ = tslib.FromBnToTs(chain, base.Blknum(app.BlockNumber))
 						}
 						currentBn = app.BlockNumber
 					}

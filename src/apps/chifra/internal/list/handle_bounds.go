@@ -35,8 +35,8 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 				errorChan <- err
 				return
 			} else if cnt > 0 {
-				firstTs, _ := tslib.FromBnToTs(chain, uint64(apps[0].BlockNumber))
-				latestTs, _ := tslib.FromBnToTs(chain, uint64(apps[len(apps)-1].BlockNumber))
+				firstTs, _ := tslib.FromBnToTs(chain, base.Blknum(apps[0].BlockNumber))
+				latestTs, _ := tslib.FromBnToTs(chain, base.Blknum(apps[len(apps)-1].BlockNumber))
 				s := types.Bounds{
 					Count: uint64(cnt),
 					FirstApp: types.RawAppearance{

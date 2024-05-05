@@ -55,8 +55,8 @@ type ExportOptions struct {
 	Load        string                `json:"load,omitempty"`        // A comma separated list of dynamic traversers to load
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
 	NoZero      bool                  `json:"noZero,omitempty"`      // For the --count option only, suppress the display of zero appearance accounts
-	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to process (inclusive)
-	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
+	FirstBlock  base.Blknum           `json:"firstBlock,omitempty"`  // First block to process (inclusive)
+	LastBlock   base.Blknum           `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
@@ -66,7 +66,7 @@ type ExportOptions struct {
 
 var defaultExportOptions = ExportOptions{
 	MaxRecords: 250,
-	LastBlock:  base.NOPOS,
+	LastBlock:  base.NOPOSN2,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -100,7 +100,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != base.NOPOS && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != base.NOPOSN2 && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -125,7 +125,7 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.MaxRecords = 250
-	opts.LastBlock = base.NOPOS
+	opts.LastBlock = base.NOPOSN2
 	for key, value := range values {
 		switch key {
 		case "addrs":
@@ -203,9 +203,9 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 		case "noZero":
 			opts.NoZero = true
 		case "firstBlock":
-			opts.FirstBlock = globals.ToUint64(value[0])
+			opts.FirstBlock = globals.ToBlknum(value[0])
 		case "lastBlock":
-			opts.LastBlock = globals.ToUint64(value[0])
+			opts.LastBlock = globals.ToBlknum(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "export")

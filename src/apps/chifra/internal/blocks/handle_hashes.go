@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -50,7 +51,7 @@ func (opts *BlocksOptions) HandleHashes() error {
 
 				items := make([]*types.Block[string], 0, len(thisMap))
 				iterFunc := func(app types.Appearance, value *types.Block[string]) error {
-					bn := uint64(app.BlockNumber)
+					bn := base.Blknum(app.BlockNumber)
 					if block, err := opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 						errMutex.Lock()
 						defer errMutex.Unlock()
