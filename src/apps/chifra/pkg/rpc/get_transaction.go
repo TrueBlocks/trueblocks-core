@@ -151,7 +151,7 @@ func (conn *Connection) GetTransactionHashByNumberAndID(bn base.Blknum, txId bas
 	} else {
 		defer ec.Close()
 
-		block, err := ec.BlockByNumber(context.Background(), base.BiFromUint64(bn))
+		block, err := ec.BlockByNumber(context.Background(), base.BiFromBn(bn))
 		if err != nil {
 			return base.Hash{}, err
 		}
@@ -331,7 +331,7 @@ func (conn *Connection) GetTransactionCountInBlock(bn base.Blknum) (uint64, erro
 	} else {
 		defer ec.Close()
 
-		block, err := ec.BlockByNumber(context.Background(), base.BiFromUint64(bn))
+		block, err := ec.BlockByNumber(context.Background(), base.BiFromBn(bn))
 		if err != nil {
 			return 0, err
 		}

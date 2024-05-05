@@ -26,7 +26,7 @@ func (conn *Connection) IsContractAt(address base.Address, bn base.Blknum) error
 		defer ec.Close()
 
 		ctx := context.Background()
-		if code, err := ec.CodeAt(ctx, address.Common(), base.BiFromUint64(bn)); err != nil {
+		if code, err := ec.CodeAt(ctx, address.Common(), base.BiFromBn(bn)); err != nil {
 			return err
 		} else {
 			if len(code) == 0 {
@@ -43,7 +43,7 @@ func (conn *Connection) GetContractCodeAt(addr base.Address, bn base.Blknum) ([]
 		return []byte{}, err
 	} else {
 		defer ec.Close()
-		return ec.CodeAt(context.Background(), addr.Common(), base.BiFromUint64(bn))
+		return ec.CodeAt(context.Background(), addr.Common(), base.BiFromBn(bn))
 	}
 }
 
@@ -88,7 +88,7 @@ func (conn *Connection) GetContractProxyAt(address base.Address, blockNumber bas
 				context.Background(),
 				address.Address,
 				common.HexToHash(location),
-				base.BiFromUint64(blockNumber),
+				base.BiFromBn(blockNumber),
 			)
 			if err != nil {
 				return proxy, err

@@ -1,7 +1,6 @@
 package base
 
 import (
-	"fmt"
 	"strconv"
 )
 
@@ -17,14 +16,24 @@ func (g *Numeral) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func MustParseNumeral(input any) Numeral {
-	result, _ := strconv.ParseUint(fmt.Sprint(input), 0, 64)
+func MustParseNumeral(input string) Numeral {
+	result, _ := strconv.ParseUint(input, 0, 64)
 	return Numeral(result)
 }
 
 type Blknum = uint64
+
+const NOPOSN2 = NOPOS
+
+// TODO: This is here to avoid circular imports
+func MustParseBlknum(input string) Blknum {
+	ret, _ := strconv.ParseUint(input, 0, 64)
+	return Blknum(ret)
+}
+
 type Gas = Numeral
 type Txnum = Numeral
+type TraceId = Numeral
 type Lognum = Numeral
 type Topic = string
 type Timestamp = int64
