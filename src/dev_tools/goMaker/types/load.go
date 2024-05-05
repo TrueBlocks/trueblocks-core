@@ -225,6 +225,10 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 		return cb.Commands[i].Route < cb.Commands[j].Route
 	})
 
+	if err := cb.Validate(); err != nil {
+		return err
+	}
+
 	current := file.AsciiFileToString("src/dev_tools/goMaker/generated/codebase.json")
 	file.StringToAsciiFile("src/dev_tools/goMaker/generated/codebase.json", cb.String())
 	if current == cb.String() {
