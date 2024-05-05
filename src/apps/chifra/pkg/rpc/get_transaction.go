@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -139,7 +138,7 @@ func (conn *Connection) GetTransactionAppByHash(hash string) (types.RawAppearanc
 		return ret, err
 	} else {
 		ret.BlockNumber = uint32(base.MustParseBlknum(rawTx.BlockNumber))
-		ret.TransactionIndex = uint32(utils.MustParseUint(rawTx.TransactionIndex))
+		ret.TransactionIndex = uint32(base.MustParseUint(rawTx.TransactionIndex))
 		return ret, nil
 	}
 }

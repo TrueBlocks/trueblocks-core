@@ -5,8 +5,9 @@
 package config
 
 import (
+	"strconv"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // ScrapeSettings carries config information for the scraper
@@ -45,15 +46,15 @@ func SetScrapeArgs(chain string, args map[string]string) {
 		for key, value := range args {
 			switch key {
 			case "appsPerChunk":
-				settings.AppsPerChunk = utils.MustParseUint(value)
+				settings.AppsPerChunk, _ = strconv.ParseUint(value, 0, 64)
 			case "snapToGrid":
-				settings.SnapToGrid = utils.MustParseUint(value)
+				settings.SnapToGrid, _ = strconv.ParseUint(value, 0, 64)
 			case "firstSnap":
-				settings.FirstSnap = utils.MustParseUint(value)
+				settings.FirstSnap, _ = strconv.ParseUint(value, 0, 64)
 			case "unripeDist":
-				settings.UnripeDist = utils.MustParseUint(value)
+				settings.UnripeDist, _ = strconv.ParseUint(value, 0, 64)
 			case "channelCount":
-				settings.ChannelCount = utils.MustParseUint(value)
+				settings.ChannelCount, _ = strconv.ParseUint(value, 0, 64)
 			case "allowMissing":
 				settings.AllowMissing = true
 			}

@@ -43,6 +43,15 @@ func MustParseInt(input string) int64 {
 	return ret
 }
 
+func MustParseUint(input string) (result uint64) {
+	result, _ = strconv.ParseUint(input, 0, 64)
+	return
+}
+
+func MustParseWei(input string) Wei {
+	return *NewWei(0).SetUint64(MustParseUint(input))
+}
+
 // TODO: Might be nice if the below two values were the same so we could cast between them.
 // TODO: Trouble is that these values may be stored on disc.
 

@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -46,7 +45,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 			traceAction := types.TraceAction{
 				Address:        base.HexToAddress(rawTrace.Action.Address),
 				Author:         base.HexToAddress(rawTrace.Action.Author),
-				Balance:        *base.NewWei(0).SetUint64(utils.MustParseUint(rawTrace.Action.Balance)),
+				Balance:        base.MustParseWei(rawTrace.Action.Balance),
 				CallType:       rawTrace.Action.CallType,
 				From:           base.HexToAddress(rawTrace.Action.From),
 				Gas:            base.MustParseNumeral(rawTrace.Action.Gas),
@@ -56,7 +55,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 				RewardType:     rawTrace.Action.RewardType,
 				SelfDestructed: base.HexToAddress(rawTrace.Action.SelfDestructed),
 				To:             base.HexToAddress(rawTrace.Action.To),
-				Value:          *base.NewWei(0).SetUint64(utils.MustParseUint(rawTrace.Action.Value)),
+				Value:          base.MustParseWei(rawTrace.Action.Value),
 			}
 			traceResult := types.TraceResult{}
 			if rawTrace.Result != nil {

@@ -172,16 +172,6 @@ func PointerOf[T any](value T) *T {
 	return &value
 }
 
-func MustParseUint(input string) (result uint64) {
-	result, _ = strconv.ParseUint(input, 0, 64)
-	return
-}
-
-func MustParseInt(input string) (result int64) {
-	result, _ = strconv.ParseInt(input, 0, 64)
-	return
-}
-
 func LowerIfHex(addr string) string {
 	if !strings.HasPrefix(addr, "0x") {
 		return addr

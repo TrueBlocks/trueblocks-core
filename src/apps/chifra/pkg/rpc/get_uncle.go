@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // GetUncleBodiesByNumber returns the number of uncles in a block.
@@ -40,7 +39,7 @@ func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block[ty
 					Hash:        base.HexToHash(rawUncle.Hash),
 					Miner:       base.HexToAddress(rawUncle.Miner),
 					ParentHash:  base.HexToHash(rawUncle.ParentHash),
-					Timestamp:   int64(utils.MustParseUint(rawUncle.Timestamp)),
+					Timestamp:   base.MustParseInt(rawUncle.Timestamp),
 					// Transactions: rawUncle.Transactions,
 					// BaseFeePerGas: rawUncle.BaseFeePerGas,
 					// Difficulty: rawUncle.Difficulty,

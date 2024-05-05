@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -287,7 +286,7 @@ func (s *Receipt) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		if err = cache.ReadValue(reader, &val, vers); err != nil {
 			return err
 		}
-		s.CumulativeGasUsed = string2gas(val)
+		s.CumulativeGasUsed = base.MustParseNumeral(val)
 	} else {
 		// CumulativeGasUsed
 		if err = cache.ReadValue(reader, &s.CumulativeGasUsed, vers); err != nil {
@@ -382,8 +381,8 @@ func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 		CumulativeGasUsed: base.Gas(cumulativeGasUsed),
 		EffectiveGasPrice: base.MustParseNumeral(r.EffectiveGasPrice),
 		GasUsed:           base.MustParseNumeral(r.GasUsed),
-		Status:            uint32(utils.MustParseUint(r.Status)),
-		IsError:           utils.MustParseUint(r.Status) == 0,
+		Status:            uint32(base.MustParseUint(r.Status)),
+		IsError:           base.MustParseUint(r.Status) == 0,
 		TransactionHash:   base.HexToHash(r.TransactionHash),
 		TransactionIndex:  base.MustParseNumeral(r.TransactionIndex),
 		Logs:              logs,
@@ -391,10 +390,6 @@ func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 	}
 
 	return receipt, nil
-}
-
-func string2gas(str string) base.Gas {
-	return base.Gas(utils.MustParseUint(str))
 }
 
 // EXISTING_CODE

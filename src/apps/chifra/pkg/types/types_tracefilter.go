@@ -15,7 +15,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -136,8 +135,8 @@ func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]inte
 	if base.IsValidAddress(parts[3]) {
 		s.ToAddress = base.HexToAddress(parts[3])
 	}
-	s.After = utils.MustParseUint(parts[4])
-	s.Count = utils.MustParseUint(parts[5])
+	s.After = base.MustParseUint(parts[4])
+	s.Count = base.MustParseUint(parts[5])
 	if s.Count == 0 {
 		s.Count = base.NOPOS
 	}

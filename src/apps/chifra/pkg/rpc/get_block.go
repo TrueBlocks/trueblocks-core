@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -210,7 +209,7 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, 
 		GasLimit:    base.MustParseNumeral(rawBlock.GasLimit),
 		GasUsed:     base.MustParseNumeral(rawBlock.GasUsed),
 		Miner:       base.HexToAddress(rawBlock.Miner),
-		Difficulty:  utils.MustParseUint(rawBlock.Difficulty),
+		Difficulty:  base.MustParseUint(rawBlock.Difficulty),
 		Uncles:      uncleHashes,
 	}
 
@@ -245,7 +244,7 @@ func (conn *Connection) getBlockRaw(bn base.Blknum, withTxs bool) (*types.RawBlo
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
 			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(0))
-		} else if utils.MustParseUint(block.Timestamp) == 0 {
+		} else if base.MustParseUint(block.Timestamp) == 0 {
 			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}
 
