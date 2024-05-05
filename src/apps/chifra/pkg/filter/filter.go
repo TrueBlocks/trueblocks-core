@@ -34,7 +34,7 @@ func NewFilter(reversed, reverted bool, fourBytes []string, exportRange base.Blo
 	return &AppearanceFilter{
 		exportRange: exportRange,
 		recordRange: recordRange,
-		OuterBounds: base.BlockRange{First: 0, Last: base.NOPOS},
+		OuterBounds: base.BlockRange{First: 0, Last: base.NOPOSN2},
 		sortBy:      sortBy,
 		Reversed:    reversed,
 		reverted:    reverted,
@@ -48,7 +48,7 @@ func NewEmptyFilter() *AppearanceFilter {
 		false,
 		false,
 		[]string{},
-		base.BlockRange{First: 0, Last: base.NOPOS},
+		base.BlockRange{First: 0, Last: base.NOPOSN2},
 		base.RecordRange{First: 0, Last: base.NOPOS},
 	)
 }
@@ -68,7 +68,7 @@ func (f *AppearanceFilter) GetOuterBounds() base.BlockRange {
 
 // ApplyFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
 func (f *AppearanceFilter) ApplyFilter(app *types.AppRecord) (passed, finished bool) {
-	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)} // --first_block/--last_block
+	appRange := base.FileRange{First: base.Blknum(app.BlockNumber), Last: base.Blknum(app.BlockNumber)} // --first_block/--last_block
 	if !appRange.Intersects(base.FileRange(f.exportRange)) {
 		return false, false
 	}
@@ -77,7 +77,7 @@ func (f *AppearanceFilter) ApplyFilter(app *types.AppRecord) (passed, finished b
 
 // ApplyRangeFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
 func (f *AppearanceFilter) ApplyRangeFilter(app *types.AppRecord) (passed, finished bool) {
-	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)} // --first_block/--last_block
+	appRange := base.FileRange{First: base.Blknum(app.BlockNumber), Last: base.Blknum(app.BlockNumber)} // --first_block/--last_block
 	return appRange.Intersects(base.FileRange(f.exportRange)), false
 }
 

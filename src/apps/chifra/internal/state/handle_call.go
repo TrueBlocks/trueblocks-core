@@ -62,7 +62,7 @@ func (opts *StateOptions) HandleCall() error {
 				}
 
 				iterFunc := func(app types.Appearance, value *types.Result) error {
-					bn := uint64(app.BlockNumber)
+					bn := base.Blknum(app.BlockNumber)
 					if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
 						delete(thisMap, app)
 						return fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)

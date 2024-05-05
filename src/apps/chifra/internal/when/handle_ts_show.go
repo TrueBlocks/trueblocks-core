@@ -23,8 +23,7 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 		return err
 	}
 
-	var cnt uint64
-	cnt, err = tslib.NTimestamps(chain)
+	cnt, err := tslib.NTimestamps(chain)
 	if err != nil {
 		return err
 	}
@@ -32,7 +31,7 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 	ctx := context.Background()
 	prev := base.Timestamp(0)
 	fetchData := func(modelChan chan types.Modeler[types.RawTimestamp], errorChan chan error) {
-		for bn := uint64(0); bn < cnt; bn++ {
+		for bn := base.Blknum(0); bn < cnt; bn++ {
 			if len(bnMap) == 0 || bnMap[bn] {
 				ts, err := tslib.FromBn(chain, bn)
 				if err != nil {

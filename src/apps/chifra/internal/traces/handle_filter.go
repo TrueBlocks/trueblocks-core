@@ -62,7 +62,7 @@ func (opts *TracesOptions) HandleFilter() error {
 				}
 
 				iterFunc := func(app types.Appearance, value *types.Transaction) error {
-					if block, err := opts.Conn.GetBlockBodyByNumber(uint64(app.BlockNumber)); err != nil {
+					if block, err := opts.Conn.GetBlockBodyByNumber(base.Blknum(app.BlockNumber)); err != nil {
 						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
 						return nil
 

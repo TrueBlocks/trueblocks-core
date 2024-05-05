@@ -28,7 +28,7 @@ func (opts *WhenOptions) HandleTimestampCount() error {
 			}
 
 			s := types.TimestampCount{
-				Count: count,
+				Count: uint64(count),
 			}
 
 			modelChan <- &s

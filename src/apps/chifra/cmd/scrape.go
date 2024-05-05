@@ -55,7 +55,7 @@ func init() {
 
 	scrapeCmd.Flags().SortFlags = false
 
-	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockCnt, "block_cnt", "n", 2000, `maximum number of blocks to process per pass`)
+	scrapeCmd.Flags().Uint64VarP((*uint64)(&scrapePkg.GetOptions().BlockCnt), "block_cnt", "n", 2000, `maximum number of blocks to process per pass`)
 	scrapeCmd.Flags().Float64VarP(&scrapePkg.GetOptions().Sleep, "sleep", "s", 14, `seconds to sleep between scraper passes`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Touch, "touch", "l", 0, `first block to visit when scraping (snapped back to most recent snap_to_grid mark)`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().RunCount, "run_count", "u", 0, `run the scraper this many times, then quit (hidden)`)

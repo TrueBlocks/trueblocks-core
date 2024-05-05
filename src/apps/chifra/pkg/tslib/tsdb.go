@@ -25,9 +25,9 @@ type TimestampDatabase struct {
 var perChainTimestamps = map[string]TimestampDatabase{}
 
 // NTimestamps returns the number of records in the timestamp file
-func NTimestamps(chain string) (uint64, error) {
+func NTimestamps(chain string) (base.Blknum, error) {
 	if perChainTimestamps[chain].count > 0 {
-		return perChainTimestamps[chain].count, nil
+		return base.Blknum(perChainTimestamps[chain].count), nil
 	}
 
 	tsPath := config.PathToTimestamps(chain)
@@ -42,7 +42,7 @@ func NTimestamps(chain string) (uint64, error) {
 		count:  uint64(fileStat.Size()) / 8,
 		memory: perChainTimestamps[chain].memory,
 	}
-	return perChainTimestamps[chain].count, nil
+	return base.Blknum(perChainTimestamps[chain].count), nil
 }
 
 // loadTimestamps loads the timestamp data from the file into memory. If the timestamps are already loaded, we short circiut.
@@ -137,7 +137,7 @@ func FromBn(chain string, bn base.Blknum) (*TimestampRecord, error) {
 		return &TimestampRecord{}, err
 	}
 
-	if bn > cnt {
+	if bn > base.Blknum(cnt) {
 		return &TimestampRecord{}, errors.New("invalid block number " + fmt.Sprintf("%d of %d", bn, cnt))
 	}
 

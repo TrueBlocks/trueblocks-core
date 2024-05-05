@@ -135,14 +135,7 @@ func (opts *ExploreOptions) idToBlockHash(chain, arg string, isBlockHash func(ar
 	if isBlockHash(arg) {
 		return opts.Conn.GetBlockHashByHash(arg)
 	}
-
-	blockNum, err := strconv.ParseUint(arg, 10, 64)
-	if err != nil {
-		return base.Hash{}, nil
-	}
-
-	blkHash, err := opts.Conn.GetBlockHashByNumber(blockNum)
-	return blkHash, err
+	return opts.Conn.GetBlockHashByNumber(base.MustParseBlknum(arg))
 }
 
 // idToTxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
@@ -168,15 +161,8 @@ func (opts *ExploreOptions) idToTxHash(chain, arg string, isBlockHash func(arg s
 		return opts.Conn.GetTransactionHashByHashAndID(parts[0], txId)
 	}
 
-	blockNum, err := strconv.ParseUint(parts[0], 10, 64)
-	if err != nil {
-		return "", nil
-	}
-	txId, err := strconv.ParseUint(parts[1], 10, 64)
-	if err != nil {
-		return "", nil
-	}
-
+	blockNum := base.MustParseBlknum(parts[0])
+	txId := base.MustParseNumeral(parts[1])
 	hash, err := opts.Conn.GetTransactionHashByNumberAndID(blockNum, base.Txnum(txId))
 	return hash.Hex(), err
 }

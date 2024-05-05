@@ -7,6 +7,7 @@ package globals
 import (
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -69,4 +70,8 @@ func ToFloat64(val string) float64 {
 func ToUint64(val string) uint64 {
 	f, _ := strconv.ParseUint(val, 10, 64)
 	return f
+}
+
+func ToBlknum(val string) base.Blknum {
+	return base.MustParseBlknum(val)
 }

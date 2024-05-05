@@ -64,8 +64,8 @@ func init() {
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().MaxRecords, "max_records", "e", 250, `the maximum number of records to process`)
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Reversed, "reversed", "E", false, `produce results in reverse chronological order`)
 	listCmd.Flags().StringVarP(&listPkg.GetOptions().Publisher, "publisher", "P", "", `for some query options, the publisher of the index (hidden)`)
-	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, `first block to export (inclusive, ignored when freshening)`)
-	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, `last block to export (inclusive, ignored when freshening)`)
+	listCmd.Flags().Uint64VarP((*uint64)(&listPkg.GetOptions().FirstBlock), "first_block", "F", 0, `first block to export (inclusive, ignored when freshening)`)
+	listCmd.Flags().Uint64VarP((*uint64)(&listPkg.GetOptions().LastBlock), "last_block", "L", 0, `last block to export (inclusive, ignored when freshening)`)
 	if os.Getenv("TEST_MODE") != "true" {
 		_ = listCmd.Flags().MarkHidden("publisher")
 	}

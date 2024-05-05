@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -91,7 +92,7 @@ func readSpecials(path string, nFields int) (specials []types.NamedBlock, err er
 					continue
 				}
 				s := types.NamedBlock{
-					BlockNumber: utils.MustParseUint(record[locs["bn"]]),
+					BlockNumber: base.MustParseBlknum(record[locs["bn"]]),
 					Name:        record[locs["name"]],
 					Timestamp:   utils.MustParseInt(record[locs["ts"]]),
 				}

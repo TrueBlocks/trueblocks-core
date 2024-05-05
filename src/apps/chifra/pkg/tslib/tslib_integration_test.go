@@ -17,7 +17,7 @@ import (
 
 type Expected struct {
 	name string
-	bn   uint64
+	bn   base.Blknum
 	ts   base.Timestamp
 	date string
 }

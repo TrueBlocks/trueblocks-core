@@ -20,7 +20,7 @@ func Truncate(chain string, maxBn base.Blknum) error {
 	}
 
 	// It's already done
-	if maxBn >= cnt {
+	if maxBn >= base.Blknum(cnt) {
 		return nil
 	}
 
