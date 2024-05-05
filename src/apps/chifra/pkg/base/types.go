@@ -16,14 +16,21 @@ func (g *Numeral) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func MustParseNumeral(input string) Numeral {
-	result, _ := strconv.ParseUint(input, 0, 64)
-	return Numeral(result)
-}
+type Gas = Numeral
+type Txnum = Numeral
+type TraceId = Numeral
+type Lognum = Numeral
+type Topic = string
+type Timestamp = int64
 
 type Blknum = uint64
 
 const NOPOSN2 = NOPOS
+
+func MustParseNumeral(input string) Numeral {
+	result, _ := strconv.ParseUint(input, 0, 64)
+	return Numeral(result)
+}
 
 // TODO: This is here to avoid circular imports
 func MustParseBlknum(input string) Blknum {
@@ -31,12 +38,10 @@ func MustParseBlknum(input string) Blknum {
 	return Blknum(ret)
 }
 
-type Gas = Numeral
-type Txnum = Numeral
-type TraceId = Numeral
-type Lognum = Numeral
-type Topic = string
-type Timestamp = int64
+func MustParseInt(input string) int64 {
+	ret, _ := strconv.ParseInt(input, 0, 64)
+	return ret
+}
 
 // TODO: Might be nice if the below two values were the same so we could cast between them.
 // TODO: Trouble is that these values may be stored on disc.

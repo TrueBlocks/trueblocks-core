@@ -5,9 +5,9 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Structure struct {
@@ -50,7 +50,7 @@ func (s *Structure) Name() string {
 func (s *Structure) Num() int {
 	parts := strings.Split(s.DocGroup, "-")
 	if len(parts) > 1 {
-		return int(utils.MustParseInt(parts[0]))
+		return int(base.MustParseInt(parts[0]))
 	}
 	logger.Fatal("unknown group: " + s.DocGroup)
 	return 0

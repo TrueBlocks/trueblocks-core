@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func main() {
@@ -23,7 +22,7 @@ func main() {
 	if len(os.Args) > 1 {
 		workers = []int{}
 		for _, arg := range os.Args[1:] {
-			v := int(utils.MustParseInt(arg))
+			v := int(base.MustParseInt(arg))
 			if v > 0 {
 				workers = append(workers, v)
 			}

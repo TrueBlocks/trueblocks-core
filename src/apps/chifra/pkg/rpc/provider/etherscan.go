@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"golang.org/x/time/rate"
 )
 
@@ -204,7 +203,7 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		BlockHash:        base.HexToHash(rawTx.BlockHash),
 		BlockNumber:      base.MustParseBlknum(rawTx.BlockNumber),
 		TransactionIndex: base.MustParseNumeral(rawTx.TransactionIndex),
-		Timestamp:        utils.MustParseInt(rawTx.Timestamp),
+		Timestamp:        base.MustParseInt(rawTx.Timestamp),
 		From:             base.HexToAddress(rawTx.From),
 		To:               base.HexToAddress(rawTx.To),
 		Gas:              base.MustParseNumeral(rawTx.Gas),

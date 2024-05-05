@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ChunksOptions) HandleList(unusedBns []base.Blknum) error {
@@ -36,7 +35,7 @@ func (opts *ChunksOptions) HandleList(unusedBns []base.Blknum) error {
 						Cid:        base.IpfsHash(parts[0]),
 						DatePinned: parts[1],
 						FileName:   parts[2],
-						Size:       utils.MustParseInt(parts[3]),
+						Size:       base.MustParseInt(parts[3]),
 						Status:     parts[4],
 					}
 					modelChan <- &s

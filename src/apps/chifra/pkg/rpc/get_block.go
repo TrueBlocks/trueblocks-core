@@ -204,7 +204,7 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, 
 
 	block = types.Block[Tx]{
 		BlockNumber: base.MustParseBlknum(rawBlock.BlockNumber),
-		Timestamp:   base.Timestamp(utils.MustParseInt(rawBlock.Timestamp)), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
+		Timestamp:   base.Timestamp(base.MustParseInt(rawBlock.Timestamp)), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
 		Hash:        base.HexToHash(rawBlock.Hash),
 		ParentHash:  base.HexToHash(rawBlock.ParentHash),
 		GasLimit:    base.MustParseNumeral(rawBlock.GasLimit),

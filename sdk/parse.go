@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // ParseFunc is a function that takes a key/value pair and returns `true,nil` if the key/value pair
@@ -58,7 +57,7 @@ func assignValuesFromArgs(args []string, parseFunc ParseFunc, target interface{}
 					case reflect.Bool:
 						field.SetBool(true)
 					case reflect.Int:
-						field.SetInt(utils.MustParseInt(value))
+						field.SetInt(base.MustParseInt(value))
 					case reflect.String:
 						field.SetString(value)
 					case reflect.Uint64:
