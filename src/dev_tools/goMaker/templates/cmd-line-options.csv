@@ -329,7 +329,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 53060,tools,Other,slurp,ethslurp,articulate,a,,visible|docs,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 53070,tools,Other,slurp,ethslurp,source,S,etherscan,visible|docs,flag,enum[etherscan*|key],,,,,the source of the slurped data
 53080,tools,Other,slurp,ethslurp,count,U,,visible|docs,switch,<boolean>,slurpCount,,,,for --appearances mode only&#44; display only the count of records
-53090,tools,Other,slurp,ethslurp,page,g,,,flag,<uint64>,,,,,the page to retrieve
+53090,tools,Other,slurp,ethslurp,page,g,,,flag,<uint64>,,,,,the page to retrieve (page number)
+53090,tools,Other,slurp,ethslurp,page_id,,,,flag,<string>,,,,,the page to retrieve (page ID)
 53100,tools,Other,slurp,ethslurp,per_page,P,3000,,flag,<uint64>,,,,,the number of records to request on each page
 53110,tools,Other,slurp,ethslurp,sleep,s,.25,visible|docs,flag,<float64>,,,,,seconds to sleep between requests
 53120,tools,Other,slurp,ethslurp,n1,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
