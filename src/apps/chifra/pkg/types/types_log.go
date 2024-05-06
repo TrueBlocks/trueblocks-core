@@ -345,7 +345,7 @@ func (r *RawLog) RawTo(vals map[string]any) (Log, error) {
 
 	log := Log{
 		Address:          base.HexToAddress(r.Address),
-		BlockNumber:      utils.MustParseUint(r.BlockNumber),
+		BlockNumber:      base.MustParseBlknum(r.BlockNumber),
 		BlockHash:        base.HexToHash(r.BlockHash),
 		TransactionIndex: base.MustParseNumeral(r.TransactionIndex),
 		TransactionHash:  hash,

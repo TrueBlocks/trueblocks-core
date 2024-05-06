@@ -19,7 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleTag(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	if opts.Globals.TestMode {

@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -56,7 +55,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 		raw.Address = app.Address.Hex()
 	}
 
-	bn := uint64(raw.BlockNumber)
+	bn := base.Blknum(raw.BlockNumber)
 	txid := base.Txnum(raw.TransactionIndex)
 
 	if conn.StoreReadable() {
@@ -135,23 +134,23 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 
 func (conn *Connection) GetTransactionAppByHash(hash string) (types.RawAppearance, error) {
 	var ret types.RawAppearance
-	if rawTx, err := conn.getTransactionRaw(notAHash, base.HexToHash(hash), notAnInt, base.NOPOSN); err != nil {
+	if rawTx, err := conn.getTransactionRaw(notAHash, base.HexToHash(hash), base.NOPOSN, base.NOPOSN); err != nil {
 		return ret, err
 	} else {
-		ret.BlockNumber = uint32(utils.MustParseUint(rawTx.BlockNumber))
-		ret.TransactionIndex = uint32(utils.MustParseUint(rawTx.TransactionIndex))
+		ret.BlockNumber = uint32(base.MustParseBlknum(rawTx.BlockNumber))
+		ret.TransactionIndex = uint32(base.MustParseUint(rawTx.TransactionIndex))
 		return ret, nil
 	}
 }
 
 // GetTransactionHashByNumberAndID returns a transaction's hash if it's a valid transaction
-func (conn *Connection) GetTransactionHashByNumberAndID(bn uint64, txId base.Txnum) (base.Hash, error) {
+func (conn *Connection) GetTransactionHashByNumberAndID(bn base.Blknum, txId base.Txnum) (base.Hash, error) {
 	if ec, err := conn.getClient(); err != nil {
 		return base.Hash{}, err
 	} else {
 		defer ec.Close()
 
-		block, err := ec.BlockByNumber(context.Background(), base.BiFromUint64(bn))
+		block, err := ec.BlockByNumber(context.Background(), base.BiFromBn(bn))
 		if err != nil {
 			return base.Hash{}, err
 		}
@@ -182,7 +181,7 @@ func (conn *Connection) GetTransactionHashByHash(hash string) (string, error) {
 }
 
 // GetTransactionHashByHashAndID returns a transaction's hash if it's a valid transaction
-func (conn *Connection) GetTransactionHashByHashAndID(hash string, txId uint64) (string, error) {
+func (conn *Connection) GetTransactionHashByHashAndID(hash string, txId base.Txnum) (string, error) {
 	if ec, err := conn.getClient(); err != nil {
 		return "", err
 	} else {
@@ -207,7 +206,7 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 	} else {
 		var blockHash base.Hash
 		var ts int64
-		if block, err := conn.GetBlockHeaderByNumber(uint64(0)); err != nil {
+		if block, err := conn.GetBlockHeaderByNumber(0); err != nil {
 			return nil, err
 		} else {
 			blockHash = block.Hash
@@ -218,7 +217,7 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 		if entry.Address.Hex() == raw.Address {
 			ret := types.Transaction{
 				BlockHash:        blockHash,
-				BlockNumber:      uint64(raw.BlockNumber),
+				BlockNumber:      base.Blknum(raw.BlockNumber),
 				TransactionIndex: base.Txnum(raw.TransactionIndex),
 				Timestamp:        ts,
 				From:             base.PrefundSender,
@@ -234,12 +233,12 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 // TODO: This is not cross-chain correct nor does it work properly for post-merge
 
 func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *types.RawAppearance) (*types.Transaction, error) {
-	if block, err := conn.GetBlockBodyByNumber(uint64(raw.BlockNumber)); err != nil {
+	if block, err := conn.GetBlockBodyByNumber(base.Blknum(raw.BlockNumber)); err != nil {
 		return nil, err
 	} else {
 		if rt == types.WithdrawalAmt {
 			tx := &types.Transaction{
-				BlockNumber:      uint64(raw.BlockNumber),
+				BlockNumber:      base.Blknum(raw.BlockNumber),
 				TransactionIndex: base.Txnum(raw.TransactionIndex),
 				Timestamp:        block.Timestamp,
 				From:             base.WithdrawalSender,
@@ -248,7 +247,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 			return tx, nil
 		}
 
-		if uncles, err := conn.GetUncleBodiesByNumber(uint64(raw.BlockNumber)); err != nil {
+		if uncles, err := conn.GetUncleBodiesByNumber(base.Blknum(raw.BlockNumber)); err != nil {
 			return nil, err
 		} else {
 			var blockReward = base.NewWei(0)
@@ -257,7 +256,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 			var uncleReward = base.NewWei(0)
 
 			sender := base.HexToAddress(raw.Address)
-			bn := uint64(raw.BlockNumber)
+			bn := base.Blknum(raw.BlockNumber)
 			blockReward = conn.getBlockReward(bn)
 			switch rt {
 			case types.BlockReward:
@@ -310,7 +309,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 
 			rewards, total := types.NewReward(blockReward, nephewReward, feeReward, uncleReward)
 			tx := &types.Transaction{
-				BlockNumber:      uint64(raw.BlockNumber),
+				BlockNumber:      base.Blknum(raw.BlockNumber),
 				TransactionIndex: base.Txnum(raw.TransactionIndex),
 				BlockHash:        block.Hash,
 				Timestamp:        block.Timestamp,
@@ -325,13 +324,13 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 }
 
 // GetTransactionCountInBlock returns the number of transactions in a block
-func (conn *Connection) GetTransactionCountInBlock(bn uint64) (uint64, error) {
+func (conn *Connection) GetTransactionCountInBlock(bn base.Blknum) (uint64, error) {
 	if ec, err := conn.getClient(); err != nil {
 		return 0, err
 	} else {
 		defer ec.Close()
 
-		block, err := ec.BlockByNumber(context.Background(), base.BiFromUint64(bn))
+		block, err := ec.BlockByNumber(context.Background(), base.BiFromBn(bn))
 		if err != nil {
 			return 0, err
 		}
@@ -342,7 +341,6 @@ func (conn *Connection) GetTransactionCountInBlock(bn uint64) (uint64, error) {
 }
 
 var (
-	notAnInt = base.NOPOS
 	notAHash = base.Hash{}
 )
 

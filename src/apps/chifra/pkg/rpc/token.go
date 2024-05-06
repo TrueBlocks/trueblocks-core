@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decode"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // erc721SupportsInterfaceData is the data needed to call the ERC-721 supportsInterface function
@@ -32,7 +31,7 @@ const tokenStateBalanceOf tokenStateSelector = "0x70a08231"
 // block or decimal number or hex number with 0x prefix.
 func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo string) (token *types.Token, err error) {
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
-		hexBlockNo = fmt.Sprintf("0x%x", utils.MustParseUint(hexBlockNo))
+		hexBlockNo = fmt.Sprintf("0x%x", base.MustParseUint(hexBlockNo))
 	}
 	payloads := []query.BatchPayload{
 		{
@@ -149,7 +148,7 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo stri
 // decimal number or hex number with 0x prefix.
 func (conn *Connection) GetBalanceAtToken(token, holder base.Address, hexBlockNo string) (*base.Wei, error) {
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
-		hexBlockNo = fmt.Sprintf("0x%x", utils.MustParseUint(hexBlockNo))
+		hexBlockNo = fmt.Sprintf("0x%x", base.MustParseUint(hexBlockNo))
 	}
 
 	payloads := []query.BatchPayload{{

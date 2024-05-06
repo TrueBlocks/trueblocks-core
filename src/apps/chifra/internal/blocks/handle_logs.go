@@ -10,6 +10,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -57,7 +58,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 						value.Receipt = &types.Receipt{}
 					}
 
-					bn := uint64(app.BlockNumber)
+					bn := base.Blknum(app.BlockNumber)
 					ts := opts.Conn.GetBlockTimestamp(bn)
 					if logs, err := opts.Conn.GetLogsByNumber(bn, ts); err != nil {
 						delete(thisMap, app)

@@ -13,12 +13,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // CheckInternal reads the header of each chunk on disc looking for the Magic number and
 // the hash of the spec version for expected values.
-func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *types.ReportCheck) error {
+func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []base.Blknum, report *types.ReportCheck) error {
 	for _, fileName := range fileNames {
 		opts.checkIndexChunkInternal(fileName, false /* check version */, report)
 		// opts.checkBloomInternal(testId, fileName, report)
@@ -56,14 +55,14 @@ func (opts *ChunksOptions) checkSnaps(fileName string, indexChunk *index.Index, 
 	report.CheckedCnt++
 
 	// we will check the manifest since it's the gold standard
-	isSnap := func(fR base.FileRange, snapMarker, firstSnap uint64) bool {
+	isSnap := func(fR base.FileRange, snapMarker, firstSnap base.Blknum) bool {
 		return fR.Last >= firstSnap && fR.Last%snapMarker == 0
 	}
 
 	chain := opts.Globals.Chain
-	firstSnap := utils.MustParseUint(config.GetScrape(chain).FirstSnap)
-	snapMarker := utils.MustParseUint(config.GetScrape(chain).SnapToGrid)
-	appsPer := uint32(utils.MustParseUint(config.GetScrape(chain).AppsPerChunk))
+	firstSnap := base.Blknum(config.GetScrape(chain).FirstSnap)
+	snapMarker := base.Blknum(config.GetScrape(chain).SnapToGrid)
+	appsPer := uint32(config.GetScrape(chain).AppsPerChunk)
 	if fR, err := base.RangeFromFilenameE(fileName); err != nil {
 		report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: %s", err, fileName))
 	} else {

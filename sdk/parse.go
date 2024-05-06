@@ -4,11 +4,9 @@ import (
 	"fmt"
 	"net/url"
 	"reflect"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // ParseFunc is a function that takes a key/value pair and returns `true,nil` if the key/value pair
@@ -58,15 +56,11 @@ func assignValuesFromArgs(args []string, parseFunc ParseFunc, target interface{}
 					case reflect.Bool:
 						field.SetBool(true)
 					case reflect.Int:
-						field.SetInt(utils.MustParseInt(value))
+						field.SetInt(base.MustParseInt(value))
 					case reflect.String:
 						field.SetString(value)
 					case reflect.Uint64:
-						if num, err := strconv.ParseUint(value, 10, 64); err != nil {
-							return fmt.Errorf("error parsing uint64 for option %s: %v", option, err)
-						} else {
-							field.SetUint(num)
-						}
+						field.SetUint(base.MustParseUint(value))
 					default:
 						return fmt.Errorf("unsupported field kind %s for option %s", kind, option)
 					}

@@ -60,7 +60,7 @@ func init() {
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().List, "list", "l", false, `export a list of the 'special' blocks`)
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Timestamps, "timestamps", "t", false, `display or process timestamps`)
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Count, "count", "U", false, `with --timestamps only, returns the number of timestamps in the cache`)
-	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Truncate, "truncate", "n", 0, `with --timestamps only, truncates the timestamp file at this block (hidden)`)
+	whenCmd.Flags().Uint64VarP((*uint64)(&whenPkg.GetOptions().Truncate), "truncate", "n", 0, `with --timestamps only, truncates the timestamp file at this block (hidden)`)
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Repair, "repair", "r", false, `with --timestamps only, repairs block(s) in the block range by re-querying from the chain`)
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, `with --timestamps only, checks the validity of the timestamp data`)
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Update, "update", "u", false, `with --timestamps only, bring the timestamp database forward to the latest block`)

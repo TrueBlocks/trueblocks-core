@@ -80,8 +80,8 @@ Transactions consist of the following fields:
 | receipt          |                                                                                                       | [Receipt](/data-model/chaindata/#receipt)      |
 | statements       | array of reconciliations (calculated)                                                                 | [Statement[]](/data-model/accounts/#statement) |
 | articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)        |
-| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                                          |
-| isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                                          |
+| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | bool                                           |
+| isError          | `true` if the transaction ended in error, `false` otherwise                                           | bool                                           |
 | compressedTx     | truncated, more readable version of the articulation                                                  | string                                         |
 
 ## Withdrawal
@@ -130,7 +130,7 @@ Receipts consist of the following fields:
 | gasUsed          | the amount of gas actually used by the transaction                         | gas                                 |
 | isError          |                                                                            | bool                                |
 | logs             | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
-| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
+| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint64                              |
 | transactionHash  |                                                                            | hash                                |
 | transactionIndex |                                                                            | txnum                               |
 
@@ -420,9 +420,7 @@ This documentation mentions the following basic data types.
 | topic     | an '0x'-prefixed 32-byte hex string | lowercase      |
 | txnum     | an alias for a uint64               |                |
 | uint256   | a 256-bit unsigned integer          |                |
-| uint32    | a 32-bit unsigned integer           |                |
 | uint64    | a 64-bit unsigned integer           |                |
-| uint8     | an alias for the boolean type       |                |
 | wei       | an unsigned big number              | as a string    |
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

@@ -14,7 +14,6 @@ import (
 	"fmt"
 	"io"
 	"path/filepath"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -56,8 +55,8 @@ type Trace struct {
 	TraceType        string         `json:"type,omitempty"`
 	raw              *RawTrace      `json:"-"`
 	// EXISTING_CODE
-	TraceIndex base.Blknum `json:"-"`
-	sortString string      `json:"-"`
+	TraceIndex base.TraceId `json:"-"`
+	sortString string       `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -428,11 +427,6 @@ func (s *Trace) GetSortString() string {
 	}
 
 	return s.sortString
-}
-
-func mustParseUint(input any) (result uint64) {
-	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
-	return
 }
 
 // EXISTING_CODE

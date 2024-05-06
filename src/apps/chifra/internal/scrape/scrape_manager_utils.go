@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -32,11 +33,11 @@ func (bm *BlazeManager) report(nBlocks, perChunk, nChunks, nAppsNow, nAppsFound,
 }
 
 // Pause goes to sleep for a period of time based on the settings.
-func (opts *ScrapeOptions) pause(dist uint64) {
+func (opts *ScrapeOptions) pause(dist base.Blknum) {
 	// we always pause at least a quarter of a second to allow the node to 'rest'
 	time.Sleep(250 * time.Millisecond)
 	isDefaultSleep := opts.Sleep >= 13 && opts.Sleep <= 14
-	shouldSleep := !isDefaultSleep || dist <= (2*config.GetScrape(opts.Globals.Chain).UnripeDist)
+	shouldSleep := !isDefaultSleep || dist <= base.Blknum(2*config.GetScrape(opts.Globals.Chain).UnripeDist)
 	if shouldSleep {
 		sleep := opts.Sleep // this value may change elsewhere allow us to break out of sleeping????
 		logger.Progress(sleep > 1, "Sleeping for", sleep, "seconds -", dist, "away from head.")

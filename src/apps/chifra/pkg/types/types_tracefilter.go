@@ -124,10 +124,10 @@ func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]inte
 	}
 
 	// ret = make(map[string]any)
-	s.FromBlock = mustParseUint(parts[0])
-	s.ToBlock = mustParseUint(parts[1])
+	s.FromBlock = base.MustParseBlknum(parts[0])
+	s.ToBlock = base.MustParseBlknum(parts[1])
 	if s.ToBlock < s.FromBlock || s.ToBlock < 1 {
-		s.ToBlock = base.NOPOS
+		s.ToBlock = base.NOPOSN
 	}
 	if base.IsValidAddress(parts[2]) {
 		s.FromAddress = base.HexToAddress(parts[2])
@@ -135,8 +135,8 @@ func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]inte
 	if base.IsValidAddress(parts[3]) {
 		s.ToAddress = base.HexToAddress(parts[3])
 	}
-	s.After = mustParseUint(parts[4])
-	s.Count = mustParseUint(parts[5])
+	s.After = base.MustParseUint(parts[4])
+	s.Count = base.MustParseUint(parts[5])
 	if s.Count == 0 {
 		s.Count = base.NOPOS
 	}

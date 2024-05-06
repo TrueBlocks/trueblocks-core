@@ -7,7 +7,7 @@
  * This file was auto generated. DO NOT EDIT.
  */
 import * as ApiCallers from '../lib/api_callers';
-import { address, double, Monitor, MonitorClean, uint64 } from '../types';
+import { address, float64, Monitor, MonitorClean, uint64 } from '../types';
 
 export function getMonitors(
   parameters?: {
@@ -21,7 +21,7 @@ export function getMonitors(
     watchlist?: string,
     commands?: string,
     batchSize?: uint64,
-    sleep?: double,
+    sleep?: float64,
     fmt?: string,
     chain: string,
     noHeader?: boolean,

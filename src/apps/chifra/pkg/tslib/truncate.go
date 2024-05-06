@@ -6,20 +6,21 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 // var writeMutex sync.Mutex
 
-func Truncate(chain string, maxBn uint64) error {
+func Truncate(chain string, maxBn base.Blknum) error {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return err
 	}
 
 	// It's already done
-	if maxBn >= cnt {
+	if maxBn >= base.Blknum(cnt) {
 		return nil
 	}
 

@@ -7,7 +7,7 @@
  * This file was auto generated. DO NOT EDIT.
  */
 import * as ApiCallers from '../lib/api_callers';
-import { address, blknum, double, Slurp } from '../types';
+import { address, blknum, float64, Slurp } from '../types';
 
 export function getSlurp(
   parameters?: {
@@ -18,7 +18,7 @@ export function getSlurp(
     articulate?: boolean,
     source?: 'etherscan*' | 'key',
     count?: boolean,
-    sleep?: double,
+    sleep?: float64,
     fmt?: string,
     chain: string,
     noHeader?: boolean,

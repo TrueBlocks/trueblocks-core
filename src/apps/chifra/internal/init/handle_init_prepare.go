@@ -40,7 +40,7 @@ import (
 // Upon return, if a chunk is in the download list, then either its indexHash, its bloomHash, or both contains
 // the IPFS hash that needs to be downloaded. Any chunks that are not in the download list are valid and remain
 // on disc.
-func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifest, blockNums []uint64) ([]types.ChunkRecord, int, int, error) {
+func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifest, blockNums []base.Blknum) ([]types.ChunkRecord, int, int, error) {
 	// The list of files on disc that need to be removed because they are invalid in some way or not in the manifest
 	deleteMap := make(map[base.FileRange]InitReason, len(man.Chunks))
 

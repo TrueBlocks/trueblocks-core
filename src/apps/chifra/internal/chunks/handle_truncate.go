@@ -18,13 +18,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // TODO: We need to make sure, when we truncate, that we truncate the corresponding maps files as well.
 
-func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleTruncate(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	if opts.Globals.TestMode {
@@ -52,7 +51,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		// each chunk, so that if we get interrupted, we have a relatively sane state (although,
 		// we will have to manually repair the index with chifra init --all if this fails. Keep track
 		// of the last chunks remaining.
-		latestChunk := uint64(0)
+		latestChunk := base.Blknum(0)
 		nChunksRemoved := 0
 		truncateIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 			if path != index.ToBloomPath(path) {
@@ -69,7 +68,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				return false, err
 			}
 
-			testRange := base.FileRange{First: opts.Truncate, Last: base.NOPOS}
+			testRange := base.FileRange{First: opts.Truncate, Last: base.NOPOSN}
 			if rng.Intersects(testRange) {
 				if err = manifest.RemoveChunk(chain, opts.PublisherAddr, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
 					return false, err
@@ -78,7 +77,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				nChunksRemoved++
 			} else {
 				// We did not remove the chunk, so we need to keep track of where the truncated index ends
-				latestChunk = utils.Max(latestChunk, rng.Last)
+				latestChunk = base.Max2(latestChunk, rng.Last)
 				bar.Prefix = fmt.Sprintf("Not removing %s", rng)
 			}
 			bar.Tick()

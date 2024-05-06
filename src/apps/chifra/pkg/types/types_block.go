@@ -328,13 +328,13 @@ func (s *Block[string]) UnmarshalCache(vers uint64, reader io.Reader) (err error
 	// EXISTING_CODE
 
 	// BaseFeePerGas
-	v1 := version.NewVersion("2.5.8")
-	if vers <= v1.Uint64() {
+	vBaseFeePerGas := version.NewVersion("2.5.8")
+	if vers <= vBaseFeePerGas.Uint64() {
 		var val base.Wei
 		if err = cache.ReadValue(reader, &val, vers); err != nil {
 			return err
 		}
-		s.BaseFeePerGas = wei2gas(val)
+		s.BaseFeePerGas = weiToGas(val)
 	} else {
 		// BaseFeePerGas
 		if err = cache.ReadValue(reader, &s.BaseFeePerGas, vers); err != nil {
@@ -431,7 +431,7 @@ func (s *Block[string]) Dup(target *Block[Transaction]) {
 	target.raw = s.raw
 }
 
-func wei2gas(w base.Wei) base.Gas {
+func weiToGas(w base.Wei) base.Gas {
 	return base.Gas(w.Uint64())
 }
 

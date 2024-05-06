@@ -10,12 +10,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
 
 // GetTracesByBlockNumber returns a slice of traces in the given block
-func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.Trace, error) {
+func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, error) {
 	if conn.StoreReadable() {
 		traceGroup := &types.TraceGroup{
 			BlockNumber:      bn,
@@ -38,7 +37,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.Trace, error)
 	} else {
 		curApp := types.Appearance{BlockNumber: uint32(^uint32(0))}
 		curTs := conn.GetBlockTimestamp(bn)
-		var idx uint64
+		var traceIndex base.TraceId
 
 		// TODO: This could be loadTrace in the same way load Blocks works
 		var ret []types.Trace
@@ -46,7 +45,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.Trace, error)
 			traceAction := types.TraceAction{
 				Address:        base.HexToAddress(rawTrace.Action.Address),
 				Author:         base.HexToAddress(rawTrace.Action.Author),
-				Balance:        *base.NewWei(0).SetUint64(utils.MustParseUint(rawTrace.Action.Balance)),
+				Balance:        base.MustParseWei(rawTrace.Action.Balance),
 				CallType:       rawTrace.Action.CallType,
 				From:           base.HexToAddress(rawTrace.Action.From),
 				Gas:            base.MustParseNumeral(rawTrace.Action.Gas),
@@ -56,7 +55,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.Trace, error)
 				RewardType:     rawTrace.Action.RewardType,
 				SelfDestructed: base.HexToAddress(rawTrace.Action.SelfDestructed),
 				To:             base.HexToAddress(rawTrace.Action.To),
-				Value:          *base.NewWei(0).SetUint64(utils.MustParseUint(rawTrace.Action.Value)),
+				Value:          base.MustParseWei(rawTrace.Action.Value),
 			}
 			traceResult := types.TraceResult{}
 			if rawTrace.Result != nil {
@@ -83,10 +82,10 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.Trace, error)
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				idx = 0
+				traceIndex = 0
 			}
-			trace.TraceIndex = idx
-			idx++
+			trace.TraceIndex = traceIndex
+			traceIndex++
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
 		}
@@ -104,7 +103,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.Trace, error)
 }
 
 // GetTracesByTransactionId returns a slice of traces in a given transaction
-func (conn *Connection) GetTracesByTransactionId(bn uint64, txid base.Txnum) ([]types.Trace, error) {
+func (conn *Connection) GetTracesByTransactionId(bn base.Blknum, txid base.Txnum) ([]types.Trace, error) {
 	if conn.StoreReadable() {
 		traceGroup := &types.TraceGroup{
 			BlockNumber:      bn,
@@ -148,7 +147,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 
 	} else {
 		curApp := types.Appearance{BlockNumber: uint32(^uint32(0))}
-		var idx uint64
+		var traceIndex base.TraceId
 
 		for _, rawTrace := range *rawTraces {
 			value := base.NewWei(0)
@@ -200,15 +199,15 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			if transaction != nil {
 				trace.Timestamp = transaction.Timestamp
 			}
-			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
+			if trace.BlockNumber != base.Blknum(curApp.BlockNumber) || trace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
 				curApp = types.Appearance{
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				idx = 0
+				traceIndex = 0
 			}
-			trace.TraceIndex = idx
-			idx++
+			trace.TraceIndex = traceIndex
+			traceIndex++
 
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
@@ -246,8 +245,8 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 
 	} else {
 		curApp := types.Appearance{BlockNumber: uint32(^uint32(0))}
-		curTs := conn.GetBlockTimestamp(utils.MustParseUint(f.FromBlock))
-		var idx uint64
+		curTs := conn.GetBlockTimestamp(f.FromBlock)
+		var traceIndex base.TraceId
 
 		// TODO: This could be loadTrace in the same way load Blocks works
 		for _, rawTrace := range *rawTraces {
@@ -298,20 +297,20 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 				Result:           result,
 			}
 
-			if trace.BlockNumber != uint64(curApp.BlockNumber) {
+			if trace.BlockNumber != base.Blknum(curApp.BlockNumber) {
 				curTs = conn.GetBlockTimestamp(trace.BlockNumber)
 			}
 
-			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
+			if trace.BlockNumber != base.Blknum(curApp.BlockNumber) || trace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
 				curApp = types.Appearance{
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				idx = 0
+				traceIndex = 0
 			}
 
-			trace.TraceIndex = idx
-			idx++
+			trace.TraceIndex = traceIndex
+			traceIndex++
 
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
@@ -321,7 +320,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 }
 
 // GetTracesCountInBlock returns the number of traces in a block
-func (conn *Connection) GetTracesCountInBlock(bn uint64) (uint64, error) {
+func (conn *Connection) GetTracesCountInBlock(bn base.Blknum) (uint64, error) {
 	if traces, err := conn.GetTracesByBlockNumber(bn); err != nil {
 		return base.NOPOS, err
 	} else {

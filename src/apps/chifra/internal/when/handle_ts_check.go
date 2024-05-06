@@ -25,9 +25,10 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	skip := uint64(500)
 	if opts.Deep {
 		m, _ := opts.Conn.GetMetaData(opts.Globals.TestMode)
-		skip = m.Latest / 500
+		skip = uint64(m.Latest) / 500
 	}
-	scanBar := progress.NewScanBar(cnt /* wanted */, (cnt / skip) /* freq */, cnt /* max */, (2. / 3.))
+	count := uint64(cnt)
+	scanBar := progress.NewScanBar(count /* wanted */, (count / skip) /* freq */, count /* max */, (2. / 3.))
 
 	blockNums, err := identifiers.GetBlockNumbers(chain, opts.BlockIds)
 	if err != nil {
@@ -35,7 +36,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	}
 
 	prev := types.NamedBlock{
-		BlockNumber: base.NOPOS,
+		BlockNumber: base.NOPOSN,
 		Timestamp:   base.NOPOSI,
 	}
 
@@ -48,7 +49,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 			}
 		}
 	} else {
-		for bn := uint64(0); bn < cnt; bn++ {
+		for bn := base.Blknum(0); bn < cnt; bn++ {
 			if err = opts.checkOneBlock(scanBar, &prev, bn); err != nil {
 				return err
 			}
@@ -58,7 +59,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	return nil
 }
 
-func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.NamedBlock, bn uint64) error {
+func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.NamedBlock, bn base.Blknum) error {
 	chain := opts.Globals.Chain
 
 	// The i'th item in the timestamp array on disc
@@ -69,7 +70,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Na
 
 	// This just simplifies the code below by removing the need to type cast
 	onDisc := types.NamedBlock{
-		BlockNumber: uint64(itemOnDisc.Bn),
+		BlockNumber: base.Blknum(itemOnDisc.Bn),
 		Timestamp:   base.Timestamp(itemOnDisc.Ts),
 	}
 

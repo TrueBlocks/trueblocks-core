@@ -65,7 +65,7 @@ func (opts *WhenOptions) WhenInternal() error {
 		} else if opts.Count {
 			err = opts.HandleTimestampCount()
 
-		} else if opts.Truncate != base.NOPOS {
+		} else if opts.Truncate != base.NOPOSN {
 			err = opts.HandleTimestampsTruncate()
 
 		} else {

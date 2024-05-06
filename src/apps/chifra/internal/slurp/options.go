@@ -116,11 +116,11 @@ func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 		case "count":
 			opts.Count = true
 		case "page":
-			opts.Page = globals.ToUint64(value[0])
+			opts.Page = base.MustParseUint(value[0])
 		case "perPage":
-			opts.PerPage = globals.ToUint64(value[0])
+			opts.PerPage = base.MustParseUint(value[0])
 		case "sleep":
-			opts.Sleep = globals.ToFloat64(value[0])
+			opts.Sleep = base.MustParseFloat(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "slurp")

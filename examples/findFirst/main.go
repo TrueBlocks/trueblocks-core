@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func main() {
@@ -22,7 +22,7 @@ func main() {
 	if len(os.Args) > 1 {
 		workers = []int{}
 		for _, arg := range os.Args[1:] {
-			v := int(utils.MustParseInt(arg))
+			v := int(base.MustParseInt(arg))
 			if v > 0 {
 				workers = append(workers, v)
 			}
@@ -47,8 +47,8 @@ func oneTest(numWorkers int) {
 	}()
 
 	var wg sync.WaitGroup
-	blknumChan := make(chan uint64)
-	minBlockNumber := uint64(^uint64(0)) // Initialize to the maximum uint64 value
+	blknumChan := make(chan base.Blknum)
+	minBlockNumber := base.NOPOSN
 	var mu sync.Mutex
 
 	// Start multiple worker goroutines
@@ -61,7 +61,7 @@ func oneTest(numWorkers int) {
 	// Send blknums into the channel
 	go func() {
 		for i := first; i >= last; i-- {
-			blknumChan <- uint64(i)
+			blknumChan <- base.Blknum(i)
 			if i%10 == 0 {
 				file.StringToAsciiFile(
 					"/Users/jrush/Development/trueblocks-core/build/shit",
@@ -74,7 +74,7 @@ func oneTest(numWorkers int) {
 	// Wait until all the block numbers are processed
 	wg.Wait()
 
-	if minBlockNumber != uint64(^uint64(0)) {
+	if minBlockNumber != base.NOPOSN {
 		fmt.Printf("Smallest BlockNumber with TransactionCount > 0 is: %d\n", minBlockNumber)
 	} else {
 		fmt.Println("No blocks with TransactionCount > 0 found.")
@@ -83,11 +83,11 @@ func oneTest(numWorkers int) {
 
 // worker listens on a channel for blknums and processes each block by looking for
 // the smallest block with transactions.
-func worker(blknumChan <-chan uint64, wg *sync.WaitGroup, mu *sync.Mutex, minBlockNumber *uint64) {
+func worker(blknumChan <-chan base.Blknum, wg *sync.WaitGroup, mu *sync.Mutex, minBlockNumber *base.Blknum) {
 	defer wg.Done()
-	for blknum := range blknumChan {
+	for bn := range blknumChan {
 		opts := sdk.BlocksOptions{
-			BlockIds: []string{fmt.Sprintf("%d", blknum)},
+			BlockIds: []string{fmt.Sprintf("%d", bn)},
 		}
 
 		blocks, _, err := opts.BlocksCount()

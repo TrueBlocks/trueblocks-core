@@ -7,7 +7,7 @@
  * This file was auto generated. DO NOT EDIT.
  */
 import * as ApiCallers from '../lib/api_callers';
-import { address, Appearance, blknum, ChunkAddress, ChunkBloom, ChunkIndex, ChunkPin, ChunkRecord, ChunkStats, double, IpfsPin, Manifest, ReportCheck } from '../types';
+import { address, Appearance, blknum, ChunkAddress, ChunkBloom, ChunkIndex, ChunkPin, ChunkRecord, ChunkStats, float64, IpfsPin, Manifest, ReportCheck } from '../types';
 
 export function getChunks(
   parameters?: {
@@ -24,7 +24,7 @@ export function getChunks(
     deep?: boolean,
     rewrite?: boolean,
     count?: boolean,
-    sleep?: double,
+    sleep?: float64,
     fmt?: string,
     chain: string,
     noHeader?: boolean,

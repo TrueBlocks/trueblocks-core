@@ -33,7 +33,7 @@ type WhenOptions struct {
 	List       bool                     `json:"list,omitempty"`       // Export a list of the 'special' blocks
 	Timestamps bool                     `json:"timestamps,omitempty"` // Display or process timestamps
 	Count      bool                     `json:"count,omitempty"`      // With --timestamps only, returns the number of timestamps in the cache
-	Truncate   uint64                   `json:"truncate,omitempty"`   // With --timestamps only, truncates the timestamp file at this block
+	Truncate   base.Blknum              `json:"truncate,omitempty"`   // With --timestamps only, truncates the timestamp file at this block
 	Repair     bool                     `json:"repair,omitempty"`     // With --timestamps only, repairs block(s) in the block range by re-querying from the chain
 	Check      bool                     `json:"check,omitempty"`      // With --timestamps only, checks the validity of the timestamp data
 	Update     bool                     `json:"update,omitempty"`     // With --timestamps only, bring the timestamp database forward to the latest block
@@ -46,7 +46,7 @@ type WhenOptions struct {
 }
 
 var defaultWhenOptions = WhenOptions{
-	Truncate: base.NOPOS,
+	Truncate: base.NOPOSN,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -55,7 +55,7 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	logger.TestLog(opts.Truncate != base.NOPOS, "Truncate: ", opts.Truncate)
+	logger.TestLog(opts.Truncate != base.NOPOSN, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Repair, "Repair: ", opts.Repair)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
@@ -83,7 +83,7 @@ func WhenFinishParseInternal(w io.Writer, values url.Values) *WhenOptions {
 	copy := defaultWhenOptions
 	copy.Globals.Caps = getCaps()
 	opts := &copy
-	opts.Truncate = base.NOPOS
+	opts.Truncate = base.NOPOSN
 	for key, value := range values {
 		switch key {
 		case "blocks":
@@ -98,7 +98,7 @@ func WhenFinishParseInternal(w io.Writer, values url.Values) *WhenOptions {
 		case "count":
 			opts.Count = true
 		case "truncate":
-			opts.Truncate = globals.ToUint64(value[0])
+			opts.Truncate = base.MustParseBlknum(value[0])
 		case "repair":
 			opts.Repair = true
 		case "check":
@@ -146,7 +146,7 @@ func whenFinishParse(args []string) *WhenOptions {
 	// EXISTING_CODE
 	opts.Blocks = args
 	if opts.Truncate == 0 {
-		opts.Truncate = base.NOPOS
+		opts.Truncate = base.NOPOSN
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

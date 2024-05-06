@@ -7,14 +7,14 @@
  * This file was auto generated. DO NOT EDIT.
  */
 import * as ApiCallers from '../lib/api_callers';
-import { blknum, ChunkRecord, double, Manifest } from '../types';
+import { blknum, ChunkRecord, float64, Manifest } from '../types';
 
 export function getInit(
   parameters?: {
     all?: boolean,
     dryRun?: boolean,
     firstBlock?: blknum,
-    sleep?: double,
+    sleep?: float64,
     chain: string,
   },
   options?: RequestInit,

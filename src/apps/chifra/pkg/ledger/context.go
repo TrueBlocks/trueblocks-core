@@ -23,6 +23,8 @@ type ledgerContext struct {
 }
 
 func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *ledgerContext {
+	_ = reversed // Silences unused parameter warning
+
 	if prev > cur || cur > next {
 		return &ledgerContext{
 			ReconType: types.Invalid,
@@ -78,7 +80,7 @@ func (c *ledgerContext) Next() base.Blknum {
 	return c.NextBlock
 }
 
-func (l *Ledger) ctxKey(bn uint64, txid base.Txnum) ledgerContextKey {
+func (l *Ledger) ctxKey(bn base.Blknum, txid base.Txnum) ledgerContextKey {
 	// TODO: Is having the context per asset necessary?
 	// return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
 	return ledgerContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
@@ -91,10 +93,10 @@ const maxTestingBlock = 17000000
 // we must know this information to be able to calculate the correct post-tx balance.
 func (l *Ledger) SetContexts(chain string, apps []types.Appearance) error {
 	for i := 0; i < len(apps); i++ {
-		cur := apps[i].BlockNumber
-		prev := uint64(apps[utils.Max(1, i)-1].BlockNumber)
-		next := uint64(apps[utils.Min(i+1, len(apps)-1)].BlockNumber)
-		key := l.ctxKey(uint64(apps[i].BlockNumber), base.Txnum(apps[i].TransactionIndex))
+		cur := base.Blknum(apps[i].BlockNumber)
+		prev := base.Blknum(apps[utils.Max(1, i)-1].BlockNumber)
+		next := base.Blknum(apps[utils.Min(i+1, len(apps)-1)].BlockNumber)
+		key := l.ctxKey(base.Blknum(apps[i].BlockNumber), base.Txnum(apps[i].TransactionIndex))
 		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.Reversed)
 	}
 	l.debugContext()

@@ -11,11 +11,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // GetUncleBodiesByNumber returns the number of uncles in a block.
-func (conn *Connection) GetUncleBodiesByNumber(bn uint64) ([]types.Block[types.Transaction], error) {
+func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block[types.Transaction], error) {
 	if count, err := conn.GetUnclesCountInBlock(bn); err != nil {
 		return nil, err
 
@@ -36,11 +35,11 @@ func (conn *Connection) GetUncleBodiesByNumber(bn uint64) ([]types.Block[types.T
 			} else {
 				// TODO: expand other fields if we ever need them (probably not)
 				ret = append(ret, types.Block[types.Transaction]{
-					BlockNumber: utils.MustParseUint(rawUncle.BlockNumber),
+					BlockNumber: base.MustParseBlknum(rawUncle.BlockNumber),
 					Hash:        base.HexToHash(rawUncle.Hash),
 					Miner:       base.HexToAddress(rawUncle.Miner),
 					ParentHash:  base.HexToHash(rawUncle.ParentHash),
-					Timestamp:   int64(utils.MustParseUint(rawUncle.Timestamp)),
+					Timestamp:   base.MustParseInt(rawUncle.Timestamp),
 					// Transactions: rawUncle.Transactions,
 					// BaseFeePerGas: rawUncle.BaseFeePerGas,
 					// Difficulty: rawUncle.Difficulty,
@@ -54,7 +53,7 @@ func (conn *Connection) GetUncleBodiesByNumber(bn uint64) ([]types.Block[types.T
 }
 
 // GetUnclesHashesByNumber returns the uncle hashes in a block.
-func (conn *Connection) GetUnclesHashesByNumber(bn uint64) ([]base.Hash, error) {
+func (conn *Connection) GetUnclesHashesByNumber(bn base.Blknum) ([]base.Hash, error) {
 	if count, err := conn.GetUnclesCountInBlock(bn); err != nil {
 		return nil, err
 	} else if count == 0 {
@@ -80,7 +79,7 @@ func (conn *Connection) GetUnclesHashesByNumber(bn uint64) ([]base.Hash, error) 
 }
 
 // GetUnclesCountInBlock returns the number of uncles in a block.
-func (conn *Connection) GetUnclesCountInBlock(bn uint64) (uint64, error) {
+func (conn *Connection) GetUnclesCountInBlock(bn base.Blknum) (uint64, error) {
 	if bn >= base.KnownBlock(conn.Chain, base.Merge) {
 		return 0, nil
 	}

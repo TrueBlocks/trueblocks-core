@@ -29,7 +29,7 @@ type ChunksOptions struct {
 	Belongs    []string     `json:"belongs,omitempty"`
 	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
 	LastBlock  base.Blknum  `json:"lastBlock,omitempty"`
-	MaxAddrs   base.Blknum  `json:"maxAddrs,omitempty"`
+	MaxAddrs   uint64       `json:"maxAddrs,omitempty"`
 	Deep       bool         `json:"deep,omitempty"`
 	Rewrite    bool         `json:"rewrite,omitempty"`
 	List       bool         `json:"list,omitempty"`

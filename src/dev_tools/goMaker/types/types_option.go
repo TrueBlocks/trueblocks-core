@@ -129,7 +129,7 @@ func (op *Option) toGoType() string {
 			"<address>":  "base.Address",
 			"<blknum>":   "base.Blknum",
 			"<boolean>":  "bool",
-			"<double>":   "float64",
+			"<float64>":  "float64",
 			"<fourbyte>": "base.Fourbyte",
 			"<string>":   "string",
 			"<topic>":    "base.Hash",
@@ -165,7 +165,6 @@ func (op *Option) toGoOptionsType() string {
 	}
 	ret := op.toGoSdkType()
 	ret = strings.Replace(ret, "base.Address", "string", -1)
-	ret = strings.Replace(ret, "base.Blknum", "uint64", -1)
 	return ret
 }
 
@@ -187,7 +186,7 @@ func (op *Option) toGoSdkType() string {
 		"<address>":  "base.Address",
 		"<blknum>":   "base.Blknum",
 		"<boolean>":  "bool",
-		"<double>":   "float64",
+		"<float64>":  "float64",
 		"<fourbyte>": "string",
 		"<string>":   "string",
 		"<topic>":    "string",
@@ -213,7 +212,10 @@ func (op *Option) PyHotKey() string {
 }
 
 func (op *Option) CmdDefault() string {
-	return strings.Replace(op.Default(), "base.NOPOS", "0", -1)
+	ret := op.Default()
+	ret = strings.Replace(ret, "base.NOPOSN", "0", -1)
+	ret = strings.Replace(ret, "base.NOPOS", "0", -1)
+	return ret
 }
 
 func (op *Option) IsFlag() bool {
@@ -236,7 +238,7 @@ func (op *Option) Default() string {
 		if op.DataType == "<boolean>" {
 			return "false"
 		}
-		if op.DataType == "<double>" {
+		if op.DataType == "<float64>" {
 			return "0.0"
 		}
 		if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
@@ -461,7 +463,10 @@ func (op *Option) DocType() string {
             items:
               type: string
               format: tx_id`
-	} else if op.DataType == "uint64" || op.DataType == "<uint64>" || op.DataType == "<blknum>" {
+	} else if op.DataType == "uint64" || op.DataType == "<uint64>" {
+		return `number
+            format: uint64`
+	} else if op.DataType == "<blknum>" {
 		return `number
             format: blknum`
 	} else if op.DataType == "<string>" {
@@ -469,9 +474,9 @@ func (op *Option) DocType() string {
 	} else if op.DataType == "<address>" {
 		return `string
             format: address`
-	} else if op.DataType == "<double>" {
+	} else if op.DataType == "<float64>" {
 		return `number
-            format: double`
+            format: float64`
 	} else if op.DataType == "enum" {
 		ret := `string
             enum:
@@ -594,7 +599,7 @@ func (op *Option) IsBool() bool {
 }
 
 func (op *Option) IsFloat() bool {
-	return op.DataType == "<double>"
+	return op.DataType == "<float64>"
 }
 
 func (op *Option) TestLog() string {
@@ -634,12 +639,24 @@ func (op *Option) TestLog() string {
 	return op.executeTemplate(tmplName, tmpl)
 }
 
+func (op *Option) CobraPart() string {
+	if op.DataType == "<blknum>" {
+		tmplName := "cobraPart1"
+		tmpl := `(*uint64)(&{{.Route}}Pkg.GetOptions().{{.GoName}})`
+		return op.executeTemplate(tmplName, tmpl)
+	} else {
+		tmplName := "cobraPart2"
+		tmpl := `&{{.Route}}Pkg.GetOptions().{{.GoName}}`
+		return op.executeTemplate(tmplName, tmpl)
+	}
+}
+
 func (op *Option) CobraType() string {
 	m := map[string]string{
 		"<address>":    "String",
 		"<blknum>":     "Uint64",
 		"<boolean>":    "Bool",
-		"<double>":     "Float64",
+		"<float64>":    "Float64",
 		"<string>":     "String",
 		"<uint64>":     "Uint64",
 		"enum":         "String",
@@ -685,9 +702,11 @@ func (op *Option) OptField() string {
 	if strings.Contains(op.toGoName(), "Settings.") {
 		return ""
 	}
+
 	tmplName := "optFields"
 	tmpl := `	{{.GoName}} {{.GoOptionsType}} {{.JsonTag}} // {{.DescrCaps}}`
 	ret := op.executeTemplate(tmplName, tmpl)
+
 	if op.LongName == "blocks" {
 		tmplName := "optFields3"
 		tmpl := `
@@ -729,18 +748,23 @@ func (op *Option) RequestOpt() string {
 			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = true`
 			ret = op.executeTemplate(tmplName, tmpl)
-		} else if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
+		} else if op.DataType == "<uint64>" {
 			tmplName := "requestOpts4"
 			tmpl := `		case "{{toCamel .LongName}}":
-			opts.{{.GoName}} = globals.ToUint64(value[0])`
+			opts.{{.GoName}} = base.MustParseUint(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
-		} else if op.DataType == "<double>" {
+		} else if op.DataType == "<blknum>" {
 			tmplName := "requestOpts5"
 			tmpl := `		case "{{toCamel .LongName}}":
-			opts.{{.GoName}} = globals.ToFloat64(value[0])`
+			opts.{{.GoName}} = base.MustParseBlknum(value[0])`
+			ret = op.executeTemplate(tmplName, tmpl)
+		} else if op.DataType == "<float64>" {
+			tmplName := "requestOpts6"
+			tmpl := `		case "{{toCamel .LongName}}":
+			opts.{{.GoName}} = base.MustParseFloat(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else {
-			tmplName := "requestOpts6"
+			tmplName := "requestOpts7"
 			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = value[0]`
 			ret = op.executeTemplate(tmplName, tmpl)

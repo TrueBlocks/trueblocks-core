@@ -4,18 +4,17 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type MetaData struct {
-	Latest    uint64 `json:"client"`
-	Finalized uint64 `json:"finalized"`
-	Staging   uint64 `json:"staging"`
-	Ripe      uint64 `json:"ripe"`
-	Unripe    uint64 `json:"unripe"`
-	ChainId   uint64 `json:"chainId,omitempty"`
-	NetworkId uint64 `json:"networkId,omitempty"`
-	Chain     string `json:"chain,omitempty"`
+	Latest    base.Blknum `json:"client"`
+	Finalized base.Blknum `json:"finalized"`
+	Staging   base.Blknum `json:"staging"`
+	Ripe      base.Blknum `json:"ripe"`
+	Unripe    base.Blknum `json:"unripe"`
+	ChainId   uint64      `json:"chainId,omitempty"`
+	NetworkId uint64      `json:"networkId,omitempty"`
+	Chain     string      `json:"chain,omitempty"`
 }
 
 func (m *MetaData) String() string {
@@ -25,7 +24,7 @@ func (m *MetaData) String() string {
 
 // Highest returns the height of the index (i.e., max between the finalized, staging, and ripe indexes).
 func (m *MetaData) IndexHeight() base.Blknum {
-	return utils.Max(m.Finalized, utils.Max(m.Staging, m.Ripe))
+	return base.Max2(m.Finalized, base.Max2(m.Staging, m.Ripe))
 }
 
 // NextIndexHeight returns the block after the height of the index.

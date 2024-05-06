@@ -19,13 +19,13 @@ import (
 )
 
 // HandleIndexBelongs displays the resolved records in a chunk given a single address
-func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleIndexBelongs(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearanceTable], errorChan chan error) {
 		showAddressesBelongs := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
-			return opts.handleResolvedRecords(modelChan, walker, path, first)
+			return opts.handleResolvedRecords(modelChan, walker, path)
 		}
 
 		walker := walk.NewCacheWalker(
@@ -47,7 +47,7 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 // handleResolvedRecords is a helper function for HandleIndexBelongs and verbose versions of
 // HandleAddresses and HandleAppearances. It is called once for each chunk in the index and
 // depends on the values of opts.Globals.Verbose and opts.Belongs.
-func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[types.RawAppearanceTable], walker *walk.CacheWalker, path string, first bool) (bool, error) {
+func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[types.RawAppearanceTable], walker *walk.CacheWalker, path string) (bool, error) {
 	if path != index.ToBloomPath(path) {
 		return false, fmt.Errorf("should not happen in showAddressesBelongs")
 	}
@@ -89,10 +89,10 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 				return false, err
 			}
 			s.AddressRecord.Count = uint32(len(s.Appearances))
-			if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOS {
+			if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOSN {
 				good := []types.AppRecord{}
 				for _, app := range s.Appearances {
-					if uint64(app.BlockNumber) >= opts.FirstBlock && uint64(app.BlockNumber) <= opts.LastBlock {
+					if base.Blknum(app.BlockNumber) >= opts.FirstBlock && base.Blknum(app.BlockNumber) <= opts.LastBlock {
 						good = append(good, app)
 					}
 				}
@@ -113,7 +113,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 // handleResolvedRecords1 is a helper function for HandleIndexBelongs and verbose versions of
 // HandleAddresses and HandleAppearances. It is called once for each chunk in the index and
 // depends on the values of opts.Globals.Verbose and opts.Belongs.
-func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[types.RawChunkAddress], walker *walk.CacheWalker, path string, first bool) (bool, error) {
+func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[types.RawChunkAddress], walker *walk.CacheWalker, path string) (bool, error) {
 	if path != index.ToBloomPath(path) {
 		return false, fmt.Errorf("should not happen in showAddressesBelongs")
 	}
@@ -155,10 +155,10 @@ func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[t
 				return false, err
 			}
 			s.AddressRecord.Count = uint32(len(s.Appearances))
-			if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOS {
+			if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOSN {
 				good := []types.AppRecord{}
 				for _, app := range s.Appearances {
-					if uint64(app.BlockNumber) >= opts.FirstBlock && uint64(app.BlockNumber) <= opts.LastBlock {
+					if base.Blknum(app.BlockNumber) >= opts.FirstBlock && base.Blknum(app.BlockNumber) <= opts.LastBlock {
 						good = append(good, app)
 					}
 				}

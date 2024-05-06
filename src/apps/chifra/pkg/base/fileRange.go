@@ -9,26 +9,28 @@ import (
 	"fmt"
 	"path/filepath"
 	"regexp"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type FileRange struct {
+type RecordRange struct {
 	First uint64
 	Last  uint64
 }
-type BlockRange FileRange  // sugar
-type RecordRange FileRange // sugar
+
+type FileRange struct {
+	First Blknum
+	Last  Blknum
+}
+type BlockRange FileRange // sugar
 type TimestampRange struct {
 	First Timestamp
 	Last  Timestamp
 }
 
-var NotARange = FileRange{First: NOPOS, Last: NOPOS}
+var NotARange = FileRange{First: NOPOSN, Last: NOPOSN}
 
 // RangeFromFilename returns a FileRange and ignore any errors
 func RangeFromFilename(path string) (blkRange FileRange) {
@@ -51,10 +53,13 @@ func RangeFromFilenameE(path string) (blkRange FileRange, err error) {
 
 	parts := strings.Split(fn, "-")
 	if len(parts) > 1 {
-		blkRange.First, _ = strconv.ParseUint(parts[0], 10, 32)
-		blkRange.Last, _ = strconv.ParseUint(parts[1], 10, 32)
+		trimmed0 := strings.TrimLeft(parts[0], "0")
+		trimmed1 := strings.TrimLeft(parts[1], "0")
+		blkRange.First = MustParseBlknum(trimmed0)
+		blkRange.Last = MustParseBlknum(trimmed1)
 	} else {
-		blkRange.First, _ = strconv.ParseUint(parts[0], 10, 32)
+		trimmed0 := strings.TrimLeft(parts[0], "0")
+		blkRange.First = MustParseBlknum(trimmed0)
 		blkRange.Last = blkRange.First
 	}
 
@@ -116,18 +121,18 @@ func (r *FileRange) LaterThan(needle FileRange) bool {
 }
 
 // IntersectsB returns true if the block is inside the range (inclusive on both ends)
-func (r *FileRange) IntersectsB(blk uint64) bool {
-	return r.Intersects(FileRange{First: blk, Last: blk})
+func (r *FileRange) IntersectsB(bn Blknum) bool {
+	return r.Intersects(FileRange{First: bn, Last: bn})
 }
 
 // EarlierThanB returns true if the range is strictly before the given block
-func (r *FileRange) EarlierThanB(blk uint64) bool {
-	return r.EarlierThan(FileRange{First: blk, Last: blk})
+func (r *FileRange) EarlierThanB(bn Blknum) bool {
+	return r.EarlierThan(FileRange{First: bn, Last: bn})
 }
 
 // LaterThanB returns true if the range is strictly after the given block
-func (r *FileRange) LaterThanB(blk uint64) bool {
-	return r.LaterThan(FileRange{First: blk, Last: blk})
+func (r *FileRange) LaterThanB(bn Blknum) bool {
+	return r.LaterThan(FileRange{First: bn, Last: bn})
 }
 
 // Equals returns true if the two ranges are equal
@@ -135,23 +140,39 @@ func (r *FileRange) Equals(needle FileRange) bool {
 	return r.First == needle.First && r.Last == needle.Last
 }
 
-func (r *FileRange) Span() uint64 {
+func (r *FileRange) Span() Blknum {
 	return r.Last - r.First + 1
 }
 
 type RangeDiff struct {
-	Min uint64
-	In  uint64
-	Mid uint64
-	Out uint64
-	Max uint64
+	Min Blknum
+	In  Blknum
+	Mid Blknum
+	Out Blknum
+	Max Blknum
+}
+
+// Min calculates the minimum between two unsigned integers (golang has no such function)
+func Min2(x, y Blknum) Blknum {
+	if x < y {
+		return x
+	}
+	return y
+}
+
+// Max calculates the max between two unsigned integers (golang has no such function)
+func Max2(x, y Blknum) Blknum {
+	if x > y {
+		return x
+	}
+	return y
 }
 
 func (r *FileRange) Overlaps(test FileRange) (rd RangeDiff) {
-	rd.Min = utils.Min(r.First, test.First)
-	rd.In = utils.Max(r.First, test.First)
-	rd.Out = utils.Min(r.Last, test.Last)
-	rd.Max = utils.Max(r.Last, test.Last)
+	rd.Min = Min2(r.First, test.First)
+	rd.In = Max2(r.First, test.First)
+	rd.Out = Min2(r.Last, test.Last)
+	rd.Max = Max2(r.Last, test.Last)
 	rd.Mid = (rd.Max-rd.Min)/2 + rd.Min
 	return
 }

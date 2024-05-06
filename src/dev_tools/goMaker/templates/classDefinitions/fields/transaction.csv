@@ -17,8 +17,8 @@ gasPrice             ,gas           ,           ,              ,      13 ,the nu
 maxFeePerGas         ,gas           ,           ,              ,         ,
 maxPriorityFeePerGas ,gas           ,           ,              ,         ,
 input                ,bytes         ,           ,              ,      14 ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
-isError              ,uint8         ,           ,simponly      ,      19 ,`true` if the transaction ended in error&#44; `false` otherwise
-hasToken             ,uint8         ,           ,simponly      ,      18 ,`true` if the transaction is token related&#44; `false` otherwise
+isError              ,bool          ,           ,simponly      ,      19 ,`true` if the transaction ended in error&#44; `false` otherwise
+hasToken             ,bool          ,           ,simponly      ,      18 ,`true` if the transaction is token related&#44; `false` otherwise
 receipt              ,*Receipt      ,           ,simponly      ,      15 ,
 traces               ,[]Trace       ,           ,simponly      ,         ,
 articulatedTx        ,*Function     ,           ,simponly      ,      17 ,

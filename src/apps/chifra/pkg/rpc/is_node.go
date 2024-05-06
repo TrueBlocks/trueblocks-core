@@ -6,7 +6,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // TODO: Some of this code may be chain-specific - for example,
@@ -40,7 +39,7 @@ var ErrTraceBlockMissing = "trace_block is missing"
 // queries block 1 (which we presume exists). The function returns false if
 // block_trace an error.
 func (conn *Connection) IsNodeTracing() bool {
-	first := utils.Max(1, base.KnownBlock(conn.Chain, base.FirstTrace))
+	first := base.Max2(1, base.KnownBlock(conn.Chain, base.FirstTrace))
 	_, err := conn.GetTracesByBlockNumber(first)
 	return err == nil
 }

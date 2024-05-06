@@ -10,11 +10,9 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-	"strconv"
 	"strings"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -36,14 +34,14 @@ type MonitorUpdate struct {
 	PublisherAddr base.Address
 	TestMode      bool
 	Silent        bool
-	FirstBlock    uint64
+	FirstBlock    base.Blknum
 	Addrs         []string
 }
 
 func NewUpdater(chain string, testMode, silent bool, addrs []string) MonitorUpdate {
 	return MonitorUpdate{
 		MaxTasks:      12,
-		FirstBlock:    base.NOPOS,
+		FirstBlock:    base.NOPOSN,
 		Chain:         chain,
 		PublisherAddr: base.Address{},
 		TestMode:      testMode,
@@ -116,8 +114,9 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 		if updater.MonitorMap[base.HexToAddress(addr)] == nil {
 			mon, _ := NewMonitorStaged(updater.Chain, addr)
 			_ = mon.ReadMonitorHeader()
-			if uint64(mon.LastScanned) < updater.FirstBlock {
-				updater.FirstBlock = uint64(mon.LastScanned)
+			bn := base.Blknum(mon.LastScanned)
+			if bn < updater.FirstBlock {
+				updater.FirstBlock = bn
 			}
 			*monitorArray = append(*monitorArray, mon)
 			// we need the address here because we want to modify this object below
@@ -154,8 +153,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 
 			max := os.Getenv("FAKE_FINAL_BLOCK") // This is for testing only, please ignore
 			if len(max) > 0 {
-				m, _ := strconv.ParseUint(max, 10, 32)
-				if fileRange.Last > m {
+				if fileRange.Last > base.MustParseBlknum(max) {
 					continue
 				}
 			}
@@ -199,7 +197,8 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 		rng := base.RangeFromFilename(stageFn)
 		lines := []string{}
 		for addr, mon := range updater.MonitorMap {
-			if !rng.LaterThanB(uint64(mon.LastScanned)) { // the range preceeds the block number
+			bn := base.Blknum(mon.LastScanned)
+			if !rng.LaterThanB(bn) { // the range preceeds the block number
 				if len(lines) == 0 {
 					lines = file.AsciiFileToLines(stageFn)
 					sort.Slice(lines, func(i, j int) bool {
@@ -384,8 +383,8 @@ func getAppearances(addrStr string, lines []string, lastVisited uint32, found in
 			break
 		}
 		r := types.AppRecord{
-			BlockNumber:      uint32(globals.ToUint64(lines[idx][startOfBlockNum:endOfBlockNum])),
-			TransactionIndex: uint32(globals.ToUint64(lines[idx][startOfTxId:endOfTxId])),
+			BlockNumber:      uint32(base.MustParseUint(lines[idx][startOfBlockNum:endOfBlockNum])),
+			TransactionIndex: uint32(base.MustParseUint(lines[idx][startOfTxId:endOfTxId])),
 		}
 		if r.BlockNumber > lastVisited {
 			results = append(results, r)

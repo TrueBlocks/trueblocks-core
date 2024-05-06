@@ -17,6 +17,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -43,8 +44,8 @@ type BlocksOptions struct {
 	Count       bool                     `json:"count,omitempty"`       // Display only the count of appearances for --addrs or --uniq
 	CacheTxs    bool                     `json:"cacheTxs,omitempty"`    // Force a write of the block's transactions to the cache (slow)
 	CacheTraces bool                     `json:"cacheTraces,omitempty"` // Force a write of the block's traces to the cache (slower)
-	List        uint64                   `json:"list,omitempty"`        // Summary list of blocks running backwards from latest block minus num
-	ListCount   uint64                   `json:"listCount,omitempty"`   // The number of blocks to report for --list option
+	List        base.Blknum              `json:"list,omitempty"`        // Summary list of blocks running backwards from latest block minus num
+	ListCount   base.Blknum              `json:"listCount,omitempty"`   // The number of blocks to report for --list option
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection          `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
@@ -133,7 +134,7 @@ func BlocksFinishParseInternal(w io.Writer, values url.Values) *BlocksOptions {
 		case "articulate":
 			opts.Articulate = true
 		case "bigRange":
-			opts.BigRange = globals.ToUint64(value[0])
+			opts.BigRange = base.MustParseUint(value[0])
 		case "count":
 			opts.Count = true
 		case "cacheTxs":
@@ -141,9 +142,9 @@ func BlocksFinishParseInternal(w io.Writer, values url.Values) *BlocksOptions {
 		case "cacheTraces":
 			opts.CacheTraces = true
 		case "list":
-			opts.List = globals.ToUint64(value[0])
+			opts.List = base.MustParseBlknum(value[0])
 		case "listCount":
-			opts.ListCount = globals.ToUint64(value[0])
+			opts.ListCount = base.MustParseBlknum(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")

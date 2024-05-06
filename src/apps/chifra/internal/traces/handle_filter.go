@@ -10,6 +10,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -61,7 +62,7 @@ func (opts *TracesOptions) HandleFilter() error {
 				}
 
 				iterFunc := func(app types.Appearance, value *types.Transaction) error {
-					if block, err := opts.Conn.GetBlockBodyByNumber(uint64(app.BlockNumber)); err != nil {
+					if block, err := opts.Conn.GetBlockBodyByNumber(base.Blknum(app.BlockNumber)); err != nil {
 						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
 						return nil
 
@@ -83,7 +84,7 @@ func (opts *TracesOptions) HandleFilter() error {
 											errorChan <- err // continue even with an error
 										}
 									}
-									traces[index].TraceIndex = uint64(index)
+									traces[index].TraceIndex = base.TraceId(index)
 									tr = append(tr, traces[index])
 								}
 								value.Traces = append(value.Traces, tr...)
@@ -1148,7 +1149,7 @@ void ::Init(void) {
 }
 
 //--------------------------------------------------------------------------------
-bool ::forEveryBlockNumber(UINT64VISITFUNC func, void* data) const {
+bool ::forEveryBlock Number(UINT64VISITFUNC func, void* data) const {
     if (!func)
         return false;
 
@@ -1200,7 +1201,7 @@ class  {
     (const COptionsBase* o);
     void Init(void);
     string_q parseBlockList_inner(const string_q& arg, blknum_t latest);
-    bool forEveryBlockNumber(UINT64VISITFUNC func, void*) const;
+    bool forEveryBlock Number(UINT64VISITFUNC func, void*) const;
     bool empty(void) const {
         return !(hashList.size() || numList.size() || (start != stop));
     }

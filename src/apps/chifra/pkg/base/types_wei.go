@@ -130,11 +130,11 @@ func ToEther(wei *Wei) *Ether {
 	return f.Quo(new(Ether).SetWei(wei), e)
 }
 
-func BiFromUint64(bn uint64) *big.Int {
-	if bn == NOPOS {
+func BiFromBn(bn Blknum) *big.Int {
+	if bn == NOPOSN {
 		return nil
 	}
-	return new(big.Int).SetUint64(bn)
+	return new(big.Int).SetUint64(uint64(bn))
 }
 
 // TODO: This is probably the same as String (could be removed)

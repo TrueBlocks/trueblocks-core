@@ -23,13 +23,13 @@ import (
 // HandleCheck looks at three different arrays: index files on disc, manifest on disc,
 // and manifest in the smart contract. It tries to check these three sources for
 // cosnsistency. Smart contract rules, so it is checked more thoroughly.
-func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleCheck(blockNums []base.Blknum) error {
 	err, _ := opts.check(blockNums, false /* silent */)
 	return err
 }
 
 // check provides internal checks against the index used from the command line and internally before pinning
-func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) {
+func (opts *ChunksOptions) check(blockNums []base.Blknum, silent bool) (error, bool) {
 	chain := opts.Globals.Chain
 
 	maxTestItems := 10

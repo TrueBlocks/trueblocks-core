@@ -9,7 +9,7 @@ import (
 )
 
 // FromDateToBn returns a chain-specific block number given a date string (date strings are valid JSON dates).
-func FromDateToBn(chain, dateStr string) (uint64, error) {
+func FromDateToBn(chain, dateStr string) (base.Blknum, error) {
 	ts, err := FromDateToTs(dateStr)
 	if err != nil {
 		return 0, err
@@ -18,11 +18,11 @@ func FromDateToBn(chain, dateStr string) (uint64, error) {
 	if err != nil {
 		return 0, err
 	}
-	return uint64(ret.Bn), err
+	return base.Blknum(ret.Bn), err
 }
 
 // FromNameToBn returns the chain-specific block number (if found) given the name of a special block. The list of special blocks is per-chain.
-func FromNameToBn(chain, name string) (uint64, error) {
+func FromNameToBn(chain, name string) (base.Blknum, error) {
 	if name == "latest" {
 		conn := rpc.TempConnection(chain)
 		meta, err := conn.GetMetaData(false)
@@ -39,14 +39,14 @@ func FromNameToBn(chain, name string) (uint64, error) {
 		}
 	}
 
-	return uint64(base.NOPOS), fmt.Errorf("block at %s returned an error: %w", name, ethereum.NotFound)
+	return base.NOPOSN, fmt.Errorf("block at %s returned an error: %w", name, ethereum.NotFound)
 }
 
 // FromTsToBn returns a chain-specific block number given a Linux timestamp.
-func FromTsToBn(chain string, ts base.Timestamp) (uint64, error) {
+func FromTsToBn(chain string, ts base.Timestamp) (base.Blknum, error) {
 	ret, err := FromTs(chain, ts)
 	if err != nil {
 		return 0, err
 	}
-	return uint64(ret.Bn), err
+	return base.Blknum(ret.Bn), err
 }

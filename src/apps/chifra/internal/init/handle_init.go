@@ -7,6 +7,7 @@ package initPkg
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
@@ -41,7 +42,7 @@ func (opts *InitOptions) HandleInit() error {
 	}
 
 	// Get the list of things we need to download
-	chunksToDownload, nToDownload, nDeleted, err := opts.prepareDownloadList(chain, remote, []uint64{})
+	chunksToDownload, nToDownload, nDeleted, err := opts.prepareDownloadList(chain, remote, []base.Blknum{})
 	if err != nil {
 		return err
 	}

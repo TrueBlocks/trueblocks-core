@@ -88,7 +88,7 @@ func (opts *TracesOptions) HandleCounts() error {
 
 				for _, item := range items {
 					counter := types.TraceCount{
-						BlockNumber:      uint64(item.BlockNumber),
+						BlockNumber:      item.BlockNumber,
 						TransactionIndex: item.TransactionIndex,
 						TransactionHash:  item.Hash,
 						Timestamp:        item.Timestamp,

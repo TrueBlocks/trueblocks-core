@@ -6,7 +6,6 @@ package chunksPkg
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -69,7 +68,8 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 
 	//  3. Makes sure that the first block inside is == first if allow_missing == false, > otherwise
 	report.CheckedCnt++
-	first := mustParseUint(strings.Split(appearances[0], "\t")[1])
+	trimmed := strings.TrimLeft(strings.Split(appearances[0], "\t")[1], "0")
+	first := base.MustParseBlknum(trimmed)
 	if first == fileRange.First || (allow_missing && first <= fileRange.First) {
 		report.PassedCnt++
 	} else {
@@ -78,7 +78,8 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 
 	//  4. Makes sure that the last block inside is == last if allow_missing == false, < otherwise
 	report.CheckedCnt++
-	last := mustParseUint(strings.Split(appearances[len(appearances)-1], "\t")[1])
+	trimmed = strings.TrimLeft(strings.Split(appearances[len(appearances)-1], "\t")[1], "0")
+	last := base.MustParseBlknum(trimmed)
 	if last == fileRange.Last || (allow_missing && last <= fileRange.Last) {
 		report.PassedCnt++
 	} else {
@@ -86,9 +87,4 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 	}
 
 	return nil
-}
-
-func mustParseUint(input string) (result uint64) {
-	result, _ = strconv.ParseUint(strings.TrimLeft(input, "0"), 0, 64)
-	return
 }

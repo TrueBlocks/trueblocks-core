@@ -23,13 +23,16 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
-	first := utils.Max(base.KnownBlock(chain, "shanghai"), opts.FirstBlock)
+	first := base.Max2(base.KnownBlock(chain, "shanghai"), opts.FirstBlock)
 	filter := filter.NewFilter(
 		opts.Reversed,
 		false,
 		[]string{},
 		base.BlockRange{First: first, Last: opts.LastBlock},
-		base.RecordRange{First: first, Last: opts.GetMax()},
+		// TODO: I feel (but have not investigated) that this may be a misake
+		// TODO: Shouldn't the RecordRange start with zero not block number?
+		// TODO: It means firstRecord, after all.
+		base.RecordRange{First: uint64(first), Last: opts.GetMax()},
 	)
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -68,7 +71,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 
 						iterFunc := func(app types.Appearance, value *types.Block[string]) error {
 							var block types.Block[string]
-							if block, err = opts.Conn.GetBlockHeaderByNumber(uint64(app.BlockNumber)); err != nil {
+							if block, err = opts.Conn.GetBlockHeaderByNumber(base.Blknum(app.BlockNumber)); err != nil {
 								return err
 							}
 

@@ -231,7 +231,7 @@ func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 
 	// Only report once in a while (17 blocks)
 	if bm.nProcessed()%17 == 0 || force {
-		dist := uint64(0)
+		dist := base.Blknum(0)
 		if bm.ripeBlock > bn {
 			dist = (bm.ripeBlock - bn)
 		}

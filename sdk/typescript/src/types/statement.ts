@@ -3,7 +3,7 @@
 /*
  * This file was generated with makeClass --sdk. Do not edit it.
  */
-import { address, blknum, datetime, double, hash, int256, timestamp, uint64 } from '.';
+import { address, blknum, datetime, float64, hash, int256, timestamp, uint64 } from '.';
 
 export type Statement = {
   blockNumber: blknum
@@ -15,7 +15,7 @@ export type Statement = {
   assetAddr: address
   assetSymbol: string
   decimals: uint64
-  spotPrice: double
+  spotPrice: float64
   priceSource: string
   accountedFor: address
   sender: address
@@ -48,4 +48,3 @@ export type Statement = {
   endBalCalc?: int256
   correctingReason?: string
 }
-

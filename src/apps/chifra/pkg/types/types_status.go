@@ -13,8 +13,8 @@ import (
 	"encoding/json"
 	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -157,7 +157,7 @@ func (s *Status) Model(chain, format string, verbose bool, extraOptions map[stri
 			for _, chain := range chainArray {
 				ch := Chain{
 					Chain:          chain.Chain,
-					ChainId:        utils.MustParseUint(chain.ChainId),
+					ChainId:        base.MustParseUint(chain.ChainId),
 					LocalExplorer:  chain.LocalExplorer,
 					RemoteExplorer: chain.RemoteExplorer,
 					RpcProvider:    chain.RpcProvider,

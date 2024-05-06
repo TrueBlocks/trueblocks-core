@@ -38,7 +38,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	state = &types.State{
 		Address:     address,
 		BlockNumber: blockNumber,
-		Deployed:    base.NOPOS,
+		Deployed:    base.NOPOSN,
 	}
 
 	rpcPayload := []query.BatchPayload{
@@ -158,13 +158,13 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 }
 
 // GetBalanceAt returns a balance for an address at a block
-func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*base.Wei, error) {
+func (conn *Connection) GetBalanceAt(addr base.Address, bn base.Blknum) (*base.Wei, error) {
 	if ec, err := conn.getClient(); err != nil {
 		var zero base.Wei
 		return &zero, err
 	} else {
 		defer ec.Close()
-		ret, err := ec.BalanceAt(context.Background(), addr.Common(), base.BiFromUint64(bn))
+		ret, err := ec.BalanceAt(context.Background(), addr.Common(), base.BiFromBn(bn))
 		return (*base.Wei)(ret), err
 	}
 }

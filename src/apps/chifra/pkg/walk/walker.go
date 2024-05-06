@@ -3,6 +3,7 @@ package walk
 import (
 	"context"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -28,7 +29,7 @@ func (walker *CacheWalker) MaxTests() int {
 	return walker.maxTests
 }
 
-func (walker *CacheWalker) WalkRegularFolder(path string, blockNums []uint64) error {
+func (walker *CacheWalker) WalkRegularFolder(path string, blockNums []base.Blknum) error {
 	filenameChan := make(chan CacheFileInfo)
 
 	var nRoutines int = 1
@@ -61,7 +62,7 @@ func (walker *CacheWalker) WalkRegularFolder(path string, blockNums []uint64) er
 	return nil
 }
 
-func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
+func (walker *CacheWalker) WalkBloomFilters(blockNums []base.Blknum) error {
 	filenameChan := make(chan CacheFileInfo)
 
 	// TODO: changing this will probably create data races because we append to slices and/or modify maps
@@ -107,7 +108,7 @@ func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
 // eventuallity. If on of the files has a two block range, we need to generate 50,000 block numbers. If we
 // used the range on the command line instead we'd only have to intersect one range.
 
-func (walker *CacheWalker) shouldDisplay(result CacheFileInfo, cnt int, blockNums []uint64) bool {
+func (walker *CacheWalker) shouldDisplay(result CacheFileInfo, cnt int, blockNums []base.Blknum) bool {
 	if !IsCacheType(result.Path, result.Type, true /* checkExt */) {
 		return false
 	}

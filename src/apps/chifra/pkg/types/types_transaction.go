@@ -280,7 +280,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 			model["type"] = ""
 		}
 		order = append(order, "type")
-		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(s.GasPrice.Uint64()), true, 18)
+		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(uint64(s.GasPrice)), true, 18)
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 
@@ -622,9 +622,9 @@ func NewTransaction(raw *RawTransaction, receipt *Receipt, timestamp base.Timest
 	// TODO: use RawTransaction methods
 	s.Hash = base.HexToHash(raw.Hash)
 	s.BlockHash = base.HexToHash(raw.BlockHash)
-	s.BlockNumber = utils.MustParseUint(raw.BlockNumber)
+	s.BlockNumber = base.MustParseBlknum(raw.BlockNumber)
 	s.TransactionIndex = base.MustParseNumeral(raw.TransactionIndex)
-	s.Nonce = utils.MustParseUint(raw.Nonce)
+	s.Nonce = base.MustParseUint(raw.Nonce)
 	s.Timestamp = timestamp
 	s.From = base.HexToAddress(raw.From)
 	s.To = base.HexToAddress(raw.To)

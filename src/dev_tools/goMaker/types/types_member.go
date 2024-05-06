@@ -411,13 +411,13 @@ func (m *Member) UnmarshalCode() string {
 	if m.HasUpgrade() {
 		tmplName := "upgrage"
 		tmpl := `	// {{.GoName}}
-	v1 := version.NewVersion("++VERS++")
-	if vers <= v1.Uint64() {
+	v{{.GoName}} := version.NewVersion("++VERS++")
+	if vers <= v{{.GoName}}.Uint64() {
 		var val ++PRIOR_TYPE++
 		if err = cache.ReadValue(reader, &val, vers); err != nil {
 			return err
 		}
-		s.{{.GoName}} = ++PRIOR++2{{.Type}}(val)
+		s.{{.GoName}} = ++CONV_FUNC++(val)
 	} else {
 		++CODE++
 	}
@@ -437,6 +437,13 @@ func (m *Member) UnmarshalCode() string {
 			}
 			return s
 		}
+		// TODO: hack
+		mm := map[string]string{
+			"CumulativeGasUsed": "base.MustParseNumeral",
+			"Status":            "uint64",
+			"BaseFeePerGas":     "weiToGas",
+		}
+		code = strings.ReplaceAll(code, "++CONV_FUNC++", mm[m.GoName()])
 		code = strings.ReplaceAll(code, "++PRIOR_TYPE++", convert(parts[1]))
 		code = strings.ReplaceAll(code, "++PRIOR++", parts[1])
 		code = strings.ReplaceAll(code, "++CODE++", cc)

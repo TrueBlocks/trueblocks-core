@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -33,7 +34,7 @@ func (opts *InitOptions) HandleDryRun() error {
 	}
 
 	// Get the list of things we need to download
-	_, nToDownload, nDeleted, err := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
+	_, nToDownload, nDeleted, err := opts.prepareDownloadList(chain, remoteManifest, []base.Blknum{})
 	if err != nil {
 		return err
 	}

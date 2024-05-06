@@ -14,14 +14,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // GetBlockBodyByNumber fetches the block with transactions from the RPC.
-func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.Block[types.Transaction], error) {
+func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block[types.Transaction], error) {
 	if conn.StoreReadable() {
 		// We only cache blocks with transaction hashes
 		cachedBlock := types.Block[string]{BlockNumber: bn}
@@ -91,7 +89,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.Block[types.Trans
 }
 
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
-func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.Block[string], err error) {
+func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (block types.Block[string], err error) {
 	if conn.StoreReadable() {
 		block.BlockNumber = bn
 		if err := conn.Store.Read(&block, nil); err == nil {
@@ -125,7 +123,7 @@ func (conn *Connection) GetBlockTimestamp(bn base.Blknum) base.Timestamp {
 	} else {
 		defer ec.Close()
 
-		r, err := ec.HeaderByNumber(context.Background(), base.BiFromUint64(bn))
+		r, err := ec.HeaderByNumber(context.Background(), base.BiFromBn(bn))
 		if err != nil {
 			logger.Error("Could not connect to RPC client", err)
 			return 0
@@ -170,18 +168,18 @@ func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
 			return 0, err
 		}
 
-		return ethBlock.NumberU64(), nil
+		return base.Blknum(ethBlock.NumberU64()), nil
 	}
 }
 
 // GetBlockHashByNumber returns a block's hash if it's a valid block
-func (conn *Connection) GetBlockHashByNumber(bn uint64) (base.Hash, error) {
+func (conn *Connection) GetBlockHashByNumber(bn base.Blknum) (base.Hash, error) {
 	if ec, err := conn.getClient(); err != nil {
 		return base.Hash{}, err
 	} else {
 		defer ec.Close()
 
-		ethBlock, err := ec.BlockByNumber(context.Background(), base.BiFromUint64(bn))
+		ethBlock, err := ec.BlockByNumber(context.Background(), base.BiFromBn(bn))
 		if err != nil {
 			return base.Hash{}, err
 		}
@@ -192,52 +190,27 @@ func (conn *Connection) GetBlockHashByNumber(bn uint64) (base.Hash, error) {
 
 // loadBlock fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
 // more specialized functions and makes loadBlock generic.
-func loadBlock[Tx string | types.Transaction](conn *Connection, bn uint64, withTxs bool) (block types.Block[Tx], rawBlock *types.RawBlock, err error) {
+func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, withTxs bool) (block types.Block[Tx], rawBlock *types.RawBlock, err error) {
 	rawBlock, err = conn.getBlockRaw(bn, withTxs)
 	if err != nil {
 		return
 	}
 
-	ts, err := hexutil.DecodeUint64(rawBlock.Timestamp)
-	if err != nil {
-		return
-	}
-
-	blockNumber, err := hexutil.DecodeUint64(rawBlock.BlockNumber)
-	if err != nil {
-		return
-	}
-
-	gasLimit, err := hexutil.DecodeUint64(rawBlock.GasLimit)
-	if err != nil {
-		return
-	}
-
-	gasUsed, err := hexutil.DecodeUint64(rawBlock.GasUsed)
-	if err != nil {
-		return
-	}
-
-	difficulty, err := hexutil.DecodeUint64(rawBlock.Difficulty)
-	if err != nil {
-		return
-	}
-
-	uncles := make([]base.Hash, 0, len(rawBlock.Uncles))
+	uncleHashes := make([]base.Hash, 0, len(rawBlock.Uncles))
 	for _, uncle := range rawBlock.Uncles {
-		uncles = append(uncles, base.HexToHash(uncle))
+		uncleHashes = append(uncleHashes, base.HexToHash(uncle))
 	}
 
 	block = types.Block[Tx]{
-		BlockNumber: blockNumber,
-		Timestamp:   base.Timestamp(ts), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
+		BlockNumber: base.MustParseBlknum(rawBlock.BlockNumber),
+		Timestamp:   base.Timestamp(base.MustParseInt(rawBlock.Timestamp)), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
 		Hash:        base.HexToHash(rawBlock.Hash),
 		ParentHash:  base.HexToHash(rawBlock.ParentHash),
-		GasLimit:    base.Gas(gasLimit),
-		GasUsed:     base.Gas(gasUsed),
+		GasLimit:    base.MustParseNumeral(rawBlock.GasLimit),
+		GasUsed:     base.MustParseNumeral(rawBlock.GasUsed),
 		Miner:       base.HexToAddress(rawBlock.Miner),
-		Difficulty:  difficulty,
-		Uncles:      uncles,
+		Difficulty:  base.MustParseUint(rawBlock.Difficulty),
+		Uncles:      uncleHashes,
 	}
 
 	if len(rawBlock.Withdrawals) > 0 {
@@ -248,8 +221,8 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn uint64, withT
 			s := types.Withdrawal{
 				Address:        base.HexToAddress(withdrawal.Address),
 				Amount:         *amt,
-				BlockNumber:    blockNumber,
-				Timestamp:      base.Timestamp(ts),
+				BlockNumber:    block.BlockNumber,
+				Timestamp:      block.Timestamp,
 				Index:          base.MustParseNumeral(withdrawal.Index),
 				ValidatorIndex: base.MustParseNumeral(withdrawal.ValidatorIndex),
 			}
@@ -261,7 +234,7 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn uint64, withT
 }
 
 // getBlockRaw returns the raw block as received from the node
-func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, error) {
+func (conn *Connection) getBlockRaw(bn base.Blknum, withTxs bool) (*types.RawBlock, error) {
 	method := "eth_getBlockByNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn), withTxs}
 
@@ -270,8 +243,8 @@ func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, e
 	} else {
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
-			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(uint64(0)))
-		} else if utils.MustParseUint(block.Timestamp) == 0 {
+			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(0))
+		} else if base.MustParseUint(block.Timestamp) == 0 {
 			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}
 
@@ -283,7 +256,7 @@ func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, e
 // anything about the Known blocks.
 
 // getBlockReward returns the block reward for a given block number
-func (conn *Connection) getBlockReward(bn uint64) *base.Wei {
+func (conn *Connection) getBlockReward(bn base.Blknum) *base.Wei {
 	if bn == 0 {
 		return base.NewWei(0)
 	} else if bn < base.KnownBlock(conn.Chain, base.Byzantium) {

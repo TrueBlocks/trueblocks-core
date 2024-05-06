@@ -186,7 +186,7 @@ var mapSync sync.Mutex
 // if we've never seen this appearance before. `appsMap` is used to build the appearance table when writing the
 // chunk. `addrMap` helps eliminate duplicates and is used to build the address table when writing the chunk.
 // Precompiles are ignored. If the given address string does not start with a lead `0x`, it is normalized.
-func addAddressToMaps(address string, bn uint64, txid base.Txnum, addrMap AddressBooleanMap) {
+func addAddressToMaps(address string, bn base.Blknum, txid base.Txnum, addrMap AddressBooleanMap) {
 	if base.IsPrecompile(address) {
 		return
 	}

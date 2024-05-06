@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 2.5.9-release
+  version: 2.5.10-release
   description: >
     A REST layer over the TrueBlocks chifra command line. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
@@ -144,7 +144,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: blknum
+            format: uint64
         - name: maxRecords
           description: the maximum number of records to process
           required: false
@@ -153,7 +153,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: blknum
+            format: uint64
         - name: reversed
           description: produce results in reverse chronological order
           required: false
@@ -384,7 +384,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: blknum
+            format: uint64
         - name: maxRecords
           description: the maximum number of records to process
           required: false
@@ -393,7 +393,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: blknum
+            format: uint64
         - name: relevant
           description: for log and accounting export only, export only logs relevant to one of the given export addresses
           required: false
@@ -708,7 +708,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: blknum
+            format: uint64
         - name: sleep
           description: available with --watch option only, the number of seconds to sleep between runs
           required: false
@@ -717,7 +717,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: double
+            format: float64
         - name: chain
           description: the chain to use
           required: false
@@ -1253,7 +1253,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: blknum
+            format: uint64
         - name: count
           description: display only the count of appearances for --addrs or --uniq
           required: false
@@ -2426,7 +2426,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: blknum
+            format: uint64
         - name: maxRecords
           description: the maximum number of records to process
           required: false
@@ -2435,7 +2435,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: blknum
+            format: uint64
         - name: chains
           description: include a list of chain configurations in the output
           required: false
@@ -2501,7 +2501,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: blknum
+            format: uint64
         - name: sleep
           description: seconds to sleep between scraper passes
           required: false
@@ -2510,7 +2510,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: double
+            format: float64
         - name: touch
           description: first block to visit when scraping (snapped back to most recent snap_to_grid mark)
           required: false
@@ -2648,7 +2648,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: blknum
+            format: uint64
         - name: deep
           description: if true, dig more deeply during checking (manifest only)
           required: false
@@ -2681,7 +2681,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: double
+            format: float64
         - name: chain
           description: the chain to use
           required: false
@@ -2790,7 +2790,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: double
+            format: float64
         - name: chain
           description: the chain to use
           required: false
@@ -2909,7 +2909,7 @@ paths:
           explode: true
           schema:
             type: number
-            format: double
+            format: float64
         - name: chain
           description: the chain to use
           required: false
@@ -3559,7 +3559,7 @@ components:
           description: "a possibly empty array of logs"
         status:
           type: number
-          format: uint32
+          format: uint64
           description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
         transactionHash:
           type: string

@@ -8,7 +8,7 @@ import (
 )
 
 // FromBnToTs returns a chain-specific Linux timestamp given a block number
-func FromBnToTs(chain string, bn uint64) (base.Timestamp, error) {
+func FromBnToTs(chain string, bn base.Blknum) (base.Timestamp, error) {
 	ret, err := FromBn(chain, bn)
 	return base.Timestamp(ret.Ts), err
 }

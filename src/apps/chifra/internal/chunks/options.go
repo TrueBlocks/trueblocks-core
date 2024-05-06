@@ -36,12 +36,12 @@ type ChunksOptions struct {
 	Pin        bool                     `json:"pin,omitempty"`        // Pin the manifest or each index chunk and bloom
 	Publish    bool                     `json:"publish,omitempty"`    // Publish the manifest to the Unchained Index smart contract
 	Publisher  string                   `json:"publisher,omitempty"`  // For some query options, the publisher of the index
-	Truncate   uint64                   `json:"truncate,omitempty"`   // Truncate the entire index at this block (requires a block identifier)
+	Truncate   base.Blknum              `json:"truncate,omitempty"`   // Truncate the entire index at this block (requires a block identifier)
 	Remote     bool                     `json:"remote,omitempty"`     // Prior to processing, retrieve the manifest from the Unchained Index smart contract
 	Belongs    []string                 `json:"belongs,omitempty"`    // In index mode only, checks the address(es) for inclusion in the given index chunk
 	Diff       bool                     `json:"diff,omitempty"`       // Compare two index portions (see notes)
-	FirstBlock uint64                   `json:"firstBlock,omitempty"` // First block to process (inclusive)
-	LastBlock  uint64                   `json:"lastBlock,omitempty"`  // Last block to process (inclusive)
+	FirstBlock base.Blknum              `json:"firstBlock,omitempty"` // First block to process (inclusive)
+	LastBlock  base.Blknum              `json:"lastBlock,omitempty"`  // Last block to process (inclusive)
 	MaxAddrs   uint64                   `json:"maxAddrs,omitempty"`   // The max number of addresses to process in a given chunk
 	Deep       bool                     `json:"deep,omitempty"`       // If true, dig more deeply during checking (manifest only)
 	Rewrite    bool                     `json:"rewrite,omitempty"`    // For the --pin --deep mode only, writes the manifest back to the index folder (see notes)
@@ -59,8 +59,8 @@ type ChunksOptions struct {
 }
 
 var defaultChunksOptions = ChunksOptions{
-	Truncate:  base.NOPOS,
-	LastBlock: base.NOPOS,
+	Truncate:  base.NOPOSN,
+	LastBlock: base.NOPOSN,
 	MaxAddrs:  base.NOPOS,
 }
 
@@ -72,12 +72,12 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
 	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
-	logger.TestLog(opts.Truncate != base.NOPOS, "Truncate: ", opts.Truncate)
+	logger.TestLog(opts.Truncate != base.NOPOSN, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
 	logger.TestLog(opts.Diff, "Diff: ", opts.Diff)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != base.NOPOS && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != base.NOPOSN && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
 	logger.TestLog(opts.MaxAddrs != base.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.Rewrite, "Rewrite: ", opts.Rewrite)
@@ -109,8 +109,8 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 	copy := defaultChunksOptions
 	copy.Globals.Caps = getCaps()
 	opts := &copy
-	opts.Truncate = base.NOPOS
-	opts.LastBlock = base.NOPOS
+	opts.Truncate = base.NOPOSN
+	opts.LastBlock = base.NOPOSN
 	opts.MaxAddrs = base.NOPOS
 	for key, value := range values {
 		switch key {
@@ -130,7 +130,7 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 		case "publisher":
 			opts.Publisher = value[0]
 		case "truncate":
-			opts.Truncate = globals.ToUint64(value[0])
+			opts.Truncate = base.MustParseBlknum(value[0])
 		case "remote":
 			opts.Remote = true
 		case "belongs":
@@ -141,11 +141,11 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 		case "diff":
 			opts.Diff = true
 		case "firstBlock":
-			opts.FirstBlock = globals.ToUint64(value[0])
+			opts.FirstBlock = base.MustParseBlknum(value[0])
 		case "lastBlock":
-			opts.LastBlock = globals.ToUint64(value[0])
+			opts.LastBlock = base.MustParseBlknum(value[0])
 		case "maxAddrs":
-			opts.MaxAddrs = globals.ToUint64(value[0])
+			opts.MaxAddrs = base.MustParseUint(value[0])
 		case "deep":
 			opts.Deep = true
 		case "rewrite":
@@ -159,7 +159,7 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 		case "tag":
 			opts.Tag = value[0]
 		case "sleep":
-			opts.Sleep = globals.ToFloat64(value[0])
+			opts.Sleep = base.MustParseFloat(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
@@ -215,16 +215,16 @@ func chunksFinishParse(args []string) *ChunksOptions {
 		}
 	}
 	if opts.Truncate == 0 {
-		opts.Truncate = base.NOPOS
+		opts.Truncate = base.NOPOSN
 	}
 	if opts.LastBlock == 0 {
-		opts.LastBlock = base.NOPOS
+		opts.LastBlock = base.NOPOSN
 	}
 	if opts.MaxAddrs == 0 {
 		opts.MaxAddrs = base.NOPOS
 	}
 	getDef := func(def string) string {
-		if opts.Truncate != base.NOPOS || len(opts.Belongs) > 0 || opts.Pin {
+		if opts.Truncate != base.NOPOSN || len(opts.Belongs) > 0 || opts.Pin {
 			return "json"
 		}
 		return def

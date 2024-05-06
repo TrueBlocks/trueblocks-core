@@ -3,7 +3,6 @@ package provider
 import (
 	"context"
 	"errors"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -182,13 +181,8 @@ type AlchemyTx struct {
 }
 
 func (tx *AlchemyTx) SimpleSlurp() (s types.Slurp, err error) {
-	bn, err := strconv.ParseUint(tx.BlockNumber, 0, 64)
-	if err != nil {
-		return
-	}
-
 	s = types.Slurp{
-		BlockNumber: bn,
+		BlockNumber: base.MustParseBlknum(tx.BlockNumber),
 		Hash:        base.HexToHash(tx.Hash),
 		From:        base.HexToAddress(tx.From),
 		To:          base.HexToAddress(tx.To),

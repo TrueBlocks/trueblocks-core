@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -51,7 +52,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 
 				apps := make([]types.Appearance, 0, len(thisMap))
 				iterFunc := func(app types.Appearance, value *types.Appearance) error {
-					bn := uint64(app.BlockNumber)
+					bn := base.Blknum(app.BlockNumber)
 					procFunc := func(s *types.Appearance) error {
 						apps = append(apps, *s)
 						return nil

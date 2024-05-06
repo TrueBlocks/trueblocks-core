@@ -9,13 +9,14 @@ import (
 	"path/filepath"
 	"unsafe"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
 // Repair repairs a single timestamp
-func Repair(chain string, bn uint64) error {
+func Repair(chain string, bn base.Blknum) error {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return err

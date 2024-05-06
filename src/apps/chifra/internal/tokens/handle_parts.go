@@ -21,7 +21,7 @@ func (opts *TokensOptions) HandleParts() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
 		for _, address := range opts.Addrs {
 			addr := base.HexToAddress(address)
-			currentBn := uint64(0)
+			currentBn := base.Blknum(0)
 			currentTs := base.Timestamp(0)
 			for _, br := range opts.BlockIds {
 				blockNums, err := br.ResolveBlocks(chain)

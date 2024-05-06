@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // GetReceipt retrieves a single receipt by block number and transaction id. If suggested is provided,
@@ -58,7 +57,7 @@ func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (
 }
 
 // getReceiptRaw fetches raw transaction given blockNumber and transactionIndex
-func (conn *Connection) getReceiptRaw(bn uint64, txid base.Txnum) (receipt *types.RawReceipt, hash base.Hash, err error) {
+func (conn *Connection) getReceiptRaw(bn base.Blknum, txid base.Txnum) (receipt *types.RawReceipt, hash base.Hash, err error) {
 	if txHash, err := conn.GetTransactionHashByNumberAndID(bn, txid); err != nil {
 		return nil, base.Hash{}, err
 
@@ -127,11 +126,11 @@ func (conn *Connection) getReceipts(bn base.Blknum) ([]types.Receipt, error) {
 		return []types.Receipt{}, nil
 
 	} else {
-		curBlock := base.NOPOS
+		curBlock := base.NOPOSN
 		curTs := base.NOPOSI
 		var ret []types.Receipt
 		for _, rawReceipt := range *rawReceipts {
-			bn := utils.MustParseUint(rawReceipt.BlockNumber)
+			bn := base.MustParseBlknum(rawReceipt.BlockNumber)
 			if bn != curBlock {
 				curTs = conn.GetBlockTimestamp(bn)
 				curBlock = bn

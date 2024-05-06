@@ -33,7 +33,7 @@ func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		visitAppearance := func(app *types.Appearance) error {
 			if opts.Globals.Verbose {
 				if app.BlockNumber == 0 || app.BlockNumber != currentBn {
-					currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
+					currentTs, _ = tslib.FromBnToTs(chain, base.Blknum(app.BlockNumber))
 				}
 				app.Timestamp = currentTs
 				currentBn = app.BlockNumber
