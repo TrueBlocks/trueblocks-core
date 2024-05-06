@@ -1,6 +1,7 @@
 package scrapePkg
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"sort"
@@ -20,7 +21,7 @@ import (
 
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
 // and then extracting addresses and timestamps from those data structures.
-func (bm *BlazeManager) HandleBlaze(blocks []base.Blknum) (err error, ok bool) {
+func (bm *BlazeManager) HandleBlaze(ctx context.Context, blocks []base.Blknum) (err error) {
 
 	// clear this out
 	bm.errors = make([]scrapeError, 0)
@@ -58,6 +59,11 @@ func (bm *BlazeManager) HandleBlaze(blocks []base.Blknum) (err error, ok bool) {
 
 	// Now we have three go routines waiting for data. Send it...
 	for _, block := range blocks {
+		if ctx.Err() != nil {
+			// This means the context got cancelled, i.e. we got a SIGINT.
+			return nil
+		}
+
 		blockChannel <- block
 	}
 
@@ -71,7 +77,7 @@ func (bm *BlazeManager) HandleBlaze(blocks []base.Blknum) (err error, ok bool) {
 	close(tsChannel)
 	tsWg.Wait()
 
-	return nil, true
+	return nil
 }
 
 // ProcessBlocks processes the block channel and for each block query the node for both
