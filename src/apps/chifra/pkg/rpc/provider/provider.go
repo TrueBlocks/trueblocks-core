@@ -80,7 +80,10 @@ func fetchAndFilterData(ctx context.Context, provider Provider, query *Query, er
 						totalFetched += fetched
 						if err != nil {
 							errorChan <- err
-							continue
+							// we break here because if cannot fetch the page, we don't
+							// know if we're finished (we can get into infinite loop)
+							paginator.SetDone(true)
+							break
 						}
 
 						for _, slurpedItem := range page {

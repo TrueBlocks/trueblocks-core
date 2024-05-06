@@ -267,7 +267,7 @@ func (p *EtherscanProvider) url(value string, paginator Paginator, requestType s
 	}
 
 	if actions[requestType] == "" {
-		return "", fmt.Errorf("should not happen (%s) ==> in getEtherscanUrl", requestType)
+		return "", fmt.Errorf("cannot find Etherscan action %s", requestType)
 	}
 
 	module := "account"
