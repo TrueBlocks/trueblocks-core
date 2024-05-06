@@ -16,10 +16,11 @@ func (opts *SlurpOptions) HandleCount() error {
 	}
 	provider.SetPrintProgress(!opts.Globals.TestMode && !utils.IsTerminal())
 	query := &providerPkg.Query{
-		Addresses: opts.Addresses(),
-		Resources: opts.Types,
-		PerPage:   uint(opts.PerPage),
-		StartPage: uint(opts.Page),
+		Addresses:  opts.Addresses(),
+		Resources:  opts.Types,
+		PerPage:    uint(opts.PerPage),
+		StartPage:  uint(opts.Page),
+		BlockRange: opts.BlockIds,
 	}
 
 	ctx := context.Background()

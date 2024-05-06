@@ -60,12 +60,9 @@ func (p *CovalentProvider) SetPrintProgress(print bool) {
 	p.printProgress = print
 }
 
-func (p *CovalentProvider) NewPaginator(firstPage any, perPage int) Paginator {
-	pageNumber, ok := firstPage.(uint)
-	if !ok {
-		pageNumber = covalentFirstPage
-	}
-	return NewPageNumberPaginator(pageNumber, pageNumber, perPage)
+func (p *CovalentProvider) NewPaginator(query *Query) Paginator {
+	pageNumber := query.StartPage
+	return NewPageNumberPaginator(pageNumber, pageNumber, int(query.PerPage))
 }
 
 func (p *CovalentProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.Slurp) {
