@@ -34,7 +34,7 @@ func (a *Address) Hex() string {
 }
 
 func (a *Address) Prefix(n int) string {
-	return a.Hex()[:Min2(len(a.Hex()), 6)]
+	return a.Hex()[:Min(len(a.Hex()), 6)]
 }
 
 func (a *Address) Encoded32() string {

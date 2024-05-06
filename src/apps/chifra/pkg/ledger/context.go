@@ -8,7 +8,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type ledgerContextKey string
@@ -94,8 +93,8 @@ const maxTestingBlock = 17000000
 func (l *Ledger) SetContexts(chain string, apps []types.Appearance) error {
 	for i := 0; i < len(apps); i++ {
 		cur := base.Blknum(apps[i].BlockNumber)
-		prev := base.Blknum(apps[utils.Max(1, i)-1].BlockNumber)
-		next := base.Blknum(apps[utils.Min(i+1, len(apps)-1)].BlockNumber)
+		prev := base.Blknum(apps[base.Max(1, i)-1].BlockNumber)
+		next := base.Blknum(apps[base.Min(i+1, len(apps)-1)].BlockNumber)
 		key := l.ctxKey(base.Blknum(apps[i].BlockNumber), base.Txnum(apps[i].TransactionIndex))
 		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.Reversed)
 	}

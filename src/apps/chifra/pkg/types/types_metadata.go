@@ -24,7 +24,7 @@ func (m *MetaData) String() string {
 
 // Highest returns the height of the index (i.e., max between the finalized, staging, and ripe indexes).
 func (m *MetaData) IndexHeight() base.Blknum {
-	return base.Max2(m.Finalized, base.Max2(m.Staging, m.Ripe))
+	return base.Max(m.Finalized, base.Max(m.Staging, m.Ripe))
 }
 
 // NextIndexHeight returns the block after the height of the index.

@@ -6,10 +6,10 @@ import (
 	"os"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Runner struct {
@@ -155,10 +155,10 @@ func (tr *Runner) ReportOneTest(t *TestCase, failed bool) {
 	}
 
 	colors.ColorsOn()
-	skip := strings.Repeat(" ", utils.Max(0, 120-len(t.ApiOptions)-40))
+	skip := strings.Repeat(" ", base.Max(0, 120-len(t.ApiOptions)-40))
 	rPadded := padRight(t.Route, 15, false, ".")
 	fPadded := padRight(t.Filename, 30, false, ".")
-	tOpts := t.ApiOptions[:utils.Min(len(t.ApiOptions), 40)]
+	tOpts := t.ApiOptions[:base.Min(len(t.ApiOptions), 40)]
 	fmt.Printf("%s    %s %d-%d %s %s%s%s%s%s%s", color, mark, tr.NTested, tr.NFiltered, tr.Mode, rPadded, fPadded, tOpts, skip, colors.Off, eol)
 	colors.ColorsOff()
 }

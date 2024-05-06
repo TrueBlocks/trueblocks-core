@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Parts int
@@ -78,7 +77,7 @@ func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) ([
 	isTesting := parts&Testing != 0
 	isTags := sortBy == SortByTags
 	if isTesting && !isTags {
-		names = names[:utils.Min(200, len(names))]
+		names = names[:base.Min(200, len(names))]
 	}
 
 	return names, nil

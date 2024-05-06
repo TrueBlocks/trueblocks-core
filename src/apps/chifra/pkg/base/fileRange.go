@@ -151,10 +151,10 @@ type RangeDiff struct {
 }
 
 func (r *FileRange) Overlaps(test FileRange) (rd RangeDiff) {
-	rd.Min = Min2(r.First, test.First)
-	rd.In = Max2(r.First, test.First)
-	rd.Out = Min2(r.Last, test.Last)
-	rd.Max = Max2(r.Last, test.Last)
+	rd.Min = Min(r.First, test.First)
+	rd.In = Max(r.First, test.First)
+	rd.Out = Min(r.Last, test.Last)
+	rd.Max = Max(r.Last, test.Last)
 	rd.Mid = (rd.Max-rd.Min)/2 + rd.Min
 	return
 }
