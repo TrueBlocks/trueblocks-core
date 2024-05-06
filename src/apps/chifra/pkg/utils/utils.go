@@ -10,14 +10,11 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 	"os/exec"
 	"reflect"
 	"runtime"
 	"strconv"
 	"strings"
-
-	"golang.org/x/term"
 )
 
 // IsServerWriter tries to cast `w` into `http.ResponseWriter`
@@ -25,10 +22,6 @@ import (
 func IsServerWriter(w io.Writer) bool {
 	_, ok := w.(http.ResponseWriter)
 	return ok
-}
-
-func IsTerminal() bool {
-	return term.IsTerminal(int(os.Stdout.Fd()))
 }
 
 func OpenBrowser(url string) {

@@ -54,7 +54,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 				} else {
 					bar := logger.NewBar(logger.BarOptions{
 						Prefix:  mon.Address.Hex(),
-						Enabled: !testMode && !utils.IsTerminal(),
+						Enabled: !testMode && !logger.IsTerminal(),
 						Total:   int64(cnt),
 					})
 
