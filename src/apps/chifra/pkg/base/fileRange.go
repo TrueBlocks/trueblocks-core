@@ -152,22 +152,6 @@ type RangeDiff struct {
 	Max Blknum
 }
 
-// Min calculates the minimum between two unsigned integers (golang has no such function)
-func Min2(x, y Blknum) Blknum {
-	if x < y {
-		return x
-	}
-	return y
-}
-
-// Max calculates the max between two unsigned integers (golang has no such function)
-func Max2(x, y Blknum) Blknum {
-	if x > y {
-		return x
-	}
-	return y
-}
-
 func (r *FileRange) Overlaps(test FileRange) (rd RangeDiff) {
 	rd.Min = Min2(r.First, test.First)
 	rd.In = Max2(r.First, test.First)
