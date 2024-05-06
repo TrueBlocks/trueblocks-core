@@ -17,7 +17,7 @@ import (
 	"golang.org/x/time/rate"
 )
 
-const covalentFirstPage = 0
+// const covalentFirstPage = 0
 const covalentRequestsPerSecond = 5
 const covalentBaseUrl = "https://api.covalenthq.com/v1/[{CHAIN}]/address/[{ADDRESS}]/transactions_v3/page/[{PAGE}]/"
 
