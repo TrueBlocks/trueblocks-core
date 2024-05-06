@@ -6,11 +6,12 @@ package file
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"os"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/ethereum/go-ethereum/log"
 )
 
 func AsciiFileToLines(filename string) []string {
@@ -35,7 +36,7 @@ func AsciiFileToString(fileName string) string {
 
 	contents, err := os.ReadFile(fileName)
 	if err != nil {
-		logger.Error(err)
+		log.Error(fmt.Sprintf("%v", err))
 		return ""
 	}
 
