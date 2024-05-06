@@ -13,7 +13,7 @@ func Test_EstablishValidFilename(t *testing.T) {
 	r := base.FileRange{First: 0, Last: 1}
 	man := manifest.Manifest{}
 	man.ChunkMap = make(map[string]*types.ChunkRecord, 0)
-	_, err := DownloadOneChunk("mainnet", &man, r)
+	err := DownloadOneChunk("mainnet", &man, r)
 	if err == nil {
 		t.Fatal("error expected")
 	}

@@ -12,7 +12,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 type RecordRange struct {
@@ -76,9 +75,8 @@ func (r FileRange) String() string {
 }
 
 // RangeToFilename returns a fileName and existence bool given a file range and a type
-func (r *FileRange) RangeToFilename(chain string) (bool, string) {
-	fileName := config.PathToIndex(chain) + "finalized/" + r.String() + ".bin"
-	return file.FileExists(fileName), fileName
+func (r *FileRange) RangeToFilename(chain string) string {
+	return config.PathToIndex(chain) + "finalized/" + r.String() + ".bin"
 }
 
 // Follows returns true if the range is strictly after the needle range.
