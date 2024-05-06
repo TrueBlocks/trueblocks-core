@@ -50,7 +50,7 @@ type SlurpOptions struct {
 
 var defaultSlurpOptions = SlurpOptions{
 	Source:  "etherscan",
-	PerPage: 3000,
+	PerPage: 1000,
 	Sleep:   .25,
 }
 
@@ -65,7 +65,7 @@ func (opts *SlurpOptions) testLog() {
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Page != 0, "Page: ", opts.Page)
 	logger.TestLog(len(opts.PageId) > 0, "PageId: ", opts.PageId)
-	logger.TestLog(opts.PerPage != 3000, "PerPage: ", opts.PerPage)
+	logger.TestLog(opts.PerPage != 1000, "PerPage: ", opts.PerPage)
 	logger.TestLog(opts.Sleep != float64(.25), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -91,7 +91,7 @@ func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.Source = "etherscan"
-	opts.PerPage = 3000
+	opts.PerPage = 1000
 	opts.Sleep = .25
 	for key, value := range values {
 		switch key {
