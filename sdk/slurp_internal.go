@@ -30,6 +30,7 @@ type slurpOptionsInternal struct {
 	Source      SlurpSource `json:"source,omitempty"`
 	Count       bool        `json:"count,omitempty"`
 	Page        uint64      `json:"page,omitempty"`
+	PageId      string      `json:"pageId,omitempty"`
 	PerPage     uint64      `json:"perPage,omitempty"`
 	Sleep       float64     `json:"sleep,omitempty"`
 	Globals
@@ -132,6 +133,7 @@ func (opts *SlurpOptions) toInternal() *slurpOptionsInternal {
 		Articulate: opts.Articulate,
 		Source:     opts.Source,
 		Page:       opts.Page,
+		PageId:     opts.PageId,
 		PerPage:    opts.PerPage,
 		Sleep:      opts.Sleep,
 		Globals:    opts.Globals,

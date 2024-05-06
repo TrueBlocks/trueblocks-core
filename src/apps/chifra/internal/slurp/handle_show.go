@@ -5,7 +5,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	providerPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/provider"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -18,17 +17,10 @@ func (opts *SlurpOptions) HandleShow() error {
 		return err
 	}
 	provider.SetPrintProgress(!opts.Globals.TestMode && !utils.IsTerminal())
-	query := &providerPkg.Query{
-		Addresses:  opts.Addresses(),
-		Resources:  opts.Types,
-		PerPage:    uint(opts.PerPage),
-		StartPage:  uint(opts.Page),
-		BlockRange: opts.BlockIds,
-	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawSlurp], errorChan chan error) {
-		txChan := provider.TransactionsByAddress(ctx, query, errorChan)
+		txChan := provider.TransactionsByAddress(ctx, opts.Query(), errorChan)
 		for tx := range txChan {
 			if opts.Articulate {
 				if err := abiCache.ArticulateSlurp(&tx); err != nil {

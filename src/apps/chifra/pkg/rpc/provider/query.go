@@ -42,9 +42,12 @@ func (q *Query) InRange(bn base.Blknum) (bool, error) {
 
 func (q *Query) Dup() *Query {
 	return &Query{
-		Chain:      q.Chain,
-		Addresses:  q.Addresses,
-		BlockRange: q.BlockRange,
-		Resources:  q.Resources,
+		Chain:       q.Chain,
+		Addresses:   q.Addresses,
+		BlockRange:  q.BlockRange,
+		Resources:   q.Resources,
+		StartPage:   q.StartPage,
+		StartPageId: q.StartPageId,
+		PerPage:     q.PerPage,
 	}
 }

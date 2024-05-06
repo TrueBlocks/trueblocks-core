@@ -69,11 +69,13 @@ One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals 
 	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().Source, "source", "S", "etherscan", `the source of the slurped data
 One of [ etherscan | key ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Count, "count", "U", false, `for --appearances mode only, display only the count of records`)
-	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().Page, "page", "g", 0, `the page to retrieve (hidden)`)
+	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().Page, "page", "g", 0, `the page to retrieve (page number) (hidden)`)
+	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().PageId, "page_id", "", "", `the page to retrieve (page ID) (hidden)`)
 	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 3000, `the number of records to request on each page (hidden)`)
 	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, `seconds to sleep between requests`)
 	if os.Getenv("TEST_MODE") != "true" {
 		_ = slurpCmd.Flags().MarkHidden("page")
+		_ = slurpCmd.Flags().MarkHidden("page_id")
 		_ = slurpCmd.Flags().MarkHidden("per_page")
 	}
 	globals.InitGlobals("slurp", slurpCmd, &slurpPkg.GetOptions().Globals, capabilities)

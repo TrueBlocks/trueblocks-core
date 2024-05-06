@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	providerPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/provider"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -15,17 +14,10 @@ func (opts *SlurpOptions) HandleAppearances() error {
 		return err
 	}
 	provider.SetPrintProgress(!opts.Globals.TestMode && !utils.IsTerminal())
-	query := &providerPkg.Query{
-		Addresses:  opts.Addresses(),
-		Resources:  opts.Types,
-		PerPage:    uint(opts.PerPage),
-		StartPage:  uint(opts.Page),
-		BlockRange: opts.BlockIds,
-	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
-		appearancesChan := provider.Appearances(ctx, query, errorChan)
+		appearancesChan := provider.Appearances(ctx, opts.Query(), errorChan)
 		for appearance := range appearancesChan {
 			modelChan <- &appearance
 		}
