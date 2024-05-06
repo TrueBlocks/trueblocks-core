@@ -108,9 +108,7 @@ func (opts *AbisOptions) toInternal() *abisOptionsInternal {
 		Addrs:    opts.Addrs,
 		Known:    opts.Known,
 		ProxyFor: opts.ProxyFor,
-		Find:     opts.Find,
 		Hint:     opts.Hint,
-		Encode:   opts.Encode,
 		Globals:  opts.Globals,
 	}
 }

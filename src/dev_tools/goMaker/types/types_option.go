@@ -795,6 +795,8 @@ func (op *Option) ToolTurd() string {
 func (op *Option) ToolParameters() string {
 	if len(op.ReturnType) == 0 {
 		return ""
+	} else if op.IsArray() && strings.Contains(op.DataType, "string") {
+		return "val []string"
 	} else if strings.Contains(op.DataType, "string") {
 		return "val string"
 	} else if strings.Contains(op.DataType, "address") {
@@ -811,7 +813,8 @@ func (op *Option) ToolParameters() string {
 func (op *Option) ToolAssignment() string {
 	if len(op.ReturnType) == 0 {
 		return ""
-	} else if strings.Contains(op.DataType, "string") ||
+	} else if strings.Contains(op.DataType, "[]string") ||
+		strings.Contains(op.DataType, "string") ||
 		strings.Contains(op.DataType, "address") ||
 		strings.Contains(op.DataType, "uint64") ||
 		strings.Contains(op.DataType, "blknum") {

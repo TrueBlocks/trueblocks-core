@@ -34,7 +34,7 @@ func ReportError(fn string, err error) {
 }
 
 func ReportOkay(fn string) {
-	logger.Error(colors.Green, "OK ", fn, colors.Off)
+	logger.Info(colors.Green, "OK ", fn, colors.Off)
 }
 
 func doCache(on bool, in []sdk.Globals) []sdk.Globals {

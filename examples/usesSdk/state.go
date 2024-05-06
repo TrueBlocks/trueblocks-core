@@ -17,22 +17,21 @@ func DoState() {
 	}
 	logger.Info("DoState", opts)
 
-	// Addrs      []string     `json:"addrs,omitempty"`
-	// BlockIds   []string     `json:"blocks,omitempty"`
-	// Parts      StateParts   `json:"parts,omitempty"`
-	// Changes    bool         `json:"changes,omitempty"`
-	// NoZero     bool         `json:"noZero,omitempty"`
-	// Articulate bool         `json:"articulate,omitempty"`
-	// ProxyFor   base.Address `json:"proxyFor,omitempty"`
-	//  func (opts *StateOptions) State() ([]types.State, *types.MetaData, error) {
-	// func (opts *StateOptions) StateCall(val string) ([]types.Result, *types.MetaData, error) {
-	// StateParts: NoSP, SPBalance, SPNonce, SPCode, SPProxy, SPDeployed, SPAccttype, SPSome, SPAll
-
+	art := []bool{false, true}
 	globs := noRaw(globals)
 
 	changes := []bool{false, true}
 	noZeros := []bool{false, true}
-	parts := []sdk.StateParts{sdk.NoSP, sdk.SPAll} //, sdk.SPBalance /*sdk.SPNonce,*/, sdk.SPCode, sdk.SPProxy, sdk.SPDeployed, sdk.SPAccttype, sdk.SPSome, sdk.SPAll}
+	parts := []sdk.StateParts{
+		sdk.SPBalance, /*sdk.SPNonce,*/
+		sdk.SPCode,
+		sdk.SPProxy,
+		sdk.SPDeployed,
+		sdk.SPAccttype,
+		sdk.SPSome,
+		sdk.SPAll,
+	}
+
 	for _, c := range changes {
 		for _, z := range noZeros {
 			for _, p := range parts {
@@ -62,7 +61,8 @@ func DoState() {
 		BlockIds: []string{"18000000"},
 		Addrs:    []string{"unchainedindex.eth"},
 	}
-	art := []bool{false, true}
+	logger.Info("DoState-Call", opts)
+
 	for _, a := range art {
 		baseFn := "state/state-call"
 		if a {
@@ -80,6 +80,8 @@ func DoState() {
 		BlockIds: []string{"10092000"},
 		Addrs:    []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
 	}
+	logger.Info("DoState-Call-Proxy", opts)
+
 	for _, a := range art {
 		baseFn := "state/state-call-proxy"
 		if a {

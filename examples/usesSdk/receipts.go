@@ -18,6 +18,7 @@ func DoReceipts() {
 	// func (opts *ReceiptsOptions) Receipts() ([]types.Receipt, *types.MetaData, error) {
 
 	art := []bool{false, true}
+	globs := noEther(noRaw(globals))
 
 	for _, a := range art {
 		baseFn := "receipts/receipts"
@@ -25,7 +26,6 @@ func DoReceipts() {
 			baseFn += "-articulate"
 		}
 		opts.Articulate = a
-		globs := noEther(globals)
 		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)

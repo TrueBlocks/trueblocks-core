@@ -22,6 +22,7 @@ func DoLogs() {
 	emitters := []string{"", "0x5564886ca2c518d1964e5fcea4f423b41db9f561"}
 	topics := []string{"", "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc"}
 	art := []bool{false, true}
+	globs := noEther(noRaw(globals))
 
 	for _, t := range topics {
 		for _, e := range emitters {
@@ -39,7 +40,6 @@ func DoLogs() {
 					baseFn += "-topic"
 				}
 				opts.Articulate = a
-				globs := noRaw(noEther(globals))
 				for _, g := range globs {
 					opts.Globals = g
 					fn := getFilename(baseFn, &opts.Globals)
