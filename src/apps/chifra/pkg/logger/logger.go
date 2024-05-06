@@ -13,7 +13,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"golang.org/x/term"
 )
 
 type severity int
@@ -171,13 +171,6 @@ func Panic(v ...any) {
 	panic(s)
 }
 
-func Progress(tick bool, v ...any) {
-	if isTestMode || !utils.IsTerminal() || !tick {
-		return
-	}
-	toLog(progress, v...)
-}
-
 func CleanLine() {
 	// \033[K is escape sequence meaning "erase to end of line"
 	fmt.Print("\r\033[K")
@@ -190,4 +183,15 @@ func PctProgress(done int32, total int, tick int32) {
 
 	percentage := math.Round(float64(done) / float64(total) * 100)
 	toLog(progress, fmt.Sprintf("\r\t\t\t Processing: %.f%% (%d of %d)%s", percentage, done, total, strings.Repeat(" ", 40)))
+}
+
+func Progress(tick bool, v ...any) {
+	if isTestMode || !IsTerminal() || !tick {
+		return
+	}
+	toLog(progress, v...)
+}
+
+func IsTerminal() bool {
+	return term.IsTerminal(int(os.Stdout.Fd()))
 }

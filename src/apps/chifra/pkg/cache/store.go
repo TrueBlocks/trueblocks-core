@@ -9,8 +9,8 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
+	"github.com/ethereum/go-ethereum/log"
 )
 
 // In verbose mode we print cache errors. It's useful for debugging.
@@ -95,7 +95,7 @@ func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	cleanOnQuit := func() {
-		logger.Warn(sigintTrap.TrapMessage)
+		log.Warn(sigintTrap.TrapMessage)
 	}
 	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
 	defer sigintTrap.Disable(trapChannel)
@@ -207,5 +207,5 @@ func printErr(desc string, err error) {
 		return
 	}
 
-	logger.Warn("cache error:", desc+":", err)
+	log.Warn("cache error:", desc+":", err)
 }

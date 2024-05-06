@@ -43,7 +43,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 
 		} else {
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !utils.IsTerminal(),
+				Enabled: !testMode && !logger.IsTerminal(),
 				Total:   int64(cnt),
 			})
 

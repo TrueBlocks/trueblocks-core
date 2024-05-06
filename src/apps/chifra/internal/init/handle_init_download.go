@@ -20,7 +20,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
@@ -33,7 +32,7 @@ var nStarted int
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
 func (opts *InitOptions) downloadAndReportProgress(chunks []types.ChunkRecord, chunkType walk.CacheType, nTotal int) ([]types.ChunkRecord, bool) {
 	chain := opts.Globals.Chain
-	sleep := utils.Max(.0125, opts.Sleep)
+	sleep := base.Max(.0125, opts.Sleep)
 	successCount := 0
 
 	failed := []types.ChunkRecord{}
@@ -75,7 +74,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.ChunkRecord, c
 			if ok {
 				failed = append(failed, *chunk)
 				if errors.Is(event.Error, index.ErrWriteToDiscError) {
-					sleep = utils.Min(4, sleep*1.2)
+					sleep = base.Min(4, sleep*1.2)
 					successCount = 0
 				}
 			}
@@ -109,7 +108,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.ChunkRecord, c
 			msg := fmt.Sprintf("Finished download of %s%s%s %s%s%s (% 4d of %4d %0.1f%%%s)", col, event.Message, colors.Off, col, rng, colors.Off, nProcessed, nTotal, pct, sleepStr)
 			logger.Info(msg, spaces)
 			if successCount%10 == 0 {
-				sleep = utils.Max(.0125, sleep/1.2)
+				sleep = base.Max(.0125, sleep/1.2)
 				successCount = 0
 			}
 

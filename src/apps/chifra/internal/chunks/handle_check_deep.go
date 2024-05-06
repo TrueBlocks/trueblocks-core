@@ -57,7 +57,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *types.
 		logger.Info("Checking each address in each index against its Bloom filter...")
 		iterFunc = func(rangeStr string, item *reporter) (err error) {
 			rng := base.RangeFromRangeString(item.chunk.Range)
-			_, path := rng.RangeToFilename(chain)
+			path := rng.RangeToFilename(chain)
 			bl, err := index.OpenBloom(index.ToBloomPath(path), true /* check */)
 			if err != nil {
 				return

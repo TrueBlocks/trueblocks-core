@@ -3,10 +3,10 @@ package slurpPkg
 import (
 	"context"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	providerPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/provider"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *SlurpOptions) HandleCount() error {
@@ -14,7 +14,7 @@ func (opts *SlurpOptions) HandleCount() error {
 	if err != nil {
 		return err
 	}
-	provider.SetPrintProgress(!opts.Globals.TestMode && !utils.IsTerminal())
+	provider.SetPrintProgress(!opts.Globals.TestMode && !logger.IsTerminal())
 	query := &providerPkg.Query{
 		Addresses: opts.Addresses(),
 		Resources: opts.Types,

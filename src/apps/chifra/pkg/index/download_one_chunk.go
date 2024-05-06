@@ -9,7 +9,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
@@ -19,13 +18,11 @@ import (
 
 // DownloadOneChunk a filename to an index portion, finds the correspoding CID (hash)
 // entry in the manifest, and downloads the index chunk to the local drive
-func DownloadOneChunk(chain string, man *manifest.Manifest, fileRange base.FileRange) (bool, error) {
-	exists, fileName := fileRange.RangeToFilename(chain)
-
+func DownloadOneChunk(chain string, man *manifest.Manifest, fileRange base.FileRange) error {
 	// Find bloom filter's CID
 	matchedPin := man.ChunkMap[fileRange.String()]
 	if matchedPin == nil || matchedPin.Range == "" {
-		return exists, fmt.Errorf("filename path missing in chunks: %s", fileRange)
+		return fmt.Errorf("filename path missing in chunks: %s", fileRange)
 	}
 
 	logger.Info("Bloom filter hit, downloading index portion", (colors.Yellow + fileRange.String() + colors.Off), "from IPFS.")
@@ -43,12 +40,12 @@ func DownloadOneChunk(chain string, man *manifest.Manifest, fileRange base.FileR
 	for event := range progressChannel {
 		switch event.Event {
 		case progress.AllDone:
-			return file.FileExists(fileName), nil
+			return nil
 		case progress.Cancelled:
-			return file.FileExists(fileName), nil
+			return nil
 		case progress.Error:
-			return file.FileExists(fileName), fmt.Errorf("error while downloading: %s", event.Message)
+			return fmt.Errorf("error while downloading: %s", event.Message)
 		}
 	}
-	return file.FileExists(fileName), nil
+	return nil
 }

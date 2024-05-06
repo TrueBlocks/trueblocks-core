@@ -8,12 +8,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // Report prints out a report of the progress of the scraper.
 func (bm *BlazeManager) report(nBlocks, perChunk, nChunks, nAppsNow, nAppsFound, nAddrsFound int) {
-	nNeeded := perChunk - utils.Min(perChunk, nAppsNow)
+	nNeeded := perChunk - base.Min(perChunk, nAppsNow)
 	appsPerAddr := float64(nAppsFound) / float64(nAddrsFound)
 	pctFull := float64(nAppsNow) / float64(perChunk)
 

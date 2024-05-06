@@ -10,14 +10,11 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 	"os/exec"
 	"reflect"
 	"runtime"
 	"strconv"
 	"strings"
-
-	"golang.org/x/term"
 )
 
 // IsServerWriter tries to cast `w` into `http.ResponseWriter`
@@ -25,10 +22,6 @@ import (
 func IsServerWriter(w io.Writer) bool {
 	_, ok := w.(http.ResponseWriter)
 	return ok
-}
-
-func IsTerminal() bool {
-	return term.IsTerminal(int(os.Stdout.Fd()))
 }
 
 func OpenBrowser(url string) {
@@ -78,22 +71,6 @@ func PadRight(str string, totalLen int, pad rune) string {
 		tail += string(pad)
 	}
 	return str + tail
-}
-
-// Min calculates the minimum between two unsigned integers (golang has no such function)
-func Min[T int | float64 | uint32 | int64 | uint64](x, y T) T {
-	if x < y {
-		return x
-	}
-	return y
-}
-
-// Max calculates the max between two unsigned integers (golang has no such function)
-func Max[T int | float64 | uint32 | int64 | uint64](x, y T) T {
-	if x > y {
-		return x
-	}
-	return y
 }
 
 func MakeFirstLowerCase(s string) string {

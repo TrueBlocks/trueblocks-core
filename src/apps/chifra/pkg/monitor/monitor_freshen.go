@@ -283,7 +283,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 			return
 		}
 
-		_, err = index.DownloadOneChunk(chain, man, bl.Range)
+		err = index.DownloadOneChunk(chain, man, bl.Range)
 		if err != nil {
 			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return
