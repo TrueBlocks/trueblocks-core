@@ -43,10 +43,12 @@ endfunction(ADD_GO_INSTALLABLE_PROGRAM2)
 # ----------------------------------------------------------------------------------------
 add_subdirectory(other/install)
 
-ADD_GO_INSTALLABLE_PROGRAM2(testRunner ${CMAKE_SOURCE_DIR}/dev_tools/testRunner/*.go ${BIN_DIR})
-ADD_GO_INSTALLABLE_PROGRAM2(goMaker ${CMAKE_SOURCE_DIR}/dev_tools/goMaker/*.go ${BIN_DIR})
 ADD_GO_INSTALLABLE_PROGRAM2(chifra ${CMAKE_SOURCE_DIR}/apps/chifra/*.go ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM2(goMaker ${CMAKE_SOURCE_DIR}/dev_tools/goMaker/*.go ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM2(testRunner ${CMAKE_SOURCE_DIR}/dev_tools/testRunner/*.go ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM2(sdkFuzzer ${CMAKE_SOURCE_DIR}/dev_tools/sdkFuzzer/*.go ${BIN_DIR})
 
 add_dependencies(testRunner goMaker)
+add_dependencies(sdkFuzzer goMaker)
 add_dependencies(chifra testRunner)
 add_dependencies(examples chifra)

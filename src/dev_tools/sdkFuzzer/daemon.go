@@ -17,5 +17,5 @@ func DoDaemon() {
 	// 	logger.Error(err)
 	// }
 
-	file.StringToAsciiFile("usesSDK/daemon.json", "daemon is not an sdk option")
+	file.StringToAsciiFile("sdkFuzzer/daemon.json", "daemon is not an sdk option")
 }

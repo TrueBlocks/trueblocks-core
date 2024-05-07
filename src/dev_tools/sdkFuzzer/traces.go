@@ -10,7 +10,7 @@ import (
 
 // DoTraces tests the traces sdk function
 func DoTraces() {
-	file.EstablishFolder("usesSdk-output/traces")
+	file.EstablishFolder("sdkFuzzer-output/traces")
 	opts := sdk.TracesOptions{
 		TransactionIds: []string{"17100101.1", "3189962.7"},
 	}

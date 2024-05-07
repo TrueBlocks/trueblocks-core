@@ -31,9 +31,9 @@ type RawBounds struct {
 
 type Bounds struct {
 	Count     uint64         `json:"count"`
-	FirstApp  RawAppearance  `json:"firstApp"`
+	FirstApp  Appearance     `json:"firstApp"`
 	FirstTs   base.Timestamp `json:"firstTs"`
-	LatestApp RawAppearance  `json:"latestApp"`
+	LatestApp Appearance     `json:"latestApp"`
 	LatestTs  base.Timestamp `json:"latestTs"`
 	raw       *RawBounds     `json:"-"`
 	// EXISTING_CODE
@@ -58,17 +58,22 @@ func (s *Bounds) Model(chain, format string, verbose bool, extraOptions map[stri
 	var order = []string{}
 
 	// EXISTING_CODE
+	extraOptions["appearances"] = true
 	model = map[string]interface{}{
 		"address":    s.FirstApp.Address,
 		"count":      s.Count,
-		"firstApp":   fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex),
+		"firstApp":   s.FirstApp.Model(chain, format, verbose, extraOptions).Data, //fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex),
 		"firstTs":    s.FirstTs,
 		"firstDate":  utils.FormattedDate(s.FirstTs),
-		"latestApp":  fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex),
+		"latestApp":  s.LatestApp.Model(chain, format, verbose, extraOptions).Data, //fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex),
 		"latestTs":   s.LatestTs,
 		"latestDate": utils.FormattedDate(s.LatestTs),
 		"blockSpan":  (s.LatestApp.BlockNumber - s.FirstApp.BlockNumber),
 		"blockFreq":  uint64(s.LatestApp.BlockNumber-s.FirstApp.BlockNumber) / s.Count,
+	}
+	if format == "txt" || format == "csv" {
+		model["firstApp"] = fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex)
+		model["latestApp"] = fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex)
 	}
 	order = []string{
 		"address",

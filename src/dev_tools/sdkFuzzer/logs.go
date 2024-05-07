@@ -8,7 +8,7 @@ import (
 
 // DoLogs tests the logs sdk function
 func DoLogs() {
-	file.EstablishFolder("usesSdk-output/logs")
+	file.EstablishFolder("sdkFuzzer-output/logs")
 	opts := sdk.LogsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
 	}

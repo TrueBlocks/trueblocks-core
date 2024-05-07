@@ -16,7 +16,7 @@ func DoTransactions() {
 	if transactions, _, err := opts.Transactions(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.Transaction]("usesSDK/transactions.json", transactions, &opts, func() error {
+		if err := SaveAndClean[types.Transaction]("sdkFuzzer/transactions.json", transactions, &opts, func() error {
 			_, _, err := opts.Transactions()
 			return err
 		}); err != nil {
@@ -27,7 +27,7 @@ func DoTransactions() {
 	if transactionsTraces, _, err := opts.TransactionsTraces(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.Trace]("usesSDK/transactionsTraces.json", transactionsTraces, &opts, func() error {
+		if err := SaveAndClean[types.Trace]("sdkFuzzer/transactionsTraces.json", transactionsTraces, &opts, func() error {
 			_, _, err := opts.TransactionsTraces()
 			return err
 		}); err != nil {
@@ -38,7 +38,7 @@ func DoTransactions() {
 	if transactionsUniq, _, err := opts.TransactionsUniq(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.Appearance]("usesSDK/transactionsUniq.json", transactionsUniq, &opts, func() error {
+		if err := SaveAndClean[types.Appearance]("sdkFuzzer/transactionsUniq.json", transactionsUniq, &opts, func() error {
 			_, _, err := opts.TransactionsUniq()
 			return err
 		}); err != nil {
@@ -50,7 +50,7 @@ func DoTransactions() {
 	if transactionsLogs, _, err := opts.TransactionsLogs(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.Log]("usesSDK/transactionsLogs.json", transactionsLogs, &opts, func() error {
+		if err := SaveAndClean[types.Log]("sdkFuzzer/transactionsLogs.json", transactionsLogs, &opts, func() error {
 			_, _, err := opts.TransactionsLogs()
 			return err
 		}); err != nil {

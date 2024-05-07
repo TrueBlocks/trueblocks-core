@@ -17,5 +17,5 @@ func DoExplore() {
 	// 	logger.Error(err)
 	// }
 
-	file.StringToAsciiFile("usesSDK/explore.json", "explore is not an SDK option")
+	file.StringToAsciiFile("sdkFuzzer/explore.json", "explore is not an SDK option")
 }

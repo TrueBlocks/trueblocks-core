@@ -16,7 +16,7 @@ func DoTokens() {
 	if tokens, _, err := opts.Tokens(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.Token]("usesSDK/tokens.json", tokens, &opts, func() error {
+		if err := SaveAndClean[types.Token]("sdkFuzzer/tokens.json", tokens, &opts, func() error {
 			_, _, err := opts.Tokens()
 			return err
 		}); err != nil {

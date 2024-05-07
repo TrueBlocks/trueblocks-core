@@ -11,12 +11,12 @@ func main() {
 	DoState()
 	DoAbis()
 	DoBlocks()
+	DoWhen()
+	DoList()
+	DoNames()
 
-	// DoNames()
 	// DoTransactions()
 	// DoTokens()
-	// DoWhen()
-	// DoList()
 	// DoExport()
 	// DoMonitors()
 	// DoConfig()
@@ -46,4 +46,5 @@ var firsts = []string{"46147.0", "50111.0", "52029.0"}
 
 func init() {
 	os.Setenv("TB_NO_USERQUERY", "true")
+	os.Setenv("TB_SDK_FUZZER", "true")
 }

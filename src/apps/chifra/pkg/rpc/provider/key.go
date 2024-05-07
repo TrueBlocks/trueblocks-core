@@ -207,6 +207,7 @@ type Meta struct {
 }
 
 // The only purpose of this type is to parse Key's lastIndexedBlock (string) into int
+// TODO: I feel like this could use base.Numeral which is exactly that type's purpose
 type lastIndexedBlock int
 
 func (l *lastIndexedBlock) UnmarshalJSON(data []byte) (err error) {

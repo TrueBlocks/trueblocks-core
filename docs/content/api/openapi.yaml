@@ -3141,7 +3141,7 @@ components:
         firstApp:
           type: object
           items:
-            $ref: "#/components/schemas/rawAppearance"
+            $ref: "#/components/schemas/appearance"
           description: "the block number and transaction id of the first appearance of this address"
         firstTs:
           type: number
@@ -3154,7 +3154,7 @@ components:
         latestApp:
           type: object
           items:
-            $ref: "#/components/schemas/rawAppearance"
+            $ref: "#/components/schemas/appearance"
           description: "the block number and transaction id of the latest appearance of this address"
         latestTs:
           type: number

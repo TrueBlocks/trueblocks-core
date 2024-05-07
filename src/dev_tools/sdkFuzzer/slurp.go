@@ -17,7 +17,7 @@ func DoSlurp() {
 	if slurp, _, err := opts.Slurp(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.Slurp]("usesSDK/slurp.json", slurp, &opts, func() error {
+		if err := SaveAndClean[types.Slurp]("sdkFuzzer/slurp.json", slurp, &opts, func() error {
 			_, _, err := opts.Slurp()
 			return err
 		}); err != nil {
@@ -28,7 +28,7 @@ func DoSlurp() {
 	if appearances, _, err := opts.SlurpAppearances(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.Appearance]("usesSDK/slurpAppearances.json", appearances, &opts, func() error {
+		if err := SaveAndClean[types.Appearance]("sdkFuzzer/slurpAppearances.json", appearances, &opts, func() error {
 			_, _, err := opts.SlurpAppearances()
 			return err
 		}); err != nil {
@@ -39,7 +39,7 @@ func DoSlurp() {
 	if counts, _, err := opts.SlurpCount(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.SlurpCount]("usesSDK/slurpCount.json", counts, &opts, func() error {
+		if err := SaveAndClean[types.SlurpCount]("sdkFuzzer/slurpCount.json", counts, &opts, func() error {
 			_, _, err := opts.SlurpCount()
 			return err
 		}); err != nil {

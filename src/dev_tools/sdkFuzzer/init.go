@@ -9,7 +9,7 @@ func DoInit() {
 	// if init, _, err := opts.InitAll(); err != nil {
 	// 	logger.Error(err)
 	// } else {
-	// 	if err := SaveAndClean[bool]("usesSDK/init.json", init, &opts, func() error {
+	// 	if err := SaveAndClean[bool]("sdkFuzzer/init.json", init, &opts, func() error {
 	// 		_, _, err := opts.InitAll()
 	// 		return err
 	// 	}); err != nil {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -26,22 +27,25 @@ func getFilename(baseName string, g *sdk.Globals) string {
 		app += "-verbose"
 	}
 
-	return "usesSdk-output/" + baseName + app + ".json"
+	return "sdkFuzzer-output/" + baseName + app + ".json"
 }
 
+var spaces = strings.Repeat(" ", 20)
+
 func ReportError(fn string, err error) {
-	logger.Error(fmt.Errorf("NO %s: %v", fn, err))
+	logger.Error(fmt.Errorf("NO %s: %v%s", fn, err, spaces))
 }
 
 func ReportOkay(fn string) {
-	logger.Info(colors.Green, "OK ", fn, colors.Off)
+	logger.Info(colors.Green, "OK ", fn, colors.Off, spaces)
 }
 
 func ShowHeader(msg string, opts fmt.Stringer) {
+	logger.Info()
 	if opts != nil {
-		logger.Info(msg, opts.String())
+		logger.Info(colors.Yellow+msg, opts.String(), colors.Off)
 	} else {
-		logger.Info(msg)
+		logger.Info(colors.Yellow+msg, colors.Off)
 	}
 }
 

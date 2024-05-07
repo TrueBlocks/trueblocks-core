@@ -14,7 +14,7 @@ func DoStatus() {
 	if indexes, _, err := opts.StatusIndex(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusIndex.json", indexes); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusIndex.json", indexes); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -22,7 +22,7 @@ func DoStatus() {
 	if blooms, _, err := opts.StatusBlooms(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusBlooms.json", blooms); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusBlooms.json", blooms); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -30,7 +30,7 @@ func DoStatus() {
 	if blocks, _, err := opts.StatusBlocks(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusBlocks.json", blocks); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusBlocks.json", blocks); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -38,7 +38,7 @@ func DoStatus() {
 	if transactions, _, err := opts.StatusTransactions(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusTransactions.json", transactions); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusTransactions.json", transactions); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -46,7 +46,7 @@ func DoStatus() {
 	if traces, _, err := opts.StatusTraces(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusTraces.json", traces); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusTraces.json", traces); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -54,7 +54,7 @@ func DoStatus() {
 	if logs, _, err := opts.StatusLogs(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusLogs.json", logs); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusLogs.json", logs); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -62,7 +62,7 @@ func DoStatus() {
 	if statements, _, err := opts.StatusStatements(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusStatements.json", statements); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusStatements.json", statements); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -70,7 +70,7 @@ func DoStatus() {
 	if results, _, err := opts.StatusResults(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusResults.json", results); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusResults.json", results); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -78,7 +78,7 @@ func DoStatus() {
 	if state, _, err := opts.StatusState(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusState.json", state); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusState.json", state); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -86,7 +86,7 @@ func DoStatus() {
 	if tokens, _, err := opts.StatusTokens(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusTokens.json", tokens); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusTokens.json", tokens); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -94,7 +94,7 @@ func DoStatus() {
 	if monitors, _, err := opts.StatusMonitors(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusMonitors.json", monitors); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusMonitors.json", monitors); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -102,7 +102,7 @@ func DoStatus() {
 	if names, _, err := opts.StatusNames(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusNames.json", names); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusNames.json", names); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -110,7 +110,7 @@ func DoStatus() {
 	if abis, _, err := opts.StatusAbis(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusAbis.json", abis); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusAbis.json", abis); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -118,7 +118,7 @@ func DoStatus() {
 	if slurps, _, err := opts.StatusSlurps(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusSlurps.json", slurps); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusSlurps.json", slurps); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -126,7 +126,7 @@ func DoStatus() {
 	if staging, _, err := opts.StatusStaging(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusStaging.json", staging); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusStaging.json", staging); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -134,7 +134,7 @@ func DoStatus() {
 	if unripe, _, err := opts.StatusUnripe(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusUnripe.json", unripe); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusUnripe.json", unripe); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -142,7 +142,7 @@ func DoStatus() {
 	if maps, _, err := opts.StatusMaps(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusMaps.json", maps); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusMaps.json", maps); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -150,7 +150,7 @@ func DoStatus() {
 	if some, _, err := opts.StatusSome(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusSome.json", some); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusSome.json", some); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -158,7 +158,7 @@ func DoStatus() {
 	if all, _, err := opts.StatusAll(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveToFile[types.Status]("usesSDK/statusAll.json", all); err != nil {
+		if err := SaveToFile[types.Status]("sdkFuzzer/statusAll.json", all); err != nil {
 			logger.Error(err)
 		}
 	}
@@ -166,7 +166,7 @@ func DoStatus() {
 	// if diagnose, _, err := opts.StatusDiagnose(); err != nil {
 	// 	logger.Error(err)
 	// } else {
-	// 	if err := SaveAndClean[bool]("usesSDK/statusDiagnose.json", diagnose, &opts, func() error {
+	// 	if err := SaveAndClean[bool]("sdkFuzzer/statusDiagnose.json", diagnose, &opts, func() error {
 	// 		_, _, err := opts.StatusDiagnose()
 	// 		return err
 	// 	}); err != nil {

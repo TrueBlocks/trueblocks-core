@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *NamesOptions) HandleAutoname() error {
@@ -29,7 +30,9 @@ func (opts *NamesOptions) HandleAutoname() error {
 			name.Decimals,
 		)
 	}
-	logger.Info(message)
+	if !utils.IsFuzzing() {
+		logger.Info(message)
+	}
 
 	if opts.Globals.IsApiMode() {
 		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawMessage], errorChan chan error) {

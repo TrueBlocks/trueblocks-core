@@ -2,6 +2,13 @@
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
+## v3.0.0 (2024/04/31)
+
+- Instructions for re-building:
+  - remove .cmake in ./build folder
+  - remove ./go.work and go.work.sum in root
+  - run ../scripts/make-go-work.sh
+
 ## v2.5.9 (2024/04/05)
 
 - Bumped version to 2.5.9.

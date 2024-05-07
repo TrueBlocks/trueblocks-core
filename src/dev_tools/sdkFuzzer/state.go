@@ -11,7 +11,7 @@ import (
 
 // DoState tests the state sdk function
 func DoState() {
-	file.EstablishFolder("usesSdk-output/state")
+	file.EstablishFolder("sdkFuzzer-output/state")
 	opts := sdk.StateOptions{
 		BlockIds: []string{"10092000"},
 		Addrs:    []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},

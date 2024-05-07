@@ -11,7 +11,7 @@ func DoConfig() {
 	// if config, _, err := opts.Config(); err != nil {
 	// 	logger.Error(err)
 	// } else {
-	// 	if err := SaveAndClean[types.Config]("usesSDK/config.json", config, &opts, func() error {
+	// 	if err := SaveAndClean[types.Config]("sdkFuzzer/config.json", config, &opts, func() error {
 	// 		_, _, err := opts.Config()
 	// 		return err
 	// 	}); err != nil {

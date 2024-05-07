@@ -8,7 +8,7 @@ import (
 
 // DoReceipts tests the receipts sdk function
 func DoReceipts() {
-	file.EstablishFolder("usesSdk-output/receipts")
+	file.EstablishFolder("sdkFuzzer-output/receipts")
 	opts := sdk.ReceiptsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
 	}

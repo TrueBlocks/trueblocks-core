@@ -6,6 +6,7 @@ package globals
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *GlobalOptions) OutputOpts() output.OutputOptions {
@@ -46,4 +47,11 @@ func (opts *GlobalOptions) OutputOptsWithExtra(extra map[string]interface{}) out
 		JsonIndent: "  ",
 		Extra:      extra,
 	}
+}
+
+func (opts *GlobalOptions) ShowProgress() bool {
+	testMode := opts.TestMode
+	toFile := len(opts.File) > 0
+	isFuzzing := utils.IsFuzzing()
+	return !testMode && !toFile && !isFuzzing
 }
