@@ -14,7 +14,7 @@ import (
 )
 
 func (opts *WhenOptions) HandleDecache() error {
-	silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
+	silent := !opts.Globals.ShowProgress()
 
 	itemsToRemove, err := decache.LocationsFromBlockIds(opts.Conn, opts.BlockIds, false, false)
 	if err != nil {

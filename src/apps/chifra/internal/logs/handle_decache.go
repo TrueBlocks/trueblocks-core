@@ -14,7 +14,7 @@ import (
 )
 
 func (opts *LogsOptions) HandleDecache() error {
-	silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
+	silent := !opts.Globals.ShowProgress()
 
 	itemsToRemove, err := decache.LocationsFromTransactionIds(opts.Conn, opts.TransactionIds)
 	if err != nil {

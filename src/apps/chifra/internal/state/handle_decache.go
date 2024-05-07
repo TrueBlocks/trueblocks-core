@@ -18,7 +18,7 @@ import (
 )
 
 func (opts *StateOptions) HandleDecache() error {
-	silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
+	silent := !opts.Globals.ShowProgress()
 
 	var itemsToRemove []cache.Locator
 	for _, addressStr := range opts.Addrs {

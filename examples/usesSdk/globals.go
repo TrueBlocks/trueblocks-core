@@ -38,10 +38,11 @@ func ReportOkay(fn string) {
 }
 
 func ShowHeader(msg string, opts fmt.Stringer) {
+	logger.Info()
 	if opts != nil {
-		logger.Info(msg, opts.String())
+		logger.Info(colors.Yellow+msg, opts.String(), colors.Off)
 	} else {
-		logger.Info(msg)
+		logger.Info(colors.Yellow+msg, colors.Off)
 	}
 }
 

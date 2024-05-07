@@ -5,6 +5,8 @@
 package globals
 
 import (
+	"os"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
@@ -46,4 +48,11 @@ func (opts *GlobalOptions) OutputOptsWithExtra(extra map[string]interface{}) out
 		JsonIndent: "  ",
 		Extra:      extra,
 	}
+}
+
+func (opts *GlobalOptions) ShowProgress() bool {
+	testMode := opts.TestMode
+	toFile := len(opts.File) > 0
+	fuzzing := os.Getenv("TB_SDK_FUZZER") == "true"
+	return !testMode && !toFile && !fuzzing
 }
