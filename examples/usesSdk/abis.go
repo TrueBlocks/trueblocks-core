@@ -12,25 +12,31 @@ import (
 func DoAbis() {
 	file.EstablishFolder("usesSdk-output/abis")
 	opts := sdk.AbisOptions{
-		Addrs: []string{"uniswap.eth"},
+		Addrs: []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
 	}
 	logger.Info("DoAbis", opts)
 
-	// ProxyFor base.Address `json:"proxyFor,omitempty"`
-	// Find     []string     `json:"find,omitempty"`
-	// Hint     []string     `json:"hint,omitempty"`
-	// Encode   string       `json:"encode,omitempty"`
-
 	known := []bool{false, true}
+	proxies := []string{"", "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"}
 	globs := noEther(noRaw(globals))
 
 	for _, k := range known {
-		for _, g := range globs {
-			baseFn := "abis/abis"
-			opts.Known = k
-			if !k || (!g.Cache && !g.Decache) {
+		for _, p := range proxies {
+			for _, g := range globs {
+				baseFn := "abis/abis"
+				opts.Known = k
+				isKnown := k
+				isProxy := len(p) > 0
+				isCache := g.Cache || g.Decache
+				if (isKnown || isProxy) && isCache {
+					continue
+				}
 				if k {
 					baseFn += "-known"
+				}
+				if len(p) > 0 {
+					baseFn += "-proxy"
+					opts.ProxyFor = base.HexToAddress(p)
 				}
 				opts.Globals = g
 				fn := getFilename(baseFn, &opts.Globals)
@@ -39,7 +45,6 @@ func DoAbis() {
 		}
 	}
 
-	// opts = sdk.AbisOptions{}
 	logger.Info("DoAbis-Encode", opts)
 
 	sigs := []string{
@@ -49,6 +54,8 @@ func DoAbis() {
 		"transfer",
 		"x",
 	}
+
+	opts = sdk.AbisOptions{}
 	globs = noCache(globs)
 	for _, s := range sigs {
 		baseFn := "abis/abis-encode" + s[:base.Max(1, base.Min(5, len(s)))]
@@ -56,6 +63,32 @@ func DoAbis() {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)
 			TestAbisEncode(s, fn, &opts)
+		}
+	}
+
+	opts = sdk.AbisOptions{}
+	logger.Info("DoAbis-Find", opts)
+
+	finds := []string{"0x1aa3a008"}
+	hints := []string{"", "register"}
+	globs = noVerbose(globs)
+
+	for _, f := range finds {
+		for _, h := range hints {
+			opts = sdk.AbisOptions{}
+			baseFn := "abis/abis-encode"
+			if len(f) > 0 {
+				baseFn += "-find"
+			}
+			if len(h) > 0 {
+				baseFn += "-hint"
+				opts.Hint = []string{h}
+			}
+			for _, g := range globs {
+				opts.Globals = g
+				fn := getFilename(baseFn, &opts.Globals)
+				TestAbisFind(f, fn, &opts)
+			}
 		}
 	}
 }
@@ -74,6 +107,18 @@ func TestAbis(fn string, opts *sdk.AbisOptions) {
 
 func TestAbisEncode(sig, fn string, opts *sdk.AbisOptions) {
 	if funcs, _, err := opts.AbisEncode(sig); err != nil {
+		ReportError(fn, err)
+	} else {
+		if err := SaveToFile[types.Function](fn, funcs); err != nil {
+			ReportError(fn, err)
+		} else {
+			ReportOkay(fn)
+		}
+	}
+}
+
+func TestAbisFind(f, fn string, opts *sdk.AbisOptions) {
+	if funcs, _, err := opts.AbisFind([]string{f}); err != nil {
 		ReportError(fn, err)
 	} else {
 		if err := SaveToFile[types.Function](fn, funcs); err != nil {

@@ -37,28 +37,10 @@ func ReportOkay(fn string) {
 	logger.Info(colors.Green, "OK ", fn, colors.Off)
 }
 
-func doCache(on bool, in []sdk.Globals) []sdk.Globals {
-	out := []sdk.Globals{}
-	for _, g := range in {
-		if g.Cache == on && g.Decache == on {
-			out = append(out, g)
-		}
-	}
-	return out
-}
-
 func noCache(in []sdk.Globals) []sdk.Globals {
-	return doCache(false, in)
-}
-
-func yesCache(in []sdk.Globals) []sdk.Globals {
-	return doCache(true, in)
-}
-
-func doEther(on bool, in []sdk.Globals) []sdk.Globals {
 	out := []sdk.Globals{}
 	for _, g := range in {
-		if g.Ether == on {
+		if !g.Cache && !g.Decache {
 			out = append(out, g)
 		}
 	}
@@ -66,17 +48,9 @@ func doEther(on bool, in []sdk.Globals) []sdk.Globals {
 }
 
 func noEther(in []sdk.Globals) []sdk.Globals {
-	return doEther(false, in)
-}
-
-func yesEther(in []sdk.Globals) []sdk.Globals {
-	return doEther(true, in)
-}
-
-func doRaw(on bool, in []sdk.Globals) []sdk.Globals {
 	out := []sdk.Globals{}
 	for _, g := range in {
-		if g.Raw == on {
+		if !g.Ether {
 			out = append(out, g)
 		}
 	}
@@ -84,11 +58,23 @@ func doRaw(on bool, in []sdk.Globals) []sdk.Globals {
 }
 
 func noRaw(in []sdk.Globals) []sdk.Globals {
-	return doRaw(false, in)
+	out := []sdk.Globals{}
+	for _, g := range in {
+		if !g.Raw {
+			out = append(out, g)
+		}
+	}
+	return out
 }
 
-func yesRaw(in []sdk.Globals) []sdk.Globals {
-	return doRaw(true, in)
+func noVerbose(in []sdk.Globals) []sdk.Globals {
+	out := []sdk.Globals{}
+	for _, g := range in {
+		if !g.Verbose {
+			out = append(out, g)
+		}
+	}
+	return out
 }
 
 var globals = []sdk.Globals{
