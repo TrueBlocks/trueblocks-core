@@ -39,14 +39,14 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 				latestTs, _ := tslib.FromBnToTs(chain, base.Blknum(apps[len(apps)-1].BlockNumber))
 				s := types.Bounds{
 					Count: uint64(cnt),
-					FirstApp: types.RawAppearance{
-						Address:          mon.Address.Hex(),
+					FirstApp: types.Appearance{
+						Address:          mon.Address,
 						BlockNumber:      apps[0].BlockNumber,
 						TransactionIndex: apps[0].TransactionIndex,
 					},
 					FirstTs: firstTs,
-					LatestApp: types.RawAppearance{
-						Address:          mon.Address.Hex(),
+					LatestApp: types.Appearance{
+						Address:          mon.Address,
 						BlockNumber:      apps[len(apps)-1].BlockNumber,
 						TransactionIndex: apps[len(apps)-1].TransactionIndex,
 					},

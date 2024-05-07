@@ -1,9 +1,10 @@
-goMaker
 old
 SymbolCache.noindex
 .DS_Store
 
 chifra*
+goMaker
+sdkFuzzer
 makeClass
 testRunner
 migrate
