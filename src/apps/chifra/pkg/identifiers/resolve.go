@@ -47,8 +47,8 @@ func GetBounds(chain string, ids *[]Identifier) (ret base.BlockRange, err error)
 		if err != nil {
 			return ret, err
 		}
-		ret.First = base.Min2(ret.First, idRange.First)
-		ret.Last = base.Max2(ret.Last, idRange.Last)
+		ret.First = base.Min(ret.First, idRange.First)
+		ret.Last = base.Max(ret.Last, idRange.Last)
 	}
 
 	return ret, nil

@@ -5,6 +5,7 @@
 package config
 
 import (
+	"log"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -12,7 +13,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/spf13/viper"
@@ -74,10 +74,10 @@ func GetRootConfig() *ConfigFile {
 	trueBlocksViper.AutomaticEnv()
 	trueBlocksViper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	if err := trueBlocksViper.ReadInConfig(); err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 	if err := trueBlocksViper.Unmarshal(&trueBlocksConfig); err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 
 	user, _ := user.Current()
@@ -164,7 +164,7 @@ func PathToConfigFile() string {
 func PathToRootConfig() string {
 	configPath, err := pathFromXDG("XDG_CONFIG_HOME")
 	if err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	} else if len(configPath) > 0 {
 		return configPath
 	}

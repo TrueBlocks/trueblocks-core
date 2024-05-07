@@ -5,8 +5,6 @@ import (
 	"os"
 	"strings"
 	"time"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var perfTiming bool
@@ -63,8 +61,16 @@ func (t *Timer) Report(msg string) {
 	if len(name) > 0 {
 		msg = strings.Replace(msg, "chifra ", "", -1) + "_" + name
 	}
+
+	max := func(x, y int64) int64 {
+		if x > y {
+			return x
+		}
+		return y
+	}
+
 	// nItems := 0
-	fmt.Printf("PERF,%s%s,%d,%d\n", strings.Repeat("_", t.level), msg, utils.Max(1, since.Milliseconds()), utils.Max(1, diff.Milliseconds()))
+	fmt.Printf("PERF,%s%s,%d,%d\n", strings.Repeat("_", t.level), msg, max(1, since.Milliseconds()), max(1, diff.Milliseconds()))
 
 	t.lastReport = time.Now()
 }

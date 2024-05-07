@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *InitOptions) HandleDryRun() error {
@@ -41,7 +40,7 @@ func (opts *InitOptions) HandleDryRun() error {
 
 	spec := manifest.Specification()
 	if opts.Globals.TestMode {
-		nToDownload = utils.Min(10, nToDownload)
+		nToDownload = base.Min(10, nToDownload)
 		spec = "--testing-hash--"
 	}
 

@@ -57,7 +57,7 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 				} else {
 					bar := logger.NewBar(logger.BarOptions{
 						Prefix:  mon.Address.Hex(),
-						Enabled: !testMode && !utils.IsTerminal(),
+						Enabled: !testMode && !logger.IsTerminal(),
 						Total:   int64(cnt),
 					})
 

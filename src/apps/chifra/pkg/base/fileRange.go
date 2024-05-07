@@ -12,7 +12,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 type RecordRange struct {
@@ -76,9 +75,8 @@ func (r FileRange) String() string {
 }
 
 // RangeToFilename returns a fileName and existence bool given a file range and a type
-func (r *FileRange) RangeToFilename(chain string) (bool, string) {
-	fileName := config.PathToIndex(chain) + "finalized/" + r.String() + ".bin"
-	return file.FileExists(fileName), fileName
+func (r *FileRange) RangeToFilename(chain string) string {
+	return config.PathToIndex(chain) + "finalized/" + r.String() + ".bin"
 }
 
 // Follows returns true if the range is strictly after the needle range.
@@ -152,27 +150,11 @@ type RangeDiff struct {
 	Max Blknum
 }
 
-// Min calculates the minimum between two unsigned integers (golang has no such function)
-func Min2(x, y Blknum) Blknum {
-	if x < y {
-		return x
-	}
-	return y
-}
-
-// Max calculates the max between two unsigned integers (golang has no such function)
-func Max2(x, y Blknum) Blknum {
-	if x > y {
-		return x
-	}
-	return y
-}
-
 func (r *FileRange) Overlaps(test FileRange) (rd RangeDiff) {
-	rd.Min = Min2(r.First, test.First)
-	rd.In = Max2(r.First, test.First)
-	rd.Out = Min2(r.Last, test.Last)
-	rd.Max = Max2(r.Last, test.Last)
+	rd.Min = Min(r.First, test.First)
+	rd.In = Max(r.First, test.First)
+	rd.Out = Min(r.Last, test.Last)
+	rd.Max = Max(r.Last, test.Last)
 	rd.Mid = (rd.Max-rd.Min)/2 + rd.Min
 	return
 }

@@ -128,7 +128,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 
 	nDeleted := 0
 	for rng, reason := range deleteMap {
-		_, indexPath := rng.RangeToFilename(chain)
+		indexPath := rng.RangeToFilename(chain)
 		bloomPath := index.ToBloomPath(indexPath)
 		indexExists := file.FileExists(indexPath)
 		bloomExists := file.FileExists(bloomPath)
@@ -160,7 +160,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 		if downloadMap[rng] == OKAY || rng.Last < opts.FirstBlock {
 			continue
 		}
-		_, indexPath := rng.RangeToFilename(chain)
+		indexPath := rng.RangeToFilename(chain)
 		bloomStatus, indexStatus, err := isValidChunk(index.ToBloomPath(indexPath), chunk.BloomSize, chunk.IndexSize, opts.All)
 		if err != nil {
 			return nil, 0, nDeleted, err
