@@ -501,11 +501,7 @@ func (c *Command) HelpDataModels() string {
 func (c *Command) HelpLinks() string {
 	tmplName := "Links"
 	tmpl := ""
-	if c.Route == "daemon" {
-		tmplName += "1"
-		tmpl = `- no api for this command
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})`
-	} else if c.Route == "explore" {
+	if c.Route == "daemon" || c.Route == "explore" {
 		tmplName += "2"
 		tmpl = `- no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})`

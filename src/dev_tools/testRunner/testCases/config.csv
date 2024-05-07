@@ -3,7 +3,12 @@ on      ,cmd  ,fast  ,config ,apps ,config ,help              ,n    ,@h
 on      ,cmd  ,fast  ,config ,apps ,config ,help_long         ,n    ,help
 on      ,cmd  ,fast  ,config ,apps ,config ,invalid_param_2   ,y    ,@l & junk
 
-on      ,both ,fast  ,config ,apps ,config ,config_edit       ,y    ,modes = edit
+local   ,cmd  ,fast  ,config ,apps ,config ,config_edit       ,y    ,modes = edit
+local   ,cmd  ,fast  ,config ,apps ,config ,config_show       ,y    ,modes = show
+local   ,cmd  ,fast  ,config ,apps ,config ,config_fail       ,y    ,modes = fail
+local   ,cmd  ,fast  ,config ,apps ,config ,config_paths      ,y    ,paths
+local   ,cmd  ,fast  ,config ,apps ,config ,config_paths_json ,y    ,paths & fmt = json
+local   ,cmd  ,fast  ,config ,apps ,config ,config_paths_fail ,y    ,modes = show & paths
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether

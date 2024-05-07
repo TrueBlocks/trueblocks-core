@@ -4,6 +4,11 @@ package main
 func DoConfig() {
 	ShowHeader("DoConfig", nil)
 
+	// modes := []ConfigMode{ NoCOM, CMShow, CMEdit }
+	// for _, mode := range modes {
+	// }
+	// Paths bool       `json:"paths,omitempty"`
+
 	// opts := sdk.ConfigOptions{
 	// 	Mode: sdk.CMShow,
 	// }

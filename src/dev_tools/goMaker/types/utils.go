@@ -22,16 +22,11 @@ func shouldProcess(source, tag string) (bool, error) {
 	}
 
 	if strings.Contains(source, "sdk_") {
-		if tag == "explore" || tag == "scrape" {
+		if strings.Contains(source, "python") {
 			return false, nil
 		}
-		if tag == "daemon" && strings.Contains(source, "python") {
-			return false, nil
-		}
-	}
 
-	if strings.HasPrefix(source, "docs_") && tag == "codebase" {
-		if tag == "explore" || tag == "daemon" {
+		if tag == "explore" || tag == "scrape" || tag == "daemon" {
 			return false, nil
 		}
 	}

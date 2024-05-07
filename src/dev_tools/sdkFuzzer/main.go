@@ -5,28 +5,29 @@ import (
 )
 
 func main() {
-	DoReceipts()
-	DoLogs()
-	DoTraces()
-	DoState()
-	DoAbis()
-	DoBlocks()
-	DoWhen()
-	DoList()
-	DoNames()
+	// DoReceipts()
+	// DoLogs()
+	// DoTraces()
+	// DoState()
+	// DoAbis()
+	// DoBlocks()
+	// DoWhen()
+	// DoList()
+	// DoNames() // does not test crud commands
 
+	DoConfig()
+	// DoInit()
+	// DoMonitors()
 	// DoTransactions()
 	// DoTokens()
-	// DoExport()
-	// DoMonitors()
-	// DoConfig()
-	// DoStatus()
-	// DoDaemon()
-	// // DoScrape()
-	//- DoChunks()
-	// DoInit()
-	// DoExplore()
 	// DoSlurp()
+	// DoChunks()
+	// DoExport()
+	// DoStatus()
+
+	// DoDaemon - do not test daemon in fuzzer
+	// DoScrape - no sdk routines for scrape
+	// DoExplore - no sdk routines for explore
 }
 
 var testBlocks = []string{
