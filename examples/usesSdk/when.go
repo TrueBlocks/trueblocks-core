@@ -8,12 +8,11 @@ import (
 
 // DoWhen tests the when sdk function
 func DoWhen() {
-	logger.Info("DoWhen")
-
 	opts := sdk.WhenOptions{
 		BlockIds: testBlocks,
 	}
 	opts.Caching(sdk.CacheOn)
+	ShowHeader("DoWhen", &opts)
 
 	if when, _, err := opts.When(); err != nil {
 		logger.Error(err)

@@ -5,7 +5,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -15,7 +14,7 @@ func DoTraces() {
 	opts := sdk.TracesOptions{
 		TransactionIds: []string{"17100101.1", "3189962.7"},
 	}
-	logger.Info("DoTraces", opts)
+	ShowHeader("DoTraces", opts)
 
 	// TransactionIds []string
 	// Filter string

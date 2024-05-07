@@ -8,11 +8,10 @@ import (
 
 // DoMonitors tests the monitors sdk function
 func DoMonitors() {
-	logger.Info("DoMonitors")
-
 	opts := sdk.MonitorsOptions{
 		Addrs: []string{testAddrs[0]},
 	}
+	ShowHeader("DoMonitors", &opts)
 
 	if monitors, _, err := opts.MonitorsList(); err != nil {
 		logger.Error(err)

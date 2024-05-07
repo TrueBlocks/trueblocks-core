@@ -37,6 +37,14 @@ func ReportOkay(fn string) {
 	logger.Info(colors.Green, "OK ", fn, colors.Off)
 }
 
+func ShowHeader(msg string, opts fmt.Stringer) {
+	if opts != nil {
+		logger.Info(msg, opts.String())
+	} else {
+		logger.Info(msg)
+	}
+}
+
 func noCache(in []sdk.Globals) []sdk.Globals {
 	out := []sdk.Globals{}
 	for _, g := range in {

@@ -52,7 +52,6 @@ Notes:
   - With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
-  - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.
   - The --decache option removes the block(s), all transactions in those block(s), and all traces in those transactions from the cache.
   - The --withdrawals option is only available on certain chains. It is ignored otherwise.`
 
@@ -76,17 +75,12 @@ One of [ from | to | reward ]`)
 	blocksCmd.Flags().StringSliceVarP(&blocksPkg.GetOptions().Topic, "topic", "B", nil, `for the --logs option only, filter logs to show only those with this topic(s)`)
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Withdrawals, "withdrawals", "i", false, `export the withdrawals from the block as opposed to the block data`)
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Articulate, "articulate", "a", false, `for the --logs option only, articulate the retrieved data if ABIs can be found`)
-	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().BigRange, "big_range", "r", 500, `for the --logs option only, allow for block ranges larger than 500`)
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Count, "count", "U", false, `display only the count of appearances for --addrs or --uniq`)
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().CacheTxs, "cache_txs", "", false, `force a write of the block's transactions to the cache (slow) (hidden)`)
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().CacheTraces, "cache_traces", "", false, `force a write of the block's traces to the cache (slower) (hidden)`)
-	blocksCmd.Flags().Uint64VarP((*uint64)(&blocksPkg.GetOptions().List), "list", "L", 0, `summary list of blocks running backwards from latest block minus num (hidden)`)
-	blocksCmd.Flags().Uint64VarP((*uint64)(&blocksPkg.GetOptions().ListCount), "list_count", "C", 0, `the number of blocks to report for --list option (hidden)`)
 	if os.Getenv("TEST_MODE") != "true" {
 		_ = blocksCmd.Flags().MarkHidden("cache_txs")
 		_ = blocksCmd.Flags().MarkHidden("cache_traces")
-		_ = blocksCmd.Flags().MarkHidden("list")
-		_ = blocksCmd.Flags().MarkHidden("list_count")
 	}
 	globals.InitGlobals("blocks", blocksCmd, &blocksPkg.GetOptions().Globals, capabilities)
 

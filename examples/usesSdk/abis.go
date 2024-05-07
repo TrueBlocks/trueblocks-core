@@ -4,7 +4,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -14,7 +13,7 @@ func DoAbis() {
 	opts := sdk.AbisOptions{
 		Addrs: []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
 	}
-	logger.Info("DoAbis", opts)
+	ShowHeader("DoAbis", opts)
 
 	known := []bool{false, true}
 	proxies := []string{"", "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"}
@@ -45,7 +44,7 @@ func DoAbis() {
 		}
 	}
 
-	logger.Info("DoAbis-Encode", opts)
+	ShowHeader("DoAbis-Encode", opts)
 
 	sigs := []string{
 		"	event Transfer(address indexed from, address indexed to, uint256 amount);",
@@ -67,7 +66,7 @@ func DoAbis() {
 	}
 
 	opts = sdk.AbisOptions{}
-	logger.Info("DoAbis-Find", opts)
+	ShowHeader("DoAbis-Find", opts)
 
 	finds := []string{"0x1aa3a008"}
 	hints := []string{"", "register"}

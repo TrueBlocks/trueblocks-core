@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -13,7 +12,7 @@ func DoReceipts() {
 	opts := sdk.ReceiptsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
 	}
-	logger.Info("DoReceipts", opts)
+	ShowHeader("DoReceipts", opts)
 
 	// TransactionIds []string `json:"transactions,omitempty"`
 	// Articulate     bool     `json:"articulate,omitempty"`

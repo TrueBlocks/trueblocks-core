@@ -6,7 +6,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -17,7 +16,7 @@ func DoState() {
 		BlockIds: []string{"10092000"},
 		Addrs:    []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
 	}
-	logger.Info("DoState", opts)
+	ShowHeader("DoState", opts)
 
 	art := []bool{false, true}
 	globs := noRaw(globals)
@@ -63,7 +62,7 @@ func DoState() {
 		BlockIds: []string{"18000000"},
 		Addrs:    []string{"unchainedindex.eth"},
 	}
-	logger.Info("DoState-Call", opts)
+	ShowHeader("DoState-Call", opts)
 
 	for _, a := range art {
 		baseFn := "state/state-call"
@@ -82,7 +81,7 @@ func DoState() {
 		BlockIds: []string{"10092000"},
 		Addrs:    []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
 	}
-	logger.Info("DoState-Call-Proxy", opts)
+	ShowHeader("DoState-Call-Proxy", opts)
 
 	for _, a := range art {
 		baseFn := "state/state-call-proxy"

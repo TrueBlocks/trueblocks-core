@@ -8,11 +8,10 @@ import (
 
 // DoList tests the list sdk function
 func DoList() {
-	logger.Info("DoList")
-
 	opts := sdk.ListOptions{
 		Addrs: []string{testAddrs[0]},
 	}
+	ShowHeader("DoList", &opts)
 
 	if appearances, _, err := opts.List(); err != nil {
 		logger.Error(err)

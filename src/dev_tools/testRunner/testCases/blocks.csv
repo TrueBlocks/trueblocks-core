@@ -38,10 +38,6 @@ slow    ,both ,medi  ,blocks ,tools ,getBlocks ,count_logs_uniq       ,y    ,blo
 slow    ,both ,medi  ,blocks ,tools ,getBlocks ,count_traces_uniq     ,y    ,blocks = 6001002 & count & traces & uniq & fmt = json
 slow    ,both ,medi  ,blocks ,tools ,getBlocks ,count_all_uniq        ,y    ,blocks = 3 6001002 & count & uncles & logs & traces & uniq & fmt = json
 slow    ,both ,medi  ,blocks ,tools ,getBlocks ,uniqTxCnt2            ,y    ,blocks = 1301011-1312011:313 & uniq & count & fmt = json
-on      ,both ,fast  ,blocks ,tools ,getBlocks ,list_fail             ,y    ,list = 0 & list_count = 12
-on      ,both ,fast  ,blocks ,tools ,getBlocks ,list_list_count       ,y    ,list = 1000 & list_count = 10
-on      ,both ,fast  ,blocks ,tools ,getBlocks ,list_count_block_fail ,y    ,list_count = 10 & blocks = 1000
-on      ,both ,fast  ,blocks ,tools ,getBlocks ,list_all              ,y    ,list_count = 2 & list = 1030000 & blocks = 10010
 
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,fmt_default           ,n    ,blocks = 2222222 2332332
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,fmt_txt               ,n    ,blocks = 2222222 2332332 & fmt = txt
@@ -52,7 +48,6 @@ on      ,both ,fast  ,blocks ,tools ,getBlocks ,fmt_junk              ,y    ,blo
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,fmt_trace             ,y    ,blocks = 2222222 & traces & fmt = json
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,deprecated_reconcile  ,y    ,blocks = 2222222 & reconcile
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,deprecated_trace      ,y    ,blocks = 2222222 & trace
-on      ,both ,fast  ,blocks ,tools ,getBlocks ,block_list            ,y    ,list = 100
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,without_logs_fail_e1  ,y    ,blocks = 4012000-4012001 & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,logs_emitter_w_ens    ,y    ,blocks = 17900008 & logs & emitter = giveth.eth
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,without_logs_fail_e2  ,y    ,blocks = 4012000-4012001 & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b7
@@ -87,15 +82,12 @@ on      ,both ,fast  ,blocks ,tools ,getBlocks ,cached_uniq           ,y    ,blo
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,decache               ,y    ,blocks = 1152642 & decache
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,no_trace_hashes       ,y    ,blocks = 4012000-4012001 & traces & hashes
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,no_trace_uniq         ,y    ,blocks = 4012000-4012001 & traces & uniq
-on      ,both ,fast  ,blocks ,tools ,getBlocks ,bigrange_not_logs     ,y    ,blocks = 4012000-4012001 & big_range = 100
 
 slow    ,both ,fast  ,blocks ,tools ,getBlocks ,access_list           ,y    ,blocks = 16500011 & fmt = json & raw
 
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,flow_error_1          ,n    ,blocks = 4102000 & fmt = txt & flow = to
 slow    ,both ,fast  ,blocks ,tools ,getBlocks ,flow_uniq_from        ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = from
 slow    ,both ,fast  ,blocks ,tools ,getBlocks ,flow_uniq_reward      ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = reward
-
-on      ,both ,fast  ,blocks ,tools ,getBlocks ,list_block_fail       ,y    ,list = 1000 & blocks = 1000
 
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,no_tracing            ,y    ,blocks = 12 & traces & chain = non-tracing
 

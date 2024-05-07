@@ -165,50 +165,40 @@ func (s *Block[Tx]) Model(chain, format string, verbose bool, extraOptions map[s
 	}
 
 	if format == "json" {
-		if extraOptions["list"] == true {
-			model["transactionsCnt"] = len(s.Transactions)
-			model["unclesCnt"] = len(s.Uncles)
-			model["withdrawalsCnt"] = len(s.Withdrawals)
+		// If we wanted just transactions' hashes, we would return earlier. So here we know that we
+		// have transactions as objects and want to load models for them to be able to display them
+		txs, ok := any(s.Transactions).([]Transaction)
+		if ok {
+			items := make([]map[string]interface{}, 0, len(txs))
+			for _, txObject := range txs {
+				items = append(items, txObject.Model(chain, format, verbose, extraOptions).Data)
+			}
+			model["transactions"] = items
 		} else {
-			// If we wanted just transactions' hashes, we would return earlier. So here we know that we
-			// have transactions as objects and want to load models for them to be able to display them
-			txs, ok := any(s.Transactions).([]Transaction)
-			if ok {
-				items := make([]map[string]interface{}, 0, len(txs))
-				for _, txObject := range txs {
-					items = append(items, txObject.Model(chain, format, verbose, extraOptions).Data)
-				}
-				model["transactions"] = items
-			} else {
-				model["transactions"] = s.Transactions
+			model["transactions"] = s.Transactions
+		}
+		order = append(order, "transactions")
+		if s.Uncles == nil {
+			model["uncles"] = []base.Hash{}
+		} else {
+			model["uncles"] = s.Uncles
+		}
+		order = append(order, "uncles")
+		if len(s.Withdrawals) > 0 {
+			withs := make([]map[string]any, 0, len(s.Withdrawals))
+			for _, w := range s.Withdrawals {
+				withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
 			}
-			order = append(order, "transactions")
-			if s.Uncles == nil {
-				model["uncles"] = []base.Hash{}
-			} else {
-				model["uncles"] = s.Uncles
-			}
-			order = append(order, "uncles")
-			if len(s.Withdrawals) > 0 {
-				withs := make([]map[string]any, 0, len(s.Withdrawals))
-				for _, w := range s.Withdrawals {
-					withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
-				}
-				model["withdrawals"] = withs
-				order = append(order, "withdrawals")
-			} else {
-				model["withdrawals"] = []Withdrawal{}
-			}
+			model["withdrawals"] = withs
+			order = append(order, "withdrawals")
+		} else {
+			model["withdrawals"] = []Withdrawal{}
 		}
 	} else {
 		model["transactionsCnt"] = len(s.Transactions)
 		order = append(order, "transactionsCnt")
 		model["withdrawalsCnt"] = len(s.Withdrawals)
 		order = append(order, "withdrawalsCnt")
-		if extraOptions["list"] == true {
-			model["unclesCnt"] = len(s.Uncles)
-			order = append(order, "unclesCnt")
-		}
 	}
 	// EXISTING_CODE
 

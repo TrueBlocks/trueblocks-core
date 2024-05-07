@@ -16,30 +16,26 @@ import (
 	"io"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type blocksOptionsInternal struct {
-	BlockIds    []string    `json:"blocks,omitempty"`
-	Hashes      bool        `json:"hashes,omitempty"`
-	Uncles      bool        `json:"uncles,omitempty"`
-	Traces      bool        `json:"traces,omitempty"`
-	Uniq        bool        `json:"uniq,omitempty"`
-	Flow        BlocksFlow  `json:"flow,omitempty"`
-	Logs        bool        `json:"logs,omitempty"`
-	Emitter     []string    `json:"emitter,omitempty"`
-	Topic       []string    `json:"topic,omitempty"`
-	Withdrawals bool        `json:"withdrawals,omitempty"`
-	Articulate  bool        `json:"articulate,omitempty"`
-	BigRange    uint64      `json:"bigRange,omitempty"`
-	Count       bool        `json:"count,omitempty"`
-	CacheTxs    bool        `json:"cacheTxs,omitempty"`
-	CacheTraces bool        `json:"cacheTraces,omitempty"`
-	List        base.Blknum `json:"list,omitempty"`
-	ListCount   base.Blknum `json:"listCount,omitempty"`
+	BlockIds    []string   `json:"blocks,omitempty"`
+	Hashes      bool       `json:"hashes,omitempty"`
+	Uncles      bool       `json:"uncles,omitempty"`
+	Traces      bool       `json:"traces,omitempty"`
+	Uniq        bool       `json:"uniq,omitempty"`
+	Flow        BlocksFlow `json:"flow,omitempty"`
+	Logs        bool       `json:"logs,omitempty"`
+	Emitter     []string   `json:"emitter,omitempty"`
+	Topic       []string   `json:"topic,omitempty"`
+	Withdrawals bool       `json:"withdrawals,omitempty"`
+	Articulate  bool       `json:"articulate,omitempty"`
+	Count       bool       `json:"count,omitempty"`
+	CacheTxs    bool       `json:"cacheTxs,omitempty"`
+	CacheTraces bool       `json:"cacheTraces,omitempty"`
 	Globals
 }
 
@@ -134,11 +130,8 @@ func (opts *BlocksOptions) toInternal() *blocksOptionsInternal {
 		Emitter:     opts.Emitter,
 		Topic:       opts.Topic,
 		Articulate:  opts.Articulate,
-		BigRange:    opts.BigRange,
 		CacheTxs:    opts.CacheTxs,
 		CacheTraces: opts.CacheTraces,
-		List:        opts.List,
-		ListCount:   opts.ListCount,
 		Globals:     opts.Globals,
 	}
 }

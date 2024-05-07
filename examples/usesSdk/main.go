@@ -5,14 +5,14 @@ import (
 )
 
 func main() {
-	// DoReceipts()
-	// DoLogs()
-	// DoTraces()
-	// DoState()
+	DoReceipts()
+	DoLogs()
+	DoTraces()
+	DoState()
 	DoAbis()
+	DoBlocks()
 
 	// DoNames()
-	// DoBlocks()
 	// DoTransactions()
 	// DoTokens()
 	// DoWhen()
@@ -31,6 +31,7 @@ func main() {
 
 var testBlocks = []string{
 	"46147",
+	"1001001",
 }
 
 var testAddrs = []string{

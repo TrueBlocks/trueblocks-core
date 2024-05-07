@@ -68,9 +68,6 @@ func (opts *BlocksOptions) BlocksInternal() error {
 	} else if opts.Uncles {
 		err = opts.HandleUncles()
 
-	} else if opts.List > 0 {
-		err = opts.HandleList()
-
 	} else if opts.Uniq {
 		err = opts.HandleUniq()
 

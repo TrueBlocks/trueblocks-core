@@ -8,12 +8,11 @@ import (
 
 // DoSlurp tests the slurp sdk function
 func DoSlurp() {
-	logger.Info("DoSlurp")
-
 	opts := sdk.SlurpOptions{
 		Addrs:   []string{testAddrs[0]},
 		PerPage: 10,
 	}
+	ShowHeader("DoSlurp", &opts)
 
 	if slurp, _, err := opts.Slurp(); err != nil {
 		logger.Error(err)

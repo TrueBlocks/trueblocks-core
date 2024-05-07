@@ -8,12 +8,11 @@ import (
 
 // DoExport tests the export sdk function
 func DoExport() {
-	logger.Info("DoExport")
-
 	opts := sdk.ExportOptions{
 		Addrs: testAddrs,
 		// Articulate: true,
 	}
+	ShowHeader("DoExport", &opts)
 
 	if export, _, err := opts.Export(); err != nil {
 		logger.Error(err)

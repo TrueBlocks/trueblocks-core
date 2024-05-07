@@ -14,22 +14,18 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type BlocksOptions struct {
-	BlockIds    []string    `json:"blocks,omitempty"`
-	Flow        BlocksFlow  `json:"flow,omitempty"`
-	Emitter     []string    `json:"emitter,omitempty"`
-	Topic       []string    `json:"topic,omitempty"`
-	Articulate  bool        `json:"articulate,omitempty"`
-	BigRange    uint64      `json:"bigRange,omitempty"`
-	CacheTxs    bool        `json:"cacheTxs,omitempty"`
-	CacheTraces bool        `json:"cacheTraces,omitempty"`
-	List        base.Blknum `json:"list,omitempty"`
-	ListCount   base.Blknum `json:"listCount,omitempty"`
+	BlockIds    []string   `json:"blocks,omitempty"`
+	Flow        BlocksFlow `json:"flow,omitempty"`
+	Emitter     []string   `json:"emitter,omitempty"`
+	Topic       []string   `json:"topic,omitempty"`
+	Articulate  bool       `json:"articulate,omitempty"`
+	CacheTxs    bool       `json:"cacheTxs,omitempty"`
+	CacheTraces bool       `json:"cacheTraces,omitempty"`
 	Globals
 }
 

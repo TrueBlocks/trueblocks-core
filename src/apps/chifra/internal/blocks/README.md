@@ -33,7 +33,6 @@ Flags:
   -B, --topic strings     for the --logs option only, filter logs to show only those with this topic(s)
   -i, --withdrawals       export the withdrawals from the block as opposed to the block data
   -a, --articulate        for the --logs option only, articulate the retrieved data if ABIs can be found
-  -r, --big_range uint    for the --logs option only, allow for block ranges larger than 500 (default 500)
   -U, --count             display only the count of appearances for --addrs or --uniq
   -H, --ether             specify value in ether
   -w, --raw               report JSON data from the source with minimal processing
@@ -50,7 +49,6 @@ Notes:
   - With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
-  - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.
   - The --decache option removes the block(s), all transactions in those block(s), and all traces in those transactions from the cache.
   - The --withdrawals option is only available on certain chains. It is ignored otherwise.
 ```
