@@ -2,12 +2,14 @@ package main
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoLogs tests the logs sdk function
 func DoLogs() {
+	file.EstablishFolder("usesSdk-output/logs")
 	opts := sdk.LogsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
 	}

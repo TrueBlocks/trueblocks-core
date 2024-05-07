@@ -6,8 +6,9 @@ package abisPkg
 
 import (
 	"context"
-	"strings"
+	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -17,17 +18,19 @@ import (
 func (opts *AbisOptions) HandleEncode() error {
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
-		parts := strings.Split(opts.Encode, "(")
-		if len(parts) == 0 {
-			parts = append(parts, opts.Encode)
+		funcs := abi.ExtractSigs(opts.Encode)
+		if len(funcs) == 0 {
+			errorChan <- fmt.Errorf("not a valid string in HandleEncode")
+			return
 		}
-		function := types.Function{
-			Encoding:     hexutil.Encode(crypto.Keccak256([]byte(opts.Encode))),
-			Name:         parts[0],
-			Signature:    opts.Encode,
-			FunctionType: "function",
+		for _, f := range funcs {
+			enc := hexutil.Encode(crypto.Keccak256([]byte(f.Signature)))
+			if f.FunctionType == "function" {
+				enc = enc[:10]
+			}
+			f.Encoding = enc
+			modelChan <- &f
 		}
-		modelChan <- &function
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }

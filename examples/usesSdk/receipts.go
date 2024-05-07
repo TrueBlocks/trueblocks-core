@@ -2,12 +2,14 @@ package main
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoReceipts tests the receipts sdk function
 func DoReceipts() {
+	file.EstablishFolder("usesSdk-output/receipts")
 	opts := sdk.ReceiptsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
 	}
