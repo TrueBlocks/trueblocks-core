@@ -8,11 +8,10 @@ import (
 
 // DoTokens tests the tokens sdk function
 func DoTokens() {
-	logger.Info("DoTokens")
-
 	opts := sdk.TokensOptions{
 		Addrs: []string{"ens.eth", "trueblocks.eth"},
 	}
+	ShowHeader("DoTokens", &opts)
 
 	if tokens, _, err := opts.Tokens(); err != nil {
 		logger.Error(err)

@@ -8,9 +8,8 @@ import (
 
 // DoStatus tests the status sdk function
 func DoStatus() {
-	logger.Info("DoStatus")
-
 	opts := sdk.StatusOptions{}
+	ShowHeader("DoStatus", &opts)
 
 	if indexes, _, err := opts.StatusIndex(); err != nil {
 		logger.Error(err)

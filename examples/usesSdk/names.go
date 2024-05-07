@@ -9,12 +9,11 @@ import (
 
 // DoNames tests the names sdk function
 func DoNames() {
-	logger.Info("DoNames")
-
 	opts := sdk.NamesOptions{
 		Terms:     []string{"Giveth"},
 		MatchCase: true,
 	}
+	ShowHeader("DoNames", &opts)
 
 	if names, _, err := opts.Names(); err != nil {
 		logger.Error(err)

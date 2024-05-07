@@ -52,6 +52,9 @@ on       ,both ,fast  ,abis  ,tools ,grabABI ,redir_output_append ,n    ,addrs =
 
 on       ,both ,fast  ,abis  ,tools ,grabABI ,generate_1          ,n    ,file = signatures.txt & fmt = txt
 on       ,both ,fast  ,abis  ,tools ,grabABI ,generate_2          ,n    ,file = signatures.txt & fmt = json
+on       ,cmd  ,fast  ,abis  ,tools ,grabABI ,generate_3          ,n    ,"encode & ""function acceptTheseAskRequestsAndBUY(uint[] _keys, uint[] _tokenAmounts, uint[] _dollarPrices) external notPaused payable "" & fmt = csv"
+on       ,cmd  ,fast  ,abis  ,tools ,grabABI ,generate_4          ,n    ,"encode & ""function whyChangeCaps(uint[] _keys, uint[] _tokenAmounts, uint[] _dollarPrices) external notPaused payable "" & fmt = json"
+on       ,cmd  ,fast  ,abis  ,tools ,grabABI ,generate_5_fail     ,n    ,"encode & ""functions throw an error or other message."" & fmt = json"
 
 on       ,both ,fast  ,abis  ,tools ,grabABI ,clean_fail_1        ,y    ,decache & known
 on       ,both ,fast  ,abis  ,tools ,grabABI ,clean_fail_2        ,y    ,decache & find = 0x1aa3a008

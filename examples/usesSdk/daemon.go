@@ -2,12 +2,11 @@ package main
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // DoDaemon tests the daemon sdk function
 func DoDaemon() {
-	logger.Info("DoDaemon")
+	ShowHeader("DoDaemon", nil)
 
 	// opts := sdk.DaemonOptions{
 	// 	Mode: sdk.CMIndex,

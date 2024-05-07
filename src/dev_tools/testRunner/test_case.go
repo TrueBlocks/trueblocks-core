@@ -63,15 +63,15 @@ func (t *TestCase) ShouldRun(mode string) bool {
 
 	switch mode {
 	case "api":
-		if t.Mode == "cmd" || strings.Contains(t.Tool, "chifra") || t.Route == "monitors" {
+		if t.Mode == "cmd" || t.Mode == "sdk" || strings.Contains(t.Tool, "chifra") || t.Route == "monitors" {
 			return false
 		}
 	case "cmd":
-		if t.Mode == "api" {
+		if t.Mode == "api" || t.Mode == "sdk" {
 			return false
 		}
 	case "sdk":
-		if t.HasShorthand || strings.Contains(t.Tool, "chifra") || t.Route == "monitors" {
+		if t.Mode == "cmd" || t.Mode == "api" || t.HasShorthand || strings.Contains(t.Tool, "chifra") || t.Route == "monitors" {
 			return false
 		}
 	}

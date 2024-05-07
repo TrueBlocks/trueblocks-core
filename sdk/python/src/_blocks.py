@@ -20,7 +20,6 @@ blocksOpts = {
     "topic": {"hotkey": "-B", "type": "flag"},
     "withdrawals": {"hotkey": "-i", "type": "switch"},
     "articulate": {"hotkey": "-a", "type": "switch"},
-    "bigRange": {"hotkey": "-r", "type": "flag"},
     "count": {"hotkey": "-U", "type": "switch"},
     "chain": {"hotkey": "", "type": "flag"},
     "noHeader": {"hotkey": "", "type": "switch"},

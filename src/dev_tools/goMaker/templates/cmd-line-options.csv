@@ -104,9 +104,9 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
 16030,tools,Accounts,abis,grabABI,known,k,,visible|docs,switch,<boolean>,,,,,load common 'known' ABIs from cache
 16040,tools,Accounts,abis,grabABI,proxy_for,r,,visible|docs,flag,<address>,,,,,redirects the query to this implementation
-16050,tools,Accounts,abis,grabABI,find,f,,visible|docs,flag,list<string>,,,,,search for function or event declarations given a four- or 32-byte code(s)
+16050,tools,Accounts,abis,grabABI,find,f,,visible|docs,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
 16060,tools,Accounts,abis,grabABI,hint,n,,visible|docs,flag,list<string>,,,,,for the --find option only&#44; provide hints to speed up the search
-16070,tools,Accounts,abis,grabABI,encode,e,,visible|docs,flag,<string>,,,,,generate the 32-byte encoding for a given cannonical function or event signature
+16070,tools,Accounts,abis,grabABI,encode,e,,visible|docs,flag,<string>,function,,,,generate the 32-byte encoding for a given cannonical function or event signature
 16090,tools,Accounts,abis,grabABI,n1,,,,note,,,,,,Search for either four byte signatures or event signatures with the --find option.
 #
 21000,,Chain Data,,,,,,,group,,,,,,Access and cache blockchain-related data
@@ -123,19 +123,15 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 22100,tools,Chain Data,blocks,getBlocks,topic,B,,visible|docs,flag,list<topic>,,,,,for the --logs option only&#44; filter logs to show only those with this topic(s)
 22110,tools,Chain Data,blocks,getBlocks,withdrawals,i,,visible|docs,switch,<boolean>,withdrawal,,,,export the withdrawals from the block as opposed to the block data
 22120,tools,Chain Data,blocks,getBlocks,articulate,a,,visible|docs,switch,<boolean>,,,,,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
-22130,tools,Chain Data,blocks,getBlocks,big_range,r,500,visible|docs,flag,<uint64>,,,,,for the --logs option only&#44; allow for block ranges larger than 500
 22140,tools,Chain Data,blocks,getBlocks,count,U,,visible|docs,switch,<boolean>,blockCount,,,,display only the count of appearances for --addrs or --uniq
 22150,tools,Chain Data,blocks,getBlocks,cache_txs,,,,switch,<boolean>,,,,,force a write of the block's transactions to the cache (slow)
 22160,tools,Chain Data,blocks,getBlocks,cache_traces,,,,switch,<boolean>,,,,,force a write of the block's traces to the cache (slower)
-22170,tools,Chain Data,blocks,getBlocks,list,L,,,flag,<blknum>,,,,,summary list of blocks running backwards from latest block minus num
-22180,tools,Chain Data,blocks,getBlocks,list_count,C,,,flag,<blknum>,,,,,the number of blocks to report for --list option
 22190,tools,Chain Data,blocks,getBlocks,n1,,,,note,,,,,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 22200,tools,Chain Data,blocks,getBlocks,n2,,,,note,,,,,,`Blocks` may be specified as either numbers or hashes.
 22210,tools,Chain Data,blocks,getBlocks,n3,,,,note,,,,,,`Special` blocks are detailed under `chifra when --list`.
 22220,tools,Chain Data,blocks,getBlocks,n4,,,,note,,,,,,With the --logs option&#44; optionally specify one or more --emitter&#44; one or more --topics&#44; either or both.
 22230,tools,Chain Data,blocks,getBlocks,n5,,,,note,,,,,,The --logs option is significantly faster if you provide an --emitter and/or a --topic.
 22240,tools,Chain Data,blocks,getBlocks,n6,,,,note,,,,,,Multiple topics match on topic0&#44; topic1&#44; and so on&#44; not on different topic0's.
-22250,tools,Chain Data,blocks,getBlocks,n7,,,,note,,,,,,For the --logs option&#44; large block ranges may crash the node&#44; use --big_range to specify a larger range.
 22260,tools,Chain Data,blocks,getBlocks,n8,,,,note,,,,,,The --decache option removes the block(s)&#44; all transactions in those block(s)&#44; and all traces in those transactions from the cache.
 22270,tools,Chain Data,blocks,getBlocks,n9,,,,note,,,,,,The --withdrawals option is only available on certain chains. It is ignored otherwise.
 #

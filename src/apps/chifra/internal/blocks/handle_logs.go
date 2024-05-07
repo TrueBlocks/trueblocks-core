@@ -61,10 +61,14 @@ func (opts *BlocksOptions) HandleLogs() error {
 					bn := base.Blknum(app.BlockNumber)
 					ts := opts.Conn.GetBlockTimestamp(bn)
 					if logs, err := opts.Conn.GetLogsByNumber(bn, ts); err != nil {
+						errMutex.Lock()
+						defer errMutex.Unlock()
 						delete(thisMap, app)
 						return fmt.Errorf("block at %d returned an error: %w", bn, err)
 
 					} else if len(logs) == 0 {
+						errMutex.Lock()
+						defer errMutex.Unlock()
 						delete(thisMap, app)
 						return fmt.Errorf("block at %d has no logs", bn)
 

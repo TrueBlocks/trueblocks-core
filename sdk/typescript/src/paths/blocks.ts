@@ -22,7 +22,6 @@ export function getBlocks(
     topic?: topic[],
     withdrawals?: boolean,
     articulate?: boolean,
-    bigRange?: uint64,
     count?: boolean,
     fmt?: string,
     chain: string,

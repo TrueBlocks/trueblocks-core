@@ -2,12 +2,11 @@ package main
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // DoExplore tests the explore sdk function
 func DoExplore() {
-	logger.Info("DoExplore")
+	ShowHeader("DoExplore", nil)
 
 	// opts := sdk.ExploreOptions{
 	// 	Mode: sdk.CMIndex,

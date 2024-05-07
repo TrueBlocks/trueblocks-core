@@ -103,7 +103,7 @@ func (s *Function) Model(chain, format string, verbose bool, extraOptions map[st
 
 	if format == "json" {
 		getParameterModels := func(params []Parameter) []map[string]any {
-			result := make([]map[string]any, 0, len(params))
+			result := make([]map[string]any, len(params))
 			for index, param := range params {
 				result[index] = param.Model(chain, format, verbose, extraOptions).Data
 				result[index]["name"] = param.DisplayName(index)
