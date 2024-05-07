@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/proto"
 	"google.golang.org/grpc"
 )
@@ -42,7 +43,7 @@ func (opts *NamesOptions) HandleShow() error {
 	} else {
 		// Report the error only if we know that the server is running or the user wants us
 		// to be verbose
-		if (grpcErr != nil && (!errors.Is(grpcErr, proto.ErrServerNotRunning) || opts.Globals.Verbose)) && !opts.Globals.IsFuzzing() {
+		if (grpcErr != nil && (!errors.Is(grpcErr, proto.ErrServerNotRunning) || opts.Globals.Verbose)) && !utils.IsFuzzing() {
 			logger.Error("gRPC connection error:", grpcErr)
 			logger.Warn("falling back to file-based search")
 		}

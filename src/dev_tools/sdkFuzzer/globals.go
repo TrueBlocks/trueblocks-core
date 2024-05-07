@@ -37,7 +37,6 @@ func ReportError(fn string, err error) {
 }
 
 func ReportOkay(fn string) {
-	// logger.Progress(true, colors.Green, "OK ", fn, colors.Off, spaces)
 	logger.Info(colors.Green, "OK ", fn, colors.Off, spaces)
 }
 
