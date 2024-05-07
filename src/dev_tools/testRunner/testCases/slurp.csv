@@ -9,18 +9,18 @@ on      ,both ,fast  ,slurp ,tools ,ethslurp ,invalid_type_2      ,y    ,addrs =
 on      ,both ,medi  ,slurp ,tools ,ethslurp ,empty_result_1      ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 0-1
 on      ,both ,medi  ,slurp ,tools ,ethslurp ,empty_result_2      ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
 
-on      ,both ,medi  ,slurp ,tools ,ethslurp ,type_ext            ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = ext & blocks = 0-7000000 & fmt = json
+on      ,both ,medi  ,slurp ,tools ,ethslurp ,type_ext            ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = ext & blocks = 0-7000000 & fmt = json & ether
 on      ,both ,medi  ,slurp ,tools ,ethslurp ,type_int            ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = int & blocks = 0-7000000 & fmt = json
-on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_token          ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & types = token & blocks = 0-1500000 & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_token          ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & types = token & blocks = 0-1500000 & fmt = json & ether
 on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_nft            ,y    ,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & types = nfts & blocks = 0-8500000 & fmt = json
-on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_1155           ,y    ,addrs = 0x83f564d180b58ad9a02a449105568189ee7de8cb & types = 1155 & blocks = 13103657-13255822 & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_1155           ,y    ,addrs = 0x83f564d180b58ad9a02a449105568189ee7de8cb & types = 1155 & blocks = 13103657-13255822 & fmt = json & ether
 on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_miner          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & types = miner & blocks = 0-1000 & fmt = json
-on      ,both ,medi  ,slurp ,tools ,ethslurp ,type_uncle          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & types = uncles & blocks = 1-1000 & fmt = json
+on      ,both ,medi  ,slurp ,tools ,ethslurp ,type_uncle          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & types = uncles & blocks = 1-1000 & fmt = json & ether
 on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_withdrawal     ,y    ,addrs = 0xdefae2ee3146e258a4383c15bb90239e85ba3cad & types = withdrawals & blocks = 17034900-17034910 & fmt = json
 on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_withdrawal_csv ,n    ,addrs = 0xdefae2ee3146e258a4383c15bb90239e85ba3cad & types = withdrawals & blocks = 17034900-17034910 & fmt = csv
 on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_withdrawal_2   ,n    ,addrs = 0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63 & types = withdrawals & blocks = 0-18000000 & fmt = txt
-on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_withdrawal_3   ,n    ,addrs = 0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63 & types = withdrawals & blocks = 18000000-18200000 & fmt = txt
-slow    ,both ,fast  ,slurp ,tools ,ethslurp ,type_all            ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = all & blocks = 0-3793420 & fmt = json & articulate
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_withdrawal_3   ,n    ,addrs = 0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63 & types = withdrawals & blocks = 18000000-18200000 & fmt = txt & ether
+slow    ,both ,fast  ,slurp ,tools ,ethslurp ,type_all            ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = all & blocks = 0-3793420 & fmt = json & articulate & ether
 slow    ,both ,fast  ,slurp ,tools ,ethslurp ,type_all_articulate ,y    ,addrs = trueblocks.eth & blocks = 8860500-8860520 & articulate & fmt = json & types = all
 
 on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_1155_csv       ,n    ,addrs = 0x83f564d180b58ad9a02a449105568189ee7de8cb & types = 1155 & blocks = 13103657-13255822 & fmt = csv
