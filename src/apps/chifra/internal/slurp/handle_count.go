@@ -5,7 +5,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	providerPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/provider"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -15,16 +14,10 @@ func (opts *SlurpOptions) HandleCount() error {
 		return err
 	}
 	provider.SetPrintProgress(!opts.Globals.TestMode && !logger.IsTerminal())
-	query := &providerPkg.Query{
-		Addresses: opts.Addresses(),
-		Resources: opts.Types,
-		PerPage:   uint(opts.PerPage),
-		StartPage: uint(opts.Page),
-	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
-		monitorChan := provider.Count(ctx, query, errorChan)
+		monitorChan := provider.Count(ctx, opts.Query(), errorChan)
 		for monitor := range monitorChan {
 			modelChan <- &monitor
 		}

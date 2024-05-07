@@ -25,6 +25,7 @@ type SlurpOptions struct {
 	Articulate bool        `json:"articulate,omitempty"`
 	Source     SlurpSource `json:"source,omitempty"`
 	Page       uint64      `json:"page,omitempty"`
+	PageId     string      `json:"pageId,omitempty"`
 	PerPage    uint64      `json:"perPage,omitempty"`
 	Sleep      float64     `json:"sleep,omitempty"`
 	Globals

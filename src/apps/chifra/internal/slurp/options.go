@@ -22,6 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/provider"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	// EXISTING_CODE
 )
@@ -36,7 +37,8 @@ type SlurpOptions struct {
 	Articulate  bool                     `json:"articulate,omitempty"`  // Articulate the retrieved data if ABIs can be found
 	Source      string                   `json:"source,omitempty"`      // The source of the slurped data
 	Count       bool                     `json:"count,omitempty"`       // For --appearances mode only, display only the count of records
-	Page        uint64                   `json:"page,omitempty"`        // The page to retrieve
+	Page        uint64                   `json:"page,omitempty"`        // The page to retrieve (page number)
+	PageId      string                   `json:"pageId,omitempty"`      // The page to retrieve (page ID)
 	PerPage     uint64                   `json:"perPage,omitempty"`     // The number of records to request on each page
 	Sleep       float64                  `json:"sleep,omitempty"`       // Seconds to sleep between requests
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
@@ -48,7 +50,7 @@ type SlurpOptions struct {
 
 var defaultSlurpOptions = SlurpOptions{
 	Source:  "etherscan",
-	PerPage: 3000,
+	PerPage: 1000,
 	Sleep:   .25,
 }
 
@@ -62,7 +64,8 @@ func (opts *SlurpOptions) testLog() {
 	logger.TestLog(len(opts.Source) > 0 && opts.Source != "etherscan", "Source: ", opts.Source)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Page != 0, "Page: ", opts.Page)
-	logger.TestLog(opts.PerPage != 3000, "PerPage: ", opts.PerPage)
+	logger.TestLog(len(opts.PageId) > 0, "PageId: ", opts.PageId)
+	logger.TestLog(opts.PerPage != 1000, "PerPage: ", opts.PerPage)
 	logger.TestLog(opts.Sleep != float64(.25), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -88,7 +91,7 @@ func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.Source = "etherscan"
-	opts.PerPage = 3000
+	opts.PerPage = 1000
 	opts.Sleep = .25
 	for key, value := range values {
 		switch key {
@@ -117,6 +120,8 @@ func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 			opts.Count = true
 		case "page":
 			opts.Page = base.MustParseUint(value[0])
+		case "pageId":
+			opts.PageId = value[0]
 		case "perPage":
 			opts.PerPage = base.MustParseUint(value[0])
 		case "sleep":
@@ -238,6 +243,17 @@ func (opts *SlurpOptions) Addresses() []base.Address {
 		addresses = append(addresses, base.HexToAddress(addr))
 	}
 	return addresses
+}
+
+func (opts *SlurpOptions) Query() *provider.Query {
+	return &provider.Query{
+		Addresses:   opts.Addresses(),
+		Resources:   opts.Types,
+		PerPage:     uint(opts.PerPage),
+		StartPage:   uint(opts.Page),
+		StartPageId: opts.PageId,
+		BlockRange:  opts.BlockIds,
+	}
 }
 
 // EXISTING_CODE

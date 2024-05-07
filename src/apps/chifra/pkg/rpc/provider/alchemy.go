@@ -87,13 +87,13 @@ func (p *AlchemyProvider) SetPrintProgress(print bool) {
 	p.printProgress = print
 }
 
-func (p *AlchemyProvider) NewPaginator(firstPage any, perPage int) Paginator {
-	pageId, ok := firstPage.(string)
-	if !ok {
+func (p *AlchemyProvider) NewPaginator(query *Query) Paginator {
+	pageId := query.StartPageId
+	if pageId == "" {
 		pageId = alchemyFirstPage
 	}
 
-	return NewPageIdPaginator(pageId, pageId, perPage)
+	return NewPageIdPaginator(pageId, pageId, int(query.PerPage))
 }
 
 func (p *AlchemyProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.Slurp) {

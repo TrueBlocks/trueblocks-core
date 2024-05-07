@@ -170,7 +170,7 @@ func TestCovalentProvider_fetchData(t *testing.T) {
 		baseUrl: ts.URL + "/[{PAGE}]",
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
-	paginator := provider.NewPaginator(0, 0)
+	paginator := provider.NewPaginator(&Query{})
 
 	var data []SlurpedPageItem
 	// var count int

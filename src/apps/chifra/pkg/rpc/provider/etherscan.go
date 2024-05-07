@@ -61,16 +61,16 @@ func (p *EtherscanProvider) SetPrintProgress(print bool) {
 	p.printProgress = print
 }
 
-func (p *EtherscanProvider) NewPaginator(firstPage any, perPage int) Paginator {
-	pageNumber, ok := firstPage.(uint)
-	if !ok || pageNumber == 0 {
+func (p *EtherscanProvider) NewPaginator(query *Query) Paginator {
+	pageNumber := query.StartPage
+	if pageNumber == 0 {
 		pageNumber = etherscanFirstPage
 	}
-	perPageValue := perPage
+	perPageValue := query.PerPage
 	if perPageValue == 0 {
 		perPageValue = etherscanMaxPerPage
 	}
-	return NewPageNumberPaginator(pageNumber, pageNumber, perPageValue)
+	return NewPageNumberPaginator(pageNumber, pageNumber, int(perPageValue))
 }
 
 func (p *EtherscanProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.Slurp) {
@@ -267,7 +267,7 @@ func (p *EtherscanProvider) url(value string, paginator Paginator, requestType s
 	}
 
 	if actions[requestType] == "" {
-		return "", fmt.Errorf("should not happen (%s) ==> in getEtherscanUrl", requestType)
+		return "", fmt.Errorf("cannot find Etherscan action %s", requestType)
 	}
 
 	module := "account"
