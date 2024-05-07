@@ -29,7 +29,9 @@ func (opts *NamesOptions) HandleAutoname() error {
 			name.Decimals,
 		)
 	}
-	logger.Info(message)
+	if !opts.Globals.IsFuzzing() {
+		logger.Info(message)
+	}
 
 	if opts.Globals.IsApiMode() {
 		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawMessage], errorChan chan error) {

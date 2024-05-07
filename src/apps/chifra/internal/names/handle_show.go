@@ -42,7 +42,7 @@ func (opts *NamesOptions) HandleShow() error {
 	} else {
 		// Report the error only if we know that the server is running or the user wants us
 		// to be verbose
-		if grpcErr != nil && (!errors.Is(grpcErr, proto.ErrServerNotRunning) || opts.Globals.Verbose) {
+		if (grpcErr != nil && (!errors.Is(grpcErr, proto.ErrServerNotRunning) || opts.Globals.Verbose)) && !opts.Globals.IsFuzzing() {
 			logger.Error("gRPC connection error:", grpcErr)
 			logger.Warn("falling back to file-based search")
 		}

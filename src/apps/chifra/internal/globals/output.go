@@ -50,9 +50,13 @@ func (opts *GlobalOptions) OutputOptsWithExtra(extra map[string]interface{}) out
 	}
 }
 
+func (opts *GlobalOptions) IsFuzzing() bool {
+	return os.Getenv("TB_SDK_FUZZER") == "true"
+}
+
 func (opts *GlobalOptions) ShowProgress() bool {
 	testMode := opts.TestMode
 	toFile := len(opts.File) > 0
-	fuzzing := os.Getenv("TB_SDK_FUZZER") == "true"
-	return !testMode && !toFile && !fuzzing
+	isFuzzing := opts.IsFuzzing()
+	return !testMode && !toFile && !isFuzzing
 }

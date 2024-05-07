@@ -12,10 +12,7 @@ func DoBlocks() {
 	opts := sdk.BlocksOptions{
 		BlockIds: testBlocks,
 	}
-	ShowHeader("DoReceipts", opts)
-
-	// Emitter     []string    `json:"emitter,omitempty"`
-	// Topic       []string    `json:"topic,omitempty"`
+	ShowHeader("DoBlocks", opts)
 
 	cacheTxs := []bool{false, true}
 	cacheTraces := []bool{false, true}

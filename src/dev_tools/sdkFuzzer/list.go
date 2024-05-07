@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -11,38 +12,60 @@ func DoList() {
 	file.EstablishFolder("sdkFuzzer-output/list")
 	globs := noCache(noEther(noRaw(globals)))
 
-	// Addrs       []string     `json:"addrs,omitempty"`
-	// NoZero      bool         `json:"noZero,omitempty"`
-	// Unripe      bool         `json:"unripe,omitempty"`
-	// Silent      bool         `json:"silent,omitempty"`
-	// FirstRecord uint64       `json:"firstRecord,omitempty"`
-	// MaxRecords  uint64       `json:"maxRecords,omitempty"`
-	// Reversed    bool         `json:"reversed,omitempty"`
-	// Publisher   base.Address `json:"publisher,omitempty"`
-	// FirstBlock  base.Blknum  `json:"firstBlock,omitempty"`
-	// LastBlock   base.Blknum  `json:"lastBlock,omitempty"`
-	// func (opts *ListOptions) List() ([]types.Appearance, *types.MetaData, error) {
-	// func (opts *ListOptions) ListCount() ([]types.AppearanceCount, *types.MetaData, error) {
-	// func (opts *ListOptions) ListBounds() ([]types.Bounds, *types.MetaData, error) {
-
 	types := []string{"list", "count", "bounds"}
+	silents := []bool{false, true}
+	reverseds := []bool{false, true}
+	publishers := []string{"", "0x02f2b09b33fdbd406ead954a31f98bd29a2a3492"}
 	for _, t := range types {
 		opts := sdk.ListOptions{
 			Addrs: []string{testAddrs[0]},
 		}
-		ShowHeader("DoList-"+t, opts)
-		nzs := []bool{false, true}
-		for _, nz := range nzs {
-			baseFn := "list/list"
-			if nz && t == "count" {
-				opts.NoZero = true
-				baseFn += "-noZero"
-			}
-			for _, g := range globs {
-				opts.Globals = g
-				fn2 := baseFn + "-" + t
-				fn := getFilename(fn2, &opts.Globals)
-				TestList(t, fn, &opts)
+		ShowHeader("DoList-"+t, &opts)
+		for _, publisher := range publishers {
+			for _, reverse := range reverseds {
+				for _, silent := range silents {
+					opts = sdk.ListOptions{
+						Addrs: []string{testAddrs[0]},
+					}
+					nzs := []bool{false, true}
+					for _, nz := range nzs {
+						baseFn := "list/list"
+						if nz && t == "count" {
+							opts.NoZero = true
+							baseFn += "-noZero"
+						}
+						if silent {
+							opts.Silent = silent
+							baseFn += "-silent"
+						}
+						if reverse {
+							opts.Reversed = reverse
+							baseFn += "-reverse"
+						}
+						if len(publisher) > 0 {
+							opts.Publisher = base.HexToAddress(publisher)
+							baseFn += "-publisher"
+						}
+						for _, g := range globs {
+							opts.Globals = g
+							fn2 := baseFn + "-" + t
+							fn := getFilename(fn2, &opts.Globals)
+							TestList(t, fn, &opts)
+							opts.FirstBlock = 10277683
+							opts.LastBlock = 18993209
+							fn2 = baseFn + "-" + t + "-blocks"
+							fn = getFilename(fn2, &opts.Globals)
+							TestList(t, fn, &opts)
+							if t != "count" {
+								opts.FirstRecord = 10
+								opts.MaxRecords = 23
+								fn2 = baseFn + "-" + t + "-record"
+								fn = getFilename(fn2, &opts.Globals)
+								TestList(t, fn, &opts)
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -82,34 +105,3 @@ func TestList(which, fn string, opts *sdk.ListOptions) {
 		}
 	}
 }
-
-// func DoList() {
-// 	opts := sdk.ListOptions{
-// 		Addrs: []string{testAddrs[0]},
-// 	}
-// 	ShowHeader("DoList", &opts)
-
-// 	if appearances, _, err := opts.List(); err != nil {
-// 		logger.Error(err)
-// 	} else {
-// 		if err := SaveToFile[types.Appearance]("sdkFuzzer/list.json", appearances); err != nil {
-// 			logger.Error(err)
-// 		}
-// 	}
-
-// 	if appearancesCount, _, err := opts.ListCount(); err != nil {
-// 		logger.Error(err)
-// 	} else {
-// 		if err := SaveToFile[types.AppearanceCount]("sdkFuzzer/listCount.json", appearancesCount); err != nil {
-// 			logger.Error(err)
-// 		}
-// 	}
-
-// 	if bounds, _, err := opts.ListBounds(); err != nil {
-// 		logger.Error(err)
-// 	} else {
-// 		if err := SaveToFile[types.Bounds]("sdkFuzzer/listBounds.json", bounds); err != nil {
-// 			logger.Error(err)
-// 		}
-// 	}
-// }
