@@ -1,12 +1,8 @@
 package main
 
-import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-)
-
 // DoConfig tests the config sdk function
 func DoConfig() {
-	logger.Info("DoConfig")
+	ShowHeader("DoConfig", nil)
 
 	// opts := sdk.ConfigOptions{
 	// 	Mode: sdk.CMShow,

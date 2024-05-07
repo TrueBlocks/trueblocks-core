@@ -22,9 +22,7 @@ type AbisOptions struct {
 	Addrs    []string     `json:"addrs,omitempty"`
 	Known    bool         `json:"known,omitempty"`
 	ProxyFor base.Address `json:"proxyFor,omitempty"`
-	Find     []string     `json:"find,omitempty"`
 	Hint     []string     `json:"hint,omitempty"`
-	Encode   string       `json:"encode,omitempty"`
 	Globals
 }
 
@@ -37,6 +35,20 @@ func (opts AbisOptions) String() string {
 // Abis implements the chifra abis command.
 func (opts *AbisOptions) Abis() ([]types.Function, *types.MetaData, error) {
 	in := opts.toInternal()
+	return queryAbis[types.Function](in)
+}
+
+// AbisFind implements the chifra abis --find command.
+func (opts *AbisOptions) AbisFind(val []string) ([]types.Function, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Find = val
+	return queryAbis[types.Function](in)
+}
+
+// AbisEncode implements the chifra abis --encode command.
+func (opts *AbisOptions) AbisEncode(val string) ([]types.Function, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Encode = val
 	return queryAbis[types.Function](in)
 }
 

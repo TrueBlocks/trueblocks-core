@@ -2,22 +2,24 @@ package main
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoReceipts tests the receipts sdk function
 func DoReceipts() {
+	file.EstablishFolder("usesSdk-output/receipts")
 	opts := sdk.ReceiptsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
 	}
-	logger.Info("DoReceipts", opts)
+	ShowHeader("DoReceipts", opts)
 
 	// TransactionIds []string `json:"transactions,omitempty"`
 	// Articulate     bool     `json:"articulate,omitempty"`
 	// func (opts *ReceiptsOptions) Receipts() ([]types.Receipt, *types.MetaData, error) {
 
 	art := []bool{false, true}
+	globs := noEther(noRaw(globals))
 
 	for _, a := range art {
 		baseFn := "receipts/receipts"
@@ -25,7 +27,6 @@ func DoReceipts() {
 			baseFn += "-articulate"
 		}
 		opts.Articulate = a
-		globs := noEther(globals)
 		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)

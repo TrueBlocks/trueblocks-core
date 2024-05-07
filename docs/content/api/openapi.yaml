@@ -1245,15 +1245,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: bigRange
-          description: for the --logs option only, allow for block ranges larger than 500
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: number
-            format: uint64
         - name: count
           description: display only the count of appearances for --addrs or --uniq
           required: false

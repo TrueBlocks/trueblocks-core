@@ -5,34 +5,34 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoState tests the state sdk function
 func DoState() {
+	file.EstablishFolder("usesSdk-output/state")
 	opts := sdk.StateOptions{
 		BlockIds: []string{"10092000"},
 		Addrs:    []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
 	}
-	logger.Info("DoState", opts)
+	ShowHeader("DoState", opts)
 
-	// Addrs      []string     `json:"addrs,omitempty"`
-	// BlockIds   []string     `json:"blocks,omitempty"`
-	// Parts      StateParts   `json:"parts,omitempty"`
-	// Changes    bool         `json:"changes,omitempty"`
-	// NoZero     bool         `json:"noZero,omitempty"`
-	// Articulate bool         `json:"articulate,omitempty"`
-	// ProxyFor   base.Address `json:"proxyFor,omitempty"`
-	//  func (opts *StateOptions) State() ([]types.State, *types.MetaData, error) {
-	// func (opts *StateOptions) StateCall(val string) ([]types.Result, *types.MetaData, error) {
-	// StateParts: NoSP, SPBalance, SPNonce, SPCode, SPProxy, SPDeployed, SPAccttype, SPSome, SPAll
-
+	art := []bool{false, true}
 	globs := noRaw(globals)
 
 	changes := []bool{false, true}
 	noZeros := []bool{false, true}
-	parts := []sdk.StateParts{sdk.NoSP, sdk.SPAll} //, sdk.SPBalance /*sdk.SPNonce,*/, sdk.SPCode, sdk.SPProxy, sdk.SPDeployed, sdk.SPAccttype, sdk.SPSome, sdk.SPAll}
+	parts := []sdk.StateParts{
+		sdk.SPBalance, /*sdk.SPNonce,*/
+		sdk.SPCode,
+		sdk.SPProxy,
+		sdk.SPDeployed,
+		sdk.SPAccttype,
+		sdk.SPSome,
+		sdk.SPAll,
+	}
+
 	for _, c := range changes {
 		for _, z := range noZeros {
 			for _, p := range parts {
@@ -62,7 +62,8 @@ func DoState() {
 		BlockIds: []string{"18000000"},
 		Addrs:    []string{"unchainedindex.eth"},
 	}
-	art := []bool{false, true}
+	ShowHeader("DoState-Call", opts)
+
 	for _, a := range art {
 		baseFn := "state/state-call"
 		if a {
@@ -80,6 +81,8 @@ func DoState() {
 		BlockIds: []string{"10092000"},
 		Addrs:    []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
 	}
+	ShowHeader("DoState-Call-Proxy", opts)
+
 	for _, a := range art {
 		baseFn := "state/state-call-proxy"
 		if a {

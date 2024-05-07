@@ -95,11 +95,8 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 |              |              | --emitter                 |             |
 |              |              | --topic                   |             |
 |              |              | --articulate              |             |
-|              |              | --big_range               | bigRange    |
 |              |              | --count                   |             |
 |              |              | --cache                   |             |
-|              |              | --list                    |             |
-|              |              | --list_count              | listCount   |
 |              |              |                           |             |
 | transactions | transactions |                           |             |
 |              |              | --articulate              |             |

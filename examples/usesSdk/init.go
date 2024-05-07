@@ -1,12 +1,8 @@
 package main
 
-import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-)
-
 // DoInit tests the init sdk function
 func DoInit() {
-	logger.Info("DoInit")
+	ShowHeader("DoInit", nil)
 
 	// opts := sdk.InitOptions{}
 

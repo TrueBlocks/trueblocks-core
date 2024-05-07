@@ -10,6 +10,8 @@ import (
 	"strings"
 	"syscall"
 	"unsafe"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 type ScanBar struct {
@@ -41,13 +43,6 @@ func (v *ScanBar) Pct() float64 {
 	return (float64(v.Visited) / float64(v.Max))
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 func (v *ScanBar) Report(writer io.Writer, action, msg string) {
 	v.Visited++
 	if v.Visited%v.Freq != 0 {
@@ -61,7 +56,7 @@ func (v *ScanBar) Report(writer io.Writer, action, msg string) {
 	}
 	w := int(screenWidth()) - 2
 	x := fmt.Sprintf("%s [%s%s] %s", action, strings.Repeat(".", done), strings.Repeat(" ", remains), msg)
-	x = x[0:min(len(x), w)]
+	x = x[0:base.Min(len(x), w)]
 	e := w - len(x)
 	var endPad string = strings.Repeat(" ", e)
 	str := fmt.Sprintf("%s%s\r", x, endPad)

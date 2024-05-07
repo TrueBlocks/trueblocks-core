@@ -7,14 +7,11 @@ import (
 
 // DoChunks tests the chunks sdk function
 func DoChunks() {
-	logger.Info("DoChunks")
-
 	opts := sdk.ChunksOptions{
 		FirstBlock: 1000,
 		LastBlock:  2000,
 	}
-
-	logger.Info("ChunksManifest")
+	ShowHeader("ChunksManifest", &opts)
 	if chunksManifest, _, err := opts.ChunksManifest(); err != nil {
 		logger.Error(err)
 	} else {
@@ -23,7 +20,7 @@ func DoChunks() {
 		}
 	}
 
-	logger.Info("ChunksIndex")
+	ShowHeader("ChunksIndex", &opts)
 	if chunksIndex, _, err := opts.ChunksIndex(); err != nil {
 		logger.Error(err)
 	} else {
@@ -32,7 +29,7 @@ func DoChunks() {
 		}
 	}
 
-	logger.Info("ChunksBlooms")
+	ShowHeader("ChunksBlooms", &opts)
 	if chunksBlooms, _, err := opts.ChunksBlooms(); err != nil {
 		logger.Error(err)
 	} else {
@@ -41,7 +38,7 @@ func DoChunks() {
 		}
 	}
 
-	logger.Info("ChunksPins")
+	ShowHeader("ChunksPins", &opts)
 	opts.List = true
 	if chunksPins, _, err := opts.ChunksPins(); err != nil {
 		logger.Error(err)
@@ -51,7 +48,7 @@ func DoChunks() {
 		}
 	}
 
-	logger.Info("ChunksAddresses")
+	ShowHeader("ChunksAddresses", &opts)
 	opts.List = false
 	// if chunksAddresses, _, err := opts.ChunksAddresses(); err != nil {
 	// 	logger.Error(err)
@@ -61,7 +58,7 @@ func DoChunks() {
 	// 	}
 	// }
 
-	logger.Info("ChunksAppearances")
+	ShowHeader("ChunksAppearances", &opts)
 	// if chunksAppearances, _, err := opts.ChunksAppearances(); err != nil {
 	// 	logger.Error(err)
 	// } else {
@@ -73,7 +70,7 @@ func DoChunks() {
 	// 	}
 	// }
 
-	logger.Info("ChunksStats")
+	ShowHeader("ChunksStats", &opts)
 	if chunkStats, _, err := opts.ChunksStats(); err != nil {
 		logger.Error(err)
 	} else {

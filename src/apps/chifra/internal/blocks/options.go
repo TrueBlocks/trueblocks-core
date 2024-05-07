@@ -17,7 +17,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -40,12 +39,9 @@ type BlocksOptions struct {
 	Topic       []string                 `json:"topic,omitempty"`       // For the --logs option only, filter logs to show only those with this topic(s)
 	Withdrawals bool                     `json:"withdrawals,omitempty"` // Export the withdrawals from the block as opposed to the block data
 	Articulate  bool                     `json:"articulate,omitempty"`  // For the --logs option only, articulate the retrieved data if ABIs can be found
-	BigRange    uint64                   `json:"bigRange,omitempty"`    // For the --logs option only, allow for block ranges larger than 500
 	Count       bool                     `json:"count,omitempty"`       // Display only the count of appearances for --addrs or --uniq
 	CacheTxs    bool                     `json:"cacheTxs,omitempty"`    // Force a write of the block's transactions to the cache (slow)
 	CacheTraces bool                     `json:"cacheTraces,omitempty"` // Force a write of the block's traces to the cache (slower)
-	List        base.Blknum              `json:"list,omitempty"`        // Summary list of blocks running backwards from latest block minus num
-	ListCount   base.Blknum              `json:"listCount,omitempty"`   // The number of blocks to report for --list option
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection          `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
@@ -53,9 +49,7 @@ type BlocksOptions struct {
 	// EXISTING_CODE
 }
 
-var defaultBlocksOptions = BlocksOptions{
-	BigRange: 500,
-}
+var defaultBlocksOptions = BlocksOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *BlocksOptions) testLog() {
@@ -70,12 +64,9 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(opts.Withdrawals, "Withdrawals: ", opts.Withdrawals)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
-	logger.TestLog(opts.BigRange != 500, "BigRange: ", opts.BigRange)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.CacheTxs, "CacheTxs: ", opts.CacheTxs)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
-	logger.TestLog(opts.List != 0, "List: ", opts.List)
-	logger.TestLog(opts.ListCount != 0, "ListCount: ", opts.ListCount)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -99,7 +90,6 @@ func BlocksFinishParseInternal(w io.Writer, values url.Values) *BlocksOptions {
 	copy := defaultBlocksOptions
 	copy.Globals.Caps = getCaps()
 	opts := &copy
-	opts.BigRange = 500
 	for key, value := range values {
 		switch key {
 		case "blocks":
@@ -133,18 +123,12 @@ func BlocksFinishParseInternal(w io.Writer, values url.Values) *BlocksOptions {
 			opts.Withdrawals = true
 		case "articulate":
 			opts.Articulate = true
-		case "bigRange":
-			opts.BigRange = base.MustParseUint(value[0])
 		case "count":
 			opts.Count = true
 		case "cacheTxs":
 			opts.CacheTxs = true
 		case "cacheTraces":
 			opts.CacheTraces = true
-		case "list":
-			opts.List = base.MustParseBlknum(value[0])
-		case "listCount":
-			opts.ListCount = base.MustParseBlknum(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")
@@ -184,7 +168,7 @@ func blocksFinishParse(args []string) *BlocksOptions {
 
 	// EXISTING_CODE
 	opts.Blocks = args
-	if !opts.Uniq && opts.List == 0 {
+	if !opts.Uniq {
 		defFmt = "json"
 	}
 	// EXISTING_CODE

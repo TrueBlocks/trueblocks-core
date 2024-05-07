@@ -8,11 +8,10 @@ import (
 
 // DoTransactions tests the transactions sdk function
 func DoTransactions() {
-	logger.Info("DoTransactions")
-
 	opts := sdk.TransactionsOptions{
 		TransactionIds: testTransactions,
 	}
+	ShowHeader("DoTransactions", &opts)
 
 	if transactions, _, err := opts.Transactions(); err != nil {
 		logger.Error(err)

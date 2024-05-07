@@ -2,27 +2,22 @@ package main
 
 import (
 	"os"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 func main() {
-	// DoNames()
-	// DoBlocks()
-	// DoTransactions()
-	//+
 	DoReceipts()
-	//+
 	DoLogs()
-	//+
 	DoTraces()
-	//+
 	DoState()
+	DoAbis()
+	DoBlocks()
+
+	// DoNames()
+	// DoTransactions()
 	// DoTokens()
-	// DoAbis()
 	// DoWhen()
-	//- DoList()
-	//- DoExport()
+	// DoList()
+	// DoExport()
 	// DoMonitors()
 	// DoConfig()
 	// DoStatus()
@@ -36,6 +31,7 @@ func main() {
 
 var testBlocks = []string{
 	"46147",
+	"1001001",
 }
 
 var testAddrs = []string{
@@ -49,11 +45,5 @@ var testTransactions = []string{
 var firsts = []string{"46147.0", "50111.0", "52029.0"}
 
 func init() {
-	// These test cases drop files in the usesSDK folder. This line
-	// creates the folder in the cwd.
-	file.EstablishFolder("usesSDK/logs")
-	file.EstablishFolder("usesSDK/receipts")
-	file.EstablishFolder("usesSDK/traces")
-	file.EstablishFolder("usesSDK/state")
 	os.Setenv("TB_NO_USERQUERY", "true")
 }
