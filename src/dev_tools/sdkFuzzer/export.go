@@ -14,6 +14,42 @@ func DoExport() {
 	}
 	ShowHeader("DoExport", &opts)
 
+	// Addrs       []string    `json:"addrs,omitempty"`
+	// Topics      []string    `json:"topics,omitempty"`
+	// Fourbytes   []string    `json:"fourbytes,omitempty"`
+	// Accounting  bool        `json:"accounting,omitempty"`
+	// Articulate  bool        `json:"articulate,omitempty"`
+	// CacheTraces bool        `json:"cacheTraces,omitempty"`
+	// FirstRecord uint64      `json:"firstRecord,omitempty"`
+	// MaxRecords  uint64      `json:"maxRecords,omitempty"`
+	// Relevant    bool        `json:"relevant,omitempty"`
+	// Emitter     []string    `json:"emitter,omitempty"`
+	// Topic       []string    `json:"topic,omitempty"`
+	// Reverted    bool        `json:"reverted,omitempty"`
+	// Asset       []string    `json:"asset,omitempty"`
+	// Flow        ExportFlow  `json:"flow,omitempty"`
+	// Factory     bool        `json:"factory,omitempty"`
+	// Unripe      bool        `json:"unripe,omitempty"`
+	// Load        string      `json:"load,omitempty"`
+	// Reversed    bool        `json:"reversed,omitempty"`
+	// NoZero      bool        `json:"noZero,omitempty"`
+	// FirstBlock  base.Blknum `json:"firstBlock,omitempty"`
+	// LastBlock   base.Blknum `json:"lastBlock,omitempty"`
+	// func (opts *ExportOptions) Export() ([]types.Transaction, *types.MetaData, error) {
+	// func (opts *ExportOptions) ExportAppearances() ([]types.Appearance, *types.MetaData, error) {
+	// func (opts *ExportOptions) ExportReceipts() ([]types.Receipt, *types.MetaData, error) {
+	// func (opts *ExportOptions) ExportLogs() ([]types.Log, *types.MetaData, error) {
+	// func (opts *ExportOptions) ExportTraces() ([]types.Trace, *types.MetaData, error) {
+	// func (opts *ExportOptions) ExportNeighbors() ([]bool, *types.MetaData, error) {
+	// func (opts *ExportOptions) ExportStatements() ([]types.Statement, *types.MetaData, error) {
+	// func (opts *ExportOptions) ExportBalances() ([]types.State, *types.MetaData, error) {
+	// func (opts *ExportOptions) ExportWithdrawals() ([]types.Withdrawal, *types.MetaData, error) {
+	// func (opts *ExportOptions) ExportCount() ([]types.AppearanceCount, *types.MetaData, error) {
+	// NoEF ExportFlow = 0
+	// EFIn            = 1 << iota
+	// EFOut
+	// EFZero
+
 	if export, _, err := opts.Export(); err != nil {
 		logger.Error(err)
 	} else {

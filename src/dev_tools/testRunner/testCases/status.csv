@@ -39,6 +39,7 @@ on      ,both ,fast  ,status ,apps ,cacheStatus ,items_all           ,y    ,mode
 on      ,both ,fast  ,status ,apps ,cacheStatus ,items_three         ,y    ,modes = abis & modes = monitors & modes = slurps & max_records = 100
 
 on      ,both ,fast  ,status ,apps ,cacheStatus ,items_blocks_chains ,y    ,modes = blocks & max_records = 100 & chains
+on      ,both ,fast  ,status ,apps ,cacheStatus ,items_chains_fail   ,y    ,max_records = 100 & chains
 
 on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_none           ,y    ,
 on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_fail           ,y    ,modes = junk & verbose

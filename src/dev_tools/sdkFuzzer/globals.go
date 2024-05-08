@@ -30,13 +30,14 @@ func getFilename(baseName string, g *sdk.Globals) string {
 	return "sdkFuzzer-output/" + baseName + app + ".json"
 }
 
-var spaces = strings.Repeat(" ", 20)
+var spaces = strings.Repeat(" ", 30)
 
 func ReportError(fn string, err error) {
 	logger.Error(fmt.Errorf("NO %s: %v%s", fn, err, spaces))
 }
 
 func ReportOkay(fn string) {
+	// logger.Progress(true, colors.Green, "OK ", fn, colors.Off, spaces)
 	logger.Info(colors.Green, "OK ", fn, colors.Off, spaces)
 }
 
@@ -52,7 +53,7 @@ func ShowHeader(msg string, opts fmt.Stringer) {
 func noCache(in []sdk.Globals) []sdk.Globals {
 	out := []sdk.Globals{}
 	for _, g := range in {
-		if !g.Cache && !g.Decache {
+		if !(g.Cache || g.Decache) {
 			out = append(out, g)
 		}
 	}

@@ -92,7 +92,7 @@ Flags:
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
   -a, --articulate      articulate the retrieved data if ABIs can be found
   -S, --source string   the source of the slurped data
-                        One of [ etherscan | key ] (default "etherscan")
+                        One of [ etherscan | key | covalent | alchemy ] (default "etherscan")
   -U, --count           for --appearances mode only, display only the count of records
   -s, --sleep float     seconds to sleep between requests (default 0.25)
   -H, --ether           specify value in ether

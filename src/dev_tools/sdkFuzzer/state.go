@@ -24,7 +24,8 @@ func DoState() {
 	changes := []bool{false, true}
 	noZeros := []bool{false, true}
 	parts := []sdk.StateParts{
-		sdk.SPBalance, /*sdk.SPNonce,*/
+		sdk.SPBalance,
+		sdk.SPNonce,
 		sdk.SPCode,
 		sdk.SPProxy,
 		sdk.SPDeployed,
