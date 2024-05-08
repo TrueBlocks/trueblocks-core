@@ -11,6 +11,50 @@ func DoStatus() {
 	opts := sdk.StatusOptions{}
 	ShowHeader("DoStatus", &opts)
 
+	// FirstRecord uint64 `json:"firstRecord,omitempty"`
+	// MaxRecords  uint64 `json:"maxRecords,omitempty"`
+	// Chains      bool   `json:"chains,omitempty"`
+	// func (opts *StatusOptions) StatusIndex() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusBlooms() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusBlocks() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusTransactions() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusTraces() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusLogs() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusStatements() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusResults() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusState() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusTokens() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusMonitors() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusNames() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusAbis() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusSlurps() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusStaging() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusUnripe() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusMaps() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusSome() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusAll() ([]types.Status, *types.MetaData, error) {
+	// func (opts *StatusOptions) StatusDiagnose() ([]bool, *types.MetaData, error) {
+	// NoSM    StatusModes = 0
+	// SMIndex             = 1 << iota
+	// SMBlooms
+	// SMBlocks
+	// SMTransactions
+	// SMTraces
+	// SMLogs
+	// SMStatements
+	// SMResults
+	// SMState
+	// SMTokens
+	// SMMonitors
+	// SMNames
+	// SMAbis
+	// SMSlurps
+	// SMStaging
+	// SMUnripe
+	// SMMaps
+	// SMSome = SMIndex | SMBlooms | SMBlocks | SMTransactions
+	// SMAll  = SMIndex | SMBlooms | SMBlocks | SMTransactions | SMTraces | SMLogs | SMStatements | SMResults | SMState | SMTokens | SMMonitors | SMNames | SMAbis | SMSlurps | SMStaging | SMUnripe | SMMaps
+
 	if indexes, _, err := opts.StatusIndex(); err != nil {
 		logger.Error(err)
 	} else {
