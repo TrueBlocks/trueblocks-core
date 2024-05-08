@@ -148,6 +148,8 @@ const (
 	NoSS        SlurpSource = 0
 	SSEtherscan             = 1 << iota
 	SSKey
+	SSCovalent
+	SSAlchemy
 )
 
 func (v SlurpSource) String() string {
@@ -159,10 +161,12 @@ func (v SlurpSource) String() string {
 	var m = map[SlurpSource]string{
 		SSEtherscan: "etherscan",
 		SSKey:       "key",
+		SSCovalent:  "covalent",
+		SSAlchemy:   "alchemy",
 	}
 
 	var ret []string
-	for _, val := range []SlurpSource{SSEtherscan, SSKey} {
+	for _, val := range []SlurpSource{SSEtherscan, SSKey, SSCovalent, SSAlchemy} {
 		if v&val != 0 {
 			ret = append(ret, m[val])
 		}
@@ -183,6 +187,10 @@ func enumFromSlurpSource(values []string) (SlurpSource, error) {
 			result |= SSEtherscan
 		case "key":
 			result |= SSKey
+		case "covalent":
+			result |= SSCovalent
+		case "alchemy":
+			result |= SSAlchemy
 		default:
 			return NoSS, fmt.Errorf("unknown source: %s", val)
 		}

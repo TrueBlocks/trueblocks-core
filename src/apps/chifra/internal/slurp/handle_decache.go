@@ -10,6 +10,6 @@ import (
 
 func (opts *SlurpOptions) HandleDecache() error {
 	// TODO: implement
-	logger.Error("Not implemented yet.")
+	logger.Error("chifra slurp --decache is not yet implemented")
 	return nil
 }

@@ -2884,6 +2884,8 @@ paths:
             enum:
               - etherscan
               - key
+              - covalent
+              - alchemy
         - name: count
           description: for --appearances mode only, display only the count of records
           required: false

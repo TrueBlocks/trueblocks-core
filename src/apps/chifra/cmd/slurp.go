@@ -67,7 +67,7 @@ One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals 
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Appearances, "appearances", "p", false, `show only the blocknumber.tx_id appearances of the exported transactions`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Articulate, "articulate", "a", false, `articulate the retrieved data if ABIs can be found`)
 	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().Source, "source", "S", "etherscan", `the source of the slurped data
-One of [ etherscan | key ]`)
+One of [ etherscan | key | covalent | alchemy ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Count, "count", "U", false, `for --appearances mode only, display only the count of records`)
 	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().Page, "page", "g", 0, `the page to retrieve (page number) (hidden)`)
 	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().PageId, "page_id", "", "", `the page to retrieve (page ID) (hidden)`)
