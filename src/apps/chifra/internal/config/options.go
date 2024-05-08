@@ -106,14 +106,12 @@ func configFinishParse(args []string) *ConfigOptions {
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	defFmt = ""
+	defFmt = "txt"
 	for _, arg := range args {
-		if arg == "show" || arg == "edit" {
-			opts.Mode = arg
-		}
+		opts.Mode = arg
 	}
 	if len(opts.Mode) == 0 {
-		opts.Mode = "show"
+		opts.Mode = "<empty>"
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

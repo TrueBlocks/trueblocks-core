@@ -14,7 +14,6 @@ func main() {
 	DoWhen()
 	DoList()
 	DoNames() // does not test crud commands
-
 	DoConfig()
 	// DoInit()
 	// DoMonitors()
