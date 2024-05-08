@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"golang.org/x/time/rate"
 )
 
@@ -163,7 +164,9 @@ func (p *EtherscanProvider) fetchData(ctx context.Context, address base.Address,
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --decache.
-		logger.Warn("provider responded with:", url, fromEs.Message, strings.Repeat(" ", 40))
+		if !utils.IsFuzzing() {
+			logger.Warn("provider responded with:", url, fromEs.Message, strings.Repeat(" ", 40))
+		}
 		return []SlurpedPageItem{}, 0, nil
 		// } else if fromEs.Message != "OK" {
 		// 	logger.Warn("URL:", url)

@@ -21,6 +21,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
@@ -29,7 +30,7 @@ import (
 func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *SelectorSyncMap) error {
 	err := conn.IsContractAtLatest(address)
 	if err != nil {
-		if errors.Is(err, rpc.ErrNotAContract) {
+		if errors.Is(err, rpc.ErrNotAContract) && !utils.IsFuzzing() {
 			logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
 		}
 		return err

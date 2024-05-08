@@ -10,11 +10,13 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -73,6 +75,39 @@ func GetConfigOptions(args []string) (*configOptionsInternal, error) {
 	}
 
 	return &opts, nil
+}
+
+type configGeneric interface {
+	types.CacheItem
+}
+
+func queryConfig[T configGeneric](opts *configOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	buffer := bytes.Buffer{}
+	if err := opts.ConfigBytes(&buffer); err != nil {
+		return nil, nil, err
+	}
+
+	str := buffer.String()
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	var result Result[T]
+	if err := json.Unmarshal([]byte(str), &result); err != nil {
+		return nil, nil, err
+	} else {
+		return result.Data, &result.Meta, nil
+	}
+}
+
+// toInternal converts the SDK options to the internal options format.
+func (opts *ConfigOptions) toInternal() *configOptionsInternal {
+	return &configOptionsInternal{
+		Mode:    opts.Mode,
+		Globals: opts.Globals,
+	}
 }
 
 // EXISTING_CODE

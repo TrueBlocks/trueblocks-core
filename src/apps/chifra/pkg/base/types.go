@@ -23,6 +23,7 @@ type Txnum = Numeral
 type TraceId = Numeral
 type Lognum = Numeral
 type Gas = Numeral
+type Nonce = Numeral
 type Topic = string
 type Timestamp = int64
 

@@ -5,24 +5,26 @@ import (
 )
 
 func main() {
-	DoReceipts()
-	DoLogs()
-	DoTraces()
-	DoState()
-	DoAbis()
-	DoBlocks()
-	DoWhen()
-	DoList()
-	DoNames() // does not test crud commands
-	DoConfig()
-	// DoInit()
-	// DoMonitors()
-	// DoTransactions()
+	// DoReceipts()
+	// DoLogs()
+	// DoTraces()
+	// DoState()
+	// DoAbis()
+	// DoBlocks()
+	// DoWhen()
+	// DoList()
+	// DoNames() // does not test crud commands
+	// DoConfig()
+	DoTransactions()
 	// DoTokens()
 	// DoSlurp()
+
 	// DoChunks()
 	// DoExport()
 	// DoStatus()
+
+	// DoInit()
+	// DoMonitors()
 
 	// DoDaemon - do not test daemon in fuzzer
 	// DoScrape - no sdk routines for scrape

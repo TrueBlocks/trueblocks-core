@@ -14,6 +14,7 @@ base      ,int256    ,a signed big number                             ,as a stri
 base      ,int64     ,a 64-bit signed integer                         ,
 base      ,ipfshash  ,a multi-hash produced by IPFS                   ,mixed-case
 base      ,lognum    ,an alias for a uint64                           ,
+base      ,nonce     ,a 64-bit unsigned integer                       ,
 base      ,numeral   ,an alias for a uint64                           ,
 base      ,string    ,a normal character string                       ,
 base      ,[]string  ,an array of strings                             ,

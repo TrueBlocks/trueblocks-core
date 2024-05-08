@@ -229,7 +229,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 #
 42000,apps,Admin,config,config,,,,visible|docs,command,,,Manage config,<mode> [flags],default|,Report on and edit the configuration of the TrueBlocks system.
 42020,apps,Admin,config,config,mode,,,visible|docs,positional,enum[show*|edit],,,,,either show or edit the configuration
-42030,apps,Admin,config,config,paths,a,,visible|docs,switch,<boolean>,,,,,show the configuration paths for the system
+42030,apps,Admin,config,config,paths,a,,visible|docs,switch,<boolean>,cacheItem,,,,show the configuration paths for the system
 #
 43000,apps,Admin,status,cacheStatus,,,,visible|docs,command,,,Get status on caches,<mode> [mode...] [flags],default|,Report on the state of the internal binary caches.
 43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,Status,,,,the (optional) name of the binary cache to report on&#44; terse otherwise

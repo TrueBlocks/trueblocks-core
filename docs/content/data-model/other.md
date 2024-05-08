@@ -130,7 +130,7 @@ Slurps consist of the following fields:
 | blockHash        | the hash of the block containing this transaction                                                     | hash                                    |
 | blockNumber      | the number of the block                                                                               | blknum                                  |
 | transactionIndex | the zero-indexed position of the transaction in the block                                             | txnum                                   |
-| nonce            | sequence number of the transactions sent by the sender                                                | uint64                                  |
+| nonce            | sequence number of the transactions sent by the sender                                                | nonce                                   |
 | timestamp        | the Unix timestamp of the object                                                                      | timestamp                               |
 | date             | the timestamp as a date (calculated)                                                                  | datetime                                |
 | from             | address from which the transaction was sent                                                           | address                                 |
@@ -199,6 +199,7 @@ This documentation mentions the following basic data types.
 | gas       | a 64-bit unsigned integer           |                |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | int64     | a 64-bit signed integer             |                |
+| nonce     | a 64-bit unsigned integer           |                |
 | numeral   | an alias for a uint64               |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |

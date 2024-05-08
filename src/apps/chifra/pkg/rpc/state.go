@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
@@ -98,13 +97,11 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	if (fieldBits & Balance) != 0 {
 		state.Balance = *balance
 	}
+
 	if value, ok := queryResults["nonce"]; ok && (fieldBits&Nonce) != 0 {
-		nonce, err := strconv.ParseUint(*value, 0, 64)
-		if err != nil {
-			return nil, err
-		}
-		state.Nonce = nonce
+		state.Nonce = base.MustParseNumeral(*value)
 	}
+
 	if value, ok := queryResults["code"]; ok && (fieldBits&Code) != 0 {
 		code := *value
 		if code != "0x" {
