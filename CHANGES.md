@@ -4,6 +4,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 ## v3.0.0 (2024/04/31)
 
+- SDK
 - Instructions for re-building:
   - remove .cmake in ./build folder
   - remove ./go.work and go.work.sum in root
