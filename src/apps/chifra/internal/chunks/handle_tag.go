@@ -43,7 +43,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []base.Blknum) error {
 			return
 		}
 		bar := logger.NewBar(logger.BarOptions{
-			Enabled: !testMode,
+			Enabled: !testMode && !logger.IsTerminal(),
 			Total:   int64(len(man.Chunks)),
 		})
 		tagIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {

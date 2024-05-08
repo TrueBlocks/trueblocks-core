@@ -10,6 +10,6 @@ import (
 
 func (opts *ScrapeOptions) HandleTouch() error {
 	// TODO: implement
-	logger.Error("Not implemented yet.")
+	logger.Error("chifra scrape --touch is not yet implemented")
 	return nil
 }

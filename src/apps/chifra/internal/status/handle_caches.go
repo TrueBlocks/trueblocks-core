@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
@@ -98,8 +99,9 @@ func (opts *StatusOptions) HandleCaches() error {
 						result.Data.(*CacheWalker).cancel()
 					}
 
+					smallMark := result.Data.(*CacheWalker).nSeen%100 == 0
 					logger.Progress(
-						result.Data.(*CacheWalker).nSeen%100 == 0,
+						smallMark && !utils.IsFuzzing(),
 						fmt.Sprintf("Found %d %s files", counterMap[cT].NFiles, cT))
 
 					if (result.Data.(*CacheWalker).nSeen+1)%100000 == 0 {
@@ -107,7 +109,7 @@ func (opts *StatusOptions) HandleCaches() error {
 					}
 
 				} else {
-					logger.Progress(true, fmt.Sprintf("Skipped %s", result.Path))
+					logger.Progress(!utils.IsFuzzing(), fmt.Sprintf("Skipped %s", result.Path))
 				}
 			}
 		}

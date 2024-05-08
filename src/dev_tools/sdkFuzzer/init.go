@@ -6,6 +6,13 @@ func DoInit() {
 
 	// opts := sdk.InitOptions{}
 
+	// Publisher  base.Address `json:"publisher,omitempty"`
+	// FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
+	// Sleep      float64      `json:"sleep,omitempty"`
+	// func (opts *InitOptions) InitAll() ([]bool, *types.MetaData, error) {
+	// func (opts *InitOptions) InitExample(val string) ([]bool, *types.MetaData, error) {
+	// func (opts *InitOptions) InitDry_run() ([]bool, *types.MetaData, error) {
+
 	// if init, _, err := opts.InitAll(); err != nil {
 	// 	logger.Error(err)
 	// } else {

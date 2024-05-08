@@ -13,6 +13,20 @@ func DoMonitors() {
 	}
 	ShowHeader("DoMonitors", &opts)
 
+	// Addrs     []string `json:"addrs,omitempty"`
+	// Delete    bool     `json:"delete,omitempty"`
+	// Undelete  bool     `json:"undelete,omitempty"`
+	// Remove    bool     `json:"remove,omitempty"`
+	// Watch     bool     `json:"watch,omitempty"`
+	// Watchlist string   `json:"watchlist,omitempty"`
+	// Commands  string   `json:"commands,omitempty"`
+	// BatchSize uint64   `json:"batchSize,omitempty"`
+	// RunCount  uint64   `json:"runCount,omitempty"`
+	// Sleep     float64  `json:"sleep,omitempty"`
+	// func (opts *MonitorsOptions) Monitors() ([]bool, *types.MetaData, error) {
+	// func (opts *MonitorsOptions) MonitorsClean() ([]types.MonitorClean, *types.MetaData, error) {
+	// func (opts *MonitorsOptions) MonitorsList() ([]types.Monitor, *types.MetaData, error) {
+
 	if monitors, _, err := opts.MonitorsList(); err != nil {
 		logger.Error(err)
 	} else {
