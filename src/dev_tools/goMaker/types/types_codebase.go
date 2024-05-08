@@ -120,6 +120,7 @@ var knownTypes = map[string]bool{
 	"int64":         true,
 	"ipfshash":      true,
 	"lognum":        true,
+	"nonce":         true,
 	"numeral":       true,
 	"RawAppearance": true,
 	"StorageSlot":   true,

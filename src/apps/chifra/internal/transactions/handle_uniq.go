@@ -20,7 +20,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
-			Enabled: !testMode,
+			Enabled: !testMode && !logger.IsTerminal(),
 			Total:   250, // estimate since we have no idea how many there are
 		})
 		procFunc := func(s *types.Appearance) error {

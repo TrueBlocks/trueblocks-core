@@ -9,7 +9,7 @@ hash                 ,hash          ,           ,              ,       1 ,the ha
 blockHash            ,hash          ,           ,              ,       2 ,the hash of the block containing this transaction
 from                 ,address       ,           ,              ,       8 ,address from which the transaction was sent
 to                   ,address       ,           ,              ,       9 ,address to which the transaction was sent
-nonce                ,uint64        ,           ,              ,       5 ,sequence number of the transactions sent by the sender
+nonce                ,nonce         ,           ,              ,       5 ,sequence number of the transactions sent by the sender
 value                ,wei           ,           ,              ,      10 ,the amount of wei sent with this transactions
 ether                ,ether         ,           ,calc          ,      11 ,if --ether is specified&#44; the value in ether
 gas                  ,gas           ,           ,              ,      12 ,the maximum number of gas allowed for this transaction

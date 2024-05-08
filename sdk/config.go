@@ -13,12 +13,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type ConfigOptions struct {
-	Mode  ConfigMode `json:"mode,omitempty"`
-	Paths bool       `json:"paths,omitempty"`
+	Mode ConfigMode `json:"mode,omitempty"`
 	Globals
 }
 
@@ -26,6 +27,13 @@ type ConfigOptions struct {
 func (opts ConfigOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
+}
+
+// ConfigPaths implements the chifra config --paths command.
+func (opts *ConfigOptions) ConfigPaths() ([]types.CacheItem, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Paths = true
+	return queryConfig[types.CacheItem](in)
 }
 
 type ConfigMode int

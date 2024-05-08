@@ -58,6 +58,12 @@ func (s *CacheItem) Model(chain, format string, verbose bool, extraOptions map[s
 	var order = []string{}
 
 	// EXISTING_CODE
+	if extraOptions["configPaths"] == true {
+		model["type"] = s.CacheItemType
+		order = append(order, "type")
+		model["path"] = s.Path
+		order = append(order, "path")
+	}
 	// EXISTING_CODE
 
 	return Model{

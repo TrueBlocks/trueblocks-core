@@ -13,20 +13,22 @@ func main() {
 	DoBlocks()
 	DoWhen()
 	DoList()
-	DoNames()
-
-	// DoTransactions()
+	DoNames() // does not test crud commands
+	DoConfig()
+	DoTransactions()
 	// DoTokens()
-	// DoExport()
-	// DoMonitors()
-	// DoConfig()
-	// DoStatus()
-	// DoDaemon()
-	// // DoScrape()
-	//- DoChunks()
-	// DoInit()
-	// DoExplore()
 	// DoSlurp()
+
+	// DoChunks()
+	// DoExport()
+	// DoStatus()
+
+	// DoInit()
+	// DoMonitors()
+
+	// DoDaemon - do not test daemon in fuzzer
+	// DoScrape - no sdk routines for scrape
+	// DoExplore - no sdk routines for explore
 }
 
 var testBlocks = []string{

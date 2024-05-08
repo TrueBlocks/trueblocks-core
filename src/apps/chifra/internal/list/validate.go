@@ -54,7 +54,8 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	if opts.Count && opts.MaxRecords != 250 {
-		return validate.Usage("The {0} option is not available with the {1}-{2} option.", "--count", "--max_records", fmt.Sprintf("%d", opts.MaxRecords))
+		x := fmt.Sprintf("%d", opts.MaxRecords)
+		return validate.Usage("The {0} option is not available{1}.", "--count", "with the --max_records-"+x+" option")
 	}
 
 	if opts.NoZero && !opts.Count {

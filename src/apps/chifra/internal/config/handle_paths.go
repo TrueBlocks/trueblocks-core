@@ -1,23 +1,47 @@
 package configPkg
 
 import (
-	"fmt"
+	"context"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/bykof/gostradamus"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // HandlePaths handles the paths command for the command line. Returns error only as per cobra.
 func (opts *ConfigOptions) HandlePaths() error {
-	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 
-	// TODO: This needs to be a Type and use StreamMany
-	dateStr := gostradamus.Now().Format("02-01|15:04:05.000")
-	fmt.Printf("\nchifra status --paths:\n")
-	fmt.Println(dateStr, colors.Green+"Config Path: "+colors.Off, config.PathToRootConfig())
-	fmt.Println(dateStr, colors.Green+"Cache Path:  "+colors.Off, config.PathToCache(chain))
-	fmt.Println(dateStr, colors.Green+"Index Path:  "+colors.Off, config.PathToIndex(chain))
-	fmt.Println()
-	return nil
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler[types.RawCacheItem], errorChan chan error) {
+		root, cache, index := config.PathToRootConfig(),
+			config.PathToCache(opts.Globals.Chain),
+			config.PathToIndex(opts.Globals.Chain)
+		if testMode {
+			root, cache, index = "--path--", "--path--", "--path--"
+		}
+
+		paths := []types.CacheItem{
+			{
+				Path:          root,
+				CacheItemType: "configPath",
+			},
+			{
+				Path:          cache,
+				CacheItemType: "cachePath",
+			},
+			{
+				Path:          index,
+				CacheItemType: "indexPath",
+			},
+		}
+		for _, s := range paths {
+			modelChan <- &s
+		}
+	}
+
+	extra := map[string]interface{}{
+		"configPaths": true,
+	}
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

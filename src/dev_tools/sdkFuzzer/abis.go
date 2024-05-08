@@ -39,7 +39,7 @@ func DoAbis() {
 				}
 				opts.Globals = g
 				fn := getFilename(baseFn, &opts.Globals)
-				TestAbis(fn, &opts)
+				TestAbis("abis", "", fn, &opts)
 			}
 		}
 	}
@@ -61,7 +61,7 @@ func DoAbis() {
 		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)
-			TestAbisEncode(s, fn, &opts)
+			TestAbis("encode", s, fn, &opts)
 		}
 	}
 
@@ -86,44 +86,43 @@ func DoAbis() {
 			for _, g := range globs {
 				opts.Globals = g
 				fn := getFilename(baseFn, &opts.Globals)
-				TestAbisFind(f, fn, &opts)
+				TestAbis("find", f, fn, &opts)
 			}
 		}
 	}
 }
 
-func TestAbis(fn string, opts *sdk.AbisOptions) {
-	if funcs, _, err := opts.Abis(); err != nil {
-		ReportError(fn, err)
-	} else {
-		if err := SaveToFile[types.Function](fn, funcs); err != nil {
+func TestAbis(which, f, fn string, opts *sdk.AbisOptions) {
+	switch which {
+	case "abis":
+		if funcs, _, err := opts.Abis(); err != nil {
 			ReportError(fn, err)
 		} else {
-			ReportOkay(fn)
+			if err := SaveToFile[types.Function](fn, funcs); err != nil {
+				ReportError(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
 		}
-	}
-}
-
-func TestAbisEncode(sig, fn string, opts *sdk.AbisOptions) {
-	if funcs, _, err := opts.AbisEncode(sig); err != nil {
-		ReportError(fn, err)
-	} else {
-		if err := SaveToFile[types.Function](fn, funcs); err != nil {
+	case "encode":
+		if funcs, _, err := opts.AbisEncode(f); err != nil {
 			ReportError(fn, err)
 		} else {
-			ReportOkay(fn)
+			if err := SaveToFile[types.Function](fn, funcs); err != nil {
+				ReportError(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
 		}
-	}
-}
-
-func TestAbisFind(f, fn string, opts *sdk.AbisOptions) {
-	if funcs, _, err := opts.AbisFind([]string{f}); err != nil {
-		ReportError(fn, err)
-	} else {
-		if err := SaveToFile[types.Function](fn, funcs); err != nil {
+	case "find":
+		if funcs, _, err := opts.AbisFind([]string{f}); err != nil {
 			ReportError(fn, err)
 		} else {
-			ReportOkay(fn)
+			if err := SaveToFile[types.Function](fn, funcs); err != nil {
+				ReportError(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
 		}
 	}
 }
