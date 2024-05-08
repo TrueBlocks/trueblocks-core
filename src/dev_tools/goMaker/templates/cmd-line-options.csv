@@ -323,7 +323,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 53040,tools,Other,slurp,ethslurp,types,t,,visible|docs,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|some|all]>,,,,,which types of transactions to request
 53050,tools,Other,slurp,ethslurp,appearances,p,,visible|docs,switch,<boolean>,appearance,,,,show only the blocknumber.tx_id appearances of the exported transactions
 53060,tools,Other,slurp,ethslurp,articulate,a,,visible|docs,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
-53070,tools,Other,slurp,ethslurp,source,S,etherscan,visible|docs,flag,enum[etherscan*|key],,,,,the source of the slurped data
+53070,tools,Other,slurp,ethslurp,source,S,etherscan,visible|docs,flag,enum[etherscan*|key|covalent|alchemy],,,,,the source of the slurped data
 53080,tools,Other,slurp,ethslurp,count,U,,visible|docs,switch,<boolean>,slurpCount,,,,for --appearances mode only&#44; display only the count of records
 53090,tools,Other,slurp,ethslurp,page,g,,,flag,<uint64>,,,,,the page to retrieve (page number)
 53090,tools,Other,slurp,ethslurp,page_id,,,,flag,<string>,,,,,the page to retrieve (page ID)
