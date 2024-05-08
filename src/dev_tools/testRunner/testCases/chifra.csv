@@ -28,7 +28,7 @@ on      ,cmd  ,fast  ,chifra  ,apps ,chifra ,help_scrape         ,n    ,modes = 
 on      ,cmd  ,fast  ,chifra  ,apps ,chifra ,help_chunks         ,n    ,modes = chunks & help
 on      ,cmd  ,fast  ,chifra  ,apps ,chifra ,help_init           ,n    ,modes = init & help
 on      ,cmd  ,fast  ,chifra  ,apps ,chifra ,help_explore        ,n    ,modes = explore & help
-local   ,cmd  ,fast  ,chifra  ,apps ,chifra ,help_slurp          ,n    ,modes = slurp & help
+on      ,cmd  ,fast  ,chifra  ,apps ,chifra ,help_slurp          ,n    ,modes = slurp & help
 
 on      ,both ,fast  ,names   ,apps ,chifra ,run_names           ,y    ,modes = names & terms = 50-Tokens & expand
 on      ,both ,fast  ,names   ,apps ,chifra ,run_names_tags      ,y    ,modes = names & tags
