@@ -14,12 +14,6 @@ func DoLogs() {
 	}
 	ShowHeader("DoLogs", opts)
 
-	// TransactionIds []string `json:"transactions,omitempty"`
-	// Emitter        []string `json:"emitter,omitempty"`
-	// Topic          []string `json:"topic,omitempty"`
-	// Articulate     bool     `json:"articulate,omitempty"`
-	// func (opts *LogsOptions) Logs() ([]types.Log, *types.MetaData, error) {
-
 	emitters := []string{"", "0x5564886ca2c518d1964e5fcea4f423b41db9f561"}
 	topics := []string{"", "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc"}
 	art := []bool{false, true}
