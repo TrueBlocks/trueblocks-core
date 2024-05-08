@@ -32,19 +32,7 @@ func (opts *TokensOptions) validateTokens() error {
 	}
 
 	if opts.Changes {
-		return validate.Usage("The {0} is not yet implemented.", "--changes")
-	}
-
-	if err != nil {
-		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
-			return invalidLiteral
-		}
-
-		if errors.Is(err, validate.ErrTooManyRanges) {
-			return validate.Usage("Specify only a single block range at a time.")
-		}
-
-		return err
+		return validate.Usage("The {0} option is not yet implemented.", "--changes")
 	}
 
 	if len(opts.Addrs) == 0 {

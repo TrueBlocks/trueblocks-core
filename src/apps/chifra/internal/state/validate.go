@@ -7,7 +7,6 @@ package statePkg
 import (
 	"errors"
 	"fmt"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
@@ -33,10 +32,6 @@ func (opts *StateOptions) validateState() error {
 	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[balance|nonce|code|proxy|deployed|accttype|some|all]")
 	if err != nil {
 		return err
-	}
-
-	if strings.Contains(strings.Join(opts.Parts, " "), "nonce") {
-		return validate.Usage("The {0} value is currently not available{1}.", "nonce", " with the --parts option")
 	}
 
 	if len(opts.Globals.File) > 0 {

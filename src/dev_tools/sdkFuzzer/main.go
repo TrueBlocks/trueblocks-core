@@ -16,7 +16,7 @@ func main() {
 	DoNames() // does not test crud commands
 	DoConfig()
 	DoTransactions()
-	// DoTokens()
+	DoTokens()
 	// DoSlurp()
 
 	// DoChunks()
@@ -27,6 +27,7 @@ func main() {
 	// DoMonitors()
 
 	// DoDaemon - do not test daemon in fuzzer
+
 	// DoScrape - no sdk routines for scrape
 	// DoExplore - no sdk routines for explore
 }
