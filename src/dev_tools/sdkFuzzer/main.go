@@ -21,7 +21,7 @@ func main() {
 
 	// DoChunks()
 	// DoExport()
-	// DoStatus()
+	DoStatus()
 
 	// DoInit()
 	// DoMonitors()

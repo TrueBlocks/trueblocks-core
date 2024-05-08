@@ -1,220 +1,126 @@
 package main
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // DoStatus tests the status sdk function
 func DoStatus() {
+	file.EstablishFolder("sdkFuzzer-output/status")
 	opts := sdk.StatusOptions{}
 	ShowHeader("DoStatus", &opts)
 
-	// FirstRecord uint64 `json:"firstRecord,omitempty"`
-	// MaxRecords  uint64 `json:"maxRecords,omitempty"`
-	// Chains      bool   `json:"chains,omitempty"`
-	// func (opts *StatusOptions) StatusIndex() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusBlooms() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusBlocks() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusTransactions() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusTraces() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusLogs() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusStatements() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusResults() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusState() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusTokens() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusMonitors() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusNames() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusAbis() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusSlurps() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusStaging() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusUnripe() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusMaps() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusSome() ([]types.Status, *types.MetaData, error) {
-	// func (opts *StatusOptions) StatusAll() ([]types.Status, *types.MetaData, error) {
 	// func (opts *StatusOptions) StatusDiagnose() ([]bool, *types.MetaData, error) {
-	// NoSM    StatusModes = 0
-	// SMIndex             = 1 << iota
-	// SMBlooms
-	// SMBlocks
-	// SMTransactions
-	// SMTraces
-	// SMLogs
-	// SMStatements
-	// SMResults
-	// SMState
-	// SMTokens
-	// SMMonitors
-	// SMNames
-	// SMAbis
-	// SMSlurps
-	// SMStaging
-	// SMUnripe
-	// SMMaps
-	// SMSome = SMIndex | SMBlooms | SMBlocks | SMTransactions
-	// SMAll  = SMIndex | SMBlooms | SMBlocks | SMTransactions | SMTraces | SMLogs | SMStatements | SMResults | SMState | SMTokens | SMMonitors | SMNames | SMAbis | SMSlurps | SMStaging | SMUnripe | SMMaps
 
-	if indexes, _, err := opts.StatusIndex(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusIndex.json", indexes); err != nil {
-			logger.Error(err)
+	firsts := []uint64{0, 10}
+	maxes := []uint64{0, 500}
+	chains := []bool{false, true}
+	globs := noEther(noRaw(noCache(globals)))
+
+	for _, c := range chains {
+		for _, f := range firsts {
+			for _, m := range maxes {
+				for _, g := range globs {
+					baseName := "status/status"
+					opts.Chains = c
+					if c {
+						baseName += "-chains"
+					}
+					if f > 0 {
+						baseName += fmt.Sprintf("-first-%d", f)
+					}
+					if m > 0 {
+						baseName += fmt.Sprintf("-max-%d", m)
+					}
+					opts.FirstRecord = f
+					opts.MaxRecords = m
+					opts.Globals = g
+
+					fn := getFilename(baseName, &opts.Globals)
+					TestStatus("index", fn, &opts)
+					TestStatus("blooms", fn, &opts)
+					TestStatus("blocks", fn, &opts)
+					TestStatus("transactions", fn, &opts)
+					TestStatus("traces", fn, &opts)
+					TestStatus("logs", fn, &opts)
+					TestStatus("statements", fn, &opts)
+					TestStatus("results", fn, &opts)
+					TestStatus("state", fn, &opts)
+					TestStatus("tokens", fn, &opts)
+					TestStatus("monitors", fn, &opts)
+					TestStatus("names", fn, &opts)
+					TestStatus("abis", fn, &opts)
+					TestStatus("slurps", fn, &opts)
+					TestStatus("staging", fn, &opts)
+					TestStatus("unripe", fn, &opts)
+					TestStatus("maps", fn, &opts)
+					TestStatus("some", fn, &opts)
+					TestStatus("all", fn, &opts)
+				}
+			}
 		}
 	}
+}
 
-	if blooms, _, err := opts.StatusBlooms(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusBlooms.json", blooms); err != nil {
-			logger.Error(err)
-		}
+func TestStatus(which, fn string, opts *sdk.StatusOptions) {
+	var f func() ([]types.Status, *types.MetaData, error)
+	switch which {
+	case "index":
+		f = opts.StatusIndex
+	case "blooms":
+		f = opts.StatusBlooms
+	case "blocks":
+		f = opts.StatusBlocks
+	case "transactions":
+		f = opts.StatusTransactions
+	case "traces":
+		f = opts.StatusTraces
+	case "logs":
+		f = opts.StatusLogs
+	case "statements":
+		f = opts.StatusStatements
+	case "results":
+		f = opts.StatusResults
+	case "state":
+		f = opts.StatusState
+	case "tokens":
+		f = opts.StatusTokens
+	case "monitors":
+		f = opts.StatusMonitors
+	case "names":
+		f = opts.StatusNames
+	case "abis":
+		f = opts.StatusAbis
+	case "slurps":
+		f = opts.StatusSlurps
+	case "staging":
+		f = opts.StatusStaging
+	case "unripe":
+		f = opts.StatusUnripe
+	case "maps":
+		f = opts.StatusMaps
+	case "some":
+		f = opts.StatusSome
+	case "all":
+		f = opts.StatusAll
+	default:
+		ReportError(fn, fmt.Errorf("unknown status type: %s", which))
+		return
 	}
 
-	if blocks, _, err := opts.StatusBlocks(); err != nil {
-		logger.Error(err)
+	if status, _, err := f(); err != nil {
+		ReportError(fn, err)
 	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusBlocks.json", blocks); err != nil {
-			logger.Error(err)
+		fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+		if err := SaveToFile[types.Status](fn, status); err != nil {
+			ReportError(fn, err)
+		} else {
+			ReportOkay(fn)
 		}
 	}
-
-	if transactions, _, err := opts.StatusTransactions(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusTransactions.json", transactions); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if traces, _, err := opts.StatusTraces(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusTraces.json", traces); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if logs, _, err := opts.StatusLogs(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusLogs.json", logs); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if statements, _, err := opts.StatusStatements(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusStatements.json", statements); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if results, _, err := opts.StatusResults(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusResults.json", results); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if state, _, err := opts.StatusState(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusState.json", state); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if tokens, _, err := opts.StatusTokens(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusTokens.json", tokens); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if monitors, _, err := opts.StatusMonitors(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusMonitors.json", monitors); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if names, _, err := opts.StatusNames(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusNames.json", names); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if abis, _, err := opts.StatusAbis(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusAbis.json", abis); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if slurps, _, err := opts.StatusSlurps(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusSlurps.json", slurps); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if staging, _, err := opts.StatusStaging(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusStaging.json", staging); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if unripe, _, err := opts.StatusUnripe(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusUnripe.json", unripe); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if maps, _, err := opts.StatusMaps(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusMaps.json", maps); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if some, _, err := opts.StatusSome(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusSome.json", some); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	if all, _, err := opts.StatusAll(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveToFile[types.Status]("sdkFuzzer/statusAll.json", all); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	// if diagnose, _, err := opts.StatusDiagnose(); err != nil {
-	// 	logger.Error(err)
-	// } else {
-	// 	if err := SaveAndClean[bool]("sdkFuzzer/statusDiagnose.json", diagnose, &opts, func() error {
-	// 		_, _, err := opts.StatusDiagnose()
-	// 		return err
-	// 	}); err != nil {
-	// 		logger.Error(err)
-	// 	}
-	// }
 }

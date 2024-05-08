@@ -36,5 +36,9 @@ func (opts *StatusOptions) validateStatus() error {
 		return validate.Usage("{0} may not be used with {1}", "--diagnose", opts.Modes[0])
 	}
 
+	if len(opts.Modes) == 0 && opts.Chains {
+		return validate.Usage("The {0} option is only available{1}.", "--chains", " with a mode")
+	}
+
 	return opts.Globals.Validate()
 }
