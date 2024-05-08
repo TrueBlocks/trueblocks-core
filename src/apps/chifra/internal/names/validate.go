@@ -31,25 +31,25 @@ func (opts *NamesOptions) validateNames() error {
 
 	if opts.Tags {
 		if opts.Addr {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--tags", "--addr")
+			return validate.Usage("The {0} option is not available{1}.", "--tags", " with the --addr option")
 		}
 		if opts.Clean {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--tags", "--clean")
+			return validate.Usage("The {0} option is not available{1}.", "--tags", " with the --clean option")
 		}
 		if opts.anyCrud() {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--tags", "any CRUD")
+			return validate.Usage("The {0} option is not available{1}.", "--tags", " with the any CRUD option")
 		}
 	}
 
 	if opts.Addr {
 		if opts.Tags {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--addr", "--tag")
+			return validate.Usage("The {0} option is not available{1}.", "--addr", " with the --tag option")
 		}
 		if opts.Clean {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--addr", "--clean")
+			return validate.Usage("The {0} option is not available{1}.", "--addr", " with the --clean option")
 		}
 		if opts.anyCrud() {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--addr", "any CRUD")
+			return validate.Usage("The {0} option is not available{1}.", "--addr", " with the any CRUD option")
 		}
 	}
 
@@ -65,7 +65,7 @@ func (opts *NamesOptions) validateNames() error {
 
 	if len(opts.Autoname) > 0 {
 		if opts.Regular {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--regular", "--autoname")
+			return validate.Usage("The {0} option is not available{1}.", "--regular", " with the --autoname option")
 		}
 
 		if !base.IsValidAddress(opts.Autoname) || opts.AutonameAddr.IsZero() {

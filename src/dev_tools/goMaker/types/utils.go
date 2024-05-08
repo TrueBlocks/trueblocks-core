@@ -26,7 +26,8 @@ func shouldProcess(source, tag string) (bool, error) {
 			return false, nil
 		}
 
-		if tag == "explore" || tag == "scrape" || tag == "daemon" {
+		cmd := Command{Route: tag}
+		if !cmd.IsRoute() || tag == "scrape" {
 			return false, nil
 		}
 	}

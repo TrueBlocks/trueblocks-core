@@ -30,13 +30,13 @@ func (opts *ChunksOptions) validateChunks() error {
 
 	if opts.Globals.IsApiMode() {
 		if len(opts.Tag) > 0 {
-			return validate.Usage("The {0} option is not available {1}.", "--tag", "in api mode")
+			return validate.Usage("The {0} option is not available{1}.", "--tag", " in api mode")
 		}
 		if opts.Truncate != base.NOPOSN {
-			return validate.Usage("The {0} option is not available {1}.", "--truncate", "in api mode")
+			return validate.Usage("The {0} option is not available{1}.", "--truncate", " in api mode")
 		}
 		if opts.Mode == "pins" {
-			return validate.Usage("The {0} mode is not available {1}.", "pins", "in api mode")
+			return validate.Usage("The {0} mode is not available{1}.", "pins", " in api mode")
 		}
 	} else if len(opts.Tag) > 0 {
 		if !version.IsValidVersion(opts.Tag) {
@@ -108,7 +108,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 
 		if opts.Check {
-			return validate.Usage("The {0} option is not available in {1} mode.", "--check", opts.Mode)
+			return validate.Usage("The {0} option is not available{1}.", "--check", " in "+opts.Mode+" mode")
 		}
 	}
 
@@ -255,16 +255,16 @@ func (opts *ChunksOptions) validateChunks() error {
 func (opts *ChunksOptions) isDisallowed(test bool, mode string) error {
 	if test {
 		if opts.Pin {
-			return validate.Usage("The {0} option is not available in {1} mode.", "--pin", mode)
+			return validate.Usage("The {0} option is not available{1}.", "--pin", " in "+mode+" mode")
 		}
 		if opts.Publish {
-			return validate.Usage("The {0} option is not available in {1} mode.", "--publish", mode)
+			return validate.Usage("The {0} option is not available{1}.", "--publish", " in "+mode+" mode")
 		}
 		if opts.Remote {
-			return validate.Usage("The {0} option is not available in {1} mode.", "--remote", mode)
+			return validate.Usage("The {0} option is not available{1}.", "--remote", " in "+mode+" mode")
 		}
 		if opts.Truncate != base.NOPOSN {
-			return validate.Usage("The {0} option is not available in {1} mode.", "--truncate", mode)
+			return validate.Usage("The {0} option is not available{1}.", "--truncate", " in "+mode+" mode")
 		}
 	}
 	return nil
