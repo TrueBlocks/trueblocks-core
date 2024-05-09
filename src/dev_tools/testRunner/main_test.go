@@ -10,7 +10,7 @@ import (
 
 func TestMainFunction(t *testing.T) {
 	os.Setenv("TEST_MODE", "true")
-	os.Setenv("TB_TEST_FILTER", "init")
+	os.Setenv("TB_TEST_FILTER", "slurp")
 	err := os.Chdir("../../../build/")
 	if err != nil {
 		logger.Fatal(fmt.Sprintf("Failed to change directory: %v", err))

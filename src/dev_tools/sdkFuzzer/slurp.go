@@ -21,34 +21,37 @@ func DoSlurp() {
 	// PerPage    uint64      `json:"perPage,omitempty"`
 
 	types1 := []sdk.SlurpTypes{
-		// sdk.NoST,
-		// sdk.STExt,
-		// sdk.STInt,
-		// sdk.STToken,
-		// sdk.STNfts,
-		// sdk.ST1155,
-		// sdk.STMiner,
-		// sdk.STUncles,
-		// sdk.STWithdrawals,
+		sdk.NoST,
+		sdk.STExt,
+		sdk.STInt,
+		sdk.STToken,
+		sdk.STNfts,
+		sdk.ST1155,
+		sdk.STMiner,
+		sdk.STUncles,
+		sdk.STWithdrawals,
 		sdk.STSome,
-		// sdk.STAll,
+		sdk.STAll,
 	}
 	sources := []sdk.SlurpSource{
 		sdk.SSEtherscan,
-		// sdk.SSKey,
-		// sdk.SSCovalent,
-		// sdk.SSAlchemy,
+		sdk.SSKey,
+		sdk.SSCovalent,
+		sdk.SSAlchemy,
 	}
 	art := []bool{false, true}
 	globs := noCache(globals)
 
 	for _, s := range sources {
 		for _, t := range types1 {
+			if sdk.NoST != t && sdk.SSEtherscan != s {
+				continue
+			}
 			for _, a := range art {
-				baseFn := "slurp/slurp" + "-" + t.String() + "-" + t.String()
-				if a {
-					baseFn += "-articulate"
-				}
+				baseFn := "slurp/slurp" + "-" + t.String() + "-" + s.String()
+				// if a {
+				// 	baseFn += "-articulate"
+				// }
 				opts.Source = s
 				opts.Types = t
 				opts.Articulate = a

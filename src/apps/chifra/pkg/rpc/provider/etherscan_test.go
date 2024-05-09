@@ -114,7 +114,7 @@ func mockConvertSlurpType(t *testing.T) func(address string, requestType string,
 	return func(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
 		return types.Slurp{
 			BlockNumber:      base.MustParseBlknum(rawTx.BlockNumber),
-			TransactionIndex: base.MustParseNumeral(rawTx.TransactionIndex),
+			TransactionIndex: base.MustParseIndex(rawTx.TransactionIndex),
 		}, nil
 	}
 }
