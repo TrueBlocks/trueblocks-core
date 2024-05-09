@@ -3487,7 +3487,7 @@ components:
         compressedTx:
           type: string
           format: string
-          description: "truncated, more readable version of the articulation"
+          description: "truncated, more readable version of the articulation (calculated)"
     withdrawal:
       description: "withdrawal record for post-Shanghai withdrawals from the consensus layer"
       type: object
@@ -4626,7 +4626,7 @@ components:
         ether:
           type: string
           format: ether
-          description: "if --ether is specified, the value in ether"
+          description: "if --ether is specified, the value in ether (calculated)"
         gas:
           type: number
           format: gas
@@ -4651,7 +4651,7 @@ components:
         compressedTx:
           type: string
           format: string
-          description: "truncated, more readable version of the articulation"
+          description: "truncated, more readable version of the articulation (calculated)"
         isError:
           type: boolean
           format: boolean

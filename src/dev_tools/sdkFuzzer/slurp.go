@@ -38,7 +38,7 @@ func DoSlurp() {
 		sdk.SSCovalent,
 		sdk.SSAlchemy,
 	}
-	art := []bool{false, true}
+	art := []bool{false} // , true}
 	globs := noCache(globals)
 
 	for _, s := range sources {

@@ -82,7 +82,7 @@ Transactions consist of the following fields:
 | articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)        |
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | bool                                           |
 | isError          | `true` if the transaction ended in error, `false` otherwise                                           | bool                                           |
-| compressedTx     | truncated, more readable version of the articulation                                                  | string                                         |
+| compressedTx     | truncated, more readable version of the articulation (calculated)                                     | string                                         |
 
 ## Withdrawal
 

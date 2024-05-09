@@ -28,7 +28,6 @@ type RawSlurp struct {
 	BlockNumber       string `json:"blockNumber"`
 	ContractAddress   string `json:"contractAddress"`
 	CumulativeGasUsed string `json:"cumulativeGasUsed"`
-	Ether             string `json:"ether"`
 	From              string `json:"from"`
 	FunctionName      string `json:"functionName"`
 	Gas               string `json:"gas"`
@@ -55,10 +54,8 @@ type Slurp struct {
 	ArticulatedTx     *Function      `json:"articulatedTx"`
 	BlockHash         base.Hash      `json:"blockHash"`
 	BlockNumber       base.Blknum    `json:"blockNumber"`
-	CompressedTx      string         `json:"compressedTx"`
 	ContractAddress   base.Address   `json:"contractAddress"`
 	CumulativeGasUsed string         `json:"cumulativeGasUsed"`
-	Ether             base.Ether     `json:"ether"`
 	From              base.Address   `json:"from"`
 	FunctionName      string         `json:"functionName"`
 	Gas               base.Gas       `json:"gas"`
@@ -322,11 +319,6 @@ func (s *Slurp) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// CompressedTx
-	if err = cache.WriteValue(writer, s.CompressedTx); err != nil {
-		return err
-	}
-
 	// ContractAddress
 	if err = cache.WriteValue(writer, s.ContractAddress); err != nil {
 		return err
@@ -334,11 +326,6 @@ func (s *Slurp) MarshalCache(writer io.Writer) (err error) {
 
 	// CumulativeGasUsed
 	if err = cache.WriteValue(writer, s.CumulativeGasUsed); err != nil {
-		return err
-	}
-
-	// Ether
-	if err = cache.WriteValue(writer, s.Ether); err != nil {
 		return err
 	}
 
@@ -459,11 +446,6 @@ func (s *Slurp) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
-	// CompressedTx
-	if err = cache.ReadValue(reader, &s.CompressedTx, vers); err != nil {
-		return err
-	}
-
 	// ContractAddress
 	if err = cache.ReadValue(reader, &s.ContractAddress, vers); err != nil {
 		return err
@@ -471,11 +453,6 @@ func (s *Slurp) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 
 	// CumulativeGasUsed
 	if err = cache.ReadValue(reader, &s.CumulativeGasUsed, vers); err != nil {
-		return err
-	}
-
-	// Ether
-	if err = cache.ReadValue(reader, &s.Ether, vers); err != nil {
 		return err
 	}
 

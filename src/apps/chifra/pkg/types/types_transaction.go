@@ -71,7 +71,6 @@ type Transaction struct {
 	ArticulatedTx        *Function       `json:"articulatedTx"`
 	BlockHash            base.Hash       `json:"blockHash"`
 	BlockNumber          base.Blknum     `json:"blockNumber"`
-	CompressedTx         string          `json:"compressedTx"`
 	From                 base.Address    `json:"from"`
 	Gas                  base.Gas        `json:"gas"`
 	GasPrice             base.Gas        `json:"gasPrice"`
