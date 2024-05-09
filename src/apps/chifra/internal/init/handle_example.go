@@ -31,7 +31,7 @@ func (opts *InitOptions) HandleExample() error {
 
 	// update the go.work file
 	os.Remove("../go.work")
-	utils.System("source ../scripts/make-go-work.sh")
+	utils.System("source ../scripts/go-work-sync.sh")
 
 	return nil
 }
