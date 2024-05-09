@@ -17,7 +17,7 @@ import (
 // of the files needed to run an example. This is a convenience function for
 // developers to quickly get started with the example.
 func (opts *InitOptions) HandleExample() error {
-	template := ""                          // will use opts.Template in the future
+	template := "base/"                     // will use opts.Template in the future
 	tmplFolder := "./templates/" + template // will later support opts.Template
 
 	// We already know that the folder does not exist since it passed validation...
