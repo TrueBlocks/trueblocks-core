@@ -57,7 +57,7 @@ jobs:
         run: |
           mkdir -p build
           cd build
-          ../scripts/make-go-work.sh
+          ../scripts/go-work-sync.sh
           cmake ../src
           cd other/install
           make
