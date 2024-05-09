@@ -10,6 +10,7 @@ package rpc
 import (
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -22,7 +23,7 @@ func Test_Client(t *testing.T) {
 	}
 
 	ts := conn.GetBlockTimestamp(1)
-	blockOneTimestamp := int64(1438269988)
+	blockOneTimestamp := base.Timestamp(1438269988)
 	if ts != blockOneTimestamp {
 		t.Error("timestamp for block 1 is not correct")
 	}

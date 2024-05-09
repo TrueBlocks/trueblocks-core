@@ -39,7 +39,7 @@ func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block[ty
 					Hash:        base.HexToHash(rawUncle.Hash),
 					Miner:       base.HexToAddress(rawUncle.Miner),
 					ParentHash:  base.HexToHash(rawUncle.ParentHash),
-					Timestamp:   base.MustParseInt(rawUncle.Timestamp),
+					Timestamp:   base.MustParseTimestamp(rawUncle.Timestamp),
 					// Transactions: rawUncle.Transactions,
 					// BaseFeePerGas: rawUncle.BaseFeePerGas,
 					// Difficulty: rawUncle.Difficulty,

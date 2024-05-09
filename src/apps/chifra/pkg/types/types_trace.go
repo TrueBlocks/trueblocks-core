@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -55,8 +54,8 @@ type Trace struct {
 	TraceType        string         `json:"type,omitempty"`
 	raw              *RawTrace      `json:"-"`
 	// EXISTING_CODE
-	TraceIndex base.TraceId `json:"-"`
-	sortString string       `json:"-"`
+	TraceIndex base.Tracenum `json:"-"`
+	sortString string        `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -199,7 +198,7 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOptions map[strin
 }
 
 func (s *Trace) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+	return base.FormattedDate(s.Timestamp)
 }
 
 type TraceGroup struct {

@@ -89,7 +89,7 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 	return nil
 }
 
-func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow string, trans *types.Transaction, ts int64, addrMap AddressBooleanMap, conn *rpc.Connection) error {
+func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow string, trans *types.Transaction, ts base.Timestamp, addrMap AddressBooleanMap, conn *rpc.Connection) error {
 	bn := trans.BlockNumber
 	txid := trans.TransactionIndex
 	traceid := base.NOPOSN
@@ -130,7 +130,7 @@ func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow str
 }
 
 // uniqFromLogsDetails extracts addresses from the logs
-func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs []types.Log, ts int64, addrMap AddressBooleanMap) (err error) {
+func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs []types.Log, ts base.Timestamp, addrMap AddressBooleanMap) (err error) {
 	traceid := base.NOPOSN
 	for l, log := range logs {
 		generator := log.Address.Hex()
@@ -160,7 +160,7 @@ func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs 
 	return
 }
 
-func traceReason(traceId base.TraceId, trace *types.Trace, r string) string {
+func traceReason(traceId base.Tracenum, trace *types.Trace, r string) string {
 	switch r {
 	case "from":
 		fallthrough
@@ -197,7 +197,7 @@ func traceReason(traceId base.TraceId, trace *types.Trace, r string) string {
 }
 
 // uniqFromTracesDetails extracts addresses from traces
-func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.Trace, ts int64, addrMap AddressBooleanMap, conn *rpc.Connection) (err error) {
+func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.Trace, ts base.Timestamp, addrMap AddressBooleanMap, conn *rpc.Connection) (err error) {
 	for _, trace := range traces {
 		traceid := trace.TraceIndex
 		bn := base.Blknum(trace.BlockNumber)
@@ -326,7 +326,7 @@ var mapSync2 sync.Mutex
 
 // streamAppearance streams an appearance to the model channel if we've not seen this appearance before. We
 // keep track of appearances we've seen with `appsMap`.
-func streamAppearance(procFunc UniqProcFunc, flow string, reason string, address string, bn base.Blknum, txid base.Txnum, traceid base.TraceId, ts int64, addrMap AddressBooleanMap) {
+func streamAppearance(procFunc UniqProcFunc, flow string, reason string, address string, bn base.Blknum, txid base.Txnum, traceid base.Tracenum, ts base.Timestamp, addrMap AddressBooleanMap) {
 	if base.IsPrecompile(address) {
 		return
 	}

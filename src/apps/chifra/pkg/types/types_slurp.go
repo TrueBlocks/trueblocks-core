@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -75,9 +74,9 @@ type Slurp struct {
 	To                base.Address   `json:"to"`
 	TransactionIndex  base.Txnum     `json:"transactionIndex"`
 	TxReceiptStatus   string         `json:"txReceiptStatus"`
-	ValidatorIndex    base.Numeral   `json:"validatorIndex"`
+	ValidatorIndex    base.Index     `json:"validatorIndex"`
 	Value             base.Wei       `json:"value"`
-	WithdrawalIndex   base.Numeral   `json:"withdrawalIndex"`
+	WithdrawalIndex   base.Index     `json:"withdrawalIndex"`
 	raw               *RawSlurp      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -264,7 +263,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[strin
 }
 
 func (s *Slurp) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+	return base.FormattedDate(s.Timestamp)
 }
 
 type SlurpGroup struct {

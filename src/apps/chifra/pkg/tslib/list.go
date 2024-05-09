@@ -92,7 +92,7 @@ func readSpecials(path string, nFields int) (specials []types.NamedBlock, err er
 				}
 				s := types.NamedBlock{
 					BlockNumber: base.MustParseBlknum(record[locs["bn"]]),
-					Timestamp:   base.MustParseInt(record[locs["ts"]]),
+					Timestamp:   base.MustParseTimestamp(record[locs["ts"]]),
 					Name:        record[locs["name"]],
 				}
 				// is this the header?

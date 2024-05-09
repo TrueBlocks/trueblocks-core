@@ -198,9 +198,9 @@ This documentation mentions the following basic data types.
 | ether     | a big number float                  | as a string    |
 | gas       | a 64-bit unsigned integer           |                |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
+| index     | an alias for a uint64               |                |
 | int64     | a 64-bit signed integer             |                |
 | nonce     | a 64-bit unsigned integer           |                |
-| numeral   | an alias for a uint64               |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | txnum     | an alias for a uint64               |                |

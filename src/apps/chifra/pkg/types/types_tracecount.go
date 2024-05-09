@@ -13,7 +13,6 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -80,7 +79,7 @@ func (s *TraceCount) Model(chain, format string, verbose bool, extraOptions map[
 }
 
 func (s *TraceCount) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+	return base.FormattedDate(s.Timestamp)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

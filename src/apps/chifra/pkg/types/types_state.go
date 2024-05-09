@@ -125,7 +125,7 @@ func (s *State) Model(chain, format string, verbose bool, extraOptions map[strin
 }
 
 func (s *State) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+	return base.FormattedDate(s.Timestamp)
 }
 
 func (s *State) CacheName() string {

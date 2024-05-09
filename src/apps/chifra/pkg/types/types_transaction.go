@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type StorageSlot struct {
@@ -323,7 +322,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 }
 
 func (s *Transaction) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+	return base.FormattedDate(s.Timestamp)
 }
 
 func (s *Transaction) CacheName() string {
@@ -624,15 +623,15 @@ func NewTransaction(raw *RawTransaction, receipt *Receipt, timestamp base.Timest
 	s.BlockHash = base.HexToHash(raw.BlockHash)
 	s.BlockNumber = base.MustParseBlknum(raw.BlockNumber)
 	s.TransactionIndex = base.MustParseIndex(raw.TransactionIndex)
-	s.Nonce = base.MustParseNumeral(raw.Nonce)
+	s.Nonce = base.MustParseIndex(raw.Nonce)
 	s.Timestamp = timestamp
 	s.From = base.HexToAddress(raw.From)
 	s.To = base.HexToAddress(raw.To)
 	s.Value.SetString(raw.Value, 0)
-	s.Gas = base.MustParseNumeral(raw.Gas)
-	s.GasPrice = base.MustParseNumeral(raw.GasPrice)
-	s.MaxFeePerGas = base.MustParseNumeral(raw.MaxFeePerGas)
-	s.MaxPriorityFeePerGas = base.MustParseNumeral(raw.MaxPriorityFeePerGas)
+	s.Gas = base.MustParseGas(raw.Gas)
+	s.GasPrice = base.MustParseGas(raw.GasPrice)
+	s.MaxFeePerGas = base.MustParseGas(raw.MaxFeePerGas)
+	s.MaxPriorityFeePerGas = base.MustParseGas(raw.MaxPriorityFeePerGas)
 	s.Input = raw.Input
 	s.TransactionType = raw.TransactionType
 

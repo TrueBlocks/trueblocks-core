@@ -8,7 +8,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -49,7 +48,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block[types.
 		return block, err
 	}
 
-	ts, _ := strconv.ParseInt(rawBlock.Timestamp, 0, 64)
+	ts := base.MustParseTimestamp(rawBlock.Timestamp)
 	block.Transactions = make([]types.Transaction, 0, len(rawBlock.Transactions))
 	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, ts)
 	for _, rawTx := range rawBlock.Transactions {
@@ -206,8 +205,8 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, 
 		Timestamp:   base.Timestamp(base.MustParseInt(rawBlock.Timestamp)), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
 		Hash:        base.HexToHash(rawBlock.Hash),
 		ParentHash:  base.HexToHash(rawBlock.ParentHash),
-		GasLimit:    base.MustParseNumeral(rawBlock.GasLimit),
-		GasUsed:     base.MustParseNumeral(rawBlock.GasUsed),
+		GasLimit:    base.MustParseGas(rawBlock.GasLimit),
+		GasUsed:     base.MustParseGas(rawBlock.GasUsed),
 		Miner:       base.HexToAddress(rawBlock.Miner),
 		Difficulty:  base.MustParseUint(rawBlock.Difficulty),
 		Uncles:      uncleHashes,

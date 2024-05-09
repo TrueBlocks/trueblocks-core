@@ -43,5 +43,5 @@ func FromNameToDate(chain, name string) (gostradamus.DateTime, error) {
 
 // FromTsToDate returns a date given a Linux timestamp (not chain-specific)
 func FromTsToDate(ts base.Timestamp) (gostradamus.DateTime, error) {
-	return gostradamus.FromUnixTimestamp(ts), nil
+	return gostradamus.FromUnixTimestamp(ts.Int64()), nil
 }

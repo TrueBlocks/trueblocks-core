@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -38,9 +37,9 @@ type Withdrawal struct {
 	Address        base.Address   `json:"address"`
 	Amount         base.Wei       `json:"amount"`
 	BlockNumber    base.Blknum    `json:"blockNumber"`
-	Index          base.Numeral   `json:"index"`
+	Index          base.Index     `json:"index"`
 	Timestamp      base.Timestamp `json:"timestamp"`
-	ValidatorIndex base.Numeral   `json:"validatorIndex"`
+	ValidatorIndex base.Index     `json:"validatorIndex"`
 	raw            *RawWithdrawal `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -99,7 +98,7 @@ func (s *Withdrawal) Model(chain, format string, verbose bool, extraOptions map[
 }
 
 func (s *Withdrawal) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+	return base.FormattedDate(s.Timestamp)
 }
 
 type WithdrawalGroup struct {

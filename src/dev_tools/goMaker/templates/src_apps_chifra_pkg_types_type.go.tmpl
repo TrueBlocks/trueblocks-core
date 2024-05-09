@@ -52,7 +52,7 @@ func (s *{{.ModelName ""}}) Model(chain, format string, verbose bool, extraOptio
 
 {{if .HasTimestamp}} 
 func (s *{{.ModelName ""}}) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+	return base.FormattedDate(s.Timestamp)
 }
 {{end}}
 

@@ -75,12 +75,15 @@ func getBalances(names []types.Name, chain string, start, end gostradamus.DateTi
 			Chain: chain,
 		},
 	}
+
 	clamps, _, _ := clamp.When()
-	if start.UnixTimestamp() < clamps[0].Timestamp {
-		start = gostradamus.FromUnixTimestamp(clamps[0].Timestamp)
+	sTs := base.Timestamp(start.UnixTimestamp())
+	eTs := base.Timestamp(end.UnixTimestamp())
+	if sTs < clamps[0].Timestamp {
+		start = gostradamus.FromUnixTimestamp(int64(clamps[0].Timestamp))
 	}
-	if end.UnixTimestamp() > clamps[1].Timestamp {
-		end = gostradamus.FromUnixTimestamp(clamps[1].Timestamp - 1)
+	if eTs > clamps[1].Timestamp {
+		end = gostradamus.FromUnixTimestamp(int64(clamps[1].Timestamp - 1))
 	}
 
 	whenOpts := sdk.WhenOptions{

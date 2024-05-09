@@ -22,7 +22,6 @@ import (
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/spf13/cobra"
 )
@@ -155,7 +154,7 @@ func GetChunkStats(chain, path string) (s types.ChunkStats, err error) {
 	ts, _ := tslib.FromBnToTs(chain, chunk.Range.Last)
 	s = types.ChunkStats{
 		Range:    chunk.Range.String(),
-		RangeEnd: utils.FormattedDate(ts),
+		RangeEnd: base.FormattedDate(ts),
 		NBlocks:  uint64(chunk.Range.Last - chunk.Range.First + 1),
 		NAddrs:   uint64(chunk.Index.Header.AddressCount),
 		NApps:    uint64(chunk.Index.Header.AppearanceCount),

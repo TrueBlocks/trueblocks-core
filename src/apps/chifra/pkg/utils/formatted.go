@@ -6,13 +6,7 @@ package utils
 
 import (
 	"strings"
-
-	"github.com/bykof/gostradamus"
 )
-
-func FormattedDate(ts int64) string {
-	return gostradamus.FromUnixTimestamp(ts).Format("2006-01-02 15:04:05 UTC")
-}
 
 func FormattedCode(verbose bool, code string) string {
 	codeLen := len(code)
