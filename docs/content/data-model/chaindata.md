@@ -163,7 +163,7 @@ Logs consist of the following fields:
 | transactionHash  | the hash of the transction                                                                        | hash                                    |
 | blockHash        | the hash of the block                                                                             | hash                                    |
 | articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
-| compressedLog    | a truncated, more readable version of the articulation                                            | string                                  |
+| compressedLog    | a truncated, more readable version of the articulation (calculated)                               | string                                  |
 
 ## LogFilter
 
@@ -203,21 +203,21 @@ The following commands produce and manage Traces:
 
 Traces consist of the following fields:
 
-| Field            | Description                                               | Type                                              |
-| ---------------- | --------------------------------------------------------- | ------------------------------------------------- |
-| blockHash        | the hash of the block containing this trace               | hash                                              |
-| blockNumber      | the number of the block                                   | blknum                                            |
-| timestamp        | the timestamp of the block                                | timestamp                                         |
-| date             | the timestamp as a date (calculated)                      | datetime                                          |
-| transactionHash  | the transaction's hash containing this trace              | hash                                              |
-| transactionIndex | the zero-indexed position of the transaction in the block | txnum                                             |
-| traceAddress     | a particular trace's address in the trace tree            | uint64[]                                          |
-| subtraces        | the number of children traces that the trace hash         | uint64                                            |
-| type             | the type of the trace                                     | string                                            |
-| action           | the trace action for this trace                           | [TraceAction](/data-model/chaindata/#traceaction) |
-| result           | the trace result of this trace                            | [TraceResult](/data-model/chaindata/#traceresult) |
-| articulatedTrace | human readable version of the trace action input data     | [Function](/data-model/other/#function)           |
-| compressedTrace  | a compressed string version of the articulated trace      | string                                            |
+| Field            | Description                                                       | Type                                              |
+| ---------------- | ----------------------------------------------------------------- | ------------------------------------------------- |
+| blockHash        | the hash of the block containing this trace                       | hash                                              |
+| blockNumber      | the number of the block                                           | blknum                                            |
+| timestamp        | the timestamp of the block                                        | timestamp                                         |
+| date             | the timestamp as a date (calculated)                              | datetime                                          |
+| transactionHash  | the transaction's hash containing this trace                      | hash                                              |
+| transactionIndex | the zero-indexed position of the transaction in the block         | txnum                                             |
+| traceAddress     | a particular trace's address in the trace tree                    | uint64[]                                          |
+| subtraces        | the number of children traces that the trace hash                 | uint64                                            |
+| type             | the type of the trace                                             | string                                            |
+| action           | the trace action for this trace                                   | [TraceAction](/data-model/chaindata/#traceaction) |
+| result           | the trace result of this trace                                    | [TraceResult](/data-model/chaindata/#traceresult) |
+| articulatedTrace | human readable version of the trace action input data             | [Function](/data-model/other/#function)           |
+| compressedTrace  | a compressed string version of the articulated trace (calculated) | string                                            |
 
 ### Notes
 

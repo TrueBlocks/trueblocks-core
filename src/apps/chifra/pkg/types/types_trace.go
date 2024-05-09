@@ -18,6 +18,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -43,7 +44,6 @@ type Trace struct {
 	ArticulatedTrace *Function      `json:"articulatedTrace,omitempty"`
 	BlockHash        base.Hash      `json:"blockHash"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
-	CompressedTrace  string         `json:"compressedTrace,omitempty"`
 	Error            string         `json:"error,omitempty"`
 	Result           *TraceResult   `json:"result"`
 	Subtraces        uint64         `json:"subtraces"`
@@ -264,10 +264,7 @@ func (s *Trace) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// CompressedTrace
-	if err = cache.WriteValue(writer, s.CompressedTrace); err != nil {
-		return err
-	}
+	// Used to write CompressedTrace, since removed
 
 	// Error
 	if err = cache.WriteValue(writer, s.Error); err != nil {
@@ -348,9 +345,13 @@ func (s *Trace) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
-	// CompressedTrace
-	if err = cache.ReadValue(reader, &s.CompressedTrace, vers); err != nil {
-		return err
+	// Used to be CompressedTrace
+	vCompressedTrace := version.NewVersion("2.5.10")
+	if vers < vCompressedTrace.Uint64() {
+		var unused string
+		if err = cache.ReadValue(reader, &unused, vers); err != nil {
+			return err
+		}
 	}
 
 	// Error

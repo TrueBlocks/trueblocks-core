@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // EXISTING_CODE
@@ -41,7 +42,6 @@ type Log struct {
 	ArticulatedLog   *Function      `json:"articulatedLog,omitempty"`
 	BlockHash        base.Hash      `json:"blockHash"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
-	CompressedLog    string         `json:"compressedLog,omitempty"`
 	Data             string         `json:"data,omitempty"`
 	LogIndex         base.Lognum    `json:"logIndex"`
 	Timestamp        base.Timestamp `json:"timestamp,omitempty"`
@@ -219,10 +219,7 @@ func (s *Log) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// CompressedLog
-	if err = cache.WriteValue(writer, s.CompressedLog); err != nil {
-		return err
-	}
+	// Used to write CompressedLog, since removed
 
 	// Data
 	if err = cache.WriteValue(writer, s.Data); err != nil {
@@ -287,8 +284,12 @@ func (s *Log) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	}
 
 	// CompressedLog
-	if err = cache.ReadValue(reader, &s.CompressedLog, vers); err != nil {
-		return err
+	vCompressed := version.NewVersion("2.5.10")
+	if vers < vCompressed.Uint64() {
+		var unused string
+		if err = cache.ReadValue(reader, &unused, vers); err != nil {
+			return err
+		}
 	}
 
 	// Data

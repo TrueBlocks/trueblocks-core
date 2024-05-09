@@ -3613,7 +3613,7 @@ components:
         compressedLog:
           type: string
           format: string
-          description: "a truncated, more readable version of the articulation"
+          description: "a truncated, more readable version of the articulation (calculated)"
     logFilter:
       description: "used by the fast path log queries for various commands"
       type: object
@@ -3699,7 +3699,7 @@ components:
         compressedTrace:
           type: string
           format: string
-          description: "a compressed string version of the articulated trace"
+          description: "a compressed string version of the articulated trace (calculated)"
     traceAction:
       description: "trace action data as returned from the RPC (with slight enhancements)"
       type: object

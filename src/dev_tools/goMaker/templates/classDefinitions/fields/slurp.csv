@@ -15,7 +15,7 @@ gasPrice          ,gas       ,           ,              ,      13 ,the number of
 input             ,bytes     ,           ,              ,      14 ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
 hasToken          ,bool      ,           ,simponly      ,      15 ,`true` if the transaction is token related&#44; `false` otherwise
 articulatedTx     ,*Function ,           ,simponly      ,      16 ,if present&#44; the function that was called in the transaction
-compressedTx      ,string    ,           ,simponly|calc ,      17 ,truncated&#44; more readable version of the articulation
+compressedTx      ,string    ,           ,calc          ,      17 ,truncated&#44; more readable version of the articulation
 isError           ,bool      ,           ,simponly      ,      18 ,`true` if the transaction ended in error&#44; `false` otherwise
 functionName      ,string    ,           ,              ,         ,the name of the articulated function if any
 methodId          ,string    ,           ,              ,         ,the fourbyte of the function

@@ -22,7 +22,7 @@ hasToken             ,bool          ,           ,simponly      ,      18 ,`true`
 receipt              ,*Receipt      ,           ,simponly      ,      15 ,
 traces               ,[]Trace       ,           ,simponly      ,         ,
 articulatedTx        ,*Function     ,           ,simponly      ,      17 ,
-compressedTx         ,string        ,           ,simponly|calc ,      20 ,truncated&#44; more readable version of the articulation
+compressedTx         ,string        ,           ,calc          ,      20 ,truncated&#44; more readable version of the articulation
 statements           ,[]Statement   ,           ,simponly|calc ,      16 ,array of reconciliations
 gasUsed              ,gas           ,           ,simponly      ,         ,
 type                 ,string        ,           ,              ,         ,
