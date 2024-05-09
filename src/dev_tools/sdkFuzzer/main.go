@@ -5,23 +5,23 @@ import (
 )
 
 func main() {
-	DoReceipts()
-	DoLogs()
-	DoTraces()
-	DoState()
-	DoAbis()
-	DoBlocks()
-	DoWhen()
-	DoList()
-	DoNames() // does not test crud commands
-	DoConfig()
-	DoTransactions()
-	DoTokens()
-	// DoSlurp()
+	// DoReceipts()
+	// DoLogs()
+	// DoTraces()
+	// DoState()
+	// DoAbis()
+	// DoBlocks()
+	// DoWhen()
+	// DoList()
+	// DoNames() // this does not test crud commands
+	// DoChunks() // this needs a lot of work
+	// DoConfig()
+	// DoTransactions()
+	// DoTokens()
+	// DoStatus()
 
-	// DoChunks()
-	// DoExport()
-	DoStatus()
+	DoSlurp()
+	//- DoExport()
 
 	// DoInit()
 	// DoMonitors()

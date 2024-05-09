@@ -35,7 +35,6 @@ type RawSlurp struct {
 	Gas               string `json:"gas"`
 	GasPrice          string `json:"gasPrice"`
 	GasUsed           string `json:"gasUsed"`
-	HasToken          string `json:"hasToken"`
 	Hash              string `json:"hash"`
 	Input             string `json:"input"`
 	MethodId          string `json:"methodId"`

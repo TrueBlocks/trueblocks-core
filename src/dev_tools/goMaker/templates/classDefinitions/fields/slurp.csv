@@ -13,7 +13,7 @@ ether             ,ether     ,           ,           ,      11 ,if --ether is sp
 gas               ,gas       ,           ,           ,      12 ,the maximum number of gas allowed for this transaction
 gasPrice          ,gas       ,           ,           ,      13 ,the number of wei per unit of gas the sender is willing to spend
 input             ,bytes     ,           ,           ,      14 ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
-hasToken          ,bool      ,           ,           ,      15 ,`true` if the transaction is token related&#44; `false` otherwise
+hasToken          ,bool      ,           ,simponly   ,      15 ,`true` if the transaction is token related&#44; `false` otherwise
 articulatedTx     ,*Function ,           ,simponly   ,      16 ,if present&#44; the function that was called in the transaction
 compressedTx      ,string    ,           ,simponly   ,      17 ,truncated&#44; more readable version of the articulation
 isError           ,bool      ,           ,simponly   ,      18 ,`true` if the transaction ended in error&#44; `false` otherwise
