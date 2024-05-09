@@ -32,7 +32,12 @@ func getFilename(baseName string, g *sdk.Globals) string {
 
 var spaces = strings.Repeat(" ", 30)
 
-func ReportError(fn string, err error) {
+func ReportError(fn string, opts fmt.Stringer, err error) {
+	logger.Error(fmt.Errorf("NO %s (%s): %v%s", fn, opts.String(), err, spaces))
+	logger.Error(fmt.Errorf("NO %s (%s): %v%s", fn, opts.String(), err, spaces))
+}
+
+func ReportError2(fn string, err error) {
 	logger.Error(fmt.Errorf("NO %s: %v%s", fn, err, spaces))
 }
 

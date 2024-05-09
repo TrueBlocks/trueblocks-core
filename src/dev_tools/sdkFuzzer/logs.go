@@ -47,10 +47,10 @@ func DoLogs() {
 
 func TestLogs(fn string, opts *sdk.LogsOptions) {
 	if logs, _, err := opts.Logs(); err != nil {
-		ReportError(fn, err)
+		ReportError(fn, opts, err)
 	} else {
 		if err := SaveToFile[types.Log](fn, logs); err != nil {
-			ReportError(fn, err)
+			ReportError2(fn, err)
 		} else {
 			ReportOkay(fn)
 		}

@@ -53,30 +53,30 @@ func TestChunks(which, fn string, opts *sdk.ChunksOptions) {
 	switch which {
 	case "manifest":
 		if manifest, _, err := opts.ChunksManifest(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.ChunkManifest](fn, manifest); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "index":
 		if index, _, err := opts.ChunksIndex(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.ChunkIndex](fn, index); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "blooms":
 		if blooms, _, err := opts.ChunksBlooms(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.ChunkBloom](fn, blooms); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
@@ -85,10 +85,10 @@ func TestChunks(which, fn string, opts *sdk.ChunksOptions) {
 		// TODO: Not sure this is included in the SDK
 		opts.List = true
 		if pins, _, err := opts.ChunksPins(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.ChunkPin](fn, pins); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
@@ -96,30 +96,30 @@ func TestChunks(which, fn string, opts *sdk.ChunksOptions) {
 		opts.List = false
 	case "addresses":
 		if addresses, _, err := opts.ChunksAddresses(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.ChunkAddress](fn, addresses); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "appearances":
 		if appearances, _, err := opts.ChunksAppearances(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.ChunkAppearance](fn, appearances); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "stats":
 		if stats, _, err := opts.ChunksStats(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.ChunkStats](fn, stats); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}

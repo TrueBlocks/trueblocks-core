@@ -37,10 +37,10 @@ func DoReceipts() {
 
 func TestReceipts(fn string, opts *sdk.ReceiptsOptions) {
 	if receipts, _, err := opts.Receipts(); err != nil {
-		ReportError(fn, err)
+		ReportError(fn, opts, err)
 	} else {
 		if err := SaveToFile[types.Receipt](fn, receipts); err != nil {
-			ReportError(fn, err)
+			ReportError2(fn, err)
 		} else {
 			ReportOkay(fn)
 		}

@@ -101,10 +101,10 @@ func DoState() {
 
 func TestState(fn string, opts *sdk.StateOptions) {
 	if state, _, err := opts.State(); err != nil {
-		ReportError(fn, err)
+		ReportError(fn, opts, err)
 	} else {
 		if err := SaveToFile[types.State](fn, state); err != nil {
-			ReportError(fn, err)
+			ReportError2(fn, err)
 		} else {
 			ReportOkay(fn)
 		}
@@ -114,10 +114,10 @@ func TestState(fn string, opts *sdk.StateOptions) {
 func TestStateCall(call, fn string, opts *sdk.StateOptions) {
 	fn = strings.ReplaceAll(fn, ".json", "-call.json")
 	if stateResult, _, err := opts.StateCall(call); err != nil {
-		ReportError(fn, err)
+		ReportError(fn, opts, err)
 	} else {
 		if err := SaveToFile[types.Result](fn, stateResult); err != nil {
-			ReportError(fn, err)
+			ReportError2(fn, err)
 		} else {
 			ReportOkay(fn)
 		}

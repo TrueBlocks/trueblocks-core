@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -49,9 +48,9 @@ func DoSlurp() {
 			}
 			for _, a := range art {
 				baseFn := "slurp/slurp" + "-" + t.String() + "-" + s.String()
-				// if a {
-				// 	baseFn += "-articulate"
-				// }
+				if a {
+					baseFn += "-articulate"
+				}
 				opts.Source = s
 				opts.Types = t
 				opts.Articulate = a
@@ -73,30 +72,30 @@ func TestSlurp(which, fn string, opts *sdk.SlurpOptions) {
 	switch which {
 	case "slurp":
 		if slurp, _, err := opts.Slurp(); err != nil {
-			logger.Error(err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Slurp](fn, slurp); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "appearances":
 		if appearances, _, err := opts.SlurpAppearances(); err != nil {
-			logger.Error(err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Appearance](fn, appearances); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "count":
 		if count, _, err := opts.SlurpCount(); err != nil {
-			logger.Error(err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.SlurpCount](fn, count); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}

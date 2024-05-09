@@ -67,7 +67,7 @@ func (e *Ether) Quo(a, b *Ether) *Ether {
 func (e *Ether) UnmarshalJSON(data []byte) error {
 	str := strings.Trim(strings.TrimSpace(string(data)), "\"") // strip quotes and whitespace if any
 	if len(str) == 0 {
-		str = "0"
+		return nil
 	}
 	return (*big.Float)(e).UnmarshalText([]byte(str))
 }

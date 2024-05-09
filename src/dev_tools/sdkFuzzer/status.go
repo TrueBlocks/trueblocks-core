@@ -109,16 +109,16 @@ func TestStatus(which, fn string, opts *sdk.StatusOptions) {
 	case "all":
 		f = opts.StatusAll
 	default:
-		ReportError(fn, fmt.Errorf("unknown status type: %s", which))
+		ReportError(fn, opts, fmt.Errorf("unknown status type: %s", which))
 		return
 	}
 
 	if status, _, err := f(); err != nil {
-		ReportError(fn, err)
+		ReportError(fn, opts, err)
 	} else {
 		fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
 		if err := SaveToFile[types.Status](fn, status); err != nil {
-			ReportError(fn, err)
+			ReportError2(fn, err)
 		} else {
 			ReportOkay(fn)
 		}

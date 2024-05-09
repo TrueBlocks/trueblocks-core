@@ -272,8 +272,7 @@ func (m *Member) NeedsPtr() bool {
 func (m *Member) MarshalCode() string {
 	if m.IsCalc() ||
 		m.IsRawOnly() ||
-		(m.Container() == "Transaction" &&
-			(m.GoName() == "CompressedTx" || m.GoName() == "Traces")) {
+		(m.Container() == "Transaction" && m.GoName() == "Traces") {
 		return ""
 	}
 
@@ -348,8 +347,7 @@ func (m *Member) MarshalCode() string {
 func (m *Member) UnmarshalCode() string {
 	if m.IsCalc() ||
 		m.IsRawOnly() ||
-		(m.Container() == "Transaction" &&
-			(m.GoName() == "CompressedTx" || m.GoName() == "Traces")) {
+		(m.Container() == "Transaction" && m.GoName() == "Traces") {
 		return ""
 	}
 

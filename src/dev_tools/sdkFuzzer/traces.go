@@ -49,10 +49,10 @@ func DoTraces() {
 
 func TestTraces(fn string, opts *sdk.TracesOptions) {
 	if traces, _, err := opts.Traces(); err != nil {
-		ReportError(fn, err)
+		ReportError(fn, opts, err)
 	} else {
 		if err := SaveToFile[types.Trace](fn, traces); err != nil {
-			ReportError(fn, err)
+			ReportError2(fn, err)
 		} else {
 			ReportOkay(fn)
 		}
@@ -62,10 +62,10 @@ func TestTraces(fn string, opts *sdk.TracesOptions) {
 func TestTracesCount(fn string, opts *sdk.TracesOptions) {
 	fn = strings.ReplaceAll(fn, ".json", "-count.json")
 	if tracesCounts, _, err := opts.TracesCount(); err != nil {
-		ReportError(fn, err)
+		ReportError(fn, opts, err)
 	} else {
 		if err := SaveToFile[types.TraceCount](fn, tracesCounts); err != nil {
-			ReportError(fn, err)
+			ReportError2(fn, err)
 		} else {
 			ReportOkay(fn)
 		}
