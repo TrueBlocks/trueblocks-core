@@ -9,7 +9,7 @@ replace github.com/TrueBlocks/trueblocks-core/src/apps/chifra => ../../src/apps/
 
 require (
 	github.com/TrueBlocks/trueblocks-core/sdk v0.0.0-00010101000000-000000000000
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-00010101000000-000000000000
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240419175527-3f8eaf44105d
 )
 
 require (
