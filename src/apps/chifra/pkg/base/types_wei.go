@@ -97,6 +97,14 @@ func (w *Wei) MarshalText() (text []byte, err error) {
 	return (*big.Int)(w).MarshalText()
 }
 
+func (e *Wei) UnmarshalJSON(data []byte) error {
+	str := strings.Trim(strings.TrimSpace(string(data)), "\"") // strip quotes and whitespace if any
+	if len(str) == 0 {
+		return nil
+	}
+	return (*big.Int)(e).UnmarshalText([]byte(str))
+}
+
 func (w *Wei) UnmarshalCache(version uint64, reader io.Reader) error {
 	var v big.Int
 	if err := cache.ReadValue(reader, &v, version); err != nil {
