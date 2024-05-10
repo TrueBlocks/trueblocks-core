@@ -99,30 +99,30 @@ func TestNames(which, fn string, opts *sdk.NamesOptions) {
 	switch which {
 	case "names":
 		if names, _, err := opts.Names(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Name](fn, names); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "addrs":
 		if names, _, err := opts.NamesAddr(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Name](fn, names); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "tags":
 		if names, _, err := opts.NamesTags(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Name](fn, names); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
@@ -130,10 +130,10 @@ func TestNames(which, fn string, opts *sdk.NamesOptions) {
 	case "autoname":
 		addr := base.HexToAddress("0xde30da39c46104798bb5aa3fe8b9e0e1f348163f")
 		if names, _, err := opts.NamesAutoname(addr); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Message](fn, names); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}

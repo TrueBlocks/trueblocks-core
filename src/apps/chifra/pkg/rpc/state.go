@@ -99,7 +99,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	}
 
 	if value, ok := queryResults["nonce"]; ok && (fieldBits&Nonce) != 0 {
-		state.Nonce = base.MustParseNumeral(*value)
+		state.Nonce = base.MustParseIndex(*value)
 	}
 
 	if value, ok := queryResults["code"]; ok && (fieldBits&Code) != 0 {

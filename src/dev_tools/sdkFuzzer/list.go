@@ -75,30 +75,30 @@ func TestList(which, fn string, opts *sdk.ListOptions) {
 	switch which {
 	case "list":
 		if apps, _, err := opts.List(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Appearance](fn, apps); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "count":
 		if counts, _, err := opts.ListCount(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.AppearanceCount](fn, counts); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "bounds":
 		if bounds, _, err := opts.ListBounds(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Bounds](fn, bounds); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}

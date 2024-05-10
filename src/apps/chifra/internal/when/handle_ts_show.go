@@ -40,7 +40,7 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 				s := types.Timestamp{
 					BlockNumber: base.Blknum(ts.Bn),
 					Timestamp:   base.Timestamp(ts.Ts),
-					Diff:        base.Timestamp(ts.Ts) - prev,
+					Diff:        int64(base.Timestamp(ts.Ts) - prev),
 				}
 				if bn == 0 {
 					s.Diff = 0

@@ -105,9 +105,8 @@ func (p *KeyProvider) TransactionsByAddress(ctx context.Context, query *Query, e
 func transactionToSlurp(tx *types.Transaction) *types.Slurp {
 	return &types.Slurp{
 		// ArticulatedTx:     tx.ArticulatedTx,
-		BlockHash:    tx.BlockHash,
-		BlockNumber:  tx.BlockNumber,
-		CompressedTx: tx.CompressedTx,
+		BlockHash:   tx.BlockHash,
+		BlockNumber: tx.BlockNumber,
 		// ContractAddress:   tx.ContractAddress,
 		// CumulativeGasUsed: tx.CumulativeGasUsed,
 		// Ether:             tx.Ether,

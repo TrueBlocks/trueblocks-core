@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -29,13 +28,11 @@ type RawSlurp struct {
 	BlockNumber       string `json:"blockNumber"`
 	ContractAddress   string `json:"contractAddress"`
 	CumulativeGasUsed string `json:"cumulativeGasUsed"`
-	Ether             string `json:"ether"`
 	From              string `json:"from"`
 	FunctionName      string `json:"functionName"`
 	Gas               string `json:"gas"`
 	GasPrice          string `json:"gasPrice"`
 	GasUsed           string `json:"gasUsed"`
-	HasToken          string `json:"hasToken"`
 	Hash              string `json:"hash"`
 	Input             string `json:"input"`
 	MethodId          string `json:"methodId"`
@@ -57,10 +54,8 @@ type Slurp struct {
 	ArticulatedTx     *Function      `json:"articulatedTx"`
 	BlockHash         base.Hash      `json:"blockHash"`
 	BlockNumber       base.Blknum    `json:"blockNumber"`
-	CompressedTx      string         `json:"compressedTx"`
 	ContractAddress   base.Address   `json:"contractAddress"`
 	CumulativeGasUsed string         `json:"cumulativeGasUsed"`
-	Ether             base.Ether     `json:"ether"`
 	From              base.Address   `json:"from"`
 	FunctionName      string         `json:"functionName"`
 	Gas               base.Gas       `json:"gas"`
@@ -76,9 +71,9 @@ type Slurp struct {
 	To                base.Address   `json:"to"`
 	TransactionIndex  base.Txnum     `json:"transactionIndex"`
 	TxReceiptStatus   string         `json:"txReceiptStatus"`
-	ValidatorIndex    base.Numeral   `json:"validatorIndex"`
+	ValidatorIndex    base.Index     `json:"validatorIndex"`
 	Value             base.Wei       `json:"value"`
-	WithdrawalIndex   base.Numeral   `json:"withdrawalIndex"`
+	WithdrawalIndex   base.Index     `json:"withdrawalIndex"`
 	raw               *RawSlurp      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -265,7 +260,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[strin
 }
 
 func (s *Slurp) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+	return base.FormattedDate(s.Timestamp)
 }
 
 type SlurpGroup struct {
@@ -324,11 +319,6 @@ func (s *Slurp) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// CompressedTx
-	if err = cache.WriteValue(writer, s.CompressedTx); err != nil {
-		return err
-	}
-
 	// ContractAddress
 	if err = cache.WriteValue(writer, s.ContractAddress); err != nil {
 		return err
@@ -336,11 +326,6 @@ func (s *Slurp) MarshalCache(writer io.Writer) (err error) {
 
 	// CumulativeGasUsed
 	if err = cache.WriteValue(writer, s.CumulativeGasUsed); err != nil {
-		return err
-	}
-
-	// Ether
-	if err = cache.WriteValue(writer, s.Ether); err != nil {
 		return err
 	}
 
@@ -461,11 +446,6 @@ func (s *Slurp) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
-	// CompressedTx
-	if err = cache.ReadValue(reader, &s.CompressedTx, vers); err != nil {
-		return err
-	}
-
 	// ContractAddress
 	if err = cache.ReadValue(reader, &s.ContractAddress, vers); err != nil {
 		return err
@@ -473,11 +453,6 @@ func (s *Slurp) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 
 	// CumulativeGasUsed
 	if err = cache.ReadValue(reader, &s.CumulativeGasUsed, vers); err != nil {
-		return err
-	}
-
-	// Ether
-	if err = cache.ReadValue(reader, &s.Ether, vers); err != nil {
 		return err
 	}
 

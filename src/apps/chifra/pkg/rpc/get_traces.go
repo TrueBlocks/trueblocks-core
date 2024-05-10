@@ -37,7 +37,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 	} else {
 		curApp := types.Appearance{BlockNumber: uint32(^uint32(0))}
 		curTs := conn.GetBlockTimestamp(bn)
-		var traceIndex base.TraceId
+		var traceIndex base.Tracenum
 
 		// TODO: This could be loadTrace in the same way load Blocks works
 		var ret []types.Trace
@@ -48,7 +48,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 				Balance:        base.MustParseWei(rawTrace.Action.Balance),
 				CallType:       rawTrace.Action.CallType,
 				From:           base.HexToAddress(rawTrace.Action.From),
-				Gas:            base.MustParseNumeral(rawTrace.Action.Gas),
+				Gas:            base.MustParseGas(rawTrace.Action.Gas),
 				Init:           rawTrace.Action.Init,
 				Input:          rawTrace.Action.Input,
 				RefundAddress:  base.HexToAddress(rawTrace.Action.RefundAddress),
@@ -61,7 +61,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 			if rawTrace.Result != nil {
 				traceResult.Address = base.HexToAddress(rawTrace.Result.Address)
 				traceResult.Code = rawTrace.Result.Code
-				traceResult.GasUsed = base.MustParseNumeral(rawTrace.Result.GasUsed)
+				traceResult.GasUsed = base.MustParseGas(rawTrace.Result.GasUsed)
 				traceResult.Output = rawTrace.Result.Output
 			}
 			trace := types.Trace{
@@ -147,7 +147,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 
 	} else {
 		curApp := types.Appearance{BlockNumber: uint32(^uint32(0))}
-		var traceIndex base.TraceId
+		var traceIndex base.Tracenum
 
 		for _, rawTrace := range *rawTraces {
 			value := base.NewWei(0)
@@ -158,7 +158,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			action := types.TraceAction{
 				CallType:       rawTrace.Action.CallType,
 				From:           base.HexToAddress(rawTrace.Action.From),
-				Gas:            base.MustParseNumeral(rawTrace.Action.Gas),
+				Gas:            base.MustParseGas(rawTrace.Action.Gas),
 				Input:          rawTrace.Action.Input,
 				To:             base.HexToAddress(rawTrace.Action.To),
 				Value:          *value,
@@ -173,7 +173,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			var result *types.TraceResult
 			if rawTrace.Result != nil {
 				result = &types.TraceResult{
-					GasUsed: base.MustParseNumeral(rawTrace.Result.GasUsed),
+					GasUsed: base.MustParseGas(rawTrace.Result.GasUsed),
 					Output:  rawTrace.Result.Output,
 					Code:    rawTrace.Result.Code,
 				}
@@ -246,7 +246,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 	} else {
 		curApp := types.Appearance{BlockNumber: uint32(^uint32(0))}
 		curTs := conn.GetBlockTimestamp(f.FromBlock)
-		var traceIndex base.TraceId
+		var traceIndex base.Tracenum
 
 		// TODO: This could be loadTrace in the same way load Blocks works
 		for _, rawTrace := range *rawTraces {
@@ -258,7 +258,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 			action := types.TraceAction{
 				CallType:       rawTrace.Action.CallType,
 				From:           base.HexToAddress(rawTrace.Action.From),
-				Gas:            base.MustParseNumeral(rawTrace.Action.Gas),
+				Gas:            base.MustParseGas(rawTrace.Action.Gas),
 				Input:          rawTrace.Action.Input,
 				To:             base.HexToAddress(rawTrace.Action.To),
 				Value:          *value,
@@ -273,7 +273,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 			var result *types.TraceResult
 			if rawTrace.Result != nil {
 				result = &types.TraceResult{
-					GasUsed: base.MustParseNumeral(rawTrace.Result.GasUsed),
+					GasUsed: base.MustParseGas(rawTrace.Result.GasUsed),
 					Output:  rawTrace.Result.Output,
 					Code:    rawTrace.Result.Code,
 				}

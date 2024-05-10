@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -209,7 +208,7 @@ func (s *Block[Tx]) Model(chain, format string, verbose bool, extraOptions map[s
 }
 
 func (s *Block[Tx]) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+	return base.FormattedDate(s.Timestamp)
 }
 
 func (s *Block[Tx]) CacheName() string {

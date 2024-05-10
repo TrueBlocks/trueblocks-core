@@ -286,7 +286,7 @@ func (s *Receipt) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		if err = cache.ReadValue(reader, &val, vers); err != nil {
 			return err
 		}
-		s.CumulativeGasUsed = base.MustParseNumeral(val)
+		s.CumulativeGasUsed = base.MustParseGas(val)
 	} else {
 		// CumulativeGasUsed
 		if err = cache.ReadValue(reader, &s.CumulativeGasUsed, vers); err != nil {
@@ -389,12 +389,12 @@ func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 		BlockNumber:       base.MustParseBlknum(r.BlockNumber),
 		ContractAddress:   base.HexToAddress(r.ContractAddress),
 		CumulativeGasUsed: base.Gas(cumulativeGasUsed),
-		EffectiveGasPrice: base.MustParseNumeral(r.EffectiveGasPrice),
-		GasUsed:           base.MustParseNumeral(r.GasUsed),
+		EffectiveGasPrice: base.MustParseGas(r.EffectiveGasPrice),
+		GasUsed:           base.MustParseGas(r.GasUsed),
 		Status:            base.MustParseUint(r.Status),
 		IsError:           base.MustParseUint(r.Status) == 0,
 		TransactionHash:   base.HexToHash(r.TransactionHash),
-		TransactionIndex:  base.MustParseNumeral(r.TransactionIndex),
+		TransactionIndex:  base.MustParseIndex(r.TransactionIndex),
 		Logs:              logs,
 		raw:               r,
 	}

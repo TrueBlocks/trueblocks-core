@@ -18,7 +18,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -44,7 +44,6 @@ type Trace struct {
 	ArticulatedTrace *Function      `json:"articulatedTrace,omitempty"`
 	BlockHash        base.Hash      `json:"blockHash"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
-	CompressedTrace  string         `json:"compressedTrace,omitempty"`
 	Error            string         `json:"error,omitempty"`
 	Result           *TraceResult   `json:"result"`
 	Subtraces        uint64         `json:"subtraces"`
@@ -55,8 +54,8 @@ type Trace struct {
 	TraceType        string         `json:"type,omitempty"`
 	raw              *RawTrace      `json:"-"`
 	// EXISTING_CODE
-	TraceIndex base.TraceId `json:"-"`
-	sortString string       `json:"-"`
+	TraceIndex base.Tracenum `json:"-"`
+	sortString string        `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -199,7 +198,7 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOptions map[strin
 }
 
 func (s *Trace) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+	return base.FormattedDate(s.Timestamp)
 }
 
 type TraceGroup struct {
@@ -262,11 +261,6 @@ func (s *Trace) MarshalCache(writer io.Writer) (err error) {
 
 	// BlockNumber
 	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
-		return err
-	}
-
-	// CompressedTrace
-	if err = cache.WriteValue(writer, s.CompressedTrace); err != nil {
 		return err
 	}
 
@@ -349,9 +343,13 @@ func (s *Trace) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
-	// CompressedTrace
-	if err = cache.ReadValue(reader, &s.CompressedTrace, vers); err != nil {
-		return err
+	// Used to be CompressedTrace, since removed
+	vCompressedTrace := version.NewVersion("2.5.10")
+	if vers <= vCompressedTrace.Uint64() {
+		var val string
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
+			return err
+		}
 	}
 
 	// Error

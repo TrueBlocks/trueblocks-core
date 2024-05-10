@@ -205,13 +205,13 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		Hash:             base.HexToHash(rawTx.Hash),
 		BlockHash:        base.HexToHash(rawTx.BlockHash),
 		BlockNumber:      base.MustParseBlknum(rawTx.BlockNumber),
-		TransactionIndex: base.MustParseNumeral(rawTx.TransactionIndex),
-		Timestamp:        base.MustParseInt(rawTx.Timestamp),
+		TransactionIndex: base.MustParseIndex(rawTx.TransactionIndex),
+		Timestamp:        base.MustParseTimestamp(rawTx.Timestamp),
 		From:             base.HexToAddress(rawTx.From),
 		To:               base.HexToAddress(rawTx.To),
-		Gas:              base.MustParseNumeral(rawTx.Gas),
-		GasPrice:         base.MustParseNumeral(rawTx.GasPrice),
-		GasUsed:          base.MustParseNumeral(rawTx.GasUsed),
+		Gas:              base.MustParseGas(rawTx.Gas),
+		GasPrice:         base.MustParseGas(rawTx.GasPrice),
+		GasUsed:          base.MustParseGas(rawTx.GasUsed),
 		Input:            rawTx.Input,
 	}
 
@@ -243,8 +243,8 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.WithdrawalAmt
 		s.From = base.WithdrawalSender
-		s.ValidatorIndex = base.MustParseNumeral(rawTx.ValidatorIndex)
-		s.WithdrawalIndex = base.MustParseNumeral(rawTx.WithdrawalIndex)
+		s.ValidatorIndex = base.MustParseIndex(rawTx.ValidatorIndex)
+		s.WithdrawalIndex = base.MustParseIndex(rawTx.WithdrawalIndex)
 		s.Value.SetString(rawTx.Amount, 0)
 		s.To = base.HexToAddress(address)
 		if s.To != base.HexToAddress(rawTx.Address) {

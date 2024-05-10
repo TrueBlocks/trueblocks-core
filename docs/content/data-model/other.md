@@ -136,13 +136,13 @@ Slurps consist of the following fields:
 | from             | address from which the transaction was sent                                                           | address                                 |
 | to               | address to which the transaction was sent                                                             | address                                 |
 | value            | the amount of wei sent with this transactions                                                         | wei                                     |
-| ether            | if --ether is specified, the value in ether                                                           | ether                                   |
+| ether            | if --ether is specified, the value in ether (calculated)                                              | ether                                   |
 | gas              | the maximum number of gas allowed for this transaction                                                | gas                                     |
 | gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                     |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                   |
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | bool                                    |
 | articulatedTx    | if present, the function that was called in the transaction                                           | [Function](/data-model/other/#function) |
-| compressedTx     | truncated, more readable version of the articulation                                                  | string                                  |
+| compressedTx     | truncated, more readable version of the articulation (calculated)                                     | string                                  |
 | isError          | `true` if the transaction ended in error, `false` otherwise                                           | bool                                    |
 
 ## SlurpCount
@@ -198,9 +198,9 @@ This documentation mentions the following basic data types.
 | ether     | a big number float                  | as a string    |
 | gas       | a 64-bit unsigned integer           |                |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
+| index     | an alias for a uint64               |                |
 | int64     | a 64-bit signed integer             |                |
 | nonce     | a 64-bit unsigned integer           |                |
-| numeral   | an alias for a uint64               |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | txnum     | an alias for a uint64               |                |

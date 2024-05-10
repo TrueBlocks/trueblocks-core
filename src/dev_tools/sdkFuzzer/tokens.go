@@ -67,10 +67,10 @@ func TestTokens(which, fn string, opts *sdk.TokensOptions) {
 	switch which {
 	case "tokens":
 		if tokens, _, err := opts.Tokens(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Token](fn, tokens); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}

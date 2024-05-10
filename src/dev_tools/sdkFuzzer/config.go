@@ -24,10 +24,10 @@ func TestConfig(which, fn string, opts *sdk.ConfigOptions) {
 	switch which {
 	case "paths":
 		if paths, _, err := opts.ConfigPaths(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.CacheItem](fn, paths); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}

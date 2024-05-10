@@ -109,13 +109,14 @@ func snapBnToPeriod(bn base.Blknum, chain, period string) (base.Blknum, error) {
 		dt = dt.FloorYear()
 	}
 
-	firstDate := gostradamus.FromUnixTimestamp(conn.GetBlockTimestamp(0))
+	zeroTs := conn.GetBlockTimestamp(0)
+	firstDate := gostradamus.FromUnixTimestamp(zeroTs.Int64())
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
 
 	ts := dt.UnixTimestamp()
-	return tslib.FromTsToBn(chain, ts)
+	return tslib.FromTsToBn(chain, base.Timestamp(ts))
 }
 
 func (id *Identifier) nextBlock(chain string, current base.Blknum) (base.Blknum, error) {
@@ -161,7 +162,7 @@ func (id *Identifier) nextBlock(chain string, current base.Blknum) (base.Blknum,
 			}
 
 			ts := dt.UnixTimestamp()
-			bn, err = tslib.FromTsToBn(chain, ts)
+			bn, err = tslib.FromTsToBn(chain, base.Timestamp(ts))
 			if err != nil {
 				return bn, err
 			}

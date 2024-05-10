@@ -91,40 +91,40 @@ func TestTransactions(which, fn string, opts *sdk.TransactionsOptions) {
 	switch which {
 	case "txs":
 		if txs, _, err := opts.Transactions(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Transaction](fn, txs); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "logs":
 		if logs, _, err := opts.TransactionsLogs(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Log](fn, logs); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "traces":
 		if traces, _, err := opts.TransactionsTraces(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Trace](fn, traces); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "uniq":
 		if apps, _, err := opts.TransactionsUniq(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Appearance](fn, apps); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}

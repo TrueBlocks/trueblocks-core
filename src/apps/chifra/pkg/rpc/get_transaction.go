@@ -205,7 +205,7 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 		return nil, err
 	} else {
 		var blockHash base.Hash
-		var ts int64
+		var ts base.Timestamp
 		if block, err := conn.GetBlockHeaderByNumber(0); err != nil {
 			return nil, err
 		} else {

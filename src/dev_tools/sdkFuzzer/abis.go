@@ -96,30 +96,30 @@ func TestAbis(which, f, fn string, opts *sdk.AbisOptions) {
 	switch which {
 	case "abis":
 		if funcs, _, err := opts.Abis(); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Function](fn, funcs); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "encode":
 		if funcs, _, err := opts.AbisEncode(f); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Function](fn, funcs); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "find":
 		if funcs, _, err := opts.AbisFind([]string{f}); err != nil {
-			ReportError(fn, err)
+			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Function](fn, funcs); err != nil {
-				ReportError(fn, err)
+				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}

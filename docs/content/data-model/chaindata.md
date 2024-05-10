@@ -82,7 +82,7 @@ Transactions consist of the following fields:
 | articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)        |
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | bool                                           |
 | isError          | `true` if the transaction ended in error, `false` otherwise                                           | bool                                           |
-| compressedTx     | truncated, more readable version of the articulation                                                  | string                                         |
+| compressedTx     | truncated, more readable version of the articulation (calculated)                                     | string                                         |
 
 ## Withdrawal
 
@@ -101,10 +101,10 @@ Withdrawals consist of the following fields:
 | amount         | a nonzero amount of ether given in gwei (1e9 wei)                                                                    | wei       |
 | ether          | if --ether is specified, the amount in ether (calculated)                                                            | ether     |
 | blockNumber    | the number of this block                                                                                             | blknum    |
-| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | numeral   |
+| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | index     |
 | timestamp      | the timestamp for this block                                                                                         | timestamp |
 | date           | the timestamp as a date (calculated)                                                                                 | datetime  |
-| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | numeral   |
+| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | index     |
 
 ## Receipt
 
@@ -163,7 +163,7 @@ Logs consist of the following fields:
 | transactionHash  | the hash of the transction                                                                        | hash                                    |
 | blockHash        | the hash of the block                                                                             | hash                                    |
 | articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
-| compressedLog    | a truncated, more readable version of the articulation                                            | string                                  |
+| compressedLog    | a truncated, more readable version of the articulation (calculated)                               | string                                  |
 
 ## LogFilter
 
@@ -203,21 +203,21 @@ The following commands produce and manage Traces:
 
 Traces consist of the following fields:
 
-| Field            | Description                                               | Type                                              |
-| ---------------- | --------------------------------------------------------- | ------------------------------------------------- |
-| blockHash        | the hash of the block containing this trace               | hash                                              |
-| blockNumber      | the number of the block                                   | blknum                                            |
-| timestamp        | the timestamp of the block                                | timestamp                                         |
-| date             | the timestamp as a date (calculated)                      | datetime                                          |
-| transactionHash  | the transaction's hash containing this trace              | hash                                              |
-| transactionIndex | the zero-indexed position of the transaction in the block | txnum                                             |
-| traceAddress     | a particular trace's address in the trace tree            | uint64[]                                          |
-| subtraces        | the number of children traces that the trace hash         | uint64                                            |
-| type             | the type of the trace                                     | string                                            |
-| action           | the trace action for this trace                           | [TraceAction](/data-model/chaindata/#traceaction) |
-| result           | the trace result of this trace                            | [TraceResult](/data-model/chaindata/#traceresult) |
-| articulatedTrace | human readable version of the trace action input data     | [Function](/data-model/other/#function)           |
-| compressedTrace  | a compressed string version of the articulated trace      | string                                            |
+| Field            | Description                                                       | Type                                              |
+| ---------------- | ----------------------------------------------------------------- | ------------------------------------------------- |
+| blockHash        | the hash of the block containing this trace                       | hash                                              |
+| blockNumber      | the number of the block                                           | blknum                                            |
+| timestamp        | the timestamp of the block                                        | timestamp                                         |
+| date             | the timestamp as a date (calculated)                              | datetime                                          |
+| transactionHash  | the transaction's hash containing this trace                      | hash                                              |
+| transactionIndex | the zero-indexed position of the transaction in the block         | txnum                                             |
+| traceAddress     | a particular trace's address in the trace tree                    | uint64[]                                          |
+| subtraces        | the number of children traces that the trace hash                 | uint64                                            |
+| type             | the type of the trace                                             | string                                            |
+| action           | the trace action for this trace                                   | [TraceAction](/data-model/chaindata/#traceaction) |
+| result           | the trace result of this trace                                    | [TraceResult](/data-model/chaindata/#traceresult) |
+| articulatedTrace | human readable version of the trace action input data             | [Function](/data-model/other/#function)           |
+| compressedTrace  | a compressed string version of the articulated trace (calculated) | string                                            |
 
 ### Notes
 
@@ -412,10 +412,10 @@ This documentation mentions the following basic data types.
 | ether     | a big number float                  | as a string    |
 | gas       | a 64-bit unsigned integer           |                |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
+| index     | an alias for a uint64               |                |
 | int64     | a 64-bit signed integer             |                |
 | lognum    | an alias for a uint64               |                |
 | nonce     | a 64-bit unsigned integer           |                |
-| numeral   | an alias for a uint64               |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | topic     | an '0x'-prefixed 32-byte hex string | lowercase      |

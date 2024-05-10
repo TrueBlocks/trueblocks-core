@@ -14,7 +14,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -64,10 +63,10 @@ func (s *Bounds) Model(chain, format string, verbose bool, extraOptions map[stri
 		"count":      s.Count,
 		"firstApp":   s.FirstApp.Model(chain, format, verbose, extraOptions).Data, //fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex),
 		"firstTs":    s.FirstTs,
-		"firstDate":  utils.FormattedDate(s.FirstTs),
+		"firstDate":  base.FormattedDate(s.FirstTs),
 		"latestApp":  s.LatestApp.Model(chain, format, verbose, extraOptions).Data, //fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex),
 		"latestTs":   s.LatestTs,
-		"latestDate": utils.FormattedDate(s.LatestTs),
+		"latestDate": base.FormattedDate(s.LatestTs),
 		"blockSpan":  (s.LatestApp.BlockNumber - s.FirstApp.BlockNumber),
 		"blockFreq":  uint64(s.LatestApp.BlockNumber-s.FirstApp.BlockNumber) / s.Count,
 	}

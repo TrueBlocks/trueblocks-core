@@ -84,7 +84,7 @@ func (opts *TracesOptions) HandleFilter() error {
 											errorChan <- err // continue even with an error
 										}
 									}
-									traces[index].TraceIndex = base.TraceId(index)
+									traces[index].TraceIndex = base.Tracenum(index)
 									tr = append(tr, traces[index])
 								}
 								value.Traces = append(value.Traces, tr...)

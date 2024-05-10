@@ -19,7 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // EXISTING_CODE
@@ -42,7 +42,6 @@ type Log struct {
 	ArticulatedLog   *Function      `json:"articulatedLog,omitempty"`
 	BlockHash        base.Hash      `json:"blockHash"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
-	CompressedLog    string         `json:"compressedLog,omitempty"`
 	Data             string         `json:"data,omitempty"`
 	LogIndex         base.Lognum    `json:"logIndex"`
 	Timestamp        base.Timestamp `json:"timestamp,omitempty"`
@@ -157,7 +156,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOptions map[string]
 }
 
 func (s *Log) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+	return base.FormattedDate(s.Timestamp)
 }
 
 type LogGroup struct {
@@ -217,11 +216,6 @@ func (s *Log) MarshalCache(writer io.Writer) (err error) {
 
 	// BlockNumber
 	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
-		return err
-	}
-
-	// CompressedLog
-	if err = cache.WriteValue(writer, s.CompressedLog); err != nil {
 		return err
 	}
 
@@ -287,9 +281,13 @@ func (s *Log) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
-	// CompressedLog
-	if err = cache.ReadValue(reader, &s.CompressedLog, vers); err != nil {
-		return err
+	// Used to be CompressedLog, since removed
+	vCompressedLog := version.NewVersion("2.5.10")
+	if vers <= vCompressedLog.Uint64() {
+		var val string
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
+			return err
+		}
 	}
 
 	// Data
@@ -347,9 +345,9 @@ func (r *RawLog) RawTo(vals map[string]any) (Log, error) {
 		Address:          base.HexToAddress(r.Address),
 		BlockNumber:      base.MustParseBlknum(r.BlockNumber),
 		BlockHash:        base.HexToHash(r.BlockHash),
-		TransactionIndex: base.MustParseNumeral(r.TransactionIndex),
+		TransactionIndex: base.MustParseIndex(r.TransactionIndex),
 		TransactionHash:  hash,
-		LogIndex:         base.MustParseNumeral(r.LogIndex),
+		LogIndex:         base.MustParseIndex(r.LogIndex),
 		Data:             r.Data,
 		raw:              r,
 	}

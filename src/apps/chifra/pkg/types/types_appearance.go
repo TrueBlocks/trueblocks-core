@@ -15,7 +15,6 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 const (
@@ -170,7 +169,7 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOptions map[
 }
 
 func (s *Appearance) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+	return base.FormattedDate(s.Timestamp)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

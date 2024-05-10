@@ -39,7 +39,7 @@ func (h Hash) MarshalText() ([]byte, error) {
 }
 
 func (h *Hash) UnmarshalJSON(data []byte) error {
-	if string(data) == "\"0x0\"" {
+	if string(data) == "\"0x0\"" || string(data) == "\"\"" {
 		return nil
 	}
 	return h.Hash.UnmarshalJSON(data)

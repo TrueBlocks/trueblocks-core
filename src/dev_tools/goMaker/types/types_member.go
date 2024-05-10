@@ -238,8 +238,8 @@ func (m *Member) GoType() string {
 				ret = "base.Txnum"
 			case "lognum":
 				ret = "base.Lognum"
-			case "numeral":
-				ret = "base.Numeral"
+			case "index":
+				ret = "base.Index"
 			case "timestamp":
 				ret = "base.Timestamp"
 			case "topic":
@@ -269,11 +269,11 @@ func (m *Member) NeedsPtr() bool {
 		m.IsObject()
 }
 
+// MarshalCode writes the writer code for caching this item
 func (m *Member) MarshalCode() string {
 	if m.IsCalc() ||
 		m.IsRawOnly() ||
-		(m.Container() == "Transaction" &&
-			(m.GoName() == "CompressedTx" || m.GoName() == "Traces")) {
+		(m.Container() == "Transaction" && m.GoName() == "Traces") {
 		return ""
 	}
 
@@ -345,11 +345,12 @@ func (m *Member) MarshalCode() string {
 	return m.executeTemplate(tmplName, tmpl)
 }
 
+// UnmarshalCode writes the reader code for caching this item
 func (m *Member) UnmarshalCode() string {
-	if m.IsCalc() ||
+	wasRemoved := m.HasUpgrade() && m.IsCalc()
+	if (!wasRemoved && m.IsCalc()) ||
 		m.IsRawOnly() ||
-		(m.Container() == "Transaction" &&
-			(m.GoName() == "CompressedTx" || m.GoName() == "Traces")) {
+		(m.Container() == "Transaction" && m.GoName() == "Traces") {
 		return ""
 	}
 
@@ -411,8 +412,21 @@ func (m *Member) UnmarshalCode() string {
 	code := m.executeTemplate(tmplName, tmpl)
 
 	if m.HasUpgrade() {
-		tmplName := "upgrage"
-		tmpl := `	// {{.GoName}}
+		if wasRemoved {
+			tmplName = "upgrageRemoved"
+			tmpl = `	// Used to be {{.GoName}}, since removed
+	v{{.GoName}} := version.NewVersion("++VERS++")
+	if vers <= v{{.GoName}}.Uint64() {
+		var val ++PRIOR_TYPE++
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
+			return err
+		}
+	}
+
+`
+		} else {
+			tmplName = "upgrage"
+			tmpl = `	// {{.GoName}}
 	v{{.GoName}} := version.NewVersion("++VERS++")
 	if vers <= v{{.GoName}}.Uint64() {
 		var val ++PRIOR_TYPE++
@@ -425,6 +439,8 @@ func (m *Member) UnmarshalCode() string {
 	}
 
 `
+		}
+
 		cc := strings.Trim(code, "\n")
 		parts := strings.Split(m.Upgrades, ":")
 		if len(parts) != 2 {
@@ -441,7 +457,7 @@ func (m *Member) UnmarshalCode() string {
 		}
 		// TODO: hack
 		mm := map[string]string{
-			"CumulativeGasUsed": "base.MustParseNumeral",
+			"CumulativeGasUsed": "base.MustParseGas",
 			"Status":            "uint64",
 			"BaseFeePerGas":     "weiToGas",
 		}
@@ -462,7 +478,7 @@ func (m *Member) YamlType() string {
 	}
 	if m.IsObject() {
 		return "object" + o
-	} else if m.Type == "blknum" || m.Type == "txnum" || m.Type == "lognum" || m.Type == "numeral" ||
+	} else if m.Type == "blknum" || m.Type == "txnum" || m.Type == "lognum" || m.Type == "index" ||
 		m.Type == "timestamp" || m.Type == "float64" || m.Type == "gas" || m.Type == "uint64" ||
 		m.Type == "int64" || m.Type == "uint32" || m.Type == "int" || m.Type == "nonce" {
 		return "number" + f

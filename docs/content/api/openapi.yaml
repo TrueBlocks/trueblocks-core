@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 2.5.10-release
+  version: 2.5.11-release
   description: >
     A REST layer over the TrueBlocks chifra command line. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
@@ -3487,7 +3487,7 @@ components:
         compressedTx:
           type: string
           format: string
-          description: "truncated, more readable version of the articulation"
+          description: "truncated, more readable version of the articulation (calculated)"
     withdrawal:
       description: "withdrawal record for post-Shanghai withdrawals from the consensus layer"
       type: object
@@ -3510,7 +3510,7 @@ components:
           description: "the number of this block"
         index:
           type: number
-          format: numeral
+          format: index
           description: "a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal"
         timestamp:
           type: number
@@ -3522,7 +3522,7 @@ components:
           description: "the timestamp as a date (calculated)"
         validatorIndex:
           type: number
-          format: numeral
+          format: index
           description: "the validator_index of the validator on the consensus layer the withdrawal corresponds to"
     receipt:
       description: "receipt data as returned from the RPC (with slight enhancements)"
@@ -3613,7 +3613,7 @@ components:
         compressedLog:
           type: string
           format: string
-          description: "a truncated, more readable version of the articulation"
+          description: "a truncated, more readable version of the articulation (calculated)"
     logFilter:
       description: "used by the fast path log queries for various commands"
       type: object
@@ -3699,7 +3699,7 @@ components:
         compressedTrace:
           type: string
           format: string
-          description: "a compressed string version of the articulated trace"
+          description: "a compressed string version of the articulated trace (calculated)"
     traceAction:
       description: "trace action data as returned from the RPC (with slight enhancements)"
       type: object
@@ -4626,7 +4626,7 @@ components:
         ether:
           type: string
           format: ether
-          description: "if --ether is specified, the value in ether"
+          description: "if --ether is specified, the value in ether (calculated)"
         gas:
           type: number
           format: gas
@@ -4651,7 +4651,7 @@ components:
         compressedTx:
           type: string
           format: string
-          description: "truncated, more readable version of the articulation"
+          description: "truncated, more readable version of the articulation (calculated)"
         isError:
           type: boolean
           format: boolean
