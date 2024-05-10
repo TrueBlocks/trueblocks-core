@@ -1,15 +1,30 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
 package main
 
+// EXISTING_CODE
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoNames tests the names sdk function
+// EXISTING_CODE
+
+// DoNames tests the Names sdk function
 func DoNames() {
 	file.EstablishFolder("sdkFuzzer-output/names")
+	opts := sdk.NamesOptions{}
+	ShowHeader("DoNames", opts)
+
 	globs := noCache(noEther(noRaw(globals)))
 
 	expands := []bool{false, true}
@@ -19,11 +34,11 @@ func DoNames() {
 	prefunds := []bool{false, true}
 	regular := []bool{false, true}
 
-	opts := sdk.NamesOptions{
+	// EXISTING_CODE
+	opts = sdk.NamesOptions{
 		Terms: []string{"0xf"},
 	}
-	ShowHeader("DoNames-bools", &opts)
-
+	// names,command,default|
 	for _, expand := range expands {
 		for _, match := range matches {
 			for _, all := range alls {
@@ -42,12 +57,12 @@ func DoNames() {
 							for _, g := range globs {
 								opts.Globals = g
 								fn := getFilenameNames("", &opts)
-								TestNames("names", fn, &opts)
+								TestNames("names", "", fn, &opts)
 								fn = getFilenameNames("addrs", &opts)
-								TestNames("addrs", fn, &opts)
+								TestNames("addrs", "", fn, &opts)
 								opts.Terms = []string{"0"}
 								fn = getFilenameNames("tags", &opts)
-								TestNames("tags", fn, &opts)
+								TestNames("tags", "", fn, &opts)
 							}
 						}
 					}
@@ -58,7 +73,7 @@ func DoNames() {
 
 	ShowHeader("DoNames-other", &opts)
 	fn := getFilenameNames("autoname", &opts)
-	TestNames("autoname", fn, &opts)
+	TestNames("autoname", "", fn, &opts)
 
 	// DryRun    bool     `json:"dryRun,omitempty"`
 	// func (opts *NamesOptions) NamesClean() ([]types.Message, *types.MetaData, error) {
@@ -67,35 +82,12 @@ func DoNames() {
 	// func (opts *NamesOptions) NamesDelete() ([]types.Name, *types.MetaData, error) {
 	// func (opts *NamesOptions) NamesUndelete() ([]types.Name, *types.MetaData, error) {
 	// func (opts *NamesOptions) NamesRemove() ([]types.Name, *types.MetaData, error) {
+	// EXISTING_CODE
+	Wait()
 }
 
-func getFilenameNames(pre string, opts *sdk.NamesOptions) string {
-	baseFn := "names/names"
-	if len(pre) > 0 {
-		baseFn += "-" + pre
-	}
-	if opts.Expand {
-		baseFn += "-expand"
-	}
-	if opts.MatchCase {
-		baseFn += "-match"
-	}
-	if opts.All {
-		baseFn += "-all"
-	}
-	if opts.Custom {
-		baseFn += "-custom"
-	}
-	if opts.Prefund {
-		baseFn += "-prefund"
-	}
-	if opts.Regular {
-		baseFn += "-regular"
-	}
-	return getFilename(baseFn, &opts.Globals)
-}
-
-func TestNames(which, fn string, opts *sdk.NamesOptions) {
+func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
 	switch which {
 	case "names":
 		if names, _, err := opts.Names(); err != nil {
@@ -140,3 +132,32 @@ func TestNames(which, fn string, opts *sdk.NamesOptions) {
 		}
 	}
 }
+
+// EXISTING_CODE
+func getFilenameNames(pre string, opts *sdk.NamesOptions) string {
+	baseFn := "names/names"
+	if len(pre) > 0 {
+		baseFn += "-" + pre
+	}
+	if opts.Expand {
+		baseFn += "-expand"
+	}
+	if opts.MatchCase {
+		baseFn += "-match"
+	}
+	if opts.All {
+		baseFn += "-all"
+	}
+	if opts.Custom {
+		baseFn += "-custom"
+	}
+	if opts.Prefund {
+		baseFn += "-prefund"
+	}
+	if opts.Regular {
+		baseFn += "-regular"
+	}
+	return getFilename(baseFn, &opts.Globals)
+}
+
+// EXISTING_CODE

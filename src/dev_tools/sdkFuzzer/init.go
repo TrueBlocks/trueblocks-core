@@ -1,9 +1,28 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
 package main
 
-// DoInit tests the init sdk function
-func DoInit() {
-	ShowHeader("DoInit", nil)
+// EXISTING_CODE
+import (
+	"github.com/TrueBlocks/trueblocks-core/sdk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+)
 
+// EXISTING_CODE
+
+// DoInit tests the Init sdk function
+func DoInit() {
+	file.EstablishFolder("sdkFuzzer-output/init")
+	opts := sdk.InitOptions{}
+	ShowHeader("DoInit", opts)
+
+	// EXISTING_CODE
+	// init,command,verbose|version|noop|noColor|chain|
 	// opts := sdk.InitOptions{}
 
 	// Publisher  base.Address `json:"publisher,omitempty"`
@@ -23,4 +42,15 @@ func DoInit() {
 	// 		logger.Error(err)
 	// 	}
 	// }
+	// EXISTING_CODE
+	Wait()
 }
+
+func TestInit(which, value, fn string, opts *sdk.InitOptions) {
+	// fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	switch which {
+	}
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

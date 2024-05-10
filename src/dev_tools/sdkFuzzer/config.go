@@ -1,26 +1,44 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
 package main
 
+// EXISTING_CODE
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoConfig tests the config sdk function
+// EXISTING_CODE
+
+// DoConfig tests the Config sdk function
 func DoConfig() {
 	file.EstablishFolder("sdkFuzzer-output/config")
 	opts := sdk.ConfigOptions{}
 	ShowHeader("DoConfig", opts)
 
 	globs := noCache(noEther(noRaw(globals)))
+
+	// EXISTING_CODE
+	// config,command,default|
 	for _, g := range globs {
 		opts.Globals = g
 		fn := getFilename("config/paths", &opts.Globals)
-		TestConfig("paths", fn, &opts)
+		TestConfig("paths", "", fn, &opts)
 	}
+	// EXISTING_CODE
+	Wait()
 }
 
-func TestConfig(which, fn string, opts *sdk.ConfigOptions) {
+func TestConfig(which, value, fn string, opts *sdk.ConfigOptions) {
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
 	switch which {
 	case "paths":
 		if paths, _, err := opts.ConfigPaths(); err != nil {
@@ -34,3 +52,6 @@ func TestConfig(which, fn string, opts *sdk.ConfigOptions) {
 		}
 	}
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

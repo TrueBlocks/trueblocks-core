@@ -1,5 +1,13 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
 package main
 
+// EXISTING_CODE
 import (
 	"strings"
 
@@ -9,13 +17,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoState tests the state sdk function
+// EXISTING_CODE
+
+// DoState tests the State sdk function
 func DoState() {
 	file.EstablishFolder("sdkFuzzer-output/state")
-	opts := sdk.StateOptions{
-		BlockIds: []string{"10092000"},
-		Addrs:    []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
-	}
+	opts := sdk.StateOptions{}
 	ShowHeader("DoState", opts)
 
 	art := []bool{false, true}
@@ -34,6 +41,12 @@ func DoState() {
 		sdk.SPAll,
 	}
 
+	// EXISTING_CODE
+	opts = sdk.StateOptions{
+		BlockIds: []string{"10092000"},
+		Addrs:    []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
+	}
+	// state,command,default|caching|ether|
 	for _, c := range changes {
 		for _, z := range noZeros {
 			for _, p := range parts {
@@ -53,7 +66,7 @@ func DoState() {
 				for _, g := range globs {
 					opts.Globals = g
 					fn := getFilename(baseFn, &opts.Globals)
-					TestState(fn, &opts)
+					TestState("state", "", fn, &opts)
 				}
 			}
 		}
@@ -74,7 +87,7 @@ func DoState() {
 		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)
-			TestStateCall("manifestHashMap(0x02f2b09b33fdbd406ead954a31f98bd29a2a3492,\"mainnet\")", fn, &opts)
+			TestStateCall("call", "manifestHashMap(0x02f2b09b33fdbd406ead954a31f98bd29a2a3492,\"mainnet\")", fn, &opts)
 		}
 	}
 
@@ -94,24 +107,31 @@ func DoState() {
 		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)
-			TestStateCall("0x0902f1ac()", fn, &opts)
+			TestStateCall("state", "0x0902f1ac()", fn, &opts)
 		}
 	}
+	// EXISTING_CODE
+	Wait()
 }
 
-func TestState(fn string, opts *sdk.StateOptions) {
-	if state, _, err := opts.State(); err != nil {
-		ReportError(fn, opts, err)
-	} else {
-		if err := SaveToFile[types.State](fn, state); err != nil {
-			ReportError2(fn, err)
+func TestState(which, value, fn string, opts *sdk.StateOptions) {
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	switch which {
+	case "state":
+		if state, _, err := opts.State(); err != nil {
+			ReportError(fn, opts, err)
 		} else {
-			ReportOkay(fn)
+			if err := SaveToFile[types.State](fn, state); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
 		}
 	}
 }
 
-func TestStateCall(call, fn string, opts *sdk.StateOptions) {
+// EXISTING_CODE
+func TestStateCall(which, call, fn string, opts *sdk.StateOptions) {
 	fn = strings.ReplaceAll(fn, ".json", "-call.json")
 	if stateResult, _, err := opts.StateCall(call); err != nil {
 		ReportError(fn, opts, err)
@@ -123,3 +143,5 @@ func TestStateCall(call, fn string, opts *sdk.StateOptions) {
 		}
 	}
 }
+
+// EXISTING_CODE

@@ -1,23 +1,28 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
 package main
 
+// EXISTING_CODE
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoSlurp tests the slurp sdk function
+// EXISTING_CODE
+
+// DoSlurp tests the Slurp sdk function
 func DoSlurp() {
 	file.EstablishFolder("sdkFuzzer-output/slurp")
-	opts := sdk.SlurpOptions{
-		Addrs:   []string{testAddrs[0]},
-		PerPage: 10,
-	}
-	ShowHeader("DoSlurp", &opts)
-
-	// Page       uint64      `json:"page,omitempty"`
-	// PageId     string      `json:"pageId,omitempty"`
-	// PerPage    uint64      `json:"perPage,omitempty"`
+	opts := sdk.SlurpOptions{}
+	ShowHeader("DoSlurp", opts)
 
 	types1 := []sdk.SlurpTypes{
 		sdk.NoST,
@@ -41,6 +46,15 @@ func DoSlurp() {
 	art := []bool{false, true}
 	globs := noCache(globals)
 
+	// EXISTING_CODE
+	// slurp,command,default|caching|ether|raw|
+	// Page       uint64      `json:"page,omitempty"`
+	// PageId     string      `json:"pageId,omitempty"`
+	// PerPage    uint64      `json:"perPage,omitempty"`
+	opts = sdk.SlurpOptions{
+		Addrs:   []string{testAddrs[0]},
+		PerPage: 10,
+	}
 	for _, s := range sources {
 		for _, t := range types1 {
 			if sdk.NoST != t && sdk.SSEtherscan != s {
@@ -57,18 +71,21 @@ func DoSlurp() {
 				for _, g := range globs {
 					opts.Globals = g
 					fn := getFilename(baseFn, &opts.Globals)
-					TestSlurp("slurp", fn, &opts)
+					TestSlurp("slurp", "", fn, &opts)
 					fn = getFilename(baseFn+"-apps", &opts.Globals)
-					TestSlurp("appearances", fn, &opts)
+					TestSlurp("appearances", "", fn, &opts)
 					fn = getFilename(baseFn+"-count", &opts.Globals)
-					TestSlurp("count", fn, &opts)
+					TestSlurp("count", "", fn, &opts)
 				}
 			}
 		}
 	}
+	// EXISTING_CODE
+	Wait()
 }
 
-func TestSlurp(which, fn string, opts *sdk.SlurpOptions) {
+func TestSlurp(which, value, fn string, opts *sdk.SlurpOptions) {
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
 	switch which {
 	case "slurp":
 		if slurp, _, err := opts.Slurp(); err != nil {
@@ -102,3 +119,6 @@ func TestSlurp(which, fn string, opts *sdk.SlurpOptions) {
 		}
 	}
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

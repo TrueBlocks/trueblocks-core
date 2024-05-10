@@ -1,18 +1,33 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
 package main
 
+// EXISTING_CODE
 import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoMonitors tests the monitors sdk function
+// EXISTING_CODE
+
+// DoMonitors tests the Monitors sdk function
 func DoMonitors() {
-	opts := sdk.MonitorsOptions{
+	file.EstablishFolder("sdkFuzzer-output/monitors")
+	opts := sdk.MonitorsOptions{}
+	ShowHeader("DoMonitors", opts)
+
+	// EXISTING_CODE
+	opts = sdk.MonitorsOptions{
 		Addrs: []string{testAddrs[0]},
 	}
-	ShowHeader("DoMonitors", &opts)
-
+	// monitors,command,default|caching|
 	// Addrs     []string `json:"addrs,omitempty"`
 	// Delete    bool     `json:"delete,omitempty"`
 	// Undelete  bool     `json:"undelete,omitempty"`
@@ -60,4 +75,15 @@ func DoMonitors() {
 	// 		logger.Error(err)
 	// 	}
 	// }
+	// EXISTING_CODE
+	Wait()
 }
+
+func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
+	// fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	switch which {
+	}
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

@@ -1,19 +1,39 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
 package main
 
+// EXISTING_CODE
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoExport tests the export sdk function
+// EXISTING_CODE
+
+// DoExport tests the Export sdk function
 func DoExport() {
-	opts := sdk.ExportOptions{
-		Addrs: testAddrs,
+	file.EstablishFolder("sdkFuzzer-output/export")
+	opts := sdk.ExportOptions{}
+	ShowHeader("DoExport", opts)
+
+	globs := noRaw(globals)
+	baseFn := "export/export"
+
+	// EXISTING_CODE
+	opts = sdk.ExportOptions{
+		Addrs:       testAddrs,
+		FirstRecord: 0,
+		MaxRecords:  10,
 		// Articulate: true,
 	}
-	ShowHeader("DoExport", &opts)
-
 	// Addrs       []string    `json:"addrs,omitempty"`
 	// Topics      []string    `json:"topics,omitempty"`
 	// Fourbytes   []string    `json:"fourbytes,omitempty"`
@@ -35,128 +55,134 @@ func DoExport() {
 	// NoZero      bool        `json:"noZero,omitempty"`
 	// FirstBlock  base.Blknum `json:"firstBlock,omitempty"`
 	// LastBlock   base.Blknum `json:"lastBlock,omitempty"`
-	// func (opts *ExportOptions) Export() ([]types.Transaction, *types.MetaData, error) {
-	// func (opts *ExportOptions) ExportAppearances() ([]types.Appearance, *types.MetaData, error) {
-	// func (opts *ExportOptions) ExportReceipts() ([]types.Receipt, *types.MetaData, error) {
-	// func (opts *ExportOptions) ExportLogs() ([]types.Log, *types.MetaData, error) {
-	// func (opts *ExportOptions) ExportTraces() ([]types.Trace, *types.MetaData, error) {
-	// func (opts *ExportOptions) ExportNeighbors() ([]bool, *types.MetaData, error) {
-	// func (opts *ExportOptions) ExportStatements() ([]types.Statement, *types.MetaData, error) {
-	// func (opts *ExportOptions) ExportBalances() ([]types.State, *types.MetaData, error) {
-	// func (opts *ExportOptions) ExportWithdrawals() ([]types.Withdrawal, *types.MetaData, error) {
-	// func (opts *ExportOptions) ExportCount() ([]types.AppearanceCount, *types.MetaData, error) {
 	// NoEF ExportFlow = 0
 	// EFIn            = 1 << iota
 	// EFOut
 	// EFZero
-
-	if export, _, err := opts.Export(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveAndClean[types.Transaction]("sdkFuzzer/export.json", export, &opts, func() error {
-			_, _, err := opts.Export()
-			return err
-		}); err != nil {
-			logger.Error(err)
-		}
+	// export,command,default|caching|ether|
+	for _, g := range globs {
+		opts.Globals = g
+		fn := baseFn
+		TestExport("export", "", fn, &opts)
+		TestExport("appearances", "", fn, &opts)
+		TestExport("receipts", "", fn, &opts)
+		TestExport("logs", "", fn, &opts)
+		TestExport("traces", "", fn, &opts)
+		TestExport("neighbors", "", fn, &opts)
+		TestExport("statements", "", fn, &opts)
+		TestExport("balances", "", fn, &opts)
+		TestExport("withdrawals", "", fn, &opts)
+		TestExport("count", "", fn, &opts)
 	}
+	// EXISTING_CODE
+	Wait()
+}
 
-	if appearances, _, err := opts.ExportAppearances(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveAndClean[types.Appearance]("sdkFuzzer/exportAppearances.json", appearances, &opts, func() error {
-			_, _, err := opts.ExportAppearances()
-			return err
-		}); err != nil {
-			logger.Error(err)
+func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	switch which {
+	case "export":
+		if export, _, err := opts.Export(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Transaction](fn, export); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
 		}
-	}
-
-	if receipts, _, err := opts.ExportReceipts(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveAndClean[types.Receipt]("sdkFuzzer/exportReceipts.json", receipts, &opts, func() error {
-			_, _, err := opts.ExportReceipts()
-			return err
-		}); err != nil {
-			logger.Error(err)
+	case "appearances":
+		if appearances, _, err := opts.ExportAppearances(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Appearance](fn, appearances); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
 		}
-	}
-
-	if logs, _, err := opts.ExportLogs(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveAndClean[types.Log]("sdkFuzzer/exportLogs.json", logs, &opts, func() error {
-			_, _, err := opts.ExportLogs()
-			return err
-		}); err != nil {
-			logger.Error(err)
+	case "receipts":
+		if receipts, _, err := opts.ExportReceipts(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Receipt](fn, receipts); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
 		}
-	}
-
-	if traces, _, err := opts.ExportTraces(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveAndClean[types.Trace]("sdkFuzzer/exportTraces.json", traces, &opts, func() error {
-			_, _, err := opts.ExportTraces()
-			return err
-		}); err != nil {
-			logger.Error(err)
+	case "logs":
+		if logs, _, err := opts.ExportLogs(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Log](fn, logs); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
 		}
-	}
-
-	if statements, _, err := opts.ExportStatements(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveAndClean[types.Statement]("sdkFuzzer/exportStatements.json", statements, &opts, func() error {
-			_, _, err := opts.ExportStatements()
-			return err
-		}); err != nil {
-			logger.Error(err)
+	case "traces":
+		if traces, _, err := opts.ExportTraces(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Trace](fn, traces); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
 		}
-	}
-
-	if balances, _, err := opts.ExportBalances(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveAndClean[types.State]("sdkFuzzer/exportBalances.json", balances, &opts, func() error {
-			_, _, err := opts.ExportBalances()
-			return err
-		}); err != nil {
-			logger.Error(err)
-		}
-	}
-
-	// if neighbors, _, err := opts.ExportNeighbors(); err != nil {
-	// 	logger.Error(err)
-	// } else {
-	// 	if err := SaveAndClean[bool]("sdkFuzzer/exportNeighbors.json", neighbors, &opts, func() error {
-	// 		_, _, err := opts.ExportNeighbors()
-	// 		return err
-	// 	}); err != nil {
-	// 		logger.Error(err)
+	case "neighbors":
+	// 	if neighbors, _, err := opts.ExportNeigbors(); err != nil {
+	// 		ReportError(fn, opts, err)
+	// 	} else {
+	// 		if err := SaveToFile[types.Neighbor](fn, neighbors); err != nil {
+	// 			ReportError2(fn, err)
+	// 		} else {
+	// 			ReportOkay(fn)
+	// 		}
 	// 	}
-	// }
-
-	if withdrawls, _, err := opts.ExportWithdrawals(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveAndClean[types.Withdrawal]("sdkFuzzer/exportWithdrawals.json", withdrawls, &opts, func() error {
-			_, _, err := opts.ExportWithdrawals()
-			return err
-		}); err != nil {
-			logger.Error(err)
+	case "statements":
+		if statements, _, err := opts.ExportStatements(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Statement](fn, statements); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
 		}
-	}
-
-	if counts, _, err := opts.ExportCount(); err != nil {
-		logger.Error(err)
-	} else {
-		if err := SaveAndClean[types.AppearanceCount]("sdkFuzzer/exportCount.json", counts, &opts, func() error {
-			_, _, err := opts.ExportCount()
-			return err
-		}); err != nil {
-			logger.Error(err)
+	case "balances":
+		if balances, _, err := opts.ExportBalances(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.State](fn, balances); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "withdrawals":
+		if withdrawls, _, err := opts.ExportWithdrawals(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Withdrawal](fn, withdrawls); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "count":
+		if counts, _, err := opts.ExportCount(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.AppearanceCount](fn, counts); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
 		}
 	}
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

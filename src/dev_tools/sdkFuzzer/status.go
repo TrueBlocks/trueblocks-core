@@ -1,5 +1,13 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
 package main
 
+// EXISTING_CODE
 import (
 	"fmt"
 	"strings"
@@ -9,11 +17,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoStatus tests the status sdk function
+// EXISTING_CODE
+
+// DoStatus tests the Status sdk function
 func DoStatus() {
 	file.EstablishFolder("sdkFuzzer-output/status")
 	opts := sdk.StatusOptions{}
-	ShowHeader("DoStatus", &opts)
+	ShowHeader("DoStatus", opts)
 
 	// func (opts *StatusOptions) StatusDiagnose() ([]bool, *types.MetaData, error) {
 
@@ -22,6 +32,8 @@ func DoStatus() {
 	chains := []bool{false, true}
 	globs := noEther(noRaw(noCache(globals)))
 
+	// EXISTING_CODE
+	// status,command,default|
 	for _, c := range chains {
 		for _, f := range firsts {
 			for _, m := range maxes {
@@ -42,32 +54,35 @@ func DoStatus() {
 					opts.Globals = g
 
 					fn := getFilename(baseName, &opts.Globals)
-					TestStatus("index", fn, &opts)
-					TestStatus("blooms", fn, &opts)
-					TestStatus("blocks", fn, &opts)
-					TestStatus("transactions", fn, &opts)
-					TestStatus("traces", fn, &opts)
-					TestStatus("logs", fn, &opts)
-					TestStatus("statements", fn, &opts)
-					TestStatus("results", fn, &opts)
-					TestStatus("state", fn, &opts)
-					TestStatus("tokens", fn, &opts)
-					TestStatus("monitors", fn, &opts)
-					TestStatus("names", fn, &opts)
-					TestStatus("abis", fn, &opts)
-					TestStatus("slurps", fn, &opts)
-					TestStatus("staging", fn, &opts)
-					TestStatus("unripe", fn, &opts)
-					TestStatus("maps", fn, &opts)
-					TestStatus("some", fn, &opts)
-					TestStatus("all", fn, &opts)
+					TestStatus("index", "", fn, &opts)
+					TestStatus("blooms", "", fn, &opts)
+					TestStatus("blocks", "", fn, &opts)
+					TestStatus("transactions", "", fn, &opts)
+					TestStatus("traces", "", fn, &opts)
+					TestStatus("logs", "", fn, &opts)
+					TestStatus("statements", "", fn, &opts)
+					TestStatus("results", "", fn, &opts)
+					TestStatus("state", "", fn, &opts)
+					TestStatus("tokens", "", fn, &opts)
+					TestStatus("monitors", "", fn, &opts)
+					TestStatus("names", "", fn, &opts)
+					TestStatus("abis", "", fn, &opts)
+					TestStatus("slurps", "", fn, &opts)
+					TestStatus("staging", "", fn, &opts)
+					TestStatus("unripe", "", fn, &opts)
+					TestStatus("maps", "", fn, &opts)
+					TestStatus("some", "", fn, &opts)
+					TestStatus("all", "", fn, &opts)
 				}
 			}
 		}
 	}
+	// EXISTING_CODE
+	Wait()
 }
 
-func TestStatus(which, fn string, opts *sdk.StatusOptions) {
+func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
 	var f func() ([]types.Status, *types.MetaData, error)
 	switch which {
 	case "index":
@@ -124,3 +139,6 @@ func TestStatus(which, fn string, opts *sdk.StatusOptions) {
 		}
 	}
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

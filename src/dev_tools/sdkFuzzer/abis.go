@@ -1,24 +1,39 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
 package main
 
+// EXISTING_CODE
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoAbis tests the abis sdk function
+// EXISTING_CODE
+
+// DoAbis tests the Abis sdk function
 func DoAbis() {
 	file.EstablishFolder("sdkFuzzer-output/abis")
-	opts := sdk.AbisOptions{
-		Addrs: []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
-	}
+	opts := sdk.AbisOptions{}
 	ShowHeader("DoAbis", opts)
 
 	known := []bool{false, true}
 	proxies := []string{"", "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"}
 	globs := noEther(noRaw(globals))
 
+	// EXISTING_CODE
+	opts = sdk.AbisOptions{
+		Addrs: []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
+	}
+	// abis,command,default|caching|
 	for _, k := range known {
 		for _, p := range proxies {
 			for _, g := range globs {
@@ -90,9 +105,12 @@ func DoAbis() {
 			}
 		}
 	}
+	// EXISTING_CODE
+	Wait()
 }
 
-func TestAbis(which, f, fn string, opts *sdk.AbisOptions) {
+func TestAbis(which, value, fn string, opts *sdk.AbisOptions) {
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
 	switch which {
 	case "abis":
 		if funcs, _, err := opts.Abis(); err != nil {
@@ -105,7 +123,7 @@ func TestAbis(which, f, fn string, opts *sdk.AbisOptions) {
 			}
 		}
 	case "encode":
-		if funcs, _, err := opts.AbisEncode(f); err != nil {
+		if funcs, _, err := opts.AbisEncode(value); err != nil {
 			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Function](fn, funcs); err != nil {
@@ -115,7 +133,7 @@ func TestAbis(which, f, fn string, opts *sdk.AbisOptions) {
 			}
 		}
 	case "find":
-		if funcs, _, err := opts.AbisFind([]string{f}); err != nil {
+		if funcs, _, err := opts.AbisFind([]string{value}); err != nil {
 			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Function](fn, funcs); err != nil {
@@ -126,3 +144,6 @@ func TestAbis(which, f, fn string, opts *sdk.AbisOptions) {
 		}
 	}
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

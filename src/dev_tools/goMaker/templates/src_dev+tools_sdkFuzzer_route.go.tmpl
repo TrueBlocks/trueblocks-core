@@ -1,0 +1,37 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+package main
+
+// EXISTING_CODE
+// EXISTING_CODE
+
+// Do{{toProper .Route}} tests the {{toProper .Route}} sdk function
+func Do{{toProper .Route}}() {
+	file.EstablishFolder("sdkFuzzer-output/{{.Route}}")
+	opts := sdk.{{toProper .Route}}Options{}
+	ShowHeader("Do{{toProper .Route}}", opts)
+
+	// ++CHANGABLE_ITEMS++
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+	Wait()
+}
+
+func Test{{toProper .Route}}(which, value, fn string, opts *sdk.{{toProper .Route}}Options) {
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// JIMMY_HAM
+	// JIMMY_HAM
+
+	switch which {
+	// ++CASES++
+	}
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

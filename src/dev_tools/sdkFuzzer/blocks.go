@@ -1,23 +1,38 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
 package main
 
+// EXISTING_CODE
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
+// EXISTING_CODE
+
 // DoBlocks tests the Blocks sdk function
 func DoBlocks() {
 	file.EstablishFolder("sdkFuzzer-output/blocks")
-	opts := sdk.BlocksOptions{
-		BlockIds: testBlocks,
-	}
+	opts := sdk.BlocksOptions{}
 	ShowHeader("DoBlocks", opts)
 
 	cacheTxs := []bool{false, true}
 	cacheTraces := []bool{false, true}
 	globs := noRaw(globals)
 
+	// EXISTING_CODE
+	// opts = sdk.BlocksOptions{
+	// 	BlockIds: testBlocks,
+	// }
+	// blocks,command,default|caching|ether|raw|
 	for _, ctxs := range cacheTxs {
 		for _, cts := range cacheTraces {
 			for _, g := range globs {
@@ -48,7 +63,7 @@ func DoBlocks() {
 							fn += "-" + f.String()
 							opts.Flow = f
 							fn3 := fn2 + "-" + f.String()
-							TestBlocks(t, fn3, &opts)
+							TestBlocks(t, "", fn3, &opts)
 						}
 					} else if t == "logs" {
 						art := []bool{false, true}
@@ -57,10 +72,10 @@ func DoBlocks() {
 							if a {
 								fn2 += "-articulate"
 							}
-							TestBlocks(t, fn2, &opts)
+							TestBlocks(t, "", fn2, &opts)
 						}
 					} else {
-						TestBlocks(t, fn2, &opts)
+						TestBlocks(t, "", fn2, &opts)
 					}
 				}
 			}
@@ -73,19 +88,22 @@ func DoBlocks() {
 		Emitter:  []string{"0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0"},
 	}
 	fn := getFilename(baseFn+"-emitter", &opts.Globals)
-	TestBlocks("logs", fn, &opts)
+	TestBlocks("logs", "", fn, &opts)
 
 	opts.Emitter = []string{}
 	opts.Topic = []string{"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"}
 	fn = getFilename(baseFn+"-topic", &opts.Globals)
-	TestBlocks("logs", fn, &opts)
+	TestBlocks("logs", "", fn, &opts)
 
 	opts.Emitter = []string{"0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0"}
 	fn = getFilename(baseFn+"-emitter-topic", &opts.Globals)
-	TestBlocks("logs", fn, &opts)
+	TestBlocks("logs", "", fn, &opts)
+	// EXISTING_CODE
+	Wait()
 }
 
-func TestBlocks(which, fn string, opts *sdk.BlocksOptions) {
+func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
 	switch which {
 	case "txs":
 		if blocks, _, err := opts.Blocks(); err != nil {
@@ -169,3 +187,6 @@ func TestBlocks(which, fn string, opts *sdk.BlocksOptions) {
 		}
 	}
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
