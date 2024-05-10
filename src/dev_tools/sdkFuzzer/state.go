@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -25,6 +26,9 @@ func DoState() {
 	opts := sdk.StateOptions{}
 	ShowHeader("DoState", opts)
 
+	// FuzzerInits tag
+
+	// EXISTING_CODE
 	art := []bool{false, true}
 	globs := noRaw(globals)
 
@@ -40,8 +44,6 @@ func DoState() {
 		sdk.SPSome,
 		sdk.SPAll,
 	}
-
-	// EXISTING_CODE
 	opts = sdk.StateOptions{
 		BlockIds: []string{"10092000"},
 		Addrs:    []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
@@ -116,6 +118,9 @@ func DoState() {
 
 func TestState(which, value, fn string, opts *sdk.StateOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "state":
 		if state, _, err := opts.State(); err != nil {
@@ -127,6 +132,9 @@ func TestState(which, value, fn string, opts *sdk.StateOptions) {
 				ReportOkay(fn)
 			}
 		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

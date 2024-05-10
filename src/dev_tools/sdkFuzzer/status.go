@@ -25,14 +25,15 @@ func DoStatus() {
 	opts := sdk.StatusOptions{}
 	ShowHeader("DoStatus", opts)
 
+	// FuzzerInits tag
+
+	// EXISTING_CODE
 	// func (opts *StatusOptions) StatusDiagnose() ([]bool, *types.MetaData, error) {
 
 	firsts := []uint64{0, 10}
 	maxes := []uint64{0, 500}
 	chains := []bool{false, true}
 	globs := noEther(noRaw(noCache(globals)))
-
-	// EXISTING_CODE
 	// status,command,default|
 	for _, c := range chains {
 		for _, f := range firsts {
@@ -83,7 +84,10 @@ func DoStatus() {
 
 func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
 	var f func() ([]types.Status, *types.MetaData, error)
+	// EXISTING_CODE
+
 	switch which {
 	case "index":
 		f = opts.StatusIndex
@@ -124,14 +128,13 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 	case "all":
 		f = opts.StatusAll
 	default:
-		ReportError(fn, opts, fmt.Errorf("unknown status type: %s", which))
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
 		return
 	}
 
 	if status, _, err := f(); err != nil {
 		ReportError(fn, opts, err)
 	} else {
-		fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
 		if err := SaveToFile[types.Status](fn, status); err != nil {
 			ReportError2(fn, err)
 		} else {

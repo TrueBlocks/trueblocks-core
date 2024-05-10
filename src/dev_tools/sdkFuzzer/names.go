@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -25,16 +26,16 @@ func DoNames() {
 	opts := sdk.NamesOptions{}
 	ShowHeader("DoNames", opts)
 
-	globs := noCache(noEther(noRaw(globals)))
+	// FuzzerInits tag
 
+	// EXISTING_CODE
+	globs := noCache(noEther(noRaw(globals)))
 	expands := []bool{false, true}
 	matches := []bool{false, true}
 	alls := []bool{false, true}
 	customs := []bool{false, true}
 	prefunds := []bool{false, true}
 	regular := []bool{false, true}
-
-	// EXISTING_CODE
 	opts = sdk.NamesOptions{
 		Terms: []string{"0xf"},
 	}
@@ -58,8 +59,8 @@ func DoNames() {
 								opts.Globals = g
 								fn := getFilenameNames("", &opts)
 								TestNames("names", "", fn, &opts)
-								fn = getFilenameNames("addrs", &opts)
-								TestNames("addrs", "", fn, &opts)
+								fn = getFilenameNames("addr", &opts)
+								TestNames("addr", "", fn, &opts)
 								opts.Terms = []string{"0"}
 								fn = getFilenameNames("tags", &opts)
 								TestNames("tags", "", fn, &opts)
@@ -73,7 +74,7 @@ func DoNames() {
 
 	ShowHeader("DoNames-other", &opts)
 	fn := getFilenameNames("autoname", &opts)
-	TestNames("autoname", "", fn, &opts)
+	TestNames("autoname", "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f", fn, &opts)
 
 	// DryRun    bool     `json:"dryRun,omitempty"`
 	// func (opts *NamesOptions) NamesClean() ([]types.Message, *types.MetaData, error) {
@@ -88,6 +89,9 @@ func DoNames() {
 
 func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "names":
 		if names, _, err := opts.Names(); err != nil {
@@ -99,37 +103,39 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 				ReportOkay(fn)
 			}
 		}
-	case "addrs":
-		if names, _, err := opts.NamesAddr(); err != nil {
+	case "addr":
+		if addr, _, err := opts.NamesAddr(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Name](fn, names); err != nil {
+			if err := SaveToFile[types.Name](fn, addr); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "tags":
-		if names, _, err := opts.NamesTags(); err != nil {
+		if tags, _, err := opts.NamesTags(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Name](fn, names); err != nil {
+			if err := SaveToFile[types.Name](fn, tags); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "autoname":
-		addr := base.HexToAddress("0xde30da39c46104798bb5aa3fe8b9e0e1f348163f")
-		if names, _, err := opts.NamesAutoname(addr); err != nil {
+		if autoname, _, err := opts.NamesAutoname(base.HexToAddress(value)); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Message](fn, names); err != nil {
+			if err := SaveToFile[types.Message](fn, autoname); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

@@ -145,7 +145,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 23080,tools,Chain Data,transactions,getTrans,emitter,m,,visible|docs,flag,list<addr>,,,,,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 23090,tools,Chain Data,transactions,getTrans,topic,B,,visible|docs,flag,list<topic>,,,,,for the --logs option only&#44; filter logs to show only those with this topic(s)
 23100,tools,Chain Data,transactions,getTrans,cache_traces,,,,switch,<boolean>,,,,,force the transaction's traces into the cache
-23110,tools,Chain Data,transactions,getTrans,seed,S,,,switch,<boolean>,bool,,,,find the source of the funds sent to the receiver
+23110,tools,Chain Data,transactions,getTrans,seed,S,,,switch,<boolean>,address,,,,find the source of the funds sent to the receiver
 23120,tools,Chain Data,transactions,getTrans,n1,,,,note,,,,,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 23130,tools,Chain Data,transactions,getTrans,n2,,,,note,,,,,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 23140,tools,Chain Data,transactions,getTrans,n3,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.

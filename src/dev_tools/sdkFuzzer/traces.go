@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -24,10 +25,11 @@ func DoTraces() {
 	opts := sdk.TracesOptions{}
 	ShowHeader("DoTraces", opts)
 
-	filters := []string{""} // , "0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!"}
-	art := []bool{false, true}
+	// FuzzerInits tag
 
 	// EXISTING_CODE
+	filters := []string{""} // , "0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!"}
+	art := []bool{false, true}
 	opts = sdk.TracesOptions{
 		TransactionIds: []string{"17100101.1", "3189962.7"},
 	}
@@ -63,6 +65,9 @@ func DoTraces() {
 
 func TestTraces(which, value, fn string, opts *sdk.TracesOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "traces":
 		if traces, _, err := opts.Traces(); err != nil {
@@ -74,6 +79,19 @@ func TestTraces(which, value, fn string, opts *sdk.TracesOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "count":
+		if count, _, err := opts.TracesCount(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.TraceCount](fn, count); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

@@ -25,6 +25,8 @@ func DoChunks() {
 	opts := sdk.ChunksOptions{}
 	ShowHeader("DoChunks", opts)
 
+	// FuzzerInits tag
+
 	// EXISTING_CODE
 	opts = sdk.ChunksOptions{
 		FirstBlock: 0,
@@ -65,6 +67,9 @@ func DoChunks() {
 
 func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "manifest":
 		if manifest, _, err := opts.ChunksManifest(); err != nil {

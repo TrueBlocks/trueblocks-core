@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -24,10 +25,11 @@ func DoExport() {
 	opts := sdk.ExportOptions{}
 	ShowHeader("DoExport", opts)
 
-	globs := noRaw(globals)
-	baseFn := "export/export"
+	// FuzzerInits tag
 
 	// EXISTING_CODE
+	globs := noRaw(globals)
+	baseFn := "export/export"
 	opts = sdk.ExportOptions{
 		Addrs:       testAddrs,
 		FirstRecord: 0,
@@ -80,6 +82,9 @@ func DoExport() {
 
 func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "export":
 		if export, _, err := opts.Export(); err != nil {
@@ -132,15 +137,6 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 			}
 		}
 	case "neighbors":
-	// 	if neighbors, _, err := opts.ExportNeigbors(); err != nil {
-	// 		ReportError(fn, opts, err)
-	// 	} else {
-	// 		if err := SaveToFile[types.Neighbor](fn, neighbors); err != nil {
-	// 			ReportError2(fn, err)
-	// 		} else {
-	// 			ReportOkay(fn)
-	// 		}
-	// 	}
 	case "statements":
 		if statements, _, err := opts.ExportStatements(); err != nil {
 			ReportError(fn, opts, err)
@@ -162,25 +158,28 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 			}
 		}
 	case "withdrawals":
-		if withdrawls, _, err := opts.ExportWithdrawals(); err != nil {
+		if withdrawals, _, err := opts.ExportWithdrawals(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Withdrawal](fn, withdrawls); err != nil {
+			if err := SaveToFile[types.Withdrawal](fn, withdrawals); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "count":
-		if counts, _, err := opts.ExportCount(); err != nil {
+		if count, _, err := opts.ExportCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.AppearanceCount](fn, counts); err != nil {
+			if err := SaveToFile[types.AppearanceCount](fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

@@ -9,9 +9,11 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -24,11 +26,12 @@ func DoTransactions() {
 	opts := sdk.TransactionsOptions{}
 	ShowHeader("DoTransactions", opts)
 
+	// FuzzerInits tag
+
+	// EXISTING_CODE
 	globs := globals
 	art := []bool{false, true}
 	cts := []bool{false, true}
-
-	// EXISTING_CODE
 	// opts = sdk.TransactionsOptions{
 	// 	TransactionIds: testTransactions,
 	// }
@@ -50,7 +53,7 @@ func DoTransactions() {
 			for _, g := range globs {
 				opts.Globals = g
 				fn := getFilename(baseFn, &opts.Globals)
-				TestTransactions("txs", "", fn, &opts)
+				TestTransactions("transactions", "", fn, &opts)
 				fn = getFilename(baseFn+"-logs", &opts.Globals)
 				TestTransactions("logs", "", fn, &opts)
 				fn = getFilename(baseFn+"-traces", &opts.Globals)
@@ -106,25 +109,15 @@ func DoTransactions() {
 
 func TestTransactions(which, value, fn string, opts *sdk.TransactionsOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
-	// JIMMY_HAM
-	// JIMMY_HAM
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	switch which {
-	case "txs":
-		if txs, _, err := opts.Transactions(); err != nil {
+	case "transactions":
+		if transactions, _, err := opts.Transactions(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Transaction](fn, txs); err != nil {
-				ReportError2(fn, err)
-			} else {
-				ReportOkay(fn)
-			}
-		}
-	case "logs":
-		if logs, _, err := opts.TransactionsLogs(); err != nil {
-			ReportError(fn, opts, err)
-		} else {
-			if err := SaveToFile[types.Log](fn, logs); err != nil {
+			if err := SaveToFile[types.Transaction](fn, transactions); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -141,15 +134,38 @@ func TestTransactions(which, value, fn string, opts *sdk.TransactionsOptions) {
 			}
 		}
 	case "uniq":
-		if apps, _, err := opts.TransactionsUniq(); err != nil {
+		if uniq, _, err := opts.TransactionsUniq(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Appearance](fn, apps); err != nil {
+			if err := SaveToFile[types.Appearance](fn, uniq); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
+	case "logs":
+		if logs, _, err := opts.TransactionsLogs(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Log](fn, logs); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "seed":
+		if seed, _, err := opts.TransactionsSeed(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[base.Address](fn, seed); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

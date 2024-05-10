@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -25,13 +26,14 @@ func DoList() {
 	opts := sdk.ListOptions{}
 	ShowHeader("DoList", opts)
 
+	// FuzzerInits tag
+
+	// EXISTING_CODE
 	globs := noCache(noEther(noRaw(globals)))
 	types := []string{"list", "count", "bounds"}
 	silents := []bool{false, true}
 	reverseds := []bool{false, true}
 	publishers := []string{"", "0x02f2b09b33fdbd406ead954a31f98bd29a2a3492"}
-
-	// EXISTING_CODE
 	// list,command,default|
 	for _, t := range types {
 		opts := sdk.ListOptions{
@@ -92,22 +94,25 @@ func DoList() {
 
 func TestList(which, value, fn string, opts *sdk.ListOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "list":
-		if apps, _, err := opts.List(); err != nil {
+		if list, _, err := opts.List(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Appearance](fn, apps); err != nil {
+			if err := SaveToFile[types.Appearance](fn, list); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "count":
-		if counts, _, err := opts.ListCount(); err != nil {
+		if count, _, err := opts.ListCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.AppearanceCount](fn, counts); err != nil {
+			if err := SaveToFile[types.AppearanceCount](fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -123,6 +128,9 @@ func TestList(which, value, fn string, opts *sdk.ListOptions) {
 				ReportOkay(fn)
 			}
 		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

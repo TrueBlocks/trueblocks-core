@@ -779,7 +779,9 @@ func (op *Option) executeTemplate(name, tmplCode string) string {
 
 func (op *Option) RetType() string {
 	v := op.ReturnType
-	if v != "string" && v != "base.Address" && v != "bool" {
+	if v == "address" {
+		v = "base.Address"
+	} else if v != "string" && v != "base.Address" && v != "bool" {
 		v = "types." + FirstUpper(v)
 	}
 	return v
@@ -834,6 +836,16 @@ func (op *Option) SdkEndpointName() string {
 	}
 }
 
+func (op *Option) SdkEndpointName2() string {
+	if len(op.ReturnType) == 0 {
+		return ""
+	} else if op.OptionType == "positional" {
+		return strings.ToLower(op.Route)
+	} else {
+		return strings.ToLower(op.GoName)
+	}
+}
+
 func (op *Option) SdkEndpoint() string {
 	if len(op.ReturnType) == 0 {
 		return ""
@@ -862,6 +874,25 @@ func (op *Option) SdkEndpoint() string {
 	} else {
 		return opp.renderRegularEndpoint()
 	}
+}
+
+func (op *Option) FuzzerSwitch() string {
+	if len(op.ReturnType) == 0 {
+		return ""
+	}
+
+	tmplName := "fuzzerSwitch"
+	tmpl := `	case "{{.SdkEndpointName2}}":
+		if {{.SdkEndpointName2}}, _, err := opts.{{firstUpper .Route}}{{.SdkEndpointName}}(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[{{.RetType}}](fn, {{.SdkEndpointName2}}); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}`
+	return op.executeTemplate(tmplName, tmpl)
 }
 
 func (op *Option) renderModeEndpoint() string {

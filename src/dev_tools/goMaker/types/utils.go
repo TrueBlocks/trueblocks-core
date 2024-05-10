@@ -21,7 +21,7 @@ func shouldProcess(source, tag string) (bool, error) {
 		return false, nil
 	}
 
-	if strings.Contains(source, "sdk_") {
+	if strings.Contains(source, "sdk_") || strings.Contains(source, "sdkFuzzer") {
 		if strings.Contains(source, "python") {
 			return false, nil
 		}

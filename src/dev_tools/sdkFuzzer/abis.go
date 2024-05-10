@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -25,11 +26,12 @@ func DoAbis() {
 	opts := sdk.AbisOptions{}
 	ShowHeader("DoAbis", opts)
 
+	// FuzzerInits tag
+
+	// EXISTING_CODE
 	known := []bool{false, true}
 	proxies := []string{"", "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"}
 	globs := noEther(noRaw(globals))
-
-	// EXISTING_CODE
 	opts = sdk.AbisOptions{
 		Addrs: []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
 	}
@@ -111,37 +113,43 @@ func DoAbis() {
 
 func TestAbis(which, value, fn string, opts *sdk.AbisOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "abis":
-		if funcs, _, err := opts.Abis(); err != nil {
+		if abis, _, err := opts.Abis(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Function](fn, funcs); err != nil {
-				ReportError2(fn, err)
-			} else {
-				ReportOkay(fn)
-			}
-		}
-	case "encode":
-		if funcs, _, err := opts.AbisEncode(value); err != nil {
-			ReportError(fn, opts, err)
-		} else {
-			if err := SaveToFile[types.Function](fn, funcs); err != nil {
+			if err := SaveToFile[types.Function](fn, abis); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "find":
-		if funcs, _, err := opts.AbisFind([]string{value}); err != nil {
+		if find, _, err := opts.AbisFind([]string{value}); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Function](fn, funcs); err != nil {
+			if err := SaveToFile[types.Function](fn, find); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
+	case "encode":
+		if encode, _, err := opts.AbisEncode(value); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Function](fn, encode); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

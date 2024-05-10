@@ -9,6 +9,9 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
@@ -20,6 +23,8 @@ func DoInit() {
 	file.EstablishFolder("sdkFuzzer-output/init")
 	opts := sdk.InitOptions{}
 	ShowHeader("DoInit", opts)
+
+	// FuzzerInits tag
 
 	// EXISTING_CODE
 	// init,command,verbose|version|noop|noColor|chain|
@@ -47,8 +52,15 @@ func DoInit() {
 }
 
 func TestInit(which, value, fn string, opts *sdk.InitOptions) {
-	// fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	_ = fn // silence warning
+	// EXISTING_CODE
+
 	switch which {
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -24,6 +25,9 @@ func DoTokens() {
 	opts := sdk.TokensOptions{}
 	ShowHeader("DoTokens", opts)
 
+	// FuzzerInits tag
+
+	// EXISTING_CODE
 	globs := noCache(noRaw(noEther(globals)))
 	parts := []sdk.TokensParts{
 		sdk.NoTP,
@@ -37,8 +41,6 @@ func DoTokens() {
 	}
 	changes := []bool{false} // , true}
 	noZeros := []bool{false, true}
-
-	// EXISTING_CODE
 	opts = sdk.TokensOptions{
 		Addrs:    []string{"ens.eth", "trueblocks.eth"},
 		BlockIds: []string{"10092000"},
@@ -82,6 +84,9 @@ func DoTokens() {
 
 func TestTokens(which, value, fn string, opts *sdk.TokensOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "tokens":
 		if tokens, _, err := opts.Tokens(); err != nil {
@@ -93,6 +98,9 @@ func TestTokens(which, value, fn string, opts *sdk.TokensOptions) {
 				ReportOkay(fn)
 			}
 		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

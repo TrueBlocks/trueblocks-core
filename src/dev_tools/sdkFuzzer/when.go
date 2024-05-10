@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -24,10 +25,11 @@ func DoWhen() {
 	opts := sdk.WhenOptions{}
 	ShowHeader("DoWhen", opts)
 
-	globs := noEther(noRaw(globals))
-	types := []string{"when", "list", "timestamps", "count"}
+	// FuzzerInits tag
 
 	// EXISTING_CODE
+	globs := noEther(noRaw(globals))
+	types := []string{"when", "list", "timestamps", "count"}
 	// when,command,default|caching|
 	// Truncate base.Blknum `json:"truncate,omitempty"`
 	// Repair   bool        `json:"repair,omitempty"`
@@ -54,25 +56,25 @@ func DoWhen() {
 
 func TestWhen(which, value, fn string, opts *sdk.WhenOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
-	// JIMMY_HAM
-	// JIMMY_HAM
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	switch which {
 	case "when":
-		if blocks, _, err := opts.When(); err != nil {
+		if when, _, err := opts.When(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.NamedBlock](fn, blocks); err != nil {
+			if err := SaveToFile[types.NamedBlock](fn, when); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "list":
-		if blocks, _, err := opts.WhenList(); err != nil {
+		if list, _, err := opts.WhenList(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.NamedBlock](fn, blocks); err != nil {
+			if err := SaveToFile[types.NamedBlock](fn, list); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -89,15 +91,18 @@ func TestWhen(which, value, fn string, opts *sdk.WhenOptions) {
 			}
 		}
 	case "count":
-		if counts, _, err := opts.WhenCount(); err != nil {
+		if count, _, err := opts.WhenCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.TimestampCount](fn, counts); err != nil {
+			if err := SaveToFile[types.TimestampCount](fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

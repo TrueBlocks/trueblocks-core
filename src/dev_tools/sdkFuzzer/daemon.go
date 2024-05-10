@@ -9,6 +9,8 @@ package main
 
 // EXISTING_CODE
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
@@ -38,7 +40,11 @@ func DoDaemon() {
 }
 
 func TestDaemon(which, value, fn string, opts *sdk.DaemonOptions) {
-	// fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	_ = fn // silence warning
+	// EXISTING_CODE
+
 	switch which {
 	}
 }

@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -24,14 +25,15 @@ func DoReceipts() {
 	opts := sdk.ReceiptsOptions{}
 	ShowHeader("DoReceipts", opts)
 
+	// FuzzerInits tag
+
+	// EXISTING_CODE
 	// TransactionIds []string `json:"transactions,omitempty"`
 	// Articulate     bool     `json:"articulate,omitempty"`
 	// func (opts *ReceiptsOptions) Receipts() ([]types.Receipt, *types.MetaData, error) {
 
 	art := []bool{false, true}
 	globs := noCache(noEther(noRaw(globals)))
-
-	// EXISTING_CODE
 	// receipts,command,default|caching|raw|
 	opts = sdk.ReceiptsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
@@ -54,6 +56,9 @@ func DoReceipts() {
 
 func TestReceipts(which, value, fn string, opts *sdk.ReceiptsOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "receipts":
 		if receipts, _, err := opts.Receipts(); err != nil {
@@ -65,6 +70,9 @@ func TestReceipts(which, value, fn string, opts *sdk.ReceiptsOptions) {
 				ReportOkay(fn)
 			}
 		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -24,12 +25,13 @@ func DoLogs() {
 	opts := sdk.LogsOptions{}
 	ShowHeader("DoLogs", opts)
 
+	// FuzzerInits tag
+
+	// EXISTING_CODE
 	emitters := []string{"", "0x5564886ca2c518d1964e5fcea4f423b41db9f561"}
 	topics := []string{"", "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc"}
 	art := []bool{false, true}
 	globs := noEther(noRaw(globals))
-
-	// EXISTING_CODE
 	opts = sdk.LogsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
 	}
@@ -64,6 +66,9 @@ func DoLogs() {
 
 func TestLogs(which, value, fn string, opts *sdk.LogsOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "logs":
 		if logs, _, err := opts.Logs(); err != nil {
@@ -75,6 +80,9 @@ func TestLogs(which, value, fn string, opts *sdk.LogsOptions) {
 				ReportOkay(fn)
 			}
 		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

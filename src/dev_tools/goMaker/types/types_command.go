@@ -679,3 +679,31 @@ func (c *Command) SdkEndpoints() string {
 	}
 	return strings.Join(ret, "\n")
 }
+
+func (c *Command) FuzzerSwitches() string {
+	if c.Route == "chunks" || c.ReturnType == "bool" {
+		return "// Thing\n"
+	}
+
+	ret := []string{}
+	for _, op := range c.Options {
+		if len(op.ReturnType) > 0 {
+			v := op.FuzzerSwitch()
+			if len(v) > 0 {
+				ret = append(ret, v)
+			}
+		}
+	}
+
+	ret = append(ret, `	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return`)
+	return strings.Join(ret, "\n")
+}
+
+func (c *Command) FuzzerInits() string {
+	ret := `FuzzerInits tag
+
+	`
+	return ret
+}

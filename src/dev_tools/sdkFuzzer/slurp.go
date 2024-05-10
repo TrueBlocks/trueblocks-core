@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -24,6 +25,9 @@ func DoSlurp() {
 	opts := sdk.SlurpOptions{}
 	ShowHeader("DoSlurp", opts)
 
+	// FuzzerInits tag
+
+	// EXISTING_CODE
 	types1 := []sdk.SlurpTypes{
 		sdk.NoST,
 		sdk.STExt,
@@ -45,8 +49,6 @@ func DoSlurp() {
 	}
 	art := []bool{false, true}
 	globs := noCache(globals)
-
-	// EXISTING_CODE
 	// slurp,command,default|caching|ether|raw|
 	// Page       uint64      `json:"page,omitempty"`
 	// PageId     string      `json:"pageId,omitempty"`
@@ -86,6 +88,9 @@ func DoSlurp() {
 
 func TestSlurp(which, value, fn string, opts *sdk.SlurpOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "slurp":
 		if slurp, _, err := opts.Slurp(); err != nil {
@@ -117,6 +122,9 @@ func TestSlurp(which, value, fn string, opts *sdk.SlurpOptions) {
 				ReportOkay(fn)
 			}
 		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

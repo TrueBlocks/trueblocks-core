@@ -16,20 +16,18 @@ func Do{{toProper .Route}}() {
 	opts := sdk.{{toProper .Route}}Options{}
 	ShowHeader("Do{{toProper .Route}}", opts)
 
-	// ++CHANGABLE_ITEMS++
-
-	// EXISTING_CODE
+	// {{.FuzzerInits}}	// EXISTING_CODE
 	// EXISTING_CODE
 	Wait()
 }
 
 func Test{{toProper .Route}}(which, value, fn string, opts *sdk.{{toProper .Route}}Options) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
-	// JIMMY_HAM
-	// JIMMY_HAM
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	switch which {
-	// ++CASES++
+{{.FuzzerSwitches}}
 	}
 }
 

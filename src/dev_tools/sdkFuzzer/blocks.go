@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -24,11 +25,12 @@ func DoBlocks() {
 	opts := sdk.BlocksOptions{}
 	ShowHeader("DoBlocks", opts)
 
+	// FuzzerInits tag
+
+	// EXISTING_CODE
 	cacheTxs := []bool{false, true}
 	cacheTraces := []bool{false, true}
 	globs := noRaw(globals)
-
-	// EXISTING_CODE
 	// opts = sdk.BlocksOptions{
 	// 	BlockIds: testBlocks,
 	// }
@@ -36,7 +38,7 @@ func DoBlocks() {
 	for _, ctxs := range cacheTxs {
 		for _, cts := range cacheTraces {
 			for _, g := range globs {
-				types := []string{"txs", "hashes", "uncles", "traces", "uniq", "logs", "withdrawals", "count"}
+				types := []string{"blocks", "hashes", "uncles", "traces", "uniq", "logs", "withdrawals", "count"}
 				for _, t := range types {
 					opts := sdk.BlocksOptions{
 						BlockIds: testBlocks,
@@ -104,8 +106,11 @@ func DoBlocks() {
 
 func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
-	case "txs":
+	case "blocks":
 		if blocks, _, err := opts.Blocks(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
@@ -116,10 +121,10 @@ func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 			}
 		}
 	case "hashes":
-		if blocks, _, err := opts.BlocksHashes(); err != nil {
+		if hashes, _, err := opts.BlocksHashes(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Block[string]](fn, blocks); err != nil {
+			if err := SaveToFile[types.Block[string]](fn, hashes); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -146,10 +151,10 @@ func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 			}
 		}
 	case "uniq":
-		if apps, _, err := opts.BlocksUniq(); err != nil {
+		if uniq, _, err := opts.BlocksUniq(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Appearance](fn, apps); err != nil {
+			if err := SaveToFile[types.Appearance](fn, uniq); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -176,15 +181,18 @@ func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 			}
 		}
 	case "count":
-		if counts, _, err := opts.BlocksCount(); err != nil {
+		if count, _, err := opts.BlocksCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.BlockCount](fn, counts); err != nil {
+			if err := SaveToFile[types.BlockCount](fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

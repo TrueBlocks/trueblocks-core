@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -24,9 +25,10 @@ func DoConfig() {
 	opts := sdk.ConfigOptions{}
 	ShowHeader("DoConfig", opts)
 
-	globs := noCache(noEther(noRaw(globals)))
+	// FuzzerInits tag
 
 	// EXISTING_CODE
+	globs := noCache(noEther(noRaw(globals)))
 	// config,command,default|
 	for _, g := range globs {
 		opts.Globals = g
@@ -39,6 +41,9 @@ func DoConfig() {
 
 func TestConfig(which, value, fn string, opts *sdk.ConfigOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "paths":
 		if paths, _, err := opts.ConfigPaths(); err != nil {
@@ -50,6 +55,9 @@ func TestConfig(which, value, fn string, opts *sdk.ConfigOptions) {
 				ReportOkay(fn)
 			}
 		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

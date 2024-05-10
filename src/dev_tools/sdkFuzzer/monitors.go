@@ -9,6 +9,9 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -22,6 +25,8 @@ func DoMonitors() {
 	file.EstablishFolder("sdkFuzzer-output/monitors")
 	opts := sdk.MonitorsOptions{}
 	ShowHeader("DoMonitors", opts)
+
+	// FuzzerInits tag
 
 	// EXISTING_CODE
 	opts = sdk.MonitorsOptions{
@@ -80,8 +85,35 @@ func DoMonitors() {
 }
 
 func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
-	// fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	_ = fn // silence warning
+	// EXISTING_CODE
+
 	switch which {
+	case "clean":
+		if clean, _, err := opts.MonitorsClean(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.MonitorClean](fn, clean); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "list":
+		if list, _, err := opts.MonitorsList(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Monitor](fn, list); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 
