@@ -6,7 +6,6 @@ package walk
 
 import (
 	"context"
-	"fmt"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -19,6 +18,27 @@ import (
 )
 
 type CacheType uint
+
+// 	Cache_Blocks
+// src/dev_tools/goMaker/templates/classDefinitions/block.toml:
+// 	Cache_Logs
+// src/dev_tools/goMaker/templates/classDefinitions/log.toml:
+// ===> src/dev_tools/goMaker/templates/classDefinitions/receipt.toml:
+// 	Cache_Results
+// src/dev_tools/goMaker/templates/classDefinitions/result.toml:
+// 	Cache_Slurps
+// src/dev_tools/goMaker/templates/classDefinitions/slurp.toml:
+// 	Cache_State
+// src/dev_tools/goMaker/templates/classDefinitions/state.toml:
+// 	Cache_Statements
+// src/dev_tools/goMaker/templates/classDefinitions/statement.toml:
+// ===> Cache_Tokens
+
+// src/dev_tools/goMaker/templates/classDefinitions/trace.toml:
+// 	Cache_Traces
+// src/dev_tools/goMaker/templates/classDefinitions/transaction.toml:
+// 	Cache_Transactions
+// ===> src/dev_tools/goMaker/templates/classDefinitions/withdrawal.toml:
 
 const (
 	Cache_NotACache CacheType = iota
@@ -393,59 +413,6 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 			"sizeInBytes": size,
 		}, nil
 	}
-}
-
-// GetDecachePath returns the path and the basePath for a given cache item depending on type
-func GetDecachePath(chain string, typ CacheType, address base.Address, blockNum, txid uint32) (basePath, path string) {
-	blkStr := fmt.Sprintf("%09d", blockNum)
-	txStr := fmt.Sprintf("%05d", txid)
-	part1 := blkStr[0:2]
-	part2 := blkStr[2:4]
-	part3 := blkStr[4:6]
-	part4 := blkStr
-	part5 := ""
-
-	cachePath := config.PathToCache(chain)
-	switch typ {
-	case Cache_Abis:
-		basePath = fmt.Sprintf("%s%s/", cachePath, typ)
-		path = fmt.Sprintf("%s%s/%s.json", cachePath, typ, address.Hex())
-	case Cache_Logs:
-		fallthrough
-	case Cache_Blocks:
-		basePath = fmt.Sprintf("%s%s/%s/%s/%s/", cachePath, typ, part1, part2, part3)
-		path = fmt.Sprintf("%s%s/%s/%s/%s/%s%s.bin", cachePath, typ, part1, part2, part3, part4, part5)
-	case Cache_Transactions:
-		fallthrough
-	case Cache_Traces:
-		part5 = "-" + txStr
-		basePath = fmt.Sprintf("%s%s/%s/%s/", cachePath, typ, part1, part2)
-		path = fmt.Sprintf("%s%s/%s/%s/%s/%s%s.bin", cachePath, typ, part1, part2, part3, part4, part5)
-	case Cache_Results:
-		fallthrough
-	case Cache_Slurps:
-		fallthrough
-	case Cache_State:
-		fallthrough
-	case Cache_Statements:
-		fallthrough
-	case Cache_Tokens:
-		if !address.IsZero() {
-			addr := address.Hex()
-			addr = addr[2:]
-			part1 := addr[0:4]
-			part2 := addr[4:8]
-			part3 := addr[8:]
-			part4 := blkStr
-			part5 := txStr
-			basePath = fmt.Sprintf("%s%s/%s/%s/", cachePath, typ, part1, part2)
-			path = fmt.Sprintf("%s%s/%s/%s/%s/%s.%s.bin", cachePath, typ, part1, part2, part3, part4, part5)
-		}
-	default:
-		fmt.Println("Unknown type in deleteIfPresent: ", typ)
-		os.Exit(1)
-	}
-	return basePath, path
 }
 
 func cacheItemName(ct CacheType) string {
