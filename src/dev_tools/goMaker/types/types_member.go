@@ -269,6 +269,7 @@ func (m *Member) NeedsPtr() bool {
 		m.IsObject()
 }
 
+// MarshalCode writes the writer code for caching this item
 func (m *Member) MarshalCode() string {
 	if m.IsCalc() ||
 		m.IsRawOnly() ||
@@ -344,8 +345,10 @@ func (m *Member) MarshalCode() string {
 	return m.executeTemplate(tmplName, tmpl)
 }
 
+// UnmarshalCode writes the reader code for caching this item
 func (m *Member) UnmarshalCode() string {
-	if m.IsCalc() ||
+	wasRemoved := m.HasUpgrade() && m.IsCalc()
+	if (!wasRemoved && m.IsCalc()) ||
 		m.IsRawOnly() ||
 		(m.Container() == "Transaction" && m.GoName() == "Traces") {
 		return ""
@@ -409,8 +412,21 @@ func (m *Member) UnmarshalCode() string {
 	code := m.executeTemplate(tmplName, tmpl)
 
 	if m.HasUpgrade() {
-		tmplName := "upgrage"
-		tmpl := `	// {{.GoName}}
+		if wasRemoved {
+			tmplName = "upgrageRemoved"
+			tmpl = `	// Used to be {{.GoName}}, since removed
+	v{{.GoName}} := version.NewVersion("++VERS++")
+	if vers <= v{{.GoName}}.Uint64() {
+		var val ++PRIOR_TYPE++
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
+			return err
+		}
+	}
+
+`
+		} else {
+			tmplName = "upgrage"
+			tmpl = `	// {{.GoName}}
 	v{{.GoName}} := version.NewVersion("++VERS++")
 	if vers <= v{{.GoName}}.Uint64() {
 		var val ++PRIOR_TYPE++
@@ -423,6 +439,8 @@ func (m *Member) UnmarshalCode() string {
 	}
 
 `
+		}
+
 		cc := strings.Trim(code, "\n")
 		parts := strings.Split(m.Upgrades, ":")
 		if len(parts) != 2 {

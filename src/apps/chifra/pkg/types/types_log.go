@@ -219,8 +219,6 @@ func (s *Log) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// Used to write CompressedLog, since removed
-
 	// Data
 	if err = cache.WriteValue(writer, s.Data); err != nil {
 		return err
@@ -283,11 +281,11 @@ func (s *Log) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
-	// CompressedLog
-	vCompressed := version.NewVersion("2.5.10")
-	if vers < vCompressed.Uint64() {
-		var unused string
-		if err = cache.ReadValue(reader, &unused, vers); err != nil {
+	// Used to be CompressedLog, since removed
+	vCompressedLog := version.NewVersion("2.5.10")
+	if vers <= vCompressedLog.Uint64() {
+		var val string
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
 			return err
 		}
 	}

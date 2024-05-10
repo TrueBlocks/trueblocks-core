@@ -264,8 +264,6 @@ func (s *Trace) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// Used to write CompressedTrace, since removed
-
 	// Error
 	if err = cache.WriteValue(writer, s.Error); err != nil {
 		return err
@@ -345,11 +343,11 @@ func (s *Trace) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
-	// Used to be CompressedTrace
+	// Used to be CompressedTrace, since removed
 	vCompressedTrace := version.NewVersion("2.5.10")
-	if vers < vCompressedTrace.Uint64() {
-		var unused string
-		if err = cache.ReadValue(reader, &unused, vers); err != nil {
+	if vers <= vCompressedTrace.Uint64() {
+		var val string
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
 			return err
 		}
 	}
