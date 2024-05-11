@@ -26,10 +26,8 @@ func DoTransactions() {
 	opts := sdk.TransactionsOptions{}
 	ShowHeader("DoTransactions", opts)
 
-	// FuzzerInits tag
-
-	// EXISTING_CODE
 	globs := globals
+	// EXISTING_CODE
 	art := []bool{false, true}
 	cts := []bool{false, true}
 	// opts = sdk.TransactionsOptions{

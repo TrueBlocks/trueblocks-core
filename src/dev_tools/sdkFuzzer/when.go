@@ -25,10 +25,8 @@ func DoWhen() {
 	opts := sdk.WhenOptions{}
 	ShowHeader("DoWhen", opts)
 
-	// FuzzerInits tag
-
+	globs := noRaw(noEther(globals))
 	// EXISTING_CODE
-	globs := noEther(noRaw(globals))
 	types := []string{"when", "list", "timestamps", "count"}
 	// when,command,default|caching|
 	// Truncate base.Blknum `json:"truncate,omitempty"`

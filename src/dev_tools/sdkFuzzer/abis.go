@@ -26,12 +26,10 @@ func DoAbis() {
 	opts := sdk.AbisOptions{}
 	ShowHeader("DoAbis", opts)
 
-	// FuzzerInits tag
-
+	globs := noRaw(noEther(globals))
 	// EXISTING_CODE
 	known := []bool{false, true}
 	proxies := []string{"", "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"}
-	globs := noEther(noRaw(globals))
 	opts = sdk.AbisOptions{
 		Addrs: []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
 	}

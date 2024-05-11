@@ -26,9 +26,9 @@ func DoMonitors() {
 	opts := sdk.MonitorsOptions{}
 	ShowHeader("DoMonitors", opts)
 
-	// FuzzerInits tag
-
+	globs := noRaw(noEther(globals))
 	// EXISTING_CODE
+	_ = globs
 	opts = sdk.MonitorsOptions{
 		Addrs: []string{testAddrs[0]},
 	}
@@ -91,6 +91,16 @@ func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
 	// EXISTING_CODE
 
 	switch which {
+	// case "monitors":
+	// 	if monitors, _, err := opts.Monitors(); err != nil {
+	// 		ReportError(fn, opts, err)
+	// 	} else {
+	// 		if err := SaveToFile[bool](fn, monitors); err != nil {
+	// 			ReportError2(fn, err)
+	// 		} else {
+	// 			ReportOkay(fn)
+	// 		}
+	// 	}
 	case "clean":
 		if clean, _, err := opts.MonitorsClean(); err != nil {
 			ReportError(fn, opts, err)

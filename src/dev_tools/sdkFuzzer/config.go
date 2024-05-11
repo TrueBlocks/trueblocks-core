@@ -25,10 +25,8 @@ func DoConfig() {
 	opts := sdk.ConfigOptions{}
 	ShowHeader("DoConfig", opts)
 
-	// FuzzerInits tag
-
+	globs := noCache(noRaw(noEther(globals)))
 	// EXISTING_CODE
-	globs := noCache(noEther(noRaw(globals)))
 	// config,command,default|
 	for _, g := range globs {
 		opts.Globals = g

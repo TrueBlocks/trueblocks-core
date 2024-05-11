@@ -25,8 +25,7 @@ func DoSlurp() {
 	opts := sdk.SlurpOptions{}
 	ShowHeader("DoSlurp", opts)
 
-	// FuzzerInits tag
-
+	globs := globals
 	// EXISTING_CODE
 	types1 := []sdk.SlurpTypes{
 		sdk.NoST,
@@ -48,7 +47,6 @@ func DoSlurp() {
 		sdk.SSAlchemy,
 	}
 	art := []bool{false, true}
-	globs := noCache(globals)
 	// slurp,command,default|caching|ether|raw|
 	// Page       uint64      `json:"page,omitempty"`
 	// PageId     string      `json:"pageId,omitempty"`

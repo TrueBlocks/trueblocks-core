@@ -31,24 +31,24 @@ func (opts InitOptions) String() string {
 }
 
 // InitAll implements the chifra init --all command.
-func (opts *InitOptions) InitAll() ([]bool, *types.MetaData, error) {
+func (opts *InitOptions) InitAll() ([]types.Message, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.All = true
-	return queryInit[bool](in)
+	return queryInit[types.Message](in)
 }
 
 // InitExample implements the chifra init --example command.
-func (opts *InitOptions) InitExample(val string) ([]bool, *types.MetaData, error) {
+func (opts *InitOptions) InitExample(val string) ([]types.Message, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.Example = val
-	return queryInit[bool](in)
+	return queryInit[types.Message](in)
 }
 
-// InitDryRun implements the chifra init --dry_run command.
-func (opts *InitOptions) InitDry_run() ([]bool, *types.MetaData, error) {
+// InitDryRun implements the chifra init --dryrun command.
+func (opts *InitOptions) InitDryRun() ([]types.Message, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.DryRun = true
-	return queryInit[bool](in)
+	return queryInit[types.Message](in)
 }
 
 // No enums

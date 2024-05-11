@@ -73,7 +73,7 @@ func GetInitOptions(args []string) (*initOptionsInternal, error) {
 }
 
 type initGeneric interface {
-	bool
+	types.Message
 }
 
 func queryInit[T initGeneric](opts *initOptionsInternal) ([]T, *types.MetaData, error) {

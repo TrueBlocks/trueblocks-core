@@ -165,10 +165,10 @@ func (opts *StatusOptions) StatusAll() ([]types.Status, *types.MetaData, error) 
 }
 
 // StatusDiagnose implements the chifra status --diagnose command.
-func (opts *StatusOptions) StatusDiagnose() ([]bool, *types.MetaData, error) {
+func (opts *StatusOptions) StatusDiagnose() ([]types.Status, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.Diagnose = true
-	return queryStatus[bool](in)
+	return queryStatus[types.Status](in)
 }
 
 type StatusModes int

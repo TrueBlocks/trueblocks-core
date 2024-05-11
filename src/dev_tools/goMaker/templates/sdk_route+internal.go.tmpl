@@ -59,7 +59,7 @@ func Get{{toProper .Route}}Options(args []string) (*{{toCamel .Route}}OptionsInt
 	return &opts, nil
 }
 
-{{if .HasSdkEndpoints}}type {{toCamel .Route}}Generic interface {
+{{if .HasSdkEndpoints}}type {{.Route}}Generic interface {
 	{{.ReturnTypes}}
 }
 
@@ -87,7 +87,7 @@ func query{{toProper .Route}}[T {{toCamel .Route}}Generic](opts *{{toCamel .Rout
 // toInternal converts the SDK options to the internal options format.
 func (opts *{{toProper .Route}}Options) toInternal() *{{toCamel .Route}}OptionsInternal {
 	return &{{toCamel .Route}}OptionsInternal{
-{{range .Options}}{{if .IsPublicEndpoint}}		{{.GoSdkName}}: opts.{{.GoSdkName}},
+{{range .Options}}{{if .SdkIsPublic}}		{{.GoSdkName}}: opts.{{.GoSdkName}},
 {{end}}{{end}}		Globals: opts.Globals,
 	}
 }{{end}}

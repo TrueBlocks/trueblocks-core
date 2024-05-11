@@ -9,6 +9,7 @@ package main
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -25,9 +26,9 @@ func DoChunks() {
 	opts := sdk.ChunksOptions{}
 	ShowHeader("DoChunks", opts)
 
-	// FuzzerInits tag
-
+	globs := noCache(noRaw(noEther(globals)))
 	// EXISTING_CODE
+	_ = globs
 	opts = sdk.ChunksOptions{
 		FirstBlock: 0,
 		LastBlock:  base.NOPOSN,
@@ -144,6 +145,39 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "truncate":
+		if truncate, _, err := opts.ChunksTruncate(base.MustParseBlknum(value)); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Message](fn, truncate); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "diff":
+		if diff, _, err := opts.ChunksDiff(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Message](fn, diff); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "tag":
+		if tag, _, err := opts.ChunksTag(value); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Message](fn, tag); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		return
 	}
 }
 

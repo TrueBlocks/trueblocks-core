@@ -25,10 +25,8 @@ func DoExport() {
 	opts := sdk.ExportOptions{}
 	ShowHeader("DoExport", opts)
 
-	// FuzzerInits tag
-
-	// EXISTING_CODE
 	globs := noRaw(globals)
+	// EXISTING_CODE
 	baseFn := "export/export"
 	opts = sdk.ExportOptions{
 		Addrs:       testAddrs,
@@ -137,6 +135,15 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 			}
 		}
 	case "neighbors":
+		if neighbors, _, err := opts.ExportNeighbors(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Message](fn, neighbors); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "statements":
 		if statements, _, err := opts.ExportStatements(); err != nil {
 			ReportError(fn, opts, err)

@@ -25,15 +25,13 @@ func DoStatus() {
 	opts := sdk.StatusOptions{}
 	ShowHeader("DoStatus", opts)
 
-	// FuzzerInits tag
-
+	globs := noCache(noRaw(noEther(globals)))
 	// EXISTING_CODE
 	// func (opts *StatusOptions) StatusDiagnose() ([]bool, *types.MetaData, error) {
 
 	firsts := []uint64{0, 10}
 	maxes := []uint64{0, 500}
 	chains := []bool{false, true}
-	globs := noEther(noRaw(noCache(globals)))
 	// status,command,default|
 	for _, c := range chains {
 		for _, f := range firsts {

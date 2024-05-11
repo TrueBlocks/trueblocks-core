@@ -25,12 +25,10 @@ func DoBlocks() {
 	opts := sdk.BlocksOptions{}
 	ShowHeader("DoBlocks", opts)
 
-	// FuzzerInits tag
-
+	globs := globals
 	// EXISTING_CODE
 	cacheTxs := []bool{false, true}
 	cacheTraces := []bool{false, true}
-	globs := noRaw(globals)
 	// opts = sdk.BlocksOptions{
 	// 	BlockIds: testBlocks,
 	// }

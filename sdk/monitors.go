@@ -37,9 +37,9 @@ func (opts MonitorsOptions) String() string {
 }
 
 // Monitors implements the chifra monitors command.
-func (opts *MonitorsOptions) Monitors() ([]bool, *types.MetaData, error) {
+func (opts *MonitorsOptions) Monitors() ([]types.Message, *types.MetaData, error) {
 	in := opts.toInternal()
-	return queryMonitors[bool](in)
+	return queryMonitors[types.Message](in)
 }
 
 // MonitorsClean implements the chifra monitors --clean command.

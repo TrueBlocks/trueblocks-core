@@ -25,8 +25,7 @@ func DoTraces() {
 	opts := sdk.TracesOptions{}
 	ShowHeader("DoTraces", opts)
 
-	// FuzzerInits tag
-
+	globs := globals
 	// EXISTING_CODE
 	filters := []string{""} // , "0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!"}
 	art := []bool{false, true}
@@ -50,7 +49,6 @@ func DoTraces() {
 			}
 			opts.Articulate = a
 			opts.Filter = f
-			globs := globals
 			for _, g := range globs {
 				opts.Globals = g
 				fn := getFilename(baseFn, &opts.Globals)

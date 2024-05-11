@@ -25,15 +25,13 @@ func DoReceipts() {
 	opts := sdk.ReceiptsOptions{}
 	ShowHeader("DoReceipts", opts)
 
-	// FuzzerInits tag
-
+	globs := noEther(globals)
 	// EXISTING_CODE
 	// TransactionIds []string `json:"transactions,omitempty"`
 	// Articulate     bool     `json:"articulate,omitempty"`
 	// func (opts *ReceiptsOptions) Receipts() ([]types.Receipt, *types.MetaData, error) {
 
 	art := []bool{false, true}
-	globs := noCache(noEther(noRaw(globals)))
 	// receipts,command,default|caching|raw|
 	opts = sdk.ReceiptsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),

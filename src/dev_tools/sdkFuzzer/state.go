@@ -26,11 +26,9 @@ func DoState() {
 	opts := sdk.StateOptions{}
 	ShowHeader("DoState", opts)
 
-	// FuzzerInits tag
-
+	globs := noRaw(globals)
 	// EXISTING_CODE
 	art := []bool{false, true}
-	globs := noRaw(globals)
 
 	changes := []bool{false, true}
 	noZeros := []bool{false, true}
@@ -89,7 +87,7 @@ func DoState() {
 		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)
-			TestStateCall("call", "manifestHashMap(0x02f2b09b33fdbd406ead954a31f98bd29a2a3492,\"mainnet\")", fn, &opts)
+			TestState("call", "manifestHashMap(0x02f2b09b33fdbd406ead954a31f98bd29a2a3492,\"mainnet\")", fn, &opts)
 		}
 	}
 
@@ -109,7 +107,7 @@ func DoState() {
 		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)
-			TestStateCall("state", "0x0902f1ac()", fn, &opts)
+			TestState("state", "0x0902f1ac()", fn, &opts)
 		}
 	}
 	// EXISTING_CODE
@@ -132,6 +130,16 @@ func TestState(which, value, fn string, opts *sdk.StateOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "call":
+		if call, _, err := opts.StateCall(value); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Result](fn, call); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	default:
 		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
 		return
@@ -139,17 +147,4 @@ func TestState(which, value, fn string, opts *sdk.StateOptions) {
 }
 
 // EXISTING_CODE
-func TestStateCall(which, call, fn string, opts *sdk.StateOptions) {
-	fn = strings.ReplaceAll(fn, ".json", "-call.json")
-	if stateResult, _, err := opts.StateCall(call); err != nil {
-		ReportError(fn, opts, err)
-	} else {
-		if err := SaveToFile[types.Result](fn, stateResult); err != nil {
-			ReportError2(fn, err)
-		} else {
-			ReportOkay(fn)
-		}
-	}
-}
-
 // EXISTING_CODE

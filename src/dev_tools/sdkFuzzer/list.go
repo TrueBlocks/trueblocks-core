@@ -26,10 +26,8 @@ func DoList() {
 	opts := sdk.ListOptions{}
 	ShowHeader("DoList", opts)
 
-	// FuzzerInits tag
-
+	globs := noCache(noRaw(noEther(globals)))
 	// EXISTING_CODE
-	globs := noCache(noEther(noRaw(globals)))
 	types := []string{"list", "count", "bounds"}
 	silents := []bool{false, true}
 	reverseds := []bool{false, true}

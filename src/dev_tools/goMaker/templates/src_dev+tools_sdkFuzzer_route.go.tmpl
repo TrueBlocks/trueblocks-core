@@ -16,7 +16,7 @@ func Do{{toProper .Route}}() {
 	opts := sdk.{{toProper .Route}}Options{}
 	ShowHeader("Do{{toProper .Route}}", opts)
 
-	// {{.FuzzerInits}}	// EXISTING_CODE
+	{{.FuzzerInits}}	// EXISTING_CODE
 	// EXISTING_CODE
 	Wait()
 }

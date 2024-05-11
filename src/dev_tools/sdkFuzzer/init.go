@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // EXISTING_CODE
@@ -24,9 +25,9 @@ func DoInit() {
 	opts := sdk.InitOptions{}
 	ShowHeader("DoInit", opts)
 
-	// FuzzerInits tag
-
+	globs := noCache(noRaw(noEther(globals)))
 	// EXISTING_CODE
+	_ = globs
 	// init,command,verbose|version|noop|noColor|chain|
 	// opts := sdk.InitOptions{}
 
@@ -35,7 +36,7 @@ func DoInit() {
 	// Sleep      float64      `json:"sleep,omitempty"`
 	// func (opts *InitOptions) InitAll() ([]bool, *types.MetaData, error) {
 	// func (opts *InitOptions) InitExample(val string) ([]bool, *types.MetaData, error) {
-	// func (opts *InitOptions) InitDry_run() ([]bool, *types.MetaData, error) {
+	// func (opts *InitOptions) InitDryRun() ([]bool, *types.MetaData, error) {
 
 	// if init, _, err := opts.InitAll(); err != nil {
 	// 	logger.Error(err)
@@ -58,6 +59,36 @@ func TestInit(which, value, fn string, opts *sdk.InitOptions) {
 	// EXISTING_CODE
 
 	switch which {
+	case "all":
+		if all, _, err := opts.InitAll(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Message](fn, all); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "example":
+		if example, _, err := opts.InitExample(value); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Message](fn, example); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "dryrun":
+		if dryrun, _, err := opts.InitDryRun(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Message](fn, dryrun); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	default:
 		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
 		return

@@ -26,10 +26,8 @@ func DoNames() {
 	opts := sdk.NamesOptions{}
 	ShowHeader("DoNames", opts)
 
-	// FuzzerInits tag
-
+	globs := noCache(noRaw(noEther(globals)))
 	// EXISTING_CODE
-	globs := noCache(noEther(noRaw(globals)))
 	expands := []bool{false, true}
 	matches := []bool{false, true}
 	alls := []bool{false, true}
@@ -123,11 +121,71 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "clean":
+		if clean, _, err := opts.NamesClean(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Message](fn, clean); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "autoname":
 		if autoname, _, err := opts.NamesAutoname(base.HexToAddress(value)); err != nil {
 			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Message](fn, autoname); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "create":
+		if create, _, err := opts.NamesCreate(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Name](fn, create); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "update":
+		if update, _, err := opts.NamesUpdate(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Name](fn, update); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "delete":
+		if delete, _, err := opts.NamesDelete(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Name](fn, delete); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "undelete":
+		if undelete, _, err := opts.NamesUndelete(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Name](fn, undelete); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "remove":
+		if remove, _, err := opts.NamesRemove(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Name](fn, remove); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

@@ -25,10 +25,8 @@ func DoTokens() {
 	opts := sdk.TokensOptions{}
 	ShowHeader("DoTokens", opts)
 
-	// FuzzerInits tag
-
+	globs := noRaw(noEther(globals))
 	// EXISTING_CODE
-	globs := noCache(noRaw(noEther(globals)))
 	parts := []sdk.TokensParts{
 		sdk.NoTP,
 		sdk.TPName,

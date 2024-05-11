@@ -78,7 +78,7 @@ func GetMonitorsOptions(args []string) (*monitorsOptionsInternal, error) {
 }
 
 type monitorsGeneric interface {
-	bool |
+	types.Message |
 		types.MonitorClean |
 		types.Monitor
 }

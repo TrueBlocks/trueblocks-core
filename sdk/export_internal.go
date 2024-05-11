@@ -112,7 +112,7 @@ type exportGeneric interface {
 		types.Receipt |
 		types.Log |
 		types.Trace |
-		bool |
+		types.Message |
 		types.Statement |
 		types.State |
 		types.Withdrawal |
