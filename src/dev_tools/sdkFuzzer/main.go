@@ -2,57 +2,87 @@ package main
 
 import (
 	"os"
+	"strings"
 )
 
+type FuzzFuncs func()
+
 func main() {
-	DoReceipts()
-	// DoAbis()
-	// DoBlocks()
-	// DoChunks() // this needs a lot of work
-	// DoConfig()
-	// DoExport()
-	// DoList()
-	// DoLogs()
-	// DoNames() // this does not test crud commands
-	// DoSlurp()
-	// DoState()
-	// DoStatus()
-	// DoTokens()
-	// DoTraces()
-	// DoTransactions()
-	// DoWhen()
-
-	// DoInit()
-	// DoMonitors()
-
-	// DoDaemon - do not test daemon in fuzzer
-
-	// DoScrape - no sdk routines for scrape
-	// DoExplore - no sdk routines for explore
+	fuzzFuncs := getFuzzFuncs()
+	for _, fuzzer := range fuzzFuncs {
+		fuzzer()
+	}
 }
 
-func Wait() {
-	// reader := bufio.NewReader(os.Stdin)
-	// fmt.Fprintf(os.Stderr, colors.Yellow+"%s"+colors.Off, "Waiting...")
-	// _, _ = reader.ReadString('\n')
+func getFuzzFuncs() []FuzzFuncs {
+	enabled := os.Getenv("TB_TEST_FILTER")
+	if len(enabled) == 0 {
+		if len(os.Args) > 1 {
+			enabled = os.Args[1]
+		} else {
+			enabled = "receipts|abis|blocks|chunks|config|export|list|logs|names|slurp|state|status|tokens|traces|transactions|when"
+		}
+	}
+
+	for _, cmd := range strings.Split(enabled, "|") {
+		if _, ok := allCommands[cmd]; ok {
+			allCommands[cmd] = true
+		}
+	}
+
+	fuzzFuncs := []FuzzFuncs{}
+	for k, v := range allCommands {
+		if v {
+			fuzzFuncs = append(fuzzFuncs, commandMap[k])
+		}
+	}
+	return fuzzFuncs
 }
 
-var testBlocks = []string{
-	"46147",
-	"1001001",
+var allCommands = map[string]bool{
+	"receipts":     false,
+	"abis":         false,
+	"blocks":       false,
+	"chunks":       false,
+	"config":       false,
+	"export":       false,
+	"list":         false,
+	"logs":         false,
+	"names":        false,
+	"slurp":        false,
+	"state":        false,
+	"status":       false,
+	"tokens":       false,
+	"traces":       false,
+	"transactions": false,
+	"when":         false,
+	"init":         false,
+	"monitors":     false,
+	"daemon":       false,
+	// "scrape":           false,
+	// "explore":          false,
 }
 
-var testAddrs = []string{
-	"0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
-}
-
-var testTransactions = []string{
-	"1718497.*",
-}
-
-var firsts = []string{"46147.0", "50111.0", "52029.0"}
-
-func init() {
-	os.Setenv("TB_NO_USERQUERY", "true")
-	os.Setenv("TB_SDK_FUZZER", "true")
+var commandMap = map[string]FuzzFuncs{
+	"receipts":     DoReceipts,
+	"abis":         DoAbis,
+	"blocks":       DoBlocks,
+	"chunks":       DoChunks,
+	"config":       DoConfig,
+	"export":       DoExport,
+	"list":         DoList,
+	"logs":         DoLogs,
+	"names":        DoNames,
+	"slurp":        DoSlurp,
+	"state":        DoState,
+	"status":       DoStatus,
+	"tokens":       DoTokens,
+	"traces":       DoTraces,
+	"transactions": DoTransactions,
+	"when":         DoWhen,
+	"init":         DoInit,
+	"monitors":     DoMonitors,
+	"daemon":       DoDaemon,
+	// "scrape":           DoScrape,
+	// "explore":          DoExplore,
 }
