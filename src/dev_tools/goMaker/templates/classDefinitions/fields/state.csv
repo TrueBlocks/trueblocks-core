@@ -8,5 +8,5 @@ balance     ,wei       ,           ,           ,       6 ,the balance of the acc
 ether       ,ether     ,           ,calc       ,       7 ,if --ether is specified&#44; the balance in ether
 code        ,string    ,           ,           ,       8 ,the code of the account
 deployed    ,blknum    ,           ,           ,       9 ,for smart contracts only&#44; the block number at which the contract was deployed
-nonce       ,nonce     ,           ,           ,      10 ,the nonce of the account at the given block
+nonce       ,numeral   ,           ,           ,      10 ,the nonce of the account at the given block
 proxy       ,address   ,           ,           ,      11 ,the proxy address of the account at the given block

@@ -43,7 +43,7 @@ States consist of the following fields:
 | ether       | if --ether is specified, the balance in ether (calculated)                    | ether     |
 | code        | the code of the account                                                       | string    |
 | deployed    | for smart contracts only, the block number at which the contract was deployed | blknum    |
-| nonce       | the nonce of the account at the given block                                   | nonce     |
+| nonce       | the nonce of the account at the given block                                   | numeral   |
 | proxy       | the proxy address of the account at the given block                           | address   |
 
 ## Token
@@ -109,7 +109,7 @@ This documentation mentions the following basic data types.
 | datetime  | a JSON formatted date               | as a string    |
 | ether     | a big number float                  | as a string    |
 | int256    | a signed big number                 | as a string    |
-| nonce     | a 64-bit unsigned integer           |                |
+| numeral   | a 64-bit unsigned integer           |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | txnum     | an alias for a uint64               |                |

@@ -66,7 +66,7 @@ type Slurp struct {
 	Input             string         `json:"input"`
 	IsError           bool           `json:"isError"`
 	MethodId          string         `json:"methodId"`
-	Nonce             base.Nonce     `json:"nonce"`
+	Nonce             base.Numeral   `json:"nonce"`
 	Timestamp         base.Timestamp `json:"timestamp"`
 	To                base.Address   `json:"to"`
 	TransactionIndex  base.Txnum     `json:"transactionIndex"`

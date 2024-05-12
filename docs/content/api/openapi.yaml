@@ -3425,7 +3425,7 @@ components:
           description: "the zero-indexed position of the transaction in the block"
         nonce:
           type: number
-          format: nonce
+          format: numeral
           description: "sequence number of the transactions sent by the sender"
         timestamp:
           type: number
@@ -3962,7 +3962,7 @@ components:
           description: "for smart contracts only, the block number at which the contract was deployed"
         nonce:
           type: number
-          format: nonce
+          format: numeral
           description: "the nonce of the account at the given block"
         proxy:
           type: string
@@ -4601,7 +4601,7 @@ components:
           description: "the zero-indexed position of the transaction in the block"
         nonce:
           type: number
-          format: nonce
+          format: numeral
           description: "sequence number of the transactions sent by the sender"
         timestamp:
           type: number

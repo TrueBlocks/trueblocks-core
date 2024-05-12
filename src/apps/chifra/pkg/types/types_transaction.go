@@ -81,7 +81,7 @@ type Transaction struct {
 	IsError              bool            `json:"isError"`
 	MaxFeePerGas         base.Gas        `json:"maxFeePerGas"`
 	MaxPriorityFeePerGas base.Gas        `json:"maxPriorityFeePerGas"`
-	Nonce                base.Nonce      `json:"nonce"`
+	Nonce                base.Numeral    `json:"nonce"`
 	Receipt              *Receipt        `json:"receipt"`
 	Timestamp            base.Timestamp  `json:"timestamp"`
 	To                   base.Address    `json:"to"`
@@ -622,7 +622,7 @@ func NewTransaction(raw *RawTransaction, receipt *Receipt, timestamp base.Timest
 	s.BlockHash = base.HexToHash(raw.BlockHash)
 	s.BlockNumber = base.MustParseBlknum(raw.BlockNumber)
 	s.TransactionIndex = base.MustParseIndex(raw.TransactionIndex)
-	s.Nonce = base.MustParseIndex(raw.Nonce)
+	s.Nonce = base.MustParseNumeral(raw.Nonce)
 	s.Timestamp = timestamp
 	s.From = base.HexToAddress(raw.From)
 	s.To = base.HexToAddress(raw.To)

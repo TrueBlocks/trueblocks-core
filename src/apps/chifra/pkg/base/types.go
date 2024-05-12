@@ -18,7 +18,6 @@ type Txnum = Numeral
 type Tracenum = Numeral
 type Lognum = Numeral
 type Gas = Numeral
-type Nonce = Numeral
 type Index = Numeral
 type Topic = string
 type Timestamp int64
@@ -43,7 +42,11 @@ func (t *Timestamp) Int64() int64 {
 	return int64(*t)
 }
 
-// TODO: This is here to avoid circular imports
+func MustParseNumeral(input string) Numeral {
+	ret, _ := strconv.ParseUint(input, 0, 64)
+	return Numeral(ret)
+}
+
 func MustParseBlknum(input string) Blknum {
 	ret, _ := strconv.ParseUint(input, 0, 64)
 	return Blknum(ret)
