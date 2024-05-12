@@ -51,6 +51,12 @@ func LocationsFromAddrAppsAndCacheType(conn *rpc.Connection, address base.Addres
 				BlockNumber: base.Blknum(app.BlockNumber),
 			})
 
+		case walk.Cache_Receipts:
+			locations = append(locations, &types.Transaction{
+				BlockNumber:      base.Blknum(app.BlockNumber),
+				TransactionIndex: base.Txnum(app.TransactionIndex),
+			})
+
 		case walk.Cache_Results:
 			locations = append(locations, &types.Result{
 				BlockNumber: base.Blknum(app.BlockNumber),
@@ -76,6 +82,12 @@ func LocationsFromAddrAppsAndCacheType(conn *rpc.Connection, address base.Addres
 				BlockNumber:      base.Blknum(app.BlockNumber),
 				TransactionIndex: base.Txnum(app.TransactionIndex),
 			})
+
+		case walk.Cache_Withdrawals:
+			locations = append(locations, &types.Block[string]{
+				BlockNumber: base.Blknum(app.BlockNumber),
+			})
+
 		}
 	}
 
