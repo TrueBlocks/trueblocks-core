@@ -5,22 +5,22 @@ import (
 )
 
 func main() {
-	// DoReceipts()
-	// DoLogs()
-	// DoTraces()
-	// DoState()
+	DoReceipts()
 	// DoAbis()
 	// DoBlocks()
-	// DoWhen()
-	// DoList()
-	// DoNames() // this does not test crud commands
 	// DoChunks() // this needs a lot of work
 	// DoConfig()
-	// DoTransactions()
-	// DoTokens()
+	// DoExport()
+	// DoList()
+	// DoLogs()
+	// DoNames() // this does not test crud commands
+	// DoSlurp()
+	// DoState()
 	// DoStatus()
-	DoSlurp()
-	//- DoExport()
+	// DoTokens()
+	// DoTraces()
+	// DoTransactions()
+	// DoWhen()
 
 	// DoInit()
 	// DoMonitors()
@@ -29,6 +29,12 @@ func main() {
 
 	// DoScrape - no sdk routines for scrape
 	// DoExplore - no sdk routines for explore
+}
+
+func Wait() {
+	// reader := bufio.NewReader(os.Stdin)
+	// fmt.Fprintf(os.Stderr, colors.Yellow+"%s"+colors.Off, "Waiting...")
+	// _, _ = reader.ReadString('\n')
 }
 
 var testBlocks = []string{

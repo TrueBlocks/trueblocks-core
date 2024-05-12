@@ -9,7 +9,7 @@ import (
 )
 
 func (opts *ReceiptsOptions) HandleDecache() error {
-	// TODO: implement
+	// TODO: decache.Decache --decache is not yet implemented
 	logger.Error("chifra receipts --decache not yet implemented")
 	return nil
 }

@@ -142,7 +142,7 @@ func updateFile(tempFn, newCode string) (bool, error) {
 	if strings.Contains(tempFn, ".go") {
 		formattedBytes, err := format.Source([]byte(newCode))
 		if err != nil {
-			return false, fmt.Errorf("format.Source failed: %v %s", err, file.AsciiFileToString(tempFn))
+			return showErroredCode(newCode, err)
 		}
 		formatted = string(formattedBytes)
 	} else if strings.Contains(tempFn, ".md") {
@@ -203,4 +203,13 @@ func hasPrettier() bool {
 	utils.System("which prettier >./found 2>/dev/null")
 	defer os.Remove("./found")
 	return file.FileExists("./found")
+}
+
+func showErroredCode(newCode string, err error) (bool, error) {
+	logger.Error("Error formatting code:", colors.Red, err, colors.Off)
+	logger.Info("Code that caused the error:")
+	for i, line := range strings.Split(newCode, "\n") {
+		logger.Info(fmt.Sprintf("%s%4d%s: %s", colors.Yellow, i+1, colors.Off, line))
+	}
+	return false, err
 }

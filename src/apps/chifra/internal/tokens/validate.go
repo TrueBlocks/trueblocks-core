@@ -59,12 +59,10 @@ func (opts *TokensOptions) validateTokens() error {
 			addr := opts.Addrs[0]
 			err := opts.Conn.IsContractAtLatest(base.HexToAddress(addr))
 			if err != nil {
-				if err != nil {
-					if errors.Is(err, rpc.ErrNotAContract) {
-						return validate.Usage("The value {0} is not a token contract.", addr)
-					}
-					return err
+				if errors.Is(err, rpc.ErrNotAContract) {
+					return validate.Usage("The value {0} is not a token contract.", addr)
 				}
+				return err
 			}
 		}
 	}

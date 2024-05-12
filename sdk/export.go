@@ -85,10 +85,10 @@ func (opts *ExportOptions) ExportTraces() ([]types.Trace, *types.MetaData, error
 }
 
 // ExportNeighbors implements the chifra export --neighbors command.
-func (opts *ExportOptions) ExportNeighbors() ([]bool, *types.MetaData, error) {
+func (opts *ExportOptions) ExportNeighbors() ([]types.Message, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.Neighbors = true
-	return queryExport[bool](in)
+	return queryExport[types.Message](in)
 }
 
 // ExportStatements implements the chifra export --statements command.

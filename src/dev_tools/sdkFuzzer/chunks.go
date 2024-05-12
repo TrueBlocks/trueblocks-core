@@ -1,6 +1,17 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
 package main
 
+// EXISTING_CODE
 import (
+	"fmt"
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -8,10 +19,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// DoChunks tests the chunks sdk function
+// EXISTING_CODE
+
+// DoChunks tests the Chunks sdk function
 func DoChunks() {
 	file.EstablishFolder("sdkFuzzer-output/chunks")
-	opts := sdk.ChunksOptions{
+	opts := sdk.ChunksOptions{}
+	ShowHeader("DoChunks", opts)
+
+	globs := noCache(noRaw(noEther(globals)))
+	// EXISTING_CODE
+	_ = globs
+	opts = sdk.ChunksOptions{
 		FirstBlock: 0,
 		LastBlock:  base.NOPOSN,
 		MaxAddrs:   base.NOPOS,
@@ -30,26 +49,29 @@ func DoChunks() {
 	// Unpin      bool         `json:"unpin,omitempty"`
 	// Count      bool         `json:"count,omitempty"`
 	// Sleep      float64      `json:"sleep,omitempty"`
-	ShowHeader("ChunksManifest", &opts)
-
+	// chunks,command,default|
 	baseFn := "chunks/chunks"
 	fn := getFilename(baseFn, &opts.Globals)
-	TestChunks("manifest", fn, &opts)
-	TestChunks("index", fn, &opts)
+	TestChunks("manifest", "", fn, &opts)
+	TestChunks("index", "", fn, &opts)
 	// TestChunks("blooms", fn, &opts)
 	// TestChunks("pins", fn, &opts)
 	// TestChunks("addresses", fn, &opts)
 	// TestChunks("appearances", fn, &opts)
-	TestChunks("stats", fn, &opts)
+	TestChunks("stats", "", fn, &opts)
 
 	// func (opts *ChunksOptions) ChunksTruncate(val base.Blknum) ([]types.Message, *types.MetaData, error) {
 	// func (opts *ChunksOptions) ChunksDiff() ([]types.Message, *types.MetaData, error) {
 	// func (opts *ChunksOptions) ChunksTag(val string) ([]types.Message, *types.MetaData, error) {
+	// EXISTING_CODE
+	Wait()
 }
 
-func TestChunks(which, fn string, opts *sdk.ChunksOptions) {
-	fn += "-" + which
-	logger.Info("-------------", fn, "-------------")
+func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "manifest":
 		if manifest, _, err := opts.ChunksManifest(); err != nil {
@@ -82,8 +104,6 @@ func TestChunks(which, fn string, opts *sdk.ChunksOptions) {
 			}
 		}
 	case "pins":
-		// TODO: Not sure this is included in the SDK
-		opts.List = true
 		if pins, _, err := opts.ChunksPins(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
@@ -93,7 +113,6 @@ func TestChunks(which, fn string, opts *sdk.ChunksOptions) {
 				ReportOkay(fn)
 			}
 		}
-		opts.List = false
 	case "addresses":
 		if addresses, _, err := opts.ChunksAddresses(); err != nil {
 			ReportError(fn, opts, err)
@@ -124,5 +143,42 @@ func TestChunks(which, fn string, opts *sdk.ChunksOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "truncate":
+		if truncate, _, err := opts.ChunksTruncate(base.MustParseBlknum(value)); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Message](fn, truncate); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "diff":
+		if diff, _, err := opts.ChunksDiff(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Message](fn, diff); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "tag":
+		if tag, _, err := opts.ChunksTag(value); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Message](fn, tag); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		logger.Fatal("Quitting...")
+		return
 	}
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

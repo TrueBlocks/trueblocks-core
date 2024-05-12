@@ -23,6 +23,7 @@ type Option struct {
 	Capabilities  string   `json:"capabilities,omitempty" csv:"capabilities"`
 	Description   string   `json:"description,omitempty" csv:"description"`
 	Enums         []string `json:"enums,omitempty"`
+	EnumVal       string   `json:"enum_name,omitempty"`
 	DefaultEnum   string   `json:"default_enum,omitempty"`
 	GoName        string   `json:"go_name"`
 	GoType        string   `json:"go_type"`
@@ -377,7 +378,9 @@ func (op *Option) SomeCases() string {
 func (op *Option) EnumTypes() []string {
 	ret := []string{}
 	for _, e := range op.Enums {
-		ret = append(ret, "types."+Singular(Proper(op.Route))+Singular(Proper(e)))
+		opp := *op
+		opp.GoName = e
+		ret = append(ret, opp.ModeType())
 	}
 	return ret
 }
@@ -777,42 +780,57 @@ func (op *Option) executeTemplate(name, tmplCode string) string {
 	return executeTemplate(op, "option", name, tmplCode)
 }
 
-func (op *Option) RetType() string {
-	v := op.ReturnType
-	if v != "string" && v != "base.Address" && v != "bool" {
-		v = "types." + FirstUpper(v)
-	}
-	return v
+func (op *Option) SdkIsPublic() bool {
+	return len(op.ReturnType) == 0 || (op.IsPositional() && !op.IsMode())
 }
 
-func (op *Option) ToolTurd() string {
-	if op.Tool == "" {
-		return ""
-	}
-	return "--" + Lower(op.Tool) + " "
+func (op *Option) IsMode() bool {
+	return strings.HasPrefix(op.LongName, "mode")
 }
 
-func (op *Option) ToolParameters() string {
-	if len(op.ReturnType) == 0 {
+func (op *Option) ModeType() string {
+	return "types." + Singular(Proper(op.Route)) + Singular(Proper(op.GoName))
+}
+
+func (op *Option) ToolParameters(forSdk bool) string {
+	if len(op.ReturnType) == 0 || op.IsPositional() || op.IsMode() {
 		return ""
-	} else if op.IsArray() && strings.Contains(op.DataType, "string") {
-		return "val []string"
-	} else if strings.Contains(op.DataType, "string") {
-		return "val string"
-	} else if strings.Contains(op.DataType, "address") {
-		return "val base.Address"
-	} else if strings.Contains(op.DataType, "uint64") {
-		return "val uint64"
-	} else if strings.Contains(op.DataType, "blknum") {
-		return "val base.Blknum"
+	}
+
+	if forSdk {
+		if op.IsArray() && strings.Contains(op.DataType, "<string>") {
+			return "[]string{value}"
+		} else if op.DataType == "<address>" {
+			return "base.HexToAddress(value)"
+		} else if op.DataType == "<blknum>" {
+			return "base.MustParseBlknum(value)"
+		} else if op.DataType != "<boolean>" {
+			return "value"
+		} else {
+			return ""
+		}
 	} else {
-		return ""
+		if op.IsArray() && strings.Contains(op.DataType, "<string>") {
+			return "val []string"
+		} else if op.DataType == "<string>" {
+			return "val string"
+		} else if op.DataType == "<address>" {
+			return "val base.Address"
+		} else if op.DataType == "<uint64>" {
+			return "val uint64"
+		} else if op.DataType == "<blknum>" {
+			return "val base.Blknum"
+		} else {
+			return ""
+		}
 	}
 }
 
 func (op *Option) ToolAssignment() string {
 	if len(op.ReturnType) == 0 {
 		return ""
+	} else if op.IsMode() {
+		return op.EnumTag() + Proper(op.GoName)
 	} else if strings.Contains(op.DataType, "[]string") ||
 		strings.Contains(op.DataType, "string") ||
 		strings.Contains(op.DataType, "address") ||
@@ -824,132 +842,95 @@ func (op *Option) ToolAssignment() string {
 	}
 }
 
-func (op *Option) SdkEndpointName() string {
-	if len(op.ReturnType) == 0 {
-		return ""
-	} else if op.OptionType == "positional" {
+func (op *Option) AssignReceive() string {
+	return FirstUpper(CamelCase(op.LongName))
+}
+
+func (op *Option) ToolTurd() string {
+	if op.IsPositional() {
 		return ""
 	} else {
-		return op.GoName
+		if op.IsMode() {
+			return Lower(op.GoName) + " "
+		} else {
+			return "--" + Lower(op.GoName) + " "
+		}
 	}
+}
+
+var sdkEndpointRegular = `	// {{firstUpper .Route}}{{.GoName}} implements the chifra {{toLower .Route}} {{.ToolTurd}}command.
+func (opts *{{firstUpper .Route}}Options) {{firstUpper .Route}}{{.GoName}}({{.ToolParameters false}}) ([]{{.SdkCoreType}}, *types.MetaData, error) {
+	in := opts.toInternal()
+{{if not .IsPositional}}	in.{{.AssignReceive}} = {{.ToolAssignment}}
+{{end}}	return query{{firstUpper .Route}}[{{.SdkCoreType}}](in)
+}
+`
+
+var fuzzerSwitch = `	case "{{.Tool}}":
+if {{.Tool}}, _, err := opts.{{firstUpper .Route}}{{.GoName}}({{.ToolParameters true}}); err != nil {
+	ReportError(fn, opts, err)
+} else {
+	if err := SaveToFile[{{.SdkCoreType}}](fn, {{.Tool}}); err != nil {
+		ReportError2(fn, err)
+	} else {
+		ReportOkay(fn)
+	}
+}`
+
+func (op *Option) FuzzerSwitch() string {
+	tmplName := "fuzzerSwitch"
+	tmpl := fuzzerSwitch
+
+	opp := *op
+	if op.IsMode() {
+		ret := []string{}
+		for _, enum := range op.Enums {
+			opp.Tool = Lower(enum)
+			opp.GoName = FirstUpper(enum)
+			ret = append(ret, opp.executeTemplate(tmplName, tmpl))
+		}
+		return strings.Join(ret, "\n")
+	}
+
+	opp.Tool = Lower(op.GoName)
+	if opp.IsPositional() {
+		opp.Tool = Lower(op.Route)
+		opp.GoName = ""
+	}
+
+	return opp.executeTemplate(tmplName, tmpl)
 }
 
 func (op *Option) SdkEndpoint() string {
-	if len(op.ReturnType) == 0 {
-		return ""
-	}
+	tmplName := "sdkEndpointRegular"
+	tmpl := sdkEndpointRegular
 
-	longName := FirstUpper(op.LongName)
-	if op.OptionType == "positional" {
-		longName = ""
-	}
-	opp := Option{
-		Route:      FirstUpper(op.Route),
-		Tool:       longName,
-		ReturnType: op.RetType(),
-		OptionType: op.OptionType,
-		DataType:   op.DataType,
-		GoName:     op.GoName,
-	}
-
+	opp := *op
 	if op.IsMode() {
-		opp = *op
-		return opp.renderModeEndpoints()
-
-	} else if op.OptionType == "positional" {
-		return opp.renderPositionalEndpoint()
-
-	} else {
-		return opp.renderRegularEndpoint()
-	}
-}
-
-func (op *Option) renderModeEndpoint() string {
-	tmplName := "modeFunc"
-	tmpl := `// {{toProper .Route}}++E++ implements the chifra {{toLower .Route}} ++EE++ command.
-func (opts *{{toProper .Route}}Options) {{toProper .Route}}++E++() ([]++EEEE++, *types.MetaData, error) {
-	in := opts.toInternal()
-	in.{{.GoName}} = ++EEE++
-	return query{{toProper .Route}}[++EEEE++](in)
-}
-
-`
-	ret := []string{}
-	for _, e := range op.Enums {
-		tN := tmplName + e
-		pp := Proper(e)
-		ll := Lower(e)
-		tt := op.EnumTag() + pp
-		ty := "types." + Singular(Proper(op.Route)) + Singular(pp)
-		tE := strings.ReplaceAll(tmpl, "++E++", pp)
-		tE = strings.ReplaceAll(tE, "++EE++", ll)
-		tE = strings.ReplaceAll(tE, "++EEE++", tt)
-		tE = strings.ReplaceAll(tE, "++EEEE++", ty)
-		ret = append(ret, op.executeTemplate(tN, tE))
+		opp.OptionType = "" // no positional any longer
+		ret := []string{}
+		for _, enum := range op.Enums {
+			opp.GoName = FirstUpper(enum)
+			ret = append(ret, opp.executeTemplate(tmplName, tmpl))
+		}
+		return strings.Join(ret, "\n")
 	}
 
-	return strings.Join(ret, "\n")
-}
-
-func (op *Option) renderModesEndpoint() string {
-	tmplName := "modesFunc"
-	tmpl := `// {{toProper .Route}}++E++ implements the chifra {{toLower .Route}} ++EE++ command.
-func (opts *{{toProper .Route}}Options) {{toProper .Route}}++E++() ([]types.{{.ReturnType}}, *types.MetaData, error) {
-	in := opts.toInternal()
-	in.{{.GoName}} = ++EEE++
-	return query{{toProper .Route}}[types.{{.ReturnType}}](in)
-}
-
-`
-	ret := []string{}
-	for _, e := range op.Enums {
-		tE := strings.ReplaceAll(tmpl, "++E++", Proper(e))
-		tE = strings.ReplaceAll(tE, "++EE++", Lower(e))
-		tE = strings.ReplaceAll(tE, "++EEE++", op.EnumTag()+Proper(e))
-		ret = append(ret, op.executeTemplate(tmplName+e, tE))
+	if opp.IsPositional() {
+		opp.GoName = ""
 	}
 
-	return strings.Join(ret, "\n")
+	return opp.executeTemplate(tmplName, tmpl)
 }
 
-func (op *Option) renderModeEndpoints() string {
-	if op.LongName == "mode" {
-		return op.renderModeEndpoint()
-	} else if op.LongName == "modes" {
-		return op.renderModesEndpoint()
+func (op *Option) SdkCoreType() string {
+	v := op.ReturnType
+	if v == "mode" {
+		return op.ModeType()
+	} else if v == "address" {
+		v = "base.Address"
+	} else if v != "string" && v != "base.Address" && v != "bool" {
+		v = "types." + FirstUpper(v)
 	}
-	return op.renderPositionalEndpoint()
-}
-
-func (op *Option) renderRegularEndpoint() string {
-	tmplName := "returnTypes"
-	tmpl := `	// {{.Route}}{{.SdkEndpointName}} implements the chifra {{toLower .Route}} {{.ToolTurd}}command.
-func (opts *{{.Route}}Options) {{.Route}}{{.Tool}}({{.ToolParameters}}) ([]{{.ReturnType}}, *types.MetaData, error) {
-	in := opts.toInternal()
-	in.{{.SdkEndpointName}} = {{.ToolAssignment}}
-	return query{{.Route}}[{{.ReturnType}}](in)
-}
-`
-	return op.executeTemplate(tmplName, tmpl)
-}
-
-func (op *Option) renderPositionalEndpoint() string {
-	tmplName := "sdkEndpointPos"
-	tmpl := `	// {{.Route}}{{.SdkEndpointName}} implements the chifra {{toLower .Route}} {{.ToolTurd}}command.
-func (opts *{{.Route}}Options) {{.Route}}{{.Tool}}() ([]{{.ReturnType}}, *types.MetaData, error) {
-	in := opts.toInternal()
-	return query{{.Route}}[{{.ReturnType}}](in)
-}
-`
-	return op.executeTemplate(tmplName, tmpl)
-}
-
-func (op *Option) IsPublicEndpoint() bool {
-	return len(op.ReturnType) == 0 ||
-		(op.IsPositional() && !op.IsMode()) //  && (op.LongName == "mode" || op.LongName == "modes"))
-}
-
-func (op *Option) IsMode() bool {
-	return (op.LongName == "mode" && op.ReturnType == "mode") ||
-		(op.LongName == "modes" && op.ReturnType == "Status")
+	return v
 }

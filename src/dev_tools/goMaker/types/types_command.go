@@ -640,19 +640,21 @@ func (c *Command) BaseTypes() string {
 	return MarkdownTable([]string{"Type", "Description", "Notes"}, ret)
 }
 
+// ----------------------------------------------------------------------
 func (c *Command) ReturnTypes() string {
 	present := map[string]bool{}
 	ret := []string{}
 	for _, op := range c.Options {
+		retType := op.SdkCoreType()
 		if len(op.ReturnType) > 0 {
-			if !present[op.RetType()] {
+			if !present[retType] {
 				if op.LongName == "mode" {
 					ret = append(ret, op.EnumTypes()...)
 				} else {
-					ret = append(ret, op.RetType())
+					ret = append(ret, retType)
 				}
 			}
-			present[op.RetType()] = true
+			present[retType] = true
 		}
 	}
 	return strings.Join(ret, "|\n")
@@ -678,4 +680,44 @@ func (c *Command) SdkEndpoints() string {
 		}
 	}
 	return strings.Join(ret, "\n")
+}
+
+// ----------------------------------------------------------------------
+func (c *Command) FuzzerSwitches() string {
+	ret := []string{}
+	for _, op := range c.Options {
+		if len(op.ReturnType) > 0 {
+			v := op.FuzzerSwitch()
+			if len(v) > 0 {
+				ret = append(ret, v)
+			}
+		}
+	}
+
+	ret = append(ret, `	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		logger.Fatal("Quitting...")
+		return`)
+	return strings.Join(ret, "\n")
+}
+
+func (c *Command) FuzzerInits() string {
+	has := map[string]bool{}
+	caps := strings.Split(c.Capabilities, "|")
+	for _, cap := range caps {
+		if len(cap) > 0 {
+			has[cap] = true
+		}
+	}
+	ret := "globals"
+	if !has["ether"] {
+		ret = "noEther(" + ret + ")"
+	}
+	if !has["raw"] {
+		ret = "noRaw(" + ret + ")"
+	}
+	if !has["caching"] {
+		ret = "noCache(" + ret + ")"
+	}
+	return "globs := " + ret + "\n"
 }

@@ -1,23 +1,40 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
 package main
 
+// EXISTING_CODE
 import (
+	"fmt"
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
+
+// EXISTING_CODE
 
 // DoWhen tests the When sdk function
 func DoWhen() {
 	file.EstablishFolder("sdkFuzzer-output/when")
-	globs := noEther(noRaw(globals))
+	opts := sdk.WhenOptions{}
+	ShowHeader("DoWhen", opts)
 
+	globs := noRaw(noEther(globals))
+	// EXISTING_CODE
+	types := []string{"when", "list", "timestamps", "count"}
+	// when,command,default|caching|
 	// Truncate base.Blknum `json:"truncate,omitempty"`
 	// Repair   bool        `json:"repair,omitempty"`
 	// Check    bool        `json:"check,omitempty"`
 	// Update   bool        `json:"update,omitempty"`
 	// Deep     bool        `json:"deep,omitempty"`
-
-	types := []string{"when", "list", "timestamps", "count"}
 	for _, t := range types {
 		opts := sdk.WhenOptions{}
 		if t != "list" && t != "when" {
@@ -29,28 +46,34 @@ func DoWhen() {
 			opts.Globals = g
 			baseFn += "-" + t
 			fn := getFilename(baseFn, &opts.Globals)
-			TestWhen(t, fn, &opts)
+			TestWhen(t, "", fn, &opts)
 		}
 	}
+	// EXISTING_CODE
+	Wait()
 }
 
-func TestWhen(which, fn string, opts *sdk.WhenOptions) {
+func TestWhen(which, value, fn string, opts *sdk.WhenOptions) {
+	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	switch which {
 	case "when":
-		if blocks, _, err := opts.When(); err != nil {
+		if when, _, err := opts.When(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.NamedBlock](fn, blocks); err != nil {
+			if err := SaveToFile[types.NamedBlock](fn, when); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
 	case "list":
-		if blocks, _, err := opts.WhenList(); err != nil {
+		if list, _, err := opts.WhenList(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.NamedBlock](fn, blocks); err != nil {
+			if err := SaveToFile[types.NamedBlock](fn, list); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -67,14 +90,21 @@ func TestWhen(which, fn string, opts *sdk.WhenOptions) {
 			}
 		}
 	case "count":
-		if counts, _, err := opts.WhenCount(); err != nil {
+		if count, _, err := opts.WhenCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.TimestampCount](fn, counts); err != nil {
+			if err := SaveToFile[types.TimestampCount](fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
+	default:
+		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		logger.Fatal("Quitting...")
+		return
 	}
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
