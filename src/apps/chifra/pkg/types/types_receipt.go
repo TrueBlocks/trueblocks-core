@@ -52,7 +52,7 @@ type Receipt struct {
 	GasUsed           base.Gas     `json:"gasUsed"`
 	IsError           bool         `json:"isError,omitempty"`
 	Logs              []Log        `json:"logs"`
-	Status            uint64       `json:"status"`
+	Status            base.Value   `json:"status"`
 	To                base.Address `json:"to,omitempty"`
 	TransactionHash   base.Hash    `json:"transactionHash"`
 	TransactionIndex  base.Txnum   `json:"transactionIndex"`
@@ -327,7 +327,7 @@ func (s *Receipt) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		if err = cache.ReadValue(reader, &val, vers); err != nil {
 			return err
 		}
-		s.Status = uint64(val)
+		s.Status = base.Value(val)
 	} else {
 		// Status
 		if err = cache.ReadValue(reader, &s.Status, vers); err != nil {
@@ -391,7 +391,7 @@ func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 		CumulativeGasUsed: base.Gas(cumulativeGasUsed),
 		EffectiveGasPrice: base.MustParseGas(r.EffectiveGasPrice),
 		GasUsed:           base.MustParseGas(r.GasUsed),
-		Status:            base.MustParseUint(r.Status),
+		Status:            base.MustParseValue(r.Status),
 		IsError:           base.MustParseUint(r.Status) == 0,
 		TransactionHash:   base.HexToHash(r.TransactionHash),
 		TransactionIndex:  base.MustParseTxnum(r.TransactionIndex),

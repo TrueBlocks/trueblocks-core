@@ -123,7 +123,6 @@ var knownTypes = map[string]bool{
 	"ipfshash":    true,
 	"lognum":      true,
 	"note":        true,
-	"numeral":     true,
 	"positional":  true,
 	"string":      true,
 	"switch":      true,

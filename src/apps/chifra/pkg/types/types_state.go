@@ -44,7 +44,7 @@ type State struct {
 	BlockNumber base.Blknum    `json:"blockNumber"`
 	Code        string         `json:"code"`
 	Deployed    base.Blknum    `json:"deployed"`
-	Nonce       base.Numeral   `json:"nonce"`
+	Nonce       base.Value     `json:"nonce"`
 	Proxy       base.Address   `json:"proxy"`
 	Timestamp   base.Timestamp `json:"timestamp"`
 	raw         *RawState      `json:"-"`

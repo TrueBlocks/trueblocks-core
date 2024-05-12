@@ -14,7 +14,6 @@ base      ,int256    ,a signed big number                             ,as a stri
 base      ,int64     ,a 64-bit signed integer                         ,
 base      ,ipfshash  ,a multi-hash produced by IPFS                   ,mixed-case
 base      ,lognum    ,an alias for a uint64                           ,
-base      ,numeral   ,a 64-bit unsigned integer                       ,
 base      ,string    ,a normal character string                       ,
 base      ,[]string  ,an array of strings                             ,
 base      ,timestamp ,a 64-bit unsigned integer                       ,Unix timestamp
@@ -24,4 +23,5 @@ base      ,uint256   ,a 256-bit unsigned integer                      ,
 base      ,uint32    ,a 32-bit unsigned integer                       ,
 base      ,uint64    ,a 64-bit unsigned integer                       ,
 base      ,uint8     ,an alias for the boolean type                   ,
+base      ,value     ,an alias for a 64-bit unsigned integer          ,
 base      ,wei       ,an unsigned big number                          ,as a string
