@@ -19,27 +19,6 @@ import (
 
 type CacheType uint
 
-// 	Cache_Blocks
-// src/dev_tools/goMaker/templates/classDefinitions/block.toml:
-// 	Cache_Logs
-// src/dev_tools/goMaker/templates/classDefinitions/log.toml:
-// ===> src/dev_tools/goMaker/templates/classDefinitions/receipt.toml:
-// 	Cache_Results
-// src/dev_tools/goMaker/templates/classDefinitions/result.toml:
-// 	Cache_Slurps
-// src/dev_tools/goMaker/templates/classDefinitions/slurp.toml:
-// 	Cache_State
-// src/dev_tools/goMaker/templates/classDefinitions/state.toml:
-// 	Cache_Statements
-// src/dev_tools/goMaker/templates/classDefinitions/statement.toml:
-// ===> Cache_Tokens
-
-// src/dev_tools/goMaker/templates/classDefinitions/trace.toml:
-// 	Cache_Traces
-// src/dev_tools/goMaker/templates/classDefinitions/transaction.toml:
-// 	Cache_Transactions
-// ===> src/dev_tools/goMaker/templates/classDefinitions/withdrawal.toml:
-
 const (
 	Cache_NotACache CacheType = iota
 	Cache_Abis
@@ -48,14 +27,16 @@ const (
 	Cache_Tmp
 
 	Cache_Blocks
-	Cache_Results
 	Cache_Logs
+	Cache_Receipts
+	Cache_Results
 	Cache_Slurps
 	Cache_State
 	Cache_Statements
 	Cache_Tokens
 	Cache_Traces
 	Cache_Transactions
+	Cache_Withdrawals
 
 	Index_Bloom
 	Index_Final
@@ -75,14 +56,16 @@ var cacheTypeToName = map[CacheType]string{
 	Cache_Names:        "names",
 	Cache_Tmp:          "tmp",
 	Cache_Blocks:       "blocks",
-	Cache_Results:      "results",
 	Cache_Logs:         "logs",
+	Cache_Receipts:     "receipts",
+	Cache_Results:      "results",
 	Cache_Slurps:       "slurps",
 	Cache_State:        "state",
 	Cache_Statements:   "statements",
 	Cache_Tokens:       "tokens",
 	Cache_Traces:       "traces",
 	Cache_Transactions: "transactions",
+	Cache_Withdrawals:  "withdrawals",
 	Index_Bloom:        "bloom",
 	Index_Final:        "index",
 	Index_Ripe:         "ripe",
@@ -101,14 +84,16 @@ var CacheTypeToFolder = map[CacheType]string{
 	Cache_Names:        "names",
 	Cache_Tmp:          "tmp",
 	Cache_Blocks:       "blocks",
-	Cache_Results:      "results",
 	Cache_Logs:         "logs",
+	Cache_Receipts:     "receipts",
+	Cache_Results:      "results",
 	Cache_Slurps:       "slurps",
 	Cache_State:        "state",
 	Cache_Statements:   "statements",
 	Cache_Tokens:       "tokens",
 	Cache_Traces:       "traces",
 	Cache_Transactions: "transactions",
+	Cache_Withdrawals:  "withdrawals",
 	Index_Bloom:        "blooms",
 	Index_Final:        "finalized",
 	Index_Ripe:         "ripe",
@@ -126,14 +111,16 @@ var cacheTypeToExt = map[CacheType]string{
 	Cache_Names:        "bin",
 	Cache_Tmp:          "",
 	Cache_Blocks:       "bin",
-	Cache_Results:      "bin",
 	Cache_Logs:         "bin",
+	Cache_Receipts:     "bin",
+	Cache_Results:      "bin",
 	Cache_Slurps:       "bin",
 	Cache_State:        "bin",
 	Cache_Statements:   "bin",
 	Cache_Tokens:       "bin",
 	Cache_Traces:       "bin",
 	Cache_Transactions: "bin",
+	Cache_Withdrawals:  "bin",
 	Index_Bloom:        "bloom",
 	Index_Final:        "bin",
 	Index_Ripe:         "txt",
@@ -171,9 +158,11 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 
 	case Cache_Blocks:
 		fallthrough
-	case Cache_Results:
-		fallthrough
 	case Cache_Logs:
+		fallthrough
+	case Cache_Receipts:
+		fallthrough
+	case Cache_Results:
 		fallthrough
 	case Cache_Slurps:
 		fallthrough
@@ -186,6 +175,8 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_Traces:
 		fallthrough
 	case Cache_Transactions:
+		fallthrough
+	case Cache_Withdrawals:
 		return filepath.Join(config.PathToCache(chain), "v1", CacheTypeToFolder[cacheType]) + "/"
 
 	case Index_Bloom:
@@ -277,10 +268,12 @@ func CacheTypesFromStringSlice(strs []string) []CacheType {
 
 			case "blocks":
 				types = append(types, Cache_Blocks)
-			case "results":
-				types = append(types, Cache_Results)
 			case "logs":
 				types = append(types, Cache_Logs)
+			case "receipts":
+				types = append(types, Cache_Receipts)
+			case "results":
+				types = append(types, Cache_Results)
 			case "slurps":
 				types = append(types, Cache_Slurps)
 			case "state":
@@ -293,6 +286,8 @@ func CacheTypesFromStringSlice(strs []string) []CacheType {
 				types = append(types, Cache_Traces)
 			case "transactions":
 				types = append(types, Cache_Transactions)
+			case "withdrawals":
+				types = append(types, Cache_Withdrawals)
 
 			case "blooms":
 				types = append(types, Index_Bloom)
@@ -323,14 +318,16 @@ func CacheTypesFromStringSlice(strs []string) []CacheType {
 				types = append(types, Cache_Monitors)
 				types = append(types, Cache_Names)
 				types = append(types, Cache_Blocks)
-				types = append(types, Cache_Results)
 				types = append(types, Cache_Logs)
+				types = append(types, Cache_Receipts)
+				types = append(types, Cache_Results)
 				types = append(types, Cache_Slurps)
 				types = append(types, Cache_State)
 				types = append(types, Cache_Statements)
 				types = append(types, Cache_Tokens)
 				types = append(types, Cache_Traces)
 				types = append(types, Cache_Transactions)
+				types = append(types, Cache_Withdrawals)
 			}
 		}
 	}

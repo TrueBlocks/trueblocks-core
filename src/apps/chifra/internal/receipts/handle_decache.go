@@ -5,11 +5,34 @@
 package receiptsPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"context"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *ReceiptsOptions) HandleDecache() error {
-	// TODO: decache.Decache --decache is not yet implemented
-	logger.Error("chifra receipts --decache not yet implemented")
-	return nil
+	silent := !opts.Globals.ShowProgress()
+
+	itemsToRemove, err := decache.LocationsFromTransactionIds(opts.Conn, opts.TransactionIds)
+	if err != nil {
+		return err
+	}
+
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler[types.RawMessage], errorChan chan error) {
+		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, walk.Cache_Receipts); err != nil {
+			errorChan <- err
+		} else {
+			s := types.Message{
+				Msg: msg,
+			}
+			modelChan <- &s
+		}
+	}
+
+	opts.Globals.NoHeader = true
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }

@@ -43,6 +43,8 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 						walk.Cache_Statements,
 						walk.Cache_Traces,
 						walk.Cache_Transactions,
+						walk.Cache_Receipts,
+						walk.Cache_Withdrawals,
 					}
 					for _, cache := range caches {
 						itemsToRemove, err := decache.LocationsFromAddrAppsAndCacheType(opts.Conn, mon.Address, apps, cache)
