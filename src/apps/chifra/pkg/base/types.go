@@ -18,7 +18,6 @@ type Txnum = Numeral
 type Tracenum = Numeral
 type Lognum = Numeral
 type Gas = Numeral
-type Index = Numeral
 type Topic = string
 type Timestamp int64
 
@@ -42,19 +41,24 @@ func (t *Timestamp) Int64() int64 {
 	return int64(*t)
 }
 
-func MustParseNumeral(input string) Numeral {
-	ret, _ := strconv.ParseUint(input, 0, 64)
-	return Numeral(ret)
-}
-
 func MustParseBlknum(input string) Blknum {
 	ret, _ := strconv.ParseUint(input, 0, 64)
 	return Blknum(ret)
 }
 
-func MustParseIndex(input string) Txnum {
+func MustParseTxnum(input string) Txnum {
 	ret, _ := strconv.ParseUint(input, 0, 64)
 	return Txnum(ret)
+}
+
+func MustParseNumeral(input string) Numeral {
+	ret, _ := strconv.ParseUint(input, 0, 64)
+	return Numeral(ret)
+}
+
+func MustParseGas(input string) Gas {
+	ret, _ := strconv.ParseUint(input, 0, 64)
+	return Gas(ret)
 }
 
 func MustParseTimestamp(input string) Timestamp {
@@ -65,11 +69,6 @@ func MustParseTimestamp(input string) Timestamp {
 func MustParseWei(input string) Wei {
 	i := MustParseUint(input)
 	return *NewWei(0).SetUint64(i)
-}
-
-func MustParseGas(input string) Gas {
-	ret, _ := strconv.ParseUint(input, 0, 64)
-	return Gas(ret)
 }
 
 func MustParseInt(input string) int64 {

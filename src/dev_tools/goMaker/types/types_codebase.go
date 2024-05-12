@@ -118,7 +118,6 @@ var knownTypes = map[string]bool{
 	"gas":         true,
 	"group":       true,
 	"hash":        true,
-	"index":       true,
 	"int256":      true,
 	"int64":       true,
 	"ipfshash":    true,

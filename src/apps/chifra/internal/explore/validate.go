@@ -153,11 +153,11 @@ func (opts *ExploreOptions) idToTxHash(arg string, isBlockHash func(arg string) 
 	}
 
 	if isBlockHash(parts[0]) {
-		return opts.Conn.GetTransactionHashByHashAndID(parts[0], base.MustParseIndex(parts[1]))
+		return opts.Conn.GetTransactionHashByHashAndID(parts[0], base.MustParseTxnum(parts[1]))
 	}
 
 	blockNum := base.MustParseBlknum(parts[0])
-	txId := base.MustParseIndex(parts[1])
+	txId := base.MustParseTxnum(parts[1])
 	hash, err := opts.Conn.GetTransactionHashByNumberAndID(blockNum, base.Txnum(txId))
 	return hash.Hex(), err
 }

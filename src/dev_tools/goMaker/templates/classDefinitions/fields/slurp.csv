@@ -23,5 +23,5 @@ gasUsed           ,gas       ,           ,              ,         ,the amount of
 contractAddress   ,address   ,           ,              ,         ,if created&#44; the address of the newly-created contract
 cumulativeGasUsed ,string    ,           ,              ,         ,a basically unused field showing all gas used
 txReceiptStatus   ,string    ,           ,              ,         ,the status field from the receipt
-withdrawalIndex   ,index     ,           ,              ,         ,for withdrawal transactions only&#44; the index of the withdrawal since inception
-validatorIndex    ,index     ,           ,              ,         ,for withdrawal transactions only&#44; the index of the validator receiving the withdrawal
+withdrawalIndex   ,numeral   ,           ,              ,         ,for withdrawal transactions only&#44; the index of the withdrawal since inception
+validatorIndex    ,numeral   ,           ,              ,         ,for withdrawal transactions only&#44; the index of the validator receiving the withdrawal

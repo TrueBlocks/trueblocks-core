@@ -3510,7 +3510,7 @@ components:
           description: "the number of this block"
         index:
           type: number
-          format: index
+          format: numeral
           description: "a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal"
         timestamp:
           type: number
@@ -3522,7 +3522,7 @@ components:
           description: "the timestamp as a date (calculated)"
         validatorIndex:
           type: number
-          format: index
+          format: numeral
           description: "the validator_index of the validator on the consensus layer the withdrawal corresponds to"
     receipt:
       description: "receipt data as returned from the RPC (with slight enhancements)"

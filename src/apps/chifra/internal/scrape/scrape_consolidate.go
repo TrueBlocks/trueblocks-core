@@ -191,7 +191,7 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 		if len(parts) == 3 { // shouldn't be needed, but just in case...
 			addr := strings.ToLower(parts[0])
 			bn := base.MustParseBlknum(strings.TrimLeft(parts[1], "0"))
-			txid := base.MustParseIndex(strings.TrimLeft(parts[2], "0"))
+			txid := base.MustParseTxnum(strings.TrimLeft(parts[2], "0"))
 			// See #3252
 			if addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
 				continue

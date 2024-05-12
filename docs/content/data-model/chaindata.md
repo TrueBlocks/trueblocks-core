@@ -101,10 +101,10 @@ Withdrawals consist of the following fields:
 | amount         | a nonzero amount of ether given in gwei (1e9 wei)                                                                    | wei       |
 | ether          | if --ether is specified, the amount in ether (calculated)                                                            | ether     |
 | blockNumber    | the number of this block                                                                                             | blknum    |
-| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | index     |
+| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | numeral   |
 | timestamp      | the timestamp for this block                                                                                         | timestamp |
 | date           | the timestamp as a date (calculated)                                                                                 | datetime  |
-| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | index     |
+| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | numeral   |
 
 ## Receipt
 
@@ -412,7 +412,6 @@ This documentation mentions the following basic data types.
 | ether     | a big number float                  | as a string    |
 | gas       | a 64-bit unsigned integer           |                |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
-| index     | an alias for a uint64               |                |
 | int64     | a 64-bit signed integer             |                |
 | lognum    | an alias for a uint64               |                |
 | numeral   | a 64-bit unsigned integer           |                |

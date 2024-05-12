@@ -10,7 +10,6 @@ base      ,ether     ,a big number float                              ,as a stri
 base      ,float64   ,a double precision float                        ,64 bits
 base      ,gas       ,a 64-bit unsigned integer                       ,
 base      ,hash      ,an '0x'-prefixed 32-byte hex string             ,lowercase
-base      ,index     ,an alias for a uint64                           ,
 base      ,int256    ,a signed big number                             ,as a string
 base      ,int64     ,a 64-bit signed integer                         ,
 base      ,ipfshash  ,a multi-hash produced by IPFS                   ,mixed-case

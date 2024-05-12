@@ -61,7 +61,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block[types.
 		raw := types.NewRawTransactionFromMap(rawData)
 
 		// Get the receipt
-		idx := base.MustParseIndex(raw.TransactionIndex)
+		idx := base.MustParseTxnum(raw.TransactionIndex)
 		var receipt types.Receipt
 		if receiptMap[idx] == nil {
 			receipt, err = conn.GetReceipt(bn, idx, ts)
@@ -222,8 +222,8 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, 
 				Amount:         *amt,
 				BlockNumber:    block.BlockNumber,
 				Timestamp:      block.Timestamp,
-				Index:          base.MustParseIndex(withdrawal.Index),
-				ValidatorIndex: base.MustParseIndex(withdrawal.ValidatorIndex),
+				Index:          base.MustParseNumeral(withdrawal.Index),
+				ValidatorIndex: base.MustParseNumeral(withdrawal.ValidatorIndex),
 			}
 			block.Withdrawals = append(block.Withdrawals, s)
 		}
