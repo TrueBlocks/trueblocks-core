@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -103,8 +104,6 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 			}
 		}
 	case "pins":
-		// TODO: Not sure this is included in the SDK
-		opts.List = true
 		if pins, _, err := opts.ChunksPins(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
@@ -114,7 +113,6 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 				ReportOkay(fn)
 			}
 		}
-		opts.List = false
 	case "addresses":
 		if addresses, _, err := opts.ChunksAddresses(); err != nil {
 			ReportError(fn, opts, err)
@@ -177,6 +175,7 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 		}
 	default:
 		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		logger.Fatal("Quitting...")
 		return
 	}
 }

@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -89,6 +90,7 @@ func TestTraces(which, value, fn string, opts *sdk.TracesOptions) {
 		}
 	default:
 		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		logger.Fatal("Quitting...")
 		return
 	}
 }

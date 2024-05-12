@@ -123,6 +123,7 @@ func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
 		}
 	default:
 		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		logger.Fatal("Quitting...")
 		return
 	}
 }

@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -83,61 +84,213 @@ func DoStatus() {
 func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
 	// EXISTING_CODE
-	var f func() ([]types.Status, *types.MetaData, error)
 	// EXISTING_CODE
 
 	switch which {
 	case "index":
-		f = opts.StatusIndex
+		if index, _, err := opts.StatusIndex(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, index); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "blooms":
-		f = opts.StatusBlooms
+		if blooms, _, err := opts.StatusBlooms(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, blooms); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "blocks":
-		f = opts.StatusBlocks
+		if blocks, _, err := opts.StatusBlocks(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, blocks); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "transactions":
-		f = opts.StatusTransactions
+		if transactions, _, err := opts.StatusTransactions(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, transactions); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "traces":
-		f = opts.StatusTraces
+		if traces, _, err := opts.StatusTraces(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, traces); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "logs":
-		f = opts.StatusLogs
+		if logs, _, err := opts.StatusLogs(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, logs); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "statements":
-		f = opts.StatusStatements
+		if statements, _, err := opts.StatusStatements(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, statements); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "results":
-		f = opts.StatusResults
+		if results, _, err := opts.StatusResults(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, results); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "state":
-		f = opts.StatusState
+		if state, _, err := opts.StatusState(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, state); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "tokens":
-		f = opts.StatusTokens
+		if tokens, _, err := opts.StatusTokens(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, tokens); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "monitors":
-		f = opts.StatusMonitors
+		if monitors, _, err := opts.StatusMonitors(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, monitors); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "names":
-		f = opts.StatusNames
+		if names, _, err := opts.StatusNames(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, names); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "abis":
-		f = opts.StatusAbis
+		if abis, _, err := opts.StatusAbis(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, abis); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "slurps":
-		f = opts.StatusSlurps
+		if slurps, _, err := opts.StatusSlurps(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, slurps); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "staging":
-		f = opts.StatusStaging
+		if staging, _, err := opts.StatusStaging(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, staging); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "unripe":
-		f = opts.StatusUnripe
+		if unripe, _, err := opts.StatusUnripe(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, unripe); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "maps":
-		f = opts.StatusMaps
+		if maps, _, err := opts.StatusMaps(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, maps); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "some":
-		f = opts.StatusSome
+		if some, _, err := opts.StatusSome(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, some); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "all":
-		f = opts.StatusAll
+		if all, _, err := opts.StatusAll(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, all); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "diagnose":
+		if diagnose, _, err := opts.StatusDiagnose(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, diagnose); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	default:
 		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		logger.Fatal("Quitting...")
 		return
-	}
-
-	if status, _, err := f(); err != nil {
-		ReportError(fn, opts, err)
-	} else {
-		if err := SaveToFile[types.Status](fn, status); err != nil {
-			ReportError2(fn, err)
-		} else {
-			ReportOkay(fn)
-		}
 	}
 }
 

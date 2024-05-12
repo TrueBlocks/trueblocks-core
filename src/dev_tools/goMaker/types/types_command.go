@@ -696,6 +696,7 @@ func (c *Command) FuzzerSwitches() string {
 
 	ret = append(ret, `	default:
 		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
+		logger.Fatal("Quitting...")
 		return`)
 	return strings.Join(ret, "\n")
 }

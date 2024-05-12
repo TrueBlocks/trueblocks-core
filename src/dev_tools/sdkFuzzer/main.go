@@ -5,15 +5,15 @@ import (
 )
 
 func main() {
+	DoReceipts()
 	// DoAbis()
-	DoBlocks()
+	// DoBlocks()
 	// DoChunks() // this needs a lot of work
 	// DoConfig()
 	// DoExport()
 	// DoList()
 	// DoLogs()
 	// DoNames() // this does not test crud commands
-	// DoReceipts()
 	// DoSlurp()
 	// DoState()
 	// DoStatus()

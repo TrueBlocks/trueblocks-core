@@ -378,7 +378,9 @@ func (op *Option) SomeCases() string {
 func (op *Option) EnumTypes() []string {
 	ret := []string{}
 	for _, e := range op.Enums {
-		ret = append(ret, "types."+Singular(Proper(op.Route))+Singular(Proper(e)))
+		opp := *op
+		opp.GoName = e
+		ret = append(ret, opp.ModeType())
 	}
 	return ret
 }
@@ -786,6 +788,10 @@ func (op *Option) IsMode() bool {
 	return strings.HasPrefix(op.LongName, "mode")
 }
 
+func (op *Option) ModeType() string {
+	return "types." + Singular(Proper(op.Route)) + Singular(Proper(op.GoName))
+}
+
 func (op *Option) ToolParameters(forSdk bool) string {
 	if len(op.ReturnType) == 0 || op.IsPositional() || op.IsMode() {
 		return ""
@@ -796,6 +802,8 @@ func (op *Option) ToolParameters(forSdk bool) string {
 			return "[]string{value}"
 		} else if op.DataType == "<address>" {
 			return "base.HexToAddress(value)"
+		} else if op.DataType == "<blknum>" {
+			return "base.MustParseBlknum(value)"
 		} else if op.DataType != "<boolean>" {
 			return "value"
 		} else {
@@ -840,17 +848,17 @@ func (op *Option) AssignReceive() string {
 
 func (op *Option) ToolTurd() string {
 	if op.IsPositional() {
-		return "command"
+		return ""
 	} else {
 		if op.IsMode() {
-			return Lower(op.GoName) + " command"
+			return Lower(op.GoName) + " "
 		} else {
-			return "--" + Lower(op.GoName) + " command"
+			return "--" + Lower(op.GoName) + " "
 		}
 	}
 }
 
-var sdkEndpointRegular = `	// {{firstUpper .Route}}{{.GoName}} implements the chifra {{toLower .Route}} {{.ToolTurd}}.
+var sdkEndpointRegular = `	// {{firstUpper .Route}}{{.GoName}} implements the chifra {{toLower .Route}} {{.ToolTurd}}command.
 func (opts *{{firstUpper .Route}}Options) {{firstUpper .Route}}{{.GoName}}({{.ToolParameters false}}) ([]{{.SdkCoreType}}, *types.MetaData, error) {
 	in := opts.toInternal()
 {{if not .IsPositional}}	in.{{.AssignReceive}} = {{.ToolAssignment}}
@@ -858,85 +866,71 @@ func (opts *{{firstUpper .Route}}Options) {{firstUpper .Route}}{{.GoName}}({{.To
 }
 `
 
-func (op *Option) renderModeEndpoint() string {
-	tmplName := "modeFunc"
-	tmpl := sdkEndpointRegular
-	ret := []string{}
-	for _, enum := range op.Enums {
-		opp := *op
-		opp.GoName = FirstUpper(enum)
-		opp.OptionType = ""
-		ret = append(ret, opp.executeTemplate(tmplName+enum, tmpl))
+var fuzzerSwitch = `	case "{{.Tool}}":
+if {{.Tool}}, _, err := opts.{{firstUpper .Route}}{{.GoName}}({{.ToolParameters true}}); err != nil {
+	ReportError(fn, opts, err)
+} else {
+	if err := SaveToFile[{{.SdkCoreType}}](fn, {{.Tool}}); err != nil {
+		ReportError2(fn, err)
+	} else {
+		ReportOkay(fn)
+	}
+}`
+
+func (op *Option) FuzzerSwitch() string {
+	tmplName := "fuzzerSwitch"
+	tmpl := fuzzerSwitch
+
+	opp := *op
+	if op.IsMode() {
+		ret := []string{}
+		for _, enum := range op.Enums {
+			opp.Tool = Lower(enum)
+			opp.GoName = FirstUpper(enum)
+			ret = append(ret, opp.executeTemplate(tmplName, tmpl))
+		}
+		return strings.Join(ret, "\n")
 	}
 
-	return strings.Join(ret, "\n")
+	opp.Tool = Lower(op.GoName)
+	if opp.IsPositional() {
+		opp.Tool = Lower(op.Route)
+		opp.GoName = ""
+	}
+
+	return opp.executeTemplate(tmplName, tmpl)
+}
+
+func (op *Option) SdkEndpoint() string {
+	tmplName := "sdkEndpointRegular"
+	tmpl := sdkEndpointRegular
+
+	opp := *op
+	if op.IsMode() {
+		opp.OptionType = "" // no positional any longer
+		ret := []string{}
+		for _, enum := range op.Enums {
+			opp.GoName = FirstUpper(enum)
+			ret = append(ret, opp.executeTemplate(tmplName, tmpl))
+		}
+		return strings.Join(ret, "\n")
+	}
+
+	if opp.IsPositional() {
+		opp.GoName = ""
+	}
+
+	return opp.executeTemplate(tmplName, tmpl)
 }
 
 func (op *Option) SdkCoreType() string {
 	v := op.ReturnType
 	if v == "mode" {
-		return "types." + Proper(Singular(op.Route)) + Proper(Singular(op.GoName))
+		return op.ModeType()
 	} else if v == "address" {
 		v = "base.Address"
 	} else if v != "string" && v != "base.Address" && v != "bool" {
 		v = "types." + FirstUpper(v)
 	}
 	return v
-}
-
-func (op *Option) SdkEndpoint() string {
-	if op.IsMode() {
-		return op.renderModeEndpoint()
-	}
-
-	opp := *op
-	if opp.IsPositional() {
-		opp.GoName = ""
-	}
-
-	tmplName := "sdkEndpointRegular"
-	tmpl := sdkEndpointRegular
-	return opp.executeTemplate(tmplName, tmpl)
-}
-
-func (op *Option) SdkEndpointName2() string {
-	return strings.ToLower(op.SdkEndpointName(true))
-}
-
-func (op *Option) SdkEndpointName(withPos bool) string {
-	if len(op.ReturnType) == 0 {
-		return ""
-	} else if op.IsPositional() {
-		if withPos {
-			return op.Route
-		} else {
-			return ""
-		}
-	} else {
-		return op.GoName
-	}
-}
-
-var fuzzerSwitch = `	case "{{toLower .SdkEndpointName2}}":
-		if {{.SdkEndpointName2}}, _, err := opts.{{firstUpper .Route}}{{.SdkEndpointName false}}({{.ToolParameters true}}); err != nil {
-			ReportError(fn, opts, err)
-		} else {
-			if err := SaveToFile[{{.SdkCoreType}}](fn, {{.SdkEndpointName2}}); err != nil {
-				ReportError2(fn, err)
-			} else {
-				ReportOkay(fn)
-			}
-		}`
-
-func (op *Option) FuzzerSwitch() string {
-	opp := *op
-	opp.Route = FirstUpper(op.Route)
-	opp.Tool = op.GoName
-	if opp.IsPositional() {
-		opp.Tool = ""
-	}
-
-	tmplName := "fuzzerSwitch"
-	tmpl := fuzzerSwitch
-	return opp.executeTemplate(tmplName, tmpl)
 }
