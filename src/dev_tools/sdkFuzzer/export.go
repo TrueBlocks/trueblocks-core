@@ -63,7 +63,7 @@ func DoExport() {
 	// export,command,default|caching|ether|
 	for _, g := range globs {
 		opts.Globals = g
-		fn := baseFn
+		fn := getFilename(baseFn, &opts.Globals)
 		TestExport("export", "", fn, &opts)
 		TestExport("appearances", "", fn, &opts)
 		TestExport("receipts", "", fn, &opts)

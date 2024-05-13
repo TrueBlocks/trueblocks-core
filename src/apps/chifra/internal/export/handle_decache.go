@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -57,7 +56,10 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 							errorChan <- err
 
 						} else {
-							logger.Info(msg)
+							s := types.Message{
+								Msg: msg,
+							}
+							modelChan <- &s
 						}
 					}
 				}
@@ -65,7 +67,10 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 				abiPath := path.Join(walk.CacheTypeToFolder[walk.Cache_Abis], mon.Address.Hex()+".json")
 				if file.FileExists(abiPath) {
 					os.Remove(abiPath)
-					logger.Info("Abi " + abiPath + " file removed.")
+					s := types.Message{
+						Msg: "Abi " + abiPath + " file removed.",
+					}
+					modelChan <- &s
 				}
 
 				modelChan <- &types.Message{

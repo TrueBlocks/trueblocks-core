@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var transferTopic = base.HexToHash(
@@ -107,7 +108,9 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 
 			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 			if !l.trialBalance("token", &s) {
-				logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
+				if !utils.IsFuzzing() {
+					logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
+				}
 			} else {
 				logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
 			}
