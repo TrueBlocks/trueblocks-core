@@ -2,12 +2,33 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
+
+var testBlocks = []string{
+	"46147",
+	"1001001",
+}
+
+var testAddrs = []string{
+	"0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+}
+
+var testTransactions = []string{
+	"1718497.*",
+}
+
+var firsts = []string{"46147.0", "50111.0", "52029.0"}
+
+func init() {
+	os.Setenv("TB_NO_USERQUERY", "true")
+	os.Setenv("TB_SDK_FUZZER", "true")
+}
 
 func getFilename(baseName string, g *sdk.Globals) string {
 	app := ""
@@ -32,6 +53,15 @@ func getFilename(baseName string, g *sdk.Globals) string {
 
 var spaces = strings.Repeat(" ", 30)
 
+func ShowHeader(msg string, opts fmt.Stringer) {
+	logger.Info()
+	if opts != nil {
+		logger.Info(colors.Yellow+msg, opts.String(), colors.Off)
+	} else {
+		logger.Info(colors.Yellow+msg, colors.Off)
+	}
+}
+
 func ReportError(fn string, opts fmt.Stringer, err error) {
 	logger.Error(fmt.Errorf("NO %s (%s): %v%s", fn, opts.String(), err, spaces))
 	logger.Error(fmt.Errorf("NO %s (%s): %v%s", fn, opts.String(), err, spaces))
@@ -44,15 +74,6 @@ func ReportError2(fn string, err error) {
 func ReportOkay(fn string) {
 	// logger.Progress(true, colors.Green, "OK ", fn, colors.Off, spaces)
 	logger.Info(colors.Green, "OK ", fn, colors.Off, spaces)
-}
-
-func ShowHeader(msg string, opts fmt.Stringer) {
-	logger.Info()
-	if opts != nil {
-		logger.Info(colors.Yellow+msg, opts.String(), colors.Off)
-	} else {
-		logger.Info(colors.Yellow+msg, colors.Off)
-	}
 }
 
 func noCache(in []sdk.Globals) []sdk.Globals {
@@ -239,4 +260,10 @@ var globals = []sdk.Globals{
 	// 	Decache: true,
 	// 	Verbose: true,
 	// },
+}
+
+func Wait() {
+	// reader := bufio.NewReader(os.Stdin)
+	// fmt.Fprintf(os.Stderr, colors.Yellow+"%s"+colors.Off, "Waiting...")
+	// _, _ = reader.ReadString('\n')
 }

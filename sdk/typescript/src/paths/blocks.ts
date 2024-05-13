@@ -6,8 +6,9 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { address, Appearance, blknum, Block, BlockCount, Log, LogFilter, topic, Trace, TraceAction, TraceResult, uint64, Withdrawal } from '../types';
+import { address, Appearance, blknum, Block, BlockCount, Log, topic, Trace, Withdrawal } from '../types';
 
 export function getBlocks(
   parameters?: {
@@ -33,7 +34,7 @@ export function getBlocks(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Appearance[] | Block[] | BlockCount[] | Log[] | LogFilter[] | Trace[] | TraceAction[] | TraceResult[] | Withdrawal[]>(
+  return ApiCallers.fetch<Appearance[] | BlockCount[] | Block[] | Log[] | Trace[] | Withdrawal[]>(
     { endpoint: '/blocks', method: 'get', parameters, options },
   );
 }

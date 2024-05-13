@@ -67,7 +67,7 @@ Transactions consist of the following fields:
 | blockHash        | the hash of the block containing this transaction                                                     | hash                                           |
 | blockNumber      | the number of the block                                                                               | blknum                                         |
 | transactionIndex | the zero-indexed position of the transaction in the block                                             | txnum                                          |
-| nonce            | sequence number of the transactions sent by the sender                                                | nonce                                          |
+| nonce            | sequence number of the transactions sent by the sender                                                | value                                          |
 | timestamp        | the Unix timestamp of the object                                                                      | timestamp                                      |
 | date             | the timestamp as a date (calculated)                                                                  | datetime                                       |
 | from             | address from which the transaction was sent                                                           | address                                        |
@@ -101,10 +101,10 @@ Withdrawals consist of the following fields:
 | amount         | a nonzero amount of ether given in gwei (1e9 wei)                                                                    | wei       |
 | ether          | if --ether is specified, the amount in ether (calculated)                                                            | ether     |
 | blockNumber    | the number of this block                                                                                             | blknum    |
-| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | index     |
+| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | value     |
 | timestamp      | the timestamp for this block                                                                                         | timestamp |
 | date           | the timestamp as a date (calculated)                                                                                 | datetime  |
-| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | index     |
+| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | value     |
 
 ## Receipt
 
@@ -130,7 +130,7 @@ Receipts consist of the following fields:
 | gasUsed          | the amount of gas actually used by the transaction                         | gas                                 |
 | isError          |                                                                            | bool                                |
 | logs             | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
-| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint64                              |
+| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | value                               |
 | transactionHash  |                                                                            | hash                                |
 | transactionIndex |                                                                            | txnum                               |
 
@@ -402,26 +402,25 @@ TimestampCounts consist of the following fields:
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                         | Notes          |
-| --------- | ----------------------------------- | -------------- |
-| address   | an '0x'-prefixed 20-byte hex string | lowercase      |
-| blknum    | an alias for a uint64               |                |
-| bool      | either `true`, `false`, `1`, or `0` |                |
-| bytes     | an arbitrarily long string of bytes |                |
-| datetime  | a JSON formatted date               | as a string    |
-| ether     | a big number float                  | as a string    |
-| gas       | a 64-bit unsigned integer           |                |
-| hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
-| index     | an alias for a uint64               |                |
-| int64     | a 64-bit signed integer             |                |
-| lognum    | an alias for a uint64               |                |
-| nonce     | a 64-bit unsigned integer           |                |
-| string    | a normal character string           |                |
-| timestamp | a 64-bit unsigned integer           | Unix timestamp |
-| topic     | an '0x'-prefixed 32-byte hex string | lowercase      |
-| txnum     | an alias for a uint64               |                |
-| uint256   | a 256-bit unsigned integer          |                |
-| uint64    | a 64-bit unsigned integer           |                |
-| wei       | an unsigned big number              | as a string    |
+| Type      | Description                            | Notes          |
+| --------- | -------------------------------------- | -------------- |
+| address   | an '0x'-prefixed 20-byte hex string    | lowercase      |
+| blknum    | an alias for a uint64                  |                |
+| bool      | either `true`, `false`, `1`, or `0`    |                |
+| bytes     | an arbitrarily long string of bytes    |                |
+| datetime  | a JSON formatted date                  | as a string    |
+| ether     | a big number float                     | as a string    |
+| gas       | a 64-bit unsigned integer              |                |
+| hash      | an '0x'-prefixed 32-byte hex string    | lowercase      |
+| int64     | a 64-bit signed integer                |                |
+| lognum    | an alias for a uint64                  |                |
+| string    | a normal character string              |                |
+| timestamp | a 64-bit unsigned integer              | Unix timestamp |
+| topic     | an '0x'-prefixed 32-byte hex string    | lowercase      |
+| txnum     | an alias for a uint64                  |                |
+| uint256   | a 256-bit unsigned integer             |                |
+| uint64    | a 64-bit unsigned integer              |                |
+| value     | an alias for a 64-bit unsigned integer |                |
+| wei       | an unsigned big number                 | as a string    |
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

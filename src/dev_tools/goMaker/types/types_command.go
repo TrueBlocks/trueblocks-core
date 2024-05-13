@@ -645,8 +645,8 @@ func (c *Command) ReturnTypes() string {
 	present := map[string]bool{}
 	ret := []string{}
 	for _, op := range c.Options {
-		retType := op.SdkCoreType()
 		if len(op.ReturnType) > 0 {
+			retType := op.SdkCoreType()
 			if !present[retType] {
 				if op.LongName == "mode" {
 					ret = append(ret, op.EnumTypes()...)
@@ -701,7 +701,7 @@ func (c *Command) FuzzerSwitches() string {
 	return strings.Join(ret, "\n")
 }
 
-func (c *Command) FuzzerInits() string {
+func (c *Command) CapsMapAndArray() (map[string]bool, []string) {
 	has := map[string]bool{}
 	caps := strings.Split(c.Capabilities, "|")
 	for _, cap := range caps {
@@ -709,15 +709,165 @@ func (c *Command) FuzzerInits() string {
 			has[cap] = true
 		}
 	}
+	return has, caps
+}
+
+func (c *Command) FuzzerInits() string {
+	capsMap, _ := c.CapsMapAndArray()
 	ret := "globals"
-	if !has["ether"] {
+	if !capsMap["ether"] {
 		ret = "noEther(" + ret + ")"
 	}
-	if !has["raw"] {
+	if !capsMap["raw"] {
 		ret = "noRaw(" + ret + ")"
 	}
-	if !has["caching"] {
+	if !capsMap["caching"] {
 		ret = "noCache(" + ret + ")"
 	}
 	return "globs := " + ret + "\n"
+}
+
+func (op *Option) TsType() string {
+	if op.IsEnum() && op.IsArray() {
+		return "string"
+	} else if op.IsEnum() {
+		ret := []string{}
+		for _, enum := range op.Enums {
+			ret = append(ret, "'"+enum+"'")
+		}
+		return strings.Join(ret, " | ")
+	} else {
+		return op.Stripped()
+	}
+}
+
+func (op *Option) TsOption() string {
+	if op.IsHidden() {
+		return ""
+	}
+	opp := *op
+	tmplName := "tsOption"
+	tmpl := `    {{toCamel .LongName}}{{if not .IsRequired}}?{{end}}: {{.TsType}}{{if .IsArray}}[]{{end}},`
+	return opp.executeTemplate(tmplName, tmpl)
+}
+
+func (c *Command) TsOptions() string {
+	ret := []string{}
+	for _, op := range c.Options {
+		v := op.TsOption()
+		if len(v) > 0 {
+			ret = append(ret, v)
+		}
+	}
+
+	if c.Route == "names" {
+		ret = append(ret, "    create?: boolean,")
+		ret = append(ret, "    update?: boolean,")
+		ret = append(ret, "    delete?: boolean,")
+		ret = append(ret, "    undelete?: boolean,")
+		ret = append(ret, "    remove?: boolean,")
+	}
+
+	_, capArray := c.CapsMapAndArray()
+	for _, cap := range capArray {
+		if len(cap) > 0 {
+			switch cap {
+			case "default":
+				ret = append(ret, "    fmt?: string,")
+				ret = append(ret, "    chain: string,")
+				ret = append(ret, "    noHeader?: boolean,")
+			case "caching":
+				ret = append(ret, "    cache?: boolean,")
+				ret = append(ret, "    decache?: boolean,")
+			case "chain":
+				ret = append(ret, "    chain: string,")
+			case "version", "noop", "noColor", "verbose":
+				// do nothing
+			default:
+				ret = append(ret, "    "+cap+"?: boolean,")
+			}
+		}
+	}
+
+	return strings.Join(ret, "\n")
+}
+
+func (op *Option) TsEnumTypes() []string {
+	ret := []string{}
+	for _, e := range op.Enums {
+		opp := *op
+		opp.GoName = e
+		retType := opp.ModeType()
+		retType = strings.Replace(retType, "base.Address", "address", -1)
+		retType = strings.Replace(retType, "base.", "", -1)
+		retType = strings.Replace(retType, "types.", "", -1)
+		retType = strings.Replace(retType, "Block[Transaction]", "Block", -1)
+		retType = strings.Replace(retType, "Block[string]", "Block", -1)
+		ret = append(ret, retType+"[]")
+	}
+	return ret
+}
+
+func (c *Command) TsReturns() string {
+	present := map[string]bool{}
+	ret := []string{}
+	for _, op := range c.Options {
+		if len(op.ReturnType) > 0 {
+			retType := op.SdkCoreType() + "[]"
+			retType = strings.Replace(retType, "base.Address", "address", -1)
+			retType = strings.Replace(retType, "base.", "", -1)
+			retType = strings.Replace(retType, "types.", "", -1)
+			retType = strings.Replace(retType, "Block[Transaction]", "Block", -1)
+			retType = strings.Replace(retType, "Block[string]", "Block", -1)
+			if !present[retType] {
+				if op.LongName == "mode" {
+					ret = append(ret, op.TsEnumTypes()...)
+				} else {
+					ret = append(ret, retType)
+				}
+			}
+			present[retType] = true
+		}
+	}
+	sort.Strings(ret)
+	return strings.Join(ret, " | ")
+}
+
+func (c *Command) TsTypes() string {
+	m := map[string]bool{}
+	m["string"] = true
+	m["boolean"] = true
+
+	returns := c.TsReturns()
+	returns = strings.ReplaceAll(returns, "[]", "")
+	returns = strings.ReplaceAll(returns, " |", ",")
+	ret := strings.Split(returns, ",")
+	for i := 0; i < len(ret); i++ {
+		ret[i] = strings.TrimSpace(ret[i])
+		if ret[i] == "boolean" || ret[i] == "string" {
+			fmt.Println("SHIT")
+		}
+		m[ret[i]] = true
+	}
+
+	options := strings.ReplaceAll(c.TsOptions(), "\n", "")
+	lines := strings.Split(options, ",")
+	for _, line := range lines {
+		parts := strings.Split(line, ":")
+		if len(parts) > 1 && len(parts[1]) > 0 {
+			parts[1] = strings.TrimSpace(strings.Replace(parts[1], "[]", "", -1))
+			if !m[parts[1]] && !strings.Contains(parts[1], "'") {
+				if strings.Contains(parts[1], "string") || strings.Contains(parts[1], "boolean") {
+					fmt.Println("Here", parts[1])
+				}
+				ret = append(ret, parts[1])
+			}
+			m[parts[1]] = true
+		}
+	}
+	sort.Slice(ret, func(i, j int) bool {
+		return Lower(ret[i]) < Lower(ret[j])
+	})
+
+	return "{ " + strings.Join(ret, ", ") + " }"
 }

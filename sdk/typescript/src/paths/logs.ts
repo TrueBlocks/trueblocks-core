@@ -6,8 +6,9 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { address, Log, LogFilter, topic, txId } from '../types';
+import { address, Log, topic, txId } from '../types';
 
 export function getLogs(
   parameters?: {
@@ -24,7 +25,7 @@ export function getLogs(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Log[] | LogFilter[]>(
+  return ApiCallers.fetch<Log[]>(
     { endpoint: '/logs', method: 'get', parameters, options },
   );
 }

@@ -6,8 +6,9 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { CacheItem, Chain, Config, uint64 } from '../types';
+import { Status, uint64 } from '../types';
 
 export function getStatus(
   parameters?: {
@@ -22,7 +23,7 @@ export function getStatus(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<CacheItem[] | Chain[] | Config[]>(
+  return ApiCallers.fetch<Status[]>(
     { endpoint: '/status', method: 'get', parameters, options },
   );
 }

@@ -6,8 +6,9 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { Trace, TraceAction, TraceCount, TraceFilter, TraceResult, txId } from '../types';
+import { Trace, TraceCount, txId } from '../types';
 
 export function getTraces(
   parameters?: {
@@ -25,7 +26,7 @@ export function getTraces(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Trace[] | TraceAction[] | TraceCount[] | TraceFilter[] | TraceResult[]>(
+  return ApiCallers.fetch<TraceCount[] | Trace[]>(
     { endpoint: '/traces', method: 'get', parameters, options },
   );
 }

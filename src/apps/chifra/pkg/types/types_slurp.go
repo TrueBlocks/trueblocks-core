@@ -66,14 +66,14 @@ type Slurp struct {
 	Input             string         `json:"input"`
 	IsError           bool           `json:"isError"`
 	MethodId          string         `json:"methodId"`
-	Nonce             base.Nonce     `json:"nonce"`
+	Nonce             base.Value     `json:"nonce"`
 	Timestamp         base.Timestamp `json:"timestamp"`
 	To                base.Address   `json:"to"`
 	TransactionIndex  base.Txnum     `json:"transactionIndex"`
 	TxReceiptStatus   string         `json:"txReceiptStatus"`
-	ValidatorIndex    base.Index     `json:"validatorIndex"`
+	ValidatorIndex    base.Value     `json:"validatorIndex"`
 	Value             base.Wei       `json:"value"`
-	WithdrawalIndex   base.Index     `json:"withdrawalIndex"`
+	WithdrawalIndex   base.Value     `json:"withdrawalIndex"`
 	raw               *RawSlurp      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE

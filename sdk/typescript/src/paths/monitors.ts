@@ -6,8 +6,9 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { address, float64, Monitor, MonitorClean, uint64 } from '../types';
+import { address, float64, Message, Monitor, MonitorClean, uint64 } from '../types';
 
 export function getMonitors(
   parameters?: {
@@ -30,7 +31,7 @@ export function getMonitors(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Monitor[] | MonitorClean[]>(
+  return ApiCallers.fetch<Message[] | MonitorClean[] | Monitor[]>(
     { endpoint: '/monitors', method: 'get', parameters, options },
   );
 }

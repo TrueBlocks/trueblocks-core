@@ -6,8 +6,9 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { address, Name } from '../types';
+import { address, Message, Name } from '../types';
 
 export function getNames(
   parameters?: {
@@ -34,7 +35,7 @@ export function getNames(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Name[]>(
+  return ApiCallers.fetch<Message[] | Name[]>(
     { endpoint: '/names', method: 'get', parameters, options },
   );
 }

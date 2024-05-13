@@ -6,8 +6,9 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { address, Appearance, AppearanceCount, blknum, fourbyte, Function, Log, Monitor, Parameter, Receipt, Statement, Token, topic, Trace, TraceAction, TraceResult, Transaction, uint64 } from '../types';
+import { address, Appearance, AppearanceCount, blknum, fourbyte, Log, Message, Receipt, State, Statement, topic, Trace, Transaction, uint64, Withdrawal } from '../types';
 
 export function getExport(
   parameters?: {
@@ -49,7 +50,7 @@ export function getExport(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Appearance[] | AppearanceCount[] | Function[] | Log[] | Monitor[] | Parameter[] | Receipt[] | Statement[] | Token[] | Trace[] | TraceAction[] | TraceResult[] | Transaction[]>(
+  return ApiCallers.fetch<AppearanceCount[] | Appearance[] | Log[] | Message[] | Receipt[] | State[] | Statement[] | Trace[] | Transaction[] | Withdrawal[]>(
     { endpoint: '/export', method: 'get', parameters, options },
   );
 }

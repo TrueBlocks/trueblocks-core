@@ -205,7 +205,7 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		Hash:             base.HexToHash(rawTx.Hash),
 		BlockHash:        base.HexToHash(rawTx.BlockHash),
 		BlockNumber:      base.MustParseBlknum(rawTx.BlockNumber),
-		TransactionIndex: base.MustParseIndex(rawTx.TransactionIndex),
+		TransactionIndex: base.MustParseTxnum(rawTx.TransactionIndex),
 		Timestamp:        base.MustParseTimestamp(rawTx.Timestamp),
 		From:             base.HexToAddress(rawTx.From),
 		To:               base.HexToAddress(rawTx.To),
@@ -243,8 +243,8 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.WithdrawalAmt
 		s.From = base.WithdrawalSender
-		s.ValidatorIndex = base.MustParseIndex(rawTx.ValidatorIndex)
-		s.WithdrawalIndex = base.MustParseIndex(rawTx.WithdrawalIndex)
+		s.ValidatorIndex = base.MustParseValue(rawTx.ValidatorIndex)
+		s.WithdrawalIndex = base.MustParseValue(rawTx.WithdrawalIndex)
 		s.Value.SetString(rawTx.Amount, 0)
 		s.To = base.HexToAddress(address)
 		if s.To != base.HexToAddress(rawTx.Address) {

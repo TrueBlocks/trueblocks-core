@@ -212,40 +212,36 @@ func (m *Member) GoType() string {
 			switch m.Type {
 			case "address":
 				ret = "base.Address"
-			case "hash":
-				ret = "base.Hash"
-			case "bytes":
-				ret = "string"
-			case "wei":
-				ret = "base.Wei"
-			case "ether":
-				ret = "base.Ether"
-			case "uint8":
-				ret = "bool"
-			case "gas":
-				ret = "base.Gas"
-			case "nonce":
-				ret = "base.Nonce"
-			case "int256":
-				ret = "base.Wei"
-			case "datetime":
-				ret = "string"
-			case "ipfshash":
-				ret = "base.IpfsHash"
 			case "blknum":
 				ret = "base.Blknum"
-			case "txnum":
-				ret = "base.Txnum"
+			case "blkrange":
+				ret = "string"
+			case "bytes":
+				ret = "string"
+			case "datetime":
+				ret = "string"
+			case "ether":
+				ret = "base.Ether"
+			case "gas":
+				ret = "base.Gas"
+			case "hash":
+				ret = "base.Hash"
+			case "int256":
+				ret = "base.Wei"
+			case "ipfshash":
+				ret = "base.IpfsHash"
 			case "lognum":
 				ret = "base.Lognum"
-			case "index":
-				ret = "base.Index"
 			case "timestamp":
 				ret = "base.Timestamp"
 			case "topic":
 				ret = "base.Hash"
-			case "blkrange":
-				ret = "string"
+			case "txnum":
+				ret = "base.Txnum"
+			case "value":
+				ret = "base.Value"
+			case "wei":
+				ret = "base.Wei"
 			}
 		}
 	}
@@ -458,7 +454,7 @@ func (m *Member) UnmarshalCode() string {
 		// TODO: hack
 		mm := map[string]string{
 			"CumulativeGasUsed": "base.MustParseGas",
-			"Status":            "uint64",
+			"Status":            "base.Value",
 			"BaseFeePerGas":     "weiToGas",
 		}
 		code = strings.ReplaceAll(code, "++CONV_FUNC++", mm[m.GoName()])
@@ -478,9 +474,9 @@ func (m *Member) YamlType() string {
 	}
 	if m.IsObject() {
 		return "object" + o
-	} else if m.Type == "blknum" || m.Type == "txnum" || m.Type == "lognum" || m.Type == "index" ||
+	} else if m.Type == "blknum" || m.Type == "txnum" || m.Type == "lognum" ||
 		m.Type == "timestamp" || m.Type == "float64" || m.Type == "gas" || m.Type == "uint64" ||
-		m.Type == "int64" || m.Type == "uint32" || m.Type == "int" || m.Type == "nonce" {
+		m.Type == "int64" || m.Type == "uint32" || m.Type == "int" || m.Type == "value" {
 		return "number" + f
 	} else if m.Type == "address" || m.Type == "datetime" || m.Type == "hash" || m.Type == "ipfshash" || m.Type == "blkrange" ||
 		m.Type == "topic" || m.Type == "int256" || m.Type == "uint256" || m.Type == "wei" || m.Type == "bytes" ||

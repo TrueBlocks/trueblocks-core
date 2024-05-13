@@ -7,29 +7,27 @@ import (
 )
 
 // make -j 12 && time make test-all shows:
-// 306.71 and 353.82 when Numeral is its own type
-// 375.40 and 332.51 when Numeral is an alias
+// 306.71 and 353.82 when Value is its own type
+// 375.40 and 332.51 when Value is an alias
 // Conclusion: Minimal difference, but concrete type is slightly faster
 // and more useful because it supports Json parsing and future needs
 
-type Numeral uint64
-type Blknum = Numeral
-type Txnum = Numeral
-type Tracenum = Numeral
-type Lognum = Numeral
-type Gas = Numeral
-type Nonce = Numeral
-type Index = Numeral
+type Value uint64
+type Blknum = Value
+type Txnum = Value
+type Tracenum = Value
+type Lognum = Value
+type Gas = Value
 type Topic = string
 type Timestamp int64
 
 const NOPOS = uint64(^uint64(0))
 const NOPOSI = Timestamp(0xdeadbeef)
-const NOPOSN = Numeral(^uint64(0))
+const NOPOSN = Value(^uint64(0))
 
-func (g *Numeral) UnmarshalJSON(data []byte) error {
+func (g *Value) UnmarshalJSON(data []byte) error {
 	result, _ := strconv.ParseUint(string(data), 0, 64)
-	*g = Numeral(result)
+	*g = Value(result)
 	return nil
 }
 
@@ -43,15 +41,24 @@ func (t *Timestamp) Int64() int64 {
 	return int64(*t)
 }
 
-// TODO: This is here to avoid circular imports
 func MustParseBlknum(input string) Blknum {
 	ret, _ := strconv.ParseUint(input, 0, 64)
 	return Blknum(ret)
 }
 
-func MustParseIndex(input string) Txnum {
+func MustParseTxnum(input string) Txnum {
 	ret, _ := strconv.ParseUint(input, 0, 64)
 	return Txnum(ret)
+}
+
+func MustParseValue(input string) Value {
+	ret, _ := strconv.ParseUint(input, 0, 64)
+	return Value(ret)
+}
+
+func MustParseGas(input string) Gas {
+	ret, _ := strconv.ParseUint(input, 0, 64)
+	return Gas(ret)
 }
 
 func MustParseTimestamp(input string) Timestamp {
@@ -62,11 +69,6 @@ func MustParseTimestamp(input string) Timestamp {
 func MustParseWei(input string) Wei {
 	i := MustParseUint(input)
 	return *NewWei(0).SetUint64(i)
-}
-
-func MustParseGas(input string) Gas {
-	ret, _ := strconv.ParseUint(input, 0, 64)
-	return Gas(ret)
 }
 
 func MustParseInt(input string) int64 {

@@ -108,7 +108,7 @@ func DoState() {
 		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)
-			TestState("state", "0x0902f1ac()", fn, &opts)
+			TestState("call", "0x0902f1ac()", fn, &opts)
 		}
 	}
 	// EXISTING_CODE

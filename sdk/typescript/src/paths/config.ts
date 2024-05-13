@@ -6,12 +6,13 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { Chain } from '../types';
+import { CacheItem } from '../types';
 
 export function getConfig(
   parameters?: {
-    mode?: 'show*' | 'edit',
+    mode?: 'show' | 'edit',
     paths?: boolean,
     fmt?: string,
     chain: string,
@@ -19,7 +20,7 @@ export function getConfig(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Chain[]>(
+  return ApiCallers.fetch<CacheItem[]>(
     { endpoint: '/config', method: 'get', parameters, options },
   );
 }
