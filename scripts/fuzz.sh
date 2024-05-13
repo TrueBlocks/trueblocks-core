@@ -1,16 +1,22 @@
 #!/usr/bin/env bash
 
+make -j 12 
+
 # This script is only used internally for testing.
 
-# broken
-# sdkFuzzer blocks
-sdkFuzzer tokens
+# decache missing
+# sdkFuzzer tokens
 # sdkFuzzer slurp
-# sdkFuzzer monitors
-# sdkFuzzer export
+
+# json parsing fails
+sdkFuzzer export
 # sdkFuzzer chunks
 
+# reports when should not
+# sdkFuzzer monitors
+
 # passes fuzzer
+# sdkFuzzer blocks
 # sdkFuzzer names
 # sdkFuzzer transactions
 # sdkFuzzer receipts
@@ -28,6 +34,7 @@ sdkFuzzer tokens
 # sdkFuzzer scrape
 # sdkFuzzer init
 # sdkFuzzer explore
+
 # //---------------------------------------------------------------------------------------------------
 # export        ==> LocationsFromAddrAppsAndCacheType       ==> [flags] <address> [address...] [topics...] [fourbytes...]
 # walk.Cache_Statements   ==> address,tx
