@@ -208,7 +208,7 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, 
 		GasLimit:    base.MustParseGas(rawBlock.GasLimit),
 		GasUsed:     base.MustParseGas(rawBlock.GasUsed),
 		Miner:       base.HexToAddress(rawBlock.Miner),
-		Difficulty:  base.MustParseUint(rawBlock.Difficulty),
+		Difficulty:  base.MustParseValue(rawBlock.Difficulty),
 		Uncles:      uncleHashes,
 	}
 

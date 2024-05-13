@@ -37,7 +37,7 @@ Blocks consist of the following fields:
 | blockNumber   | the number of the block                                       | blknum                                              |
 | parentHash    | hash of previous block                                        | hash                                                |
 | miner         | address of block's winning miner                              | address                                             |
-| difficulty    | the computational difficulty at this block                    | uint64                                              |
+| difficulty    | the computational difficulty at this block                    | value                                               |
 | timestamp     | the Unix timestamp of the object                              | timestamp                                           |
 | date          | the timestamp as a date (calculated)                          | datetime                                            |
 | transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |

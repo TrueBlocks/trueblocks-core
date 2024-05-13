@@ -54,7 +54,7 @@ type RawBlock struct {
 type Block[Tx string | Transaction] struct {
 	BaseFeePerGas base.Gas       `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum    `json:"blockNumber"`
-	Difficulty    uint64         `json:"difficulty"`
+	Difficulty    base.Value     `json:"difficulty"`
 	GasLimit      base.Gas       `json:"gasLimit"`
 	GasUsed       base.Gas       `json:"gasUsed"`
 	Hash          base.Hash      `json:"hash"`

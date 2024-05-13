@@ -12,7 +12,7 @@ func TestBlockCache(t *testing.T) {
 	expected := &Block[string]{
 		BlockNumber:   4000001,
 		BaseFeePerGas: 0,
-		Difficulty:    uint64(1097113993909745),
+		Difficulty:    1097113993909745,
 		GasLimit:      6712392,
 		GasUsed:       337966,
 		Hash:          base.HexToHash("0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39"),
