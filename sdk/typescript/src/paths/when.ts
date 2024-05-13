@@ -6,8 +6,9 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { Block, NamedBlock, Timestamp, TimestampCount } from '../types';
+import { NamedBlock, Timestamp, TimestampCount } from '../types';
 
 export function getWhen(
   parameters?: {
@@ -27,7 +28,7 @@ export function getWhen(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Block[] | NamedBlock[] | Timestamp[] | TimestampCount[]>(
+  return ApiCallers.fetch<NamedBlock[] | TimestampCount[] | Timestamp[]>(
     { endpoint: '/when', method: 'get', parameters, options },
   );
 }

@@ -6,8 +6,9 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { blknum, ChunkRecord, float64, Manifest } from '../types';
+import { blknum, float64, Message } from '../types';
 
 export function getInit(
   parameters?: {
@@ -19,7 +20,7 @@ export function getInit(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<ChunkRecord[] | Manifest[]>(
+  return ApiCallers.fetch<Message[]>(
     { endpoint: '/init', method: 'get', parameters, options },
   );
 }

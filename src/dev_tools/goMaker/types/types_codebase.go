@@ -172,22 +172,27 @@ func (cb *CodeBase) Validate() error {
 
 	for _, cmd := range cb.Commands {
 		for _, op := range cmd.Options {
-			dt := strings.ReplaceAll(strings.ReplaceAll(op.DataType, "<", ""), ">", "")
+			stripped := op.Stripped()
 			ot := op.OptionType
-			if knownTypes[ot] && knownTypes[dt] {
+			if knownTypes[ot] && knownTypes[stripped] {
 				continue
 			}
-			isEnum := strings.HasPrefix(dt, "enum")
-			isList := strings.HasPrefix(dt, "list")
-			if isEnum || isList {
+			if op.IsEnum() || op.IsArray() {
 				continue
 			}
 
-			msg := fmt.Sprintf("unknown types %s.%s in command: %s", dt, ot, op.LongName)
+			msg := fmt.Sprintf("unknown types %s.%s in command: %s", stripped, ot, op.LongName)
 			logger.Fatal(msg)
 		}
 	}
 
 	return nil
 
+}
+
+func (op *Option) Stripped() string {
+	ret := strings.ReplaceAll(op.DataType, "<addr>", "<address>")
+	ret = strings.ReplaceAll(ret, "list<", "")
+	ret = strings.ReplaceAll(ret, "enum<", "")
+	return CamelCase(strings.ReplaceAll(strings.ReplaceAll(ret, "<", ""), ">", ""))
 }

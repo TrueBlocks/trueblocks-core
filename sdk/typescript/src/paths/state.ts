@@ -6,6 +6,7 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
 import { address, blknum, Result, State } from '../types';
 

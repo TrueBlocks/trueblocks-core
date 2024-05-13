@@ -6,8 +6,9 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { address, topic, Transaction, txId } from '../types';
+import { address, Appearance, Log, topic, Trace, Transaction, txId } from '../types';
 
 export function getTransactions(
   parameters?: {
@@ -29,7 +30,7 @@ export function getTransactions(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Transaction[]>(
+  return ApiCallers.fetch<Appearance[] | Log[] | Trace[] | Transaction[] | address[]>(
     { endpoint: '/transactions', method: 'get', parameters, options },
   );
 }

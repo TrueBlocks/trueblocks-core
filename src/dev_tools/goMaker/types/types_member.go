@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type Member struct {
@@ -240,14 +238,10 @@ func (m *Member) GoType() string {
 				ret = "base.Hash"
 			case "txnum":
 				ret = "base.Txnum"
-			case "uint8":
-				ret = "bool"
 			case "value":
 				ret = "base.Value"
 			case "wei":
 				ret = "base.Wei"
-			default:
-				logger.Fatal("unkown type: " + m.Type + " in GoType()")
 			}
 		}
 	}

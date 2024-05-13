@@ -6,8 +6,9 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { address, Appearance, AppearanceCount, blknum, Bounds, Monitor, uint64 } from '../types';
+import { address, Appearance, AppearanceCount, blknum, Bounds, uint64 } from '../types';
 
 export function getList(
   parameters?: {
@@ -28,7 +29,7 @@ export function getList(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Appearance[] | AppearanceCount[] | Bounds[] | Monitor[]>(
+  return ApiCallers.fetch<AppearanceCount[] | Appearance[] | Bounds[]>(
     { endpoint: '/list', method: 'get', parameters, options },
   );
 }

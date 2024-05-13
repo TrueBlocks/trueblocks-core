@@ -2,7 +2,10 @@ package types
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type Option struct {
@@ -654,21 +657,28 @@ func (op *Option) CobraPart() string {
 	}
 }
 
+var typeMap = map[string][]string{
+	"<address>":    {"String", "address"},
+	"<blknum>":     {"Uint64", "number"},
+	"<boolean>":    {"Bool", "boolean"},
+	"<float64>":    {"Float64", "float"},
+	"<string>":     {"String", "string"},
+	"<uint64>":     {"Uint64", "number"},
+	"enum":         {"String", "string"},
+	"list<addr>":   {"StringSlice", "address[]"},
+	"list<blknum>": {"Uint64Slice", "number[]"},
+	"list<enum>":   {"StringSlice", "string[]"},
+	"list<string>": {"StringSlice", "string[]"},
+	"list<topic>":  {"StringSlice", "string[]"},
+}
+
 func (op *Option) CobraType() string {
-	m := map[string]string{
-		"<address>":    "String",
-		"<blknum>":     "Uint64",
-		"<boolean>":    "Bool",
-		"<float64>":    "Float64",
-		"<string>":     "String",
-		"<uint64>":     "Uint64",
-		"enum":         "String",
-		"list<addr>":   "StringSlice",
-		"list<enum>":   "StringSlice",
-		"list<string>": "StringSlice",
-		"list<topic>":  "StringSlice",
+	val, ok := typeMap[op.DataType]
+	if ok {
+		return val[0]
 	}
-	return m[op.DataType]
+	logger.Info(fmt.Sprintf("unknown type: %s.%s.%s", op.Route, op.LongName, op.DataType))
+	return ""
 }
 
 func (op *Option) DefaultApi() string {
