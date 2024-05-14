@@ -712,7 +712,7 @@ func (c *Command) CapsMapAndArray() (map[string]bool, []string) {
 	return has, caps
 }
 
-func (c *Command) FuzzerInits() string {
+func (c *Command) GetGlobs() string {
 	capsMap, _ := c.CapsMapAndArray()
 	ret := "globals"
 	if !capsMap["ether"] {
@@ -724,7 +724,30 @@ func (c *Command) FuzzerInits() string {
 	if !capsMap["caching"] {
 		ret = "noCache(" + ret + ")"
 	}
-	return "globs := " + ret + "\n"
+	return "globs := " + ret
+}
+
+func (op *Option) GetEnums() string {
+	if !op.IsEnum() {
+		return ""
+	}
+	return "// Option '" + op.LongName + "' is an enum"
+}
+
+func (c *Command) FuzzerInits() string {
+	ret := []string{}
+
+	globs := c.GetGlobs()
+	ret = append(ret, globs)
+
+	for _, op := range c.Options {
+		enums := op.GetEnums()
+		if len(enums) > 0 {
+			ret = append(ret, enums)
+		}
+	}
+
+	return strings.Join(ret, "\n") + "\n"
 }
 
 func (op *Option) TsType() string {

@@ -27,6 +27,7 @@ func DoTokens() {
 	ShowHeader("DoTokens", opts)
 
 	globs := noRaw(noEther(globals))
+	// Option 'parts' is an enum
 	// EXISTING_CODE
 	parts := []sdk.TokensParts{
 		sdk.NoTP,

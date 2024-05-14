@@ -27,6 +27,8 @@ func DoSlurp() {
 	ShowHeader("DoSlurp", opts)
 
 	globs := globals
+	// Option 'types1' is an enum
+	// Option 'source' is an enum
 	// EXISTING_CODE
 	types1 := []sdk.SlurpTypes{
 		sdk.NoST,

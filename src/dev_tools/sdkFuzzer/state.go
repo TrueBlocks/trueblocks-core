@@ -28,11 +28,8 @@ func DoState() {
 	ShowHeader("DoState", opts)
 
 	globs := noRaw(globals)
+	// Option 'parts' is an enum
 	// EXISTING_CODE
-	art := []bool{false, true}
-
-	changes := []bool{false, true}
-	noZeros := []bool{false, true}
 	parts := []sdk.StateParts{
 		sdk.SPBalance,
 		sdk.SPNonce,
@@ -43,6 +40,9 @@ func DoState() {
 		sdk.SPSome,
 		sdk.SPAll,
 	}
+	art := []bool{false, true}
+	changes := []bool{false, true}
+	noZeros := []bool{false, true}
 	opts = sdk.StateOptions{
 		BlockIds: []string{"10092000"},
 		Addrs:    []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},

@@ -27,6 +27,7 @@ func DoExport() {
 	ShowHeader("DoExport", opts)
 
 	globs := noRaw(globals)
+	// Option 'flow' is an enum
 	// EXISTING_CODE
 	baseFn := "export/export"
 	opts = sdk.ExportOptions{

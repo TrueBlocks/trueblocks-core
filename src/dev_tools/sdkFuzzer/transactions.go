@@ -28,6 +28,7 @@ func DoTransactions() {
 	ShowHeader("DoTransactions", opts)
 
 	globs := globals
+	// Option 'flow' is an enum
 	// EXISTING_CODE
 	art := []bool{false, true}
 	cts := []bool{false, true}

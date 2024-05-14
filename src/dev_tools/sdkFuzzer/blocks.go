@@ -27,6 +27,7 @@ func DoBlocks() {
 	ShowHeader("DoBlocks", opts)
 
 	globs := globals
+	// Option 'flow' is an enum
 	// EXISTING_CODE
 	cacheTxs := []bool{false, true}
 	cacheTraces := []bool{false, true}
