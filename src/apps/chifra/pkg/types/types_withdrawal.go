@@ -85,7 +85,7 @@ func (s *Withdrawal) Model(chain, format string, verbose bool, extraOptions map[
 
 	asEther := extraOptions["ether"] == true
 	if asEther {
-		model["ether"] = base.FormattedValue(&s.Amount, true, 18)
+		model["ether"] = s.Amount.ToEtherStr(18)
 		order = append(order, "ether")
 	}
 

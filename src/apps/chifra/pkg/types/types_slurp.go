@@ -247,7 +247,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[strin
 
 	asEther := true // like transactions, we always export ether for slurps -- extraOptions["ether"] == true
 	if asEther {
-		model["ether"] = base.FormattedValue(&s.Value, true, 18)
+		model["ether"] = s.Value.ToEtherStr(18)
 		order = append(order, "ether")
 	}
 

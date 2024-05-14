@@ -166,14 +166,14 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOptions map[strin
 				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = hexutil.Encode(s.Action.RefundAddress.Bytes())
 				model["action::value"] = s.Action.Balance.String()
-				model["action::ether"] = base.FormattedValue(&s.Action.Balance, true, 18)
+				model["action::ether"] = s.Action.Balance.ToEtherStr(18)
 				model["action::input"] = "0x"
 				model["action::callType"] = "self-destruct"
 			} else {
 				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = to
 				model["action::value"] = s.Action.Value.String()
-				model["action::ether"] = base.FormattedValue(&s.Action.Value, true, 18)
+				model["action::ether"] = s.Action.Value.ToEtherStr(18)
 			}
 		}
 		if s.Result != nil {
