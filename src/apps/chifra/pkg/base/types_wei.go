@@ -125,11 +125,8 @@ func (w *Wei) UnmarshalText(text []byte) error {
 
 // TODO: BOGUS - THIS NAME SUCKS
 
-func FormattedValue(in *Wei, asEther bool, decimals int) string {
-	if asEther {
-		return ToEther(in).Text('f', -1*decimals)
-	}
-	return in.Text(10)
+func (w *Wei) ToEtherStr(decimals int) string {
+	return ToEther(w).Text('f', -1*decimals)
 }
 
 func ToEther(wei *Wei) *Ether {

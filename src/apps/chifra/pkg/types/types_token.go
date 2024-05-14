@@ -118,7 +118,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOptions map[strin
 		case "address":
 			model["address"] = s.Address
 		case "balance":
-			model["balance"] = base.FormattedValue(&s.Balance, true, int(name.Decimals))
+			model["balance"] = s.Balance.ToEtherStr(int(name.Decimals))
 		case "blockNumber":
 			model["blockNumber"] = s.BlockNumber
 		case "date":
@@ -136,11 +136,11 @@ func (s *Token) Model(chain, format string, verbose bool, extraOptions map[strin
 		case "timestamp":
 			model["timestamp"] = s.Timestamp
 		case "totalSupply":
-			model["totalSupply"] = base.FormattedValue(&s.TotalSupply, true, int(name.Decimals))
+			model["totalSupply"] = s.TotalSupply.ToEtherStr(int(name.Decimals))
 		case "transactionIndex":
 			model["transactionIndex"] = s.TransactionIndex
 		case "units":
-			model["units"] = base.FormattedValue(&s.Balance, false, int(name.Decimals)) // present underlying units
+			model["units"] = s.Balance.String()
 		case "version":
 			model["version"] = ""
 		}
@@ -180,9 +180,9 @@ func (s *Token) formattedDiff(dec uint64) string {
 	diff := new(big.Int).Sub(b, pB)
 	if diff.Sign() == -1 {
 		diff = diff.Neg(diff)
-		return "-" + base.FormattedValue((*base.Wei)(diff), true, int(dec))
+		return "-" + (*base.Wei)(diff).ToEtherStr(int(dec))
 	}
-	return base.FormattedValue((*base.Wei)(diff), true, int(dec))
+	return (*base.Wei)(diff).ToEtherStr(int(dec))
 }
 
 type TokenType int

@@ -47,7 +47,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Tran
 					trace.Action.CallType,
 					"to",
 					trace.Action.To.Hex(),
-					base.FormattedValue(&trace.Action.Value, true, 18),
+					trace.Action.Value.ToEtherStr(18),
 				)
 				continue
 			}

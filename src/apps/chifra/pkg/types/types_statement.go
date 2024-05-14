@@ -116,58 +116,57 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOptions map[s
 	var order = []string{}
 
 	// EXISTING_CODE
-	asEther := extraOptions["ether"] == true
-	decimals := int(s.Decimals)
 	model = map[string]any{
-		"blockNumber":         s.BlockNumber,
-		"transactionIndex":    s.TransactionIndex,
-		"logIndex":            s.LogIndex,
-		"transactionHash":     s.TransactionHash,
-		"timestamp":           s.Timestamp,
-		"date":                s.Date(),
-		"assetAddr":           s.AssetAddr,
-		"assetType":           s.AssetType,
-		"assetSymbol":         s.AssetSymbol,
-		"decimals":            s.Decimals,
-		"spotPrice":           s.SpotPrice,
-		"priceSource":         s.PriceSource,
-		"accountedFor":        s.AccountedFor,
-		"sender":              s.Sender,
-		"recipient":           s.Recipient,
-		"begBal":              base.FormattedValue(&s.BegBal, asEther, decimals),
-		"amountNet":           base.FormattedValue(s.AmountNet(), asEther, decimals),
-		"endBal":              base.FormattedValue(&s.EndBal, asEther, decimals),
-		"reconciliationType":  s.ReconType.String(),
-		"reconciled":          s.Reconciled(),
-		"totalIn":             base.FormattedValue(s.TotalIn(), asEther, decimals),
-		"amountIn":            base.FormattedValue(&s.AmountIn, asEther, decimals),
-		"internalIn":          base.FormattedValue(&s.InternalIn, asEther, decimals),
-		"selfDestructIn":      base.FormattedValue(&s.SelfDestructIn, asEther, decimals),
-		"minerBaseRewardIn":   base.FormattedValue(&s.MinerBaseRewardIn, asEther, decimals),
-		"minerNephewRewardIn": base.FormattedValue(&s.MinerNephewRewardIn, asEther, decimals),
-		"minerTxFeeIn":        base.FormattedValue(&s.MinerTxFeeIn, asEther, decimals),
-		"minerUncleRewardIn":  base.FormattedValue(&s.MinerUncleRewardIn, asEther, decimals),
-		"correctingIn":        base.FormattedValue(&s.CorrectingIn, asEther, decimals),
-		"prefundIn":           base.FormattedValue(&s.PrefundIn, asEther, decimals),
-		"totalOut":            base.FormattedValue(s.TotalOut(), asEther, decimals),
-		"amountOut":           base.FormattedValue(&s.AmountOut, asEther, decimals),
-		"internalOut":         base.FormattedValue(&s.InternalOut, asEther, decimals),
-		"correctingOut":       base.FormattedValue(&s.CorrectingOut, asEther, decimals),
-		"selfDestructOut":     base.FormattedValue(&s.SelfDestructOut, asEther, decimals),
-		"gasOut":              base.FormattedValue(&s.GasOut, asEther, decimals),
-		"totalOutLessGas":     base.FormattedValue(s.TotalOutLessGas(), asEther, decimals),
-		"begBalDiff":          base.FormattedValue(s.BegBalDiff(), asEther, decimals),
-		"endBalDiff":          base.FormattedValue(s.EndBalDiff(), asEther, decimals),
-		"endBalCalc":          base.FormattedValue(s.EndBalCalc(), asEther, decimals),
-		"correctingReason":    s.CorrectingReason,
+		"blockNumber":        s.BlockNumber,
+		"transactionIndex":   s.TransactionIndex,
+		"logIndex":           s.LogIndex,
+		"transactionHash":    s.TransactionHash,
+		"timestamp":          s.Timestamp,
+		"date":               s.Date(),
+		"assetAddr":          s.AssetAddr,
+		"assetType":          s.AssetType,
+		"assetSymbol":        s.AssetSymbol,
+		"decimals":           s.Decimals,
+		"spotPrice":          s.SpotPrice,
+		"priceSource":        s.PriceSource,
+		"accountedFor":       s.AccountedFor,
+		"sender":             s.Sender,
+		"recipient":          s.Recipient,
+		"reconciliationType": s.ReconType.String(),
+		"reconciled":         s.Reconciled(),
+		"correctingReason":   s.CorrectingReason,
 	}
 
+	decimals := int(s.Decimals)
+
+	model["begBal"] = s.BegBal.Text(10)
+	model["amountNet"] = s.AmountNet().Text(10)
+	model["endBal"] = s.EndBal.Text(10)
+	model["totalIn"] = s.TotalIn().Text(10)
+	model["amountIn"] = s.AmountIn.Text(10)
+	model["internalIn"] = s.InternalIn.Text(10)
+	model["selfDestructIn"] = s.SelfDestructIn.Text(10)
+	model["minerBaseRewardIn"] = s.MinerBaseRewardIn.Text(10)
+	model["minerNephewRewardIn"] = s.MinerNephewRewardIn.Text(10)
+	model["minerTxFeeIn"] = s.MinerTxFeeIn.Text(10)
+	model["minerUncleRewardIn"] = s.MinerUncleRewardIn.Text(10)
+	model["correctingIn"] = s.CorrectingIn.Text(10)
+	model["prefundIn"] = s.PrefundIn.Text(10)
+	model["totalOut"] = s.TotalOut().Text(10)
+	model["amountOut"] = s.AmountOut.Text(10)
+	model["internalOut"] = s.InternalOut.Text(10)
+	model["correctingOut"] = s.CorrectingOut.Text(10)
+	model["selfDestructOut"] = s.SelfDestructOut.Text(10)
+	model["gasOut"] = s.GasOut.Text(10)
+	model["totalOutLessGas"] = s.TotalOutLessGas().Text(10)
+	model["begBalDiff"] = s.BegBalDiff().Text(10)
+	model["endBalDiff"] = s.EndBalDiff().Text(10)
+	model["endBalCalc"] = s.EndBalCalc().Text(10)
 	if s.ReconType&First == 0 {
-		model["prevBal"] = base.FormattedValue(&s.PrevBal, asEther, decimals)
+		model["prevBal"] = s.PrevBal.Text(10)
 	} else if format != "json" {
 		model["prevBal"] = ""
 	}
-
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
 		"assetAddr", "assetType", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
@@ -176,6 +175,45 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOptions map[s
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
 		"selfDestructOut", "gasOut", "totalOutLessGas", "prevBal", "begBalDiff",
 		"endBalDiff", "endBalCalc", "correctingReason",
+	}
+
+	asEther := extraOptions["ether"] == true
+	if asEther {
+		model["begBal-eth"] = s.BegBal.ToEtherStr(decimals)
+		model["amountNet-eth"] = s.AmountNet().ToEtherStr(decimals)
+		model["endBal-eth"] = s.EndBal.ToEtherStr(decimals)
+		model["totalIn-eth"] = s.TotalIn().ToEtherStr(decimals)
+		model["amountIn-eth"] = s.AmountIn.ToEtherStr(decimals)
+		model["internalIn-eth"] = s.InternalIn.ToEtherStr(decimals)
+		model["selfDestructIn-eth"] = s.SelfDestructIn.ToEtherStr(decimals)
+		model["minerBaseRewardIn-eth"] = s.MinerBaseRewardIn.ToEtherStr(decimals)
+		model["minerNephewRewardIn-eth"] = s.MinerNephewRewardIn.ToEtherStr(decimals)
+		model["minerTxFeeIn-eth"] = s.MinerTxFeeIn.ToEtherStr(decimals)
+		model["minerUncleRewardIn-eth"] = s.MinerUncleRewardIn.ToEtherStr(decimals)
+		model["correctingIn-eth"] = s.CorrectingIn.ToEtherStr(decimals)
+		model["prefundIn-eth"] = s.PrefundIn.ToEtherStr(decimals)
+		model["totalOut-eth"] = s.TotalOut().ToEtherStr(decimals)
+		model["amountOut-eth"] = s.AmountOut.ToEtherStr(decimals)
+		model["internalOut-eth"] = s.InternalOut.ToEtherStr(decimals)
+		model["correctingOut-eth"] = s.CorrectingOut.ToEtherStr(decimals)
+		model["selfDestructOut-eth"] = s.SelfDestructOut.ToEtherStr(decimals)
+		model["gasOut-eth"] = s.GasOut.ToEtherStr(decimals)
+		model["totalOutLessGas-eth"] = s.TotalOutLessGas().ToEtherStr(decimals)
+		model["begBalDiff-eth"] = s.BegBalDiff().ToEtherStr(decimals)
+		model["endBalDiff-eth"] = s.EndBalDiff().ToEtherStr(decimals)
+		model["endBalCalc-eth"] = s.EndBalCalc().ToEtherStr(decimals)
+		if s.ReconType&First == 0 {
+			model["prevBal-eth"] = s.PrevBal.ToEtherStr(decimals)
+		} else if format != "json" {
+			model["prevBal-eth"] = ""
+		}
+		order = append(order, []string{"begBal-eth", "amountNet-eth", "endBal-eth",
+			"totalIn-eth", "amountIn-eth", "internalIn-eth", "selfDestructIn-eth",
+			"minerBaseRewardIn-eth", "minerNephewRewardIn-eth", "minerTxFeeIn-eth",
+			"minerUncleRewardIn-eth", "correctingIn-eth", "prefundIn-eth",
+			"totalOut-eth", "amountOut-eth", "internalOut-eth", "correctingOut-eth",
+			"selfDestructOut-eth", "gasOut-eth", "totalOutLessGas-eth", "begBalDiff-eth",
+			"endBalDiff-eth", "endBalCalc-eth", "prevBal-eth"}...)
 	}
 	// EXISTING_CODE
 
@@ -810,16 +848,16 @@ func isZero(val *base.Wei) bool {
 }
 
 func reportE(msg string, val *base.Wei) {
-	logger.TestLog(!isZero(val), msg, base.FormattedValue(val, true, 18))
+	logger.TestLog(!isZero(val), msg, val.ToEtherStr(18))
 }
 
 func report2(msg string, v1 *base.Wei, v2 *base.Wei) {
 	s := ""
 	if v1 != nil {
-		s = base.FormattedValue(v1, true, 18)
+		s = v1.ToEtherStr(18)
 	}
 	if v2 != nil {
-		s += " (" + base.FormattedValue(v2, true, 18) + ")"
+		s += " (" + v2.ToEtherStr(18) + ")"
 	}
 	logger.TestLog(true, msg, s)
 }

@@ -278,7 +278,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 			model["type"] = ""
 		}
 		order = append(order, "type")
-		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(uint64(s.GasPrice)), true, 18)
+		ethGasPrice := base.NewWei(0).SetUint64(uint64(s.GasPrice)).ToEtherStr(18)
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 
@@ -308,7 +308,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 
 	asEther := true // special case for transactions, we always show --ether -- extraOptions["ether"] == true
 	if asEther {
-		model["ether"] = base.FormattedValue(&s.Value, true, 18)
+		model["ether"] = s.Value.ToEtherStr(18)
 		order = append(order, "ether")
 	}
 

@@ -98,14 +98,14 @@ func (s *TraceAction) Model(chain, format string, verbose bool, extraOptions map
 		asEther := extraOptions["ether"] == true
 		model["value"] = s.Value.String()
 		if asEther {
-			model["ether"] = base.FormattedValue(&s.Value, true, 18)
+			model["ether"] = s.Value.ToEtherStr(18)
 		}
 
 		if !s.RefundAddress.IsZero() {
 			model["refundAddress"] = s.RefundAddress
 			model["balance"] = s.Balance.String()
 			if asEther {
-				model["balanceEth"] = base.FormattedValue(&s.Balance, true, 18)
+				model["balanceEth"] = s.Balance.ToEtherStr(18)
 			}
 
 		} else {
