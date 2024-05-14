@@ -293,4 +293,9 @@ func enumFromStatusModes(values []string) (StatusModes, error) {
 }
 
 // EXISTING_CODE
+// Status implements the chifra status command.
+func (opts *StatusOptions) Status() ([]types.Status, *types.MetaData, error) {
+	return opts.StatusDiagnose()
+}
+
 // EXISTING_CODE
