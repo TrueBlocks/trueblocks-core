@@ -27,7 +27,15 @@ func DoMonitors() {
 	ShowHeader("DoMonitors", opts)
 
 	globs := noRaw(noEther(globals))
+	delete := []bool{false, true}
+	undelete := []bool{false, true}
+	remove := []bool{false, true}
+	watch := []bool{false, true}
 	// EXISTING_CODE
+	_ = delete
+	_ = undelete
+	_ = remove
+	_ = watch
 	_ = globs
 	opts = sdk.MonitorsOptions{
 		Addrs: []string{testAddrs[0]},

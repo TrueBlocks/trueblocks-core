@@ -27,7 +27,15 @@ func DoWhen() {
 	ShowHeader("DoWhen", opts)
 
 	globs := noRaw(noEther(globals))
+	repair := []bool{false, true}
+	check := []bool{false, true}
+	update := []bool{false, true}
+	deep := []bool{false, true}
 	// EXISTING_CODE
+	_ = repair
+	_ = check
+	_ = update
+	_ = deep
 	types := []string{"when", "list", "timestamps", "count"}
 	// when,command,default|caching|
 	// Truncate base.Blknum `json:"truncate,omitempty"`

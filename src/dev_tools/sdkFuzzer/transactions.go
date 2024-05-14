@@ -28,23 +28,25 @@ func DoTransactions() {
 	ShowHeader("DoTransactions", opts)
 
 	globs := globals
-	// Option 'flow' is an enum
+	articulate := []bool{false, true}
+	// Option 'flow.enum' is an emum
+	cacheTraces := []bool{false, true}
 	// EXISTING_CODE
-	art := []bool{false, true}
+	_ = cacheTraces
 	cts := []bool{false, true}
 	// opts = sdk.TransactionsOptions{
 	// 	TransactionIds: testTransactions,
 	// }
 	// transactions,command,default|caching|ether|raw|
-	for _, a := range art {
+	for _, art := range articulate {
 		for _, c := range cts {
 			opts := sdk.TransactionsOptions{
 				TransactionIds: testTransactions,
 			}
 			baseFn := "transactions/transactions"
-			opts.Articulate = a
+			opts.Articulate = art
 			opts.CacheTraces = c
-			if a {
+			if art {
 				baseFn += "-articulate"
 			}
 			if c {

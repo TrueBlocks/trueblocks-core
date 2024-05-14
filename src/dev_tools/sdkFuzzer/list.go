@@ -28,10 +28,14 @@ func DoList() {
 	ShowHeader("DoList", opts)
 
 	globs := noCache(noRaw(noEther(globals)))
+	noZero := []bool{false, true}
+	unripe := []bool{false, true}
+	silent := []bool{false, true}
+	reversed := []bool{false, true}
 	// EXISTING_CODE
+	_ = noZero
+	_ = unripe
 	types := []string{"list", "count", "bounds"}
-	silents := []bool{false, true}
-	reverseds := []bool{false, true}
 	publishers := []string{"", "0x02f2b09b33fdbd406ead954a31f98bd29a2a3492"}
 	// list,command,default|
 	for _, t := range types {
@@ -40,8 +44,8 @@ func DoList() {
 		}
 		ShowHeader("DoList-"+t, &opts)
 		for _, publisher := range publishers {
-			for _, reverse := range reverseds {
-				for _, silent := range silents {
+			for _, r := range reversed {
+				for _, s := range silent {
 					opts = sdk.ListOptions{
 						Addrs: []string{testAddrs[0]},
 					}
@@ -52,12 +56,12 @@ func DoList() {
 							opts.NoZero = true
 							baseFn += "-noZero"
 						}
-						if silent {
-							opts.Silent = silent
+						opts.Silent = s
+						if s {
 							baseFn += "-silent"
 						}
-						if reverse {
-							opts.Reversed = reverse
+						opts.Reversed = r
+						if r {
 							baseFn += "-reverse"
 						}
 						if len(publisher) > 0 {

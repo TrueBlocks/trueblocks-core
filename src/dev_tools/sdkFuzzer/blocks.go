@@ -27,10 +27,11 @@ func DoBlocks() {
 	ShowHeader("DoBlocks", opts)
 
 	globs := globals
-	// Option 'flow' is an enum
-	// EXISTING_CODE
+	// Option 'flow.enum' is an emum
+	articulate := []bool{false, true}
 	cacheTxs := []bool{false, true}
 	cacheTraces := []bool{false, true}
+	// EXISTING_CODE
 	// opts = sdk.BlocksOptions{
 	// 	BlockIds: testBlocks,
 	// }
@@ -68,10 +69,9 @@ func DoBlocks() {
 							TestBlocks(t, "", fn3, &opts)
 						}
 					} else if t == "logs" {
-						art := []bool{false, true}
-						for _, a := range art {
-							opts.Articulate = a
-							if a {
+						for _, art := range articulate {
+							opts.Articulate = art
+							if art {
 								fn2 += "-articulate"
 							}
 							TestBlocks(t, "", fn2, &opts)

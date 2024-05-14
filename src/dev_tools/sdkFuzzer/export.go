@@ -27,8 +27,26 @@ func DoExport() {
 	ShowHeader("DoExport", opts)
 
 	globs := noRaw(globals)
-	// Option 'flow' is an enum
+	accounting := []bool{false, true}
+	articulate := []bool{false, true}
+	cacheTraces := []bool{false, true}
+	relevant := []bool{false, true}
+	reverted := []bool{false, true}
+	// Option 'flow.enum' is an emum
+	factory := []bool{false, true}
+	unripe := []bool{false, true}
+	reversed := []bool{false, true}
+	noZero := []bool{false, true}
 	// EXISTING_CODE
+	_ = accounting
+	_ = cacheTraces
+	_ = relevant
+	_ = reverted
+	_ = factory
+	_ = unripe
+	_ = reversed
+	_ = articulate
+	_ = noZero
 	baseFn := "export/export"
 	opts = sdk.ExportOptions{
 		Addrs:       testAddrs,

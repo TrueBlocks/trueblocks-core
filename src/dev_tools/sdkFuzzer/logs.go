@@ -27,19 +27,19 @@ func DoLogs() {
 	ShowHeader("DoLogs", opts)
 
 	globs := noEther(globals)
+	articulate := []bool{false, true}
 	// EXISTING_CODE
 	emitters := []string{"", "0x5564886ca2c518d1964e5fcea4f423b41db9f561"}
 	topics := []string{"", "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc"}
-	art := []bool{false, true}
 	opts = sdk.LogsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
 	}
 	// logs,command,default|caching|raw|
 	for _, t := range topics {
 		for _, e := range emitters {
-			for _, a := range art {
+			for _, art := range articulate {
 				baseFn := "logs/logs"
-				if a {
+				if art {
 					baseFn += "-articulate"
 				}
 				if len(e) > 0 {
@@ -50,7 +50,7 @@ func DoLogs() {
 					opts.Topic = []string{t}
 					baseFn += "-topic"
 				}
-				opts.Articulate = a
+				opts.Articulate = art
 				for _, g := range globs {
 					opts.Globals = g
 					fn := getFilename(baseFn, &opts.Globals)

@@ -27,22 +27,22 @@ func DoReceipts() {
 	ShowHeader("DoReceipts", opts)
 
 	globs := noEther(globals)
+	articulate := []bool{false, true}
 	// EXISTING_CODE
 	// TransactionIds []string `json:"transactions,omitempty"`
 	// Articulate     bool     `json:"articulate,omitempty"`
 	// func (opts *ReceiptsOptions) Receipts() ([]types.Receipt, *types.MetaData, error) {
 
-	art := []bool{false, true}
 	// receipts,command,default|caching|raw|
 	opts = sdk.ReceiptsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
 	}
-	for _, a := range art {
+	for _, art := range articulate {
 		baseFn := "receipts/receipts"
-		if a {
+		if art {
 			baseFn += "-articulate"
 		}
-		opts.Articulate = a
+		opts.Articulate = art
 		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)

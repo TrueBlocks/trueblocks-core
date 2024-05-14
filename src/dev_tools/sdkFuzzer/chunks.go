@@ -28,8 +28,26 @@ func DoChunks() {
 	ShowHeader("DoChunks", opts)
 
 	globs := noCache(noRaw(noEther(globals)))
+	check := []bool{false, true}
+	pin := []bool{false, true}
+	publish := []bool{false, true}
+	remote := []bool{false, true}
+	deep := []bool{false, true}
+	rewrite := []bool{false, true}
+	list := []bool{false, true}
+	unpin := []bool{false, true}
+	count := []bool{false, true}
 	// EXISTING_CODE
 	_ = globs
+	_ = check
+	_ = pin
+	_ = publish
+	_ = remote
+	_ = deep
+	_ = rewrite
+	_ = list
+	_ = unpin
+	_ = count
 	opts = sdk.ChunksOptions{
 		FirstBlock: 0,
 		LastBlock:  base.NOPOSN,

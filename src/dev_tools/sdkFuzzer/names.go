@@ -28,31 +28,33 @@ func DoNames() {
 	ShowHeader("DoNames", opts)
 
 	globs := noCache(noRaw(noEther(globals)))
-	// EXISTING_CODE
-	expands := []bool{false, true}
-	matches := []bool{false, true}
-	alls := []bool{false, true}
-	customs := []bool{false, true}
-	prefunds := []bool{false, true}
+	expand := []bool{false, true}
+	matchCase := []bool{false, true}
+	all := []bool{false, true}
+	custom := []bool{false, true}
+	prefund := []bool{false, true}
 	regular := []bool{false, true}
+	dryRun := []bool{false, true}
+	// EXISTING_CODE
+	_ = dryRun
 	opts = sdk.NamesOptions{
 		Terms: []string{"0xf"},
 	}
 	// names,command,default|
-	for _, expand := range expands {
-		for _, match := range matches {
-			for _, all := range alls {
-				for _, custom := range customs {
-					for _, prefund := range prefunds {
-						for _, reg := range regular {
+	for _, e := range expand {
+		for _, m := range matchCase {
+			for _, a := range all {
+				for _, c := range custom {
+					for _, p := range prefund {
+						for _, r := range regular {
 							opts := sdk.NamesOptions{
 								Terms:     []string{"0xf"},
-								Expand:    expand,
-								MatchCase: match,
-								All:       all,
-								Custom:    custom,
-								Prefund:   prefund,
-								Regular:   reg,
+								Expand:    e,
+								MatchCase: m,
+								All:       a,
+								Custom:    c,
+								Prefund:   p,
+								Regular:   r,
 							}
 							for _, g := range globs {
 								opts.Globals = g

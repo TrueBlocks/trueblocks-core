@@ -28,7 +28,10 @@ func DoState() {
 	ShowHeader("DoState", opts)
 
 	globs := noRaw(globals)
-	// Option 'parts' is an enum
+	// Option 'parts.list<enum>' is an emum
+	changes := []bool{false, true}
+	noZero := []bool{false, true}
+	articulate := []bool{false, true}
 	// EXISTING_CODE
 	parts := []sdk.StateParts{
 		sdk.SPBalance,
@@ -40,16 +43,13 @@ func DoState() {
 		sdk.SPSome,
 		sdk.SPAll,
 	}
-	art := []bool{false, true}
-	changes := []bool{false, true}
-	noZeros := []bool{false, true}
 	opts = sdk.StateOptions{
 		BlockIds: []string{"10092000"},
 		Addrs:    []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
 	}
 	// state,command,default|caching|ether|
 	for _, c := range changes {
-		for _, z := range noZeros {
+		for _, z := range noZero {
 			for _, p := range parts {
 				baseFn := "state/state"
 				if c {
@@ -79,12 +79,12 @@ func DoState() {
 	}
 	ShowHeader("DoState-Call", opts)
 
-	for _, a := range art {
+	for _, art := range articulate {
 		baseFn := "state/state-call"
-		if a {
+		if art {
 			baseFn += "-art"
 		}
-		opts.Articulate = a
+		opts.Articulate = art
 		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)
@@ -98,13 +98,13 @@ func DoState() {
 	}
 	ShowHeader("DoState-Call-Proxy", opts)
 
-	for _, a := range art {
+	for _, art := range articulate {
 		baseFn := "state/state-call-proxy"
-		if a {
+		if art {
 			baseFn += "-art"
 		}
 		opts.ProxyFor = base.HexToAddress("0xbb2b8038a1640196fbe3e38816f3e67cba72d940")
-		opts.Articulate = a
+		opts.Articulate = art
 		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)

@@ -27,8 +27,12 @@ func DoTokens() {
 	ShowHeader("DoTokens", opts)
 
 	globs := noRaw(noEther(globals))
-	// Option 'parts' is an enum
+	// Option 'parts.list<enum>' is an emum
+	byAcct := []bool{false, true}
+	changes := []bool{false, true}
+	noZero := []bool{false, true}
 	// EXISTING_CODE
+	_ = byAcct
 	parts := []sdk.TokensParts{
 		sdk.NoTP,
 		sdk.TPName,
@@ -39,15 +43,13 @@ func DoTokens() {
 		sdk.TPSome,
 		sdk.TPAll,
 	}
-	changes := []bool{false} // , true}
-	noZeros := []bool{false, true}
 	opts = sdk.TokensOptions{
 		Addrs:    []string{"ens.eth", "trueblocks.eth"},
 		BlockIds: []string{"10092000"},
 	}
 	// tokens,command,default|caching|
 	for _, c := range changes {
-		for _, z := range noZeros {
+		for _, z := range noZero {
 			for _, p := range parts {
 				baseFn := "tokens/tokens"
 				if c {

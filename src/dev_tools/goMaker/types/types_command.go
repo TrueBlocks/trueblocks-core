@@ -731,7 +731,14 @@ func (op *Option) GetEnums() string {
 	if !op.IsEnum() {
 		return ""
 	}
-	return "// Option '" + op.LongName + "' is an enum"
+	return "// Option '" + op.LongName + "." + op.DataType + "' is an emum"
+}
+
+func (op *Option) GetBools() string {
+	if len(op.ReturnType) != 0 || !op.IsBool() {
+		return ""
+	}
+	return " " + CamelCase(op.LongName) + " := []bool{false, true}"
 }
 
 func (c *Command) FuzzerInits() string {
@@ -742,8 +749,12 @@ func (c *Command) FuzzerInits() string {
 
 	for _, op := range c.Options {
 		enums := op.GetEnums()
-		if len(enums) > 0 {
+		if len(enums) > 0 && !op.IsMode() {
 			ret = append(ret, enums)
+		}
+		bools := op.GetBools()
+		if len(bools) > 0 {
+			ret = append(ret, bools)
 		}
 	}
 
