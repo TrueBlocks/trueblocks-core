@@ -32,7 +32,11 @@ func DoState() {
 	changes := []bool{false, true}
 	noZero := []bool{false, true}
 	articulate := []bool{false, true}
+	proxyFor := fuzzProxyFors
+	// blocks is not fuzzed
+	// Fuzz Loop
 	// EXISTING_CODE
+	_ = proxyFor
 	parts := []sdk.StateParts{
 		sdk.SPBalance,
 		sdk.SPNonce,

@@ -731,7 +731,7 @@ func (op *Option) GetEnums() string {
 	if !op.IsEnum() {
 		return ""
 	}
-	return "// Option '" + op.LongName + "." + op.DataType + "' is an emum"
+	return "// Option '" + CamelCase(op.LongName) + "." + op.DataType + "' is an emum"
 }
 
 func (op *Option) GetBools() string {
@@ -741,8 +741,50 @@ func (op *Option) GetBools() string {
 	return " " + CamelCase(op.LongName) + " := []bool{false, true}"
 }
 
+func (op *Option) GetNotFuzzed() string {
+	in := []string{"watchlist",
+		"commands",
+		"load",
+		"truncate",
+		"batch_size",
+		"run_count",
+		"sleep",
+		"publisher",
+		"first_record",
+		"max_records",
+		"page",
+		"page_id",
+		"per_page",
+		"blocks",
+	}
+	for _, i := range in {
+		if i == op.LongName {
+			return "// " + CamelCase(op.LongName) + " is not fuzzed"
+		}
+	}
+	return ""
+}
+
+func (op *Option) GetOthers() string {
+	if len(op.ReturnType) != 0 || op.IsBool() || op.IsEnum() || op.GetNotFuzzed() != "" {
+		return ""
+	}
+
+	cc := CamelCase(op.LongName)
+	switch cc {
+	case "topics", "fourbytes", "belongs":
+		return cc + " := fuzz" + FirstUpper(cc)
+	case "topic", "emitter", "asset", "hint", "proxyFor":
+		return cc + " := fuzz" + FirstUpper(cc) + "s"
+	default:
+		return "// " + cc + " is a " + op.DataType + " --other"
+	}
+}
+
 func (c *Command) FuzzerInits() string {
 	ret := []string{}
+	notFuzzed := []string{}
+	others := []string{}
 
 	globs := c.GetGlobs()
 	ret = append(ret, globs)
@@ -756,7 +798,22 @@ func (c *Command) FuzzerInits() string {
 		if len(bools) > 0 {
 			ret = append(ret, bools)
 		}
+		other := op.GetOthers()
+		if len(other) > 0 {
+			if strings.Contains(other, "--other") {
+				others = append(others, other)
+			} else {
+				ret = append(ret, other)
+			}
+		}
+		nFuzzed := op.GetNotFuzzed()
+		if len(nFuzzed) > 0 {
+			notFuzzed = append(notFuzzed, nFuzzed)
+		}
 	}
+
+	ret = append(ret, others...)
+	ret = append(ret, notFuzzed...)
 
 	return strings.Join(ret, "\n") + "\n"
 }

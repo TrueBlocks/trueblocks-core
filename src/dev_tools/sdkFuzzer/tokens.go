@@ -31,6 +31,8 @@ func DoTokens() {
 	byAcct := []bool{false, true}
 	changes := []bool{false, true}
 	noZero := []bool{false, true}
+	// blocks is not fuzzed
+	// Fuzz Loop
 	// EXISTING_CODE
 	_ = byAcct
 	parts := []sdk.TokensParts{

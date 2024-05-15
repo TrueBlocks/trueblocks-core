@@ -27,17 +27,33 @@ func DoExport() {
 	ShowHeader("DoExport", opts)
 
 	globs := noRaw(globals)
+	topics := fuzzTopics
+	fourbytes := fuzzFourbytes
 	accounting := []bool{false, true}
 	articulate := []bool{false, true}
 	cacheTraces := []bool{false, true}
 	relevant := []bool{false, true}
+	emitter := fuzzEmitters
+	topic := fuzzTopics
 	reverted := []bool{false, true}
+	asset := fuzzAssets
 	// Option 'flow.enum' is an emum
 	factory := []bool{false, true}
 	unripe := []bool{false, true}
 	reversed := []bool{false, true}
 	noZero := []bool{false, true}
+	// firstBlock is a <blknum> --other
+	// lastBlock is a <blknum> --other
+	// firstRecord is not fuzzed
+	// maxRecords is not fuzzed
+	// load is not fuzzed
+	// Fuzz Loop
 	// EXISTING_CODE
+	_ = asset
+	_ = fourbytes
+	_ = topics
+	_ = emitter
+	_ = topic
 	_ = accounting
 	_ = cacheTraces
 	_ = relevant
@@ -49,7 +65,7 @@ func DoExport() {
 	_ = noZero
 	baseFn := "export/export"
 	opts = sdk.ExportOptions{
-		Addrs:       testAddrs,
+		Addrs:       fuzzAddresses,
 		FirstRecord: 0,
 		MaxRecords:  10,
 		// Articulate: true,

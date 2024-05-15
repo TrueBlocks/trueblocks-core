@@ -28,6 +28,8 @@ func DoTraces() {
 
 	globs := globals
 	articulate := []bool{false, true}
+	// filter is a <string> --other
+	// Fuzz Loop
 	// EXISTING_CODE
 	filters := []string{""} // , "0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!"}
 	opts = sdk.TracesOptions{

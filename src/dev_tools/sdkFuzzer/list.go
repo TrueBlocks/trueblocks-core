@@ -32,6 +32,12 @@ func DoList() {
 	unripe := []bool{false, true}
 	silent := []bool{false, true}
 	reversed := []bool{false, true}
+	// firstBlock is a <blknum> --other
+	// lastBlock is a <blknum> --other
+	// firstRecord is not fuzzed
+	// maxRecords is not fuzzed
+	// publisher is not fuzzed
+	// Fuzz Loop
 	// EXISTING_CODE
 	_ = noZero
 	_ = unripe
@@ -40,14 +46,14 @@ func DoList() {
 	// list,command,default|
 	for _, t := range types {
 		opts := sdk.ListOptions{
-			Addrs: []string{testAddrs[0]},
+			Addrs: []string{fuzzAddresses[0]},
 		}
 		ShowHeader("DoList-"+t, &opts)
 		for _, publisher := range publishers {
 			for _, r := range reversed {
 				for _, s := range silent {
 					opts = sdk.ListOptions{
-						Addrs: []string{testAddrs[0]},
+						Addrs: []string{fuzzAddresses[0]},
 					}
 					nzs := []bool{false, true}
 					for _, nz := range nzs {

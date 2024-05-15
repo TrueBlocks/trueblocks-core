@@ -35,6 +35,7 @@ func DoNames() {
 	prefund := []bool{false, true}
 	regular := []bool{false, true}
 	dryRun := []bool{false, true}
+	// Fuzz Loop
 	// EXISTING_CODE
 	_ = dryRun
 	opts = sdk.NamesOptions{

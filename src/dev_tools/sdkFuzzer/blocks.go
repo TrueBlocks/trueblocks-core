@@ -28,21 +28,23 @@ func DoBlocks() {
 
 	globs := globals
 	// Option 'flow.enum' is an emum
+	emitter := fuzzEmitters
+	topic := fuzzTopics
 	articulate := []bool{false, true}
 	cacheTxs := []bool{false, true}
 	cacheTraces := []bool{false, true}
+	// blocks is not fuzzed
+	// Fuzz Loop
 	// EXISTING_CODE
-	// opts = sdk.BlocksOptions{
-	// 	BlockIds: testBlocks,
-	// }
-	// blocks,command,default|caching|ether|raw|
+	_ = emitter
+	_ = topic
 	for _, ctxs := range cacheTxs {
 		for _, cts := range cacheTraces {
 			for _, g := range globs {
 				types := []string{"blocks", "hashes", "uncles", "traces", "uniq", "logs", "withdrawals", "count"}
 				for _, t := range types {
 					opts := sdk.BlocksOptions{
-						BlockIds: testBlocks,
+						BlockIds: fuzzBlocks,
 					}
 					baseFn := "blocks/blocks"
 					if ctxs {

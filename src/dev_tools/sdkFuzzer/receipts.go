@@ -28,6 +28,7 @@ func DoReceipts() {
 
 	globs := noEther(globals)
 	articulate := []bool{false, true}
+	// Fuzz Loop
 	// EXISTING_CODE
 	// TransactionIds []string `json:"transactions,omitempty"`
 	// Articulate     bool     `json:"articulate,omitempty"`

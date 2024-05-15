@@ -28,6 +28,9 @@ func DoStatus() {
 
 	globs := noCache(noRaw(noEther(globals)))
 	chains := []bool{false, true}
+	// firstRecord is not fuzzed
+	// maxRecords is not fuzzed
+	// Fuzz Loop
 	// EXISTING_CODE
 	// func (opts *StatusOptions) StatusDiagnose() ([]bool, *types.MetaData, error) {
 

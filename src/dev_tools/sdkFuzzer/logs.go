@@ -27,30 +27,30 @@ func DoLogs() {
 	ShowHeader("DoLogs", opts)
 
 	globs := noEther(globals)
+	emitter := fuzzEmitters
+	topic := fuzzTopics
 	articulate := []bool{false, true}
+	// Fuzz Loop
 	// EXISTING_CODE
-	emitters := []string{"", "0x5564886ca2c518d1964e5fcea4f423b41db9f561"}
-	topics := []string{"", "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc"}
-	opts = sdk.LogsOptions{
-		TransactionIds: append(firsts, []string{"17100101.1"}...),
-	}
-	// logs,command,default|caching|raw|
-	for _, t := range topics {
-		for _, e := range emitters {
+	for _, t := range topic {
+		for _, e := range emitter {
 			for _, art := range articulate {
 				baseFn := "logs/logs"
+				opts = sdk.LogsOptions{
+					TransactionIds: append(firsts, []string{"17100101.1"}...),
+				}
+				opts.Articulate = art
 				if art {
 					baseFn += "-articulate"
 				}
+				opts.Emitter = []string{e}
 				if len(e) > 0 {
-					opts.Emitter = []string{e}
 					baseFn += "-emitter"
 				}
+				opts.Topic = []string{t}
 				if len(t) > 0 {
-					opts.Topic = []string{t}
 					baseFn += "-topic"
 				}
-				opts.Articulate = art
 				for _, g := range globs {
 					opts.Globals = g
 					fn := getFilename(baseFn, &opts.Globals)

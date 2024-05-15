@@ -27,6 +27,10 @@ func DoInit() {
 	ShowHeader("DoInit", opts)
 
 	globs := noCache(noRaw(noEther(globals)))
+	// firstBlock is a <blknum> --other
+	// publisher is not fuzzed
+	// sleep is not fuzzed
+	// Fuzz Loop
 	// EXISTING_CODE
 	_ = globs
 	// init,command,verbose|version|noop|noColor|chain|

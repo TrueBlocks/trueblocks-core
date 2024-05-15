@@ -29,14 +29,14 @@ func DoAbis() {
 
 	globs := noRaw(noEther(globals))
 	known := []bool{false, true}
+	proxyFor := fuzzProxyFors
+	hint := fuzzHints
+	// Fuzz Loop
 	// EXISTING_CODE
-	proxies := []string{"", "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"}
-	opts = sdk.AbisOptions{
-		Addrs: []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"},
-	}
-	// abis,command,default|caching|
+	_ = hint
+	opts.Addrs = fuzzSmartContract
 	for _, k := range known {
-		for _, p := range proxies {
+		for _, p := range proxyFor {
 			for _, g := range globs {
 				baseFn := "abis/abis"
 				opts.Known = k

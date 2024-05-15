@@ -30,6 +30,12 @@ func DoSlurp() {
 	// Option 'types.list<enum>' is an emum
 	articulate := []bool{false, true}
 	// Option 'source.enum' is an emum
+	// blocks is not fuzzed
+	// page is not fuzzed
+	// pageId is not fuzzed
+	// perPage is not fuzzed
+	// sleep is not fuzzed
+	// Fuzz Loop
 	// EXISTING_CODE
 	types := []sdk.SlurpTypes{
 		sdk.NoST,
@@ -55,7 +61,7 @@ func DoSlurp() {
 	// PageId     string      `json:"pageId,omitempty"`
 	// PerPage    uint64      `json:"perPage,omitempty"`
 	opts = sdk.SlurpOptions{
-		Addrs:   []string{testAddrs[0]},
+		Addrs:   []string{fuzzAddresses[0]},
 		PerPage: 10,
 	}
 	for _, s := range sources {

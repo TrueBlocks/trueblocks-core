@@ -31,6 +31,9 @@ func DoWhen() {
 	check := []bool{false, true}
 	update := []bool{false, true}
 	deep := []bool{false, true}
+	// blocks is not fuzzed
+	// truncate is not fuzzed
+	// Fuzz Loop
 	// EXISTING_CODE
 	_ = repair
 	_ = check
@@ -46,7 +49,7 @@ func DoWhen() {
 	for _, t := range types {
 		opts := sdk.WhenOptions{}
 		if t != "list" && t != "when" {
-			opts.BlockIds = testBlocks
+			opts.BlockIds = fuzzBlocks
 		}
 		ShowHeader("DoWhen-"+t, opts)
 		for _, g := range globs {
