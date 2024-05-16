@@ -68,11 +68,17 @@ add_custom_target(examples ALL COMMAND ${SCRIPTS_DIR}/build-examples.sh WORKING_
 # ----------------------------------------------------------------------------------------
 function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC DEST_DIR)
     get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
+    file(GLOB SRC_FILE_LIST "*.go")
+    set(EXE_NAME ${NAME})
+    if (WIN32)
+        set(EXE_NAME ${NAME}.exe)
+    endif()
+
     add_custom_target(${NAME} ALL)
     add_custom_command(TARGET ${NAME}
                     COMMAND go build
-                    -o "${DEST_DIR}/${NAME}"
-                    ${CMAKE_GO_FLAGS} ${MAIN_SRC}
+                    -o "${DEST_DIR}/${EXE_NAME}"
+                    ${CMAKE_GO_FLAGS} ${SRC_FILE_LIST}
                     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
                     DEPENDS ${MAIN_SRC_ABS} ${MAIN_SRC})
 endfunction(ADD_GO_INSTALLABLE_PROGRAM)
