@@ -14,7 +14,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
@@ -153,7 +152,7 @@ type fetchResult struct {
 // fetchFromIpfsGateway downloads a chunk from an IPFS gateway using HTTP
 func fetchFromIpfsGateway(ctx context.Context, gateway, hash string) (*fetchResult, error) {
 	url, _ := url.Parse(gateway)
-	url.Path = filepath.Join(url.Path, hash)
+	url.Path += hash
 
 	debug.DebugCurlStr(url.String())
 	request, err := http.NewRequestWithContext(ctx, "GET", url.String(), nil)

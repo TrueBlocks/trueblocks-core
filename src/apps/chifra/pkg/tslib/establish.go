@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"path/filepath"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -54,7 +53,7 @@ func downloadTimestamps(chain, database, outputFn, cid string) (error, bool) {
 	if err != nil {
 		return err, false
 	}
-	url.Path = filepath.Join(url.Path, cid)
+	url.Path += cid
 
 	debug.DebugCurlStr(url.String())
 

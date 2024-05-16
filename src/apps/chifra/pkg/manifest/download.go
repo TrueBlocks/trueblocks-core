@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
@@ -69,7 +68,7 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 	if err != nil {
 		return nil, err
 	}
-	url.Path = filepath.Join(url.Path, cid)
+	url.Path += cid
 
 	debug.DebugCurlStr(url.String())
 	resp, err := http.Get(url.String())

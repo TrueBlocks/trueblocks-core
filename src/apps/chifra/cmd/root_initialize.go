@@ -28,11 +28,7 @@ func Initialize() bool {
 // VerifyOs will panic if the operating system isn't cooperating
 func VerifyOs() {
 	userOs := runtime.GOOS
-	if userOs == "windows" {
-		logger.Fatal("Windows is not supported\n")
-	}
-
-	if userOs != "linux" && userOs != "darwin" {
+	if userOs != "linux" && userOs != "darwin" && userOs != "windows" {
 		logger.Fatal("Unsupported operating system: ", userOs, "\n")
 	}
 

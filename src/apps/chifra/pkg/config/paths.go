@@ -54,7 +54,7 @@ func PathToIndex(chain string) string {
 	}
 
 	// Probably already true, but can't hurt to be sure
-	if !strings.Contains(indexPath, "/unchained") {
+	if !strings.Contains(indexPath, string(os.PathSeparator) + "unchained") {
 		indexPath = filepath.Join(indexPath, "unchained")
 	}
 
@@ -64,7 +64,7 @@ func PathToIndex(chain string) string {
 	}
 
 	// We know what we want, create it if it doesn't exist and return it
-	newPath := filepath.Join(indexPath, chain) + "/"
+	newPath := filepath.Join(indexPath, chain) + string(os.PathSeparator)
 	EstablishIndexPaths(newPath)
 	return newPath
 }
@@ -80,7 +80,7 @@ func PathToCache(chain string) string {
 	}
 
 	// Probably already true, but can't hurt to be sure
-	if !strings.Contains(cachePath, "/cache") {
+	if !strings.Contains(cachePath, string(os.PathSeparator) + "cache") {
 		cachePath = filepath.Join(cachePath, "cache")
 	}
 
@@ -90,7 +90,7 @@ func PathToCache(chain string) string {
 	}
 
 	// We know what we want, create it if it doesn't exist and return it
-	newPath := filepath.Join(cachePath, chain) + "/"
+	newPath := filepath.Join(cachePath, chain) + string(os.PathSeparator)
 	EstablishCachePaths(newPath)
 	return newPath
 }

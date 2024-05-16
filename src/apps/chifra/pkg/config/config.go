@@ -83,22 +83,22 @@ func GetRootConfig() *ConfigFile {
 
 	cachePath := trueBlocksConfig.Settings.CachePath
 	if len(cachePath) == 0 || cachePath == "<not_set>" {
-		cachePath = filepath.Join(configPath, "cache") + "/"
+		cachePath = filepath.Join(configPath, "cache") + string(os.PathSeparator)
 	}
 	cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
 	cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
-	if !strings.Contains(cachePath, "/cache") {
+	if !strings.Contains(cachePath, string(os.PathSeparator) + "cache") {
 		cachePath = filepath.Join(cachePath, "cache")
 	}
 	trueBlocksConfig.Settings.CachePath = cachePath
 
 	indexPath := trueBlocksConfig.Settings.IndexPath
 	if len(indexPath) == 0 || indexPath == "<not_set>" {
-		indexPath = filepath.Join(configPath, "unchained") + "/"
+		indexPath = filepath.Join(configPath, "unchained") + string(os.PathSeparator)
 	}
 	indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
 	indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
-	if !strings.Contains(indexPath, "/unchained") {
+	if !strings.Contains(indexPath, string(os.PathSeparator) + "unchained") {
 		indexPath = filepath.Join(indexPath, "unchained")
 	}
 	trueBlocksConfig.Settings.IndexPath = indexPath
@@ -181,6 +181,8 @@ func PathToRootConfig() string {
 	osPath := ".local/share/trueblocks"
 	if userOs == "darwin" {
 		osPath = "Library/Application Support/TrueBlocks"
+	} else if userOs == "windows" {
+	    osPath = "AppData/Local/trueblocks"
 	}
 
 	return filepath.Join(user.HomeDir, osPath) + "/"

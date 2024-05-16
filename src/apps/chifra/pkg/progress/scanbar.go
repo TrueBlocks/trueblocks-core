@@ -8,10 +8,6 @@ import (
 	"fmt"
 	"io"
 	"strings"
-	"syscall"
-	"unsafe"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 type ScanBar struct {
@@ -68,19 +64,4 @@ type winsize struct {
 	Col    uint16
 	Xpixel uint16
 	Ypixel uint16
-}
-
-func screenWidth() uint {
-	ws := &winsize{}
-	retCode, _, _ := syscall.Syscall(syscall.SYS_IOCTL,
-		uintptr(syscall.Stdin),
-		uintptr(syscall.TIOCGWINSZ),
-		uintptr(unsafe.Pointer(ws)))
-
-	if int(retCode) == -1 {
-		// This is okay if we're debugging in VSCode for example
-		// logger.Error("System call to syscall.SYS_IOCTL returned: ", errno)
-		return 120 // default reasonably
-	}
-	return uint(ws.Col)
 }
