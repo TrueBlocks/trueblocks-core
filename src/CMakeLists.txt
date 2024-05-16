@@ -17,7 +17,6 @@ find_package(Python COMPONENTS Interpreter Development)
 # ----------------------------------------------------------------------------------------
 message(STATUS "======== LOOKING FOR CURL ========================")
 find_package(CURL REQUIRED)
-include_directories(${CURL_INCLUDE_DIRS})
 
 # ----------------------------------------------------------------------------------------
 message(STATUS "======== LOOKING FOR GOLANG ========================")
