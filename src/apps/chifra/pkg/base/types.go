@@ -11,8 +11,14 @@ import (
 // 375.40 and 332.51 when Value is an alias
 // Conclusion: Minimal difference, but concrete type is slightly faster
 // and more useful because it supports Json parsing and future needs
+// Some more testing of speed
+// When				Seconds		nTests	Seconds/Test
+// Two weeks ago	505			579		0.8721
+// Currently		1036.2		1200	0.8635 (a bit faster)
+// As an alias		1056		1200	0.8800 (a bit slower)
 
-type Value uint64
+// type Value = uint64 // as an alias
+type Value uint64 // allows for json parsing
 type Blknum = Value
 type Txnum = Value
 type Tracenum = Value
