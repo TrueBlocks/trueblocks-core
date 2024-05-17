@@ -154,7 +154,7 @@ func (gr *NameReader) Read() (types.Name, error) {
 		Tags:       record[gr.header["tags"]],
 		Address:    base.HexToAddress(strings.ToLower(record[gr.header["address"]])),
 		Name:       record[gr.header["name"]],
-		Decimals:   base.MustParseUint(record[gr.header["decimals"]]),
+		Decimals:   base.MustParseUint64(record[gr.header["decimals"]]),
 		Symbol:     record[gr.header["symbol"]],
 		Source:     record[gr.header["source"]],
 		Petname:    record[gr.header["petname"]],

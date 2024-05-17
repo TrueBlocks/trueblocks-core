@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -199,27 +198,10 @@ func (k *KeyAppearance) Appearance(address base.Address) (a types.Appearance, er
 }
 
 type Meta struct {
-	LastIndexedBlock lastIndexedBlock `json:"lastIndexedBlock,omitempty"`
-	Address          string           `json:"address,omitempty"`
-	PreviousPageId   string           `json:"previousPageId"`
-	NextPageId       string           `json:"nextPageId"`
-}
-
-// The only purpose of this type is to parse Key's lastIndexedBlock (string) into int
-// TODO: I feel like this could use base.Value which is exactly that type's purpose
-type lastIndexedBlock int
-
-func (l *lastIndexedBlock) UnmarshalJSON(data []byte) (err error) {
-	var value int64
-	var unquoted string
-	unquoted, err = strconv.Unquote(string(data))
-	if err != nil {
-		return
-	}
-
-	value, err = strconv.ParseInt(unquoted, 0, 64)
-	*l = lastIndexedBlock(value)
-	return
+	LastIndexedBlock base.Blknum `json:"lastIndexedBlock,omitempty"`
+	Address          string      `json:"address,omitempty"`
+	PreviousPageId   string      `json:"previousPageId"`
+	NextPageId       string      `json:"nextPageId"`
 }
 
 func (e *KeyProvider) fetchData(ctx context.Context, address base.Address, paginator Paginator, _ string) (data []SlurpedPageItem, count int, err error) {

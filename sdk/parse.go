@@ -56,11 +56,11 @@ func assignValuesFromArgs(args []string, parseFunc ParseFunc, target interface{}
 					case reflect.Bool:
 						field.SetBool(true)
 					case reflect.Int:
-						field.SetInt(base.MustParseInt(value))
+						field.SetInt(base.MustParseInt64(value))
 					case reflect.String:
 						field.SetString(value)
 					case reflect.Uint64:
-						field.SetUint(base.MustParseUint(value))
+						field.SetUint(base.MustParseUint64(value))
 					default:
 						return fmt.Errorf("unsupported field kind %s for option %s", kind, option)
 					}

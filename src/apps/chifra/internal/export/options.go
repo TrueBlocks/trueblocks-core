@@ -168,9 +168,9 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 		case "count":
 			opts.Count = true
 		case "firstRecord":
-			opts.FirstRecord = base.MustParseUint(value[0])
+			opts.FirstRecord = base.MustParseUint64(value[0])
 		case "maxRecords":
-			opts.MaxRecords = base.MustParseUint(value[0])
+			opts.MaxRecords = base.MustParseUint64(value[0])
 		case "relevant":
 			opts.Relevant = true
 		case "emitter":

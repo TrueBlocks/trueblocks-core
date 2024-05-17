@@ -1,8 +1,6 @@
 package base
 
 import (
-	"strconv"
-
 	"github.com/bykof/gostradamus"
 )
 
@@ -32,71 +30,8 @@ const NOPOS = uint64(^uint64(0))
 const NOPOSI = Timestamp(0xdeadbeef)
 const NOPOSN = Value(^uint64(0))
 
-func (g *Value) UnmarshalJSON(data []byte) error {
-	result, _ := strconv.ParseUint(string(data), 0, 64)
-	*g = Value(result)
-	return nil
-}
-
-func (t *Timestamp) UnmarshalJSON(data []byte) error {
-	result, _ := strconv.ParseUint(string(data), 0, 64)
-	*t = Timestamp(result)
-	return nil
-}
-
 func (t *Timestamp) Int64() int64 {
 	return int64(*t)
-}
-
-func (f *Float) UnmarshalJSON(data []byte) error {
-	result, _ := strconv.ParseUint(string(data), 0, 64)
-	*f = Float(result)
-	return nil
-}
-
-func MustParseBlknum(input string) Blknum {
-	ret, _ := strconv.ParseUint(input, 0, 64)
-	return Blknum(ret)
-}
-
-func MustParseTxnum(input string) Txnum {
-	ret, _ := strconv.ParseUint(input, 0, 64)
-	return Txnum(ret)
-}
-
-func MustParseValue(input string) Value {
-	ret, _ := strconv.ParseUint(input, 0, 64)
-	return Value(ret)
-}
-
-func MustParseGas(input string) Gas {
-	ret, _ := strconv.ParseUint(input, 0, 64)
-	return Gas(ret)
-}
-
-func MustParseTimestamp(input string) Timestamp {
-	ret, _ := strconv.ParseInt(input, 0, 64)
-	return Timestamp(ret)
-}
-
-func MustParseWei(input string) Wei {
-	i := MustParseUint(input)
-	return *NewWei(0).SetUint64(i)
-}
-
-func MustParseInt(input string) int64 {
-	ret, _ := strconv.ParseInt(input, 0, 64)
-	return ret
-}
-
-func MustParseUint(input string) uint64 {
-	ret, _ := strconv.ParseUint(input, 0, 64)
-	return ret
-}
-
-func MustParseFloat(val string) float64 {
-	f, _ := strconv.ParseFloat(val, 64)
-	return f
 }
 
 func FormattedDate(ts Timestamp) string {

@@ -50,7 +50,7 @@ func (s *Structure) Name() string {
 func (s *Structure) Num() int {
 	parts := strings.Split(s.DocGroup, "-")
 	if len(parts) > 1 {
-		return int(base.MustParseInt(parts[0]))
+		return int(base.MustParseInt64(parts[0]))
 	}
 	logger.Fatal("unknown group: " + s.DocGroup)
 	return 0

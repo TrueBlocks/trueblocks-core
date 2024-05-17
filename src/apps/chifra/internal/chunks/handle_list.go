@@ -35,7 +35,7 @@ func (opts *ChunksOptions) HandleList(unusedBns []base.Blknum) error {
 						Cid:        base.IpfsHash(parts[0]),
 						DatePinned: parts[1],
 						FileName:   parts[2],
-						Size:       base.MustParseInt(parts[3]),
+						Size:       base.MustParseInt64(parts[3]),
 						Status:     parts[4],
 					}
 					modelChan <- &s

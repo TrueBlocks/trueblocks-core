@@ -36,7 +36,7 @@ func (opts *TokensOptions) HandleShow() error {
 				}
 
 				for _, bn := range blockNums {
-					if bal, err := opts.Conn.GetBalanceAtToken(tokenAddr, addr, fmt.Sprintf("0x%x", bn)); bal == nil {
+					if units, err := opts.Conn.GetBalanceAtToken(tokenAddr, addr, fmt.Sprintf("0x%x", bn)); units == nil {
 						errorChan <- err
 					} else {
 						if opts.Globals.Verbose {
@@ -48,7 +48,7 @@ func (opts *TokensOptions) HandleShow() error {
 						s := &types.Token{
 							Holder:      addr,
 							Address:     tokenAddr,
-							Balance:     *bal,
+							Units:       *units,
 							BlockNumber: bn,
 							Timestamp:   currentTs,
 							TokenType:   types.TokenErc20,

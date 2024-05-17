@@ -138,7 +138,7 @@ func (conn *Connection) GetTransactionAppByHash(hash string) (types.RawAppearanc
 		return ret, err
 	} else {
 		ret.BlockNumber = uint32(base.MustParseBlknum(rawTx.BlockNumber))
-		ret.TransactionIndex = uint32(base.MustParseUint(rawTx.TransactionIndex))
+		ret.TransactionIndex = uint32(base.MustParseUint64(rawTx.TransactionIndex))
 		return ret, nil
 	}
 }

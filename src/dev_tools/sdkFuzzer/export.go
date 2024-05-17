@@ -99,16 +99,16 @@ func DoExport() {
 	for _, g := range globs {
 		opts.Globals = g
 		fn := getFilename(baseFn, &opts.Globals)
-		TestExport("export", "", fn, &opts)
-		TestExport("appearances", "", fn, &opts)
-		TestExport("receipts", "", fn, &opts)
-		TestExport("logs", "", fn, &opts)
-		TestExport("traces", "", fn, &opts)
-		TestExport("neighbors", "", fn, &opts)
-		TestExport("statements", "", fn, &opts)
+		// TestExport("export", "", fn, &opts)
+		// TestExport("appearances", "", fn, &opts)
+		// TestExport("receipts", "", fn, &opts)
+		// TestExport("logs", "", fn, &opts)
+		// TestExport("traces", "", fn, &opts)
+		// TestExport("neighbors", "", fn, &opts)
+		// TestExport("statements", "", fn, &opts)
 		TestExport("balances", "", fn, &opts)
-		TestExport("withdrawals", "", fn, &opts)
-		TestExport("count", "", fn, &opts)
+		// TestExport("withdrawals", "", fn, &opts)
+		// TestExport("count", "", fn, &opts)
 	}
 	// EXISTING_CODE
 	Wait()

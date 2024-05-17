@@ -110,9 +110,9 @@ func ListFinishParseInternal(w io.Writer, values url.Values) *ListOptions {
 		case "silent":
 			opts.Silent = true
 		case "firstRecord":
-			opts.FirstRecord = base.MustParseUint(value[0])
+			opts.FirstRecord = base.MustParseUint64(value[0])
 		case "maxRecords":
-			opts.MaxRecords = base.MustParseUint(value[0])
+			opts.MaxRecords = base.MustParseUint64(value[0])
 		case "reversed":
 			opts.Reversed = true
 		case "publisher":

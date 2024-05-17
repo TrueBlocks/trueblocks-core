@@ -20,12 +20,10 @@ import (
 
 type RawToken struct {
 	Address          string `json:"address"`
-	Balance          string `json:"balance"`
 	BlockNumber      string `json:"blockNumber"`
 	Decimals         string `json:"decimals"`
 	Holder           string `json:"holder"`
 	Name             string `json:"name"`
-	PriorBalance     string `json:"priorBalance"`
 	Symbol           string `json:"symbol"`
 	Timestamp        string `json:"timestamp"`
 	TotalSupply      string `json:"totalSupply"`
@@ -37,17 +35,17 @@ type RawToken struct {
 
 type Token struct {
 	Address          base.Address   `json:"address"`
-	Balance          base.Wei       `json:"balance"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	Decimals         uint64         `json:"decimals"`
 	Holder           base.Address   `json:"holder"`
 	Name             string         `json:"name"`
-	PriorBalance     base.Wei       `json:"priorBalance,omitempty"`
+	PriorUnits       base.Wei       `json:"priorBalance,omitempty"`
 	Symbol           string         `json:"symbol"`
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TotalSupply      base.Wei       `json:"totalSupply"`
 	TransactionIndex base.Txnum     `json:"transactionIndex,omitempty"`
 	TokenType        TokenType      `json:"type"`
+	Units            base.Wei       `json:"units"`
 	raw              *RawToken      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -118,7 +116,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOptions map[strin
 		case "address":
 			model["address"] = s.Address
 		case "balance":
-			model["balance"] = s.Balance.ToEtherStr(int(name.Decimals))
+			model["balance"] = s.Units.ToEtherStr(int(name.Decimals))
 		case "blockNumber":
 			model["blockNumber"] = s.BlockNumber
 		case "date":
@@ -140,7 +138,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOptions map[strin
 		case "transactionIndex":
 			model["transactionIndex"] = s.TransactionIndex
 		case "units":
-			model["units"] = s.Balance.String()
+			model["units"] = s.Units.String()
 		case "version":
 			model["version"] = ""
 		}
@@ -175,8 +173,8 @@ func (s *Token) IsErc721() bool {
 }
 
 func (s *Token) formattedDiff(dec uint64) string {
-	b := s.Balance.BigInt()
-	pB := s.PriorBalance.BigInt()
+	b := s.Units.BigInt()
+	pB := s.PriorUnits.BigInt()
 	diff := new(big.Int).Sub(b, pB)
 	if diff.Sign() == -1 {
 		diff = diff.Neg(diff)

@@ -22,7 +22,7 @@ func main() {
 	if len(os.Args) > 1 {
 		workers = []int{}
 		for _, arg := range os.Args[1:] {
-			v := int(base.MustParseInt(arg))
+			v := int(base.MustParseInt64(arg))
 			if v > 0 {
 				workers = append(workers, v)
 			}
