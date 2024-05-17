@@ -18,8 +18,8 @@ var (
 )
 
 // priceUsdUniswap returns the price of the given asset in USD as of the given block number.
-func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Statement) (price float64, source string, err error) {
-	multiplier := float64(1.0)
+func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price base.Float, source string, err error) {
+	multiplier := base.Float(1.0)
 	var first base.Address
 	var second base.Address
 	if statement.IsEth() {
@@ -30,7 +30,7 @@ func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.State
 		temp := *statement
 		temp.AssetAddr = base.FAKE_ETH_ADDRESS
 		temp.AssetSymbol = "WEI"
-		multiplier, _, err = priceUsdUniswap(conn, testMode, &temp)
+		multiplier, _, err = priceUsdUniswap(conn, &temp)
 		if err != nil {
 			return 0.0, "not-priced", err
 		}
@@ -92,7 +92,7 @@ func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.State
 	bigPrice := new(base.Ether)
 	bigPrice = bigPrice.Quo(reserve0, reserve1)
 
-	price = bigPrice.Float64()
+	price = base.Float(bigPrice.Float64())
 	price *= multiplier
 	source = "uniswap"
 
@@ -109,12 +109,12 @@ func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.State
 		reversed:    reversed,
 		float0:      reserve0,
 		float1:      reserve1,
-		float2:      new(base.Ether).SetFloat64(multiplier),
+		float2:      new(base.Ether).SetFloat64(float64(multiplier)),
 		bigPrice:    bigPrice,
 		price:       price,
 		source:      source,
 	}
-	r.report("using Uniswap", testMode)
+	r.report("using Uniswap")
 
 	return price, source, nil
 }

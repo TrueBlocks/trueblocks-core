@@ -114,6 +114,7 @@ var knownTypes = map[string]bool{
 	"ether":       true,
 	"flag":        true,
 	"float64":     true,
+	"float":       true,
 	"fourbyte":    true,
 	"gas":         true,
 	"group":       true,

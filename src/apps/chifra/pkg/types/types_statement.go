@@ -70,7 +70,7 @@ type Statement struct {
 	CorrectingIn        base.Wei       `json:"correctingIn,omitempty"`
 	CorrectingOut       base.Wei       `json:"correctingOut,omitempty"`
 	CorrectingReason    string         `json:"correctingReason,omitempty"`
-	Decimals            uint64         `json:"decimals"`
+	Decimals            base.Value     `json:"decimals"`
 	EndBal              base.Wei       `json:"endBal"`
 	GasOut              base.Wei       `json:"gasOut,omitempty"`
 	InternalIn          base.Wei       `json:"internalIn,omitempty"`
@@ -87,7 +87,7 @@ type Statement struct {
 	SelfDestructIn      base.Wei       `json:"selfDestructIn,omitempty"`
 	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
-	SpotPrice           float64        `json:"spotPrice"`
+	SpotPrice           base.Float     `json:"spotPrice"`
 	Timestamp           base.Timestamp `json:"timestamp"`
 	TransactionHash     base.Hash      `json:"transactionHash"`
 	TransactionIndex    base.Txnum     `json:"transactionIndex"`

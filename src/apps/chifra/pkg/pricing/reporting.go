@@ -24,12 +24,12 @@ type priceDebugger struct {
 	int0        *base.Wei
 	int1        *base.Wei
 	bigPrice    *base.Ether
-	price       float64
+	price       base.Float
 	source      string
 }
 
 // TODO: Much of this reporting could be removed by using a String function on the types.Statement
-func (r *priceDebugger) report(msg string, testMode bool) {
+func (r *priceDebugger) report(msg string) {
 	isStable := strings.Contains(msg, "stable-coin")
 	if isStable {
 		msg = ""

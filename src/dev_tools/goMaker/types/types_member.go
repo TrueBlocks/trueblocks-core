@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type Member struct {
@@ -212,6 +214,8 @@ func (m *Member) GoType() string {
 			switch m.Type {
 			case "address":
 				ret = "base.Address"
+			case "float":
+				ret = "base.Float"
 			case "blknum":
 				ret = "base.Blknum"
 			case "blkrange":
@@ -475,7 +479,7 @@ func (m *Member) YamlType() string {
 	if m.IsObject() {
 		return "object" + o
 	} else if m.Type == "blknum" || m.Type == "txnum" || m.Type == "lognum" ||
-		m.Type == "timestamp" || m.Type == "float64" || m.Type == "gas" || m.Type == "uint64" ||
+		m.Type == "timestamp" || m.Type == "float" || m.Type == "float64" || m.Type == "gas" || m.Type == "uint64" ||
 		m.Type == "int64" || m.Type == "uint32" || m.Type == "int" || m.Type == "value" {
 		return "number" + f
 	} else if m.Type == "address" || m.Type == "datetime" || m.Type == "hash" || m.Type == "ipfshash" || m.Type == "blkrange" ||
@@ -485,6 +489,7 @@ func (m *Member) YamlType() string {
 	} else if m.Type == "bool" || m.Type == "uint8" {
 		return "boolean\n          format: boolean"
 	} else {
+		logger.Fatal(fmt.Sprintf("unknown type '%s' in Member '%s'\n", m.Type, m.Name))
 		return "unknown" + f
 	}
 }

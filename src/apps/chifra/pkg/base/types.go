@@ -26,6 +26,7 @@ type Lognum = Value
 type Gas = Value
 type Topic = string
 type Timestamp int64
+type Float float64
 
 const NOPOS = uint64(^uint64(0))
 const NOPOSI = Timestamp(0xdeadbeef)
@@ -45,6 +46,12 @@ func (t *Timestamp) UnmarshalJSON(data []byte) error {
 
 func (t *Timestamp) Int64() int64 {
 	return int64(*t)
+}
+
+func (f *Float) UnmarshalJSON(data []byte) error {
+	result, _ := strconv.ParseUint(string(data), 0, 64)
+	*f = Float(result)
+	return nil
 }
 
 func MustParseBlknum(input string) Blknum {
