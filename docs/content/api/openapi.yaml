@@ -227,15 +227,15 @@ paths:
                         {
                           "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
                           "blockNumber": 4037786,
-                          "transactionIndex": 47
+                          "transactionIndex": 47,
                         },
                         {
                           "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
                           "blockNumber": 4037800,
-                          "transactionIndex": 77
+                          "transactionIndex": 77,
                         },
-                        { "...": "..." }
-                      ]
+                        { "...": "..." },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -604,16 +604,16 @@ paths:
                               "contractAddress": "0x0",
                               "gasUsed": 21000,
                               "effectiveGasPrice": 20000000000,
-                              "status": null
+                              "status": null,
                             },
                           "compressedTx": "0x()",
                           "gasCost": 420000000000000,
                           "gasUsed": 21000,
                           "date": "2017-07-18 04:41:28 UTC",
-                          "ether": 0.08435387
+                          "ether": 0.08435387,
                         },
-                        { "...": "..." }
-                      ]
+                        { "...": "..." },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -970,8 +970,8 @@ paths:
                       "symbol": "LBA",
                       "source": "On chain",
                       "decimals": 18,
-                      "petname": "actively-happy-mite"
-                    }
+                      "petname": "actively-happy-mite",
+                    },
                   ]
         "400":
           description: bad input parameter
@@ -1112,27 +1112,27 @@ paths:
                                 "type": "address",
                                 "name": "token0",
                                 "indexed": true,
-                                "internalType": "address"
+                                "internalType": "address",
                               },
                               {
                                 "type": "address",
                                 "name": "token1",
                                 "indexed": true,
-                                "internalType": "address"
+                                "internalType": "address",
                               },
                               {
                                 "type": "address",
                                 "name": "pair",
-                                "internalType": "address"
+                                "internalType": "address",
                               },
                               {
                                 "type": "uint256",
                                 "name": "val_0",
-                                "internalType": "uint256"
-                              }
-                            ]
-                        }
-                      ]
+                                "internalType": "uint256",
+                              },
+                            ],
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -1336,7 +1336,7 @@ paths:
                     "blockNumber": 3141592,
                     "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
                     "...": "...",
-                    "transactions": []
+                    "transactions": [],
                   }
         "400":
           description: bad input parameter
@@ -2130,9 +2130,9 @@ paths:
                           "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
                           "deployed": 0,
                           "accttype": "EOA",
-                          "ether": 0.2588436983603185
-                        }
-                      ]
+                          "ether": 0.2588436983603185,
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -2272,9 +2272,9 @@ paths:
                           "decimals": 1,
                           "isContract": true,
                           "isErc20": true,
-                          "isErc721": true
-                        }
-                      ]
+                          "isErc721": true,
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -2357,9 +2357,9 @@ paths:
                           "isTracing": true,
                           "hasEskey": true,
                           "hasPinkey": true,
-                          "date": "2021-09-03 19:38:19 UTC"
-                        }
-                      ]
+                          "date": "2021-09-03 19:38:19 UTC",
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -2728,15 +2728,15 @@ paths:
                         {
                           "fileName": "000000000-000000000",
                           "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
-                          "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4"
+                          "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4",
                         },
                         {
                           "fileName": "000000001-000590501",
                           "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
-                          "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
+                          "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp",
                         },
-                        { "...": "..." }
-                      ]
+                        { "...": "..." },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -2997,8 +2997,8 @@ paths:
                       "hasToken": "0",
                       "gasUsed": "21000",
                       "date": "2015-08-07 03:50:51 UTC",
-                      "ether": "0.000000000000000000"
-                    }
+                      "ether": "0.000000000000000000",
+                    },
                   ]
         "400":
           description: bad input parameter
