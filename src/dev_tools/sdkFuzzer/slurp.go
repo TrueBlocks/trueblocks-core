@@ -37,6 +37,8 @@ func DoSlurp() {
 	// sleep is not fuzzed
 	// Fuzz Loop
 	// EXISTING_CODE
+	_ = globs
+	globs = noCache(globs)
 	types := []sdk.SlurpTypes{
 		sdk.NoST,
 		sdk.STExt,

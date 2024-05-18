@@ -36,7 +36,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
 		currentBn := base.Blknum(0)
-		prevUnits := base.NewWei(0)
+		prevBalance := base.NewWei(0)
 
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
@@ -61,7 +61,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 
 					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 					finished := false
-					prevUnits, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
+					prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
 					for _, thisMap := range sliceOfMaps {
 						if finished {
 							continue
@@ -72,15 +72,15 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						}
 
 						iterFunc := func(app types.Appearance, value *types.Token) error {
-							var units *base.Wei
-							if units, err = opts.Conn.GetBalanceAt(mon.Address, base.Blknum(app.BlockNumber)); err != nil {
+							var balance *base.Wei
+							if balance, err = opts.Conn.GetBalanceAt(mon.Address, base.Blknum(app.BlockNumber)); err != nil {
 								return err
 							}
 							value.Address = base.FAKE_ETH_ADDRESS
 							value.Holder = mon.Address
 							value.BlockNumber = base.Blknum(app.BlockNumber)
 							value.TransactionIndex = base.Txnum(app.TransactionIndex)
-							value.Units = *units
+							value.Balance = *balance
 							value.Timestamp = app.Timestamp
 							bar.Tick()
 							return nil
@@ -111,19 +111,19 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 
 						for idx, item := range items {
 							visitToken := func(idx int, item *types.Token) error {
-								item.PriorUnits = *prevUnits
+								item.PriorBalance = *prevBalance
 								if item.BlockNumber == 0 || item.BlockNumber != currentBn || item.Timestamp == 0xdeadbeef {
 									item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
 								}
 								currentBn = item.BlockNumber
-								if idx == 0 || item.PriorUnits.Cmp(&item.Units) != 0 || opts.Globals.Verbose {
+								if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
 									var passes bool
 									passes, finished = filter.ApplyCountFilter()
 									if passes {
 										modelChan <- item
 									}
 								}
-								prevUnits = &item.Units
+								prevBalance = &item.Balance
 								return nil
 							}
 							if err := visitToken(idx, item); err != nil {
@@ -137,7 +137,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					}
 					bar.Finish(true /* newLine */)
 				}
-				prevUnits = base.NewWei(0)
+				prevBalance = base.NewWei(0)
 			}
 
 		}
@@ -146,7 +146,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	extra := map[string]interface{}{
 		"testMode": testMode,
 		"export":   true,
-		"parts":    []string{"blockNumber", "date", "holder", "balance", "diff", "units"},
+		"parts":    []string{"blockNumber", "date", "holder", "balance", "diff", "balanceDec"},
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

@@ -112,7 +112,9 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 					logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
 				}
 			} else {
-				logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
+				if !utils.IsFuzzing() {
+					logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
+				}
 			}
 		}
 

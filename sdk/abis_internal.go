@@ -96,6 +96,7 @@ func queryAbis[T abisGeneric](opts *abisOptionsInternal) ([]T, *types.MetaData, 
 
 	var result Result[T]
 	if err := json.Unmarshal([]byte(str), &result); err != nil {
+		debugPrint(str, result, err)
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil

@@ -32,7 +32,7 @@ type ListOptions struct {
 	Count       bool                  `json:"count,omitempty"`       // Display only the count of records for each monitor
 	NoZero      bool                  `json:"noZero,omitempty"`      // For the --count option only, suppress the display of zero appearance accounts
 	Bounds      bool                  `json:"bounds,omitempty"`      // Report first and last block this address appears
-	Unripe      bool                  `json:"unripe,omitempty"`      // List transactions labeled upripe (i.e. less than 28 blocks old)
+	Unripe      bool                  `json:"unripe,omitempty"`      // List transactions labeled unripe (i.e. less than 28 blocks old)
 	Silent      bool                  `json:"silent,omitempty"`      // Freshen the monitor only (no reporting)
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process

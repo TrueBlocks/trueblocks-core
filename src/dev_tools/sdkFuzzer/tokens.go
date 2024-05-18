@@ -35,6 +35,10 @@ func DoTokens() {
 	// Fuzz Loop
 	// EXISTING_CODE
 	_ = byAcct
+	_ = changes
+	changes = []bool{false} // , true}
+	_ = globs
+	globs = noCache(globs)
 	parts := []sdk.TokensParts{
 		sdk.NoTP,
 		sdk.TPName,

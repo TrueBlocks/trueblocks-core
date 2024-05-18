@@ -2,6 +2,9 @@ package sdk
 
 import (
 	"encoding/json"
+	"fmt"
+	"os"
+	"reflect"
 	"strings"
 )
 
@@ -130,4 +133,13 @@ func convertEmptyStrToZero(field, strIn string) string {
 	}
 
 	return str
+}
+
+func debugPrint(str string, t any, err error) {
+	fmt.Println("======================================")
+	fmt.Println(err)
+	fmt.Println(reflect.TypeOf(t))
+	fmt.Println(str[:2000])
+	fmt.Println("======================================")
+	os.Exit(1)
 }

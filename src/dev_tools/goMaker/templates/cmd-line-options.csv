@@ -6,7 +6,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 12030,apps,Accounts,list,acctExport,count,U,,visible|docs,switch,<boolean>,appearanceCount,,,,display only the count of records for each monitor
 12040,apps,Accounts,list,acctExport,no_zero,z,,visible|docs,switch,<boolean>,,,,,for the --count option only&#44; suppress the display of zero appearance accounts
 12050,apps,Accounts,list,acctExport,bounds,b,,visible|docs,switch,<boolean>,bounds,,,,report first and last block this address appears
-12060,apps,Accounts,list,acctExport,unripe,u,,visible|docs,switch,<boolean>,,,,,list transactions labeled upripe (i.e. less than 28 blocks old)
+12060,apps,Accounts,list,acctExport,unripe,u,,visible|docs,switch,<boolean>,,,,,list transactions labeled unripe (i.e. less than 28 blocks old)
 12070,apps,Accounts,list,acctExport,silent,s,,visible|docs,switch,<boolean>,,,,,freshen the monitor only (no reporting)
 12080,apps,Accounts,list,acctExport,first_record,c,,visible|docs,flag,<uint64>,,,,,the first record to process
 12090,apps,Accounts,list,acctExport,max_records,e,250,visible|docs,flag,<uint64>,,,,,the maximum number of records to process
@@ -42,7 +42,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 13230,apps,Accounts,export,acctExport,asset,P,,visible|docs,flag,list<addr>,,,,,for the accounting options only&#44; export statements only for this asset
 13240,apps,Accounts,export,acctExport,flow,f,,visible|docs,flag,enum[in|out|zero],,,,,for the accounting options only&#44; export statements with incoming&#44; outgoing&#44; or zero value
 13250,apps,Accounts,export,acctExport,factory,y,,visible|docs,switch,<boolean>,,,,,for --traces only&#44; report addresses created by (or self-destructed by) the given address(es)
-13260,apps,Accounts,export,acctExport,unripe,u,,visible|docs,switch,<boolean>,,,,,export transactions labeled upripe (i.e. less than 28 blocks old)
+13260,apps,Accounts,export,acctExport,unripe,u,,visible|docs,switch,<boolean>,,,,,export transactions labeled unripe (i.e. less than 28 blocks old)
 13270,apps,Accounts,export,acctExport,load,O,,,flag,<string>,,,,,a comma separated list of dynamic traversers to load
 13280,apps,Accounts,export,acctExport,reversed,E,,visible|docs,switch,<boolean>,,,,,produce results in reverse chronological order
 13290,apps,Accounts,export,acctExport,no_zero,z,,visible|docs,switch,<boolean>,,,,,for the --count option only&#44; suppress the display of zero appearance accounts

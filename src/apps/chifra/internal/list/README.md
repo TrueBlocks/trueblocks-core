@@ -25,7 +25,7 @@ Flags:
   -U, --count               display only the count of records for each monitor
   -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
   -b, --bounds              report first and last block this address appears
-  -u, --unripe              list transactions labeled upripe (i.e. less than 28 blocks old)
+  -u, --unripe              list transactions labeled unripe (i.e. less than 28 blocks old)
   -s, --silent              freshen the monitor only (no reporting)
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 250)
