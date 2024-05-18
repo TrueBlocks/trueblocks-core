@@ -27,9 +27,11 @@ func DoTraces() {
 	ShowHeader("DoTraces", opts)
 
 	globs := globals
+	articulate := []bool{false, true}
+	// filter is a <string> --other
+	// Fuzz Loop
 	// EXISTING_CODE
 	filters := []string{""} // , "0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!"}
-	art := []bool{false, true}
 	opts = sdk.TracesOptions{
 		TransactionIds: []string{"17100101.1", "3189962.7"},
 	}
@@ -40,15 +42,15 @@ func DoTraces() {
 	// func Traces() []types.Trace
 	// func TracesCount() []types.TraceCount
 	for _, f := range filters {
-		for _, a := range art {
+		for _, art := range articulate {
 			baseFn := "traces/traces"
 			if len(f) > 0 {
 				baseFn += "-filter"
 			}
-			if a {
+			if art {
 				baseFn += "-articulate"
 			}
-			opts.Articulate = a
+			opts.Articulate = art
 			opts.Filter = f
 			for _, g := range globs {
 				opts.Globals = g

@@ -114,11 +114,11 @@ func MonitorsFinishParseInternal(w io.Writer, values url.Values) *MonitorsOption
 		case "commands":
 			opts.Commands = value[0]
 		case "batchSize":
-			opts.BatchSize = base.MustParseUint(value[0])
+			opts.BatchSize = base.MustParseUint64(value[0])
 		case "runCount":
-			opts.RunCount = base.MustParseUint(value[0])
+			opts.RunCount = base.MustParseUint64(value[0])
 		case "sleep":
-			opts.Sleep = base.MustParseFloat(value[0])
+			opts.Sleep = base.MustParseFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "monitors")

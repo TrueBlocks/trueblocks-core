@@ -392,7 +392,7 @@ func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 		EffectiveGasPrice: base.MustParseGas(r.EffectiveGasPrice),
 		GasUsed:           base.MustParseGas(r.GasUsed),
 		Status:            base.MustParseValue(r.Status),
-		IsError:           base.MustParseUint(r.Status) == 0,
+		IsError:           base.MustParseUint64(r.Status) == 0,
 		TransactionHash:   base.HexToHash(r.TransactionHash),
 		TransactionIndex:  base.MustParseTxnum(r.TransactionIndex),
 		Logs:              logs,

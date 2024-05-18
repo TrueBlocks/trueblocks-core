@@ -89,6 +89,7 @@ func queryReceipts[T receiptsGeneric](opts *receiptsOptionsInternal) ([]T, *type
 
 	var result Result[T]
 	if err := json.Unmarshal([]byte(str), &result); err != nil {
+		debugPrint(str, result, err)
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil

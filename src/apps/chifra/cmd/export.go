@@ -90,7 +90,7 @@ func init() {
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Flow, "flow", "f", "", `for the accounting options only, export statements with incoming, outgoing, or zero value
 One of [ in | out | zero ]`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Factory, "factory", "y", false, `for --traces only, report addresses created by (or self-destructed by) the given address(es)`)
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Unripe, "unripe", "u", false, `export transactions labeled upripe (i.e. less than 28 blocks old)`)
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Unripe, "unripe", "u", false, `export transactions labeled unripe (i.e. less than 28 blocks old)`)
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Load, "load", "O", "", `a comma separated list of dynamic traversers to load (hidden)`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reversed, "reversed", "E", false, `produce results in reverse chronological order`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().NoZero, "no_zero", "z", false, `for the --count option only, suppress the display of zero appearance accounts`)

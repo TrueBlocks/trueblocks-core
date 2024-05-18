@@ -77,7 +77,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	pidPath := filepath.Join(config.PathToCache(chain), "tmp/scrape.pid")
 	if file.FileExists(pidPath) {
-		pid := base.MustParseInt(file.AsciiFileToString(pidPath))
+		pid := base.MustParseInt64(file.AsciiFileToString(pidPath))
 		// fmt.Println("Pid file exists with contents:", pid)
 		if running, err := utils.PidExists(pid); err == nil && running {
 			return validate.Usage("The {0} is already running. If it is not, remove {1} and try again.", "scraper", pidPath)

@@ -27,8 +27,8 @@ func DoConfig() {
 	ShowHeader("DoConfig", opts)
 
 	globs := noCache(noRaw(noEther(globals)))
+	// Fuzz Loop
 	// EXISTING_CODE
-	// config,command,default|
 	for _, g := range globs {
 		opts.Globals = g
 		fn := getFilename("config/paths", &opts.Globals)

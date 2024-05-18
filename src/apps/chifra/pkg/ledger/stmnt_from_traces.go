@@ -5,6 +5,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
@@ -42,13 +43,15 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Tran
 			}
 			if trace.Action.CallType == "delegatecall" && trace.Action.To != s.AccountedFor {
 				// delegate calls are not included in the transaction's gas cost, so we skip them
-				logger.Info(
-					"Skipping",
-					trace.Action.CallType,
-					"to",
-					trace.Action.To.Hex(),
-					trace.Action.Value.ToEtherStr(18),
-				)
+				if !utils.IsFuzzing() {
+					logger.Info(
+						"Skipping",
+						trace.Action.CallType,
+						"to",
+						trace.Action.To.Hex(),
+						trace.Action.Value.ToEtherStr(18),
+					)
+				}
 				continue
 			}
 

@@ -10,20 +10,19 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-var testBlocks = []string{
-	"46147",
-	"1001001",
-}
-
-var testAddrs = []string{
-	"0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
-}
-
-var testTransactions = []string{
-	"1718497.*",
-}
+var fuzzAddresses = []string{"0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"}
+var fuzzBlocks = []string{"46147", "1001001"}
+var fuzzSmartContract = []string{"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"}
+var fuzzTransactions = []string{"50111.*"}
 
 var firsts = []string{"46147.0", "50111.0", "52029.0"}
+var fuzzAssets = []string{"", "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"}
+var fuzzBelongs = []string{"", "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9"}
+var fuzzEmitters = []string{"", "0x5564886ca2c518d1964e5fcea4f423b41db9f561"}
+var fuzzFourbytes = []string{}
+var fuzzHints = []string{"", "Reward"}
+var fuzzProxyFors = []string{"", "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"}
+var fuzzTopics = []string{"", "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc"}
 
 func init() {
 	os.Setenv("TB_NO_USERQUERY", "true")

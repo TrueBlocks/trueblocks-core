@@ -146,7 +146,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	extra := map[string]interface{}{
 		"testMode": testMode,
 		"export":   true,
-		"parts":    []string{"blockNumber", "date", "holder", "balance", "diff", "units"},
+		"parts":    []string{"blockNumber", "date", "holder", "balance", "diff", "balanceDec"},
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

@@ -135,8 +135,8 @@ func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]inte
 	if base.IsValidAddress(parts[3]) {
 		s.ToAddress = base.HexToAddress(parts[3])
 	}
-	s.After = base.MustParseUint(parts[4])
-	s.Count = base.MustParseUint(parts[5])
+	s.After = base.MustParseUint64(parts[4])
+	s.Count = base.MustParseUint64(parts[5])
 	if s.Count == 0 {
 		s.Count = base.NOPOS
 	}

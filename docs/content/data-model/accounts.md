@@ -199,8 +199,8 @@ Statements consist of the following fields:
 | date                | the timestamp as a date (calculated)                                                                                                  | datetime  |
 | assetAddr           | 0xeeee...eeee for ETH reconciliations, the token address otherwise                                                                    | address   |
 | assetSymbol         | either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain                                              | string    |
-| decimals            | the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                             | uint64    |
-| spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                              | float64   |
+| decimals            | the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                             | value     |
+| spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                              | float     |
 | priceSource         | the on-chain source from which the spot price was taken                                                                               | string    |
 | accountedFor        | the address being accounted for in this reconciliation                                                                                | address   |
 | sender              | the initiator of the transfer (the sender)                                                                                            | address   |
@@ -252,21 +252,21 @@ AppearanceTables consist of the following fields:
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                         | Notes          |
-| --------- | ----------------------------------- | -------------- |
-| address   | an '0x'-prefixed 20-byte hex string | lowercase      |
-| blknum    | an alias for a uint64               |                |
-| bool      | either `true`, `false`, `1`, or `0` |                |
-| datetime  | a JSON formatted date               | as a string    |
-| float64   | a double precision float            | 64 bits        |
-| hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
-| int256    | a signed big number                 | as a string    |
-| int64     | a 64-bit signed integer             |                |
-| lognum    | an alias for a uint64               |                |
-| string    | a normal character string           |                |
-| timestamp | a 64-bit unsigned integer           | Unix timestamp |
-| txnum     | an alias for a uint64               |                |
-| uint32    | a 32-bit unsigned integer           |                |
-| uint64    | a 64-bit unsigned integer           |                |
+| Type      | Description                            | Notes          |
+| --------- | -------------------------------------- | -------------- |
+| address   | an '0x'-prefixed 20-byte hex string    | lowercase      |
+| blknum    | an alias for a uint64                  |                |
+| bool      | either `true`, `false`, `1`, or `0`    |                |
+| datetime  | a JSON formatted date                  | as a string    |
+| hash      | an '0x'-prefixed 32-byte hex string    | lowercase      |
+| int256    | a signed big number                    | as a string    |
+| int64     | a 64-bit signed integer                |                |
+| lognum    | an alias for a uint64                  |                |
+| string    | a normal character string              |                |
+| timestamp | a 64-bit unsigned integer              | Unix timestamp |
+| txnum     | an alias for a uint64                  |                |
+| uint32    | a 32-bit unsigned integer              |                |
+| uint64    | a 64-bit unsigned integer              |                |
+| value     | an alias for a 64-bit unsigned integer |                |
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

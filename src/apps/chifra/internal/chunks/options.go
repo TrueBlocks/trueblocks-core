@@ -145,7 +145,7 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 		case "lastBlock":
 			opts.LastBlock = base.MustParseBlknum(value[0])
 		case "maxAddrs":
-			opts.MaxAddrs = base.MustParseUint(value[0])
+			opts.MaxAddrs = base.MustParseUint64(value[0])
 		case "deep":
 			opts.Deep = true
 		case "rewrite":
@@ -159,7 +159,7 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 		case "tag":
 			opts.Tag = value[0]
 		case "sleep":
-			opts.Sleep = base.MustParseFloat(value[0])
+			opts.Sleep = base.MustParseFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")

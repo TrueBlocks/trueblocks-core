@@ -90,13 +90,13 @@ func ScrapeFinishParseInternal(w io.Writer, values url.Values) *ScrapeOptions {
 	for key, value := range values {
 		switch key {
 		case "blockCnt":
-			opts.BlockCnt = base.MustParseUint(value[0])
+			opts.BlockCnt = base.MustParseUint64(value[0])
 		case "sleep":
-			opts.Sleep = base.MustParseFloat(value[0])
+			opts.Sleep = base.MustParseFloat64(value[0])
 		case "touch":
 			opts.Touch = base.MustParseBlknum(value[0])
 		case "runCount":
-			opts.RunCount = base.MustParseUint(value[0])
+			opts.RunCount = base.MustParseUint64(value[0])
 		case "publisher":
 			opts.Publisher = value[0]
 		case "dryRun":

@@ -27,10 +27,24 @@ func DoMonitors() {
 	ShowHeader("DoMonitors", opts)
 
 	globs := noRaw(noEther(globals))
+	delete := []bool{false, true}
+	undelete := []bool{false, true}
+	remove := []bool{false, true}
+	watch := []bool{false, true}
+	// watchlist is not fuzzed
+	// commands is not fuzzed
+	// batchSize is not fuzzed
+	// runCount is not fuzzed
+	// sleep is not fuzzed
+	// Fuzz Loop
 	// EXISTING_CODE
+	_ = delete
+	_ = undelete
+	_ = remove
+	_ = watch
 	_ = globs
 	opts = sdk.MonitorsOptions{
-		Addrs: []string{testAddrs[0]},
+		Addrs: []string{fuzzAddresses[0]},
 	}
 	// monitors,command,default|caching|
 	// Addrs     []string `json:"addrs,omitempty"`

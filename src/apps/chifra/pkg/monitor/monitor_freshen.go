@@ -383,8 +383,8 @@ func getAppearances(addrStr string, lines []string, lastVisited uint32, found in
 			break
 		}
 		r := types.AppRecord{
-			BlockNumber:      uint32(base.MustParseUint(lines[idx][startOfBlockNum:endOfBlockNum])),
-			TransactionIndex: uint32(base.MustParseUint(lines[idx][startOfTxId:endOfTxId])),
+			BlockNumber:      uint32(base.MustParseUint64(lines[idx][startOfBlockNum:endOfBlockNum])),
+			TransactionIndex: uint32(base.MustParseUint64(lines[idx][startOfTxId:endOfTxId])),
 		}
 		if r.BlockNumber > lastVisited {
 			results = append(results, r)

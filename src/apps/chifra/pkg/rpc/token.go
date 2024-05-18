@@ -31,7 +31,7 @@ const tokenStateBalanceOf tokenStateSelector = "0x70a08231"
 // block or decimal number or hex number with 0x prefix.
 func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo string) (token *types.Token, err error) {
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
-		hexBlockNo = fmt.Sprintf("0x%x", base.MustParseUint(hexBlockNo))
+		hexBlockNo = fmt.Sprintf("0x%x", base.MustParseUint64(hexBlockNo))
 	}
 	payloads := []query.BatchPayload{
 		{
@@ -148,7 +148,7 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo stri
 // decimal number or hex number with 0x prefix.
 func (conn *Connection) GetBalanceAtToken(token, holder base.Address, hexBlockNo string) (*base.Wei, error) {
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
-		hexBlockNo = fmt.Sprintf("0x%x", base.MustParseUint(hexBlockNo))
+		hexBlockNo = fmt.Sprintf("0x%x", base.MustParseUint64(hexBlockNo))
 	}
 
 	payloads := []query.BatchPayload{{

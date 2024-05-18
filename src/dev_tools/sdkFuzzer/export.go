@@ -27,54 +27,61 @@ func DoExport() {
 	ShowHeader("DoExport", opts)
 
 	globs := noRaw(globals)
+	topics := fuzzTopics
+	fourbytes := fuzzFourbytes
+	accounting := []bool{false, true}
+	articulate := []bool{false, true}
+	cacheTraces := []bool{false, true}
+	relevant := []bool{false, true}
+	emitter := fuzzEmitters
+	topic := fuzzTopics
+	reverted := []bool{false, true}
+	asset := fuzzAssets
+	// Option 'flow.enum' is an emum
+	factory := []bool{false, true}
+	unripe := []bool{false, true}
+	reversed := []bool{false, true}
+	noZero := []bool{false, true}
+	// firstBlock is a <blknum> --other
+	// lastBlock is a <blknum> --other
+	// firstRecord is not fuzzed
+	// maxRecords is not fuzzed
+	// load is not fuzzed
+	// Fuzz Loop
 	// EXISTING_CODE
+	flow := []sdk.ExportFlow{sdk.NoEF, sdk.EFIn, sdk.EFOut, sdk.EFZero}
+	_ = topic
+	_ = fourbytes
+	_ = articulate
 	baseFn := "export/export"
 	opts = sdk.ExportOptions{
-		Addrs:       testAddrs,
+		Addrs:       fuzzAddresses,
 		FirstRecord: 0,
 		MaxRecords:  10,
-		// Articulate: true,
 	}
-	// Addrs       []string    `json:"addrs,omitempty"`
-	// Topics      []string    `json:"topics,omitempty"`
-	// Fourbytes   []string    `json:"fourbytes,omitempty"`
-	// Accounting  bool        `json:"accounting,omitempty"`
-	// Articulate  bool        `json:"articulate,omitempty"`
-	// CacheTraces bool        `json:"cacheTraces,omitempty"`
-	// FirstRecord uint64      `json:"firstRecord,omitempty"`
-	// MaxRecords  uint64      `json:"maxRecords,omitempty"`
-	// Relevant    bool        `json:"relevant,omitempty"`
-	// Emitter     []string    `json:"emitter,omitempty"`
-	// Topic       []string    `json:"topic,omitempty"`
-	// Reverted    bool        `json:"reverted,omitempty"`
-	// Asset       []string    `json:"asset,omitempty"`
-	// Flow        ExportFlow  `json:"flow,omitempty"`
-	// Factory     bool        `json:"factory,omitempty"`
-	// Unripe      bool        `json:"unripe,omitempty"`
-	// Load        string      `json:"load,omitempty"`
-	// Reversed    bool        `json:"reversed,omitempty"`
-	// NoZero      bool        `json:"noZero,omitempty"`
-	// FirstBlock  base.Blknum `json:"firstBlock,omitempty"`
-	// LastBlock   base.Blknum `json:"lastBlock,omitempty"`
-	// NoEF ExportFlow = 0
-	// EFIn            = 1 << iota
-	// EFOut
-	// EFZero
-	// export,command,default|caching|ether|
+
 	for _, g := range globs {
 		opts.Globals = g
 		fn := getFilename(baseFn, &opts.Globals)
-		TestExport("export", "", fn, &opts)
-		TestExport("appearances", "", fn, &opts)
+		TestExportExport(reverted, unripe, accounting, reversed, asset, flow, fn, &opts)
+		TestExportApps(noZero, fn, &opts)
 		TestExport("receipts", "", fn, &opts)
-		TestExport("logs", "", fn, &opts)
-		TestExport("traces", "", fn, &opts)
-		TestExport("neighbors", "", fn, &opts)
-		TestExport("statements", "", fn, &opts)
+		TestExportLogs(emitter, topics, relevant, fn, &opts)
+		TestExportTraces(cacheTraces, factory, fn, &opts)
+		// TestExport("neighbors", "", fn, &opts)
 		TestExport("balances", "", fn, &opts)
 		TestExport("withdrawals", "", fn, &opts)
-		TestExport("count", "", fn, &opts)
 	}
+
+	/*
+	   -a, --articulate          articulate transactions, traces, logs, and outputs
+	   -F, --first_block uint    first block to process (inclusive)
+	   -L, --last_block uint     last block to process (inclusive)
+	   -c, --first_record uint   the first record to process
+	   -e, --max_records uint    the maximum number of records to process (default 250)
+	*/
+
+	// Load string `json:"load,omitempty"`
 	// EXISTING_CODE
 	Wait()
 }
@@ -82,6 +89,9 @@ func DoExport() {
 func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 	fn = strings.Replace(fn, ".json", "-"+which+".json", 1)
 	// EXISTING_CODE
+	fn = strings.ReplaceAll(fn, "-true", "t")
+	fn = strings.ReplaceAll(fn, "-false", "f")
+	fn = strings.ReplaceAll(fn, ".json", "") + ".json"
 	// EXISTING_CODE
 
 	switch which {
@@ -193,4 +203,78 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 }
 
 // EXISTING_CODE
+func TestExportApps(noZero []bool, fn string, opt *sdk.ExportOptions) {
+	opts := *opt
+	for _, n := range noZero {
+		opts.NoZero = n
+		if n {
+			fn += "-noZero"
+		}
+		TestExport("appearances", "", fn, &opts)
+		TestExport("count", "", fn, &opts)
+	}
+}
+
+func TestExportLogs(emitter, topics []string, relevant []bool, fn string, opt *sdk.ExportOptions) {
+	for _, e := range emitter {
+		for _, t := range topics {
+			for _, r := range relevant {
+				opts := *opt
+				if len(e) > 0 {
+					opts.Emitter = []string{e}
+				}
+				if len(t) > 0 {
+					opts.Topic = []string{t}
+				}
+				opts.Relevant = r
+				if r {
+					fn += "-relevant"
+				}
+				ff := fn + "-" + e + "-" + t
+				TestExport("logs", "", ff, &opts)
+			}
+		}
+	}
+}
+
+func TestExportTraces(cacheTraces, factor []bool, fn string, opt *sdk.ExportOptions) {
+	for _, c := range cacheTraces {
+		for _, f := range factor {
+			opts := *opt
+			opts.CacheTraces = c
+			opts.Factory = f
+			if c {
+				fn += "-cacheTraces"
+			}
+			if f {
+				fn += "-factory"
+			}
+			TestExport("traces", "", fn, &opts)
+		}
+	}
+}
+
+func TestExportExport(reverted, unripe, accounting, reversed []bool, asset []string, flow []sdk.ExportFlow, fn string, opts *sdk.ExportOptions) {
+	for _, r := range reverted {
+		for _, u := range unripe {
+			for _, a := range accounting {
+				for _, rv := range reversed {
+					opts := *opts
+					opts.Reverted = r
+					opts.Unripe = u
+					opts.Accounting = a
+					opts.Reversed = rv
+					ff := fmt.Sprintf("%s--%t-%t-%t-%t", fn, r, u, a, rv)
+					TestExport("export", "", ff, &opts)
+					for _, as := range asset {
+						opts.Asset = []string{as}
+						ff += fmt.Sprintf("-%s", as)
+						TestExport("statements", "", ff, &opts)
+					}
+				}
+			}
+		}
+	}
+}
+
 // EXISTING_CODE

@@ -70,7 +70,7 @@ type Statement struct {
 	CorrectingIn        base.Wei       `json:"correctingIn,omitempty"`
 	CorrectingOut       base.Wei       `json:"correctingOut,omitempty"`
 	CorrectingReason    string         `json:"correctingReason,omitempty"`
-	Decimals            uint64         `json:"decimals"`
+	Decimals            base.Value     `json:"decimals"`
 	EndBal              base.Wei       `json:"endBal"`
 	GasOut              base.Wei       `json:"gasOut,omitempty"`
 	InternalIn          base.Wei       `json:"internalIn,omitempty"`
@@ -87,7 +87,7 @@ type Statement struct {
 	SelfDestructIn      base.Wei       `json:"selfDestructIn,omitempty"`
 	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
-	SpotPrice           float64        `json:"spotPrice"`
+	SpotPrice           base.Float     `json:"spotPrice"`
 	Timestamp           base.Timestamp `json:"timestamp"`
 	TransactionHash     base.Hash      `json:"transactionHash"`
 	TransactionIndex    base.Txnum     `json:"transactionIndex"`
@@ -179,41 +179,41 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOptions map[s
 
 	asEther := extraOptions["ether"] == true
 	if asEther {
-		model["begBal-eth"] = s.BegBal.ToEtherStr(decimals)
-		model["amountNet-eth"] = s.AmountNet().ToEtherStr(decimals)
-		model["endBal-eth"] = s.EndBal.ToEtherStr(decimals)
-		model["totalIn-eth"] = s.TotalIn().ToEtherStr(decimals)
-		model["amountIn-eth"] = s.AmountIn.ToEtherStr(decimals)
-		model["internalIn-eth"] = s.InternalIn.ToEtherStr(decimals)
-		model["selfDestructIn-eth"] = s.SelfDestructIn.ToEtherStr(decimals)
-		model["minerBaseRewardIn-eth"] = s.MinerBaseRewardIn.ToEtherStr(decimals)
-		model["minerNephewRewardIn-eth"] = s.MinerNephewRewardIn.ToEtherStr(decimals)
-		model["minerTxFeeIn-eth"] = s.MinerTxFeeIn.ToEtherStr(decimals)
-		model["minerUncleRewardIn-eth"] = s.MinerUncleRewardIn.ToEtherStr(decimals)
-		model["correctingIn-eth"] = s.CorrectingIn.ToEtherStr(decimals)
-		model["prefundIn-eth"] = s.PrefundIn.ToEtherStr(decimals)
-		model["totalOut-eth"] = s.TotalOut().ToEtherStr(decimals)
-		model["amountOut-eth"] = s.AmountOut.ToEtherStr(decimals)
-		model["internalOut-eth"] = s.InternalOut.ToEtherStr(decimals)
-		model["correctingOut-eth"] = s.CorrectingOut.ToEtherStr(decimals)
-		model["selfDestructOut-eth"] = s.SelfDestructOut.ToEtherStr(decimals)
-		model["gasOut-eth"] = s.GasOut.ToEtherStr(decimals)
-		model["totalOutLessGas-eth"] = s.TotalOutLessGas().ToEtherStr(decimals)
-		model["begBalDiff-eth"] = s.BegBalDiff().ToEtherStr(decimals)
-		model["endBalDiff-eth"] = s.EndBalDiff().ToEtherStr(decimals)
-		model["endBalCalc-eth"] = s.EndBalCalc().ToEtherStr(decimals)
+		model["begBalEth"] = s.BegBal.ToEtherStr(decimals)
+		model["amountNetEth"] = s.AmountNet().ToEtherStr(decimals)
+		model["endBalEth"] = s.EndBal.ToEtherStr(decimals)
+		model["totalInEth"] = s.TotalIn().ToEtherStr(decimals)
+		model["amountInEth"] = s.AmountIn.ToEtherStr(decimals)
+		model["internalInEth"] = s.InternalIn.ToEtherStr(decimals)
+		model["selfDestructInEth"] = s.SelfDestructIn.ToEtherStr(decimals)
+		model["minerBaseRewardInEth"] = s.MinerBaseRewardIn.ToEtherStr(decimals)
+		model["minerNephewRewardInEth"] = s.MinerNephewRewardIn.ToEtherStr(decimals)
+		model["minerTxFeeInEth"] = s.MinerTxFeeIn.ToEtherStr(decimals)
+		model["minerUncleRewardInEth"] = s.MinerUncleRewardIn.ToEtherStr(decimals)
+		model["correctingInEth"] = s.CorrectingIn.ToEtherStr(decimals)
+		model["prefundInEth"] = s.PrefundIn.ToEtherStr(decimals)
+		model["totalOutEth"] = s.TotalOut().ToEtherStr(decimals)
+		model["amountOutEth"] = s.AmountOut.ToEtherStr(decimals)
+		model["internalOutEth"] = s.InternalOut.ToEtherStr(decimals)
+		model["correctingOutEth"] = s.CorrectingOut.ToEtherStr(decimals)
+		model["selfDestructOutEth"] = s.SelfDestructOut.ToEtherStr(decimals)
+		model["gasOutEth"] = s.GasOut.ToEtherStr(decimals)
+		model["totalOutLessGasEth"] = s.TotalOutLessGas().ToEtherStr(decimals)
+		model["begBalDiffEth"] = s.BegBalDiff().ToEtherStr(decimals)
+		model["endBalDiffEth"] = s.EndBalDiff().ToEtherStr(decimals)
+		model["endBalCalcEth"] = s.EndBalCalc().ToEtherStr(decimals)
 		if s.ReconType&First == 0 {
-			model["prevBal-eth"] = s.PrevBal.ToEtherStr(decimals)
+			model["prevBalEth"] = s.PrevBal.ToEtherStr(decimals)
 		} else if format != "json" {
-			model["prevBal-eth"] = ""
+			model["prevBalEth"] = ""
 		}
-		order = append(order, []string{"begBal-eth", "amountNet-eth", "endBal-eth",
-			"totalIn-eth", "amountIn-eth", "internalIn-eth", "selfDestructIn-eth",
-			"minerBaseRewardIn-eth", "minerNephewRewardIn-eth", "minerTxFeeIn-eth",
-			"minerUncleRewardIn-eth", "correctingIn-eth", "prefundIn-eth",
-			"totalOut-eth", "amountOut-eth", "internalOut-eth", "correctingOut-eth",
-			"selfDestructOut-eth", "gasOut-eth", "totalOutLessGas-eth", "begBalDiff-eth",
-			"endBalDiff-eth", "endBalCalc-eth", "prevBal-eth"}...)
+		order = append(order, []string{"begBalEth", "amountNetEth", "endBalEth",
+			"totalInEth", "amountInEth", "internalInEth", "selfDestructInEth",
+			"minerBaseRewardInEth", "minerNephewRewardInEth", "minerTxFeeInEth",
+			"minerUncleRewardInEth", "correctingInEth", "prefundInEth",
+			"totalOutEth", "amountOutEth", "internalOutEth", "correctingOutEth",
+			"selfDestructOutEth", "gasOutEth", "totalOutLessGasEth", "begBalDiffEth",
+			"endBalDiffEth", "endBalCalcEth", "prevBalEth"}...)
 	}
 	// EXISTING_CODE
 

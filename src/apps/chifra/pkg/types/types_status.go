@@ -157,7 +157,7 @@ func (s *Status) Model(chain, format string, verbose bool, extraOptions map[stri
 			for _, chain := range chainArray {
 				ch := Chain{
 					Chain:          chain.Chain,
-					ChainId:        base.MustParseUint(chain.ChainId),
+					ChainId:        base.MustParseUint64(chain.ChainId),
 					LocalExplorer:  chain.LocalExplorer,
 					RemoteExplorer: chain.RemoteExplorer,
 					RpcProvider:    chain.RpcProvider,

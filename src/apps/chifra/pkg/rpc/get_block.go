@@ -202,7 +202,7 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, 
 
 	block = types.Block[Tx]{
 		BlockNumber: base.MustParseBlknum(rawBlock.BlockNumber),
-		Timestamp:   base.Timestamp(base.MustParseInt(rawBlock.Timestamp)), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
+		Timestamp:   base.Timestamp(base.MustParseInt64(rawBlock.Timestamp)), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
 		Hash:        base.HexToHash(rawBlock.Hash),
 		ParentHash:  base.HexToHash(rawBlock.ParentHash),
 		GasLimit:    base.MustParseGas(rawBlock.GasLimit),
@@ -243,7 +243,7 @@ func (conn *Connection) getBlockRaw(bn base.Blknum, withTxs bool) (*types.RawBlo
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
 			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(0))
-		} else if base.MustParseUint(block.Timestamp) == 0 {
+		} else if base.MustParseUint64(block.Timestamp) == 0 {
 			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}
 

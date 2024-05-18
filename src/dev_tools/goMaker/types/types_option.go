@@ -764,7 +764,7 @@ func (op *Option) RequestOpt() string {
 		} else if op.DataType == "<uint64>" {
 			tmplName := "requestOpts4"
 			tmpl := `		case "{{toCamel .LongName}}":
-			opts.{{.GoName}} = base.MustParseUint(value[0])`
+			opts.{{.GoName}} = base.MustParseUint64(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else if op.DataType == "<blknum>" {
 			tmplName := "requestOpts5"
@@ -774,7 +774,7 @@ func (op *Option) RequestOpt() string {
 		} else if op.DataType == "<float64>" {
 			tmplName := "requestOpts6"
 			tmpl := `		case "{{toCamel .LongName}}":
-			opts.{{.GoName}} = base.MustParseFloat(value[0])`
+			opts.{{.GoName}} = base.MustParseFloat64(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else {
 			tmplName := "requestOpts7"

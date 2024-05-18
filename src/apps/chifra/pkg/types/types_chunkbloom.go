@@ -80,6 +80,10 @@ func (s *ChunkBloom) Model(chain, format string, verbose bool, extraOptions map[
 		"size",
 		"byteWidth",
 	}
+	if format == "json" {
+		model["hash"] = s.Hash.Hex()
+		model["hashValue"] = FormattedTag(verbose, s.Hash)
+	}
 	// EXISTING_CODE
 
 	return Model{

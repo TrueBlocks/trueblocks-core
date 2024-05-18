@@ -28,22 +28,26 @@ func DoTransactions() {
 	ShowHeader("DoTransactions", opts)
 
 	globs := globals
+	articulate := []bool{false, true}
+	// Option 'flow.enum' is an emum
+	emitter := fuzzEmitters
+	topic := fuzzTopics
+	cacheTraces := []bool{false, true}
+	// Fuzz Loop
 	// EXISTING_CODE
-	art := []bool{false, true}
+	_ = cacheTraces
+	_ = emitter
+	_ = topic
 	cts := []bool{false, true}
-	// opts = sdk.TransactionsOptions{
-	// 	TransactionIds: testTransactions,
-	// }
-	// transactions,command,default|caching|ether|raw|
-	for _, a := range art {
+	for _, art := range articulate {
 		for _, c := range cts {
-			opts := sdk.TransactionsOptions{
-				TransactionIds: testTransactions,
+			opts = sdk.TransactionsOptions{
+				TransactionIds: fuzzTransactions,
 			}
 			baseFn := "transactions/transactions"
-			opts.Articulate = a
+			opts.Articulate = art
 			opts.CacheTraces = c
-			if a {
+			if art {
 				baseFn += "-articulate"
 			}
 			if c {
@@ -61,44 +65,42 @@ func DoTransactions() {
 		}
 	}
 
-	emitters := []string{"", "0x5564886ca2c518d1964e5fcea4f423b41db9f561"}
-	topics := []string{"", "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc"}
-	for _, t := range topics {
-		for _, e := range emitters {
-			opts := sdk.TransactionsOptions{
-				TransactionIds: []string{"17100101.1"},
-			}
-			baseFn := "transactions/transactions-logs"
-			if len(e) > 0 {
-				opts.Emitter = []string{e}
-				baseFn += "-emitter"
-			}
-			if len(t) > 0 {
-				opts.Topic = []string{t}
-				baseFn += "-topic"
-			}
-			for _, g := range globs {
-				opts.Globals = g
-				fn := getFilename(baseFn, &opts.Globals)
-				TestTransactions("logs", "", fn, &opts)
-			}
-		}
-	}
+	// for _, t := range topic {
+	// 	for _, e := range emitter {
+	// 		opts := sdk.TransactionsOptions{
+	// 			TransactionIds: fuzzTransactions,
+	// 		}
+	// 		baseFn := "transactions/transactions-logs"
+	// 		opts.Emitter = []string{e}
+	// 		if len(e) > 0 {
+	// 			baseFn += "-emitter"
+	// 		}
+	// 		opts.Topic = []string{t}
+	// 		if len(t) > 0 {
+	// 			baseFn += "-topic"
+	// 		}
+	// 		for _, g := range globs {
+	// 			opts.Globals = g
+	// 			fn := getFilename(baseFn, &opts.Globals)
+	// 			TestTransactions("logs", "", fn, &opts)
+	// 		}
+	// 	}
+	// }
 
-	flows := []sdk.TransactionsFlow{sdk.NoTF, sdk.TFFrom, sdk.TFTo}
-	for _, f := range flows {
-		opts := sdk.TransactionsOptions{
-			TransactionIds: []string{"17100101.1"},
-		}
-		baseFn := "transactions/transactions-uniq"
-		opts.Flow = f
-		baseFn += "-flow-" + f.String()
-		for _, g := range globs {
-			opts.Globals = g
-			fn := getFilename(baseFn, &opts.Globals)
-			TestTransactions("uniq", "", fn, &opts)
-		}
-	}
+	// flows := []sdk.TransactionsFlow{sdk.NoTF, sdk.TFFrom, sdk.TFTo}
+	// for _, f := range flows {
+	// 	opts := sdk.TransactionsOptions{
+	// 		TransactionIds: fuzzTransactions,
+	// 	}
+	// 	baseFn := "transactions/transactions-uniq"
+	// 	opts.Flow = f
+	// 	baseFn += "-flow-" + f.String()
+	// 	for _, g := range globs {
+	// 		opts.Globals = g
+	// 		fn := getFilename(baseFn, &opts.Globals)
+	// 		TestTransactions("uniq", "", fn, &opts)
+	// 	}
+	// }
 
 	// Not tested
 	// func (opts *TransactionsOptions) TransactionsSeed() ([]bool, *types.MetaData, error) {

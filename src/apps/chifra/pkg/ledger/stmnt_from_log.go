@@ -30,14 +30,14 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 
 	} else {
 		sym := log.Address.Prefix(6)
-		decimals := uint64(18)
+		decimals := base.Value(18)
 		name := l.Names[log.Address]
 		if name.Address == log.Address {
 			if name.Symbol != "" {
 				sym = name.Symbol
 			}
 			if name.Decimals != 0 {
-				decimals = name.Decimals
+				decimals = base.Value(name.Decimals)
 			}
 		}
 
@@ -112,7 +112,9 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 					logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
 				}
 			} else {
-				logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
+				if !utils.IsFuzzing() {
+					logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
+				}
 			}
 		}
 

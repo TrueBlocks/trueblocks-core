@@ -94,11 +94,11 @@ func (s *Token) Model(chain, format string, verbose bool, extraOptions map[strin
 		} else if wanted[0] == "all_held" {
 			if verbose {
 				wanted = []string{
-					"blockNumber", "timestamp", "date", "holder", "address", "name", "symbol", "decimals", "balance", "units",
+					"blockNumber", "timestamp", "date", "holder", "address", "name", "symbol", "decimals", "balance", "balanceDec",
 				}
 			} else {
 				wanted = []string{
-					"blockNumber", "holder", "address", "name", "symbol", "decimals", "balance", "units",
+					"blockNumber", "holder", "address", "name", "symbol", "decimals", "balance", "balanceDec",
 				}
 			}
 		}
@@ -118,7 +118,9 @@ func (s *Token) Model(chain, format string, verbose bool, extraOptions map[strin
 		case "address":
 			model["address"] = s.Address
 		case "balance":
-			model["balance"] = s.Balance.ToEtherStr(int(name.Decimals))
+			model["balance"] = s.Balance.String()
+		case "balanceDec":
+			model["balanceDec"] = s.Balance.ToEtherStr(int(name.Decimals))
 		case "blockNumber":
 			model["blockNumber"] = s.BlockNumber
 		case "date":
@@ -139,8 +141,6 @@ func (s *Token) Model(chain, format string, verbose bool, extraOptions map[strin
 			model["totalSupply"] = s.TotalSupply.ToEtherStr(int(name.Decimals))
 		case "transactionIndex":
 			model["transactionIndex"] = s.TransactionIndex
-		case "units":
-			model["units"] = s.Balance.String()
 		case "version":
 			model["version"] = ""
 		}

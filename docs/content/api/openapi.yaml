@@ -121,7 +121,7 @@ paths:
           schema:
             type: boolean
         - name: unripe
-          description: list transactions labeled upripe (i.e. less than 28 blocks old)
+          description: list transactions labeled unripe (i.e. less than 28 blocks old)
           required: false
           style: form
           in: query
@@ -464,7 +464,7 @@ paths:
           schema:
             type: boolean
         - name: unripe
-          description: export transactions labeled upripe (i.e. less than 28 blocks old)
+          description: export transactions labeled unripe (i.e. less than 28 blocks old)
           required: false
           style: form
           in: query
@@ -3204,11 +3204,11 @@ components:
           description: "either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain"
         decimals:
           type: number
-          format: uint64
+          format: value
           description: "the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18"
         spotPrice:
           type: number
-          format: float64
+          format: float
           description: "the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
         priceSource:
           type: string

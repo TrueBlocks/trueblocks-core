@@ -74,6 +74,10 @@ func (s *ChunkIndex) Model(chain, format string, verbose bool, extraOptions map[
 		"nAppearances",
 		"fileSize",
 	}
+	if format == "json" {
+		model["hash"] = s.Hash.Hex()
+		model["hashValue"] = FormattedTag(verbose, s.Hash)
+	}
 	// EXISTING_CODE
 
 	return Model{

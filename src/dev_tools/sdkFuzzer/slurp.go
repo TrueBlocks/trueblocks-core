@@ -27,8 +27,19 @@ func DoSlurp() {
 	ShowHeader("DoSlurp", opts)
 
 	globs := globals
+	// Option 'types.list<enum>' is an emum
+	articulate := []bool{false, true}
+	// Option 'source.enum' is an emum
+	// blocks is not fuzzed
+	// page is not fuzzed
+	// pageId is not fuzzed
+	// perPage is not fuzzed
+	// sleep is not fuzzed
+	// Fuzz Loop
 	// EXISTING_CODE
-	types1 := []sdk.SlurpTypes{
+	_ = globs
+	globs = noCache(globs)
+	types := []sdk.SlurpTypes{
 		sdk.NoST,
 		sdk.STExt,
 		sdk.STInt,
@@ -47,28 +58,27 @@ func DoSlurp() {
 		sdk.SSCovalent,
 		sdk.SSAlchemy,
 	}
-	art := []bool{false, true}
 	// slurp,command,default|caching|ether|raw|
 	// Page       uint64      `json:"page,omitempty"`
 	// PageId     string      `json:"pageId,omitempty"`
 	// PerPage    uint64      `json:"perPage,omitempty"`
 	opts = sdk.SlurpOptions{
-		Addrs:   []string{testAddrs[0]},
+		Addrs:   []string{fuzzAddresses[0]},
 		PerPage: 10,
 	}
 	for _, s := range sources {
-		for _, t := range types1 {
+		for _, t := range types {
 			if sdk.NoST != t && sdk.SSEtherscan != s {
 				continue
 			}
-			for _, a := range art {
+			for _, art := range articulate {
 				baseFn := "slurp/slurp" + "-" + t.String() + "-" + s.String()
-				if a {
+				if art {
 					baseFn += "-articulate"
 				}
 				opts.Source = s
 				opts.Types = t
-				opts.Articulate = a
+				opts.Articulate = art
 				for _, g := range globs {
 					opts.Globals = g
 					fn := getFilename(baseFn, &opts.Globals)
