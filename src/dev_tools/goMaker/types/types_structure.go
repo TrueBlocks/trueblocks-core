@@ -24,6 +24,7 @@ type Structure struct {
 	CacheType   string    `json:"cache_type,omitempty" toml:"cache_type"`
 	DisableGo   bool      `json:"disable_go,omitempty" toml:"disable_go"`
 	DisableDocs bool      `json:"disable_docs,omitempty" toml:"disable_docs"`
+	Attributes  string    `json:"attributes,omitempty" toml:"attributes"`
 	Members     []Member  `json:"members,omitempty" toml:"members"`
 	Route       string    `json:"-" toml:"-"`
 	Producers   []string  `json:"-" toml:"-"`
@@ -66,6 +67,10 @@ func (s *Structure) IsMarshalOnly() bool {
 
 func (s *Structure) IsCacheAsGroup() bool {
 	return s.CacheAs == "group"
+}
+
+func (s *Structure) IsSimpOnly() bool {
+	return strings.Contains(s.Attributes, "simonly")
 }
 
 func (s *Structure) HasNotes() bool {
