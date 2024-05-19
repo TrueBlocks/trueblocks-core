@@ -9,11 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// GetLogsByFilter returns the logs given a filter
-func (conn *Connection) GetLogsByFilter(filter types.LogFilter) ([]types.Log, error) {
-	return conn.getLogs(filter)
-}
-
 // GetLogsByNumber returns the logs of a block
 func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.Log, error) {
 	if conn.StoreReadable() {
@@ -77,7 +72,7 @@ func (conn *Connection) getLogs(filter types.LogFilter) ([]types.Log, error) {
 	method := "eth_getLogs"
 	params := query.Params{p}
 
-	if rawLogs, err := query.Query[[]types.RawLog](conn.Chain, method, params); err != nil {
+	if rawLogs, err := query.Query[[]types.Log](conn.Chain, method, params); err != nil {
 		return []types.Log{}, err
 
 	} else if rawLogs == nil || len(*rawLogs) == 0 {
@@ -88,17 +83,14 @@ func (conn *Connection) getLogs(filter types.LogFilter) ([]types.Log, error) {
 		curTs := base.NOPOSI
 		var ret []types.Log
 		for _, rawLog := range *rawLogs {
-			bn := base.MustParseBlknum(rawLog.BlockNumber)
+			bn := rawLog.BlockNumber
 			if bn != curBlock {
 				curTs = conn.GetBlockTimestamp(bn)
 				curBlock = bn
 			}
-			txHash := base.HexToHash(rawLog.TransactionHash)
-			log, _ := rawLog.RawTo(map[string]any{
-				"hash":      txHash,
-				"timestamp": curTs,
-			})
-			ret = append(ret, log)
+			rawLog.BlockNumber = curBlock
+			rawLog.Timestamp = curTs
+			ret = append(ret, rawLog)
 		}
 		return ret, nil
 	}

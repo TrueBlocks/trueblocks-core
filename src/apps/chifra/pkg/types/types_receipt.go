@@ -25,19 +25,19 @@ import (
 // EXISTING_CODE
 
 type RawReceipt struct {
-	BlockHash         string   `json:"blockHash"`
-	BlockNumber       string   `json:"blockNumber"`
-	ContractAddress   string   `json:"contractAddress"`
-	CumulativeGasUsed string   `json:"cumulativeGasUsed"`
-	EffectiveGasPrice string   `json:"effectiveGasPrice"`
-	From              string   `json:"from"`
-	GasUsed           string   `json:"gasUsed"`
-	Logs              []RawLog `json:"logs"`
-	LogsBloom         string   `json:"logsBloom"`
-	Status            string   `json:"status"`
-	To                string   `json:"to"`
-	TransactionHash   string   `json:"transactionHash"`
-	TransactionIndex  string   `json:"transactionIndex"`
+	BlockHash         string `json:"blockHash"`
+	BlockNumber       string `json:"blockNumber"`
+	ContractAddress   string `json:"contractAddress"`
+	CumulativeGasUsed string `json:"cumulativeGasUsed"`
+	EffectiveGasPrice string `json:"effectiveGasPrice"`
+	From              string `json:"from"`
+	GasUsed           string `json:"gasUsed"`
+	Logs              []Log  `json:"logs"`
+	LogsBloom         string `json:"logsBloom"`
+	Status            string `json:"status"`
+	To                string `json:"to"`
+	TransactionHash   string `json:"transactionHash"`
+	TransactionIndex  string `json:"transactionIndex"`
 }
 
 type Receipt struct {
@@ -371,12 +371,6 @@ func (s *Receipt) IsDefault() bool {
 }
 
 func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
-	logs := []Log{}
-	for _, rawLog := range r.Logs {
-		log, _ := rawLog.RawTo(vals)
-		logs = append(logs, log)
-	}
-
 	cumulativeGasUsed, err := hexutil.DecodeUint64(r.CumulativeGasUsed)
 	if err != nil {
 		return Receipt{}, err
@@ -393,7 +387,7 @@ func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
 		IsError:           base.MustParseUint64(r.Status) == 0,
 		TransactionHash:   base.HexToHash(r.TransactionHash),
 		TransactionIndex:  base.MustParseTxnum(r.TransactionIndex),
-		Logs:              logs,
+		Logs:              r.Logs,
 		raw:               r,
 	}
 

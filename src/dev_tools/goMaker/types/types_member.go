@@ -174,7 +174,7 @@ func (m *Member) RawType() string {
 		}
 	case "Receipt":
 		if m.GoName() == "Logs" {
-			return "[]RawLog"
+			return "[]Log"
 		}
 	case "Transaction":
 		if m.GoName() == "AccessList" {

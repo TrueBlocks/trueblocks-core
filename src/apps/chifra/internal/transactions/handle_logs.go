@@ -26,7 +26,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 	logFilter := types.NewLogFilter(opts.Emitter, opts.Topic)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Log], errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err

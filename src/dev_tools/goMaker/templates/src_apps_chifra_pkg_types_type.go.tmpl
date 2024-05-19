@@ -11,15 +11,15 @@ package types
 // EXISTING_CODE
 // EXISTING_CODE
 
-type Raw{{.Class}} struct {
+{{if .HasRaw}}type Raw{{.Class}} struct {
 {{range .Members}}{{if .IsRawField}}{{.GoName}} {{.RawType}} {{.RawTag}}
 {{end}}{{end}}
 }
-
+{{end}}
 type {{.ModelName "simple"}} struct {
 {{range .Members}}{{if .IsSimpField}}{{.GoName}} {{.GoType}} {{.Tag}}
-{{end}}{{end}}	raw *Raw{{.Class}} `json:"-"`
-	// EXISTING_CODE
+{{end}}{{end}}{{if .HasRaw}}	raw *Raw{{.Class}} `json:"-"`
+{{end}}	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -28,13 +28,13 @@ func (s {{.ModelName ""}}) String() string {
 	return string(bytes)
 }
 
-func (s *{{.ModelName ""}}) Raw() *Raw{{.Class}} {
-	return s.raw
+func (s *{{.ModelName ""}}) Raw() *{{if .HasRaw}}Raw{{end}}{{.Class}} {
+	return {{if .HasRaw}}s.raw{{else}}s{{end}}
 }
 
-func (s *{{.ModelName ""}}) SetRaw(raw *Raw{{.Class}}) {
-	s.raw = raw
-}
+func (s *{{.ModelName ""}}) SetRaw(raw *{{if .HasRaw}}Raw{{end}}{{.Class}}) {
+{{if .HasRaw}}	s.raw = raw
+{{end}}}
 
 func (s *{{.ModelName ""}}) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
