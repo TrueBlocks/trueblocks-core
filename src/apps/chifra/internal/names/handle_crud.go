@@ -45,7 +45,7 @@ func (opts *NamesOptions) HandleCrud() (err error) {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Name], errorChan chan error) {
 		modelChan <- name
 	}
 

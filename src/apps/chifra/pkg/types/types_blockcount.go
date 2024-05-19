@@ -17,17 +17,6 @@ import (
 
 // EXISTING_CODE
 
-type RawBlockCount struct {
-	AddressCnt      string `json:"addressCnt"`
-	BlockNumber     string `json:"blockNumber"`
-	LogsCnt         string `json:"logsCnt"`
-	Timestamp       string `json:"timestamp"`
-	TracesCnt       string `json:"tracesCnt"`
-	TransactionsCnt string `json:"transactionsCnt"`
-	UnclesCnt       string `json:"unclesCnt"`
-	WithdrawalsCnt  string `json:"withdrawalsCnt"`
-}
-
 type BlockCount struct {
 	AddressCnt      uint64         `json:"addressCnt,omitempty"`
 	BlockNumber     base.Blknum    `json:"blockNumber"`
@@ -37,7 +26,6 @@ type BlockCount struct {
 	TransactionsCnt uint64         `json:"transactionsCnt"`
 	UnclesCnt       uint64         `json:"unclesCnt,omitempty"`
 	WithdrawalsCnt  uint64         `json:"withdrawalsCnt,omitempty"`
-	raw             *RawBlockCount `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -47,12 +35,11 @@ func (s BlockCount) String() string {
 	return string(bytes)
 }
 
-func (s *BlockCount) Raw() *RawBlockCount {
-	return s.raw
+func (s *BlockCount) Raw() *BlockCount {
+	return s
 }
 
-func (s *BlockCount) SetRaw(raw *RawBlockCount) {
-	s.raw = raw
+func (s *BlockCount) SetRaw(raw *BlockCount) {
 }
 
 func (s *BlockCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

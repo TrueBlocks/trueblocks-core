@@ -15,27 +15,15 @@ import (
 
 // EXISTING_CODE
 
-type RawReportCheck struct {
-	CheckedCnt string   `json:"checkedCnt"`
-	FailedCnt  string   `json:"failedCnt"`
+type ReportCheck struct {
+	CheckedCnt uint64   `json:"checkedCnt"`
+	FailedCnt  uint64   `json:"failedCnt"`
 	MsgStrings []string `json:"msgStrings"`
-	PassedCnt  string   `json:"passedCnt"`
+	PassedCnt  uint64   `json:"passedCnt"`
 	Reason     string   `json:"reason"`
 	Result     string   `json:"result"`
-	SkippedCnt string   `json:"skippedCnt"`
-	VisitedCnt string   `json:"visitedCnt"`
-}
-
-type ReportCheck struct {
-	CheckedCnt uint64          `json:"checkedCnt"`
-	FailedCnt  uint64          `json:"failedCnt"`
-	MsgStrings []string        `json:"msgStrings"`
-	PassedCnt  uint64          `json:"passedCnt"`
-	Reason     string          `json:"reason"`
-	Result     string          `json:"result"`
-	SkippedCnt uint64          `json:"skippedCnt"`
-	VisitedCnt uint64          `json:"visitedCnt"`
-	raw        *RawReportCheck `json:"-"`
+	SkippedCnt uint64   `json:"skippedCnt"`
+	VisitedCnt uint64   `json:"visitedCnt"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -45,12 +33,11 @@ func (s ReportCheck) String() string {
 	return string(bytes)
 }
 
-func (s *ReportCheck) Raw() *RawReportCheck {
-	return s.raw
+func (s *ReportCheck) Raw() *ReportCheck {
+	return s
 }
 
-func (s *ReportCheck) SetRaw(raw *RawReportCheck) {
-	s.raw = raw
+func (s *ReportCheck) SetRaw(raw *ReportCheck) {
 }
 
 func (s *ReportCheck) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

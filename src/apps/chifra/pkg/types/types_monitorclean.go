@@ -17,19 +17,11 @@ import (
 
 // EXISTING_CODE
 
-type RawMonitorClean struct {
-	Address  string `json:"address"`
-	Dups     string `json:"dups"`
-	SizeNow  string `json:"sizeNow"`
-	SizeThen string `json:"sizeThen"`
-}
-
 type MonitorClean struct {
-	Address  base.Address     `json:"address"`
-	Dups     int64            `json:"dups"`
-	SizeNow  int64            `json:"sizeNow"`
-	SizeThen int64            `json:"sizeThen"`
-	raw      *RawMonitorClean `json:"-"`
+	Address  base.Address `json:"address"`
+	Dups     int64        `json:"dups"`
+	SizeNow  int64        `json:"sizeNow"`
+	SizeThen int64        `json:"sizeThen"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -39,12 +31,11 @@ func (s MonitorClean) String() string {
 	return string(bytes)
 }
 
-func (s *MonitorClean) Raw() *RawMonitorClean {
-	return s.raw
+func (s *MonitorClean) Raw() *MonitorClean {
+	return s
 }
 
-func (s *MonitorClean) SetRaw(raw *RawMonitorClean) {
-	s.raw = raw
+func (s *MonitorClean) SetRaw(raw *MonitorClean) {
 }
 
 func (s *MonitorClean) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

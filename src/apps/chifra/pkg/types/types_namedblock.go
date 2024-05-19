@@ -17,21 +17,12 @@ import (
 
 // EXISTING_CODE
 
-type RawNamedBlock struct {
-	BlockNumber string `json:"blockNumber"`
-	Component   string `json:"component"`
-	Description string `json:"description"`
-	Name        string `json:"name"`
-	Timestamp   string `json:"timestamp"`
-}
-
 type NamedBlock struct {
 	BlockNumber base.Blknum    `json:"blockNumber"`
 	Component   string         `json:"component,omitempty"`
 	Description string         `json:"description,omitempty"`
 	Name        string         `json:"name,omitempty"`
 	Timestamp   base.Timestamp `json:"timestamp"`
-	raw         *RawNamedBlock `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -41,12 +32,11 @@ func (s NamedBlock) String() string {
 	return string(bytes)
 }
 
-func (s *NamedBlock) Raw() *RawNamedBlock {
-	return s.raw
+func (s *NamedBlock) Raw() *NamedBlock {
+	return s
 }
 
-func (s *NamedBlock) SetRaw(raw *RawNamedBlock) {
-	s.raw = raw
+func (s *NamedBlock) SetRaw(raw *NamedBlock) {
 }
 
 func (s *NamedBlock) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

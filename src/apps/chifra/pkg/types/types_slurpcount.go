@@ -17,15 +17,9 @@ import (
 
 // EXISTING_CODE
 
-type RawSlurpCount struct {
-	Address string `json:"address"`
-	Count   string `json:"count"`
-}
-
 type SlurpCount struct {
-	Address base.Address   `json:"address,omitempty"`
-	Count   uint64         `json:"count,omitempty"`
-	raw     *RawSlurpCount `json:"-"`
+	Address base.Address `json:"address,omitempty"`
+	Count   uint64       `json:"count,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -35,12 +29,11 @@ func (s SlurpCount) String() string {
 	return string(bytes)
 }
 
-func (s *SlurpCount) Raw() *RawSlurpCount {
-	return s.raw
+func (s *SlurpCount) Raw() *SlurpCount {
+	return s
 }
 
-func (s *SlurpCount) SetRaw(raw *RawSlurpCount) {
-	s.raw = raw
+func (s *SlurpCount) SetRaw(raw *SlurpCount) {
 }
 
 func (s *SlurpCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

@@ -19,25 +19,14 @@ import (
 
 // EXISTING_CODE
 
-type RawChunkBloom struct {
-	ByteWidth string `json:"byteWidth"`
-	Hash      string `json:"hash"`
-	Magic     string `json:"magic"`
-	NBlooms   string `json:"nBlooms"`
-	NInserted string `json:"nInserted"`
-	Range     string `json:"range"`
-	Size      string `json:"size"`
-}
-
 type ChunkBloom struct {
-	ByteWidth uint64         `json:"byteWidth"`
-	Hash      base.Hash      `json:"hash"`
-	Magic     string         `json:"magic"`
-	NBlooms   uint64         `json:"nBlooms"`
-	NInserted uint64         `json:"nInserted"`
-	Range     string         `json:"range"`
-	Size      uint64         `json:"size"`
-	raw       *RawChunkBloom `json:"-"`
+	ByteWidth uint64    `json:"byteWidth"`
+	Hash      base.Hash `json:"hash"`
+	Magic     string    `json:"magic"`
+	NBlooms   uint64    `json:"nBlooms"`
+	NInserted uint64    `json:"nInserted"`
+	Range     string    `json:"range"`
+	Size      uint64    `json:"size"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -47,12 +36,11 @@ func (s ChunkBloom) String() string {
 	return string(bytes)
 }
 
-func (s *ChunkBloom) Raw() *RawChunkBloom {
-	return s.raw
+func (s *ChunkBloom) Raw() *ChunkBloom {
+	return s
 }
 
-func (s *ChunkBloom) SetRaw(raw *RawChunkBloom) {
-	s.raw = raw
+func (s *ChunkBloom) SetRaw(raw *ChunkBloom) {
 }
 
 func (s *ChunkBloom) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

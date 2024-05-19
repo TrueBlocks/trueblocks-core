@@ -17,21 +17,12 @@ import (
 
 // EXISTING_CODE
 
-type RawChunkPin struct {
-	Chain         string `json:"chain"`
-	ManifestHash  string `json:"manifestHash"`
-	SpecHash      string `json:"specHash"`
-	TimestampHash string `json:"timestampHash"`
-	Version       string `json:"version"`
-}
-
 type ChunkPin struct {
 	Chain         string        `json:"chain"`
 	ManifestHash  base.IpfsHash `json:"manifestHash"`
 	SpecHash      base.IpfsHash `json:"specHash"`
 	TimestampHash base.IpfsHash `json:"timestampHash"`
 	Version       string        `json:"version"`
-	raw           *RawChunkPin  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -41,12 +32,11 @@ func (s ChunkPin) String() string {
 	return string(bytes)
 }
 
-func (s *ChunkPin) Raw() *RawChunkPin {
-	return s.raw
+func (s *ChunkPin) Raw() *ChunkPin {
+	return s
 }
 
-func (s *ChunkPin) SetRaw(raw *RawChunkPin) {
-	s.raw = raw
+func (s *ChunkPin) SetRaw(raw *ChunkPin) {
 }
 
 func (s *ChunkPin) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

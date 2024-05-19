@@ -13,25 +13,14 @@ import "encoding/json"
 
 // EXISTING_CODE
 
-type RawChain struct {
+type Chain struct {
 	Chain          string `json:"chain"`
-	ChainId        string `json:"chainId"`
+	ChainId        uint64 `json:"chainId"`
 	IpfsGateway    string `json:"ipfsGateway"`
 	LocalExplorer  string `json:"localExplorer"`
 	RemoteExplorer string `json:"remoteExplorer"`
 	RpcProvider    string `json:"rpcProvider"`
 	Symbol         string `json:"symbol"`
-}
-
-type Chain struct {
-	Chain          string    `json:"chain"`
-	ChainId        uint64    `json:"chainId"`
-	IpfsGateway    string    `json:"ipfsGateway"`
-	LocalExplorer  string    `json:"localExplorer"`
-	RemoteExplorer string    `json:"remoteExplorer"`
-	RpcProvider    string    `json:"rpcProvider"`
-	Symbol         string    `json:"symbol"`
-	raw            *RawChain `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -41,12 +30,11 @@ func (s Chain) String() string {
 	return string(bytes)
 }
 
-func (s *Chain) Raw() *RawChain {
-	return s.raw
+func (s *Chain) Raw() *Chain {
+	return s
 }
 
-func (s *Chain) SetRaw(raw *RawChain) {
-	s.raw = raw
+func (s *Chain) SetRaw(raw *Chain) {
 }
 
 func (s *Chain) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

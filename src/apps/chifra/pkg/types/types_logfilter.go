@@ -17,21 +17,12 @@ import (
 
 // EXISTING_CODE
 
-type RawLogFilter struct {
-	BlockHash string   `json:"blockHash"`
-	Emitters  []string `json:"emitters"`
-	FromBlock string   `json:"fromBlock"`
-	ToBlock   string   `json:"toBlock"`
-	Topics    []string `json:"topics"`
-}
-
 type LogFilter struct {
 	BlockHash base.Hash      `json:"blockHash"`
 	Emitters  []base.Address `json:"emitters"`
 	FromBlock base.Blknum    `json:"fromBlock"`
 	ToBlock   base.Blknum    `json:"toBlock"`
 	Topics    []base.Hash    `json:"topics"`
-	raw       *RawLogFilter  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -41,12 +32,11 @@ func (s LogFilter) String() string {
 	return string(bytes)
 }
 
-func (s *LogFilter) Raw() *RawLogFilter {
-	return s.raw
+func (s *LogFilter) Raw() *LogFilter {
+	return s
 }
 
-func (s *LogFilter) SetRaw(raw *RawLogFilter) {
-	s.raw = raw
+func (s *LogFilter) SetRaw(raw *LogFilter) {
 }
 
 func (s *LogFilter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

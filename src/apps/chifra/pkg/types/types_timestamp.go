@@ -17,17 +17,10 @@ import (
 
 // EXISTING_CODE
 
-type RawTimestamp struct {
-	BlockNumber string `json:"blockNumber"`
-	Diff        string `json:"diff"`
-	Timestamp   string `json:"timestamp"`
-}
-
 type Timestamp struct {
 	BlockNumber base.Blknum    `json:"blockNumber"`
 	Diff        int64          `json:"diff"`
 	Timestamp   base.Timestamp `json:"timestamp"`
-	raw         *RawTimestamp  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -37,12 +30,11 @@ func (s Timestamp) String() string {
 	return string(bytes)
 }
 
-func (s *Timestamp) Raw() *RawTimestamp {
-	return s.raw
+func (s *Timestamp) Raw() *Timestamp {
+	return s
 }
 
-func (s *Timestamp) SetRaw(raw *RawTimestamp) {
-	s.raw = raw
+func (s *Timestamp) SetRaw(raw *Timestamp) {
 }
 
 func (s *Timestamp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

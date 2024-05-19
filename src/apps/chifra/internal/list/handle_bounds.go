@@ -24,7 +24,7 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 	)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawBounds], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Bounds], errorChan chan error) {
 		if len(monitorArray) == 0 {
 			errorChan <- errors.New("no monitors found in HandleBounds")
 			return

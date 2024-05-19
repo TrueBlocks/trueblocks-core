@@ -51,7 +51,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawChunkPin], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.ChunkPin], errorChan chan error) {
 		hash := base.BytesToHash(config.HeaderHash(config.ExpectedVersion()))
 		report := types.ChunkPin{
 			Version:  config.VersionTags[hash.Hex()],

@@ -3,4 +3,5 @@
     doc_group = "02-Chain Data"
     doc_descr = "the number of timestamps in the timestamps database"
     doc_route = "245-timestampCount"
+    attributes = "simponly"
     produced_by = "when"

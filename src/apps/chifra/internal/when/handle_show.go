@@ -22,7 +22,7 @@ func (opts *WhenOptions) HandleShow() error {
 	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawNamedBlock], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.NamedBlock], errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {

@@ -20,7 +20,7 @@ func (opts *ChunksOptions) HandleList(unusedBns []base.Blknum) error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawIpfsPin], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.IpfsPin], errorChan chan error) {
 		var perPage = 1000
 		if testMode {
 			perPage = -100

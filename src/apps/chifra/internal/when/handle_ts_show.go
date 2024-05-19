@@ -30,7 +30,7 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 
 	ctx := context.Background()
 	prev := base.Timestamp(0)
-	fetchData := func(modelChan chan types.Modeler[types.RawTimestamp], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Timestamp], errorChan chan error) {
 		for bn := base.Blknum(0); bn < cnt; bn++ {
 			if len(bnMap) == 0 || bnMap[bn] {
 				ts, err := tslib.FromBn(chain, bn)

@@ -19,7 +19,7 @@ import (
 
 func (opts *NamesOptions) HandleShow() error {
 	chain := opts.Globals.Chain
-	var fetchData func(modelChan chan types.Modeler[types.RawName], errorChan chan error)
+	var fetchData func(modelChan chan types.Modeler[types.Name], errorChan chan error)
 
 	apiMode := opts.Globals.IsApiMode()
 	testMode := opts.Globals.TestMode
@@ -37,7 +37,7 @@ func (opts *NamesOptions) HandleShow() error {
 	if !apiMode && grpcErr == nil {
 		defer conn.Close()
 		// RPC server is running and available
-		fetchData = func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
+		fetchData = func(modelChan chan types.Modeler[types.Name], errorChan chan error) {
 			opts.fetchFromGrpc(client, modelChan, errorChan)
 		}
 	} else {
@@ -62,7 +62,7 @@ func (opts *NamesOptions) HandleShow() error {
 			return nil
 		}
 
-		fetchData = func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
+		fetchData = func(modelChan chan types.Modeler[types.Name], errorChan chan error) {
 			for _, name := range namesArray {
 				modelChan <- &name
 			}
@@ -81,7 +81,7 @@ func (opts *NamesOptions) HandleShow() error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-func (opts *NamesOptions) fetchFromGrpc(client proto.NamesClient, modelChan chan types.Modeler[types.RawName], errorChan chan error) {
+func (opts *NamesOptions) fetchFromGrpc(client proto.NamesClient, modelChan chan types.Modeler[types.Name], errorChan chan error) {
 	stream, err := client.SearchStream(context.Background(), &proto.SearchRequest{
 		Parts: int64(opts.getType()),
 		Terms: opts.Terms,

@@ -17,19 +17,11 @@ import (
 
 // EXISTING_CODE
 
-type RawChunkAddress struct {
-	Address string `json:"address"`
-	Count   string `json:"count"`
-	Offset  string `json:"offset"`
-	Range   string `json:"range"`
-}
-
 type ChunkAddress struct {
-	Address base.Address     `json:"address"`
-	Count   uint64           `json:"count"`
-	Offset  uint64           `json:"offset"`
-	Range   string           `json:"range"`
-	raw     *RawChunkAddress `json:"-"`
+	Address base.Address `json:"address"`
+	Count   uint64       `json:"count"`
+	Offset  uint64       `json:"offset"`
+	Range   string       `json:"range"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -39,12 +31,11 @@ func (s ChunkAddress) String() string {
 	return string(bytes)
 }
 
-func (s *ChunkAddress) Raw() *RawChunkAddress {
-	return s.raw
+func (s *ChunkAddress) Raw() *ChunkAddress {
+	return s
 }
 
-func (s *ChunkAddress) SetRaw(raw *RawChunkAddress) {
-	s.raw = raw
+func (s *ChunkAddress) SetRaw(raw *ChunkAddress) {
 }
 
 func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

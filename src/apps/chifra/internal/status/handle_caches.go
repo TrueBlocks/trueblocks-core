@@ -23,7 +23,7 @@ func (opts *StatusOptions) HandleCaches() error {
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawStatus], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Status], errorChan chan error) {
 		now := time.Now()
 
 		filenameChan := make(chan walk.CacheFileInfo)

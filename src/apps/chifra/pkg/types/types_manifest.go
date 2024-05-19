@@ -19,19 +19,11 @@ type ChunkManifest = Manifest
 
 // EXISTING_CODE
 
-type RawManifest struct {
-	Chain         string `json:"chain"`
-	Chunks        string `json:"chunks"`
-	Specification string `json:"specification"`
-	Version       string `json:"version"`
-}
-
 type Manifest struct {
 	Chain         string        `json:"chain"`
 	Chunks        []ChunkRecord `json:"chunks"`
 	Specification base.IpfsHash `json:"specification"`
 	Version       string        `json:"version"`
-	raw           *RawManifest  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -41,12 +33,11 @@ func (s Manifest) String() string {
 	return string(bytes)
 }
 
-func (s *Manifest) Raw() *RawManifest {
-	return s.raw
+func (s *Manifest) Raw() *Manifest {
+	return s
 }
 
-func (s *Manifest) SetRaw(raw *RawManifest) {
-	s.raw = raw
+func (s *Manifest) SetRaw(raw *Manifest) {
 }
 
 func (s *Manifest) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

@@ -18,21 +18,12 @@ import (
 
 // EXISTING_CODE
 
-type RawIpfsPin struct {
-	Cid        string `json:"cid"`
-	DatePinned string `json:"datePinned"`
-	FileName   string `json:"fileName"`
-	Size       string `json:"size"`
-	Status     string `json:"status"`
-}
-
 type IpfsPin struct {
 	Cid        base.IpfsHash `json:"cid"`
 	DatePinned string        `json:"datePinned"`
 	FileName   string        `json:"fileName"`
 	Size       int64         `json:"size"`
 	Status     string        `json:"status"`
-	raw        *RawIpfsPin   `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -42,12 +33,11 @@ func (s IpfsPin) String() string {
 	return string(bytes)
 }
 
-func (s *IpfsPin) Raw() *RawIpfsPin {
-	return s.raw
+func (s *IpfsPin) Raw() *IpfsPin {
+	return s
 }
 
-func (s *IpfsPin) SetRaw(raw *RawIpfsPin) {
-	s.raw = raw
+func (s *IpfsPin) SetRaw(raw *IpfsPin) {
 }
 
 func (s *IpfsPin) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

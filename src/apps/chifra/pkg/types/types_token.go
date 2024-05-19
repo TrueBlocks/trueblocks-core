@@ -18,21 +18,6 @@ import (
 
 // EXISTING_CODE
 
-type RawToken struct {
-	Address          string `json:"address"`
-	Balance          string `json:"balance"`
-	BlockNumber      string `json:"blockNumber"`
-	Decimals         string `json:"decimals"`
-	Holder           string `json:"holder"`
-	Name             string `json:"name"`
-	PriorBalance     string `json:"priorBalance"`
-	Symbol           string `json:"symbol"`
-	Timestamp        string `json:"timestamp"`
-	TotalSupply      string `json:"totalSupply"`
-	TransactionIndex string `json:"transactionIndex"`
-	TokenType        string `json:"type"`
-}
-
 type Token struct {
 	Address          base.Address   `json:"address"`
 	Balance          base.Wei       `json:"balance"`
@@ -46,7 +31,6 @@ type Token struct {
 	TotalSupply      base.Wei       `json:"totalSupply"`
 	TransactionIndex base.Txnum     `json:"transactionIndex,omitempty"`
 	TokenType        TokenType      `json:"type"`
-	raw              *RawToken      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -56,12 +40,11 @@ func (s Token) String() string {
 	return string(bytes)
 }
 
-func (s *Token) Raw() *RawToken {
-	return s.raw
+func (s *Token) Raw() *Token {
+	return s
 }
 
-func (s *Token) SetRaw(raw *RawToken) {
-	s.raw = raw
+func (s *Token) SetRaw(raw *Token) {
 }
 
 func (s *Token) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

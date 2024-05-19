@@ -17,23 +17,13 @@ import (
 
 // EXISTING_CODE
 
-type RawChunkIndex struct {
-	Hash         string `json:"hash"`
-	Magic        string `json:"magic"`
-	NAddresses   string `json:"nAddresses"`
-	NAppearances string `json:"nAppearances"`
-	Range        string `json:"range"`
-	Size         string `json:"size"`
-}
-
 type ChunkIndex struct {
-	Hash         base.Hash      `json:"hash"`
-	Magic        string         `json:"magic"`
-	NAddresses   uint64         `json:"nAddresses"`
-	NAppearances uint64         `json:"nAppearances"`
-	Range        string         `json:"range"`
-	Size         uint64         `json:"size"`
-	raw          *RawChunkIndex `json:"-"`
+	Hash         base.Hash `json:"hash"`
+	Magic        string    `json:"magic"`
+	NAddresses   uint64    `json:"nAddresses"`
+	NAppearances uint64    `json:"nAppearances"`
+	Range        string    `json:"range"`
+	Size         uint64    `json:"size"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -43,12 +33,11 @@ func (s ChunkIndex) String() string {
 	return string(bytes)
 }
 
-func (s *ChunkIndex) Raw() *RawChunkIndex {
-	return s.raw
+func (s *ChunkIndex) Raw() *ChunkIndex {
+	return s
 }
 
-func (s *ChunkIndex) SetRaw(raw *RawChunkIndex) {
-	s.raw = raw
+func (s *ChunkIndex) SetRaw(raw *ChunkIndex) {
 }
 
 func (s *ChunkIndex) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

@@ -4,6 +4,7 @@
     doc_group = "01-Accounts"
     doc_descr = "a statement, including all inflows and outflows, for a single transfer of an asset (including ETH) to or from a given address"
     doc_route = "118-statement"
+    attributes = "simponly"
     produced_by = "export"
     cache_type = "cacheable"
     cache_by = "address,tx"

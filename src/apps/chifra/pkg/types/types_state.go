@@ -23,18 +23,6 @@ import (
 
 // EXISTING_CODE
 
-type RawState struct {
-	AccountType string `json:"accountType"`
-	Address     string `json:"address"`
-	Balance     string `json:"balance"`
-	BlockNumber string `json:"blockNumber"`
-	Code        string `json:"code"`
-	Deployed    string `json:"deployed"`
-	Nonce       string `json:"nonce"`
-	Proxy       string `json:"proxy"`
-	Timestamp   string `json:"timestamp"`
-}
-
 type State struct {
 	AccountType string         `json:"accountType"`
 	Address     base.Address   `json:"address"`
@@ -45,7 +33,6 @@ type State struct {
 	Nonce       base.Value     `json:"nonce"`
 	Proxy       base.Address   `json:"proxy"`
 	Timestamp   base.Timestamp `json:"timestamp"`
-	raw         *RawState      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -55,12 +42,11 @@ func (s State) String() string {
 	return string(bytes)
 }
 
-func (s *State) Raw() *RawState {
-	return s.raw
+func (s *State) Raw() *State {
+	return s
 }
 
-func (s *State) SetRaw(raw *RawState) {
-	s.raw = raw
+func (s *State) SetRaw(raw *State) {
 }
 
 func (s *State) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

@@ -17,15 +17,9 @@ import (
 
 // EXISTING_CODE
 
-type RawAbi struct {
-	Address   string   `json:"address"`
-	Functions []string `json:"functions"`
-}
-
 type Abi struct {
 	Address   base.Address `json:"address"`
 	Functions []Function   `json:"functions"`
-	raw       *RawAbi      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -35,12 +29,11 @@ func (s Abi) String() string {
 	return string(bytes)
 }
 
-func (s *Abi) Raw() *RawAbi {
-	return s.raw
+func (s *Abi) Raw() *Abi {
+	return s
 }
 
-func (s *Abi) SetRaw(raw *RawAbi) {
-	s.raw = raw
+func (s *Abi) SetRaw(raw *Abi) {
 }
 
 func (s *Abi) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

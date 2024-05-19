@@ -17,17 +17,10 @@ import (
 
 // EXISTING_CODE
 
-type RawAppearanceCount struct {
-	Address  string `json:"address"`
-	FileSize string `json:"fileSize"`
-	NRecords string `json:"nRecords"`
-}
-
 type AppearanceCount struct {
-	Address  base.Address        `json:"address"`
-	FileSize uint64              `json:"fileSize"`
-	NRecords uint64              `json:"nRecords"`
-	raw      *RawAppearanceCount `json:"-"`
+	Address  base.Address `json:"address"`
+	FileSize uint64       `json:"fileSize"`
+	NRecords uint64       `json:"nRecords"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -37,12 +30,11 @@ func (s AppearanceCount) String() string {
 	return string(bytes)
 }
 
-func (s *AppearanceCount) Raw() *RawAppearanceCount {
-	return s.raw
+func (s *AppearanceCount) Raw() *AppearanceCount {
+	return s
 }
 
-func (s *AppearanceCount) SetRaw(raw *RawAppearanceCount) {
-	s.raw = raw
+func (s *AppearanceCount) SetRaw(raw *AppearanceCount) {
 }
 
 func (s *AppearanceCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

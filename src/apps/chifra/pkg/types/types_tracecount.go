@@ -17,21 +17,12 @@ import (
 
 // EXISTING_CODE
 
-type RawTraceCount struct {
-	BlockNumber      string `json:"blockNumber"`
-	Timestamp        string `json:"timestamp"`
-	TracesCnt        string `json:"tracesCnt"`
-	TransactionHash  string `json:"transactionHash"`
-	TransactionIndex string `json:"transactionIndex"`
-}
-
 type TraceCount struct {
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TracesCnt        uint64         `json:"tracesCnt"`
 	TransactionHash  base.Hash      `json:"transactionHash"`
 	TransactionIndex base.Txnum     `json:"transactionIndex"`
-	raw              *RawTraceCount `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -41,12 +32,11 @@ func (s TraceCount) String() string {
 	return string(bytes)
 }
 
-func (s *TraceCount) Raw() *RawTraceCount {
-	return s.raw
+func (s *TraceCount) Raw() *TraceCount {
+	return s
 }
 
-func (s *TraceCount) SetRaw(raw *RawTraceCount) {
-	s.raw = raw
+func (s *TraceCount) SetRaw(raw *TraceCount) {
 }
 
 func (s *TraceCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

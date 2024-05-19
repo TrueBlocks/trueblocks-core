@@ -15,25 +15,14 @@ import (
 
 // EXISTING_CODE
 
-type RawCacheItem struct {
-	Items         []string `json:"items"`
-	LastCached    string   `json:"lastCached"`
-	NFiles        string   `json:"nFiles"`
-	NFolders      string   `json:"nFolders"`
-	Path          string   `json:"path"`
-	SizeInBytes   string   `json:"sizeInBytes"`
-	CacheItemType string   `json:"type"`
-}
-
 type CacheItem struct {
-	Items         []any         `json:"items"`
-	LastCached    string        `json:"lastCached,omitempty"`
-	NFiles        uint64        `json:"nFiles"`
-	NFolders      uint64        `json:"nFolders"`
-	Path          string        `json:"path"`
-	SizeInBytes   int64         `json:"sizeInBytes"`
-	CacheItemType string        `json:"type"`
-	raw           *RawCacheItem `json:"-"`
+	Items         []any  `json:"items"`
+	LastCached    string `json:"lastCached,omitempty"`
+	NFiles        uint64 `json:"nFiles"`
+	NFolders      uint64 `json:"nFolders"`
+	Path          string `json:"path"`
+	SizeInBytes   int64  `json:"sizeInBytes"`
+	CacheItemType string `json:"type"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -43,12 +32,11 @@ func (s CacheItem) String() string {
 	return string(bytes)
 }
 
-func (s *CacheItem) Raw() *RawCacheItem {
-	return s.raw
+func (s *CacheItem) Raw() *CacheItem {
+	return s
 }
 
-func (s *CacheItem) SetRaw(raw *RawCacheItem) {
-	s.raw = raw
+func (s *CacheItem) SetRaw(raw *CacheItem) {
 }
 
 func (s *CacheItem) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

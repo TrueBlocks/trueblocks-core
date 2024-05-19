@@ -34,7 +34,7 @@ func (opts *ListOptions) HandleCount(monitorArray []monitor.Monitor) error {
 	)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Monitor], errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, true /* withCount */); err != nil {
 				errorChan <- err

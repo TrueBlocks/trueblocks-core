@@ -18,7 +18,7 @@ import (
 func (opts *ChunksOptions) HandleStats(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawChunkStats], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.ChunkStats], errorChan chan error) {
 		showFinalizedStats := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showFinalizedStats")

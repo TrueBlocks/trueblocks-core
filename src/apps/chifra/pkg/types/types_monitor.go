@@ -17,16 +17,12 @@ import (
 
 // EXISTING_CODE
 
-type RawMonitor struct {
-}
-
 type Monitor struct {
 	Address     base.Address `json:"address"`
 	Deleted     bool         `json:"deleted"`
 	FileSize    int64        `json:"fileSize"`
 	LastScanned uint32       `json:"lastScanned"`
 	NRecords    int64        `json:"nRecords"`
-	raw         *RawMonitor  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -36,12 +32,11 @@ func (s Monitor) String() string {
 	return string(bytes)
 }
 
-func (s *Monitor) Raw() *RawMonitor {
-	return s.raw
+func (s *Monitor) Raw() *Monitor {
+	return s
 }
 
-func (s *Monitor) SetRaw(raw *RawMonitor) {
-	s.raw = raw
+func (s *Monitor) SetRaw(raw *Monitor) {
 }
 
 func (s *Monitor) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

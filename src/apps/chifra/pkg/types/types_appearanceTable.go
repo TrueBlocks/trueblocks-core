@@ -28,15 +28,9 @@ type AppRecord struct {
 
 // EXISTING_CODE
 
-type RawAppearanceTable struct {
-	AddressRecord string   `json:"AddressRecord"`
-	Appearances   []string `json:"Appearances"`
-}
-
 type AppearanceTable struct {
-	AddressRecord AddrRecord          `json:"AddressRecord"`
-	Appearances   []AppRecord         `json:"Appearances"`
-	raw           *RawAppearanceTable `json:"-"`
+	AddressRecord AddrRecord  `json:"AddressRecord"`
+	Appearances   []AppRecord `json:"Appearances"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -46,12 +40,11 @@ func (s AppearanceTable) String() string {
 	return string(bytes)
 }
 
-func (s *AppearanceTable) Raw() *RawAppearanceTable {
-	return s.raw
+func (s *AppearanceTable) Raw() *AppearanceTable {
+	return s
 }
 
-func (s *AppearanceTable) SetRaw(raw *RawAppearanceTable) {
-	s.raw = raw
+func (s *AppearanceTable) SetRaw(raw *AppearanceTable) {
 }
 
 func (s *AppearanceTable) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

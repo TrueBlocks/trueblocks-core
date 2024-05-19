@@ -32,7 +32,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 	)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawStatement], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Statement], errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err

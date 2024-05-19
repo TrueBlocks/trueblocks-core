@@ -3,5 +3,6 @@
     doc_group = "05-Other"
     doc_descr = "counts of transaction data returned by remote APIs"
     doc_route = "515-slurpCount"
+    attributes = "simponly"
     produced_by = "slurp"
     go_output = "src/apps/chifra/pkg/types"

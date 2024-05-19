@@ -18,21 +18,12 @@ import (
 
 // EXISTING_CODE
 
-type RawBounds struct {
-	Count     string `json:"count"`
-	FirstApp  string `json:"firstApp"`
-	FirstTs   string `json:"firstTs"`
-	LatestApp string `json:"latestApp"`
-	LatestTs  string `json:"latestTs"`
-}
-
 type Bounds struct {
 	Count     uint64         `json:"count"`
 	FirstApp  Appearance     `json:"firstApp"`
 	FirstTs   base.Timestamp `json:"firstTs"`
 	LatestApp Appearance     `json:"latestApp"`
 	LatestTs  base.Timestamp `json:"latestTs"`
-	raw       *RawBounds     `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -42,12 +33,11 @@ func (s Bounds) String() string {
 	return string(bytes)
 }
 
-func (s *Bounds) Raw() *RawBounds {
-	return s.raw
+func (s *Bounds) Raw() *Bounds {
+	return s
 }
 
-func (s *Bounds) SetRaw(raw *RawBounds) {
-	s.raw = raw
+func (s *Bounds) SetRaw(raw *Bounds) {
 }
 
 func (s *Bounds) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

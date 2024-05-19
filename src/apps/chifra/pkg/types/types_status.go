@@ -19,29 +19,6 @@ import (
 
 // EXISTING_CODE
 
-type RawStatus struct {
-	CachePath     string   `json:"cachePath"`
-	Caches        []string `json:"caches"`
-	Chain         string   `json:"chain"`
-	ChainConfig   string   `json:"chainConfig"`
-	ChainId       string   `json:"chainId"`
-	Chains        []string `json:"chains"`
-	ClientVersion string   `json:"clientVersion"`
-	HasEsKey      string   `json:"hasEsKey"`
-	HasPinKey     string   `json:"hasPinKey"`
-	IndexPath     string   `json:"indexPath"`
-	IsApi         string   `json:"isApi"`
-	IsArchive     string   `json:"isArchive"`
-	IsScraping    string   `json:"isScraping"`
-	IsTesting     string   `json:"isTesting"`
-	IsTracing     string   `json:"isTracing"`
-	NetworkId     string   `json:"networkId"`
-	Progress      string   `json:"progress"`
-	RootConfig    string   `json:"rootConfig"`
-	RpcProvider   string   `json:"rpcProvider"`
-	Version       string   `json:"version"`
-}
-
 type Status struct {
 	CachePath     string      `json:"cachePath,omitempty"`
 	Caches        []CacheItem `json:"caches"`
@@ -63,7 +40,6 @@ type Status struct {
 	RootConfig    string      `json:"rootConfig,omitempty"`
 	RpcProvider   string      `json:"rpcProvider,omitempty"`
 	Version       string      `json:"version,omitempty"`
-	raw           *RawStatus  `json:"-"`
 	// EXISTING_CODE
 	Meta  *MetaData `json:"meta,omitempty"`
 	Diffs *MetaData `json:"diffs,omitempty"`
@@ -75,12 +51,11 @@ func (s Status) String() string {
 	return string(bytes)
 }
 
-func (s *Status) Raw() *RawStatus {
-	return s.raw
+func (s *Status) Raw() *Status {
+	return s
 }
 
-func (s *Status) SetRaw(raw *RawStatus) {
-	s.raw = raw
+func (s *Status) SetRaw(raw *Status) {
 }
 
 func (s *Status) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

@@ -3,4 +3,5 @@
     doc_group = "04-Admin"
     doc_descr = "summary statistics about an Unchained Index bloom filter and index chunk"
     doc_route = "424-chunkStats"
+    attributes = "simponly"
     produced_by = "chunks"

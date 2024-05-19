@@ -34,7 +34,7 @@ func (opts *ChunksOptions) HandleManifest(blockNums []base.Blknum) error {
 
 	ctx := context.Background()
 	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
-		fetchData := func(modelChan chan types.Modeler[types.RawChunkRecord], errorChan chan error) {
+		fetchData := func(modelChan chan types.Modeler[types.ChunkRecord], errorChan chan error) {
 			for _, chunk := range man.Chunks {
 				s := types.ChunkRecord{
 					Range:     chunk.Range,
@@ -50,7 +50,7 @@ func (opts *ChunksOptions) HandleManifest(blockNums []base.Blknum) error {
 		return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 
 	} else {
-		fetchData := func(modelChan chan types.Modeler[types.RawManifest], errorChan chan error) {
+		fetchData := func(modelChan chan types.Modeler[types.Manifest], errorChan chan error) {
 			s := types.Manifest{
 				Version:       man.Version,
 				Chain:         man.Chain,
