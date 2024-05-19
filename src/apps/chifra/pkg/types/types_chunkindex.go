@@ -24,8 +24,6 @@ type RawChunkIndex struct {
 	NAppearances string `json:"nAppearances"`
 	Range        string `json:"range"`
 	Size         string `json:"size"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type ChunkIndex struct {

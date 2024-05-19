@@ -24,8 +24,6 @@ type RawIpfsPin struct {
 	FileName   string `json:"fileName"`
 	Size       string `json:"size"`
 	Status     string `json:"status"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type IpfsPin struct {

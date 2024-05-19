@@ -26,8 +26,6 @@ type RawTraceResult struct {
 	Code    string `json:"code"`
 	GasUsed string `json:"gasUsed"`
 	Output  string `json:"output"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type TraceResult struct {

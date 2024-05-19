@@ -21,8 +21,6 @@ type RawTimestamp struct {
 	BlockNumber string `json:"blockNumber"`
 	Diff        string `json:"diff"`
 	Timestamp   string `json:"timestamp"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Timestamp struct {

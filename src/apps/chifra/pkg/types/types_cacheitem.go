@@ -23,8 +23,6 @@ type RawCacheItem struct {
 	Path          string   `json:"path"`
 	SizeInBytes   string   `json:"sizeInBytes"`
 	CacheItemType string   `json:"type"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type CacheItem struct {

@@ -23,8 +23,6 @@ type RawTraceCount struct {
 	TracesCnt        string `json:"tracesCnt"`
 	TransactionHash  string `json:"transactionHash"`
 	TransactionIndex string `json:"transactionIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type TraceCount struct {

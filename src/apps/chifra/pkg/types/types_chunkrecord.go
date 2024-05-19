@@ -23,8 +23,6 @@ type RawChunkRecord struct {
 	IndexHash string `json:"indexHash"`
 	IndexSize string `json:"indexSize"`
 	Range     string `json:"range"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type ChunkRecord struct {

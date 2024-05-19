@@ -31,8 +31,6 @@ type RawToken struct {
 	TotalSupply      string `json:"totalSupply"`
 	TransactionIndex string `json:"transactionIndex"`
 	TokenType        string `json:"type"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Token struct {

@@ -27,8 +27,6 @@ type RawChunkStats struct {
 	RangeEnd      string `json:"rangeEnd"`
 	Ratio         string `json:"ratio"`
 	RecWid        string `json:"recWid"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type ChunkStats struct {

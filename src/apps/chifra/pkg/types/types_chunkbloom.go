@@ -27,8 +27,6 @@ type RawChunkBloom struct {
 	NInserted string `json:"nInserted"`
 	Range     string `json:"range"`
 	Size      string `json:"size"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type ChunkBloom struct {

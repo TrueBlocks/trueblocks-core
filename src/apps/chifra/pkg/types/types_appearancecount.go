@@ -21,8 +21,6 @@ type RawAppearanceCount struct {
 	Address  string `json:"address"`
 	FileSize string `json:"fileSize"`
 	NRecords string `json:"nRecords"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type AppearanceCount struct {

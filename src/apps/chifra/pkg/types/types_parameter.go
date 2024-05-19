@@ -27,8 +27,6 @@ type RawParameter struct {
 	StrDefault    string `json:"strDefault"`
 	ParameterType string `json:"type"`
 	Value         string `json:"value"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Parameter struct {

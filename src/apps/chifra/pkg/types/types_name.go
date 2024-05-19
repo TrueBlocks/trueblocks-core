@@ -34,8 +34,6 @@ type RawName struct {
 	Source     string `json:"source"`
 	Symbol     string `json:"symbol"`
 	Tags       string `json:"tags"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Name struct {

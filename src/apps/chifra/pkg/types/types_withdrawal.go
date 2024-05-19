@@ -29,8 +29,6 @@ type RawWithdrawal struct {
 	Index          string `json:"index"`
 	Timestamp      string `json:"timestamp"`
 	ValidatorIndex string `json:"validatorIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Withdrawal struct {

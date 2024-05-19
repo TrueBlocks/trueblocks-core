@@ -24,8 +24,6 @@ type RawBounds struct {
 	FirstTs   string `json:"firstTs"`
 	LatestApp string `json:"latestApp"`
 	LatestTs  string `json:"latestTs"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Bounds struct {

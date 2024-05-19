@@ -25,3 +25,5 @@ cumulativeGasUsed ,string    ,           ,              ,         ,a basically u
 txReceiptStatus   ,string    ,           ,              ,         ,the status field from the receipt
 withdrawalIndex   ,value     ,           ,              ,         ,for withdrawal transactions only&#44; the index of the withdrawal since inception
 validatorIndex    ,value     ,           ,              ,         ,for withdrawal transactions only&#44; the index of the validator receiving the withdrawal
+address           ,address   ,           ,rawonly       ,         ,internal use only&#44; converted to 'to' after query
+amount            ,wei       ,           ,rawonly       ,         ,internal use only&#44; converted to 'value' after query

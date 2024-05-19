@@ -23,8 +23,6 @@ type RawLogFilter struct {
 	FromBlock string   `json:"fromBlock"`
 	ToBlock   string   `json:"toBlock"`
 	Topics    []string `json:"topics"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type LogFilter struct {

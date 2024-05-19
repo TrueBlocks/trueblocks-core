@@ -34,8 +34,6 @@ type RawTraceAction struct {
 	SelfDestructed string `json:"selfDestructed"`
 	To             string `json:"to"`
 	Value          string `json:"value"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type TraceAction struct {

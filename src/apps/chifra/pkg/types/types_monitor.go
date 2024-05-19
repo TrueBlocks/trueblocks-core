@@ -18,8 +18,6 @@ import (
 // EXISTING_CODE
 
 type RawMonitor struct {
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Monitor struct {

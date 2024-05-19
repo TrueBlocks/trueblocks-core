@@ -30,8 +30,6 @@ type RawResult struct {
 	Name             string `json:"name"`
 	Signature        string `json:"signature"`
 	Timestamp        string `json:"timestamp"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Result struct {

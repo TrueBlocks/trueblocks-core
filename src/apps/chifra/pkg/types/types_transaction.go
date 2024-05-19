@@ -63,8 +63,6 @@ type RawTransaction struct {
 	TransactionIndex     string        `json:"transactionIndex"`
 	TransactionType      string        `json:"type"`
 	Value                string        `json:"value"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Transaction struct {

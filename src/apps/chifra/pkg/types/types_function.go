@@ -36,8 +36,6 @@ type RawFunction struct {
 	Signature       string `json:"signature"`
 	StateMutability string `json:"stateMutability"`
 	FunctionType    string `json:"type"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Function struct {

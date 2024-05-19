@@ -33,8 +33,6 @@ type RawState struct {
 	Nonce       string `json:"nonce"`
 	Proxy       string `json:"proxy"`
 	Timestamp   string `json:"timestamp"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type State struct {

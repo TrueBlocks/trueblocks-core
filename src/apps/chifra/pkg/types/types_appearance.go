@@ -37,8 +37,6 @@ type RawAppearance struct {
 	Address          string `json:"address"`
 	BlockNumber      uint32 `json:"blockNumber"`
 	TransactionIndex uint32 `json:"transactionIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Appearance struct {

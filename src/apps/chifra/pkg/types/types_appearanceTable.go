@@ -31,8 +31,6 @@ type AppRecord struct {
 type RawAppearanceTable struct {
 	AddressRecord string   `json:"AddressRecord"`
 	Appearances   []string `json:"Appearances"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type AppearanceTable struct {

@@ -33,8 +33,6 @@ type RawLog struct {
 	Topics           []string `json:"topics"`
 	TransactionHash  string   `json:"transactionHash"`
 	TransactionIndex string   `json:"transactionIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Log struct {

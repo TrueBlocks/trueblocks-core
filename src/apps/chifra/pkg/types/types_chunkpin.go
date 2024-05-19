@@ -23,8 +23,6 @@ type RawChunkPin struct {
 	SpecHash      string `json:"specHash"`
 	TimestampHash string `json:"timestampHash"`
 	Version       string `json:"version"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type ChunkPin struct {

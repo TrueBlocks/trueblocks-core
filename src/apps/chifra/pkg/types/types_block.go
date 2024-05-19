@@ -47,8 +47,6 @@ type RawBlock struct {
 	TransactionsRoot string          `json:"transactionsRoot"`
 	Uncles           []string        `json:"uncles"`
 	Withdrawals      []RawWithdrawal `json:"withdrawals"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Block[Tx string | Transaction] struct {

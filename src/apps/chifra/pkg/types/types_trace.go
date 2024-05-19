@@ -35,8 +35,6 @@ type RawTrace struct {
 	TransactionHash  string          `json:"transactionHash"`
 	TransactionIndex base.Txnum      `json:"transactionPosition"`
 	TraceType        string          `json:"type"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Trace struct {

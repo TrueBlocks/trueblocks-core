@@ -21,8 +21,6 @@ type RawChain struct {
 	RemoteExplorer string `json:"remoteExplorer"`
 	RpcProvider    string `json:"rpcProvider"`
 	Symbol         string `json:"symbol"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Chain struct {

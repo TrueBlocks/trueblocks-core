@@ -20,8 +20,6 @@ import (
 type RawAbi struct {
 	Address   string   `json:"address"`
 	Functions []string `json:"functions"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Abi struct {

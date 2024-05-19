@@ -23,8 +23,6 @@ type RawNamedBlock struct {
 	Description string `json:"description"`
 	Name        string `json:"name"`
 	Timestamp   string `json:"timestamp"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type NamedBlock struct {

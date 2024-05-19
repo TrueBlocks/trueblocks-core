@@ -24,8 +24,6 @@ type RawManifest struct {
 	Chunks        string `json:"chunks"`
 	Specification string `json:"specification"`
 	Version       string `json:"version"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Manifest struct {

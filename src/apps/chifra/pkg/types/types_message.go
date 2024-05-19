@@ -16,8 +16,6 @@ import "encoding/json"
 type RawMessage struct {
 	Msg string `json:"msg"`
 	Num string `json:"num"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Message struct {

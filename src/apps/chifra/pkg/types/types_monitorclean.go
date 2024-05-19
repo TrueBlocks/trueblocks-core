@@ -22,8 +22,6 @@ type RawMonitorClean struct {
 	Dups     string `json:"dups"`
 	SizeNow  string `json:"sizeNow"`
 	SizeThen string `json:"sizeThen"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type MonitorClean struct {

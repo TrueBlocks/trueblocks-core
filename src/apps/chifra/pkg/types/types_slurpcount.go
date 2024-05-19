@@ -20,8 +20,6 @@ import (
 type RawSlurpCount struct {
 	Address string `json:"address"`
 	Count   string `json:"count"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type SlurpCount struct {

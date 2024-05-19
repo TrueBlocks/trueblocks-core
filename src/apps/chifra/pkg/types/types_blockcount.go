@@ -26,8 +26,6 @@ type RawBlockCount struct {
 	TransactionsCnt string `json:"transactionsCnt"`
 	UnclesCnt       string `json:"unclesCnt"`
 	WithdrawalsCnt  string `json:"withdrawalsCnt"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type BlockCount struct {

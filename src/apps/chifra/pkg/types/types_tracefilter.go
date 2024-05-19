@@ -26,8 +26,6 @@ type RawTraceFilter struct {
 	FromBlock   string `json:"fromBlock"`
 	ToAddress   string `json:"toAddress"`
 	ToBlock     string `json:"toBlock"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type TraceFilter struct {

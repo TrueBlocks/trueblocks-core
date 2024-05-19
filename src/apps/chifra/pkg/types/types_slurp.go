@@ -24,6 +24,8 @@ import (
 // EXISTING_CODE
 
 type RawSlurp struct {
+	Address           string `json:"address"`
+	Amount            string `json:"amount"`
 	BlockHash         string `json:"blockHash"`
 	BlockNumber       string `json:"blockNumber"`
 	ContractAddress   string `json:"contractAddress"`
@@ -44,10 +46,6 @@ type RawSlurp struct {
 	ValidatorIndex    string `json:"validatorIndex"`
 	Value             string `json:"value"`
 	WithdrawalIndex   string `json:"withdrawalIndex"`
-	// EXISTING_CODE
-	Address string `json:"address"`
-	Amount  string `json:"amount"`
-	// EXISTING_CODE
 }
 
 type Slurp struct {

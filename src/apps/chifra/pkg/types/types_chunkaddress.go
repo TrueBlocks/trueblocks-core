@@ -22,8 +22,6 @@ type RawChunkAddress struct {
 	Count   string `json:"count"`
 	Offset  string `json:"offset"`
 	Range   string `json:"range"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type ChunkAddress struct {

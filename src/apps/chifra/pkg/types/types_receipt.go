@@ -38,8 +38,6 @@ type RawReceipt struct {
 	To                string   `json:"to"`
 	TransactionHash   string   `json:"transactionHash"`
 	TransactionIndex  string   `json:"transactionIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Receipt struct {

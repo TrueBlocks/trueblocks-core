@@ -13,8 +13,7 @@ package types
 
 type Raw{{.Class}} struct {
 {{range .Members}}{{if .IsRawField}}{{.GoName}} {{.RawType}} {{.RawTag}}
-{{end}}{{end}}	// EXISTING_CODE
-	// EXISTING_CODE
+{{end}}{{end}}
 }
 
 type {{.ModelName "simple"}} struct {

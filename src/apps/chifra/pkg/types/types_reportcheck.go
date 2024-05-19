@@ -24,8 +24,6 @@ type RawReportCheck struct {
 	Result     string   `json:"result"`
 	SkippedCnt string   `json:"skippedCnt"`
 	VisitedCnt string   `json:"visitedCnt"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type ReportCheck struct {

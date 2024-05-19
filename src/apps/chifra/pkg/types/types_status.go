@@ -40,8 +40,6 @@ type RawStatus struct {
 	RootConfig    string   `json:"rootConfig"`
 	RpcProvider   string   `json:"rpcProvider"`
 	Version       string   `json:"version"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type Status struct {

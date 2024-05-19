@@ -17,8 +17,6 @@ import (
 
 type RawTimestampCount struct {
 	Count string `json:"count"`
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 type TimestampCount struct {
