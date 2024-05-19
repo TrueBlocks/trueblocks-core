@@ -55,7 +55,6 @@ func init() {
 	var capabilities caps.Capability // capabilities for chifra logs
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Raw)
 
 	logsCmd.Flags().SortFlags = false
 

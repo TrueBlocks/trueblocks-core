@@ -158,7 +158,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 24050,tools,Chain Data,receipts,getReceipts,n2,,,,note,,,,,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 24060,tools,Chain Data,receipts,getReceipts,n3,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 #
-25000,tools,Chain Data,logs,getLogs,,,,visible|docs,command,,,Get logs,[flags] <tx_id> [tx_id...],default|caching|raw|,Retrieve logs for the given transaction(s).
+25000,tools,Chain Data,logs,getLogs,,,,visible|docs,command,,,Get logs,[flags] <tx_id> [tx_id...],default|caching|,Retrieve logs for the given transaction(s).
 25020,tools,Chain Data,logs,getLogs,transactions,,,required|visible|docs,positional,list<tx_id>,log,,,,a space-separated list of one or more transaction identifiers
 25030,tools,Chain Data,logs,getLogs,emitter,m,,visible|docs,flag,list<addr>,,,,,filter logs to show only those logs emitted by the given address(es)
 25040,tools,Chain Data,logs,getLogs,topic,B,,visible|docs,flag,list<topic>,,,,,filter logs to show only those with this topic(s)
