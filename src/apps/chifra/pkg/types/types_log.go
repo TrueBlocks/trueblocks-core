@@ -317,33 +317,4 @@ func (s *Log) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
-//
-
-// func (r *RawLog) RawTo(vals map[string]any) (Log, error) {
-// 	hash, ok := vals["hash"].(base.Hash)
-// 	if !ok {
-// 		logger.Fatal("should not happen ==> hash not found in raw log values")
-// 	}
-
-// 	log := Log{
-// 		Address:          base.HexToAddress(r.Address),
-// 		BlockNumber:      base.MustParseBlknum(r.BlockNumber),
-// 		BlockHash:        base.HexToHash(r.BlockHash),
-// 		TransactionIndex: base.MustParseTxnum(r.TransactionIndex),
-// 		TransactionHash:  hash,
-// 		LogIndex:         base.MustParseTxnum(r.LogIndex),
-// 		Data:             r.Data,
-// 		raw:              r,
-// 	}
-// 	for _, topic := range r.Topics {
-// 		log.Topics = append(log.Topics, base.HexToHash(topic))
-// 	}
-
-// 	if ts, ok := vals["timestamp"].(base.Timestamp); ok && ts != base.NOPOSI {
-// 		log.Timestamp = ts
-// 	}
-
-// 	return log, nil
-// }
-
 // EXISTING_CODE

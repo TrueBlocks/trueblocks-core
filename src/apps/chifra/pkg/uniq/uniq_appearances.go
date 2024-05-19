@@ -8,7 +8,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // AddMiner adds the miner address (for use with post-merge)
@@ -142,8 +141,8 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 				if trace.Result != nil && trace.Result.Address.IsZero() {
 					if trace.Error != "" {
 						if receipt, err := conn.GetReceiptNoTimestamp(bn, txid); err == nil {
-							addr := hexutil.Encode(receipt.ContractAddress.Bytes())
-							addAddressToMaps(addr, bn, txid, addrMap)
+							address := receipt.ContractAddress.Hex()
+							addAddressToMaps(address, bn, txid, addrMap)
 						}
 					}
 				}
