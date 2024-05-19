@@ -22,15 +22,6 @@ import (
 
 // EXISTING_CODE
 
-type RawWithdrawal struct {
-	Address        string `json:"address"`
-	Amount         string `json:"amount"`
-	BlockNumber    string `json:"blockNumber"`
-	Index          string `json:"index"`
-	Timestamp      string `json:"timestamp"`
-	ValidatorIndex string `json:"validatorIndex"`
-}
-
 type Withdrawal struct {
 	Address        base.Address   `json:"address"`
 	Amount         base.Wei       `json:"amount"`
@@ -38,7 +29,6 @@ type Withdrawal struct {
 	Index          base.Value     `json:"index"`
 	Timestamp      base.Timestamp `json:"timestamp"`
 	ValidatorIndex base.Value     `json:"validatorIndex"`
-	raw            *RawWithdrawal `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -48,12 +38,11 @@ func (s Withdrawal) String() string {
 	return string(bytes)
 }
 
-func (s *Withdrawal) Raw() *RawWithdrawal {
-	return s.raw
+func (s *Withdrawal) Raw() *Withdrawal {
+	return s
 }
 
-func (s *Withdrawal) SetRaw(raw *RawWithdrawal) {
-	s.raw = raw
+func (s *Withdrawal) SetRaw(raw *Withdrawal) {
 }
 
 func (s *Withdrawal) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

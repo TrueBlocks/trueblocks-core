@@ -215,17 +215,9 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, 
 	if len(rawBlock.Withdrawals) > 0 {
 		block.Withdrawals = make([]types.Withdrawal, 0, len(rawBlock.Withdrawals))
 		for _, withdrawal := range rawBlock.Withdrawals {
-			amt := base.NewWei(0)
-			amt.SetString(withdrawal.Amount, 0)
-			s := types.Withdrawal{
-				Address:        base.HexToAddress(withdrawal.Address),
-				Amount:         *amt,
-				BlockNumber:    block.BlockNumber,
-				Timestamp:      block.Timestamp,
-				Index:          base.MustParseValue(withdrawal.Index),
-				ValidatorIndex: base.MustParseValue(withdrawal.ValidatorIndex),
-			}
-			block.Withdrawals = append(block.Withdrawals, s)
+			withdrawal.BlockNumber = block.BlockNumber
+			withdrawal.Timestamp = block.Timestamp
+			block.Withdrawals = append(block.Withdrawals, withdrawal)
 		}
 	}
 

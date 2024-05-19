@@ -141,7 +141,7 @@ func (m *Member) RawType() string {
 		if m.GoName() == "Transactions" {
 			return "[]any"
 		} else if m.GoName() == "Withdrawals" {
-			return "[]RawWithdrawal"
+			return "[]Withdrawal"
 		}
 	}
 
