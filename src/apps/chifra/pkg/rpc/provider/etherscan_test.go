@@ -63,26 +63,26 @@ func mockEtherscanServer(t *testing.T) (ts *httptest.Server) {
 
 	pages := []etherscanResponseBody{
 		{
-			Result: []types.RawSlurp{
+			Result: []types.Slurp{
 				{
-					BlockNumber:      "1",
-					TransactionIndex: "1",
+					BlockNumber:      1,
+					TransactionIndex: 1,
 				},
 				{
-					BlockNumber:      "1",
-					TransactionIndex: "2",
+					BlockNumber:      1,
+					TransactionIndex: 2,
 				},
 				{
-					BlockNumber:      "1",
-					TransactionIndex: "3",
+					BlockNumber:      1,
+					TransactionIndex: 3,
 				},
 			},
 		},
 		{
-			Result: []types.RawSlurp{
+			Result: []types.Slurp{
 				{
-					BlockNumber:      "2",
-					TransactionIndex: "1",
+					BlockNumber:      2,
+					TransactionIndex: 1,
 				},
 			},
 		},
@@ -109,12 +109,12 @@ func mockEtherscanServer(t *testing.T) (ts *httptest.Server) {
 	return ts
 }
 
-func mockConvertSlurpType(t *testing.T) func(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
+func mockConvertSlurpType(t *testing.T) func(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error) {
 	t.Helper()
-	return func(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
+	return func(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error) {
 		return types.Slurp{
-			BlockNumber:      base.MustParseBlknum(rawTx.BlockNumber),
-			TransactionIndex: base.MustParseTxnum(rawTx.TransactionIndex),
+			BlockNumber:      rawTx.BlockNumber,
+			TransactionIndex: rawTx.TransactionIndex,
 		}, nil
 	}
 }

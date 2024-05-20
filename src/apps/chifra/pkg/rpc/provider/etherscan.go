@@ -30,7 +30,7 @@ type EtherscanProvider struct {
 	baseUrl          string
 	conn             *rpc.Connection
 	limiter          *rate.Limiter
-	convertSlurpType func(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error)
+	convertSlurpType func(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error)
 	apiKey           string
 }
 
@@ -124,9 +124,9 @@ func (p *EtherscanProvider) Count(ctx context.Context, query *Query, errorChan c
 }
 
 type etherscanResponseBody struct {
-	Message string           `json:"message"`
-	Result  []types.RawSlurp `json:"result"`
-	Status  string           `json:"status"`
+	Message string        `json:"message"`
+	Result  []types.Slurp `json:"result"`
+	Status  string        `json:"status"`
 }
 
 func (p *EtherscanProvider) fetchData(ctx context.Context, address base.Address, paginator Paginator, requestType string) (data []SlurpedPageItem, count int, err error) {
@@ -195,30 +195,29 @@ func (p *EtherscanProvider) fetchData(ctx context.Context, address base.Address,
 	return ret, fetchedCount, nil
 }
 
-// rawSlurpTo translate RawSlurp to Slurp. By default it uses `defaultConvertSlurpType`, but this can be changed, e.g. in tests
-func (p *EtherscanProvider) rawSlurpTo(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
+// rawSlurpTo translate Slurp to Slurp. By default it uses `defaultConvertSlurpType`, but this can be changed, e.g. in tests
+func (p *EtherscanProvider) rawSlurpTo(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error) {
 	return p.convertSlurpType(address, requestType, rawTx)
 }
 
-func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
+func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error) {
 	s := types.Slurp{
-		Hash:             base.HexToHash(rawTx.Hash),
-		BlockHash:        base.HexToHash(rawTx.BlockHash),
-		BlockNumber:      base.MustParseBlknum(rawTx.BlockNumber),
-		TransactionIndex: base.MustParseTxnum(rawTx.TransactionIndex),
-		Timestamp:        base.MustParseTimestamp(rawTx.Timestamp),
-		From:             base.HexToAddress(rawTx.From),
-		To:               base.HexToAddress(rawTx.To),
-		Gas:              base.MustParseGas(rawTx.Gas),
-		GasPrice:         base.MustParseGas(rawTx.GasPrice),
-		GasUsed:          base.MustParseGas(rawTx.GasUsed),
+		Hash:             rawTx.Hash,
+		BlockHash:        rawTx.BlockHash,
+		BlockNumber:      rawTx.BlockNumber,
+		TransactionIndex: rawTx.TransactionIndex,
+		Timestamp:        rawTx.Timestamp,
+		From:             rawTx.From,
+		To:               rawTx.To,
+		Gas:              rawTx.Gas,
+		GasPrice:         rawTx.GasPrice,
+		GasUsed:          rawTx.GasUsed,
 		Input:            rawTx.Input,
+		Value:            rawTx.Value,
+		ContractAddress:  rawTx.ContractAddress,
+		HasToken:         requestType == "nfts" || requestType == "token" || requestType == "1155",
 	}
-
-	s.IsError = rawTx.TxReceiptStatus == "0"
-	s.HasToken = requestType == "nfts" || requestType == "token" || requestType == "1155"
-	s.Value.SetString(rawTx.Value, 0)
-	s.ContractAddress = base.HexToAddress(rawTx.ContractAddress)
+	// s.IsError = rawTx.TxReceiptStatus == "0"
 
 	if requestType == "int" {
 		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't
@@ -243,13 +242,10 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.WithdrawalAmt
 		s.From = base.WithdrawalSender
-		s.ValidatorIndex = base.MustParseValue(rawTx.ValidatorIndex)
-		s.WithdrawalIndex = base.MustParseValue(rawTx.WithdrawalIndex)
-		s.Value.SetString(rawTx.Amount, 0)
+		s.ValidatorIndex = rawTx.ValidatorIndex
+		s.WithdrawalIndex = rawTx.WithdrawalIndex
+		s.Value = rawTx.Amount
 		s.To = base.HexToAddress(address)
-		if s.To != base.HexToAddress(rawTx.Address) {
-			logger.Fatal("should not happen ==> in rawSlurpTo", s.To, rawTx.Address)
-		}
 	}
 
 	s.SetRaw(rawTx)

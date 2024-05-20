@@ -23,31 +23,6 @@ import (
 
 // EXISTING_CODE
 
-type RawSlurp struct {
-	Address           string `json:"address"`
-	Amount            string `json:"amount"`
-	BlockHash         string `json:"blockHash"`
-	BlockNumber       string `json:"blockNumber"`
-	ContractAddress   string `json:"contractAddress"`
-	CumulativeGasUsed string `json:"cumulativeGasUsed"`
-	From              string `json:"from"`
-	FunctionName      string `json:"functionName"`
-	Gas               string `json:"gas"`
-	GasPrice          string `json:"gasPrice"`
-	GasUsed           string `json:"gasUsed"`
-	Hash              string `json:"hash"`
-	Input             string `json:"input"`
-	MethodId          string `json:"methodId"`
-	Nonce             string `json:"nonce"`
-	Timestamp         string `json:"timestamp"`
-	To                string `json:"to"`
-	TransactionIndex  string `json:"transactionIndex"`
-	TxReceiptStatus   string `json:"txReceiptStatus"`
-	ValidatorIndex    string `json:"validatorIndex"`
-	Value             string `json:"value"`
-	WithdrawalIndex   string `json:"withdrawalIndex"`
-}
-
 type Slurp struct {
 	ArticulatedTx     *Function      `json:"articulatedTx"`
 	BlockHash         base.Hash      `json:"blockHash"`
@@ -72,8 +47,9 @@ type Slurp struct {
 	ValidatorIndex    base.Value     `json:"validatorIndex"`
 	Value             base.Wei       `json:"value"`
 	WithdrawalIndex   base.Value     `json:"withdrawalIndex"`
-	raw               *RawSlurp      `json:"-"`
 	// EXISTING_CODE
+	Address base.Address `json:"address"`
+	Amount  base.Wei     `json:"amount"`
 	// EXISTING_CODE
 }
 
@@ -82,12 +58,11 @@ func (s Slurp) String() string {
 	return string(bytes)
 }
 
-func (s *Slurp) Raw() *RawSlurp {
-	return s.raw
+func (s *Slurp) Raw() *Slurp {
+	return s
 }
 
-func (s *Slurp) SetRaw(raw *RawSlurp) {
-	s.raw = raw
+func (s *Slurp) SetRaw(raw *Slurp) {
 }
 
 func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
