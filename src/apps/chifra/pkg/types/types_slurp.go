@@ -37,7 +37,7 @@ type Slurp struct {
 	HasToken          bool           `json:"hasToken"`
 	Hash              base.Hash      `json:"hash"`
 	Input             string         `json:"input"`
-	IsError           bool           `json:"isError"`
+	IsError           bool           `json:"-"`
 	MethodId          string         `json:"methodId"`
 	Nonce             base.Value     `json:"nonce"`
 	Timestamp         base.Timestamp `json:"timestamp"`
@@ -48,8 +48,7 @@ type Slurp struct {
 	Value             base.Wei       `json:"value"`
 	WithdrawalIndex   base.Value     `json:"withdrawalIndex"`
 	// EXISTING_CODE
-	Address base.Address `json:"address"`
-	Amount  base.Wei     `json:"amount"`
+	Amount base.Wei `json:"amount"`
 	// EXISTING_CODE
 }
 

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -140,59 +141,77 @@ func (p *EtherscanProvider) fetchData(ctx context.Context, address base.Address,
 	}
 
 	debug.DebugCurlStr(url)
-	resp, err := http.Get(url)
-	if err != nil {
-		return []SlurpedPageItem{}, 0, err
-	}
-	defer resp.Body.Close()
-
-	// Check server response
-	if resp.StatusCode != http.StatusOK {
-		return []SlurpedPageItem{}, 0, fmt.Errorf("etherscan API error: %s", resp.Status)
-	}
-
-	decoder := json.NewDecoder(resp.Body)
 	fromEs := etherscanResponseBody{}
-	if err = decoder.Decode(&fromEs); err != nil {
-		if fromEs.Message == "NOTOK" {
-			return []SlurpedPageItem{}, 0, fmt.Errorf("provider responded with: %s %s", url, fromEs.Message)
-		}
-		return []SlurpedPageItem{}, 0, fmt.Errorf("decoder failed: %w", err)
-	}
+	sleepyTime := 100 * time.Millisecond
 
-	if fromEs.Message == "NOTOK" {
-		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
-		// response so we don't keep asking Etherscan for the same address. The user may later
-		// remove empty ABIs with chifra abis --decache.
-		if !utils.IsFuzzing() {
-			logger.Warn("provider responded with:", url, fromEs.Message, strings.Repeat(" ", 40))
-		}
-		return []SlurpedPageItem{}, 0, nil
-		// } else if fromEs.Message != "OK" {
-		// 	logger.Warn("URL:", url)
-		// 	logger.Warn("provider responded with:", url, fromEs.Message)
-	}
-
+	attempts := 0
 	var ret []SlurpedPageItem
-	for _, rawTx := range fromEs.Result {
-		if transaction, err := p.rawSlurpTo(address.String(), requestType, &rawTx); err != nil {
-			return nil, 0, err
-		} else {
-			ret = append(ret, SlurpedPageItem{
-				Appearance: &types.Appearance{
-					Address:          address,
-					BlockNumber:      uint32(transaction.BlockNumber),
-					TransactionIndex: uint32(transaction.TransactionIndex),
-				},
-				Transaction: &transaction,
-			})
+	for {
+		attempts++
+		if len(ret) > 0 || attempts > 3 {
+			paginator.SetDone(len(ret) < paginator.PerPage())
+			return ret, len(ret), nil
+		}
+		resp, err := http.Get(url)
+		if err != nil {
+			if attempts > 3 {
+				return ret, len(ret), err
+			}
+		}
+
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			if attempts > 3 {
+				return ret, len(ret), fmt.Errorf("etherscan API error: %s", resp.Status)
+			}
+			time.Sleep(sleepyTime)
+			sleepyTime *= 2
+		}
+		// Check server response
+		decoder := json.NewDecoder(resp.Body)
+		if err = decoder.Decode(&fromEs); err != nil {
+			if attempts > 3 {
+				if fromEs.Message == "NOTOK" {
+					return ret, len(ret), fmt.Errorf("provider responded with: %s %s", url, fromEs.Message)
+				}
+				return ret, len(ret), fmt.Errorf("decoder failed: %w", err)
+			}
+			time.Sleep(sleepyTime)
+			sleepyTime *= 2
+		}
+
+		if fromEs.Message == "NOTOK" {
+			if attempts > 3 {
+				// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
+				// response so we don't keep asking Etherscan for the same address. The user may later
+				// remove empty ABIs with chifra abis --decache.
+				if !utils.IsFuzzing() {
+					logger.Warn("provider responded with:", url, fromEs.Message, strings.Repeat(" ", 40))
+				}
+				return ret, len(ret), nil
+				// } else if fromEs.Message != "OK" {
+				// 	logger.Warn("URL:", url)
+				// 	logger.Warn("provider responded with:", url, fromEs.Message)
+			}
+			time.Sleep(sleepyTime)
+			sleepyTime *= 2
+		}
+
+		for _, rawTx := range fromEs.Result {
+			if transaction, err := p.rawSlurpTo(address.String(), requestType, &rawTx); err != nil {
+				return nil, 0, err
+			} else {
+				ret = append(ret, SlurpedPageItem{
+					Appearance: &types.Appearance{
+						Address:          address,
+						BlockNumber:      uint32(transaction.BlockNumber),
+						TransactionIndex: uint32(transaction.TransactionIndex),
+					},
+					Transaction: &transaction,
+				})
+			}
 		}
 	}
-
-	fetchedCount := len(ret)
-	paginator.SetDone(fetchedCount < paginator.PerPage())
-
-	return ret, fetchedCount, nil
 }
 
 // rawSlurpTo translate Slurp to Slurp. By default it uses `defaultConvertSlurpType`, but this can be changed, e.g. in tests
@@ -228,14 +247,14 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.BlockReward
 		s.From = base.BlockRewardSender
-		// TODO: This is incorrect for mainnet
+		// TODO: This is only correct for Eth mainnet
 		s.Value.SetString("5000000000000000000", 0)
 		s.To = base.HexToAddress(address)
 	} else if requestType == "uncles" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.UncleReward
 		s.From = base.UncleRewardSender
-		// TODO: This is incorrect for mainnet
+		// TODO: This is only correct for Eth mainnet
 		s.Value.SetString("3750000000000000000", 0)
 		s.To = base.HexToAddress(address)
 	} else if requestType == "withdrawals" {

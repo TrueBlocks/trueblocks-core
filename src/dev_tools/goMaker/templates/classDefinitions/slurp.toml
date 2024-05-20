@@ -3,7 +3,7 @@
     doc_group = "05-Other"
     doc_descr = "transaction data as returned from by remote APIs"
     doc_route = "512-slurp"
-    attributes = "hasraw"
+    attributes = ""
     produced_by = "slurp"
     contains = "function"
     cache_type = "cacheable"
