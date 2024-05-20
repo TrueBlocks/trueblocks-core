@@ -22,16 +22,6 @@ import (
 
 // EXISTING_CODE
 
-type RawResult struct {
-	Address          string `json:"address"`
-	BlockNumber      string `json:"blockNumber"`
-	EncodedArguments string `json:"encodedArguments"`
-	Encoding         string `json:"encoding"`
-	Name             string `json:"name"`
-	Signature        string `json:"signature"`
-	Timestamp        string `json:"timestamp"`
-}
-
 type Result struct {
 	Address          base.Address   `json:"address"`
 	ArticulatedOut   *Function      `json:"articulatedOut"`
@@ -41,7 +31,6 @@ type Result struct {
 	Name             string         `json:"name"`
 	Signature        string         `json:"signature"`
 	Timestamp        base.Timestamp `json:"timestamp"`
-	raw              *RawResult     `json:"-"`
 	// EXISTING_CODE
 	Values        map[string]string `json:"values"`
 	ReturnedBytes string
@@ -53,12 +42,11 @@ func (s Result) String() string {
 	return string(bytes)
 }
 
-func (s *Result) Raw() *RawResult {
-	return s.raw
+func (s *Result) Raw() *Result {
+	return s
 }
 
-func (s *Result) SetRaw(raw *RawResult) {
-	s.raw = raw
+func (s *Result) SetRaw(raw *Result) {
 }
 
 func (s *Result) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

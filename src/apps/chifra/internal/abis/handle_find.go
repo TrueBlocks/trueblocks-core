@@ -34,7 +34,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 	// TODO: we might want to use utils.IterateOver Map here
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Function], errorChan chan error) {
 		var results []types.Function
 		var wg sync.WaitGroup
 		mutex := sync.Mutex{}

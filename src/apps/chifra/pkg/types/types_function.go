@@ -25,31 +25,17 @@ import (
 // https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
 // EXISTING_CODE
 
-type RawFunction struct {
-	Anonymous       string `json:"anonymous"`
-	Constant        string `json:"constant"`
-	Encoding        string `json:"encoding"`
-	Inputs          string `json:"inputs"`
-	Message         string `json:"message"`
-	Name            string `json:"name"`
-	Outputs         string `json:"outputs"`
-	Signature       string `json:"signature"`
-	StateMutability string `json:"stateMutability"`
-	FunctionType    string `json:"type"`
-}
-
 type Function struct {
-	Anonymous       bool         `json:"anonymous,omitempty"`
-	Constant        bool         `json:"constant,omitempty"`
-	Encoding        string       `json:"encoding"`
-	Inputs          []Parameter  `json:"inputs"`
-	Message         string       `json:"message,omitempty"`
-	Name            string       `json:"name"`
-	Outputs         []Parameter  `json:"outputs"`
-	Signature       string       `json:"signature,omitempty"`
-	StateMutability string       `json:"stateMutability,omitempty"`
-	FunctionType    string       `json:"type"`
-	raw             *RawFunction `json:"-"`
+	Anonymous       bool        `json:"anonymous,omitempty"`
+	Constant        bool        `json:"constant,omitempty"`
+	Encoding        string      `json:"encoding"`
+	Inputs          []Parameter `json:"inputs"`
+	Message         string      `json:"message,omitempty"`
+	Name            string      `json:"name"`
+	Outputs         []Parameter `json:"outputs"`
+	Signature       string      `json:"signature,omitempty"`
+	StateMutability string      `json:"stateMutability,omitempty"`
+	FunctionType    string      `json:"type"`
 	// EXISTING_CODE
 	payable   bool
 	abiMethod *abi.Method
@@ -62,12 +48,11 @@ func (s Function) String() string {
 	return string(bytes)
 }
 
-func (s *Function) Raw() *RawFunction {
-	return s.raw
+func (s *Function) Raw() *Function {
+	return s
 }
 
-func (s *Function) SetRaw(raw *RawFunction) {
-	s.raw = raw
+func (s *Function) SetRaw(raw *Function) {
 }
 
 func (s *Function) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

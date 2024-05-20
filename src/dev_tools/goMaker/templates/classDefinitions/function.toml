@@ -4,6 +4,7 @@
     doc_group = "05-Other"
     doc_descr = "a human-readable representation of a Solidity function call or event"
     doc_route = "506-function"
+    attributes = "simponly"
     produced_by = "abis, export, transactions, receipts, logs, traces, state, slurp"
     contains = "parameter"
     cache_type = "marshal_only"
