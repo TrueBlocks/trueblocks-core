@@ -43,19 +43,19 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 		var ret []types.Trace
 		for _, rawTrace := range *rawTraces {
 			traceAction := types.TraceAction{
-				Address:        base.HexToAddress(rawTrace.Action.Address),
-				Author:         base.HexToAddress(rawTrace.Action.Author),
-				Balance:        base.MustParseWei(rawTrace.Action.Balance),
+				Address:        rawTrace.Action.Address,
+				Author:         rawTrace.Action.Author,
+				Balance:        rawTrace.Action.Balance,
 				CallType:       rawTrace.Action.CallType,
-				From:           base.HexToAddress(rawTrace.Action.From),
-				Gas:            base.MustParseGas(rawTrace.Action.Gas),
+				From:           rawTrace.Action.From,
+				Gas:            rawTrace.Action.Gas,
 				Init:           rawTrace.Action.Init,
 				Input:          rawTrace.Action.Input,
-				RefundAddress:  base.HexToAddress(rawTrace.Action.RefundAddress),
+				RefundAddress:  rawTrace.Action.RefundAddress,
 				RewardType:     rawTrace.Action.RewardType,
-				SelfDestructed: base.HexToAddress(rawTrace.Action.SelfDestructed),
-				To:             base.HexToAddress(rawTrace.Action.To),
-				Value:          base.MustParseWei(rawTrace.Action.Value),
+				SelfDestructed: rawTrace.Action.SelfDestructed,
+				To:             rawTrace.Action.To,
+				Value:          rawTrace.Action.Value,
 			}
 			traceResult := types.TraceResult{}
 			if rawTrace.Result != nil {
@@ -150,22 +150,17 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 		var traceIndex base.Tracenum
 
 		for _, rawTrace := range *rawTraces {
-			value := base.NewWei(0)
-			value.SetString(rawTrace.Action.Value, 0)
-			balance := base.NewWei(0)
-			balance.SetString(rawTrace.Action.Balance, 0)
-
 			action := types.TraceAction{
 				CallType:       rawTrace.Action.CallType,
-				From:           base.HexToAddress(rawTrace.Action.From),
-				Gas:            base.MustParseGas(rawTrace.Action.Gas),
+				From:           rawTrace.Action.From,
+				Gas:            rawTrace.Action.Gas,
 				Input:          rawTrace.Action.Input,
-				To:             base.HexToAddress(rawTrace.Action.To),
-				Value:          *value,
-				Balance:        *balance,
-				Address:        base.HexToAddress(rawTrace.Action.Address),
-				RefundAddress:  base.HexToAddress(rawTrace.Action.RefundAddress),
-				SelfDestructed: base.HexToAddress(rawTrace.Action.SelfDestructed),
+				To:             rawTrace.Action.To,
+				Value:          rawTrace.Action.Value,
+				Balance:        rawTrace.Action.Balance,
+				Address:        rawTrace.Action.Address,
+				RefundAddress:  rawTrace.Action.RefundAddress,
+				SelfDestructed: rawTrace.Action.SelfDestructed,
 				Init:           rawTrace.Action.Init,
 			}
 			action.SetRaw(&rawTrace.Action)
@@ -250,22 +245,17 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 
 		// TODO: This could be loadTrace in the same way load Blocks works
 		for _, rawTrace := range *rawTraces {
-			value := base.NewWei(0)
-			value.SetString(rawTrace.Action.Value, 0)
-			balance := base.NewWei(0)
-			balance.SetString(rawTrace.Action.Balance, 0)
-
 			action := types.TraceAction{
 				CallType:       rawTrace.Action.CallType,
-				From:           base.HexToAddress(rawTrace.Action.From),
-				Gas:            base.MustParseGas(rawTrace.Action.Gas),
+				From:           rawTrace.Action.From,
+				Gas:            rawTrace.Action.Gas,
 				Input:          rawTrace.Action.Input,
-				To:             base.HexToAddress(rawTrace.Action.To),
-				Value:          *value,
-				Balance:        *balance,
-				Address:        base.HexToAddress(rawTrace.Action.Address),
-				RefundAddress:  base.HexToAddress(rawTrace.Action.RefundAddress),
-				SelfDestructed: base.HexToAddress(rawTrace.Action.SelfDestructed),
+				To:             rawTrace.Action.To,
+				Value:          rawTrace.Action.Value,
+				Balance:        rawTrace.Action.Balance,
+				Address:        rawTrace.Action.Address,
+				RefundAddress:  rawTrace.Action.RefundAddress,
+				SelfDestructed: rawTrace.Action.SelfDestructed,
 				Init:           rawTrace.Action.Init,
 			}
 			action.SetRaw(&rawTrace.Action)

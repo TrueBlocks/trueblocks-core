@@ -149,7 +149,7 @@ func (m *Member) RawType() string {
 	switch m.Container() {
 	case "Trace":
 		if m.GoName() == "Action" {
-			return "RawTraceAction"
+			return "TraceAction"
 		} else if m.GoName() == "TransactionHash" {
 			return "string"
 		}
