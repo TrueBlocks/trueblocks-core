@@ -168,7 +168,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 25080,tools,Chain Data,logs,getLogs,n3,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 25090,tools,Chain Data,logs,getLogs,n4,,,,note,,,,,,If you specify a 32-byte hash&#44; it will be assumed to be a transaction hash&#44; if it is not&#44; the hash will be used as a topic.
 #
-26000,tools,Chain Data,traces,getTraces,,,,visible|docs,command,,,Get traces,[flags] <tx_id> [tx_id...],default|caching|ether|raw|,Retrieve traces for the given transaction(s).
+26000,tools,Chain Data,traces,getTraces,,,,visible|docs,command,,,Get traces,[flags] <tx_id> [tx_id...],default|caching|ether|,Retrieve traces for the given transaction(s).
 26020,tools,Chain Data,traces,getTraces,transactions,,,required|visible|docs,positional,list<tx_id>,trace,,,,a space-separated list of one or more transaction identifiers
 26030,tools,Chain Data,traces,getTraces,articulate,a,,visible|docs,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 26040,tools,Chain Data,traces,getTraces,filter,f,,visible|docs,flag,<string>,,,,,call the node's trace_filter routine with bang-separated filter

@@ -35,16 +35,16 @@ on      ,both ,medi  ,traces ,tools ,getTraces ,by_bnun_and_txid_c  ,y    ,trans
 on      ,both ,medi  ,traces ,tools ,getTraces ,count_1             ,n    ,transactions = 1001001.0 1001001.0 2462000.* 14000201.0 & fmt = csv & count
 on      ,both ,medi  ,traces ,tools ,getTraces ,count_2             ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json & count
 on      ,both ,fast  ,traces ,tools ,getTraces ,no_tracing          ,y    ,transactions = 3648669.24 & chain = non-tracing
-on      ,both ,medi  ,traces ,tools ,getTraces ,00                  ,y    ,transactions = 0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab & raw
-on      ,both ,fast  ,traces ,tools ,getTraces ,04                  ,y    ,transactions = 0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497 & raw & fmt = json
-on      ,both ,medi  ,traces ,tools ,getTraces ,25                  ,y    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & raw
+on      ,both ,medi  ,traces ,tools ,getTraces ,00                  ,y    ,transactions = 0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab & fmt = json
+on      ,both ,fast  ,traces ,tools ,getTraces ,04                  ,y    ,transactions = 0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497 & fmt = json
+on      ,both ,medi  ,traces ,tools ,getTraces ,25                  ,y    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & fmt = json
 on      ,both ,fast  ,traces ,tools ,getTraces ,26                  ,n    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & fmt = csv
-on      ,both ,fast  ,traces ,tools ,getTraces ,27                  ,y    ,transactions = 0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b & raw
+on      ,both ,fast  ,traces ,tools ,getTraces ,27                  ,y    ,transactions = 0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b & fmt = json
 on      ,both ,fast  ,traces ,tools ,getTraces ,29                  ,y    ,transactions = 0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b & fmt = json & ether
-on      ,both ,fast  ,traces ,tools ,getTraces ,bad_hash_msg_raw    ,y    ,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & raw
-on      ,both ,fast  ,traces ,tools ,getTraces ,bad_blkhash_msg_raw ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 & raw
-on      ,both ,medi  ,traces ,tools ,getTraces ,prev_bug2_2         ,y    ,transactions = 4279119.46 & raw
-on      ,both ,fast  ,traces ,tools ,getTraces ,from_raw            ,y    ,transactions = 4000000.5 & raw
+on      ,both ,fast  ,traces ,tools ,getTraces ,bad_hash_msg_raw    ,y    ,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & fmt = json
+on      ,both ,fast  ,traces ,tools ,getTraces ,bad_blkhash_msg_raw ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 & fmt = json
+on      ,both ,medi  ,traces ,tools ,getTraces ,prev_bug2_2         ,y    ,transactions = 4279119.46 & fmt = json
+on      ,both ,fast  ,traces ,tools ,getTraces ,from_raw            ,y    ,transactions = 4000000.5 & fmt = json
 on      ,both ,fast  ,traces ,tools ,getTraces ,04_01               ,y    ,transactions = 0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497 & fmt = json
 on      ,both ,medi  ,traces ,tools ,getTraces ,25_01               ,y    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & fmt = json
 on      ,cmd  ,fast  ,traces ,tools ,getTraces ,by_filebad          ,n    ,bad & file = cmd_file
@@ -95,6 +95,6 @@ on      ,both ,fast  ,traces ,tools ,getTraces ,cache_one           ,y    ,trans
 on      ,both ,fast  ,traces ,tools ,getTraces ,decache_one         ,y    ,transactions = 46147.0 & decache
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
-on      ,both ,fast  ,traces ,tools ,getTraces ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
+on      ,both ,fast  ,traces ,tools ,getTraces ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & fail_on_purpose
 on      ,both ,fast  ,traces ,tools ,getTraces ,caps_disallowed_1   ,y    ,transactions = 12.0 & wei

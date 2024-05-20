@@ -189,11 +189,11 @@ func (c *Command) PyGlobals() string {
 	if c.Route == "names" {
 		caps = "create|update|delete|undelete|remove|" + caps
 	}
-	for _, op := range globals {
-		if strings.Contains(caps, strings.ToLower(op.LongName)+"|") {
+	for _, glob := range globals {
+		if strings.Contains(caps, strings.ToLower(glob.LongName)+"|") {
 			tmplName := "pyglobals1"
 			tmpl := "    \"{{toCamel .LongName}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
-			ret = append(ret, op.executeTemplate(tmplName, tmpl))
+			ret = append(ret, glob.executeTemplate(tmplName, tmpl))
 		}
 	}
 	return strings.Join(ret, "\n")
