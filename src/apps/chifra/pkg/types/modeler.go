@@ -13,6 +13,6 @@ type Model struct {
 type RawModeler interface{}
 
 type RawData interface {
-	RawBlock | RawTransaction | RawReceipt | RawTrace |
+	RawBlock | RawTransaction | RawTrace |
 		RawTraceAction | RawTraceResult | RawAppearance | RawModeler
 }

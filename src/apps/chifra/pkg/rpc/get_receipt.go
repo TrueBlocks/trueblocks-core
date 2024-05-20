@@ -45,30 +45,23 @@ func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (
 		}
 	}
 
-	rawReceipt, txHash, err := conn.getReceiptRaw(bn, txid)
-	if err != nil {
-		return
-	}
-
-	return rawReceipt.RawTo(map[string]any{
-		"hash":      txHash,
-		"timestmap": base.NOPOSI,
-	})
+	return conn.getReceiptRaw(bn, txid)
 }
 
 // getReceiptRaw fetches raw transaction given blockNumber and transactionIndex
-func (conn *Connection) getReceiptRaw(bn base.Blknum, txid base.Txnum) (receipt *types.RawReceipt, hash base.Hash, err error) {
+func (conn *Connection) getReceiptRaw(bn base.Blknum, txid base.Txnum) (receipt types.Receipt, err error) {
 	if txHash, err := conn.GetTransactionHashByNumberAndID(bn, txid); err != nil {
-		return nil, base.Hash{}, err
+		return types.Receipt{}, err
 
 	} else {
 		method := "eth_getTransactionReceipt"
 		params := query.Params{txHash}
 
-		if receipt, err := query.Query[types.RawReceipt](conn.Chain, method, params); err != nil {
-			return nil, base.Hash{}, err
+		if receipt, err := query.Query[types.Receipt](conn.Chain, method, params); err != nil {
+			return types.Receipt{}, err
 		} else {
-			return receipt, txHash, nil
+			receipt.IsError = receipt.Status == 0
+			return *receipt, nil
 		}
 	}
 }
@@ -119,30 +112,17 @@ func (conn *Connection) getReceipts(bn base.Blknum) ([]types.Receipt, error) {
 	method := "eth_getBlockReceipts"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
-	if rawReceipts, err := query.Query[[]types.RawReceipt](conn.Chain, method, params); err != nil {
+	if rawReceipts, err := query.Query[[]types.Receipt](conn.Chain, method, params); err != nil {
 		return []types.Receipt{}, err
 
 	} else if rawReceipts == nil || len(*rawReceipts) == 0 {
 		return []types.Receipt{}, nil
 
 	} else {
-		curBlock := base.NOPOSN
-		curTs := base.NOPOSI
 		var ret []types.Receipt
-		for _, rawReceipt := range *rawReceipts {
-			bn := base.MustParseBlknum(rawReceipt.BlockNumber)
-			if bn != curBlock {
-				curTs = conn.GetBlockTimestamp(bn)
-				curBlock = bn
-			}
-			if simp, err := rawReceipt.RawTo(map[string]any{
-				"hash":      base.Hash{},
-				"timestamp": curTs,
-			}); err != nil {
-				return ret, err
-			} else {
-				ret = append(ret, simp)
-			}
+		for _, receipt := range *rawReceipts {
+			receipt.IsError = receipt.Status == 0
+			ret = append(ret, receipt)
 		}
 		return ret, nil
 	}

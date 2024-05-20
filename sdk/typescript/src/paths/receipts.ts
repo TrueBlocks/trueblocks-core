@@ -19,7 +19,6 @@ export function getReceipts(
     noHeader?: boolean,
     cache?: boolean,
     decache?: boolean,
-    raw?: boolean,
   },
   options?: RequestInit,
 ) {

@@ -22,7 +22,6 @@ Arguments:
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
-  -w, --raw          report JSON data from the source with minimal processing
   -o, --cache        force the results of the query into the cache
   -D, --decache      removes related items from the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]

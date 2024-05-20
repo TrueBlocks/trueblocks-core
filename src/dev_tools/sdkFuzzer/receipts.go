@@ -26,7 +26,7 @@ func DoReceipts() {
 	opts := sdk.ReceiptsOptions{}
 	ShowHeader("DoReceipts", opts)
 
-	globs := noEther(globals)
+	globs := noRaw(noEther(globals))
 	articulate := []bool{false, true}
 	// Fuzz Loop
 	// EXISTING_CODE

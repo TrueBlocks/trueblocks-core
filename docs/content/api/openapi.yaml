@@ -1559,14 +1559,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: raw
-          description: report raw data directly from the source
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: fmt
           description: export format, one of [ txt | csv | json ]
           required: false

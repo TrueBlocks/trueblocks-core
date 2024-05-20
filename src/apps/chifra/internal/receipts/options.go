@@ -131,7 +131,6 @@ func getCaps() caps.Capability {
 	var capabilities caps.Capability // capabilities for chifra receipts
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return capabilities

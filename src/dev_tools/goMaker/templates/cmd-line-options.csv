@@ -151,7 +151,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 23140,tools,Chain Data,transactions,getTrans,n3,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 23150,tools,Chain Data,transactions,getTrans,n5,,,,note,,,,,,The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
 #
-24000,tools,Chain Data,receipts,getReceipts,,,,visible|docs,command,,,Get receipts,[flags] <tx_id> [tx_id...],default|caching|raw|,Retrieve receipts for the given transaction(s).
+24000,tools,Chain Data,receipts,getReceipts,,,,visible|docs,command,,,Get receipts,[flags] <tx_id> [tx_id...],default|caching|,Retrieve receipts for the given transaction(s).
 24020,tools,Chain Data,receipts,getReceipts,transactions,,,required|visible|docs,positional,list<tx_id>,receipt,,,,a space-separated list of one or more transaction identifiers
 24030,tools,Chain Data,receipts,getReceipts,articulate,a,,visible|docs,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 24040,tools,Chain Data,receipts,getReceipts,n1,,,,note,,,,,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
