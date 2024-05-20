@@ -28,7 +28,7 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 	)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Appearance], errorChan chan error) {
 		currentBn := uint32(0)
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, true /* withCount */); err != nil {

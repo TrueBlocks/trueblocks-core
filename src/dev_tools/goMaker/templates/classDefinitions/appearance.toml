@@ -4,5 +4,5 @@
     doc_group = "01-Accounts"
     doc_descr = "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain (note that in some cases, not all fields will appear depending on the command)"
     doc_route = "103-appearance"
-    attributes = "hasraw"
+    attributes = ""
     produced_by = "list, export, blocks, chunks, slurp, transactions"

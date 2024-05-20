@@ -13,5 +13,5 @@ type Model struct {
 type RawModeler interface{}
 
 type RawData interface {
-	RawBlock | RawTransaction | RawAppearance | RawModeler
+	RawBlock | RawTransaction | RawModeler
 }

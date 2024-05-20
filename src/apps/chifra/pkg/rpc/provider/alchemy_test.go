@@ -114,8 +114,8 @@ func TestAlchemyProvider_TransactionsByAddress(t *testing.T) {
 	provider := AlchemyProvider{
 		perPage: perPage,
 		baseUrl: ts.URL,
-		getTransactionAppearance: func(hash string) (types.RawAppearance, error) {
-			return types.RawAppearance{}, nil
+		getTransactionAppearance: func(hash string) (types.Appearance, error) {
+			return types.Appearance{}, nil
 		},
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
@@ -162,8 +162,8 @@ func TestAlchemyProvider_Appearances(t *testing.T) {
 	provider := AlchemyProvider{
 		perPage: perPage,
 		baseUrl: ts.URL,
-		getTransactionAppearance: func(hash string) (types.RawAppearance, error) {
-			return types.RawAppearance{}, nil
+		getTransactionAppearance: func(hash string) (types.Appearance, error) {
+			return types.Appearance{}, nil
 		},
 	}
 	provider.limiter = rate.NewLimiter(5, 5)
@@ -210,8 +210,8 @@ func TestAlchemyProvider_Count(t *testing.T) {
 	provider := AlchemyProvider{
 		perPage: perPage,
 		baseUrl: ts.URL,
-		getTransactionAppearance: func(hash string) (types.RawAppearance, error) {
-			return types.RawAppearance{}, nil
+		getTransactionAppearance: func(hash string) (types.Appearance, error) {
+			return types.Appearance{}, nil
 		},
 	}
 

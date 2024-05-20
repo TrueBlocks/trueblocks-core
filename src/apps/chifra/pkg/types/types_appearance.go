@@ -33,12 +33,6 @@ type ChunkAppearance = Appearance
 
 // EXISTING_CODE
 
-type RawAppearance struct {
-	Address          string `json:"address"`
-	BlockNumber      uint32 `json:"blockNumber"`
-	TransactionIndex uint32 `json:"transactionIndex"`
-}
-
 type Appearance struct {
 	Address          base.Address   `json:"address"`
 	BlockNumber      uint32         `json:"blockNumber"`
@@ -46,7 +40,6 @@ type Appearance struct {
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TraceIndex       uint32         `json:"traceIndex,omitempty"`
 	TransactionIndex uint32         `json:"transactionIndex"`
-	raw              *RawAppearance `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -56,12 +49,11 @@ func (s Appearance) String() string {
 	return string(bytes)
 }
 
-func (s *Appearance) Raw() *RawAppearance {
-	return s.raw
+func (s *Appearance) Raw() *Appearance {
+	return s
 }
 
-func (s *Appearance) SetRaw(raw *RawAppearance) {
-	s.raw = raw
+func (s *Appearance) SetRaw(raw *Appearance) {
 }
 
 func (s *Appearance) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

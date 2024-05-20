@@ -57,7 +57,7 @@ type AlchemyProvider struct {
 	limiter                  *rate.Limiter
 	baseUrl                  string
 	chain                    string
-	getTransactionAppearance func(hash string) (types.RawAppearance, error)
+	getTransactionAppearance func(hash string) (types.Appearance, error)
 }
 
 func NewAlchemyProvider(conn *rpc.Connection, chain string) (p *AlchemyProvider, err error) {
@@ -249,6 +249,6 @@ func (e *AlchemyProvider) fetchData(ctx context.Context, address base.Address, p
 	return
 }
 
-func (p *AlchemyProvider) defaultGetTransactionAppearance(hash string) (types.RawAppearance, error) {
+func (p *AlchemyProvider) defaultGetTransactionAppearance(hash string) (types.Appearance, error) {
 	return p.conn.GetTransactionAppByHash(hash)
 }
