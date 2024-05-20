@@ -21,19 +21,11 @@ import (
 
 // EXISTING_CODE
 
-type RawTraceResult struct {
-	Address string `json:"address"`
-	Code    string `json:"code"`
-	GasUsed string `json:"gasUsed"`
-	Output  string `json:"output"`
-}
-
 type TraceResult struct {
-	Address base.Address    `json:"address,omitempty"`
-	Code    string          `json:"code,omitempty"`
-	GasUsed base.Gas        `json:"gasUsed,omitempty"`
-	Output  string          `json:"output,omitempty"`
-	raw     *RawTraceResult `json:"-"`
+	Address base.Address `json:"address,omitempty"`
+	Code    string       `json:"code,omitempty"`
+	GasUsed base.Gas     `json:"gasUsed,omitempty"`
+	Output  string       `json:"output,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -43,12 +35,11 @@ func (s TraceResult) String() string {
 	return string(bytes)
 }
 
-func (s *TraceResult) Raw() *RawTraceResult {
-	return s.raw
+func (s *TraceResult) Raw() *TraceResult {
+	return s
 }
 
-func (s *TraceResult) SetRaw(raw *RawTraceResult) {
-	s.raw = raw
+func (s *TraceResult) SetRaw(raw *TraceResult) {
 }
 
 func (s *TraceResult) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

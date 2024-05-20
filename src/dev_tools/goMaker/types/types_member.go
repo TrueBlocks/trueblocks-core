@@ -155,7 +155,7 @@ func (m *Member) RawType() string {
 		}
 		if m.IsObject() {
 			if m.GoName() == "Result" {
-				return "*RawTraceResult"
+				return "*TraceResult"
 			}
 		} else {
 			switch m.GoName() {

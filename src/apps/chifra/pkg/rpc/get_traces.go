@@ -59,9 +59,9 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 			}
 			traceResult := types.TraceResult{}
 			if rawTrace.Result != nil {
-				traceResult.Address = base.HexToAddress(rawTrace.Result.Address)
+				traceResult.Address = rawTrace.Result.Address
 				traceResult.Code = rawTrace.Result.Code
-				traceResult.GasUsed = base.MustParseGas(rawTrace.Result.GasUsed)
+				traceResult.GasUsed = rawTrace.Result.GasUsed
 				traceResult.Output = rawTrace.Result.Output
 			}
 			trace := types.Trace{
@@ -173,12 +173,12 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			var result *types.TraceResult
 			if rawTrace.Result != nil {
 				result = &types.TraceResult{
-					GasUsed: base.MustParseGas(rawTrace.Result.GasUsed),
+					GasUsed: rawTrace.Result.GasUsed,
 					Output:  rawTrace.Result.Output,
 					Code:    rawTrace.Result.Code,
 				}
-				if len(rawTrace.Result.Address) > 0 {
-					result.Address = base.HexToAddress(rawTrace.Result.Address)
+				if !rawTrace.Result.Address.IsZero() {
+					result.Address = rawTrace.Result.Address
 				}
 				result.SetRaw(rawTrace.Result)
 			}
@@ -273,12 +273,12 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 			var result *types.TraceResult
 			if rawTrace.Result != nil {
 				result = &types.TraceResult{
-					GasUsed: base.MustParseGas(rawTrace.Result.GasUsed),
+					GasUsed: rawTrace.Result.GasUsed,
 					Output:  rawTrace.Result.Output,
 					Code:    rawTrace.Result.Code,
 				}
-				if len(rawTrace.Result.Address) > 0 {
-					result.Address = base.HexToAddress(rawTrace.Result.Address)
+				if !rawTrace.Result.Address.IsZero() {
+					result.Address = rawTrace.Result.Address
 				}
 				result.SetRaw(rawTrace.Result)
 			}

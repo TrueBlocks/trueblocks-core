@@ -25,16 +25,16 @@ import (
 // EXISTING_CODE
 
 type RawTrace struct {
-	Action           RawTraceAction  `json:"action"`
-	BlockHash        string          `json:"blockHash"`
-	BlockNumber      base.Blknum     `json:"blockNumber"`
-	Error            string          `json:"error"`
-	Result           *RawTraceResult `json:"result"`
-	Subtraces        uint64          `json:"subtraces"`
-	TraceAddress     []uint64        `json:"traceAddress"`
-	TransactionHash  string          `json:"transactionHash"`
-	TransactionIndex base.Txnum      `json:"transactionPosition"`
-	TraceType        string          `json:"type"`
+	Action           RawTraceAction `json:"action"`
+	BlockHash        string         `json:"blockHash"`
+	BlockNumber      base.Blknum    `json:"blockNumber"`
+	Error            string         `json:"error"`
+	Result           *TraceResult   `json:"result"`
+	Subtraces        uint64         `json:"subtraces"`
+	TraceAddress     []uint64       `json:"traceAddress"`
+	TransactionHash  string         `json:"transactionHash"`
+	TransactionIndex base.Txnum     `json:"transactionPosition"`
+	TraceType        string         `json:"type"`
 }
 
 type Trace struct {

@@ -14,5 +14,5 @@ type RawModeler interface{}
 
 type RawData interface {
 	RawBlock | RawTransaction | RawTrace |
-		RawTraceAction | RawTraceResult | RawAppearance | RawModeler
+		RawTraceAction | RawAppearance | RawModeler
 }
