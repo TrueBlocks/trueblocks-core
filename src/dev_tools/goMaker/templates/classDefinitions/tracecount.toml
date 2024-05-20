@@ -3,5 +3,5 @@
     doc_group = "02-Chain Data"
     doc_descr = "counts the number of traces in a transaction"
     doc_route = "230-traceCount"
-    attributes = "simponly"
+    attributes = ""
     produced_by = "traces"

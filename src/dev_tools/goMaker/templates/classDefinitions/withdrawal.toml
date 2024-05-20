@@ -4,7 +4,7 @@
     doc_group = "02-Chain Data"
     doc_descr = "withdrawal record for post-Shanghai withdrawals from the consensus layer"
     doc_route = "209-withdrawal"
-    attributes = "simponly"
+    attributes = ""
     produced_by = "blocks, export"
     cache_type = "cacheable"
     cache_by = "block"

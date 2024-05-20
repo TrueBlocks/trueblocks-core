@@ -70,7 +70,7 @@ func (s *Structure) IsCacheAsGroup() bool {
 }
 
 func (s *Structure) HasRaw() bool {
-	return !s.IsSimpOnly()
+	return strings.Contains(s.Attributes, "hasraw")
 }
 
 func (s *Structure) IsSimpOnly() bool {

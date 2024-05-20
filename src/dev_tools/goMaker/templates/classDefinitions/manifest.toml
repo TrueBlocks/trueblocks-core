@@ -3,6 +3,6 @@
     doc_group = "04-Admin"
     doc_descr = "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
     doc_route = "406-manifest"
-    attributes = "simponly"
+    attributes = ""
     produced_by = "chunks, init, scrape"
     contains = "chunkrecord"

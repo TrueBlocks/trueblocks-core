@@ -4,6 +4,6 @@
     doc_group = "01-Accounts"
     doc_descr = "an appearance table for an address"
     doc_route = "121-appearanceTable"
-    attributes = "simponly"
+    attributes = ""
     produced_by = "chunks"
     contains = "addrrecord, apprecord"

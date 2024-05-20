@@ -4,7 +4,7 @@
     doc_group = "05-Other"
     doc_descr = "an input or output parameter to a Solidity function or event"
     doc_route = "509-parameter"
-    attributes = "simponly"
+    attributes = ""
     produced_by = "abis, export, transactions, receipts, logs, traces, state, slurp"
     contains = "parameter"
     cache_type = "marshal_only"

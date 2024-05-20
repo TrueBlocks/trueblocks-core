@@ -3,5 +3,5 @@
     doc_group = "05-Other"
     doc_descr = "used for various responses when no real data is generated"
     doc_route = "518-message"
-    attributes = "simponly"
+    attributes = ""
     produced_by = "blocks, chunks, export, logs, monitors, names, state, traces, transactions, when"

@@ -4,6 +4,7 @@
     doc_group = "02-Chain Data"
     doc_descr = "trace data as returned from the RPC (with slight enhancements)"
     doc_route = "221-trace"
+    attributes = "hasraw"
     produced_by = "traces, export, blocks"
     contains = "traceaction, traceresult, function"
     cache_type = "cacheable"

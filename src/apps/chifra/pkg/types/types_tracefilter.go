@@ -19,23 +19,13 @@ import (
 
 // EXISTING_CODE
 
-type RawTraceFilter struct {
-	After       string `json:"after"`
-	Count       string `json:"count"`
-	FromAddress string `json:"fromAddress"`
-	FromBlock   string `json:"fromBlock"`
-	ToAddress   string `json:"toAddress"`
-	ToBlock     string `json:"toBlock"`
-}
-
 type TraceFilter struct {
-	After       uint64          `json:"after,omitempty"`
-	Count       uint64          `json:"count,omitempty"`
-	FromAddress base.Address    `json:"fromAddress,omitempty"`
-	FromBlock   base.Blknum     `json:"fromBlock,omitempty"`
-	ToAddress   base.Address    `json:"toAddress,omitempty"`
-	ToBlock     base.Blknum     `json:"toBlock,omitempty"`
-	raw         *RawTraceFilter `json:"-"`
+	After       uint64       `json:"after,omitempty"`
+	Count       uint64       `json:"count,omitempty"`
+	FromAddress base.Address `json:"fromAddress,omitempty"`
+	FromBlock   base.Blknum  `json:"fromBlock,omitempty"`
+	ToAddress   base.Address `json:"toAddress,omitempty"`
+	ToBlock     base.Blknum  `json:"toBlock,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -45,12 +35,11 @@ func (s TraceFilter) String() string {
 	return string(bytes)
 }
 
-func (s *TraceFilter) Raw() *RawTraceFilter {
-	return s.raw
+func (s *TraceFilter) Raw() *TraceFilter {
+	return s
 }
 
-func (s *TraceFilter) SetRaw(raw *RawTraceFilter) {
-	s.raw = raw
+func (s *TraceFilter) SetRaw(raw *TraceFilter) {
 }
 
 func (s *TraceFilter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

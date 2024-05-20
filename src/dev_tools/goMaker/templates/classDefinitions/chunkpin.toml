@@ -3,5 +3,5 @@
     doc_group = "04-Admin"
     doc_descr = "a JSON object containing the results of pinning the Unchained Index"
     doc_route = "436-chunkPin"
-    attributes = "simponly"
+    attributes = ""
     produced_by = "chunks"

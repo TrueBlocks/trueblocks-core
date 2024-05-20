@@ -3,5 +3,5 @@
     doc_group = "02-Chain Data"
     doc_descr = "used by the fast path log queries for various commands"
     doc_route = "218-logFilter"
-    attributes = "simponly"
+    attributes = ""
     produced_by = "blocks, logs"

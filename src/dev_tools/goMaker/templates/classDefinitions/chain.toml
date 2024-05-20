@@ -4,5 +4,5 @@
     doc_group = "04-Admin"
     doc_descr = "a configuration item carrying information about a single chain"
     doc_route = "439-chain"
-    attributes = "simponly"
+    attributes = ""
     produced_by = "status, config"

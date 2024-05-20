@@ -3,5 +3,5 @@
     doc_group = "04-Admin"
     doc_descr = "internal-use only data model detailing a single remote or local ipfs pinned file"
     doc_route = "421-ipfsPin"
-    attributes = "simponly"
+    attributes = ""
     produced_by = "chunks"
