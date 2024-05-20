@@ -24,19 +24,6 @@ import (
 
 // EXISTING_CODE
 
-type RawTrace struct {
-	Action           TraceAction  `json:"action"`
-	BlockHash        string       `json:"blockHash"`
-	BlockNumber      base.Blknum  `json:"blockNumber"`
-	Error            string       `json:"error"`
-	Result           *TraceResult `json:"result"`
-	Subtraces        uint64       `json:"subtraces"`
-	TraceAddress     []uint64     `json:"traceAddress"`
-	TransactionHash  string       `json:"transactionHash"`
-	TransactionIndex base.Txnum   `json:"transactionPosition"`
-	TraceType        string       `json:"type"`
-}
-
 type Trace struct {
 	Action           *TraceAction   `json:"action"`
 	ArticulatedTrace *Function      `json:"articulatedTrace,omitempty"`
@@ -50,10 +37,10 @@ type Trace struct {
 	TransactionHash  base.Hash      `json:"transactionHash"`
 	TransactionIndex base.Txnum     `json:"transactionIndex"`
 	TraceType        string         `json:"type,omitempty"`
-	raw              *RawTrace      `json:"-"`
 	// EXISTING_CODE
-	TraceIndex base.Tracenum `json:"-"`
-	sortString string        `json:"-"`
+	TraceIndex          base.Tracenum `json:"-"`
+	sortString          string        `json:"-"`
+	TransactionPosition base.Txnum    `json:"transactionPosition,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -62,12 +49,11 @@ func (s Trace) String() string {
 	return string(bytes)
 }
 
-func (s *Trace) Raw() *RawTrace {
-	return s.raw
+func (s *Trace) Raw() *Trace {
+	return s
 }
 
-func (s *Trace) SetRaw(raw *RawTrace) {
-	s.raw = raw
+func (s *Trace) SetRaw(raw *Trace) {
 }
 
 func (s *Trace) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

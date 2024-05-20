@@ -28,7 +28,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 	method := "trace_block"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
-	if rawTraces, err := query.Query[[]types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := query.Query[[]types.Trace](conn.Chain, method, params); err != nil {
 		return []types.Trace{}, err
 
 	} else if rawTraces == nil || len(*rawTraces) == 0 {
@@ -66,10 +66,10 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 			}
 			trace := types.Trace{
 				Error:            rawTrace.Error,
-				BlockHash:        base.HexToHash(rawTrace.BlockHash),
+				BlockHash:        rawTrace.BlockHash,
 				BlockNumber:      rawTrace.BlockNumber,
-				TransactionHash:  base.HexToHash(rawTrace.TransactionHash),
-				TransactionIndex: rawTrace.TransactionIndex,
+				TransactionHash:  rawTrace.TransactionHash,
+				TransactionIndex: rawTrace.TransactionPosition, // note!
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
 				TraceType:        rawTrace.TraceType,
@@ -139,7 +139,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 	params := query.Params{txHash}
 
 	var ret []types.Trace
-	if rawTraces, err := query.Query[[]types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := query.Query[[]types.Trace](conn.Chain, method, params); err != nil {
 		return ret, ethereum.NotFound
 
 	} else if rawTraces == nil || len(*rawTraces) == 0 {
@@ -163,7 +163,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 				SelfDestructed: rawTrace.Action.SelfDestructed,
 				Init:           rawTrace.Action.Init,
 			}
-			action.SetRaw(&rawTrace.Action)
+			action.SetRaw(rawTrace.Action)
 
 			var result *types.TraceResult
 			if rawTrace.Result != nil {
@@ -181,10 +181,10 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			// TODO: This could be loadTrace in the same way load Blocks works
 			trace := types.Trace{
 				Error:            rawTrace.Error,
-				BlockHash:        base.HexToHash(rawTrace.BlockHash),
+				BlockHash:        rawTrace.BlockHash,
 				BlockNumber:      rawTrace.BlockNumber,
-				TransactionHash:  base.HexToHash(rawTrace.TransactionHash),
-				TransactionIndex: rawTrace.TransactionIndex,
+				TransactionHash:  rawTrace.TransactionHash,
+				TransactionIndex: rawTrace.TransactionPosition, // note!
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
 				TraceType:        rawTrace.TraceType,
@@ -232,7 +232,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 	params := query.Params{ff}
 
 	var ret []types.Trace
-	if rawTraces, err := query.Query[[]types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := query.Query[[]types.Trace](conn.Chain, method, params); err != nil {
 		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
 
 	} else if rawTraces == nil || len(*rawTraces) == 0 {
@@ -258,7 +258,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 				SelfDestructed: rawTrace.Action.SelfDestructed,
 				Init:           rawTrace.Action.Init,
 			}
-			action.SetRaw(&rawTrace.Action)
+			action.SetRaw(rawTrace.Action)
 
 			var result *types.TraceResult
 			if rawTrace.Result != nil {
@@ -275,10 +275,10 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 
 			trace := types.Trace{
 				Error:            rawTrace.Error,
-				BlockHash:        base.HexToHash(rawTrace.BlockHash),
+				BlockHash:        rawTrace.BlockHash,
 				BlockNumber:      rawTrace.BlockNumber,
-				TransactionHash:  base.HexToHash(rawTrace.TransactionHash),
-				TransactionIndex: rawTrace.TransactionIndex,
+				TransactionHash:  rawTrace.TransactionHash,
+				TransactionIndex: rawTrace.TransactionPosition, // note!
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
 				TraceType:        rawTrace.TraceType,
