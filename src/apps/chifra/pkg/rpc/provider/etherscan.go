@@ -142,7 +142,7 @@ func (p *EtherscanProvider) fetchData(ctx context.Context, address base.Address,
 
 	debug.DebugCurlStr(url)
 	fromEs := etherscanResponseBody{}
-	sleepyTime := 100 * time.Millisecond
+	sleepyTime := 50 * time.Millisecond
 
 	attempts := 0
 	var ret []SlurpedPageItem
