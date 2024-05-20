@@ -113,7 +113,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 
 				if workerArgs.ctx.Err() != nil {
 					// User hit control + c - clean up both peices for the current chunk
-					chunkPath := config.PathToIndex(chain) + "finalized/" + chunk.Range + ".bin"
+					chunkPath := config.PathToIndex(chain) + "finalized" + string(os.PathSeparator) + chunk.Range + ".bin"
 					removeLocalFile(ToIndexPath(chunkPath), "user canceled", progressChannel)
 					removeLocalFile(ToBloomPath(chunkPath), "user canceled", progressChannel)
 					progressChannel <- &progress.ProgressMsg{
@@ -307,7 +307,7 @@ func DownloadChunks(chain string, chunksToDownload []types.ChunkRecord, chunkTyp
 
 // writeBytesToDisc save the downloaded bytes to disc
 func writeBytesToDisc(chain string, chunkType walk.CacheType, res *jobResult) error {
-	fullPath := config.PathToIndex(chain) + "finalized/" + res.rng + ".bin"
+	fullPath := config.PathToIndex(chain) + "finalized" + string(os.PathSeparator) + res.rng + ".bin"
 	if chunkType == walk.Index_Bloom {
 		fullPath = ToBloomPath(fullPath)
 	}

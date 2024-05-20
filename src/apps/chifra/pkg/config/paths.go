@@ -28,7 +28,7 @@ func PathToChainConfig(chain string) (string, error) {
 	ret := PathToRootConfig()
 
 	// Our configuration files are always in ./config folder relative to top most folder
-	cfgFolder := filepath.Join(ret, "config/", chain) + "/"
+	cfgFolder := filepath.Join(ret, "config", chain) + string(os.PathSeparator)
 	_, err := os.Stat(cfgFolder)
 	return cfgFolder, err
 }
@@ -100,7 +100,7 @@ func EstablishCachePaths(cachePath string) {
 	folders := []string{
 		"abis",
 		"monitors",
-		"monitors/staging",
+		filepath.Join("monitors", "staging"),
 		"names",
 		"tmp",
 		"v1",
