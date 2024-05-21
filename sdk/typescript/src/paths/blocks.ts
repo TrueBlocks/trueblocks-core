@@ -8,7 +8,7 @@
  */
 
 import * as ApiCallers from '../lib/api_callers';
-import { address, Appearance, blknum, Block, BlockCount, Log, topic, Trace, Withdrawal } from '../types';
+import { address, Appearance, blknum, Block, BlockCount, LightBlock, Log, topic, Trace, Withdrawal } from '../types';
 
 export function getBlocks(
   parameters?: {
@@ -34,7 +34,7 @@ export function getBlocks(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Appearance[] | BlockCount[] | Block[] | Log[] | Trace[] | Withdrawal[]>(
+  return ApiCallers.fetch<Appearance[] | BlockCount[] | Block[] | LightBlock[] | Log[] | Trace[] | Withdrawal[]>(
     { endpoint: '/blocks', method: 'get', parameters, options },
   );
 }

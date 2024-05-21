@@ -31,8 +31,8 @@ func (opts *BlocksOptions) HandleCounts() error {
 			}
 
 			for _, bn := range blockNums {
-				var block types.Block[string]
-				if block, err = opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
+				var block types.LightBlock
+				if block, err = opts.Conn.GetBlockHeaderByNumber2(bn); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
 						continue

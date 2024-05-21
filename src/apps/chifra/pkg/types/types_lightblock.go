@@ -43,7 +43,7 @@ type RawLightBlock struct {
 	StateRoot        string       `json:"stateRoot"`
 	Timestamp        string       `json:"timestamp"`
 	TotalDifficulty  string       `json:"totalDifficulty"`
-	Transactions     []any        `json:"transactions"`
+	Transactions     []string     `json:"transactions"`
 	TransactionsRoot string       `json:"transactionsRoot"`
 	Uncles           []string     `json:"uncles"`
 	Withdrawals      []Withdrawal `json:"withdrawals"`

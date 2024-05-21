@@ -21,7 +21,7 @@ import (
 func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block[types.Transaction], error) {
 	if conn.StoreReadable() {
 		// We only cache blocks with transaction hashes
-		cachedBlock := types.Block[string]{BlockNumber: bn}
+		cachedBlock := types.LightBlock{BlockNumber: bn}
 		if err := conn.Store.Read(&cachedBlock, nil); err == nil {
 			// Success, we now have to fill in transaction objects
 			result := types.Block[types.Transaction]{}
@@ -80,6 +80,29 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block[types.
 		}
 	}
 
+	if conn.StoreWritable() && conn.EnabledMap["blocks"] && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
+		_ = conn.Store.Write(&block, nil)
+	}
+
+	return block, nil
+}
+
+// GetBlockHeaderByNumber2 fetches the block with only transactions' hashes from the RPC
+func (conn *Connection) GetBlockHeaderByNumber2(bn base.Blknum) (block types.LightBlock, err error) {
+	if conn.StoreReadable() {
+		block.BlockNumber = bn
+		if err := conn.Store.Read(&block, nil); err == nil {
+			return block, nil
+		}
+	}
+
+	block, rawBlock, err := loadBlock2(conn, bn)
+	block.SetRaw(rawBlock) // may have failed, but it's ok
+	if err != nil {
+		return block, err
+	}
+
+	block.Transactions = rawBlock.Transactions
 	if conn.StoreWritable() && conn.EnabledMap["blocks"] && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
 		_ = conn.Store.Write(&block, nil)
 	}
@@ -187,6 +210,43 @@ func (conn *Connection) GetBlockHashByNumber(bn base.Blknum) (base.Hash, error) 
 	}
 }
 
+// loadBlock2 fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
+// more specialized functions and makes loadBlock2 generic.
+func loadBlock2(conn *Connection, bn base.Blknum) (block types.LightBlock, rawBlock *types.RawLightBlock, err error) {
+	rawBlock, err = conn.getBlockRaw2(bn)
+	if err != nil {
+		return
+	}
+
+	uncleHashes := make([]base.Hash, 0, len(rawBlock.Uncles))
+	for _, uncle := range rawBlock.Uncles {
+		uncleHashes = append(uncleHashes, base.HexToHash(uncle))
+	}
+
+	block = types.LightBlock{
+		BlockNumber: base.MustParseBlknum(rawBlock.BlockNumber),
+		Timestamp:   base.Timestamp(base.MustParseInt64(rawBlock.Timestamp)), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
+		Hash:        base.HexToHash(rawBlock.Hash),
+		ParentHash:  base.HexToHash(rawBlock.ParentHash),
+		GasLimit:    base.MustParseGas(rawBlock.GasLimit),
+		GasUsed:     base.MustParseGas(rawBlock.GasUsed),
+		Miner:       base.HexToAddress(rawBlock.Miner),
+		Difficulty:  base.MustParseValue(rawBlock.Difficulty),
+		Uncles:      uncleHashes,
+	}
+
+	if len(rawBlock.Withdrawals) > 0 {
+		block.Withdrawals = make([]types.Withdrawal, 0, len(rawBlock.Withdrawals))
+		for _, withdrawal := range rawBlock.Withdrawals {
+			withdrawal.BlockNumber = block.BlockNumber
+			withdrawal.Timestamp = block.Timestamp
+			block.Withdrawals = append(block.Withdrawals, withdrawal)
+		}
+	}
+
+	return
+}
+
 // loadBlock fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
 // more specialized functions and makes loadBlock generic.
 func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, withTxs bool) (block types.Block[Tx], rawBlock *types.RawBlock, err error) {
@@ -222,6 +282,25 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, 
 	}
 
 	return
+}
+
+// getBlockRaw2 returns the raw block as received from the node
+func (conn *Connection) getBlockRaw2(bn base.Blknum) (*types.RawLightBlock, error) {
+	method := "eth_getBlockByNumber"
+	params := query.Params{fmt.Sprintf("0x%x", bn), false}
+
+	if block, err := query.Query[types.RawLightBlock](conn.Chain, method, params); err != nil {
+		return &types.RawLightBlock{}, err
+	} else {
+		if bn == 0 {
+			// The RPC does not return a timestamp for the zero block, so we make one
+			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(0))
+		} else if base.MustParseUint64(block.Timestamp) == 0 {
+			return &types.RawLightBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
+		}
+
+		return block, nil
+	}
 }
 
 // getBlockRaw returns the raw block as received from the node

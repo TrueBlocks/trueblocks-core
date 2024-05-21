@@ -91,7 +91,7 @@ func GetBlocksOptions(args []string) (*blocksOptionsInternal, error) {
 
 type blocksGeneric interface {
 	types.Block[types.Transaction] |
-		types.Block[string] |
+		types.LightBlock |
 		types.Trace |
 		types.Appearance |
 		types.Log |

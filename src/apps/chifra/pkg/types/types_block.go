@@ -402,7 +402,7 @@ func (s *Block[Tx]) FinishUnmarshal() {
 //
 
 // Dup duplicates all fields but Transactions into target
-func (s *Block[string]) Dup(target *Block[Transaction]) {
+func (s *LightBlock) Dup(target *Block[Transaction]) {
 	target.BaseFeePerGas = s.BaseFeePerGas
 	target.BlockNumber = s.BlockNumber
 	target.Difficulty = s.Difficulty
@@ -415,7 +415,7 @@ func (s *Block[string]) Dup(target *Block[Transaction]) {
 	// TODO: This copy of an array possibly doesn't do what we expect
 	target.Uncles = s.Uncles
 	target.Withdrawals = s.Withdrawals
-	target.raw = s.raw
+	// target.raw = s.raw
 }
 
 func weiToGas(w base.Wei) base.Gas {

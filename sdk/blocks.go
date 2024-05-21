@@ -42,17 +42,17 @@ func (opts *BlocksOptions) Blocks() ([]types.Block[types.Transaction], *types.Me
 }
 
 // BlocksHashes implements the chifra blocks --hashes command.
-func (opts *BlocksOptions) BlocksHashes() ([]types.Block[string], *types.MetaData, error) {
+func (opts *BlocksOptions) BlocksHashes() ([]types.LightBlock, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.Hashes = true
-	return queryBlocks[types.Block[string]](in)
+	return queryBlocks[types.LightBlock](in)
 }
 
 // BlocksUncles implements the chifra blocks --uncles command.
-func (opts *BlocksOptions) BlocksUncles() ([]types.Block[string], *types.MetaData, error) {
+func (opts *BlocksOptions) BlocksUncles() ([]types.LightBlock, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.Uncles = true
-	return queryBlocks[types.Block[string]](in)
+	return queryBlocks[types.LightBlock](in)
 }
 
 // BlocksTraces implements the chifra blocks --traces command.
