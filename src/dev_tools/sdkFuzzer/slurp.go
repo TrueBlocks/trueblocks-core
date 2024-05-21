@@ -26,7 +26,7 @@ func DoSlurp() {
 	opts := sdk.SlurpOptions{}
 	ShowHeader("DoSlurp", opts)
 
-	globs := globals
+	globs := noRaw(globals)
 	// Option 'types.list<enum>' is an emum
 	articulate := []bool{false, true}
 	// Option 'source.enum' is an emum
@@ -58,7 +58,7 @@ func DoSlurp() {
 		sdk.SSCovalent,
 		sdk.SSAlchemy,
 	}
-	// slurp,command,default|caching|ether|raw|
+	// slurp,command,default|caching|ether|
 	// Page       uint64      `json:"page,omitempty"`
 	// PageId     string      `json:"pageId,omitempty"`
 	// PerPage    uint64      `json:"perPage,omitempty"`

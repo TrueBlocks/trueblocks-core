@@ -278,8 +278,7 @@ func (s *Block) MarshalCache(writer io.Writer) (err error) {
 	}
 
 	// Transactions
-	var txHashes []string
-	txHashes = make([]string, 0, len(s.Transactions))
+	txHashes := make([]string, 0, len(s.Transactions))
 	for _, tx := range s.Transactions {
 		txHashes = append(txHashes, tx.Hash.Hex())
 	}

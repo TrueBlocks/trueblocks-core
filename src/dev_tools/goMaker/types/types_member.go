@@ -208,7 +208,7 @@ func (m *Member) RawType() string {
 
 func (m *Member) GoType() string {
 	if strings.HasPrefix(m.Container(), "Block") && m.GoName() == "Transactions" {
-		return "[]Tx"
+		return "[]Transaction"
 	}
 
 	ret := m.Type
@@ -291,15 +291,9 @@ func (m *Member) MarshalCode() string {
 	if m.GoName() == "Transactions" && m.Container() == "Block" {
 		tmplName += "1"
 		tmpl = `	// Transactions
-	var txHashes []string
-	switch v := any(s.Transactions).(type) {
-	case []string:
-		txHashes = v
-	case []Transaction:
-		txHashes = make([]string, 0, len(s.Transactions))
-		for _, tx := range v {
-			txHashes = append(txHashes, tx.Hash.Hex())
-		}
+	txHashes := make([]string, 0, len(s.Transactions))
+	for _, tx := range s.Transactions {
+		txHashes = append(txHashes, tx.Hash.Hex())
 	}
 	if err = cache.WriteValue(writer, txHashes); err != nil {
 		return err

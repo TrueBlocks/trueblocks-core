@@ -26,7 +26,6 @@ export function getSlurp(
     cache?: boolean,
     decache?: boolean,
     ether?: boolean,
-    raw?: boolean,
   },
   options?: RequestInit,
 ) {

@@ -317,7 +317,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 52030,apps,Other,explore,fireStorm,local,l,,visible|docs,switch,<boolean>,,,,,open the local TrueBlocks explorer
 52040,apps,Other,explore,fireStorm,google,g,,visible|docs,switch,<boolean>,,,,,search google excluding popular blockchain explorers
 #
-53000,tools,Other,slurp,ethslurp,,,,visible|docs,command,,,Slurp Api services,[flags] <address> [address...] [block...],default|caching|ether|raw|,Fetch data from Etherscan and other APIs for any address.
+53000,tools,Other,slurp,ethslurp,,,,visible|docs,command,,,Slurp Api services,[flags] <address> [address...] [block...],default|caching|ether|,Fetch data from Etherscan and other APIs for any address.
 53020,tools,Other,slurp,ethslurp,addrs,,,required|visible|docs,positional,list<addr>,slurp,,,,one or more addresses to slurp from Etherscan
 53030,tools,Other,slurp,ethslurp,blocks,,,visible|docs,positional,list<blknum>,,,,,an optional range of blocks to slurp
 53040,tools,Other,slurp,ethslurp,types,t,,visible|docs,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|some|all]>,,,,,which types of transactions to request
