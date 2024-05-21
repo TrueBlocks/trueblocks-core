@@ -58,6 +58,7 @@ Data models produced by this tool:
 - [appearance](/data-model/accounts/#appearance)
 - [block](/data-model/chaindata/#block)
 - [blockcount](/data-model/chaindata/#blockcount)
+- [lightblock](/data-model/chaindata/#lightblock)
 - [log](/data-model/chaindata/#log)
 - [logfilter](/data-model/chaindata/#logfilter)
 - [message](/data-model/other/#message)

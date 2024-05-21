@@ -1,0 +1,10 @@
+[settings]
+    class = "LightBlock"
+    doc_group = "02-Chain Data"
+    doc_descr = "a block containing only the hashes of the transactions"
+    doc_route = "248-block"
+    attributes = "hasraw"
+    produced_by = "blocks"
+    contains = "transaction, withdrawal"
+    cache_type = "cacheable"
+    cache_by = "block"

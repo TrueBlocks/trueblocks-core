@@ -40,7 +40,7 @@ Blocks consist of the following fields:
 | difficulty    | the computational difficulty at this block                    | value                                               |
 | timestamp     | the Unix timestamp of the object                              | timestamp                                           |
 | date          | the timestamp as a date (calculated)                          | datetime                                            |
-| transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
+| transactions  | a possibly empty array of transactions                        | [Transaction[]](/data-model/chaindata/#transaction) |
 | baseFeePerGas | the base fee for this block                                   | gas                                                 |
 | uncles        | a possibly empty array of uncle hashes                        | hash[]                                              |
 | withdrawals   | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal)   |
@@ -397,6 +397,32 @@ TimestampCounts consist of the following fields:
 | Field | Description                                         | Type   |
 | ----- | --------------------------------------------------- | ------ |
 | count | the number of timestamps in the timestamps database | uint64 |
+
+## LightBlock
+
+`chifra blocks --hashes` returns top level data specified block with only
+the hashes of the block's transactions.
+
+The following commands produce and manage LightBlocks:
+
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
+
+LightBlocks consist of the following fields:
+
+| Field         | Description                                                   | Type                                              |
+| ------------- | ------------------------------------------------------------- | ------------------------------------------------- |
+| gasLimit      | the system-wide maximum amount of gas permitted in this block | gas                                               |
+| hash          | the hash of the current block                                 | hash                                              |
+| blockNumber   | the number of the block                                       | blknum                                            |
+| parentHash    | hash of previous block                                        | hash                                              |
+| miner         | address of block's winning miner                              | address                                           |
+| difficulty    | the computational difficulty at this block                    | value                                             |
+| timestamp     | the Unix timestamp of the object                              | timestamp                                         |
+| date          | the timestamp as a date (calculated)                          | datetime                                          |
+| transactions  | a possibly empty array of transaction hashes                  | hash[]                                            |
+| baseFeePerGas | the base fee for this block                                   | gas                                               |
+| uncles        | a possibly empty array of uncle hashes                        | hash[]                                            |
+| withdrawals   | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal) |
 
 ## Base types
 

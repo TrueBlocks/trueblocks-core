@@ -19,7 +19,7 @@ nonce            ,value         ,           ,rawonly    ,          ,         ,
 timestamp        ,timestamp     ,           ,           ,          ,       7 ,the Unix timestamp of the object
 date             ,datetime      ,           ,calc       ,          ,       8 ,the timestamp as a date
 baseFeePerGas    ,gas           ,           ,           ,2.5.8:wei ,      10 ,the base fee for this block
-transactions     ,[]Transaction ,           ,           ,          ,       9 ,a possibly empty array of transactions or transaction hashes
+transactions     ,[]Transaction ,           ,           ,          ,       9 ,a possibly empty array of transactions
 transactionsRoot ,hash          ,           ,rawonly    ,          ,         ,
 uncles           ,[]hash        ,           ,omitempty  ,          ,      11 ,a possibly empty array of uncle hashes
 withdrawals      ,[]Withdrawal  ,           ,omitempty  ,          ,      12 ,a possibly empty array of withdrawals (post Shanghai)

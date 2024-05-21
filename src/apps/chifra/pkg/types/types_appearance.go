@@ -183,6 +183,7 @@ type MappedType interface {
 	Transaction |
 		Block[string] |
 		Block[Transaction] |
+		LightBlock |
 		Appearance |
 		Withdrawal |
 		Result |

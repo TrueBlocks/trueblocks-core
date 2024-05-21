@@ -68,7 +68,10 @@ func (m *Member) IsRawOnly() bool {
 
 func (m *Member) IsSimpOnly() bool {
 	return strings.Contains(m.Attributes, "simponly")
+}
 
+func (m *Member) IsNoTag() bool {
+	return strings.Contains(m.Attributes, "notag")
 }
 
 func (m *Member) IsCalc() bool {
@@ -98,16 +101,22 @@ func (m *Member) RawTag() string {
 	if m.Name == "transactionIndex" && m.Container() == "Trace" {
 		return "`json:\"transactionPosition\"`"
 	}
-	if m.Name == "blockNumber" && m.Container() == "Block" {
+	if m.Name == "blockNumber" && (m.Container() == "Block" || m.Container() == "LightBlock") {
 		return "`json:\"number\"`"
 	}
 	return "`json:\"" + m.Name + "\"`"
 }
 
 func (m *Member) Tag() string {
-	tmplName := "tag"
-	tmpl := "`json:\"{{.Name}}{{if .IsOmitEmpty}},omitempty{{end}}\"`"
-	return m.executeTemplate(tmplName, tmpl)
+	if m.IsNoTag() {
+		tmplName := "notag"
+		tmpl := "`json:\"-\"`"
+		return m.executeTemplate(tmplName, tmpl)
+	} else {
+		tmplName := "tag"
+		tmpl := "`json:\"{{.Name}}{{if .IsOmitEmpty}},omitempty{{end}}\"`"
+		return m.executeTemplate(tmplName, tmpl)
+	}
 }
 
 func (m *Member) MarkdownDescription() string {
@@ -137,7 +146,7 @@ func (m *Member) MarkdownType() string {
 }
 
 func (m *Member) RawType() string {
-	if strings.HasPrefix(m.Container(), "Block") {
+	if m.Container() == "Block" || m.Container() == "LightBlock" {
 		if m.GoName() == "Transactions" {
 			return "[]any"
 		} else if m.GoName() == "Withdrawals" {
@@ -309,7 +318,11 @@ func (m *Member) MarshalCode() string {
 	}
 
 `
-	} else if m.IsArray && m.GoName() != "Topics" && m.GoName() != "TraceAddress" && m.GoName() != "Uncles" {
+	} else if m.IsArray &&
+		m.GoName() != "Topics" &&
+		m.GoName() != "Transactions" &&
+		m.GoName() != "TraceAddress" &&
+		m.GoName() != "Uncles" {
 		tmplName += "3"
 		tmpl = `// {{.GoName}}
 	{{.Lower}} := make([]cache.Marshaler, 0, len(s.{{.GoName}}))
@@ -365,8 +378,17 @@ func (m *Member) UnmarshalCode() string {
 	}
 
 `
-	} else if m.GoName() == "Value" && m.Container() == "Parameter" {
+	} else if m.GoName() == "Transactions" && m.Container() == "LightBlock" {
 		tmplName += "2"
+		tmpl = `		// Transactions
+	s.Transactions = make([]base.Hash, 0)
+	if err = cache.ReadValue(reader, &s.Transactions, vers); err != nil {
+		return err
+	}
+
+`
+	} else if m.GoName() == "Value" && m.Container() == "Parameter" {
+		tmplName += "3"
 		tmpl = `// {{.GoName}}
 	var {{.Lower}} string
 	if err = cache.ReadValue(reader, &{{.Lower}}, vers); err != nil {
@@ -378,7 +400,7 @@ func (m *Member) UnmarshalCode() string {
 
 `
 	} else if m.IsArray {
-		tmplName += "3"
+		tmplName += "4"
 		tmpl = `// {{.GoName}}
 	s.{{.GoName}} = make({{.GoType}}, 0)
 	if err = cache.ReadValue(reader, &s.{{.GoName}}, vers); err != nil {
@@ -387,7 +409,7 @@ func (m *Member) UnmarshalCode() string {
 
 `
 	} else if m.IsObject() {
-		tmplName += "4"
+		tmplName += "5"
 		tmpl = `// {{.GoName}}
 	opt{{.GoName}} := &cache.Optional[{{.Type}}]{
 		Value: s.{{.GoName}},
@@ -400,7 +422,7 @@ func (m *Member) UnmarshalCode() string {
 `
 
 	} else {
-		tmplName += "5"
+		tmplName += "6"
 		tmpl = `// {{.GoName}}
 	if err = cache.ReadValue(reader, &s.{{.GoName}}, vers); err != nil {
 		return err

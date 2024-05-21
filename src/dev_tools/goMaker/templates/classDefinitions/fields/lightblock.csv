@@ -1,0 +1,25 @@
+name             ,type         ,strDefault ,attributes ,upgrades  ,docOrder ,description
+author           ,address      ,           ,rawonly    ,          ,         ,
+gasLimit         ,gas          ,           ,           ,          ,       1 ,the system-wide maximum amount of gas permitted in this block
+gasUsed          ,gas          ,           ,           ,          ,         ,the total amount of gas used in this block
+hash             ,hash         ,           ,           ,          ,       2 ,the hash of the current block
+blockNumber      ,blknum       ,           ,           ,          ,       3 ,the number of the block
+parentHash       ,hash         ,           ,           ,          ,       4 ,hash of previous block
+receiptsRoot     ,hash         ,           ,rawonly    ,          ,         ,
+sha3Uncles       ,hash         ,           ,rawonly    ,          ,         ,
+size             ,uint64       ,           ,rawonly    ,          ,         ,
+stateRoot        ,hash         ,           ,rawonly    ,          ,         ,
+totalDifficulty  ,uint256      ,           ,rawonly    ,          ,         ,
+miner            ,address      ,           ,           ,          ,       5 ,address of block's winning miner
+difficulty       ,value        ,           ,           ,          ,       6 ,the computational difficulty at this block
+extraData        ,string       ,           ,rawonly    ,          ,         ,
+logsBloom        ,string       ,           ,rawonly    ,          ,         ,
+mixHash          ,string       ,           ,rawonly    ,          ,         ,
+nonce            ,value        ,           ,rawonly    ,          ,         ,
+timestamp        ,timestamp    ,           ,           ,          ,       7 ,the Unix timestamp of the object
+date             ,datetime     ,           ,calc       ,          ,       8 ,the timestamp as a date
+baseFeePerGas    ,gas          ,           ,           ,2.5.8:wei ,      10 ,the base fee for this block
+transactions     ,[]hash       ,           ,           ,          ,       9 ,a possibly empty array of transaction hashes
+transactionsRoot ,hash         ,           ,rawonly    ,          ,         ,
+uncles           ,[]hash       ,           ,omitempty  ,          ,      11 ,a possibly empty array of uncle hashes
+withdrawals      ,[]Withdrawal ,           ,omitempty  ,          ,      12 ,a possibly empty array of withdrawals (post Shanghai)

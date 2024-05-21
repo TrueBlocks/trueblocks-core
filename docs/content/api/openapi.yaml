@@ -1317,13 +1317,14 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#blockcount">BlockCount</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#logfilter">LogFilter</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#blockcount">BlockCount</a>, <a href="/data-model/chaindata/#lightblock">LightBlock</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#logfilter">LogFilter</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/block"
                         - $ref: "#/components/schemas/blockCount"
+                        - $ref: "#/components/schemas/lightBlock"
                         - $ref: "#/components/schemas/log"
                         - $ref: "#/components/schemas/logFilter"
                         - $ref: "#/components/schemas/message"
@@ -3364,7 +3365,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/transaction"
-          description: "a possibly empty array of transactions or transaction hashes"
+          description: "a possibly empty array of transactions"
         baseFeePerGas:
           type: number
           format: gas
@@ -3896,6 +3897,61 @@ components:
           type: number
           format: uint64
           description: "the number of timestamps in the timestamps database"
+    lightBlock:
+      description: "a block containing only the hashes of the transactions"
+      type: object
+      properties:
+        gasLimit:
+          type: number
+          format: gas
+          description: "the system-wide maximum amount of gas permitted in this block"
+        hash:
+          type: string
+          format: hash
+          description: "the hash of the current block"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        parentHash:
+          type: string
+          format: hash
+          description: "hash of previous block"
+        miner:
+          type: string
+          format: address
+          description: "address of block's winning miner"
+        difficulty:
+          type: number
+          format: value
+          description: "the computational difficulty at this block"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        transactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/hash"
+          description: "a possibly empty array of transaction hashes"
+        baseFeePerGas:
+          type: number
+          format: gas
+          description: "the base fee for this block"
+        uncles:
+          type: array
+          items:
+            $ref: "#/components/schemas/hash"
+          description: "a possibly empty array of uncle hashes"
+        withdrawals:
+          type: array
+          items:
+            $ref: "#/components/schemas/withdrawal"
+          description: "a possibly empty array of withdrawals (post Shanghai)"
     state:
       description: "the state of an Ethereum account (EOA or smart contract) on-chain"
       type: object
