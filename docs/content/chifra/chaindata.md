@@ -59,7 +59,6 @@ Flags:
   -a, --articulate        for the --logs option only, articulate the retrieved data if ABIs can be found
   -U, --count             display only the count of appearances for --addrs or --uniq
   -H, --ether             specify value in ether
-  -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]

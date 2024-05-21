@@ -26,7 +26,7 @@ func DoBlocks() {
 	opts := sdk.BlocksOptions{}
 	ShowHeader("DoBlocks", opts)
 
-	globs := globals
+	globs := noRaw(globals)
 	// Option 'flow.enum' is an emum
 	emitter := fuzzEmitters
 	topic := fuzzTopics

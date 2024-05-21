@@ -83,7 +83,7 @@ on      ,both ,fast  ,blocks ,tools ,getBlocks ,decache               ,y    ,blo
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,no_trace_hashes       ,y    ,blocks = 4012000-4012001 & traces & hashes
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,no_trace_uniq         ,y    ,blocks = 4012000-4012001 & traces & uniq
 
-slow    ,both ,fast  ,blocks ,tools ,getBlocks ,access_list           ,y    ,blocks = 16500011 & fmt = json & raw
+slow    ,both ,fast  ,blocks ,tools ,getBlocks ,access_list           ,y    ,blocks = 16500011 & fmt = json
 
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,flow_error_1          ,n    ,blocks = 4102000 & fmt = txt & flow = to
 slow    ,both ,fast  ,blocks ,tools ,getBlocks ,flow_uniq_from        ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = from
@@ -91,9 +91,9 @@ slow    ,both ,fast  ,blocks ,tools ,getBlocks ,flow_uniq_reward      ,n    ,blo
 
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,no_tracing            ,y    ,blocks = 12 & traces & chain = non-tracing
 
-on      ,both ,fast  ,blocks ,tools ,getBlocks ,raw_01                ,y    ,blocks = 2768801 1995314 1958017 & raw
+on      ,both ,fast  ,blocks ,tools ,getBlocks ,raw_01                ,y    ,blocks = 2768801 1995314 1958017 & fmt = json
 on      ,both ,slow  ,blocks ,tools ,getBlocks ,terse_no_raw          ,y    ,blocks = 4001001-4001003 & hashes
-on      ,both ,fast  ,blocks ,tools ,getBlocks ,terse_yes_raw         ,y    ,blocks = 4001001 & hashes & raw
+on      ,both ,fast  ,blocks ,tools ,getBlocks ,terse_yes_raw         ,y    ,blocks = 4001001 & hashes & fmt = json
 
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,artic_not_logs        ,y    ,blocks = 4012000-4012001 & articulate
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,with_traces_art       ,y    ,blocks = 4012000-4012001 & traces & articulate
@@ -125,6 +125,6 @@ on      ,both ,fast  ,blocks ,tools ,getBlocks ,cache_traces          ,y    ,blo
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,decache_traces        ,y    ,blocks = 12 & decache
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
-on      ,both ,fast  ,blocks ,tools ,getBlocks ,caps_allowed          ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
+on      ,both ,fast  ,blocks ,tools ,getBlocks ,caps_allowed          ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & fail_on_purpose
 on      ,both ,fast  ,blocks ,tools ,getBlocks ,caps_disallowed_1     ,y    ,blocks = 3000000 & wei

@@ -30,7 +30,6 @@ export function getBlocks(
     cache?: boolean,
     decache?: boolean,
     ether?: boolean,
-    raw?: boolean,
   },
   options?: RequestInit,
 ) {
