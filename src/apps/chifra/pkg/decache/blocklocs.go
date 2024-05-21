@@ -31,7 +31,7 @@ func LocationsFromBlockIds(conn *rpc.Connection, ids []identifiers.Identifier, l
 				locations = append(locations, traceGroup)
 
 			} else {
-				rawBlock, err := conn.GetBlockHeaderByNumber2(bn)
+				rawBlock, err := conn.GetBlockHeaderByNumber(bn)
 				if err != nil {
 					return nil, err
 				}

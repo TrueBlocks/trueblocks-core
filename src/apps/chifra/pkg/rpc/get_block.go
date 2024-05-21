@@ -42,7 +42,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block[types.
 		}
 	}
 
-	block, rawBlock, err := loadBlock[types.Transaction](conn, bn, true)
+	block, rawBlock, err := loadFullBlock(conn, bn)
 	block.SetRaw(rawBlock) // may have failed, but it's ok
 	if err != nil {
 		return block, err
@@ -87,8 +87,8 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block[types.
 	return block, nil
 }
 
-// GetBlockHeaderByNumber2 fetches the block with only transactions' hashes from the RPC
-func (conn *Connection) GetBlockHeaderByNumber2(bn base.Blknum) (block types.LightBlock, err error) {
+// GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
+func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (block types.LightBlock, err error) {
 	if conn.StoreReadable() {
 		block.BlockNumber = bn
 		if err := conn.Store.Read(&block, nil); err == nil {
@@ -96,40 +96,13 @@ func (conn *Connection) GetBlockHeaderByNumber2(bn base.Blknum) (block types.Lig
 		}
 	}
 
-	block, rawBlock, err := loadBlock2(conn, bn)
+	block, rawBlock, err := loadLightBlock(conn, bn)
 	block.SetRaw(rawBlock) // may have failed, but it's ok
 	if err != nil {
 		return block, err
 	}
 
 	block.Transactions = rawBlock.Transactions
-	if conn.StoreWritable() && conn.EnabledMap["blocks"] && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
-		_ = conn.Store.Write(&block, nil)
-	}
-
-	return block, nil
-}
-
-// GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
-func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (block types.Block[string], err error) {
-	if conn.StoreReadable() {
-		block.BlockNumber = bn
-		if err := conn.Store.Read(&block, nil); err == nil {
-			return block, nil
-		}
-	}
-
-	block, rawBlock, err := loadBlock[string](conn, bn, false)
-	block.SetRaw(rawBlock) // may have failed, but it's ok
-	if err != nil {
-		return block, err
-	}
-
-	block.Transactions = make([]string, 0, len(rawBlock.Transactions))
-	for _, txHash := range rawBlock.Transactions {
-		block.Transactions = append(block.Transactions, fmt.Sprint(txHash))
-	}
-
 	if conn.StoreWritable() && conn.EnabledMap["blocks"] && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
 		_ = conn.Store.Write(&block, nil)
 	}
@@ -210,10 +183,9 @@ func (conn *Connection) GetBlockHashByNumber(bn base.Blknum) (base.Hash, error) 
 	}
 }
 
-// loadBlock2 fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
-// more specialized functions and makes loadBlock2 generic.
-func loadBlock2(conn *Connection, bn base.Blknum) (block types.LightBlock, rawBlock *types.RawLightBlock, err error) {
-	rawBlock, err = conn.getBlockRaw2(bn)
+// loadLightBlock fetches block from RPC, but it queries only for the hashes
+func loadLightBlock(conn *Connection, bn base.Blknum) (block types.LightBlock, rawBlock *types.RawLightBlock, err error) {
+	rawBlock, err = conn.getRawLightBlock(bn)
 	if err != nil {
 		return
 	}
@@ -247,10 +219,9 @@ func loadBlock2(conn *Connection, bn base.Blknum) (block types.LightBlock, rawBl
 	return
 }
 
-// loadBlock fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
-// more specialized functions and makes loadBlock generic.
-func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, withTxs bool) (block types.Block[Tx], rawBlock *types.RawBlock, err error) {
-	rawBlock, err = conn.getBlockRaw(bn, withTxs)
+// loadFullBlock fetches block from RPC with full transactions.
+func loadFullBlock(conn *Connection, bn base.Blknum) (block types.Block[types.Transaction], rawBlock *types.RawBlock, err error) {
+	rawBlock, err = conn.getRawBlock(bn)
 	if err != nil {
 		return
 	}
@@ -260,7 +231,7 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, 
 		uncleHashes = append(uncleHashes, base.HexToHash(uncle))
 	}
 
-	block = types.Block[Tx]{
+	block = types.Block[types.Transaction]{
 		BlockNumber: base.MustParseBlknum(rawBlock.BlockNumber),
 		Timestamp:   base.Timestamp(base.MustParseInt64(rawBlock.Timestamp)), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
 		Hash:        base.HexToHash(rawBlock.Hash),
@@ -284,8 +255,8 @@ func loadBlock[Tx string | types.Transaction](conn *Connection, bn base.Blknum, 
 	return
 }
 
-// getBlockRaw2 returns the raw block as received from the node
-func (conn *Connection) getBlockRaw2(bn base.Blknum) (*types.RawLightBlock, error) {
+// getRawLightBlock returns the raw block as received from the node
+func (conn *Connection) getRawLightBlock(bn base.Blknum) (*types.RawLightBlock, error) {
 	method := "eth_getBlockByNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn), false}
 
@@ -303,10 +274,10 @@ func (conn *Connection) getBlockRaw2(bn base.Blknum) (*types.RawLightBlock, erro
 	}
 }
 
-// getBlockRaw returns the raw block as received from the node
-func (conn *Connection) getBlockRaw(bn base.Blknum, withTxs bool) (*types.RawBlock, error) {
+// getRawBlock returns the raw block as received from the node
+func (conn *Connection) getRawBlock(bn base.Blknum) (*types.RawBlock, error) {
 	method := "eth_getBlockByNumber"
-	params := query.Params{fmt.Sprintf("0x%x", bn), withTxs}
+	params := query.Params{fmt.Sprintf("0x%x", bn), true}
 
 	if block, err := query.Query[types.RawBlock](conn.Chain, method, params); err != nil {
 		return &types.RawBlock{}, err
@@ -322,8 +293,8 @@ func (conn *Connection) getBlockRaw(bn base.Blknum, withTxs bool) (*types.RawBlo
 	}
 }
 
-// This most likely does not work for non-mainnet chains which don't know
-// anything about the Known blocks.
+// TODO: The following most likely does not work for non-mainnet chains which
+// TODO: don't know anything about the Known blocks.
 
 // getBlockReward returns the block reward for a given block number
 func (conn *Connection) getBlockReward(bn base.Blknum) *base.Wei {

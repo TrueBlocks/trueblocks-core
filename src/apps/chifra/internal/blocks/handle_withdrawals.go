@@ -52,7 +52,7 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 				items := make([]*types.Withdrawal, 0, len(thisMap))
 				iterFunc := func(app types.Appearance, value *types.LightBlock) error {
 					bn := base.Blknum(app.BlockNumber)
-					if block, err := opts.Conn.GetBlockHeaderByNumber2(bn); err != nil {
+					if block, err := opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 						delete(thisMap, app)
 						return err
 					} else {

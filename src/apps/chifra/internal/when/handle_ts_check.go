@@ -77,7 +77,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Na
 	expected := types.LightBlock{BlockNumber: bn, Timestamp: onDisc.Timestamp}
 	if opts.Deep {
 		// If we're going deep, we need to query the node
-		expected, _ = opts.Conn.GetBlockHeaderByNumber2(bn)
+		expected, _ = opts.Conn.GetBlockHeaderByNumber(bn)
 	}
 
 	if prev.Timestamp != base.NOPOSI {

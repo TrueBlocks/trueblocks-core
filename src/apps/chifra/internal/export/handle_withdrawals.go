@@ -71,7 +71,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 
 						iterFunc := func(app types.Appearance, value *types.LightBlock) error {
 							var block types.LightBlock
-							if block, err = opts.Conn.GetBlockHeaderByNumber2(base.Blknum(app.BlockNumber)); err != nil {
+							if block, err = opts.Conn.GetBlockHeaderByNumber(base.Blknum(app.BlockNumber)); err != nil {
 								return err
 							}
 
