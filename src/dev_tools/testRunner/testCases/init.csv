@@ -20,7 +20,6 @@ on      ,both ,fast  ,init  ,apps ,init ,caps_disallowed_1 ,y    ,no_header
 on      ,both ,fast  ,init  ,apps ,init ,caps_disallowed_2 ,y    ,output
 on      ,both ,fast  ,init  ,apps ,init ,caps_disallowed_3 ,y    ,append
 on      ,both ,fast  ,init  ,apps ,init ,caps_disallowed_4 ,y    ,cache
-on      ,both ,fast  ,init  ,apps ,init ,caps_disallowed_5 ,y    ,raw
 on      ,both ,fast  ,init  ,apps ,init ,caps_disallowed_6 ,y    ,ether
 on      ,both ,fast  ,init  ,apps ,init ,caps_disallowed_7 ,y    ,wei
 # caps not tested: fmt, file

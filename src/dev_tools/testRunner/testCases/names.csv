@@ -92,7 +92,6 @@ delay   ,both ,fast  ,names ,tools ,ethNames ,show_remove            ,y    ,term
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,names ,tools ,ethNames ,caps_allowed           ,y    ,terms = find_nothing & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
 on      ,both ,fast  ,names ,tools ,ethNames ,caps_disallowed_1      ,y    ,terms = find_nothing & cache
-on      ,both ,fast  ,names ,tools ,ethNames ,caps_disallowed_2      ,y    ,terms = find_nothing & raw
 on      ,both ,fast  ,names ,tools ,ethNames ,caps_disallowed_3      ,y    ,terms = find_nothing & ether
 on      ,both ,fast  ,names ,tools ,ethNames ,caps_disallowed_4      ,y    ,terms = find_nothing & wei
 on      ,both ,fast  ,names ,tools ,ethNames ,caps_disallowed_5      ,y    ,terms = find_nothing & decache

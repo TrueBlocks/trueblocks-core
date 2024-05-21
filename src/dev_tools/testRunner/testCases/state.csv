@@ -113,7 +113,6 @@ on      ,both ,fast  ,state ,tools ,getState ,decache_one                    ,y 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,state ,tools ,getState ,caps_allowed                   ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & fail_on_purpose
-on      ,both ,fast  ,state ,tools ,getState ,caps_disallowed_1              ,y    ,addrs = trueblocks.eth & raw
 on      ,both ,fast  ,state ,tools ,getState ,caps_disallowed_2              ,y    ,addrs = trueblocks.eth & wei
 
 # See issue #3004

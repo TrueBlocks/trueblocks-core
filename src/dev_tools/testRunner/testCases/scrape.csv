@@ -45,7 +45,6 @@ on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_3            ,y
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_4            ,y    ,output
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_5            ,y    ,append
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_6            ,y    ,cache
-on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_7            ,y    ,raw
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_8            ,y    ,ether
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_9            ,y    ,wei
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_10           ,y    ,decache

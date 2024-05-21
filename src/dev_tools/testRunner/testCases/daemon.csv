@@ -12,7 +12,6 @@ on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_2 ,y    ,no_header
 on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_3 ,y    ,output
 on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_4 ,y    ,append
 on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_5 ,y    ,cache
-on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_6 ,y    ,raw
 on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_7 ,y    ,ether
 on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_8 ,y    ,wei
 # caps not tested: fmt, file

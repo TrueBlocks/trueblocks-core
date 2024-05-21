@@ -85,6 +85,5 @@ on      ,both ,fast  ,tokens ,tools ,getTokens ,decache_one                   ,y
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,tokens ,tools ,getTokens ,caps_allowed                  ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & fail_on_purpose
-on      ,both ,fast  ,tokens ,tools ,getTokens ,caps_disallowed_1             ,y    ,addrs = trueblocks.eth & raw
 on      ,both ,fast  ,tokens ,tools ,getTokens ,caps_disallowed_2             ,y    ,addrs = trueblocks.eth & ether
 on      ,both ,fast  ,tokens ,tools ,getTokens ,caps_disallowed_3             ,y    ,addrs = trueblocks.eth & wei

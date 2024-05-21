@@ -54,7 +54,7 @@ on      ,both ,fast  ,slurp ,tools ,ethslurp ,cache_and_decache   ,y    ,addrs =
 on      ,both ,fast  ,slurp ,tools ,ethslurp ,cache_one           ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279 & cache
 on      ,both ,fast  ,slurp ,tools ,ethslurp ,decache_one         ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279 & decache
 
-shit    ,both ,fast  ,slurp ,tools ,ethslurp ,raw                 ,y    ,addrs = 0x839395e20bbb182fa440d08f850e6c7a8f6f0780 & per_page = 1999 & types = int & cache & fmt json
+shit    ,both ,fast  ,slurp ,tools ,ethslurp ,internal            ,y    ,addrs = 0x839395e20bbb182fa440d08f850e6c7a8f6f0780 & per_page = 1999 & types = int & cache & fmt json
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether

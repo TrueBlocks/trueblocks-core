@@ -84,7 +84,6 @@ on      ,both ,slow  ,status ,apps ,cacheStatus ,redir_output_append ,n    ,mode
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,status ,apps ,cacheStatus ,caps_allowed        ,y    ,modes = blooms & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
 on      ,both ,fast  ,status ,apps ,cacheStatus ,caps_disallowed_1   ,y    ,modes = blooms & cache
-on      ,both ,fast  ,status ,apps ,cacheStatus ,caps_disallowed_2   ,y    ,modes = blooms & raw
 on      ,both ,fast  ,status ,apps ,cacheStatus ,caps_disallowed_3   ,y    ,modes = blooms & ether
 on      ,both ,fast  ,status ,apps ,cacheStatus ,caps_disallowed_4   ,y    ,modes = blooms & wei
 on      ,both ,fast  ,status ,apps ,cacheStatus ,caps_disallowed_5   ,y    ,modes = blooms & decache

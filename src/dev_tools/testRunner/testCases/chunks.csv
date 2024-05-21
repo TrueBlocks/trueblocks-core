@@ -67,7 +67,6 @@ on      ,both ,fast  ,chunks ,apps ,chunkMan ,tag_test                ,y    ,mod
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,caps_allowed            ,y    ,mode = blooms & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,caps_disallowed_1       ,y    ,mode = blooms & cache
-on      ,both ,fast  ,chunks ,apps ,chunkMan ,caps_disallowed_2       ,y    ,mode = blooms & raw
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,caps_disallowed_3       ,y    ,mode = blooms & ether
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,caps_disallowed_4       ,y    ,mode = blooms & wei
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,caps_disallowed_5       ,y    ,mode = blooms & decache

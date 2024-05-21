@@ -102,6 +102,5 @@ on      ,both ,fast  ,when  ,tools ,whenBlock ,decache_one                 ,y   
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,when  ,tools ,whenBlock ,caps_allowed                ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & fail_on_purpose
-on      ,both ,fast  ,when  ,tools ,whenBlock ,caps_disallowed_1           ,y    ,blocks = 3000000 & raw
 on      ,both ,fast  ,when  ,tools ,whenBlock ,caps_disallowed_2           ,y    ,blocks = 3000000 & ether
 on      ,both ,fast  ,when  ,tools ,whenBlock ,caps_disallowed_3           ,y    ,blocks = 3000000 & wei
