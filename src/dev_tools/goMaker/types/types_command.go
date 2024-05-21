@@ -892,8 +892,6 @@ func (op *Option) TsEnumTypes() []string {
 		retType = strings.Replace(retType, "base.Address", "address", -1)
 		retType = strings.Replace(retType, "base.", "", -1)
 		retType = strings.Replace(retType, "types.", "", -1)
-		retType = strings.Replace(retType, "Block[Transaction]", "Block", -1)
-		retType = strings.Replace(retType, "Block[string]", "Block", -1)
 		ret = append(ret, retType+"[]")
 	}
 	return ret
@@ -908,8 +906,6 @@ func (c *Command) TsReturns() string {
 			retType = strings.Replace(retType, "base.Address", "address", -1)
 			retType = strings.Replace(retType, "base.", "", -1)
 			retType = strings.Replace(retType, "types.", "", -1)
-			retType = strings.Replace(retType, "Block[Transaction]", "Block", -1)
-			retType = strings.Replace(retType, "Block[string]", "Block", -1)
 			if !present[retType] {
 				if op.LongName == "mode" {
 					ret = append(ret, op.TsEnumTypes()...)

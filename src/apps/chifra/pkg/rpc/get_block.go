@@ -18,13 +18,13 @@ import (
 )
 
 // GetBlockBodyByNumber fetches the block with transactions from the RPC.
-func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block[types.Transaction], error) {
+func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error) {
 	if conn.StoreReadable() {
 		// We only cache blocks with transaction hashes
 		cachedBlock := types.LightBlock{BlockNumber: bn}
 		if err := conn.Store.Read(&cachedBlock, nil); err == nil {
 			// Success, we now have to fill in transaction objects
-			result := types.Block[types.Transaction]{}
+			result := types.Block{}
 			result.Transactions = make([]types.Transaction, 0, len(cachedBlock.Transactions))
 			success := true
 			for index := range cachedBlock.Transactions {
@@ -220,7 +220,7 @@ func loadLightBlock(conn *Connection, bn base.Blknum) (block types.LightBlock, r
 }
 
 // loadFullBlock fetches block from RPC with full transactions.
-func loadFullBlock(conn *Connection, bn base.Blknum) (block types.Block[types.Transaction], rawBlock *types.RawBlock, err error) {
+func loadFullBlock(conn *Connection, bn base.Blknum) (block types.Block, rawBlock *types.RawBlock, err error) {
 	rawBlock, err = conn.getRawBlock(bn)
 	if err != nil {
 		return
@@ -231,7 +231,7 @@ func loadFullBlock(conn *Connection, bn base.Blknum) (block types.Block[types.Tr
 		uncleHashes = append(uncleHashes, base.HexToHash(uncle))
 	}
 
-	block = types.Block[types.Transaction]{
+	block = types.Block{
 		BlockNumber: base.MustParseBlknum(rawBlock.BlockNumber),
 		Timestamp:   base.Timestamp(base.MustParseInt64(rawBlock.Timestamp)), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
 		Hash:        base.HexToHash(rawBlock.Hash),

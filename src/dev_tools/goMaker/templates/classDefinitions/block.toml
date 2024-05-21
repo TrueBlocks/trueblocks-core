@@ -6,6 +6,5 @@
     attributes = "hasraw"
     produced_by = "blocks"
     contains = "transaction, withdrawal"
-    go_model = "Block[Tx]"
     cache_type = "cacheable"
     cache_by = "block"

@@ -49,7 +49,7 @@ type RawBlock struct {
 	Withdrawals      []Withdrawal `json:"withdrawals"`
 }
 
-type Block[Tx string | Transaction] struct {
+type Block struct {
 	BaseFeePerGas base.Gas       `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum    `json:"blockNumber"`
 	Difficulty    base.Value     `json:"difficulty"`
@@ -59,7 +59,7 @@ type Block[Tx string | Transaction] struct {
 	Miner         base.Address   `json:"miner"`
 	ParentHash    base.Hash      `json:"parentHash"`
 	Timestamp     base.Timestamp `json:"timestamp"`
-	Transactions  []Tx           `json:"transactions"`
+	Transactions  []Transaction  `json:"transactions"`
 	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	Withdrawals   []Withdrawal   `json:"withdrawals,omitempty"`
 	raw           *RawBlock      `json:"-"`
@@ -67,20 +67,20 @@ type Block[Tx string | Transaction] struct {
 	// EXISTING_CODE
 }
 
-func (s Block[Tx]) String() string {
+func (s Block) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *Block[Tx]) Raw() *RawBlock {
+func (s *Block) Raw() *RawBlock {
 	return s.raw
 }
 
-func (s *Block[Tx]) SetRaw(raw *RawBlock) {
+func (s *Block) SetRaw(raw *RawBlock) {
 	s.raw = raw
 }
 
-func (s *Block[Tx]) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Block) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -205,19 +205,19 @@ func (s *Block[Tx]) Model(chain, format string, verbose bool, extraOptions map[s
 	}
 }
 
-func (s *Block[Tx]) Date() string {
+func (s *Block) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
-func (s *Block[Tx]) CacheName() string {
+func (s *Block) CacheName() string {
 	return "Block"
 }
 
-func (s *Block[Tx]) CacheId() string {
+func (s *Block) CacheId() string {
 	return fmt.Sprintf("%09d", s.BlockNumber)
 }
 
-func (s *Block[Tx]) CacheLocation() (directory string, extension string) {
+func (s *Block) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -231,7 +231,7 @@ func (s *Block[Tx]) CacheLocation() (directory string, extension string) {
 	return
 }
 
-func (s *Block[Tx]) MarshalCache(writer io.Writer) (err error) {
+func (s *Block) MarshalCache(writer io.Writer) (err error) {
 	// BaseFeePerGas
 	if err = cache.WriteValue(writer, s.BaseFeePerGas); err != nil {
 		return err
@@ -279,14 +279,9 @@ func (s *Block[Tx]) MarshalCache(writer io.Writer) (err error) {
 
 	// Transactions
 	var txHashes []string
-	switch v := any(s.Transactions).(type) {
-	case []string:
-		txHashes = v
-	case []Transaction:
-		txHashes = make([]string, 0, len(s.Transactions))
-		for _, tx := range v {
-			txHashes = append(txHashes, tx.Hash.Hex())
-		}
+	txHashes = make([]string, 0, len(s.Transactions))
+	for _, tx := range s.Transactions {
+		txHashes = append(txHashes, tx.Hash.Hex())
 	}
 	if err = cache.WriteValue(writer, txHashes); err != nil {
 		return err
@@ -309,7 +304,7 @@ func (s *Block[Tx]) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Block[string]) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *Block) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -370,9 +365,13 @@ func (s *Block[string]) UnmarshalCache(vers uint64, reader io.Reader) (err error
 	}
 
 	// Transactions
-	s.Transactions = make([]string, 0)
-	if err = cache.ReadValue(reader, &s.Transactions, vers); err != nil {
+	hashes := make([]string, 0, len(s.Transactions))
+	if err = cache.ReadValue(reader, &hashes, vers); err != nil {
 		return err
+	}
+	s.Transactions = make([]Transaction, 0, len(hashes))
+	for i := 0; i < len(hashes); i++ {
+		s.Transactions[i].Hash = base.HexToHash(hashes[i])
 	}
 
 	// Uncles
@@ -393,7 +392,7 @@ func (s *Block[string]) UnmarshalCache(vers uint64, reader io.Reader) (err error
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Block[Tx]) FinishUnmarshal() {
+func (s *Block) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -402,7 +401,7 @@ func (s *Block[Tx]) FinishUnmarshal() {
 //
 
 // Dup duplicates all fields but Transactions into target
-func (s *LightBlock) Dup(target *Block[Transaction]) {
+func (s *LightBlock) Dup(target *Block) {
 	target.BaseFeePerGas = s.BaseFeePerGas
 	target.BlockNumber = s.BlockNumber
 	target.Difficulty = s.Difficulty

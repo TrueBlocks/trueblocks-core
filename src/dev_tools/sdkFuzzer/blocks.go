@@ -116,7 +116,7 @@ func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 		if blocks, _, err := opts.Blocks(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Block[types.Transaction]](fn, blocks); err != nil {
+			if err := SaveToFile[types.Block](fn, blocks); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

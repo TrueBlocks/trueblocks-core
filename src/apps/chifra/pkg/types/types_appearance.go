@@ -181,8 +181,7 @@ func (s *Appearance) Orig() string {
 
 type MappedType interface {
 	Transaction |
-		Block[string] |
-		Block[Transaction] |
+		Block |
 		LightBlock |
 		Appearance |
 		Withdrawal |

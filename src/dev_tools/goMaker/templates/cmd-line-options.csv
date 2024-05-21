@@ -112,7 +112,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 21000,,Chain Data,,,,,,,group,,,,,,Access and cache blockchain-related data
 #
 22000,tools,Chain Data,blocks,getBlocks,,,,visible|docs,command,,,Get blocks,[flags] <block> [block...],default|caching|ether|raw|,Retrieve one or more blocks from the chain or local cache.
-22020,tools,Chain Data,blocks,getBlocks,blocks,,,required|visible|docs,positional,list<blknum>,block[types.Transaction],,,,a space-separated list of one or more block identifiers
+22020,tools,Chain Data,blocks,getBlocks,blocks,,,required|visible|docs,positional,list<blknum>,block,,,,a space-separated list of one or more block identifiers
 22030,tools,Chain Data,blocks,getBlocks,hashes,e,,visible|docs,switch,<boolean>,lightBlock,,,,display only transaction hashes&#44; default is to display full transaction detail
 22040,tools,Chain Data,blocks,getBlocks,uncles,c,,visible|docs,switch,<boolean>,lightBlock,,,,display uncle blocks (if any) instead of the requested block
 22050,tools,Chain Data,blocks,getBlocks,traces,t,,visible|docs,switch,<boolean>,trace,,,,export the traces from the block as opposed to the block data

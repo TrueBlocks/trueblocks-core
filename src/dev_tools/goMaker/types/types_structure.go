@@ -18,7 +18,6 @@ type Structure struct {
 	DocNotes    string    `json:"doc_notes,omitempty" toml:"doc_notes" csv:"doc_notes"`
 	ProducedBy  string    `json:"produced_by,omitempty" toml:"produced_by"`
 	ContainedBy string    `json:"contained_by,omitempty" toml:"contained_by"`
-	GoModel     string    `json:"go_model,omitempty" toml:"go_model"`
 	CacheAs     string    `json:"cache_as,omitempty" toml:"cache_as"`
 	CacheBy     string    `json:"cache_by,omitempty" toml:"cache_by"`
 	CacheType   string    `json:"cache_type,omitempty" toml:"cache_type"`
@@ -102,19 +101,6 @@ func (s *Structure) GroupName() string {
 	}
 	logger.Fatal("unknown group: " + s.DocGroup)
 	return ""
-}
-
-func (s *Structure) ModelName(which string) string {
-	if s.GoModel != "" {
-		if which == "simple" {
-			return strings.Replace(s.GoModel, "Block[Tx]", "Block[Tx string | Transaction]", -1)
-		} else if which == "cache" {
-			return strings.Replace(s.GoModel, "Block[Tx]", "Block[string]", -1)
-		}
-		return s.GoModel
-	}
-	return s.Class
-
 }
 
 func (s *Structure) ModelIntro() string {

@@ -33,7 +33,7 @@ func (opts *BlocksOptions) HandleShow() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Block[types.Transaction]](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Block](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -49,11 +49,11 @@ func (opts *BlocksOptions) HandleShow() error {
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.Block[types.Transaction])
+					thisMap[app] = new(types.Block)
 				}
 
-				items := make([]*types.Block[types.Transaction], 0, len(thisMap))
-				iterFunc := func(app types.Appearance, value *types.Block[types.Transaction]) error {
+				items := make([]*types.Block, 0, len(thisMap))
+				iterFunc := func(app types.Appearance, value *types.Block) error {
 					bn := base.Blknum(app.BlockNumber)
 					if block, err := opts.Conn.GetBlockBodyByNumber(bn); err != nil {
 						errMutex.Lock()

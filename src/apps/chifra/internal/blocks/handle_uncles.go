@@ -49,7 +49,7 @@ func (opts *BlocksOptions) HandleUncles() error {
 					thisMap[app] = new(types.LightBlock)
 				}
 
-				items := make([]*types.Block[types.Transaction], 0, len(thisMap))
+				items := make([]*types.Block, 0, len(thisMap))
 				iterFunc := func(app types.Appearance, value *types.LightBlock) error {
 					bn := base.Blknum(app.BlockNumber)
 					if uncles, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
