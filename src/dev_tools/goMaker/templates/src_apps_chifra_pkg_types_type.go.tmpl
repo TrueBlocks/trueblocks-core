@@ -28,14 +28,6 @@ func (s {{.Class}}) String() string {
 	return string(bytes)
 }
 
-func (s *{{.Class}}) Raw() *{{if .HasRaw}}Raw{{end}}{{.Class}} {
-	return {{if .HasRaw}}s.raw{{else}}s{{end}}
-}
-
-func (s *{{.Class}}) SetRaw(raw *{{if .HasRaw}}Raw{{end}}{{.Class}}) {
-{{if .HasRaw}}	s.raw = raw
-{{end}}}
-
 func (s *{{.Class}}) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
