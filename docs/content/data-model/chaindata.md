@@ -419,7 +419,7 @@ LightBlocks consist of the following fields:
 | difficulty    | the computational difficulty at this block                    | value                                             |
 | timestamp     | the Unix timestamp of the object                              | timestamp                                         |
 | date          | the timestamp as a date (calculated)                          | datetime                                          |
-| transactions  | a possibly empty array of transaction hashes                  | hash[]                                            |
+| transactions  | a possibly empty array of transaction hashes                  | string[]                                          |
 | baseFeePerGas | the base fee for this block                                   | gas                                               |
 | uncles        | a possibly empty array of uncle hashes                        | hash[]                                            |
 | withdrawals   | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal) |

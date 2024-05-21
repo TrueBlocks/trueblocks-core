@@ -35,7 +35,7 @@ func LocationsFromBlockIds(conn *rpc.Connection, ids []identifiers.Identifier, l
 				if err != nil {
 					return nil, err
 				}
-				locations = append(locations, &types.Block[string]{
+				locations = append(locations, &types.LightBlock{
 					BlockNumber: bn,
 				})
 				for index := range rawBlock.Transactions {

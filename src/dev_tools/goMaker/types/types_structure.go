@@ -157,6 +157,13 @@ func (s *Structure) ModelNotes() string {
 	return strings.Trim(s.executeTemplate(tmplName, tmpl), ws)
 }
 
+func (s *Structure) CacheLoc() string {
+	if s.Class == "LightBlock" {
+		return "Block"
+	}
+	return s.Class
+}
+
 func (s *Structure) CacheIdStr() string {
 	switch s.CacheBy {
 	case "address,block":

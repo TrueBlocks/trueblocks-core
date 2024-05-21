@@ -3936,7 +3936,7 @@ components:
         transactions:
           type: array
           items:
-            $ref: "#/components/schemas/hash"
+            $ref: "#/components/schemas/string"
           description: "a possibly empty array of transaction hashes"
         baseFeePerGas:
           type: number

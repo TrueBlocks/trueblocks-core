@@ -369,19 +369,10 @@ func (m *Member) UnmarshalCode() string {
 
 	tmplName := "unmarshalCode"
 	tmpl := ""
-	if m.GoName() == "Transactions" && m.Container() == "Block" {
+	if m.GoName() == "Transactions" && (m.Container() == "Block" || m.Container() == "LightBlock") {
 		tmplName += "1"
 		tmpl = `		// Transactions
 	s.Transactions = make([]string, 0)
-	if err = cache.ReadValue(reader, &s.Transactions, vers); err != nil {
-		return err
-	}
-
-`
-	} else if m.GoName() == "Transactions" && m.Container() == "LightBlock" {
-		tmplName += "2"
-		tmpl = `		// Transactions
-	s.Transactions = make([]base.Hash, 0)
 	if err = cache.ReadValue(reader, &s.Transactions, vers); err != nil {
 		return err
 	}

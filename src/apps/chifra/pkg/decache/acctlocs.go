@@ -47,7 +47,7 @@ func LocationsFromAddrAppsAndCacheType(conn *rpc.Connection, address base.Addres
 			locations = append(locations, logGroup)
 
 		case walk.Cache_Blocks:
-			locations = append(locations, &types.Block[string]{
+			locations = append(locations, &types.LightBlock{
 				BlockNumber: base.Blknum(app.BlockNumber),
 			})
 
@@ -84,7 +84,7 @@ func LocationsFromAddrAppsAndCacheType(conn *rpc.Connection, address base.Addres
 			})
 
 		case walk.Cache_Withdrawals:
-			locations = append(locations, &types.Block[string]{
+			locations = append(locations, &types.LightBlock{
 				BlockNumber: base.Blknum(app.BlockNumber),
 			})
 

@@ -66,7 +66,7 @@ type {{.Class}}{{if .IsCacheAsGroup}}Group{{end}} struct {
 }
 {{end}}
 func (s *{{.ModelName ""}}{{if .IsCacheAsGroup}}Group{{end}}) CacheName() string {
-	return "{{.Class}}"
+	return "{{.CacheLoc}}"
 }
 
 func (s *{{.ModelName ""}}{{if .IsCacheAsGroup}}Group{{end}}) CacheId() string {

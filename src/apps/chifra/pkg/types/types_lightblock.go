@@ -59,7 +59,7 @@ type LightBlock struct {
 	Miner         base.Address   `json:"miner"`
 	ParentHash    base.Hash      `json:"parentHash"`
 	Timestamp     base.Timestamp `json:"timestamp"`
-	Transactions  []base.Hash    `json:"transactions"`
+	Transactions  []string       `json:"transactions"`
 	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	Withdrawals   []Withdrawal   `json:"withdrawals,omitempty"`
 	raw           *RawLightBlock `json:"-"`
@@ -210,7 +210,7 @@ func (s *LightBlock) Date() string {
 }
 
 func (s *LightBlock) CacheName() string {
-	return "LightBlock"
+	return "Block"
 }
 
 func (s *LightBlock) CacheId() string {
@@ -360,7 +360,7 @@ func (s *LightBlock) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	}
 
 	// Transactions
-	s.Transactions = make([]base.Hash, 0)
+	s.Transactions = make([]string, 0)
 	if err = cache.ReadValue(reader, &s.Transactions, vers); err != nil {
 		return err
 	}
