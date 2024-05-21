@@ -1,6 +1,6 @@
 package types
 
-type Modeler[RT RawData] interface {
+type Modeler[RT interface{}] interface {
 	Model(chain, format string, verbose bool, extraOptions map[string]any) Model
 }
 
@@ -10,7 +10,3 @@ type Model struct {
 }
 
 type RawModeler interface{}
-
-type RawData interface {
-	RawBlock | RawTransaction | RawModeler
-}
