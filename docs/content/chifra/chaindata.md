@@ -16,7 +16,7 @@ weight: 21000
 toc: true
 ---
 
-The Chain Data group of tools extract raw blockchain data directly from the node. You may extract
+The Chain Data group of tools extract blockchain data directly from the node. You may extract
 block data, transactional data, receipts, logs, traces, and other information. Each tool has it own
 set of options, allowing you to get exactly the data you need.
 
@@ -97,8 +97,7 @@ Links:
 
 ## chifra transactions
 
-The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw`
-option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
+The `chifra transactions` tool retrieves transactions directly from the Ethereum node or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
 per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt
 and generated logs.
 

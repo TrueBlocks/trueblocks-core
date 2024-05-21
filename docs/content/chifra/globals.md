@@ -78,20 +78,18 @@ Where:
 
 ### Group 4
 
-The tools in this group have all of the above options, but have an additional option, `--raw`, which shows the underlying data queried directly from the node (or API provider in the case of `slurp`).
+**As of version 2.6.0, the `--r aw` option has been removed in  its entirity.
+Prior to that version, the following tools had this option which would pass
+the data received directly from the node without modification.**
 
-| Group      | Cmd          | Enabled                    | Disabled |
-| ---------- | ------------ | -------------------------- | -------- |
-| chain_data | blocks       | Cache, Decache, Ether, Raw |          |
-| chain_data | transactions | Cache, Decache, Ether, Raw |          |
-| chain_data | receipts     | Cache, Decache, Ether, Raw |          |
-| chain_data | logs         | Cache, Decache, Ether, Raw |          |
-| chain_data | traces       | Cache, Decache, Ether, Raw |          |
-| other      | slurp        | Cache, Decache, Ether, Raw |          |
-
-Where:
-
-      --raw                passes the data queried from the node directly to the display
+```[bash]
+chifra blocks
+chifra transactions
+chifra receipts
+chifra logs
+chifra traces
+chifra slurp
+```
 
 ### Group 5
 

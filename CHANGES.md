@@ -691,7 +691,7 @@ The following data models were either modified, added, removed, or renamed by ha
 - #3232 chifra daemon scrape values invalid
 - #3229 Indexing an unsupported EVM chain
 - #3227 chifra state cores
-- #3226 chifra abis should have a --raw option
+- #3226 chifra abis should have a --r aw option
 - #3225 Utilize BlockRange on eth_getLogs querys
 - #3223 ABI docs are vague and unclear
 - #3221 chifra blocks reports error incorrectly
@@ -1342,7 +1342,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 - Many additional tests for all subcommands
 - Removed a fair amount of the C++ library testing code as being not needed and in preparation for porting to C++
 - Re-wrote logger package to more closely mimic the new GoLang structured log package which we will be switching to soon - if you depend on our logging messages for anything, please note that they will change.
-- Made sure RPC and Raw data agrees
+- Made sure RPC is valid
 
 ## Changes to Data Models
 
