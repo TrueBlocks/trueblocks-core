@@ -26,7 +26,7 @@ func DoConfig() {
 	opts := sdk.ConfigOptions{}
 	ShowHeader("DoConfig", opts)
 
-	globs := noCache(noRaw(noEther(globals)))
+	globs := noCache(noEther(globals))
 	// Fuzz Loop
 	// EXISTING_CODE
 	for _, g := range globs {

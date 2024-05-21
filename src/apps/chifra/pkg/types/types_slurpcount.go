@@ -29,13 +29,6 @@ func (s SlurpCount) String() string {
 	return string(bytes)
 }
 
-func (s *SlurpCount) Raw() *SlurpCount {
-	return s
-}
-
-func (s *SlurpCount) SetRaw(raw *SlurpCount) {
-}
-
 func (s *SlurpCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

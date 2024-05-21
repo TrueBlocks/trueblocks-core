@@ -30,16 +30,16 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 		}
 
 		for _, rng := range opts.TransactionIds {
-			txIds, err := rng.ResolveTxs(chain)
+			apps, err := rng.ResolveTxs(chain)
 			if err != nil && !errors.Is(err, ethereum.NotFound) {
 				errorChan <- err
 				cancel()
 			}
 
-			for _, raw := range txIds {
+			for _, app := range apps {
 				app := types.Appearance{
-					BlockNumber:      raw.BlockNumber,
-					TransactionIndex: raw.TransactionIndex,
+					BlockNumber:      app.BlockNumber,
+					TransactionIndex: app.TransactionIndex,
 				}
 				bn := base.Blknum(app.BlockNumber)
 				ts := opts.Conn.GetBlockTimestamp(bn)

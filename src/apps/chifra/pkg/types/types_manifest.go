@@ -33,13 +33,6 @@ func (s Manifest) String() string {
 	return string(bytes)
 }
 
-func (s *Manifest) Raw() *Manifest {
-	return s
-}
-
-func (s *Manifest) SetRaw(raw *Manifest) {
-}
-
 func (s *Manifest) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

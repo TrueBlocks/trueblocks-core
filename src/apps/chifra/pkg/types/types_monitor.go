@@ -32,13 +32,6 @@ func (s Monitor) String() string {
 	return string(bytes)
 }
 
-func (s *Monitor) Raw() *Monitor {
-	return s
-}
-
-func (s *Monitor) SetRaw(raw *Monitor) {
-}
-
 func (s *Monitor) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

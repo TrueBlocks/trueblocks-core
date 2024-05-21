@@ -26,7 +26,7 @@ func DoSlurp() {
 	opts := sdk.SlurpOptions{}
 	ShowHeader("DoSlurp", opts)
 
-	globs := noRaw(globals)
+	globs := globals
 	// Option 'types.list<enum>' is an emum
 	articulate := []bool{false, true}
 	// Option 'source.enum' is an emum

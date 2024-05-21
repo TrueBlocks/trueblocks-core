@@ -26,13 +26,6 @@ func (s TimestampCount) String() string {
 	return string(bytes)
 }
 
-func (s *TimestampCount) Raw() *TimestampCount {
-	return s
-}
-
-func (s *TimestampCount) SetRaw(raw *TimestampCount) {
-}
-
 func (s *TimestampCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

@@ -26,7 +26,7 @@ func DoMonitors() {
 	opts := sdk.MonitorsOptions{}
 	ShowHeader("DoMonitors", opts)
 
-	globs := noRaw(noEther(globals))
+	globs := noEther(globals)
 	delete := []bool{false, true}
 	undelete := []bool{false, true}
 	remove := []bool{false, true}

@@ -32,13 +32,6 @@ func (s CacheItem) String() string {
 	return string(bytes)
 }
 
-func (s *CacheItem) Raw() *CacheItem {
-	return s
-}
-
-func (s *CacheItem) SetRaw(raw *CacheItem) {
-}
-
 func (s *CacheItem) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

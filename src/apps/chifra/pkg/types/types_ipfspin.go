@@ -33,13 +33,6 @@ func (s IpfsPin) String() string {
 	return string(bytes)
 }
 
-func (s *IpfsPin) Raw() *IpfsPin {
-	return s
-}
-
-func (s *IpfsPin) SetRaw(raw *IpfsPin) {
-}
-
 func (s *IpfsPin) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

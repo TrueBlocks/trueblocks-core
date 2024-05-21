@@ -27,7 +27,7 @@ func DoList() {
 	opts := sdk.ListOptions{}
 	ShowHeader("DoList", opts)
 
-	globs := noCache(noRaw(noEther(globals)))
+	globs := noCache(noEther(globals))
 	noZero := []bool{false, true}
 	unripe := []bool{false, true}
 	silent := []bool{false, true}

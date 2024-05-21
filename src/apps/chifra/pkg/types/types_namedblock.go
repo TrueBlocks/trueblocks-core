@@ -32,13 +32,6 @@ func (s NamedBlock) String() string {
 	return string(bytes)
 }
 
-func (s *NamedBlock) Raw() *NamedBlock {
-	return s
-}
-
-func (s *NamedBlock) SetRaw(raw *NamedBlock) {
-}
-
 func (s *NamedBlock) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

@@ -32,13 +32,6 @@ func (s LogFilter) String() string {
 	return string(bytes)
 }
 
-func (s *LogFilter) Raw() *LogFilter {
-	return s
-}
-
-func (s *LogFilter) SetRaw(raw *LogFilter) {
-}
-
 func (s *LogFilter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

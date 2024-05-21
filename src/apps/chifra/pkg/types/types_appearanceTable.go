@@ -40,13 +40,6 @@ func (s AppearanceTable) String() string {
 	return string(bytes)
 }
 
-func (s *AppearanceTable) Raw() *AppearanceTable {
-	return s
-}
-
-func (s *AppearanceTable) SetRaw(raw *AppearanceTable) {
-}
-
 func (s *AppearanceTable) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

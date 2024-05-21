@@ -48,7 +48,7 @@ func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (
 	return conn.getReceiptRaw(bn, txid)
 }
 
-// getReceiptRaw fetches raw transaction given blockNumber and transactionIndex
+// getReceiptRaw fetches transaction given blockNumber and transactionIndex
 func (conn *Connection) getReceiptRaw(bn base.Blknum, txid base.Txnum) (receipt types.Receipt, err error) {
 	if txHash, err := conn.GetTransactionHashByNumberAndID(bn, txid); err != nil {
 		return types.Receipt{}, err

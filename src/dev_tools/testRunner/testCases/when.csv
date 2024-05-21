@@ -85,7 +85,7 @@ on      ,both ,fast  ,when  ,tools ,whenBlock ,redir_output_append         ,n   
 on      ,both ,fast  ,when  ,tools ,whenBlock ,count_not_timestamps        ,y    ,blocks = 1301000 & count
 on      ,both ,fast  ,when  ,tools ,whenBlock ,count_timestamps_csv        ,n    ,count & fmt = csv & timestamps
 on      ,both ,fast  ,when  ,tools ,whenBlock ,count_timestamps_json       ,y    ,count & fmt = json & timestamps
-on      ,both ,fast  ,when  ,tools ,whenBlock ,count_timestamps_txt_raw    ,y    ,count & fmt = txt & timestamps & raw
+on      ,both ,fast  ,when  ,tools ,whenBlock ,count_timestamps_txt_raw    ,y    ,count & fmt = json & timestamps
 
 on      ,both ,medi  ,when  ,tools ,whenBlock ,skip_hourly                 ,n    ,fmt = txt & blocks = 1125561-1130516:hourly
 on      ,both ,medi  ,when  ,tools ,whenBlock ,skip_daily                  ,n    ,fmt = txt & blocks = 1065497-1125561:daily
@@ -100,7 +100,7 @@ on      ,both ,fast  ,when  ,tools ,whenBlock ,cache_timestamps            ,y   
 on      ,both ,fast  ,when  ,tools ,whenBlock ,decache_one                 ,y    ,blocks = 12 & decache
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,when  ,tools ,whenBlock ,caps_allowed                ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & fail_on_purpose
 on      ,both ,fast  ,when  ,tools ,whenBlock ,caps_disallowed_1           ,y    ,blocks = 3000000 & raw
 on      ,both ,fast  ,when  ,tools ,whenBlock ,caps_disallowed_2           ,y    ,blocks = 3000000 & ether

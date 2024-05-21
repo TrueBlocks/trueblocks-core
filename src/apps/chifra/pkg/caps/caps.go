@@ -7,7 +7,6 @@ type Capability int
 const (
 	Caching Capability = 1 << iota
 	Fmt
-	Raw
 	NoHeader
 	Wei
 	Ether
@@ -26,7 +25,6 @@ var AllCaps = []Capability{
 	Default,
 	Caching,
 	Fmt,
-	Raw,
 	NoHeader,
 	Wei,
 	Ether,
@@ -63,8 +61,6 @@ func (c Capability) Text() string {
 		return "cache,decache"
 	case Fmt:
 		return "fmt"
-	case Raw:
-		return "raw"
 	case NoHeader:
 		return "noHeader"
 	case Wei:

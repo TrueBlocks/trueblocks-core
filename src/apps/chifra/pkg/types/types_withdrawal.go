@@ -38,13 +38,6 @@ func (s Withdrawal) String() string {
 	return string(bytes)
 }
 
-func (s *Withdrawal) Raw() *Withdrawal {
-	return s
-}
-
-func (s *Withdrawal) SetRaw(raw *Withdrawal) {
-}
-
 func (s *Withdrawal) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

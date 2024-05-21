@@ -26,7 +26,7 @@ func DoTraces() {
 	opts := sdk.TracesOptions{}
 	ShowHeader("DoTraces", opts)
 
-	globs := noRaw(globals)
+	globs := globals
 	articulate := []bool{false, true}
 	// filter is a <string> --other
 	// Fuzz Loop

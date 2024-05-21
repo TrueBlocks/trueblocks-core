@@ -26,7 +26,7 @@ func DoWhen() {
 	opts := sdk.WhenOptions{}
 	ShowHeader("DoWhen", opts)
 
-	globs := noRaw(noEther(globals))
+	globs := noEther(globals)
 	repair := []bool{false, true}
 	check := []bool{false, true}
 	update := []bool{false, true}

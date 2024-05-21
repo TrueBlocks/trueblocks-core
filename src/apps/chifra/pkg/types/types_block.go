@@ -62,7 +62,6 @@ type Block struct {
 	Transactions  []Transaction  `json:"transactions"`
 	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	Withdrawals   []Withdrawal   `json:"withdrawals,omitempty"`
-	raw           *RawBlock      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -70,14 +69,6 @@ type Block struct {
 func (s Block) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
-}
-
-func (s *Block) Raw() *RawBlock {
-	return s.raw
-}
-
-func (s *Block) SetRaw(raw *RawBlock) {
-	s.raw = raw
 }
 
 func (s *Block) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

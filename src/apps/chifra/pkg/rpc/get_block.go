@@ -43,7 +43,6 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 	}
 
 	block, rawBlock, err := loadFullBlock(conn, bn)
-	block.SetRaw(rawBlock) // may have failed, but it's ok
 	if err != nil {
 		return block, err
 	}
@@ -55,7 +54,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		// cast transaction to a concrete type
 		rawData, ok := rawTx.(map[string]any)
 		if !ok {
-			err = errors.New("cannot cast raw block transaction into map")
+			err = errors.New("cannot cast block transaction into map")
 			return block, err
 		}
 		raw := types.NewRawTransactionFromMap(rawData)
@@ -97,7 +96,6 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (block types.Ligh
 	}
 
 	block, rawBlock, err := loadLightBlock(conn, bn)
-	block.SetRaw(rawBlock) // may have failed, but it's ok
 	if err != nil {
 		return block, err
 	}

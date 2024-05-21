@@ -31,13 +31,6 @@ func (s ChunkAddress) String() string {
 	return string(bytes)
 }
 
-func (s *ChunkAddress) Raw() *ChunkAddress {
-	return s
-}
-
-func (s *ChunkAddress) SetRaw(raw *ChunkAddress) {
-}
-
 func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

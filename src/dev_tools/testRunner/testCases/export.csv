@@ -195,7 +195,7 @@ statbad  ,both ,fast  ,export   ,apps ,acctExport ,statement_forward       ,y   
 # chifra export --unripe
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on       ,both ,fast  ,export   ,apps ,acctExport ,caps_allowed_e          ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & fail_on_purpose
 on       ,both ,fast  ,export   ,apps ,acctExport ,caps_disallowed_1_e     ,y    ,addrs = trueblocks.eth & raw & max_records = 3
 on       ,both ,fast  ,export   ,apps ,acctExport ,caps_disallowed_2_e     ,y    ,addrs = trueblocks.eth & wei & max_records = 3

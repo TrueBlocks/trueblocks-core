@@ -30,13 +30,6 @@ func (s AppearanceCount) String() string {
 	return string(bytes)
 }
 
-func (s *AppearanceCount) Raw() *AppearanceCount {
-	return s
-}
-
-func (s *AppearanceCount) SetRaw(raw *AppearanceCount) {
-}
-
 func (s *AppearanceCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

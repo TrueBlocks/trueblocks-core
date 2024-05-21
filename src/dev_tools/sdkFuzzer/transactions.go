@@ -27,7 +27,7 @@ func DoTransactions() {
 	opts := sdk.TransactionsOptions{}
 	ShowHeader("DoTransactions", opts)
 
-	globs := noRaw(globals)
+	globs := globals
 	articulate := []bool{false, true}
 	// Option 'flow.enum' is an emum
 	emitter := fuzzEmitters

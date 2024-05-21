@@ -31,13 +31,6 @@ func (s MonitorClean) String() string {
 	return string(bytes)
 }
 
-func (s *MonitorClean) Raw() *MonitorClean {
-	return s
-}
-
-func (s *MonitorClean) SetRaw(raw *MonitorClean) {
-}
-
 func (s *MonitorClean) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

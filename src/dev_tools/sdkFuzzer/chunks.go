@@ -27,7 +27,7 @@ func DoChunks() {
 	opts := sdk.ChunksOptions{}
 	ShowHeader("DoChunks", opts)
 
-	globs := noCache(noRaw(noEther(globals)))
+	globs := noCache(noEther(globals))
 	check := []bool{false, true}
 	pin := []bool{false, true}
 	publish := []bool{false, true}

@@ -44,13 +44,6 @@ func (s Name) String() string {
 	return string(bytes)
 }
 
-func (s *Name) Raw() *Name {
-	return s
-}
-
-func (s *Name) SetRaw(raw *Name) {
-}
-
 func (s *Name) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

@@ -27,7 +27,7 @@ func DoState() {
 	opts := sdk.StateOptions{}
 	ShowHeader("DoState", opts)
 
-	globs := noRaw(globals)
+	globs := globals
 	// Option 'parts.list<enum>' is an emum
 	changes := []bool{false, true}
 	noZero := []bool{false, true}

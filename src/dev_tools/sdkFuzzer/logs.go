@@ -26,7 +26,7 @@ func DoLogs() {
 	opts := sdk.LogsOptions{}
 	ShowHeader("DoLogs", opts)
 
-	globs := noRaw(noEther(globals))
+	globs := noEther(globals)
 	emitter := fuzzEmitters
 	topic := fuzzTopics
 	articulate := []bool{false, true}

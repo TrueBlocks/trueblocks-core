@@ -36,13 +36,6 @@ func (s ChunkStats) String() string {
 	return string(bytes)
 }
 
-func (s *ChunkStats) Raw() *ChunkStats {
-	return s
-}
-
-func (s *ChunkStats) SetRaw(raw *ChunkStats) {
-}
-
 func (s *ChunkStats) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

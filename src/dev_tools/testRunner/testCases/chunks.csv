@@ -64,7 +64,7 @@ on      ,both ,fast  ,chunks ,apps ,chunkMan ,tag_invalid_mode        ,y    ,mod
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,tag_test                ,y    ,mode = index & tag = v2.0.0-release
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,caps_allowed            ,y    ,mode = blooms & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,caps_disallowed_1       ,y    ,mode = blooms & cache
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,caps_disallowed_2       ,y    ,mode = blooms & raw

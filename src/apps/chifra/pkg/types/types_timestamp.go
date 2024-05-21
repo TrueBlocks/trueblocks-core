@@ -30,13 +30,6 @@ func (s Timestamp) String() string {
 	return string(bytes)
 }
 
-func (s *Timestamp) Raw() *Timestamp {
-	return s
-}
-
-func (s *Timestamp) SetRaw(raw *Timestamp) {
-}
-
 func (s *Timestamp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

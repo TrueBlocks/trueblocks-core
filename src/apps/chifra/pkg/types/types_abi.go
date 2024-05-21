@@ -29,13 +29,6 @@ func (s Abi) String() string {
 	return string(bytes)
 }
 
-func (s *Abi) Raw() *Abi {
-	return s
-}
-
-func (s *Abi) SetRaw(raw *Abi) {
-}
-
 func (s *Abi) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

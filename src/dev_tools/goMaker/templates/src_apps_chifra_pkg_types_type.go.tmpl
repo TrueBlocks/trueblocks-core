@@ -18,8 +18,7 @@ package types
 {{end}}
 type {{.Class}} struct {
 {{range .Members}}{{if .IsSimpField}}{{.GoName}} {{.GoType}} {{.Tag}}
-{{end}}{{end}}{{if .HasRaw}}	raw *Raw{{.Class}} `json:"-"`
-{{end}}	// EXISTING_CODE
+{{end}}{{end}}	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

@@ -40,13 +40,6 @@ func (s Token) String() string {
 	return string(bytes)
 }
 
-func (s *Token) Raw() *Token {
-	return s
-}
-
-func (s *Token) SetRaw(raw *Token) {
-}
-
 func (s *Token) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

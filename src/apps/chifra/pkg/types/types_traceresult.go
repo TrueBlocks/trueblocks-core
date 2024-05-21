@@ -35,13 +35,6 @@ func (s TraceResult) String() string {
 	return string(bytes)
 }
 
-func (s *TraceResult) Raw() *TraceResult {
-	return s
-}
-
-func (s *TraceResult) SetRaw(raw *TraceResult) {
-}
-
 func (s *TraceResult) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

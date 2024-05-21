@@ -32,13 +32,6 @@ func (s ChunkRecord) String() string {
 	return string(bytes)
 }
 
-func (s *ChunkRecord) Raw() *ChunkRecord {
-	return s
-}
-
-func (s *ChunkRecord) SetRaw(raw *ChunkRecord) {
-}
-
 func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

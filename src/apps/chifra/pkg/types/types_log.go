@@ -43,13 +43,6 @@ func (s Log) String() string {
 	return string(bytes)
 }
 
-func (s *Log) Raw() *Log {
-	return s
-}
-
-func (s *Log) SetRaw(raw *Log) {
-}
-
 func (s *Log) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

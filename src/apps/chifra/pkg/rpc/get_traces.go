@@ -86,7 +86,6 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 			}
 			trace.TraceIndex = traceIndex
 			traceIndex++
-			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
 		}
 
@@ -163,7 +162,6 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 				SelfDestructed: rawTrace.Action.SelfDestructed,
 				Init:           rawTrace.Action.Init,
 			}
-			action.SetRaw(rawTrace.Action)
 
 			var result *types.TraceResult
 			if rawTrace.Result != nil {
@@ -175,7 +173,6 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 				if !rawTrace.Result.Address.IsZero() {
 					result.Address = rawTrace.Result.Address
 				}
-				result.SetRaw(rawTrace.Result)
 			}
 
 			// TODO: This could be loadTrace in the same way load Blocks works
@@ -203,8 +200,6 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			}
 			trace.TraceIndex = traceIndex
 			traceIndex++
-
-			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
 		}
 
@@ -258,7 +253,6 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 				SelfDestructed: rawTrace.Action.SelfDestructed,
 				Init:           rawTrace.Action.Init,
 			}
-			action.SetRaw(rawTrace.Action)
 
 			var result *types.TraceResult
 			if rawTrace.Result != nil {
@@ -270,7 +264,6 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 				if !rawTrace.Result.Address.IsZero() {
 					result.Address = rawTrace.Result.Address
 				}
-				result.SetRaw(rawTrace.Result)
 			}
 
 			trace := types.Trace{
@@ -301,8 +294,6 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.Trace, error) 
 
 			trace.TraceIndex = traceIndex
 			traceIndex++
-
-			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
 		}
 	}

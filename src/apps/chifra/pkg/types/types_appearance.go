@@ -49,13 +49,6 @@ func (s Appearance) String() string {
 	return string(bytes)
 }
 
-func (s *Appearance) Raw() *Appearance {
-	return s
-}
-
-func (s *Appearance) SetRaw(raw *Appearance) {
-}
-
 func (s *Appearance) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

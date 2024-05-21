@@ -33,13 +33,6 @@ func (s ReportCheck) String() string {
 	return string(bytes)
 }
 
-func (s *ReportCheck) Raw() *ReportCheck {
-	return s
-}
-
-func (s *ReportCheck) SetRaw(raw *ReportCheck) {
-}
-
 func (s *ReportCheck) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

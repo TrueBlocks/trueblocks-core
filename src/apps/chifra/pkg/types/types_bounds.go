@@ -33,13 +33,6 @@ func (s Bounds) String() string {
 	return string(bytes)
 }
 
-func (s *Bounds) Raw() *Bounds {
-	return s
-}
-
-func (s *Bounds) SetRaw(raw *Bounds) {
-}
-
 func (s *Bounds) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

@@ -46,13 +46,6 @@ func (s Receipt) String() string {
 	return string(bytes)
 }
 
-func (s *Receipt) Raw() *Receipt {
-	return s
-}
-
-func (s *Receipt) SetRaw(raw *Receipt) {
-}
-
 func (s *Receipt) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

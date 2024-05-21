@@ -266,8 +266,6 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		s.Value = rawTx.Amount
 		s.To = base.HexToAddress(address)
 	}
-
-	s.SetRaw(rawTx)
 	return s, nil
 }
 

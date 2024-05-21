@@ -35,13 +35,6 @@ func (s BlockCount) String() string {
 	return string(bytes)
 }
 
-func (s *BlockCount) Raw() *BlockCount {
-	return s
-}
-
-func (s *BlockCount) SetRaw(raw *BlockCount) {
-}
-
 func (s *BlockCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

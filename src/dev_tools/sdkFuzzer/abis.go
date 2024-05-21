@@ -27,7 +27,7 @@ func DoAbis() {
 	opts := sdk.AbisOptions{}
 	ShowHeader("DoAbis", opts)
 
-	globs := noRaw(noEther(globals))
+	globs := noEther(globals)
 	known := []bool{false, true}
 	proxyFor := fuzzProxyFors
 	hint := fuzzHints

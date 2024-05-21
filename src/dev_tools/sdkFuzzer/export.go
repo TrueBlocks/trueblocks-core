@@ -26,7 +26,7 @@ func DoExport() {
 	opts := sdk.ExportOptions{}
 	ShowHeader("DoExport", opts)
 
-	globs := noRaw(globals)
+	globs := globals
 	topics := fuzzTopics
 	fourbytes := fuzzFourbytes
 	accounting := []bool{false, true}

@@ -62,7 +62,6 @@ type LightBlock struct {
 	Transactions  []string       `json:"transactions"`
 	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	Withdrawals   []Withdrawal   `json:"withdrawals,omitempty"`
-	raw           *RawLightBlock `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -70,14 +69,6 @@ type LightBlock struct {
 func (s LightBlock) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
-}
-
-func (s *LightBlock) Raw() *RawLightBlock {
-	return s.raw
-}
-
-func (s *LightBlock) SetRaw(raw *RawLightBlock) {
-	s.raw = raw
 }
 
 func (s *LightBlock) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {

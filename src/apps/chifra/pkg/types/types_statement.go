@@ -66,13 +66,6 @@ func (s Statement) String() string {
 	return string(bytes)
 }
 
-func (s *Statement) Raw() *Statement {
-	return s
-}
-
-func (s *Statement) SetRaw(raw *Statement) {
-}
-
 func (s *Statement) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

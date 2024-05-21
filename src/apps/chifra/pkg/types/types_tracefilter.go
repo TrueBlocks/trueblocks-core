@@ -35,13 +35,6 @@ func (s TraceFilter) String() string {
 	return string(bytes)
 }
 
-func (s *TraceFilter) Raw() *TraceFilter {
-	return s
-}
-
-func (s *TraceFilter) SetRaw(raw *TraceFilter) {
-}
-
 func (s *TraceFilter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

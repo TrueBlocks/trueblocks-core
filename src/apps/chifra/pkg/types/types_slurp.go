@@ -57,13 +57,6 @@ func (s Slurp) String() string {
 	return string(bytes)
 }
 
-func (s *Slurp) Raw() *Slurp {
-	return s
-}
-
-func (s *Slurp) SetRaw(raw *Slurp) {
-}
-
 func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

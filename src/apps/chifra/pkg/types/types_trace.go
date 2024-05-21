@@ -49,13 +49,6 @@ func (s Trace) String() string {
 	return string(bytes)
 }
 
-func (s *Trace) Raw() *Trace {
-	return s
-}
-
-func (s *Trace) SetRaw(raw *Trace) {
-}
-
 func (s *Trace) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

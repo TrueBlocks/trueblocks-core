@@ -89,7 +89,7 @@ delay2  ,both ,fast  ,names ,tools ,ethNames ,edit_remove            ,y    ,remo
 delay   ,both ,fast  ,names ,tools ,ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,names ,tools ,ethNames ,caps_allowed           ,y    ,terms = find_nothing & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
 on      ,both ,fast  ,names ,tools ,ethNames ,caps_disallowed_1      ,y    ,terms = find_nothing & cache
 on      ,both ,fast  ,names ,tools ,ethNames ,caps_disallowed_2      ,y    ,terms = find_nothing & raw

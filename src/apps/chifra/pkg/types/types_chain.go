@@ -30,13 +30,6 @@ func (s Chain) String() string {
 	return string(bytes)
 }
 
-func (s *Chain) Raw() *Chain {
-	return s
-}
-
-func (s *Chain) SetRaw(raw *Chain) {
-}
-
 func (s *Chain) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}

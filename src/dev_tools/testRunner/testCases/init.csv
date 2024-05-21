@@ -14,7 +14,7 @@ on      ,both ,fast  ,init  ,apps ,init ,by_file_bad       ,n    ,file = cmd_fil
 on      ,both ,fast  ,init  ,apps ,init ,first_block       ,y    ,first_block = 12
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & ether
 on      ,both ,fast  ,init  ,apps ,init ,caps_allowed      ,y    ,chain & nocolor & noop & version & verbose & fail_on_purpose
 on      ,both ,fast  ,init  ,apps ,init ,caps_disallowed_1 ,y    ,no_header
 on      ,both ,fast  ,init  ,apps ,init ,caps_disallowed_2 ,y    ,output

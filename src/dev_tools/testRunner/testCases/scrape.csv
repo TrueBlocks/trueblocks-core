@@ -38,7 +38,7 @@ on      ,both ,fast  ,scrape ,apps ,blockScrape ,options_cmd_line             ,n
 local   ,both ,fast  ,scrape ,apps ,blockScrape ,options_combo                ,n    ,dry_run & snap_to_grid = 10000 & first_snap = 10000 & chain = sepolia
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_allowed                 ,y    ,chain & nocolor & noop & version & verbose & fail_on_purpose
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_1            ,y    ,fmt = json
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,caps_disallowed_3            ,y    ,no_header
