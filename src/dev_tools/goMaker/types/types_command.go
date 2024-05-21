@@ -179,7 +179,6 @@ var globals = []Option{
 	{LongName: "cache", HotKey: "o", OptionType: "switch", Description: "force the results of the query into the cache", DataType: "boolean"},
 	{LongName: "decache", HotKey: "D", OptionType: "switch", Description: "removes related items from the cache", DataType: "boolean"},
 	{LongName: "ether", HotKey: "H", OptionType: "switch", Description: "export values in ether", DataType: "boolean"},
-	{LongName: "raw", HotKey: "w", OptionType: "switch", Description: "report raw data directly from the source", DataType: "boolean"},
 	{LongName: "fmt", HotKey: "x", OptionType: "flag", Description: "export format, one of [ txt | csv | json ]", DataType: "string"},
 }
 
@@ -717,9 +716,6 @@ func (c *Command) GetGlobs() string {
 	ret := "globals"
 	if !capsMap["ether"] {
 		ret = "noEther(" + ret + ")"
-	}
-	if !capsMap["raw"] {
-		ret = "noRaw(" + ret + ")"
 	}
 	if !capsMap["caching"] {
 		ret = "noCache(" + ret + ")"
