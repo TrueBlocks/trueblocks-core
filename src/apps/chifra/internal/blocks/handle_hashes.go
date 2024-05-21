@@ -23,14 +23,14 @@ func (opts *BlocksOptions) HandleHashes() error {
 	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawLightBlock], errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Block[string]](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.LightBlock](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -46,13 +46,13 @@ func (opts *BlocksOptions) HandleHashes() error {
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.Block[string])
+					thisMap[app] = new(types.LightBlock)
 				}
 
-				items := make([]*types.Block[string], 0, len(thisMap))
-				iterFunc := func(app types.Appearance, value *types.Block[string]) error {
+				items := make([]*types.LightBlock, 0, len(thisMap))
+				iterFunc := func(app types.Appearance, value *types.LightBlock) error {
 					bn := base.Blknum(app.BlockNumber)
-					if block, err := opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
+					if block, err := opts.Conn.GetBlockHeaderByNumber2(bn); err != nil {
 						errMutex.Lock()
 						defer errMutex.Unlock()
 						delete(thisMap, app)

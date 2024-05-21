@@ -69,7 +69,7 @@ func (opts *StateOptions) HandleShow() error {
 					}
 
 					if br.StartType == identifiers.BlockHash {
-						block, _ := opts.Conn.GetBlockHeaderByNumber(bn)
+						block, _ := opts.Conn.GetBlockHeaderByNumber2(bn)
 						if base.HexToHash(br.Orig) != block.Hash {
 							errorChan <- errors.New("block hash " + br.Orig + " not found")
 							continue

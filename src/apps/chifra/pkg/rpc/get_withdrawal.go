@@ -16,7 +16,7 @@ func (conn *Connection) GetMinerAndWithdrawals(bn base.Blknum) ([]types.Withdraw
 		return []types.Withdrawal{}, base.ZeroAddr, nil
 	}
 
-	if block, err := conn.GetBlockHeaderByNumber(bn); err != nil {
+	if block, err := conn.GetBlockHeaderByNumber2(bn); err != nil {
 		return []types.Withdrawal{}, base.ZeroAddr, nil
 	} else {
 		if withdrawals, err := conn.GetWithdrawalsByNumber(bn); err != nil {
@@ -63,7 +63,7 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 
 // getWithdrawals fetches the withdrawals from a block
 func (conn *Connection) getWithdrawals(bn base.Blknum) ([]types.Withdrawal, base.Timestamp, error) {
-	if block, err := conn.GetBlockHeaderByNumber(bn); err != nil {
+	if block, err := conn.GetBlockHeaderByNumber2(bn); err != nil {
 		return []types.Withdrawal{}, base.NOPOSI, err
 	} else {
 		return block.Withdrawals, block.Timestamp, nil

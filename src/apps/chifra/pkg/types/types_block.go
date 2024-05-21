@@ -415,7 +415,6 @@ func (s *LightBlock) Dup(target *Block[Transaction]) {
 	// TODO: This copy of an array possibly doesn't do what we expect
 	target.Uncles = s.Uncles
 	target.Withdrawals = s.Withdrawals
-	// target.raw = s.raw
 }
 
 func weiToGas(w base.Wei) base.Gas {

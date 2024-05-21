@@ -30,7 +30,7 @@ func (opts *BlocksOptions) HandleUncles() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Block[string]](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.LightBlock](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -46,11 +46,11 @@ func (opts *BlocksOptions) HandleUncles() error {
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.Block[string])
+					thisMap[app] = new(types.LightBlock)
 				}
 
 				items := make([]*types.Block[types.Transaction], 0, len(thisMap))
-				iterFunc := func(app types.Appearance, value *types.Block[string]) error {
+				iterFunc := func(app types.Appearance, value *types.LightBlock) error {
 					bn := base.Blknum(app.BlockNumber)
 					if uncles, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
 						delete(thisMap, app)

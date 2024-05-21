@@ -47,7 +47,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 				continue
 
 			} else {
-				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Block[string]](apps, filter.Reversed); err != nil {
+				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.LightBlock](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					cancel()
 
@@ -66,12 +66,12 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 						}
 
 						for app := range thisMap {
-							thisMap[app] = new(types.Block[string])
+							thisMap[app] = new(types.LightBlock)
 						}
 
-						iterFunc := func(app types.Appearance, value *types.Block[string]) error {
-							var block types.Block[string]
-							if block, err = opts.Conn.GetBlockHeaderByNumber(base.Blknum(app.BlockNumber)); err != nil {
+						iterFunc := func(app types.Appearance, value *types.LightBlock) error {
+							var block types.LightBlock
+							if block, err = opts.Conn.GetBlockHeaderByNumber2(base.Blknum(app.BlockNumber)); err != nil {
 								return err
 							}
 

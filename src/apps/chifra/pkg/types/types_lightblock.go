@@ -85,7 +85,10 @@ func (s *LightBlock) Model(chain, format string, verbose bool, extraOptions map[
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["hashes"] == true {
+	// if extraOptions["hashes"] == true
+	{
+		_ = model
+		_ = order
 		txHashes := make([]string, 0, len(s.Transactions))
 		// Check what type Tx is
 		switch txs := any(s.Transactions).(type) {
@@ -135,74 +138,74 @@ func (s *LightBlock) Model(chain, format string, verbose bool, extraOptions map[
 		return model
 	}
 
-	model = map[string]interface{}{
-		"gasUsed":       s.GasUsed,
-		"gasLimit":      s.GasLimit,
-		"hash":          s.Hash,
-		"blockNumber":   s.BlockNumber,
-		"parentHash":    s.ParentHash,
-		"miner":         s.Miner.Hex(),
-		"difficulty":    s.Difficulty,
-		"timestamp":     s.Timestamp,
-		"date":          s.Date(),
-		"baseFeePerGas": s.BaseFeePerGas,
-	}
+	// model = map[string]interface{}{
+	// 	"gasUsed":       s.GasUsed,
+	// 	"gasLimit":      s.GasLimit,
+	// 	"hash":          s.Hash,
+	// 	"blockNumber":   s.BlockNumber,
+	// 	"parentHash":    s.ParentHash,
+	// 	"miner":         s.Miner.Hex(),
+	// 	"difficulty":    s.Difficulty,
+	// 	"timestamp":     s.Timestamp,
+	// 	"date":          s.Date(),
+	// 	"baseFeePerGas": s.BaseFeePerGas,
+	// }
 
-	order = []string{
-		"blockNumber",
-		"timestamp",
-		"date",
-		"hash",
-		"parentHash",
-		"miner",
-		"difficulty",
-		"baseFeePerGas",
-		"gasLimit",
-		"gasUsed",
-	}
+	// order = []string{
+	// 	"blockNumber",
+	// 	"timestamp",
+	// 	"date",
+	// 	"hash",
+	// 	"parentHash",
+	// 	"miner",
+	// 	"difficulty",
+	// 	"baseFeePerGas",
+	// 	"gasLimit",
+	// 	"gasUsed",
+	// }
 
-	if format == "json" {
-		// If we wanted just transactions' hashes, we would return earlier. So here we know that we
-		// have transactions as objects and want to load models for them to be able to display them
-		txs, ok := any(s.Transactions).([]Transaction)
-		if ok {
-			items := make([]map[string]interface{}, 0, len(txs))
-			for _, txObject := range txs {
-				items = append(items, txObject.Model(chain, format, verbose, extraOptions).Data)
-			}
-			model["transactions"] = items
-		} else {
-			model["transactions"] = s.Transactions
-		}
-		order = append(order, "transactions")
-		if s.Uncles == nil {
-			model["uncles"] = []base.Hash{}
-		} else {
-			model["uncles"] = s.Uncles
-		}
-		order = append(order, "uncles")
-		if len(s.Withdrawals) > 0 {
-			withs := make([]map[string]any, 0, len(s.Withdrawals))
-			for _, w := range s.Withdrawals {
-				withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
-			}
-			model["withdrawals"] = withs
-			order = append(order, "withdrawals")
-		} else {
-			model["withdrawals"] = []Withdrawal{}
-		}
-	} else {
-		model["transactionsCnt"] = len(s.Transactions)
-		order = append(order, "transactionsCnt")
-		model["withdrawalsCnt"] = len(s.Withdrawals)
-		order = append(order, "withdrawalsCnt")
-	}
-	// EXISTING_CODE
+	// if format == "json" {
+	// 	// If we wanted just transactions' hashes, we would return earlier. So here we know that we
+	// 	// have transactions as objects and want to load models for them to be able to display them
+	// 	txs, ok := any(s.Transactions).([]Transaction)
+	// 	if ok {
+	// 		items := make([]map[string]interface{}, 0, len(txs))
+	// 		for _, txObject := range txs {
+	// 			items = append(items, txObject.Model(chain, format, verbose, extraOptions).Data)
+	// 		}
+	// 		model["transactions"] = items
+	// 	} else {
+	// 		model["transactions"] = s.Transactions
+	// 	}
+	// 	order = append(order, "transactions")
+	// 	if s.Uncles == nil {
+	// 		model["uncles"] = []base.Hash{}
+	// 	} else {
+	// 		model["uncles"] = s.Uncles
+	// 	}
+	// 	order = append(order, "uncles")
+	// 	if len(s.Withdrawals) > 0 {
+	// 		withs := make([]map[string]any, 0, len(s.Withdrawals))
+	// 		for _, w := range s.Withdrawals {
+	// 			withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
+	// 		}
+	// 		model["withdrawals"] = withs
+	// 		order = append(order, "withdrawals")
+	// 	} else {
+	// 		model["withdrawals"] = []Withdrawal{}
+	// 	}
+	// } else {
+	// 	model["transactionsCnt"] = len(s.Transactions)
+	// 	order = append(order, "transactionsCnt")
+	// 	model["withdrawalsCnt"] = len(s.Withdrawals)
+	// 	order = append(order, "withdrawalsCnt")
+	// }
+	// // EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	// return Model{
+	// 	Data:  model,
+	// 	Order: order,
+	// }
 }
 
 func (s *LightBlock) Date() string {

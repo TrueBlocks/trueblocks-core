@@ -39,7 +39,7 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 
 	logger.Info("Updating timestamps file from", cnt, "to", meta.Latest, fmt.Sprintf("(%d blocks)", (meta.Latest-cnt)))
 	for bn := cnt; bn < meta.Latest; bn++ {
-		block, _ := opts.Conn.GetBlockHeaderByNumber(bn)
+		block, _ := opts.Conn.GetBlockHeaderByNumber2(bn)
 		record := tslib.TimestampRecord{Bn: uint32(block.BlockNumber), Ts: uint32(block.Timestamp)}
 		timestamps = append(timestamps, record)
 		logger.Progress(bn%23 == 0, "Adding block", bn, "of", meta.Latest, "to timestamp array")

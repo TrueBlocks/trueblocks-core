@@ -40,7 +40,7 @@ func (opts *WhenOptions) HandleShow() error {
 			})
 
 			for _, bn := range blockNums {
-				block, err := opts.Conn.GetBlockHeaderByNumber(bn)
+				block, err := opts.Conn.GetBlockHeaderByNumber2(bn)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
