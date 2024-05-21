@@ -215,8 +215,8 @@ Result:        {"jsonrpc":"2.0","id":1,"result":"0x44"}
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Group-x:       Geth/Parity Proxy
-Description-y: eth_sendRawTransaction Submits a pre-signed transaction for broadcast to the Ethereum network.
-Endpoint-x:    https://api.etherscan.io/api?module=proxy&action=eth_sendRawTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken
+Description-y: eth_sendRaw Transaction Submits a pre-signed transaction for broadcast to the Ethereum network.
+Endpoint-x:    https://api.etherscan.io/api?module=proxy&action=eth_sendRaw Transaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken
 Result:        {"id":1,"jsonrpc": "2.0","result": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331"}
 ​
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------

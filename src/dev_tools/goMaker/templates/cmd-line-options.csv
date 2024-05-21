@@ -135,7 +135,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 22260,tools,Chain Data,blocks,getBlocks,n8,,,,note,,,,,,The --decache option removes the block(s)&#44; all transactions in those block(s)&#44; and all traces in those transactions from the cache.
 22270,tools,Chain Data,blocks,getBlocks,n9,,,,note,,,,,,The --withdrawals option is only available on certain chains. It is ignored otherwise.
 #
-23000,tools,Chain Data,transactions,getTrans,,,,visible|docs,command,,,Get transactions,[flags] <tx_id> [tx_id...],default|caching|ether|raw|,Retrieve one or more transactions from the chain or local cache.
+23000,tools,Chain Data,transactions,getTrans,,,,visible|docs,command,,,Get transactions,[flags] <tx_id> [tx_id...],default|caching|ether|,Retrieve one or more transactions from the chain or local cache.
 23020,tools,Chain Data,transactions,getTrans,transactions,,,required|visible|docs,positional,list<tx_id>,transaction,,,,a space-separated list of one or more transaction identifiers
 23030,tools,Chain Data,transactions,getTrans,articulate,a,,visible|docs,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 23040,tools,Chain Data,transactions,getTrans,traces,t,,visible|docs,switch,<boolean>,trace,,,,include the transaction's traces in the results

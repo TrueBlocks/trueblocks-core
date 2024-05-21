@@ -47,11 +47,11 @@ on      ,both ,fast  ,transactions ,tools ,getTrans ,no_tracing           ,y    
 on      ,both ,medi  ,transactions ,tools ,getTrans ,by_bhash_and_txid    ,n    ,transactions = 0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372.5 & traces & fmt = txt
 on      ,both ,fast  ,transactions ,tools ,getTrans ,by_three_dups        ,y    ,transactions = 0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887 4000002.5 0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372.5 & fmt = json
 
-on      ,both ,fast  ,transactions ,tools ,getTrans ,from_raw             ,y    ,transactions = 4000000.5 & raw
+on      ,both ,fast  ,transactions ,tools ,getTrans ,from_raw             ,y    ,transactions = 4000000.5 & fmt = json
 local   ,both ,fast  ,transactions ,tools ,getTrans ,bad_hash_msg         ,n    ,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & fmt = csv
-local   ,both ,fast  ,transactions ,tools ,getTrans ,bad_hash_msg_raw     ,y    ,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & raw
-on      ,both ,fast  ,transactions ,tools ,getTrans ,bad_blkhash_msg_raw  ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 & raw
-on      ,both ,fast  ,transactions ,tools ,getTrans ,has_accessList       ,y    ,transactions = 16500011.0 & raw & fmt = json
+local   ,both ,fast  ,transactions ,tools ,getTrans ,bad_hash_msg_raw     ,y    ,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & fmt = json
+on      ,both ,fast  ,transactions ,tools ,getTrans ,bad_blkhash_msg_raw  ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 & fmt = json
+on      ,both ,fast  ,transactions ,tools ,getTrans ,has_accessList       ,y    ,transactions = 16500011.0 & fmt = json
 on      ,both ,fast  ,transactions ,tools ,getTrans ,bug_3302_type_2      ,y    ,transactions = 0xbe10c6a9b7e971be08540d7255804bbe96e9c46fe79b210b642f8adf687a8306 & fmt = json
 
 on      ,both ,fast  ,transactions ,tools ,getTrans ,logs                 ,y    ,transactions = 9004225.10 & logs & fmt = json
@@ -123,7 +123,7 @@ on      ,both ,fast  ,transactions ,tools ,getTrans ,cache_traces         ,n    
 on      ,both ,fast  ,transactions ,tools ,getTrans ,decache_traces       ,y    ,transactions = 46147.0 & decache
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
-on      ,both ,fast  ,transactions ,tools ,getTrans ,caps_allowed         ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
+on      ,both ,fast  ,transactions ,tools ,getTrans ,caps_allowed         ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & fail_on_purpose
 on      ,both ,fast  ,transactions ,tools ,getTrans ,caps_disallowed_1    ,y    ,transactions = 12.0 & fail_on_purpose
 on      ,both ,fast  ,transactions ,tools ,getTrans ,caps_disallowed_2    ,y    ,transactions = 12.0 & wei
