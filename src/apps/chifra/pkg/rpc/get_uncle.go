@@ -30,21 +30,16 @@ func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block, e
 				fmt.Sprintf("0x%x", i),
 			}
 
-			if rawUncle, err := query.Query[types.RawBlock](conn.Chain, method, params); err != nil {
+			if rawUncle, err := query.Query[types.Block](conn.Chain, method, params); err != nil {
 				return ret, err
 			} else {
 				// TODO: expand other fields if we ever need them (probably not)
 				ret = append(ret, types.Block{
-					BlockNumber: base.MustParseBlknum(rawUncle.BlockNumber),
-					Hash:        base.HexToHash(rawUncle.Hash),
-					Miner:       base.HexToAddress(rawUncle.Miner),
-					ParentHash:  base.HexToHash(rawUncle.ParentHash),
-					Timestamp:   base.MustParseTimestamp(rawUncle.Timestamp),
-					// Transactions: rawUncle.Transactions,
-					// BaseFeePerGas: rawUncle.BaseFeePerGas,
-					// Difficulty: rawUncle.Difficulty,
-					// GasLimit: rawUncle.GasLimit,
-					// GasUsed: rawUncle.GasUsed,
+					BlockNumber: rawUncle.Number,
+					Hash:        rawUncle.Hash,
+					Miner:       rawUncle.Miner,
+					ParentHash:  rawUncle.ParentHash,
+					Timestamp:   rawUncle.Timestamp,
 				})
 			}
 		}

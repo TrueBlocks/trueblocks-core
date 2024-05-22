@@ -63,6 +63,7 @@ type Block struct {
 	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	Withdrawals   []Withdrawal   `json:"withdrawals,omitempty"`
 	// EXISTING_CODE
+	Number base.Blknum `json:"number"`
 	// EXISTING_CODE
 }
 
