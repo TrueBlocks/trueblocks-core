@@ -45,12 +45,12 @@ func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (
 		}
 	}
 
-	return conn.getReceiptRaw(bn, txid)
+	return conn.getRawReceipt(bn, txid)
 }
 
 // TODO: BOGUS - clean raw
-// getReceiptRaw fetches transaction given blockNumber and transactionIndex
-func (conn *Connection) getReceiptRaw(bn base.Blknum, txid base.Txnum) (receipt types.Receipt, err error) {
+// getRawReceipt fetches transaction given blockNumber and transactionIndex
+func (conn *Connection) getRawReceipt(bn base.Blknum, txid base.Txnum) (receipt types.Receipt, err error) {
 	if txHash, err := conn.GetTransactionHashByNumberAndID(bn, txid); err != nil {
 		return types.Receipt{}, err
 

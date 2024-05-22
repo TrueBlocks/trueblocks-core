@@ -13,8 +13,6 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-// TODO: BOGUS - clean raw
-
 // GetBlockBodyByNumber fetches the block with transactions from the RPC.
 func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error) {
 	var err error
@@ -34,7 +32,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 			}
 
 			if err == nil && len(transactions) == len(lightBlock.Transactions) {
-				toBody := func(block *types.LightBlock) *types.Block {
+				lightToBody := func(block *types.LightBlock) *types.Block {
 					var ret types.Block
 					ret.BaseFeePerGas = block.BaseFeePerGas
 					ret.BlockNumber = block.BlockNumber
@@ -50,7 +48,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 					return &ret
 				}
 
-				ret := toBody(lightBlock)
+				ret := lightToBody(lightBlock)
 				ret.Transactions = transactions
 				// TODO: BOGUS - clean raw - avoid copy
 				return *ret, err
@@ -60,38 +58,38 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 
 	// The block is not in the cache, or reading the cache failed. We
 	// need to fetch the block from the RPC.
-	rawBlock, err := conn.getRawBlock(bn)
+	block, err := conn.getRawBlock(bn)
 	if err != nil {
 		return types.Block{}, err
 	}
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, rawBlock.Timestamp)
+	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
 
-	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, rawBlock.Timestamp)
-	for i := 0; i < len(rawBlock.Transactions); i++ {
-		receipt := receiptMap[rawBlock.Transactions[i].TransactionIndex]
+	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, block.Timestamp)
+	for i := 0; i < len(block.Transactions); i++ {
+		receipt := receiptMap[block.Transactions[i].TransactionIndex]
 		if receipt == nil {
-			rec, err := conn.GetReceipt(bn, rawBlock.Transactions[i].TransactionIndex, rawBlock.Timestamp)
+			rec, err := conn.GetReceipt(bn, block.Transactions[i].TransactionIndex, block.Timestamp)
 			if err != nil {
 				return types.Block{}, err
 			}
 			receipt = &rec
 		}
-		rawBlock.Transactions[i].GasUsed = receipt.GasUsed
-		rawBlock.Transactions[i].IsError = receipt.IsError
-		rawBlock.Transactions[i].Receipt = receipt
-		rawBlock.Transactions[i].Timestamp = rawBlock.Timestamp
-		rawBlock.Transactions[i].HasToken = types.IsTokenFunction(rawBlock.Transactions[i].Input)
+		block.Transactions[i].GasUsed = receipt.GasUsed
+		block.Transactions[i].IsError = receipt.IsError
+		block.Transactions[i].Receipt = receipt
+		block.Transactions[i].Timestamp = block.Timestamp
+		block.Transactions[i].HasToken = types.IsTokenFunction(block.Transactions[i].Input)
 		if conn.StoreWritable() && conn.EnabledMap["transactions"] && isFinal {
-			_ = conn.Store.Write(&rawBlock.Transactions[i], nil)
+			_ = conn.Store.Write(&block.Transactions[i], nil)
 		}
 	}
 
 	if conn.StoreWritable() && conn.EnabledMap["blocks"] && isFinal {
-		_ = conn.Store.Write(rawBlock, nil)
+		_ = conn.Store.Write(block, nil)
 	}
 
 	// TODO: BOGUS - clean raw - avoid copy
-	return *rawBlock, nil
+	return *block, nil
 }
 
 // getRawBlock returns the raw block as received from the node

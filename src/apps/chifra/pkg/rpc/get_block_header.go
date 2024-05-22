@@ -13,8 +13,6 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-// TODO: BOGUS - clean raw
-
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
 func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock, error) {
 	if conn.StoreReadable() {
