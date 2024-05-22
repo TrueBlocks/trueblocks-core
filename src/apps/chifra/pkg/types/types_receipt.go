@@ -46,7 +46,7 @@ func (s Receipt) String() string {
 	return string(bytes)
 }
 
-func (s *Receipt) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -82,7 +82,7 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOptions map[str
 		} else {
 			logs := make([]map[string]any, 0, len(s.Logs))
 			for _, log := range s.Logs {
-				logs = append(logs, log.Model(chain, format, verbose, extraOptions).Data)
+				logs = append(logs, log.Model(chain, format, verbose, extraOpts).Data)
 			}
 			model["logs"] = logs
 		}

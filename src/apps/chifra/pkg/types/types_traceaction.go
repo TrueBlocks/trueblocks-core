@@ -43,13 +43,13 @@ func (s TraceAction) String() string {
 	return string(bytes)
 }
 
-func (s *TraceAction) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
 	if format == "json" {
-		if extraOptions["traces"] != true && len(s.Init) > 0 {
+		if extraOpts["traces"] != true && len(s.Init) > 0 {
 			model["init"] = utils.FormattedCode(verbose, s.Init)
 		}
 		if !s.SelfDestructed.IsZero() {
@@ -68,7 +68,7 @@ func (s *TraceAction) Model(chain, format string, verbose bool, extraOptions map
 			model["input"] = s.Input
 		}
 
-		asEther := extraOptions["ether"] == true
+		asEther := extraOpts["ether"] == true
 		model["value"] = s.Value.String()
 		if asEther {
 			model["ether"] = s.Value.ToEtherStr(18)

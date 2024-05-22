@@ -35,7 +35,7 @@ func (s BlockCount) String() string {
 	return string(bytes)
 }
 
-func (s *BlockCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *BlockCount) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -57,10 +57,10 @@ func (s *BlockCount) Model(chain, format string, verbose bool, extraOptions map[
 		order = append(order, "date")
 	}
 
-	wantsUncles := extraOptions["uncles"] == true
-	wantsLogs := extraOptions["logs"] == true
-	wantsTraces := extraOptions["traces"] == true
-	wantsUniqs := extraOptions["uniqs"] == true
+	wantsUncles := extraOpts["uncles"] == true
+	wantsLogs := extraOpts["logs"] == true
+	wantsTraces := extraOpts["traces"] == true
+	wantsUniqs := extraOpts["uniqs"] == true
 	wantsWithdrawals := true
 
 	if format == "json" {

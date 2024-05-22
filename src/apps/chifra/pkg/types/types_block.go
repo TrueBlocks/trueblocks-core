@@ -71,12 +71,12 @@ func (s Block) String() string {
 	return string(bytes)
 }
 
-func (s *Block) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["hashes"] == true {
+	if extraOpts["hashes"] == true {
 		txHashes := make([]string, 0, len(s.Transactions))
 		// Check what type Tx is
 		switch txs := any(s.Transactions).(type) {
@@ -110,7 +110,7 @@ func (s *Block) Model(chain, format string, verbose bool, extraOptions map[strin
 			if s.BlockNumber >= base.KnownBlock(chain, base.Shanghai) {
 				withs := make([]map[string]any, 0, len(s.Withdrawals))
 				for _, w := range s.Withdrawals {
-					withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
+					withs = append(withs, w.Model(chain, format, verbose, extraOpts).Data)
 				}
 				model.Data["withdrawals"] = withs
 			}
@@ -159,7 +159,7 @@ func (s *Block) Model(chain, format string, verbose bool, extraOptions map[strin
 		if ok {
 			items := make([]map[string]interface{}, 0, len(txs))
 			for _, txObject := range txs {
-				items = append(items, txObject.Model(chain, format, verbose, extraOptions).Data)
+				items = append(items, txObject.Model(chain, format, verbose, extraOpts).Data)
 			}
 			model["transactions"] = items
 		} else {
@@ -175,7 +175,7 @@ func (s *Block) Model(chain, format string, verbose bool, extraOptions map[strin
 		if len(s.Withdrawals) > 0 {
 			withs := make([]map[string]any, 0, len(s.Withdrawals))
 			for _, w := range s.Withdrawals {
-				withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
+				withs = append(withs, w.Model(chain, format, verbose, extraOpts).Data)
 			}
 			model["withdrawals"] = withs
 			order = append(order, "withdrawals")

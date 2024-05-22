@@ -49,7 +49,7 @@ func (s Trace) String() string {
 	return string(bytes)
 }
 
-func (s *Trace) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -83,7 +83,7 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOptions map[strin
 	}
 
 	var articulatedTrace map[string]interface{}
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTrace != nil
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTrace != nil
 	if isArticulated {
 		articulatedTrace = map[string]interface{}{
 			"name": s.ArticulatedTrace.Name,
@@ -115,10 +115,10 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOptions map[strin
 			model["type"] = s.TraceType
 		}
 		if s.Action != nil {
-			model["action"] = s.Action.Model(chain, format, verbose, extraOptions).Data
+			model["action"] = s.Action.Model(chain, format, verbose, extraOpts).Data
 		}
 		if s.Result != nil {
-			model["result"] = s.Result.Model(chain, format, verbose, extraOptions).Data
+			model["result"] = s.Result.Model(chain, format, verbose, extraOpts).Data
 		}
 
 		if isArticulated {

@@ -49,12 +49,12 @@ func (s Appearance) String() string {
 	return string(bytes)
 }
 
-func (s *Appearance) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["appearances"] == true {
+	if extraOpts["appearances"] == true {
 		model = map[string]interface{}{
 			"blockNumber":      s.BlockNumber,
 			"transactionIndex": s.TransactionIndex,
@@ -81,15 +81,15 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOptions map[
 		"transactionIndex",
 	}
 
-	if extraOptions["namesMap"] != nil {
-		name := extraOptions["namesMap"].(map[base.Address]Name)[s.Address]
+	if extraOpts["namesMap"] != nil {
+		name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 		if name.Address.Hex() != "0x0" {
 			model["name"] = name
 			order = append(order, "name")
 		}
 	}
 
-	if extraOptions["uniq"] == true {
+	if extraOpts["uniq"] == true {
 		if s.TraceIndex > 0 {
 			model["traceIndex"] = s.TraceIndex
 			order = append(order, "traceIndex")
@@ -109,15 +109,15 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOptions map[
 				"date",
 			}...)
 		}
-	} else if extraOptions["export"] == true && format == "json" {
+	} else if extraOpts["export"] == true && format == "json" {
 		if verbose {
 			if s.Timestamp != base.NOPOSI {
 				model["timestamp"] = s.Timestamp
 			}
 			model["date"] = s.Date()
 		}
-		if extraOptions["namesMap"] != nil {
-			name := extraOptions["namesMap"].(map[base.Address]Name)[s.Address]
+		if extraOpts["namesMap"] != nil {
+			name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 			if name.Address.Hex() != "0x0" {
 				model["name"] = name.Name
 				order = append(order, "name")

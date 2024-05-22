@@ -33,7 +33,7 @@ func (s Manifest) String() string {
 	return string(bytes)
 }
 
-func (s *Manifest) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Manifest) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

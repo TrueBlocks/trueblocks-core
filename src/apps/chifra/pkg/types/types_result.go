@@ -42,7 +42,7 @@ func (s Result) String() string {
 	return string(bytes)
 }
 
-func (s *Result) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -87,7 +87,7 @@ func (s *Result) Model(chain, format string, verbose bool, extraOptions map[stri
 		delete(model, "date")
 	}
 
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedOut != nil
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedOut != nil
 	var articulatedOut map[string]interface{}
 	if isArticulated {
 		articulatedOut = map[string]interface{}{

@@ -71,7 +71,7 @@ func (s LightBlock) String() string {
 	return string(bytes)
 }
 
-func (s *LightBlock) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *LightBlock) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -96,7 +96,7 @@ func (s *LightBlock) Model(chain, format string, verbose bool, extraOptions map[
 		if s.BlockNumber >= base.KnownBlock(chain, base.Shanghai) {
 			withs := make([]map[string]any, 0, len(s.Withdrawals))
 			for _, w := range s.Withdrawals {
-				withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
+				withs = append(withs, w.Model(chain, format, verbose, extraOpts).Data)
 			}
 			model["withdrawals"] = withs
 		}

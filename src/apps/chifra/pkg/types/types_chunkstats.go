@@ -36,7 +36,7 @@ func (s ChunkStats) String() string {
 	return string(bytes)
 }
 
-func (s *ChunkStats) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *ChunkStats) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

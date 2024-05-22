@@ -32,7 +32,7 @@ func (s Monitor) String() string {
 	return string(bytes)
 }
 
-func (s *Monitor) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -54,13 +54,13 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOptions map[str
 	if verbose {
 		model["lastScanned"] = s.LastScanned
 		model["deleted"] = s.Deleted
-		if extraOptions["testMode"] == true {
+		if extraOpts["testMode"] == true {
 			model["lastScanned"] = "--lastScanned--"
 		}
 		order = append(order, "lastScanned")
 		order = append(order, "deleted")
-		if extraOptions["namesMap"] != nil {
-			name := extraOptions["namesMap"].(map[base.Address]Name)[s.Address]
+		if extraOpts["namesMap"] != nil {
+			name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 			if name.Address.Hex() != "0x0" {
 				model["name"] = name
 				order = append(order, "name")

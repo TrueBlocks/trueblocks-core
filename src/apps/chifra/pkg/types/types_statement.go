@@ -66,7 +66,7 @@ func (s Statement) String() string {
 	return string(bytes)
 }
 
-func (s *Statement) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -132,7 +132,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOptions map[s
 		"endBalDiff", "endBalCalc", "correctingReason",
 	}
 
-	asEther := extraOptions["ether"] == true
+	asEther := extraOpts["ether"] == true
 	if asEther {
 		model["begBalEth"] = s.BegBal.ToEtherStr(decimals)
 		model["amountNetEth"] = s.AmountNet().ToEtherStr(decimals)

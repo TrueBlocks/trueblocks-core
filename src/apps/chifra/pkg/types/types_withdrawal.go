@@ -38,7 +38,7 @@ func (s Withdrawal) String() string {
 	return string(bytes)
 }
 
-func (s *Withdrawal) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Withdrawal) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -63,7 +63,7 @@ func (s *Withdrawal) Model(chain, format string, verbose bool, extraOptions map[
 		"amount",
 	}
 
-	asEther := extraOptions["ether"] == true
+	asEther := extraOpts["ether"] == true
 	if asEther {
 		model["ether"] = s.Amount.ToEtherStr(18)
 		order = append(order, "ether")

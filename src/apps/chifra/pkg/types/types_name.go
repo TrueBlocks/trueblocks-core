@@ -44,18 +44,18 @@ func (s Name) String() string {
 	return string(bytes)
 }
 
-func (s *Name) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["single"] == "tags" || extraOptions["single"] == "address" {
-		if extraOptions["single"] == "tags" {
+	if extraOpts["single"] == "tags" || extraOpts["single"] == "address" {
+		if extraOpts["single"] == "tags" {
 			model["tags"] = s.Tags
 		} else {
 			model["address"] = s.Address.Hex()
 		}
-		order = append(order, extraOptions["single"].(string))
+		order = append(order, extraOpts["single"].(string))
 		return Model{
 			Data:  model,
 			Order: order,
@@ -86,8 +86,8 @@ func (s *Name) Model(chain, format string, verbose bool, extraOptions map[string
 		model["address"] = strings.ToLower(s.Address.String())
 	}
 
-	isExpanded := extraOptions["expand"] == true
-	isPrefund := extraOptions["prefund"] == true
+	isExpanded := extraOpts["expand"] == true
+	isPrefund := extraOpts["prefund"] == true
 	if !isExpanded && !isPrefund {
 		x := []string{}
 		for _, v := range order {

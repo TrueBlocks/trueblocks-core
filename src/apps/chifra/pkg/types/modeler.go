@@ -1,7 +1,7 @@
 package types
 
 type Modeler[RT interface{}] interface {
-	Model(chain, format string, verbose bool, extraOptions map[string]any) Model
+	Model(chain, format string, verbose bool, extraOpts map[string]any) Model
 }
 
 type Model struct {

@@ -35,7 +35,7 @@ func (s TraceResult) String() string {
 	return string(bytes)
 }
 
-func (s *TraceResult) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -53,7 +53,7 @@ func (s *TraceResult) Model(chain, format string, verbose bool, extraOptions map
 			model["address"] = s.Address
 			order = append(order, "address")
 		}
-		if extraOptions["traces"] != true && len(s.Code) > 2 { // "0x" is empty
+		if extraOpts["traces"] != true && len(s.Code) > 2 { // "0x" is empty
 			model["code"] = utils.FormattedCode(verbose, s.Code)
 			order = append(order, "code")
 		}

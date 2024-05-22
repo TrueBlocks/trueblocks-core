@@ -40,7 +40,7 @@ func (s AppearanceTable) String() string {
 	return string(bytes)
 }
 
-func (s *AppearanceTable) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *AppearanceTable) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

@@ -99,7 +99,7 @@ func (s Transaction) String() string {
 	return string(bytes)
 }
 
-func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -142,7 +142,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 
 	// TODO: Shouldn't this use the Function model - the answer is yes?
 	var articulatedTx map[string]interface{}
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTx != nil
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTx != nil
 	if isArticulated && format != "json" {
 		order = append(order, "compressedTx")
 	}
@@ -168,7 +168,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		if s.Statements != nil {
 			statements := make([]map[string]any, 0, len(*s.Statements))
 			for _, statement := range *s.Statements {
-				statements = append(statements, statement.Model(chain, format, verbose, extraOptions).Data)
+				statements = append(statements, statement.Model(chain, format, verbose, extraOpts).Data)
 			}
 			model["statements"] = statements
 		}
@@ -225,7 +225,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 					"timestamp": s.Timestamp,
 					"date":      s.Date(),
 				}
-				if extraOptions["articulate"] == true && log.ArticulatedLog != nil {
+				if extraOpts["articulate"] == true && log.ArticulatedLog != nil {
 					inputModels := parametersToMap(log.ArticulatedLog.Inputs)
 					articulatedLog := map[string]any{
 						"name":   log.ArticulatedLog.Name,
@@ -241,10 +241,10 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 			model["receipt"] = map[string]interface{}{}
 		}
 
-		if extraOptions["traces"] == true && len(s.Traces) > 0 {
+		if extraOpts["traces"] == true && len(s.Traces) > 0 {
 			traceModels := make([]map[string]any, 0, len(s.Traces))
 			for _, trace := range s.Traces {
-				traceModels = append(traceModels, trace.Model(chain, format, verbose, extraOptions).Data)
+				traceModels = append(traceModels, trace.Model(chain, format, verbose, extraOpts).Data)
 			}
 			model["traces"] = traceModels
 		} else {
@@ -271,7 +271,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 
-		if extraOptions["articulate"] == true && s.ArticulatedTx != nil {
+		if extraOpts["articulate"] == true && s.ArticulatedTx != nil {
 			model["encoding"] = s.ArticulatedTx.Encoding
 		}
 
@@ -289,13 +289,13 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 			model["compressedTx"] = s.Message
 		}
 
-		if extraOptions["traces"] == true {
+		if extraOpts["traces"] == true {
 			model["nTraces"] = len(s.Traces)
 			order = append(order, "nTraces")
 		}
 	}
 
-	asEther := true // special case for transactions, we always show --ether -- extraOptions["ether"] == true
+	asEther := true // special case for transactions, we always show --ether -- extraOpts["ether"] == true
 	if asEther {
 		model["ether"] = s.Value.ToEtherStr(18)
 		order = append(order, "ether")

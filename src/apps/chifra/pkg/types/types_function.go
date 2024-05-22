@@ -48,12 +48,12 @@ func (s Function) String() string {
 	return string(bytes)
 }
 
-func (s *Function) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Function) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["encodingSignatureOnly"] == true {
+	if extraOpts["encodingSignatureOnly"] == true {
 		return Model{
 			Data: map[string]any{
 				"encoding":  s.Encoding,
@@ -81,7 +81,7 @@ func (s *Function) Model(chain, format string, verbose bool, extraOptions map[st
 		getParameterModels := func(params []Parameter) []map[string]any {
 			result := make([]map[string]any, len(params))
 			for index, param := range params {
-				result[index] = param.Model(chain, format, verbose, extraOptions).Data
+				result[index] = param.Model(chain, format, verbose, extraOpts).Data
 				result[index]["name"] = param.DisplayName(index)
 			}
 			return result

@@ -51,7 +51,7 @@ func (s Status) String() string {
 	return string(bytes)
 }
 
-func (s *Status) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -87,12 +87,12 @@ func (s *Status) Model(chain, format string, verbose bool, extraOptions map[stri
 		"trueblocksVersion",
 	}
 
-	if extraOptions != nil && extraOptions["showProgress"] == true {
+	if extraOpts != nil && extraOpts["showProgress"] == true {
 		model["progress"] = s.Progress
 		order = append(order, "progress")
 	}
 
-	testMode := extraOptions["testMode"] == true
+	testMode := extraOpts["testMode"] == true
 	if len(s.Caches) > 0 {
 		if testMode {
 			for i := 0; i < len(s.Caches); i++ {
@@ -107,9 +107,9 @@ func (s *Status) Model(chain, format string, verbose bool, extraOptions map[stri
 		order = append(order, "caches")
 	}
 
-	if extraOptions["chains"] == true {
+	if extraOpts["chains"] == true {
 		var chains []Chain
-		if extraOptions["testMode"] == true {
+		if extraOpts["testMode"] == true {
 			ch := Chain{
 				Chain:         "testChain",
 				ChainId:       12345,

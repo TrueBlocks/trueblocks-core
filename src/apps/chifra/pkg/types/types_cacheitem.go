@@ -32,12 +32,12 @@ func (s CacheItem) String() string {
 	return string(bytes)
 }
 
-func (s *CacheItem) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *CacheItem) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["configPaths"] == true {
+	if extraOpts["configPaths"] == true {
 		model["type"] = s.CacheItemType
 		order = append(order, "type")
 		model["path"] = s.Path

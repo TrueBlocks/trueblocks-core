@@ -25,7 +25,7 @@ func (s Message) String() string {
 	return string(bytes)
 }
 
-func (s *Message) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Message) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

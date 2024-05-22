@@ -40,15 +40,15 @@ func (s Token) String() string {
 	return string(bytes)
 }
 
-func (s *Token) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
 	name := Name{}
 	name.Name = "Unknown"
-	if extraOptions["namesMap"] != nil {
-		name = extraOptions["namesMap"].(map[base.Address]Name)[s.Address]
+	if extraOpts["namesMap"] != nil {
+		name = extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 	}
 	if name.Decimals == 0 {
 		name.Decimals = 18
@@ -57,7 +57,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOptions map[strin
 		name.Symbol = name.Address.Prefix(6)
 	}
 
-	wanted := extraOptions["parts"].([]string)
+	wanted := extraOpts["parts"].([]string)
 	if len(wanted) == 1 {
 		if wanted[0] == "all" {
 			if verbose {

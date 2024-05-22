@@ -57,7 +57,7 @@ func (s Slurp) String() string {
 	return string(bytes)
 }
 
-func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -142,7 +142,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[strin
 
 	// TODO: Turn this back on
 	var articulatedTx map[string]interface{}
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTx != nil
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTx != nil
 	if isArticulated && format != "json" {
 		order = append(order, "compressedTx")
 	}
@@ -210,7 +210,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[strin
 		}
 	}
 
-	asEther := true // like transactions, we always export ether for slurps -- extraOptions["ether"] == true
+	asEther := true // like transactions, we always export ether for slurps -- extraOpts["ether"] == true
 	if asEther {
 		model["ether"] = s.Value.ToEtherStr(18)
 		order = append(order, "ether")

@@ -43,7 +43,7 @@ func (s Log) String() string {
 	return string(bytes)
 }
 
-func (s *Log) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -75,7 +75,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOptions map[string]
 		"data",
 	}
 
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedLog != nil
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedLog != nil
 	var articulatedLog = make(map[string]any)
 	if isArticulated {
 		articulatedLog["name"] = s.ArticulatedLog.Name

@@ -31,7 +31,7 @@ func (s ChunkAddress) String() string {
 	return string(bytes)
 }
 
-func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

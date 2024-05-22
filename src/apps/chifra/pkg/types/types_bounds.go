@@ -33,19 +33,19 @@ func (s Bounds) String() string {
 	return string(bytes)
 }
 
-func (s *Bounds) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Bounds) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	extraOptions["appearances"] = true
+	extraOpts["appearances"] = true
 	model = map[string]interface{}{
 		"address":    s.FirstApp.Address,
 		"count":      s.Count,
-		"firstApp":   s.FirstApp.Model(chain, format, verbose, extraOptions).Data, //fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex),
+		"firstApp":   s.FirstApp.Model(chain, format, verbose, extraOpts).Data, //fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex),
 		"firstTs":    s.FirstTs,
 		"firstDate":  base.FormattedDate(s.FirstTs),
-		"latestApp":  s.LatestApp.Model(chain, format, verbose, extraOptions).Data, //fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex),
+		"latestApp":  s.LatestApp.Model(chain, format, verbose, extraOpts).Data, //fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex),
 		"latestTs":   s.LatestTs,
 		"latestDate": base.FormattedDate(s.LatestTs),
 		"blockSpan":  (s.LatestApp.BlockNumber - s.FirstApp.BlockNumber),

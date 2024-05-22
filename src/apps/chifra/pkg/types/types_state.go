@@ -42,7 +42,7 @@ func (s State) String() string {
 	return string(bytes)
 }
 
-func (s *State) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -57,8 +57,8 @@ func (s *State) Model(chain, format string, verbose bool, extraOptions map[strin
 		order = []string{"blockNumber", "address", "timestamp", "date"}
 	}
 
-	if extraOptions != nil {
-		if fields, ok := extraOptions["fields"]; ok {
+	if extraOpts != nil {
+		if fields, ok := extraOpts["fields"]; ok {
 			if fields, ok := fields.([]string); ok {
 				for _, field := range fields {
 					switch field {
@@ -87,7 +87,7 @@ func (s *State) Model(chain, format string, verbose bool, extraOptions map[strin
 
 	if _, ok := model["balance"]; ok {
 		model["ether"] = s.Balance.ToEtherStr(18)
-		asEther := extraOptions["ether"] == true
+		asEther := extraOpts["ether"] == true
 		if asEther {
 			order = append(order, "ether")
 		}
