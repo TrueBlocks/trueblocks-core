@@ -46,7 +46,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		return block, err
 	}
 
-	ts := base.MustParseTimestamp(rawBlock.Timestamp)
+	ts := rawBlock.Timestamp
 	block.Transactions = make([]types.Transaction, 0, len(rawBlock.Transactions))
 	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, ts)
 	for _, rawTx := range rawBlock.Transactions {
@@ -206,27 +206,22 @@ func loadLightBlock(conn *Connection, bn base.Blknum) (block types.LightBlock, r
 }
 
 // loadFullBlock fetches block from RPC with full transactions.
-func loadFullBlock(conn *Connection, bn base.Blknum) (block types.Block, rawBlock *types.RawBlock, err error) {
+func loadFullBlock(conn *Connection, bn base.Blknum) (block types.Block, rawBlock *types.Block, err error) {
 	rawBlock, err = conn.getBlockRaw(bn)
 	if err != nil {
 		return
 	}
 
-	uncleHashes := make([]base.Hash, 0, len(rawBlock.Uncles))
-	for _, uncle := range rawBlock.Uncles {
-		uncleHashes = append(uncleHashes, base.HexToHash(uncle))
-	}
-
 	block = types.Block{
-		BlockNumber: base.MustParseBlknum(rawBlock.BlockNumber),
-		Timestamp:   base.Timestamp(base.MustParseInt64(rawBlock.Timestamp)), // note that we turn Ethereum's timestamps into types. Timestamp upon read.
-		Hash:        base.HexToHash(rawBlock.Hash),
-		ParentHash:  base.HexToHash(rawBlock.ParentHash),
-		GasLimit:    base.MustParseGas(rawBlock.GasLimit),
-		GasUsed:     base.MustParseGas(rawBlock.GasUsed),
-		Miner:       base.HexToAddress(rawBlock.Miner),
-		Difficulty:  base.MustParseValue(rawBlock.Difficulty),
-		Uncles:      uncleHashes,
+		BlockNumber: rawBlock.BlockNumber,
+		Timestamp:   rawBlock.Timestamp,
+		Hash:        rawBlock.Hash,
+		ParentHash:  rawBlock.ParentHash,
+		GasLimit:    rawBlock.GasLimit,
+		GasUsed:     rawBlock.GasUsed,
+		Miner:       rawBlock.Miner,
+		Difficulty:  rawBlock.Difficulty,
+		Uncles:      rawBlock.Uncles,
 	}
 
 	if len(rawBlock.Withdrawals) > 0 {
@@ -261,18 +256,19 @@ func (conn *Connection) getRawLightBlock(bn base.Blknum) (*types.LightBlock, err
 }
 
 // getBlockRaw returns the raw block as received from the node
-func (conn *Connection) getBlockRaw(bn base.Blknum) (*types.RawBlock, error) {
+func (conn *Connection) getBlockRaw(bn base.Blknum) (*types.Block, error) {
 	method := "eth_getBlockByNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn), true}
 
-	if block, err := query.Query[types.RawBlock](conn.Chain, method, params); err != nil {
-		return &types.RawBlock{}, err
+	if block, err := query.Query[types.Block](conn.Chain, method, params); err != nil {
+		return &types.Block{}, err
 	} else {
+		block.BlockNumber = block.Number
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
-			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(0))
-		} else if base.MustParseUint64(block.Timestamp) == 0 {
-			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
+			block.Timestamp = conn.GetBlockTimestamp(0)
+		} else if block.Timestamp == 0 {
+			return &types.Block{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}
 
 		return block, nil
