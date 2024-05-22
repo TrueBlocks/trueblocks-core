@@ -60,55 +60,38 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 
 	// The block is not in the cache, or reading the cache failed. We
 	// need to fetch the block from the RPC.
-	rawBlock, err := loadBlockFull(conn, bn)
-	block := *rawBlock
+	rawBlock, err := conn.getRawBlock(bn)
 	if err != nil {
-		return block, err
+		return types.Block{}, err
 	}
+	isFinal := base.IsFinal(conn.LatestBlockTimestamp, rawBlock.Timestamp)
 
-	transactions := make([]types.Transaction, 0, len(rawBlock.Transactions))
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, block.Timestamp)
-	for _, rawTx := range rawBlock.Transactions {
-		idx := rawTx.TransactionIndex
-		var receipt types.Receipt
-		if receiptMap[idx] == nil {
-			receipt, err = conn.GetReceipt(bn, idx, block.Timestamp)
+	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, rawBlock.Timestamp)
+	for i := 0; i < len(rawBlock.Transactions); i++ {
+		receipt := receiptMap[rawBlock.Transactions[i].TransactionIndex]
+		if receipt == nil {
+			rec, err := conn.GetReceipt(bn, rawBlock.Transactions[i].TransactionIndex, rawBlock.Timestamp)
 			if err != nil {
-				return block, err
+				return types.Block{}, err
 			}
-		} else {
-			receipt = *receiptMap[idx]
+			receipt = &rec
 		}
-
-		tx := rawTx
-		tx.Timestamp = block.Timestamp
-		tx.HasToken = types.IsTokenFunction(rawTx.Input)
-		tx.GasUsed = receipt.GasUsed
-		tx.IsError = receipt.IsError
-		tx.Receipt = &receipt
-		transactions = append(transactions, tx)
-
+		rawBlock.Transactions[i].GasUsed = receipt.GasUsed
+		rawBlock.Transactions[i].IsError = receipt.IsError
+		rawBlock.Transactions[i].Receipt = receipt
+		rawBlock.Transactions[i].Timestamp = rawBlock.Timestamp
+		rawBlock.Transactions[i].HasToken = types.IsTokenFunction(rawBlock.Transactions[i].Input)
 		if conn.StoreWritable() && conn.EnabledMap["transactions"] && isFinal {
-			_ = conn.Store.Write(&tx, nil)
+			_ = conn.Store.Write(&rawBlock.Transactions[i], nil)
 		}
 	}
 
-	block.Transactions = transactions
 	if conn.StoreWritable() && conn.EnabledMap["blocks"] && isFinal {
-		_ = conn.Store.Write(&block, nil)
+		_ = conn.Store.Write(rawBlock, nil)
 	}
 
-	return block, nil
-}
-
-// loadBlockFull fetches block from RPC with full transactions.
-func loadBlockFull(conn *Connection, bn base.Blknum) (*types.Block, error) {
-	block, err := conn.getRawBlock(bn)
-	if err != nil {
-		return nil, err
-	}
-	return block, nil
+	// TODO: BOGUS - clean raw - avoid copy
+	return *rawBlock, nil
 }
 
 // getRawBlock returns the raw block as received from the node
