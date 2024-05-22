@@ -4,7 +4,7 @@
     doc_group = "02-Chain Data"
     doc_descr = "transaction data as returned from the RPC (with slight enhancements)"
     doc_route = "206-transaction"
-    attributes = "hasraw"
+    attributes = ""
     produced_by = "transactions, export"
     contains = "receipt, statement, trace, function"
     cache_type = "cacheable"

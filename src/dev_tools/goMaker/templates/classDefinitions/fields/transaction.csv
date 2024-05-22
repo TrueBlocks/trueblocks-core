@@ -1,6 +1,6 @@
 name                 ,type          ,strDefault ,attributes    ,docOrder ,description
-accessList           ,[]StorageSlot ,           ,rawonly       ,         ,
-chainId              ,string        ,           ,rawonly       ,         ,
+accessList           ,[]StorageSlot ,           ,removed       ,         ,
+chainId              ,string        ,           ,removed       ,         ,
 blockNumber          ,blknum        ,           ,              ,       3 ,the number of the block
 transactionIndex     ,txnum         ,           ,              ,       4 ,the zero-indexed position of the transaction in the block
 timestamp            ,timestamp     ,           ,simponly      ,       6 ,the Unix timestamp of the object

@@ -62,8 +62,8 @@ func (m *Member) IsOmitEmpty() bool {
 	return strings.Contains(m.Attributes, "omitempty")
 }
 
-func (m *Member) IsRawOnly() bool {
-	return strings.Contains(m.Attributes, "rawonly")
+func (m *Member) IsRemoved() bool {
+	return strings.Contains(m.Attributes, "removed")
 }
 
 func (m *Member) IsSimpOnly() bool {
@@ -82,12 +82,8 @@ func (m *Member) HasUpgrade() bool {
 	return len(m.Upgrades) > 0
 }
 
-func (m *Member) IsRawField() bool {
-	return !m.IsCalc() && !m.IsSimpOnly()
-}
-
 func (m *Member) IsSimpField() bool {
-	return !m.IsCalc() && !m.IsRawOnly()
+	return !m.IsCalc() && !m.IsRemoved()
 }
 
 func (m *Member) SortName() string {
@@ -95,16 +91,6 @@ func (m *Member) SortName() string {
 		return Proper(m.Name)
 	}
 	return m.GoName()
-}
-
-func (m *Member) RawTag() string {
-	if m.Name == "transactionIndex" && m.Container() == "Trace" {
-		return "`json:\"transactionPosition\"`"
-	}
-	if m.Name == "blockNumber" && (m.Container() == "Block" || m.Container() == "LightBlock") {
-		return "`json:\"number\"`"
-	}
-	return "`json:\"" + m.Name + "\"`"
 }
 
 func (m *Member) Tag() string {
@@ -143,67 +129,6 @@ func (m *Member) MarkdownType() string {
 		}
 	}
 	return typ
-}
-
-func (m *Member) RawType() string {
-	if m.Container() == "Block" || m.Container() == "LightBlock" {
-		if m.GoName() == "Transactions" {
-			return "[]any"
-		} else if m.GoName() == "Withdrawals" {
-			return "[]Withdrawal"
-		}
-	}
-
-	ret := "string"
-	switch m.Container() {
-	case "Trace":
-		if m.GoName() == "Action" {
-			return "TraceAction"
-		} else if m.GoName() == "TransactionHash" {
-			return "string"
-		}
-		if m.IsObject() {
-			if m.GoName() == "Result" {
-				return "*TraceResult"
-			}
-		} else {
-			switch m.GoName() {
-			case "BlockHash":
-				return "string"
-			case "BlockNumber":
-				return "base.Blknum"
-			case "TransactionIndex":
-				return "base.Txnum"
-			case "TraceAddress":
-				return "[]uint64"
-			case "TransactionHash":
-				return "hash"
-			}
-			return m.Type
-		}
-	case "Receipt":
-		if m.GoName() == "Logs" {
-			return "[]Log"
-		}
-	case "Transaction":
-		if m.GoName() == "AccessList" {
-			return "[]StorageSlot"
-		}
-	case "Appearance":
-		gn := m.GoName()
-		if gn == "BlockNumber" || gn == "TransactionIndex" {
-			return "uint32"
-		}
-	}
-
-	ret = "string"
-	one := m.Container() == "Function" && (m.GoName() == "Inputs" || m.GoName() == "Outputs")
-	two := m.Container() == "Manifest" && m.GoName() == "Chunks"
-	three := m.Container() == "Parameter" && m.GoName() == "Components"
-	if !one && !two && !three && m.IsArray {
-		ret = "[]" + ret
-	}
-	return ret
 }
 
 func (m *Member) GoType() string {
@@ -278,7 +203,7 @@ func (m *Member) NeedsPtr() bool {
 // MarshalCode writes the writer code for caching this item
 func (m *Member) MarshalCode() string {
 	if m.IsCalc() ||
-		m.IsRawOnly() ||
+		m.IsRemoved() ||
 		(m.Container() == "Transaction" && m.GoName() == "Traces") {
 		return ""
 	}
@@ -353,19 +278,32 @@ func (m *Member) MarshalCode() string {
 func (m *Member) UnmarshalCode() string {
 	wasRemoved := m.HasUpgrade() && m.IsCalc()
 	if (!wasRemoved && m.IsCalc()) ||
-		m.IsRawOnly() ||
+		m.IsRemoved() ||
 		(m.Container() == "Transaction" && m.GoName() == "Traces") {
 		return ""
 	}
 
 	tmplName := "unmarshalCode"
 	tmpl := ""
-	if m.GoName() == "Transactions" && (m.Container() == "Block" || m.Container() == "LightBlock") {
+	if m.GoName() == "Transactions" && m.Container() == "LightBlock" {
 		tmplName += "1"
 		tmpl = `		// Transactions
 	s.Transactions = make([]string, 0)
 	if err = cache.ReadValue(reader, &s.Transactions, vers); err != nil {
 		return err
+	}
+
+`
+	} else if m.GoName() == "Transactions" && m.Container() == "Block" {
+		tmplName += "2"
+		tmpl = `		// Transactions
+	hashes := make([]string, 0, len(s.Transactions))
+	if err = cache.ReadValue(reader, &hashes, vers); err != nil {
+		return err
+	}
+	s.Transactions = make([]Transaction, 0, len(hashes))
+	for i := 0; i < len(hashes); i++ {
+		s.Transactions[i].Hash = base.HexToHash(hashes[i])
 	}
 
 `

@@ -68,10 +68,6 @@ func (s *Structure) IsCacheAsGroup() bool {
 	return s.CacheAs == "group"
 }
 
-func (s *Structure) HasRaw() bool {
-	return strings.Contains(s.Attributes, "hasraw")
-}
-
 func (s *Structure) IsSimpOnly() bool {
 	return strings.Contains(s.Attributes, "simponly")
 }

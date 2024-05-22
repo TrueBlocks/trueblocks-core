@@ -3,7 +3,7 @@
     doc_group = "02-Chain Data"
     doc_descr = "block data as returned from the RPC (with slight enhancements)"
     doc_route = "203-block"
-    attributes = "hasraw"
+    attributes = ""
     produced_by = "blocks"
     contains = "transaction, withdrawal"
     cache_type = "cacheable"

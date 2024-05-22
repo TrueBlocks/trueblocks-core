@@ -11,11 +11,6 @@ package types
 // EXISTING_CODE
 // EXISTING_CODE
 
-{{if .HasRaw}}type Raw{{.Class}} struct {
-{{range .Members}}{{if .IsRawField}}{{.GoName}} {{.RawType}} {{.RawTag}}
-{{end}}{{end}}
-}
-{{end}}
 type {{.Class}} struct {
 {{range .Members}}{{if .IsSimpField}}{{.GoName}} {{.GoType}} {{.Tag}}
 {{end}}{{end}}	// EXISTING_CODE
