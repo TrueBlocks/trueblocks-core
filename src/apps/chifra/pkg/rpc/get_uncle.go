@@ -61,12 +61,10 @@ func (conn *Connection) GetUnclesHashesByNumber(bn base.Blknum) ([]base.Hash, er
 				fmt.Sprintf("0x%x", bn),
 				fmt.Sprintf("0x%x", i),
 			}
-			if rawUncle, err := query.Query[types.RawBlock](conn.Chain, method, params); err != nil {
+			if rawUncle, err := query.Query[types.Block](conn.Chain, method, params); err != nil {
 				return ret, err
 			} else {
-				for _, uncle := range rawUncle.Uncles {
-					ret = append(ret, base.HexToHash(uncle))
-				}
+				ret = rawUncle.Uncles
 			}
 		}
 		return ret, nil
