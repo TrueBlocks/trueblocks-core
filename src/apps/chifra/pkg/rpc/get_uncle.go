@@ -6,7 +6,6 @@ package rpc
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
@@ -30,44 +29,14 @@ func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block, e
 				fmt.Sprintf("0x%x", i),
 			}
 
-			// TODO: BOGUS - clean raw
-			if rawUncle, err := query.Query[types.Block](conn.Chain, method, params); err != nil {
+			if uncle, err := query.Query[types.Block](conn.Chain, method, params); err != nil {
 				return ret, err
 			} else {
-				// TODO: expand other fields if we ever need them (probably not)
-				ret = append(ret, types.Block{
-					BlockNumber: rawUncle.Number,
-					Hash:        rawUncle.Hash,
-					Miner:       rawUncle.Miner,
-					ParentHash:  rawUncle.ParentHash,
-					Timestamp:   rawUncle.Timestamp,
-				})
+				uncle.BlockNumber = uncle.Number
+				ret = append(ret, *uncle)
 			}
 		}
-		return ret, nil
-	}
-}
-
-// GetUnclesHashesByNumber returns the uncle hashes in a block.
-func (conn *Connection) GetUnclesHashesByNumber(bn base.Blknum) ([]base.Hash, error) {
-	if count, err := conn.GetUnclesCountInBlock(bn); err != nil {
-		return nil, err
-	} else if count == 0 {
-		return []base.Hash{}, nil
-	} else {
-		ret := make([]base.Hash, 0, count)
-		for i := uint64(0); i < count; i++ {
-			method := "eth_getUncleByBlockNumberAndIndex"
-			params := query.Params{
-				fmt.Sprintf("0x%x", bn),
-				fmt.Sprintf("0x%x", i),
-			}
-			if rawUncle, err := query.Query[types.Block](conn.Chain, method, params); err != nil {
-				return ret, err
-			} else {
-				ret = rawUncle.Uncles
-			}
-		}
+		// TODO: BOGUS - clean raw - avoid copy
 		return ret, nil
 	}
 }
@@ -81,11 +50,9 @@ func (conn *Connection) GetUnclesCountInBlock(bn base.Blknum) (uint64, error) {
 	method := "eth_getUncleCountByBlockNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
-	if count, err := query.Query[string](conn.Chain, method, params); err != nil {
+	if count, err := query.Query[base.Value](conn.Chain, method, params); err != nil {
 		return 0, err
-	} else if count == nil || *count == "" {
-		return 0, nil
 	} else {
-		return strconv.ParseUint(fmt.Sprint(*count), 0, 64)
+		return uint64(*count), nil
 	}
 }

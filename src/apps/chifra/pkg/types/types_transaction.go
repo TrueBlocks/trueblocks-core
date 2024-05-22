@@ -553,19 +553,6 @@ func (s *Transaction) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-// TODO: BOGUS - clean raw
-// NewTransaction builds Transaction using data from raw and receipt. Receipt can be nil.
-// Transaction timestamp and HasToken flag will be set to timestamp and hasToken.
-func NewTransaction(raw *Transaction, receipt *Receipt, timestamp base.Timestamp) *Transaction {
-	s := *raw
-	s.Timestamp = timestamp
-	s.HasToken = IsTokenFunction(raw.Input)
-	s.GasUsed = receipt.GasUsed
-	s.IsError = receipt.IsError
-	s.Receipt = receipt
-	return &s
-}
-
 func IsTokenFunction(needle string) bool {
 	var tokenRelated = map[string]bool{
 		"0x095ea7b3": true, // approve(address spender, uint256 value)

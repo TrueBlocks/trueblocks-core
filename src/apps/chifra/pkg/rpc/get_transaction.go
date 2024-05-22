@@ -12,9 +12,9 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Txnum) (tx *types.Transaction, err error) {
+func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Txnum) (*types.Transaction, error) {
 	if conn.StoreReadable() {
-		tx = &types.Transaction{
+		tx := &types.Transaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
@@ -28,26 +28,33 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Tx
 	// TODO: BOGUS - clean raw
 	rawTx, err := conn.getTransactionRaw(notAHash, notAHash, bn, txid)
 	if err != nil {
-		return
+		return nil, err
 	}
 
 	blockTs := conn.GetBlockTimestamp(bn)
 	receipt, err := conn.GetReceipt(bn, txid, blockTs)
 	if err != nil {
-		return
+		return nil, err
 	}
 
-	tx = types.NewTransaction(rawTx, &receipt, blockTs)
+	rawTx.Timestamp = blockTs
+	rawTx.HasToken = types.IsTokenFunction(rawTx.Input)
+	rawTx.GasUsed = receipt.GasUsed
+	rawTx.IsError = receipt.IsError
+	rawTx.Receipt = &receipt
+
 	if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
-		_ = conn.Store.Write(tx, nil)
+		_ = conn.Store.Write(rawTx, nil)
 	}
 
-	return
+	return rawTx, nil
 }
 
 // TODO: See #3361
 
-func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchTraces bool) (tx *types.Transaction, err error) {
+// TODO: BOGUS - clean raw
+
+func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchTraces bool) (*types.Transaction, error) {
 	raw := types.Appearance{
 		BlockNumber:      app.BlockNumber,
 		TransactionIndex: app.TransactionIndex,
@@ -60,7 +67,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 	txid := base.Txnum(raw.TransactionIndex)
 
 	if conn.StoreReadable() {
-		tx = &types.Transaction{
+		tx := &types.Transaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
@@ -78,61 +85,81 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 		}
 	}
 
-	tx = nil
+	blockTs := conn.GetBlockTimestamp(bn)
 	if bn == 0 {
-		if tx, err = conn.GetTransactionPrefundByApp(&raw); err != nil {
+		if tx, err := conn.GetTransactionPrefundByApp(&raw); err != nil {
 			return nil, err
+		} else {
+			tx.Timestamp = blockTs
+			if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
+				_ = conn.Store.Write(tx, nil)
+			}
+			return tx, nil
 		}
 	} else if txid == types.BlockReward || txid == types.MisconfigReward || txid == types.ExternalReward {
-		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.BlockReward, &raw); err != nil {
+		if tx, err := conn.GetTransactionRewardByTypeAndApp(types.BlockReward, &raw); err != nil {
 			return nil, err
+		} else {
+			tx.Timestamp = blockTs
+			if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
+				_ = conn.Store.Write(tx, nil)
+			}
+			return tx, nil
 		}
 	} else if txid == types.UncleReward {
-		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.UncleReward, &raw); err != nil {
+		if tx, err := conn.GetTransactionRewardByTypeAndApp(types.UncleReward, &raw); err != nil {
 			return nil, err
+		} else {
+			tx.Timestamp = blockTs
+			if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
+				_ = conn.Store.Write(tx, nil)
+			}
+			return tx, nil
 		}
 	} else if txid == types.WithdrawalAmt {
-		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.WithdrawalAmt, &raw); err != nil {
+		if tx, err := conn.GetTransactionRewardByTypeAndApp(types.WithdrawalAmt, &raw); err != nil {
 			return nil, err
+		} else {
+			tx.Timestamp = blockTs
+			if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
+				_ = conn.Store.Write(tx, nil)
+			}
+			return tx, nil
 		}
-	}
-
-	blockTs := conn.GetBlockTimestamp(bn)
-	if tx != nil {
-		tx.Timestamp = blockTs
-		if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
-			_ = conn.Store.Write(tx, nil)
-		}
-		return tx, nil
 	}
 
 	receipt, err := conn.GetReceipt(bn, txid, blockTs)
 	if err != nil {
-		return
+		return nil, err
 	}
 
 	rawTx, err := conn.getTransactionRaw(notAHash, notAHash, bn, txid)
 	if err != nil {
-		return
+		return nil, err
 	}
 
-	tx = types.NewTransaction(rawTx, &receipt, blockTs)
+	rawTx.Timestamp = blockTs
+	rawTx.HasToken = types.IsTokenFunction(rawTx.Input)
+	rawTx.GasUsed = receipt.GasUsed
+	rawTx.IsError = receipt.IsError
+	rawTx.Receipt = &receipt
 
 	if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
-		_ = conn.Store.Write(tx, nil)
+		_ = conn.Store.Write(rawTx, nil)
 	}
 
 	if fetchTraces {
-		traces, err := conn.GetTracesByTransactionHash(tx.Hash.Hex(), tx)
+		traces, err := conn.GetTracesByTransactionHash(rawTx.Hash.Hex(), rawTx)
 		if err != nil {
 			return nil, err
 		}
-		tx.Traces = traces
+		rawTx.Traces = traces
 	}
 
-	return
+	return rawTx, err
 }
 
+// GetTransactionAppByHash returns a transaction's appearance if it's a valid transaction
 func (conn *Connection) GetTransactionAppByHash(hash string) (types.Appearance, error) {
 	var ret types.Appearance
 	if rawTx, err := conn.getTransactionRaw(notAHash, base.HexToHash(hash), base.NOPOSN, base.NOPOSN); err != nil {
