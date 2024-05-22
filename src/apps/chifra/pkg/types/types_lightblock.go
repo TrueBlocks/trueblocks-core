@@ -23,32 +23,6 @@ import (
 
 // EXISTING_CODE
 
-type RawLightBlock struct {
-	Author           string       `json:"author"`
-	BaseFeePerGas    string       `json:"baseFeePerGas"`
-	BlockNumber      string       `json:"number"`
-	Difficulty       string       `json:"difficulty"`
-	ExtraData        string       `json:"extraData"`
-	GasLimit         string       `json:"gasLimit"`
-	GasUsed          string       `json:"gasUsed"`
-	Hash             string       `json:"hash"`
-	LogsBloom        string       `json:"logsBloom"`
-	Miner            string       `json:"miner"`
-	MixHash          string       `json:"mixHash"`
-	Nonce            string       `json:"nonce"`
-	ParentHash       string       `json:"parentHash"`
-	ReceiptsRoot     string       `json:"receiptsRoot"`
-	Sha3Uncles       string       `json:"sha3Uncles"`
-	Size             string       `json:"size"`
-	StateRoot        string       `json:"stateRoot"`
-	Timestamp        string       `json:"timestamp"`
-	TotalDifficulty  string       `json:"totalDifficulty"`
-	Transactions     []string     `json:"transactions"`
-	TransactionsRoot string       `json:"transactionsRoot"`
-	Uncles           []string     `json:"uncles"`
-	Withdrawals      []Withdrawal `json:"withdrawals"`
-}
-
 type LightBlock struct {
 	BaseFeePerGas base.Gas       `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum    `json:"blockNumber"`
@@ -63,6 +37,7 @@ type LightBlock struct {
 	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	Withdrawals   []Withdrawal   `json:"withdrawals,omitempty"`
 	// EXISTING_CODE
+	Number base.Blknum `json:"number"`
 	// EXISTING_CODE
 }
 

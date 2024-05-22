@@ -3,7 +3,7 @@
     doc_group = "02-Chain Data"
     doc_descr = "a block containing only the hashes of the transactions"
     doc_route = "248-block"
-    attributes = "hasraw"
+    attributes = ""
     produced_by = "blocks"
     contains = "transaction, withdrawal"
     cache_type = "cacheable"

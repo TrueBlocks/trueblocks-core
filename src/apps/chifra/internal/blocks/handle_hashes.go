@@ -23,7 +23,7 @@ func (opts *BlocksOptions) HandleHashes() error {
 	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawLightBlock], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.LightBlock], errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err

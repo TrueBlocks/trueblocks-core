@@ -39,7 +39,6 @@ type Streamable interface {
 		NamedBlock |
 		Parameter |
 		RawBlock |
-		RawLightBlock |
 		RawTransaction |
 		Receipt |
 		ReportCheck |
