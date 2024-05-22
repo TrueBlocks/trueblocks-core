@@ -25,10 +25,12 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 		}
 	}
 
+	curTs := conn.GetBlockTimestamp(bn) // same for every trace
+	isFinal := base.IsFinal(conn.LatestBlockTimestamp, curTs)
+
 	method := "trace_block"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
-	// TODO: BOGUS - clean raw
 	if rawTraces, err := query.Query[[]types.Trace](conn.Chain, method, params); err != nil {
 		return []types.Trace{}, err
 
@@ -36,69 +38,33 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 		return []types.Trace{}, nil
 
 	} else {
-		curApp := types.Appearance{BlockNumber: uint32(^uint32(0))}
-		curTs := conn.GetBlockTimestamp(bn)
-		var traceIndex base.Tracenum
+		curTx := base.NOPOSN
 
-		// TODO: This could be loadTrace in the same way load Blocks works
-		var ret []types.Trace
-		for _, rawTrace := range *rawTraces {
-			traceAction := types.TraceAction{
-				Address:        rawTrace.Action.Address,
-				Author:         rawTrace.Action.Author,
-				Balance:        rawTrace.Action.Balance,
-				CallType:       rawTrace.Action.CallType,
-				From:           rawTrace.Action.From,
-				Gas:            rawTrace.Action.Gas,
-				Init:           rawTrace.Action.Init,
-				Input:          rawTrace.Action.Input,
-				RefundAddress:  rawTrace.Action.RefundAddress,
-				RewardType:     rawTrace.Action.RewardType,
-				SelfDestructed: rawTrace.Action.SelfDestructed,
-				To:             rawTrace.Action.To,
-				Value:          rawTrace.Action.Value,
+		var traceIndex base.Tracenum
+		for i := range *rawTraces {
+			rawTrace := &(*rawTraces)[i]
+			rawTrace.Timestamp = curTs
+			if rawTrace.Result == nil {
+				rawTrace.Result = &types.TraceResult{}
 			}
-			traceResult := types.TraceResult{}
-			if rawTrace.Result != nil {
-				traceResult.Address = rawTrace.Result.Address
-				traceResult.Code = rawTrace.Result.Code
-				traceResult.GasUsed = rawTrace.Result.GasUsed
-				traceResult.Output = rawTrace.Result.Output
-			}
-			trace := types.Trace{
-				Error:            rawTrace.Error,
-				BlockHash:        rawTrace.BlockHash,
-				BlockNumber:      rawTrace.BlockNumber,
-				TransactionHash:  rawTrace.TransactionHash,
-				TransactionIndex: rawTrace.TransactionPosition, // note!
-				TraceAddress:     rawTrace.TraceAddress,
-				Subtraces:        rawTrace.Subtraces,
-				TraceType:        rawTrace.TraceType,
-				Timestamp:        curTs,
-				Action:           &traceAction,
-				Result:           &traceResult,
-			}
-			if trace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
-				curApp = types.Appearance{
-					BlockNumber:      uint32(trace.BlockNumber),
-					TransactionIndex: uint32(trace.TransactionIndex),
-				}
+			rawTrace.TransactionIndex = rawTrace.TransactionPosition
+			if rawTrace.TransactionIndex != base.Txnum(curTx) {
+				curTx = rawTrace.TransactionIndex
 				traceIndex = 0
 			}
-			trace.TraceIndex = traceIndex
+			rawTrace.TraceIndex = traceIndex
 			traceIndex++
-			ret = append(ret, trace)
 		}
 
-		if conn.StoreWritable() && conn.EnabledMap["traces"] && base.IsFinal(conn.LatestBlockTimestamp, curTs) {
+		if conn.StoreWritable() && conn.EnabledMap["traces"] && isFinal {
 			traceGroup := &types.TraceGroup{
-				Traces:           ret,
+				Traces:           *rawTraces,
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,
 			}
 			_ = conn.Store.Write(traceGroup, nil)
 		}
-		return ret, nil
+		return *rawTraces, nil
 	}
 }
 

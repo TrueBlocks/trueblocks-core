@@ -72,7 +72,6 @@ func (conn *Connection) getLogs(filter LogFilter) ([]types.Log, error) {
 	method := "eth_getLogs"
 	params := query.Params{p}
 
-	// TODO: BOGUS - clean raw
 	if rawLogs, err := query.Query[[]types.Log](conn.Chain, method, params); err != nil {
 		return []types.Log{}, err
 
@@ -80,20 +79,24 @@ func (conn *Connection) getLogs(filter LogFilter) ([]types.Log, error) {
 		return []types.Log{}, nil
 
 	} else {
-		curBlock := base.NOPOSN
-		curTs := base.NOPOSI
-		var ret []types.Log
-		for _, rawLog := range *rawLogs {
-			bn := rawLog.BlockNumber
-			if bn != curBlock {
-				curTs = conn.GetBlockTimestamp(bn)
-				curBlock = bn
-			}
-			rawLog.BlockNumber = curBlock
-			rawLog.Timestamp = curTs
-			ret = append(ret, rawLog)
+		curBlock := types.LightBlock{
+			BlockNumber: base.NOPOSN,
+			Timestamp:   base.NOPOSI,
 		}
-		return ret, nil
+		for i := range *rawLogs {
+			r := &(*rawLogs)[i] // avoid a copy, don't change
+			if r.BlockNumber != curBlock.BlockNumber {
+				curBlock = types.LightBlock{
+					BlockNumber: (*rawLogs)[i].BlockNumber,
+					Timestamp:   conn.GetBlockTimestamp(r.BlockNumber),
+				}
+			}
+			r.BlockNumber = curBlock.BlockNumber
+			r.Timestamp = curBlock.Timestamp
+		}
+
+		// TODO: BOGUS - clean raw - avoid copy
+		return *rawLogs, nil
 	}
 }
 

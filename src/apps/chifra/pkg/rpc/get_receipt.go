@@ -45,10 +45,10 @@ func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (
 		}
 	}
 
+	// TODO: Bogus - weird code related to with or without timestamp. There's a better way
 	return conn.getRawReceipt(bn, txid)
 }
 
-// TODO: BOGUS - clean raw
 // getRawReceipt fetches transaction given blockNumber and transactionIndex
 func (conn *Connection) getRawReceipt(bn base.Blknum, txid base.Txnum) (receipt types.Receipt, err error) {
 	if txHash, err := conn.GetTransactionHashByNumberAndID(bn, txid); err != nil {
