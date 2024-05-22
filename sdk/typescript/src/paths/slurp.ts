@@ -8,7 +8,7 @@
  */
 
 import * as ApiCallers from '../lib/api_callers';
-import { address, Appearance, blknum, float64, Slurp, SlurpCount } from '../types';
+import { address, Appearance, blknum, float64, Monitor, Slurp } from '../types';
 
 export function getSlurp(
   parameters?: {
@@ -29,7 +29,7 @@ export function getSlurp(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Appearance[] | SlurpCount[] | Slurp[]>(
+  return ApiCallers.fetch<Appearance[] | Monitor[] | Slurp[]>(
     { endpoint: '/slurp', method: 'get', parameters, options },
   );
 }

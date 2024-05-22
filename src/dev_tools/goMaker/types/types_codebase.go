@@ -203,6 +203,9 @@ func (cb *CodeBase) Streamables() string {
 	for _, st := range cb.Structures {
 		ret = append(ret, "\t"+st.Class)
 	}
+	ret = append(ret, "\tRawBlock")
+	ret = append(ret, "\tRawLightBlock")
+	ret = append(ret, "\tRawTransaction")
 	sort.Strings(ret)
 	return strings.Join(ret, " |\n")
 }

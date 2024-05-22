@@ -1,3 +1,0 @@
-name    ,type    ,strDefault ,attributes ,docOrder ,description
-address ,address ,           ,omitempty  ,       1 ,the address used to query the API
-count   ,uint64  ,           ,omitempty  ,       2 ,the number of records known by the API for this address

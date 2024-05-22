@@ -59,7 +59,6 @@ Data models produced by this tool:
 - [monitor](/data-model/accounts/#monitor)
 - [parameter](/data-model/other/#parameter)
 - [slurp](/data-model/other/#slurp)
-- [slurpcount](/data-model/other/#slurpcount)
 
 ### Adding provider API key
 Call `chifra config edit` to edit the configuration file.

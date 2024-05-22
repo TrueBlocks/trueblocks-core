@@ -2916,7 +2916,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/other/#slurp">Slurp</a> or <a href="/data-model/other/#slurpcount">SlurpCount</a> data. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a> or <a href="/data-model/other/#slurp">Slurp</a> data. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -2925,7 +2925,6 @@ paths:
                         - $ref: "#/components/schemas/monitor"
                         - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/slurp"
-                        - $ref: "#/components/schemas/slurpCount"
                 example:
                   [
                     {
@@ -4618,18 +4617,6 @@ components:
           type: boolean
           format: boolean
           description: "`true` if the transaction ended in error, `false` otherwise"
-    slurpCount:
-      description: "counts of transaction data returned by remote APIs"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-          description: "the address used to query the API"
-        count:
-          type: number
-          format: uint64
-          description: "the number of records known by the API for this address"
     message:
       description: "used for various responses when no real data is generated"
       type: object

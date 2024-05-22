@@ -45,7 +45,6 @@ type Streamable interface {
 		ReportCheck |
 		Result |
 		Slurp |
-		SlurpCount |
 		State |
 		Statement |
 		Status |

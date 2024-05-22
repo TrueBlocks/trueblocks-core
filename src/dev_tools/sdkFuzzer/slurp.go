@@ -125,7 +125,7 @@ func TestSlurp(which, value, fn string, opts *sdk.SlurpOptions) {
 		if count, _, err := opts.SlurpCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.SlurpCount](fn, count); err != nil {
+			if err := SaveToFile[types.Monitor](fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
