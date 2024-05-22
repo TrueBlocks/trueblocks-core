@@ -21,7 +21,7 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 		}
 	}
 
-	filter := types.LogFilter{
+	filter := LogFilter{
 		FromBlock: bn,
 		ToBlock:   bn,
 	}
@@ -52,7 +52,7 @@ func (conn *Connection) GetLogsCountInBlock(bn base.Blknum, ts base.Timestamp) (
 	}
 }
 
-func (conn *Connection) getLogs(filter types.LogFilter) ([]types.Log, error) {
+func (conn *Connection) getLogs(filter LogFilter) ([]types.Log, error) {
 	p := struct {
 		FromBlock string   `json:"fromBlock"`
 		ToBlock   string   `json:"toBlock"`
@@ -94,4 +94,47 @@ func (conn *Connection) getLogs(filter types.LogFilter) ([]types.Log, error) {
 		}
 		return ret, nil
 	}
+}
+
+type LogFilter struct {
+	BlockHash base.Hash      `json:"blockHash"`
+	Emitters  []base.Address `json:"emitters"`
+	FromBlock base.Blknum    `json:"fromBlock"`
+	ToBlock   base.Blknum    `json:"toBlock"`
+	Topics    []base.Hash    `json:"topics"`
+}
+
+func NewLogFilter(emitters []string, topics []string) *LogFilter {
+	logFilter := &LogFilter{}
+	for _, e := range emitters {
+		logFilter.Emitters = append(logFilter.Emitters, base.HexToAddress(e))
+	}
+	for _, t := range topics {
+		logFilter.Topics = append(logFilter.Topics, base.HexToHash(t))
+	}
+	return logFilter
+}
+
+func (filter *LogFilter) PassesFilter(log *types.Log) bool {
+	foundEmitter := false
+	for _, e := range filter.Emitters {
+		if e == log.Address {
+			foundEmitter = true
+			break
+		}
+	}
+
+	topicsFound := 0
+	for _, t := range filter.Topics {
+		for _, lt := range log.Topics {
+			if t == lt {
+				topicsFound++
+			}
+		}
+	}
+
+	passesEmitter := len(filter.Emitters) == 0 || foundEmitter
+	passesTopic := len(filter.Topics) == 0 || topicsFound > 0
+
+	return passesEmitter && passesTopic
 }

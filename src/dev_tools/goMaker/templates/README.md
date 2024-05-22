@@ -43,6 +43,5 @@ List of types that support the Modeler interface
 |                     |                          |                       |                   |         |        |               |
 | ./api               | openapi.yaml             | <--- missing --->     | abi               |         |        |               |
 |                     |                          |                       |                   |         |        |               |
-|                     |                          |                       | logfilter         |         |        |               |
 |                     |                          |                       | chain             |         |        |               |
 |                     |                          |                       | key               |         |        |               |

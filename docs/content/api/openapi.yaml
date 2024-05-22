@@ -1307,7 +1307,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#blockcount">BlockCount</a>, <a href="/data-model/chaindata/#lightblock">LightBlock</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#logfilter">LogFilter</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#blockcount">BlockCount</a>, <a href="/data-model/chaindata/#lightblock">LightBlock</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1316,7 +1316,6 @@ paths:
                         - $ref: "#/components/schemas/blockCount"
                         - $ref: "#/components/schemas/lightBlock"
                         - $ref: "#/components/schemas/log"
-                        - $ref: "#/components/schemas/logFilter"
                         - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/trace"
                         - $ref: "#/components/schemas/traceAction"
@@ -1664,13 +1663,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#logfilter">LogFilter</a>, <a href="/data-model/other/#message">Message</a> or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
+                    description: Produces <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a> or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/log"
-                        - $ref: "#/components/schemas/logFilter"
                         - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/parameter"
         "400":
@@ -3549,32 +3547,6 @@ components:
           type: string
           format: string
           description: "a truncated, more readable version of the articulation (calculated)"
-    logFilter:
-      description: "used by the fast path log queries for various commands"
-      type: object
-      properties:
-        fromBlock:
-          type: number
-          format: blknum
-          description: "the first block in the block range to query with eth_getLogs"
-        toBlock:
-          type: number
-          format: blknum
-          description: "the last block in the range to query with eth_getLogs"
-        blockHash:
-          type: string
-          format: hash
-          description: "an alternative to blocks specification, the hash of the block to query"
-        emitters:
-          type: array
-          items:
-            $ref: "#/components/schemas/address"
-          description: "one or more emitting addresses from which logs were emitted"
-        topics:
-          type: array
-          items:
-            $ref: "#/components/schemas/topic"
-          description: "one or more topics which logs represent"
     trace:
       description: "trace data as returned from the RPC (with slight enhancements)"
       type: object

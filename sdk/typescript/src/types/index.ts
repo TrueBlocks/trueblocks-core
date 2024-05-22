@@ -16,7 +16,6 @@ export * from './config';
 export * from './function';
 export * from './ipfsPin';
 export * from './log';
-export * from './logFilter';
 export * from './manifest';
 export * from './monitor';
 export * from './monitorClean';

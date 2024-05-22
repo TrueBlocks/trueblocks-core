@@ -16,9 +16,11 @@ type Streamable interface {
 		Abi |
 		Appearance |
 		AppearanceTable |
+		Block |
 		BlockCount |
 		Bounds |
 		CacheItem |
+		Chain |
 		ChunkAddress |
 		ChunkBloom |
 		ChunkIndex |
@@ -27,6 +29,7 @@ type Streamable interface {
 		ChunkStats |
 		Function |
 		IpfsPin |
+		LightBlock |
 		Log |
 		Manifest |
 		Message |
@@ -34,6 +37,7 @@ type Streamable interface {
 		MonitorClean |
 		Name |
 		NamedBlock |
+		Parameter |
 		RawBlock |
 		RawLightBlock |
 		RawTransaction |
@@ -41,6 +45,7 @@ type Streamable interface {
 		ReportCheck |
 		Result |
 		Slurp |
+		SlurpCount |
 		State |
 		Statement |
 		Status |
@@ -48,7 +53,11 @@ type Streamable interface {
 		TimestampCount |
 		Token |
 		Trace |
+		TraceAction |
 		TraceCount |
+		TraceFilter |
+		TraceResult |
+		Transaction |
 		Withdrawal
 }
 

@@ -165,25 +165,6 @@ Logs consist of the following fields:
 | articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
 | compressedLog    | a truncated, more readable version of the articulation (calculated)                               | string                                  |
 
-## LogFilter
-
-Log filters are used to speed up querying of the node when searching for logs.
-
-The following commands produce and manage LogFilters:
-
-- [chifra blocks](/chifra/chaindata/#chifra-blocks)
-- [chifra logs](/chifra/chaindata/#chifra-logs)
-
-LogFilters consist of the following fields:
-
-| Field     | Description                                                            | Type      |
-| --------- | ---------------------------------------------------------------------- | --------- |
-| fromBlock | the first block in the block range to query with eth_getLogs           | blknum    |
-| toBlock   | the last block in the range to query with eth_getLogs                  | blknum    |
-| blockHash | an alternative to blocks specification, the hash of the block to query | hash      |
-| emitters  | one or more emitting addresses from which logs were emitted            | address[] |
-| topics    | one or more topics which logs represent                                | topic[]   |
-
 ## Trace
 
 The deepest layer of the Ethereum data is the trace. Every transaction has at least one trace which
