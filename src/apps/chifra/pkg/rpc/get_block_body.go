@@ -58,19 +58,22 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		}
 	}
 
-	block, rawBlock, err := loadBlockFull(conn, bn)
+	// The block is not in the cache, or reading the cache failed. We
+	// need to fetch the block from the RPC.
+	rawBlock, err := loadBlockFull(conn, bn)
+	block := *rawBlock
 	if err != nil {
 		return block, err
 	}
 
-	ts := rawBlock.Timestamp
-	block.Transactions = make([]types.Transaction, 0, len(rawBlock.Transactions))
-	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, ts)
+	transactions := make([]types.Transaction, 0, len(rawBlock.Transactions))
+	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
+	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, block.Timestamp)
 	for _, rawTx := range rawBlock.Transactions {
 		idx := rawTx.TransactionIndex
 		var receipt types.Receipt
 		if receiptMap[idx] == nil {
-			receipt, err = conn.GetReceipt(bn, idx, ts)
+			receipt, err = conn.GetReceipt(bn, idx, block.Timestamp)
 			if err != nil {
 				return block, err
 			}
@@ -78,40 +81,34 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 			receipt = *receiptMap[idx]
 		}
 
-		tx := NewTransaction2(&rawTx, &receipt, ts)
-		block.Transactions = append(block.Transactions, *tx)
+		tx := rawTx
+		tx.Timestamp = block.Timestamp
+		tx.HasToken = types.IsTokenFunction(rawTx.Input)
+		tx.GasUsed = receipt.GasUsed
+		tx.IsError = receipt.IsError
+		tx.Receipt = &receipt
+		transactions = append(transactions, tx)
 
-		if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, tx.Timestamp) {
-			_ = conn.Store.Write(tx, nil)
+		if conn.StoreWritable() && conn.EnabledMap["transactions"] && isFinal {
+			_ = conn.Store.Write(&tx, nil)
 		}
 	}
 
-	if conn.StoreWritable() && conn.EnabledMap["blocks"] && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
+	block.Transactions = transactions
+	if conn.StoreWritable() && conn.EnabledMap["blocks"] && isFinal {
 		_ = conn.Store.Write(&block, nil)
 	}
 
 	return block, nil
 }
 
-// NewTransaction2 builds Transaction using data from raw and receipt. Receipt can be nil.
-// Transaction timestamp and HasToken flag will be set to timestamp and hasToken.
-func NewTransaction2(raw *types.Transaction, receipt *types.Receipt, timestamp base.Timestamp) *types.Transaction {
-	s := *raw
-	s.Timestamp = timestamp
-	s.HasToken = types.IsTokenFunction(raw.Input)
-	s.GasUsed = receipt.GasUsed
-	s.IsError = receipt.IsError
-	s.Receipt = receipt
-	return &s
-}
-
 // loadBlockFull fetches block from RPC with full transactions.
-func loadBlockFull(conn *Connection, bn base.Blknum) (types.Block, *types.Block, error) {
+func loadBlockFull(conn *Connection, bn base.Blknum) (*types.Block, error) {
 	block, err := conn.getRawBlock(bn)
 	if err != nil {
-		return types.Block{}, nil, err
+		return nil, err
 	}
-	return *block, block, err
+	return block, nil
 }
 
 // getRawBlock returns the raw block as received from the node
