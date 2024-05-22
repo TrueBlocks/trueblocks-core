@@ -265,9 +265,6 @@ func (m *Member) GoType() string {
 	if m.IsArray {
 		ret = "[]" + ret
 	}
-	if strings.HasPrefix(ret, "Raw") {
-		ret = strings.Replace(ret, "Raw", "Raw", -1)
-	}
 
 	return ret
 }
