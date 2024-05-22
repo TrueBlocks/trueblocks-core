@@ -154,7 +154,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_Names:
 		fallthrough
 	case Cache_Tmp:
-		return filepath.Join(config.PathToCache(chain), CacheTypeToFolder[cacheType]) + "/"
+		return filepath.Join(config.PathToCache(chain), CacheTypeToFolder[cacheType]) + string(os.PathSeparator)
 
 	case Cache_Blocks:
 		fallthrough
@@ -177,7 +177,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_Transactions:
 		fallthrough
 	case Cache_Withdrawals:
-		return filepath.Join(config.PathToCache(chain), "v1", CacheTypeToFolder[cacheType]) + "/"
+		return filepath.Join(config.PathToCache(chain), "v1", CacheTypeToFolder[cacheType]) + string(os.PathSeparator)
 
 	case Index_Bloom:
 		fallthrough
@@ -190,7 +190,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Index_Unripe:
 		fallthrough
 	case Index_Maps:
-		return filepath.Join(config.PathToIndex(chain), CacheTypeToFolder[cacheType]) + "/"
+		return filepath.Join(config.PathToIndex(chain), CacheTypeToFolder[cacheType]) + string(os.PathSeparator)
 	case Config:
 		return config.PathToRootConfig()
 	case Cache_NotACache:

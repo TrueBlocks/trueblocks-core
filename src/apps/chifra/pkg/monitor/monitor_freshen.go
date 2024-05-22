@@ -128,7 +128,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 		return canceled, nil
 	}
 
-	bloomPath := filepath.Join(config.PathToIndex(updater.Chain), "blooms/")
+	bloomPath := filepath.Join(config.PathToIndex(updater.Chain), "blooms" + string(os.PathSeparator))
 	files, err := os.ReadDir(bloomPath)
 	if err != nil {
 		return canceled, err
@@ -144,7 +144,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 			continue
 		}
 		if !info.IsDir() {
-			fileName := bloomPath + "/" + info.Name()
+			fileName := bloomPath + string(os.PathSeparator) + info.Name()
 			if !walk.IsCacheType(fileName, walk.Index_Bloom, true /* checkExt */) {
 				continue // sometimes there are .gz files in this folder, for example
 			}
