@@ -31,15 +31,14 @@ func LocationsFromBlockIds(conn *rpc.Connection, ids []identifiers.Identifier, l
 				locations = append(locations, traceGroup)
 
 			} else {
-				// TODO: BOGUS - clean raw
-				rawBlock, err := conn.GetBlockHeaderByNumber(bn)
+				block, err := conn.GetBlockHeaderByNumber(bn)
 				if err != nil {
 					return nil, err
 				}
 				locations = append(locations, &types.LightBlock{
 					BlockNumber: bn,
 				})
-				for index := range rawBlock.Transactions {
+				for index := range block.Transactions {
 					locations = append(locations, &types.Transaction{
 						BlockNumber:      bn,
 						TransactionIndex: base.Txnum(index),
