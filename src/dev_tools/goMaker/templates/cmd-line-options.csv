@@ -3,7 +3,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 #
 12000,apps,Accounts,list,acctExport,,,,visible|docs,command,,,List transactions,[flags] <address> [address...],default|,List every appearance of an address anywhere on the chain.
 12020,apps,Accounts,list,acctExport,addrs,,,required|visible|docs,positional,list<addr>,appearance,,,,one or more addresses (0x...) to list
-12030,apps,Accounts,list,acctExport,count,U,,visible|docs,switch,<boolean>,appearanceCount,,,,display only the count of records for each monitor
+12030,apps,Accounts,list,acctExport,count,U,,visible|docs,switch,<boolean>,monitor,,,,display only the count of records for each monitor
 12040,apps,Accounts,list,acctExport,no_zero,z,,visible|docs,switch,<boolean>,,,,,for the --count option only&#44; suppress the display of zero appearance accounts
 12050,apps,Accounts,list,acctExport,bounds,b,,visible|docs,switch,<boolean>,bounds,,,,report first and last block this address appears
 12060,apps,Accounts,list,acctExport,unripe,u,,visible|docs,switch,<boolean>,,,,,list transactions labeled unripe (i.e. less than 28 blocks old)
@@ -32,7 +32,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 13130,apps,Accounts,export,acctExport,withdrawals,i,,visible|docs,switch,<boolean>,withdrawal,,,,export withdrawals for the given address
 13140,apps,Accounts,export,acctExport,articulate,a,,visible|docs,switch,<boolean>,,,,,articulate transactions&#44; traces&#44; logs&#44; and outputs
 13150,apps,Accounts,export,acctExport,cache_traces,R,,visible|docs,switch,<boolean>,,,,,force the transaction's traces into the cache
-13160,apps,Accounts,export,acctExport,count,U,,visible|docs,switch,<boolean>,appearanceCount,,,,for --appearances mode only&#44; display only the count of records
+13160,apps,Accounts,export,acctExport,count,U,,visible|docs,switch,<boolean>,monitor,,,,for --appearances mode only&#44; display only the count of records
 13170,apps,Accounts,export,acctExport,first_record,c,,visible|docs,flag,<uint64>,,,,,the first record to process
 13180,apps,Accounts,export,acctExport,max_records,e,250,visible|docs,flag,<uint64>,,,,,the maximum number of records to process
 13190,apps,Accounts,export,acctExport,relevant,N,,visible|docs,switch,<boolean>,,,,,for log and accounting export only&#44; export only logs relevant to one of the given export addresses

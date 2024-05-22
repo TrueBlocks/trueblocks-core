@@ -79,7 +79,6 @@ Notes:
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
-- [appearancecount](/data-model/accounts/#appearancecount)
 - [function](/data-model/other/#function)
 - [log](/data-model/chaindata/#log)
 - [message](/data-model/other/#message)

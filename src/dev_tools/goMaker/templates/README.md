@@ -42,7 +42,6 @@ List of types that support the Modeler interface
 | ./pkg/types         | types_transaction.go     | Transaction           | transaction       | x       | x      |               |
 |                     |                          |                       |                   |         |        |               |
 | ./api               | openapi.yaml             | <--- missing --->     | abi               |         |        |               |
-| ./api               | openapi.yaml             | <--- missing --->     | appearanceCount   |         |        |               |
 |                     |                          |                       |                   |         |        |               |
 |                     |                          |                       | logfilter         |         |        |               |
 |                     |                          |                       | chain             |         |        |               |

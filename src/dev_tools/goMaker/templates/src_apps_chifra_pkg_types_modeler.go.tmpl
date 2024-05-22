@@ -13,7 +13,7 @@ type Streamable interface {
 	struct{} | // needed for auto-gen formatting only
 		// EXISTING_CODE
 		// EXISTING_CODE
-{{range .Structures}}{{.Streamable}}{{end}}
+{{.Streamables}}
 }
 
 // EXISTING_CODE
