@@ -110,12 +110,12 @@ func mockEtherscanServer(t *testing.T) (ts *httptest.Server) {
 }
 
 // TODO: BOGUS - clean raw
-func mockConvertSlurpType(t *testing.T) func(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error) {
+func mockConvertSlurpType(t *testing.T) func(address string, requestType string, trans *types.Slurp) (types.Slurp, error) {
 	t.Helper()
-	return func(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error) {
+	return func(address string, requestType string, trans *types.Slurp) (types.Slurp, error) {
 		return types.Slurp{
-			BlockNumber:      rawTx.BlockNumber,
-			TransactionIndex: rawTx.TransactionIndex,
+			BlockNumber:      trans.BlockNumber,
+			TransactionIndex: trans.TransactionIndex,
 		}, nil
 	}
 }

@@ -32,7 +32,7 @@ type EtherscanProvider struct {
 	conn          *rpc.Connection
 	limiter       *rate.Limiter
 	// TODO: BOGUS - clean raw
-	convertSlurpType func(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error)
+	convertSlurpType func(address string, requestType string, trans *types.Slurp) (types.Slurp, error)
 	apiKey           string
 }
 
@@ -198,8 +198,8 @@ func (p *EtherscanProvider) fetchData(ctx context.Context, address base.Address,
 			sleepyTime *= 2
 		}
 
-		for _, rawTx := range fromEs.Result {
-			if transaction, err := p.rawSlurpTo(address.String(), requestType, &rawTx); err != nil {
+		for _, trans := range fromEs.Result {
+			if transaction, err := p.convert(address.String(), requestType, &trans); err != nil {
 				return nil, 0, err
 			} else {
 				ret = append(ret, SlurpedPageItem{
@@ -215,29 +215,29 @@ func (p *EtherscanProvider) fetchData(ctx context.Context, address base.Address,
 	}
 }
 
-// rawSlurpTo translate Slurp to Slurp. By default it uses `defaultConvertSlurpType`, but this can be changed, e.g. in tests
-func (p *EtherscanProvider) rawSlurpTo(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error) {
-	return p.convertSlurpType(address, requestType, rawTx)
+// convert translate Slurp to Slurp. By default it uses `defaultConvertSlurpType`, but this can be changed, e.g. in tests
+func (p *EtherscanProvider) convert(address string, requestType string, trans *types.Slurp) (types.Slurp, error) {
+	return p.convertSlurpType(address, requestType, trans)
 }
 
-func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error) {
+func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType string, trans *types.Slurp) (types.Slurp, error) {
 	s := types.Slurp{
-		Hash:             rawTx.Hash,
-		BlockHash:        rawTx.BlockHash,
-		BlockNumber:      rawTx.BlockNumber,
-		TransactionIndex: rawTx.TransactionIndex,
-		Timestamp:        rawTx.Timestamp,
-		From:             rawTx.From,
-		To:               rawTx.To,
-		Gas:              rawTx.Gas,
-		GasPrice:         rawTx.GasPrice,
-		GasUsed:          rawTx.GasUsed,
-		Input:            rawTx.Input,
-		Value:            rawTx.Value,
-		ContractAddress:  rawTx.ContractAddress,
+		Hash:             trans.Hash,
+		BlockHash:        trans.BlockHash,
+		BlockNumber:      trans.BlockNumber,
+		TransactionIndex: trans.TransactionIndex,
+		Timestamp:        trans.Timestamp,
+		From:             trans.From,
+		To:               trans.To,
+		Gas:              trans.Gas,
+		GasPrice:         trans.GasPrice,
+		GasUsed:          trans.GasUsed,
+		Input:            trans.Input,
+		Value:            trans.Value,
+		ContractAddress:  trans.ContractAddress,
 		HasToken:         requestType == "nfts" || requestType == "token" || requestType == "1155",
 	}
-	// s.IsError = rawTx.TxReceiptStatus == "0"
+	// s.IsError = trans.TxReceiptStatus == "0"
 
 	if requestType == "int" {
 		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't
@@ -262,9 +262,9 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.WithdrawalAmt
 		s.From = base.WithdrawalSender
-		s.ValidatorIndex = rawTx.ValidatorIndex
-		s.WithdrawalIndex = rawTx.WithdrawalIndex
-		s.Value = rawTx.Amount
+		s.ValidatorIndex = trans.ValidatorIndex
+		s.WithdrawalIndex = trans.WithdrawalIndex
+		s.Value = trans.Amount
 		s.To = base.HexToAddress(address)
 	}
 	return s, nil
