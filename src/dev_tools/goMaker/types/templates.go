@@ -14,7 +14,7 @@ func init() {
 	codebaseCache = make(map[string]*template.Template)
 }
 
-func executeTemplate(receiver interface{}, tmplPrefix, name, tmplCode string) string {
+func executeTemplate(receiver any, tmplPrefix, name, tmplCode string) string {
 	tmplName := tmplPrefix + " " + name
 
 	if codebaseCache[tmplName] == nil {

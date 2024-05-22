@@ -100,7 +100,7 @@ func (s Transaction) String() string {
 }
 
 func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -109,7 +109,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
-	model = map[string]interface{}{
+	model = map[string]any{
 		"blockNumber":      s.BlockNumber,
 		"from":             s.From,
 		"gasPrice":         s.GasPrice,
@@ -141,13 +141,13 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 	model["gasCost"] = s.GasCost()
 
 	// TODO: Shouldn't this use the Function model - the answer is yes?
-	var articulatedTx map[string]interface{}
+	var articulatedTx map[string]any
 	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTx != nil
 	if isArticulated && format != "json" {
 		order = append(order, "compressedTx")
 	}
 	if isArticulated {
-		articulatedTx = map[string]interface{}{
+		articulatedTx = map[string]any{
 			"name": s.ArticulatedTx.Name,
 		}
 		inputModels := parametersToMap(s.ArticulatedTx.Inputs)
@@ -238,7 +238,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 			receiptModel["logs"] = logs
 			model["receipt"] = receiptModel
 		} else {
-			model["receipt"] = map[string]interface{}{}
+			model["receipt"] = map[string]any{}
 		}
 
 		if extraOpts["traces"] == true && len(s.Traces) > 0 {

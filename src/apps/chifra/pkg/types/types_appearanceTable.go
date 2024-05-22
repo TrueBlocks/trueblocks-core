@@ -41,7 +41,7 @@ func (s AppearanceTable) String() string {
 }
 
 func (s *AppearanceTable) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE

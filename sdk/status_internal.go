@@ -48,7 +48,7 @@ func (opts *statusOptionsInternal) StatusBytes(w io.Writer) error {
 }
 
 // statusParseFunc handles special cases such as structs and enums (if any).
-func statusParseFunc(target interface{}, key, value string) (bool, error) {
+func statusParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*statusOptionsInternal)
 	if !ok {

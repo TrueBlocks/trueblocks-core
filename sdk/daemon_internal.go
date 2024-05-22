@@ -47,7 +47,7 @@ func (opts *daemonOptionsInternal) DaemonBytes(w io.Writer) error {
 }
 
 // daemonParseFunc handles special cases such as structs and enums (if any).
-func daemonParseFunc(target interface{}, key, value string) (bool, error) {
+func daemonParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*daemonOptionsInternal)
 	if !ok {

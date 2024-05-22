@@ -53,7 +53,7 @@ func (opts *monitorsOptionsInternal) MonitorsBytes(w io.Writer) error {
 }
 
 // monitorsParseFunc handles special cases such as structs and enums (if any).
-func monitorsParseFunc(target interface{}, key, value string) (bool, error) {
+func monitorsParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*monitorsOptionsInternal)
 	if !ok {

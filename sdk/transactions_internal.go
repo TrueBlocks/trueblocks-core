@@ -53,7 +53,7 @@ func (opts *transactionsOptionsInternal) TransactionsBytes(w io.Writer) error {
 }
 
 // transactionsParseFunc handles special cases such as structs and enums (if any).
-func transactionsParseFunc(target interface{}, key, value string) (bool, error) {
+func transactionsParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*transactionsOptionsInternal)
 	if !ok {

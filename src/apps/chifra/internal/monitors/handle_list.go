@@ -58,7 +58,7 @@ func (opts *MonitorsOptions) HandleList() error {
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 	}
 

@@ -72,11 +72,11 @@ func (s LightBlock) String() string {
 }
 
 func (s *LightBlock) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"hash":        s.Hash,
 		"blockNumber": s.BlockNumber,
 		"parentHash":  s.ParentHash,

@@ -44,7 +44,7 @@ func (s TraceAction) String() string {
 }
 
 func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE

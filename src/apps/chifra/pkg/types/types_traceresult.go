@@ -36,7 +36,7 @@ func (s TraceResult) String() string {
 }
 
 func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -58,7 +58,7 @@ func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[st
 			order = append(order, "code")
 		}
 	} else {
-		model = map[string]interface{}{
+		model = map[string]any{
 			"gasUsed": s.GasUsed,
 			"output":  s.Output,
 		}

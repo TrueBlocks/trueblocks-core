@@ -45,7 +45,7 @@ func (s Name) String() string {
 }
 
 func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -62,7 +62,7 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 		}
 	}
 
-	model = map[string]interface{}{
+	model = map[string]any{
 		"address":  s.Address,
 		"decimals": s.Decimals,
 		"name":     s.Name,

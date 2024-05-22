@@ -10,7 +10,7 @@ import (
 )
 
 func (opts *GlobalOptions) OutputOpts() output.OutputOptions {
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"ether": opts.Ether,
 	}
 
@@ -28,7 +28,7 @@ func (opts *GlobalOptions) OutputOpts() output.OutputOptions {
 	}
 }
 
-func (opts *GlobalOptions) OutputOptsWithExtra(extraOpts map[string]interface{}) output.OutputOptions {
+func (opts *GlobalOptions) OutputOptsWithExtra(extraOpts map[string]any) output.OutputOptions {
 	if extraOpts != nil {
 		extraOpts["ether"] = opts.Ether
 	}

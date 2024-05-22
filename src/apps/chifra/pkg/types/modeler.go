@@ -1,7 +1,7 @@
 package types
 
 type Modeler[RT Streamable] interface {
-	Model(chain, format string, verbose bool, extraOpts map[string]interface{}) Model
+	Model(chain, format string, verbose bool, extraOpts map[string]any) Model
 }
 
 type Model struct {

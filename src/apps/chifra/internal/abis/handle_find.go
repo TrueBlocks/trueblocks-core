@@ -38,7 +38,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 		var results []types.Function
 		var wg sync.WaitGroup
 		mutex := sync.Mutex{}
-		checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2, func(testSig interface{}) {
+		checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2, func(testSig any) {
 			defer wg.Done()
 			byts := []byte(testSig.(string))
 			sigBytes := crypto.Keccak256(byts)
@@ -120,7 +120,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"encodingSignatureOnly": true,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

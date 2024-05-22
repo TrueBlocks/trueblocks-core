@@ -101,7 +101,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 		"traces":     opts.Traces,
 	}

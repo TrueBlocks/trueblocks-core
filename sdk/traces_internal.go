@@ -45,7 +45,7 @@ func (opts *tracesOptionsInternal) TracesBytes(w io.Writer) error {
 }
 
 // tracesParseFunc handles special cases such as structs and enums (if any).
-func tracesParseFunc(target interface{}, key, value string) (bool, error) {
+func tracesParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*tracesOptionsInternal)
 	if !ok {

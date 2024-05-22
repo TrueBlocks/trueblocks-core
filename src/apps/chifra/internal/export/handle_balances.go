@@ -143,7 +143,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 		"export":   true,
 		"parts":    []string{"blockNumber", "date", "holder", "balance", "diff", "balanceDec"},

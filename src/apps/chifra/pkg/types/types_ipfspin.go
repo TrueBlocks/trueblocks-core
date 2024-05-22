@@ -34,11 +34,11 @@ func (s IpfsPin) String() string {
 }
 
 func (s *IpfsPin) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"fileName":   s.FileName,
 		"cid":        s.Cid,
 		"datePinned": cleanDate(s.DatePinned),

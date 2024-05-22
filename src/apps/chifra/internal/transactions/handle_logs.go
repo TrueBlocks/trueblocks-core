@@ -107,7 +107,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"logs":      opts.Logs,
 		"traces":    opts.Traces,
 		"addresses": opts.Uniq,

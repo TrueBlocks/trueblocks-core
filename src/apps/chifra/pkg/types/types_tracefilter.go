@@ -36,11 +36,11 @@ func (s TraceFilter) String() string {
 }
 
 func (s *TraceFilter) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"after":       s.After,
 		"count":       s.Count,
 		"fromAddress": s.FromAddress,
@@ -94,7 +94,7 @@ func (s *TraceFilter) PassesBasic(trace *Trace, nTested uint64, nPassed uint64) 
 	return true, ""
 }
 
-func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]interface{}, br base.BlockRange) {
+func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]any, br base.BlockRange) {
 	parts := strings.Split(filter, "!")
 	for {
 		if len(parts) >= 6 {

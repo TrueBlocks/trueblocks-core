@@ -39,11 +39,11 @@ func (s Withdrawal) String() string {
 }
 
 func (s *Withdrawal) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"address":        s.Address,
 		"amount":         s.Amount.String(),
 		"blockNumber":    s.BlockNumber,

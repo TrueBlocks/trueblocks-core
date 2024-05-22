@@ -40,7 +40,7 @@ func (opts *ConfigOptions) HandlePaths() error {
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"configPaths": true,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

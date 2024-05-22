@@ -103,7 +103,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 	}
 

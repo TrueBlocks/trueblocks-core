@@ -35,7 +35,7 @@ func (opts *{{toCamel .Route}}OptionsInternal) {{toProper .Route}}Bytes(w io.Wri
 }
 
 // {{toLower .Route}}ParseFunc handles special cases such as structs and enums (if any).
-func {{toLower .Route}}ParseFunc(target interface{}, key, value string) (bool, error) {
+func {{toLower .Route}}ParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	{{.Enums3}}, ok := target.(*{{toCamel .Route}}OptionsInternal)
 	if !ok {

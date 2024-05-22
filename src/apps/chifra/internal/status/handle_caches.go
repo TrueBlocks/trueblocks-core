@@ -140,7 +140,7 @@ func (opts *StatusOptions) HandleCaches() error {
 		modelChan <- status
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"showProgress": false,
 		"testMode":     testMode,
 		"chains":       opts.Chains,

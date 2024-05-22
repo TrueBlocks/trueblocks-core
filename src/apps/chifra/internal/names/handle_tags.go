@@ -37,7 +37,7 @@ func (opts *NamesOptions) HandleTags() error {
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"single": "tags",
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

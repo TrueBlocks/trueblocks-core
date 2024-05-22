@@ -69,7 +69,7 @@ func (opts *NamesOptions) HandleShow() error {
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"expand":  opts.Expand,
 		"prefund": opts.Prefund,
 	}

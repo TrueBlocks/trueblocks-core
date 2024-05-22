@@ -33,7 +33,7 @@ func (s ChunkRecord) String() string {
 }
 
 func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE

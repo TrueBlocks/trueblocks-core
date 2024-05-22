@@ -144,7 +144,7 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,

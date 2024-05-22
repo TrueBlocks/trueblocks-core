@@ -359,7 +359,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 		if testMode {
 			display = strings.Replace(cacheInfo.Path, config.PathToIndex(chain), "$indexPath/", 1)
 		}
-		return map[string]interface{}{
+		return map[string]any{
 			// "bloomSizeBytes": file.FileSize(index.ToBloomPath(cacheInfo.Path)),
 			"fileDate": date,
 			"filename": display,
@@ -388,7 +388,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 			display = strings.Replace(display, address, "--address--", -1)
 			address = "--address--"
 		}
-		ret := map[string]interface{}{
+		ret := map[string]any{
 			"address":     address,
 			"fileDate":    date,
 			"filename":    display,
@@ -403,7 +403,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 		if testMode {
 			display = "$cachePath/data-model/file.bin"
 		}
-		return map[string]interface{}{
+		return map[string]any{
 			"fileDate":    date,
 			"filename":    display,
 			"itemType":    cacheItemName(cT),

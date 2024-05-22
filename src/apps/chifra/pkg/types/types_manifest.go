@@ -34,7 +34,7 @@ func (s Manifest) String() string {
 }
 
 func (s *Manifest) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE

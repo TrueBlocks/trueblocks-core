@@ -102,7 +102,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"count":  opts.Count,
 		"uncles": opts.Uncles,
 		"logs":   opts.Logs,

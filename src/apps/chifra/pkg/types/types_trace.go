@@ -50,11 +50,11 @@ func (s Trace) String() string {
 }
 
 func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"blockHash":        s.BlockHash,
 		"blockNumber":      s.BlockNumber,
 		"result":           s.Result,
@@ -82,10 +82,10 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 		"result::output",
 	}
 
-	var articulatedTrace map[string]interface{}
+	var articulatedTrace map[string]any
 	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTrace != nil
 	if isArticulated {
-		articulatedTrace = map[string]interface{}{
+		articulatedTrace = map[string]any{
 			"name": s.ArticulatedTrace.Name,
 		}
 		inputModels := parametersToMap(s.ArticulatedTrace.Inputs)

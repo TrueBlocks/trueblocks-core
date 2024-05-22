@@ -51,7 +51,7 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"export": true,
 	}
 

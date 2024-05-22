@@ -133,7 +133,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 		"export":   true,
 	}

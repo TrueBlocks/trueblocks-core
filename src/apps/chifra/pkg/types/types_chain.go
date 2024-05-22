@@ -31,11 +31,11 @@ func (s Chain) String() string {
 }
 
 func (s *Chain) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"chain":          s.Chain,
 		"chainId":        s.ChainId,
 		"ipfsGateway":    s.IpfsGateway,

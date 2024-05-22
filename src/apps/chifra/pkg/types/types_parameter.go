@@ -37,11 +37,11 @@ func (s Parameter) String() string {
 }
 
 func (s *Parameter) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"name": s.Name,
 		"type": s.ParameterType,
 	}

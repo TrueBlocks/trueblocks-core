@@ -56,7 +56,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 		bar.Finish(true /* newLine */)
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"uniq": true,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

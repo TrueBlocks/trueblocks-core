@@ -59,7 +59,7 @@ func (opts *namesOptionsInternal) NamesBytes(w io.Writer) error {
 }
 
 // namesParseFunc handles special cases such as structs and enums (if any).
-func namesParseFunc(target interface{}, key, value string) (bool, error) {
+func namesParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*namesOptionsInternal)
 	if !ok {

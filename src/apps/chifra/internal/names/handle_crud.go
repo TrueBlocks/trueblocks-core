@@ -49,7 +49,7 @@ func (opts *NamesOptions) HandleCrud() (err error) {
 		modelChan <- name
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"crud": true,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

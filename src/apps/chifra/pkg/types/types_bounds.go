@@ -34,12 +34,12 @@ func (s Bounds) String() string {
 }
 
 func (s *Bounds) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
 	extraOpts["appearances"] = true
-	model = map[string]interface{}{
+	model = map[string]any{
 		"address":    s.FirstApp.Address,
 		"count":      s.Count,
 		"firstApp":   s.FirstApp.Model(chain, format, verbose, extraOpts).Data, //fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex),

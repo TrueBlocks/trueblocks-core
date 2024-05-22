@@ -58,7 +58,7 @@ func (s Slurp) String() string {
 }
 
 func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -67,7 +67,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
-	model = map[string]interface{}{
+	model = map[string]any{
 		"blockNumber": s.BlockNumber,
 		"from":        s.From,
 		"timestamp":   s.Timestamp,
@@ -141,7 +141,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 	model["transactionIndex"] = s.TransactionIndex
 
 	// TODO: Turn this back on
-	var articulatedTx map[string]interface{}
+	var articulatedTx map[string]any
 	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTx != nil
 	if isArticulated && format != "json" {
 		order = append(order, "compressedTx")
@@ -149,7 +149,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 
 	// TODO: ARTICULATE SLURP
 	if isArticulated {
-		articulatedTx = map[string]interface{}{
+		articulatedTx = map[string]any{
 			"name": s.ArticulatedTx.Name,
 		}
 		inputModels := parametersToMap(s.ArticulatedTx.Inputs)

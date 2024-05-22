@@ -51,7 +51,7 @@ func (opts *stateOptionsInternal) StateBytes(w io.Writer) error {
 }
 
 // stateParseFunc handles special cases such as structs and enums (if any).
-func stateParseFunc(target interface{}, key, value string) (bool, error) {
+func stateParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*stateOptionsInternal)
 	if !ok {

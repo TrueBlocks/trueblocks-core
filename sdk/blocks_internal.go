@@ -56,7 +56,7 @@ func (opts *blocksOptionsInternal) BlocksBytes(w io.Writer) error {
 }
 
 // blocksParseFunc handles special cases such as structs and enums (if any).
-func blocksParseFunc(target interface{}, key, value string) (bool, error) {
+func blocksParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*blocksOptionsInternal)
 	if !ok {

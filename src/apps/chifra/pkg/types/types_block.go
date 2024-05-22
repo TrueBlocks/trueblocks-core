@@ -72,7 +72,7 @@ func (s Block) String() string {
 }
 
 func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -89,7 +89,7 @@ func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]a
 			// TODO: no error if can't cast?
 		}
 		model := Model{
-			Data: map[string]interface{}{
+			Data: map[string]any{
 				"hash":        s.Hash,
 				"blockNumber": s.BlockNumber,
 				"parentHash":  s.ParentHash,
@@ -126,7 +126,7 @@ func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]a
 		return model
 	}
 
-	model = map[string]interface{}{
+	model = map[string]any{
 		"gasUsed":       s.GasUsed,
 		"gasLimit":      s.GasLimit,
 		"hash":          s.Hash,
@@ -157,7 +157,7 @@ func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]a
 		// have transactions as objects and want to load models for them to be able to display them
 		txs, ok := any(s.Transactions).([]Transaction)
 		if ok {
-			items := make([]map[string]interface{}, 0, len(txs))
+			items := make([]map[string]any, 0, len(txs))
 			for _, txObject := range txs {
 				items = append(items, txObject.Model(chain, format, verbose, extraOpts).Data)
 			}

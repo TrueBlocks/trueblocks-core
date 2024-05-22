@@ -66,7 +66,7 @@ func (opts *TokensOptions) HandleShow() error {
 		return err
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 		"namesMap": namesMap,
 		"parts":    []string{"all_held"},

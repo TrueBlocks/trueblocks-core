@@ -35,7 +35,7 @@ type OutputOptions struct {
 	// The writer
 	Writer io.Writer
 	// Extra options passed to model, for example command-specific output formatting flags
-	Extra map[string]interface{}
+	Extra map[string]any
 }
 
 var formatToSeparator = map[string]rune{

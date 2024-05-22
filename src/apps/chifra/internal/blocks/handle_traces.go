@@ -48,7 +48,7 @@ func (opts *BlocksOptions) HandleTraces() error {
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"uncles":     opts.Uncles,
 		"logs":       opts.Logs,
 		"traces":     opts.Traces,

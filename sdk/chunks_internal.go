@@ -63,7 +63,7 @@ func (opts *chunksOptionsInternal) ChunksBytes(w io.Writer) error {
 }
 
 // chunksParseFunc handles special cases such as structs and enums (if any).
-func chunksParseFunc(target interface{}, key, value string) (bool, error) {
+func chunksParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*chunksOptionsInternal)
 	if !ok {

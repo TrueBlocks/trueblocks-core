@@ -32,11 +32,11 @@ func (s ChunkAddress) String() string {
 }
 
 func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"address": s.Address,
 		"range":   s.Range,
 		"offset":  s.Offset,

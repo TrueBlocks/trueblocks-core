@@ -43,7 +43,7 @@ func (opts *receiptsOptionsInternal) ReceiptsBytes(w io.Writer) error {
 }
 
 // receiptsParseFunc handles special cases such as structs and enums (if any).
-func receiptsParseFunc(target interface{}, key, value string) (bool, error) {
+func receiptsParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*receiptsOptionsInternal)
 	if !ok {

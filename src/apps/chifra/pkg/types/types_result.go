@@ -43,7 +43,7 @@ func (s Result) String() string {
 }
 
 func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	var model = map[string]interface{}{}
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -88,9 +88,9 @@ func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]
 	}
 
 	isArticulated := extraOpts["articulate"] == true && s.ArticulatedOut != nil
-	var articulatedOut map[string]interface{}
+	var articulatedOut map[string]any
 	if isArticulated {
-		articulatedOut = map[string]interface{}{
+		articulatedOut = map[string]any{
 			"name": s.ArticulatedOut.Name,
 		}
 		outputModels := parametersToMap(s.ArticulatedOut.Outputs)

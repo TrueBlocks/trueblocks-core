@@ -109,7 +109,7 @@ func (opts *StateOptions) HandleCall() error {
 		}
 	}
 
-	extraOpts := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 	}
 
