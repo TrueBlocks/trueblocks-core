@@ -100,9 +100,9 @@ func (opts *StateOptions) HandleShow() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"fields": outputFields,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

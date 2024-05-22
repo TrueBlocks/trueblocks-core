@@ -66,13 +66,13 @@ func (opts *TokensOptions) HandleShow() error {
 		return err
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"testMode": testMode,
 		"namesMap": namesMap,
 		"parts":    []string{"all_held"},
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 // TODO: NOTE THIS - DOES IT STILL WORK THIS WAY?

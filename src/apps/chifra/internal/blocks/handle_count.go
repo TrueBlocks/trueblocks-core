@@ -102,12 +102,12 @@ func (opts *BlocksOptions) HandleCounts() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"count":  opts.Count,
 		"uncles": opts.Uncles,
 		"logs":   opts.Logs,
 		"traces": opts.Traces,
 		"uniqs":  opts.Uniq,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

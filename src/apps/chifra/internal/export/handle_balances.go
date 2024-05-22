@@ -143,7 +143,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"testMode": testMode,
 		"export":   true,
 		"parts":    []string{"blockNumber", "date", "holder", "balance", "diff", "balanceDec"},
@@ -154,9 +154,9 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
 		} else {
-			extra["namesMap"] = namesMap
+			extraOpts["namesMap"] = namesMap
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

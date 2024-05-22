@@ -101,10 +101,10 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"articulate": opts.Articulate,
 		"traces":     opts.Traces,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

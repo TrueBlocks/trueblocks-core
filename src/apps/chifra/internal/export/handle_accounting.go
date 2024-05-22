@@ -97,7 +97,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
@@ -109,8 +109,8 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 		if err != nil {
 			return err
 		}
-		extra["namesMap"] = namesMap
+		extraOpts["namesMap"] = namesMap
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

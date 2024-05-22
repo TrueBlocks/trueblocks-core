@@ -164,7 +164,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
@@ -175,9 +175,9 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
 		} else {
-			extra["namesMap"] = namesMap
+			extraOpts["namesMap"] = namesMap
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

@@ -139,7 +139,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
@@ -150,11 +150,11 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
 		} else {
-			extra["namesMap"] = namesMap
+			extraOpts["namesMap"] = namesMap
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 /*

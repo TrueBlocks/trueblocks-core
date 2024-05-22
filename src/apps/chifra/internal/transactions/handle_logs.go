@@ -107,11 +107,11 @@ func (opts *TransactionsOptions) HandleLogs() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"logs":      opts.Logs,
 		"traces":    opts.Traces,
 		"addresses": opts.Uniq,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

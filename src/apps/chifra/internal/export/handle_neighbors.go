@@ -125,11 +125,11 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"uniq": true,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 /*

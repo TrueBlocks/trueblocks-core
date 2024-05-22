@@ -69,16 +69,16 @@ func (opts *NamesOptions) HandleShow() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"expand":  opts.Expand,
 		"prefund": opts.Prefund,
 	}
 	if opts.Addr {
-		extra["single"] = "address"
+		extraOpts["single"] = "address"
 		opts.Globals.NoHeader = true
 	}
 	ctx := context.Background()
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func (opts *NamesOptions) fetchFromGrpc(client proto.NamesClient, modelChan chan types.Modeler[types.Name], errorChan chan error) {

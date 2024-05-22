@@ -140,13 +140,13 @@ func (opts *StatusOptions) HandleCaches() error {
 		modelChan <- status
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"showProgress": false,
 		"testMode":     testMode,
 		"chains":       opts.Chains,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 type CacheWalker struct {

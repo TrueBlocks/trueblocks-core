@@ -37,10 +37,10 @@ func (opts *StatusOptions) HandleShow() error {
 		modelChan <- s
 	}
 
-	extra := map[string]any{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func ToProgress(chain string, diagnose bool, meta *types.MetaData) string {

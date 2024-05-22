@@ -78,8 +78,8 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []base.Blknum) error {
 		}
 	}
 
-	extra := map[string]any{
+	extraOpts := map[string]any{
 		"appearances": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

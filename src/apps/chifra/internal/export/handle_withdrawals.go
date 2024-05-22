@@ -133,7 +133,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"testMode": testMode,
 		"export":   true,
 	}
@@ -143,9 +143,9 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
 		} else {
-			extra["namesMap"] = namesMap
+			extraOpts["namesMap"] = namesMap
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

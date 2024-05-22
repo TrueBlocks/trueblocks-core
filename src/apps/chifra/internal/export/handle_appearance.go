@@ -51,7 +51,7 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"export": true,
 	}
 
@@ -61,10 +61,10 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 		if err != nil {
 			return err
 		}
-		extra["namesMap"] = namesMap
+		extraOpts["namesMap"] = namesMap
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func (opts *ExportOptions) IsMax(cnt uint64) bool {

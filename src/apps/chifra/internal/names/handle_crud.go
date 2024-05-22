@@ -49,10 +49,10 @@ func (opts *NamesOptions) HandleCrud() (err error) {
 		modelChan <- name
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"crud": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func handleCreate(chain string, data *CrudData) (name *types.Name, err error) {

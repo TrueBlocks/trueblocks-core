@@ -48,12 +48,12 @@ func (opts *BlocksOptions) HandleTraces() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"uncles":     opts.Uncles,
 		"logs":       opts.Logs,
 		"traces":     opts.Traces,
 		"addresses":  opts.Uniq,
 		"articulate": opts.Articulate,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

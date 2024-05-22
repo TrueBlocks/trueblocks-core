@@ -64,11 +64,11 @@ func (opts *TokensOptions) HandleParts() error {
 		return err
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"testMode": testMode,
 		"namesMap": namesMap,
 		"parts":    opts.Parts,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

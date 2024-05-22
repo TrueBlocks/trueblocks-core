@@ -120,10 +120,10 @@ func (opts *AbisOptions) HandleAbiFind() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"encodingSignatureOnly": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func (opts *AbisOptions) hitsHint(test string) bool {

@@ -58,7 +58,7 @@ func (opts *MonitorsOptions) HandleList() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]interface{}{
 		"testMode": testMode,
 	}
 
@@ -68,8 +68,8 @@ func (opts *MonitorsOptions) HandleList() error {
 		if err != nil {
 			return err
 		}
-		extra["namesMap"] = namesMap
+		extraOpts["namesMap"] = namesMap
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
