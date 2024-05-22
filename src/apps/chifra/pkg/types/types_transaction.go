@@ -559,14 +559,14 @@ func (s *Transaction) FinishUnmarshal() {
 func NewTransaction(raw *Transaction, receipt *Receipt, timestamp base.Timestamp) *Transaction {
 	s := *raw
 	s.Timestamp = timestamp
-	s.HasToken = isTokenFunction(raw.Input)
+	s.HasToken = IsTokenFunction(raw.Input)
 	s.GasUsed = receipt.GasUsed
 	s.IsError = receipt.IsError
 	s.Receipt = receipt
 	return &s
 }
 
-func isTokenFunction(needle string) bool {
+func IsTokenFunction(needle string) bool {
 	var tokenRelated = map[string]bool{
 		"0x095ea7b3": true, // approve(address spender, uint256 value)
 		"0xa9059cbb": true, // transfer(address from, uint256 to);

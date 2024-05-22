@@ -365,22 +365,6 @@ func (s *Block) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-// Dup duplicates all fields but Transactions into target
-func (s *LightBlock) Dup(target *Block) {
-	target.BaseFeePerGas = s.BaseFeePerGas
-	target.BlockNumber = s.BlockNumber
-	target.Difficulty = s.Difficulty
-	target.GasLimit = s.GasLimit
-	target.GasUsed = s.GasUsed
-	target.Hash = s.Hash
-	target.Miner = s.Miner
-	target.ParentHash = s.ParentHash
-	target.Timestamp = s.Timestamp
-	// TODO: This copy of an array possibly doesn't do what we expect
-	target.Uncles = s.Uncles
-	target.Withdrawals = s.Withdrawals
-}
-
 func weiToGas(w base.Wei) base.Gas {
 	return base.Gas(w.Uint64())
 }
