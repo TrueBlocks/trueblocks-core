@@ -553,6 +553,7 @@ func (s *Transaction) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
+// TODO: BOGUS - clean raw
 // NewTransaction builds Transaction using data from raw and receipt. Receipt can be nil.
 // Transaction timestamp and HasToken flag will be set to timestamp and hasToken.
 func NewTransaction(raw *Transaction, receipt *Receipt, timestamp base.Timestamp) *Transaction {

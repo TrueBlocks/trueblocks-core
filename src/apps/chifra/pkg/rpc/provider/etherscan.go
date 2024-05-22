@@ -26,11 +26,12 @@ const etherscanMaxPerPage = 3000
 var etherscanBaseUrl = "https://api.etherscan.io"
 
 type EtherscanProvider struct {
-	printProgress    bool
-	perPage          int
-	baseUrl          string
-	conn             *rpc.Connection
-	limiter          *rate.Limiter
+	printProgress bool
+	perPage       int
+	baseUrl       string
+	conn          *rpc.Connection
+	limiter       *rate.Limiter
+	// TODO: BOGUS - clean raw
 	convertSlurpType func(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error)
 	apiKey           string
 }

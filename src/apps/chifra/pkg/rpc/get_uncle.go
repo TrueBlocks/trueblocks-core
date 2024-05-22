@@ -30,6 +30,7 @@ func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block, e
 				fmt.Sprintf("0x%x", i),
 			}
 
+			// TODO: BOGUS - clean raw
 			if rawUncle, err := query.Query[types.Block](conn.Chain, method, params); err != nil {
 				return ret, err
 			} else {

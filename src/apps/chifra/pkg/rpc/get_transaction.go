@@ -25,6 +25,7 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Tx
 		}
 	}
 
+	// TODO: BOGUS - clean raw
 	rawTx, err := conn.getTransactionRaw(notAHash, notAHash, bn, txid)
 	if err != nil {
 		return

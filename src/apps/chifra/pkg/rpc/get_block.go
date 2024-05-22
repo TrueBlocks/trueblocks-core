@@ -41,6 +41,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		}
 	}
 
+	// TODO: BOGUS - clean raw
 	block, rawBlock, err := loadFullBlock(conn, bn)
 	if err != nil {
 		return block, err

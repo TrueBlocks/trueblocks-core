@@ -109,6 +109,7 @@ func mockEtherscanServer(t *testing.T) (ts *httptest.Server) {
 	return ts
 }
 
+// TODO: BOGUS - clean raw
 func mockConvertSlurpType(t *testing.T) func(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error) {
 	t.Helper()
 	return func(address string, requestType string, rawTx *types.Slurp) (types.Slurp, error) {

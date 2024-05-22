@@ -72,6 +72,7 @@ func (conn *Connection) getLogs(filter LogFilter) ([]types.Log, error) {
 	method := "eth_getLogs"
 	params := query.Params{p}
 
+	// TODO: BOGUS - clean raw
 	if rawLogs, err := query.Query[[]types.Log](conn.Chain, method, params); err != nil {
 		return []types.Log{}, err
 

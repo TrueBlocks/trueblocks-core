@@ -28,6 +28,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 	method := "trace_block"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
+	// TODO: BOGUS - clean raw
 	if rawTraces, err := query.Query[[]types.Trace](conn.Chain, method, params); err != nil {
 		return []types.Trace{}, err
 
