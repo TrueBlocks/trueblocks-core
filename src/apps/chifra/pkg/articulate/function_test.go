@@ -415,11 +415,11 @@ func TestArticulateArgumentsTupleTuple(t *testing.T) {
 	}
 	third := newMyBig(3)
 
-	rawPayload, err := abiMethod.Inputs.Pack(first, second, third)
+	payload, err := abiMethod.Inputs.Pack(first, second, third)
 	if err != nil {
 		t.Fatal(err)
 	}
-	txData := base.Bytes2Hex(rawPayload)
+	txData := base.Bytes2Hex(payload)
 
 	if err = articulateArguments(abiMethod.Inputs, txData, nil, result.Inputs); err != nil {
 		t.Fatal(err)

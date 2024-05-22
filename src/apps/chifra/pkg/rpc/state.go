@@ -32,7 +32,7 @@ type StateFilters struct {
 	Balance func(address base.Address, balance *base.Wei) bool
 }
 
-// GetState returns account state
+// GetState returns account state (search: FromRpc)
 func (conn *Connection) GetState(fieldBits StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (state *types.State, err error) {
 	state = &types.State{
 		Address:     address,

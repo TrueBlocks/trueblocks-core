@@ -28,7 +28,7 @@ const tokenStateName tokenStateSelector = "0x06fdde03"
 const tokenStateBalanceOf tokenStateSelector = "0x70a08231"
 
 // GetTokenState returns token state for given block. `hexBlockNo` can be "latest" or "" for the latest
-// block or decimal number or hex number with 0x prefix.
+// block or decimal number or hex number with 0x prefix. (search: FromRpc)
 func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo string) (token *types.Token, err error) {
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
 		hexBlockNo = fmt.Sprintf("0x%x", base.MustParseUint64(hexBlockNo))
@@ -111,8 +111,8 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo stri
 	symbol, _ := decode.ArticulateStringOrBytes(*results["symbol"])
 
 	var decimals uint64 = 0
-	rawDecimals := *results["decimals"]
-	parsedDecimals, parseErr := strconv.ParseUint(rawDecimals, 0, 8)
+	strDecimals := *results["decimals"]
+	parsedDecimals, parseErr := strconv.ParseUint(strDecimals, 0, 8)
 	if parseErr == nil {
 		decimals = uint64(parsedDecimals)
 	}

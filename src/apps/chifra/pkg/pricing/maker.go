@@ -48,10 +48,10 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 
 	// TODO: Since Dawid fixed the articulate code, we should use the value at results["val_1"] instead of this
 	//       hacky string manipulation
-	rawHex := strings.TrimPrefix(string(result.ReturnedBytes), "0x")
-	rawHex = rawHex[:64]
+	trimmed := strings.TrimPrefix(string(result.ReturnedBytes), "0x")
+	trimmed = trimmed[:64]
 	int0 := new(base.Wei)
-	int0.SetString(rawHex, 16)
+	int0.SetString(trimmed, 16)
 	int0 = int0.Mul(int0, new(base.Wei).SetInt64(100000))
 	int1 := new(base.Wei).Quo(int0, divisor)
 
@@ -66,7 +66,7 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 		source1:     makerMedianizer,
 		theCall1:    theCall,
 		source2:     base.ZeroAddr,
-		theCall2:    "0x" + rawHex,
+		theCall2:    "0x" + trimmed,
 		first:       base.ZeroAddr,
 		second:      base.ZeroAddr,
 		reversed:    false,

@@ -25,8 +25,7 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Tx
 		}
 	}
 
-	// TODO: BOGUS - clean raw
-	rawTx, err := conn.getTransactionRaw(notAHash, notAHash, bn, txid)
+	rawTx, err := conn.getTransactionFromRpc(notAHash, notAHash, bn, txid)
 	if err != nil {
 		return nil, err
 	}
@@ -49,8 +48,6 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Tx
 
 	return rawTx, nil
 }
-
-// TODO: See #3361
 
 // TODO: BOGUS - clean raw
 
@@ -133,7 +130,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 		return nil, err
 	}
 
-	rawTx, err := conn.getTransactionRaw(notAHash, notAHash, bn, txid)
+	rawTx, err := conn.getTransactionFromRpc(notAHash, notAHash, bn, txid)
 	if err != nil {
 		return nil, err
 	}
@@ -162,7 +159,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 // GetTransactionAppByHash returns a transaction's appearance if it's a valid transaction
 func (conn *Connection) GetTransactionAppByHash(hash string) (types.Appearance, error) {
 	var ret types.Appearance
-	if rawTx, err := conn.getTransactionRaw(notAHash, base.HexToHash(hash), base.NOPOSN, base.NOPOSN); err != nil {
+	if rawTx, err := conn.getTransactionFromRpc(notAHash, base.HexToHash(hash), base.NOPOSN, base.NOPOSN); err != nil {
 		return ret, err
 	} else {
 		ret.BlockNumber = uint32(rawTx.BlockNumber)
@@ -372,7 +369,7 @@ var (
 	notAHash = base.Hash{}
 )
 
-func (conn *Connection) getTransactionRaw(blkHash base.Hash, txHash base.Hash, bn base.Blknum, txid base.Txnum) (raw *types.Transaction, err error) {
+func (conn *Connection) getTransactionFromRpc(blkHash base.Hash, txHash base.Hash, bn base.Blknum, txid base.Txnum) (raw *types.Transaction, err error) {
 	method := "eth_getTransactionByBlockNumberAndIndex"
 	params := query.Params{fmt.Sprintf("0x%x", bn), fmt.Sprintf("0x%x", txid)}
 	if txHash != notAHash {

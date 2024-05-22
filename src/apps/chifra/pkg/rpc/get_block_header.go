@@ -24,7 +24,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 		}
 	}
 
-	block, err := conn.getRawBlockLight(bn)
+	block, err := conn.getLightBlockFromRpc(bn)
 	if err != nil {
 		return types.LightBlock{}, err
 	}
@@ -34,12 +34,12 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 		_ = conn.Store.Write(block, nil)
 	}
 
-	// TODO: BOGUS - clean raw - avoid copies
+	// TODO: BOGUS - avoid copies
 	return *block, nil
 }
 
-// getRawBlockLight returns the raw block as received from the node
-func (conn *Connection) getRawBlockLight(bn base.Blknum) (*types.LightBlock, error) {
+// getLightBlockFromRpc returns the block as received from the node
+func (conn *Connection) getLightBlockFromRpc(bn base.Blknum) (*types.LightBlock, error) {
 	method := "eth_getBlockByNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn), false}
 

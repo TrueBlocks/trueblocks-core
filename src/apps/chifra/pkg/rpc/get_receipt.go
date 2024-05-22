@@ -46,11 +46,11 @@ func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (
 	}
 
 	// TODO: Bogus - weird code related to with or without timestamp. There's a better way
-	return conn.getRawReceipt(bn, txid)
+	return conn.getReceiptFromRpc(bn, txid)
 }
 
-// getRawReceipt fetches transaction given blockNumber and transactionIndex
-func (conn *Connection) getRawReceipt(bn base.Blknum, txid base.Txnum) (receipt types.Receipt, err error) {
+// getReceiptFromRpc fetches transaction given blockNumber and transactionIndex
+func (conn *Connection) getReceiptFromRpc(bn base.Blknum, txid base.Txnum) (receipt types.Receipt, err error) {
 	if txHash, err := conn.GetTransactionHashByNumberAndID(bn, txid); err != nil {
 		return types.Receipt{}, err
 
@@ -84,7 +84,7 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 		}
 	}
 
-	if receipts, err := conn.getReceipts(bn); err != nil {
+	if receipts, err := conn.getBlockReceiptsFromRpc(bn); err != nil {
 		return receipts, nil, err
 	} else {
 		if conn.StoreWritable() && conn.EnabledMap["receipts"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
@@ -107,21 +107,21 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 	}
 }
 
-// getReceipts fetches receipts from the RPC using eth_getBlockReceipts. It returns
+// getBlockReceiptsFromRpc fetches receipts from the RPC using eth_getBlockReceipts. It returns
 // an array of Receipts with the timestamp set to the block timestamp.
-func (conn *Connection) getReceipts(bn base.Blknum) ([]types.Receipt, error) {
+func (conn *Connection) getBlockReceiptsFromRpc(bn base.Blknum) ([]types.Receipt, error) {
 	method := "eth_getBlockReceipts"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
-	if rawReceipts, err := query.Query[[]types.Receipt](conn.Chain, method, params); err != nil {
+	if receipts, err := query.Query[[]types.Receipt](conn.Chain, method, params); err != nil {
 		return []types.Receipt{}, err
 
-	} else if rawReceipts == nil || len(*rawReceipts) == 0 {
+	} else if receipts == nil || len(*receipts) == 0 {
 		return []types.Receipt{}, nil
 
 	} else {
 		var ret []types.Receipt
-		for _, receipt := range *rawReceipts {
+		for _, receipt := range *receipts {
 			receipt.IsError = receipt.Status == 0
 			ret = append(ret, receipt)
 		}

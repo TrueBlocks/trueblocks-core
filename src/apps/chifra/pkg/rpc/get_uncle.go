@@ -12,7 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// GetUncleBodiesByNumber returns the number of uncles in a block.
+// GetUncleBodiesByNumber returns the number of uncles in a block. (search: FromRpc)
 func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block, error) {
 	if count, err := conn.GetUnclesCountInBlock(bn); err != nil {
 		return nil, err
@@ -36,12 +36,12 @@ func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block, e
 				ret = append(ret, *uncle)
 			}
 		}
-		// TODO: BOGUS - clean raw - avoid copy
+		// TODO: BOGUS - avoid copy
 		return ret, nil
 	}
 }
 
-// GetUnclesCountInBlock returns the number of uncles in a block.
+// GetUnclesCountInBlock returns the number of uncles in a block. (search: FromRpc)
 func (conn *Connection) GetUnclesCountInBlock(bn base.Blknum) (uint64, error) {
 	if bn >= base.KnownBlock(conn.Chain, base.Merge) {
 		return 0, nil

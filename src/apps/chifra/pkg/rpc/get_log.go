@@ -26,7 +26,7 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 		ToBlock:   bn,
 	}
 
-	if logs, err := conn.getLogs(filter); err != nil {
+	if logs, err := conn.getLogsFromRpc(filter); err != nil {
 		return logs, err
 	} else {
 		if conn.StoreWritable() && conn.EnabledMap["logs"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
@@ -52,7 +52,7 @@ func (conn *Connection) GetLogsCountInBlock(bn base.Blknum, ts base.Timestamp) (
 	}
 }
 
-func (conn *Connection) getLogs(filter LogFilter) ([]types.Log, error) {
+func (conn *Connection) getLogsFromRpc(filter LogFilter) ([]types.Log, error) {
 	p := struct {
 		FromBlock string   `json:"fromBlock"`
 		ToBlock   string   `json:"toBlock"`
@@ -72,10 +72,10 @@ func (conn *Connection) getLogs(filter LogFilter) ([]types.Log, error) {
 	method := "eth_getLogs"
 	params := query.Params{p}
 
-	if rawLogs, err := query.Query[[]types.Log](conn.Chain, method, params); err != nil {
+	if logs, err := query.Query[[]types.Log](conn.Chain, method, params); err != nil {
 		return []types.Log{}, err
 
-	} else if rawLogs == nil || len(*rawLogs) == 0 {
+	} else if logs == nil || len(*logs) == 0 {
 		return []types.Log{}, nil
 
 	} else {
@@ -83,11 +83,11 @@ func (conn *Connection) getLogs(filter LogFilter) ([]types.Log, error) {
 			BlockNumber: base.NOPOSN,
 			Timestamp:   base.NOPOSI,
 		}
-		for i := range *rawLogs {
-			r := &(*rawLogs)[i] // avoid a copy, don't change
+		for i := range *logs {
+			r := &(*logs)[i] // avoid a copy, don't change
 			if r.BlockNumber != curBlock.BlockNumber {
 				curBlock = types.LightBlock{
-					BlockNumber: (*rawLogs)[i].BlockNumber,
+					BlockNumber: (*logs)[i].BlockNumber,
 					Timestamp:   conn.GetBlockTimestamp(r.BlockNumber),
 				}
 			}
@@ -95,8 +95,8 @@ func (conn *Connection) getLogs(filter LogFilter) ([]types.Log, error) {
 			r.Timestamp = curBlock.Timestamp
 		}
 
-		// TODO: BOGUS - clean raw - avoid copy
-		return *rawLogs, nil
+		// TODO: BOGUS - avoid copy
+		return *logs, nil
 	}
 }
 

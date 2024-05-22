@@ -50,7 +50,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 
 				ret := lightToBody(lightBlock)
 				ret.Transactions = transactions
-				// TODO: BOGUS - clean raw - avoid copy
+				// TODO: BOGUS - avoid copy
 				return *ret, err
 			}
 		}
@@ -58,7 +58,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 
 	// The block is not in the cache, or reading the cache failed. We
 	// need to fetch the block from the RPC.
-	block, err := conn.getRawBlock(bn)
+	block, err := conn.getBlockFromRpc(bn)
 	if err != nil {
 		return types.Block{}, err
 	}
@@ -88,12 +88,12 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		_ = conn.Store.Write(block, nil)
 	}
 
-	// TODO: BOGUS - clean raw - avoid copy
+	// TODO: BOGUS - avoid copy
 	return *block, nil
 }
 
-// getRawBlock returns the raw block as received from the node
-func (conn *Connection) getRawBlock(bn base.Blknum) (*types.Block, error) {
+// getBlockFromRpc returns the block as received from the node
+func (conn *Connection) getBlockFromRpc(bn base.Blknum) (*types.Block, error) {
 	method := "eth_getBlockByNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn), true}
 
