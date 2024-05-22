@@ -35,7 +35,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 	)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Transaction], errorChan chan error) {
 		visitAppearance := func(app *types.Appearance) error {
 			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
 				errorChan <- err

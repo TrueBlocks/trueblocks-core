@@ -137,8 +137,8 @@ func (conn *Connection) GetTransactionAppByHash(hash string) (types.Appearance, 
 	if rawTx, err := conn.getTransactionRaw(notAHash, base.HexToHash(hash), base.NOPOSN, base.NOPOSN); err != nil {
 		return ret, err
 	} else {
-		ret.BlockNumber = uint32(base.MustParseBlknum(rawTx.BlockNumber))
-		ret.TransactionIndex = uint32(base.MustParseUint64(rawTx.TransactionIndex))
+		ret.BlockNumber = uint32(rawTx.BlockNumber)
+		ret.TransactionIndex = uint32(rawTx.TransactionIndex)
 		return ret, nil
 	}
 }
@@ -344,7 +344,7 @@ var (
 	notAHash = base.Hash{}
 )
 
-func (conn *Connection) getTransactionRaw(blkHash base.Hash, txHash base.Hash, bn base.Blknum, txid base.Txnum) (raw *types.RawTransaction, err error) {
+func (conn *Connection) getTransactionRaw(blkHash base.Hash, txHash base.Hash, bn base.Blknum, txid base.Txnum) (raw *types.Transaction, err error) {
 	method := "eth_getTransactionByBlockNumberAndIndex"
 	params := query.Params{fmt.Sprintf("0x%x", bn), fmt.Sprintf("0x%x", txid)}
 	if txHash != notAHash {
@@ -355,12 +355,9 @@ func (conn *Connection) getTransactionRaw(blkHash base.Hash, txHash base.Hash, b
 		params = query.Params{blkHash.Hex(), fmt.Sprintf("0x%x", txid)}
 	}
 
-	if trans, err := query.Query[types.RawTransaction](conn.Chain, method, params); err != nil {
-		return &types.RawTransaction{}, err
+	if trans, err := query.Query[types.Transaction](conn.Chain, method, params); err != nil {
+		return &types.Transaction{}, err
 	} else {
-		if trans.AccessList == nil {
-			trans.AccessList = make([]types.StorageSlot, 0)
-		}
 		return trans, nil
 	}
 }

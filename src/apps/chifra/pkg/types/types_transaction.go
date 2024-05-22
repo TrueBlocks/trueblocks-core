@@ -46,25 +46,6 @@ func NewReward(block, nephew, txFee, uncle *base.Wei) (Rewards, base.Wei) {
 
 // EXISTING_CODE
 
-type RawTransaction struct {
-	AccessList           []StorageSlot `json:"accessList"`
-	BlockHash            string        `json:"blockHash"`
-	BlockNumber          string        `json:"blockNumber"`
-	ChainId              string        `json:"chainId"`
-	From                 string        `json:"from"`
-	Gas                  string        `json:"gas"`
-	GasPrice             string        `json:"gasPrice"`
-	Hash                 string        `json:"hash"`
-	Input                string        `json:"input"`
-	MaxFeePerGas         string        `json:"maxFeePerGas"`
-	MaxPriorityFeePerGas string        `json:"maxPriorityFeePerGas"`
-	Nonce                string        `json:"nonce"`
-	To                   string        `json:"to"`
-	TransactionIndex     string        `json:"transactionIndex"`
-	TransactionType      string        `json:"type"`
-	Value                string        `json:"value"`
-}
-
 type Transaction struct {
 	ArticulatedTx        *Function      `json:"articulatedTx"`
 	BlockHash            base.Hash      `json:"blockHash"`
@@ -574,34 +555,14 @@ func (s *Transaction) FinishUnmarshal() {
 
 // NewTransaction builds Transaction using data from raw and receipt. Receipt can be nil.
 // Transaction timestamp and HasToken flag will be set to timestamp and hasToken.
-func NewTransaction(raw *RawTransaction, receipt *Receipt, timestamp base.Timestamp) (s *Transaction) {
-	hasToken := isTokenFunction(raw.Input)
-	s = &Transaction{}
-
-	// TODO: use RawTransaction methods
-	s.Hash = base.HexToHash(raw.Hash)
-	s.BlockHash = base.HexToHash(raw.BlockHash)
-	s.BlockNumber = base.MustParseBlknum(raw.BlockNumber)
-	s.TransactionIndex = base.MustParseTxnum(raw.TransactionIndex)
-	s.Nonce = base.MustParseValue(raw.Nonce)
+func NewTransaction(raw *Transaction, receipt *Receipt, timestamp base.Timestamp) *Transaction {
+	s := *raw
 	s.Timestamp = timestamp
-	s.From = base.HexToAddress(raw.From)
-	s.To = base.HexToAddress(raw.To)
-	s.Value.SetString(raw.Value, 0)
-	s.Gas = base.MustParseGas(raw.Gas)
-	s.GasPrice = base.MustParseGas(raw.GasPrice)
-	s.MaxFeePerGas = base.MustParseGas(raw.MaxFeePerGas)
-	s.MaxPriorityFeePerGas = base.MustParseGas(raw.MaxPriorityFeePerGas)
-	s.Input = raw.Input
-	s.TransactionType = raw.TransactionType
-
-	s.HasToken = hasToken
-	if receipt != nil {
-		s.GasUsed = receipt.GasUsed
-		s.IsError = receipt.IsError
-		s.Receipt = receipt
-	}
-	return
+	s.HasToken = isTokenFunction(raw.Input)
+	s.GasUsed = receipt.GasUsed
+	s.IsError = receipt.IsError
+	s.Receipt = receipt
+	return &s
 }
 
 func isTokenFunction(needle string) bool {
