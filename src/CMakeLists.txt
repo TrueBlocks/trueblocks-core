@@ -67,7 +67,7 @@ add_custom_target(examples ALL COMMAND ${SCRIPTS_DIR}/build-examples.sh WORKING_
 # ----------------------------------------------------------------------------------------
 function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC DEST_DIR)
     get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
-    file(GLOB SRC_FILE_LIST "*.go")
+    file(GLOB SRC_FILE_LIST "${MAIN_SRC}/*.go")
     set(EXE_NAME ${NAME})
     if (WIN32)
         set(EXE_NAME ${NAME}.exe)
@@ -85,10 +85,10 @@ endfunction(ADD_GO_INSTALLABLE_PROGRAM)
 # ----------------------------------------------------------------------------------------
 add_subdirectory(other/install)
 
-ADD_GO_INSTALLABLE_PROGRAM(chifra ${CMAKE_SOURCE_DIR}/apps/chifra/*.go ${BIN_DIR})
-ADD_GO_INSTALLABLE_PROGRAM(goMaker ${CMAKE_SOURCE_DIR}/dev_tools/goMaker/*.go ${BIN_DIR})
-ADD_GO_INSTALLABLE_PROGRAM(testRunner ${CMAKE_SOURCE_DIR}/dev_tools/testRunner/*.go ${BIN_DIR})
-ADD_GO_INSTALLABLE_PROGRAM(sdkFuzzer ${CMAKE_SOURCE_DIR}/dev_tools/sdkFuzzer/*.go ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM(chifra ${CMAKE_SOURCE_DIR}/apps/chifra ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM(goMaker ${CMAKE_SOURCE_DIR}/dev_tools/goMaker ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM(testRunner ${CMAKE_SOURCE_DIR}/dev_tools/testRunner ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM(sdkFuzzer ${CMAKE_SOURCE_DIR}/dev_tools/sdkFuzzer ${BIN_DIR})
 
 add_dependencies(testRunner goMaker)
 add_dependencies(sdkFuzzer goMaker)
