@@ -572,34 +572,6 @@ func (s *Transaction) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-// NewRawTransactionFromMap is useful when we get a map of transaction properties, e.g.
-// from a call to eth_getBlockByHash [0x..., true]
-func NewRawTransactionFromMap(input map[string]any) (r *RawTransaction) {
-	r = &RawTransaction{}
-
-	// TODO: I wonder why we make copies here
-	r.BlockHash = fmt.Sprint(input["blockHash"])
-	r.BlockNumber = fmt.Sprint(input["blockNumber"])
-	// Missing in block query
-	if _, ok := input["chainId"]; ok {
-		r.ChainId = fmt.Sprint(input["chainId"])
-	}
-	r.From = fmt.Sprint(input["from"])
-	r.Gas = fmt.Sprint(input["gas"])
-	r.GasPrice = fmt.Sprint(input["gasPrice"])
-	r.Hash = fmt.Sprint(input["hash"])
-	r.Input = fmt.Sprint(input["input"])
-	r.MaxFeePerGas = fmt.Sprint(input["maxFeePerGas"])
-	r.MaxPriorityFeePerGas = fmt.Sprint(input["maxPriorityFeePerGas"])
-	r.Nonce = fmt.Sprint(input["nonce"])
-	r.To = fmt.Sprint(input["to"])
-	r.TransactionIndex = fmt.Sprint(input["transactionIndex"])
-	r.Value = fmt.Sprint(input["value"])
-	r.TransactionType = fmt.Sprint(input["type"])
-
-	return
-}
-
 // NewTransaction builds Transaction using data from raw and receipt. Receipt can be nil.
 // Transaction timestamp and HasToken flag will be set to timestamp and hasToken.
 func NewTransaction(raw *RawTransaction, receipt *Receipt, timestamp base.Timestamp) (s *Transaction) {

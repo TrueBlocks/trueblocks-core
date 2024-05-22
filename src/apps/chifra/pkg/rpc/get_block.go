@@ -6,7 +6,6 @@ package rpc
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -51,16 +50,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 	block.Transactions = make([]types.Transaction, 0, len(rawBlock.Transactions))
 	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, ts)
 	for _, rawTx := range rawBlock.Transactions {
-		// cast transaction to a concrete type
-		rawData, ok := rawTx.(map[string]any)
-		if !ok {
-			err = errors.New("cannot cast block transaction into map")
-			return block, err
-		}
-		raw := types.NewRawTransactionFromMap(rawData)
-
-		// Get the receipt
-		idx := base.MustParseTxnum(raw.TransactionIndex)
+		idx := base.MustParseTxnum(rawTx.TransactionIndex)
 		var receipt types.Receipt
 		if receiptMap[idx] == nil {
 			receipt, err = conn.GetReceipt(bn, idx, ts)
@@ -71,7 +61,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 			receipt = *receiptMap[idx]
 		}
 
-		tx := types.NewTransaction(raw, &receipt, ts)
+		tx := types.NewTransaction(&rawTx, &receipt, ts)
 		block.Transactions = append(block.Transactions, *tx)
 
 		if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, tx.Timestamp) {
@@ -217,7 +207,7 @@ func loadLightBlock(conn *Connection, bn base.Blknum) (block types.LightBlock, r
 
 // loadFullBlock fetches block from RPC with full transactions.
 func loadFullBlock(conn *Connection, bn base.Blknum) (block types.Block, rawBlock *types.RawBlock, err error) {
-	rawBlock, err = conn.getRawBlock(bn)
+	rawBlock, err = conn.getBlockRaw(bn)
 	if err != nil {
 		return
 	}
@@ -270,8 +260,8 @@ func (conn *Connection) getRawLightBlock(bn base.Blknum) (*types.LightBlock, err
 	}
 }
 
-// getRawBlock returns the raw block as received from the node
-func (conn *Connection) getRawBlock(bn base.Blknum) (*types.RawBlock, error) {
+// getBlockRaw returns the raw block as received from the node
+func (conn *Connection) getBlockRaw(bn base.Blknum) (*types.RawBlock, error) {
 	method := "eth_getBlockByNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn), true}
 
