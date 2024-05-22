@@ -49,8 +49,6 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Tx
 	return rawTx, nil
 }
 
-// TODO: BOGUS - clean raw
-
 func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchTraces bool) (*types.Transaction, error) {
 	raw := types.Appearance{
 		BlockNumber:      app.BlockNumber,

@@ -30,40 +30,44 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 	method := "trace_block"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
-	if rawTraces, err := query.Query[[]types.Trace](conn.Chain, method, params); err != nil {
-		return []types.Trace{}, err
+	if traces, err := query.Query[[]types.Trace](conn.Chain, method, params); err != nil {
+		return []types.Trace{{
+			Result: &types.TraceResult{},
+		}}, err
 
-	} else if rawTraces == nil || len(*rawTraces) == 0 {
-		return []types.Trace{}, nil
+	} else if traces == nil || len(*traces) == 0 {
+		return []types.Trace{{
+			Result: &types.TraceResult{},
+		}}, err
 
 	} else {
 		curTx := base.NOPOSN
 
 		var traceIndex base.Tracenum
-		for i := range *rawTraces {
-			rawTrace := &(*rawTraces)[i]
-			rawTrace.Timestamp = curTs
-			if rawTrace.Result == nil {
-				rawTrace.Result = &types.TraceResult{}
+		for i := range *traces {
+			traces := &(*traces)[i]
+			traces.Timestamp = curTs
+			if traces.Result == nil {
+				traces.Result = &types.TraceResult{}
 			}
-			rawTrace.TransactionIndex = rawTrace.TransactionPosition
-			if rawTrace.TransactionIndex != base.Txnum(curTx) {
-				curTx = rawTrace.TransactionIndex
+			traces.TransactionIndex = traces.TransactionPosition
+			if traces.TransactionIndex != base.Txnum(curTx) {
+				curTx = traces.TransactionIndex
 				traceIndex = 0
 			}
-			rawTrace.TraceIndex = traceIndex
+			traces.TraceIndex = traceIndex
 			traceIndex++
 		}
 
 		if conn.StoreWritable() && conn.EnabledMap["traces"] && isFinal {
 			traceGroup := &types.TraceGroup{
-				Traces:           *rawTraces,
+				Traces:           *traces,
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,
 			}
 			_ = conn.Store.Write(traceGroup, nil)
 		}
-		return *rawTraces, nil
+		return *traces, nil
 	}
 }
 
@@ -83,12 +87,12 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 	method := "trace_transaction"
 	params := query.Params{txHash}
 
-	if rawTraces, err := query.Query[[]types.Trace](conn.Chain, method, params); err != nil {
+	if traces, err := query.Query[[]types.Trace](conn.Chain, method, params); err != nil {
 		return []types.Trace{{
 			Result: &types.TraceResult{},
 		}}, err
 
-	} else if rawTraces == nil || len(*rawTraces) == 0 {
+	} else if traces == nil || len(*traces) == 0 {
 		return []types.Trace{{
 			Result: &types.TraceResult{},
 		}}, err
@@ -96,30 +100,30 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 	} else {
 		curApp := types.Appearance{BlockNumber: uint32(^uint32(0))}
 		var traceIndex base.Tracenum
-		for i := range *rawTraces {
-			rawTrace := &(*rawTraces)[i]
-			if rawTrace.Result == nil {
-				rawTrace.Result = &types.TraceResult{}
-			}
+		for i := range *traces {
+			traces := &(*traces)[i]
 			if transaction != nil {
-				rawTrace.Timestamp = transaction.Timestamp
+				traces.Timestamp = transaction.Timestamp
 			}
-			rawTrace.TransactionIndex = rawTrace.TransactionPosition
-			if rawTrace.BlockNumber != base.Blknum(curApp.BlockNumber) || rawTrace.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
+			if traces.Result == nil {
+				traces.Result = &types.TraceResult{}
+			}
+			traces.TransactionIndex = traces.TransactionPosition
+			if traces.BlockNumber != base.Blknum(curApp.BlockNumber) || traces.TransactionIndex != base.Txnum(curApp.TransactionIndex) {
 				curApp = types.Appearance{
-					BlockNumber:      uint32(rawTrace.BlockNumber),
-					TransactionIndex: uint32(rawTrace.TransactionIndex),
+					BlockNumber:      uint32(traces.BlockNumber),
+					TransactionIndex: uint32(traces.TransactionIndex),
 				}
 				traceIndex = 0
 			}
-			rawTrace.TraceIndex = traceIndex
+			traces.TraceIndex = traceIndex
 			traceIndex++
 		}
 
 		if transaction != nil {
 			if conn.StoreWritable() && conn.EnabledMap["traces"] && base.IsFinal(conn.LatestBlockTimestamp, transaction.Timestamp) {
 				traceGroup := &types.TraceGroup{
-					Traces:           *rawTraces,
+					Traces:           *traces,
 					BlockNumber:      transaction.BlockNumber,
 					TransactionIndex: transaction.TransactionIndex,
 				}
@@ -127,6 +131,6 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			}
 		}
 
-		return *rawTraces, nil
+		return *traces, nil
 	}
 }
