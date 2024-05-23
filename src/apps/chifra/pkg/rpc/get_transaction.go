@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Txnum) (*types.Transaction, error) {
@@ -178,33 +177,19 @@ func (conn *Connection) GetTransactionHashByNumberAndID(bn base.Blknum, txId bas
 
 // GetTransactionHashByHash returns a transaction's hash if it's a valid transaction, an empty string otherwise
 func (conn *Connection) GetTransactionHashByHash(hash string) (string, error) {
-	if ec, err := conn.getClient(); err != nil {
+	if trans, err := conn.getTransactionFromRpc(notAHash, base.HexToHash(hash), base.NOPOSN, base.NOPOSN); err != nil {
 		return "", err
 	} else {
-		defer ec.Close()
-
-		tx, _, err := ec.TransactionByHash(context.Background(), common.HexToHash(hash))
-		if err != nil {
-			return "", err
-		}
-
-		return tx.Hash().Hex(), nil
+		return trans.Hash.Hex(), nil
 	}
 }
 
 // GetTransactionHashByHashAndID returns a transaction's hash if it's a valid transaction
 func (conn *Connection) GetTransactionHashByHashAndID(hash string, txId base.Txnum) (string, error) {
-	if ec, err := conn.getClient(); err != nil {
+	if trans, err := conn.getTransactionFromRpc(base.HexToHash(hash), notAHash, base.NOPOSN, txId); err != nil {
 		return "", err
 	} else {
-		defer ec.Close()
-
-		tx, err := ec.TransactionInBlock(context.Background(), common.HexToHash(hash), uint(txId))
-		if err != nil {
-			return "", err
-		}
-
-		return tx.Hash().Hex(), nil
+		return trans.Hash.Hex(), nil
 	}
 }
 
@@ -337,6 +322,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, theApp *
 
 // GetTransactionCountInBlock returns the number of transactions in a block
 func (conn *Connection) GetTransactionCountInBlock(bn base.Blknum) (uint64, error) {
+	// TODO: Can we use our Query here?
 	if ec, err := conn.getClient(); err != nil {
 		return 0, err
 	} else {
