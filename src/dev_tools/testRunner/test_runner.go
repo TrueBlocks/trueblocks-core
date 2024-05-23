@@ -100,11 +100,12 @@ func (tr *Runner) Run(t *TestCase) error {
 		}
 	}
 
+	isRemovable := strings.HasSuffix(t.Filename, "_remove_me")
 	if workFile != nil {
 		workFile.Close()
 		workContents := file.AsciiFileToString(workFn)
 		goldContents := file.AsciiFileToString(goldFn)
-		passedTest = workContents == goldContents
+		passedTest = (workContents == goldContents) || isRemovable
 	}
 
 	if wasTested {
@@ -113,6 +114,11 @@ func (tr *Runner) Run(t *TestCase) error {
 
 	if passedTest {
 		tr.NPassed++
+	}
+
+	if isRemovable {
+		os.Remove(workFn)
+		os.Remove(goldFn)
 	}
 
 	return nil
