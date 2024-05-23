@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -168,22 +169,10 @@ func (conn *Connection) GetTransactionAppByHash(hash string) (types.Appearance, 
 
 // GetTransactionHashByNumberAndID returns a transaction's hash if it's a valid transaction
 func (conn *Connection) GetTransactionHashByNumberAndID(bn base.Blknum, txId base.Txnum) (base.Hash, error) {
-	if ec, err := conn.getClient(); err != nil {
+	if trans, err := conn.getTransactionFromRpc(notAHash, notAHash, bn, txId); err != nil {
 		return base.Hash{}, err
 	} else {
-		defer ec.Close()
-
-		block, err := ec.BlockByNumber(context.Background(), base.BiFromBn(bn))
-		if err != nil {
-			return base.Hash{}, err
-		}
-
-		tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
-		if err != nil {
-			return base.Hash{}, err
-		}
-
-		return base.HexToHash(tx.Hash().Hex()), nil
+		return trans.Hash, nil
 	}
 }
 
@@ -380,6 +369,8 @@ func (conn *Connection) getTransactionFromRpc(blkHash base.Hash, txHash base.Has
 
 	if trans, err := query.Query[types.Transaction](conn.Chain, method, params); err != nil {
 		return &types.Transaction{}, err
+	} else if trans.Hash.IsZero() {
+		return &types.Transaction{}, ethereum.NotFound
 	} else {
 		return trans, nil
 	}
