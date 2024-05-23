@@ -5,82 +5,46 @@
 package rpc
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // GetBlockTimestamp returns the timestamp associated with a given block
 func (conn *Connection) GetBlockTimestamp(bn base.Blknum) base.Timestamp {
-	if ec, err := conn.getClient(); err != nil {
-		logger.Error("Could not connect to RPC client", err)
-		return 0
+	b, _ := conn.GetBlockHeaderByNumber(bn)
+	return b.Timestamp
+}
+
+// GetBlockHashByNumber returns a block's hash if it's a valid block
+func (conn *Connection) GetBlockHashByNumber(bn base.Blknum) (base.Hash, error) {
+	if b, err := conn.GetBlockHeaderByNumber(bn); err != nil {
+		return base.Hash{}, err
 	} else {
-		defer ec.Close()
-
-		r, err := ec.HeaderByNumber(context.Background(), base.BiFromBn(bn))
-		if err != nil {
-			logger.Error("Could not connect to RPC client", err)
-			return 0
-		}
-
-		ts := base.Timestamp(r.Time)
-		if ts == 0 {
-			// The RPC does not return a timestamp for block zero, so we simulate it with ts from block one less 13 seconds
-			// TODO: Chain specific
-			return conn.GetBlockTimestamp(1) - 13
-		}
-
-		return ts
+		return b.Hash, err
 	}
 }
 
 // GetBlockHashByHash returns a block's hash if it's a valid block
 func (conn *Connection) GetBlockHashByHash(hash string) (base.Hash, error) {
-	if ec, err := conn.getClient(); err != nil {
+	if block, err := conn.getLightBlockFromRpc(base.NOPOSN, base.HexToHash(hash)); err != nil {
 		return base.Hash{}, err
 	} else {
-		defer ec.Close()
-
-		ethBlock, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
-		if err != nil {
-			return base.Hash{}, err
+		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
+		if conn.StoreWritable() && conn.EnabledMap["blocks"] && isFinal {
+			_ = conn.Store.Write(block, nil)
 		}
-
-		return base.HexToHash(ethBlock.Hash().Hex()), nil
+		return block.Hash, nil
 	}
 }
 
 // GetBlockNumberByHash returns a block's hash if it's a valid block
 func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
-	if ec, err := conn.getClient(); err != nil {
+	if block, err := conn.getLightBlockFromRpc(base.NOPOSN, base.HexToHash(hash)); err != nil {
 		return 0, err
 	} else {
-		defer ec.Close()
-
-		ethBlock, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
-		if err != nil {
-			return 0, err
+		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
+		if conn.StoreWritable() && conn.EnabledMap["blocks"] && isFinal {
+			_ = conn.Store.Write(block, nil)
 		}
-
-		return base.Blknum(ethBlock.NumberU64()), nil
-	}
-}
-
-// GetBlockHashByNumber returns a block's hash if it's a valid block
-func (conn *Connection) GetBlockHashByNumber(bn base.Blknum) (base.Hash, error) {
-	if ec, err := conn.getClient(); err != nil {
-		return base.Hash{}, err
-	} else {
-		defer ec.Close()
-
-		ethBlock, err := ec.BlockByNumber(context.Background(), base.BiFromBn(bn))
-		if err != nil {
-			return base.Hash{}, err
-		}
-
-		return base.HexToHash(ethBlock.Hash().Hex()), nil
+		return block.BlockNumber, nil
 	}
 }
