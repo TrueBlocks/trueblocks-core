@@ -38,7 +38,6 @@ Flags:
   -U, --count           for --appearances mode only, display only the count of records
   -s, --sleep float     seconds to sleep between requests (default 0.25)
   -H, --ether           specify value in ether
-  -w, --raw             report JSON data from the source with minimal processing
   -o, --cache           force the results of the query into the cache
   -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
@@ -60,7 +59,6 @@ Data models produced by this tool:
 - [monitor](/data-model/accounts/#monitor)
 - [parameter](/data-model/other/#parameter)
 - [slurp](/data-model/other/#slurp)
-- [slurpcount](/data-model/other/#slurpcount)
 
 ### Adding provider API key
 Call `chifra config edit` to edit the configuration file.

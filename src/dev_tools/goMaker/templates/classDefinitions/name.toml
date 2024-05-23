@@ -3,4 +3,5 @@
     doc_group = "01-Accounts"
     doc_descr = "an association between a human-readable name and an address used throughout TrueBlocks"
     doc_route = "109-name"
+    attributes = ""
     produced_by = "names"

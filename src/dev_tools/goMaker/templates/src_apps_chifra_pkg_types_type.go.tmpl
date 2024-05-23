@@ -11,34 +11,19 @@ package types
 // EXISTING_CODE
 // EXISTING_CODE
 
-type Raw{{.Class}} struct {
-{{range .Members}}{{if .IsRawField}}{{.GoName}} {{.RawType}} {{.RawTag}}
+type {{.Class}} struct {
+{{range .Members}}{{if .IsSimpField}}{{.GoName}} {{.GoType}} {{.Tag}}
 {{end}}{{end}}	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-type {{.ModelName "simple"}} struct {
-{{range .Members}}{{if .IsSimpField}}{{.GoName}} {{.GoType}} {{.Tag}}
-{{end}}{{end}}	raw *Raw{{.Class}} `json:"-"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
-func (s {{.ModelName ""}}) String() string {
+func (s {{.Class}}) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *{{.ModelName ""}}) Raw() *Raw{{.Class}} {
-	return s.raw
-}
-
-func (s *{{.ModelName ""}}) SetRaw(raw *Raw{{.Class}}) {
-	s.raw = raw
-}
-
-func (s *{{.ModelName ""}}) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *{{.Class}}) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -51,7 +36,7 @@ func (s *{{.ModelName ""}}) Model(chain, format string, verbose bool, extraOptio
 }
 
 {{if .HasTimestamp}} 
-func (s *{{.ModelName ""}}) Date() string {
+func (s *{{.Class}}) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 {{end}}
@@ -66,15 +51,15 @@ type {{.Class}}{{if .IsCacheAsGroup}}Group{{end}} struct {
 	{{end}}{{.Class}}s      []{{.Class}}
 }
 {{end}}
-func (s *{{.ModelName ""}}{{if .IsCacheAsGroup}}Group{{end}}) CacheName() string {
-	return "{{.Class}}"
+func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheName() string {
+	return "{{.CacheLoc}}"
 }
 
-func (s *{{.ModelName ""}}{{if .IsCacheAsGroup}}Group{{end}}) CacheId() string {
+func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheId() string {
 	return fmt.Sprintf({{.CacheIdStr}})
 }
 
-func (s *{{.ModelName ""}}{{if .IsCacheAsGroup}}Group{{end}}) CacheLocation() (directory string, extension string) {
+func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -89,23 +74,23 @@ func (s *{{.ModelName ""}}{{if .IsCacheAsGroup}}Group{{end}}) CacheLocation() (d
 }
 
 {{if .IsCacheAsGroup}}
-func (s *{{.ModelName ""}}Group) MarshalCache(writer io.Writer) (err error) {
+func (s *{{.Class}}Group) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.{{.Class}}s)
 }
 
-func (s *{{.ModelName ""}}Group) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *{{.Class}}Group) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	return cache.ReadValue(reader, &s.{{.Class}}s, vers)
 }
 
 {{end}}
 {{end}}
-func (s *{{.ModelName ""}}) MarshalCache(writer io.Writer) (err error) {
+func (s *{{.Class}}) MarshalCache(writer io.Writer) (err error) {
 	{{range .Members}}{{.MarshalCode}}{{end}}
 
 	return nil
 }
 
-func (s *{{.ModelName "cache"}}) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *{{.Class}}) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -119,7 +104,7 @@ func (s *{{.ModelName "cache"}}) UnmarshalCache(vers uint64, reader io.Reader) (
 {{end}}
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *{{.ModelName ""}}) FinishUnmarshal() {
+func (s *{{.Class}}) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

@@ -18,23 +18,6 @@ import (
 
 // EXISTING_CODE
 
-type RawToken struct {
-	Address          string `json:"address"`
-	Balance          string `json:"balance"`
-	BlockNumber      string `json:"blockNumber"`
-	Decimals         string `json:"decimals"`
-	Holder           string `json:"holder"`
-	Name             string `json:"name"`
-	PriorBalance     string `json:"priorBalance"`
-	Symbol           string `json:"symbol"`
-	Timestamp        string `json:"timestamp"`
-	TotalSupply      string `json:"totalSupply"`
-	TransactionIndex string `json:"transactionIndex"`
-	TokenType        string `json:"type"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Token struct {
 	Address          base.Address   `json:"address"`
 	Balance          base.Wei       `json:"balance"`
@@ -48,7 +31,6 @@ type Token struct {
 	TotalSupply      base.Wei       `json:"totalSupply"`
 	TransactionIndex base.Txnum     `json:"transactionIndex,omitempty"`
 	TokenType        TokenType      `json:"type"`
-	raw              *RawToken      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -58,23 +40,15 @@ func (s Token) String() string {
 	return string(bytes)
 }
 
-func (s *Token) Raw() *RawToken {
-	return s.raw
-}
-
-func (s *Token) SetRaw(raw *RawToken) {
-	s.raw = raw
-}
-
-func (s *Token) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
 	name := Name{}
 	name.Name = "Unknown"
-	if extraOptions["namesMap"] != nil {
-		name = extraOptions["namesMap"].(map[base.Address]Name)[s.Address]
+	if extraOpts["namesMap"] != nil {
+		name = extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 	}
 	if name.Decimals == 0 {
 		name.Decimals = 18
@@ -83,7 +57,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOptions map[strin
 		name.Symbol = name.Address.Prefix(6)
 	}
 
-	wanted := extraOptions["parts"].([]string)
+	wanted := extraOpts["parts"].([]string)
 	if len(wanted) == 1 {
 		if wanted[0] == "all" {
 			if verbose {

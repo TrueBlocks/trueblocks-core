@@ -51,10 +51,9 @@ on      ,both ,fast  ,list  ,apps ,acctExport ,128_list_fb_lb_fr_3      ,n    ,a
 on      ,both ,fast  ,list  ,apps ,acctExport ,130_list_fb_lb_fr_mr     ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 1 & max_records = 10
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,list  ,apps ,acctExport ,caps_allowed_l           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
 on      ,both ,fast  ,list  ,apps ,acctExport ,caps_disallowed_1_l      ,y    ,addrs = trueblocks.eth & cache
-on      ,both ,fast  ,list  ,apps ,acctExport ,caps_disallowed_2_l      ,y    ,addrs = trueblocks.eth & raw
 on      ,both ,fast  ,list  ,apps ,acctExport ,caps_disallowed_3_l      ,y    ,addrs = trueblocks.eth & ether
 on      ,both ,fast  ,list  ,apps ,acctExport ,caps_disallowed_4_l      ,y    ,addrs = trueblocks.eth & wei & max_records = 10
 on      ,both ,fast  ,list  ,apps ,acctExport ,caps_disallowed_5_l      ,y    ,addrs = trueblocks.eth & decache

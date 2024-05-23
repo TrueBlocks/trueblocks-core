@@ -43,25 +43,25 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 		return fmt.Errorf("on line %d: %s", lineNumber, err)
 	}
 	for scanner.Scan() {
-		rawLine := strings.TrimSpace(scanner.Text())
+		trimmed := strings.TrimSpace(scanner.Text())
 		lineNumber++
 
 		// ignore comments and empty lines
-		if len(rawLine) == 0 || rawLine[0] == '#' || rawLine[0] == ';' {
+		if len(trimmed) == 0 || trimmed[0] == '#' || trimmed[0] == ';' {
 			continue
 		}
 
 		// --file inside file is forbidden
-		if strings.Contains(rawLine, "--file") {
+		if strings.Contains(trimmed, "--file") {
 			err = reportErrWithLineNumber(errors.New("file uses --file flag recursively"), lineNumber)
 			return
 		}
 
 		// remove unwanted whitespace including duplicate spaces, etc.
-		rawLine = strings.Join(strings.Fields(rawLine), " ")
+		trimmed = strings.Join(strings.Fields(trimmed), " ")
 
 		// both cobra and pflags packages expect their parameters to be slices of strings
-		tokens := strings.Split(rawLine, " ")
+		tokens := strings.Split(trimmed, " ")
 		// validate flags (we assume that `Flags()` returns `FlagSet` with both local and
 		// global flags defined)
 		err = cmd.ParseFlags(tokens)

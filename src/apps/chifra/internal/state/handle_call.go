@@ -35,7 +35,7 @@ func (opts *StateOptions) HandleCall() error {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawResult], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Result], errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
@@ -109,9 +109,9 @@ func (opts *StateOptions) HandleCall() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

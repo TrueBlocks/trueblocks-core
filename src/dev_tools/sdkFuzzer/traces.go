@@ -35,7 +35,7 @@ func DoTraces() {
 	opts = sdk.TracesOptions{
 		TransactionIds: []string{"17100101.1", "3189962.7"},
 	}
-	// traces,command,default|caching|ether|raw|
+	// traces,command,default|caching|ether|
 	// TransactionIds []string
 	// Filter string
 	// Articulate bool

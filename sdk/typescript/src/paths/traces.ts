@@ -22,7 +22,6 @@ export function getTraces(
     cache?: boolean,
     decache?: boolean,
     ether?: boolean,
-    raw?: boolean,
   },
   options?: RequestInit,
 ) {

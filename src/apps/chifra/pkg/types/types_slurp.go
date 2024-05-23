@@ -23,33 +23,6 @@ import (
 
 // EXISTING_CODE
 
-type RawSlurp struct {
-	BlockHash         string `json:"blockHash"`
-	BlockNumber       string `json:"blockNumber"`
-	ContractAddress   string `json:"contractAddress"`
-	CumulativeGasUsed string `json:"cumulativeGasUsed"`
-	From              string `json:"from"`
-	FunctionName      string `json:"functionName"`
-	Gas               string `json:"gas"`
-	GasPrice          string `json:"gasPrice"`
-	GasUsed           string `json:"gasUsed"`
-	Hash              string `json:"hash"`
-	Input             string `json:"input"`
-	MethodId          string `json:"methodId"`
-	Nonce             string `json:"nonce"`
-	Timestamp         string `json:"timestamp"`
-	To                string `json:"to"`
-	TransactionIndex  string `json:"transactionIndex"`
-	TxReceiptStatus   string `json:"txReceiptStatus"`
-	ValidatorIndex    string `json:"validatorIndex"`
-	Value             string `json:"value"`
-	WithdrawalIndex   string `json:"withdrawalIndex"`
-	// EXISTING_CODE
-	Address string `json:"address"`
-	Amount  string `json:"amount"`
-	// EXISTING_CODE
-}
-
 type Slurp struct {
 	ArticulatedTx     *Function      `json:"articulatedTx"`
 	BlockHash         base.Hash      `json:"blockHash"`
@@ -64,7 +37,7 @@ type Slurp struct {
 	HasToken          bool           `json:"hasToken"`
 	Hash              base.Hash      `json:"hash"`
 	Input             string         `json:"input"`
-	IsError           bool           `json:"isError"`
+	IsError           bool           `json:"-"`
 	MethodId          string         `json:"methodId"`
 	Nonce             base.Value     `json:"nonce"`
 	Timestamp         base.Timestamp `json:"timestamp"`
@@ -74,8 +47,8 @@ type Slurp struct {
 	ValidatorIndex    base.Value     `json:"validatorIndex"`
 	Value             base.Wei       `json:"value"`
 	WithdrawalIndex   base.Value     `json:"withdrawalIndex"`
-	raw               *RawSlurp      `json:"-"`
 	// EXISTING_CODE
+	Amount base.Wei `json:"amount"`
 	// EXISTING_CODE
 }
 
@@ -84,16 +57,8 @@ func (s Slurp) String() string {
 	return string(bytes)
 }
 
-func (s *Slurp) Raw() *RawSlurp {
-	return s.raw
-}
-
-func (s *Slurp) SetRaw(raw *RawSlurp) {
-	s.raw = raw
-}
-
-func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -102,7 +67,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[strin
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
-	model = map[string]interface{}{
+	model = map[string]any{
 		"blockNumber": s.BlockNumber,
 		"from":        s.From,
 		"timestamp":   s.Timestamp,
@@ -176,15 +141,15 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[strin
 	model["transactionIndex"] = s.TransactionIndex
 
 	// TODO: Turn this back on
-	var articulatedTx map[string]interface{}
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTx != nil
+	var articulatedTx map[string]any
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTx != nil
 	if isArticulated && format != "json" {
 		order = append(order, "compressedTx")
 	}
 
 	// TODO: ARTICULATE SLURP
 	if isArticulated {
-		articulatedTx = map[string]interface{}{
+		articulatedTx = map[string]any{
 			"name": s.ArticulatedTx.Name,
 		}
 		inputModels := parametersToMap(s.ArticulatedTx.Inputs)
@@ -245,7 +210,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOptions map[strin
 		}
 	}
 
-	asEther := true // like transactions, we always export ether for slurps -- extraOptions["ether"] == true
+	asEther := true // like transactions, we always export ether for slurps -- extraOpts["ether"] == true
 	if asEther {
 		model["ether"] = s.Value.ToEtherStr(18)
 		order = append(order, "ether")

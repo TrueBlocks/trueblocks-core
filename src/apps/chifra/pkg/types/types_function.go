@@ -25,33 +25,17 @@ import (
 // https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
 // EXISTING_CODE
 
-type RawFunction struct {
-	Anonymous       string `json:"anonymous"`
-	Constant        string `json:"constant"`
-	Encoding        string `json:"encoding"`
-	Inputs          string `json:"inputs"`
-	Message         string `json:"message"`
-	Name            string `json:"name"`
-	Outputs         string `json:"outputs"`
-	Signature       string `json:"signature"`
-	StateMutability string `json:"stateMutability"`
-	FunctionType    string `json:"type"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Function struct {
-	Anonymous       bool         `json:"anonymous,omitempty"`
-	Constant        bool         `json:"constant,omitempty"`
-	Encoding        string       `json:"encoding"`
-	Inputs          []Parameter  `json:"inputs"`
-	Message         string       `json:"message,omitempty"`
-	Name            string       `json:"name"`
-	Outputs         []Parameter  `json:"outputs"`
-	Signature       string       `json:"signature,omitempty"`
-	StateMutability string       `json:"stateMutability,omitempty"`
-	FunctionType    string       `json:"type"`
-	raw             *RawFunction `json:"-"`
+	Anonymous       bool        `json:"anonymous,omitempty"`
+	Constant        bool        `json:"constant,omitempty"`
+	Encoding        string      `json:"encoding"`
+	Inputs          []Parameter `json:"inputs"`
+	Message         string      `json:"message,omitempty"`
+	Name            string      `json:"name"`
+	Outputs         []Parameter `json:"outputs"`
+	Signature       string      `json:"signature,omitempty"`
+	StateMutability string      `json:"stateMutability,omitempty"`
+	FunctionType    string      `json:"type"`
 	// EXISTING_CODE
 	payable   bool
 	abiMethod *abi.Method
@@ -64,20 +48,12 @@ func (s Function) String() string {
 	return string(bytes)
 }
 
-func (s *Function) Raw() *RawFunction {
-	return s.raw
-}
-
-func (s *Function) SetRaw(raw *RawFunction) {
-	s.raw = raw
-}
-
-func (s *Function) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Function) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["encodingSignatureOnly"] == true {
+	if extraOpts["encodingSignatureOnly"] == true {
 		return Model{
 			Data: map[string]any{
 				"encoding":  s.Encoding,
@@ -87,7 +63,7 @@ func (s *Function) Model(chain, format string, verbose bool, extraOptions map[st
 		}
 	}
 
-	model = map[string]interface{}{
+	model = map[string]any{
 		"encoding":  s.Encoding,
 		"name":      s.Name,
 		"signature": s.Signature,
@@ -105,7 +81,7 @@ func (s *Function) Model(chain, format string, verbose bool, extraOptions map[st
 		getParameterModels := func(params []Parameter) []map[string]any {
 			result := make([]map[string]any, len(params))
 			for index, param := range params {
-				result[index] = param.Model(chain, format, verbose, extraOptions).Data
+				result[index] = param.Model(chain, format, verbose, extraOpts).Data
 				result[index]["name"] = param.DisplayName(index)
 			}
 			return result

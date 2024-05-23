@@ -23,7 +23,7 @@ func (opts *StatusOptions) HandleCaches() error {
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawStatus], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Status], errorChan chan error) {
 		now := time.Now()
 
 		filenameChan := make(chan walk.CacheFileInfo)
@@ -140,13 +140,13 @@ func (opts *StatusOptions) HandleCaches() error {
 		modelChan <- status
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"showProgress": false,
 		"testMode":     testMode,
 		"chains":       opts.Chains,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 type CacheWalker struct {

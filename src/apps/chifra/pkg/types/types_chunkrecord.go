@@ -17,23 +17,12 @@ import (
 
 // EXISTING_CODE
 
-type RawChunkRecord struct {
-	BloomHash string `json:"bloomHash"`
-	BloomSize string `json:"bloomSize"`
-	IndexHash string `json:"indexHash"`
-	IndexSize string `json:"indexSize"`
-	Range     string `json:"range"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type ChunkRecord struct {
-	BloomHash base.IpfsHash   `json:"bloomHash"`
-	BloomSize int64           `json:"bloomSize"`
-	IndexHash base.IpfsHash   `json:"indexHash"`
-	IndexSize int64           `json:"indexSize"`
-	Range     string          `json:"range"`
-	raw       *RawChunkRecord `json:"-"`
+	BloomHash base.IpfsHash `json:"bloomHash"`
+	BloomSize int64         `json:"bloomSize"`
+	IndexHash base.IpfsHash `json:"indexHash"`
+	IndexSize int64         `json:"indexSize"`
+	Range     string        `json:"range"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -43,16 +32,8 @@ func (s ChunkRecord) String() string {
 	return string(bytes)
 }
 
-func (s *ChunkRecord) Raw() *RawChunkRecord {
-	return s.raw
-}
-
-func (s *ChunkRecord) SetRaw(raw *RawChunkRecord) {
-	s.raw = raw
-}
-
-func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE

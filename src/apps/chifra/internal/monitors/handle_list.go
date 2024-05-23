@@ -39,7 +39,7 @@ func (opts *MonitorsOptions) HandleList() error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Monitor], errorChan chan error) {
 		for _, e := range errors {
 			errorChan <- e
 		}
@@ -58,7 +58,7 @@ func (opts *MonitorsOptions) HandleList() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 	}
 
@@ -68,8 +68,8 @@ func (opts *MonitorsOptions) HandleList() error {
 		if err != nil {
 			return err
 		}
-		extra["namesMap"] = namesMap
+		extraOpts["namesMap"] = namesMap
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

@@ -70,7 +70,6 @@ The `.toml` file contains the following fields:
 | doc_route    | corresponds to the subsection of the data model documentation for this type      | poorly named                                                                                 |
 | doc_descr    | the short description for this type                                              | see below                                                                                    |
 | go_output    | if not empty, the destination folder for the generated code. Disabled if empty   |                                                                                              |
-| go_model     | an override for the generic (i.e. somewhat complicated) `Blocks` model only      |                                                                                              |
 | produced_by  | a list of commands that produces this data model                                 |                                                                                              |
 | cache_as     | if set to `group`, the cache for this type is a slice. A single value otherwise. |                                                                                              |
 | cache_by     | the fields by which to identify cache items                                      | (one of \[ `address,block` \| `address,block,fourbyte` \| `address,tx` \| `block` \| `tx` \] |

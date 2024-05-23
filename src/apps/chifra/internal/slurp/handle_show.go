@@ -19,7 +19,7 @@ func (opts *SlurpOptions) HandleShow() error {
 	provider.SetPrintProgress(!opts.Globals.TestMode && !logger.IsTerminal())
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawSlurp], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Slurp], errorChan chan error) {
 		txChan := provider.TransactionsByAddress(ctx, opts.Query(), errorChan)
 		for tx := range txChan {
 			if opts.Articulate {
@@ -31,9 +31,9 @@ func (opts *SlurpOptions) HandleShow() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

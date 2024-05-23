@@ -51,7 +51,7 @@ func (opts *whenOptionsInternal) WhenBytes(w io.Writer) error {
 }
 
 // whenParseFunc handles special cases such as structs and enums (if any).
-func whenParseFunc(target interface{}, key, value string) (bool, error) {
+func whenParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*whenOptionsInternal)
 	if !ok {

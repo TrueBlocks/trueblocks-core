@@ -26,14 +26,14 @@ func (opts *BlocksOptions) HandleShow() error {
 	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Block], errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Block[types.Transaction]](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Block](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -49,11 +49,11 @@ func (opts *BlocksOptions) HandleShow() error {
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.Block[types.Transaction])
+					thisMap[app] = new(types.Block)
 				}
 
-				items := make([]*types.Block[types.Transaction], 0, len(thisMap))
-				iterFunc := func(app types.Appearance, value *types.Block[types.Transaction]) error {
+				items := make([]*types.Block, 0, len(thisMap))
+				iterFunc := func(app types.Appearance, value *types.Block) error {
 					bn := base.Blknum(app.BlockNumber)
 					if block, err := opts.Conn.GetBlockBodyByNumber(bn); err != nil {
 						errMutex.Lock()
@@ -96,11 +96,11 @@ func (opts *BlocksOptions) HandleShow() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"hashes":     opts.Hashes,
 		"uncles":     opts.Uncles,
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

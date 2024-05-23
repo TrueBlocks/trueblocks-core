@@ -34,9 +34,6 @@ func getFilename(baseName string, g *sdk.Globals) string {
 	if g.Ether {
 		app += "-ether"
 	}
-	if g.Raw {
-		app += "-raw"
-	}
 	if g.Cache {
 		app += "-cache"
 	}
@@ -95,16 +92,6 @@ func noEther(in []sdk.Globals) []sdk.Globals {
 	return out
 }
 
-func noRaw(in []sdk.Globals) []sdk.Globals {
-	out := []sdk.Globals{}
-	for _, g := range in {
-		if !g.Raw {
-			out = append(out, g)
-		}
-	}
-	return out
-}
-
 func noVerbose(in []sdk.Globals) []sdk.Globals {
 	out := []sdk.Globals{}
 	for _, g := range in {
@@ -121,9 +108,6 @@ var globals = []sdk.Globals{
 		Ether: true,
 	},
 	{
-		Raw: true,
-	},
-	{
 		Cache: true,
 	},
 	{
@@ -134,10 +118,6 @@ var globals = []sdk.Globals{
 	},
 	{
 		Ether: true,
-		Raw:   true,
-	},
-	{
-		Ether: true,
 		Cache: true,
 	},
 	{
@@ -148,18 +128,6 @@ var globals = []sdk.Globals{
 		Ether:   true,
 		Verbose: true,
 	},
-	{
-		Raw:   true,
-		Cache: true,
-	},
-	{
-		Raw:     true,
-		Decache: true,
-	},
-	{
-		Raw:     true,
-		Verbose: true,
-	},
 	// {
 	// 	Cache:   true,
 	// 	Decache: true,
@@ -170,21 +138,6 @@ var globals = []sdk.Globals{
 	},
 	{
 		Decache: true,
-		Verbose: true,
-	},
-	{
-		Ether: true,
-		Raw:   true,
-		Cache: true,
-	},
-	{
-		Ether:   true,
-		Raw:     true,
-		Decache: true,
-	},
-	{
-		Ether:   true,
-		Raw:     true,
 		Verbose: true,
 	},
 	// {
@@ -199,21 +152,6 @@ var globals = []sdk.Globals{
 	},
 	{
 		Ether:   true,
-		Decache: true,
-		Verbose: true,
-	},
-	// {
-	// 	Raw:     true,
-	// 	Cache:   true,
-	// 	Decache: true,
-	// },
-	{
-		Raw:     true,
-		Cache:   true,
-		Verbose: true,
-	},
-	{
-		Raw:     true,
 		Decache: true,
 		Verbose: true,
 	},
@@ -224,37 +162,6 @@ var globals = []sdk.Globals{
 	// },
 	// {
 	// 	Ether:   true,
-	// 	Raw:     true,
-	// 	Cache:   true,
-	// 	Decache: true,
-	// },
-	{
-		Ether:   true,
-		Raw:     true,
-		Cache:   true,
-		Verbose: true,
-	},
-	{
-		Ether:   true,
-		Raw:     true,
-		Decache: true,
-		Verbose: true,
-	},
-	// {
-	// 	Ether:   true,
-	// 	Cache:   true,
-	// 	Decache: true,
-	// 	Verbose: true,
-	// },
-	// {
-	// 	Raw:     true,
-	// 	Cache:   true,
-	// 	Decache: true,
-	// 	Verbose: true,
-	// },
-	// {
-	// 	Ether:   true,
-	// 	Raw:     true,
 	// 	Cache:   true,
 	// 	Decache: true,
 	// 	Verbose: true,

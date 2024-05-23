@@ -3,7 +3,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 #
 12000,apps,Accounts,list,acctExport,,,,visible|docs,command,,,List transactions,[flags] <address> [address...],default|,List every appearance of an address anywhere on the chain.
 12020,apps,Accounts,list,acctExport,addrs,,,required|visible|docs,positional,list<addr>,appearance,,,,one or more addresses (0x...) to list
-12030,apps,Accounts,list,acctExport,count,U,,visible|docs,switch,<boolean>,appearanceCount,,,,display only the count of records for each monitor
+12030,apps,Accounts,list,acctExport,count,U,,visible|docs,switch,<boolean>,monitor,,,,display only the count of records for each monitor
 12040,apps,Accounts,list,acctExport,no_zero,z,,visible|docs,switch,<boolean>,,,,,for the --count option only&#44; suppress the display of zero appearance accounts
 12050,apps,Accounts,list,acctExport,bounds,b,,visible|docs,switch,<boolean>,bounds,,,,report first and last block this address appears
 12060,apps,Accounts,list,acctExport,unripe,u,,visible|docs,switch,<boolean>,,,,,list transactions labeled unripe (i.e. less than 28 blocks old)
@@ -32,7 +32,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 13130,apps,Accounts,export,acctExport,withdrawals,i,,visible|docs,switch,<boolean>,withdrawal,,,,export withdrawals for the given address
 13140,apps,Accounts,export,acctExport,articulate,a,,visible|docs,switch,<boolean>,,,,,articulate transactions&#44; traces&#44; logs&#44; and outputs
 13150,apps,Accounts,export,acctExport,cache_traces,R,,visible|docs,switch,<boolean>,,,,,force the transaction's traces into the cache
-13160,apps,Accounts,export,acctExport,count,U,,visible|docs,switch,<boolean>,appearanceCount,,,,for --appearances mode only&#44; display only the count of records
+13160,apps,Accounts,export,acctExport,count,U,,visible|docs,switch,<boolean>,monitor,,,,for --appearances mode only&#44; display only the count of records
 13170,apps,Accounts,export,acctExport,first_record,c,,visible|docs,flag,<uint64>,,,,,the first record to process
 13180,apps,Accounts,export,acctExport,max_records,e,250,visible|docs,flag,<uint64>,,,,,the maximum number of records to process
 13190,apps,Accounts,export,acctExport,relevant,N,,visible|docs,switch,<boolean>,,,,,for log and accounting export only&#44; export only logs relevant to one of the given export addresses
@@ -111,10 +111,10 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 #
 21000,,Chain Data,,,,,,,group,,,,,,Access and cache blockchain-related data
 #
-22000,tools,Chain Data,blocks,getBlocks,,,,visible|docs,command,,,Get blocks,[flags] <block> [block...],default|caching|ether|raw|,Retrieve one or more blocks from the chain or local cache.
-22020,tools,Chain Data,blocks,getBlocks,blocks,,,required|visible|docs,positional,list<blknum>,block[types.Transaction],,,,a space-separated list of one or more block identifiers
-22030,tools,Chain Data,blocks,getBlocks,hashes,e,,visible|docs,switch,<boolean>,block[string],,,,display only transaction hashes&#44; default is to display full transaction detail
-22040,tools,Chain Data,blocks,getBlocks,uncles,c,,visible|docs,switch,<boolean>,block[string],,,,display uncle blocks (if any) instead of the requested block
+22000,tools,Chain Data,blocks,getBlocks,,,,visible|docs,command,,,Get blocks,[flags] <block> [block...],default|caching|ether|,Retrieve one or more blocks from the chain or local cache.
+22020,tools,Chain Data,blocks,getBlocks,blocks,,,required|visible|docs,positional,list<blknum>,block,,,,a space-separated list of one or more block identifiers
+22030,tools,Chain Data,blocks,getBlocks,hashes,e,,visible|docs,switch,<boolean>,lightBlock,,,,display only transaction hashes&#44; default is to display full transaction detail
+22040,tools,Chain Data,blocks,getBlocks,uncles,c,,visible|docs,switch,<boolean>,lightBlock,,,,display uncle blocks (if any) instead of the requested block
 22050,tools,Chain Data,blocks,getBlocks,traces,t,,visible|docs,switch,<boolean>,trace,,,,export the traces from the block as opposed to the block data
 22060,tools,Chain Data,blocks,getBlocks,uniq,u,,visible|docs,switch,<boolean>,appearance,,,,display a list of uniq address appearances per transaction
 22070,tools,Chain Data,blocks,getBlocks,flow,f,,visible|docs,flag,enum[from|to|reward],,,,,for the --uniq option only&#44; export only from or to (including trace from or to)
@@ -135,7 +135,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 22260,tools,Chain Data,blocks,getBlocks,n8,,,,note,,,,,,The --decache option removes the block(s)&#44; all transactions in those block(s)&#44; and all traces in those transactions from the cache.
 22270,tools,Chain Data,blocks,getBlocks,n9,,,,note,,,,,,The --withdrawals option is only available on certain chains. It is ignored otherwise.
 #
-23000,tools,Chain Data,transactions,getTrans,,,,visible|docs,command,,,Get transactions,[flags] <tx_id> [tx_id...],default|caching|ether|raw|,Retrieve one or more transactions from the chain or local cache.
+23000,tools,Chain Data,transactions,getTrans,,,,visible|docs,command,,,Get transactions,[flags] <tx_id> [tx_id...],default|caching|ether|,Retrieve one or more transactions from the chain or local cache.
 23020,tools,Chain Data,transactions,getTrans,transactions,,,required|visible|docs,positional,list<tx_id>,transaction,,,,a space-separated list of one or more transaction identifiers
 23030,tools,Chain Data,transactions,getTrans,articulate,a,,visible|docs,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 23040,tools,Chain Data,transactions,getTrans,traces,t,,visible|docs,switch,<boolean>,trace,,,,include the transaction's traces in the results
@@ -151,14 +151,14 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 23140,tools,Chain Data,transactions,getTrans,n3,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 23150,tools,Chain Data,transactions,getTrans,n5,,,,note,,,,,,The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
 #
-24000,tools,Chain Data,receipts,getReceipts,,,,visible|docs,command,,,Get receipts,[flags] <tx_id> [tx_id...],default|caching|raw|,Retrieve receipts for the given transaction(s).
+24000,tools,Chain Data,receipts,getReceipts,,,,visible|docs,command,,,Get receipts,[flags] <tx_id> [tx_id...],default|caching|,Retrieve receipts for the given transaction(s).
 24020,tools,Chain Data,receipts,getReceipts,transactions,,,required|visible|docs,positional,list<tx_id>,receipt,,,,a space-separated list of one or more transaction identifiers
 24030,tools,Chain Data,receipts,getReceipts,articulate,a,,visible|docs,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 24040,tools,Chain Data,receipts,getReceipts,n1,,,,note,,,,,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 24050,tools,Chain Data,receipts,getReceipts,n2,,,,note,,,,,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 24060,tools,Chain Data,receipts,getReceipts,n3,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 #
-25000,tools,Chain Data,logs,getLogs,,,,visible|docs,command,,,Get logs,[flags] <tx_id> [tx_id...],default|caching|raw|,Retrieve logs for the given transaction(s).
+25000,tools,Chain Data,logs,getLogs,,,,visible|docs,command,,,Get logs,[flags] <tx_id> [tx_id...],default|caching|,Retrieve logs for the given transaction(s).
 25020,tools,Chain Data,logs,getLogs,transactions,,,required|visible|docs,positional,list<tx_id>,log,,,,a space-separated list of one or more transaction identifiers
 25030,tools,Chain Data,logs,getLogs,emitter,m,,visible|docs,flag,list<addr>,,,,,filter logs to show only those logs emitted by the given address(es)
 25040,tools,Chain Data,logs,getLogs,topic,B,,visible|docs,flag,list<topic>,,,,,filter logs to show only those with this topic(s)
@@ -168,7 +168,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 25080,tools,Chain Data,logs,getLogs,n3,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 25090,tools,Chain Data,logs,getLogs,n4,,,,note,,,,,,If you specify a 32-byte hash&#44; it will be assumed to be a transaction hash&#44; if it is not&#44; the hash will be used as a topic.
 #
-26000,tools,Chain Data,traces,getTraces,,,,visible|docs,command,,,Get traces,[flags] <tx_id> [tx_id...],default|caching|ether|raw|,Retrieve traces for the given transaction(s).
+26000,tools,Chain Data,traces,getTraces,,,,visible|docs,command,,,Get traces,[flags] <tx_id> [tx_id...],default|caching|ether|,Retrieve traces for the given transaction(s).
 26020,tools,Chain Data,traces,getTraces,transactions,,,required|visible|docs,positional,list<tx_id>,trace,,,,a space-separated list of one or more transaction identifiers
 26030,tools,Chain Data,traces,getTraces,articulate,a,,visible|docs,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 26040,tools,Chain Data,traces,getTraces,filter,f,,visible|docs,flag,<string>,,,,,call the node's trace_filter routine with bang-separated filter
@@ -317,14 +317,14 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 52030,apps,Other,explore,fireStorm,local,l,,visible|docs,switch,<boolean>,,,,,open the local TrueBlocks explorer
 52040,apps,Other,explore,fireStorm,google,g,,visible|docs,switch,<boolean>,,,,,search google excluding popular blockchain explorers
 #
-53000,tools,Other,slurp,ethslurp,,,,visible|docs,command,,,Slurp Api services,[flags] <address> [address...] [block...],default|caching|ether|raw|,Fetch data from Etherscan and other APIs for any address.
+53000,tools,Other,slurp,ethslurp,,,,visible|docs,command,,,Slurp Api services,[flags] <address> [address...] [block...],default|caching|ether|,Fetch data from Etherscan and other APIs for any address.
 53020,tools,Other,slurp,ethslurp,addrs,,,required|visible|docs,positional,list<addr>,slurp,,,,one or more addresses to slurp from Etherscan
 53030,tools,Other,slurp,ethslurp,blocks,,,visible|docs,positional,list<blknum>,,,,,an optional range of blocks to slurp
 53040,tools,Other,slurp,ethslurp,types,t,,visible|docs,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|some|all]>,,,,,which types of transactions to request
 53050,tools,Other,slurp,ethslurp,appearances,p,,visible|docs,switch,<boolean>,appearance,,,,show only the blocknumber.tx_id appearances of the exported transactions
 53060,tools,Other,slurp,ethslurp,articulate,a,,visible|docs,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 53070,tools,Other,slurp,ethslurp,source,S,etherscan,visible|docs,flag,enum[etherscan*|key|covalent|alchemy],,,,,the source of the slurped data
-53080,tools,Other,slurp,ethslurp,count,U,,visible|docs,switch,<boolean>,slurpCount,,,,for --appearances mode only&#44; display only the count of records
+53080,tools,Other,slurp,ethslurp,count,U,,visible|docs,switch,<boolean>,monitor,,,,for --appearances mode only&#44; display only the count of records
 53090,tools,Other,slurp,ethslurp,page,g,,,flag,<uint64>,,,,,the page to retrieve (page number)
 53090,tools,Other,slurp,ethslurp,page_id,,,,flag,<string>,,,,,the page to retrieve (page ID)
 53100,tools,Other,slurp,ethslurp,per_page,P,1000,,flag,<uint64>,,,,,the number of records to request on each page

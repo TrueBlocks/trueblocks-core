@@ -17,18 +17,12 @@ import (
 
 // EXISTING_CODE
 
-type RawMonitor struct {
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Monitor struct {
 	Address     base.Address `json:"address"`
 	Deleted     bool         `json:"deleted"`
 	FileSize    int64        `json:"fileSize"`
 	LastScanned uint32       `json:"lastScanned"`
 	NRecords    int64        `json:"nRecords"`
-	raw         *RawMonitor  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -38,16 +32,8 @@ func (s Monitor) String() string {
 	return string(bytes)
 }
 
-func (s *Monitor) Raw() *RawMonitor {
-	return s.raw
-}
-
-func (s *Monitor) SetRaw(raw *RawMonitor) {
-	s.raw = raw
-}
-
-func (s *Monitor) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -68,13 +54,13 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOptions map[str
 	if verbose {
 		model["lastScanned"] = s.LastScanned
 		model["deleted"] = s.Deleted
-		if extraOptions["testMode"] == true {
+		if extraOpts["testMode"] == true {
 			model["lastScanned"] = "--lastScanned--"
 		}
 		order = append(order, "lastScanned")
 		order = append(order, "deleted")
-		if extraOptions["namesMap"] != nil {
-			name := extraOptions["namesMap"].(map[base.Address]Name)[s.Address]
+		if extraOpts["namesMap"] != nil {
+			name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 			if name.Address.Hex() != "0x0" {
 				model["name"] = name
 				order = append(order, "name")

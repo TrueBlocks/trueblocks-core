@@ -15,15 +15,8 @@ import (
 
 // EXISTING_CODE
 
-type RawTimestampCount struct {
-	Count string `json:"count"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type TimestampCount struct {
-	Count uint64             `json:"count"`
-	raw   *RawTimestampCount `json:"-"`
+	Count uint64 `json:"count"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -33,20 +26,12 @@ func (s TimestampCount) String() string {
 	return string(bytes)
 }
 
-func (s *TimestampCount) Raw() *RawTimestampCount {
-	return s.raw
-}
-
-func (s *TimestampCount) SetRaw(raw *RawTimestampCount) {
-	s.raw = raw
-}
-
-func (s *TimestampCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *TimestampCount) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"count": s.Count,
 	}
 	order = []string{

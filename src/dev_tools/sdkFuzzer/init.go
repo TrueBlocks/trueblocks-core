@@ -26,7 +26,7 @@ func DoInit() {
 	opts := sdk.InitOptions{}
 	ShowHeader("DoInit", opts)
 
-	globs := noCache(noRaw(noEther(globals)))
+	globs := noCache(noEther(globals))
 	// firstBlock is a <blknum> --other
 	// publisher is not fuzzed
 	// sleep is not fuzzed

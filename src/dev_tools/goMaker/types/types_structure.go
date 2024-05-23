@@ -18,12 +18,12 @@ type Structure struct {
 	DocNotes    string    `json:"doc_notes,omitempty" toml:"doc_notes" csv:"doc_notes"`
 	ProducedBy  string    `json:"produced_by,omitempty" toml:"produced_by"`
 	ContainedBy string    `json:"contained_by,omitempty" toml:"contained_by"`
-	GoModel     string    `json:"go_model,omitempty" toml:"go_model"`
 	CacheAs     string    `json:"cache_as,omitempty" toml:"cache_as"`
 	CacheBy     string    `json:"cache_by,omitempty" toml:"cache_by"`
 	CacheType   string    `json:"cache_type,omitempty" toml:"cache_type"`
 	DisableGo   bool      `json:"disable_go,omitempty" toml:"disable_go"`
 	DisableDocs bool      `json:"disable_docs,omitempty" toml:"disable_docs"`
+	Attributes  string    `json:"attributes,omitempty" toml:"attributes"`
 	Members     []Member  `json:"members,omitempty" toml:"members"`
 	Route       string    `json:"-" toml:"-"`
 	Producers   []string  `json:"-" toml:"-"`
@@ -68,6 +68,10 @@ func (s *Structure) IsCacheAsGroup() bool {
 	return s.CacheAs == "group"
 }
 
+func (s *Structure) IsSimpOnly() bool {
+	return strings.Contains(s.Attributes, "simponly")
+}
+
 func (s *Structure) HasNotes() bool {
 	thePath := "src/dev_tools/goMaker/templates/model-intros/" + CamelCase(s.Class) + ".notes.md"
 	return file.FileExists(thePath)
@@ -93,19 +97,6 @@ func (s *Structure) GroupName() string {
 	}
 	logger.Fatal("unknown group: " + s.DocGroup)
 	return ""
-}
-
-func (s *Structure) ModelName(which string) string {
-	if s.GoModel != "" {
-		if which == "simple" {
-			return strings.Replace(s.GoModel, "Block[Tx]", "Block[Tx string | Transaction]", -1)
-		} else if which == "cache" {
-			return strings.Replace(s.GoModel, "Block[Tx]", "Block[string]", -1)
-		}
-		return s.GoModel
-	}
-	return s.Class
-
 }
 
 func (s *Structure) ModelIntro() string {
@@ -146,6 +137,13 @@ func (s *Structure) ModelNotes() string {
 	tmplName := "Notes" + s.Class
 	tmpl := strings.Trim(getContents("templates/model-intros/"+CamelCase(s.Class)+".notes"), ws)
 	return strings.Trim(s.executeTemplate(tmplName, tmpl), ws)
+}
+
+func (s *Structure) CacheLoc() string {
+	if s.Class == "LightBlock" {
+		return "Block"
+	}
+	return s.Class
 }
 
 func (s *Structure) CacheIdStr() string {

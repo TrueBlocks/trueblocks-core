@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -26,10 +27,10 @@ func (opts *LogsOptions) HandleShow() error {
 	nErrors := 0
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
-	logFilter := types.NewLogFilter(opts.Emitter, opts.Topic)
+	logFilter := rpc.NewLogFilter(opts.Emitter, opts.Topic)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Log], errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err
@@ -120,9 +121,9 @@ func (opts *LogsOptions) HandleShow() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

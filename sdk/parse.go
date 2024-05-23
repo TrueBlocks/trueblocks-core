@@ -12,11 +12,11 @@ import (
 // ParseFunc is a function that takes a key/value pair and returns `true,nil` if the key/value pair
 // was parsed and the value is valid. If the key is found, but the value is invalid, it returns
 // `false, error` with a non-nil error. If it doesn't recognize the key, it returns `false, nil`.
-type ParseFunc func(target interface{}, key, value string) (bool, error)
+type ParseFunc func(target any, key, value string) (bool, error)
 
 // assignValuesFromArgs assumes the args array is a valid url (with & and = separating options and bools
 // with no value). It parses the URL into the target.
-func assignValuesFromArgs(args []string, parseFunc ParseFunc, target interface{}, globals *Globals) error {
+func assignValuesFromArgs(args []string, parseFunc ParseFunc, target any, globals *Globals) error {
 	if len(args) == 0 || (len(args) == 1 && args[0] == "") {
 		return nil
 	}
@@ -88,7 +88,7 @@ func assignValuesFromArgs(args []string, parseFunc ParseFunc, target interface{}
 	return nil
 }
 
-func structToValues(data interface{}) (url.Values, error) {
+func structToValues(data any) (url.Values, error) {
 	values := make(url.Values)
 	dataVal := reflect.ValueOf(data)
 

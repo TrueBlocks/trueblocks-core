@@ -36,7 +36,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 	)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawWithdrawal], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Withdrawal], errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
@@ -47,7 +47,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 				continue
 
 			} else {
-				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Block[string]](apps, filter.Reversed); err != nil {
+				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.LightBlock](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					cancel()
 
@@ -66,11 +66,11 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 						}
 
 						for app := range thisMap {
-							thisMap[app] = new(types.Block[string])
+							thisMap[app] = new(types.LightBlock)
 						}
 
-						iterFunc := func(app types.Appearance, value *types.Block[string]) error {
-							var block types.Block[string]
+						iterFunc := func(app types.Appearance, value *types.LightBlock) error {
+							var block types.LightBlock
 							if block, err = opts.Conn.GetBlockHeaderByNumber(base.Blknum(app.BlockNumber)); err != nil {
 								return err
 							}
@@ -133,7 +133,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 		"export":   true,
 	}
@@ -143,9 +143,9 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
 		} else {
-			extra["namesMap"] = namesMap
+			extraOpts["namesMap"] = namesMap
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

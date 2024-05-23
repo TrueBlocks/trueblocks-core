@@ -24,21 +24,6 @@ import (
 
 // EXISTING_CODE
 
-type RawTrace struct {
-	Action           RawTraceAction  `json:"action"`
-	BlockHash        string          `json:"blockHash"`
-	BlockNumber      base.Blknum     `json:"blockNumber"`
-	Error            string          `json:"error"`
-	Result           *RawTraceResult `json:"result"`
-	Subtraces        uint64          `json:"subtraces"`
-	TraceAddress     []uint64        `json:"traceAddress"`
-	TransactionHash  string          `json:"transactionHash"`
-	TransactionIndex base.Txnum      `json:"transactionPosition"`
-	TraceType        string          `json:"type"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Trace struct {
 	Action           *TraceAction   `json:"action"`
 	ArticulatedTrace *Function      `json:"articulatedTrace,omitempty"`
@@ -52,10 +37,10 @@ type Trace struct {
 	TransactionHash  base.Hash      `json:"transactionHash"`
 	TransactionIndex base.Txnum     `json:"transactionIndex"`
 	TraceType        string         `json:"type,omitempty"`
-	raw              *RawTrace      `json:"-"`
 	// EXISTING_CODE
-	TraceIndex base.Tracenum `json:"-"`
-	sortString string        `json:"-"`
+	TraceIndex          base.Tracenum `json:"-"`
+	sortString          string        `json:"-"`
+	TransactionPosition base.Txnum    `json:"transactionPosition,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -64,20 +49,12 @@ func (s Trace) String() string {
 	return string(bytes)
 }
 
-func (s *Trace) Raw() *RawTrace {
-	return s.raw
-}
-
-func (s *Trace) SetRaw(raw *RawTrace) {
-	s.raw = raw
-}
-
-func (s *Trace) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"blockHash":        s.BlockHash,
 		"blockNumber":      s.BlockNumber,
 		"result":           s.Result,
@@ -105,10 +82,10 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOptions map[strin
 		"result::output",
 	}
 
-	var articulatedTrace map[string]interface{}
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTrace != nil
+	var articulatedTrace map[string]any
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTrace != nil
 	if isArticulated {
-		articulatedTrace = map[string]interface{}{
+		articulatedTrace = map[string]any{
 			"name": s.ArticulatedTrace.Name,
 		}
 		inputModels := parametersToMap(s.ArticulatedTrace.Inputs)
@@ -138,10 +115,10 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOptions map[strin
 			model["type"] = s.TraceType
 		}
 		if s.Action != nil {
-			model["action"] = s.Action.Model(chain, format, verbose, extraOptions).Data
+			model["action"] = s.Action.Model(chain, format, verbose, extraOpts).Data
 		}
 		if s.Result != nil {
-			model["result"] = s.Result.Model(chain, format, verbose, extraOptions).Data
+			model["result"] = s.Result.Model(chain, format, verbose, extraOpts).Data
 		}
 
 		if isArticulated {

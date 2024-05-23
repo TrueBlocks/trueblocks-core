@@ -19,31 +19,6 @@ import (
 
 // EXISTING_CODE
 
-type RawStatus struct {
-	CachePath     string   `json:"cachePath"`
-	Caches        []string `json:"caches"`
-	Chain         string   `json:"chain"`
-	ChainConfig   string   `json:"chainConfig"`
-	ChainId       string   `json:"chainId"`
-	Chains        []string `json:"chains"`
-	ClientVersion string   `json:"clientVersion"`
-	HasEsKey      string   `json:"hasEsKey"`
-	HasPinKey     string   `json:"hasPinKey"`
-	IndexPath     string   `json:"indexPath"`
-	IsApi         string   `json:"isApi"`
-	IsArchive     string   `json:"isArchive"`
-	IsScraping    string   `json:"isScraping"`
-	IsTesting     string   `json:"isTesting"`
-	IsTracing     string   `json:"isTracing"`
-	NetworkId     string   `json:"networkId"`
-	Progress      string   `json:"progress"`
-	RootConfig    string   `json:"rootConfig"`
-	RpcProvider   string   `json:"rpcProvider"`
-	Version       string   `json:"version"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Status struct {
 	CachePath     string      `json:"cachePath,omitempty"`
 	Caches        []CacheItem `json:"caches"`
@@ -65,7 +40,6 @@ type Status struct {
 	RootConfig    string      `json:"rootConfig,omitempty"`
 	RpcProvider   string      `json:"rpcProvider,omitempty"`
 	Version       string      `json:"version,omitempty"`
-	raw           *RawStatus  `json:"-"`
 	// EXISTING_CODE
 	Meta  *MetaData `json:"meta,omitempty"`
 	Diffs *MetaData `json:"diffs,omitempty"`
@@ -77,20 +51,12 @@ func (s Status) String() string {
 	return string(bytes)
 }
 
-func (s *Status) Raw() *RawStatus {
-	return s.raw
-}
-
-func (s *Status) SetRaw(raw *RawStatus) {
-	s.raw = raw
-}
-
-func (s *Status) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"cachePath":         s.CachePath,
 		"chainConfig":       s.ChainConfig,
 		"clientVersion":     s.ClientVersion,
@@ -121,12 +87,12 @@ func (s *Status) Model(chain, format string, verbose bool, extraOptions map[stri
 		"trueblocksVersion",
 	}
 
-	if extraOptions != nil && extraOptions["showProgress"] == true {
+	if extraOpts != nil && extraOpts["showProgress"] == true {
 		model["progress"] = s.Progress
 		order = append(order, "progress")
 	}
 
-	testMode := extraOptions["testMode"] == true
+	testMode := extraOpts["testMode"] == true
 	if len(s.Caches) > 0 {
 		if testMode {
 			for i := 0; i < len(s.Caches); i++ {
@@ -141,9 +107,9 @@ func (s *Status) Model(chain, format string, verbose bool, extraOptions map[stri
 		order = append(order, "caches")
 	}
 
-	if extraOptions["chains"] == true {
+	if extraOpts["chains"] == true {
 		var chains []Chain
-		if extraOptions["testMode"] == true {
+		if extraOpts["testMode"] == true {
 			ch := Chain{
 				Chain:         "testChain",
 				ChainId:       12345,

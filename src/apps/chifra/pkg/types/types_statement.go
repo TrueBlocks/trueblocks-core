@@ -23,42 +23,6 @@ import (
 
 // EXISTING_CODE
 
-type RawStatement struct {
-	AccountedFor        string `json:"accountedFor"`
-	AmountIn            string `json:"amountIn"`
-	AmountOut           string `json:"amountOut"`
-	AssetAddr           string `json:"assetAddr"`
-	AssetSymbol         string `json:"assetSymbol"`
-	BegBal              string `json:"begBal"`
-	BlockNumber         string `json:"blockNumber"`
-	CorrectingIn        string `json:"correctingIn"`
-	CorrectingOut       string `json:"correctingOut"`
-	CorrectingReason    string `json:"correctingReason"`
-	Decimals            string `json:"decimals"`
-	EndBal              string `json:"endBal"`
-	GasOut              string `json:"gasOut"`
-	InternalIn          string `json:"internalIn"`
-	InternalOut         string `json:"internalOut"`
-	LogIndex            string `json:"logIndex"`
-	MinerBaseRewardIn   string `json:"minerBaseRewardIn"`
-	MinerNephewRewardIn string `json:"minerNephewRewardIn"`
-	MinerTxFeeIn        string `json:"minerTxFeeIn"`
-	MinerUncleRewardIn  string `json:"minerUncleRewardIn"`
-	PrefundIn           string `json:"prefundIn"`
-	PrevBal             string `json:"prevBal"`
-	PriceSource         string `json:"priceSource"`
-	Recipient           string `json:"recipient"`
-	SelfDestructIn      string `json:"selfDestructIn"`
-	SelfDestructOut     string `json:"selfDestructOut"`
-	Sender              string `json:"sender"`
-	SpotPrice           string `json:"spotPrice"`
-	Timestamp           string `json:"timestamp"`
-	TransactionHash     string `json:"transactionHash"`
-	TransactionIndex    string `json:"transactionIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Statement struct {
 	AccountedFor        base.Address   `json:"accountedFor"`
 	AmountIn            base.Wei       `json:"amountIn,omitempty"`
@@ -91,7 +55,6 @@ type Statement struct {
 	Timestamp           base.Timestamp `json:"timestamp"`
 	TransactionHash     base.Hash      `json:"transactionHash"`
 	TransactionIndex    base.Txnum     `json:"transactionIndex"`
-	raw                 *RawStatement  `json:"-"`
 	// EXISTING_CODE
 	ReconType ReconType `json:"-"`
 	AssetType string    `json:"-"`
@@ -103,16 +66,8 @@ func (s Statement) String() string {
 	return string(bytes)
 }
 
-func (s *Statement) Raw() *RawStatement {
-	return s.raw
-}
-
-func (s *Statement) SetRaw(raw *RawStatement) {
-	s.raw = raw
-}
-
-func (s *Statement) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -177,7 +132,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOptions map[s
 		"endBalDiff", "endBalCalc", "correctingReason",
 	}
 
-	asEther := extraOptions["ether"] == true
+	asEther := extraOpts["ether"] == true
 	if asEther {
 		model["begBalEth"] = s.BegBal.ToEtherStr(decimals)
 		model["amountNetEth"] = s.AmountNet().ToEtherStr(decimals)

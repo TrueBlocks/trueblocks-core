@@ -12,9 +12,9 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Txnum) (tx *types.Transaction, err error) {
+func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Txnum) (*types.Transaction, error) {
 	if conn.StoreReadable() {
-		tx = &types.Transaction{
+		tx := &types.Transaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
@@ -25,41 +25,44 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Tx
 		}
 	}
 
-	rawTx, err := conn.getTransactionRaw(notAHash, notAHash, bn, txid)
+	trans, err := conn.getTransactionFromRpc(notAHash, notAHash, bn, txid)
 	if err != nil {
-		return
+		return nil, err
 	}
 
 	blockTs := conn.GetBlockTimestamp(bn)
 	receipt, err := conn.GetReceipt(bn, txid, blockTs)
 	if err != nil {
-		return
+		return nil, err
 	}
 
-	tx = types.NewTransaction(rawTx, &receipt, blockTs)
+	trans.Timestamp = blockTs
+	trans.HasToken = types.IsTokenFunction(trans.Input)
+	trans.GasUsed = receipt.GasUsed
+	trans.IsError = receipt.IsError
+	trans.Receipt = &receipt
+
 	if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
-		_ = conn.Store.Write(tx, nil)
+		_ = conn.Store.Write(trans, nil)
 	}
 
-	return
+	return trans, nil
 }
 
-// TODO: See #3361
-
-func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchTraces bool) (tx *types.Transaction, err error) {
-	raw := types.RawAppearance{
+func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchTraces bool) (*types.Transaction, error) {
+	theApp := types.Appearance{
 		BlockNumber:      app.BlockNumber,
 		TransactionIndex: app.TransactionIndex,
 	}
 	if !app.Address.IsZero() {
-		raw.Address = app.Address.Hex()
+		theApp.Address = app.Address
 	}
 
-	bn := base.Blknum(raw.BlockNumber)
-	txid := base.Txnum(raw.TransactionIndex)
+	bn := base.Blknum(theApp.BlockNumber)
+	txid := base.Txnum(theApp.TransactionIndex)
 
 	if conn.StoreReadable() {
-		tx = &types.Transaction{
+		tx := &types.Transaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
@@ -77,68 +80,88 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 		}
 	}
 
-	tx = nil
+	blockTs := conn.GetBlockTimestamp(bn)
 	if bn == 0 {
-		if tx, err = conn.GetTransactionPrefundByApp(&raw); err != nil {
+		if tx, err := conn.GetTransactionPrefundByApp(&theApp); err != nil {
 			return nil, err
+		} else {
+			tx.Timestamp = blockTs
+			if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
+				_ = conn.Store.Write(tx, nil)
+			}
+			return tx, nil
 		}
 	} else if txid == types.BlockReward || txid == types.MisconfigReward || txid == types.ExternalReward {
-		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.BlockReward, &raw); err != nil {
+		if tx, err := conn.GetTransactionRewardByTypeAndApp(types.BlockReward, &theApp); err != nil {
 			return nil, err
+		} else {
+			tx.Timestamp = blockTs
+			if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
+				_ = conn.Store.Write(tx, nil)
+			}
+			return tx, nil
 		}
 	} else if txid == types.UncleReward {
-		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.UncleReward, &raw); err != nil {
+		if tx, err := conn.GetTransactionRewardByTypeAndApp(types.UncleReward, &theApp); err != nil {
 			return nil, err
+		} else {
+			tx.Timestamp = blockTs
+			if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
+				_ = conn.Store.Write(tx, nil)
+			}
+			return tx, nil
 		}
 	} else if txid == types.WithdrawalAmt {
-		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.WithdrawalAmt, &raw); err != nil {
+		if tx, err := conn.GetTransactionRewardByTypeAndApp(types.WithdrawalAmt, &theApp); err != nil {
 			return nil, err
+		} else {
+			tx.Timestamp = blockTs
+			if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
+				_ = conn.Store.Write(tx, nil)
+			}
+			return tx, nil
 		}
-	}
-
-	blockTs := conn.GetBlockTimestamp(bn)
-	if tx != nil {
-		tx.Timestamp = blockTs
-		if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
-			_ = conn.Store.Write(tx, nil)
-		}
-		return tx, nil
 	}
 
 	receipt, err := conn.GetReceipt(bn, txid, blockTs)
 	if err != nil {
-		return
+		return nil, err
 	}
 
-	rawTx, err := conn.getTransactionRaw(notAHash, notAHash, bn, txid)
+	trans, err := conn.getTransactionFromRpc(notAHash, notAHash, bn, txid)
 	if err != nil {
-		return
+		return nil, err
 	}
 
-	tx = types.NewTransaction(rawTx, &receipt, blockTs)
+	trans.Timestamp = blockTs
+	trans.HasToken = types.IsTokenFunction(trans.Input)
+	trans.GasUsed = receipt.GasUsed
+	trans.IsError = receipt.IsError
+	trans.Receipt = &receipt
 
 	if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, blockTs) {
-		_ = conn.Store.Write(tx, nil)
+		_ = conn.Store.Write(trans, nil)
 	}
 
 	if fetchTraces {
-		traces, err := conn.GetTracesByTransactionHash(tx.Hash.Hex(), tx)
+		traces, err := conn.GetTracesByTransactionHash(trans.Hash.Hex(), trans)
 		if err != nil {
 			return nil, err
 		}
-		tx.Traces = traces
+		trans.Traces = traces
 	}
 
-	return
+	return trans, err
 }
 
-func (conn *Connection) GetTransactionAppByHash(hash string) (types.RawAppearance, error) {
-	var ret types.RawAppearance
-	if rawTx, err := conn.getTransactionRaw(notAHash, base.HexToHash(hash), base.NOPOSN, base.NOPOSN); err != nil {
+// GetTransactionAppByHash returns a transaction's appearance if it's a valid transaction
+func (conn *Connection) GetTransactionAppByHash(hash string) (types.Appearance, error) {
+	var ret types.Appearance
+	if trans, err := conn.getTransactionFromRpc(notAHash, base.HexToHash(hash), base.NOPOSN, base.NOPOSN); err != nil {
 		return ret, err
 	} else {
-		ret.BlockNumber = uint32(base.MustParseBlknum(rawTx.BlockNumber))
-		ret.TransactionIndex = uint32(base.MustParseUint64(rawTx.TransactionIndex))
+		ret.BlockNumber = uint32(trans.BlockNumber)
+		ret.TransactionIndex = uint32(trans.TransactionIndex)
 		return ret, nil
 	}
 }
@@ -196,7 +219,7 @@ func (conn *Connection) GetTransactionHashByHashAndID(hash string, txId base.Txn
 	}
 }
 
-func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx *types.Transaction, err error) {
+func (conn *Connection) GetTransactionPrefundByApp(theApp *types.Appearance) (tx *types.Transaction, err error) {
 	// TODO: performance - This loads and then drops the file every time it's called. Quite slow.
 	// TODO: performance - in the old C++ we stored these values in a pre fundAddrMap so that given a txid in block zero
 	// TODO: performance - we knew which address was granted allocation at that transaction.
@@ -213,15 +236,15 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 			ts = block.Timestamp
 		}
 
-		entry := (*prefundMap)[base.HexToAddress(raw.Address)]
-		if entry.Address.Hex() == raw.Address {
+		entry := (*prefundMap)[theApp.Address]
+		if entry.Address == theApp.Address {
 			ret := types.Transaction{
 				BlockHash:        blockHash,
-				BlockNumber:      base.Blknum(raw.BlockNumber),
-				TransactionIndex: base.Txnum(raw.TransactionIndex),
+				BlockNumber:      base.Blknum(theApp.BlockNumber),
+				TransactionIndex: base.Txnum(theApp.TransactionIndex),
 				Timestamp:        ts,
 				From:             base.PrefundSender,
-				To:               base.HexToAddress(raw.Address),
+				To:               theApp.Address,
 				Value:            entry.Prefund,
 			}
 			return &ret, nil
@@ -232,22 +255,22 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 
 // TODO: This is not cross-chain correct nor does it work properly for post-merge
 
-func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *types.RawAppearance) (*types.Transaction, error) {
-	if block, err := conn.GetBlockBodyByNumber(base.Blknum(raw.BlockNumber)); err != nil {
+func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, theApp *types.Appearance) (*types.Transaction, error) {
+	if block, err := conn.GetBlockBodyByNumber(base.Blknum(theApp.BlockNumber)); err != nil {
 		return nil, err
 	} else {
 		if rt == types.WithdrawalAmt {
 			tx := &types.Transaction{
-				BlockNumber:      base.Blknum(raw.BlockNumber),
-				TransactionIndex: base.Txnum(raw.TransactionIndex),
+				BlockNumber:      base.Blknum(theApp.BlockNumber),
+				TransactionIndex: base.Txnum(theApp.TransactionIndex),
 				Timestamp:        block.Timestamp,
 				From:             base.WithdrawalSender,
-				To:               base.HexToAddress(raw.Address),
+				To:               theApp.Address,
 			}
 			return tx, nil
 		}
 
-		if uncles, err := conn.GetUncleBodiesByNumber(base.Blknum(raw.BlockNumber)); err != nil {
+		if uncles, err := conn.GetUncleBodiesByNumber(base.Blknum(theApp.BlockNumber)); err != nil {
 			return nil, err
 		} else {
 			var blockReward = base.NewWei(0)
@@ -255,12 +278,12 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 			var feeReward = base.NewWei(0)
 			var uncleReward = base.NewWei(0)
 
-			sender := base.HexToAddress(raw.Address)
-			bn := base.Blknum(raw.BlockNumber)
+			sender := theApp.Address
+			bn := base.Blknum(theApp.BlockNumber)
 			blockReward = conn.getBlockReward(bn)
 			switch rt {
 			case types.BlockReward:
-				if block.Miner.Hex() == raw.Address {
+				if block.Miner == theApp.Address {
 					sender = base.BlockRewardSender
 					nUncles := len(uncles)
 					if nUncles > 0 {
@@ -277,7 +300,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 				}
 			case types.UncleReward:
 				for _, uncle := range uncles {
-					if uncle.Miner.Hex() == raw.Address {
+					if uncle.Miner == theApp.Address {
 						sender = base.UncleRewardSender
 						if bn < uncle.BlockNumber+6 {
 							diff := (uncle.BlockNumber + 8 - bn) // positive since +6 < bn
@@ -286,10 +309,10 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 						}
 					}
 				}
-				if block.Miner.Hex() == raw.Address {
+				if block.Miner == theApp.Address {
 					sender = base.BlockRewardSender // if it's both, it's the block reward
 					// The uncle miner may also have been the miner of the block
-					if minerTx, err := conn.GetTransactionRewardByTypeAndApp(types.BlockReward, raw); err != nil {
+					if minerTx, err := conn.GetTransactionRewardByTypeAndApp(types.BlockReward, theApp); err != nil {
 						return nil, err
 					} else {
 						blockReward = &minerTx.Rewards.Block
@@ -309,12 +332,12 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 
 			rewards, total := types.NewReward(blockReward, nephewReward, feeReward, uncleReward)
 			tx := &types.Transaction{
-				BlockNumber:      base.Blknum(raw.BlockNumber),
-				TransactionIndex: base.Txnum(raw.TransactionIndex),
+				BlockNumber:      base.Blknum(theApp.BlockNumber),
+				TransactionIndex: base.Txnum(theApp.TransactionIndex),
 				BlockHash:        block.Hash,
 				Timestamp:        block.Timestamp,
 				From:             sender,
-				To:               base.HexToAddress(raw.Address),
+				To:               theApp.Address,
 				Value:            total,
 				Rewards:          &rewards,
 			}
@@ -344,7 +367,7 @@ var (
 	notAHash = base.Hash{}
 )
 
-func (conn *Connection) getTransactionRaw(blkHash base.Hash, txHash base.Hash, bn base.Blknum, txid base.Txnum) (raw *types.RawTransaction, err error) {
+func (conn *Connection) getTransactionFromRpc(blkHash base.Hash, txHash base.Hash, bn base.Blknum, txid base.Txnum) (*types.Transaction, error) {
 	method := "eth_getTransactionByBlockNumberAndIndex"
 	params := query.Params{fmt.Sprintf("0x%x", bn), fmt.Sprintf("0x%x", txid)}
 	if txHash != notAHash {
@@ -355,12 +378,9 @@ func (conn *Connection) getTransactionRaw(blkHash base.Hash, txHash base.Hash, b
 		params = query.Params{blkHash.Hex(), fmt.Sprintf("0x%x", txid)}
 	}
 
-	if trans, err := query.Query[types.RawTransaction](conn.Chain, method, params); err != nil {
-		return &types.RawTransaction{}, err
+	if trans, err := query.Query[types.Transaction](conn.Chain, method, params); err != nil {
+		return &types.Transaction{}, err
 	} else {
-		if trans.AccessList == nil {
-			trans.AccessList = make([]types.StorageSlot, 0)
-		}
 		return trans, nil
 	}
 }

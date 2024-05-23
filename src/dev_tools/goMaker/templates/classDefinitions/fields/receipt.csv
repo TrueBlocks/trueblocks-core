@@ -8,7 +8,7 @@ gasUsed           ,gas     ,           ,                   ,             ,      
 effectiveGasPrice ,gas     ,           ,omitempty          ,             ,         ,
 isError           ,bool    ,           ,omitempty|simponly ,             ,       5 ,
 logs              ,[]Log   ,           ,                   ,             ,       6 ,a possibly empty array of logs
-logsBloom         ,string  ,           ,omitempty|rawonly  ,             ,         ,
+logsBloom         ,string  ,           ,omitempty|removed  ,             ,         ,
 status            ,value   ,           ,                   ,2.5.9:uint32 ,       7 ,`1` on transaction suceess&#44; `null` if tx preceeds Byzantium&#44; `0` otherwise
 to                ,address ,           ,omitempty          ,             ,         ,
 transactionHash   ,hash    ,           ,                   ,             ,       8 ,

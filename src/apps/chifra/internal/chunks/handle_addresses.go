@@ -24,7 +24,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	been_here := 0
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawChunkAddress], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.ChunkAddress], errorChan chan error) {
 		var showAddresses func(walker *walk.CacheWalker, path string, first bool) (bool, error)
 		if opts.Globals.Verbose {
 			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {

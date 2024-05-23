@@ -48,7 +48,7 @@ func (opts *initOptionsInternal) InitBytes(w io.Writer) error {
 }
 
 // initParseFunc handles special cases such as structs and enums (if any).
-func initParseFunc(target interface{}, key, value string) (bool, error) {
+func initParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*initOptionsInternal)
 	if !ok {

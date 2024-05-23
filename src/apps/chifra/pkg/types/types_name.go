@@ -20,24 +20,6 @@ import (
 
 // EXISTING_CODE
 
-type RawName struct {
-	Address    string `json:"address"`
-	Decimals   string `json:"decimals"`
-	Deleted    string `json:"deleted"`
-	IsContract string `json:"isContract"`
-	IsCustom   string `json:"isCustom"`
-	IsErc20    string `json:"isErc20"`
-	IsErc721   string `json:"isErc721"`
-	IsPrefund  string `json:"isPrefund"`
-	Name       string `json:"name"`
-	Petname    string `json:"petname"`
-	Source     string `json:"source"`
-	Symbol     string `json:"symbol"`
-	Tags       string `json:"tags"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Name struct {
 	Address    base.Address `json:"address"`
 	Decimals   uint64       `json:"decimals"`
@@ -52,7 +34,6 @@ type Name struct {
 	Source     string       `json:"source"`
 	Symbol     string       `json:"symbol"`
 	Tags       string       `json:"tags"`
-	raw        *RawName     `json:"-"`
 	// EXISTING_CODE
 	Prefund base.Wei `json:"prefund,omitempty"`
 	// EXISTING_CODE
@@ -63,33 +44,25 @@ func (s Name) String() string {
 	return string(bytes)
 }
 
-func (s *Name) Raw() *RawName {
-	return s.raw
-}
-
-func (s *Name) SetRaw(raw *RawName) {
-	s.raw = raw
-}
-
-func (s *Name) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["single"] == "tags" || extraOptions["single"] == "address" {
-		if extraOptions["single"] == "tags" {
+	if extraOpts["single"] == "tags" || extraOpts["single"] == "address" {
+		if extraOpts["single"] == "tags" {
 			model["tags"] = s.Tags
 		} else {
 			model["address"] = s.Address.Hex()
 		}
-		order = append(order, extraOptions["single"].(string))
+		order = append(order, extraOpts["single"].(string))
 		return Model{
 			Data:  model,
 			Order: order,
 		}
 	}
 
-	model = map[string]interface{}{
+	model = map[string]any{
 		"address":  s.Address,
 		"decimals": s.Decimals,
 		"name":     s.Name,
@@ -113,8 +86,8 @@ func (s *Name) Model(chain, format string, verbose bool, extraOptions map[string
 		model["address"] = strings.ToLower(s.Address.String())
 	}
 
-	isExpanded := extraOptions["expand"] == true
-	isPrefund := extraOptions["prefund"] == true
+	isExpanded := extraOpts["expand"] == true
+	isPrefund := extraOpts["prefund"] == true
 	if !isExpanded && !isPrefund {
 		x := []string{}
 		for _, v := range order {

@@ -17,7 +17,7 @@ func (opts *BlocksOptions) HandleTraces() error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Trace], errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
@@ -48,12 +48,12 @@ func (opts *BlocksOptions) HandleTraces() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"uncles":     opts.Uncles,
 		"logs":       opts.Logs,
 		"traces":     opts.Traces,
 		"addresses":  opts.Uniq,
 		"articulate": opts.Articulate,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

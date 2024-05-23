@@ -105,7 +105,7 @@ func articulateArguments(args abi.Arguments, data string, topics []base.Hash, ab
 	}
 
 	// Set values of indexed arguments
-	out := make(map[string]interface{}, len(indexed))
+	out := make(map[string]any, len(indexed))
 	tops := []common.Hash{}
 	for _, hash := range topics {
 		tops = append(tops, hash.Common())

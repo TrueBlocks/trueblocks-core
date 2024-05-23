@@ -28,7 +28,7 @@ CHIFRA="${REPO_ROOT}/src/apps/chifra"
 (cd "$CHIFRA" && go test --tags integration ./...)
 
 #------------------------------------------------
-echo "Reporting on the status of the stests submodule. No update..."
+echo "Reporting on the status of the tests submodule. No update..."
 git -C "$REPO_ROOT" submodule status tests
 
 #------------------------------------------------

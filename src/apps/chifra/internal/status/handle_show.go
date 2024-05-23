@@ -22,7 +22,7 @@ func (opts *StatusOptions) HandleShow() error {
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawStatus], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Status], errorChan chan error) {
 		s, err := opts.GetStatus(opts.Diagnose)
 		if err != nil {
 			errorChan <- err
@@ -37,10 +37,10 @@ func (opts *StatusOptions) HandleShow() error {
 		modelChan <- s
 	}
 
-	extra := map[string]any{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func ToProgress(chain string, diagnose bool, meta *types.MetaData) string {

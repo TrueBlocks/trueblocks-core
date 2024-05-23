@@ -147,7 +147,7 @@ func TestStreamMany(t *testing.T) {
 		FieldType: FieldArray,
 	}
 
-	renderData := func(models chan types.Modeler[types.RawReceipt], errorChan chan error) {
+	renderData := func(models chan types.Modeler[types.Receipt], errorChan chan error) {
 		models <- &types.Receipt{
 			BlockNumber:      123,
 			TransactionIndex: 1,
@@ -195,7 +195,7 @@ func TestStreamMany(t *testing.T) {
 
 func TestApiFormat(t *testing.T) {
 	outputBuffer := &bytes.Buffer{}
-	renderData := func(models chan types.Modeler[types.RawReceipt], errorChan chan error) {
+	fetchData := func(models chan types.Modeler[types.Receipt], errorChan chan error) {
 		models <- &types.Receipt{
 			BlockNumber:      123,
 			TransactionIndex: 1,
@@ -205,7 +205,7 @@ func TestApiFormat(t *testing.T) {
 			IsError:          false,
 		}
 	}
-	err := StreamMany(context.Background(), renderData, OutputOptions{
+	err := StreamMany(context.Background(), fetchData, OutputOptions{
 		Writer: outputBuffer,
 		Format: "api",
 	})

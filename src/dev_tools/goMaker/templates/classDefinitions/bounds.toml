@@ -3,5 +3,6 @@
     doc_group = "01-Accounts"
     doc_descr = "show first block and last block an address appears in along with timestamps and dates"
     doc_route = "115-bounds"
+    attributes = ""
     produced_by = "list"
     contains = "appearance"

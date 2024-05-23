@@ -12,7 +12,6 @@ import (
 // that make sense in the SDK context
 type Globals struct {
 	Ether   bool   `json:"ether,omitempty"`
-	Raw     bool   `json:"raw,omitempty"`
 	Cache   bool   `json:"cache,omitempty"`
 	Decache bool   `json:"decache,omitempty"`
 	Verbose bool   `json:"verbose,omitempty"`

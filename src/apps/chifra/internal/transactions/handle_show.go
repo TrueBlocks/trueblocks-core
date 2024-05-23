@@ -24,7 +24,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Transaction], errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err
@@ -101,10 +101,10 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 		"traces":     opts.Traces,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

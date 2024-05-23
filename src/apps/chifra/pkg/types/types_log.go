@@ -18,24 +18,10 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // EXISTING_CODE
-
-type RawLog struct {
-	Address          string   `json:"address"`
-	BlockHash        string   `json:"blockHash"`
-	BlockNumber      string   `json:"blockNumber"`
-	Data             string   `json:"data"`
-	LogIndex         string   `json:"logIndex"`
-	Topics           []string `json:"topics"`
-	TransactionHash  string   `json:"transactionHash"`
-	TransactionIndex string   `json:"transactionIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
 
 type Log struct {
 	Address          base.Address   `json:"address"`
@@ -48,7 +34,6 @@ type Log struct {
 	Topics           []base.Hash    `json:"topics,omitempty"`
 	TransactionHash  base.Hash      `json:"transactionHash"`
 	TransactionIndex base.Txnum     `json:"transactionIndex"`
-	raw              *RawLog        `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -58,20 +43,12 @@ func (s Log) String() string {
 	return string(bytes)
 }
 
-func (s *Log) Raw() *RawLog {
-	return s.raw
-}
-
-func (s *Log) SetRaw(raw *RawLog) {
-	s.raw = raw
-}
-
-func (s *Log) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"address":          s.Address,
 		"blockHash":        s.BlockHash,
 		"blockNumber":      s.BlockNumber,
@@ -98,7 +75,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOptions map[string]
 		"data",
 	}
 
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedLog != nil
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedLog != nil
 	var articulatedLog = make(map[string]any)
 	if isArticulated {
 		articulatedLog["name"] = s.ArticulatedLog.Name
@@ -333,33 +310,4 @@ func (s *Log) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
-//
-
-func (r *RawLog) RawTo(vals map[string]any) (Log, error) {
-	hash, ok := vals["hash"].(base.Hash)
-	if !ok {
-		logger.Fatal("should not happen ==> hash not found in raw log values")
-	}
-
-	log := Log{
-		Address:          base.HexToAddress(r.Address),
-		BlockNumber:      base.MustParseBlknum(r.BlockNumber),
-		BlockHash:        base.HexToHash(r.BlockHash),
-		TransactionIndex: base.MustParseTxnum(r.TransactionIndex),
-		TransactionHash:  hash,
-		LogIndex:         base.MustParseTxnum(r.LogIndex),
-		Data:             r.Data,
-		raw:              r,
-	}
-	for _, topic := range r.Topics {
-		log.Topics = append(log.Topics, base.HexToHash(topic))
-	}
-
-	if ts, ok := vals["timestamp"].(base.Timestamp); ok && ts != base.NOPOSI {
-		log.Timestamp = ts
-	}
-
-	return log, nil
-}
-
 // EXISTING_CODE

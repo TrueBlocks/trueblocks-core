@@ -32,8 +32,8 @@ func PreRunWithJsonWriter(cmdName string, getOptions func() *globals.GlobalOptio
 		}
 
 		// If we need to output JSON, init JsonWriter...
-		if opts.Format == "json" || opts.ShowRaw {
-			jw := output.NewDefaultJsonWriter(outputWriter, !opts.ShowRaw)
+		if opts.Format == "json" {
+			jw := output.NewDefaultJsonWriter(outputWriter, true)
 			opts.Writer = jw
 		} else {
 			// ...or set the default writer as global writer for the current command
@@ -63,7 +63,7 @@ func PostRunWithJsonWriter(getOptions func() *globals.GlobalOptions) func(cmd *c
 func SetWriterForCommand(cmdName string, opts *globals.GlobalOptions) {
 	// Try to cast the default writer to JsonWriter
 	jw, ok := opts.Writer.(*output.JsonWriter)
-	wantsJson := (opts.Format == "json" || opts.ShowRaw)
+	wantsJson := (opts.Format == "json")
 
 	// Global writer is set to JsonWriter, but this command wants to output
 	// a different format. We have to close JsonWriter so that closing brackets
@@ -81,7 +81,7 @@ func SetWriterForCommand(cmdName string, opts *globals.GlobalOptions) {
 	// writer
 	if !ok && wantsJson {
 		w := opts.GetOutputFileWriter()
-		jw := output.NewDefaultJsonWriter(w, !opts.ShowRaw)
+		jw := output.NewDefaultJsonWriter(w, true)
 		opts.Writer = jw
 	}
 

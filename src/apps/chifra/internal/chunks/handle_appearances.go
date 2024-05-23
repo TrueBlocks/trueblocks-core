@@ -22,7 +22,7 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Appearance], errorChan chan error) {
 		showAppearances := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showAppearances")
@@ -78,8 +78,8 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []base.Blknum) error {
 		}
 	}
 
-	extra := map[string]any{
+	extraOpts := map[string]any{
 		"appearances": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

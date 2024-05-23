@@ -24,7 +24,6 @@ Flags:
   -f, --filter string   call the node's trace_filter routine with bang-separated filter
   -U, --count           display only the number of traces for the transaction (fast)
   -H, --ether           specify value in ether
-  -w, --raw             report JSON data from the source with minimal processing
   -o, --cache           force the results of the query into the cache
   -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]

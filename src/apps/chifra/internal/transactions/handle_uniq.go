@@ -17,7 +17,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Appearance], errorChan chan error) {
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
 			Enabled: !testMode && !logger.IsTerminal(),
@@ -30,16 +30,16 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 		}
 
 		for _, rng := range opts.TransactionIds {
-			txIds, err := rng.ResolveTxs(chain)
+			apps, err := rng.ResolveTxs(chain)
 			if err != nil && !errors.Is(err, ethereum.NotFound) {
 				errorChan <- err
 				cancel()
 			}
 
-			for _, raw := range txIds {
+			for _, app := range apps {
 				app := types.Appearance{
-					BlockNumber:      raw.BlockNumber,
-					TransactionIndex: raw.TransactionIndex,
+					BlockNumber:      app.BlockNumber,
+					TransactionIndex: app.TransactionIndex,
 				}
 				bn := base.Blknum(app.BlockNumber)
 				ts := opts.Conn.GetBlockTimestamp(bn)
@@ -56,8 +56,8 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 		bar.Finish(true /* newLine */)
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"uniq": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

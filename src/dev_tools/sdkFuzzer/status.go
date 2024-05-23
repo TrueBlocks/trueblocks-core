@@ -26,7 +26,7 @@ func DoStatus() {
 	opts := sdk.StatusOptions{}
 	ShowHeader("DoStatus", opts)
 
-	globs := noCache(noRaw(noEther(globals)))
+	globs := noCache(noEther(globals))
 	chains := []bool{false, true}
 	// firstRecord is not fuzzed
 	// maxRecords is not fuzzed

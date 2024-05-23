@@ -27,7 +27,7 @@ func DoList() {
 	opts := sdk.ListOptions{}
 	ShowHeader("DoList", opts)
 
-	globs := noCache(noRaw(noEther(globals)))
+	globs := noCache(noEther(globals))
 	noZero := []bool{false, true}
 	unripe := []bool{false, true}
 	silent := []bool{false, true}
@@ -121,7 +121,7 @@ func TestList(which, value, fn string, opts *sdk.ListOptions) {
 		if count, _, err := opts.ListCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.AppearanceCount](fn, count); err != nil {
+			if err := SaveToFile[types.Monitor](fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

@@ -22,17 +22,6 @@ import (
 
 // EXISTING_CODE
 
-type RawWithdrawal struct {
-	Address        string `json:"address"`
-	Amount         string `json:"amount"`
-	BlockNumber    string `json:"blockNumber"`
-	Index          string `json:"index"`
-	Timestamp      string `json:"timestamp"`
-	ValidatorIndex string `json:"validatorIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Withdrawal struct {
 	Address        base.Address   `json:"address"`
 	Amount         base.Wei       `json:"amount"`
@@ -40,7 +29,6 @@ type Withdrawal struct {
 	Index          base.Value     `json:"index"`
 	Timestamp      base.Timestamp `json:"timestamp"`
 	ValidatorIndex base.Value     `json:"validatorIndex"`
-	raw            *RawWithdrawal `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -50,20 +38,12 @@ func (s Withdrawal) String() string {
 	return string(bytes)
 }
 
-func (s *Withdrawal) Raw() *RawWithdrawal {
-	return s.raw
-}
-
-func (s *Withdrawal) SetRaw(raw *RawWithdrawal) {
-	s.raw = raw
-}
-
-func (s *Withdrawal) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Withdrawal) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"address":        s.Address,
 		"amount":         s.Amount.String(),
 		"blockNumber":    s.BlockNumber,
@@ -83,7 +63,7 @@ func (s *Withdrawal) Model(chain, format string, verbose bool, extraOptions map[
 		"amount",
 	}
 
-	asEther := extraOptions["ether"] == true
+	asEther := extraOpts["ether"] == true
 	if asEther {
 		model["ether"] = s.Amount.ToEtherStr(18)
 		order = append(order, "ether")

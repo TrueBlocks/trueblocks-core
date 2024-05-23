@@ -33,14 +33,6 @@ type ChunkAppearance = Appearance
 
 // EXISTING_CODE
 
-type RawAppearance struct {
-	Address          string `json:"address"`
-	BlockNumber      uint32 `json:"blockNumber"`
-	TransactionIndex uint32 `json:"transactionIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Appearance struct {
 	Address          base.Address   `json:"address"`
 	BlockNumber      uint32         `json:"blockNumber"`
@@ -48,7 +40,6 @@ type Appearance struct {
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TraceIndex       uint32         `json:"traceIndex,omitempty"`
 	TransactionIndex uint32         `json:"transactionIndex"`
-	raw              *RawAppearance `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -58,21 +49,13 @@ func (s Appearance) String() string {
 	return string(bytes)
 }
 
-func (s *Appearance) Raw() *RawAppearance {
-	return s.raw
-}
-
-func (s *Appearance) SetRaw(raw *RawAppearance) {
-	s.raw = raw
-}
-
-func (s *Appearance) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["appearances"] == true {
-		model = map[string]interface{}{
+	if extraOpts["appearances"] == true {
+		model = map[string]any{
 			"blockNumber":      s.BlockNumber,
 			"transactionIndex": s.TransactionIndex,
 		}
@@ -87,7 +70,7 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOptions map[
 		}
 	}
 
-	model = map[string]interface{}{
+	model = map[string]any{
 		"address":          s.Address,
 		"blockNumber":      s.BlockNumber,
 		"transactionIndex": s.TransactionIndex,
@@ -98,15 +81,15 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOptions map[
 		"transactionIndex",
 	}
 
-	if extraOptions["namesMap"] != nil {
-		name := extraOptions["namesMap"].(map[base.Address]Name)[s.Address]
+	if extraOpts["namesMap"] != nil {
+		name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 		if name.Address.Hex() != "0x0" {
 			model["name"] = name
 			order = append(order, "name")
 		}
 	}
 
-	if extraOptions["uniq"] == true {
+	if extraOpts["uniq"] == true {
 		if s.TraceIndex > 0 {
 			model["traceIndex"] = s.TraceIndex
 			order = append(order, "traceIndex")
@@ -126,15 +109,15 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOptions map[
 				"date",
 			}...)
 		}
-	} else if extraOptions["export"] == true && format == "json" {
+	} else if extraOpts["export"] == true && format == "json" {
 		if verbose {
 			if s.Timestamp != base.NOPOSI {
 				model["timestamp"] = s.Timestamp
 			}
 			model["date"] = s.Date()
 		}
-		if extraOptions["namesMap"] != nil {
-			name := extraOptions["namesMap"].(map[base.Address]Name)[s.Address]
+		if extraOpts["namesMap"] != nil {
+			name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 			if name.Address.Hex() != "0x0" {
 				model["name"] = name.Name
 				order = append(order, "name")
@@ -191,8 +174,8 @@ func (s *Appearance) Orig() string {
 
 type MappedType interface {
 	Transaction |
-		Block[string] |
-		Block[Transaction] |
+		Block |
+		LightBlock |
 		Appearance |
 		Withdrawal |
 		Result |

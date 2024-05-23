@@ -58,7 +58,7 @@ func DoSlurp() {
 		sdk.SSCovalent,
 		sdk.SSAlchemy,
 	}
-	// slurp,command,default|caching|ether|raw|
+	// slurp,command,default|caching|ether|
 	// Page       uint64      `json:"page,omitempty"`
 	// PageId     string      `json:"pageId,omitempty"`
 	// PerPage    uint64      `json:"perPage,omitempty"`
@@ -125,7 +125,7 @@ func TestSlurp(which, value, fn string, opts *sdk.SlurpOptions) {
 		if count, _, err := opts.SlurpCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.SlurpCount](fn, count); err != nil {
+			if err := SaveToFile[types.Monitor](fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

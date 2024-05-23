@@ -9,7 +9,7 @@ import (
 )
 
 func TestBlockCache(t *testing.T) {
-	expected := &Block[string]{
+	expected := &LightBlock{
 		BlockNumber:   4000001,
 		BaseFeePerGas: 0,
 		Difficulty:    1097113993909745,
@@ -33,7 +33,7 @@ func TestBlockCache(t *testing.T) {
 	}
 
 	// Read
-	readBack := &Block[string]{
+	readBack := &LightBlock{
 		BlockNumber: expected.BlockNumber,
 	}
 	if err := store.Read(readBack, nil); err != nil {

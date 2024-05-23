@@ -19,28 +19,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // EXISTING_CODE
-
-type RawReceipt struct {
-	BlockHash         string   `json:"blockHash"`
-	BlockNumber       string   `json:"blockNumber"`
-	ContractAddress   string   `json:"contractAddress"`
-	CumulativeGasUsed string   `json:"cumulativeGasUsed"`
-	EffectiveGasPrice string   `json:"effectiveGasPrice"`
-	From              string   `json:"from"`
-	GasUsed           string   `json:"gasUsed"`
-	Logs              []RawLog `json:"logs"`
-	LogsBloom         string   `json:"logsBloom"`
-	Status            string   `json:"status"`
-	To                string   `json:"to"`
-	TransactionHash   string   `json:"transactionHash"`
-	TransactionIndex  string   `json:"transactionIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
 
 type Receipt struct {
 	BlockHash         base.Hash    `json:"blockHash,omitempty"`
@@ -56,7 +37,6 @@ type Receipt struct {
 	To                base.Address `json:"to,omitempty"`
 	TransactionHash   base.Hash    `json:"transactionHash"`
 	TransactionIndex  base.Txnum   `json:"transactionIndex"`
-	raw               *RawReceipt  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -66,20 +46,12 @@ func (s Receipt) String() string {
 	return string(bytes)
 }
 
-func (s *Receipt) Raw() *RawReceipt {
-	return s.raw
-}
-
-func (s *Receipt) SetRaw(raw *RawReceipt) {
-	s.raw = raw
-}
-
-func (s *Receipt) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"blockNumber":      s.BlockNumber,
 		"gasUsed":          s.GasUsed,
 		"status":           s.Status,
@@ -110,7 +82,7 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOptions map[str
 		} else {
 			logs := make([]map[string]any, 0, len(s.Logs))
 			for _, log := range s.Logs {
-				logs = append(logs, log.Model(chain, format, verbose, extraOptions).Data)
+				logs = append(logs, log.Model(chain, format, verbose, extraOpts).Data)
 			}
 			model["logs"] = logs
 		}
@@ -121,15 +93,14 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOptions map[str
 
 			model["cumulativeGasUsed"] = s.CumulativeGasUsed
 			order = append(order, "cumulativeGasUsed")
-
-			if !s.From.IsZero() {
-				model["from"] = s.From
-			}
-
-			if !s.To.IsZero() {
-				model["to"] = s.To
-			}
 		}
+		if !s.From.IsZero() {
+			model["from"] = s.From
+		}
+		if !s.To.IsZero() {
+			model["to"] = s.To
+		}
+
 	} else {
 		model["logsCnt"] = len(s.Logs)
 		order = append(order, "logsCnt")
@@ -370,36 +341,6 @@ func (s *Receipt) IsDefault() bool {
 	c := s.GasUsed == 0
 	d := len(s.Logs) == 0
 	return a && b && c && d
-}
-
-func (r *RawReceipt) RawTo(vals map[string]any) (Receipt, error) {
-	logs := []Log{}
-	for _, rawLog := range r.Logs {
-		log, _ := rawLog.RawTo(vals)
-		logs = append(logs, log)
-	}
-
-	cumulativeGasUsed, err := hexutil.DecodeUint64(r.CumulativeGasUsed)
-	if err != nil {
-		return Receipt{}, err
-	}
-
-	receipt := Receipt{
-		BlockHash:         base.HexToHash(r.BlockHash),
-		BlockNumber:       base.MustParseBlknum(r.BlockNumber),
-		ContractAddress:   base.HexToAddress(r.ContractAddress),
-		CumulativeGasUsed: base.Gas(cumulativeGasUsed),
-		EffectiveGasPrice: base.MustParseGas(r.EffectiveGasPrice),
-		GasUsed:           base.MustParseGas(r.GasUsed),
-		Status:            base.MustParseValue(r.Status),
-		IsError:           base.MustParseUint64(r.Status) == 0,
-		TransactionHash:   base.HexToHash(r.TransactionHash),
-		TransactionIndex:  base.MustParseTxnum(r.TransactionIndex),
-		Logs:              logs,
-		raw:               r,
-	}
-
-	return receipt, nil
 }
 
 // EXISTING_CODE

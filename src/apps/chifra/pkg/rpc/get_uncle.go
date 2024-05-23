@@ -6,23 +6,22 @@ package rpc
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// GetUncleBodiesByNumber returns the number of uncles in a block.
-func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block[types.Transaction], error) {
+// GetUncleBodiesByNumber returns the number of uncles in a block. (search: FromRpc)
+func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block, error) {
 	if count, err := conn.GetUnclesCountInBlock(bn); err != nil {
 		return nil, err
 
 	} else if count == 0 {
-		return []types.Block[types.Transaction]{}, nil
+		return []types.Block{}, nil
 
 	} else {
-		ret := make([]types.Block[types.Transaction], 0, count)
+		ret := make([]types.Block, 0, count)
 		for i := uint64(0); i < count; i++ {
 			method := "eth_getUncleByBlockNumberAndIndex"
 			params := query.Params{
@@ -30,55 +29,19 @@ func (conn *Connection) GetUncleBodiesByNumber(bn base.Blknum) ([]types.Block[ty
 				fmt.Sprintf("0x%x", i),
 			}
 
-			if rawUncle, err := query.Query[types.RawBlock](conn.Chain, method, params); err != nil {
+			if uncle, err := query.Query[types.Block](conn.Chain, method, params); err != nil {
 				return ret, err
 			} else {
-				// TODO: expand other fields if we ever need them (probably not)
-				ret = append(ret, types.Block[types.Transaction]{
-					BlockNumber: base.MustParseBlknum(rawUncle.BlockNumber),
-					Hash:        base.HexToHash(rawUncle.Hash),
-					Miner:       base.HexToAddress(rawUncle.Miner),
-					ParentHash:  base.HexToHash(rawUncle.ParentHash),
-					Timestamp:   base.MustParseTimestamp(rawUncle.Timestamp),
-					// Transactions: rawUncle.Transactions,
-					// BaseFeePerGas: rawUncle.BaseFeePerGas,
-					// Difficulty: rawUncle.Difficulty,
-					// GasLimit: rawUncle.GasLimit,
-					// GasUsed: rawUncle.GasUsed,
-				})
+				uncle.BlockNumber = uncle.Number
+				ret = append(ret, *uncle)
 			}
 		}
+		// TODO: BOGUS - avoid copy
 		return ret, nil
 	}
 }
 
-// GetUnclesHashesByNumber returns the uncle hashes in a block.
-func (conn *Connection) GetUnclesHashesByNumber(bn base.Blknum) ([]base.Hash, error) {
-	if count, err := conn.GetUnclesCountInBlock(bn); err != nil {
-		return nil, err
-	} else if count == 0 {
-		return []base.Hash{}, nil
-	} else {
-		ret := make([]base.Hash, 0, count)
-		for i := uint64(0); i < count; i++ {
-			method := "eth_getUncleByBlockNumberAndIndex"
-			params := query.Params{
-				fmt.Sprintf("0x%x", bn),
-				fmt.Sprintf("0x%x", i),
-			}
-			if rawUncle, err := query.Query[types.RawBlock](conn.Chain, method, params); err != nil {
-				return ret, err
-			} else {
-				for _, uncle := range rawUncle.Uncles {
-					ret = append(ret, base.HexToHash(uncle))
-				}
-			}
-		}
-		return ret, nil
-	}
-}
-
-// GetUnclesCountInBlock returns the number of uncles in a block.
+// GetUnclesCountInBlock returns the number of uncles in a block. (search: FromRpc)
 func (conn *Connection) GetUnclesCountInBlock(bn base.Blknum) (uint64, error) {
 	if bn >= base.KnownBlock(conn.Chain, base.Merge) {
 		return 0, nil
@@ -87,11 +50,9 @@ func (conn *Connection) GetUnclesCountInBlock(bn base.Blknum) (uint64, error) {
 	method := "eth_getUncleCountByBlockNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
-	if count, err := query.Query[string](conn.Chain, method, params); err != nil {
+	if count, err := query.Query[base.Value](conn.Chain, method, params); err != nil {
 		return 0, err
-	} else if count == nil || *count == "" {
-		return 0, nil
 	} else {
-		return strconv.ParseUint(fmt.Sprint(*count), 0, 64)
+		return uint64(*count), nil
 	}
 }

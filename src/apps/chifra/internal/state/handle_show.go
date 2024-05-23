@@ -42,7 +42,7 @@ func (opts *StateOptions) HandleShow() error {
 
 	cnt := 0
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawState], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.State], errorChan chan error) {
 		for _, addressStr := range opts.Addrs {
 			address := base.HexToAddress(addressStr)
 			currentBn := base.Blknum(0)
@@ -100,9 +100,9 @@ func (opts *StateOptions) HandleShow() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"fields": outputFields,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

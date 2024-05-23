@@ -26,7 +26,6 @@ blocksOpts = {
     "cache": {"hotkey": "-o", "type": "switch"},
     "decache": {"hotkey": "-D", "type": "switch"},
     "ether": {"hotkey": "-H", "type": "switch"},
-    "raw": {"hotkey": "-w", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
 }
 

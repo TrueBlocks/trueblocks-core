@@ -48,7 +48,7 @@ func (opts *tokensOptionsInternal) TokensBytes(w io.Writer) error {
 }
 
 // tokensParseFunc handles special cases such as structs and enums (if any).
-func tokensParseFunc(target interface{}, key, value string) (bool, error) {
+func tokensParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*tokensOptionsInternal)
 	if !ok {

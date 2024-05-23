@@ -8,7 +8,7 @@
  */
 
 import * as ApiCallers from '../lib/api_callers';
-import { address, Appearance, AppearanceCount, blknum, fourbyte, Log, Message, Receipt, State, Statement, topic, Trace, Transaction, uint64, Withdrawal } from '../types';
+import { address, Appearance, blknum, fourbyte, Log, Message, Monitor, Receipt, State, Statement, topic, Trace, Transaction, uint64, Withdrawal } from '../types';
 
 export function getExport(
   parameters?: {
@@ -50,7 +50,7 @@ export function getExport(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<AppearanceCount[] | Appearance[] | Log[] | Message[] | Receipt[] | State[] | Statement[] | Trace[] | Transaction[] | Withdrawal[]>(
+  return ApiCallers.fetch<Appearance[] | Log[] | Message[] | Monitor[] | Receipt[] | State[] | Statement[] | Trace[] | Transaction[] | Withdrawal[]>(
     { endpoint: '/export', method: 'get', parameters, options },
   );
 }

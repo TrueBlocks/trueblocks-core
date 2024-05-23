@@ -27,7 +27,7 @@ func DoNames() {
 	opts := sdk.NamesOptions{}
 	ShowHeader("DoNames", opts)
 
-	globs := noCache(noRaw(noEther(globals)))
+	globs := noCache(noEther(globals))
 	expand := []bool{false, true}
 	matchCase := []bool{false, true}
 	all := []bool{false, true}

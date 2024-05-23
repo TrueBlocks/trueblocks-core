@@ -212,12 +212,11 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#appearancecount">AppearanceCount</a>, <a href="/data-model/accounts/#bounds">Bounds</a> or <a href="/data-model/accounts/#monitor">Monitor</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-list">chifra list</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#bounds">Bounds</a> or <a href="/data-model/accounts/#monitor">Monitor</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-list">chifra list</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
-                        - $ref: "#/components/schemas/appearanceCount"
                         - $ref: "#/components/schemas/bounds"
                         - $ref: "#/components/schemas/monitor"
                 example:
@@ -561,12 +560,11 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#appearancecount">AppearanceCount</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a>, <a href="/data-model/chaindata/#transaction">Transaction</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a>, <a href="/data-model/chaindata/#transaction">Transaction</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
-                        - $ref: "#/components/schemas/appearanceCount"
                         - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/log"
                         - $ref: "#/components/schemas/message"
@@ -1293,14 +1291,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: raw
-          description: report raw data directly from the source
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: fmt
           description: export format, one of [ txt | csv | json ]
           required: false
@@ -1317,15 +1307,15 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#blockcount">BlockCount</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#logfilter">LogFilter</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#blockcount">BlockCount</a>, <a href="/data-model/chaindata/#lightblock">LightBlock</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/block"
                         - $ref: "#/components/schemas/blockCount"
+                        - $ref: "#/components/schemas/lightBlock"
                         - $ref: "#/components/schemas/log"
-                        - $ref: "#/components/schemas/logFilter"
                         - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/trace"
                         - $ref: "#/components/schemas/traceAction"
@@ -1464,14 +1454,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: raw
-          description: report raw data directly from the source
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: fmt
           description: export format, one of [ txt | csv | json ]
           required: false
@@ -1553,14 +1535,6 @@ paths:
             type: boolean
         - name: decache
           description: removes related items from the cache
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: raw
-          description: report raw data directly from the source
           required: false
           style: form
           in: query
@@ -1673,14 +1647,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: raw
-          description: report raw data directly from the source
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: fmt
           description: export format, one of [ txt | csv | json ]
           required: false
@@ -1697,13 +1663,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#logfilter">LogFilter</a>, <a href="/data-model/other/#message">Message</a> or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
+                    description: Produces <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a> or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/log"
-                        - $ref: "#/components/schemas/logFilter"
                         - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/parameter"
         "400":
@@ -1785,14 +1750,6 @@ paths:
             type: boolean
         - name: ether
           description: export values in ether
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: raw
-          description: report raw data directly from the source
           required: false
           style: form
           in: query
@@ -2943,14 +2900,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: raw
-          description: report raw data directly from the source
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: fmt
           description: export format, one of [ txt | csv | json ]
           required: false
@@ -2967,7 +2916,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/other/#slurp">Slurp</a> or <a href="/data-model/other/#slurpcount">SlurpCount</a> data. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a> or <a href="/data-model/other/#slurp">Slurp</a> data. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -2976,7 +2925,6 @@ paths:
                         - $ref: "#/components/schemas/monitor"
                         - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/slurp"
-                        - $ref: "#/components/schemas/slurpCount"
                 example:
                   [
                     {
@@ -3116,22 +3064,6 @@ components:
           type: boolean
           format: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
-    appearanceCount:
-      description: "the number of records, file size, and last visited block for a given monitor"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-          description: "the address for this count"
-        nRecords:
-          type: number
-          format: uint64
-          description: "the number of appearances for the given address"
-        fileSize:
-          type: number
-          format: uint64
-          description: "the size of the monitor file containing those appearances"
     bounds:
       description: "show first block and last block an address appears in along with timestamps and dates"
       type: object
@@ -3388,7 +3320,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/transaction"
-          description: "a possibly empty array of transactions or transaction hashes"
+          description: "a possibly empty array of transactions"
         baseFeePerGas:
           type: number
           format: gas
@@ -3614,32 +3546,6 @@ components:
           type: string
           format: string
           description: "a truncated, more readable version of the articulation (calculated)"
-    logFilter:
-      description: "used by the fast path log queries for various commands"
-      type: object
-      properties:
-        fromBlock:
-          type: number
-          format: blknum
-          description: "the first block in the block range to query with eth_getLogs"
-        toBlock:
-          type: number
-          format: blknum
-          description: "the last block in the range to query with eth_getLogs"
-        blockHash:
-          type: string
-          format: hash
-          description: "an alternative to blocks specification, the hash of the block to query"
-        emitters:
-          type: array
-          items:
-            $ref: "#/components/schemas/address"
-          description: "one or more emitting addresses from which logs were emitted"
-        topics:
-          type: array
-          items:
-            $ref: "#/components/schemas/topic"
-          description: "one or more topics which logs represent"
     trace:
       description: "trace data as returned from the RPC (with slight enhancements)"
       type: object
@@ -3920,6 +3826,61 @@ components:
           type: number
           format: uint64
           description: "the number of timestamps in the timestamps database"
+    lightBlock:
+      description: "a block containing only the hashes of the transactions"
+      type: object
+      properties:
+        gasLimit:
+          type: number
+          format: gas
+          description: "the system-wide maximum amount of gas permitted in this block"
+        hash:
+          type: string
+          format: hash
+          description: "the hash of the current block"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        parentHash:
+          type: string
+          format: hash
+          description: "hash of previous block"
+        miner:
+          type: string
+          format: address
+          description: "address of block's winning miner"
+        difficulty:
+          type: number
+          format: value
+          description: "the computational difficulty at this block"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        transactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/string"
+          description: "a possibly empty array of transaction hashes"
+        baseFeePerGas:
+          type: number
+          format: gas
+          description: "the base fee for this block"
+        uncles:
+          type: array
+          items:
+            $ref: "#/components/schemas/hash"
+          description: "a possibly empty array of uncle hashes"
+        withdrawals:
+          type: array
+          items:
+            $ref: "#/components/schemas/withdrawal"
+          description: "a possibly empty array of withdrawals (post Shanghai)"
     state:
       description: "the state of an Ethereum account (EOA or smart contract) on-chain"
       type: object
@@ -4656,18 +4617,6 @@ components:
           type: boolean
           format: boolean
           description: "`true` if the transaction ended in error, `false` otherwise"
-    slurpCount:
-      description: "counts of transaction data returned by remote APIs"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-          description: "the address used to query the API"
-        count:
-          type: number
-          format: uint64
-          description: "the number of records known by the API for this address"
     message:
       description: "used for various responses when no real data is generated"
       type: object

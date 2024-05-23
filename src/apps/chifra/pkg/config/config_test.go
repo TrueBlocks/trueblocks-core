@@ -15,7 +15,7 @@ func Test_ReadTrueBlocks(t *testing.T) {
 		t.Error("CachePath is empty")
 	}
 	if GetSettings().CachePath[len(GetSettings().CachePath)-1] != '/' {
-		// the raw path may not end with a slash, but the returned path better
+		// the path may not end with a slash, but the returned path better
 		ret := PathToCache(utils.GetTestChain())
 		if len(ret) > 0 && ret[len(ret)-1] != '/' {
 			t.Error("CachePath does not end with a '/'")
@@ -28,7 +28,7 @@ func Test_ReadTrueBlocks(t *testing.T) {
 		t.Error("IndexPath is empty")
 	}
 	if GetSettings().IndexPath[len(GetSettings().IndexPath)-1] != '/' {
-		// the raw path may not end with a slash, but the returned path better
+		// the path may not end with a slash, but the returned path better
 		ret := PathToIndex(utils.GetTestChain())
 		if len(ret) > 0 && ret[len(ret)-1] != '/' {
 			t.Error("IndexPath does not end with a '/'")

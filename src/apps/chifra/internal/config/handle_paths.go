@@ -13,7 +13,7 @@ func (opts *ConfigOptions) HandlePaths() error {
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawCacheItem], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.CacheItem], errorChan chan error) {
 		root, cache, index := config.PathToRootConfig(),
 			config.PathToCache(opts.Globals.Chain),
 			config.PathToIndex(opts.Globals.Chain)
@@ -40,8 +40,8 @@ func (opts *ConfigOptions) HandlePaths() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"configPaths": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

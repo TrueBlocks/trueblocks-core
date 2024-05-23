@@ -17,25 +17,13 @@ import (
 
 // EXISTING_CODE
 
-type RawChunkIndex struct {
-	Hash         string `json:"hash"`
-	Magic        string `json:"magic"`
-	NAddresses   string `json:"nAddresses"`
-	NAppearances string `json:"nAppearances"`
-	Range        string `json:"range"`
-	Size         string `json:"size"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type ChunkIndex struct {
-	Hash         base.Hash      `json:"hash"`
-	Magic        string         `json:"magic"`
-	NAddresses   uint64         `json:"nAddresses"`
-	NAppearances uint64         `json:"nAppearances"`
-	Range        string         `json:"range"`
-	Size         uint64         `json:"size"`
-	raw          *RawChunkIndex `json:"-"`
+	Hash         base.Hash `json:"hash"`
+	Magic        string    `json:"magic"`
+	NAddresses   uint64    `json:"nAddresses"`
+	NAppearances uint64    `json:"nAppearances"`
+	Range        string    `json:"range"`
+	Size         uint64    `json:"size"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -45,20 +33,12 @@ func (s ChunkIndex) String() string {
 	return string(bytes)
 }
 
-func (s *ChunkIndex) Raw() *RawChunkIndex {
-	return s.raw
-}
-
-func (s *ChunkIndex) SetRaw(raw *RawChunkIndex) {
-	s.raw = raw
-}
-
-func (s *ChunkIndex) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *ChunkIndex) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"range":        s.Range,
 		"magic":        s.Magic,
 		"hash":         FormattedTag(verbose, s.Hash),

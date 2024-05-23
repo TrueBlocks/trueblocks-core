@@ -88,7 +88,6 @@ func (bm *BlazeManager) ProcessBlocks(blockChannel chan base.Blknum, blockWg *sy
 		}
 
 		// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
-		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
 		var err error
 		if sd.traces, err = bm.opts.Conn.GetTracesByBlockNumber(bn); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})

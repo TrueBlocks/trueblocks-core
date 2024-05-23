@@ -16,7 +16,7 @@ weight: 21000
 toc: true
 ---
 
-The Chain Data group of tools extract raw blockchain data directly from the node. You may extract
+The Chain Data group of tools extract blockchain data directly from the node. You may extract
 block data, transactional data, receipts, logs, traces, and other information. Each tool has it own
 set of options, allowing you to get exactly the data you need.
 
@@ -59,7 +59,6 @@ Flags:
   -a, --articulate        for the --logs option only, articulate the retrieved data if ABIs can be found
   -U, --count             display only the count of appearances for --addrs or --uniq
   -H, --ether             specify value in ether
-  -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
@@ -82,8 +81,8 @@ Data models produced by this tool:
 - [appearance](/data-model/accounts/#appearance)
 - [block](/data-model/chaindata/#block)
 - [blockcount](/data-model/chaindata/#blockcount)
+- [lightblock](/data-model/chaindata/#lightblock)
 - [log](/data-model/chaindata/#log)
-- [logfilter](/data-model/chaindata/#logfilter)
 - [message](/data-model/other/#message)
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
@@ -97,8 +96,7 @@ Links:
 
 ## chifra transactions
 
-The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw`
-option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
+The `chifra transactions` tool retrieves transactions directly from the Ethereum node or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
 per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt
 and generated logs.
 
@@ -129,7 +127,6 @@ Flags:
   -m, --emitter strings   for the --logs option only, filter logs to show only those logs emitted by the given address(es)
   -B, --topic strings     for the --logs option only, filter logs to show only those with this topic(s)
   -H, --ether             specify value in ether
-  -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
@@ -181,7 +178,6 @@ Arguments:
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
-  -w, --raw          report JSON data from the source with minimal processing
   -o, --cache        force the results of the query into the cache
   -D, --decache      removes related items from the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]
@@ -227,7 +223,6 @@ Flags:
   -m, --emitter strings   filter logs to show only those logs emitted by the given address(es)
   -B, --topic strings     filter logs to show only those with this topic(s)
   -a, --articulate        articulate the retrieved data if ABIs can be found
-  -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
@@ -245,7 +240,6 @@ Data models produced by this tool:
 
 - [function](/data-model/other/#function)
 - [log](/data-model/chaindata/#log)
-- [logfilter](/data-model/chaindata/#logfilter)
 - [message](/data-model/other/#message)
 - [parameter](/data-model/other/#parameter)
 
@@ -280,7 +274,6 @@ Flags:
   -f, --filter string   call the node's trace_filter routine with bang-separated filter
   -U, --count           display only the number of traces for the transaction (fast)
   -H, --ether           specify value in ether
-  -w, --raw             report JSON data from the source with minimal processing
   -o, --cache           force the results of the query into the cache
   -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]

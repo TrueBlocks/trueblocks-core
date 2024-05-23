@@ -19,25 +19,13 @@ import (
 
 // EXISTING_CODE
 
-type RawTraceFilter struct {
-	After       string `json:"after"`
-	Count       string `json:"count"`
-	FromAddress string `json:"fromAddress"`
-	FromBlock   string `json:"fromBlock"`
-	ToAddress   string `json:"toAddress"`
-	ToBlock     string `json:"toBlock"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type TraceFilter struct {
-	After       uint64          `json:"after,omitempty"`
-	Count       uint64          `json:"count,omitempty"`
-	FromAddress base.Address    `json:"fromAddress,omitempty"`
-	FromBlock   base.Blknum     `json:"fromBlock,omitempty"`
-	ToAddress   base.Address    `json:"toAddress,omitempty"`
-	ToBlock     base.Blknum     `json:"toBlock,omitempty"`
-	raw         *RawTraceFilter `json:"-"`
+	After       uint64       `json:"after,omitempty"`
+	Count       uint64       `json:"count,omitempty"`
+	FromAddress base.Address `json:"fromAddress,omitempty"`
+	FromBlock   base.Blknum  `json:"fromBlock,omitempty"`
+	ToAddress   base.Address `json:"toAddress,omitempty"`
+	ToBlock     base.Blknum  `json:"toBlock,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -47,20 +35,12 @@ func (s TraceFilter) String() string {
 	return string(bytes)
 }
 
-func (s *TraceFilter) Raw() *RawTraceFilter {
-	return s.raw
-}
-
-func (s *TraceFilter) SetRaw(raw *RawTraceFilter) {
-	s.raw = raw
-}
-
-func (s *TraceFilter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *TraceFilter) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"after":       s.After,
 		"count":       s.Count,
 		"fromAddress": s.FromAddress,
@@ -114,7 +94,7 @@ func (s *TraceFilter) PassesBasic(trace *Trace, nTested uint64, nPassed uint64) 
 	return true, ""
 }
 
-func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]interface{}, br base.BlockRange) {
+func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]any, br base.BlockRange) {
 	parts := strings.Split(filter, "!")
 	for {
 		if len(parts) >= 6 {

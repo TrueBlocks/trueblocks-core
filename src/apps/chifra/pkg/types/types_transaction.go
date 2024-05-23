@@ -46,50 +46,28 @@ func NewReward(block, nephew, txFee, uncle *base.Wei) (Rewards, base.Wei) {
 
 // EXISTING_CODE
 
-type RawTransaction struct {
-	AccessList           []StorageSlot `json:"accessList"`
-	BlockHash            string        `json:"blockHash"`
-	BlockNumber          string        `json:"blockNumber"`
-	ChainId              string        `json:"chainId"`
-	From                 string        `json:"from"`
-	Gas                  string        `json:"gas"`
-	GasPrice             string        `json:"gasPrice"`
-	Hash                 string        `json:"hash"`
-	Input                string        `json:"input"`
-	MaxFeePerGas         string        `json:"maxFeePerGas"`
-	MaxPriorityFeePerGas string        `json:"maxPriorityFeePerGas"`
-	Nonce                string        `json:"nonce"`
-	To                   string        `json:"to"`
-	TransactionIndex     string        `json:"transactionIndex"`
-	TransactionType      string        `json:"type"`
-	Value                string        `json:"value"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Transaction struct {
-	ArticulatedTx        *Function       `json:"articulatedTx"`
-	BlockHash            base.Hash       `json:"blockHash"`
-	BlockNumber          base.Blknum     `json:"blockNumber"`
-	From                 base.Address    `json:"from"`
-	Gas                  base.Gas        `json:"gas"`
-	GasPrice             base.Gas        `json:"gasPrice"`
-	GasUsed              base.Gas        `json:"gasUsed"`
-	HasToken             bool            `json:"hasToken"`
-	Hash                 base.Hash       `json:"hash"`
-	Input                string          `json:"input"`
-	IsError              bool            `json:"isError"`
-	MaxFeePerGas         base.Gas        `json:"maxFeePerGas"`
-	MaxPriorityFeePerGas base.Gas        `json:"maxPriorityFeePerGas"`
-	Nonce                base.Value      `json:"nonce"`
-	Receipt              *Receipt        `json:"receipt"`
-	Timestamp            base.Timestamp  `json:"timestamp"`
-	To                   base.Address    `json:"to"`
-	Traces               []Trace         `json:"traces"`
-	TransactionIndex     base.Txnum      `json:"transactionIndex"`
-	TransactionType      string          `json:"type"`
-	Value                base.Wei        `json:"value"`
-	raw                  *RawTransaction `json:"-"`
+	ArticulatedTx        *Function      `json:"articulatedTx"`
+	BlockHash            base.Hash      `json:"blockHash"`
+	BlockNumber          base.Blknum    `json:"blockNumber"`
+	From                 base.Address   `json:"from"`
+	Gas                  base.Gas       `json:"gas"`
+	GasPrice             base.Gas       `json:"gasPrice"`
+	GasUsed              base.Gas       `json:"gasUsed"`
+	HasToken             bool           `json:"hasToken"`
+	Hash                 base.Hash      `json:"hash"`
+	Input                string         `json:"input"`
+	IsError              bool           `json:"isError"`
+	MaxFeePerGas         base.Gas       `json:"maxFeePerGas"`
+	MaxPriorityFeePerGas base.Gas       `json:"maxPriorityFeePerGas"`
+	Nonce                base.Value     `json:"nonce"`
+	Receipt              *Receipt       `json:"receipt"`
+	Timestamp            base.Timestamp `json:"timestamp"`
+	To                   base.Address   `json:"to"`
+	Traces               []Trace        `json:"traces"`
+	TransactionIndex     base.Txnum     `json:"transactionIndex"`
+	TransactionType      string         `json:"type"`
+	Value                base.Wei       `json:"value"`
 	// EXISTING_CODE
 	Message    string       `json:"-"`
 	Rewards    *Rewards     `json:"-"`
@@ -102,16 +80,8 @@ func (s Transaction) String() string {
 	return string(bytes)
 }
 
-func (s *Transaction) Raw() *RawTransaction {
-	return s.raw
-}
-
-func (s *Transaction) SetRaw(raw *RawTransaction) {
-	s.raw = raw
-}
-
-func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -120,7 +90,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
-	model = map[string]interface{}{
+	model = map[string]any{
 		"blockNumber":      s.BlockNumber,
 		"from":             s.From,
 		"gasPrice":         s.GasPrice,
@@ -152,13 +122,13 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 	model["gasCost"] = s.GasCost()
 
 	// TODO: Shouldn't this use the Function model - the answer is yes?
-	var articulatedTx map[string]interface{}
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTx != nil
+	var articulatedTx map[string]any
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTx != nil
 	if isArticulated && format != "json" {
 		order = append(order, "compressedTx")
 	}
 	if isArticulated {
-		articulatedTx = map[string]interface{}{
+		articulatedTx = map[string]any{
 			"name": s.ArticulatedTx.Name,
 		}
 		inputModels := parametersToMap(s.ArticulatedTx.Inputs)
@@ -179,7 +149,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		if s.Statements != nil {
 			statements := make([]map[string]any, 0, len(*s.Statements))
 			for _, statement := range *s.Statements {
-				statements = append(statements, statement.Model(chain, format, verbose, extraOptions).Data)
+				statements = append(statements, statement.Model(chain, format, verbose, extraOpts).Data)
 			}
 			model["statements"] = statements
 		}
@@ -236,7 +206,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 					"timestamp": s.Timestamp,
 					"date":      s.Date(),
 				}
-				if extraOptions["articulate"] == true && log.ArticulatedLog != nil {
+				if extraOpts["articulate"] == true && log.ArticulatedLog != nil {
 					inputModels := parametersToMap(log.ArticulatedLog.Inputs)
 					articulatedLog := map[string]any{
 						"name":   log.ArticulatedLog.Name,
@@ -249,13 +219,13 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 			receiptModel["logs"] = logs
 			model["receipt"] = receiptModel
 		} else {
-			model["receipt"] = map[string]interface{}{}
+			model["receipt"] = map[string]any{}
 		}
 
-		if extraOptions["traces"] == true && len(s.Traces) > 0 {
+		if extraOpts["traces"] == true && len(s.Traces) > 0 {
 			traceModels := make([]map[string]any, 0, len(s.Traces))
 			for _, trace := range s.Traces {
-				traceModels = append(traceModels, trace.Model(chain, format, verbose, extraOptions).Data)
+				traceModels = append(traceModels, trace.Model(chain, format, verbose, extraOpts).Data)
 			}
 			model["traces"] = traceModels
 		} else {
@@ -282,7 +252,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 
-		if extraOptions["articulate"] == true && s.ArticulatedTx != nil {
+		if extraOpts["articulate"] == true && s.ArticulatedTx != nil {
 			model["encoding"] = s.ArticulatedTx.Encoding
 		}
 
@@ -300,13 +270,13 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOptions map
 			model["compressedTx"] = s.Message
 		}
 
-		if extraOptions["traces"] == true {
+		if extraOpts["traces"] == true {
 			model["nTraces"] = len(s.Traces)
 			order = append(order, "nTraces")
 		}
 	}
 
-	asEther := true // special case for transactions, we always show --ether -- extraOptions["ether"] == true
+	asEther := true // special case for transactions, we always show --ether -- extraOpts["ether"] == true
 	if asEther {
 		model["ether"] = s.Value.ToEtherStr(18)
 		order = append(order, "ether")
@@ -583,69 +553,7 @@ func (s *Transaction) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-// NewRawTransactionFromMap is useful when we get a map of transaction properties, e.g.
-// from a call to eth_getBlockByHash [0x..., true]
-func NewRawTransactionFromMap(input map[string]any) (r *RawTransaction) {
-	r = &RawTransaction{}
-
-	// TODO: I wonder why we make copies here
-	r.BlockHash = fmt.Sprint(input["blockHash"])
-	r.BlockNumber = fmt.Sprint(input["blockNumber"])
-	// Missing in block query
-	if _, ok := input["chainId"]; ok {
-		r.ChainId = fmt.Sprint(input["chainId"])
-	}
-	r.From = fmt.Sprint(input["from"])
-	r.Gas = fmt.Sprint(input["gas"])
-	r.GasPrice = fmt.Sprint(input["gasPrice"])
-	r.Hash = fmt.Sprint(input["hash"])
-	r.Input = fmt.Sprint(input["input"])
-	r.MaxFeePerGas = fmt.Sprint(input["maxFeePerGas"])
-	r.MaxPriorityFeePerGas = fmt.Sprint(input["maxPriorityFeePerGas"])
-	r.Nonce = fmt.Sprint(input["nonce"])
-	r.To = fmt.Sprint(input["to"])
-	r.TransactionIndex = fmt.Sprint(input["transactionIndex"])
-	r.Value = fmt.Sprint(input["value"])
-	r.TransactionType = fmt.Sprint(input["type"])
-
-	return
-}
-
-// NewTransaction builds Transaction using data from raw and receipt. Receipt can be nil.
-// Transaction timestamp and HasToken flag will be set to timestamp and hasToken.
-func NewTransaction(raw *RawTransaction, receipt *Receipt, timestamp base.Timestamp) (s *Transaction) {
-	hasToken := isTokenFunction(raw.Input)
-	s = &Transaction{}
-
-	// TODO: use RawTransaction methods
-	s.Hash = base.HexToHash(raw.Hash)
-	s.BlockHash = base.HexToHash(raw.BlockHash)
-	s.BlockNumber = base.MustParseBlknum(raw.BlockNumber)
-	s.TransactionIndex = base.MustParseTxnum(raw.TransactionIndex)
-	s.Nonce = base.MustParseValue(raw.Nonce)
-	s.Timestamp = timestamp
-	s.From = base.HexToAddress(raw.From)
-	s.To = base.HexToAddress(raw.To)
-	s.Value.SetString(raw.Value, 0)
-	s.Gas = base.MustParseGas(raw.Gas)
-	s.GasPrice = base.MustParseGas(raw.GasPrice)
-	s.MaxFeePerGas = base.MustParseGas(raw.MaxFeePerGas)
-	s.MaxPriorityFeePerGas = base.MustParseGas(raw.MaxPriorityFeePerGas)
-	s.Input = raw.Input
-	s.TransactionType = raw.TransactionType
-
-	s.HasToken = hasToken
-	if receipt != nil {
-		s.GasUsed = receipt.GasUsed
-		s.IsError = receipt.IsError
-		s.Receipt = receipt
-	}
-	s.SetRaw(raw)
-
-	return
-}
-
-func isTokenFunction(needle string) bool {
+func IsTokenFunction(needle string) bool {
 	var tokenRelated = map[string]bool{
 		"0x095ea7b3": true, // approve(address spender, uint256 value)
 		"0xa9059cbb": true, // transfer(address from, uint256 to);

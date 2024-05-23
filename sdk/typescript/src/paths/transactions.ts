@@ -26,7 +26,6 @@ export function getTransactions(
     cache?: boolean,
     decache?: boolean,
     ether?: boolean,
-    raw?: boolean,
   },
   options?: RequestInit,
 ) {

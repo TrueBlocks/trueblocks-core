@@ -16,8 +16,6 @@ import (
 // OutputOptions allow more granular configuration of output details
 // TODO: This used to be "type OutputOptions = struct" (the '=' sign). Was that a typo or purposful? I couldn't embed it in the GlobalOptions data structure, so I removed the '='
 type OutputOptions struct {
-	// If set, raw data from the RPC will be printed instead of the model
-	ShowRaw bool
 	// If set, hidden fields will be printed as well (depends on the format)
 	Verbose bool
 	// If set, the first line of "txt" and "csv" output will NOT (the keys) will squelched
@@ -37,7 +35,7 @@ type OutputOptions struct {
 	// The writer
 	Writer io.Writer
 	// Extra options passed to model, for example command-specific output formatting flags
-	Extra map[string]interface{}
+	Extra map[string]any
 }
 
 var formatToSeparator = map[string]rune{
@@ -98,30 +96,19 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 	return nil
 }
 
-// streamRaw outputs raw `Raw` to `w`
-func streamRaw[Raw types.RawData](w io.Writer, raw *Raw) (err error) {
-	jw, ok := w.(*JsonWriter)
-	if !ok {
-		// This should never happen
-		panic("streaming raw data requires JsonWriter")
-	}
-	_, err = jw.WriteCompoundItem("", raw)
-	return
-}
-
 func logErrors(errsToReport []string) {
 	for _, errMessage := range errsToReport {
 		logger.Error(errMessage)
 	}
 }
 
-type fetchDataFunc[Raw types.RawData] func(modelChan chan types.Modeler[Raw], errorChan chan error)
+type fetchDataFunc[S types.Streamable] func(modelChan chan types.Modeler[S], errorChan chan error)
 
-// StreamMany outputs models or raw data as they are acquired
-func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[Raw], options OutputOptions) error {
+// StreamMany outputs models as they are acquired
+func StreamMany[S types.Streamable](ctx context.Context, fetchData fetchDataFunc[S], options OutputOptions) error {
 	errsToReport := make([]string, 0)
 
-	modelChan := make(chan types.Modeler[Raw])
+	modelChan := make(chan types.Modeler[S])
 	errorChan := make(chan error)
 
 	first := true
@@ -131,7 +118,7 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 		close(errorChan)
 	}()
 
-	isJson := options.Format == "json" || options.ShowRaw
+	isJson := options.Format == "json"
 	var jw *JsonWriter
 	if !isJson {
 		defer func() {
@@ -161,19 +148,15 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 
 			// If the output is JSON and we are printing another item, put `,` in front of it
 			var err error
-			if options.ShowRaw {
-				err = streamRaw(options.Writer, model.Raw())
+			modelValue := model.Model(options.Chain, options.Format, options.Verbose, options.Extra)
+			if customFormat {
+				err = StreamWithTemplate(options.Writer, modelValue, tmpl)
 			} else {
-				modelValue := model.Model(options.Chain, options.Format, options.Verbose, options.Extra)
-				if customFormat {
-					err = StreamWithTemplate(options.Writer, modelValue, tmpl)
-				} else {
-					err = StreamModel(options.Writer, modelValue, OutputOptions{
-						NoHeader:   !first || options.NoHeader,
-						Format:     options.Format,
-						JsonIndent: "  ",
-					})
-				}
+				err = StreamModel(options.Writer, modelValue, OutputOptions{
+					NoHeader:   !first || options.NoHeader,
+					Format:     options.Format,
+					JsonIndent: "  ",
+				})
 			}
 			if err != nil {
 				return err

@@ -113,10 +113,10 @@ func (opts *ExportOptions) ExportWithdrawals() ([]types.Withdrawal, *types.MetaD
 }
 
 // ExportCount implements the chifra export --count command.
-func (opts *ExportOptions) ExportCount() ([]types.AppearanceCount, *types.MetaData, error) {
+func (opts *ExportOptions) ExportCount() ([]types.Monitor, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.Count = true
-	return queryExport[types.AppearanceCount](in)
+	return queryExport[types.Monitor](in)
 }
 
 type ExportFlow int

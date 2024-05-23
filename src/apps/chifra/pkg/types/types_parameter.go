@@ -19,27 +19,14 @@ import (
 
 // EXISTING_CODE
 
-type RawParameter struct {
-	Components    string `json:"components"`
-	Indexed       string `json:"indexed"`
-	InternalType  string `json:"internalType"`
-	Name          string `json:"name"`
-	StrDefault    string `json:"strDefault"`
-	ParameterType string `json:"type"`
-	Value         string `json:"value"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Parameter struct {
-	Components    []Parameter   `json:"components,omitempty"`
-	Indexed       bool          `json:"indexed,omitempty"`
-	InternalType  string        `json:"internalType,omitempty"`
-	Name          string        `json:"name"`
-	StrDefault    string        `json:"strDefault,omitempty"`
-	ParameterType string        `json:"type"`
-	Value         any           `json:"value,omitempty"`
-	raw           *RawParameter `json:"-"`
+	Components    []Parameter `json:"components,omitempty"`
+	Indexed       bool        `json:"indexed,omitempty"`
+	InternalType  string      `json:"internalType,omitempty"`
+	Name          string      `json:"name"`
+	StrDefault    string      `json:"strDefault,omitempty"`
+	ParameterType string      `json:"type"`
+	Value         any         `json:"value,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -49,20 +36,12 @@ func (s Parameter) String() string {
 	return string(bytes)
 }
 
-func (s *Parameter) Raw() *RawParameter {
-	return s.raw
-}
-
-func (s *Parameter) SetRaw(raw *RawParameter) {
-	s.raw = raw
-}
-
-func (s *Parameter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Parameter) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"name": s.Name,
 		"type": s.ParameterType,
 	}

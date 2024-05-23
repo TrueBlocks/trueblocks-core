@@ -71,8 +71,7 @@ delay    ,both ,fast  ,abis  ,tools ,grabABI ,findSig_a_lot       ,n    ,find = 
 delay    ,both ,fast  ,abis  ,tools ,grabABI ,findSig_event       ,y    ,find = 0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on       ,both ,fast  ,abis  ,tools ,grabABI ,caps_allowed        ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & fail_on_purpose
-on       ,both ,fast  ,abis  ,tools ,grabABI ,caps_disallowed_1   ,y    ,addrs = trueblocks.eth & raw
 on       ,both ,fast  ,abis  ,tools ,grabABI ,caps_disallowed_2   ,y    ,addrs = trueblocks.eth & ether
 on       ,both ,fast  ,abis  ,tools ,grabABI ,caps_disallowed_3   ,y    ,addrs = trueblocks.eth & wei

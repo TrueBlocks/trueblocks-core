@@ -179,7 +179,6 @@ var globals = []Option{
 	{LongName: "cache", HotKey: "o", OptionType: "switch", Description: "force the results of the query into the cache", DataType: "boolean"},
 	{LongName: "decache", HotKey: "D", OptionType: "switch", Description: "removes related items from the cache", DataType: "boolean"},
 	{LongName: "ether", HotKey: "H", OptionType: "switch", Description: "export values in ether", DataType: "boolean"},
-	{LongName: "raw", HotKey: "w", OptionType: "switch", Description: "report raw data directly from the source", DataType: "boolean"},
 	{LongName: "fmt", HotKey: "x", OptionType: "flag", Description: "export format, one of [ txt | csv | json ]", DataType: "string"},
 }
 
@@ -189,11 +188,11 @@ func (c *Command) PyGlobals() string {
 	if c.Route == "names" {
 		caps = "create|update|delete|undelete|remove|" + caps
 	}
-	for _, op := range globals {
-		if strings.Contains(caps, strings.ToLower(op.LongName)+"|") {
+	for _, glob := range globals {
+		if strings.Contains(caps, strings.ToLower(glob.LongName)+"|") {
 			tmplName := "pyglobals1"
 			tmpl := "    \"{{toCamel .LongName}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
-			ret = append(ret, op.executeTemplate(tmplName, tmpl))
+			ret = append(ret, glob.executeTemplate(tmplName, tmpl))
 		}
 	}
 	return strings.Join(ret, "\n")
@@ -718,9 +717,6 @@ func (c *Command) GetGlobs() string {
 	if !capsMap["ether"] {
 		ret = "noEther(" + ret + ")"
 	}
-	if !capsMap["raw"] {
-		ret = "noRaw(" + ret + ")"
-	}
 	if !capsMap["caching"] {
 		ret = "noCache(" + ret + ")"
 	}
@@ -892,8 +888,6 @@ func (op *Option) TsEnumTypes() []string {
 		retType = strings.Replace(retType, "base.Address", "address", -1)
 		retType = strings.Replace(retType, "base.", "", -1)
 		retType = strings.Replace(retType, "types.", "", -1)
-		retType = strings.Replace(retType, "Block[Transaction]", "Block", -1)
-		retType = strings.Replace(retType, "Block[string]", "Block", -1)
 		ret = append(ret, retType+"[]")
 	}
 	return ret
@@ -908,8 +902,6 @@ func (c *Command) TsReturns() string {
 			retType = strings.Replace(retType, "base.Address", "address", -1)
 			retType = strings.Replace(retType, "base.", "", -1)
 			retType = strings.Replace(retType, "types.", "", -1)
-			retType = strings.Replace(retType, "Block[Transaction]", "Block", -1)
-			retType = strings.Replace(retType, "Block[string]", "Block", -1)
 			if !present[retType] {
 				if op.LongName == "mode" {
 					ret = append(ret, op.TsEnumTypes()...)

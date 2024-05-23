@@ -24,7 +24,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Receipt], errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err
@@ -103,9 +103,9 @@ func (opts *ReceiptsOptions) HandleShow() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

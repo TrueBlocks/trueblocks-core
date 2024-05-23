@@ -36,7 +36,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []base.Blknum) error {
 	userHitCtrlC := false
 	ctx, cancel := context.WithCancel(context.Background())
 
-	fetchData := func(modelChan chan types.Modeler[types.RawMessage], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Message], errorChan chan error) {
 		nChunksTagged := 0
 		man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 		if err != nil {

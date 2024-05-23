@@ -24,13 +24,12 @@ on      ,both ,fast  ,explore ,apps ,fireStorm ,failApi            ,y    ,terms 
 on      ,both ,fast  ,explore ,apps ,fireStorm ,block_not_found    ,y    ,terms = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_allowed       ,y    ,terms = 12.0 & chain & nocolor & noop & verbose & file & fail_on_purpose
 on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_1  ,y    ,terms = 12.0 & fmt = json
 on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_3  ,y    ,terms = 12.0 & no_header
 on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_4  ,y    ,terms = 12.0 & output
 on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_5  ,y    ,terms = 12.0 & append
-on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_6  ,y    ,terms = 12.0 & raw
 on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_7  ,y    ,terms = 12.0 & ether
 on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_8  ,y    ,terms = 12.0 & wei
 on      ,both ,fast  ,explore ,apps ,fireStorm ,caps_disallowed_9  ,y    ,terms = 12.0 & cache

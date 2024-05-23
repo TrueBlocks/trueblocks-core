@@ -73,7 +73,7 @@
     action: eth_getTransactionByHash                <hash>
     action: eth_getTransactionByBlockNumberAndIndex <tag>           index=<hex>
     action: eth_getTransactionCount                 <tag>           <address>
-    action: eth_sendRawTransaction                  <hex>
+    action: eth_sendRaw Transaction                 <hex>
     action: eth_getTransactionReceipt               <hash>
     action: eth_gasPrice
     action: eth_call                                <tag>           <address>       <hex>

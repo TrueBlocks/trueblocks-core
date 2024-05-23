@@ -3,15 +3,14 @@
 /*
  * This file was generated with makeClass --sdk. Do not edit it.
  */
-import { datetime, RawAppearance, timestamp, uint64 } from '.';
+import { datetime, Appearance, timestamp, uint64 } from '.';
 
 export type Bounds = {
   count: uint64
-  firstApp: RawAppearance
+  firstApp: Appearance
   firstTs: timestamp
   firstDate: datetime
-  latestApp: RawAppearance
+  latestApp: Appearance
   latestTs: timestamp
   latestDate: datetime
 }
-

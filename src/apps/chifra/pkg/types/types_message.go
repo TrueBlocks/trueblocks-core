@@ -13,17 +13,9 @@ import "encoding/json"
 
 // EXISTING_CODE
 
-type RawMessage struct {
-	Msg string `json:"msg"`
-	Num string `json:"num"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Message struct {
-	Msg string      `json:"msg,omitempty"`
-	Num int64       `json:"num,omitempty"`
-	raw *RawMessage `json:"-"`
+	Msg string `json:"msg,omitempty"`
+	Num int64  `json:"num,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -33,16 +25,8 @@ func (s Message) String() string {
 	return string(bytes)
 }
 
-func (s *Message) Raw() *RawMessage {
-	return s.raw
-}
-
-func (s *Message) SetRaw(raw *RawMessage) {
-	s.raw = raw
-}
-
-func (s *Message) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Message) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE

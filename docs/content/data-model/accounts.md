@@ -128,24 +128,6 @@ Names consist of the following fields:
 | isErc20    | `true` if the address is an ERC20, `false` otherwise                                | bool    |
 | isErc721   | `true` if the address is an ERC720, `false` otherwise                               | bool    |
 
-## AppearanceCount
-
-The `appearanceCount` data model is used mostly by the frontend explorer application. It carries
-various information about the monitor data for an address.
-
-The following commands produce and manage AppearanceCounts:
-
-- [chifra list](/chifra/accounts/#chifra-list)
-- [chifra export](/chifra/accounts/#chifra-export)
-
-AppearanceCounts consist of the following fields:
-
-| Field    | Description                                               | Type    |
-| -------- | --------------------------------------------------------- | ------- |
-| address  | the address for this count                                | address |
-| nRecords | the number of appearances for the given address           | uint64  |
-| fileSize | the size of the monitor file containing those appearances | uint64  |
-
 ## Bounds
 
 The Bounds data model displays information about a given address including how many times it's appeared on the chain and when the first and most recent blocks, timestamps, and dates are.

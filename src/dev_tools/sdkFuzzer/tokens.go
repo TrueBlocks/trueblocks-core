@@ -26,7 +26,7 @@ func DoTokens() {
 	opts := sdk.TokensOptions{}
 	ShowHeader("DoTokens", opts)
 
-	globs := noRaw(noEther(globals))
+	globs := noEther(globals)
 	// Option 'parts.list<enum>' is an emum
 	byAcct := []bool{false, true}
 	changes := []bool{false, true}

@@ -27,7 +27,7 @@ func DoAbis() {
 	opts := sdk.AbisOptions{}
 	ShowHeader("DoAbis", opts)
 
-	globs := noRaw(noEther(globals))
+	globs := noEther(globals)
 	known := []bool{false, true}
 	proxyFor := fuzzProxyFors
 	hint := fuzzHints
@@ -64,7 +64,7 @@ func DoAbis() {
 
 	sigs := []string{
 		"	event Transfer(address indexed from, address indexed to, uint256 amount);",
-		"function transfer(address dst, uint rawAmount) external returns (bool)",
+		"function transfer(address dst, uint amt) external returns (bool)",
 		"transfer(address,uint)",
 		"transfer",
 		"x",

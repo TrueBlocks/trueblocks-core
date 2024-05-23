@@ -3,6 +3,7 @@
     doc_group = "03-Chain State"
     doc_descr = "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
     doc_route = "309-result"
+    attributes = ""
     produced_by = "state"
     contains = "function"
     cache_type = "cacheable"

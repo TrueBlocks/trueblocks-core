@@ -44,7 +44,7 @@ func (opts *configOptionsInternal) ConfigBytes(w io.Writer) error {
 }
 
 // configParseFunc handles special cases such as structs and enums (if any).
-func configParseFunc(target interface{}, key, value string) (bool, error) {
+func configParseFunc(target any, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*configOptionsInternal)
 	if !ok {

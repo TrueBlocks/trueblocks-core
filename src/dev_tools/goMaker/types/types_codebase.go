@@ -197,3 +197,12 @@ func (op *Option) Stripped() string {
 	ret = strings.ReplaceAll(ret, "enum<", "")
 	return CamelCase(strings.ReplaceAll(strings.ReplaceAll(ret, "<", ""), ">", ""))
 }
+
+func (cb *CodeBase) Streamables() string {
+	ret := []string{}
+	for _, st := range cb.Structures {
+		ret = append(ret, "\t"+st.Class)
+	}
+	sort.Strings(ret)
+	return strings.Join(ret, " |\n")
+}

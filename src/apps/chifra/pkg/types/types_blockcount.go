@@ -17,19 +17,6 @@ import (
 
 // EXISTING_CODE
 
-type RawBlockCount struct {
-	AddressCnt      string `json:"addressCnt"`
-	BlockNumber     string `json:"blockNumber"`
-	LogsCnt         string `json:"logsCnt"`
-	Timestamp       string `json:"timestamp"`
-	TracesCnt       string `json:"tracesCnt"`
-	TransactionsCnt string `json:"transactionsCnt"`
-	UnclesCnt       string `json:"unclesCnt"`
-	WithdrawalsCnt  string `json:"withdrawalsCnt"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type BlockCount struct {
 	AddressCnt      uint64         `json:"addressCnt,omitempty"`
 	BlockNumber     base.Blknum    `json:"blockNumber"`
@@ -39,7 +26,6 @@ type BlockCount struct {
 	TransactionsCnt uint64         `json:"transactionsCnt"`
 	UnclesCnt       uint64         `json:"unclesCnt,omitempty"`
 	WithdrawalsCnt  uint64         `json:"withdrawalsCnt,omitempty"`
-	raw             *RawBlockCount `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -49,20 +35,12 @@ func (s BlockCount) String() string {
 	return string(bytes)
 }
 
-func (s *BlockCount) Raw() *RawBlockCount {
-	return s.raw
-}
-
-func (s *BlockCount) SetRaw(raw *RawBlockCount) {
-	s.raw = raw
-}
-
-func (s *BlockCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *BlockCount) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"blockNumber":     s.BlockNumber,
 		"transactionsCnt": s.TransactionsCnt,
 	}
@@ -79,10 +57,10 @@ func (s *BlockCount) Model(chain, format string, verbose bool, extraOptions map[
 		order = append(order, "date")
 	}
 
-	wantsUncles := extraOptions["uncles"] == true
-	wantsLogs := extraOptions["logs"] == true
-	wantsTraces := extraOptions["traces"] == true
-	wantsUniqs := extraOptions["uniqs"] == true
+	wantsUncles := extraOpts["uncles"] == true
+	wantsLogs := extraOpts["logs"] == true
+	wantsTraces := extraOpts["traces"] == true
+	wantsUniqs := extraOpts["uniqs"] == true
 	wantsWithdrawals := true
 
 	if format == "json" {

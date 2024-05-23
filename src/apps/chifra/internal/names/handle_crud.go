@@ -45,14 +45,14 @@ func (opts *NamesOptions) HandleCrud() (err error) {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Name], errorChan chan error) {
 		modelChan <- name
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"crud": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func handleCreate(chain string, data *CrudData) (name *types.Name, err error) {

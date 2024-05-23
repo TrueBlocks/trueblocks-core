@@ -22,18 +22,6 @@ import (
 
 // EXISTING_CODE
 
-type RawResult struct {
-	Address          string `json:"address"`
-	BlockNumber      string `json:"blockNumber"`
-	EncodedArguments string `json:"encodedArguments"`
-	Encoding         string `json:"encoding"`
-	Name             string `json:"name"`
-	Signature        string `json:"signature"`
-	Timestamp        string `json:"timestamp"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
 type Result struct {
 	Address          base.Address   `json:"address"`
 	ArticulatedOut   *Function      `json:"articulatedOut"`
@@ -43,7 +31,6 @@ type Result struct {
 	Name             string         `json:"name"`
 	Signature        string         `json:"signature"`
 	Timestamp        base.Timestamp `json:"timestamp"`
-	raw              *RawResult     `json:"-"`
 	// EXISTING_CODE
 	Values        map[string]string `json:"values"`
 	ReturnedBytes string
@@ -55,16 +42,8 @@ func (s Result) String() string {
 	return string(bytes)
 }
 
-func (s *Result) Raw() *RawResult {
-	return s.raw
-}
-
-func (s *Result) SetRaw(raw *RawResult) {
-	s.raw = raw
-}
-
-func (s *Result) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -108,10 +87,10 @@ func (s *Result) Model(chain, format string, verbose bool, extraOptions map[stri
 		delete(model, "date")
 	}
 
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedOut != nil
-	var articulatedOut map[string]interface{}
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedOut != nil
+	var articulatedOut map[string]any
 	if isArticulated {
-		articulatedOut = map[string]interface{}{
+		articulatedOut = map[string]any{
 			"name": s.ArticulatedOut.Name,
 		}
 		outputModels := parametersToMap(s.ArticulatedOut.Outputs)

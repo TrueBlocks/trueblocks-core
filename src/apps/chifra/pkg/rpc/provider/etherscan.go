@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -25,12 +26,13 @@ const etherscanMaxPerPage = 3000
 var etherscanBaseUrl = "https://api.etherscan.io"
 
 type EtherscanProvider struct {
-	printProgress    bool
-	perPage          int
-	baseUrl          string
-	conn             *rpc.Connection
-	limiter          *rate.Limiter
-	convertSlurpType func(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error)
+	printProgress bool
+	perPage       int
+	baseUrl       string
+	conn          *rpc.Connection
+	limiter       *rate.Limiter
+	// TODO: BOGUS - clean raw
+	convertSlurpType func(address string, requestType string, trans *types.Slurp) (types.Slurp, error)
 	apiKey           string
 }
 
@@ -124,9 +126,9 @@ func (p *EtherscanProvider) Count(ctx context.Context, query *Query, errorChan c
 }
 
 type etherscanResponseBody struct {
-	Message string           `json:"message"`
-	Result  []types.RawSlurp `json:"result"`
-	Status  string           `json:"status"`
+	Message string        `json:"message"`
+	Result  []types.Slurp `json:"result"`
+	Status  string        `json:"status"`
 }
 
 func (p *EtherscanProvider) fetchData(ctx context.Context, address base.Address, paginator Paginator, requestType string) (data []SlurpedPageItem, count int, err error) {
@@ -140,85 +142,102 @@ func (p *EtherscanProvider) fetchData(ctx context.Context, address base.Address,
 	}
 
 	debug.DebugCurlStr(url)
-	resp, err := http.Get(url)
-	if err != nil {
-		return []SlurpedPageItem{}, 0, err
-	}
-	defer resp.Body.Close()
-
-	// Check server response
-	if resp.StatusCode != http.StatusOK {
-		return []SlurpedPageItem{}, 0, fmt.Errorf("etherscan API error: %s", resp.Status)
-	}
-
-	decoder := json.NewDecoder(resp.Body)
 	fromEs := etherscanResponseBody{}
-	if err = decoder.Decode(&fromEs); err != nil {
-		if fromEs.Message == "NOTOK" {
-			return []SlurpedPageItem{}, 0, fmt.Errorf("provider responded with: %s %s", url, fromEs.Message)
-		}
-		return []SlurpedPageItem{}, 0, fmt.Errorf("decoder failed: %w", err)
-	}
+	sleepyTime := 50 * time.Millisecond
 
-	if fromEs.Message == "NOTOK" {
-		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
-		// response so we don't keep asking Etherscan for the same address. The user may later
-		// remove empty ABIs with chifra abis --decache.
-		if !utils.IsFuzzing() {
-			logger.Warn("provider responded with:", url, fromEs.Message, strings.Repeat(" ", 40))
-		}
-		return []SlurpedPageItem{}, 0, nil
-		// } else if fromEs.Message != "OK" {
-		// 	logger.Warn("URL:", url)
-		// 	logger.Warn("provider responded with:", url, fromEs.Message)
-	}
-
+	attempts := 0
 	var ret []SlurpedPageItem
-	for _, rawTx := range fromEs.Result {
-		if transaction, err := p.rawSlurpTo(address.String(), requestType, &rawTx); err != nil {
-			return nil, 0, err
-		} else {
-			ret = append(ret, SlurpedPageItem{
-				Appearance: &types.Appearance{
-					Address:          address,
-					BlockNumber:      uint32(transaction.BlockNumber),
-					TransactionIndex: uint32(transaction.TransactionIndex),
-				},
-				Transaction: &transaction,
-			})
+	for {
+		attempts++
+		if len(ret) > 0 || attempts > 3 {
+			paginator.SetDone(len(ret) < paginator.PerPage())
+			return ret, len(ret), nil
+		}
+		resp, err := http.Get(url)
+		if err != nil {
+			if attempts > 3 {
+				return ret, len(ret), err
+			}
+		}
+
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			if attempts > 3 {
+				return ret, len(ret), fmt.Errorf("etherscan API error: %s", resp.Status)
+			}
+			time.Sleep(sleepyTime)
+			sleepyTime *= 2
+		}
+		// Check server response
+		decoder := json.NewDecoder(resp.Body)
+		if err = decoder.Decode(&fromEs); err != nil {
+			if attempts > 3 {
+				if fromEs.Message == "NOTOK" {
+					return ret, len(ret), fmt.Errorf("provider responded with: %s %s", url, fromEs.Message)
+				}
+				return ret, len(ret), fmt.Errorf("decoder failed: %w", err)
+			}
+			time.Sleep(sleepyTime)
+			sleepyTime *= 2
+		}
+
+		if fromEs.Message == "NOTOK" {
+			if attempts > 3 {
+				// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
+				// response so we don't keep asking Etherscan for the same address. The user may later
+				// remove empty ABIs with chifra abis --decache.
+				if !utils.IsFuzzing() {
+					logger.Warn("provider responded with:", url, fromEs.Message, strings.Repeat(" ", 40))
+				}
+				return ret, len(ret), nil
+				// } else if fromEs.Message != "OK" {
+				// 	logger.Warn("URL:", url)
+				// 	logger.Warn("provider responded with:", url, fromEs.Message)
+			}
+			time.Sleep(sleepyTime)
+			sleepyTime *= 2
+		}
+
+		for _, trans := range fromEs.Result {
+			if transaction, err := p.convert(address.String(), requestType, &trans); err != nil {
+				return nil, 0, err
+			} else {
+				ret = append(ret, SlurpedPageItem{
+					Appearance: &types.Appearance{
+						Address:          address,
+						BlockNumber:      uint32(transaction.BlockNumber),
+						TransactionIndex: uint32(transaction.TransactionIndex),
+					},
+					Transaction: &transaction,
+				})
+			}
 		}
 	}
-
-	fetchedCount := len(ret)
-	paginator.SetDone(fetchedCount < paginator.PerPage())
-
-	return ret, fetchedCount, nil
 }
 
-// rawSlurpTo translate RawSlurp to Slurp. By default it uses `defaultConvertSlurpType`, but this can be changed, e.g. in tests
-func (p *EtherscanProvider) rawSlurpTo(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
-	return p.convertSlurpType(address, requestType, rawTx)
+// convert translate Slurp to Slurp. By default it uses `defaultConvertSlurpType`, but this can be changed, e.g. in tests
+func (p *EtherscanProvider) convert(address string, requestType string, trans *types.Slurp) (types.Slurp, error) {
+	return p.convertSlurpType(address, requestType, trans)
 }
 
-func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType string, rawTx *types.RawSlurp) (types.Slurp, error) {
+func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType string, trans *types.Slurp) (types.Slurp, error) {
 	s := types.Slurp{
-		Hash:             base.HexToHash(rawTx.Hash),
-		BlockHash:        base.HexToHash(rawTx.BlockHash),
-		BlockNumber:      base.MustParseBlknum(rawTx.BlockNumber),
-		TransactionIndex: base.MustParseTxnum(rawTx.TransactionIndex),
-		Timestamp:        base.MustParseTimestamp(rawTx.Timestamp),
-		From:             base.HexToAddress(rawTx.From),
-		To:               base.HexToAddress(rawTx.To),
-		Gas:              base.MustParseGas(rawTx.Gas),
-		GasPrice:         base.MustParseGas(rawTx.GasPrice),
-		GasUsed:          base.MustParseGas(rawTx.GasUsed),
-		Input:            rawTx.Input,
+		Hash:             trans.Hash,
+		BlockHash:        trans.BlockHash,
+		BlockNumber:      trans.BlockNumber,
+		TransactionIndex: trans.TransactionIndex,
+		Timestamp:        trans.Timestamp,
+		From:             trans.From,
+		To:               trans.To,
+		Gas:              trans.Gas,
+		GasPrice:         trans.GasPrice,
+		GasUsed:          trans.GasUsed,
+		Input:            trans.Input,
+		Value:            trans.Value,
+		ContractAddress:  trans.ContractAddress,
+		HasToken:         requestType == "nfts" || requestType == "token" || requestType == "1155",
 	}
-
-	s.IsError = rawTx.TxReceiptStatus == "0"
-	s.HasToken = requestType == "nfts" || requestType == "token" || requestType == "1155"
-	s.Value.SetString(rawTx.Value, 0)
-	s.ContractAddress = base.HexToAddress(rawTx.ContractAddress)
+	// s.IsError = trans.TxReceiptStatus == "0"
 
 	if requestType == "int" {
 		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't
@@ -229,30 +248,25 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.BlockReward
 		s.From = base.BlockRewardSender
-		// TODO: This is incorrect for mainnet
+		// TODO: This is only correct for Eth mainnet
 		s.Value.SetString("5000000000000000000", 0)
 		s.To = base.HexToAddress(address)
 	} else if requestType == "uncles" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.UncleReward
 		s.From = base.UncleRewardSender
-		// TODO: This is incorrect for mainnet
+		// TODO: This is only correct for Eth mainnet
 		s.Value.SetString("3750000000000000000", 0)
 		s.To = base.HexToAddress(address)
 	} else if requestType == "withdrawals" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.WithdrawalAmt
 		s.From = base.WithdrawalSender
-		s.ValidatorIndex = base.MustParseValue(rawTx.ValidatorIndex)
-		s.WithdrawalIndex = base.MustParseValue(rawTx.WithdrawalIndex)
-		s.Value.SetString(rawTx.Amount, 0)
+		s.ValidatorIndex = trans.ValidatorIndex
+		s.WithdrawalIndex = trans.WithdrawalIndex
+		s.Value = trans.Amount
 		s.To = base.HexToAddress(address)
-		if s.To != base.HexToAddress(rawTx.Address) {
-			logger.Fatal("should not happen ==> in rawSlurpTo", s.To, rawTx.Address)
-		}
 	}
-
-	s.SetRaw(rawTx)
 	return s, nil
 }
 

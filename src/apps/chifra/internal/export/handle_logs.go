@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -36,10 +37,10 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 	for _, mon := range monitorArray {
 		addrArray = append(addrArray, mon.Address)
 	}
-	logFilter := types.NewLogFilter(opts.Emitter, opts.Topic)
+	logFilter := rpc.NewLogFilter(opts.Emitter, opts.Topic)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Log], errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
@@ -144,7 +145,7 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
@@ -155,9 +156,9 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
 		} else {
-			extra["namesMap"] = namesMap
+			extraOpts["namesMap"] = namesMap
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

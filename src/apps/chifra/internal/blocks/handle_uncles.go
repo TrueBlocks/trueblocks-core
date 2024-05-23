@@ -23,14 +23,14 @@ func (opts *BlocksOptions) HandleUncles() error {
 	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Block], errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Block[string]](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.LightBlock](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -46,11 +46,11 @@ func (opts *BlocksOptions) HandleUncles() error {
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.Block[string])
+					thisMap[app] = new(types.LightBlock)
 				}
 
-				items := make([]*types.Block[types.Transaction], 0, len(thisMap))
-				iterFunc := func(app types.Appearance, value *types.Block[string]) error {
+				items := make([]*types.Block, 0, len(thisMap))
+				iterFunc := func(app types.Appearance, value *types.LightBlock) error {
 					bn := base.Blknum(app.BlockNumber)
 					if uncles, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
 						delete(thisMap, app)
@@ -90,11 +90,11 @@ func (opts *BlocksOptions) HandleUncles() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"hashes":     opts.Hashes,
 		"uncles":     opts.Uncles,
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

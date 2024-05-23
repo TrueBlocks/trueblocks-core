@@ -34,7 +34,7 @@ func DoReceipts() {
 	// Articulate     bool     `json:"articulate,omitempty"`
 	// func (opts *ReceiptsOptions) Receipts() ([]types.Receipt, *types.MetaData, error) {
 
-	// receipts,command,default|caching|raw|
+	// receipts,command,default|caching|
 	opts = sdk.ReceiptsOptions{
 		TransactionIds: append(firsts, []string{"17100101.1"}...),
 	}

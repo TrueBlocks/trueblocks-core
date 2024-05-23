@@ -40,7 +40,7 @@ Blocks consist of the following fields:
 | difficulty    | the computational difficulty at this block                    | value                                               |
 | timestamp     | the Unix timestamp of the object                              | timestamp                                           |
 | date          | the timestamp as a date (calculated)                          | datetime                                            |
-| transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
+| transactions  | a possibly empty array of transactions                        | [Transaction[]](/data-model/chaindata/#transaction) |
 | baseFeePerGas | the base fee for this block                                   | gas                                                 |
 | uncles        | a possibly empty array of uncle hashes                        | hash[]                                              |
 | withdrawals   | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal)   |
@@ -165,25 +165,6 @@ Logs consist of the following fields:
 | articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
 | compressedLog    | a truncated, more readable version of the articulation (calculated)                               | string                                  |
 
-## LogFilter
-
-Log filters are used to speed up querying of the node when searching for logs.
-
-The following commands produce and manage LogFilters:
-
-- [chifra blocks](/chifra/chaindata/#chifra-blocks)
-- [chifra logs](/chifra/chaindata/#chifra-logs)
-
-LogFilters consist of the following fields:
-
-| Field     | Description                                                            | Type      |
-| --------- | ---------------------------------------------------------------------- | --------- |
-| fromBlock | the first block in the block range to query with eth_getLogs           | blknum    |
-| toBlock   | the last block in the range to query with eth_getLogs                  | blknum    |
-| blockHash | an alternative to blocks specification, the hash of the block to query | hash      |
-| emitters  | one or more emitting addresses from which logs were emitted            | address[] |
-| topics    | one or more topics which logs represent                                | topic[]   |
-
 ## Trace
 
 The deepest layer of the Ethereum data is the trace. Every transaction has at least one trace which
@@ -220,8 +201,6 @@ Traces consist of the following fields:
 | compressedTrace  | a compressed string version of the articulated trace (calculated) | string                                            |
 
 ### Notes
-
-When produced using the `--raw` option to `chifra traces`, this data model actually produces `transactionPosition` instead of `transactionIndex`. When produced without the `--raw` option, the model uses `transactionIndex` to be consistent with other data models such as the `transaction`.
 
 Traces and TraceActions, when produced during a self-destruct, export different fields when rendered in JSON. In CSV and TXT output, these fields change thier meaning while retaining the header of the original fields. The following table describes these differences:
 
@@ -397,6 +376,32 @@ TimestampCounts consist of the following fields:
 | Field | Description                                         | Type   |
 | ----- | --------------------------------------------------- | ------ |
 | count | the number of timestamps in the timestamps database | uint64 |
+
+## LightBlock
+
+`chifra blocks --hashes` returns top level data specified block with only
+the hashes of the block's transactions.
+
+The following commands produce and manage LightBlocks:
+
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
+
+LightBlocks consist of the following fields:
+
+| Field         | Description                                                   | Type                                              |
+| ------------- | ------------------------------------------------------------- | ------------------------------------------------- |
+| gasLimit      | the system-wide maximum amount of gas permitted in this block | gas                                               |
+| hash          | the hash of the current block                                 | hash                                              |
+| blockNumber   | the number of the block                                       | blknum                                            |
+| parentHash    | hash of previous block                                        | hash                                              |
+| miner         | address of block's winning miner                              | address                                           |
+| difficulty    | the computational difficulty at this block                    | value                                             |
+| timestamp     | the Unix timestamp of the object                              | timestamp                                         |
+| date          | the timestamp as a date (calculated)                          | datetime                                          |
+| transactions  | a possibly empty array of transaction hashes                  | string[]                                          |
+| baseFeePerGas | the base fee for this block                                   | gas                                               |
+| uncles        | a possibly empty array of uncle hashes                        | hash[]                                            |
+| withdrawals   | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal) |
 
 ## Base types
 

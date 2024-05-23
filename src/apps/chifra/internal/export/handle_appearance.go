@@ -28,7 +28,7 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 	)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Appearance], errorChan chan error) {
 		currentBn := uint32(0)
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, true /* withCount */); err != nil {
@@ -51,7 +51,7 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"export": true,
 	}
 
@@ -61,10 +61,10 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 		if err != nil {
 			return err
 		}
-		extra["namesMap"] = namesMap
+		extraOpts["namesMap"] = namesMap
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func (opts *ExportOptions) IsMax(cnt uint64) bool {

@@ -34,11 +34,11 @@ func (opts *AbisOptions) HandleAbiFind() error {
 	// TODO: we might want to use utils.IterateOver Map here
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Function], errorChan chan error) {
 		var results []types.Function
 		var wg sync.WaitGroup
 		mutex := sync.Mutex{}
-		checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2, func(testSig interface{}) {
+		checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2, func(testSig any) {
 			defer wg.Done()
 			byts := []byte(testSig.(string))
 			sigBytes := crypto.Keccak256(byts)
@@ -120,10 +120,10 @@ func (opts *AbisOptions) HandleAbiFind() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"encodingSignatureOnly": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func (opts *AbisOptions) hitsHint(test string) bool {

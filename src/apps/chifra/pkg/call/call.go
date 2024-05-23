@@ -232,15 +232,15 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 		blockNumberHex,
 	}
 
-	rawBytes, err := query.Query[string](call.Conn.Chain, method, params)
+	theBytes, err := query.Query[string](call.Conn.Chain, method, params)
 	if err != nil {
 		return nil, err
 	}
 
 	function := call.Method.Clone()
 	// articulate it if possible
-	if rawBytes != nil {
-		str := *rawBytes
+	if theBytes != nil {
+		str := *theBytes
 		if err = artFunc(str, function); err != nil {
 			return nil, err
 		}
@@ -254,7 +254,7 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 		Encoding:         call.Method.Encoding,
 		Signature:        call.Method.Signature,
 		EncodedArguments: encodedArguments,
-		ReturnedBytes:    *rawBytes,
+		ReturnedBytes:    *theBytes,
 		ArticulatedOut:   function,
 	}
 	results.Values = make(map[string]string)

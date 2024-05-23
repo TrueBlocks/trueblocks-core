@@ -83,8 +83,7 @@ on      ,both ,fast  ,tokens ,tools ,getTokens ,cache_one                     ,y
 on      ,both ,fast  ,tokens ,tools ,getTokens ,decache_one                   ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 & blocks = 12000000 & decache
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,tokens ,tools ,getTokens ,caps_allowed                  ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & fail_on_purpose
-on      ,both ,fast  ,tokens ,tools ,getTokens ,caps_disallowed_1             ,y    ,addrs = trueblocks.eth & raw
 on      ,both ,fast  ,tokens ,tools ,getTokens ,caps_disallowed_2             ,y    ,addrs = trueblocks.eth & ether
 on      ,both ,fast  ,tokens ,tools ,getTokens ,caps_disallowed_3             ,y    ,addrs = trueblocks.eth & wei

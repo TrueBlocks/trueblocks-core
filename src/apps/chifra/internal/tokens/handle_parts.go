@@ -18,7 +18,7 @@ func (opts *TokensOptions) HandleParts() error {
 	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.Token], errorChan chan error) {
 		for _, address := range opts.Addrs {
 			addr := base.HexToAddress(address)
 			currentBn := base.Blknum(0)
@@ -64,11 +64,11 @@ func (opts *TokensOptions) HandleParts() error {
 		return err
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 		"namesMap": namesMap,
 		"parts":    opts.Parts,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

@@ -1,6 +1,5 @@
 export * from './abi';
 export * from './appearance';
-export * from './appearanceCount';
 export * from './basetypes';
 export * from './block';
 export * from './blockCount';
@@ -17,7 +16,6 @@ export * from './config';
 export * from './function';
 export * from './ipfsPin';
 export * from './log';
-export * from './logFilter';
 export * from './manifest';
 export * from './monitor';
 export * from './monitorClean';

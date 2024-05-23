@@ -18,7 +18,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawBlockCount], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.BlockCount], errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
@@ -31,7 +31,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 			}
 
 			for _, bn := range blockNums {
-				var block types.Block[string]
+				var block types.LightBlock
 				if block, err = opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -102,12 +102,12 @@ func (opts *BlocksOptions) HandleCounts() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"count":  opts.Count,
 		"uncles": opts.Uncles,
 		"logs":   opts.Logs,
 		"traces": opts.Traces,
 		"uniqs":  opts.Uniq,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

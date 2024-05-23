@@ -35,10 +35,9 @@ on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list2_v         ,n   
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list_not_in     ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 & list
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_allowed_m           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & decache & fail_on_purpose
 on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_disallowed_1_m      ,y    ,addrs = trueblocks.eth & cache
-on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_disallowed_2_m      ,y    ,addrs = trueblocks.eth & raw
 on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_disallowed_3_m      ,y    ,addrs = trueblocks.eth & ether
 on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_disallowed_4_m      ,y    ,addrs = trueblocks.eth & wei
 
