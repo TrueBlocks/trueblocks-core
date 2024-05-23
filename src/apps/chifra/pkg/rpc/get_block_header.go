@@ -24,7 +24,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 		}
 	}
 
-	block, err := conn.getLightBlockFromRpc(bn)
+	block, err := conn.getLightBlockFromRpc(bn, notAHash)
 	if err != nil {
 		return types.LightBlock{}, err
 	}
@@ -39,9 +39,13 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 }
 
 // getLightBlockFromRpc returns the block as received from the node
-func (conn *Connection) getLightBlockFromRpc(bn base.Blknum) (*types.LightBlock, error) {
+func (conn *Connection) getLightBlockFromRpc(bn base.Blknum, hash base.Hash) (*types.LightBlock, error) {
 	method := "eth_getBlockByNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn), false}
+	if hash != notAHash {
+		method = "eth_getBlockByHash"
+		params = query.Params{hash, false}
+	}
 
 	if block, err := query.Query[types.LightBlock](conn.Chain, method, params); err != nil {
 		return &types.LightBlock{}, err
