@@ -52,7 +52,8 @@ func (conn *Connection) getLightBlockFromRpc(bn base.Blknum, hash base.Hash) (*t
 	} else {
 		block.BlockNumber = block.Number
 		if bn == 0 {
-			block.Timestamp = conn.GetBlockTimestamp(0)
+			// TODO: Chain specific
+			block.Timestamp = conn.GetBlockTimestamp(1) - 13
 		} else if block.Timestamp == 0 {
 			return &types.LightBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}

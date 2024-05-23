@@ -71,16 +71,9 @@ func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
 
 // GetBlockHashByNumber returns a block's hash if it's a valid block
 func (conn *Connection) GetBlockHashByNumber(bn base.Blknum) (base.Hash, error) {
-	if ec, err := conn.getClient(); err != nil {
+	if block, err := conn.GetBlockHeaderByNumber(bn); err != nil {
 		return base.Hash{}, err
 	} else {
-		defer ec.Close()
-
-		ethBlock, err := ec.BlockByNumber(context.Background(), base.BiFromBn(bn))
-		if err != nil {
-			return base.Hash{}, err
-		}
-
-		return base.HexToHash(ethBlock.Hash().Hex()), nil
+		return block.Hash, err
 	}
 }
