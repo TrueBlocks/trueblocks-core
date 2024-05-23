@@ -67,6 +67,7 @@ on      ,both ,fast  ,traces ,tools ,getTraces ,ddos_supress        ,y    ,trans
 on      ,both ,fast  ,traces ,tools ,getTraces ,ddos_show           ,y    ,transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
 
 # These work, but they are slow so we do not run them
+on      ,both ,fast  ,traces ,tools ,getTraces ,by_filter_decache   ,y    ,transactions = 4370000.* 4370001.* 4370002.* & decache
 on      ,both ,fast  ,traces ,tools ,getTraces ,by_filter1          ,y    ,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!1000!100 & cache
 on      ,both ,fast  ,traces ,tools ,getTraces ,by_filter2          ,y    ,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!
 local   ,both ,fast  ,traces ,tools ,getTraces ,by_filter3          ,y    ,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!1
