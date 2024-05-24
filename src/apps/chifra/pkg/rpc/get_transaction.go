@@ -354,9 +354,13 @@ func (conn *Connection) getTransactionFromRpc(blkHash base.Hash, txHash base.Has
 	}
 
 	if trans, err := query.Query[types.Transaction](conn.Chain, method, params); err != nil {
-		return &types.Transaction{}, err
+		return &types.Transaction{
+			Receipt: &types.Receipt{},
+		}, err
 	} else if trans.Hash.IsZero() {
-		return &types.Transaction{}, ethereum.NotFound
+		return &types.Transaction{
+			Receipt: &types.Receipt{},
+		}, ethereum.NotFound
 	} else {
 		return trans, nil
 	}

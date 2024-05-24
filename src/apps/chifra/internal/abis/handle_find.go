@@ -50,7 +50,10 @@ func (opts *AbisOptions) HandleAbiFind() error {
 				if bytes.Equal(sigBytes[:len(str)], str) {
 					scanBar.Found++
 					logger.Progress(len(opts.Find) < 2, "Found", scanBar.Found, "of", scanBar.Wanted, arg, testSig)
-					found := types.Function{Encoding: arg, Signature: testSig.(string)}
+					found := types.Function{
+						Encoding:  arg,
+						Signature: testSig.(string),
+					}
 					if testMode {
 						mutex.Lock()
 						results = append(results, found)
