@@ -12,6 +12,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
   - run ../scripts/make-go-work.sh
 - Removes all Raw code
 - First version of the SDK
+- Added better examples
 
 ## v2.5.9 (2024/04/05)
 
