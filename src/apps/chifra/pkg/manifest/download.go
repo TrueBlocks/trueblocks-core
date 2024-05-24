@@ -134,9 +134,9 @@ func getUnchainedAbi() (base.Address, *abi.SelectorSyncMap, error) {
 	return callAddress, abiMap, nil
 }
 
-var unchainedWarning string = `
-The Unchained Index requires your mainnet RPC to be synced (at least to block 0x1304073 or 19000000).
-Check the progress with the following curl command and try again later.
+// var unchainedWarning string = `
+// The Unchained Index requires your mainnet RPC to be synced (at least to block 0x1304073 or 19000000).
+// Check the progress with the following curl command and try again later.
 
-curl -X POST -H "Content-Type: application/json" --data '{"method":"eth_blockNumber","params":[],"id":1,"jsonrpc":"2.0"}' {0}
-`
+// curl -X POST -H "Content-Type: application/json" --data '{"method":"eth_blockNumber","params":[],"id":1,"jsonrpc":"2.0"}' {0}
+// `
