@@ -5,35 +5,13 @@
 package rpc
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // GetBlockTimestamp returns the timestamp associated with a given block
 func (conn *Connection) GetBlockTimestamp(bn base.Blknum) base.Timestamp {
-	if ec, err := conn.getClient(); err != nil {
-		logger.Error("Could not connect to RPC client", err)
-		return 0
-	} else {
-		defer ec.Close()
-
-		r, err := ec.HeaderByNumber(context.Background(), base.BiFromBn(bn))
-		if err != nil {
-			logger.Error("Could not connect to RPC client", err)
-			return 0
-		}
-
-		ts := base.Timestamp(r.Time)
-		if ts == 0 {
-			// The RPC does not return a timestamp for block zero, so we simulate it with ts from block one less 13 seconds
-			// TODO: Chain specific
-			return conn.GetBlockTimestamp(1) - 13
-		}
-
-		return ts
-	}
+	block, _ := conn.GetBlockHeaderByNumber(bn)
+	return block.Timestamp
 }
 
 // GetBlockHashByHash returns a block's hash if it's a valid block

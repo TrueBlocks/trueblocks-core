@@ -15,7 +15,7 @@ import (
 
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
 func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock, error) {
-	if conn.StoreReadable() {
+	if conn.StoreReadable() && bn != base.NOPOSN {
 		var block types.LightBlock
 		block.BlockNumber = bn
 		if err := conn.Store.Read(&block, nil); err == nil {
@@ -42,6 +42,9 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 func (conn *Connection) getLightBlockFromRpc(bn base.Blknum, hash base.Hash) (*types.LightBlock, error) {
 	method := "eth_getBlockByNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn), false}
+	if bn == base.NOPOSN {
+		params = query.Params{"latest", false}
+	}
 	if !hash.IsZero() {
 		method = "eth_getBlockByHash"
 		params = query.Params{hash, false}
