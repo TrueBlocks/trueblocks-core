@@ -9,7 +9,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // GetBlockTimestamp returns the timestamp associated with a given block
@@ -39,33 +38,27 @@ func (conn *Connection) GetBlockTimestamp(bn base.Blknum) base.Timestamp {
 
 // GetBlockHashByHash returns a block's hash if it's a valid block
 func (conn *Connection) GetBlockHashByHash(hash string) (base.Hash, error) {
-	if ec, err := conn.getClient(); err != nil {
+	if block, err := conn.getLightBlockFromRpc(base.NOPOSN, base.HexToHash(hash)); err != nil {
 		return base.Hash{}, err
 	} else {
-		defer ec.Close()
-
-		ethBlock, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
-		if err != nil {
-			return base.Hash{}, err
+		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
+		if conn.StoreWritable() && conn.EnabledMap["blocks"] && isFinal {
+			_ = conn.Store.Write(block, nil)
 		}
-
-		return base.HexToHash(ethBlock.Hash().Hex()), nil
+		return block.Hash, nil
 	}
 }
 
 // GetBlockNumberByHash returns a block's hash if it's a valid block
 func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
-	if ec, err := conn.getClient(); err != nil {
+	if block, err := conn.getLightBlockFromRpc(base.NOPOSN, base.HexToHash(hash)); err != nil {
 		return 0, err
 	} else {
-		defer ec.Close()
-
-		ethBlock, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
-		if err != nil {
-			return 0, err
+		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
+		if conn.StoreWritable() && conn.EnabledMap["blocks"] && isFinal {
+			_ = conn.Store.Write(block, nil)
 		}
-
-		return base.Blknum(ethBlock.NumberU64()), nil
+		return block.BlockNumber, nil
 	}
 }
 
