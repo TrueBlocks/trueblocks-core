@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // Initialize makes sure everything is ready to run. These routines don't return if they aren't
@@ -43,7 +44,7 @@ func VerifyOs() {
 
 // VerifyMigrations will panic if the installation is not properly migrated
 func VerifyMigrations() {
-	if isPermitted() {
+	if utils.IsPermitted() {
 		// Allow certain status and config routes to pass so as to aide user in migrating...
 		return
 	}
@@ -110,36 +111,4 @@ func VerifyMigrations() {
 			logger.Fatal(msg)
 		}
 	}
-}
-
-func isPermitted() bool {
-	isStatus := false
-	isConfig := false
-	hasPaths := false
-	hasEdit := false
-	cnt := len(os.Args)
-	for _, arg := range os.Args {
-		if arg == "help" {
-			return false
-		} else if arg == "status" {
-			isStatus = true
-		} else if arg == "config" {
-			isConfig = true
-		} else if arg == "--paths" {
-			hasPaths = true
-		} else if arg == "edit" {
-			hasEdit = true
-		} else if arg != "--verbose" {
-			isStatus = false
-			isConfig = false
-		} else {
-			cnt-- // allow --verbose
-		}
-	}
-
-	if isStatus && cnt == 2 {
-		return true
-	}
-
-	return isConfig && (hasPaths || hasEdit) && cnt < 4
 }
