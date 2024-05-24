@@ -39,6 +39,11 @@ func ReadUnchainedIndex(chain string, publisher base.Address, database string) (
 
 	unchainedChain := "mainnet" // the unchained index is on mainnet
 	conn := rpc.TempConnection(unchainedChain)
+	// if conn.LatestBlockTimestamp < 1_705_173_443 { // block 19_000_000
+	// 	provider := config.GetChain(unchainedChain).RpcProvider
+	// 	logger.Fatal(usage.Usage(unchainedWarning, provider))
+	// }
+
 	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
 	if contractCall, _, err := call.NewContractCallWithAbi(conn, callAddress, theCall, abiMap); err != nil {
 		wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", theCall, err)
@@ -128,3 +133,10 @@ func getUnchainedAbi() (base.Address, *abi.SelectorSyncMap, error) {
 
 	return callAddress, abiMap, nil
 }
+
+// var unchainedWarning string = `
+// The Unchained Index requires your mainnet RPC to be synced (at least to block 0x1304073 or 19000000).
+// Check the progress with the following curl command and try again later.
+
+// curl -X POST -H "Content-Type: application/json" --data '{"method":"eth_blockNumber","params":[],"id":1,"jsonrpc":"2.0"}' {0}
+// `

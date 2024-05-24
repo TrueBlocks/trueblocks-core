@@ -24,6 +24,7 @@ func (conn *Connection) GetTracesByTransactionId(bn base.Blknum, txid base.Txnum
 	tx, err := conn.GetTransactionByNumberAndId(bn, txid)
 	if err != nil {
 		return []types.Trace{{
+			Action: &types.TraceAction{},
 			Result: &types.TraceResult{},
 		}}, err
 	}

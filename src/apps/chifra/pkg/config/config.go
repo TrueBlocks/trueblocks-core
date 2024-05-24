@@ -13,7 +13,9 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/spf13/viper"
 )
@@ -132,6 +134,9 @@ func GetRootConfig() *ConfigFile {
 		ch.LocalExplorer = clean(ch.LocalExplorer)
 		ch.RemoteExplorer = clean(ch.RemoteExplorer)
 		ch.RpcProvider = strings.Trim(clean(ch.RpcProvider), "/") // Infura, for example, doesn't like the trailing slash
+		if err := validateRpcEndpoint(ch.Chain, ch.RpcProvider); err != nil {
+			logger.Fatal(err)
+		}
 		ch.IpfsGateway = clean(ch.IpfsGateway)
 		if ch.Scrape.AppsPerChunk == 0 {
 			settings := ScrapeSettings{
@@ -201,3 +206,36 @@ func pathFromXDG(envVar string) (string, error) {
 
 	return filepath.Join(xdg, "") + "/", nil
 }
+
+func validateRpcEndpoint(chain, provider string) error {
+	if utils.IsPermitted() {
+		return nil
+	}
+
+	if provider == "https:" {
+		problem := `No rpcProvider found.`
+		return usage.Usage(rpcWarning, chain, provider, problem)
+	}
+
+	if !strings.HasPrefix(provider, "http") {
+		problem := `Invalid rpcProvider found (must be a url).`
+		return usage.Usage(rpcWarning, chain, provider, problem)
+	}
+
+	return nil
+}
+
+var rpcWarning string = `
+We found a problem with the rpcProvider for the {0} chain.
+
+	Provider: {1}
+	Chain:    {0}
+	Problem:  {2}
+
+Confirm the value for the given provider. You may edit this value with
+"chifra config edit".
+
+Also, try the following curl command. If this command does not work, neither will chifra.
+
+curl -X POST -H "Content-Type: application/json" --data '{ "jsonrpc": "2.0", "method": "web3_clientVersion", "id": 6 }' {1}
+`

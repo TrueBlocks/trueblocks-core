@@ -32,11 +32,13 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 
 	if traces, err := query.Query[[]types.Trace](conn.Chain, method, params); err != nil {
 		return []types.Trace{{
+			Action: &types.TraceAction{},
 			Result: &types.TraceResult{},
 		}}, err
 
 	} else if traces == nil || len(*traces) == 0 {
 		return []types.Trace{{
+			Action: &types.TraceAction{},
 			Result: &types.TraceResult{},
 		}}, err
 
@@ -89,11 +91,13 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 
 	if traces, err := query.Query[[]types.Trace](conn.Chain, method, params); err != nil {
 		return []types.Trace{{
+			Action: &types.TraceAction{},
 			Result: &types.TraceResult{},
 		}}, err
 
 	} else if traces == nil || len(*traces) == 0 {
 		return []types.Trace{{
+			Action: &types.TraceAction{},
 			Result: &types.TraceResult{},
 		}}, err
 
