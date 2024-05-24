@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum"
 )
 
 func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Txnum) (*types.Transaction, error) {
@@ -168,54 +168,28 @@ func (conn *Connection) GetTransactionAppByHash(hash string) (types.Appearance, 
 
 // GetTransactionHashByNumberAndID returns a transaction's hash if it's a valid transaction
 func (conn *Connection) GetTransactionHashByNumberAndID(bn base.Blknum, txId base.Txnum) (base.Hash, error) {
-	if ec, err := conn.getClient(); err != nil {
+	if trans, err := conn.getTransactionFromRpc(notAHash, notAHash, bn, txId); err != nil {
 		return base.Hash{}, err
 	} else {
-		defer ec.Close()
-
-		block, err := ec.BlockByNumber(context.Background(), base.BiFromBn(bn))
-		if err != nil {
-			return base.Hash{}, err
-		}
-
-		tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
-		if err != nil {
-			return base.Hash{}, err
-		}
-
-		return base.HexToHash(tx.Hash().Hex()), nil
+		return trans.Hash, nil
 	}
 }
 
 // GetTransactionHashByHash returns a transaction's hash if it's a valid transaction, an empty string otherwise
 func (conn *Connection) GetTransactionHashByHash(hash string) (string, error) {
-	if ec, err := conn.getClient(); err != nil {
+	if trans, err := conn.getTransactionFromRpc(notAHash, base.HexToHash(hash), base.NOPOSN, base.NOPOSN); err != nil {
 		return "", err
 	} else {
-		defer ec.Close()
-
-		tx, _, err := ec.TransactionByHash(context.Background(), common.HexToHash(hash))
-		if err != nil {
-			return "", err
-		}
-
-		return tx.Hash().Hex(), nil
+		return trans.Hash.Hex(), nil
 	}
 }
 
 // GetTransactionHashByHashAndID returns a transaction's hash if it's a valid transaction
 func (conn *Connection) GetTransactionHashByHashAndID(hash string, txId base.Txnum) (string, error) {
-	if ec, err := conn.getClient(); err != nil {
+	if trans, err := conn.getTransactionFromRpc(base.HexToHash(hash), notAHash, base.NOPOSN, txId); err != nil {
 		return "", err
 	} else {
-		defer ec.Close()
-
-		tx, err := ec.TransactionInBlock(context.Background(), common.HexToHash(hash), uint(txId))
-		if err != nil {
-			return "", err
-		}
-
-		return tx.Hash().Hex(), nil
+		return trans.Hash.Hex(), nil
 	}
 }
 
@@ -348,6 +322,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, theApp *
 
 // GetTransactionCountInBlock returns the number of transactions in a block
 func (conn *Connection) GetTransactionCountInBlock(bn base.Blknum) (uint64, error) {
+	// TODO: Can we use our Query here?
 	if ec, err := conn.getClient(); err != nil {
 		return 0, err
 	} else {
@@ -380,6 +355,8 @@ func (conn *Connection) getTransactionFromRpc(blkHash base.Hash, txHash base.Has
 
 	if trans, err := query.Query[types.Transaction](conn.Chain, method, params); err != nil {
 		return &types.Transaction{}, err
+	} else if trans.Hash.IsZero() {
+		return &types.Transaction{}, ethereum.NotFound
 	} else {
 		return trans, nil
 	}

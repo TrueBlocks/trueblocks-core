@@ -58,7 +58,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 
 	// The block is not in the cache, or reading the cache failed. We
 	// need to fetch the block from the RPC.
-	block, err := conn.getBlockFromRpc(bn)
+	block, err := conn.getBlockFromRpc(bn, notAHash)
 	if err != nil {
 		return types.Block{}, err
 	}
@@ -93,9 +93,13 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 }
 
 // getBlockFromRpc returns the block as received from the node
-func (conn *Connection) getBlockFromRpc(bn base.Blknum) (*types.Block, error) {
+func (conn *Connection) getBlockFromRpc(bn base.Blknum, hash base.Hash) (*types.Block, error) {
 	method := "eth_getBlockByNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn), true}
+	if hash != notAHash {
+		method = "eth_getBlockByHash"
+		params = query.Params{hash, true}
+	}
 
 	if block, err := query.Query[types.Block](conn.Chain, method, params); err != nil {
 		return &types.Block{}, err

@@ -15,7 +15,7 @@ import (
 
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
 func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock, error) {
-	if conn.StoreReadable() {
+	if conn.StoreReadable() && bn != base.NOPOSN {
 		var block types.LightBlock
 		block.BlockNumber = bn
 		if err := conn.Store.Read(&block, nil); err == nil {
@@ -24,7 +24,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 		}
 	}
 
-	block, err := conn.getLightBlockFromRpc(bn)
+	block, err := conn.getLightBlockFromRpc(bn, notAHash)
 	if err != nil {
 		return types.LightBlock{}, err
 	}
@@ -39,16 +39,24 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 }
 
 // getLightBlockFromRpc returns the block as received from the node
-func (conn *Connection) getLightBlockFromRpc(bn base.Blknum) (*types.LightBlock, error) {
+func (conn *Connection) getLightBlockFromRpc(bn base.Blknum, hash base.Hash) (*types.LightBlock, error) {
 	method := "eth_getBlockByNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn), false}
+	if bn == base.NOPOSN {
+		params = query.Params{"latest", false}
+	}
+	if !hash.IsZero() {
+		method = "eth_getBlockByHash"
+		params = query.Params{hash, false}
+	}
 
 	if block, err := query.Query[types.LightBlock](conn.Chain, method, params); err != nil {
 		return &types.LightBlock{}, err
 	} else {
 		block.BlockNumber = block.Number
 		if bn == 0 {
-			block.Timestamp = conn.GetBlockTimestamp(0)
+			// TODO: Chain specific
+			block.Timestamp = conn.GetBlockTimestamp(1) - 13
 		} else if block.Timestamp == 0 {
 			return &types.LightBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}

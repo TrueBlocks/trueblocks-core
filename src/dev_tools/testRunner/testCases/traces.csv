@@ -79,6 +79,7 @@ on      ,both ,fast  ,traces ,tools ,getTraces ,by_filter8          ,y    ,fmt =
 on      ,both ,fast  ,traces ,tools ,getTraces ,by_filter9          ,y    ,fmt = json & filter = 4370000!4370002!!!1!
 on      ,both ,fast  ,traces ,tools ,getTraces ,by_filter10         ,y    ,fmt = json & filter = 4370000!4370002!!!!1
 on      ,both ,fast  ,traces ,tools ,getTraces ,by_filter11         ,y    ,fmt = json & filter = 4370000!4370002!!!1!2
+on      ,both ,fast  ,traces ,tools ,getTraces ,cache_remove_me     ,y    ,transactions = 4370000.* 4370001.* 4370002.* & cache
 
 # These do not work because :next and :prev are not parsed in goLang
 delay   ,both ,fast  ,traces ,tools ,getTraces ,first               ,y    ,transactions = 40500.0:next
