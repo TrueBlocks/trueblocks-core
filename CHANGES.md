@@ -10,6 +10,8 @@ This file details changes made to TrueBlocks over time. See the [migration notes
   - remove .cmake in ./build folder
   - remove ./go.work and go.work.sum in root
   - run ../scripts/make-go-work.sh
+- Removes all Raw code
+- First version of the SDK
 
 ## v2.5.9 (2024/04/05)
 
