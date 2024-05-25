@@ -54,7 +54,7 @@ func (opts *BlocksOptions) BlocksInternal() error {
 		err = opts.HandleDecache()
 
 	} else if opts.Count {
-		err = opts.HandleCounts()
+		err = opts.HandleCount()
 
 	} else if opts.Logs {
 		err = opts.HandleLogs()

@@ -53,7 +53,7 @@ func (opts *AbisOptions) AbisInternal() error {
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if len(opts.Find) > 0 {
-		err = opts.HandleAbiFind()
+		err = opts.HandleFind()
 	} else if len(opts.Encode) > 0 {
 		err = opts.HandleEncode()
 	} else {

@@ -53,7 +53,7 @@ func (opts *TracesOptions) TracesInternal() error {
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if opts.Count {
-		err = opts.HandleCounts()
+		err = opts.HandleCount()
 	} else if len(opts.Filter) > 0 {
 		err = opts.HandleFilter()
 	} else {
