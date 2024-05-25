@@ -33,19 +33,17 @@ type MonitorUpdate struct {
 	Chain         string
 	PublisherAddr base.Address
 	TestMode      bool
-	Silent        bool
 	FirstBlock    base.Blknum
 	Addrs         []string
 }
 
-func NewUpdater(chain string, testMode, silent bool, addrs []string) MonitorUpdate {
+func NewUpdater(chain string, testMode bool, addrs []string) MonitorUpdate {
 	return MonitorUpdate{
 		MaxTasks:      12,
 		FirstBlock:    base.NOPOSN,
 		Chain:         chain,
 		PublisherAddr: base.Address{},
 		TestMode:      testMode,
-		Silent:        silent,
 		Addrs:         addrs,
 		MonitorMap:    make(map[base.Address]*Monitor, len(addrs)),
 	}
@@ -345,9 +343,9 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 				_, err := mon.WriteAppearances(*result.AppRecords, true /* append */)
 				if err != nil {
 					logger.Error(err)
-				} else if !updater.TestMode && !updater.Silent {
-					msg := fmt.Sprintf("%s appended %d apps at %s", mon.Address.Hex(), nWritten, result.Range)
-					logger.Info(msg)
+				} else {
+					msg := fmt.Sprintf("%s%s appended %5d apps at %s%s", colors.Green, mon.Address.Hex(), nWritten, result.Range, colors.Off)
+					logger.Progress(!updater.TestMode, msg)
 				}
 			}
 		}
