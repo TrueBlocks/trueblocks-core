@@ -75,3 +75,7 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 
 	return nil
 }
+
+func (opts *MonitorsOptions) HandleShow() error {
+	return opts.HandleCrudCommands()
+}

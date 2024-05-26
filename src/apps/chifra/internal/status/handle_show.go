@@ -19,6 +19,10 @@ import (
 )
 
 func (opts *StatusOptions) HandleShow() error {
+	if len(opts.Modes) > 0 {
+		return opts.HandleModes()
+	}
+
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()

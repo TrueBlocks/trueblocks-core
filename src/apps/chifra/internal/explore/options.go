@@ -18,6 +18,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -163,4 +164,56 @@ func (opts *ExploreOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
+func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
+
+	var chain = opts.Globals.Chain
+
+	if opts.Google {
+		var query = "https://www.google.com/search?q=[{TERM}]"
+		query = strings.Replace(query, "[{TERM}]", u.term, -1)
+		var exclusions = []string{
+			"etherscan", "etherchain", "bloxy", "bitquery", "ethplorer", "tokenview", "anyblocks", "explorer",
+		}
+		for _, ex := range exclusions {
+			query += ("+-" + ex)
+		}
+		return query
+	}
+
+	if u.termType == ExploreFourByte {
+		var query = "https://www.4byte.directory/signatures/?bytes4_signature=[{TERM}]"
+		query = strings.Replace(query, "[{TERM}]", u.term, -1)
+		return query
+	}
+
+	if u.termType == ExploreEnsName {
+		var query = "https://app.ens.domains/name/[{TERM}]/details"
+		query = strings.Replace(query, "[{TERM}]", u.term, -1)
+		return query
+	}
+
+	url := config.GetChain(chain).RemoteExplorer
+	query := ""
+	switch u.termType {
+	case ExploreNone:
+		// do nothing
+	case ExploreTx:
+		query = "tx/" + u.term
+	case ExploreBlock:
+		query = "block/" + u.term
+	case ExploreAddress:
+		fallthrough
+	default:
+		query = "address/" + u.term
+	}
+
+	if opts.Local {
+		url = config.GetChain(chain).LocalExplorer
+		query = strings.Replace(query, "tx/", "explorer/transactions/", -1)
+		query = strings.Replace(query, "block/", "explorer/blocks/", -1)
+	}
+
+	return url + query
+}
+
 // EXISTING_CODE

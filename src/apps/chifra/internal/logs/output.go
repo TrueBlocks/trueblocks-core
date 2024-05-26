@@ -50,12 +50,12 @@ func (opts *LogsOptions) LogsInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra logs"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -69,6 +69,3 @@ func GetLogsOptions(args []string, g *globals.GlobalOptions) *LogsOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

@@ -5,7 +5,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ExploreOptions) HandleExplore() error {
+func (opts *ExploreOptions) HandleShow() error {
 	for _, url := range urls {
 		ret := url.getUrl(opts)
 		if !opts.Globals.TestMode {

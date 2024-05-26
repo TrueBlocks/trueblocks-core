@@ -17,6 +17,10 @@ import (
 )
 
 func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
+	if opts.Silent {
+		return nil
+	}
+
 	chain := opts.Globals.Chain
 	filter := filter.NewFilter(
 		opts.Reversed,

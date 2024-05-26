@@ -255,4 +255,20 @@ func (opts *SlurpOptions) Query() *provider.Query {
 	}
 }
 
+// Provider returns 3rd party RPC provider based on --source
+func (opts *SlurpOptions) Provider() (provider.Provider, error) {
+	switch opts.Source {
+	case "key":
+		return provider.NewKeyProvider(opts.Conn, opts.Globals.Chain)
+	case "covalent":
+		return provider.NewCovalentProvider(opts.Conn, opts.Globals.Chain)
+	case "alchemy":
+		return provider.NewAlchemyProvider(opts.Conn, opts.Globals.Chain)
+	case "etherscan":
+		fallthrough
+	default:
+		return provider.NewEtherscanProvider(opts.Conn)
+	}
+}
+
 // EXISTING_CODE

@@ -11,7 +11,6 @@ package scrapePkg
 // EXISTING_CODE
 import (
 	"net/http"
-	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -52,12 +51,12 @@ func (opts *ScrapeOptions) ScrapeInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra scrape"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Touch > 0 {
 		err = opts.HandleTouch()
 	} else {
-		err = opts.HandleScrape() // Note this never returns
+		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -71,32 +70,3 @@ func GetScrapeOptions(args []string, g *globals.GlobalOptions) *ScrapeOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-func getConfigCmdsFromArgs() map[string]string {
-	configs := make(map[string]string, 10)
-	for i := 0; i < len(os.Args); i++ {
-		arg := os.Args[i]
-		next := ""
-		if i < len(os.Args)-1 {
-			next = os.Args[i+1]
-		}
-		switch arg {
-		case "--apps_per_chunk":
-			configs["appsPerChunk"] = next
-		case "--snap_to_grid":
-			configs["snapToGrid"] = next
-		case "--first_snap":
-			configs["firstSnap"] = next
-		case "--unripe_dist":
-			configs["unripeDist"] = next
-		case "--channel_count":
-			configs["channelCount"] = next
-		case "--allow_missing":
-			configs["allowMissing"] = "true"
-		}
-	}
-	return configs
-}
-
-// EXISTING_CODE

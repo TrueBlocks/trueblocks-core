@@ -18,6 +18,7 @@ type Option struct {
 	HotKey        string   `json:"hotKey" csv:"hotKey"`
 	DefVal        string   `json:"def_val" csv:"def_val"`
 	Attributes    string   `json:"attributes" csv:"attributes"`
+	Handler       float64  `json:"handler,omitempty" csv:"handler"`
 	OptionType    string   `json:"option_type" csv:"option_type"`
 	DataType      string   `json:"data_type" csv:"data_type"`
 	ReturnType    string   `json:"return_type,omitempty" csv:"return_type"`
@@ -42,6 +43,10 @@ func (op *Option) IsRequired() bool {
 
 func (op *Option) IsVisible() bool {
 	return strings.Contains(op.Attributes, "visible")
+}
+
+func (op *Option) IsCrud() bool {
+	return strings.Contains(op.Attributes, "crud")
 }
 
 func (op *Option) IsVisibleDocs() bool {

@@ -50,14 +50,14 @@ func (opts *StateOptions) StateInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra state"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
-	} else if opts.Call != "" {
+	} else if len(opts.Call) > 0 {
 		err = opts.HandleCall()
 	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -71,6 +71,3 @@ func GetStateOptions(args []string, g *globals.GlobalOptions) *StateOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

@@ -167,13 +167,13 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 	})
 
 	// Attach each option to its command (i.e. its route)
-	theMap := make(map[string]Command)
+	routeMap := make(map[string]Command)
 	for _, op := range options {
 		route := strings.ToLower(op.Route)
 		c := Command{
-			Options: append(theMap[route].Options, op),
+			Options: append(routeMap[route].Options, op),
 		}
-		theMap[route] = c
+		routeMap[route] = c
 	}
 
 	// Enhance the commands with information from the endpoints data (could have been combined,
@@ -187,7 +187,7 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 				Summary:     op.Summary,
 				cbPtr:       cb,
 			}
-			theMap[op.Group] = c
+			routeMap[op.Group] = c
 		} else if op.OptionType == "command" {
 			sort.Slice(producesMap[op.Route], func(i, j int) bool {
 				return producesMap[op.Route][i].Class < producesMap[op.Route][j].Class
@@ -196,7 +196,7 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 				Route:        op.Route,
 				Group:        op.Group,
 				Description:  op.Description,
-				Options:      theMap[op.Route].Options,
+				Options:      routeMap[op.Route].Options,
 				Num:          op.Num,
 				ReturnType:   op.ReturnType,
 				Capabilities: op.Capabilities,
@@ -206,13 +206,50 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 				Productions:  producesMap[op.Route],
 				cbPtr:        cb,
 			}
-			theMap[op.Route] = c
+			routeMap[op.Route] = c
 		}
 	}
 
+	handlerMap := make(map[string][]Handler)
+	for _, op := range options {
+		if op.Handler > 0.0 {
+			if len(handlerMap[op.Route]) == 0 {
+				handlerMap[op.Route] = make([]Handler, 0)
+			}
+			handlerMap[op.Route] = append(handlerMap[op.Route], Handler{
+				Position: op.Handler,
+				Name:     FirstUpper(CamelCase(op.LongName)),
+				Option:   &op,
+			})
+		}
+	}
+
+	for route, handlers := range handlerMap {
+		if len(handlers) == 0 {
+			continue
+		}
+		if strings.Contains(routeMap[route].Capabilities, "caching") {
+			handlers = append(handlers, Handler{
+				Position: 0.0,
+				Name:     FirstUpper(CamelCase("Decache")),
+				Option: &Option{
+					LongName: "decache",
+					Route:    route,
+				},
+			})
+		}
+		sort.Slice(handlers, func(i, j int) bool {
+			return handlers[i].Position < handlers[j].Position
+		})
+		handlers[len(handlers)-1].Name = "Show"
+		route := routeMap[route]
+		route.Handlers = handlers
+		routeMap[route.Route] = route
+	}
+
 	// Create a command array from the map and sort it by route within group
-	cb.Commands = make([]Command, 0, len(theMap))
-	for _, c := range theMap {
+	cb.Commands = make([]Command, 0, len(routeMap))
+	for _, c := range routeMap {
 		c.Clean()
 		if len(c.Group) > 0 {
 			cb.Commands = append(cb.Commands, c)

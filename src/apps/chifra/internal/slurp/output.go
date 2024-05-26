@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/provider"
 	"github.com/spf13/cobra"
 )
 
@@ -51,6 +50,7 @@ func (opts *SlurpOptions) SlurpInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra slurp"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if opts.Count {
@@ -60,7 +60,6 @@ func (opts *SlurpOptions) SlurpInternal() error {
 	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -74,22 +73,3 @@ func GetSlurpOptions(args []string, g *globals.GlobalOptions) *SlurpOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// Provider returns 3rd party RPC provider based on --source
-func (opts *SlurpOptions) Provider() (provider.Provider, error) {
-	switch opts.Source {
-	case "key":
-		return provider.NewKeyProvider(opts.Conn, opts.Globals.Chain)
-	case "covalent":
-		return provider.NewCovalentProvider(opts.Conn, opts.Globals.Chain)
-	case "alchemy":
-		return provider.NewAlchemyProvider(opts.Conn, opts.Globals.Chain)
-	case "etherscan":
-		fallthrough
-	default:
-		return provider.NewEtherscanProvider(opts.Conn)
-	}
-}
-
-// EXISTING_CODE
