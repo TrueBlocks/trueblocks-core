@@ -10,9 +10,9 @@ import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 func (opts *WhenOptions) HandleTimestamps() error {
 	var err error
 	if opts.Update {
-		err = opts.HandleTimestampUpdate()
+		err = opts.HandleTimestampsUpdate()
 	} else if opts.Count {
-		err = opts.HandleTimestampCount()
+		err = opts.HandleTimestampsCount()
 	} else if opts.Truncate != base.NOPOSN {
 		err = opts.HandleTimestampsTruncate()
 	} else if opts.Check {
