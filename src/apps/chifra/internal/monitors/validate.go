@@ -93,7 +93,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 				return validate.Usage("The {0} option is not available{1}.", "--sleep", " without --watch")
 			}
 
-			// We validate some of the simpler curd commands here and the rest in HandleCrudCommands
+			// We validate some of the simpler curd commands here and the rest in HandleCrud
 			if opts.Undelete {
 				if opts.Delete || opts.Remove {
 					return validate.Usage("The --undelete option may not be used with --delete or --remove.")
