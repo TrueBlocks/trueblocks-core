@@ -50,16 +50,16 @@ func (opts *AbisOptions) AbisInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra abis"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if len(opts.Find) > 0 {
-		err = opts.HandleAbiFind()
+		err = opts.HandleFind()
 	} else if len(opts.Encode) > 0 {
 		err = opts.HandleEncode()
 	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -73,6 +73,3 @@ func GetAbisOptions(args []string, g *globals.GlobalOptions) *AbisOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

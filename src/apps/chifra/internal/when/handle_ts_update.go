@@ -11,8 +11,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
-// HandleTimestampUpdate update the timestamp file to the latest block
-func (opts *WhenOptions) HandleTimestampUpdate() error {
+// HandleTimestampsUpdate update the timestamp file to the latest block
+func (opts *WhenOptions) HandleTimestampsUpdate() error {
 	chain := opts.Globals.Chain
 
 	if opts.Globals.TestMode {

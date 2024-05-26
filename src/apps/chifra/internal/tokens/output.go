@@ -50,6 +50,7 @@ func (opts *TokensOptions) TokensInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra tokens"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if len(opts.Parts) > 0 {
@@ -57,7 +58,6 @@ func (opts *TokensOptions) TokensInternal() error {
 	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -71,6 +71,3 @@ func GetTokensOptions(args []string, g *globals.GlobalOptions) *TokensOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

@@ -50,34 +50,26 @@ func (opts *BlocksOptions) BlocksInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra blocks"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
-
 	} else if opts.Count {
-		err = opts.HandleCounts()
-
+		err = opts.HandleCount()
 	} else if opts.Logs {
 		err = opts.HandleLogs()
-
 	} else if opts.Withdrawals {
 		err = opts.HandleWithdrawals()
-
 	} else if opts.Traces {
 		err = opts.HandleTraces()
-
 	} else if opts.Uncles {
 		err = opts.HandleUncles()
-
 	} else if opts.Uniq {
 		err = opts.HandleUniq()
-
 	} else if opts.Hashes {
 		err = opts.HandleHashes()
-
 	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -91,6 +83,3 @@ func GetBlocksOptions(args []string, g *globals.GlobalOptions) *BlocksOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

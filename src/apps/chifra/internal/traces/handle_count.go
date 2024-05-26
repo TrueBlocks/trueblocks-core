@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *TracesOptions) HandleCounts() error {
+func (opts *TracesOptions) HandleCount() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0

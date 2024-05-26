@@ -9,6 +9,10 @@ import (
 )
 
 func (opts *ConfigOptions) HandleShow() error {
+	if opts.Mode == "edit" {
+		return opts.HandleEdit()
+	}
+
 	if opts.Globals.TestMode {
 		logger.Info("Can not process this command in test mode.")
 		return nil

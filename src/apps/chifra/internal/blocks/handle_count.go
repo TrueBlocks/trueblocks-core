@@ -14,7 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *BlocksOptions) HandleCounts() error {
+func (opts *BlocksOptions) HandleCount() error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())

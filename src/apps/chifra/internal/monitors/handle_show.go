@@ -12,14 +12,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-// HandleCrudCommands handles the chifra monitors delete, undelete, remove and decache commands.
+// HandleCrud handles the chifra monitors delete, undelete, remove and decache commands.
 //
 // [State]     | Delete | Undelete | Remove |
 // ------------|--------|-------------------|
 // Not Deleted | Delete	| Error    | Error  |
 // Deleted     | Error  | Undelete | Remove |
 // ------------|--------|-------------------|
-func (opts *MonitorsOptions) HandleCrudCommands() error {
+func (opts *MonitorsOptions) HandleCrud() error {
 	chain := opts.Globals.Chain
 	for _, addr := range opts.Addrs {
 		m, _ := monitor.NewMonitor(chain, base.HexToAddress(addr), false)
@@ -74,4 +74,8 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 	}
 
 	return nil
+}
+
+func (opts *MonitorsOptions) HandleShow() error {
+	return opts.HandleCrud()
 }

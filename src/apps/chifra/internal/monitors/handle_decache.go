@@ -24,11 +24,12 @@ func (opts *MonitorsOptions) HandleDecache() error {
 	message := "Decaching complete"
 	logger.Info(message)
 	if opts.Globals.IsApiMode() {
-		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.Message], errorChan chan error) {
+		fetchData := func(modelChan chan types.Modeler[types.Message], errorChan chan error) {
 			modelChan <- &types.Message{
 				Msg: message,
 			}
-		}, opts.Globals.OutputOpts())
+		}
+		_ = output.StreamMany(context.Background(), fetchData, opts.Globals.OutputOpts())
 	}
 
 	return nil

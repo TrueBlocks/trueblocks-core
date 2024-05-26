@@ -70,6 +70,7 @@ func (opts *MonitorsOptions) MonitorsInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra monitors"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if opts.Clean {
@@ -79,9 +80,8 @@ func (opts *MonitorsOptions) MonitorsInternal() error {
 	} else if opts.Watch {
 		err = opts.HandleWatch()
 	} else {
-		err = opts.HandleCrudCommands()
+		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -95,6 +95,3 @@ func GetMonitorsOptions(args []string, g *globals.GlobalOptions) *MonitorsOption
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

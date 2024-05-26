@@ -21,6 +21,7 @@ type Command struct {
 	Options      []Option     `json:"options,omitempty"`
 	ReturnType   string       `json:"return_type,omitempty"`
 	Capabilities string       `json:"capabilities,omitempty"`
+	Handlers     []Handler    `json:"handlers,omitempty"`
 	Usage        string       `json:"usage,omitempty"`
 	Summary      string       `json:"summary,omitempty"`
 	Notes        []string     `json:"notes,omitempty"`
@@ -953,4 +954,36 @@ func (c *Command) TsTypes() string {
 	})
 
 	return "{ " + strings.Join(ret, ", ") + " }"
+}
+
+func (c *Command) HandlerCode() string {
+	ret := []string{}
+	if c.Route == "explore" {
+		ret = append(ret, "err = opts.HandleShow()")
+	} else {
+		for i, handler := range c.Handlers {
+			if i == 0 {
+				ret = append(ret, "if "+handler.Test()+"{")
+			} else if i == len(c.Handlers)-1 {
+				ret = append(ret, "} else {")
+			} else {
+				ret = append(ret, "} else if "+handler.Test()+"{")
+			}
+			ret = append(ret, handler.Handler())
+			if i == len(c.Handlers)-1 {
+				ret = append(ret, "}")
+			}
+		}
+	}
+	return strings.Join(ret, "\n")
+}
+
+func (c *Command) HandlerRows() string {
+	ret := []string{}
+	for _, handler := range c.Handlers {
+		tmplName := "handlerRow"
+		tmpl := `{{.Option.Route}}/handle_{{toLower .Name}},,Handle{{.Name}},{{if eq .Option.ReturnType ""}}-{{else}}{{firstUpper .Option.ReturnType}}{{end}},{{.Position}}`
+		ret = append(ret, handler.executeTemplate(tmplName, tmpl))
+	}
+	return strings.Join(ret, "\n")
 }

@@ -18,6 +18,10 @@ import (
 )
 
 func (opts *NamesOptions) HandleShow() error {
+	if opts.anyCrud() {
+		return opts.HandleCrud()
+	}
+
 	chain := opts.Globals.Chain
 	var fetchData func(modelChan chan types.Modeler[types.Name], errorChan chan error)
 

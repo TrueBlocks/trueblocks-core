@@ -50,16 +50,16 @@ func (opts *TracesOptions) TracesInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra traces"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if opts.Count {
-		err = opts.HandleCounts()
+		err = opts.HandleCount()
 	} else if len(opts.Filter) > 0 {
 		err = opts.HandleFilter()
 	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -73,6 +73,3 @@ func GetTracesOptions(args []string, g *globals.GlobalOptions) *TracesOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

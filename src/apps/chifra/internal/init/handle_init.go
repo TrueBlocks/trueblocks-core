@@ -112,3 +112,8 @@ func (opts *InitOptions) HandleInit() error {
 
 	return nil
 }
+
+// HandleShow initializes local copy of UnchainedIndex by downloading manifests and chunks
+func (opts *InitOptions) HandleShow() error {
+	return opts.HandleInit()
+}

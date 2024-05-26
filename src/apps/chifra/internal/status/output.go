@@ -50,14 +50,12 @@ func (opts *StatusOptions) StatusInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra status"
 	// EXISTING_CODE
-	if len(opts.ModeTypes) > 0 {
-		err = opts.HandleCaches()
-	} else if opts.Diagnose {
+	// EXISTING_CODE
+	if opts.Diagnose {
 		err = opts.HandleDiagnose()
 	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -71,6 +69,3 @@ func GetStatusOptions(args []string, g *globals.GlobalOptions) *StatusOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

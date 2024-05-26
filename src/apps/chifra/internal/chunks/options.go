@@ -14,16 +14,22 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 	// EXISTING_CODE
 )
 
@@ -272,4 +278,53 @@ func (opts *ChunksOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
+func (opts *ChunksOptions) shouldShow(obj types.AddrRecord) bool {
+	if opts.Mode == "addresses" || opts.Mode == "appearances" {
+		return opts.Globals.Verbose
+	}
+
+	for _, addr := range opts.Belongs {
+		if hexutil.Encode(obj.Address.Bytes()) == addr {
+			return true
+		}
+	}
+	return false
+}
+
+func GetChunkStats(chain, path string) (s types.ChunkStats, err error) {
+	chunk, err := index.OpenChunk(path, true /* check */)
+	if err != nil && !os.IsNotExist(err) {
+		return s, err
+	}
+	defer chunk.Close()
+
+	ts, _ := tslib.FromBnToTs(chain, chunk.Range.Last)
+	s = types.ChunkStats{
+		Range:    chunk.Range.String(),
+		RangeEnd: base.FormattedDate(ts),
+		NBlocks:  uint64(chunk.Range.Last - chunk.Range.First + 1),
+		NAddrs:   uint64(chunk.Index.Header.AddressCount),
+		NApps:    uint64(chunk.Index.Header.AppearanceCount),
+		NBlooms:  uint64(chunk.Bloom.Count),
+		BloomSz:  uint64(file.FileSize(index.ToBloomPath(path))),
+		ChunkSz:  uint64(file.FileSize(index.ToIndexPath(path))),
+		RecWid:   4 + index.BLOOM_WIDTH_IN_BYTES,
+	}
+
+	if s.NBlocks > 0 {
+		s.AddrsPerBlock = float64(s.NAddrs) / float64(s.NBlocks)
+		s.AppsPerBlock = float64(s.NApps) / float64(s.NBlocks)
+	}
+
+	if s.NAddrs > 0 {
+		s.AppsPerAddr = float64(s.NApps) / float64(s.NAddrs)
+	}
+
+	if s.BloomSz > 0 {
+		s.Ratio = float64(s.ChunkSz) / float64(s.BloomSz)
+	}
+
+	return s, nil
+}
+
 // EXISTING_CODE

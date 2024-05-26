@@ -50,15 +50,14 @@ func (opts *InitOptions) InitInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra init"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.DryRun {
 		err = opts.HandleDryRun()
 	} else if len(opts.Example) > 0 {
 		err = opts.HandleExample()
 	} else {
-		err = opts.HandleInit()
+		err = opts.HandleShow()
 	}
-
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -72,6 +71,3 @@ func GetInitOptions(args []string, g *globals.GlobalOptions) *InitOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

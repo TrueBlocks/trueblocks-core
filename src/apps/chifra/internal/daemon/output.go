@@ -100,6 +100,7 @@ func (opts *DaemonOptions) DaemonInternal() error {
 	logger.Fatal(http.ListenAndServe(opts.Url, NewRouter(opts.Silent)))
 
 	// EXISTING_CODE
+
 	timer.Report(msg)
 
 	return err
@@ -113,6 +114,3 @@ func GetDaemonOptions(args []string, g *globals.GlobalOptions) *DaemonOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

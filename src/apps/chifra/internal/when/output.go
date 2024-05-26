@@ -13,7 +13,6 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -51,40 +50,16 @@ func (opts *WhenOptions) WhenInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra when"
 	// EXISTING_CODE
-	// TODO: This should use StreamMany for all cases
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
-
 	} else if opts.List {
 		err = opts.HandleList()
-
 	} else if opts.Timestamps {
-		if opts.Update {
-			err = opts.HandleTimestampUpdate()
-
-		} else if opts.Count {
-			err = opts.HandleTimestampCount()
-
-		} else if opts.Truncate != base.NOPOSN {
-			err = opts.HandleTimestampsTruncate()
-
-		} else {
-			if opts.Check {
-				err = opts.HandleTimestampsCheck()
-
-			} else if opts.Repair {
-				err = opts.HandleTimestampsRepair()
-
-			} else {
-				err = opts.HandleTimestampsShow()
-
-			}
-		}
-
+		err = opts.HandleTimestamps()
 	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -98,6 +73,3 @@ func GetWhenOptions(args []string, g *globals.GlobalOptions) *WhenOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

@@ -11,18 +11,12 @@ package chunksPkg
 // EXISTING_CODE
 import (
 	"net/http"
-	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/spf13/cobra"
 )
 
@@ -66,56 +60,26 @@ func (opts *ChunksOptions) ChunksInternal() error {
 	if opts.Globals.TestMode && len(blockNums) > 200 {
 		blockNums = blockNums[:200]
 	}
-
+	// EXISTING_CODE
 	if opts.Check {
 		err = opts.HandleCheck(blockNums)
-
 	} else if opts.List {
 		err = opts.HandleList(blockNums)
-
 	} else if opts.Unpin {
 		err = opts.HandleUnpin(blockNums)
-
 	} else if len(opts.Tag) > 0 {
 		err = opts.HandleTag(blockNums)
-
 	} else if opts.Diff {
 		err = opts.HandleDiff(blockNums)
-
 	} else if opts.Pin {
 		err = opts.HandlePin(blockNums)
-
 	} else if opts.Publish {
 		err = opts.HandlePublish(blockNums)
-
 	} else if opts.Truncate != base.NOPOSN {
 		err = opts.HandleTruncate(blockNums)
-
 	} else {
-		switch opts.Mode {
-		case "manifest":
-			err = opts.HandleManifest(blockNums)
-
-		case "index":
-			err = opts.HandleIndex(blockNums)
-
-		case "blooms":
-			err = opts.HandleBlooms(blockNums)
-
-		case "addresses":
-			err = opts.HandleAddresses(blockNums)
-
-		case "appearances":
-			err = opts.HandleAppearances(blockNums)
-
-		case "stats":
-			err = opts.HandleStats(blockNums)
-
-		default:
-			logger.Fatal("should not happen ==> in NamesInternal")
-		}
+		err = opts.HandleShow(blockNums)
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -129,55 +93,3 @@ func GetChunksOptions(args []string, g *globals.GlobalOptions) *ChunksOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-func (opts *ChunksOptions) shouldShow(obj types.AddrRecord) bool {
-	if opts.Mode == "addresses" || opts.Mode == "appearances" {
-		return opts.Globals.Verbose
-	}
-
-	for _, addr := range opts.Belongs {
-		if hexutil.Encode(obj.Address.Bytes()) == addr {
-			return true
-		}
-	}
-	return false
-}
-
-func GetChunkStats(chain, path string) (s types.ChunkStats, err error) {
-	chunk, err := index.OpenChunk(path, true /* check */)
-	if err != nil && !os.IsNotExist(err) {
-		return s, err
-	}
-	defer chunk.Close()
-
-	ts, _ := tslib.FromBnToTs(chain, chunk.Range.Last)
-	s = types.ChunkStats{
-		Range:    chunk.Range.String(),
-		RangeEnd: base.FormattedDate(ts),
-		NBlocks:  uint64(chunk.Range.Last - chunk.Range.First + 1),
-		NAddrs:   uint64(chunk.Index.Header.AddressCount),
-		NApps:    uint64(chunk.Index.Header.AppearanceCount),
-		NBlooms:  uint64(chunk.Bloom.Count),
-		BloomSz:  uint64(file.FileSize(index.ToBloomPath(path))),
-		ChunkSz:  uint64(file.FileSize(index.ToIndexPath(path))),
-		RecWid:   4 + index.BLOOM_WIDTH_IN_BYTES,
-	}
-
-	if s.NBlocks > 0 {
-		s.AddrsPerBlock = float64(s.NAddrs) / float64(s.NBlocks)
-		s.AppsPerBlock = float64(s.NApps) / float64(s.NBlocks)
-	}
-
-	if s.NAddrs > 0 {
-		s.AppsPerAddr = float64(s.NApps) / float64(s.NAddrs)
-	}
-
-	if s.BloomSz > 0 {
-		s.Ratio = float64(s.ChunkSz) / float64(s.BloomSz)
-	}
-
-	return s, nil
-}
-
-// EXISTING_CODE

@@ -39,7 +39,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []base.Blknum) error {
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
 	bar := logger.NewBar(logger.BarOptions{
-		Enabled: !testMode, // && !logger.IsTerminal(),
+		Enabled: !testMode, // do not uncomment !logger.IsTerminal(),
 		Total:   128,
 		Type:    logger.Expanding,
 	})

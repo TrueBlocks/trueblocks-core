@@ -12,6 +12,6 @@ func (opts *MonitorsOptions) FreshenMonitorsForWatch(addrs []base.Address) (bool
 	}
 
 	unusedMonitors := make([]monitor.Monitor, 0, len(addrs))
-	var updater = monitor.NewUpdater(opts.Globals.Chain, opts.Globals.TestMode, true, strs)
+	var updater = monitor.NewUpdater(opts.Globals.Chain, opts.Globals.TestMode, strs)
 	return updater.FreshenMonitors(&unusedMonitors)
 }

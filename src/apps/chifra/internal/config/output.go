@@ -50,14 +50,12 @@ func (opts *ConfigOptions) ConfigInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra config"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Paths {
 		err = opts.HandlePaths()
-	} else if opts.Mode == "edit" {
-		err = opts.HandleEdit()
-	} else if opts.Mode == "show" {
+	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -71,6 +69,3 @@ func GetConfigOptions(args []string, g *globals.GlobalOptions) *ConfigOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

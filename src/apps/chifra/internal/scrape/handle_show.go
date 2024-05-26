@@ -206,3 +206,8 @@ var spaces = strings.Repeat(" ", 50)
 func cleanEphemeralIndexFolders(chain string) error {
 	return file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe"})
 }
+
+func (opts *ScrapeOptions) HandleShow() error {
+	// Note this never returns
+	return opts.HandleScrape()
+}
