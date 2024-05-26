@@ -51,11 +51,11 @@ func (opts *ListOptions) ListInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra list"
 	// EXISTING_CODE
-	// EXISTING_CODE
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
 	if canceled, err := opts.FreshenMonitorsForList(&monitorArray); err != nil || canceled {
 		return err
 	}
+	// EXISTING_CODE
 	if opts.Count {
 		err = opts.HandleCount(monitorArray)
 	} else if opts.Bounds {

@@ -51,11 +51,11 @@ func (opts *ExportOptions) ExportInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra export"
 	// EXISTING_CODE
-	// EXISTING_CODE
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
 	if canceled, err := opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
 		return err
 	}
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache(monitorArray)
 	} else if opts.Count {
