@@ -206,3 +206,16 @@ func (cb *CodeBase) Streamables() string {
 	sort.Strings(ret)
 	return strings.Join(ret, " |\n")
 }
+
+func (cb *CodeBase) Handlers() string {
+	ret := []string{}
+	for _, cmd := range cb.Commands {
+		tmplName := "handlers"
+		tmpl := `{{.HandlerRows}}`
+		val := cmd.executeTemplate(tmplName, tmpl)
+		if len(val) > 0 {
+			ret = append(ret, val)
+		}
+	}
+	return strings.Join(ret, "\n")
+}

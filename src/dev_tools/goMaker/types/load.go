@@ -233,8 +233,9 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 				Position: 0.0,
 				Name:     FirstUpper(CamelCase("Decache")),
 				Option: &Option{
-					LongName: "decache",
-					Route:    route,
+					ReturnType: "message",
+					LongName:   "decache",
+					Route:      route,
 				},
 			})
 		}

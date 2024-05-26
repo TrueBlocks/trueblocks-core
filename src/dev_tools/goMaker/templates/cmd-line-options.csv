@@ -101,12 +101,12 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 15200,tools,Accounts,names,ethNames,n2,,,,,note,,,,,,The `--match_case` option enables case sensitive matching.
 #
 16000,tools,Accounts,abis,grabABI,,,,visible|docs,,command,,,Manage Abi files,[flags] <address> [address...],default|caching|,Fetches the ABI for a smart contract.
-16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,4,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
+16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,3,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
 16030,tools,Accounts,abis,grabABI,known,k,,visible|docs,,switch,<boolean>,,,,,load common 'known' ABIs from cache
 16040,tools,Accounts,abis,grabABI,proxy_for,r,,visible|docs,,flag,<address>,,,,,redirects the query to this implementation
-16050,tools,Accounts,abis,grabABI,find,f,,visible|docs,2,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
+16050,tools,Accounts,abis,grabABI,find,f,,visible|docs,1,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
 16060,tools,Accounts,abis,grabABI,hint,n,,visible|docs,,flag,list<string>,,,,,for the --find option only&#44; provide hints to speed up the search
-16070,tools,Accounts,abis,grabABI,encode,e,,visible|docs,3,flag,<string>,function,,,,generate the 32-byte encoding for a given cannonical function or event signature
+16070,tools,Accounts,abis,grabABI,encode,e,,visible|docs,2,flag,<string>,function,,,,generate the 32-byte encoding for a given cannonical function or event signature
 16090,tools,Accounts,abis,grabABI,n1,,,,,note,,,,,,Search for either four byte signatures or event signatures with the --find option.
 #
 21000,,Chain Data,,,,,,,,group,,,,,,Access and cache blockchain-related data
@@ -168,8 +168,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 25080,tools,Chain Data,logs,getLogs,n3,,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 25090,tools,Chain Data,logs,getLogs,n4,,,,,note,,,,,,If you specify a 32-byte hash&#44; it will be assumed to be a transaction hash&#44; if it is not&#44; the hash will be used as a topic.
 #
-26000,tools,Chain Data,traces,getTraces,,,,visible|docs,3,command,,,Get traces,[flags] <tx_id> [tx_id...],default|caching|ether|,Retrieve traces for the given transaction(s).
-26020,tools,Chain Data,traces,getTraces,transactions,,,required|visible|docs,,positional,list<tx_id>,trace,,,,a space-separated list of one or more transaction identifiers
+26000,tools,Chain Data,traces,getTraces,,,,visible|docs,,command,,,Get traces,[flags] <tx_id> [tx_id...],default|caching|ether|,Retrieve traces for the given transaction(s).
+26020,tools,Chain Data,traces,getTraces,transactions,,,required|visible|docs,3,positional,list<tx_id>,trace,,,,a space-separated list of one or more transaction identifiers
 26030,tools,Chain Data,traces,getTraces,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 26040,tools,Chain Data,traces,getTraces,filter,f,,visible|docs,2,flag,<string>,,,,,call the node's trace_filter routine with bang-separated filter
 26050,tools,Chain Data,traces,getTraces,count,U,,visible|docs,1,switch,<boolean>,traceCount,,,,display only the number of traces for the transaction (fast)

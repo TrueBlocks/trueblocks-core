@@ -977,3 +977,13 @@ func (c *Command) HandlerCode() string {
 	}
 	return strings.Join(ret, "\n")
 }
+
+func (c *Command) HandlerRows() string {
+	ret := []string{}
+	for _, handler := range c.Handlers {
+		tmplName := "handlerRow"
+		tmpl := `{{.Option.Route}}/handle_{{toLower .Name}},,Handle{{.Name}},{{if eq .Option.ReturnType ""}}-{{else}}{{firstUpper .Option.ReturnType}}{{end}},{{.Position}}`
+		ret = append(ret, handler.executeTemplate(tmplName, tmpl))
+	}
+	return strings.Join(ret, "\n")
+}

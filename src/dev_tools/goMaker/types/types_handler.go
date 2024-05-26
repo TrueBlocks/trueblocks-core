@@ -40,3 +40,7 @@ func (h *Handler) Handler() string {
 	}
 	return "err = opts.Handle" + h.Name + "()"
 }
+
+func (h *Handler) executeTemplate(name, tmplCode string) string {
+	return executeTemplate(h, "handler", name, tmplCode)
+}
