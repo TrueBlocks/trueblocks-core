@@ -19,7 +19,7 @@ func (opts *TokensOptions) HandleShow() error {
 	tokenAddr := base.HexToAddress(opts.Addrs[0])
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Token], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, address := range opts.Addrs[1:] {
 			addr := base.HexToAddress(address)
 			currentBn := base.Blknum(0)

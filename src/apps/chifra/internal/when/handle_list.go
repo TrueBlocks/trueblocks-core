@@ -14,7 +14,7 @@ func (opts *WhenOptions) HandleList() error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.NamedBlock], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		results, err := tslib.GetSpecials(chain)
 		if err != nil {
 			errorChan <- err

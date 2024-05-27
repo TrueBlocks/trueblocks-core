@@ -18,7 +18,7 @@ func (opts *TokensOptions) HandleParts() error {
 	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Token], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, address := range opts.Addrs {
 			addr := base.HexToAddress(address)
 			currentBn := base.Blknum(0)

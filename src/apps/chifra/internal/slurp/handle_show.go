@@ -19,7 +19,7 @@ func (opts *SlurpOptions) HandleShow() error {
 	provider.SetPrintProgress(!opts.Globals.TestMode && !logger.IsTerminal())
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.Slurp], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		txChan := provider.TransactionsByAddress(ctx, opts.Query(), errorChan)
 		for tx := range txChan {
 			if opts.Articulate {

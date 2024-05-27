@@ -23,7 +23,7 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.AppearanceTable], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showAddressesBelongs := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 			return opts.handleResolvedRecords(modelChan, walker, path)
 		}
@@ -47,7 +47,7 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []base.Blknum) error {
 // handleResolvedRecords is a helper function for HandleIndexBelongs and verbose versions of
 // HandleAddresses and HandleAppearances. It is called once for each chunk in the index and
 // depends on the values of opts.Globals.Verbose and opts.Belongs.
-func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[types.AppearanceTable], walker *walk.CacheWalker, path string) (bool, error) {
+func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler, walker *walk.CacheWalker, path string) (bool, error) {
 	if path != index.ToBloomPath(path) {
 		return false, fmt.Errorf("should not happen in showAddressesBelongs")
 	}
@@ -113,7 +113,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 // handleResolvedRecords1 is a helper function for HandleIndexBelongs and verbose versions of
 // HandleAddresses and HandleAppearances. It is called once for each chunk in the index and
 // depends on the values of opts.Globals.Verbose and opts.Belongs.
-func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler[types.ChunkAddress], walker *walk.CacheWalker, path string) (bool, error) {
+func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler, walker *walk.CacheWalker, path string) (bool, error) {
 	if path != index.ToBloomPath(path) {
 		return false, fmt.Errorf("should not happen in showAddressesBelongs")
 	}

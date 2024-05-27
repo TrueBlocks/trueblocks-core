@@ -24,7 +24,7 @@ func (opts *MonitorsOptions) HandleDecache() error {
 	message := "Decaching complete"
 	logger.Info(message)
 	if opts.Globals.IsApiMode() {
-		fetchData := func(modelChan chan types.Modeler[types.Message], errorChan chan error) {
+		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 			modelChan <- &types.Message{
 				Msg: message,
 			}

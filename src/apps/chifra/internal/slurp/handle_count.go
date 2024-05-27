@@ -16,7 +16,7 @@ func (opts *SlurpOptions) HandleCount() error {
 	provider.SetPrintProgress(!opts.Globals.TestMode && !logger.IsTerminal())
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.Monitor], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		monitorChan := provider.Count(ctx, opts.Query(), errorChan)
 		for monitor := range monitorChan {
 			modelChan <- &monitor

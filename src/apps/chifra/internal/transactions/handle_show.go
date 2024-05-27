@@ -24,7 +24,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Transaction], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err

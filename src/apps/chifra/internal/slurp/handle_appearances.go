@@ -16,7 +16,7 @@ func (opts *SlurpOptions) HandleAppearances() error {
 	provider.SetPrintProgress(!opts.Globals.TestMode && !logger.IsTerminal())
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.Appearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		appearancesChan := provider.Appearances(ctx, opts.Query(), errorChan)
 		for appearance := range appearancesChan {
 			modelChan <- &appearance
