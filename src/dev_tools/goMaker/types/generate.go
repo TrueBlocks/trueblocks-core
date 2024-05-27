@@ -59,7 +59,5 @@ func (cb *CodeBase) Generate(generators []Generator) {
 			}
 		}
 	}
-
-	logger.Info()
 	logger.Info(colors.Green + "Done..." + strings.Repeat(" ", 120) + colors.Off + "\033[K")
 }

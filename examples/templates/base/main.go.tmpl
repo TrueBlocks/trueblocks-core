@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
@@ -8,21 +9,26 @@ import (
 
 func main() {
 	opts := sdk.BlocksOptions{
-		BlockIds: []string{"latest"},
+		BlockIds: []string{
+			"1000",                // Query block 1,000
+			"2020-12-31T12:59:59", // Query block at 12:59:59 on 2020-12-31
+		},
 	}
 
-	blocks, _, err := opts.Blocks()
+	// Returns an array of blocks or error
+	blocks, _, err := opts.BlocksHashes()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	fmt.Println("[")
-	for i, block := range blocks {
-		if i > 0 {
-			fmt.Println(",")
-		}
-		fmt.Println(block.String())
+	// Show the data as a CSV
+	fmt.Println("blockNumber,timestamp,date,transactionCount")
+	for _, block := range blocks {
+		fmt.Printf("%d,%d,%s,%d\n", block.BlockNumber, block.Timestamp, block.Date(), len(block.Transactions))
 	}
-	fmt.Println("]")
+
+	// Show the data as JSON
+	bytes, _ := json.MarshalIndent(blocks, "", "  ")
+	fmt.Println(string(bytes))
 }
