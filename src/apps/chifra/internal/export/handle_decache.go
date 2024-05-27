@@ -26,7 +26,7 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 	silent := !opts.Globals.ShowProgress()
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.Message], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if !opts.Globals.IsApiMode() && !usage.QueryUser(getWarning(mon.Address.Hex(), mon.Count()), "Not decaching") {
 				continue

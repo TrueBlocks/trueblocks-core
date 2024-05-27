@@ -23,7 +23,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []base.Blknum) error {
 
 	chain := opts.Globals.Chain
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.ChunkIndex], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showIndex := func(walker *walk.CacheWalker, fileName string, first bool) (bool, error) {
 			if fileName != index.ToBloomPath(fileName) {
 				return false, fmt.Errorf("should not happen in showIndex")

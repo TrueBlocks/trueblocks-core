@@ -34,7 +34,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Token], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		currentBn := base.Blknum(0)
 		prevBalance := base.NewWei(0)
 

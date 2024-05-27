@@ -35,7 +35,7 @@ func (opts *TracesOptions) HandleFilter() error {
 	opts.TransactionIds = ids
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Trace], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err

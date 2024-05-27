@@ -102,13 +102,13 @@ func logErrors(errsToReport []string) {
 	}
 }
 
-type fetchDataFunc[S types.Streamable] func(modelChan chan types.Modeler[S], errorChan chan error)
+type fetchDataFunc func(modelChan chan types.Modeler, errorChan chan error)
 
 // StreamMany outputs models as they are acquired
-func StreamMany[S types.Streamable](ctx context.Context, fetchData fetchDataFunc[S], options OutputOptions) error {
+func StreamMany(ctx context.Context, fetchData fetchDataFunc, options OutputOptions) error {
 	errsToReport := make([]string, 0)
 
-	modelChan := make(chan types.Modeler[S])
+	modelChan := make(chan types.Modeler)
 	errorChan := make(chan error)
 
 	first := true

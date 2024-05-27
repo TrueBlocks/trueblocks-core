@@ -33,7 +33,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Trace], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err

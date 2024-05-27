@@ -197,7 +197,7 @@ func (opts *ChunksOptions) check(blockNums []base.Blknum, silent bool) (error, b
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.ReportCheck], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, report := range reports {
 			if !silent {
 				modelChan <- &report

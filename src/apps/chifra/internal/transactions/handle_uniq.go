@@ -17,7 +17,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Appearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
 			Enabled: !testMode && !logger.IsTerminal(),

@@ -24,7 +24,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Appearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err

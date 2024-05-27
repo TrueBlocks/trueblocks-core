@@ -35,7 +35,7 @@ func (opts *NamesOptions) HandleAutoname() error {
 	}
 
 	if opts.Globals.IsApiMode() {
-		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.Message], errorChan chan error) {
+		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler, errorChan chan error) {
 			modelChan <- &types.Message{
 				Msg: message,
 			}

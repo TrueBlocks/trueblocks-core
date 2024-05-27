@@ -147,8 +147,8 @@ func TestStreamMany(t *testing.T) {
 		FieldType: FieldArray,
 	}
 
-	renderData := func(models chan types.Modeler[types.Receipt], errorChan chan error) {
-		models <- &types.Receipt{
+	renderData := func(modelChan chan types.Modeler, errorChan chan error) {
+		modelChan <- &types.Receipt{
 			BlockNumber:      123,
 			TransactionIndex: 1,
 			TransactionHash:  base.HexToHash("0xdeadbeef"),
@@ -157,7 +157,7 @@ func TestStreamMany(t *testing.T) {
 			IsError:          false,
 		}
 
-		models <- &types.Receipt{
+		modelChan <- &types.Receipt{
 			BlockNumber:      124,
 			TransactionIndex: 5,
 			TransactionHash:  base.HexToHash("0xdeadbeef2"),
@@ -195,8 +195,8 @@ func TestStreamMany(t *testing.T) {
 
 func TestApiFormat(t *testing.T) {
 	outputBuffer := &bytes.Buffer{}
-	fetchData := func(models chan types.Modeler[types.Receipt], errorChan chan error) {
-		models <- &types.Receipt{
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		modelChan <- &types.Receipt{
 			BlockNumber:      123,
 			TransactionIndex: 1,
 			TransactionHash:  base.HexToHash("0xdeadbeef"),

@@ -26,7 +26,7 @@ func (opts *StatusOptions) HandleShow() error {
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.Status], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		s, err := opts.GetStatus(opts.Diagnose)
 		if err != nil {
 			errorChan <- err
