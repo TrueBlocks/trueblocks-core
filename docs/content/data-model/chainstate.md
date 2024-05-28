@@ -58,23 +58,23 @@ The following commands produce and manage Tokens:
 
 Tokens consist of the following fields:
 
-| Field            | Description                                                                | Type      |
-| ---------------- | -------------------------------------------------------------------------- | --------- |
-| blockNumber      | the block at which the report is made                                      | blknum    |
-| transactionIndex | the transaction index (if applicable) at which the report is made          | txnum     |
-| timestamp        | the timestamp of the block                                                 | timestamp |
-| date             | the timestamp as a date (calculated)                                       | datetime  |
-| totalSupply      | the total supply of the token contract                                     | int256    |
-| address          | the address of the token contract                                          | address   |
-| holder           | the holder address for which we are reporting                              | address   |
-| priorBalance     | the holder's asset balance at its prior appearance                         | int256    |
-| balance          | the holder's asset balance at the given block height                       | int256    |
-| diff             | the difference, if any, between the prior and current balance (calculated) | int256    |
-| name             | the name of the token contract, if available                               | string    |
-| symbol           | the symbol of the token contract                                           | string    |
-| decimals         | the number of decimals for the token contract                              | uint64    |
-| type             | the type of token (ERC20 or ERC721) or none                                | TokenType |
-What about balanceDec?
+| Field            | Description                                                                  | Type      |
+| ---------------- | ---------------------------------------------------------------------------- | --------- |
+| blockNumber      | the block at which the report is made                                        | blknum    |
+| transactionIndex | the transaction index (if applicable) at which the report is made            | txnum     |
+| timestamp        | the timestamp of the block                                                   | timestamp |
+| date             | the timestamp as a date (calculated)                                         | datetime  |
+| totalSupply      | the total supply of the token contract                                       | int256    |
+| address          | the address of the token contract                                            | address   |
+| holder           | the holder address for which we are reporting                                | address   |
+| priorBalance     | the holder's asset balance at its prior appearance                           | int256    |
+| balance          | the holder's asset balance at the given block height                         | int256    |
+| balanceDec       | the holder's asset balance (in Ether) at the given block height (calculated) | float64   |
+| diff             | the difference, if any, between the prior and current balance (calculated)   | int256    |
+| name             | the name of the token contract, if available                                 | string    |
+| symbol           | the symbol of the token contract                                             | string    |
+| decimals         | the number of decimals for the token contract                                | uint64    |
+| type             | the type of token (ERC20 or ERC721) or none                                  | TokenType |
 
 ## Result
 
@@ -109,6 +109,7 @@ This documentation mentions the following basic data types.
 | blknum    | an alias for a uint64                  |                |
 | datetime  | a JSON formatted date                  | as a string    |
 | ether     | a big number float                     | as a string    |
+| float64   | a double precision float               | 64 bits        |
 | int256    | a signed big number                    | as a string    |
 | string    | a normal character string              |                |
 | timestamp | a 64-bit unsigned integer              | Unix timestamp |

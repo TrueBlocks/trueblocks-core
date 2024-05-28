@@ -1,4 +1,4 @@
-openapi: 3.1.3
+openapi: 3.1.0
 info:
   title: TrueBlocks API
   contact:
@@ -87,3 +87,15 @@ paths:
       format: bytes
       description: "One of four 32-byte topics of a log"
       example: "0xf128...1e98"
+    addrRecord:
+      type: string
+      description: "an address record in the Unchained Index chunk"
+    appRecord:
+      type: string
+      description: "any cache item found in the binary cache"
+    tokenType:
+      type: string
+      description: "an appearance record in the Unchained Index chunk"
+    any:
+      type: string
+      description: "a string representing the token type"
