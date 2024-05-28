@@ -74,6 +74,7 @@ Tokens consist of the following fields:
 | symbol           | the symbol of the token contract                                           | string    |
 | decimals         | the number of decimals for the token contract                              | uint64    |
 | type             | the type of token (ERC20 or ERC721) or none                                | TokenType |
+What about balanceDec?
 
 ## Result
 

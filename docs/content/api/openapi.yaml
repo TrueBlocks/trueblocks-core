@@ -1,4 +1,4 @@
-openapi: 3.1.3
+openapi: 3.1.0
 info:
   title: TrueBlocks API
   contact:
@@ -3271,14 +3271,10 @@ components:
       type: object
       properties:
         AddressRecord:
-          type: object
-          items:
-            $ref: "#/components/schemas/addrRecord"
+          type: string
           description: "the address record for these appearances"
         Appearances:
-          type: array
-          items:
-            $ref: "#/components/schemas/appRecord"
+          type: string
           description: "all the appearances for this address"
     block:
       description: "block data as returned from the RPC (with slight enhancements)"
@@ -3986,9 +3982,7 @@ components:
           format: uint64
           description: "the number of decimals for the token contract"
         type:
-          type: object
-          items:
-            $ref: "#/components/schemas/tokenType"
+          type: string
           description: "the type of token (ERC20 or ERC721) or none"
     result:
       description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
@@ -4351,9 +4345,7 @@ components:
           format: string
           description: "the type of the cache"
         items:
-          type: array
-          items:
-            $ref: "#/components/schemas/any"
+          type: string
           description: "the individual items in the cache (if --verbose)"
         lastCached:
           type: string
