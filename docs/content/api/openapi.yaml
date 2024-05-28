@@ -3271,14 +3271,12 @@ components:
       type: object
       properties:
         AddressRecord:
-          type: object
-          items:
-            $ref: "#/components/schemas/addrRecord"
+          type: string
+          format: string
           description: "the address record for these appearances"
         Appearances:
-          type: array
-          items:
-            $ref: "#/components/schemas/appRecord"
+          type: string
+          format: string
           description: "all the appearances for this address"
     block:
       description: "block data as returned from the RPC (with slight enhancements)"
@@ -3990,9 +3988,8 @@ components:
           format: uint64
           description: "the number of decimals for the token contract"
         type:
-          type: object
-          items:
-            $ref: "#/components/schemas/tokenType"
+          type: string
+          format: string
           description: "the type of token (ERC20 or ERC721) or none"
     result:
       description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
@@ -4355,9 +4352,8 @@ components:
           format: string
           description: "the type of the cache"
         items:
-          type: array
-          items:
-            $ref: "#/components/schemas/any"
+          type: string
+          format: string
           description: "the individual items in the cache (if --verbose)"
         lastCached:
           type: string
@@ -4664,15 +4660,3 @@ components:
       format: bytes
       description: "One of four 32-byte topics of a log"
       example: "0xf128...1e98"
-    addrRecord:
-      type: string
-      description: "an address record in the Unchained Index chunk"
-    appRecord:
-      type: string
-      description: "any cache item found in the binary cache"
-    tokenType:
-      type: string
-      description: "an appearance record in the Unchained Index chunk"
-    any:
-      type: string
-      description: "a string representing the token type"
