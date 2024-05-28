@@ -219,23 +219,20 @@ paths:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/bounds"
                         - $ref: "#/components/schemas/monitor"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-                          "blockNumber": 4037786,
-                          "transactionIndex": 47,
-                        },
-                        {
-                          "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-                          "blockNumber": 4037800,
-                          "transactionIndex": 77,
-                        },
-                        { "...": "..." },
-                      ],
-                  }
+                examples:
+                  [
+                    {
+                      "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                      "blockNumber": 4037786,
+                      "transactionIndex": 47
+                    },
+                    {
+                      "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                      "blockNumber": 4037800,
+                      "transactionIndex": 77
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /export:
@@ -578,41 +575,38 @@ paths:
                         - $ref: "#/components/schemas/traceResult"
                         - $ref: "#/components/schemas/transaction"
                         - $ref: "#/components/schemas/withdrawal"
-                example:
-                  {
-                    "data":
-                      [
+                examples:
+                  [
+                    {
+                      "hash": "0x78a17b79e638190d72a3030a79645c32cf3420a133ea2835206778e5ab63fdc7",
+                      "blockHash": "0xdf551eb24dd5275c22d497b9076f1111f483b71ca37002bee51d5db55d20d2fa",
+                      "blockNumber": 4037786,
+                      "transactionIndex": 47,
+                      "timestamp": 1500352888,
+                      "from": "0x29205869522cc9d1f84b0ad5279a8e74a7c66c15",
+                      "to": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                      "value": 84353870000000000,
+                      "gas": 90000,
+                      "gasPrice": 20000000000,
+                      "maxFeePerGas": 0,
+                      "maxPriorityFeePerGas": 0,
+                      "isError": 0,
+                      "hasToken": 0,
+                      "receipt":
                         {
-                          "hash": "0x78a17b79e638190d72a3030a79645c32cf3420a133ea2835206778e5ab63fdc7",
-                          "blockHash": "0xdf551eb24dd5275c22d497b9076f1111f483b71ca37002bee51d5db55d20d2fa",
-                          "blockNumber": 4037786,
-                          "transactionIndex": 47,
-                          "timestamp": 1500352888,
-                          "from": "0x29205869522cc9d1f84b0ad5279a8e74a7c66c15",
-                          "to": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-                          "value": 84353870000000000,
-                          "gas": 90000,
-                          "gasPrice": 20000000000,
-                          "maxFeePerGas": 0,
-                          "maxPriorityFeePerGas": 0,
-                          "isError": 0,
-                          "hasToken": 0,
-                          "receipt":
-                            {
-                              "contractAddress": "0x0",
-                              "gasUsed": 21000,
-                              "effectiveGasPrice": 20000000000,
-                              "status": null,
-                            },
-                          "compressedTx": "0x()",
-                          "gasCost": 420000000000000,
+                          "contractAddress": "0x0",
                           "gasUsed": 21000,
-                          "date": "2017-07-18 04:41:28 UTC",
-                          "ether": 0.08435387,
+                          "effectiveGasPrice": 20000000000,
+                          "status": null
                         },
-                        { "...": "..." },
-                      ],
-                  }
+                      "compressedTx": "0x()",
+                      "gasCost": 420000000000000,
+                      "gasUsed": 21000,
+                      "date": "2017-07-18 04:41:28 UTC",
+                      "ether": 0.08435387
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /monitors:
@@ -959,7 +953,7 @@ paths:
                       oneOf:
                         - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/name"
-                example:
+                examples:
                   [
                     {
                       "tags": "50-Tokens:ERC20",
@@ -968,8 +962,8 @@ paths:
                       "symbol": "LBA",
                       "source": "On chain",
                       "decimals": 18,
-                      "petname": "actively-happy-mite",
-                    },
+                      "petname": "actively-happy-mite"
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -1094,44 +1088,41 @@ paths:
                         - $ref: "#/components/schemas/abi"
                         - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/parameter"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "name": "PairCreated",
-                          "type": "event",
-                          "stateMutability": "nonpayable",
-                          "signature": "PairCreated(address,address,address,uint256)",
-                          "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
-                          "inputs":
-                            [
-                              {
-                                "type": "address",
-                                "name": "token0",
-                                "indexed": true,
-                                "internalType": "address",
-                              },
-                              {
-                                "type": "address",
-                                "name": "token1",
-                                "indexed": true,
-                                "internalType": "address",
-                              },
-                              {
-                                "type": "address",
-                                "name": "pair",
-                                "internalType": "address",
-                              },
-                              {
-                                "type": "uint256",
-                                "name": "val_0",
-                                "internalType": "uint256",
-                              },
-                            ],
-                        },
-                      ],
-                  }
+                examples:
+                  [
+                    {
+                      "name": "PairCreated",
+                      "type": "event",
+                      "stateMutability": "nonpayable",
+                      "signature": "PairCreated(address,address,address,uint256)",
+                      "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+                      "inputs":
+                        [
+                          {
+                            "type": "address",
+                            "name": "token0",
+                            "indexed": true,
+                            "internalType": "address"
+                          },
+                          {
+                            "type": "address",
+                            "name": "token1",
+                            "indexed": true,
+                            "internalType": "address"
+                          },
+                          {
+                            "type": "address",
+                            "name": "pair",
+                            "internalType": "address"
+                          },
+                          {
+                            "type": "uint256",
+                            "name": "val_0",
+                            "internalType": "uint256"
+                          }
+                        ]
+                    }
+                  ]
         "400":
           description: bad input parameter
   /blocks:
@@ -1321,13 +1312,15 @@ paths:
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
                         - $ref: "#/components/schemas/withdrawal"
-                example:
-                  {
-                    "blockNumber": 3141592,
-                    "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
-                    "...": "...",
-                    "transactions": [],
-                  }
+                examples:
+                  [
+                    {
+                      "blockNumber": 3141592,
+                      "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
+                      "...": "...",
+                      "transactions": []
+                    }
+                  ]
         "400":
           description: bad input parameter
   /transactions:
@@ -2074,23 +2067,20 @@ paths:
                         - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/result"
                         - $ref: "#/components/schemas/state"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "blockNumber": 13176226,
-                          "balance": 258843698360318500,
-                          "nonce": 115,
-                          "code": "0x",
-                          "proxy": "0xd9db270c1b5e3bd161e8c8503c55ceabee709552",
-                          "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
-                          "deployed": 0,
-                          "accttype": "EOA",
-                          "ether": 0.2588436983603185,
-                        },
-                      ],
-                  }
+                examples:
+                  [
+                    {
+                      "blockNumber": 13176226,
+                      "balance": 258843698360318500,
+                      "nonce": 115,
+                      "code": "0x",
+                      "proxy": "0xd9db270c1b5e3bd161e8c8503c55ceabee709552",
+                      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+                      "deployed": 0,
+                      "accttype": "EOA",
+                      "ether": 0.2588436983603185
+                    }
+                  ]
         "400":
           description: bad input parameter
   /tokens:
@@ -2217,22 +2207,19 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/token"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
-                          "balance": "624980000000000000",
-                          "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-                          "name": "The DAO Original",
-                          "decimals": 1,
-                          "isContract": true,
-                          "isErc20": true,
-                          "isErc721": true,
-                        },
-                      ],
-                  }
+                examples:
+                  [
+                    {
+                      "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+                      "balance": "624980000000000000",
+                      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+                      "name": "The DAO Original",
+                      "decimals": 1,
+                      "isContract": true,
+                      "isErc20": true,
+                      "isErc721": true
+                    }
+                  ]
         "400":
           description: bad input parameter
   /config:
@@ -2298,26 +2285,23 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/chain"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "clientVersion": "erigon/2021.09.2/linux-amd64/go1.16.3",
-                          "trueblocksVersion": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
-                          "rpcProvider": "http://localhost:23456",
-                          "configPath": "~/Library/Application Support/TrueBlocks/",
-                          "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
-                          "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
-                          "isTesting": false,
-                          "isArchive": true,
-                          "isTracing": true,
-                          "hasEskey": true,
-                          "hasPinkey": true,
-                          "date": "2021-09-03 19:38:19 UTC",
-                        },
-                      ],
-                  }
+                examples:
+                  [
+                    {
+                      "clientVersion": "erigon/2021.09.2/linux-amd64/go1.16.3",
+                      "trueblocksVersion": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
+                      "rpcProvider": "http://localhost:23456",
+                      "configPath": "~/Library/Application Support/TrueBlocks/",
+                      "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
+                      "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
+                      "isTesting": false,
+                      "isArchive": true,
+                      "isTracing": true,
+                      "hasEskey": true,
+                      "hasPinkey": true,
+                      "date": "2021-09-03 19:38:19 UTC"
+                    }
+                  ]
         "400":
           description: bad input parameter
   /status:
@@ -2678,23 +2662,20 @@ paths:
                         - $ref: "#/components/schemas/manifest"
                         - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/reportCheck"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "fileName": "000000000-000000000",
-                          "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
-                          "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4",
-                        },
-                        {
-                          "fileName": "000000001-000590501",
-                          "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
-                          "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp",
-                        },
-                        { "...": "..." },
-                      ],
-                  }
+                examples:
+                  [
+                    {
+                      "fileName": "000000000-000000000",
+                      "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
+                      "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4"
+                    },
+                    {
+                      "fileName": "000000001-000590501",
+                      "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
+                      "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /init:
@@ -2925,7 +2906,7 @@ paths:
                         - $ref: "#/components/schemas/monitor"
                         - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/slurp"
-                example:
+                examples:
                   [
                     {
                       "hash": "0x2ec382949ba0b22443aa4cb38267b1fb5e68e188109ac11f7a82f67571a0adf3",
@@ -2945,8 +2926,8 @@ paths:
                       "hasToken": "0",
                       "gasUsed": "21000",
                       "date": "2015-08-07 03:50:51 UTC",
-                      "ether": "0.000000000000000000",
-                    },
+                      "ether": "0.000000000000000000"
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -3271,12 +3252,14 @@ components:
       type: object
       properties:
         AddressRecord:
-          type: string
-          format: string
+          type: object
+          items:
+            $ref: "#/components/schemas/addrRecord"
           description: "the address record for these appearances"
         Appearances:
-          type: string
-          format: string
+          type: array
+          items:
+            $ref: "#/components/schemas/appRecord"
           description: "all the appearances for this address"
     block:
       description: "block data as returned from the RPC (with slight enhancements)"
@@ -3988,8 +3971,9 @@ components:
           format: uint64
           description: "the number of decimals for the token contract"
         type:
-          type: string
-          format: string
+          type: object
+          items:
+            $ref: "#/components/schemas/tokenType"
           description: "the type of token (ERC20 or ERC721) or none"
     result:
       description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
@@ -4352,8 +4336,9 @@ components:
           format: string
           description: "the type of the cache"
         items:
-          type: string
-          format: string
+          type: array
+          items:
+            $ref: "#/components/schemas/any"
           description: "the individual items in the cache (if --verbose)"
         lastCached:
           type: string
@@ -4638,16 +4623,12 @@ components:
           type: object
         error:
           type: array
-          example:
-            - error 1
-            - error 2
           items:
             type: string
     hash:
       type: string
       format: hash
       description: "The 32-byte hash"
-      example: "0xf128...1e98"
     address:
       type: string
     string:
@@ -4659,4 +4640,15 @@ components:
       type: string
       format: bytes
       description: "One of four 32-byte topics of a log"
-      example: "0xf128...1e98"
+    addrRecord:
+      type: string
+      description: "an address record in the Unchained Index chunk"
+    appRecord:
+      type: string
+      description: "an appearance record in the Unchained Index chunk"
+    any:
+      type: string
+      description: "any cache item found in the binary cache"
+    tokenType:
+      type: string
+      description: "a string representing the token type"

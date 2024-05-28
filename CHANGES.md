@@ -131,7 +131,6 @@ Packages:
 chifra scrape:
   - Enabled `--notify` option.
   - Removed `--raw` option.
-  - 
 
 ## v2.5.8 (2024/02/09)
 
@@ -606,7 +605,7 @@ The following data models were either modified, added, removed, or renamed by ha
 - Fixed an issue where scraper was missing certain smart contract addresses created during out of gas transactions in the early chain.
 - Fixes many issues with scraper. It is now more complete, faster, and more consistent when running near the head of the chain.
 - Remove `--pin` and `--remote` options from `chifra scrape`. Use `chifra chunks manifest --pin --remote` (post-de-facto) instead.
-- Replace `chifra scrape --first_block` option with `chifra scrape --touch` 
+- Replace `chifra scrape --first_block` option with `chifra scrape --touch`
 - Renamed `--run_once` to `--run_count`. Get same behaviour with `chifra --run_count 1` - aides in debugging scraper.
 - Added `--dry_run` to aide in debugging scraper.
 - Now disallows running `chifra scrape` if the node is not a tracing archive node.
@@ -951,14 +950,17 @@ The following existing data models were either added, removed, or modified by ha
   - In some cases, `Timestamp` and `Date` will only appear under the `--verbose` option. Consult the documentation.
   - For any data model with a `Timestamp`, that data model now also has an (automatically-generated) `Date` field.
 
-### New data models:
+### New data models
+
 - `ChunkPin`: Added `ChunkPin` data model. Used by the `chifra chunks` command.
 - `Slurp`: Added `Slurp` data model. Used by the `chifra slurp` command.
 
 ### Remove data models
+
 - The `MonitorCount` data model was removed as unused. Previously used by the `chifra monitors --count` command.
 
 ### Renamed data models
+
 - `EthState` was renamed to `Result`. Used by the `chifra state --call` command.
 - `Reconciliation` was renamed to `Statement`. Used by the `chifra export --accounting` commands.
 - `TokenBalance` was renamed to `Token`. Used by the `chifra tokens` and `chifra export --accounting` commands.
@@ -1125,6 +1127,7 @@ The following existing data models were either added, removed, or modified by ha
 - No changes.
 
 ## Pull Requests (46)
+
 - #3154 Catching up to a lot of cache related code
 - #3152 Starting to turn on accounting again
 - #3151 Stops calling reconcile if not relevant log
@@ -1204,7 +1207,7 @@ The following existing data models were either added, removed, or modified by ha
 - #3153 chifra blocks --uncles does not cache
 - #3157 progress reporting
 - #3144 Pending testing seconds against millseconds
-- #3126 Access to Topic[0] even when len(log.Topics) == 0
+- #3126 Access to Topic0 even when len(log.Topics) == 0
 - #3128 Concurrent access to map core dumps
 - #3092 finishing caps
 - #3079 Use bitflags where possible for capabilities
@@ -1778,7 +1781,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 **chifra export**
 
 - Major re-write of accounting module. Previously, token accounting was incomplete. Now, were' 99.98% accurate.
-- Removed `--dollars` option. Instead, use the `spotPrice` from `chifra export --accounting` reconciliation model. 
+- Removed `--dollars` option. Instead, use the `spotPrice` from `chifra export --accounting` reconciliation model.
 - Clarified the semantics of `--first_record`, `--max_records`, `--first_block`, `--last_block` and how they interact.
 
 **chifra monitors**
@@ -1894,6 +1897,7 @@ With this release, we made a lot of improvements to the help file and the code. 
 - Updated the Specification for the Unchained Index to version 0.55.0. (Note this does not update the actual index chunks as this update does not change any algorithms or data structures used to create the index.)
 
 ## Breaking Changes
+
 - The `--to_file` option has been removed from all tools.
 - Value of the `--callType` field that previously held `suicide` now contain `self-destruct` throughout all tools.
 - The `hash` field in the `Receipt` data model has been changed to `transactionHash`.
@@ -1901,6 +1905,7 @@ With this release, we made a lot of improvements to the help file and the code. 
 - As some of our tools are only partially ported to Go (such as `chifra blocks` and `chifra traces`), some outputs differ in subtle ways depending on the options chosen.
 
 ## Bug Fixes
+
 - Fixed a bug in `chifra export --neighbors` related to the display of that information.
 - Fixed a bug related to `chifra scrape` that was not allowing forward progress of the scrape in certain situations.
 - Various other small bug fixes.
@@ -1918,6 +1923,7 @@ With this release, we made a lot of improvements to the help file and the code. 
 ## Tool Specific Changes
 
 **chifra blocks**
+
 - The `--trace` option was renamed to `--traces`. `--trace` is deprecated and may be removed in the future.
 - Expanded the `--count` option to produce additional counts for uncles and traces, etc.
 - Partial port to GoLang. See note above.
@@ -1976,7 +1982,7 @@ In an effort to produce better, more consistent data from all of our tools (and 
 
 **removed fields**
 
- - Removed the `root` field from the `Receipts` data model.
+- Removed the `root` field from the `Receipts` data model.
 
 ## Other
 
@@ -2214,7 +2220,7 @@ Changes in this release are in support of [the docker version](https://github.co
 
 - **chifra list:**
   - Expanded which transactions `chifra list` considers for inclusion in a monitor to include "staged but not consolidated" transactions. That is, transactions that are older than 28 blocks but not yet consolidated into an index chunk (see `unripe_dist` above).
-  - This change allows `chirfra export` to display transactions 28 blocks old or older (about six minutes). 
+  - This change allows `chirfra export` to display transactions 28 blocks old or older (about six minutes).
   - Previously, only consolidated transactions were reported (about seven hours behind the head, on average).
   - You may use the `--unripe` option of `chifra export` to see transactions less than 28 blocks old, but use this data with caution due to re-orgs.
 
@@ -2236,7 +2242,7 @@ Changes in this release are in support of [the docker version](https://github.co
     - Added `--publish` option (currently a `noop`).
     - Added `--truncate` option to remove any files in the index after (and including) the given block (***use with caution***).
     - Added `--sleep` option (available on to `--pin --remote`) to "slow down" the upload to avoid time outs.
-  - Removed 
+  - Removed
     - `pins` mode (not needed)
     - `addresses` argument (not needed, replaced with `--belongs`)
     - `details` option (use `--verbose` instead)

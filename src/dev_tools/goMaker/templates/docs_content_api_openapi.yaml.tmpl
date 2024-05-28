@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
   title: TrueBlocks API
   contact:
@@ -44,7 +44,7 @@ paths:
                     description: {{.ProducedByDescr}}
                     type: array
                     items:
-{{.ProducedByList}}{{if .HasExample}}                example:
+{{.ProducedByList}}{{if .HasExample}}                examples:
                   {{.Example}}{{end}}        "400":
           description: bad input parameter
 {{end}}{{end}}components:
@@ -65,16 +65,12 @@ paths:
           type: object
         error:
           type: array
-          example:
-            - error 1
-            - error 2
           items:
             type: string
     hash:
       type: string
       format: hash
       description: "The 32-byte hash"
-      example: "0xf128...1e98"
     address:
       type: string
     string:
@@ -86,16 +82,15 @@ paths:
       type: string
       format: bytes
       description: "One of four 32-byte topics of a log"
-      example: "0xf128...1e98"
     addrRecord:
       type: string
       description: "an address record in the Unchained Index chunk"
     appRecord:
       type: string
-      description: "any cache item found in the binary cache"
-    tokenType:
-      type: string
       description: "an appearance record in the Unchained Index chunk"
     any:
+      type: string
+      description: "any cache item found in the binary cache"
+    tokenType:
       type: string
       description: "a string representing the token type"
