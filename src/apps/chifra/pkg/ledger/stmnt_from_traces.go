@@ -42,13 +42,6 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Tran
 			}
 			if trace.Action.CallType == "delegatecall" && trace.Action.To != s.AccountedFor {
 				// delegate calls are not included in the transaction's gas cost, so we skip them
-				// logger.Info(
-				// 	"Skipping",
-				// 	trace.Action.CallType,
-				// 	"to",
-				// 	trace.Action.To.Hex(),
-				// 	trace.Action.Value.ToEtherStr(18),
-				// )
 				continue
 			}
 
