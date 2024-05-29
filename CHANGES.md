@@ -77,6 +77,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
   - `--ether` option previously replaced the `value` column with `ether` for CSV and TXT output.  Now, it leaves `value` column showing and adds `ether` column to output.
   - `--ether` option previously displayed an Ether value under the `value` key. Now, the `value` key continues to display WEI value and a new key called `ether` carries the Ether value.
   - `--raw` option no longer exists.
+  - Removed unused `--seed`.
 - chifra traces:
   - `--ether` option previously replaced the `value` column with `ether` for CSV and TXT output.  Now, it leaves `value` column showing and adds `ether` column to output.
   - `--ether` option previously displayed an Ether value under the `value` key. Now, the `value` key continues to display WEI value and a new key called `ether` carries the Ether value.

@@ -32,7 +32,6 @@ type transactionsOptionsInternal struct {
 	Emitter        []string         `json:"emitter,omitempty"`
 	Topic          []string         `json:"topic,omitempty"`
 	CacheTraces    bool             `json:"cacheTraces,omitempty"`
-	Seed           bool             `json:"seed,omitempty"`
 	Globals
 }
 
