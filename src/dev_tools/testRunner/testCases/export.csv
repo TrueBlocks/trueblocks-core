@@ -109,7 +109,7 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,export                  ,n   
 on       ,both ,fast  ,export   ,apps ,acctExport ,ens_test_export         ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081450
 on       ,both ,fast  ,export   ,apps ,acctExport ,old_bug2_5              ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 1 & first_record = 6 & fmt = json
 
-# Tests --load option (disabled)
+# Tests --load option (since removed)
 on       ,both ,fast  ,export   ,apps ,acctExport ,load                    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & ether & load = testModule & fmt = json & max_records = 10
 
 # CONFIRM TESTING FOR

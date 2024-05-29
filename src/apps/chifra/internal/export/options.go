@@ -52,7 +52,6 @@ type ExportOptions struct {
 	Flow        string                `json:"flow,omitempty"`        // For the accounting options only, export statements with incoming, outgoing, or zero value
 	Factory     bool                  `json:"factory,omitempty"`     // For --traces only, report addresses created by (or self-destructed by) the given address(es)
 	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled unripe (i.e. less than 28 blocks old)
-	Load        string                `json:"load,omitempty"`        // A comma separated list of dynamic traversers to load
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
 	NoZero      bool                  `json:"noZero,omitempty"`      // For the --count option only, suppress the display of zero appearance accounts
 	FirstBlock  base.Blknum           `json:"firstBlock,omitempty"`  // First block to process (inclusive)
@@ -96,7 +95,6 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
 	logger.TestLog(opts.Factory, "Factory: ", opts.Factory)
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
-	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
@@ -196,8 +194,6 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 			opts.Factory = true
 		case "unripe":
 			opts.Unripe = true
-		case "load":
-			opts.Load = value[0]
 		case "reversed":
 			opts.Reversed = true
 		case "noZero":

@@ -43,7 +43,6 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13240,apps,Accounts,export,acctExport,flow,f,,visible|docs,,flag,enum[in|out|zero],,,,,for the accounting options only&#44; export statements with incoming&#44; outgoing&#44; or zero value
 13250,apps,Accounts,export,acctExport,factory,y,,visible|docs,,switch,<boolean>,,,,,for --traces only&#44; report addresses created by (or self-destructed by) the given address(es)
 13260,apps,Accounts,export,acctExport,unripe,u,,visible|docs,,switch,<boolean>,,,,,export transactions labeled unripe (i.e. less than 28 blocks old)
-13270,apps,Accounts,export,acctExport,load,O,,,,flag,<string>,,,,,a comma separated list of dynamic traversers to load
 13280,apps,Accounts,export,acctExport,reversed,E,,visible|docs,,switch,<boolean>,,,,,produce results in reverse chronological order
 13290,apps,Accounts,export,acctExport,no_zero,z,,visible|docs,,switch,<boolean>,,,,,for the --count option only&#44; suppress the display of zero appearance accounts
 13300,apps,Accounts,export,acctExport,first_block,F,,visible|docs,,flag,<blknum>,,,,,first block to process (inclusive)

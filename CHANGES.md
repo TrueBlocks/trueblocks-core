@@ -119,6 +119,7 @@ chifra export:
   - `--raw` option is removed.
   - `chifra export --decache` now cleans up `receipts` and `withdrawal` caches. (Used to leave them in place never to be removed.)
   - `chifra export --bounds` now produces an Appearance for first and last appearances. Used to produce a string.
+  - Removes `--load` option as unused.
 - All types now no longer have related Raw data type.
 - All types previously called SimpleSomething and now just called Something. For example, SimpleBlock is now Block and RawBlock no longer exists.
 - Removes go.work and go.work.sum files from the repo.

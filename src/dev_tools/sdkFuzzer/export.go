@@ -46,7 +46,6 @@ func DoExport() {
 	// lastBlock is a <blknum> --other
 	// firstRecord is not fuzzed
 	// maxRecords is not fuzzed
-	// load is not fuzzed
 	// Fuzz Loop
 	// EXISTING_CODE
 	flow := []sdk.ExportFlow{sdk.NoEF, sdk.EFIn, sdk.EFOut, sdk.EFZero}
