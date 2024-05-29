@@ -18,8 +18,6 @@ import (
 )
 
 func (opts *StateOptions) HandleDecache() error {
-	silent := !opts.Globals.ShowProgress()
-
 	var itemsToRemove []cache.Locator
 	for _, addressStr := range opts.Addrs {
 		address := base.HexToAddress(addressStr)
@@ -45,7 +43,8 @@ func (opts *StateOptions) HandleDecache() error {
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, walk.Cache_State); err != nil {
+		showProgress := opts.Globals.ShowProgress()
+		if msg, err := decache.Decache(opts.Conn, itemsToRemove, showProgress, walk.Cache_State); err != nil {
 			errorChan <- err
 		} else {
 			s := types.Message{

@@ -40,8 +40,9 @@ func (opts *BlocksOptions) HandleUniq() error {
 			cancel()
 
 		} else {
+			showProgress := opts.Globals.ShowProgress()
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !logger.IsTerminal(),
+				Enabled: showProgress,
 				Total:   int64(cnt),
 			})
 

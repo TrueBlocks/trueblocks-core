@@ -312,7 +312,7 @@ func ResetOptions(testMode bool) {
 func (opts *ExportOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		// TODO: Enabled neighbors cache
+		// TODO: Enable neighbors cache
 		"transactions": true,
 		"statements":   opts.Accounting,
 		"traces":       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Neighbors)),

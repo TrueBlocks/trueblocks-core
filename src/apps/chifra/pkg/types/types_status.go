@@ -87,11 +87,6 @@ func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]
 		"trueblocksVersion",
 	}
 
-	if extraOpts != nil && extraOpts["showProgress"] == true {
-		model["progress"] = s.Progress
-		order = append(order, "progress")
-	}
-
 	testMode := extraOpts["testMode"] == true
 	if len(s.Caches) > 0 {
 		if testMode {

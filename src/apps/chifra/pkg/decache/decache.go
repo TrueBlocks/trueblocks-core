@@ -11,7 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func Decache(conn *rpc.Connection, locs []cache.Locator, silent bool, cT walk.CacheType) (string, error) {
+func Decache(conn *rpc.Connection, locs []cache.Locator, showProgress bool, cT walk.CacheType) (string, error) {
 	itemsSeen := int64(0)
 	itemsProcessed := int64(0)
 	bytesProcessed := 0
@@ -19,7 +19,7 @@ func Decache(conn *rpc.Connection, locs []cache.Locator, silent bool, cT walk.Ca
 	cacheName := strings.ToLower(cT.String())
 	bar := logger.NewBar(logger.BarOptions{
 		Prefix:  "Decaching " + cacheName,
-		Enabled: !silent, // from opts.Globals.TestMode || len(opts.Globals.File) > 0 because we don't have opts here
+		Enabled: showProgress,
 		Total:   int64(len(locs)),
 	})
 

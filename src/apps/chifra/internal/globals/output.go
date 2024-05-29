@@ -49,7 +49,7 @@ func (opts *GlobalOptions) OutputOptsWithExtra(extraOpts map[string]any) output.
 
 func (opts *GlobalOptions) ShowProgress() bool {
 	testMode := opts.TestMode
-	toFile := len(opts.File) > 0
+	toFile := len(opts.OutputFn) > 0
 	isFuzzing := utils.IsFuzzing()
 	return !testMode && !toFile && !isFuzzing
 }

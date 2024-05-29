@@ -23,8 +23,6 @@ import (
 
 // HandleDecache handles the command chifra monitors --decache
 func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
-	silent := !opts.Globals.ShowProgress()
-
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
@@ -52,7 +50,8 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 							continue
 						}
 
-						if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, cache); err != nil {
+						showProgress := opts.Globals.ShowProgress()
+						if msg, err := decache.Decache(opts.Conn, itemsToRemove, showProgress, cache); err != nil {
 							errorChan <- err
 
 						} else {

@@ -49,9 +49,10 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					cancel()
 
 				} else {
+					showProgress := opts.Globals.ShowProgress()
 					bar := logger.NewBar(logger.BarOptions{
 						Prefix:  mon.Address.Hex(),
-						Enabled: !testMode && !logger.IsTerminal(),
+						Enabled: showProgress,
 						Total:   int64(cnt),
 					})
 

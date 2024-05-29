@@ -42,7 +42,7 @@ func getPins(chain, status string, first, cnt int) (int, []Pin) {
 }
 
 // ListPins pins a file remotely to the pinning service
-func ListPins(chain, status string, countOnly bool, perPage int, dur time.Duration) ([]string, error) {
+func ListPins(chain, status string, showProgress, countOnly bool, perPage int, dur time.Duration) ([]string, error) {
 	count, _ := getPins(chain, status, 0, 1)
 	ret := make([]string, 0, count)
 	if countOnly {
@@ -56,7 +56,7 @@ func ListPins(chain, status string, countOnly bool, perPage int, dur time.Durati
 		}
 
 		bar := logger.NewBar(logger.BarOptions{
-			Enabled: true,
+			Enabled: showProgress,
 			Total:   int64(count)/int64(perPage) + 1,
 		})
 

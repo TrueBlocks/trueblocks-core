@@ -141,9 +141,8 @@ func (opts *StatusOptions) HandleModes() error {
 	}
 
 	extraOpts := map[string]any{
-		"showProgress": false,
-		"testMode":     testMode,
-		"chains":       opts.Chains,
+		"testMode": testMode,
+		"chains":   opts.Chains,
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
