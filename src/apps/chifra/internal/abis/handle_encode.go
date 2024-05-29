@@ -20,7 +20,7 @@ func (opts *AbisOptions) HandleEncode() error {
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		funcs := abi.ExtractSigs(opts.Encode)
 		if len(funcs) == 0 {
-			errorChan <- fmt.Errorf("not a valid string in HandleEncode")
+			errorChan <- fmt.Errorf("not a valid function signature in HandleEncode: %s", opts.Encode)
 			return
 		}
 		for _, f := range funcs {

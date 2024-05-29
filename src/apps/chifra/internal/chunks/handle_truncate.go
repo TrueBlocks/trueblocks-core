@@ -37,7 +37,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []base.Blknum) error {
 
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
-	showProgress := opts.Globals.ShowProgress()
+	showProgress := opts.Globals.ShowProgress() || logger.IsTerminal()
 	bar := logger.NewBar(logger.BarOptions{
 		Enabled: showProgress,
 		Total:   128,

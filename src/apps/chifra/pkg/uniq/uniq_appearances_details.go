@@ -292,7 +292,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 			}
 
 		} else {
-			fmt.Println("Unknown trace type", trace.TraceType)
+			logger.Warn(fmt.Sprintf("Unknown trace type %s for trace: %d.%d.%d", trace.TraceType, trace.BlockNumber, trace.TransactionIndex, trace.TraceIndex))
 			return err
 		}
 
