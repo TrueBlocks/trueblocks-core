@@ -54,3 +54,7 @@ func (opts *GlobalOptions) ShowProgress() bool {
 	}
 	return len(opts.OutputFn) > 0 || !logger.IsTerminal()
 }
+
+func (opts *GlobalOptions) ShowProgressNotTesting() bool {
+	return !opts.TestMode && !utils.IsFuzzing()
+}

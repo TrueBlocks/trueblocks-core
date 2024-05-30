@@ -179,15 +179,16 @@ func (s *Store) Remove(value Locator) (err error) {
 	return
 }
 
-func (s *Store) Decache(locators []Locator, processor func(*locations.ItemInfo) bool) (err error) {
+func (s *Store) Decache(locators []Locator, procFunc, skipFunc func(*locations.ItemInfo) bool) (err error) {
 	for _, locator := range locators {
 		stats, err := s.Stat(locator)
 		if err != nil {
-			// we silently ignore this for folders as an example
+			// many locations will not have been cached, but we want to report
+			skipFunc(stats)
 			continue
 		}
 		// If processor returns false, we don't want to remove this item from the cache
-		if !processor(stats) {
+		if !procFunc(stats) {
 			continue
 		}
 		if err := s.Remove(locator); err != nil {

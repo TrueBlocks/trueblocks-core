@@ -100,6 +100,8 @@ This file details changes made to TrueBlocks over time. See the [migration notes
   - JSON output now includes timestamp and date keys.
 - chifra names:
   - corrects process of some UniCode strings.
+- chifra monitors
+  - enabled chifra monitors --decache
 - chifra slurp
   - adds `--source` which allows specification of a provider: etherscan, key, covalent, or alchemy
   - Removes `--raw` option.

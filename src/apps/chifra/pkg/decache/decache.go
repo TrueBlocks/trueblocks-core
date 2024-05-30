@@ -18,20 +18,34 @@ func Decache(conn *rpc.Connection, locs []cache.Locator, showProgress bool, cT w
 
 	cacheName := strings.ToLower(cT.String())
 	bar := logger.NewBar(logger.BarOptions{
-		Prefix:  "Decaching " + cacheName,
+		Prefix:  "Decaching " + cacheName + " if present",
 		Enabled: showProgress,
 		Total:   int64(len(locs)),
 	})
 
-	processorFunc := func(info *locations.ItemInfo) bool {
+	procFunc := func(info *locations.ItemInfo) bool {
 		itemsSeen++
 		itemsProcessed++
 		bytesProcessed += info.Size()
-		bar.Tick()
+		if itemsSeen%1000 == 0 {
+			bar.Tick()
+		} else {
+			bar.Bump()
+		}
 		return true
 	}
 
-	if err := conn.Store.Decache(locs, processorFunc); err != nil {
+	skipFunc := func(info *locations.ItemInfo) bool {
+		itemsSeen++
+		if itemsSeen%1000 == 0 {
+			bar.Tick()
+		} else {
+			bar.Bump()
+		}
+		return true
+	}
+
+	if err := conn.Store.Decache(locs, procFunc, skipFunc); err != nil {
 		bar.Finish(true /* newLine */)
 		return "", err
 	}
