@@ -149,7 +149,9 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 			}
 
 		} else {
-			logger.Warn(fmt.Sprintf("Unknown trace type %s for trace: %d.%d.%d", trace.TraceType, trace.BlockNumber, trace.TransactionIndex, trace.TraceIndex))
+			if len(trace.TraceType) > 0 && trace.BlockNumber != 0 {
+				logger.Warn(fmt.Sprintf("Unknown trace type %s for trace: %d.%d.%d", trace.TraceType, trace.BlockNumber, trace.TransactionIndex, trace.TraceIndex))
+			}
 			return err
 		}
 
