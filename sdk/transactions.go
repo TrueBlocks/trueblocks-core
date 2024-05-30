@@ -14,7 +14,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
@@ -60,13 +59,6 @@ func (opts *TransactionsOptions) TransactionsLogs() ([]types.Log, *types.MetaDat
 	in := opts.toInternal()
 	in.Logs = true
 	return queryTransactions[types.Log](in)
-}
-
-// TransactionsSeed implements the chifra transactions --seed command.
-func (opts *TransactionsOptions) TransactionsSeed() ([]base.Address, *types.MetaData, error) {
-	in := opts.toInternal()
-	in.Seed = true
-	return queryTransactions[base.Address](in)
 }
 
 type TransactionsFlow int

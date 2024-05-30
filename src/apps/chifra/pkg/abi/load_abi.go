@@ -31,7 +31,7 @@ func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *SelectorSyncMap
 	err := conn.IsContractAtLatest(address)
 	if err != nil {
 		if errors.Is(err, rpc.ErrNotAContract) && !utils.IsFuzzing() {
-			logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
+			logger.Progress(logger.IsTerminal(), fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
 		}
 		return err
 	}

@@ -45,11 +45,6 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
 	}
 
-	if len(opts.Load) > 0 {
-		// See https://pkg.go.dev/plugin
-		return validate.Usage("The {0} option is currenlty disabled.", "--load")
-	}
-
 	if opts.tooMany() {
 		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.)")
 	}

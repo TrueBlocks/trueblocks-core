@@ -84,7 +84,7 @@ func (c *Command) HasNotes() bool {
 }
 
 func (c *Command) HasExample() bool {
-	return file.FileExists("./src/dev_tools/goMaker/templates/api/examples/" + c.Route + ".txt")
+	return file.FileExists("./src/dev_tools/goMaker/templates/api/examples/" + c.Route + ".json")
 }
 
 func (c *Command) HasHidden() bool {
@@ -466,7 +466,7 @@ func (c *Command) IsRoute() bool {
 }
 
 func (c *Command) Example() string {
-	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/api/examples/"+c.Route+".txt"), ws)
+	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/api/examples/"+c.Route+".json"), ws)
 	contents = strings.Replace(contents, "\n", "\n                  ", -1)
 	return strings.Trim(contents, ws) + "\n"
 }

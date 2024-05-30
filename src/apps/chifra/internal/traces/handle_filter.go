@@ -51,8 +51,9 @@ func (opts *TracesOptions) HandleFilter() error {
 			cancel()
 
 		} else {
+			showProgress := opts.Globals.ShowProgress()
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !logger.IsTerminal(),
+				Enabled: showProgress,
 				Total:   int64(cnt),
 			})
 
@@ -1022,7 +1023,7 @@ parseBlockOption
     }
 
     ASSERT(opts);
-    if (opts->isEnabled(OPT_CHECKLATEST) && ret > lastBlock) {
+    if (opts->isE nabled(OPT_CHECKLATEST) && ret > lastBlock) {
         string_q lateStr = (isTestMode() ? "--" : uint_2_Str(lastBlock));
         msg = "Block " + arg + " is later than the last valid block " + lateStr + "." + (isApi Mode() ? "" : "\n");
         return NOPOS;

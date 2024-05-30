@@ -12,12 +12,72 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 - Moves VERSION into a file - to update version from now on, simply modify this file.
 - Many updated and modified test cases including new ones for the SDK.
 - Added sdkFuzzer which calls each of the SDK endpoints with each combination of options testing only for error responses.
+- Changes to the cache no longer require a migration.
+- Data Model changes
+  - The word 'Simple' was removed from all data models.
+  - The Raw version of each data type was removed entirely.
+  - All `fetchData` routines were modified to accept a channel for a Modeler interface without a generic RawData type.
+  - Changes all `double` types to `float64`.
+  - Slurp:
+    - Adds calculated `ether` field which shows for all commands.
+    - No longer replaces `value` field with `ether` when `--ether` option is used.
+    - Marks `compressedTx` as calculated.
+  - SlurpCount:
+    - Removes this data-model as unused.
+  - State:
+    - Adds calculated `ether` field which shows for all commands.
+    - No longer replaces `value` field with `ether` when `--ether` option is used.
+    - Marks `nonce` as `value` type as opposed to `txnum` as a more accurate representation.
+  - Token:
+    - Marks `transactionIndex` as a `txnum` type as opposed to `blknum` as a more accurate representation.
+    - Marks `diff` as a calculated field.
+  - Block:
+    - Marks `difficulty` as a `value` type as opposed to `uint64` to be more accurate.
+    - Makes `Block` type a non-generic (by removing the `[Transaction|string]` generic and creating a `LightBlock` type. Easier, more clear.
+    - Marks `baseFeePerGas` as base type `gas` as opposed to `uint64` to be more accurate.
+  - Transaction:
+    - Marks `transactionIndex` as a `txnum` type as opposed to `blknum` as a more accurate representation.
+    - Marks `nonce` as a `value` type as opposed to `txnum` as a more accurate representation.
+    - Adds `ether` field which shows Ether value of the transaction for all commands.
+    - Changes type of `hasToken` and `isError` to `bool` from `uint8` as more accurate. Does not change hte underlying cache data.
+    - Marks `compressedTx` as calculated field.
+  - Withdrawal:
+    - Adds `ether` field which shows Ether value of the withdrawal for all commands.
+    - Marks `index` field as type `value` as opposed to `uint64` to be more accurate.
+    - Marks `validatorIndex` field as type `value` as opposed to `uint64` to be more accurate.
+  - Receipt:
+    - Marks `status` field as type `value` as opposed to `uint32` to be more accurate. (Modifies cache data.)
+    - Marks `transactionIndex` as `txnum` type as opposed to `blknum` as a more accurate representation.
+  - Log:
+    - Marks `transactionIndex` as `txnum` type as opposed to `uint64` as a more accurate representation.
+    - Marks `logIndex` as `lognum` type as opposed to `uint64` as a more accurate representation.
+    - Makks `compressedLog` as calculated field.
+  - Trace:
+    - Marks `transactionIndex` as `txnum` type as opposed to `uint64` as a more accurate representation.
+    - Marks `compressedTrace` as calculated field.
+  - ReportCheck:
+    - Converts all fields that were previously `uint32` to `uint64`.
+  - ChunkPin:
+    - Renamed this field from `ChunkPinReport` to this name.
+  - AppearanceCount:
+    - Removed as unused.
+  - Bounds:
+    - Changes `firstApp` and `latestApp` from string to `Appearance` to make parsing as JSON easier.
+  - Statement:
+    - Changes `transactionIndex` from `blknum` to `txnum` to be more accurate.
+    - Changes `logIndex` from `blknum` to `lognum` to be more accurate.
+    - Changes `decimals` field from `uint64` to `value`.
+    - Changes `spotPrice` field from `double` to `float64`.
+  - LightBlock:
+    - New type to separate out Block[string | Transaction].
+- It is now required to run `./scripts/go-work-sync.sh` to build the GoLang code.
 - chifra when -- additional special blocks for firstLog and the Dencun hard fork.
 - chifra abis --find now shows properly formatted output (json, txt, or csv).
 - chifra transactions:
   - `--ether` option previously replaced the `value` column with `ether` for CSV and TXT output.  Now, it leaves `value` column showing and adds `ether` column to output.
   - `--ether` option previously displayed an Ether value under the `value` key. Now, the `value` key continues to display WEI value and a new key called `ether` carries the Ether value.
   - `--raw` option no longer exists.
+  - Removed unused `--seed`.
 - chifra traces:
   - `--ether` option previously replaced the `value` column with `ether` for CSV and TXT output.  Now, it leaves `value` column showing and adds `ether` column to output.
   - `--ether` option previously displayed an Ether value under the `value` key. Now, the `value` key continues to display WEI value and a new key called `ether` carries the Ether value.
@@ -40,6 +100,8 @@ This file details changes made to TrueBlocks over time. See the [migration notes
   - JSON output now includes timestamp and date keys.
 - chifra names:
   - corrects process of some UniCode strings.
+- chifra monitors
+  - enabled chifra monitors --decache
 - chifra slurp
   - adds `--source` which allows specification of a provider: etherscan, key, covalent, or alchemy
   - Removes `--raw` option.
@@ -60,6 +122,7 @@ chifra export:
   - `--raw` option is removed.
   - `chifra export --decache` now cleans up `receipts` and `withdrawal` caches. (Used to leave them in place never to be removed.)
   - `chifra export --bounds` now produces an Appearance for first and last appearances. Used to produce a string.
+  - Removes `--load` option as unused.
 - All types now no longer have related Raw data type.
 - All types previously called SimpleSomething and now just called Something. For example, SimpleBlock is now Block and RawBlock no longer exists.
 - Removes go.work and go.work.sum files from the repo.
@@ -72,7 +135,6 @@ Packages:
 chifra scrape:
   - Enabled `--notify` option.
   - Removed `--raw` option.
-  - 
 
 ## v2.5.8 (2024/02/09)
 
@@ -113,7 +175,7 @@ chifra scrape:
 
 data models
 
-- Added `ReconType` and `AssetType` to `SimpleReconciliation` data models.
+- Added `ReconType` and `AssetType` to `Reconciliation` data models.
 
 ## v2.1.0 (2023/11/25)
 
@@ -547,7 +609,7 @@ The following data models were either modified, added, removed, or renamed by ha
 - Fixed an issue where scraper was missing certain smart contract addresses created during out of gas transactions in the early chain.
 - Fixes many issues with scraper. It is now more complete, faster, and more consistent when running near the head of the chain.
 - Remove `--pin` and `--remote` options from `chifra scrape`. Use `chifra chunks manifest --pin --remote` (post-de-facto) instead.
-- Replace `chifra scrape --first_block` option with `chifra scrape --touch` 
+- Replace `chifra scrape --first_block` option with `chifra scrape --touch`
 - Renamed `--run_once` to `--run_count`. Get same behaviour with `chifra --run_count 1` - aides in debugging scraper.
 - Added `--dry_run` to aide in debugging scraper.
 - Now disallows running `chifra scrape` if the node is not a tracing archive node.
@@ -748,7 +810,7 @@ The following data models were either modified, added, removed, or renamed by ha
 - #3232 chifra daemon scrape values invalid
 - #3229 Indexing an unsupported EVM chain
 - #3227 chifra state cores
-- #3226 chifra abis should have a --raw option
+- #3226 chifra abis should have a --r aw option
 - #3225 Utilize BlockRange on eth_getLogs querys
 - #3223 ABI docs are vague and unclear
 - #3221 chifra blocks reports error incorrectly
@@ -758,7 +820,7 @@ The following data models were either modified, added, removed, or renamed by ha
 - #3215 chifra tokens with --verbose produces empty dates
 - #3214 chifra cmd - thoughts from making a tutorial in Berlin
 - #3213 chifra export --trace --count doesn't work
-- #3212 chifra cmd -- any use of `--chain` with a value not found in the array shoudl fail more gracefully
+- #3212 chifra cmd -- any use of `--chain` with a value not found in the array should fail more gracefully
 - #3211 Omission of popular contracts with long vanity addresses
 - #3210 chifra chunks manifest --pin requires ipfs even if the help text says otherwise
 - #3207 chifra blocks no reporting...
@@ -892,14 +954,17 @@ The following existing data models were either added, removed, or modified by ha
   - In some cases, `Timestamp` and `Date` will only appear under the `--verbose` option. Consult the documentation.
   - For any data model with a `Timestamp`, that data model now also has an (automatically-generated) `Date` field.
 
-### New data models:
-- `ChunkPinReport`: Added `ChunkPinReport` data model. Used by the `chifra chunks` command.
+### New data models
+
+- `ChunkPin`: Added `ChunkPin` data model. Used by the `chifra chunks` command.
 - `Slurp`: Added `Slurp` data model. Used by the `chifra slurp` command.
 
 ### Remove data models
+
 - The `MonitorCount` data model was removed as unused. Previously used by the `chifra monitors --count` command.
 
 ### Renamed data models
+
 - `EthState` was renamed to `Result`. Used by the `chifra state --call` command.
 - `Reconciliation` was renamed to `Statement`. Used by the `chifra export --accounting` commands.
 - `TokenBalance` was renamed to `Token`. Used by the `chifra tokens` and `chifra export --accounting` commands.
@@ -1066,6 +1131,7 @@ The following existing data models were either added, removed, or modified by ha
 - No changes.
 
 ## Pull Requests (46)
+
 - #3154 Catching up to a lot of cache related code
 - #3152 Starting to turn on accounting again
 - #3151 Stops calling reconcile if not relevant log
@@ -1074,7 +1140,7 @@ The following existing data models were either added, removed, or modified by ha
 - #3148 Fixes query package
 - #3139 Feature/decache for all
 - #3138 Update cmake
-- #3137 Move token package to rpcClient, removes separate Token type in favor of SimpleToken
+- #3137 Move token package to rpcClient, removes separate Token type in favor of Token
 - #3131 Moved linter job to build workflow
 - #3124 Removes chain from most methods on rpcClient.Options
 - #3129 concurrent access to map core dumps
@@ -1145,7 +1211,7 @@ The following existing data models were either added, removed, or modified by ha
 - #3153 chifra blocks --uncles does not cache
 - #3157 progress reporting
 - #3144 Pending testing seconds against millseconds
-- #3126 Access to Topic[0] even when len(log.Topics) == 0
+- #3126 Access to Topic0 even when len(log.Topics) == 0
 - #3128 Concurrent access to map core dumps
 - #3092 finishing caps
 - #3079 Use bitflags where possible for capabilities
@@ -1399,7 +1465,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 - Many additional tests for all subcommands
 - Removed a fair amount of the C++ library testing code as being not needed and in preparation for porting to C++
 - Re-wrote logger package to more closely mimic the new GoLang structured log package which we will be switching to soon - if you depend on our logging messages for anything, please note that they will change.
-- Made sure RPC and Raw data agrees
+- Made sure RPC is valid
 
 ## Changes to Data Models
 
@@ -1676,7 +1742,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 - We completed partial ports for `chifra blocks`, `chifra transactions`, and `chifra traces`. In some cases, this changed the format of the output (especially for JSON output). In every case, we think the data has been improved.
 - Implemented `--articulate` across many tools in GoLang. (Thanks Dawid!)
 - We made significant improvements to the documentation including more examples for the API docs and cross links to data models from tools producing the same.
-- We prepared all tools for using the GoLang `--cache` options (caching is not yet yet enabled in the GoLang code). (Thanks Dawid!)
+- We prepared all tools for using the GoLang `--cache` options (caching is not yet enabled in the GoLang code). (Thanks Dawid!)
 - Better support for streaming output to various formats (including preliminary support for `.xlsx`).
 - Begun improvements for more useful and flexible connections to the RPC.
 
@@ -1686,7 +1752,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
   - Changed `abi_source` to `abiSource`.
   - Changed `input_dicts` to `inputDicts`.
   - Changed `output_dicts` to `outputDicts`.
-  - Removed `input_names` and `output_names`. (These may be added back in in the future.)
+  - Removed `input_names` and `output_names`. (These may be added back in the future.)
 - `Reconciliation` data model:
   - Changed `prevBlock` to `prevAppBlk`.
   - Changed `prevBlkBal` to `prevBal`.
@@ -1696,7 +1762,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
   - Removed `unclesCnt`.
 - `TraceResult` data model:
   - Renamed `newContract` to `address` in order to agree with the RPC.
-- Renamed `VerboseAppearance` data model to `SimpleAppearance` to be consistent with other tools.
+- Renamed `VerboseAppearance` data model to `Appearance` to be consistent with other tools.
 - Renamed `TokenBalanceRecord` data model to `TokenBalance`.
 - New data models:
   - `BlockCount`
@@ -1719,7 +1785,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 **chifra export**
 
 - Major re-write of accounting module. Previously, token accounting was incomplete. Now, were' 99.98% accurate.
-- Removed `--dollars` option. Instead, use the `spotPrice` from `chifra export --accounting` reconciliation model. 
+- Removed `--dollars` option. Instead, use the `spotPrice` from `chifra export --accounting` reconciliation model.
 - Clarified the semantics of `--first_record`, `--max_records`, `--first_block`, `--last_block` and how they interact.
 
 **chifra monitors**
@@ -1819,7 +1885,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 - Removed `--tsx` option as unused.
 - Removed `--dump` option as unused.
 - Added `--sdk` option to output Python and Typescript SDKs.
-- Separation of `CParameter` class from `CMember` class making publically presented `CParamater` much simple since most of the complications came from that class's use in makeClass.
+- Separation of `CParameter` class from `CMember` class making publically presented `CParamater` much simpler since most of the complications came from that class's use in makeClass.
 
 **testRunner**
 
@@ -1835,6 +1901,7 @@ With this release, we made a lot of improvements to the help file and the code. 
 - Updated the Specification for the Unchained Index to version 0.55.0. (Note this does not update the actual index chunks as this update does not change any algorithms or data structures used to create the index.)
 
 ## Breaking Changes
+
 - The `--to_file` option has been removed from all tools.
 - Value of the `--callType` field that previously held `suicide` now contain `self-destruct` throughout all tools.
 - The `hash` field in the `Receipt` data model has been changed to `transactionHash`.
@@ -1842,6 +1909,7 @@ With this release, we made a lot of improvements to the help file and the code. 
 - As some of our tools are only partially ported to Go (such as `chifra blocks` and `chifra traces`), some outputs differ in subtle ways depending on the options chosen.
 
 ## Bug Fixes
+
 - Fixed a bug in `chifra export --neighbors` related to the display of that information.
 - Fixed a bug related to `chifra scrape` that was not allowing forward progress of the scrape in certain situations.
 - Various other small bug fixes.
@@ -1859,13 +1927,14 @@ With this release, we made a lot of improvements to the help file and the code. 
 ## Tool Specific Changes
 
 **chifra blocks**
+
 - The `--trace` option was renamed to `--traces`. `--trace` is deprecated and may be removed in the future.
 - Expanded the `--count` option to produce additional counts for uncles and traces, etc.
 - Partial port to GoLang. See note above.
 
 **chifra traces**
 
-- An attempt was made to improve the data exported from this tool, as it was quite confused previously. There may be unforeseen breaking changes to the expotred data.
+- An attempt was made to improve the data exported from this tool, as it was quite confused previously. There may be unforeseen breaking changes to the exported data.
 - Removed unused (and previously unimplemented) `--statediff` option.
 - Partial port to GoLang. See note above.
 
@@ -1917,7 +1986,7 @@ In an effort to produce better, more consistent data from all of our tools (and 
 
 **removed fields**
 
- - Removed the `root` field from the `Receipts` data model.
+- Removed the `root` field from the `Receipts` data model.
 
 ## Other
 
@@ -2155,7 +2224,7 @@ Changes in this release are in support of [the docker version](https://github.co
 
 - **chifra list:**
   - Expanded which transactions `chifra list` considers for inclusion in a monitor to include "staged but not consolidated" transactions. That is, transactions that are older than 28 blocks but not yet consolidated into an index chunk (see `unripe_dist` above).
-  - This change allows `chirfra export` to display transactions 28 blocks old or older (about six minutes). 
+  - This change allows `chirfra export` to display transactions 28 blocks old or older (about six minutes).
   - Previously, only consolidated transactions were reported (about seven hours behind the head, on average).
   - You may use the `--unripe` option of `chifra export` to see transactions less than 28 blocks old, but use this data with caution due to re-orgs.
 
@@ -2177,7 +2246,7 @@ Changes in this release are in support of [the docker version](https://github.co
     - Added `--publish` option (currently a `noop`).
     - Added `--truncate` option to remove any files in the index after (and including) the given block (***use with caution***).
     - Added `--sleep` option (available on to `--pin --remote`) to "slow down" the upload to avoid time outs.
-  - Removed 
+  - Removed
     - `pins` mode (not needed)
     - `addresses` argument (not needed, replaced with `--belongs`)
     - `details` option (use `--verbose` instead)

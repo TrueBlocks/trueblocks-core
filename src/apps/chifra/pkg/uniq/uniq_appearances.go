@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -102,7 +103,7 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 				addAddressToMaps(author, bn, types.ExternalReward, addrMap)
 
 			} else {
-				fmt.Println("Unknown reward type", trace.Action.RewardType)
+				logger.Warn(fmt.Sprintf("Unknown reward type %s for trace: %d.%d.%d", trace.Action.RewardType, trace.BlockNumber, trace.TransactionIndex, trace.TraceIndex))
 				return err
 			}
 
@@ -148,7 +149,9 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 			}
 
 		} else {
-			fmt.Println("Unknown trace type", trace.TraceType)
+			if len(trace.TraceType) > 0 && trace.BlockNumber != 0 {
+				logger.Warn(fmt.Sprintf("Unknown trace type %s for trace: %d.%d.%d", trace.TraceType, trace.BlockNumber, trace.TransactionIndex, trace.TraceIndex))
+			}
 			return err
 		}
 

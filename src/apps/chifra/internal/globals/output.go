@@ -5,6 +5,7 @@
 package globals
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -48,8 +49,12 @@ func (opts *GlobalOptions) OutputOptsWithExtra(extraOpts map[string]any) output.
 }
 
 func (opts *GlobalOptions) ShowProgress() bool {
-	testMode := opts.TestMode
-	toFile := len(opts.File) > 0
-	isFuzzing := utils.IsFuzzing()
-	return !testMode && !toFile && !isFuzzing
+	if opts.TestMode || utils.IsFuzzing() {
+		return false
+	}
+	return len(opts.OutputFn) > 0 || !logger.IsTerminal()
+}
+
+func (opts *GlobalOptions) ShowProgressNotTesting() bool {
+	return !opts.TestMode && !utils.IsFuzzing()
 }

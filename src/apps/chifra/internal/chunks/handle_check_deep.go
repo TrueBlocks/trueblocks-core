@@ -44,9 +44,10 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *types.
 		appMap[chunk.Range] = &reporter{chunk, report, &mutex}
 	}
 
+	showProgress := opts.Globals.ShowProgress()
 	bar := logger.NewBar(logger.BarOptions{
+		Enabled: showProgress,
 		Total:   int64(len(appMap)),
-		Enabled: true,
 	})
 
 	addrCnt := 0

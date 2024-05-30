@@ -14,8 +14,6 @@ import (
 )
 
 func (opts *WhenOptions) HandleDecache() error {
-	silent := !opts.Globals.ShowProgress()
-
 	itemsToRemove, err := decache.LocationsFromBlockIds(opts.Conn, opts.BlockIds, false, false)
 	if err != nil {
 		return err
@@ -23,7 +21,8 @@ func (opts *WhenOptions) HandleDecache() error {
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, walk.Cache_Blocks); err != nil {
+		showProgress := opts.Globals.ShowProgress()
+		if msg, err := decache.Decache(opts.Conn, itemsToRemove, showProgress, walk.Cache_Blocks); err != nil {
 			errorChan <- err
 		} else {
 			s := types.Message{

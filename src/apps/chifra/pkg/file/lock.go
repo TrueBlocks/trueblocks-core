@@ -69,13 +69,10 @@ func WaitOnLock(filePath string, openFlags int) (file *os.File, err error) {
 		}
 		if err == syscall.EAGAIN || err == syscall.EACCES {
 			// Another process has already locked the file, we wait
+			time.Sleep(500 * time.Millisecond)
 			continue
 		}
-		if err != nil {
-			// We cannot lock, so report the error back to the caller
-			return file, err
-		}
-		time.Sleep(1 * time.Second)
+		return file, err
 	}
 	return file, errors.New("lock timeout")
 }

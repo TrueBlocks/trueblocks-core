@@ -36,7 +36,6 @@ type ExportOptions struct {
 	Flow        ExportFlow  `json:"flow,omitempty"`
 	Factory     bool        `json:"factory,omitempty"`
 	Unripe      bool        `json:"unripe,omitempty"`
-	Load        string      `json:"load,omitempty"`
 	Reversed    bool        `json:"reversed,omitempty"`
 	NoZero      bool        `json:"noZero,omitempty"`
 	FirstBlock  base.Blknum `json:"firstBlock,omitempty"`

@@ -186,7 +186,7 @@ func PctProgress(done int32, total int, tick int32) {
 }
 
 func Progress(tick bool, v ...any) {
-	if isTestMode || !IsTerminal() || !tick {
+	if isTestMode || !tick {
 		return
 	}
 	toLog(progress, v...)

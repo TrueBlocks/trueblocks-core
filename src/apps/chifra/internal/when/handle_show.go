@@ -19,7 +19,6 @@ import (
 
 func (opts *WhenOptions) HandleShow() error {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
@@ -34,8 +33,9 @@ func (opts *WhenOptions) HandleShow() error {
 				return
 			}
 
+			showProgress := opts.Globals.ShowProgress()
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !logger.IsTerminal(),
+				Enabled: showProgress,
 				Total:   int64(len(blockNums)),
 			})
 

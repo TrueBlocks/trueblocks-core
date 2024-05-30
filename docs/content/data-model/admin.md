@@ -312,17 +312,18 @@ Chains consist of the following fields:
 
 This documentation mentions the following basic data types.
 
-| Type     | Description                         | Notes       |
-| -------- | ----------------------------------- | ----------- |
-| address  | an '0x'-prefixed 20-byte hex string | lowercase   |
-| blkrange | a pair of nine-digit block numbers  | zero padded |
-| bool     | either `true`, `false`, `1`, or `0` |             |
-| datetime | a JSON formatted date               | as a string |
-| float64  | a double precision float            | 64 bits     |
-| hash     | an '0x'-prefixed 32-byte hex string | lowercase   |
-| int64    | a 64-bit signed integer             |             |
-| ipfshash | a multi-hash produced by IPFS       | mixed-case  |
-| string   | a normal character string           |             |
-| uint64   | a 64-bit unsigned integer           |             |
+| Type     | Description                              | Notes       |
+| -------- | ---------------------------------------- | ----------- |
+| address  | an '0x'-prefixed 20-byte hex string      | lowercase   |
+| any      | any cache item found in the binary cache |             |
+| blkrange | a pair of nine-digit block numbers       | zero padded |
+| bool     | either `true`, `false`, `1`, or `0`      |             |
+| datetime | a JSON formatted date                    | as a string |
+| float64  | a double precision float                 | 64 bits     |
+| hash     | an '0x'-prefixed 32-byte hex string      | lowercase   |
+| int64    | a 64-bit signed integer                  |             |
+| ipfshash | a multi-hash produced by IPFS            | mixed-case  |
+| string   | a normal character string                |             |
+| uint64   | a 64-bit unsigned integer                |             |
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

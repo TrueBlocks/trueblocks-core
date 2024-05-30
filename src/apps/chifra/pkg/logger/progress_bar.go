@@ -59,6 +59,10 @@ func NewBar(opts BarOptions) (bar *ProgressBar) {
 	return bar
 }
 
+func (bar *ProgressBar) Bump() {
+	atomic.AddInt64(&bar.cur, 1)
+}
+
 func (bar *ProgressBar) Tick() {
 	atomic.AddInt64(&bar.cur, 1)
 	if bar.Type == Expanding && bar.cur >= bar.Total {

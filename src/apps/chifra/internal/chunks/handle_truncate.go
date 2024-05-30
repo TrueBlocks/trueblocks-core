@@ -25,7 +25,6 @@ import (
 
 func (opts *ChunksOptions) HandleTruncate(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
 	if opts.Globals.TestMode {
 		logger.Warn("Truncate option not tested.")
 		return nil
@@ -38,8 +37,9 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []base.Blknum) error {
 
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
+	showProgress := opts.Globals.ShowProgressNotTesting()
 	bar := logger.NewBar(logger.BarOptions{
-		Enabled: !testMode, // do not uncomment !logger.IsTerminal(),
+		Enabled: showProgress,
 		Total:   128,
 		Type:    logger.Expanding,
 	})
@@ -98,7 +98,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []base.Blknum) error {
 			bar.Prefix = fmt.Sprintf("Truncated to %d                    ", opts.Truncate)
 			bar.Finish(true /* newLine */)
 			bar = logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !logger.IsTerminal(),
+				Enabled: showProgress,
 				Total:   20,
 				Type:    logger.Expanding,
 			})

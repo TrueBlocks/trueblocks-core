@@ -57,7 +57,7 @@ func articulateTrace(trace *types.Trace, abiMap *abi.SelectorSyncMap) (articulat
 
 	var abiMethod *goEthAbi.Method
 
-	if len(trace.Action.Input) > 10 {
+	if len(trace.Action.Input) >= 10 {
 		abiMethod, err = articulated.GetAbiMethod()
 		if err != nil {
 			return nil, err
@@ -77,12 +77,14 @@ func articulateTrace(trace *types.Trace, abiMap *abi.SelectorSyncMap) (articulat
 	if err != nil {
 		return nil, err
 	}
-	err = articulateArguments(
-		abiMethod.Outputs,
-		trace.Result.Output[2:],
-		nil,
-		articulated.Outputs,
-	)
+	if len(trace.Result.Output) >= 2 {
+		err = articulateArguments(
+			abiMethod.Outputs,
+			trace.Result.Output[2:],
+			nil,
+			articulated.Outputs,
+		)
+	}
 
 	return
 }
