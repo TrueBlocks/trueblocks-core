@@ -9,7 +9,6 @@ package namesPkg
 
 import (
 	"context"
-	"os"
 	"reflect"
 	"testing"
 
@@ -18,12 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
-
-func init() {
-	// We need this so the tests don't fail when the provider is not available on github
-	// actions. Note that these settings on get set when running unit tests.
-	os.Setenv("TB_NO_PROVIDER_CHECK", "true")
-}
 
 func Test_cleanName(t *testing.T) {
 	type args struct {
