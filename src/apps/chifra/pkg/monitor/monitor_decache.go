@@ -41,7 +41,7 @@ func (mon *Monitor) Decache(conn *rpc.Connection, showProgress bool) (string, er
 			}
 		}
 
-		abiPath := path.Join(walk.CacheTypeToFolder[walk.Cache_Abis], mon.Address.Hex()+".json")
+		abiPath := path.Join(walk.GetRootPathFromCacheType(conn.Chain, walk.Cache_Abis), mon.Address.Hex()+".json")
 		if file.FileExists(abiPath) {
 			os.Remove(abiPath)
 			logger.Progress(showProgress, "Abi "+abiPath+" file removed.")
