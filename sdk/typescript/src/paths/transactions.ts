@@ -29,7 +29,7 @@ export function getTransactions(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Appearance[] | Log[] | Trace[] | Transaction[] | address[]>(
+  return ApiCallers.fetch<Appearance[] | Log[] | Trace[] | Transaction[]>(
     { endpoint: '/transactions', method: 'get', parameters, options },
   );
 }

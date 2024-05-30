@@ -124,8 +124,13 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 		if err != nil {
 			return err
 		}
+		dupMap := make(map[string]bool, len(structure.Members))
 		for i := 0; i < len(structure.Members); i++ {
+			if dupMap[structure.Members[i].Name] {
+				return fmt.Errorf("duplicate member %s in class %s", structure.Members[i].Name, class)
+			}
 			structure.Members[i].Num = (i + 1)
+			dupMap[structure.Members[i].Name] = true
 		}
 		sort.Slice(structure.Members, func(i, j int) bool {
 			if structure.Members[i].DocOrder != 0 && (structure.Members[i].DocOrder != structure.Members[j].DocOrder) {
