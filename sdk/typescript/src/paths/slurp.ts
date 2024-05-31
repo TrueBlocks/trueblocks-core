@@ -8,17 +8,20 @@
  */
 
 import * as ApiCallers from '../lib/api_callers';
-import { address, Appearance, blknum, float64, Monitor, Slurp } from '../types';
+import { address, Appearance, blknum, float64, Monitor, Slurp, uint64 } from '../types';
 
 export function getSlurp(
   parameters?: {
     addrs: address[],
     blocks?: blknum[],
-    types?: string[],
+    parts?: string[],
     appearances?: boolean,
     articulate?: boolean,
     source?: 'etherscan' | 'key' | 'covalent' | 'alchemy',
     count?: boolean,
+    page?: uint64,
+    pageId?: string,
+    perPage?: uint64,
     sleep?: float64,
     fmt?: string,
     chain: string,

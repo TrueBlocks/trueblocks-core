@@ -53,7 +53,6 @@ func (opts *DaemonOptions) testLog() {
 	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
 	logger.TestLog(opts.Grpc, "Grpc: ", opts.Grpc)
 	logger.TestLog(opts.Silent, "Silent: ", opts.Silent)
-	logger.TestLog(len(opts.Port) > 0 && opts.Port != ":8080", "Port: ", opts.Port)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -111,6 +110,7 @@ func DaemonFinishParseInternal(w io.Writer, values url.Values) *DaemonOptions {
 	if opts.Port != ":8080" && opts.Url == "localhost:8080" {
 		logger.Warn("The --port flag is deprecated. Please use --url instead.")
 		opts.Url = opts.Port
+		opts.Port = ""
 	}
 
 	// EXISTING_CODE
@@ -142,6 +142,7 @@ func daemonFinishParse(args []string) *DaemonOptions {
 	if opts.Port != ":8080" && opts.Url == "localhost:8080" {
 		logger.Warn("The --port flag is deprecated. Please use --url instead.")
 		opts.Url = opts.Port
+		opts.Port = ""
 	}
 
 	// EXISTING_CODE

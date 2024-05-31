@@ -2910,7 +2910,7 @@ paths:
             items:
               type: string
               format: blknum
-        - name: types
+        - name: parts
           description: which types of transactions to request
           required: false
           style: form
@@ -2968,6 +2968,32 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: page
+          description: the page to retrieve (page number)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: pageId
+          description: the page to retrieve (page ID)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: perPage
+          description: the number of records to request on each page
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
         - name: sleep
           description: seconds to sleep between requests
           required: false
