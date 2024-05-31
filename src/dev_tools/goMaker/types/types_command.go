@@ -141,7 +141,6 @@ func (c *Command) Clean() {
 				op.DataType = "enum"
 			}
 		}
-
 		if op.OptionType == "note" {
 			c.Notes = append(c.Notes, op.Description)
 		} else if op.OptionType == "alias" {
@@ -155,6 +154,16 @@ func (c *Command) Clean() {
 			cleaned = append(cleaned, op)
 		}
 	}
+
+	for index, op := range cleaned {
+		if op.IsDeprecated() {
+			parts := strings.Split(op.Attributes, "=")
+			msg := "deprecated, use --" + parts[1] + " instead"
+			cleaned[index].Description = msg
+			c.Notes = append(c.Notes, "The --"+op.LongName+" option is "+msg+".")
+		}
+	}
+
 	c.Options = cleaned
 }
 
@@ -986,4 +995,74 @@ func (c *Command) HandlerRows() string {
 		ret = append(ret, handler.executeTemplate(tmplName, tmpl))
 	}
 	return strings.Join(ret, "\n")
+}
+
+func (c *Command) Deprecated() string {
+	ret := []string{}
+	for _, op := range c.Options {
+		if op.IsDeprecated() {
+			tmplName := "deprecated"
+			tmpl := `	_ = [ROUTE]Cmd.Flags().MarkDeprecated("{{.LongName}}", "The --{{.LongName}} option has been deprecated.")`
+			val := op.executeTemplate(tmplName, tmpl)
+			val = strings.Replace(val, "[ROUTE]", op.Route, -1)
+			ret = append(ret, val)
+		}
+	}
+	return strings.Join(ret, "\n") + "\n"
+}
+
+func (c *Command) HasDeprecated() bool {
+	for _, op := range c.Options {
+		if op.IsDeprecated() {
+			return true
+		}
+	}
+	return false
+}
+
+func (op *Option) FindDeprecator() *Option {
+	parts := strings.Split(op.Attributes, "=")
+	for _, op := range op.cmdPtr.Options {
+		if op.LongName == parts[1] {
+			return &op
+		}
+	}
+	logger.Fatal(fmt.Sprintf("Deprecator (%s) not found for: %s", parts[1], op.LongName))
+	return nil
+}
+
+func (op *Option) Deprecator() string {
+	return op.FindDeprecator().LongName
+}
+
+func (op *Option) DeprecatorIsDefault() string {
+	dep := op.FindDeprecator()
+	if dep.IsArray() {
+		return "len(opts." + dep.GoName + ") == 0"
+	}
+	return "opts." + dep.GoName + " == \"" + dep.DefVal + "\""
+}
+
+func (op *Option) DeprecatedNotDefault() string {
+	if op.IsArray() {
+		return "len(opts." + op.GoName + ") > 0"
+	}
+	return "opts." + op.GoName + " != \"" + op.DefVal + "\""
+}
+
+func (c *Command) DeprecatedTransfer() string {
+	ret := []string{}
+	for _, op := range c.Options {
+		if op.IsDeprecated() {
+			tmplName := "deprecatedTransfer"
+			tmpl := `	// Deprecated, but still supported
+	if {{.DeprecatedNotDefault}} && {{.DeprecatorIsDefault}} {
+		logger.Warn("The --{{.LongName}} flag is deprecated. Please use --{{.Deprecator}} instead.")
+		opts.{{firstUpper .Deprecator}} = opts.{{.GoName}}
+	}
+`
+			ret = append(ret, op.executeTemplate(tmplName, tmpl))
+		}
+	}
+	return strings.Join(ret, "\n") + "\n"
 }

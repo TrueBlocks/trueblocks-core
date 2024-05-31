@@ -291,11 +291,11 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 46240,apps,Admin,chunks,chunkMan,n3,,,,,note,,,,,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
 46250,apps,Admin,chunks,chunkMan,n5,,,,,note,,,,,,The --truncate option updates the manifest and removes local data&#44; but does not alter remote pins.
 46260,apps,Admin,chunks,chunkMan,n6,,,,,note,,,,,,The --belongs option is only available in the index mode.
-46270,apps,Admin,chunks,chunkMan,n5,,,,,note,,,,,,The --first_block and --last_block options apply only to addresses&#44; appearances&#44; and index --belongs mode.
-46280,apps,Admin,chunks,chunkMan,n7,,,,,note,,,,,,The --pin option requires a locally running IPFS node or a pinning service API key.
-46290,apps,Admin,chunks,chunkMan,n8,,,,,note,,,,,,The --publish option requires a private key.
-46300,apps,Admin,chunks,chunkMan,n9,,,,,note,,,,,,The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
-46310,apps,Admin,chunks,chunkMan,n10,,,,,note,,,,,,Without --rewrite&#44; the manifest is written to the temporary cache. With it&#44; the manifest is rewritten to the index folder.
+46270,apps,Admin,chunks,chunkMan,n7,,,,,note,,,,,,The --first_block and --last_block options apply only to addresses&#44; appearances&#44; and index --belongs mode.
+46280,apps,Admin,chunks,chunkMan,n8,,,,,note,,,,,,The --pin option requires a locally running IPFS node or a pinning service API key.
+46290,apps,Admin,chunks,chunkMan,n9,,,,,note,,,,,,The --publish option requires a private key.
+46300,apps,Admin,chunks,chunkMan,n10,,,,,note,,,,,,The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
+46310,apps,Admin,chunks,chunkMan,n11,,,,,note,,,,,,Without --rewrite&#44; the manifest is written to the temporary cache. With it&#44; the manifest is rewritten to the index folder.
 #
 47000,apps,Admin,init,init,,,,visible|docs,,command,,,Initialize index,[flags],verbose|version|noop|noColor|chain|,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
 47020,apps,Admin,init,init,all,a,,visible|docs,3,switch,<boolean>,message,,,,in addition to Bloom filters&#44; download full index chunks (recommended)
@@ -330,5 +330,5 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 53120,tools,Other,slurp,ethslurp,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 53130,tools,Other,slurp,ethslurp,n2,,,,,note,,,,,,Portions of this software are Powered by Etherscan.io&#44; Covalent&#44; Alchemy&#44; TrueBlocks Key APIs.
 53131,tools,Other,slurp,ethslurp,n3,,,,,note,,,,,,See slurp/README on how to configure keys for API providers
-53140,tools,Other,slurp,ethslurp,n3,,,,,note,,,,,,The withdrawals option is only available on certain chains. It is ignored otherwise.
-53150,tools,Other,slurp,ethslurp,n4,,,,,note,,,,,,If the value of --source is key&#44; --types is ignored.
+53140,tools,Other,slurp,ethslurp,n4,,,,,note,,,,,,The withdrawals option is only available on certain chains. It is ignored otherwise.
+53150,tools,Other,slurp,ethslurp,n5,,,,,note,,,,,,If the value of --source is key&#44; --types is ignored.
