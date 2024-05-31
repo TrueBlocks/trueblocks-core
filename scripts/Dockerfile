@@ -6,8 +6,11 @@ ARG commit_sha
 ARG branch
 
 RUN apt-get update -y
-RUN apt install -y g++ gcc make cmake git nano libcurl3-dev python3 python3-dev \
-        curl bash linux-headers-amd64 xz-utils jq unzip
+RUN apt install -y g++ gcc make cmake git nano libcurl3-dev
+RUN python3 python3-dev curl bash linux-headers-amd64 xz-utils jq unzip
+
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt-get install -y nodejs
 
 RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
 RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
