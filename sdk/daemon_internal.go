@@ -25,7 +25,6 @@ type daemonOptionsInternal struct {
 	Scrape  DaemonScrape `json:"scrape,omitempty"`
 	Monitor bool         `json:"monitor,omitempty"`
 	Grpc    bool         `json:"grpc,omitempty"`
-	Port    string       `json:"port,omitempty"`
 	Silent  bool         `json:"silent,omitempty"`
 	Globals
 }
@@ -97,7 +96,6 @@ func (opts *DaemonOptions) toInternal() *daemonOptionsInternal {
 		Scrape:  opts.Scrape,
 		Monitor: opts.Monitor,
 		Grpc:    opts.Grpc,
-		Port:    opts.Port,
 		Silent:  opts.Silent,
 		Globals: opts.Globals,
 	}

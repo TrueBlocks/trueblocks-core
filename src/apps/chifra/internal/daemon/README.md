@@ -39,6 +39,7 @@ Flags:
 Notes:
   - To start API open terminal window and run chifra daemon.
   - See the API documentation (https://trueblocks.io/api) for more information.
+  - The --port option is deprecated, use --url instead.
 ```
 
 Data models produced by this tool:

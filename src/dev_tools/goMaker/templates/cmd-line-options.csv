@@ -244,8 +244,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 44040,apps,Admin,daemon,flame,scrape,s,,,,flag,enum[off|blooms|index]>,,,,,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
 44050,apps,Admin,daemon,flame,monitor,m,,,,switch,<boolean>,,,,,instruct the node to start the monitors tool
 44060,apps,Admin,daemon,flame,grpc,g,,visible|docs,,switch,<boolean>,,,,,run gRPC server to serve names
-44070,apps,Admin,daemon,flame,port,p,:8080,visible|docs,,flag,<string>,,,,,deprecated please use --url flag instead
 44070,apps,Admin,daemon,flame,silent,,,visible|docs,,switch,<boolean>,,,,,disable logging (for use in SDK for example)
+44070,apps,Admin,daemon,flame,port,p,:8080,deprecated=url,,flag,<string>,,,,,deprecated
 44080,apps,Admin,daemon,flame,n1,,,,,note,,,,,,To start API open terminal window and run chifra daemon.
 44090,apps,Admin,daemon,flame,n2,,,,,note,,,,,,See the API documentation (https://trueblocks.io/api) for more information.
 44100,apps,Admin,daemon,flame,a1,,,,,alias,,,,,,serve

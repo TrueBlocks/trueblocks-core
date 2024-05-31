@@ -44,7 +44,8 @@ const longDaemon = `Purpose:
 const notesDaemon = `
 Notes:
   - To start API open terminal window and run chifra daemon.
-  - See the API documentation (https://trueblocks.io/api) for more information.`
+  - See the API documentation (https://trueblocks.io/api) for more information.
+  - The --port option is deprecated, use --url instead.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra daemon
@@ -62,20 +63,21 @@ One of [ off | on ]`)
 One of [ off | blooms | index ]`)
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Monitor, "monitor", "m", false, `instruct the node to start the monitors tool (hidden)`)
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Grpc, "grpc", "g", false, `run gRPC server to serve names`)
-	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", `deprecated please use --url flag instead`)
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Silent, "silent", "", false, `disable logging (for use in SDK for example)`)
+	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", `deprecated, use --url instead (hidden)`)
 	if os.Getenv("TEST_MODE") != "true" {
 		_ = daemonCmd.Flags().MarkHidden("api")
 		_ = daemonCmd.Flags().MarkHidden("scrape")
 		_ = daemonCmd.Flags().MarkHidden("monitor")
+		_ = daemonCmd.Flags().MarkHidden("port")
 	}
+	_ = daemonCmd.Flags().MarkDeprecated("port", "The --port option has been deprecated.")
 	globals.InitGlobals("daemon", daemonCmd, &daemonPkg.GetOptions().Globals, capabilities)
 
 	daemonCmd.SetUsageTemplate(UsageWithNotes(notesDaemon))
 	daemonCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
-	_ = daemonCmd.Flags().MarkDeprecated("port", "The --port option has been deprecated. Please use --url instead.") //cmd is the parent/top level command
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(daemonCmd)

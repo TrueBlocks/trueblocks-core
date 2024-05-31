@@ -26,7 +26,6 @@ type DaemonOptions struct {
 	Scrape  DaemonScrape `json:"scrape,omitempty"`
 	Monitor bool         `json:"monitor,omitempty"`
 	Grpc    bool         `json:"grpc,omitempty"`
-	Port    string       `json:"port,omitempty"`
 	Silent  bool         `json:"silent,omitempty"`
 	Globals
 }
