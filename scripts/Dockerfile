@@ -10,8 +10,8 @@ RUN apt-get install -y curl bash g++ gcc make cmake git
 RUN nano libcurl3-dev python3 python3-dev jq unzip
 RUN apt-get install -y linux-headers-amd64 xz-utils
 
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-apt-get install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt-get install -y nodejs
 
 RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
 RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
