@@ -103,6 +103,8 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 - chifra monitors
   - enabled chifra monitors --decache
 - chifra slurp
+  - deprecated `--types` in favor of `--parts` to be consistent with other endpoints
+  - exposes previously hidden `--page`, `--page_id`, and `--per_page`.
   - adds `--source` which allows specification of a provider: etherscan, key, covalent, or alchemy
   - Removes `--raw` option.
   - Adds `--ether` option to all sources shows ether for all commands.

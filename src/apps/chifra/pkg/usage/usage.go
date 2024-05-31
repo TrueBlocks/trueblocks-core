@@ -21,12 +21,3 @@ func Replace(msg string, values ...string) string {
 func Usage(msg string, values ...string) error {
 	return errors.New(Replace(msg, values...))
 }
-
-// Deprecated can be used to mark a command option as deprecated.
-func Deprecated(cmd string, rep string) error {
-	msg := "The {0} flag has been deprecated."
-	if len(rep) > 0 {
-		msg += " Use {1} instead."
-	}
-	return Usage(msg, cmd, rep)
-}

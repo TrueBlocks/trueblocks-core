@@ -49,7 +49,7 @@ func init() {
 {{if .HasHidden}}	if os.Getenv("TEST_MODE") != "true" {
 {{range .Options}}{{if .IsHidden}}	_ = {{.Route}}Cmd.Flags().MarkHidden("{{.LongName}}")
 {{end}}{{end}}	}
-{{end}}	globals.InitGlobals("{{.Route}}", {{.Route}}Cmd, &{{.Route}}Pkg.GetOptions().Globals, capabilities)
+{{end}}{{if .HasDeprecated}}{{.Deprecated}}{{end}}	globals.InitGlobals("{{.Route}}", {{.Route}}Cmd, &{{.Route}}Pkg.GetOptions().Globals, capabilities)
 
 	{{.Route}}Cmd.SetUsageTemplate(UsageWithNotes(notes{{toProper .Route}}))
 	{{.Route}}Cmd.SetOut(os.Stderr)

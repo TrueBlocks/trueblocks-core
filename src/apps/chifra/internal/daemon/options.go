@@ -30,8 +30,8 @@ type DaemonOptions struct {
 	Scrape  string                `json:"scrape,omitempty"`  // Start the scraper, initialize it with either just blooms or entire index, generate for new blocks
 	Monitor bool                  `json:"monitor,omitempty"` // Instruct the node to start the monitors tool
 	Grpc    bool                  `json:"grpc,omitempty"`    // Run gRPC server to serve names
-	Port    string                `json:"port,omitempty"`    // Deprecated please use --url flag instead
 	Silent  bool                  `json:"silent,omitempty"`  // Disable logging (for use in SDK for example)
+	Port    string                `json:"port,omitempty"`    // Deprecated, use --url instead
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	Conn    *rpc.Connection       `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
@@ -52,8 +52,8 @@ func (opts *DaemonOptions) testLog() {
 	logger.TestLog(len(opts.Scrape) > 0, "Scrape: ", opts.Scrape)
 	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
 	logger.TestLog(opts.Grpc, "Grpc: ", opts.Grpc)
-	logger.TestLog(len(opts.Port) > 0 && opts.Port != ":8080", "Port: ", opts.Port)
 	logger.TestLog(opts.Silent, "Silent: ", opts.Silent)
+	logger.TestLog(len(opts.Port) > 0 && opts.Port != ":8080", "Port: ", opts.Port)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -92,10 +92,10 @@ func DaemonFinishParseInternal(w io.Writer, values url.Values) *DaemonOptions {
 			opts.Monitor = true
 		case "grpc":
 			opts.Grpc = true
-		case "port":
-			opts.Port = value[0]
 		case "silent":
 			opts.Silent = true
+		case "port":
+			opts.Port = value[0]
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")
@@ -107,12 +107,13 @@ func DaemonFinishParseInternal(w io.Writer, values url.Values) *DaemonOptions {
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
-	// EXISTING_CODE
-	if len(opts.Port) > 0 && opts.Port != ":8080" && opts.Url == "localhost:8080" {
-		// deprecated, but still supported
+	// Deprecated, but still supported
+	if opts.Port != ":8080" && opts.Url == "localhost:8080" {
 		logger.Warn("The --port flag is deprecated. Please use --url instead.")
 		opts.Url = opts.Port
 	}
+
+	// EXISTING_CODE
 	// EXISTING_CODE
 
 	return opts
@@ -137,12 +138,13 @@ func daemonFinishParse(args []string) *DaemonOptions {
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
-	// EXISTING_CODE
-	if len(opts.Port) > 0 && opts.Port != ":8080" && opts.Url == "localhost:8080" {
-		// deprecated, but still supported
+	// Deprecated, but still supported
+	if opts.Port != ":8080" && opts.Url == "localhost:8080" {
 		logger.Warn("The --port flag is deprecated. Please use --url instead.")
 		opts.Url = opts.Port
 	}
+
+	// EXISTING_CODE
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
