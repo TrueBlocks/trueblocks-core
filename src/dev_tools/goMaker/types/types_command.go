@@ -435,9 +435,11 @@ func (c *Command) RequestOpts() string {
 func (c *Command) TestLogs() string {
 	ret := []string{}
 	for _, op := range c.Options {
-		v := op.TestLog()
-		if len(v) > 0 {
-			ret = append(ret, v)
+		if !op.IsDeprecated() {
+			v := op.TestLog()
+			if len(v) > 0 {
+				ret = append(ret, v)
+			}
 		}
 	}
 	if c.Route == "scrape" {
@@ -1050,6 +1052,13 @@ func (op *Option) DeprecatedNotDefault() string {
 	return "opts." + op.GoName + " != \"" + op.DefVal + "\""
 }
 
+func (op *Option) Clear() string {
+	if op.IsArray() {
+		return "[]string{}"
+	}
+	return "\"\""
+}
+
 func (c *Command) DeprecatedTransfer() string {
 	ret := []string{}
 	for _, op := range c.Options {
@@ -1059,6 +1068,7 @@ func (c *Command) DeprecatedTransfer() string {
 	if {{.DeprecatedNotDefault}} && {{.DeprecatorIsDefault}} {
 		logger.Warn("The --{{.LongName}} flag is deprecated. Please use --{{.Deprecator}} instead.")
 		opts.{{firstUpper .Deprecator}} = opts.{{.GoName}}
+		opts.{{.GoName}} = {{.Clear}}
 	}
 `
 			ret = append(ret, op.executeTemplate(tmplName, tmpl))

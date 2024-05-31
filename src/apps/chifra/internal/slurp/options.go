@@ -32,7 +32,7 @@ type SlurpOptions struct {
 	Addrs       []string                 `json:"addrs,omitempty"`       // One or more addresses to slurp from Etherscan
 	Blocks      []string                 `json:"blocks,omitempty"`      // An optional range of blocks to slurp
 	BlockIds    []identifiers.Identifier `json:"blockIds,omitempty"`    // Block identifiers
-	Types       []string                 `json:"types,omitempty"`       // Which types of transactions to request
+	Parts       []string                 `json:"parts,omitempty"`       // Which types of transactions to request
 	Appearances bool                     `json:"appearances,omitempty"` // Show only the blocknumber.tx_id appearances of the exported transactions
 	Articulate  bool                     `json:"articulate,omitempty"`  // Articulate the retrieved data if ABIs can be found
 	Source      string                   `json:"source,omitempty"`      // The source of the slurped data
@@ -41,6 +41,7 @@ type SlurpOptions struct {
 	PageId      string                   `json:"pageId,omitempty"`      // The page to retrieve (page ID)
 	PerPage     uint64                   `json:"perPage,omitempty"`     // The number of records to request on each page
 	Sleep       float64                  `json:"sleep,omitempty"`       // Seconds to sleep between requests
+	Types       []string                 `json:"types,omitempty"`       // Deprecated, use --parts instead
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection          `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
@@ -58,7 +59,7 @@ var defaultSlurpOptions = SlurpOptions{
 func (opts *SlurpOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
-	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
+	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.Source) > 0 && opts.Source != "etherscan", "Source: ", opts.Source)
@@ -105,10 +106,10 @@ func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Blocks = append(opts.Blocks, s...)
 			}
-		case "types":
+		case "parts":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
-				opts.Types = append(opts.Types, s...)
+				opts.Parts = append(opts.Parts, s...)
 			}
 		case "appearances":
 			opts.Appearances = true
@@ -126,6 +127,11 @@ func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 			opts.PerPage = base.MustParseUint64(value[0])
 		case "sleep":
 			opts.Sleep = base.MustParseFloat64(value[0])
+		case "types":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Types = append(opts.Types, s...)
+			}
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "slurp")
@@ -137,15 +143,22 @@ func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
+	// Deprecated, but still supported
+	if len(opts.Types) > 0 && len(opts.Parts) == 0 {
+		logger.Warn("The --types flag is deprecated. Please use --parts instead.")
+		opts.Parts = opts.Types
+		opts.Types = []string{}
+	}
+
 	// EXISTING_CODE
-	for _, t := range opts.Types {
+	for _, t := range opts.Parts {
 		if t == "all" {
-			opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles", "withdrawals"}
+			opts.Parts = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles", "withdrawals"}
 			break
 		}
 	}
-	if len(opts.Types) == 0 {
-		opts.Types = []string{"ext"}
+	if len(opts.Parts) == 0 {
+		opts.Parts = []string{"ext"}
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
@@ -172,6 +185,13 @@ func slurpFinishParse(args []string) *SlurpOptions {
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
+	// Deprecated, but still supported
+	if len(opts.Types) > 0 && len(opts.Parts) == 0 {
+		logger.Warn("The --types flag is deprecated. Please use --parts instead.")
+		opts.Parts = opts.Types
+		opts.Types = []string{}
+	}
+
 	// EXISTING_CODE
 	for _, arg := range args {
 		if base.IsValidAddress(arg) {
@@ -180,14 +200,14 @@ func slurpFinishParse(args []string) *SlurpOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	for _, t := range opts.Types {
+	for _, t := range opts.Parts {
 		if t == "all" {
-			opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles", "withdrawals"}
+			opts.Parts = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles", "withdrawals"}
 			break
 		}
 	}
-	if len(opts.Types) == 0 {
-		opts.Types = []string{"ext"}
+	if len(opts.Parts) == 0 {
+		opts.Parts = []string{"ext"}
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
@@ -247,7 +267,7 @@ func (opts *SlurpOptions) Addresses() []base.Address {
 func (opts *SlurpOptions) Query() *provider.Query {
 	return &provider.Query{
 		Addresses:   opts.Addresses(),
-		Resources:   opts.Types,
+		Resources:   opts.Parts,
 		PerPage:     uint(opts.PerPage),
 		StartPage:   uint(opts.Page),
 		StartPageId: opts.PageId,
