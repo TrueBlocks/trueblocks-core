@@ -90,10 +90,18 @@ func ValidateAtLeastOneAddr(args []string) error {
 	return Usage("Please specify at least one {0}.", "valid Ethereum address")
 }
 
+func ValidateEnumRequired(field, value, valid string) error {
+	if len(value) == 0 {
+		return Usage("Please choose at least one of {0}.", valid)
+	}
+	return ValidateEnum(field, value, valid)
+}
+
 func ValidateEnum(field, value, valid string) error {
 	if len(value) == 0 {
 		return nil
 	}
+
 	valid = strings.Replace(valid, "[", "|", 1)
 	valid = strings.Replace(valid, "]", "|", 1)
 	if strings.Contains(valid, "|"+value+"|") {

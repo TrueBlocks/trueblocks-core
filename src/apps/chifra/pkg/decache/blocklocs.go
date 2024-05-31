@@ -38,6 +38,11 @@ func LocationsFromBlockIds(conn *rpc.Connection, ids []identifiers.Identifier, l
 				locations = append(locations, &types.LightBlock{
 					BlockNumber: bn,
 				})
+				receiptGroup := &types.ReceiptGroup{
+					BlockNumber:      bn,
+					TransactionIndex: base.NOPOSN,
+				}
+				locations = append(locations, receiptGroup)
 				for index := range block.Transactions {
 					locations = append(locations, &types.Transaction{
 						BlockNumber:      bn,

@@ -12,7 +12,7 @@ func (opts *SlurpOptions) HandleCount() error {
 	if err != nil {
 		return err
 	}
-	provider.SetPrintProgress(opts.Globals.ShowProgress())
+	provider.SetPrintProgress(opts.Globals.ShowProgressNotTesting())
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
