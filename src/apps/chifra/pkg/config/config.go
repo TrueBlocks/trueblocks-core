@@ -242,6 +242,10 @@ func validateRpcEndpoint(chain, provider string) error {
 func checkUnchainedProvider(chain string, deployed uint64) error {
 	// TODO: Clean this up
 	// TODO: We need to check that the unchained index has been deployed on the chain
+	if os.Getenv("TB_NO_PROVIDER_CHECK") == "true" {
+		logger.Info("Skipping rpcProvider check")
+		return nil
+	}
 	url := trueBlocksViper.Get("chains." + chain + ".rpcProvider").(string)
 	str := `{ "jsonrpc": "2.0", "method": "eth_getBlockByNumber", "params": [ "{0}", true ], "id": 1 }`
 	payLoad := []byte(strings.Replace(str, "{0}", fmt.Sprintf("0x%x", deployed), -1))
