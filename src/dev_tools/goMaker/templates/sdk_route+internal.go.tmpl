@@ -14,8 +14,8 @@ import (
 )
 
 type {{toCamel .Route}}OptionsInternal struct {
-{{range .Options}}	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
-{{end}}	Globals
+{{range .Options}}{{if not .IsDeprecated}}	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
+{{end}}{{end}}	Globals
 }
 
 // String implements the stringer interface

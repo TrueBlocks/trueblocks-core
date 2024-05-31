@@ -52,24 +52,24 @@ func (opts *StateOptions) StateCall(val string) ([]types.Result, *types.MetaData
 type StateParts int
 
 const (
-	NoSP      StateParts = 0
+	NoSTP     StateParts = 0
 	SPBalance            = 1 << iota
 	SPNonce
 	SPCode
 	SPProxy
 	SPDeployed
 	SPAccttype
-	SPSome = SPBalance | SPProxy | SPDeployed | SPAccttype
-	SPAll  = SPBalance | SPNonce | SPCode | SPProxy | SPDeployed | SPAccttype
+	STPSome = SPBalance | SPProxy | SPDeployed | SPAccttype
+	STPAll  = SPBalance | SPNonce | SPCode | SPProxy | SPDeployed | SPAccttype
 )
 
 func (v StateParts) String() string {
 	switch v {
-	case NoSP:
+	case NoSTP:
 		return "none"
-	case SPSome:
+	case STPSome:
 		return "some"
-	case SPAll:
+	case STPAll:
 		return "all"
 	}
 
@@ -94,13 +94,13 @@ func (v StateParts) String() string {
 
 func enumFromStateParts(values []string) (StateParts, error) {
 	if len(values) == 0 {
-		return NoSP, fmt.Errorf("no value provided for parts option")
+		return NoSTP, fmt.Errorf("no value provided for parts option")
 	}
 
 	if len(values) == 1 && values[0] == "all" {
-		return SPAll, nil
+		return STPAll, nil
 	} else if len(values) == 1 && values[0] == "some" {
-		return SPSome, nil
+		return STPSome, nil
 	}
 
 	var result StateParts
@@ -119,7 +119,7 @@ func enumFromStateParts(values []string) (StateParts, error) {
 		case "accttype":
 			result |= SPAccttype
 		default:
-			return NoSP, fmt.Errorf("unknown parts: %s", val)
+			return NoSTP, fmt.Errorf("unknown parts: %s", val)
 		}
 	}
 

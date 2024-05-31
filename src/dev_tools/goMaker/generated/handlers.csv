@@ -1,3 +1,4 @@
+path,internal,handler,type,order
 list/handle_count,,HandleCount,Monitor,1
 list/handle_bounds,,HandleBounds,Bounds,2
 list/handle_show,,HandleShow,Appearance,3

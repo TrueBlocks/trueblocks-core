@@ -30,12 +30,20 @@ func LoadCodebase() (CodeBase, error) {
 		return CodeBase{}, err
 	}
 
+	var cb CodeBase
 	options, err := LoadCsv[Option, any](thePath+"cmd-line-options.csv", readCmdOption, nil)
 	if err != nil {
-		return CodeBase{}, err
+		return cb, err
+	}
+	dupMap := make(map[string]bool, len(options))
+	for _, op := range options {
+		key := op.Route + ":" + op.LongName
+		if len(key) > 1 && dupMap[key] {
+			return cb, fmt.Errorf("duplicate option %s", key)
+		}
+		dupMap[key] = true
 	}
 
-	var cb CodeBase
 	structMap := make(map[string]Structure)
 	err = cb.LoadStructures(thePath+"classDefinitions/", readStructure, structMap)
 	if err != nil {
