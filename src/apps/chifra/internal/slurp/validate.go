@@ -46,6 +46,9 @@ func (opts *SlurpOptions) validateSlurp() error {
 			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "a valid TrueBlocks Key endpoint")
 		}
 		opts.Parts = []string{"not-used"} // key returns everything
+		if !opts.Appearances && !opts.Count {
+			return validate.Usage("The {0} option is only available with {1} or {2}.", "--source=key", "--appearances", "--count")
+		}
 	}
 
 	if chain != "mainnet" {
