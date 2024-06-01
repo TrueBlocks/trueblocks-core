@@ -239,6 +239,10 @@ func (op *Option) IsAlias() bool {
 	return op.OptionType == "alias"
 }
 
+func (op *Option) IsFlagAlias() bool {
+	return strings.Contains(op.Attributes, "alias")
+}
+
 func (op *Option) IsPositional() bool {
 	return op.OptionType == "positional"
 }

@@ -235,6 +235,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 43040,apps,Admin,status,cacheStatus,first_record,c,,visible|docs,,flag,<uint64>,,,,,the first record to process
 43050,apps,Admin,status,cacheStatus,max_records,e,10000,visible|docs,,flag,<uint64>,,,,,the maximum number of records to process
 43060,apps,Admin,status,cacheStatus,chains,a,,visible|docs,,switch,<boolean>,,,,,include a list of chain configurations in the output
+43065,apps,Admin,status,cacheStatus,healthcheck,k,,visible|docs|alias=diagnose,,switch,<boolean>,status,,,,an alias for the diagnose endpoint
 43070,apps,Admin,status,cacheStatus,n1,,,,,note,,,,,,The `some` mode includes index&#44; monitors&#44; names&#44; slurps&#44; and abis.
 43080,apps,Admin,status,cacheStatus,n2,,,,,note,,,,,,If no mode is supplied&#44; a terse report is generated.
 #

@@ -1076,3 +1076,31 @@ func (c *Command) DeprecatedTransfer() string {
 	}
 	return strings.Join(ret, "\n") + "\n"
 }
+
+func (c *Command) HasFlagAliases() bool {
+	for _, op := range c.Options {
+		if op.IsFlagAlias() {
+			return true
+		}
+	}
+	return false
+}
+
+func (op *Option) FlagAliasTarget() string {
+	return FirstUpper("diagnose")
+}
+
+func (c *Command) FlagAliases() string {
+	for _, op := range c.Options {
+		if op.IsFlagAlias() {
+			tmplName := "flagAlias"
+			tmpl := `	if !opts.{{.FlagAliasTarget}} {
+		opts.{{.FlagAliasTarget}} = opts.{{firstUpper .LongName}} // alias
+		opts.{{firstUpper .LongName}} = false
+	}
+`
+			return op.executeTemplate(tmplName, tmpl)
+		}
+	}
+	return ""
+}

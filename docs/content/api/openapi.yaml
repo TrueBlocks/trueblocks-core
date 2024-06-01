@@ -2545,6 +2545,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: healthcheck
+          description: an alias for the diagnose endpoint
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: chain
           description: the chain to use
           required: false

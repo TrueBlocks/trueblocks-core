@@ -92,6 +92,7 @@ Flags:
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 10000)
   -a, --chains              include a list of chain configurations in the output
+  -k, --healthcheck         an alias for the diagnose endpoint
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose output
   -h, --help                display this help screen

@@ -28,6 +28,7 @@ type statusOptionsInternal struct {
 	FirstRecord uint64      `json:"firstRecord,omitempty"`
 	MaxRecords  uint64      `json:"maxRecords,omitempty"`
 	Chains      bool        `json:"chains,omitempty"`
+	Healthcheck bool        `json:"healthcheck,omitempty"`
 	Globals
 }
 
