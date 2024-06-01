@@ -262,13 +262,15 @@ func getCaps() caps.Capability {
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultChunksOptions = ChunksOptions{}
-	globals.SetDefaults(&defaultChunksOptions.Globals)
-	defaultChunksOptions.Globals.TestMode = testMode
-	defaultChunksOptions.Globals.Writer = w
-	// EXISTING_CODE
-	// EXISTING_CODE
-	defaultChunksOptions.Globals.Caps = getCaps()
+	opts := ChunksOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	opts.Truncate = base.NOPOSN
+	opts.LastBlock = base.NOPOSN
+	opts.MaxAddrs = base.NOPOS
+	defaultChunksOptions = opts
 }
 
 func (opts *ChunksOptions) getCaches() (m map[string]bool) {

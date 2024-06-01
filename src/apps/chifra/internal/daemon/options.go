@@ -174,13 +174,15 @@ func getCaps() caps.Capability {
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultDaemonOptions = DaemonOptions{}
-	globals.SetDefaults(&defaultDaemonOptions.Globals)
-	defaultDaemonOptions.Globals.TestMode = testMode
-	defaultDaemonOptions.Globals.Writer = w
-	// EXISTING_CODE
-	// EXISTING_CODE
-	defaultDaemonOptions.Globals.Caps = getCaps()
+	opts := DaemonOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	opts.Url = "localhost:8080"
+	opts.Api = "on"
+	opts.Port = ":8080"
+	defaultDaemonOptions = opts
 }
 
 func (opts *DaemonOptions) getCaches() (m map[string]bool) {

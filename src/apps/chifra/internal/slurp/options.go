@@ -237,13 +237,15 @@ func getCaps() caps.Capability {
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultSlurpOptions = SlurpOptions{}
-	globals.SetDefaults(&defaultSlurpOptions.Globals)
-	defaultSlurpOptions.Globals.TestMode = testMode
-	defaultSlurpOptions.Globals.Writer = w
-	// EXISTING_CODE
-	// EXISTING_CODE
-	defaultSlurpOptions.Globals.Caps = getCaps()
+	opts := SlurpOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	opts.Source = "etherscan"
+	opts.PerPage = 1000
+	opts.Sleep = .25
+	defaultSlurpOptions = opts
 }
 
 func (opts *SlurpOptions) getCaches() (m map[string]bool) {

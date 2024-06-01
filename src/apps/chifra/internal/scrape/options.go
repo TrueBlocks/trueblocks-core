@@ -192,13 +192,19 @@ func getCaps() caps.Capability {
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultScrapeOptions = ScrapeOptions{}
-	globals.SetDefaults(&defaultScrapeOptions.Globals)
-	defaultScrapeOptions.Globals.TestMode = testMode
-	defaultScrapeOptions.Globals.Writer = w
-	// EXISTING_CODE
-	// EXISTING_CODE
-	defaultScrapeOptions.Globals.Caps = getCaps()
+	opts := ScrapeOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	opts.BlockCnt = 2000
+	opts.Sleep = 14
+	opts.Settings.AppsPerChunk = 2000000
+	opts.Settings.SnapToGrid = 250000
+	opts.Settings.FirstSnap = 2000000
+	opts.Settings.UnripeDist = 28
+	opts.Settings.ChannelCount = 20
+	defaultScrapeOptions = opts
 }
 
 func (opts *ScrapeOptions) getCaches() (m map[string]bool) {
