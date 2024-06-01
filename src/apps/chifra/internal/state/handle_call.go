@@ -42,7 +42,7 @@ func (opts *StateOptions) HandleCall() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Result](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[[]types.Result](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -59,10 +59,10 @@ func (opts *StateOptions) HandleCall() error {
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.Result)
+					thisMap[app] = new([]types.Result)
 				}
 
-				iterFunc := func(app types.Appearance, value *types.Result) error {
+				iterFunc := func(app types.Appearance, value *[]types.Result) error {
 					bn := base.Blknum(app.BlockNumber)
 					for _, c := range opts.Calls {
 						if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
@@ -77,7 +77,7 @@ func (opts *StateOptions) HandleCall() error {
 								return err
 							} else {
 								bar.Tick()
-								*value = *results
+								*value = append(*value, *results)
 							}
 						}
 					}
@@ -97,7 +97,7 @@ func (opts *StateOptions) HandleCall() error {
 
 				items := make([]types.Result, 0, len(thisMap))
 				for _, v := range thisMap {
-					items = append(items, *v)
+					items = append(items, *v...)
 				}
 
 				sort.Slice(items, func(i, j int) bool {
