@@ -161,13 +161,12 @@ func getCaps() caps.Capability {
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultInitOptions = InitOptions{}
-	globals.SetDefaults(&defaultInitOptions.Globals)
-	defaultInitOptions.Globals.TestMode = testMode
-	defaultInitOptions.Globals.Writer = w
-	// EXISTING_CODE
-	// EXISTING_CODE
-	defaultInitOptions.Globals.Caps = getCaps()
+	opts := InitOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	defaultInitOptions = opts
 }
 
 func (opts *InitOptions) getCaches() (m map[string]bool) {

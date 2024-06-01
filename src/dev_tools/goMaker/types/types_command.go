@@ -328,7 +328,7 @@ func (c *Command) AddCaps() string {
 }
 
 // DefaultsApi for tag {{.DefaultsApi}}
-func (c *Command) DefaultsApi() string {
+func (c *Command) DefaultsApi(showConfig bool) string {
 	ret := []string{}
 	hasConfig := false
 	for _, op := range c.Options {
@@ -338,7 +338,7 @@ func (c *Command) DefaultsApi() string {
 			ret = append(ret, v)
 		}
 	}
-	if hasConfig {
+	if hasConfig && showConfig {
 		ret = append(ret, "	configs := make(map[string]string, 10)")
 	}
 	if len(ret) == 0 {
