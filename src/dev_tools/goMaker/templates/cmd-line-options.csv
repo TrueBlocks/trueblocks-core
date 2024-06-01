@@ -198,7 +198,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 32040,tools,Chain State,state,getState,parts,p,,visible|docs,,flag,list<enum[balance|nonce|code|proxy|deployed|accttype|some*|all]>,,,,,control which state to export
 32050,tools,Chain State,state,getState,changes,c,,visible|docs,,switch,<boolean>,,,,,only report a balance when it changes from one block to the next
 32060,tools,Chain State,state,getState,no_zero,z,,visible|docs,,switch,<boolean>,,,,,suppress the display of zero balance accounts
-32070,tools,Chain State,state,getState,call,l,,visible|docs,1,flag,<string>,result,,,,call a smart contract with a solidity syntax&#44; a four-byte and parameters&#44; or encoded call data
+32070,tools,Chain State,state,getState,call,l,,visible|docs,1,flag,<string>,result,,,,call a smart contract with one or more solidity calls&#44; four-byte plus parameters&#44; or encoded call data strings
 32080,tools,Chain State,state,getState,articulate,a,,visible|docs,,switch,<boolean>,,,,,for the --call option only&#44; articulate the retrieved data if ABIs can be found
 32090,tools,Chain State,state,getState,proxy_for,r,,visible|docs,,flag,<address>,,,,,for the --call option only&#44; redirects calls to this implementation
 32100,tools,Chain State,state,getState,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
@@ -207,7 +207,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 32130,tools,Chain State,state,getState,n4,,,,,note,,,,,,`Special` blocks are detailed under `chifra when --list`.
 32140,tools,Chain State,state,getState,n5,,,,,note,,,,,,`Balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
 32150,tools,Chain State,state,getState,n6,,,,,note,,,,,,Valid parameters for --call include Solidity-like syntax: balanceOf(0x316b...183d)&#44; a four-byte followed by parameters: 0x70a08231(0x316b...183d)&#44; or encoded input data.
-32160,tools,Chain State,state,getState,n7,,,,,note,,,,,,You may specify multiple `modes` on a single line.
+32160,tools,Chain State,state,getState,n7,,,,,note,,,,,,You may specify multiple `parts` on a single line.
+32170,tools,Chain State,state,getState,n8,,,,,note,,,,,,In the --call string&#44; you may separate multiple calls with a colon.
 #
 33000,tools,Chain State,tokens,getTokens,,,,visible|docs,,command,,,Get token balance(s),[flags] <address> <address> [address...] [block...],default|caching|,Retrieve token balance(s) for one or more addresses at given block(s).
 33020,tools,Chain State,tokens,getTokens,addrs,,,required|visible|docs,2,positional,list<addr>,token,,,,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported

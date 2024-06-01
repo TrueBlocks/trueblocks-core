@@ -2144,7 +2144,7 @@ paths:
           schema:
             type: boolean
         - name: call
-          description: call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
+          description: call a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
           required: false
           style: form
           in: query

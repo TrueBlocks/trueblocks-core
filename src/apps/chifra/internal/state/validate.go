@@ -73,21 +73,22 @@ func (opts *StateOptions) validateState() error {
 			if !proxy.IsZero() {
 				callAddress = proxy
 			}
-			// TODO: Can't we preserve the results of this so we don't have to do it later?
-			if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
-				message := fmt.Sprintf("the --call value provided (%s) was not found: %s", opts.Call, err)
-				if len(suggestions) > 0 {
+			for _, c := range opts.Calls {
+				if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
+					message := fmt.Sprintf("the --call value provided (%s) was not found: %s", c, err)
 					if len(suggestions) > 0 {
-						message += " Suggestions: "
-						for index, suggestion := range suggestions {
-							if index > 0 {
-								message += " "
+						if len(suggestions) > 0 {
+							message += " Suggestions: "
+							for index, suggestion := range suggestions {
+								if index > 0 {
+									message += " "
+								}
+								message += fmt.Sprintf("%d: %s.", index+1, suggestion)
 							}
-							message += fmt.Sprintf("%d: %s.", index+1, suggestion)
 						}
 					}
+					return errors.New(message)
 				}
-				return errors.New(message)
 			}
 
 		} else {

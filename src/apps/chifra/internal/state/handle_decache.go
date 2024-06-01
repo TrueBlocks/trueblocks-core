@@ -21,23 +21,24 @@ func (opts *StateOptions) HandleDecache() error {
 	var itemsToRemove []cache.Locator
 	for _, addressStr := range opts.Addrs {
 		address := base.HexToAddress(addressStr)
-		if len(opts.Call) > 0 {
-			callAddress := base.HexToAddress(opts.Addrs[0])
-			proxy := base.HexToAddress(opts.ProxyFor)
-			if !proxy.IsZero() {
-				callAddress = proxy
-			}
-			if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
-				wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)
-				return wrapped
-			} else {
-				if items, err := decache.LocationsFromAddressEncodingAndBlockIds(opts.Conn, address, contractCall.Method.Encoding, opts.BlockIds); err != nil {
-					return err
+		for _, c := range opts.Calls {
+			if len(c) > 0 {
+				callAddress := base.HexToAddress(opts.Addrs[0])
+				proxy := base.HexToAddress(opts.ProxyFor)
+				if !proxy.IsZero() {
+					callAddress = proxy
+				}
+				if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
+					wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", c, err)
+					return wrapped
 				} else {
-					itemsToRemove = append(itemsToRemove, items...)
+					if items, err := decache.LocationsFromAddressEncodingAndBlockIds(opts.Conn, address, contractCall.Method.Encoding, opts.BlockIds); err != nil {
+						return err
+					} else {
+						itemsToRemove = append(itemsToRemove, items...)
+					}
 				}
 			}
-			// } else {
 		}
 	}
 

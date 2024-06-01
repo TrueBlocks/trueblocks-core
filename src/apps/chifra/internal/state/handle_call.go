@@ -64,19 +64,21 @@ func (opts *StateOptions) HandleCall() error {
 
 				iterFunc := func(app types.Appearance, value *types.Result) error {
 					bn := base.Blknum(app.BlockNumber)
-					if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
-						delete(thisMap, app)
-						return fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)
-
-					} else {
-						contractCall.BlockNumber = bn
-						results, err := contractCall.Call(artFunc)
-						if err != nil {
+					for _, c := range opts.Calls {
+						if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
 							delete(thisMap, app)
-							return err
+							return fmt.Errorf("the --call value provided (%s) was not found: %s", c, err)
+
 						} else {
-							bar.Tick()
-							*value = *results
+							contractCall.BlockNumber = bn
+							results, err := contractCall.Call(artFunc)
+							if err != nil {
+								delete(thisMap, app)
+								return err
+							} else {
+								bar.Tick()
+								*value = *results
+							}
 						}
 					}
 					return nil
