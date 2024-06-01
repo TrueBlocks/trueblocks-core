@@ -20,6 +20,7 @@ export function getTransactions(
     logs?: boolean,
     emitter?: address[],
     topic?: topic[],
+    cacheTraces?: boolean,
     fmt?: string,
     chain: string,
     noHeader?: boolean,

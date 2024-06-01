@@ -75,12 +75,8 @@ One of [ from | to | reward ]`)
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Withdrawals, "withdrawals", "i", false, `export the withdrawals from the block as opposed to the block data`)
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Articulate, "articulate", "a", false, `for the --logs option only, articulate the retrieved data if ABIs can be found`)
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Count, "count", "U", false, `display only the count of appearances for --addrs or --uniq`)
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().CacheTxs, "cache_txs", "", false, `force a write of the block's transactions to the cache (slow) (hidden)`)
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().CacheTraces, "cache_traces", "", false, `force a write of the block's traces to the cache (slower) (hidden)`)
-	if os.Getenv("TEST_MODE") != "true" {
-		_ = blocksCmd.Flags().MarkHidden("cache_txs")
-		_ = blocksCmd.Flags().MarkHidden("cache_traces")
-	}
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().CacheTxs, "cache_txs", "X", false, `force a write of the block's transactions to the cache (slow)`)
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().CacheTraces, "cache_traces", "R", false, `force a write of the block's traces to the cache (slower)`)
 	globals.InitGlobals("blocks", blocksCmd, &blocksPkg.GetOptions().Globals, capabilities)
 
 	blocksCmd.SetUsageTemplate(UsageWithNotes(notesBlocks))

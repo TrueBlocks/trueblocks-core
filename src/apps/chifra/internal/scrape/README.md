@@ -29,6 +29,7 @@ Flags:
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
   -s, --sleep float      seconds to sleep between scraper passes (default 14)
   -l, --touch uint       first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+  -u, --run_count uint   run the scraper this many times, then quit
   -v, --verbose          enable verbose output
   -h, --help             display this help screen
 

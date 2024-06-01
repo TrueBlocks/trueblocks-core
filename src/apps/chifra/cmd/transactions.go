@@ -67,10 +67,7 @@ One of [ from | to ]`)
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Logs, "logs", "l", false, `display only the logs found in the transaction(s)`)
 	transactionsCmd.Flags().StringSliceVarP(&transactionsPkg.GetOptions().Emitter, "emitter", "m", nil, `for the --logs option only, filter logs to show only those logs emitted by the given address(es)`)
 	transactionsCmd.Flags().StringSliceVarP(&transactionsPkg.GetOptions().Topic, "topic", "B", nil, `for the --logs option only, filter logs to show only those with this topic(s)`)
-	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().CacheTraces, "cache_traces", "", false, `force the transaction's traces into the cache (hidden)`)
-	if os.Getenv("TEST_MODE") != "true" {
-		_ = transactionsCmd.Flags().MarkHidden("cache_traces")
-	}
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().CacheTraces, "cache_traces", "R", false, `force the transaction's traces into the cache`)
 	globals.InitGlobals("transactions", transactionsCmd, &transactionsPkg.GetOptions().Globals, capabilities)
 
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))

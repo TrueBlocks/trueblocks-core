@@ -58,7 +58,7 @@ func init() {
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockCnt, "block_cnt", "n", 2000, `maximum number of blocks to process per pass`)
 	scrapeCmd.Flags().Float64VarP(&scrapePkg.GetOptions().Sleep, "sleep", "s", 14, `seconds to sleep between scraper passes`)
 	scrapeCmd.Flags().Uint64VarP((*uint64)(&scrapePkg.GetOptions().Touch), "touch", "l", 0, `first block to visit when scraping (snapped back to most recent snap_to_grid mark)`)
-	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().RunCount, "run_count", "u", 0, `run the scraper this many times, then quit (hidden)`)
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().RunCount, "run_count", "u", 0, `run the scraper this many times, then quit`)
 	scrapeCmd.Flags().StringVarP(&scrapePkg.GetOptions().Publisher, "publisher", "P", "", `for some query options, the publisher of the index (hidden)`)
 	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().DryRun, "dry_run", "d", false, `show the configuration that would be applied if run,no changes are made (hidden)`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.AppsPerChunk, "apps_per_chunk", "", 2000000, `the number of appearances to build into a chunk before consolidating it (hidden)`)
@@ -68,7 +68,6 @@ func init() {
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.ChannelCount, "channel_count", "", 20, `number of concurrent processing channels (hidden)`)
 	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Settings.AllowMissing, "allow_missing", "", false, `do not report errors for blockchains that contain blocks with zero addresses (hidden)`)
 	if os.Getenv("TEST_MODE") != "true" {
-		_ = scrapeCmd.Flags().MarkHidden("run_count")
 		_ = scrapeCmd.Flags().MarkHidden("publisher")
 		_ = scrapeCmd.Flags().MarkHidden("dry_run")
 		_ = scrapeCmd.Flags().MarkHidden("apps_per_chunk")

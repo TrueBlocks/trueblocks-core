@@ -13,6 +13,7 @@ import { blknum, float64, Message } from '../types';
 export function getInit(
   parameters?: {
     all?: boolean,
+    example?: string,
     dryRun?: boolean,
     firstBlock?: blknum,
     sleep?: float64,
