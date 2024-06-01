@@ -60,7 +60,7 @@ func init() {
 	scrapeCmd.Flags().Uint64VarP((*uint64)(&scrapePkg.GetOptions().Touch), "touch", "l", 0, `first block to visit when scraping (snapped back to most recent snap_to_grid mark)`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().RunCount, "run_count", "u", 0, `run the scraper this many times, then quit`)
 	scrapeCmd.Flags().StringVarP(&scrapePkg.GetOptions().Publisher, "publisher", "P", "", `for some query options, the publisher of the index (hidden)`)
-	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().DryRun, "dry_run", "d", false, `show the configuration that would be applied if run,no changes are made (hidden)`)
+	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().DryRun, "dry_run", "d", false, `show the configuration that would be applied if run,no changes are made`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.AppsPerChunk, "apps_per_chunk", "", 2000000, `the number of appearances to build into a chunk before consolidating it (hidden)`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.SnapToGrid, "snap_to_grid", "", 250000, `an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index (hidden)`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.FirstSnap, "first_snap", "", 2000000, `the first block at which snap_to_grid is enabled (hidden)`)
@@ -69,7 +69,6 @@ func init() {
 	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Settings.AllowMissing, "allow_missing", "", false, `do not report errors for blockchains that contain blocks with zero addresses (hidden)`)
 	if os.Getenv("TEST_MODE") != "true" {
 		_ = scrapeCmd.Flags().MarkHidden("publisher")
-		_ = scrapeCmd.Flags().MarkHidden("dry_run")
 		_ = scrapeCmd.Flags().MarkHidden("apps_per_chunk")
 		_ = scrapeCmd.Flags().MarkHidden("snap_to_grid")
 		_ = scrapeCmd.Flags().MarkHidden("first_snap")

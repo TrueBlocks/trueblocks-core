@@ -2630,6 +2630,14 @@ paths:
           schema:
             type: number
             format: uint64
+        - name: dryRun
+          description: show the configuration that would be applied if run,no changes are made
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: chain
           description: the chain to use
           required: false
