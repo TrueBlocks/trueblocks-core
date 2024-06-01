@@ -34,7 +34,7 @@ type StateOptions struct {
 	Parts      []string                 `json:"parts,omitempty"`      // Control which state to export
 	Changes    bool                     `json:"changes,omitempty"`    // Only report a balance when it changes from one block to the next
 	NoZero     bool                     `json:"noZero,omitempty"`     // Suppress the display of zero balance accounts
-	Call       string                   `json:"call,omitempty"`       // Call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
+	Call       []string                 `json:"call,omitempty"`       // A list of calls to a smart contract with solidity syntax, a four-byte and parameters, or encoded call data
 	Articulate bool                     `json:"articulate,omitempty"` // For the --call option only, articulate the retrieved data if ABIs can be found
 	ProxyFor   string                   `json:"proxyFor,omitempty"`   // For the --call option only, redirects calls to this implementation
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
@@ -102,7 +102,10 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 		case "noZero":
 			opts.NoZero = true
 		case "call":
-			opts.Call = value[0]
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Call = append(opts.Call, s...)
+			}
 		case "articulate":
 			opts.Articulate = true
 		case "proxyFor":
@@ -121,7 +124,12 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
-	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
+	calls := []string{}
+	for _, c := range opts.Call {
+		c = strings.Replace(strings.Trim(c, "'"), "'", "\"", -1)
+		calls = append(calls, c)
+	}
+	opts.Call = calls
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -164,7 +172,12 @@ func stateFinishParse(args []string) *StateOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
+	calls := []string{}
+	for _, c := range opts.Call {
+		c = strings.Replace(strings.Trim(c, "'"), "'", "\"", -1)
+		calls = append(calls, c)
+	}
+	opts.Call = calls
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}

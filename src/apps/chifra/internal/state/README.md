@@ -23,7 +23,7 @@ Flags:
                            One or more of [ balance | nonce | code | proxy | deployed | accttype | some | all ]
   -c, --changes            only report a balance when it changes from one block to the next
   -z, --no_zero            suppress the display of zero balance accounts
-  -l, --call string        call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
+  -l, --call strings       a list of calls to a smart contract with solidity syntax, a four-byte and parameters, or encoded call data
   -a, --articulate         for the --call option only, articulate the retrieved data if ABIs can be found
   -r, --proxy_for string   for the --call option only, redirects calls to this implementation
   -H, --ether              specify value in ether
@@ -40,7 +40,7 @@ Notes:
   - Special blocks are detailed under chifra when --list.
   - Balance is the default mode. To select a single mode use none first, followed by that mode.
   - Valid parameters for --call include Solidity-like syntax: balanceOf(0x316b...183d), a four-byte followed by parameters: 0x70a08231(0x316b...183d), or encoded input data.
-  - You may specify multiple modes on a single line.
+  - You may specify multiple calls on a single line. Each will be called on each address.
 ```
 
 Data models produced by this tool:

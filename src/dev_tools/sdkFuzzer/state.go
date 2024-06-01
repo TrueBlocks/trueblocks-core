@@ -136,7 +136,7 @@ func TestState(which, value, fn string, opts *sdk.StateOptions) {
 			}
 		}
 	case "call":
-		if call, _, err := opts.StateCall(value); err != nil {
+		if call, _, err := opts.StateCall([]string{value}); err != nil {
 			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Result](fn, call); err != nil {

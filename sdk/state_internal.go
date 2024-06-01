@@ -28,7 +28,7 @@ type stateOptionsInternal struct {
 	Parts      StateParts   `json:"parts,omitempty"`
 	Changes    bool         `json:"changes,omitempty"`
 	NoZero     bool         `json:"noZero,omitempty"`
-	Call       string       `json:"call,omitempty"`
+	Call       []string     `json:"call,omitempty"`
 	Articulate bool         `json:"articulate,omitempty"`
 	ProxyFor   base.Address `json:"proxyFor,omitempty"`
 	Globals

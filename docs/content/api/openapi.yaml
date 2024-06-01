@@ -2144,13 +2144,16 @@ paths:
           schema:
             type: boolean
         - name: call
-          description: call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
+          description: a list of calls to a smart contract with solidity syntax, a four-byte and parameters, or encoded call data
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+              format: string
         - name: articulate
           description: for the --call option only, articulate the retrieved data if ABIs can be found
           required: false

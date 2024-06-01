@@ -17,7 +17,7 @@ export function getState(
     parts?: string[],
     changes?: boolean,
     noZero?: boolean,
-    call?: string,
+    call?: string[],
     articulate?: boolean,
     proxyFor?: address,
     fmt?: string,
