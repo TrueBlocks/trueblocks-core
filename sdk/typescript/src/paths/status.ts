@@ -17,6 +17,7 @@ export function getStatus(
     firstRecord?: uint64,
     maxRecords?: uint64,
     chains?: boolean,
+    healthcheck?: boolean,
     fmt?: string,
     chain: string,
     noHeader?: boolean,

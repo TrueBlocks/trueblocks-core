@@ -30,6 +30,7 @@ Flags:
   -l, --logs              display only the logs found in the transaction(s)
   -m, --emitter strings   for the --logs option only, filter logs to show only those logs emitted by the given address(es)
   -B, --topic strings     for the --logs option only, filter logs to show only those with this topic(s)
+  -R, --cache_traces      force the transaction's traces into the cache
   -H, --ether             specify value in ether
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache

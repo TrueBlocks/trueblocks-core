@@ -63,7 +63,7 @@ func {{toProper .Route}}FinishParseInternal(w io.Writer, values url.Values) *{{t
 {{.EnsConvert1}}{{if .HasDeprecated}}{{.DeprecatedTransfer}}{{end}}
 	// EXISTING_CODE
 	// EXISTING_CODE
-{{.EnsConvert2}}
+{{if .HasFlagAliases}}{{.FlagAliases}}{{end}}{{.EnsConvert2}}
 	return opts
 }
 
@@ -88,7 +88,7 @@ func {{toLower .Route}}FinishParse(args []string) *{{toProper .Route}}Options {
 {{.EnsConvert1}}{{if .HasDeprecated}}{{.DeprecatedTransfer}}{{end}}
 	// EXISTING_CODE
 	// EXISTING_CODE
-{{.EnsConvert2}}	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+{{if .HasFlagAliases}}{{.FlagAliases}}{{end}}{{.EnsConvert2}}	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
 

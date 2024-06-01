@@ -30,6 +30,7 @@ Usage:
 
 Flags:
   -a, --all                in addition to Bloom filters, download full index chunks (recommended)
+  -e, --example string     create an example for the SDK with the given name
   -d, --dry_run            display the results of the download without actually downloading
   -F, --first_block uint   do not download any chunks earlier than this block
   -s, --sleep float        seconds to sleep between downloads

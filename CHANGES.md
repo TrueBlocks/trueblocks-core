@@ -78,6 +78,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
   - `--ether` option previously displayed an Ether value under the `value` key. Now, the `value` key continues to display WEI value and a new key called `ether` carries the Ether value.
   - `--raw` option no longer exists.
   - Removed unused `--seed`.
+  - added `chifra transactions --cache_traces`
 - chifra traces:
   - `--ether` option previously replaced the `value` column with `ether` for CSV and TXT output.  Now, it leaves `value` column showing and adds `ether` column to output.
   - `--ether` option previously displayed an Ether value under the `value` key. Now, the `value` key continues to display WEI value and a new key called `ether` carries the Ether value.
@@ -102,6 +103,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
   - corrects process of some UniCode strings.
 - chifra monitors
   - enabled chifra monitors --decache
+  - enabled chifra monitors --run_count
 - chifra slurp
   - deprecated `--types` in favor of `--parts` to be consistent with other endpoints
   - exposes previously hidden `--page`, `--page_id`, and `--per_page`.
@@ -112,11 +114,14 @@ This file details changes made to TrueBlocks over time. See the [migration notes
   - adds `some` option to `chifra slurp --parts` enum.
   - adds `--page_id` option for better pagination for some providers.
 chifra blocks:
+  - added `chifra blocks --cache_txs`
+  - added `chifra blocks --cache_traces`
   - `--big_range`, `--list`, and `--list_count` are removed as unused.
   - `--raw` removed.
   - `amount` field remains in WEI when `--ether` option is used. (It used to switch its meaning to Ether.) A new `ether` field is added.
 chifra init:
   - Added `--examples` option.
+  - Added `chifra init --example <name>` option.
 chifra daemon:
   - Adds `--silent` option, removes unused `--fmt` option.
 chifra export:
@@ -137,6 +142,7 @@ Packages:
 chifra scrape:
   - Enabled `--notify` option.
   - Removed `--raw` option.
+  - Added `chifra scrape --run_count` option.
 
 ## v2.5.8 (2024/02/09)
 

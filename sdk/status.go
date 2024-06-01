@@ -171,6 +171,13 @@ func (opts *StatusOptions) StatusDiagnose() ([]types.Status, *types.MetaData, er
 	return queryStatus[types.Status](in)
 }
 
+// StatusHealthcheck implements the chifra status --healthcheck command.
+func (opts *StatusOptions) StatusHealthcheck() ([]types.Status, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Healthcheck = true
+	return queryStatus[types.Status](in)
+}
+
 type StatusModes int
 
 const (

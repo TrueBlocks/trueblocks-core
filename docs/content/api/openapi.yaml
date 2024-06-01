@@ -701,6 +701,15 @@ paths:
           schema:
             type: number
             format: uint64
+        - name: runCount
+          description: available with --watch option only, run the monitor this many times, then quit
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
         - name: sleep
           description: available with --watch option only, the number of seconds to sleep between runs
           required: false
@@ -1244,6 +1253,22 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: cacheTxs
+          description: force a write of the block's transactions to the cache (slow)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cacheTraces
+          description: force a write of the block's traces to the cache (slower)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: chain
           description: the chain to use
           required: false
@@ -1410,6 +1435,14 @@ paths:
             items:
               type: string
               format: topic
+        - name: cacheTraces
+          description: force the transaction's traces into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: chain
           description: the chain to use
           required: false
@@ -2512,6 +2545,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: healthcheck
+          description: an alias for the diagnose endpoint
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: chain
           description: the chain to use
           required: false
@@ -2588,6 +2629,23 @@ paths:
           schema:
             type: number
             format: blknum
+        - name: runCount
+          description: run the scraper this many times, then quit
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: dryRun
+          description: show the configuration that would be applied if run,no changes are made
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: chain
           description: the chain to use
           required: false
@@ -2830,6 +2888,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: example
+          description: create an example for the SDK with the given name
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
         - name: dryRun
           description: display the results of the download without actually downloading
           required: false

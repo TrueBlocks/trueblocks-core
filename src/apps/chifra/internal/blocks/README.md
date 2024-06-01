@@ -34,6 +34,8 @@ Flags:
   -i, --withdrawals       export the withdrawals from the block as opposed to the block data
   -a, --articulate        for the --logs option only, articulate the retrieved data if ABIs can be found
   -U, --count             display only the count of appearances for --addrs or --uniq
+  -X, --cache_txs         force a write of the block's transactions to the cache (slow)
+  -R, --cache_traces      force a write of the block's traces to the cache (slower)
   -H, --ether             specify value in ether
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache

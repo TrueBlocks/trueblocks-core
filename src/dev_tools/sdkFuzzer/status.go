@@ -290,6 +290,16 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "healthcheck":
+		if healthcheck, _, err := opts.StatusHealthcheck(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, healthcheck); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	default:
 		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
 		logger.Fatal("Quitting...")
