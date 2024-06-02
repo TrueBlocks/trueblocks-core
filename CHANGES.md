@@ -119,6 +119,7 @@ chifra blocks:
   - `--big_range`, `--list`, and `--list_count` are removed as unused.
   - `--raw` removed.
   - `amount` field remains in WEI when `--ether` option is used. (It used to switch its meaning to Ether.) A new `ether` field is added.
+  - chose not to make articulation available for any optiob but --logs
 chifra init:
   - Added `--examples` option.
   - Added `chifra init --example <name>` option.
