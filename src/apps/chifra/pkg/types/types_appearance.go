@@ -178,7 +178,7 @@ type MappedType interface {
 		LightBlock |
 		Appearance |
 		Withdrawal |
-		Result |
+		[]Result |
 		Token |
 		bool
 }
