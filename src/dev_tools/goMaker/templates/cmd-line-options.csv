@@ -58,6 +58,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13400,apps,Accounts,export,acctExport,n9,,,,,note,,,,,,If the --reversed option is present&#44; the appearance list is reversed prior to all processing (including filtering).
 13410,apps,Accounts,export,acctExport,n10,,,,,note,,,,,,The --decache option will remove all cache items (blocks&#44; transactions&#44; traces&#44; etc.) for the given address(es).
 13420,apps,Accounts,export,acctExport,n11,,,,,note,,,,,,The --withdrawals option is only available on certain chains. It is ignored otherwise.
+13430,apps,Accounts,export,acctExport,n12,,,,,note,,,,,,The --traces option requires your RPC to provide trace data. See the README for more information.
 #
 14000,apps,Accounts,monitors,acctExport,,,,visible|docs,,command,,,Manage monitors,[flags] <address> [address...],default|caching|,Add&#44; remove&#44; clean&#44; and list address monitors.
 14020,apps,Accounts,monitors,acctExport,addrs,,,visible|docs,4,positional,list<addr>,message,,,,one or more addresses (0x...) to process
@@ -133,6 +134,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 22240,tools,Chain Data,blocks,getBlocks,n6,,,,,note,,,,,,Multiple topics match on topic0&#44; topic1&#44; and so on&#44; not on different topic0's.
 22260,tools,Chain Data,blocks,getBlocks,n8,,,,,note,,,,,,The --decache option removes the block(s)&#44; all transactions in those block(s)&#44; and all traces in those transactions from the cache.
 22270,tools,Chain Data,blocks,getBlocks,n9,,,,,note,,,,,,The --withdrawals option is only available on certain chains. It is ignored otherwise.
+22280,tools,Chain Data,blocks,getBlocks,n10,,,,,note,,,,,,The --traces option requires your RPC to provide trace data. See the README for more information.
 #
 23000,tools,Chain Data,transactions,getTrans,,,,visible|docs,,command,,,Get transactions,[flags] <tx_id> [tx_id...],default|caching|ether|,Retrieve one or more transactions from the chain or local cache.
 23020,tools,Chain Data,transactions,getTrans,transactions,,,required|visible|docs,4,positional,list<tx_id>,transaction,,,,a space-separated list of one or more transaction identifiers
@@ -148,6 +150,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 23130,tools,Chain Data,transactions,getTrans,n2,,,,,note,,,,,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 23140,tools,Chain Data,transactions,getTrans,n3,,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 23150,tools,Chain Data,transactions,getTrans,n5,,,,,note,,,,,,The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
+23160,tools,Chain Data,transactions,getTrans,n6,,,,,note,,,,,,The --traces option requires your RPC to provide trace data. See the README for more information.
 #
 24000,tools,Chain Data,receipts,getReceipts,,,,visible|docs,,command,,,Get receipts,[flags] <tx_id> [tx_id...],default|caching|,Retrieve receipts for the given transaction(s).
 24020,tools,Chain Data,receipts,getReceipts,transactions,,,required|visible|docs,1,positional,list<tx_id>,receipt,,,,a space-separated list of one or more transaction identifiers
@@ -175,6 +178,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 26070,tools,Chain Data,traces,getTraces,n2,,,,,note,,,,,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 26080,tools,Chain Data,traces,getTraces,n3,,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 26090,tools,Chain Data,traces,getTraces,n4,,,,,note,,,,,,A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk&#44; toBlk&#44; fromAddr&#44; toAddr&#44; after&#44; count.
+26090,tools,Chain Data,traces,getTraces,n5,,,,,note,,,,,,This command requires your RPC to provide trace data. See the README for more information.
 #
 27000,tools,Chain Data,when,whenBlock,,,,visible|docs,,command,,,Get block dates,[flags] < block | date > [ block... | date... ],default|caching|,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 27020,tools,Chain Data,when,whenBlock,blocks,,,visible|docs,3,positional,list<string>,namedBlock,,,,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
@@ -266,6 +270,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 45120,apps,Admin,scrape,blockScrape,channel_count,,20,config,,flag,<uint64>,,,,,number of concurrent processing channels
 45130,apps,Admin,scrape,blockScrape,allow_missing,,,config,,flag,<boolean>,,,,,do not report errors for blockchains that contain blocks with zero addresses
 45140,apps,Admin,scrape,blockScrape,n1,,,,,note,,,,,,The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
+45150,apps,Admin,scrape,blockScrape,n2,,,,,note,,,,,,This command requires your RPC to provide trace data. See the README for more information.
 #
 46000,apps,Admin,chunks,chunkMan,,,,visible|docs,,command,,,Manage chunks,<mode> [flags] [blocks...] [address...],default|,Manage&#44; investigate&#44; and display the Unchained Index.
 46020,apps,Admin,chunks,chunkMan,mode,,,required|visible|docs,9,positional,enum[manifest|index|blooms|pins|addresses|appearances|stats],mode,,,,the type of data to process

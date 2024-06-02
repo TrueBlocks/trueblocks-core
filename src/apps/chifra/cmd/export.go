@@ -58,7 +58,8 @@ Notes:
   - The _block and _record filters are ignored when used with the --count option.
   - If the --reversed option is present, the appearance list is reversed prior to all processing (including filtering).
   - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).
-  - The --withdrawals option is only available on certain chains. It is ignored otherwise.`
+  - The --withdrawals option is only available on certain chains. It is ignored otherwise.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra export

@@ -76,6 +76,7 @@ Notes:
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
   - The --decache option removes the block(s), all transactions in those block(s), and all traces in those transactions from the cache.
   - The --withdrawals option is only available on certain chains. It is ignored otherwise.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
@@ -145,6 +146,7 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
@@ -296,6 +298,7 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
+  - This command requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:

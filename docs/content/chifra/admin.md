@@ -218,6 +218,7 @@ Flags:
 
 Notes:
   - The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
+  - This command requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:

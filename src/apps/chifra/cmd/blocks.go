@@ -53,7 +53,8 @@ Notes:
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
   - The --decache option removes the block(s), all transactions in those block(s), and all traces in those transactions from the cache.
-  - The --withdrawals option is only available on certain chains. It is ignored otherwise.`
+  - The --withdrawals option is only available on certain chains. It is ignored otherwise.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra blocks
