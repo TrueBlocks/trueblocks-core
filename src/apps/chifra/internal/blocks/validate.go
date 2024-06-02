@@ -88,7 +88,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 		if !validate.HasArticulationKey(opts.Articulate) {
 			return validate.Usage("The {0} option requires an Etherscan API key.", "--articulate")
 		}
-		if opts.Articulate && !opts.Logs {
+		if opts.Articulate && !opts.canArticulate() {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--logs")
 		}
 		if opts.Uniq && !opts.Count {
@@ -143,4 +143,8 @@ func (opts *BlocksOptions) tooMany() bool {
 		cnt++
 	}
 	return !opts.Count && cnt > 1
+}
+
+func (opts *BlocksOptions) canArticulate() bool {
+	return !opts.Hashes && !opts.Uncles && !opts.Withdrawals
 }
