@@ -4,6 +4,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 ## v3.0.0-alpha (2024/06/01)
 
+- Closed a bunch of issues
 - Moves gold tests into its own submodule.
 - Moves ./src/dev_tools/makeClass into ./src/dev_tools/goMaker.
 - Moves all auto-code-gen templates from ./docs to ./src/dev_tools/goMaker/templates.
