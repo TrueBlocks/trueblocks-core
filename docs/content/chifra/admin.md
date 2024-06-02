@@ -281,6 +281,10 @@ on their own machines. The user needs the data for the software to operate--shar
 minimal effort and makes the data available to other people. Everyone is better off. A
 naturally-occuring network effect.
 
+### tracing
+
+The `scrape` command requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
+
 ### prerequisites
 
 `chifra scrape` works with any EVM-based blockchain, but does not currently work without a "tracing,

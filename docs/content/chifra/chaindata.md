@@ -96,6 +96,10 @@ Links:
 - [api docs](/api/#operation/chaindata-blocks)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
 
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
+
 ## chifra transactions
 
 The `chifra transactions` tool retrieves transactions directly from the Ethereum node or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
@@ -156,6 +160,10 @@ Links:
 
 - [api docs](/api/#operation/chaindata-transactions)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
+
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
 
 ## chifra receipts
 
@@ -305,6 +313,18 @@ Links:
 
 - [api docs](/api/#operation/chaindata-traces)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
+
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Many remote RPC providers do not enable these endpoints due to the additional load they can place on the node. If you are running your own node, you can enable these endpoints by adding `trace` to your node's startup.
+
+The test for tracing assumes your node provides tracing starting at block 1. If your is partially synced, you may export the following enviroment variable before running the command to instruct `chifra` where to test.
+
+```[bash]
+export TB_<chain>_FIRSTTRACE=<bn>
+```
+
+where `<chain>` is the chain you are running and `<bn>` is the block number at which tracing starts. For example, to start tracing at block 1000 on the mainnet, you would export `TB_MAINNET_FIRSTTRACE=1000`.
 
 ## chifra when
 

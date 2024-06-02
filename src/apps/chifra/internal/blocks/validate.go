@@ -9,7 +9,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -103,8 +102,11 @@ func (opts *BlocksOptions) validateBlocks() error {
 			}
 		}
 
-		if opts.Traces && !opts.Conn.IsNodeTracing() {
-			return validate.Usage("{0} requires tracing, err: {1}", "chifra blocks --traces", rpc.ErrTraceBlockMissing)
+		if opts.Traces {
+			err, ok := opts.Conn.IsNodeTracing()
+			if !ok {
+				return validate.Usage("{0} requires tracing, err: {1}", "chifra blocks --traces", err.Error())
+			}
 		}
 
 		if opts.Articulate {
