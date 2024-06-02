@@ -10,7 +10,6 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -25,8 +24,6 @@ func (opts *BlocksOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
-
-	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
@@ -65,13 +62,6 @@ func (opts *BlocksOptions) HandleShow() error {
 						delete(thisMap, app)
 						return err
 					} else {
-						if opts.Articulate {
-							for index := range block.Transactions {
-								if err = abiCache.ArticulateTransaction(&block.Transactions[index]); err != nil {
-									errorChan <- err // continue even with an error
-								}
-							}
-						}
 						*value = block
 						bar.Tick()
 					}
