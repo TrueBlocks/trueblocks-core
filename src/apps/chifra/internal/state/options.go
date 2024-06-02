@@ -34,7 +34,7 @@ type StateOptions struct {
 	Parts      []string                 `json:"parts,omitempty"`      // Control which state to export
 	Changes    bool                     `json:"changes,omitempty"`    // Only report a balance when it changes from one block to the next
 	NoZero     bool                     `json:"noZero,omitempty"`     // Suppress the display of zero balance accounts
-	Call       string                   `json:"call,omitempty"`       // Call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
+	Call       string                   `json:"call,omitempty"`       // Call a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
 	Articulate bool                     `json:"articulate,omitempty"` // For the --call option only, articulate the retrieved data if ABIs can be found
 	ProxyFor   string                   `json:"proxyFor,omitempty"`   // For the --call option only, redirects calls to this implementation
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
@@ -42,6 +42,7 @@ type StateOptions struct {
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	ProxyForAddr base.Address `json:"-"`
+	Calls        []string     `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -122,6 +123,7 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 
 	// EXISTING_CODE
 	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
+	opts.Calls = strings.Split(opts.Call, ":")
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -165,6 +167,7 @@ func stateFinishParse(args []string) *StateOptions {
 		}
 	}
 	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
+	opts.Calls = strings.Split(opts.Call, ":")
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -200,13 +203,12 @@ func getCaps() caps.Capability {
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultStateOptions = StateOptions{}
-	globals.SetDefaults(&defaultStateOptions.Globals)
-	defaultStateOptions.Globals.TestMode = testMode
-	defaultStateOptions.Globals.Writer = w
-	// EXISTING_CODE
-	// EXISTING_CODE
-	defaultStateOptions.Globals.Caps = getCaps()
+	opts := StateOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	defaultStateOptions = opts
 }
 
 func (opts *StateOptions) getCaches() (m map[string]bool) {

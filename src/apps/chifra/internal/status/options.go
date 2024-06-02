@@ -33,6 +33,7 @@ type StatusOptions struct {
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Chains      bool                  `json:"chains,omitempty"`      // Include a list of chain configurations in the output
+	Healthcheck bool                  `json:"healthcheck,omitempty"` // An alias for the diagnose endpoint
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
@@ -52,6 +53,7 @@ func (opts *StatusOptions) testLog() {
 	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 10000, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.Chains, "Chains: ", opts.Chains)
+	logger.TestLog(opts.Healthcheck, "Healthcheck: ", opts.Healthcheck)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -91,6 +93,8 @@ func StatusFinishParseInternal(w io.Writer, values url.Values) *StatusOptions {
 			opts.MaxRecords = base.MustParseUint64(value[0])
 		case "chains":
 			opts.Chains = true
+		case "healthcheck":
+			opts.Healthcheck = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "status")
@@ -108,6 +112,10 @@ func StatusFinishParseInternal(w io.Writer, values url.Values) *StatusOptions {
 	}
 	opts.ModeTypes = walk.CacheTypesFromStringSlice(opts.Modes)
 	// EXISTING_CODE
+	if !opts.Diagnose {
+		opts.Diagnose = opts.Healthcheck // alias
+		opts.Healthcheck = false
+	}
 
 	return opts
 }
@@ -141,6 +149,10 @@ func statusFinishParse(args []string) *StatusOptions {
 		defFmt = "json"
 	}
 	// EXISTING_CODE
+	if !opts.Diagnose {
+		opts.Diagnose = opts.Healthcheck // alias
+		opts.Healthcheck = false
+	}
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
@@ -165,13 +177,13 @@ func getCaps() caps.Capability {
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultStatusOptions = StatusOptions{}
-	globals.SetDefaults(&defaultStatusOptions.Globals)
-	defaultStatusOptions.Globals.TestMode = testMode
-	defaultStatusOptions.Globals.Writer = w
-	// EXISTING_CODE
-	// EXISTING_CODE
-	defaultStatusOptions.Globals.Caps = getCaps()
+	opts := StatusOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	opts.MaxRecords = 10000
+	defaultStatusOptions = opts
 }
 
 func (opts *StatusOptions) getCaches() (m map[string]bool) {

@@ -1,4 +1,4 @@
-openapi: 3.1.3
+openapi: 3.1.0
 info:
   title: TrueBlocks API
   contact:
@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 2.5.11-release
+  version: 2.9.0-release
   description: >
     A REST layer over the TrueBlocks chifra command line. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
@@ -219,23 +219,20 @@ paths:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/bounds"
                         - $ref: "#/components/schemas/monitor"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-                          "blockNumber": 4037786,
-                          "transactionIndex": 47,
-                        },
-                        {
-                          "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-                          "blockNumber": 4037800,
-                          "transactionIndex": 77,
-                        },
-                        { "...": "..." },
-                      ],
-                  }
+                examples:
+                  [
+                    {
+                      "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                      "blockNumber": 4037786,
+                      "transactionIndex": 47
+                    },
+                    {
+                      "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                      "blockNumber": 4037800,
+                      "transactionIndex": 77
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /export:
@@ -578,41 +575,38 @@ paths:
                         - $ref: "#/components/schemas/traceResult"
                         - $ref: "#/components/schemas/transaction"
                         - $ref: "#/components/schemas/withdrawal"
-                example:
-                  {
-                    "data":
-                      [
+                examples:
+                  [
+                    {
+                      "hash": "0x78a17b79e638190d72a3030a79645c32cf3420a133ea2835206778e5ab63fdc7",
+                      "blockHash": "0xdf551eb24dd5275c22d497b9076f1111f483b71ca37002bee51d5db55d20d2fa",
+                      "blockNumber": 4037786,
+                      "transactionIndex": 47,
+                      "timestamp": 1500352888,
+                      "from": "0x29205869522cc9d1f84b0ad5279a8e74a7c66c15",
+                      "to": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                      "value": 84353870000000000,
+                      "gas": 90000,
+                      "gasPrice": 20000000000,
+                      "maxFeePerGas": 0,
+                      "maxPriorityFeePerGas": 0,
+                      "isError": 0,
+                      "hasToken": 0,
+                      "receipt":
                         {
-                          "hash": "0x78a17b79e638190d72a3030a79645c32cf3420a133ea2835206778e5ab63fdc7",
-                          "blockHash": "0xdf551eb24dd5275c22d497b9076f1111f483b71ca37002bee51d5db55d20d2fa",
-                          "blockNumber": 4037786,
-                          "transactionIndex": 47,
-                          "timestamp": 1500352888,
-                          "from": "0x29205869522cc9d1f84b0ad5279a8e74a7c66c15",
-                          "to": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-                          "value": 84353870000000000,
-                          "gas": 90000,
-                          "gasPrice": 20000000000,
-                          "maxFeePerGas": 0,
-                          "maxPriorityFeePerGas": 0,
-                          "isError": 0,
-                          "hasToken": 0,
-                          "receipt":
-                            {
-                              "contractAddress": "0x0",
-                              "gasUsed": 21000,
-                              "effectiveGasPrice": 20000000000,
-                              "status": null,
-                            },
-                          "compressedTx": "0x()",
-                          "gasCost": 420000000000000,
+                          "contractAddress": "0x0",
                           "gasUsed": 21000,
-                          "date": "2017-07-18 04:41:28 UTC",
-                          "ether": 0.08435387,
+                          "effectiveGasPrice": 20000000000,
+                          "status": null
                         },
-                        { "...": "..." },
-                      ],
-                  }
+                      "compressedTx": "0x()",
+                      "gasCost": 420000000000000,
+                      "gasUsed": 21000,
+                      "date": "2017-07-18 04:41:28 UTC",
+                      "ether": 0.08435387
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /monitors:
@@ -700,6 +694,15 @@ paths:
             type: string
         - name: batchSize
           description: available with --watch option only, the number of monitors to process in each batch
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: runCount
+          description: available with --watch option only, run the monitor this many times, then quit
           required: false
           style: form
           in: query
@@ -959,7 +962,7 @@ paths:
                       oneOf:
                         - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/name"
-                example:
+                examples:
                   [
                     {
                       "tags": "50-Tokens:ERC20",
@@ -968,8 +971,9 @@ paths:
                       "symbol": "LBA",
                       "source": "On chain",
                       "decimals": 18,
-                      "petname": "actively-happy-mite",
+                      "petname": "actively-happy-mite"
                     },
+                    { "...": "..." }
                   ]
         "400":
           description: bad input parameter
@@ -1094,44 +1098,42 @@ paths:
                         - $ref: "#/components/schemas/abi"
                         - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/parameter"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "name": "PairCreated",
-                          "type": "event",
-                          "stateMutability": "nonpayable",
-                          "signature": "PairCreated(address,address,address,uint256)",
-                          "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
-                          "inputs":
-                            [
-                              {
-                                "type": "address",
-                                "name": "token0",
-                                "indexed": true,
-                                "internalType": "address",
-                              },
-                              {
-                                "type": "address",
-                                "name": "token1",
-                                "indexed": true,
-                                "internalType": "address",
-                              },
-                              {
-                                "type": "address",
-                                "name": "pair",
-                                "internalType": "address",
-                              },
-                              {
-                                "type": "uint256",
-                                "name": "val_0",
-                                "internalType": "uint256",
-                              },
-                            ],
-                        },
-                      ],
-                  }
+                examples:
+                  [
+                    {
+                      "name": "PairCreated",
+                      "type": "event",
+                      "stateMutability": "nonpayable",
+                      "signature": "PairCreated(address,address,address,uint256)",
+                      "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+                      "inputs":
+                        [
+                          {
+                            "type": "address",
+                            "name": "token0",
+                            "indexed": true,
+                            "internalType": "address"
+                          },
+                          {
+                            "type": "address",
+                            "name": "token1",
+                            "indexed": true,
+                            "internalType": "address"
+                          },
+                          {
+                            "type": "address",
+                            "name": "pair",
+                            "internalType": "address"
+                          },
+                          {
+                            "type": "uint256",
+                            "name": "val_0",
+                            "internalType": "uint256"
+                          }
+                        ]
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /blocks:
@@ -1251,6 +1253,22 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: cacheTxs
+          description: force a write of the block's transactions to the cache (slow)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cacheTraces
+          description: force a write of the block's traces to the cache (slower)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: chain
           description: the chain to use
           required: false
@@ -1321,13 +1339,16 @@ paths:
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
                         - $ref: "#/components/schemas/withdrawal"
-                example:
-                  {
-                    "blockNumber": 3141592,
-                    "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
-                    "...": "...",
-                    "transactions": [],
-                  }
+                examples:
+                  [
+                    {
+                      "blockNumber": 3141592,
+                      "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
+                      "...": "...",
+                      "transactions": []
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /transactions:
@@ -1414,6 +1435,14 @@ paths:
             items:
               type: string
               format: topic
+        - name: cacheTraces
+          description: force the transaction's traces into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: chain
           description: the chain to use
           required: false
@@ -1480,6 +1509,51 @@ paths:
                         - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/transaction"
+                examples:
+                  [
+                    {
+                      "blockHash": "0x3a1fba5abd9d41457944e91ed097e039b7b12d3d7ba324a3f422db2277a48e28",
+                      "blockNumber": 52029,
+                      "date": "2015-08-08 06:22:55 UTC",
+                      "ether": "0",
+                      "from": "0x3d0768da09ce77d25e2d998e6a7b6ed4b9116c2d",
+                      "gas": 90000,
+                      "gasCost": 2516291173295740,
+                      "gasPrice": 57380137580,
+                      "gasUsed": 43853,
+                      "hash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
+                      "input": "0x432ced044d794669727374436f696e000000000000000000000000000000000000000000",
+                      "nonce": 31,
+                      "receipt":
+                        {
+                          "contractAddress": "0x0",
+                          "effectiveGasPrice": 57380137580,
+                          "gasUsed": 43853,
+                          "logs":
+                            [
+                              {
+                                "address": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                                "data": "0x",
+                                "date": "2015-08-08 06:22:55 UTC",
+                                "logIndex": 0,
+                                "timestamp": 1439014975,
+                                "topics":
+                                  [
+                                    "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
+                                    "0x4d794669727374436f696e000000000000000000000000000000000000000000"
+                                  ]
+                              }
+                            ],
+                          "status": null
+                        },
+                      "timestamp": 1439014975,
+                      "to": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                      "traces": [],
+                      "transactionIndex": 0,
+                      "value": "0"
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /receipts:
@@ -1564,6 +1638,37 @@ paths:
                         - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/receipt"
+                examples:
+                  [
+                    {
+                      "blockNumber": 52029,
+                      "from": "0x3d0768da09ce77d25e2d998e6a7b6ed4b9116c2d",
+                      "gasUsed": 43853,
+                      "logs":
+                        [
+                          {
+                            "address": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                            "blockHash": "0x3a1fba5abd9d41457944e91ed097e039b7b12d3d7ba324a3f422db2277a48e28",
+                            "blockNumber": 52029,
+                            "date": "2015-08-08 06:22:55 UTC",
+                            "logIndex": 0,
+                            "timestamp": 1439014975,
+                            "topics":
+                              [
+                                "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
+                                "0x4d794669727374436f696e000000000000000000000000000000000000000000"
+                              ],
+                            "transactionHash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
+                            "transactionIndex": 0
+                          }
+                        ],
+                      "status": 1,
+                      "to": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                      "transactionHash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
+                      "transactionIndex": 0
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /logs:
@@ -1671,6 +1776,25 @@ paths:
                         - $ref: "#/components/schemas/log"
                         - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/parameter"
+                examples:
+                  [
+                    {
+                      "address": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                      "blockHash": "0x3a1fba5abd9d41457944e91ed097e039b7b12d3d7ba324a3f422db2277a48e28",
+                      "blockNumber": 52029,
+                      "date": "2015-08-08 06:22:55 UTC",
+                      "logIndex": 0,
+                      "timestamp": 1439014975,
+                      "topics":
+                        [
+                          "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
+                          "0x4d794669727374436f696e000000000000000000000000000000000000000000"
+                        ],
+                      "transactionHash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
+                      "transactionIndex": 0
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /traces:
@@ -1784,6 +1908,31 @@ paths:
                         - $ref: "#/components/schemas/traceCount"
                         - $ref: "#/components/schemas/traceFilter"
                         - $ref: "#/components/schemas/traceResult"
+                examples:
+                  [
+                    {
+                      "action":
+                        {
+                          "callType": "call",
+                          "from": "0x3d0768da09ce77d25e2d998e6a7b6ed4b9116c2d",
+                          "gas": 67896,
+                          "input": "0x432ced044d794669727374436f696e000000000000000000000000000000000000000000",
+                          "to": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                          "value": "0"
+                        },
+                      "blockHash": "0x3a1fba5abd9d41457944e91ed097e039b7b12d3d7ba324a3f422db2277a48e28",
+                      "blockNumber": 52029,
+                      "date": "2015-08-08 06:22:55 UTC",
+                      "result": { "gasUsed": 21749 },
+                      "subtraces": 0,
+                      "timestamp": 1439014975,
+                      "traceAddress": [],
+                      "transactionHash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
+                      "transactionIndex": 0,
+                      "type": "call"
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /when:
@@ -1917,6 +2066,16 @@ paths:
                         - $ref: "#/components/schemas/namedBlock"
                         - $ref: "#/components/schemas/timestamp"
                         - $ref: "#/components/schemas/timestampCount"
+                examples:
+                  [
+                    {
+                      "blockNumber": 52029,
+                      "date": "2015-08-08 06:22:55 UTC",
+                      "name": "firstLog",
+                      "timestamp": 1439014975
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /state:
@@ -1985,7 +2144,7 @@ paths:
           schema:
             type: boolean
         - name: call
-          description: call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
+          description: call a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
           required: false
           style: form
           in: query
@@ -2074,23 +2233,21 @@ paths:
                         - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/result"
                         - $ref: "#/components/schemas/state"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "blockNumber": 13176226,
-                          "balance": 258843698360318500,
-                          "nonce": 115,
-                          "code": "0x",
-                          "proxy": "0xd9db270c1b5e3bd161e8c8503c55ceabee709552",
-                          "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
-                          "deployed": 0,
-                          "accttype": "EOA",
-                          "ether": 0.2588436983603185,
-                        },
-                      ],
-                  }
+                examples:
+                  [
+                    {
+                      "blockNumber": 13176226,
+                      "balance": 258843698360318500,
+                      "nonce": 115,
+                      "code": "0x",
+                      "proxy": "0xd9db270c1b5e3bd161e8c8503c55ceabee709552",
+                      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+                      "deployed": 0,
+                      "accttype": "EOA",
+                      "ether": 0.2588436983603185
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /tokens:
@@ -2217,22 +2374,20 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/token"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
-                          "balance": "624980000000000000",
-                          "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-                          "name": "The DAO Original",
-                          "decimals": 1,
-                          "isContract": true,
-                          "isErc20": true,
-                          "isErc721": true,
-                        },
-                      ],
-                  }
+                examples:
+                  [
+                    {
+                      "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+                      "balance": "624980000000000000",
+                      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+                      "name": "The DAO Original",
+                      "decimals": 1,
+                      "isContract": true,
+                      "isErc20": true,
+                      "isErc721": true
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /config:
@@ -2298,26 +2453,24 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/chain"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "clientVersion": "erigon/2021.09.2/linux-amd64/go1.16.3",
-                          "trueblocksVersion": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
-                          "rpcProvider": "http://localhost:23456",
-                          "configPath": "~/Library/Application Support/TrueBlocks/",
-                          "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
-                          "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
-                          "isTesting": false,
-                          "isArchive": true,
-                          "isTracing": true,
-                          "hasEskey": true,
-                          "hasPinkey": true,
-                          "date": "2021-09-03 19:38:19 UTC",
-                        },
-                      ],
-                  }
+                examples:
+                  [
+                    {
+                      "clientVersion": "erigon/2021.09.2/linux-amd64/go1.16.3",
+                      "trueblocksVersion": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
+                      "rpcProvider": "http://localhost:23456",
+                      "configPath": "~/Library/Application Support/TrueBlocks/",
+                      "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
+                      "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
+                      "isTesting": false,
+                      "isArchive": true,
+                      "isTracing": true,
+                      "hasEskey": true,
+                      "hasPinkey": true,
+                      "date": "2021-09-03 19:38:19 UTC"
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /status:
@@ -2386,6 +2539,14 @@ paths:
             format: uint64
         - name: chains
           description: include a list of chain configurations in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: healthcheck
+          description: an alias for the diagnose endpoint
           required: false
           style: form
           in: query
@@ -2468,6 +2629,23 @@ paths:
           schema:
             type: number
             format: blknum
+        - name: runCount
+          description: run the scraper this many times, then quit
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: dryRun
+          description: show the configuration that would be applied if run,no changes are made
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: chain
           description: the chain to use
           required: false
@@ -2678,23 +2856,20 @@ paths:
                         - $ref: "#/components/schemas/manifest"
                         - $ref: "#/components/schemas/message"
                         - $ref: "#/components/schemas/reportCheck"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "fileName": "000000000-000000000",
-                          "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
-                          "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4",
-                        },
-                        {
-                          "fileName": "000000001-000590501",
-                          "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
-                          "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp",
-                        },
-                        { "...": "..." },
-                      ],
-                  }
+                examples:
+                  [
+                    {
+                      "fileName": "000000000-000000000",
+                      "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
+                      "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4"
+                    },
+                    {
+                      "fileName": "000000001-000590501",
+                      "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
+                      "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
+                    },
+                    { "...": "..." }
+                  ]
         "400":
           description: bad input parameter
   /init:
@@ -2713,6 +2888,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: example
+          description: create an example for the SDK with the given name
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
         - name: dryRun
           description: display the results of the download without actually downloading
           required: false
@@ -2793,7 +2976,7 @@ paths:
             items:
               type: string
               format: blknum
-        - name: types
+        - name: parts
           description: which types of transactions to request
           required: false
           style: form
@@ -2851,6 +3034,32 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: page
+          description: the page to retrieve (page number)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: pageId
+          description: the page to retrieve (page ID)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: perPage
+          description: the number of records to request on each page
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
         - name: sleep
           description: seconds to sleep between requests
           required: false
@@ -2925,7 +3134,7 @@ paths:
                         - $ref: "#/components/schemas/monitor"
                         - $ref: "#/components/schemas/parameter"
                         - $ref: "#/components/schemas/slurp"
-                example:
+                examples:
                   [
                     {
                       "hash": "0x2ec382949ba0b22443aa4cb38267b1fb5e68e188109ac11f7a82f67571a0adf3",
@@ -2945,8 +3154,9 @@ paths:
                       "hasToken": "0",
                       "gasUsed": "21000",
                       "date": "2015-08-07 03:50:51 UTC",
-                      "ether": "0.000000000000000000",
+                      "ether": "0.000000000000000000"
                     },
+                    { "...": "..." }
                   ]
         "400":
           description: bad input parameter
@@ -3969,6 +4179,10 @@ components:
           type: string
           format: int256
           description: "the holder's asset balance at the given block height"
+        balanceDec:
+          type: number
+          format: float64
+          description: "the holder's asset balance (in Ether) at the given block height (calculated)"
         diff:
           type: string
           format: int256
@@ -4638,16 +4852,12 @@ components:
           type: object
         error:
           type: array
-          example:
-            - error 1
-            - error 2
           items:
             type: string
     hash:
       type: string
       format: hash
       description: "The 32-byte hash"
-      example: "0xf128...1e98"
     address:
       type: string
     string:
@@ -4659,4 +4869,15 @@ components:
       type: string
       format: bytes
       description: "One of four 32-byte topics of a log"
-      example: "0xf128...1e98"
+    addrRecord:
+      type: string
+      description: "an address record in the Unchained Index chunk"
+    appRecord:
+      type: string
+      description: "an appearance record in the Unchained Index chunk"
+    any:
+      type: string
+      description: "any cache item found in the binary cache"
+    tokenType:
+      type: string
+      description: "a string representing the token type"

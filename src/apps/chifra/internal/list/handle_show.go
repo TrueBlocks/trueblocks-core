@@ -31,7 +31,7 @@ func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.Appearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		currentBn := uint32(0)
 		currentTs := base.Timestamp(0)
 		visitAppearance := func(app *types.Appearance) error {

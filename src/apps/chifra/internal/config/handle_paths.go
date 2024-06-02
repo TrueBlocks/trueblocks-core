@@ -13,7 +13,7 @@ func (opts *ConfigOptions) HandlePaths() error {
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.CacheItem], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		root, cache, index := config.PathToRootConfig(),
 			config.PathToCache(opts.Globals.Chain),
 			config.PathToIndex(opts.Globals.Chain)

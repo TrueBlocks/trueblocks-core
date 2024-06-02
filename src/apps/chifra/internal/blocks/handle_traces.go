@@ -6,54 +6,119 @@ package blocksPkg
 
 import (
 	"context"
-	"errors"
+	"fmt"
+	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *BlocksOptions) HandleTraces() error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
+	nErrors := 0
+
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Trace], errorChan chan error) {
-		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(chain)
-			if err != nil {
-				errorChan <- err
-				if errors.Is(err, ethereum.NotFound) {
-					continue
-				}
-				cancel()
-				return
-			}
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
+		if err != nil {
+			errorChan <- err
+			cancel()
+		}
 
-			for _, bn := range blockNums {
-				var traces []types.Trace
-				traces, err = opts.Conn.GetTracesByBlockNumber(bn)
-				if err != nil {
-					errorChan <- err
-					if errors.Is(err, ethereum.NotFound) {
-						continue
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Transaction](apps, false); err != nil {
+			errorChan <- err
+			cancel()
+
+		} else if cnt == 0 {
+			errorChan <- fmt.Errorf("no blocks found for the query")
+			cancel()
+
+		} else {
+			showProgress := opts.Globals.ShowProgress()
+			bar := logger.NewBar(logger.BarOptions{
+				Enabled: showProgress,
+				Total:   int64(cnt),
+			})
+
+			for _, thisMap := range sliceOfMaps {
+				for app := range thisMap {
+					thisMap[app] = new(types.Transaction)
+				}
+
+				iterFunc := func(app types.Appearance, value *types.Transaction) error {
+					bn := base.Blknum(app.BlockNumber)
+					if traces, err := opts.Conn.GetTracesByBlockNumber(bn); err != nil {
+						errMutex.Lock()
+						defer errMutex.Unlock()
+						delete(thisMap, app)
+						return fmt.Errorf("block at %d returned an error: %w", bn, err)
+
+					} else if len(traces) == 0 {
+						errMutex.Lock()
+						defer errMutex.Unlock()
+						delete(thisMap, app)
+						return fmt.Errorf("block at %d has no traces", bn)
+
+					} else {
+						l := make([]types.Trace, 0, len(traces))
+						for index := range traces {
+							if opts.Articulate {
+								if err = abiCache.ArticulateTrace(&traces[index]); err != nil {
+									errorChan <- err // continue even with an error
+								}
+							}
+							l = append(l, traces[index])
+						}
+						value.Traces = append(value.Traces, l...)
+						bar.Tick()
+						return nil
 					}
-					cancel()
-					return
 				}
 
-				for _, trace := range traces {
-					modelChan <- &trace
+				iterErrorChan := make(chan error)
+				iterCtx, iterCancel := context.WithCancel(context.Background())
+				defer iterCancel()
+				go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+				for err := range iterErrorChan {
+					if !testMode || nErrors == 0 {
+						errorChan <- err
+						nErrors++
+					}
+				}
+
+				items := make([]types.Trace, 0, len(thisMap))
+				for _, tx := range thisMap {
+					items = append(items, tx.Traces...)
+				}
+				sort.Slice(items, func(i, j int) bool {
+					if items[i].BlockNumber == items[j].BlockNumber {
+						if items[i].TransactionIndex == items[j].TransactionIndex {
+							return items[i].TraceIndex < items[j].TraceIndex
+						}
+						return items[i].TransactionIndex < items[j].TransactionIndex
+					}
+					return items[i].BlockNumber < items[j].BlockNumber
+				})
+
+				for _, item := range items {
+					modelChan <- &item
 				}
 			}
+			bar.Finish(true /* newLine */)
 		}
 	}
 
 	extraOpts := map[string]any{
-		"uncles":     opts.Uncles,
-		"logs":       opts.Logs,
-		"traces":     opts.Traces,
-		"addresses":  opts.Uniq,
 		"articulate": opts.Articulate,
 	}
+
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

@@ -40,7 +40,7 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 	logFilter := rpc.NewLogFilter(opts.Emitter, opts.Topic)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Log], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
@@ -56,9 +56,10 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 					cancel()
 
 				} else {
+					showProgress := opts.Globals.ShowProgress()
 					bar := logger.NewBar(logger.BarOptions{
 						Prefix:  mon.Address.Hex(),
-						Enabled: !testMode && !logger.IsTerminal(),
+						Enabled: showProgress,
 						Total:   int64(cnt),
 					})
 

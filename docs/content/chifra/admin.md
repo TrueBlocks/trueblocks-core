@@ -92,6 +92,7 @@ Flags:
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 10000)
   -a, --chains              include a list of chain configurations in the output
+  -k, --healthcheck         an alias for the diagnose endpoint
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose output
   -h, --help                display this help screen
@@ -153,6 +154,7 @@ Flags:
 Notes:
   - To start API open terminal window and run chifra daemon.
   - See the API documentation (https://trueblocks.io/api) for more information.
+  - The --port option is deprecated, use --url instead.
 ```
 
 Data models produced by this tool:
@@ -209,6 +211,8 @@ Flags:
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
   -s, --sleep float      seconds to sleep between scraper passes (default 14)
   -l, --touch uint       first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+  -u, --run_count uint   run the scraper this many times, then quit
+  -d, --dry_run          show the configuration that would be applied if run,no changes are made
   -v, --verbose          enable verbose output
   -h, --help             display this help screen
 
@@ -388,6 +392,7 @@ Usage:
 
 Flags:
   -a, --all                in addition to Bloom filters, download full index chunks (recommended)
+  -e, --example string     create an example for the SDK with the given name
   -d, --dry_run            display the results of the download without actually downloading
   -F, --first_block uint   do not download any chunks earlier than this block
   -s, --sleep float        seconds to sleep between downloads

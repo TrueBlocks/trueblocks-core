@@ -21,7 +21,7 @@ import (
 type SlurpOptions struct {
 	Addrs      []string    `json:"addrs,omitempty"`
 	BlockIds   []string    `json:"blocks,omitempty"`
-	Types      SlurpTypes  `json:"types,omitempty"`
+	Parts      SlurpParts  `json:"parts,omitempty"`
 	Articulate bool        `json:"articulate,omitempty"`
 	Source     SlurpSource `json:"source,omitempty"`
 	Page       uint64      `json:"page,omitempty"`
@@ -57,45 +57,45 @@ func (opts *SlurpOptions) SlurpCount() ([]types.Monitor, *types.MetaData, error)
 	return querySlurp[types.Monitor](in)
 }
 
-type SlurpTypes int
+type SlurpParts int
 
 const (
-	NoST  SlurpTypes = 0
-	STExt            = 1 << iota
-	STInt
-	STToken
-	STNfts
-	ST1155
-	STMiner
-	STUncles
-	STWithdrawals
-	STSome = STExt | STInt | STToken | STNfts
-	STAll  = STExt | STInt | STToken | STNfts | ST1155 | STMiner | STUncles | STWithdrawals
+	NoSLP SlurpParts = 0
+	SPExt            = 1 << iota
+	SPInt
+	SPToken
+	SPNfts
+	SP1155
+	SPMiner
+	SPUncles
+	SPWithdrawals
+	SLPSome = SPExt | SPInt | SPToken | SPNfts
+	SLPAll  = SPExt | SPInt | SPToken | SPNfts | SP1155 | SPMiner | SPUncles | SPWithdrawals
 )
 
-func (v SlurpTypes) String() string {
+func (v SlurpParts) String() string {
 	switch v {
-	case NoST:
+	case NoSLP:
 		return "none"
-	case STSome:
+	case SLPSome:
 		return "some"
-	case STAll:
+	case SLPAll:
 		return "all"
 	}
 
-	var m = map[SlurpTypes]string{
-		STExt:         "ext",
-		STInt:         "int",
-		STToken:       "token",
-		STNfts:        "nfts",
-		ST1155:        "1155",
-		STMiner:       "miner",
-		STUncles:      "uncles",
-		STWithdrawals: "withdrawals",
+	var m = map[SlurpParts]string{
+		SPExt:         "ext",
+		SPInt:         "int",
+		SPToken:       "token",
+		SPNfts:        "nfts",
+		SP1155:        "1155",
+		SPMiner:       "miner",
+		SPUncles:      "uncles",
+		SPWithdrawals: "withdrawals",
 	}
 
 	var ret []string
-	for _, val := range []SlurpTypes{STExt, STInt, STToken, STNfts, ST1155, STMiner, STUncles, STWithdrawals} {
+	for _, val := range []SlurpParts{SPExt, SPInt, SPToken, SPNfts, SP1155, SPMiner, SPUncles, SPWithdrawals} {
 		if v&val != 0 {
 			ret = append(ret, m[val])
 		}
@@ -104,38 +104,38 @@ func (v SlurpTypes) String() string {
 	return strings.Join(ret, ",")
 }
 
-func enumFromSlurpTypes(values []string) (SlurpTypes, error) {
+func enumFromSlurpParts(values []string) (SlurpParts, error) {
 	if len(values) == 0 {
-		return NoST, fmt.Errorf("no value provided for types option")
+		return NoSLP, fmt.Errorf("no value provided for parts option")
 	}
 
 	if len(values) == 1 && values[0] == "all" {
-		return STAll, nil
+		return SLPAll, nil
 	} else if len(values) == 1 && values[0] == "some" {
-		return STSome, nil
+		return SLPSome, nil
 	}
 
-	var result SlurpTypes
+	var result SlurpParts
 	for _, val := range values {
 		switch val {
 		case "ext":
-			result |= STExt
+			result |= SPExt
 		case "int":
-			result |= STInt
+			result |= SPInt
 		case "token":
-			result |= STToken
+			result |= SPToken
 		case "nfts":
-			result |= STNfts
+			result |= SPNfts
 		case "1155":
-			result |= ST1155
+			result |= SP1155
 		case "miner":
-			result |= STMiner
+			result |= SPMiner
 		case "uncles":
-			result |= STUncles
+			result |= SPUncles
 		case "withdrawals":
-			result |= STWithdrawals
+			result |= SPWithdrawals
 		default:
-			return NoST, fmt.Errorf("unknown types: %s", val)
+			return NoSLP, fmt.Errorf("unknown parts: %s", val)
 		}
 	}
 

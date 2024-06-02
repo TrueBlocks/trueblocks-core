@@ -16,7 +16,6 @@ import (
 	"io"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -32,7 +31,6 @@ type transactionsOptionsInternal struct {
 	Emitter        []string         `json:"emitter,omitempty"`
 	Topic          []string         `json:"topic,omitempty"`
 	CacheTraces    bool             `json:"cacheTraces,omitempty"`
-	Seed           bool             `json:"seed,omitempty"`
 	Globals
 }
 
@@ -90,8 +88,7 @@ type transactionsGeneric interface {
 	types.Transaction |
 		types.Trace |
 		types.Appearance |
-		types.Log |
-		base.Address
+		types.Log
 }
 
 func queryTransactions[T transactionsGeneric](opts *transactionsOptionsInternal) ([]T, *types.MetaData, error) {

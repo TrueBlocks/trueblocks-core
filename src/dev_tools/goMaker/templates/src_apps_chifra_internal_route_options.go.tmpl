@@ -48,7 +48,7 @@ func {{toProper .Route}}FinishParseInternal(w io.Writer, values url.Values) *{{t
 	copy := default{{toProper .Route}}Options
 	copy.Globals.Caps = getCaps()
 	opts := &copy
-{{.DefaultsApi}}	for key, value := range values {
+{{.DefaultsApi true}}	for key, value := range values {
 		switch key {
 {{.RequestOpts}}		default:
 			if !copy.Globals.Caps.HasKey(key) {
@@ -60,10 +60,10 @@ func {{toProper .Route}}FinishParseInternal(w io.Writer, values url.Values) *{{t
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
-{{.EnsConvert1}}
+{{.EnsConvert1}}{{if .HasDeprecated}}{{.DeprecatedTransfer}}{{end}}
 	// EXISTING_CODE
 	// EXISTING_CODE
-{{.EnsConvert2}}
+{{if .HasFlagAliases}}{{.FlagAliases}}{{end}}{{.EnsConvert2}}
 	return opts
 }
 
@@ -85,10 +85,10 @@ func {{toLower .Route}}FinishParse(args []string) *{{toProper .Route}}Options {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-{{.EnsConvert1}}
+{{.EnsConvert1}}{{if .HasDeprecated}}{{.DeprecatedTransfer}}{{end}}
 	// EXISTING_CODE
 	// EXISTING_CODE
-{{.EnsConvert2}}	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+{{if .HasFlagAliases}}{{.FlagAliases}}{{end}}{{.EnsConvert2}}	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
 
@@ -110,13 +110,12 @@ func getCaps() caps.Capability {
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	default{{toProper .Route}}Options = {{toProper .Route}}Options{}
-	globals.SetDefaults(&default{{toProper .Route}}Options.Globals)
-	default{{toProper .Route}}Options.Globals.TestMode = testMode
-	default{{toProper .Route}}Options.Globals.Writer = w
-	// EXISTING_CODE
-	// EXISTING_CODE
-	default{{toProper .Route}}Options.Globals.Caps = getCaps()
+	opts := {{toProper .Route}}Options{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+{{.DefaultsApi false}}	default{{toProper .Route}}Options = opts
 }
 
 func (opts *{{toProper .Route}}Options) getCaches() (m map[string]bool) {

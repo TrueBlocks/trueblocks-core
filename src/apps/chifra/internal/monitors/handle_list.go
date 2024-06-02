@@ -39,7 +39,7 @@ func (opts *MonitorsOptions) HandleList() error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.Monitor], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, e := range errors {
 			errorChan <- e
 		}

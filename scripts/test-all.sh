@@ -25,7 +25,7 @@ make -C "$INSTALL"
 #------------------------------------------------
 echo "Running Go integration tests..."
 CHIFRA="${REPO_ROOT}/src/apps/chifra"
-(cd "$CHIFRA" && go test --tags integration ./...)
+(cd "$CHIFRA" && TB_NO_PROVIDER_CHECK=true go test --tags integration ./...)
 
 #------------------------------------------------
 echo "Reporting on the status of the tests submodule. No update..."

@@ -84,7 +84,7 @@ func (c *Command) HasNotes() bool {
 }
 
 func (c *Command) HasExample() bool {
-	return file.FileExists("./src/dev_tools/goMaker/templates/api/examples/" + c.Route + ".txt")
+	return file.FileExists("./src/dev_tools/goMaker/templates/api/examples/" + c.Route + ".json")
 }
 
 func (c *Command) HasHidden() bool {
@@ -141,7 +141,6 @@ func (c *Command) Clean() {
 				op.DataType = "enum"
 			}
 		}
-
 		if op.OptionType == "note" {
 			c.Notes = append(c.Notes, op.Description)
 		} else if op.OptionType == "alias" {
@@ -155,6 +154,16 @@ func (c *Command) Clean() {
 			cleaned = append(cleaned, op)
 		}
 	}
+
+	for index, op := range cleaned {
+		if op.IsDeprecated() {
+			parts := strings.Split(op.Attributes, "=")
+			msg := "deprecated, use --" + parts[1] + " instead"
+			cleaned[index].Description = msg
+			c.Notes = append(c.Notes, "The --"+op.LongName+" option is "+msg+".")
+		}
+	}
+
 	c.Options = cleaned
 }
 
@@ -319,7 +328,7 @@ func (c *Command) AddCaps() string {
 }
 
 // DefaultsApi for tag {{.DefaultsApi}}
-func (c *Command) DefaultsApi() string {
+func (c *Command) DefaultsApi(showConfig bool) string {
 	ret := []string{}
 	hasConfig := false
 	for _, op := range c.Options {
@@ -329,7 +338,7 @@ func (c *Command) DefaultsApi() string {
 			ret = append(ret, v)
 		}
 	}
-	if hasConfig {
+	if hasConfig && showConfig {
 		ret = append(ret, "	configs := make(map[string]string, 10)")
 	}
 	if len(ret) == 0 {
@@ -426,9 +435,11 @@ func (c *Command) RequestOpts() string {
 func (c *Command) TestLogs() string {
 	ret := []string{}
 	for _, op := range c.Options {
-		v := op.TestLog()
-		if len(v) > 0 {
-			ret = append(ret, v)
+		if !op.IsDeprecated() {
+			v := op.TestLog()
+			if len(v) > 0 {
+				ret = append(ret, v)
+			}
 		}
 	}
 	if c.Route == "scrape" {
@@ -466,7 +477,7 @@ func (c *Command) IsRoute() bool {
 }
 
 func (c *Command) Example() string {
-	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/api/examples/"+c.Route+".txt"), ws)
+	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/api/examples/"+c.Route+".json"), ws)
 	contents = strings.Replace(contents, "\n", "\n                  ", -1)
 	return strings.Trim(contents, ws) + "\n"
 }
@@ -986,4 +997,110 @@ func (c *Command) HandlerRows() string {
 		ret = append(ret, handler.executeTemplate(tmplName, tmpl))
 	}
 	return strings.Join(ret, "\n")
+}
+
+func (c *Command) Deprecated() string {
+	ret := []string{}
+	for _, op := range c.Options {
+		if op.IsDeprecated() {
+			tmplName := "deprecated"
+			tmpl := `	_ = [ROUTE]Cmd.Flags().MarkDeprecated("{{.LongName}}", "The --{{.LongName}} option has been deprecated.")`
+			val := op.executeTemplate(tmplName, tmpl)
+			val = strings.Replace(val, "[ROUTE]", op.Route, -1)
+			ret = append(ret, val)
+		}
+	}
+	return strings.Join(ret, "\n") + "\n"
+}
+
+func (c *Command) HasDeprecated() bool {
+	for _, op := range c.Options {
+		if op.IsDeprecated() {
+			return true
+		}
+	}
+	return false
+}
+
+func (op *Option) FindDeprecator() *Option {
+	parts := strings.Split(op.Attributes, "=")
+	for _, op := range op.cmdPtr.Options {
+		if op.LongName == parts[1] {
+			return &op
+		}
+	}
+	logger.Fatal(fmt.Sprintf("Deprecator (%s) not found for: %s", parts[1], op.LongName))
+	return nil
+}
+
+func (op *Option) Deprecator() string {
+	return op.FindDeprecator().LongName
+}
+
+func (op *Option) DeprecatorIsDefault() string {
+	dep := op.FindDeprecator()
+	if dep.IsArray() {
+		return "len(opts." + dep.GoName + ") == 0"
+	}
+	return "opts." + dep.GoName + " == \"" + dep.DefVal + "\""
+}
+
+func (op *Option) DeprecatedNotDefault() string {
+	if op.IsArray() {
+		return "len(opts." + op.GoName + ") > 0"
+	}
+	return "opts." + op.GoName + " != \"" + op.DefVal + "\""
+}
+
+func (op *Option) Clear() string {
+	if op.IsArray() {
+		return "[]string{}"
+	}
+	return "\"\""
+}
+
+func (c *Command) DeprecatedTransfer() string {
+	ret := []string{}
+	for _, op := range c.Options {
+		if op.IsDeprecated() {
+			tmplName := "deprecatedTransfer"
+			tmpl := `	// Deprecated, but still supported
+	if {{.DeprecatedNotDefault}} && {{.DeprecatorIsDefault}} {
+		logger.Warn("The --{{.LongName}} flag is deprecated. Please use --{{.Deprecator}} instead.")
+		opts.{{firstUpper .Deprecator}} = opts.{{.GoName}}
+		opts.{{.GoName}} = {{.Clear}}
+	}
+`
+			ret = append(ret, op.executeTemplate(tmplName, tmpl))
+		}
+	}
+	return strings.Join(ret, "\n") + "\n"
+}
+
+func (c *Command) HasFlagAliases() bool {
+	for _, op := range c.Options {
+		if op.IsFlagAlias() {
+			return true
+		}
+	}
+	return false
+}
+
+func (op *Option) FlagAliasTarget() string {
+	return FirstUpper("diagnose")
+}
+
+func (c *Command) FlagAliases() string {
+	for _, op := range c.Options {
+		if op.IsFlagAlias() {
+			tmplName := "flagAlias"
+			tmpl := `	if !opts.{{.FlagAliasTarget}} {
+		opts.{{.FlagAliasTarget}} = opts.{{firstUpper .LongName}} // alias
+		opts.{{firstUpper .LongName}} = false
+	}
+`
+			return op.executeTemplate(tmplName, tmpl)
+		}
+	}
+	return ""
 }

@@ -42,7 +42,7 @@ func (opts *StateOptions) HandleShow() error {
 
 	cnt := 0
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.State], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, addressStr := range opts.Addrs {
 			address := base.HexToAddress(addressStr)
 			currentBn := base.Blknum(0)

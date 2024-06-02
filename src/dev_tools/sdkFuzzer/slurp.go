@@ -27,9 +27,10 @@ func DoSlurp() {
 	ShowHeader("DoSlurp", opts)
 
 	globs := globals
-	// Option 'types.list<enum>' is an emum
+	// Option 'parts.list<enum>' is an emum
 	articulate := []bool{false, true}
 	// Option 'source.enum' is an emum
+	// types is a list<string> --other
 	// blocks is not fuzzed
 	// page is not fuzzed
 	// pageId is not fuzzed
@@ -39,18 +40,18 @@ func DoSlurp() {
 	// EXISTING_CODE
 	_ = globs
 	globs = noCache(globs)
-	types := []sdk.SlurpTypes{
-		sdk.NoST,
-		sdk.STExt,
-		sdk.STInt,
-		sdk.STToken,
-		sdk.STNfts,
-		sdk.ST1155,
-		sdk.STMiner,
-		sdk.STUncles,
-		sdk.STWithdrawals,
-		sdk.STSome,
-		sdk.STAll,
+	types := []sdk.SlurpParts{
+		sdk.NoSLP,
+		sdk.SPExt,
+		sdk.SPInt,
+		sdk.SPToken,
+		sdk.SPNfts,
+		sdk.SP1155,
+		sdk.SPMiner,
+		sdk.SPUncles,
+		sdk.SPWithdrawals,
+		sdk.SLPSome,
+		sdk.SLPAll,
 	}
 	sources := []sdk.SlurpSource{
 		sdk.SSEtherscan,
@@ -67,17 +68,17 @@ func DoSlurp() {
 		PerPage: 10,
 	}
 	for _, s := range sources {
-		for _, t := range types {
-			if sdk.NoST != t && sdk.SSEtherscan != s {
+		for _, p := range types {
+			if sdk.NoSLP != p && sdk.SSEtherscan != s {
 				continue
 			}
 			for _, art := range articulate {
-				baseFn := "slurp/slurp" + "-" + t.String() + "-" + s.String()
+				baseFn := "slurp/slurp" + "-" + p.String() + "-" + s.String()
 				if art {
 					baseFn += "-articulate"
 				}
 				opts.Source = s
-				opts.Types = t
+				opts.Parts = p
 				opts.Articulate = art
 				for _, g := range globs {
 					opts.Globals = g

@@ -35,7 +35,7 @@ func (opts *TracesOptions) HandleFilter() error {
 	opts.TransactionIds = ids
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Trace], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err
@@ -51,8 +51,9 @@ func (opts *TracesOptions) HandleFilter() error {
 			cancel()
 
 		} else {
+			showProgress := opts.Globals.ShowProgress()
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !logger.IsTerminal(),
+				Enabled: showProgress,
 				Total:   int64(cnt),
 			})
 
@@ -1022,7 +1023,7 @@ parseBlockOption
     }
 
     ASSERT(opts);
-    if (opts->isEnabled(OPT_CHECKLATEST) && ret > lastBlock) {
+    if (opts->isE nabled(OPT_CHECKLATEST) && ret > lastBlock) {
         string_q lateStr = (isTestMode() ? "--" : uint_2_Str(lastBlock));
         msg = "Block " + arg + " is later than the last valid block " + lateStr + "." + (isApi Mode() ? "" : "\n");
         return NOPOS;

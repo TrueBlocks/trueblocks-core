@@ -171,13 +171,12 @@ func getCaps() caps.Capability {
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultAbisOptions = AbisOptions{}
-	globals.SetDefaults(&defaultAbisOptions.Globals)
-	defaultAbisOptions.Globals.TestMode = testMode
-	defaultAbisOptions.Globals.Writer = w
-	// EXISTING_CODE
-	// EXISTING_CODE
-	defaultAbisOptions.Globals.Caps = getCaps()
+	opts := AbisOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	defaultAbisOptions = opts
 }
 
 func (opts *AbisOptions) getCaches() (m map[string]bool) {

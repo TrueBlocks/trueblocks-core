@@ -25,7 +25,6 @@ import (
 
 func (opts *ChunksOptions) HandleTruncate(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
 	if opts.Globals.TestMode {
 		logger.Warn("Truncate option not tested.")
 		return nil
@@ -38,14 +37,15 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []base.Blknum) error {
 
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
+	showProgress := opts.Globals.ShowProgressNotTesting()
 	bar := logger.NewBar(logger.BarOptions{
-		Enabled: !testMode, // do not uncomment !logger.IsTerminal(),
+		Enabled: showProgress,
 		Total:   128,
 		Type:    logger.Expanding,
 	})
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Message], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 
 		// First, we will remove the chunks and update the manifest. We do this separately for
 		// each chunk, so that if we get interrupted, we have a relatively sane state (although,
@@ -98,7 +98,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []base.Blknum) error {
 			bar.Prefix = fmt.Sprintf("Truncated to %d                    ", opts.Truncate)
 			bar.Finish(true /* newLine */)
 			bar = logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !logger.IsTerminal(),
+				Enabled: showProgress,
 				Total:   20,
 				Type:    logger.Expanding,
 			})

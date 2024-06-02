@@ -48,7 +48,6 @@ type exportOptionsInternal struct {
 	Flow        ExportFlow  `json:"flow,omitempty"`
 	Factory     bool        `json:"factory,omitempty"`
 	Unripe      bool        `json:"unripe,omitempty"`
-	Load        string      `json:"load,omitempty"`
 	Reversed    bool        `json:"reversed,omitempty"`
 	NoZero      bool        `json:"noZero,omitempty"`
 	FirstBlock  base.Blknum `json:"firstBlock,omitempty"`
@@ -165,7 +164,6 @@ func (opts *ExportOptions) toInternal() *exportOptionsInternal {
 		Flow:        opts.Flow,
 		Factory:     opts.Factory,
 		Unripe:      opts.Unripe,
-		Load:        opts.Load,
 		Reversed:    opts.Reversed,
 		NoZero:      opts.NoZero,
 		FirstBlock:  opts.FirstBlock,

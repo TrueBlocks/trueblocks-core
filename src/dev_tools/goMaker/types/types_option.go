@@ -53,6 +53,10 @@ func (op *Option) IsVisibleDocs() bool {
 	return strings.Contains(op.Attributes, "docs")
 }
 
+func (op *Option) IsDeprecated() bool {
+	return strings.Contains(op.Attributes, "deprecated")
+}
+
 func (op *Option) IsConfig() bool {
 	return strings.Contains(op.Attributes, "config")
 }
@@ -235,6 +239,10 @@ func (op *Option) IsAlias() bool {
 	return op.OptionType == "alias"
 }
 
+func (op *Option) IsFlagAlias() bool {
+	return strings.Contains(op.Attributes, "alias")
+}
+
 func (op *Option) IsPositional() bool {
 	return op.OptionType == "positional"
 }
@@ -271,32 +279,34 @@ func (op *Option) EnumName() string {
 	return strings.ToUpper(op.Route[0:1]) + op.Route[1:] + op.GoName
 }
 
-func (op *Option) EnumTag() string {
+func (op *Option) EnumTag(e string) string {
 	if len(op.Route) < 2 || len(op.GoSdkName) < 2 {
 		return ""
 	}
-	return strings.ToUpper(op.Route[0:1]) + op.GoSdkName[0:1]
+	tag := strings.ToUpper(op.Route[0:1]) + op.GoSdkName[0:1]
+	if tag == "CM" && e == "none" {
+		tag = strings.ToUpper(op.Route[0:2]) + op.GoSdkName[0:1]
+	} else if tag == "SP" && (e == "none" || e == "all" || e == "some") {
+		tag = strings.ToUpper(op.Route[0:2]) + op.GoSdkName[0:1]
+	}
+	return tag
 }
 
 func (op *Option) EnumNone() string {
 	if len(op.Route) < 3 || len(op.GoSdkName) < 2 {
 		return ""
 	}
-	tag := op.EnumTag()
-	if tag == "CM" {
-		// name clash otherwise
-		tag = strings.ToUpper(op.Route[0:2]) + op.GoSdkName[0:1]
-	}
+	tag := op.EnumTag("none")
 	return "No" + tag
 }
 
 func (op *Option) EnumDef() string {
-	tag := op.EnumTag()
 	some := []string{}
 	all := []string{}
 	ret := []string{}
 	for i, e := range op.Enums {
-		token := tag + strings.ToUpper(e[0:1]) + e[1:]
+		tag := op.EnumTag(e)
+		token := tag + FirstUpper(e)
 		if e == "some" {
 			if op.Route == "state" {
 				some = []string{"SPBalance", "SPProxy", "SPDeployed", "SPAccttype"}
@@ -325,7 +335,7 @@ func (op *Option) EnumMap() string {
 		if e == "some" || e == "all" {
 			continue
 		}
-		v := "\t\t" + op.EnumTag() + strings.ToUpper(e[0:1]) + e[1:] + ": \"" + e + "\","
+		v := "\t\t" + op.EnumTag(e) + FirstUpper(e) + ": \"" + e + "\","
 		ret = append(ret, v)
 	}
 	return strings.Join(ret, "\n")
@@ -341,7 +351,7 @@ func (op *Option) EnumList() string {
 		if e == "some" || e == "all" {
 			continue
 		}
-		ret = append(ret, op.EnumTag()+strings.ToUpper(e[0:1])+e[1:])
+		ret = append(ret, op.EnumTag(e)+FirstUpper(e))
 	}
 	return op.EnumName() + "{" + strings.Join(ret, ", ") + "}"
 }
@@ -361,9 +371,9 @@ func (op *Option) PreSwitch() string {
 	}
 	tmplName := "preSwitch"
 	tmpl := `if len(values) == 1 && values[0] == "all" {
-		return {{.EnumTag}}All, nil
+		return {{.EnumTag "all"}}All, nil
 	} else if len(values) == 1 && values[0] == "some" {
-		return {{.EnumTag}}Some, nil
+		return {{.EnumTag "some"}}Some, nil
 	}
 
 `
@@ -375,9 +385,9 @@ func (op *Option) SomeCases() string {
 		return ""
 	}
 	tmplName := "someCases"
-	tmpl := `	case {{.EnumTag}}Some:
+	tmpl := `	case {{.EnumTag "some"}}Some:
 		return "some"
-	case {{.EnumTag}}All:
+	case {{.EnumTag "all"}}All:
 		return "all"
 `
 	return op.executeTemplate(tmplName, tmpl)
@@ -399,7 +409,7 @@ func (op *Option) EnumCases() string {
 		if e == "some" || e == "all" {
 			continue
 		}
-		v := op.EnumTag() + strings.ToUpper(e[0:1]) + e[1:]
+		v := op.EnumTag(e) + FirstUpper(e)
 		ret = append(ret, "\t\tcase \""+e+"\":\n\t\t\tresult |= "+v)
 	}
 	v := "\t\tdefault:\n\t\t\treturn " + op.EnumNone() + ", fmt.Errorf(\"unknown " + op.LongName + ": %s\", val)"
@@ -796,7 +806,7 @@ func (op *Option) executeTemplate(name, tmplCode string) string {
 }
 
 func (op *Option) SdkIsPublic() bool {
-	return len(op.ReturnType) == 0 || (op.IsPositional() && !op.IsMode())
+	return (len(op.ReturnType) == 0 || (op.IsPositional() && !op.IsMode())) && !op.IsDeprecated()
 }
 
 func (op *Option) IsMode() bool {
@@ -845,7 +855,7 @@ func (op *Option) ToolAssignment() string {
 	if len(op.ReturnType) == 0 {
 		return ""
 	} else if op.IsMode() {
-		return op.EnumTag() + Proper(op.GoName)
+		return op.EnumTag("") + Proper(op.GoName)
 	} else if strings.Contains(op.DataType, "[]string") ||
 		strings.Contains(op.DataType, "string") ||
 		strings.Contains(op.DataType, "address") ||

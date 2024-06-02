@@ -14,16 +14,15 @@ import (
 )
 
 func (opts *TransactionsOptions) HandleDecache() error {
-	silent := !opts.Globals.ShowProgress()
-
 	itemsToRemove, err := decache.LocationsFromTransactionIds(opts.Conn, opts.TransactionIds)
 	if err != nil {
 		return err
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.Message], errorChan chan error) {
-		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, walk.Cache_Transactions); err != nil {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		showProgress := opts.Globals.ShowProgress()
+		if msg, err := decache.Decache(opts.Conn, itemsToRemove, showProgress, walk.Cache_Transactions); err != nil {
 			errorChan <- err
 		} else {
 			s := types.Message{

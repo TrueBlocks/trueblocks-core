@@ -43,7 +43,6 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13240,apps,Accounts,export,acctExport,flow,f,,visible|docs,,flag,enum[in|out|zero],,,,,for the accounting options only&#44; export statements with incoming&#44; outgoing&#44; or zero value
 13250,apps,Accounts,export,acctExport,factory,y,,visible|docs,,switch,<boolean>,,,,,for --traces only&#44; report addresses created by (or self-destructed by) the given address(es)
 13260,apps,Accounts,export,acctExport,unripe,u,,visible|docs,,switch,<boolean>,,,,,export transactions labeled unripe (i.e. less than 28 blocks old)
-13270,apps,Accounts,export,acctExport,load,O,,,,flag,<string>,,,,,a comma separated list of dynamic traversers to load
 13280,apps,Accounts,export,acctExport,reversed,E,,visible|docs,,switch,<boolean>,,,,,produce results in reverse chronological order
 13290,apps,Accounts,export,acctExport,no_zero,z,,visible|docs,,switch,<boolean>,,,,,for the --count option only&#44; suppress the display of zero appearance accounts
 13300,apps,Accounts,export,acctExport,first_block,F,,visible|docs,,flag,<blknum>,,,,,first block to process (inclusive)
@@ -71,7 +70,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 14090,apps,Accounts,monitors,acctExport,watchlist,a,,visible|docs,,flag,<string>,,,,,available with --watch option only&#44; a file containing the addresses to watch
 14100,apps,Accounts,monitors,acctExport,commands,c,,visible|docs,,flag,<string>,,,,,available with --watch option only&#44; the file containing the list of commands to apply to each watched address
 14110,apps,Accounts,monitors,acctExport,batch_size,b,8,visible|docs,,flag,<uint64>,,,,,available with --watch option only&#44; the number of monitors to process in each batch
-14120,apps,Accounts,monitors,acctExport,run_count,u,,,,flag,<uint64>,,,,,available with --watch option only&#44; run the monitor this many times&#44; then quit
+14120,apps,Accounts,monitors,acctExport,run_count,u,,visible|docs,,flag,<uint64>,,,,,available with --watch option only&#44; run the monitor this many times&#44; then quit
 14130,apps,Accounts,monitors,acctExport,sleep,s,14,visible|docs,,flag,<float64>,,,,,available with --watch option only&#44; the number of seconds to sleep between runs
 14140,apps,Accounts,monitors,acctExport,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 14150,apps,Accounts,monitors,acctExport,n2,,,,,note,,,,,,If no address is presented to the --clean command&#44; all existing monitors will be cleaned.
@@ -124,8 +123,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 22110,tools,Chain Data,blocks,getBlocks,withdrawals,i,,visible|docs,3,switch,<boolean>,withdrawal,,,,export the withdrawals from the block as opposed to the block data
 22120,tools,Chain Data,blocks,getBlocks,articulate,a,,visible|docs,,switch,<boolean>,,,,,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
 22140,tools,Chain Data,blocks,getBlocks,count,U,,visible|docs,1,switch,<boolean>,blockCount,,,,display only the count of appearances for --addrs or --uniq
-22150,tools,Chain Data,blocks,getBlocks,cache_txs,,,,,switch,<boolean>,,,,,force a write of the block's transactions to the cache (slow)
-22160,tools,Chain Data,blocks,getBlocks,cache_traces,,,,,switch,<boolean>,,,,,force a write of the block's traces to the cache (slower)
+22150,tools,Chain Data,blocks,getBlocks,cache_txs,X,,visible|docs,,switch,<boolean>,,,,,force a write of the block's transactions to the cache (slow)
+22160,tools,Chain Data,blocks,getBlocks,cache_traces,R,,visible|docs,,switch,<boolean>,,,,,force a write of the block's traces to the cache (slower)
 22190,tools,Chain Data,blocks,getBlocks,n1,,,,,note,,,,,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 22200,tools,Chain Data,blocks,getBlocks,n2,,,,,note,,,,,,`Blocks` may be specified as either numbers or hashes.
 22210,tools,Chain Data,blocks,getBlocks,n3,,,,,note,,,,,,`Special` blocks are detailed under `chifra when --list`.
@@ -144,8 +143,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 23070,tools,Chain Data,transactions,getTrans,logs,l,,visible|docs,1,switch,<boolean>,log,,,,display only the logs found in the transaction(s)
 23080,tools,Chain Data,transactions,getTrans,emitter,m,,visible|docs,,flag,list<addr>,,,,,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 23090,tools,Chain Data,transactions,getTrans,topic,B,,visible|docs,,flag,list<topic>,,,,,for the --logs option only&#44; filter logs to show only those with this topic(s)
-23100,tools,Chain Data,transactions,getTrans,cache_traces,,,,,switch,<boolean>,,,,,force the transaction's traces into the cache
-23110,tools,Chain Data,transactions,getTrans,seed,S,,,2,switch,<boolean>,address,,,,find the source of the funds sent to the receiver
+23100,tools,Chain Data,transactions,getTrans,cache_traces,R,,visible|docs,,switch,<boolean>,,,,,force the transaction's traces into the cache
 23120,tools,Chain Data,transactions,getTrans,n1,,,,,note,,,,,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 23130,tools,Chain Data,transactions,getTrans,n2,,,,,note,,,,,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 23140,tools,Chain Data,transactions,getTrans,n3,,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
@@ -200,7 +198,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 32040,tools,Chain State,state,getState,parts,p,,visible|docs,,flag,list<enum[balance|nonce|code|proxy|deployed|accttype|some*|all]>,,,,,control which state to export
 32050,tools,Chain State,state,getState,changes,c,,visible|docs,,switch,<boolean>,,,,,only report a balance when it changes from one block to the next
 32060,tools,Chain State,state,getState,no_zero,z,,visible|docs,,switch,<boolean>,,,,,suppress the display of zero balance accounts
-32070,tools,Chain State,state,getState,call,l,,visible|docs,1,flag,<string>,result,,,,call a smart contract with a solidity syntax&#44; a four-byte and parameters&#44; or encoded call data
+32070,tools,Chain State,state,getState,call,l,,visible|docs,1,flag,<string>,result,,,,call a smart contract with one or more solidity calls&#44; four-byte plus parameters&#44; or encoded call data strings
 32080,tools,Chain State,state,getState,articulate,a,,visible|docs,,switch,<boolean>,,,,,for the --call option only&#44; articulate the retrieved data if ABIs can be found
 32090,tools,Chain State,state,getState,proxy_for,r,,visible|docs,,flag,<address>,,,,,for the --call option only&#44; redirects calls to this implementation
 32100,tools,Chain State,state,getState,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
@@ -209,7 +207,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 32130,tools,Chain State,state,getState,n4,,,,,note,,,,,,`Special` blocks are detailed under `chifra when --list`.
 32140,tools,Chain State,state,getState,n5,,,,,note,,,,,,`Balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
 32150,tools,Chain State,state,getState,n6,,,,,note,,,,,,Valid parameters for --call include Solidity-like syntax: balanceOf(0x316b...183d)&#44; a four-byte followed by parameters: 0x70a08231(0x316b...183d)&#44; or encoded input data.
-32160,tools,Chain State,state,getState,n7,,,,,note,,,,,,You may specify multiple `modes` on a single line.
+32160,tools,Chain State,state,getState,n7,,,,,note,,,,,,You may specify multiple `parts` on a single line.
+32170,tools,Chain State,state,getState,n8,,,,,note,,,,,,In the --call string&#44; you may separate multiple calls with a colon.
 #
 33000,tools,Chain State,tokens,getTokens,,,,visible|docs,,command,,,Get token balance(s),[flags] <address> <address> [address...] [block...],default|caching|,Retrieve token balance(s) for one or more addresses at given block(s).
 33020,tools,Chain State,tokens,getTokens,addrs,,,required|visible|docs,2,positional,list<addr>,token,,,,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
@@ -237,6 +236,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 43040,apps,Admin,status,cacheStatus,first_record,c,,visible|docs,,flag,<uint64>,,,,,the first record to process
 43050,apps,Admin,status,cacheStatus,max_records,e,10000,visible|docs,,flag,<uint64>,,,,,the maximum number of records to process
 43060,apps,Admin,status,cacheStatus,chains,a,,visible|docs,,switch,<boolean>,,,,,include a list of chain configurations in the output
+43065,apps,Admin,status,cacheStatus,healthcheck,k,,visible|docs|alias=diagnose,,switch,<boolean>,status,,,,an alias for the diagnose endpoint
 43070,apps,Admin,status,cacheStatus,n1,,,,,note,,,,,,The `some` mode includes index&#44; monitors&#44; names&#44; slurps&#44; and abis.
 43080,apps,Admin,status,cacheStatus,n2,,,,,note,,,,,,If no mode is supplied&#44; a terse report is generated.
 #
@@ -246,8 +246,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 44040,apps,Admin,daemon,flame,scrape,s,,,,flag,enum[off|blooms|index]>,,,,,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
 44050,apps,Admin,daemon,flame,monitor,m,,,,switch,<boolean>,,,,,instruct the node to start the monitors tool
 44060,apps,Admin,daemon,flame,grpc,g,,visible|docs,,switch,<boolean>,,,,,run gRPC server to serve names
-44070,apps,Admin,daemon,flame,port,p,:8080,visible|docs,,flag,<string>,,,,,deprecated please use --url flag instead
 44070,apps,Admin,daemon,flame,silent,,,visible|docs,,switch,<boolean>,,,,,disable logging (for use in SDK for example)
+44070,apps,Admin,daemon,flame,port,p,:8080,deprecated=url,,flag,<string>,,,,,deprecated
 44080,apps,Admin,daemon,flame,n1,,,,,note,,,,,,To start API open terminal window and run chifra daemon.
 44090,apps,Admin,daemon,flame,n2,,,,,note,,,,,,See the API documentation (https://trueblocks.io/api) for more information.
 44100,apps,Admin,daemon,flame,a1,,,,,alias,,,,,,serve
@@ -256,9 +256,9 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 45020,apps,Admin,scrape,blockScrape,block_cnt,n,2000,visible|docs,2,flag,<uint64>,,,,,maximum number of blocks to process per pass
 45030,apps,Admin,scrape,blockScrape,sleep,s,14,visible|docs,,flag,<float64>,,,,,seconds to sleep between scraper passes
 45040,apps,Admin,scrape,blockScrape,touch,l,,visible|docs,1,flag,<blknum>,,,,,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
-45050,apps,Admin,scrape,blockScrape,run_count,u,,,,flag,<uint64>,,,,,run the scraper this many times&#44; then quit
+45050,apps,Admin,scrape,blockScrape,run_count,u,,visible|docs,,flag,<uint64>,,,,,run the scraper this many times&#44; then quit
 45060,apps,Admin,scrape,blockScrape,publisher,P,,,,flag,<address>,,,,,for some query options&#44; the publisher of the index
-45070,apps,Admin,scrape,blockScrape,dry_run,d,,,,switch,<boolean>,,,,,show the configuration that would be applied if run&#44;no changes are made
+45070,apps,Admin,scrape,blockScrape,dry_run,d,,visible|docs,,switch,<boolean>,,,,,show the configuration that would be applied if run&#44;no changes are made
 45080,apps,Admin,scrape,blockScrape,apps_per_chunk,,2000000,config,,flag,<uint64>,,,,,the number of appearances to build into a chunk before consolidating it
 45090,apps,Admin,scrape,blockScrape,snap_to_grid,,250000,config,,flag,<uint64>,,,,,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
 45100,apps,Admin,scrape,blockScrape,first_snap,,2000000,config,,flag,<uint64>,,,,,the first block at which snap_to_grid is enabled
@@ -293,15 +293,15 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 46240,apps,Admin,chunks,chunkMan,n3,,,,,note,,,,,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
 46250,apps,Admin,chunks,chunkMan,n5,,,,,note,,,,,,The --truncate option updates the manifest and removes local data&#44; but does not alter remote pins.
 46260,apps,Admin,chunks,chunkMan,n6,,,,,note,,,,,,The --belongs option is only available in the index mode.
-46270,apps,Admin,chunks,chunkMan,n5,,,,,note,,,,,,The --first_block and --last_block options apply only to addresses&#44; appearances&#44; and index --belongs mode.
-46280,apps,Admin,chunks,chunkMan,n7,,,,,note,,,,,,The --pin option requires a locally running IPFS node or a pinning service API key.
-46290,apps,Admin,chunks,chunkMan,n8,,,,,note,,,,,,The --publish option requires a private key.
-46300,apps,Admin,chunks,chunkMan,n9,,,,,note,,,,,,The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
-46310,apps,Admin,chunks,chunkMan,n10,,,,,note,,,,,,Without --rewrite&#44; the manifest is written to the temporary cache. With it&#44; the manifest is rewritten to the index folder.
+46270,apps,Admin,chunks,chunkMan,n7,,,,,note,,,,,,The --first_block and --last_block options apply only to addresses&#44; appearances&#44; and index --belongs mode.
+46280,apps,Admin,chunks,chunkMan,n8,,,,,note,,,,,,The --pin option requires a locally running IPFS node or a pinning service API key.
+46290,apps,Admin,chunks,chunkMan,n9,,,,,note,,,,,,The --publish option requires a private key.
+46300,apps,Admin,chunks,chunkMan,n10,,,,,note,,,,,,The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
+46310,apps,Admin,chunks,chunkMan,n11,,,,,note,,,,,,Without --rewrite&#44; the manifest is written to the temporary cache. With it&#44; the manifest is rewritten to the index folder.
 #
 47000,apps,Admin,init,init,,,,visible|docs,,command,,,Initialize index,[flags],verbose|version|noop|noColor|chain|,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
 47020,apps,Admin,init,init,all,a,,visible|docs,3,switch,<boolean>,message,,,,in addition to Bloom filters&#44; download full index chunks (recommended)
-47025,apps,Admin,init,init,example,e,,visible,2,flag,<string>,message,,,,create an example for the SDK with the given name
+47025,apps,Admin,init,init,example,e,,visible|docs,2,flag,<string>,message,,,,create an example for the SDK with the given name
 47030,apps,Admin,init,init,dry_run,d,,visible|docs,1,switch,<boolean>,message,,,,display the results of the download without actually downloading
 47040,apps,Admin,init,init,publisher,P,,,,flag,<address>,,,,,the publisher of the index to download
 47050,apps,Admin,init,init,first_block,F,,visible|docs,,flag,<blknum>,,,,,do not download any chunks earlier than this block
@@ -320,17 +320,18 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 53000,tools,Other,slurp,ethslurp,,,,visible|docs,,command,,,Slurp Api services,[flags] <address> [address...] [block...],default|caching|ether|,Fetch data from Etherscan and other APIs for any address.
 53020,tools,Other,slurp,ethslurp,addrs,,,required|visible|docs,3,positional,list<addr>,slurp,,,,one or more addresses to slurp from Etherscan
 53030,tools,Other,slurp,ethslurp,blocks,,,visible|docs,,positional,list<blknum>,,,,,an optional range of blocks to slurp
-53040,tools,Other,slurp,ethslurp,types,t,,visible|docs,,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|some|all]>,,,,,which types of transactions to request
+53040,tools,Other,slurp,ethslurp,parts,r,,visible|docs,,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|some|all]>,,,,,which types of transactions to request
 53050,tools,Other,slurp,ethslurp,appearances,p,,visible|docs,2,switch,<boolean>,appearance,,,,show only the blocknumber.tx_id appearances of the exported transactions
 53060,tools,Other,slurp,ethslurp,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 53070,tools,Other,slurp,ethslurp,source,S,etherscan,visible|docs,,flag,enum[etherscan*|key|covalent|alchemy],,,,,the source of the slurped data
 53080,tools,Other,slurp,ethslurp,count,U,,visible|docs,1,switch,<boolean>,monitor,,,,for --appearances mode only&#44; display only the count of records
-53090,tools,Other,slurp,ethslurp,page,g,,,,flag,<uint64>,,,,,the page to retrieve (page number)
-53090,tools,Other,slurp,ethslurp,page_id,,,,,flag,<string>,,,,,the page to retrieve (page ID)
-53100,tools,Other,slurp,ethslurp,per_page,P,1000,,,flag,<uint64>,,,,,the number of records to request on each page
+53090,tools,Other,slurp,ethslurp,page,g,,visible|docs,,flag,<uint64>,,,,,the page to retrieve (page number)
+53090,tools,Other,slurp,ethslurp,page_id,,,visible|docs,,flag,<string>,,,,,the page to retrieve (page ID)
+53100,tools,Other,slurp,ethslurp,per_page,P,1000,visible|docs,,flag,<uint64>,,,,,the number of records to request on each page
 53110,tools,Other,slurp,ethslurp,sleep,s,.25,visible|docs,,flag,<float64>,,,,,seconds to sleep between requests
+53015,tools,Other,slurp,ethslurp,types,t,,deprecated=parts,,flag,list<string>,,,,,deprecated
 53120,tools,Other,slurp,ethslurp,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 53130,tools,Other,slurp,ethslurp,n2,,,,,note,,,,,,Portions of this software are Powered by Etherscan.io&#44; Covalent&#44; Alchemy&#44; TrueBlocks Key APIs.
 53131,tools,Other,slurp,ethslurp,n3,,,,,note,,,,,,See slurp/README on how to configure keys for API providers
-53140,tools,Other,slurp,ethslurp,n3,,,,,note,,,,,,The withdrawals option is only available on certain chains. It is ignored otherwise.
-53150,tools,Other,slurp,ethslurp,n4,,,,,note,,,,,,If the value of --source is key&#44; --types is ignored.
+53140,tools,Other,slurp,ethslurp,n4,,,,,note,,,,,,The withdrawals option is only available on certain chains. It is ignored otherwise.
+53150,tools,Other,slurp,ethslurp,n5,,,,,note,,,,,,If the value of --source is key&#44; --parts is ignored.

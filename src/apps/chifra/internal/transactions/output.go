@@ -55,8 +55,6 @@ func (opts *TransactionsOptions) TransactionsInternal() error {
 		err = opts.HandleDecache()
 	} else if opts.Logs {
 		err = opts.HandleLogs()
-	} else if opts.Seed {
-		err = opts.HandleSeed()
 	} else if opts.Uniq {
 		err = opts.HandleUniq()
 	} else {

@@ -20,6 +20,7 @@ export function getTransactions(
     logs?: boolean,
     emitter?: address[],
     topic?: topic[],
+    cacheTraces?: boolean,
     fmt?: string,
     chain: string,
     noHeader?: boolean,
@@ -29,7 +30,7 @@ export function getTransactions(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Appearance[] | Log[] | Trace[] | Transaction[] | address[]>(
+  return ApiCallers.fetch<Appearance[] | Log[] | Trace[] | Transaction[]>(
     { endpoint: '/transactions', method: 'get', parameters, options },
   );
 }

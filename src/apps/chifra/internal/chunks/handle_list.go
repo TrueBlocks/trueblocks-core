@@ -20,12 +20,14 @@ func (opts *ChunksOptions) HandleList(unusedBns []base.Blknum) error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.IpfsPin], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		var perPage = 1000
 		if testMode {
 			perPage = -100
 		}
-		if array, err := pinning.ListPins(opts.Globals.Chain, "pinned", opts.Count, perPage, time.Millisecond*500); err != nil {
+
+		showProgress := opts.Globals.ShowProgress()
+		if array, err := pinning.ListPins(opts.Globals.Chain, "pinned", showProgress, opts.Count, perPage, time.Millisecond*500); err != nil {
 			errorChan <- err
 		} else {
 			for _, line := range array {

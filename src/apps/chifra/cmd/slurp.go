@@ -51,7 +51,8 @@ Notes:
   - Portions of this software are Powered by Etherscan.io, Covalent, Alchemy, TrueBlocks Key APIs.
   - See slurp/README on how to configure keys for API providers
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
-  - If the value of --source is key, --types is ignored.`
+  - If the value of --source is key, --parts is ignored.
+  - The --types option is deprecated, use --parts instead.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra slurp
@@ -61,22 +62,22 @@ func init() {
 
 	slurpCmd.Flags().SortFlags = false
 
-	slurpCmd.Flags().StringSliceVarP(&slurpPkg.GetOptions().Types, "types", "t", nil, `which types of transactions to request
+	slurpCmd.Flags().StringSliceVarP(&slurpPkg.GetOptions().Parts, "parts", "r", nil, `which types of transactions to request
 One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | some | all ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Appearances, "appearances", "p", false, `show only the blocknumber.tx_id appearances of the exported transactions`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Articulate, "articulate", "a", false, `articulate the retrieved data if ABIs can be found`)
 	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().Source, "source", "S", "etherscan", `the source of the slurped data
 One of [ etherscan | key | covalent | alchemy ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Count, "count", "U", false, `for --appearances mode only, display only the count of records`)
-	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().Page, "page", "g", 0, `the page to retrieve (page number) (hidden)`)
-	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().PageId, "page_id", "", "", `the page to retrieve (page ID) (hidden)`)
-	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 1000, `the number of records to request on each page (hidden)`)
+	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().Page, "page", "g", 0, `the page to retrieve (page number)`)
+	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().PageId, "page_id", "", "", `the page to retrieve (page ID)`)
+	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 1000, `the number of records to request on each page`)
 	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, `seconds to sleep between requests`)
+	slurpCmd.Flags().StringSliceVarP(&slurpPkg.GetOptions().Types, "types", "t", nil, `deprecated, use --parts instead (hidden)`)
 	if os.Getenv("TEST_MODE") != "true" {
-		_ = slurpCmd.Flags().MarkHidden("page")
-		_ = slurpCmd.Flags().MarkHidden("page_id")
-		_ = slurpCmd.Flags().MarkHidden("per_page")
+		_ = slurpCmd.Flags().MarkHidden("types")
 	}
+	_ = slurpCmd.Flags().MarkDeprecated("types", "The --types option has been deprecated.")
 	globals.InitGlobals("slurp", slurpCmd, &slurpPkg.GetOptions().Globals, capabilities)
 
 	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))

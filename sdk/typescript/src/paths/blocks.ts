@@ -24,6 +24,8 @@ export function getBlocks(
     withdrawals?: boolean,
     articulate?: boolean,
     count?: boolean,
+    cacheTxs?: boolean,
+    cacheTraces?: boolean,
     fmt?: string,
     chain: string,
     noHeader?: boolean,

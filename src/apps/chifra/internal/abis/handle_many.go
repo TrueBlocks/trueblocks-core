@@ -16,7 +16,7 @@ import (
 
 func (opts *AbisOptions) HandleMany() (err error) {
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Abi], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, addr := range opts.Addrs {
 			abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)
 			address := base.HexToAddress(addr)

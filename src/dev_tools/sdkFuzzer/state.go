@@ -44,8 +44,8 @@ func DoState() {
 		sdk.SPProxy,
 		sdk.SPDeployed,
 		sdk.SPAccttype,
-		sdk.SPSome,
-		sdk.SPAll,
+		sdk.STPSome,
+		sdk.STPAll,
 	}
 	opts = sdk.StateOptions{
 		BlockIds: []string{"10092000"},
@@ -62,7 +62,7 @@ func DoState() {
 				if z {
 					baseFn += "-noZero"
 				}
-				if p != sdk.NoSP {
+				if p != sdk.NoSTP {
 					baseFn += "-" + strings.ToLower(p.String())
 				}
 				opts.Changes = c

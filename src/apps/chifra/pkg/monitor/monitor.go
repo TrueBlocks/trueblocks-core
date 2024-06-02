@@ -166,6 +166,10 @@ func (mon *Monitor) Remove() (bool, error) {
 	if !mon.IsDeleted() {
 		return false, errors.New("cannot remove a monitor that is not deleted")
 	}
+	if mon.Staged {
+		file.Remove(mon.Path())
+		mon.Staged = false
+	}
 	file.Remove(mon.Path())
 	return !file.FileExists(mon.Path()), nil
 }

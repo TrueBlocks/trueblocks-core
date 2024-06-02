@@ -35,14 +35,14 @@ func (opts *StateOptions) HandleCall() error {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.Result], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Result](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[[]types.Result](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -51,31 +51,34 @@ func (opts *StateOptions) HandleCall() error {
 			cancel()
 
 		} else {
+			showProgress := opts.Globals.ShowProgress()
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !logger.IsTerminal(),
+				Enabled: showProgress,
 				Total:   int64(cnt),
 			})
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.Result)
+					thisMap[app] = new([]types.Result)
 				}
 
-				iterFunc := func(app types.Appearance, value *types.Result) error {
+				iterFunc := func(app types.Appearance, value *[]types.Result) error {
 					bn := base.Blknum(app.BlockNumber)
-					if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
-						delete(thisMap, app)
-						return fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)
-
-					} else {
-						contractCall.BlockNumber = bn
-						results, err := contractCall.Call(artFunc)
-						if err != nil {
+					for _, c := range opts.Calls {
+						if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
 							delete(thisMap, app)
-							return err
+							return fmt.Errorf("the --call value provided (%s) was not found: %s", c, err)
+
 						} else {
-							bar.Tick()
-							*value = *results
+							contractCall.BlockNumber = bn
+							results, err := contractCall.Call(artFunc)
+							if err != nil {
+								delete(thisMap, app)
+								return err
+							} else {
+								bar.Tick()
+								*value = append(*value, *results)
+							}
 						}
 					}
 					return nil
@@ -94,7 +97,7 @@ func (opts *StateOptions) HandleCall() error {
 
 				items := make([]types.Result, 0, len(thisMap))
 				for _, v := range thisMap {
-					items = append(items, *v)
+					items = append(items, *v...)
 				}
 
 				sort.Slice(items, func(i, j int) bool {

@@ -23,7 +23,7 @@ func (opts *StatusOptions) HandleModes() error {
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.Status], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		now := time.Now()
 
 		filenameChan := make(chan walk.CacheFileInfo)
@@ -141,9 +141,8 @@ func (opts *StatusOptions) HandleModes() error {
 	}
 
 	extraOpts := map[string]any{
-		"showProgress": false,
-		"testMode":     testMode,
-		"chains":       opts.Chains,
+		"testMode": testMode,
+		"chains":   opts.Chains,
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

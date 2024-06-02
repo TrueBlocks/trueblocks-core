@@ -33,7 +33,7 @@ func Test_FreshenMonitors(t *testing.T) {
 
 	os.Setenv("FAKE_FINAL_BLOCK", "2500000")
 	monitorArray := make([]Monitor, 0, len(addrs))
-	var updater = NewUpdater(utils.GetTestChain(), true, addrs)
+	var updater = NewUpdater(utils.GetTestChain(), true, false /* skipFreshen */, addrs)
 	_, err := updater.FreshenMonitors(&monitorArray)
 	if err != nil {
 		t.Error(err)
@@ -48,7 +48,7 @@ func Test_FreshenMonitors(t *testing.T) {
 
 	os.Setenv("FAKE_FINAL_BLOCK", "")
 	// Must reset this or use a different one. We'll just reset it.
-	updater = NewUpdater(utils.GetTestChain(), true, addrs)
+	updater = NewUpdater(utils.GetTestChain(), true, false /* skipFreshen */, addrs)
 	_, err = updater.FreshenMonitors(&monitorArray)
 	if err != nil {
 		t.Error(err)

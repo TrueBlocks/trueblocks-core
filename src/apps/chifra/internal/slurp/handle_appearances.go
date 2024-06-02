@@ -3,7 +3,6 @@ package slurpPkg
 import (
 	"context"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -13,10 +12,10 @@ func (opts *SlurpOptions) HandleAppearances() error {
 	if err != nil {
 		return err
 	}
-	provider.SetPrintProgress(!opts.Globals.TestMode && !logger.IsTerminal())
+	provider.SetPrintProgress(opts.Globals.ShowProgress())
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.Appearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		appearancesChan := provider.Appearances(ctx, opts.Query(), errorChan)
 		for appearance := range appearancesChan {
 			modelChan <- &appearance

@@ -24,7 +24,7 @@ import (
 type slurpOptionsInternal struct {
 	Addrs       []string    `json:"addrs,omitempty"`
 	BlockIds    []string    `json:"blocks,omitempty"`
-	Types       SlurpTypes  `json:"types,omitempty"`
+	Parts       SlurpParts  `json:"parts,omitempty"`
 	Appearances bool        `json:"appearances,omitempty"`
 	Articulate  bool        `json:"articulate,omitempty"`
 	Source      SlurpSource `json:"source,omitempty"`
@@ -60,10 +60,10 @@ func slurpParseFunc(target any, key, value string) (bool, error) {
 		return false, fmt.Errorf("parseFunc(slurp): target is not of correct type")
 	}
 
-	if key == "types" {
+	if key == "parts" {
 		var err error
 		values := strings.Split(value, ",")
-		if opts.Types, err = enumFromSlurpTypes(values); err != nil {
+		if opts.Parts, err = enumFromSlurpParts(values); err != nil {
 			return false, err
 		} else {
 			found = true
@@ -130,7 +130,7 @@ func (opts *SlurpOptions) toInternal() *slurpOptionsInternal {
 	return &slurpOptionsInternal{
 		Addrs:      opts.Addrs,
 		BlockIds:   opts.BlockIds,
-		Types:      opts.Types,
+		Parts:      opts.Parts,
 		Articulate: opts.Articulate,
 		Source:     opts.Source,
 		Page:       opts.Page,

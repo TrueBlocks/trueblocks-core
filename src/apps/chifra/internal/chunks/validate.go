@@ -48,13 +48,15 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Mode == "pins" {
-		if !opts.List && !opts.Unpin {
-			return validate.Usage("{0} mode requires {1}.", "pins", "either --list or --unpin")
+		if !opts.List && !opts.Unpin && !opts.Count {
+			return validate.Usage("{0} mode requires {1}.", "pins", "either --list, --count, or --unpin")
 		}
+
 		if opts.Unpin {
 			if !file.FileExists("./unpins") {
-				return validate.Usage("The {0} file does not exist.", "./unpins")
+				return validate.Usage("The file {0} was not found in the local folder.", "./unpins")
 			}
+
 			hasOne := false
 			lines := file.AsciiFileToLines("./unpins")
 			for _, line := range lines {
@@ -67,23 +69,22 @@ func (opts *ChunksOptions) validateChunks() error {
 				return validate.Usage("The {0} file does not contain any valid CIDs.", "./unpins")
 			}
 		}
-	} else if opts.List {
-		return validate.Usage("The {0} option is only available in {1} mode.", "--list", "pins")
-	} else if opts.Unpin {
-		return validate.Usage("The {0} option is only available in {1} mode.", "--unpin", "pins")
-	} else if opts.Count {
-		return validate.Usage("The {0} option is only available in {1} mode.", "--count", "pins")
+
+	} else {
+		if opts.List {
+			return validate.Usage("The {0} option is only available in {1} mode.", "--list", "pins")
+		} else if opts.Unpin {
+			return validate.Usage("The {0} option is only available in {1} mode.", "--unpin", "pins")
+		} else if opts.Count {
+			return validate.Usage("The {0} option is only available in {1} mode.", "--count", "pins")
+		}
 	}
 
 	if !config.IsChainConfigured(chain) {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	if len(opts.Mode) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[manifest|index|blooms|pins|addresses|appearances|stats]")
-	}
-
-	err := validate.ValidateEnum("mode", opts.Mode, "[manifest|index|blooms|pins|addresses|appearances|stats]")
+	err := validate.ValidateEnumRequired("mode", opts.Mode, "[manifest|index|blooms|pins|addresses|appearances|stats]")
 	if err != nil {
 		return err
 	}

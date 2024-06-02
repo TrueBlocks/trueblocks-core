@@ -33,17 +33,19 @@ type MonitorUpdate struct {
 	Chain         string
 	PublisherAddr base.Address
 	TestMode      bool
+	SkipFreshen   bool
 	FirstBlock    base.Blknum
 	Addrs         []string
 }
 
-func NewUpdater(chain string, testMode bool, addrs []string) MonitorUpdate {
+func NewUpdater(chain string, testMode, skipFreshen bool, addrs []string) MonitorUpdate {
 	return MonitorUpdate{
 		MaxTasks:      12,
 		FirstBlock:    base.NOPOSN,
 		Chain:         chain,
 		PublisherAddr: base.Address{},
 		TestMode:      testMode,
+		SkipFreshen:   skipFreshen,
 		Addrs:         addrs,
 		MonitorMap:    make(map[base.Address]*Monitor, len(addrs)),
 	}
@@ -120,6 +122,10 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 			// we need the address here because we want to modify this object below
 			updater.MonitorMap[mon.Address] = &(*monitorArray)[len(*monitorArray)-1]
 		}
+	}
+
+	if updater.SkipFreshen {
+		return canceled, nil
 	}
 
 	bloomPath := filepath.Join(config.PathToIndex(updater.Chain), "blooms/")

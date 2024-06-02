@@ -5,11 +5,17 @@
 package config
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
 	"log"
+	"net/http"
 	"os"
 	"os/user"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 	"sync"
 
@@ -222,6 +228,54 @@ func validateRpcEndpoint(chain, provider string) error {
 		return usage.Usage(rpcWarning, chain, provider, problem)
 	}
 
+	if chain == "mainnet" {
+		// TODO: Eventually this will be parameterized, for example, when we start publishing to Optimism
+		deployed := uint64(14957097) // block where the unchained index was deployed to mainnet
+		if err := checkUnchainedProvider(chain, deployed); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func checkUnchainedProvider(chain string, deployed uint64) error {
+	// TODO: Clean this up
+	// TODO: We need to check that the unchained index has been deployed on the chain
+	if os.Getenv("TB_NO_PROVIDER_CHECK") == "true" {
+		logger.Info("Skipping rpcProvider check")
+		return nil
+	}
+	url := trueBlocksViper.Get("chains." + chain + ".rpcProvider").(string)
+	str := `{ "jsonrpc": "2.0", "method": "eth_getBlockByNumber", "params": [ "{0}", true ], "id": 1 }`
+	payLoad := []byte(strings.Replace(str, "{0}", fmt.Sprintf("0x%x", deployed), -1))
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payLoad))
+	if err != nil {
+		return fmt.Errorf("error creating request to rpcProvider (%s): %v", url, err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return fmt.Errorf("error making request to rpcProvider (%s): %v", url, err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("unexpected status code from rpcProvider (%s): %d, expected: %d", url, resp.StatusCode, http.StatusOK)
+	}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("error reading response body: %v", err)
+	}
+	var result map[string]interface{}
+	if err := json.Unmarshal(body, &result); err != nil {
+		return fmt.Errorf("error unmarshalling response: %v", err)
+	}
+	s := result["result"].(map[string]interface{})["number"].(string)
+	if bn, _ := strconv.ParseUint(s, 0, 64); bn != deployed {
+		msg := `the unchained index was deployed at block %d. Is your node synced that far?`
+		return fmt.Errorf(msg, deployed)
+	}
 	return nil
 }
 
