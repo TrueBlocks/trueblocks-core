@@ -19,6 +19,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	l.theTx = trans
 
 	if false && conn.StoreReadable() {
+		// walk.Cache_Statements
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,

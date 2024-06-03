@@ -33,6 +33,7 @@ func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested ba
 // receipts in blocks before London
 func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (receipt types.Receipt, err error) {
 	if conn.StoreReadable() {
+		// walk.Cache_Transactions
 		tx := &types.Transaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
@@ -71,6 +72,7 @@ func (conn *Connection) getReceiptFromRpc(bn base.Blknum, txid base.Txnum) (rece
 // GetReceiptsByNumber returns all receipts in a blocks along with their logs
 func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.Receipt, map[base.Txnum]*types.Receipt, error) {
 	if conn.StoreReadable() {
+		// walk.Cache_Receipts
 		receiptGroup := &types.ReceiptGroup{
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN,

@@ -18,6 +18,7 @@ import (
 func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error) {
 	var err error
 	if conn.StoreReadable() {
+		// walk.Cache_Transactions, walk.Cache_Blocks
 		lightBlock := &types.LightBlock{
 			BlockNumber: bn,
 		}

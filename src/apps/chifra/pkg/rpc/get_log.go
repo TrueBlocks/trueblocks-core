@@ -13,6 +13,7 @@ import (
 // GetLogsByNumber returns the logs of a block
 func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.Log, error) {
 	if conn.StoreReadable() {
+		// walk.Cache_Logs
 		logGroup := &types.LogGroup{
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN,

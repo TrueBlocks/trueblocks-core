@@ -17,6 +17,7 @@ import (
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
 func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock, error) {
 	if conn.StoreReadable() && bn != base.NOPOSN {
+		// walk.Cache_Blocks
 		block := types.LightBlock{
 			BlockNumber: bn,
 		}

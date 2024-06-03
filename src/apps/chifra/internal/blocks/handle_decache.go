@@ -9,6 +9,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -38,24 +39,29 @@ func (opts *BlocksOptions) HandleDecache() error {
 }
 
 func (opts *BlocksOptions) getCacheType() walk.CacheType {
-	cT := walk.Cache_Blocks
 	if opts.Logs {
-		cT = walk.Cache_Logs
+		return walk.Cache_Logs
 	} else if opts.Traces {
-		cT = walk.Cache_Traces
+		return walk.Cache_Traces
+	} else {
+		return walk.Cache_Blocks
 	}
-	return cT
 }
 
 func (opts *BlocksOptions) getItemsToRemove() ([]cache.Locator, error) {
-	if opts.Logs {
+	cT := opts.getCacheType()
+	switch cT {
+	case walk.Cache_Logs:
 		itemsToRemove, err := decache.LocationsFromLogs(opts.Conn, opts.BlockIds)
 		return itemsToRemove, err
-	} else if opts.Traces {
+	case walk.Cache_Traces:
 		itemsToRemove, err := decache.LocationsFromTraces(opts.Conn, opts.BlockIds)
 		return itemsToRemove, err
-	} else {
+	case walk.Cache_Blocks:
 		itemsToRemove, err := decache.LocationsFromBlocks(opts.Conn, opts.BlockIds)
 		return itemsToRemove, err
+	default:
+		logger.Fatal("Unknown cache type. Should not happen.")
+		return []cache.Locator{}, nil
 	}
 }

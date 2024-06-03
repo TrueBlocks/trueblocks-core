@@ -189,6 +189,7 @@ func (call *ContractCall) forceEncoding(encoding string) {
 func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (results *types.Result, err error) {
 	blockTs := base.Timestamp(0)
 	if call.Conn.StoreReadable() {
+		// walk.Cache_Results
 		results = &types.Result{
 			BlockNumber: call.BlockNumber,
 			Address:     call.Address,

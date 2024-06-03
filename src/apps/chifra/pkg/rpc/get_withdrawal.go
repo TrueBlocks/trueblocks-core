@@ -35,6 +35,7 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 	}
 
 	if conn.StoreReadable() {
+		// walk.Cache_Withdrawals
 		withdrawalGroup := &types.WithdrawalGroup{
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN,

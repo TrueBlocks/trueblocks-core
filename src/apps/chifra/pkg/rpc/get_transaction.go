@@ -15,11 +15,11 @@ import (
 
 func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Txnum) (*types.Transaction, error) {
 	if conn.StoreReadable() {
+		// walk.Cache_Transactions
 		tx := &types.Transaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
-
 		if err := conn.Store.Read(tx, nil); err == nil {
 			// success
 			return tx, nil
@@ -64,11 +64,11 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 	txid := base.Txnum(theApp.TransactionIndex)
 
 	if conn.StoreReadable() {
+		// walk.Cache_Transactions
 		tx := &types.Transaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
-
 		if err := conn.Store.Read(tx, nil); err == nil {
 			// success
 			if fetchTraces {

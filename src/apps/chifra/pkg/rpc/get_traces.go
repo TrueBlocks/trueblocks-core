@@ -16,6 +16,7 @@ import (
 // GetTracesByBlockNumber returns a slice of traces in the given block
 func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, error) {
 	if conn.StoreReadable() {
+		// walk.Cache_Traces
 		traceGroup := &types.TraceGroup{
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN, // no tx id means we're storing the whole block
@@ -77,6 +78,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
 func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *types.Transaction) ([]types.Trace, error) {
 	if conn.StoreReadable() && transaction != nil {
+		// walk.Cache_Traces
 		traceGroup := &types.TraceGroup{
 			BlockNumber:      transaction.BlockNumber,
 			TransactionIndex: transaction.TransactionIndex,
