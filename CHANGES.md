@@ -93,6 +93,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 - chifra state:
   - removes `none` option from chifra state --parts enum.
   - if `--ether` option is provided, now show `balance` field (that is, WEI) in addition to `ether` field. Used to show only `ether`.
+  - enables cache for both `chifra state` and `chifra state --call`.
 - chifra receipts:
   - `cumulativeGasUsed` is now reported as an integer (probably too small, but will not be fixed).
   - `to` and `from` now included in output.
