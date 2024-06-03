@@ -65,7 +65,7 @@ sdkFuzzer export
 
 # //---------------------------------------------------------------------------------------------------
 # state         ==> LocationsFromAddressEncodingAndBlockIds ==> [flags] <address> [address...] [block...]
-# walk.Cache_Result         ==> address,block,fourbyte
+# walk.Cache_Results        ==> address,block,fourbyte
 # walk.Cache_State          ==> address,block
 
 # tokens        ==>                                         ==> [flags] <address> <address> [address...] [block...]
