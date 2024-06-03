@@ -107,11 +107,11 @@ func AbisFinishParseInternal(w io.Writer, values url.Values) *AbisOptions {
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	return opts
 }
@@ -134,7 +134,6 @@ func abisFinishParse(args []string) *AbisOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	for _, arg := range args {
@@ -144,6 +143,7 @@ func abisFinishParse(args []string) *AbisOptions {
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

@@ -118,7 +118,6 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
@@ -132,6 +131,7 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	return opts
 }
@@ -154,7 +154,6 @@ func stateFinishParse(args []string) *StateOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	for _, arg := range args {
@@ -175,6 +174,7 @@ func stateFinishParse(args []string) *StateOptions {
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
