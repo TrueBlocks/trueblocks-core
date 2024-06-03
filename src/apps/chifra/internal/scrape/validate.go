@@ -32,8 +32,9 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	if !opts.Conn.IsNodeTracing() {
-		return validate.Usage("{0} requires {1}, try {2} instead.", "chifra scrape", "tracing", "chifra init")
+	err, ok := opts.Conn.IsNodeTracing()
+	if !ok {
+		return validate.Usage("{0} requires {1}, try {2} instead. Error: {3}", "chifra scrape", "tracing", "chifra init", err.Error())
 	}
 
 	if !opts.Conn.IsNodeArchive() {

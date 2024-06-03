@@ -77,6 +77,7 @@ func (opts *StatusOptions) GetStatus(diagnose bool) (*types.Status, error) {
 		return nil, err
 	}
 
+	_, isTracing := opts.Conn.IsNodeTracing()
 	provider := config.GetChain(chain).RpcProvider
 	s := &types.Status{
 		ClientVersion: vers,
@@ -90,7 +91,7 @@ func (opts *StatusOptions) GetStatus(diagnose bool) (*types.Status, error) {
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),
 		IsArchive:     opts.Conn.IsNodeArchive(),
-		IsTracing:     opts.Conn.IsNodeTracing(),
+		IsTracing:     isTracing,
 		HasEsKey:      validate.HasArticulationKey(true),
 		HasPinKey:     len(config.GetKey("pinata").ApiKey) > 0 || len(config.GetKey("pinata").Secret) > 0,
 		Chain:         chain,

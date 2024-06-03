@@ -43,7 +43,8 @@ const longScrape = `Purpose:
 
 const notesScrape = `
 Notes:
-  - The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.`
+  - The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
+  - This command requires your RPC to provide trace data. See the README for more information.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra scrape

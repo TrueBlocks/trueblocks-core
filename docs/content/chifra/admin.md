@@ -218,6 +218,7 @@ Flags:
 
 Notes:
   - The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
+  - This command requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
@@ -280,6 +281,10 @@ Recently, we enabled the ability for the end user to pin these downloaded index 
 on their own machines. The user needs the data for the software to operate--sharing requires
 minimal effort and makes the data available to other people. Everyone is better off. A
 naturally-occuring network effect.
+
+### tracing
+
+The `scrape` command requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
 
 ### prerequisites
 

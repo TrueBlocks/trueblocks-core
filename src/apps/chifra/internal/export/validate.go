@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -49,8 +48,11 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.)")
 	}
 
-	if opts.Traces && !opts.Conn.IsNodeTracing() {
-		return validate.Usage("{0} requires tracing, err: {1}", "chifra export --traces", rpc.ErrTraceBlockMissing)
+	if opts.Traces {
+		err, ok := opts.Conn.IsNodeTracing()
+		if !ok {
+			return validate.Usage("{0} requires tracing, err: {1}", "chifra export --traces", err.Error())
+		}
 	}
 
 	if opts.Count {

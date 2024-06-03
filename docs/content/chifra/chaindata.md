@@ -76,6 +76,7 @@ Notes:
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
   - The --decache option removes the block(s), all transactions in those block(s), and all traces in those transactions from the cache.
   - The --withdrawals option is only available on certain chains. It is ignored otherwise.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
@@ -95,6 +96,10 @@ Links:
 
 - [api docs](/api/#operation/chaindata-blocks)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
+
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
 
 ## chifra transactions
 
@@ -141,6 +146,7 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
@@ -156,6 +162,10 @@ Links:
 
 - [api docs](/api/#operation/chaindata-transactions)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
+
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
 
 ## chifra receipts
 
@@ -288,6 +298,7 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
+  - This command requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
@@ -305,6 +316,18 @@ Links:
 
 - [api docs](/api/#operation/chaindata-traces)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
+
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Many remote RPC providers do not enable these endpoints due to the additional load they can place on the node. If you are running your own node, you can enable these endpoints by adding `trace` to your node's startup.
+
+The test for tracing assumes your node provides tracing starting at block 1. If your is partially synced, you may export the following enviroment variable before running the command to instruct `chifra` where to test.
+
+```[bash]
+export TB_<chain>_FIRSTTRACE=<bn>
+```
+
+where `<chain>` is the chain you are running and `<bn>` is the block number at which tracing starts. For example, to start tracing at block 1000 on the mainnet, you would export `TB_MAINNET_FIRSTTRACE=1000`.
 
 ## chifra when
 
