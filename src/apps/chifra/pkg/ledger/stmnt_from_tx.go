@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetStatements returns a statement from a given transaction
@@ -129,7 +130,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	}
 
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, trans.Timestamp)
-	if false && isFinal && conn.StoreWritable() && conn.EnabledMap["statements"] {
+	if false && isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Statements] {
 		statementGroup := &types.StatementGroup{
 			Address:          l.AccountFor,
 			BlockNumber:      trans.BlockNumber,

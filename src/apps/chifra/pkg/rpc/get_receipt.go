@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetReceipt retrieves a single receipt by block number and transaction id. If suggested is provided,
@@ -88,7 +89,7 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 		return receipts, nil, err
 	} else {
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap["receipts"] {
+		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Receipts] {
 			receiptGroup := &types.ReceiptGroup{
 				Receipts:         receipts,
 				BlockNumber:      bn,

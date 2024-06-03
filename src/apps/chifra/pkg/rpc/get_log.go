@@ -7,6 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetLogsByNumber returns the logs of a block
@@ -30,7 +31,7 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 		return logs, err
 	} else {
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap["logs"] {
+		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Logs] {
 			logGroup := &types.LogGroup{
 				Logs:             logs,
 				BlockNumber:      bn,

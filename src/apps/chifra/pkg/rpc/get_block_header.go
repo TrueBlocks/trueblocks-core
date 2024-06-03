@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -30,7 +31,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 	}
 
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-	if isFinal && conn.StoreWritable() && conn.EnabledMap["blocks"] {
+	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
 		_ = conn.Store.Write(block, nil)
 	}
 

@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -79,12 +80,12 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		block.Transactions[i].Receipt = receipt
 		block.Transactions[i].Timestamp = block.Timestamp
 		block.Transactions[i].HasToken = types.IsTokenFunction(block.Transactions[i].Input)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap["transactions"] {
+		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Transactions] {
 			_ = conn.Store.Write(&block.Transactions[i], nil)
 		}
 	}
 
-	if isFinal && conn.StoreWritable() && conn.EnabledMap["blocks"] {
+	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
 		_ = conn.Store.Write(block, nil)
 	}
 

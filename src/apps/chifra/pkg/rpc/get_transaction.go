@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -43,7 +44,7 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Tx
 	trans.Receipt = &receipt
 
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-	if isFinal && conn.StoreWritable() && conn.EnabledMap["transactions"] {
+	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Transactions] {
 		_ = conn.Store.Write(trans, nil)
 	}
 
@@ -88,7 +89,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 		} else {
 			tx.Timestamp = blockTs
 			isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-			if isFinal && conn.StoreWritable() && conn.EnabledMap["transactions"] {
+			if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Transactions] {
 				_ = conn.Store.Write(tx, nil)
 			}
 			return tx, nil
@@ -99,7 +100,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 		} else {
 			tx.Timestamp = blockTs
 			isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-			if isFinal && conn.StoreWritable() && conn.EnabledMap["transactions"] {
+			if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Transactions] {
 				_ = conn.Store.Write(tx, nil)
 			}
 			return tx, nil
@@ -110,7 +111,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 		} else {
 			tx.Timestamp = blockTs
 			isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-			if isFinal && conn.StoreWritable() && conn.EnabledMap["transactions"] {
+			if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Transactions] {
 				_ = conn.Store.Write(tx, nil)
 			}
 			return tx, nil
@@ -121,7 +122,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 		} else {
 			tx.Timestamp = blockTs
 			isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-			if isFinal && conn.StoreWritable() && conn.EnabledMap["transactions"] {
+			if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Transactions] {
 				_ = conn.Store.Write(tx, nil)
 			}
 			return tx, nil
@@ -145,7 +146,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 	trans.Receipt = &receipt
 
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-	if isFinal && conn.StoreWritable() && conn.EnabledMap["transactions"] {
+	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Transactions] {
 		_ = conn.Store.Write(trans, nil)
 	}
 

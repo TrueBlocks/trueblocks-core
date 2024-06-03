@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 var ErrAbiNotFound = errors.New("abi not found ")
@@ -264,7 +265,7 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 
 	conn := call.Conn
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-	if isFinal && conn.StoreWritable() && conn.EnabledMap["results"] {
+	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Results] {
 		_ = conn.Store.Write(results, nil)
 		// logger.Info("Writing call results to the database...", results.Address, results.BlockNumber, call.Method.Encoding)
 		// if err := call.Conn.Store.Write(results, nil); err != nil {

@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetMinerAndWithdrawals returns the miner and withdrawals for a block
@@ -47,7 +48,7 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 		return withdrawals, err
 	} else {
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap["withdrawals"] {
+		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Withdrawals] {
 			withdrawalGroup := &types.WithdrawalGroup{
 				Withdrawals:      withdrawals,
 				BlockNumber:      bn,

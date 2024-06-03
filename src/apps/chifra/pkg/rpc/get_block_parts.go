@@ -6,6 +6,7 @@ package rpc
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetBlockTimestamp returns the timestamp associated with a given block
@@ -20,7 +21,7 @@ func (conn *Connection) GetBlockHashByHash(hash string) (base.Hash, error) {
 		return base.Hash{}, err
 	} else {
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap["blocks"] {
+		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
 			_ = conn.Store.Write(block, nil)
 		}
 		return block.Hash, nil
@@ -33,7 +34,7 @@ func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
 		return 0, err
 	} else {
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap["blocks"] {
+		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
 			_ = conn.Store.Write(block, nil)
 		}
 		return block.BlockNumber, nil
