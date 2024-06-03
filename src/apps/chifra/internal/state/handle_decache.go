@@ -18,28 +18,9 @@ import (
 )
 
 func (opts *StateOptions) HandleDecache() error {
-	var itemsToRemove []cache.Locator
-	for _, addressStr := range opts.Addrs {
-		address := base.HexToAddress(addressStr)
-		for _, c := range opts.Calls {
-			if len(c) > 0 {
-				callAddress := base.HexToAddress(opts.Addrs[0])
-				proxy := base.HexToAddress(opts.ProxyFor)
-				if !proxy.IsZero() {
-					callAddress = proxy
-				}
-				if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
-					wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", c, err)
-					return wrapped
-				} else {
-					if items, err := decache.LocationsFromAddressEncodingAndBlockIds(opts.Conn, address, contractCall.Method.Encoding, opts.BlockIds); err != nil {
-						return err
-					} else {
-						itemsToRemove = append(itemsToRemove, items...)
-					}
-				}
-			}
-		}
+	itemsToRemove, err := opts.getItemsToRemove()
+	if err != nil {
+		return err
 	}
 
 	ctx := context.Background()
@@ -57,4 +38,27 @@ func (opts *StateOptions) HandleDecache() error {
 
 	opts.Globals.NoHeader = true
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+func (opts *StateOptions) getItemsToRemove() ([]cache.Locator, error) {
+	allItems := make([]cache.Locator, 0)
+	for _, addr := range opts.Addrs {
+		address := base.HexToAddress(addr)
+		for _, c := range opts.Calls {
+			if len(c) > 0 {
+				callAddress := opts.GetCallAddress()
+				if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
+					wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", c, err)
+					return []cache.Locator{}, wrapped
+				} else {
+					itemsToRemove, err := decache.LocationsFromAddressAndEncodings(opts.Conn, address, contractCall.Method.Encoding, opts.BlockIds)
+					if err != nil {
+						return []cache.Locator{}, err
+					}
+					allItems = append(allItems, itemsToRemove...)
+				}
+			}
+		}
+	}
+	return allItems, nil
 }

@@ -7,6 +7,7 @@ package blocksPkg
 import (
 	"context"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -14,7 +15,7 @@ import (
 )
 
 func (opts *BlocksOptions) HandleDecache() error {
-	itemsToRemove, err := decache.LocationsFromBlockIds(opts.Conn, opts.BlockIds, opts.Logs, opts.Traces)
+	itemsToRemove, err := opts.getItemsToRemove()
 	if err != nil {
 		return err
 	}
@@ -44,4 +45,17 @@ func (opts *BlocksOptions) getCacheType() walk.CacheType {
 		cT = walk.Cache_Traces
 	}
 	return cT
+}
+
+func (opts *BlocksOptions) getItemsToRemove() ([]cache.Locator, error) {
+	if opts.Logs {
+		itemsToRemove, err := decache.LocationsFromLogs(opts.Conn, opts.BlockIds)
+		return itemsToRemove, err
+	} else if opts.Traces {
+		itemsToRemove, err := decache.LocationsFromTraces(opts.Conn, opts.BlockIds)
+		return itemsToRemove, err
+	} else {
+		itemsToRemove, err := decache.LocationsFromBlocks(opts.Conn, opts.BlockIds)
+		return itemsToRemove, err
+	}
 }
