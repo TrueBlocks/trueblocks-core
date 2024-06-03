@@ -33,8 +33,8 @@ type StateFilters struct {
 }
 
 // GetState returns account state (search: FromRpc)
-func (conn *Connection) GetState(fieldBits StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (state *types.State, err error) {
-	state = &types.State{
+func (conn *Connection) GetState(fieldBits StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (*types.State, error) {
+	state := &types.State{
 		Address:     address,
 		BlockNumber: blockNumber,
 		Deployed:    base.NOPOSN,
@@ -81,7 +81,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 
 	queryResults, err := query.QueryBatch[string](conn.Chain, rpcPayload)
 	if err != nil {
-		return
+		return nil, err
 	}
 
 	value := queryResults["balance"]
@@ -136,7 +136,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	if (fieldBits&Proxy) != 0 || (fieldBits&Type) != 0 {
 		proxy, err = conn.GetContractProxyAt(address, blockNumber)
 		if err != nil {
-			return
+			return nil, err
 		}
 		if (fieldBits & Proxy) != 0 {
 			state.Proxy = proxy
@@ -151,7 +151,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 		}
 	}
 
-	return
+	return state, nil
 }
 
 // GetBalanceAt returns a balance for an address at a block
