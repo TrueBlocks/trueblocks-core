@@ -20,19 +20,26 @@ func LocationsFromBlocks(conn *rpc.Connection, ids []identifiers.Identifier) ([]
 			if err != nil {
 				return nil, err
 			}
+			// walk.Cache_Blocks
 			locations = append(locations, &types.LightBlock{
 				BlockNumber: bn,
 			})
+
+			// walk.Cache_Receipts
 			receiptGroup := &types.ReceiptGroup{
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,
 			}
 			locations = append(locations, receiptGroup)
+
 			for index := range block.Transactions {
+				// walk.Cache_Transactions
 				locations = append(locations, &types.Transaction{
 					BlockNumber:      bn,
 					TransactionIndex: base.Txnum(index),
 				})
+
+				// walk.Cache_Traces
 				locations = append(locations, &types.TraceGroup{
 					BlockNumber:      bn,
 					TransactionIndex: base.Txnum(index),

@@ -50,12 +50,19 @@ func (opts *StateOptions) getItemsToRemove() ([]cache.Locator, error) {
 	allItems := make([]cache.Locator, 0)
 	for _, addr := range opts.Addrs {
 		address := base.HexToAddress(addr)
+		itemsToRemove, err := decache.LocationsFromState(opts.Conn, address, opts.BlockIds)
+		if err != nil {
+			return []cache.Locator{}, err
+		}
+		allItems = append(allItems, itemsToRemove...)
+
 		for _, c := range opts.Calls {
 			if len(c) > 0 {
 				callAddress := opts.GetCallAddress()
 				if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
 					wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", c, err)
 					return []cache.Locator{}, wrapped
+
 				} else {
 					itemsToRemove, err := decache.LocationsFromAddressAndEncodings(opts.Conn, address, contractCall.Method.Encoding, opts.BlockIds)
 					if err != nil {

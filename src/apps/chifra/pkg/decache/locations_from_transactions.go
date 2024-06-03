@@ -19,11 +19,14 @@ func LocationsFromTransactions(conn *rpc.Connection, ids []identifiers.Identifie
 			continue
 		}
 		for _, app := range txIds {
+			// walk.Cache_Transactions
 			tx := &types.Transaction{
 				BlockNumber:      base.Blknum(app.BlockNumber),
 				TransactionIndex: base.Txnum(app.TransactionIndex),
 			}
 			locations = append(locations, tx)
+
+			// walk.Cache_Traces
 			locations = append(locations, &types.TraceGroup{
 				BlockNumber:      tx.BlockNumber,
 				TransactionIndex: tx.TransactionIndex,

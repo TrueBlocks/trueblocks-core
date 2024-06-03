@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func LocationsFromAddressAndEncodings(conn *rpc.Connection, address base.Address, encoding string, ids []identifiers.Identifier) ([]cache.Locator, error) {
+func LocationsFromState(conn *rpc.Connection, address base.Address, ids []identifiers.Identifier) ([]cache.Locator, error) {
 	locations := make([]cache.Locator, 0)
 	for _, br := range ids {
 		blockNums, err := br.ResolveBlocks(conn.Chain)
@@ -16,10 +16,9 @@ func LocationsFromAddressAndEncodings(conn *rpc.Connection, address base.Address
 			return nil, err
 		}
 		for _, bn := range blockNums {
-			// walk.Cache_Results
-			locations = append(locations, &types.Result{
+			// walk.Cache_State
+			locations = append(locations, &types.State{
 				BlockNumber: bn,
-				Encoding:    encoding,
 				Address:     address,
 			})
 		}

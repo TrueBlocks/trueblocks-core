@@ -16,6 +16,7 @@ func LocationsFromLogs(conn *rpc.Connection, ids []identifiers.Identifier) ([]ca
 			return nil, err
 		}
 		for _, bn := range blockNums {
+			// walk.Cache_Logs
 			logGroup := &types.LogGroup{
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,

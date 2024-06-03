@@ -16,6 +16,7 @@ func LocationsFromTraces(conn *rpc.Connection, ids []identifiers.Identifier) ([]
 			return nil, err
 		}
 		for _, bn := range blockNums {
+			// walk.Cache_Traces
 			traceGroup := &types.TraceGroup{
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,
