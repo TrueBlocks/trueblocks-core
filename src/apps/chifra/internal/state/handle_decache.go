@@ -26,13 +26,19 @@ func (opts *StateOptions) HandleDecache() error {
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showProgress := opts.Globals.ShowProgress()
-		if msg, err := decache.Decache(opts.Conn, itemsToRemove, showProgress, walk.Cache_State); err != nil {
-			errorChan <- err
-		} else {
-			s := types.Message{
-				Msg: msg,
+		monitorCacheTypes := []walk.CacheType{
+			walk.Cache_State,
+			walk.Cache_Results,
+		}
+		for _, cacheType := range monitorCacheTypes {
+			if msg, err := decache.Decache(opts.Conn, itemsToRemove, showProgress, cacheType); err != nil {
+				errorChan <- err
+			} else {
+				s := types.Message{
+					Msg: msg,
+				}
+				modelChan <- &s
 			}
-			modelChan <- &s
 		}
 	}
 
