@@ -262,8 +262,10 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 		results.Values[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 
-	if call.Conn.StoreWritable() && call.Conn.EnabledMap["results"] && base.IsFinal(call.Conn.LatestBlockTimestamp, blockTs) {
-		_ = call.Conn.Store.Write(results, nil)
+	conn := call.Conn
+	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
+	if isFinal && conn.StoreWritable() && conn.EnabledMap["results"] {
+		_ = conn.Store.Write(results, nil)
 		// logger.Info("Writing call results to the database...", results.Address, results.BlockNumber, call.Method.Encoding)
 		// if err := call.Conn.Store.Write(results, nil); err != nil {
 		// 	logger.Warn("Failed to write call results to the database", err) // report but don't fail

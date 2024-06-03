@@ -128,7 +128,8 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		statements = append(statements, receiptStatements...)
 	}
 
-	if false && l.Conn.StoreWritable() && l.Conn.EnabledMap["statements"] && base.IsFinal(l.Conn.LatestBlockTimestamp, trans.Timestamp) {
+	isFinal := base.IsFinal(conn.LatestBlockTimestamp, trans.Timestamp)
+	if false && isFinal && conn.StoreWritable() && conn.EnabledMap["statements"] {
 		statementGroup := &types.StatementGroup{
 			Address:          l.AccountFor,
 			BlockNumber:      trans.BlockNumber,

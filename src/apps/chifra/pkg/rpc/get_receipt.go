@@ -87,7 +87,8 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 	if receipts, err := conn.getBlockReceiptsFromRpc(bn); err != nil {
 		return receipts, nil, err
 	} else {
-		if conn.StoreWritable() && conn.EnabledMap["receipts"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
+		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
+		if isFinal && conn.StoreWritable() && conn.EnabledMap["receipts"] {
 			receiptGroup := &types.ReceiptGroup{
 				Receipts:         receipts,
 				BlockNumber:      bn,

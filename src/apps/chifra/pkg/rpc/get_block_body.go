@@ -79,12 +79,12 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		block.Transactions[i].Receipt = receipt
 		block.Transactions[i].Timestamp = block.Timestamp
 		block.Transactions[i].HasToken = types.IsTokenFunction(block.Transactions[i].Input)
-		if conn.StoreWritable() && conn.EnabledMap["transactions"] && isFinal {
+		if isFinal && conn.StoreWritable() && conn.EnabledMap["transactions"] {
 			_ = conn.Store.Write(&block.Transactions[i], nil)
 		}
 	}
 
-	if conn.StoreWritable() && conn.EnabledMap["blocks"] && isFinal {
+	if isFinal && conn.StoreWritable() && conn.EnabledMap["blocks"] {
 		_ = conn.Store.Write(block, nil)
 	}
 

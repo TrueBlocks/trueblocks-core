@@ -29,7 +29,8 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 	if logs, err := conn.getLogsFromRpc(filter); err != nil {
 		return logs, err
 	} else {
-		if conn.StoreWritable() && conn.EnabledMap["logs"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
+		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
+		if isFinal && conn.StoreWritable() && conn.EnabledMap["logs"] {
 			logGroup := &types.LogGroup{
 				Logs:             logs,
 				BlockNumber:      bn,

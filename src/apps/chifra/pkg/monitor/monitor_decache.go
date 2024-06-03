@@ -6,11 +6,14 @@ import (
 	"path"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
@@ -19,15 +22,15 @@ func (mon *Monitor) Decache(conn *rpc.Connection, showProgress bool) (string, er
 		return "", err
 	} else {
 		if cnt > 0 {
-			caches := []walk.CacheType{
+			monitorCacheTypes := []walk.CacheType{
 				walk.Cache_Statements,
 				walk.Cache_Traces,
 				walk.Cache_Transactions,
 				walk.Cache_Receipts,
 				walk.Cache_Withdrawals,
 			}
-			for _, cache := range caches {
-				itemsToRemove, err := decache.LocationsFromAddrAppsAndCacheType(conn, mon.Address, apps, cache)
+			for _, cache := range monitorCacheTypes {
+				itemsToRemove, err := mon.locationsForMonitor(apps, cache)
 				if err != nil {
 					return "", err
 				}
@@ -70,4 +73,39 @@ func (mon *Monitor) GetRemoveWarning() string {
 		return strings.Replace(strings.Replace(warning, "{1}", ". It may take a long time to process {2} records.", -1), "{2}", fmt.Sprintf("%d", count), -1)
 	}
 	return strings.Replace(warning, "{1}", "", -1)
+}
+
+func (mon *Monitor) locationsForMonitor(apps []types.Appearance, cT walk.CacheType) ([]cache.Locator, error) {
+	locations := make([]cache.Locator, 0)
+	for _, app := range apps {
+		switch cT {
+		case walk.Cache_Transactions:
+			locations = append(locations, &types.Transaction{
+				BlockNumber:      base.Blknum(app.BlockNumber),
+				TransactionIndex: base.Txnum(app.TransactionIndex),
+			})
+		case walk.Cache_Receipts:
+			locations = append(locations, &types.Transaction{
+				BlockNumber:      base.Blknum(app.BlockNumber),
+				TransactionIndex: base.Txnum(app.TransactionIndex),
+			})
+		case walk.Cache_Traces:
+			locations = append(locations, &types.TraceGroup{
+				BlockNumber:      base.Blknum(app.BlockNumber),
+				TransactionIndex: base.Txnum(app.TransactionIndex),
+			})
+		case walk.Cache_Withdrawals:
+			locations = append(locations, &types.LightBlock{
+				BlockNumber: base.Blknum(app.BlockNumber),
+			})
+		case walk.Cache_Statements:
+			locations = append(locations, &types.StatementGroup{
+				Address:          mon.Address,
+				BlockNumber:      base.Blknum(app.BlockNumber),
+				TransactionIndex: base.Txnum(app.TransactionIndex),
+			})
+		}
+	}
+
+	return locations, nil
 }

@@ -61,7 +61,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 			traceIndex++
 		}
 
-		if conn.StoreWritable() && conn.EnabledMap["traces"] && isFinal {
+		if isFinal && conn.StoreWritable() && conn.EnabledMap["traces"] {
 			traceGroup := &types.TraceGroup{
 				Traces:           *traces,
 				BlockNumber:      bn,
@@ -125,7 +125,8 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 		}
 
 		if transaction != nil {
-			if conn.StoreWritable() && conn.EnabledMap["traces"] && base.IsFinal(conn.LatestBlockTimestamp, transaction.Timestamp) {
+			isFinal := base.IsFinal(conn.LatestBlockTimestamp, transaction.Timestamp)
+			if isFinal && conn.StoreWritable() && conn.EnabledMap["traces"] {
 				traceGroup := &types.TraceGroup{
 					Traces:           *traces,
 					BlockNumber:      transaction.BlockNumber,
