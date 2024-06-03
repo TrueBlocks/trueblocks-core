@@ -50,9 +50,9 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
 		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Withdrawals] {
 			withdrawalGroup := &types.WithdrawalGroup{
-				Withdrawals:      withdrawals,
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,
+				Withdrawals:      withdrawals,
 			}
 			if err = conn.Store.Write(withdrawalGroup, nil); err != nil {
 				logger.Warn("Failed to write withdrawals to cache", err)

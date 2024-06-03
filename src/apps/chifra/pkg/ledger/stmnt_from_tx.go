@@ -20,9 +20,9 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 
 	if false && conn.StoreReadable() {
 		statementGroup := &types.StatementGroup{
-			Address:          l.AccountFor,
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
+			Address:          l.AccountFor,
 		}
 		if err := conn.Store.Read(statementGroup, nil); err == nil {
 			return statementGroup.Statements, nil
@@ -132,9 +132,9 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, trans.Timestamp)
 	if false && isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Statements] {
 		statementGroup := &types.StatementGroup{
-			Address:          l.AccountFor,
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
+			Address:          l.AccountFor,
 			Statements:       statements,
 		}
 		_ = conn.Store.Write(statementGroup, nil)

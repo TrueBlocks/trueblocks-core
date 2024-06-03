@@ -33,9 +33,9 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
 		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Logs] {
 			logGroup := &types.LogGroup{
-				Logs:             logs,
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,
+				Logs:             logs,
 			}
 			if err = conn.Store.Write(logGroup, nil); err != nil {
 				logger.Warn("Failed to write logs to cache", err)

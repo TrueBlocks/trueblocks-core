@@ -18,7 +18,9 @@ import (
 func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error) {
 	var err error
 	if conn.StoreReadable() {
-		lightBlock := &types.LightBlock{BlockNumber: bn}
+		lightBlock := &types.LightBlock{
+			BlockNumber: bn,
+		}
 		if err := conn.Store.Read(lightBlock, nil); err == nil {
 			// We need to fill in the actual transactions (from cache hopefully, but
 			// if not, then from the RPC)

@@ -91,9 +91,9 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
 		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Receipts] {
 			receiptGroup := &types.ReceiptGroup{
-				Receipts:         receipts,
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,
+				Receipts:         receipts,
 			}
 			if err = conn.Store.Write(receiptGroup, nil); err != nil {
 				logger.Warn("Failed to write receipts to cache", err)
