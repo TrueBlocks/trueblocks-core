@@ -8,38 +8,33 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-)
-
-// StatePart is a bit mask for querying various parts an address's state
-type StatePart int
-
-const (
-	// The balance of the address
-	Balance StatePart = 1 << iota
-	// The nonce of the address
-	Nonce
-	// The code of the address if the address is a smart contract
-	Code
-	// The block number when the smart contract was deployed
-	Deployed
-	// If an address is proxied, the address of the proxy (note that the proxy may in some cases not be visible and therefore this value will be empty)
-	Proxy
-	// Either EOA or Contract
-	Type
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 type StateFilters struct {
-	Balance func(address base.Address, balance *base.Wei) bool
+	BalanceCheck func(address base.Address, balance *base.Wei) bool
 }
 
 // GetState returns account state (search: FromRpc)
-func (conn *Connection) GetState(fieldBits StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (*types.State, error) {
-	state := &types.State{
-		Address:     address,
-		BlockNumber: blockNumber,
-		Deployed:    base.NOPOSN,
+func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (*types.State, error) {
+	blockTs := base.Timestamp(0)
+	if conn.StoreReadable() {
+		// walk.Cache_State
+		state := &types.State{
+			BlockNumber: blockNumber,
+			Address:     address,
+		}
+		if err := conn.Store.Read(state, nil); err == nil {
+			if state.Parts&fieldBits == fieldBits {
+				// we have what we need
+				return state, nil
+			}
+		}
+		fieldBits |= state.Parts // preserve what's there
+		blockTs = conn.GetBlockTimestamp(blockNumber)
 	}
 
+	// We always ask for balance even if we dont' need it. Not sure why.
 	rpcPayload := []query.BatchPayload{
 		{
 			Key: "balance",
@@ -53,7 +48,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 		},
 	}
 
-	if (fieldBits & Nonce) != 0 {
+	if (fieldBits & types.Nonce) != 0 {
 		rpcPayload = append(rpcPayload, query.BatchPayload{
 			Key: "nonce",
 			Payload: &query.Payload{
@@ -66,7 +61,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 		})
 	}
 
-	if (fieldBits & Code) != 0 {
+	if (fieldBits & types.Code) != 0 {
 		rpcPayload = append(rpcPayload, query.BatchPayload{
 			Key: "code",
 			Payload: &query.Payload{
@@ -88,39 +83,34 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	balance := base.NewWei(0)
 	balance.SetString(*value, 0)
 
-	if filters.Balance != nil {
-		if !filters.Balance(address, balance) {
-			return nil, nil
-		}
+	state := &types.State{
+		Address:     address,
+		BlockNumber: blockNumber,
+		Deployed:    base.NOPOSN,
+		Timestamp:   blockTs,
+		Parts:       fieldBits,
 	}
 
-	if (fieldBits & Balance) != 0 {
+	if (fieldBits & types.Balance) != 0 {
 		state.Balance = *balance
 	}
 
-	if value, ok := queryResults["nonce"]; ok && (fieldBits&Nonce) != 0 {
-		state.Nonce = base.MustParseValue(*value)
-	}
-
-	if value, ok := queryResults["code"]; ok && (fieldBits&Code) != 0 {
-		code := *value
-		if code != "0x" {
-			state.Code = code
+	if (fieldBits & types.Nonce) != 0 {
+		if value, ok := queryResults["nonce"]; ok {
+			state.Nonce = base.MustParseValue(*value)
 		}
 	}
 
-	// deployedChan := make(chan struct{ block base.Blknum; err error })
-	// if (mode & GetDeployed) != 0 {
-	// 	go func ()  {
-	// 		block, err := conn.GetContractDeployBlock(address)
-	// 		deployedChan <- struct{block uint64; err error}{
-	// 			block, err,
-	// 		}
-	// 		close(deployedChan)
-	// 	}()
-	// }
+	if (fieldBits & types.Code) != 0 {
+		if value, ok := queryResults["code"]; ok {
+			code := *value
+			if code != "0x" {
+				state.Code = code
+			}
+		}
+	}
 
-	if (fieldBits & Deployed) != 0 {
+	if (fieldBits & types.Deployed) != 0 {
 		block, err := conn.GetContractDeployBlock(address)
 		if err != nil && !errors.Is(err, ErrNotAContract) {
 			return nil, err
@@ -133,21 +123,32 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 
 	var proxy base.Address
 
-	if (fieldBits&Proxy) != 0 || (fieldBits&Type) != 0 {
+	if (fieldBits&types.Proxy) != 0 || (fieldBits&types.Type) != 0 {
 		proxy, err = conn.GetContractProxyAt(address, blockNumber)
 		if err != nil {
 			return nil, err
 		}
-		if (fieldBits & Proxy) != 0 {
+		if (fieldBits & types.Proxy) != 0 {
 			state.Proxy = proxy
 		}
 	}
 
-	if (fieldBits & Type) != 0 {
+	if (fieldBits & types.Type) != 0 {
 		if !proxy.IsZero() {
 			state.AccountType = "Proxy"
 		} else {
 			state.AccountType = conn.getTypeNonProxy(address, blockNumber)
+		}
+	}
+
+	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
+	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_State] {
+		_ = conn.Store.Write(state, nil)
+	}
+
+	if filters.BalanceCheck != nil {
+		if !filters.BalanceCheck(address, &state.Balance) {
+			return nil, nil
 		}
 	}
 
@@ -164,64 +165,6 @@ func (conn *Connection) GetBalanceAt(addr base.Address, bn base.Blknum) (*base.W
 		ret, err := ec.BalanceAt(context.Background(), addr.Common(), base.BiFromBn(bn))
 		return (*base.Wei)(ret), err
 	}
-}
-
-// GetFieldsFromParts converts a string array of part names to a bit mask of parts and returns the corresponding output field names or none if no valid parts are present
-func (conn *Connection) GetFieldsFromParts(parts []string) (stateFields StatePart, outputFields []string, none bool) {
-	if len(parts) == 0 {
-		stateFields = Balance
-		outputFields = []string{"balance"}
-		return
-	}
-
-	for _, part := range parts {
-		switch part {
-		case "none":
-			none = true
-			outputFields = nil
-			return
-		case "some":
-			stateFields |= Balance | Nonce | Code | Type
-		case "all":
-			stateFields |= Balance | Nonce | Code | Proxy | Deployed | Type
-		case "balance":
-			stateFields |= Balance
-		case "nonce":
-			stateFields |= Nonce
-		case "code":
-			stateFields |= Code
-		case "proxy":
-			stateFields |= Proxy
-		case "deployed":
-			stateFields |= Deployed
-		case "accttype":
-			stateFields |= Type
-		}
-	}
-
-	outputFields = make([]string, 0, 6)
-	if (stateFields & Proxy) != 0 {
-		outputFields = append(outputFields, "proxy")
-	}
-
-	// Always show balance for non-none parts
-	stateFields |= Balance
-	outputFields = append(outputFields, "balance")
-
-	if (stateFields & Nonce) != 0 {
-		outputFields = append(outputFields, "nonce")
-	}
-	if (stateFields & Code) != 0 {
-		outputFields = append(outputFields, "code")
-	}
-	if (stateFields & Deployed) != 0 {
-		outputFields = append(outputFields, "deployed")
-	}
-	if (stateFields & Type) != 0 {
-		outputFields = append(outputFields, "accttype")
-	}
-
-	return
 }
 
 func (conn *Connection) getTypeNonProxy(address base.Address, bn base.Blknum) string {
