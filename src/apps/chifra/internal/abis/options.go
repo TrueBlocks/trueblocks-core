@@ -22,6 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	// EXISTING_CODE
 )
 
@@ -179,7 +180,7 @@ func ResetOptions(testMode bool) {
 	defaultAbisOptions = opts
 }
 
-func (opts *AbisOptions) getCaches() (m map[string]bool) {
+func (opts *AbisOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return

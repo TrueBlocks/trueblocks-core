@@ -186,7 +186,7 @@ func ResetOptions(testMode bool) {
 	defaultStatusOptions = opts
 }
 
-func (opts *StatusOptions) getCaches() (m map[string]bool) {
+func (opts *StatusOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return
