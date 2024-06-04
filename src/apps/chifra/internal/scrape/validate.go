@@ -36,12 +36,12 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	if opts.Notify {
 		if !NotifyConfigured() {
-			validate.Usage("The {0} feature is {1}.", "--notify", "not properly configured. See the README.md")
+			return validate.Usage("The {0} feature is {1}.", "--notify", "not properly configured. See the README.md")
 		}
 		if !config.IpfsRunning() {
 			return validate.Usage("The {0} option requires {1}.", "--notify", "a locally running IPFS daemon")
 		}
-	} else if !testMode && opts.NotifyConfigured() {
+	} else if !testMode && NotifyConfigured() {
 		msg := validate.Usage("The notify feature is configured but not running. Enable it with the {0} flag.", "--notify").Error()
 		logger.Warn(msg)
 	}
