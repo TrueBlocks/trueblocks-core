@@ -213,7 +213,7 @@ func (c *Command) PyGlobals() string {
 
 func (c *Command) YamlGlobals() string {
 	ret := []string{}
-	caps := strings.Replace(strings.Replace(strings.ToLower(c.Capabilities)+"|", "default|", "verbose|fmt|version|noop|nocolor|chain|noheader|file|output|append|", -1), "caching|", "cache|decache|", -1)
+	caps := strings.Replace(strings.Replace(strings.ToLower(c.Capabilities)+"|", "default|", "verbose|fmt|version|chain|noheader|", -1), "caching|", "cache|decache|", -1)
 	if c.Route == "names" {
 		caps = "create|update|delete|undelete|remove|" + caps
 	}
@@ -475,6 +475,7 @@ func (c *Command) IsRoute() bool {
 	excludedRoutes := map[string]bool{
 		"daemon":  true,
 		"explore": true,
+		"scrape":  true,
 	}
 	return !excludedRoutes[c.Route]
 }
