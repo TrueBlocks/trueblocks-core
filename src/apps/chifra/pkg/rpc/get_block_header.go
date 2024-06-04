@@ -10,14 +10,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	"github.com/ethereum/go-ethereum"
 )
 
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
 func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock, error) {
 	if conn.StoreReadable() && bn != base.NOPOSN {
-		var block types.LightBlock
-		block.BlockNumber = bn
+		// walk.Cache_Blocks
+		block := types.LightBlock{
+			BlockNumber: bn,
+		}
 		if err := conn.Store.Read(&block, nil); err == nil {
 			// read was successful
 			return block, nil
@@ -30,7 +33,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 	}
 
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-	if conn.StoreWritable() && conn.EnabledMap["blocks"] && isFinal {
+	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
 		_ = conn.Store.Write(block, nil)
 	}
 

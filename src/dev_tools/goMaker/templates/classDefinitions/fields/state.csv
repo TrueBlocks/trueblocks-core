@@ -10,3 +10,4 @@ code        ,string    ,           ,           ,       8 ,the code of the accoun
 deployed    ,blknum    ,           ,           ,       9 ,for smart contracts only&#44; the block number at which the contract was deployed
 nonce       ,value     ,           ,           ,      10 ,the nonce of the account at the given block
 proxy       ,address   ,           ,           ,      11 ,the proxy address of the account at the given block
+parts       ,StatePart ,           ,           ,         ,the parts of the state in the cache

@@ -22,6 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	// EXISTING_CODE
 )
 
@@ -207,14 +208,14 @@ func ResetOptions(testMode bool) {
 	defaultBlocksOptions = opts
 }
 
-func (opts *BlocksOptions) getCaches() (m map[string]bool) {
+func (opts *BlocksOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
-	m = map[string]bool{
-		"blocks":       !opts.Uncles,
-		"receipts":     !opts.Uncles,
-		"transactions": opts.CacheTxs || opts.Uniq,
-		"traces":       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Uniq)),
-		"logs":         opts.Logs,
+	caches = map[walk.CacheType]bool{
+		walk.Cache_Blocks:       !opts.Uncles,
+		walk.Cache_Receipts:     !opts.Uncles,
+		walk.Cache_Transactions: opts.CacheTxs || opts.Uniq,
+		walk.Cache_Traces:       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Uniq)),
+		walk.Cache_Logs:         opts.Logs,
 	}
 	// EXISTING_CODE
 	return

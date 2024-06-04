@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetReceipt retrieves a single receipt by block number and transaction id. If suggested is provided,
@@ -32,6 +33,7 @@ func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested ba
 // receipts in blocks before London
 func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (receipt types.Receipt, err error) {
 	if conn.StoreReadable() {
+		// walk.Cache_Transactions
 		tx := &types.Transaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
@@ -70,6 +72,7 @@ func (conn *Connection) getReceiptFromRpc(bn base.Blknum, txid base.Txnum) (rece
 // GetReceiptsByNumber returns all receipts in a blocks along with their logs
 func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.Receipt, map[base.Txnum]*types.Receipt, error) {
 	if conn.StoreReadable() {
+		// walk.Cache_Receipts
 		receiptGroup := &types.ReceiptGroup{
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN,
@@ -87,11 +90,12 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 	if receipts, err := conn.getBlockReceiptsFromRpc(bn); err != nil {
 		return receipts, nil, err
 	} else {
-		if conn.StoreWritable() && conn.EnabledMap["receipts"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
+		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
+		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Receipts] {
 			receiptGroup := &types.ReceiptGroup{
-				Receipts:         receipts,
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,
+				Receipts:         receipts,
 			}
 			if err = conn.Store.Write(receiptGroup, nil); err != nil {
 				logger.Warn("Failed to write receipts to cache", err)

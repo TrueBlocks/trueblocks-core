@@ -14,7 +14,7 @@ import (
 )
 
 func (opts *WhenOptions) HandleDecache() error {
-	itemsToRemove, err := decache.LocationsFromBlockIds(opts.Conn, opts.BlockIds, false, false)
+	itemsToRemove, err := decache.LocationsFromBlocks(opts.Conn, opts.BlockIds)
 	if err != nil {
 		return err
 	}

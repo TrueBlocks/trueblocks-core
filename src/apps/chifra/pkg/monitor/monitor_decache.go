@@ -19,20 +19,20 @@ func (mon *Monitor) Decache(conn *rpc.Connection, showProgress bool) (string, er
 		return "", err
 	} else {
 		if cnt > 0 {
-			caches := []walk.CacheType{
+			monitorCacheTypes := []walk.CacheType{
 				walk.Cache_Statements,
 				walk.Cache_Traces,
 				walk.Cache_Transactions,
 				walk.Cache_Receipts,
 				walk.Cache_Withdrawals,
 			}
-			for _, cache := range caches {
-				itemsToRemove, err := decache.LocationsFromAddrAppsAndCacheType(conn, mon.Address, apps, cache)
+			for _, cacheType := range monitorCacheTypes {
+				itemsToRemove, err := decache.LocationsFromAddressAndAppearances(mon.Address, apps, cacheType)
 				if err != nil {
 					return "", err
 				}
 
-				if msg, err := decache.Decache(conn, itemsToRemove, showProgress, cache); err != nil {
+				if msg, err := decache.Decache(conn, itemsToRemove, showProgress, cacheType); err != nil {
 					return "", err
 
 				} else {

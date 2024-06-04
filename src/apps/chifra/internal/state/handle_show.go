@@ -20,7 +20,7 @@ func (opts *StateOptions) HandleShow() error {
 	var filters rpc.StateFilters
 	if opts.Changes || opts.NoZero {
 		filters = rpc.StateFilters{
-			Balance: func(address base.Address, balance *base.Wei) bool {
+			BalanceCheck: func(address base.Address, balance *base.Wei) bool {
 				if opts.Changes {
 					previous := previousBalance[address]
 					if balance.Text(10) == previous.Text(10) {
@@ -38,7 +38,7 @@ func (opts *StateOptions) HandleShow() error {
 		}
 	}
 
-	stateFields, outputFields, none := opts.Conn.GetFieldsFromParts(opts.Parts)
+	stateFields, outputFields, none := types.SliceToStateParts(opts.Parts)
 
 	cnt := 0
 	ctx, cancel := context.WithCancel(context.Background())

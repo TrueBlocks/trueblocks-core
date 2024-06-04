@@ -23,6 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	// EXISTING_CODE
 )
 
@@ -41,8 +42,7 @@ type StateOptions struct {
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
-	ProxyForAddr base.Address `json:"-"`
-	Calls        []string     `json:"-"`
+	Calls []string `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -118,8 +118,6 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
-	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
@@ -133,6 +131,7 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	return opts
 }
@@ -155,8 +154,6 @@ func stateFinishParse(args []string) *StateOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
-	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	for _, arg := range args {
@@ -177,6 +174,7 @@ func stateFinishParse(args []string) *StateOptions {
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
@@ -211,11 +209,11 @@ func ResetOptions(testMode bool) {
 	defaultStateOptions = opts
 }
 
-func (opts *StateOptions) getCaches() (m map[string]bool) {
+func (opts *StateOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
-	m = map[string]bool{
-		"state":   true,
-		"results": len(opts.Call) > 0,
+	caches = map[walk.CacheType]bool{
+		walk.Cache_State:   true,
+		walk.Cache_Results: len(opts.Call) > 0,
 	}
 	// EXISTING_CODE
 	return

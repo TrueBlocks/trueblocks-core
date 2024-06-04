@@ -422,7 +422,7 @@ func (op *Option) IsConfigurableAddr() bool {
 }
 
 func (op *Option) IsSpecialAddr() bool {
-	return op.GoName == "ProxyFor" || op.IsConfigurableAddr() || op.GoName == "Autoname"
+	return op.IsConfigurableAddr() || op.GoName == "Autoname"
 }
 
 func (op *Option) EnsConvert() string {

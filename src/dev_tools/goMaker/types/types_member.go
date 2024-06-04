@@ -138,7 +138,7 @@ func (m *Member) GoType() string {
 
 	ret := m.Type
 	if m.IsObject() {
-		if m.GoName() != "TokenType" {
+		if m.GoName() != "TokenType" && m.GoName() != "StateType" {
 			ret = "" + ret
 		}
 	} else {
@@ -250,8 +250,16 @@ func (m *Member) MarshalCode() string {
 	}
 
 `
-	} else if m.IsObject() {
+	} else if m.GoName() == "Parts" && m.Container() == "State" {
 		tmplName += "4"
+		tmpl = `// {{.GoName}}
+	if err = cache.WriteValue(writer, uint64(s.{{.GoName}})); err != nil {
+		return err
+	}
+
+`
+	} else if m.IsObject() {
+		tmplName += "5"
 		tmpl = `// {{.GoName}}
 	opt{{.GoName}} := &cache.Optional[{{.Type}}]{
 		Value: s.{{.GoName}},
@@ -262,7 +270,7 @@ func (m *Member) MarshalCode() string {
 
 `
 	} else {
-		tmplName += "5"
+		tmplName += "6"
 		tmpl = `// {{.GoName}}
 	if err = cache.WriteValue(writer, {{if .NeedsPtr}}&{{end}}s.{{.GoName}}); err != nil {
 		return err
@@ -328,8 +336,18 @@ func (m *Member) UnmarshalCode() string {
 	}
 
 `
-	} else if m.IsObject() {
+	} else if m.GoName() == "Parts" && m.Container() == "State" {
 		tmplName += "5"
+		tmpl = `// {{.GoName}}
+	var parts uint64
+	if err = cache.ReadValue(reader, &parts, vers); err != nil {
+		return err
+	}
+	s.{{.GoName}} = StatePart(parts)
+
+`
+	} else if m.IsObject() {
+		tmplName += "6"
 		tmpl = `// {{.GoName}}
 	opt{{.GoName}} := &cache.Optional[{{.Type}}]{
 		Value: s.{{.GoName}},
@@ -340,9 +358,8 @@ func (m *Member) UnmarshalCode() string {
 	s.{{.GoName}} = opt{{.GoName}}.Get()
 
 `
-
 	} else {
-		tmplName += "6"
+		tmplName += "7"
 		tmpl = `// {{.GoName}}
 	if err = cache.ReadValue(reader, &s.{{.GoName}}, vers); err != nil {
 		return err

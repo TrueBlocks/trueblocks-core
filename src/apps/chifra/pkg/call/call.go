@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 var ErrAbiNotFound = errors.New("abi not found ")
@@ -186,24 +187,22 @@ func (call *ContractCall) forceEncoding(encoding string) {
 }
 
 func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (results *types.Result, err error) {
-	if artFunc == nil {
-		logger.Fatal("should not happen ==> implementation error: artFunc is nil")
-	}
-
 	blockTs := base.Timestamp(0)
 	if call.Conn.StoreReadable() {
+		// walk.Cache_Results
 		results = &types.Result{
-			Address:     call.Address,
 			BlockNumber: call.BlockNumber,
+			Address:     call.Address,
 			Encoding:    call.Method.Encoding,
 		}
 		if err := call.Conn.Store.Read(results, nil); err == nil {
-			// logger.Info("cache read:", results.Address, results.BlockNumber, call.Method.Encoding)
 			return results, nil
-			// } else {
-			// 	logger.Info("no cache read:", results.Address, results.BlockNumber, call.Method.Encoding, err)
 		}
 		blockTs = call.Conn.GetBlockTimestamp(call.BlockNumber)
+	}
+
+	if artFunc == nil {
+		logger.Fatal("should not happen ==> implementation error: artFunc is nil")
 	}
 
 	var packed []byte
@@ -262,14 +261,10 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 		results.Values[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 
-	if call.Conn.StoreWritable() && call.Conn.EnabledMap["results"] && base.IsFinal(call.Conn.LatestBlockTimestamp, blockTs) {
-		_ = call.Conn.Store.Write(results, nil)
-		// logger.Info("Writing call results to the database...", results.Address, results.BlockNumber, call.Method.Encoding)
-		// if err := call.Conn.Store.Write(results, nil); err != nil {
-		// 	logger.Warn("Failed to write call results to the database", err) // report but don't fail
-		// }
-		// } else if !isFin {
-		// 	logger.Info("Not caching result (not ripe)...", results.Address, results.BlockNumber, call.Method.Encoding)
+	conn := call.Conn
+	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
+	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Results] {
+		_ = conn.Store.Write(results, nil)
 	}
 
 	return results, nil

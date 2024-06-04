@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -17,7 +18,10 @@ import (
 func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error) {
 	var err error
 	if conn.StoreReadable() {
-		lightBlock := &types.LightBlock{BlockNumber: bn}
+		// walk.Cache_Transactions, walk.Cache_Blocks
+		lightBlock := &types.LightBlock{
+			BlockNumber: bn,
+		}
 		if err := conn.Store.Read(lightBlock, nil); err == nil {
 			// We need to fill in the actual transactions (from cache hopefully, but
 			// if not, then from the RPC)
@@ -79,12 +83,12 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		block.Transactions[i].Receipt = receipt
 		block.Transactions[i].Timestamp = block.Timestamp
 		block.Transactions[i].HasToken = types.IsTokenFunction(block.Transactions[i].Input)
-		if conn.StoreWritable() && conn.EnabledMap["transactions"] && isFinal {
+		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Transactions] {
 			_ = conn.Store.Write(&block.Transactions[i], nil)
 		}
 	}
 
-	if conn.StoreWritable() && conn.EnabledMap["blocks"] && isFinal {
+	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
 		_ = conn.Store.Write(block, nil)
 	}
 

@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"io"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -31,6 +32,7 @@ type State struct {
 	Code        string         `json:"code"`
 	Deployed    base.Blknum    `json:"deployed"`
 	Nonce       base.Value     `json:"nonce"`
+	Parts       StatePart      `json:"parts"`
 	Proxy       base.Address   `json:"proxy"`
 	Timestamp   base.Timestamp `json:"timestamp"`
 	// EXISTING_CODE
@@ -55,6 +57,8 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 		model["timestamp"] = s.Timestamp
 		model["date"] = s.Date()
 		order = []string{"blockNumber", "address", "timestamp", "date"}
+		model["parts"] = s.Parts.String()
+		order = append(order, "parts")
 	}
 
 	if extraOpts != nil {
@@ -163,6 +167,11 @@ func (s *State) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// Parts
+	if err = cache.WriteValue(writer, uint64(s.Parts)); err != nil {
+		return err
+	}
+
 	// Proxy
 	if err = cache.WriteValue(writer, s.Proxy); err != nil {
 		return err
@@ -216,6 +225,13 @@ func (s *State) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
+	// Parts
+	var parts uint64
+	if err = cache.ReadValue(reader, &parts, vers); err != nil {
+		return err
+	}
+	s.Parts = StatePart(parts)
+
 	// Proxy
 	if err = cache.ReadValue(reader, &s.Proxy, vers); err != nil {
 		return err
@@ -238,4 +254,93 @@ func (s *State) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
+// StatePart is a bit mask for querying various parts an address's state
+type StatePart int
+
+const (
+	Balance StatePart = 1 << iota
+	Nonce
+	Code
+	Deployed
+	Proxy
+	Type
+)
+
+func (s StatePart) String() string {
+	m := map[StatePart]string{
+		Balance:  "balance",
+		Nonce:    "nonce",
+		Code:     "code",
+		Deployed: "deployed",
+		Proxy:    "proxy",
+		Type:     "accttype",
+	}
+	ret := []string{}
+	for k, v := range m {
+		if (s & k) != 0 {
+			ret = append(ret, v)
+		}
+	}
+	sort.Strings(ret)
+	return strings.Join(ret, ",")
+}
+
+// SliceToStateParts converts a string array of part names to a bit mask of parts and returns the corresponding output field names or none if no valid parts are present
+func SliceToStateParts(parts []string) (stateFields StatePart, outputFields []string, none bool) {
+	if len(parts) == 0 {
+		stateFields = Balance
+		outputFields = []string{"balance"}
+		return
+	}
+
+	for _, part := range parts {
+		switch part {
+		case "none":
+			none = true
+			outputFields = nil
+			return
+		case "some":
+			stateFields |= Balance | Nonce | Code | Type
+		case "all":
+			stateFields |= Balance | Nonce | Code | Proxy | Deployed | Type
+		case "balance":
+			stateFields |= Balance
+		case "nonce":
+			stateFields |= Nonce
+		case "code":
+			stateFields |= Code
+		case "proxy":
+			stateFields |= Proxy
+		case "deployed":
+			stateFields |= Deployed
+		case "accttype":
+			stateFields |= Type
+		}
+	}
+
+	outputFields = make([]string, 0, 6)
+	if (stateFields & Proxy) != 0 {
+		outputFields = append(outputFields, "proxy")
+	}
+
+	// Always show balance for non-none parts
+	stateFields |= Balance
+	outputFields = append(outputFields, "balance")
+
+	if (stateFields & Nonce) != 0 {
+		outputFields = append(outputFields, "nonce")
+	}
+	if (stateFields & Code) != 0 {
+		outputFields = append(outputFields, "code")
+	}
+	if (stateFields & Deployed) != 0 {
+		outputFields = append(outputFields, "deployed")
+	}
+	if (stateFields & Type) != 0 {
+		outputFields = append(outputFields, "accttype")
+	}
+
+	return
+}
+
 // EXISTING_CODE
