@@ -117,7 +117,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				report.FileSize = file.FileSize(chunkPath)
 				report.Report()
 			}
-			if err = NotifyChunkWritten(chunk, chunkPath); err != nil {
+			if err = bm.opts.NotifyChunkWritten(chunk, chunkPath); err != nil {
 				return err, true
 			}
 

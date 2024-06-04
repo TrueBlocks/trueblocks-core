@@ -74,7 +74,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 		report.FileSize = file.FileSize(indexPath)
 		report.Report()
 	}
-	if err = NotifyChunkWritten(chunk, indexPath); err != nil {
+	if err = opts.NotifyChunkWritten(chunk, indexPath); err != nil {
 		return false, err
 	}
 

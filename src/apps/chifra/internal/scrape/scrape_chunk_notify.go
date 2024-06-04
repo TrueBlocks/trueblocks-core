@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
 )
 
-func NotifyChunkWritten(chunk index.Chunk, chunkPath string) (err error) {
+func (opts *ScrapeOptions) NotifyChunkWritten(chunk index.Chunk, chunkPath string) (err error) {
 	var cidString string
 	if ok, _ := NotifyConfigured(); ok {
 		if cidString, err = index.ChunkCid(chunkPath); err != nil {
