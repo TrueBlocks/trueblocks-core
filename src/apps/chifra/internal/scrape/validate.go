@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -21,6 +22,7 @@ import (
 
 func (opts *ScrapeOptions) validateScrape() error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 
 	opts.testLog()
 
@@ -30,6 +32,18 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	if !config.IsChainConfigured(chain) {
 		return validate.Usage("chain {0} is not properly configured.", chain)
+	}
+
+	if opts.Notify {
+		if !NotifyConfigured() {
+			return validate.Usage("The {0} feature is {1}.", "--notify", "not properly configured. See the README.md")
+		}
+		if !config.IpfsRunning() {
+			return validate.Usage("The {0} option requires {1}.", "--notify", "a locally running IPFS daemon")
+		}
+	} else if !testMode && NotifyConfigured() {
+		msg := validate.Usage("The notify feature is configured but not running. Enable it with the {0} flag.", "--notify").Error()
+		logger.Warn(msg)
 	}
 
 	err, ok := opts.Conn.IsNodeTracing()

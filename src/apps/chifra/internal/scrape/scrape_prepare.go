@@ -23,13 +23,6 @@ import (
 func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	chain := opts.Globals.Chain
 
-	// Notify feature requires IPFS daemon to be running.
-	if ok, _ := NotifyConfigured(); ok {
-		if !config.IpfsRunning() {
-			logger.Fatal("notify requires IPFS daemon")
-		}
-	}
-
 	// We always clean the temporary folders (other than staging) when starting
 	_ = cleanEphemeralIndexFolders(chain)
 
@@ -74,7 +67,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 		report.FileSize = file.FileSize(indexPath)
 		report.Report()
 	}
-	if err = NotifyChunkWritten(chunk, indexPath); err != nil {
+	if err = opts.NotifyChunkWritten(chunk, indexPath); err != nil {
 		return false, err
 	}
 

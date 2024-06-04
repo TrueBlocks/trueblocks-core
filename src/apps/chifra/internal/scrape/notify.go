@@ -16,20 +16,24 @@ import (
 
 var ErrConfiguredButNotRunning = fmt.Errorf("listener is configured but not running")
 
-// NotifyConfigured returns true if notification feature is configured
-func NotifyConfigured() (bool, string) {
+// GetNotifyEndpoint returns the notification endpoint
+func GetNotifyEndpoint() string {
 	endpoint := config.GetSettings().Notify.Url
-
 	// If protocol is not specified, use http by default
 	if endpoint != "" && !strings.HasPrefix(endpoint, "http") {
 		endpoint = "http://" + endpoint
 	}
-	return endpoint != "", endpoint
+	return endpoint
+}
+
+// NotifyConfigured returns true if notification feature is configured
+func NotifyConfigured() bool {
+	return GetNotifyEndpoint() != ""
 }
 
 // Notify may be used to tell other processes about progress.
 func Notify[T notify.NotificationPayload](notification notify.Notification[T]) error {
-	_, endpoint := NotifyConfigured()
+	endpoint := GetNotifyEndpoint()
 	if endpoint == "" {
 		return nil
 	}
