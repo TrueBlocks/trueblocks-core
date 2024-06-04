@@ -142,6 +142,9 @@ func (c *Command) Clean() {
 			}
 		}
 		if op.OptionType == "note" {
+			if !strings.HasSuffix(op.Description, ".") {
+				logger.Warn("Note does not end with a period: " + op.Description)
+			}
 			c.Notes = append(c.Notes, op.Description)
 		} else if op.OptionType == "alias" {
 			c.Aliases = append(c.Aliases, op.Description)
