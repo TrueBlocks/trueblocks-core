@@ -35,6 +35,7 @@ type ScrapeOptions struct {
 	RunCount  uint64                `json:"runCount,omitempty"`  // Run the scraper this many times, then quit
 	Publisher string                `json:"publisher,omitempty"` // For some query options, the publisher of the index
 	DryRun    bool                  `json:"dryRun,omitempty"`    // Show the configuration that would be applied if run,no changes are made
+	Notify    bool                  `json:"notify,omitempty"`    // Enable the notify feature
 	Settings  config.ScrapeSettings `json:"settings,omitempty"`  // Configuration items for the scrape
 	Globals   globals.GlobalOptions `json:"globals,omitempty"`   // The global options
 	Conn      *rpc.Connection       `json:"conn,omitempty"`      // The connection to the RPC server
@@ -57,6 +58,7 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.RunCount != 0, "RunCount: ", opts.RunCount)
 	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
+	logger.TestLog(opts.Notify, "Notify: ", opts.Notify)
 	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -103,6 +105,8 @@ func ScrapeFinishParseInternal(w io.Writer, values url.Values) *ScrapeOptions {
 			opts.Publisher = value[0]
 		case "dryRun":
 			opts.DryRun = true
+		case "notify":
+			opts.Notify = true
 		case "appsPerChunk":
 			configs[key] = value[0]
 		case "snapToGrid":

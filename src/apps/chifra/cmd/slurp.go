@@ -49,7 +49,7 @@ const notesSlurp = `
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Portions of this software are Powered by Etherscan.io, Covalent, Alchemy, TrueBlocks Key APIs.
-  - See slurp/README on how to configure keys for API providers
+  - See slurp/README on how to configure keys for API providers.
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
   - If the value of --source is key, --parts is ignored.
   - The --types option is deprecated, use --parts instead.`

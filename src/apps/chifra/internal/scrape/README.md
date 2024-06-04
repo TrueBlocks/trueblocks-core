@@ -31,12 +31,14 @@ Flags:
   -l, --touch uint       first block to visit when scraping (snapped back to most recent snap_to_grid mark)
   -u, --run_count uint   run the scraper this many times, then quit
   -d, --dry_run          show the configuration that would be applied if run,no changes are made
+  -o, --notify           enable the notify feature
   -v, --verbose          enable verbose output
   -h, --help             display this help screen
 
 Notes:
   - The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
   - This command requires your RPC to provide trace data. See the README for more information.
+  - The --notify option requires proper configuration. Additionally, IPFS must be running locally. See the README.md file.
 ```
 
 Data models produced by this tool:
@@ -71,8 +73,8 @@ These items may be set in three ways, each overriding the preceding method:
 ### further information
 
 Each time `chifra scrape` runs, it begins at the last block it completed processing (plus one). With
-each pass, the scraper descends as deeply as is possible into each block's data. (This is why
-TrueBlocks requires a `--tracing` node.) As the scraper encounters appearances of address in the
+each pass, the scraper descends into each block's complete data. (This is why TrueBlocks requires
+a `--tracing` node.) As the scraper encounters appearances of address in the
 block's data, it adds those appearances to a growing index. Periodically (after processing the
 block that contains the 2,000,000th appearance), the system consolidates an **index chunk**.
 
@@ -84,11 +86,10 @@ chunk and the Bloom filter to IPFS. In this way, TrueBlocks creates an immutable
 index of appearances that can be used not only by TrueBlocks, but any member of the community who
 needs it. (Hint: We all need it.)
 
-Users of the [TrueBlocks Explorer](https://github.com/TrueBlocks/trueblocks-explorer) (or any other
-software) may subsequently download the Bloom filters, query them to determine which **index
-chunks** need to be downloaded, and thereby build a historical list of transactions for a given
-address. This is accomplished while imposing a minimum amount of resource requirement on the end
-user's machine.
+Users of of any of the TrueBlocks applications (or anyone else's applications) may subsequently
+download the Bloom filters, query them to determine which **index chunks** need to be downloaded,
+and thereby build a historical list of transactions for a given address. This is accomplished
+while imposing a minimum amount of resource requirement on the end user's machine.
 
 Recently, we enabled the ability for the end user to pin these downloaded index chunks and blooms
 on their own machines. The user needs the data for the software to operate--sharing requires
@@ -97,16 +98,31 @@ naturally-occuring network effect.
 
 ### tracing
 
-The `scrape` command requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
+The `chifra scrape` command requires your node to provide the `trace_block` (and related) RPC endpoints. Please see the
+README file for the `chifra traces` command for more information.
 
 ### prerequisites
 
 `chifra scrape` works with any EVM-based blockchain, but does not currently work without a "tracing,
-archive" RPC endpoint. The Erigon blockchain node, given its minimal disc footprint for an archive
-node and its support of the required `trace_` endpoint routines, is highly recommended.
+archive" RPC endpoint. The Erigon and Reth blockchain nodes, given their minimal disc footprint for an
+archive node and their support of the required `trace_` endpoint routines, are recommended.
 
 Please [see this article](https://trueblocks.io/blog/a-long-winded-explanation-of-trueblocks/) for
 more information about running the scraper and building and sharing the index of appearances.
+
+### notifications
+
+The `chifra scrape` command provides a notification feature which is used primarily for `trueblocks-key`.
+To configure it, you must edit the `trueBlocks.toml` file. You may edit the configuration file with
+`chifra config edit`. Add the following configuration items to the `[settings]` group:
+
+```toml
+[settings.notify]
+    url = "http://localhost:5555" # or other
+    author = "TrueBlocks" #optional
+```
+
+In addition, you must enable the feature by adding the `--notify` option to the command line.
 
 ### Other Options
 

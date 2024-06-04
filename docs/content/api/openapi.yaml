@@ -2646,6 +2646,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: notify
+          description: enable the notify feature
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: chain
           description: the chain to use
           required: false

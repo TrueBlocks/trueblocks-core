@@ -44,7 +44,8 @@ const longScrape = `Purpose:
 const notesScrape = `
 Notes:
   - The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
-  - This command requires your RPC to provide trace data. See the README for more information.`
+  - This command requires your RPC to provide trace data. See the README for more information.
+  - The --notify option requires proper configuration. Additionally, IPFS must be running locally. See the README.md file.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra scrape
@@ -62,6 +63,7 @@ func init() {
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().RunCount, "run_count", "u", 0, `run the scraper this many times, then quit`)
 	scrapeCmd.Flags().StringVarP(&scrapePkg.GetOptions().Publisher, "publisher", "P", "", `for some query options, the publisher of the index (hidden)`)
 	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().DryRun, "dry_run", "d", false, `show the configuration that would be applied if run,no changes are made`)
+	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Notify, "notify", "o", false, `enable the notify feature`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.AppsPerChunk, "apps_per_chunk", "", 2000000, `the number of appearances to build into a chunk before consolidating it (hidden)`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.SnapToGrid, "snap_to_grid", "", 250000, `an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index (hidden)`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.FirstSnap, "first_snap", "", 2000000, `the first block at which snap_to_grid is enabled (hidden)`)
