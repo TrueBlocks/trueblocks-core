@@ -143,7 +143,7 @@ Packages:
 - cache: adds Receipts and Withdrawal caches
 - rpc: moves MetaData type to types package.
 chifra scrape:
-  - Enabled `--notify` option.
+  - Enabled `--notify` option to command.
   - Removed `--raw` option.
   - Added `chifra scrape --run_count` option.
 
