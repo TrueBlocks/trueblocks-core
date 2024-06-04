@@ -9,7 +9,7 @@ import (
 
 func (opts *ScrapeOptions) NotifyChunkWritten(chunk index.Chunk, chunkPath string) (err error) {
 	var cidString string
-	if ok, _ := NotifyConfigured(); ok {
+	if ok := NotifyConfigured(); ok {
 		if cidString, err = index.ChunkCid(chunkPath); err != nil {
 			return err
 		}

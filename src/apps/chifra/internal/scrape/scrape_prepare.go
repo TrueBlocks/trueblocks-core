@@ -24,7 +24,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	chain := opts.Globals.Chain
 
 	// Notify feature requires IPFS daemon to be running.
-	if ok, _ := NotifyConfigured(); ok {
+	if ok := NotifyConfigured(); ok {
 		if !config.IpfsRunning() {
 			logger.Fatal("notify requires IPFS daemon")
 		}
