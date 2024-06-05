@@ -28,12 +28,7 @@ func (opts *StateOptions) HandleCall() error {
 		return articulate.ArticulateFunction(function, "", str[2:])
 	}
 
-	callAddress := base.HexToAddress(opts.Addrs[0])
-	proxy := base.HexToAddress(opts.ProxyFor)
-	if !proxy.IsZero() {
-		callAddress = proxy
-	}
-
+	callAddress := opts.GetCallAddress()
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
@@ -117,4 +112,15 @@ func (opts *StateOptions) HandleCall() error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+}
+
+func (opts *StateOptions) GetCallAddress() base.Address {
+	// Note that the validator precludes the possibility of having more than one address
+	// if the call option is present.
+	callAddress := base.HexToAddress(opts.Addrs[0])
+	proxy := base.HexToAddress(opts.ProxyFor)
+	if !proxy.IsZero() {
+		callAddress = proxy
+	}
+	return callAddress
 }

@@ -20,7 +20,7 @@ func TestGetState(t *testing.T) {
 
 	type args struct {
 		chain       string
-		mode        StatePart
+		mode        types.StatePart
 		address     base.Address
 		blockNumber base.Blknum
 		filters     StateFilters
@@ -35,7 +35,7 @@ func TestGetState(t *testing.T) {
 			name: "balance only",
 			args: args{
 				chain:       chain,
-				mode:        Balance,
+				mode:        types.Balance,
 				address:     base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 				blockNumber: 15531843,
 			},
@@ -44,13 +44,15 @@ func TestGetState(t *testing.T) {
 				BlockNumber: 15531843,
 				Balance:     func() base.Wei { b, _ := base.NewWei(0).SetString("57006123709077586392", 10); return *b }(),
 				Deployed:    base.NOPOSN,
+				Timestamp:   1663142858,
+				Parts:       types.Balance,
 			},
 		},
 		{
 			name: "balance and nonce and code",
 			args: args{
 				chain:       chain,
-				mode:        Balance | Nonce | Code,
+				mode:        types.Balance | types.Nonce | types.Code,
 				address:     base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"),
 				blockNumber: 15531843,
 			},
@@ -61,7 +63,9 @@ func TestGetState(t *testing.T) {
 					b, _ := base.NewWei(0).SetString("32460000000000000021", 10)
 					return *b
 				}(),
-				Nonce: 0,
+				Nonce:     0,
+				Timestamp: 1663142858,
+				Parts:     types.Balance | types.Nonce | types.Code,
 				Code: func() string {
 					code, err := conn.GetContractCodeAt(base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"), 15531843)
 					if err != nil {
@@ -81,7 +85,7 @@ func TestGetState(t *testing.T) {
 			name: "deployed only",
 			args: args{
 				chain:       chain,
-				mode:        Deployed,
+				mode:        types.Deployed,
 				address:     base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"),
 				blockNumber: 15531843,
 			},
@@ -89,13 +93,15 @@ func TestGetState(t *testing.T) {
 				Address:     base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"),
 				BlockNumber: 15531843,
 				Deployed:    988725,
+				Timestamp:   1663142858,
+				Parts:       types.Deployed,
 			},
 		},
 		{
 			name: "proxy and type",
 			args: args{
 				chain:       chain,
-				mode:        Proxy | Type,
+				mode:        types.Proxy | types.Type,
 				address:     base.HexToAddress("0x4Fabb145d64652a948d72533023f6E7A623C7C53"),
 				blockNumber: 15531843,
 			},
@@ -104,18 +110,20 @@ func TestGetState(t *testing.T) {
 				BlockNumber: 15531843,
 				Proxy:       base.HexToAddress("0x5864c777697bf9881220328bf2f16908c9afcd7e"),
 				AccountType: "Proxy",
+				Timestamp:   1663142858,
 				Deployed:    base.NOPOSN,
+				Parts:       types.Proxy | types.Type,
 			},
 		},
 		{
 			name: "balance filter",
 			args: args{
 				chain:       chain,
-				mode:        Balance,
+				mode:        types.Balance,
 				address:     base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 				blockNumber: 15531843,
 				filters: StateFilters{
-					Balance: func(address base.Address, balance *base.Wei) bool {
+					BalanceCheck: func(address base.Address, balance *base.Wei) bool {
 						return balance == base.NewWei(0)
 					},
 				},
@@ -171,6 +179,9 @@ func TestGetState(t *testing.T) {
 				}
 				if gotState.Timestamp != tt.wantState.Timestamp {
 					msg += fmt.Sprintf("Timestamp:   %d -- %d\n", gotState.Timestamp, tt.wantState.Timestamp)
+				}
+				if gotState.Parts != tt.wantState.Parts {
+					msg += fmt.Sprintf("Parts:   %s -- %s\n", gotState.Parts.String(), tt.wantState.Parts.String())
 				}
 				t.Errorf(fmt.Sprintf("Test %s\n", tt.name), msg)
 			}

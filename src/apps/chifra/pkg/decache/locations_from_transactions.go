@@ -11,7 +11,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func LocationsFromTransactionIds(conn *rpc.Connection, ids []identifiers.Identifier) ([]cache.Locator, error) {
+func LocationsFromTransactions(conn *rpc.Connection, ids []identifiers.Identifier) ([]cache.Locator, error) {
 	locations := make([]cache.Locator, 0)
 	for _, rng := range ids {
 		txIds, err := rng.ResolveTxs(conn.Chain)
@@ -19,11 +19,14 @@ func LocationsFromTransactionIds(conn *rpc.Connection, ids []identifiers.Identif
 			continue
 		}
 		for _, app := range txIds {
+			// walk.Cache_Transactions
 			tx := &types.Transaction{
 				BlockNumber:      base.Blknum(app.BlockNumber),
 				TransactionIndex: base.Txnum(app.TransactionIndex),
 			}
 			locations = append(locations, tx)
+
+			// walk.Cache_Traces
 			locations = append(locations, &types.TraceGroup{
 				BlockNumber:      tx.BlockNumber,
 				TransactionIndex: tx.TransactionIndex,

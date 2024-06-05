@@ -14,7 +14,7 @@ import (
 )
 
 func (opts *TracesOptions) HandleDecache() error {
-	itemsToRemove, err := decache.LocationsFromTransactionIds(opts.Conn, opts.TransactionIds)
+	itemsToRemove, err := decache.LocationsFromTransactions(opts.Conn, opts.TransactionIds)
 	if err != nil {
 		return err
 	}

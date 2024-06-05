@@ -140,6 +140,7 @@ var knownTypes = map[string]bool{
 	"AppRecord":   true,
 	"StorageSlot": true,
 	"TokenType":   true,
+	"StatePart":   true,
 }
 
 func (cb *CodeBase) Validate() error {

@@ -17,7 +17,6 @@ import (
 
 func (opts *StateOptions) validateState() error {
 	chain := opts.Globals.Chain
-	proxy := base.HexToAddress(opts.ProxyFor)
 
 	opts.testLog()
 
@@ -55,12 +54,8 @@ func (opts *StateOptions) validateState() error {
 				return validate.Usage("Exactly one address is required for the {0} option.", "--call")
 			}
 
-			contract := opts.Addrs[0]
-			if !proxy.IsZero() {
-				contract = proxy.Hex()
-			}
-
-			err := opts.Conn.IsContractAtLatest(base.HexToAddress(contract))
+			callAddress := opts.GetCallAddress()
+			err := opts.Conn.IsContractAtLatest(base.HexToAddress(callAddress.Hex()))
 			if err != nil {
 				if errors.Is(err, rpc.ErrNotAContract) {
 					return validate.Usage("The address for the --call option must be a smart contract.")
@@ -69,10 +64,6 @@ func (opts *StateOptions) validateState() error {
 			}
 
 			// Before we do anythinng, let's just make sure we have a valid four-byte
-			callAddress := base.HexToAddress(opts.Addrs[0])
-			if !proxy.IsZero() {
-				callAddress = proxy
-			}
 			for _, c := range opts.Calls {
 				if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
 					message := fmt.Sprintf("the --call value provided (%s) was not found: %s", c, err)
@@ -96,6 +87,7 @@ func (opts *StateOptions) validateState() error {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--call")
 			}
 
+			proxy := base.HexToAddress(opts.ProxyFor)
 			if !proxy.IsZero() {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--proxy_for", "--call")
 			}

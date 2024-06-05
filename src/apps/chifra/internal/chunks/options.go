@@ -29,6 +29,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	// EXISTING_CODE
 )
@@ -273,7 +274,7 @@ func ResetOptions(testMode bool) {
 	defaultChunksOptions = opts
 }
 
-func (opts *ChunksOptions) getCaches() (m map[string]bool) {
+func (opts *ChunksOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return

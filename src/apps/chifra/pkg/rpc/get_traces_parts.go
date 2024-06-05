@@ -12,6 +12,7 @@ import (
 // GetTracesByTransactionId returns a slice of traces in a given transaction
 func (conn *Connection) GetTracesByTransactionId(bn base.Blknum, txid base.Txnum) ([]types.Trace, error) {
 	if conn.StoreReadable() {
+		// walk.Cache_Traces
 		traceGroup := &types.TraceGroup{
 			BlockNumber:      bn,
 			TransactionIndex: txid,

@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetMinerAndWithdrawals returns the miner and withdrawals for a block
@@ -34,6 +35,7 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 	}
 
 	if conn.StoreReadable() {
+		// walk.Cache_Withdrawals
 		withdrawalGroup := &types.WithdrawalGroup{
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN,
@@ -46,11 +48,12 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 	if withdrawals, ts, err := conn.getWithdrawals(bn); err != nil {
 		return withdrawals, err
 	} else {
-		if conn.StoreWritable() && conn.EnabledMap["withdrawals"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
+		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
+		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Withdrawals] {
 			withdrawalGroup := &types.WithdrawalGroup{
-				Withdrawals:      withdrawals,
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,
+				Withdrawals:      withdrawals,
 			}
 			if err = conn.Store.Write(withdrawalGroup, nil); err != nil {
 				logger.Warn("Failed to write withdrawals to cache", err)

@@ -213,6 +213,7 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 				Num:          op.Num,
 				ReturnType:   op.ReturnType,
 				Capabilities: op.Capabilities,
+				Attributes:   op.Attributes,
 				Usage:        op.Usage,
 				Folder:       op.Folder,
 				Summary:      op.Summary,

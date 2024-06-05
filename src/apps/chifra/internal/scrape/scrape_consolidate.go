@@ -112,8 +112,8 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 				report.FileSize = file.FileSize(chunkPath)
 				report.Report()
 			}
-			if err = NotifyChunkWritten(chunk, chunkPath); err != nil {
-				return err
+			if err = bm.opts.NotifyChunkWritten(chunk, chunkPath); err != nil {
+				return err, true
 			}
 
 			// reset for next chunk
@@ -158,12 +158,14 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
 	bm.report(len(blocks), int(bm.PerChunk()), nChunks, nAppsNow, nAppsFound, nAddrsFound)
 
-	if err := Notify(notify.Notification[string]{
-		Msg:     notify.MessageStageUpdated,
-		Meta:    bm.meta,
-		Payload: newRange.String(),
-	}); err != nil {
-		return err
+	if bm.opts.Notify {
+		if err := Notify(notify.Notification[string]{
+			Msg:     notify.MessageStageUpdated,
+			Meta:    bm.meta,
+			Payload: newRange.String(),
+		}); err != nil {
+			return err, true
+		}
 	}
 
 	// Commit the change by deleting the backup file.

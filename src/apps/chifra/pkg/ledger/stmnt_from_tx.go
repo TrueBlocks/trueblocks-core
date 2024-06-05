@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetStatements returns a statement from a given transaction
@@ -18,10 +19,11 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	l.theTx = trans
 
 	if false && conn.StoreReadable() {
+		// walk.Cache_Statements
 		statementGroup := &types.StatementGroup{
-			Address:          l.AccountFor,
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
+			Address:          l.AccountFor,
 		}
 		if err := conn.Store.Read(statementGroup, nil); err == nil {
 			return statementGroup.Statements, nil
@@ -128,11 +130,12 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		statements = append(statements, receiptStatements...)
 	}
 
-	if false && l.Conn.StoreWritable() && l.Conn.EnabledMap["statements"] && base.IsFinal(l.Conn.LatestBlockTimestamp, trans.Timestamp) {
+	isFinal := base.IsFinal(conn.LatestBlockTimestamp, trans.Timestamp)
+	if false && isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Statements] {
 		statementGroup := &types.StatementGroup{
-			Address:          l.AccountFor,
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
+			Address:          l.AccountFor,
 			Statements:       statements,
 		}
 		_ = conn.Store.Write(statementGroup, nil)

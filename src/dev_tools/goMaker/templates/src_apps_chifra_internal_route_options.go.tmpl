@@ -118,7 +118,7 @@ func ResetOptions(testMode bool) {
 {{.DefaultsApi false}}	default{{toProper .Route}}Options = opts
 }
 
-func (opts *{{toProper .Route}}Options) getCaches() (m map[string]bool) {
+func (opts *{{toProper .Route}}Options) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return

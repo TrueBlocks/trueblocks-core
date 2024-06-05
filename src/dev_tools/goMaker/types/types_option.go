@@ -112,6 +112,10 @@ func readCmdOption(op *Option, data *any) (bool, error) {
 	return true, nil
 }
 
+func (op *Option) IsApiHidden() bool {
+	return strings.Contains(op.Attributes, "notApi") || op.IsHidden()
+}
+
 func (op *Option) IsHidden() bool {
 	return !op.IsVisibleDocs() ||
 		(!op.IsRequired() && !op.IsVisible() && op.IsVisibleDocs())
@@ -422,7 +426,7 @@ func (op *Option) IsConfigurableAddr() bool {
 }
 
 func (op *Option) IsSpecialAddr() bool {
-	return op.GoName == "ProxyFor" || op.IsConfigurableAddr() || op.GoName == "Autoname"
+	return op.IsConfigurableAddr() || op.GoName == "Autoname"
 }
 
 func (op *Option) EnsConvert() string {

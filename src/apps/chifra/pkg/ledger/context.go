@@ -80,7 +80,7 @@ func (c *ledgerContext) Next() base.Blknum {
 }
 
 func (l *Ledger) ctxKey(bn base.Blknum, txid base.Txnum) ledgerContextKey {
-	// TODO: Is having the context per asset necessary?
+	// TODO: Is having the context per asset necessary? Can we use Locator?
 	// return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
 	return ledgerContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }

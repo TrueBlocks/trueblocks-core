@@ -198,13 +198,15 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		}
 	}
 
-	if bn <= bm.ripeBlock {
+	if bm.opts.Notify && bn <= bm.ripeBlock {
 		err = Notify(notify.Notification[[]notify.NotificationPayloadAppearance]{
 			Msg:     notify.MessageAppearance,
 			Meta:    bm.meta,
 			Payload: notificationPayload,
 		})
 		if err != nil {
+			// We need this warning, otherwise errors don't show up for 2,000 blocks
+			logger.Error("error sending notification", err)
 			return err
 		}
 	}

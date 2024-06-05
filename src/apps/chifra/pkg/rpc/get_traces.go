@@ -10,11 +10,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetTracesByBlockNumber returns a slice of traces in the given block
 func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, error) {
 	if conn.StoreReadable() {
+		// walk.Cache_Traces
 		traceGroup := &types.TraceGroup{
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN, // no tx id means we're storing the whole block
@@ -61,7 +63,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 			traceIndex++
 		}
 
-		if conn.StoreWritable() && conn.EnabledMap["traces"] && isFinal {
+		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Traces] {
 			traceGroup := &types.TraceGroup{
 				Traces:           *traces,
 				BlockNumber:      bn,
@@ -76,10 +78,11 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
 func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *types.Transaction) ([]types.Trace, error) {
 	if conn.StoreReadable() && transaction != nil {
+		// walk.Cache_Traces
 		traceGroup := &types.TraceGroup{
-			Traces:           make([]types.Trace, 0, len(transaction.Traces)),
 			BlockNumber:      transaction.BlockNumber,
 			TransactionIndex: transaction.TransactionIndex,
+			Traces:           make([]types.Trace, 0, len(transaction.Traces)),
 		}
 		if err := conn.Store.Read(traceGroup, nil); err == nil {
 			return traceGroup.Traces, nil
@@ -125,11 +128,12 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 		}
 
 		if transaction != nil {
-			if conn.StoreWritable() && conn.EnabledMap["traces"] && base.IsFinal(conn.LatestBlockTimestamp, transaction.Timestamp) {
+			isFinal := base.IsFinal(conn.LatestBlockTimestamp, transaction.Timestamp)
+			if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Traces] {
 				traceGroup := &types.TraceGroup{
-					Traces:           *traces,
 					BlockNumber:      transaction.BlockNumber,
 					TransactionIndex: transaction.TransactionIndex,
+					Traces:           *traces,
 				}
 				_ = conn.Store.Write(traceGroup, nil)
 			}

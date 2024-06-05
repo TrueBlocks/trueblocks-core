@@ -43,6 +43,7 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
@@ -53,6 +54,10 @@ Data models produced by this tool:
 - [message](/data-model/other/#message)
 - [parameter](/data-model/other/#parameter)
 - [transaction](/data-model/chaindata/#transaction)
+
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
 
 ### Other Options
 

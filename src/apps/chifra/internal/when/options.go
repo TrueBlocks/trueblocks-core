@@ -23,6 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	// EXISTING_CODE
 )
 
@@ -183,12 +184,10 @@ func ResetOptions(testMode bool) {
 	defaultWhenOptions = opts
 }
 
-func (opts *WhenOptions) getCaches() (m map[string]bool) {
+func (opts *WhenOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
-	if !opts.Timestamps {
-		m = map[string]bool{
-			"blocks": true,
-		}
+	caches = map[walk.CacheType]bool{
+		walk.Cache_Blocks: !opts.Timestamps,
 	}
 	// EXISTING_CODE
 	return

@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	"github.com/spf13/cobra"
 )
 
@@ -135,7 +136,7 @@ func InitGlobals(whoAmI string, cmd *cobra.Command, opts *GlobalOptions, c caps.
 	SetDefaults(opts)
 }
 
-func (opts *GlobalOptions) FinishParseApi(w io.Writer, values url.Values, caches map[string]bool) *rpc.Connection {
+func (opts *GlobalOptions) FinishParseApi(w io.Writer, values url.Values, caches map[walk.CacheType]bool) *rpc.Connection {
 	opts.Writer = w
 
 	for key, value := range values {
@@ -205,7 +206,7 @@ func (opts *GlobalOptions) FinishParseApi(w io.Writer, values url.Values, caches
 	}
 }
 
-func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *rpc.Connection {
+func (opts *GlobalOptions) FinishParse(args []string, caches map[walk.CacheType]bool) *rpc.Connection {
 	if (len(opts.Format) == 0 || opts.Format == "none") && len(opts.OutputFn) > 0 {
 		parts := strings.Split(opts.OutputFn, ".")
 		if len(parts) > 0 {
