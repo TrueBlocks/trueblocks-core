@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // HandleTimestampsCheck handles chifra when --timestamps --check
@@ -26,18 +25,19 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	skip := uint64(500)
 	if opts.Deep {
 		m, _ := opts.Conn.GetMetaData(opts.Globals.TestMode)
-		skip = m.Latest / 500
+		skip = uint64(m.Latest) / 500
 	}
-	scanBar := progress.NewScanBar(cnt /* wanted */, (cnt / skip) /* freq */, cnt /* max */, (2. / 3.))
+	count := uint64(cnt)
+	scanBar := progress.NewScanBar(count /* wanted */, (count / skip) /* freq */, count /* max */, (2. / 3.))
 
 	blockNums, err := identifiers.GetBlockNumbers(chain, opts.BlockIds)
 	if err != nil {
 		return err
 	}
 
-	prev := types.SimpleNamedBlock{
-		BlockNumber: utils.NOPOS,
-		Timestamp:   utils.NOPOSI,
+	prev := types.NamedBlock{
+		BlockNumber: base.NOPOSN,
+		Timestamp:   base.NOPOSI,
 	}
 
 	if len(blockNums) > 0 {
@@ -49,7 +49,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 			}
 		}
 	} else {
-		for bn := uint64(0); bn < cnt; bn++ {
+		for bn := base.Blknum(0); bn < cnt; bn++ {
 			if err = opts.checkOneBlock(scanBar, &prev, bn); err != nil {
 				return err
 			}
@@ -59,7 +59,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	return nil
 }
 
-func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.SimpleNamedBlock, bn uint64) error {
+func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.NamedBlock, bn base.Blknum) error {
 	chain := opts.Globals.Chain
 
 	// The i'th item in the timestamp array on disc
@@ -69,18 +69,18 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 	}
 
 	// This just simplifies the code below by removing the need to type cast
-	onDisc := types.SimpleNamedBlock{
-		BlockNumber: uint64(itemOnDisc.Bn),
+	onDisc := types.NamedBlock{
+		BlockNumber: base.Blknum(itemOnDisc.Bn),
 		Timestamp:   base.Timestamp(itemOnDisc.Ts),
 	}
 
-	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: onDisc.Timestamp}
+	expected := types.LightBlock{BlockNumber: bn, Timestamp: onDisc.Timestamp}
 	if opts.Deep {
 		// If we're going deep, we need to query the node
 		expected, _ = opts.Conn.GetBlockHeaderByNumber(bn)
 	}
 
-	if prev.Timestamp != utils.NOPOSI {
+	if prev.Timestamp != base.NOPOSI {
 		status := "Okay"
 
 		bnSequential := prev.BlockNumber < onDisc.BlockNumber

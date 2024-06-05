@@ -1,6 +1,0 @@
-when?blocks=idonotexist
-{
-  "errors": [
-    "The given value 'idonotexist' is not a valid identifier."
-  ]
-}

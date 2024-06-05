@@ -1,6 +1,0 @@
-list?addrs=trueblocks.eth&wei
-{
-  "errors": [
-    "Invalid key (wei) in list route."
-  ]
-}

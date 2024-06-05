@@ -1,6 +1,6 @@
 ---
 title: "Other"
-description: ""
+description: "Access to other and external data"
 lead: ""
 lastmod:
   - :git
@@ -9,8 +9,8 @@ lastmod:
 draft: false
 menu:
   data:
-    parent: "collections"
-weight: 1800
+    parent: collections
+weight: 51000
 toc: true
 ---
 
@@ -64,6 +64,12 @@ The following commands produce and manage Functions:
 
 - [chifra abis](/chifra/accounts/#chifra-abis)
 - [chifra export](/chifra/accounts/#chifra-export)
+- [chifra transactions](/chifra/chaindata/#chifra-transactions)
+- [chifra receipts](/chifra/chaindata/#chifra-receipts)
+- [chifra logs](/chifra/chaindata/#chifra-logs)
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+- [chifra state](/chifra/chainstate/#chifra-state)
+- [chifra slurp](/chifra/other/#chifra-slurp)
 
 Functions consist of the following fields:
 
@@ -89,6 +95,12 @@ The following commands produce and manage Parameters:
 
 - [chifra abis](/chifra/accounts/#chifra-abis)
 - [chifra export](/chifra/accounts/#chifra-export)
+- [chifra transactions](/chifra/chaindata/#chifra-transactions)
+- [chifra receipts](/chifra/chaindata/#chifra-receipts)
+- [chifra logs](/chifra/chaindata/#chifra-logs)
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+- [chifra state](/chifra/chainstate/#chifra-state)
+- [chifra slurp](/chifra/other/#chifra-slurp)
 
 Parameters consist of the following fields:
 
@@ -117,36 +129,65 @@ Slurps consist of the following fields:
 | hash             | the hash of the transaction                                                                           | hash                                    |
 | blockHash        | the hash of the block containing this transaction                                                     | hash                                    |
 | blockNumber      | the number of the block                                                                               | blknum                                  |
-| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                  |
-| nonce            | sequence number of the transactions sent by the sender                                                | uint64                                  |
+| transactionIndex | the zero-indexed position of the transaction in the block                                             | txnum                                   |
+| nonce            | sequence number of the transactions sent by the sender                                                | value                                   |
 | timestamp        | the Unix timestamp of the object                                                                      | timestamp                               |
 | date             | the timestamp as a date (calculated)                                                                  | datetime                                |
 | from             | address from which the transaction was sent                                                           | address                                 |
 | to               | address to which the transaction was sent                                                             | address                                 |
 | value            | the amount of wei sent with this transactions                                                         | wei                                     |
+| ether            | if --ether is specified, the value in ether (calculated)                                              | ether                                   |
 | gas              | the maximum number of gas allowed for this transaction                                                | gas                                     |
 | gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                     |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                   |
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | bool                                    |
 | articulatedTx    | if present, the function that was called in the transaction                                           | [Function](/data-model/other/#function) |
-| compressedTx     | truncated, more readable version of the articulation                                                  | string                                  |
+| compressedTx     | truncated, more readable version of the articulation (calculated)                                     | string                                  |
 | isError          | `true` if the transaction ended in error, `false` otherwise                                           | bool                                    |
+
+## Message
+
+The Message type is used in various places to return information about a command. For example, when using the `chifra names --autoname` feature in the SDK, a Message type is returned.
+
+The following commands produce and manage Messages:
+
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra chunks](/chifra/admin/#chifra-chunks)
+- [chifra export](/chifra/accounts/#chifra-export)
+- [chifra logs](/chifra/chaindata/#chifra-logs)
+- [chifra monitors](/chifra/accounts/#chifra-monitors)
+- [chifra names](/chifra/accounts/#chifra-names)
+- [chifra state](/chifra/chainstate/#chifra-state)
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+- [chifra transactions](/chifra/chaindata/#chifra-transactions)
+- [chifra when](/chifra/chaindata/#chifra-when)
+
+Messages consist of the following fields:
+
+| Field | Description        | Type   |
+| ----- | ------------------ | ------ |
+| msg   | the message        | string |
+| num   | a number if needed | int64  |
 
 ## Base types
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                         | Notes          |
-| --------- | ----------------------------------- | -------------- |
-| address   | an '0x'-prefixed 20-byte hex string | lowercase      |
-| blknum    | an alias for a uint64               |                |
-| bool      | either `true`, `false`, `1`, or `0` |                |
-| bytes     | an arbitrarily long string of bytes |                |
-| datetime  | a JSON formatted date               | as a string    |
-| gas       | an unsigned big number              | as a string    |
-| hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
-| string    | a normal character string           |                |
-| timestamp | a 64-bit unsigned integer           | Unix timestamp |
-| uint64    | a 64-bit unsigned integer           |                |
-| wei       | an unsigned big number              | as a string    |
+| Type      | Description                            | Notes          |
+| --------- | -------------------------------------- | -------------- |
+| address   | an '0x'-prefixed 20-byte hex string    | lowercase      |
+| blknum    | an alias for a uint64                  |                |
+| bool      | either `true`, `false`, `1`, or `0`    |                |
+| bytes     | an arbitrarily long string of bytes    |                |
+| datetime  | a JSON formatted date                  | as a string    |
+| ether     | a big number float                     | as a string    |
+| gas       | a 64-bit unsigned integer              |                |
+| hash      | an '0x'-prefixed 32-byte hex string    | lowercase      |
+| int64     | a 64-bit signed integer                |                |
+| string    | a normal character string              |                |
+| timestamp | a 64-bit unsigned integer              | Unix timestamp |
+| txnum     | an alias for a uint64                  |                |
+| value     | an alias for a 64-bit unsigned integer |                |
+| wei       | an unsigned big number                 | as a string    |
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

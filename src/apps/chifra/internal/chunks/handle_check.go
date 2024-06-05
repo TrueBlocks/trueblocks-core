@@ -23,13 +23,13 @@ import (
 // HandleCheck looks at three different arrays: index files on disc, manifest on disc,
 // and manifest in the smart contract. It tries to check these three sources for
 // cosnsistency. Smart contract rules, so it is checked more thoroughly.
-func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleCheck(blockNums []base.Blknum) error {
 	err, _ := opts.check(blockNums, false /* silent */)
 	return err
 }
 
 // check provides internal checks against the index used from the command line and internally before pinning
-func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) {
+func (opts *ChunksOptions) check(blockNums []base.Blknum, silent bool) (error, bool) {
 	chain := opts.Globals.Chain
 
 	maxTestItems := 10
@@ -121,63 +121,63 @@ func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) 
 		return remoteArray[i] < remoteArray[j]
 	})
 
-	reports := []simpleReportCheck{}
+	reports := []types.ReportCheck{}
 
 	allowMissing := config.GetScrape(chain).AllowMissing
 
-	seq := simpleReportCheck{Reason: "Filenames sequential"}
+	seq := types.ReportCheck{Reason: "Filenames sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
 		return err, false
 	}
 	reports = append(reports, seq)
 
-	intern := simpleReportCheck{Reason: "Internally consistent"}
+	intern := types.ReportCheck{Reason: "Internally consistent"}
 	if err := opts.CheckInternal(fileNames, blockNums, &intern); err != nil {
 		return err, false
 	}
 	reports = append(reports, intern)
 
-	version := simpleReportCheck{Reason: "Correct version"}
+	version := types.ReportCheck{Reason: "Correct version"}
 	if err := opts.CheckVersion(fileNames, blockNums, &version); err != nil {
 		return err, false
 	}
 	reports = append(reports, version)
 
-	con := simpleReportCheck{Reason: "Consistent hashes"}
+	con := types.ReportCheck{Reason: "Consistent hashes"}
 	if err := opts.CheckHashes(cacheManifest, remoteManifest, &con); err != nil {
 		return err, false
 	}
 	reports = append(reports, con)
 
-	sizes := simpleReportCheck{Reason: "Check file sizes"}
+	sizes := types.ReportCheck{Reason: "Check file sizes"}
 	if err := opts.CheckSizes(fileNames, blockNums, cacheManifest, remoteManifest, &sizes); err != nil {
 		return err, false
 	}
 	reports = append(reports, sizes)
 
 	// compare with çached manifest with files on disc
-	d2c := simpleReportCheck{Reason: "Disc files to cached manifest"}
+	d2c := types.ReportCheck{Reason: "Disc files to cached manifest"}
 	if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {
 		return err, false
 	}
 	reports = append(reports, d2c)
 
 	// compare with remote manifest with files on disc
-	d2r := simpleReportCheck{Reason: "Disc files to remote manifest"}
+	d2r := types.ReportCheck{Reason: "Disc files to remote manifest"}
 	if err := opts.CheckManifest(fnArray, remoteArray, &d2r); err != nil {
 		return err, false
 	}
 	reports = append(reports, d2r)
 
 	// compare remote manifest to cached manifest
-	r2c := simpleReportCheck{Reason: "Remote manifest to cached manifest"}
+	r2c := types.ReportCheck{Reason: "Remote manifest to cached manifest"}
 	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
 		return err, false
 	}
 	reports = append(reports, r2c)
 
 	if opts.Deep {
-		deep := simpleReportCheck{Reason: "Deep checks for " + opts.Mode}
+		deep := types.ReportCheck{Reason: "Deep checks for " + opts.Mode}
 		if err := opts.CheckDeep(cacheManifest, &deep); err != nil {
 			return err, false
 		}
@@ -197,7 +197,7 @@ func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) 
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, report := range reports {
 			if !silent {
 				modelChan <- &report

@@ -17,7 +17,7 @@ type Ledger struct {
 	AccountFor  base.Address
 	FirstBlock  base.Blknum
 	LastBlock   base.Blknum
-	Names       map[base.Address]types.SimpleName
+	Names       map[base.Address]types.Name
 	TestMode    bool
 	Contexts    map[ledgerContextKey]*ledgerContext
 	AsEther     bool
@@ -26,7 +26,7 @@ type Ledger struct {
 	UseTraces   bool
 	Conn        *rpc.Connection
 	assetFilter []base.Address
-	theTx       *types.SimpleTransaction
+	theTx       *types.Transaction
 }
 
 // NewLedger returns a new empty Ledger struct

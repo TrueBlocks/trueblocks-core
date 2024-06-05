@@ -30,7 +30,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 	)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
@@ -46,9 +46,10 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 					cancel()
 
 				} else {
+					showProgress := opts.Globals.ShowProgress()
 					bar := logger.NewBar(logger.BarOptions{
 						Prefix:  mon.Address.Hex(),
-						Enabled: !testMode && !utils.IsTerminal(),
+						Enabled: showProgress,
 						Total:   int64(cnt),
 					})
 
@@ -64,7 +65,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 						}
 
 						neighbors := make([]Reason, 0)
-						iterFunc := func(app types.SimpleAppearance, unused *bool) error {
+						iterFunc := func(app types.Appearance, unused *bool) error {
 							if theseNeighbors, err := GetNeighbors(&app); err != nil {
 								return err
 							} else {
@@ -84,9 +85,9 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 							}
 						}
 
-						items := make([]types.SimpleAppearance, 0, len(thisMap))
+						items := make([]types.Appearance, 0, len(thisMap))
 						for _, neighbor := range neighbors {
-							app := types.SimpleAppearance{
+							app := types.Appearance{
 								Address:          *neighbor.Address,
 								BlockNumber:      neighbor.App.BlockNumber,
 								TransactionIndex: neighbor.App.TransactionIndex,
@@ -125,11 +126,11 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"uniq": true,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 /*
@@ -576,7 +577,7 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
 
 //-----------------------------------------------------------------------
 bool COptions::reportNeighbors(void) {
-    // BOGUS: NEW_CODE
+    // BOGUS: NEW_CO DE
     if (isTestMode()) {
         return true;
     }
@@ -624,14 +625,14 @@ class CIndexArchiveWithNeighborMaps : public CIndexArchive {
 
 */
 
-func GetNeighbors(app *types.SimpleAppearance) ([]Reason, error) {
+func GetNeighbors(app *types.Appearance) ([]Reason, error) {
 	reasons := make([]Reason, 0)
 	reasons = append(reasons, Reason{App: app, Address: &app.Address, Reason: "self"})
 	return reasons, nil
 }
 
 type Reason struct {
-	App     *types.SimpleAppearance
+	App     *types.Appearance
 	Address *base.Address
 	Reason  string
 }

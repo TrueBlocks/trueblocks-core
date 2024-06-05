@@ -24,14 +24,14 @@ func (opts *TracesOptions) HandleShow() error {
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Transaction](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -40,17 +40,18 @@ func (opts *TracesOptions) HandleShow() error {
 			cancel()
 
 		} else {
+			showProgress := opts.Globals.ShowProgress()
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !utils.IsTerminal(),
+				Enabled: showProgress,
 				Total:   int64(cnt),
 			})
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.SimpleTransaction)
+					thisMap[app] = new(types.Transaction)
 				}
 
-				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+				iterFunc := func(app types.Appearance, value *types.Transaction) error {
 					if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
 						delete(thisMap, app)
 						return fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
@@ -84,7 +85,7 @@ func (opts *TracesOptions) HandleShow() error {
 					}
 				}
 
-				items := make([]types.SimpleTrace, 0, len(thisMap))
+				items := make([]types.Trace, 0, len(thisMap))
 				for _, receipt := range thisMap {
 					items = append(items, receipt.Traces...)
 				}
@@ -106,9 +107,9 @@ func (opts *TracesOptions) HandleShow() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

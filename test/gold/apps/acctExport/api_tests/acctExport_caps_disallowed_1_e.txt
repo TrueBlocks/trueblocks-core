@@ -1,6 +1,0 @@
-export?addrs=trueblocks.eth&raw
-{
-  "errors": [
-    "Invalid key (raw) in export route."
-  ]
-}

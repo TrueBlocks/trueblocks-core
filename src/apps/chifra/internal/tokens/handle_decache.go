@@ -9,7 +9,7 @@ import (
 )
 
 func (opts *TokensOptions) HandleDecache() error {
-	// TODO: implement
-	logger.Error("Not implemented yet.")
+	// TODO: decache.Decache --decache not implemented
+	logger.Error("chifra tokens --decache is not yet implemented")
 	return nil
 }

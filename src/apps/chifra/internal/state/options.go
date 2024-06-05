@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package statePkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -19,6 +23,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	// EXISTING_CODE
 )
 
 // StateOptions provides all command options for the chifra state command.
@@ -29,14 +35,14 @@ type StateOptions struct {
 	Parts      []string                 `json:"parts,omitempty"`      // Control which state to export
 	Changes    bool                     `json:"changes,omitempty"`    // Only report a balance when it changes from one block to the next
 	NoZero     bool                     `json:"noZero,omitempty"`     // Suppress the display of zero balance accounts
-	Call       string                   `json:"call,omitempty"`       // Call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
+	Call       string                   `json:"call,omitempty"`       // Call a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
 	Articulate bool                     `json:"articulate,omitempty"` // For the --call option only, articulate the retrieved data if ABIs can be found
 	ProxyFor   string                   `json:"proxyFor,omitempty"`   // For the --call option only, redirects calls to this implementation
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
-	ProxyForAddr base.Address `json:"-"`
+	Calls []string `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -64,9 +70,18 @@ func (opts *StateOptions) String() string {
 
 // stateFinishParseApi finishes the parsing for server invocations. Returns a new StateOptions.
 func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return StateFinishParseInternal(w, values)
+}
+
+func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 	copy := defaultStateOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -95,16 +110,18 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 			opts.ProxyFor = value[0]
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "state")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "state")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
-	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
+	opts.Calls = strings.Split(opts.Call, ":")
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -114,6 +131,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	return opts
 }
@@ -136,8 +154,6 @@ func stateFinishParse(args []string) *StateOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
-	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	for _, arg := range args {
@@ -148,6 +164,7 @@ func stateFinishParse(args []string) *StateOptions {
 		}
 	}
 	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
+	opts.Calls = strings.Split(opts.Call, ":")
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -157,6 +174,7 @@ func stateFinishParse(args []string) *StateOptions {
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
@@ -170,26 +188,32 @@ func GetOptions() *StateOptions {
 	return &defaultStateOptions
 }
 
-func ResetOptions(testMode bool) {
-	// We want to keep writer between command file calls
-	w := GetOptions().Globals.Writer
-	defaultStateOptions = StateOptions{}
-	globals.SetDefaults(&defaultStateOptions.Globals)
-	defaultStateOptions.Globals.TestMode = testMode
-	defaultStateOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra state
-	// EXISTING_CODE
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra state
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
 	// EXISTING_CODE
-	defaultStateOptions.Globals.Caps = capabilities
+	// EXISTING_CODE
+	return capabilities
 }
 
-func (opts *StateOptions) getCaches() (m map[string]bool) {
+func ResetOptions(testMode bool) {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	opts := StateOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	defaultStateOptions = opts
+}
+
+func (opts *StateOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
-	m = map[string]bool{
-		"state":   true,
-		"results": len(opts.Call) > 0,
+	caches = map[walk.CacheType]bool{
+		walk.Cache_State:   true,
+		walk.Cache_Results: len(opts.Call) > 0,
 	}
 	// EXISTING_CODE
 	return
@@ -197,4 +221,3 @@ func (opts *StateOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

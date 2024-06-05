@@ -62,7 +62,7 @@ func TestNameWriterWrite(t *testing.T) {
 	w := NewNameWriter(&buf)
 
 	var err error
-	name := &types.SimpleName{
+	name := &types.Name{
 		Address: base.HexToAddress("0x1f9090aae28b8a3dceadf281b0f12828e676c326"),
 		Name:    "John",
 	}
@@ -121,7 +121,7 @@ func TestNameWriterWriteNoHeader(t *testing.T) {
 	w.WriteHeader = false
 
 	var err error
-	name := &types.SimpleName{
+	name := &types.Name{
 		Address: base.HexToAddress("0x1f9090aae28b8a3dceadf281b0f12828e676c326"),
 		Name:    "John",
 	}

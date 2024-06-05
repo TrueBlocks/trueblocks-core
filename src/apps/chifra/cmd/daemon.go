@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -24,7 +25,6 @@ import (
 // daemonCmd represents the daemon command
 var daemonCmd = &cobra.Command{
 	Use:     usageDaemon,
-	Short:   shortDaemon,
 	Long:    longDaemon,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("daemon", func() *globals.GlobalOptions {
@@ -34,14 +34,9 @@ var daemonCmd = &cobra.Command{
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &daemonPkg.GetOptions().Globals
 	}),
-	Aliases: []string{
-		"serve",
-	},
-}
+	Aliases: []string{"serve"}}
 
 const usageDaemon = `daemon [flags]`
-
-const shortDaemon = "initialize and control long-running processes such as the API and the scrapers"
 
 const longDaemon = `Purpose:
   Initialize and control long-running processes such as the API and the scrapers.`
@@ -49,43 +44,41 @@ const longDaemon = `Purpose:
 const notesDaemon = `
 Notes:
   - To start API open terminal window and run chifra daemon.
-  - See the API documentation (https://trueblocks.io/api) for more information.`
+  - See the API documentation (https://trueblocks.io/api) for more information.
+  - The --port option is deprecated, use --url instead.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra daemon
-	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Chain)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
-	// capabilities = capabilities.Remove(caps.Fmt)
-	// capabilities = capabilities.Remove(caps.File)
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra daemon
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.NoColor)
 
 	daemonCmd.Flags().SortFlags = false
 
-	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Url, "url", "u", "localhost:8080", "specify the API server's url and optionally its port")
+	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Url, "url", "u", "localhost:8080", `specify the API server's url and optionally its port`)
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Api, "api", "a", "on", `instruct the node to start the API server (hidden)
 One of [ off | on ]`)
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Scrape, "scrape", "s", "", `start the scraper, initialize it with either just blooms or entire index, generate for new blocks (hidden)
 One of [ off | blooms | index ]`)
-	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Monitor, "monitor", "m", false, "instruct the node to start the monitors tool (hidden)")
-	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Grpc, "grpc", "g", false, "run gRPC server to serve names")
-	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", "deprecated please use --url flag instead")
+	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Monitor, "monitor", "m", false, `instruct the node to start the monitors tool (hidden)`)
+	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Grpc, "grpc", "g", false, `run gRPC server to serve names`)
+	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Silent, "silent", "", false, `disable logging (for use in SDK for example)`)
+	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", `deprecated, use --url instead (hidden)`)
 	if os.Getenv("TEST_MODE") != "true" {
-		daemonCmd.Flags().MarkHidden("api")
-		daemonCmd.Flags().MarkHidden("scrape")
-		daemonCmd.Flags().MarkHidden("monitor")
+		_ = daemonCmd.Flags().MarkHidden("api")
+		_ = daemonCmd.Flags().MarkHidden("scrape")
+		_ = daemonCmd.Flags().MarkHidden("monitor")
+		_ = daemonCmd.Flags().MarkHidden("port")
 	}
+	_ = daemonCmd.Flags().MarkDeprecated("port", "The --port option has been deprecated.")
 	globals.InitGlobals("daemon", daemonCmd, &daemonPkg.GetOptions().Globals, capabilities)
 
 	daemonCmd.SetUsageTemplate(UsageWithNotes(notesDaemon))
 	daemonCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
-	daemonCmd.Flags().MarkDeprecated("port", "The --port option has been deprecated. Please use --url instead.") //cmd is the parent/top level command
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(daemonCmd)
 }
-

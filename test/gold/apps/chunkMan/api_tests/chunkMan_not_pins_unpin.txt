@@ -1,6 +1,0 @@
-chunks?mode=index&unpin=12
-{
-  "errors": [
-    "The --unpin option is only available in pins mode."
-  ]
-}

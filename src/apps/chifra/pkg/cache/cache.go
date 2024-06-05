@@ -2,10 +2,10 @@ package cache
 
 import (
 	"io"
+	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type StoreLocation uint
@@ -41,7 +41,7 @@ type Locator interface {
 // Unmarshaler is a struct implementing Unmarshaler can be read from binary by
 // calling UnmarshalCache
 type Unmarshaler interface {
-	UnmarshalCache(version uint64, reader io.Reader) error
+	UnmarshalCache(vers uint64, reader io.Reader) error
 }
 
 // Marshaler is a struct implementing the Marshaler interface. It can be
@@ -64,8 +64,7 @@ type StoreOptions struct {
 
 func (s *StoreOptions) location() (loc Storer, err error) {
 	if s == nil {
-		// TODO: s can never be nil, we would have cored already
-		logger.Fatal("should not happen ==> implementation error in location.")
+		log.Fatal("should not happen ==> implementation error in location.")
 		return
 	}
 	switch s.Location {
@@ -86,8 +85,7 @@ func (s *StoreOptions) rootDir() (dir string) {
 	}
 
 	if s == nil {
-		// TODO: s is never nil, we would have cored already
-		logger.Fatal("should not happen ==> implementation error in location.")
+		log.Fatal("should not happen ==> implementation error in location.")
 	} else if s.RootDir == "" {
 		dir = config.PathToCache(s.Chain)
 	}

@@ -5,12 +5,14 @@
 package abisPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *AbisOptions) validateAbis() error {
 	chain := opts.Globals.Chain
+	proxy := base.HexToAddress(opts.ProxyFor)
 
 	opts.testLog()
 
@@ -23,9 +25,6 @@ func (opts *AbisOptions) validateAbis() error {
 	}
 
 	if opts.Globals.Decache {
-		if opts.Globals.IsApiMode() {
-			return validate.Usage("The {0} option is not available{1}.", "--decache", " in API mode")
-		}
 		if len(opts.Encode) > 0 {
 			return validate.Usage("Please choose only one of {0}.", "--decache or --encode")
 		}
@@ -35,7 +34,7 @@ func (opts *AbisOptions) validateAbis() error {
 		if opts.Known {
 			return validate.Usage("Please choose only one of {0}.", "--decache or --known")
 		}
-		if len(opts.ProxyFor) > 0 {
+		if !proxy.IsZero() {
 			return validate.Usage("Please choose only one of {0}.", "--decache or --proxy_for")
 		}
 	}
@@ -52,7 +51,7 @@ func (opts *AbisOptions) validateAbis() error {
 		return validate.Usage("Please choose only one of {0}.", "--find or --encode")
 	}
 
-	if len(opts.Addrs) != 1 && len(opts.ProxyFor) > 0 {
+	if len(opts.Addrs) != 1 && !proxy.IsZero() {
 		return validate.Usage("The {0} option requires exactly one address.", "--proxy_for")
 	}
 

@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package transactionsPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -19,6 +23,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	// EXISTING_CODE
 )
 
 // TransactionsOptions provides all command options for the chifra transactions command.
@@ -33,7 +39,6 @@ type TransactionsOptions struct {
 	Emitter        []string                 `json:"emitter,omitempty"`        // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
 	Topic          []string                 `json:"topic,omitempty"`          // For the --logs option only, filter logs to show only those with this topic(s)
 	CacheTraces    bool                     `json:"cacheTraces,omitempty"`    // Force the transaction's traces into the cache
-	Seed           bool                     `json:"seed,omitempty"`           // Find the source of the funds sent to the receiver
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
 	Conn           *rpc.Connection          `json:"conn,omitempty"`           // The connection to the RPC server
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
@@ -55,7 +60,6 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
-	logger.TestLog(opts.Seed, "Seed: ", opts.Seed)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -68,9 +72,18 @@ func (opts *TransactionsOptions) String() string {
 
 // transactionsFinishParseApi finishes the parsing for server invocations. Returns a new TransactionsOptions.
 func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return TransactionsFinishParseInternal(w, values)
+}
+
+func TransactionsFinishParseInternal(w io.Writer, values url.Values) *TransactionsOptions {
 	copy := defaultTransactionsOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "transactions":
 			for _, val := range value {
@@ -99,15 +112,16 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			}
 		case "cacheTraces":
 			opts.CacheTraces = true
-		case "seed":
-			opts.Seed = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "transactions")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "transactions")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -152,27 +166,32 @@ func GetOptions() *TransactionsOptions {
 	return &defaultTransactionsOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra transactions
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultTransactionsOptions = TransactionsOptions{}
-	globals.SetDefaults(&defaultTransactionsOptions.Globals)
-	defaultTransactionsOptions.Globals.TestMode = testMode
-	defaultTransactionsOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra transactions
-	// EXISTING_CODE
-	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Ether)
-	capabilities = capabilities.Add(caps.Raw)
-	// EXISTING_CODE
-	defaultTransactionsOptions.Globals.Caps = capabilities
+	opts := TransactionsOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	defaultTransactionsOptions = opts
 }
 
-func (opts *TransactionsOptions) getCaches() (m map[string]bool) {
+func (opts *TransactionsOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
-	m = map[string]bool{
-		"transactions": true,
-		"traces":       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Uniq)),
+	caches = map[walk.CacheType]bool{
+		walk.Cache_Transactions: true,
+		walk.Cache_Traces:       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Uniq)),
 	}
 	// EXISTING_CODE
 	return
@@ -180,4 +199,3 @@ func (opts *TransactionsOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

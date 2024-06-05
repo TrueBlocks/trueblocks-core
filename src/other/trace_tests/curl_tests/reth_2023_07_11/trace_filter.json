@@ -1,9 +1,0 @@
-{
-  "error": {
-    "code": -32602,
-    "data": "invalid type: string \"0x3\", expected u64 at line 1 column 20",
-    "message": "Invalid params"
-  },
-  "id": "1",
-  "jsonrpc": "2.0"
-}

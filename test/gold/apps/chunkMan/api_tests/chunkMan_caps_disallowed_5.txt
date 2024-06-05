@@ -1,6 +1,0 @@
-chunks?mode=blooms&decache
-{
-  "errors": [
-    "Invalid key (decache) in chunks route."
-  ]
-}

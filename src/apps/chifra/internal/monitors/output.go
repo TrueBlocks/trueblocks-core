@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -25,9 +25,7 @@ import (
 // RunMonitors handles the monitors command for the command line. Returns error only as per cobra.
 func RunMonitors(cmd *cobra.Command, args []string) error {
 	opts := monitorsFinishParse(args)
-	outputHelpers.EnableCommand("monitors", true)
 	// EXISTING_CODE
-	outputHelpers.EnableCommand("monitors", opts.List || opts.Clean || opts.Globals.Decache)
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("monitors", &opts.Globals)
 	return opts.MonitorsInternal()
@@ -36,11 +34,9 @@ func RunMonitors(cmd *cobra.Command, args []string) error {
 // ServeMonitors handles the monitors command for the API. Returns an error.
 func ServeMonitors(w http.ResponseWriter, r *http.Request) error {
 	opts := monitorsFinishParseApi(w, r)
-	outputHelpers.EnableCommand("monitors", true)
 	// EXISTING_CODE
 	// TODO: can we move this to Validate?
 	var err1 error
-	outputHelpers.EnableCommand("monitors", opts.List || opts.Clean || opts.Globals.Decache)
 	if !opts.Globals.TestMode { // our test harness does not use DELETE
 		delOptions := "--delete, --undelete, or --remove"
 		if r.Method == "DELETE" {
@@ -64,7 +60,7 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// MonitorsInternal handles the internal workings of the monitors command.  Returns an error.
+// MonitorsInternal handles the internal workings of the monitors command. Returns an error.
 func (opts *MonitorsOptions) MonitorsInternal() error {
 	var err error
 	if err = opts.validateMonitors(); err != nil {
@@ -73,6 +69,7 @@ func (opts *MonitorsOptions) MonitorsInternal() error {
 
 	timer := logger.NewTimer()
 	msg := "chifra monitors"
+	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
@@ -83,9 +80,8 @@ func (opts *MonitorsOptions) MonitorsInternal() error {
 	} else if opts.Watch {
 		err = opts.HandleWatch()
 	} else {
-		err = opts.HandleCrudCommands()
+		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -99,7 +95,3 @@ func GetMonitorsOptions(args []string, g *globals.GlobalOptions) *MonitorsOption
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
-

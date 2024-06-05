@@ -6,13 +6,13 @@ package chunksPkg
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // CheckStaging checks the staging file which should be names first-second.txt
@@ -20,7 +20,7 @@ import (
 //  2. Makes sure the first < last
 //  3. Makes sure that the first block inside is == first if allow_missing == false, > otherwise
 //  4. Makes sure that the last block inside is == last if allow_missing == false, < otherwise
-func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, report *simpleReportCheck) error {
+func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, report *types.ReportCheck) error {
 	chain := opts.Globals.Chain
 	stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)
@@ -68,7 +68,8 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 
 	//  3. Makes sure that the first block inside is == first if allow_missing == false, > otherwise
 	report.CheckedCnt++
-	first := mustParseUint(strings.Split(appearances[0], "\t")[1])
+	trimmed := strings.TrimLeft(strings.Split(appearances[0], "\t")[1], "0")
+	first := base.MustParseBlknum(trimmed)
 	if first == fileRange.First || (allow_missing && first <= fileRange.First) {
 		report.PassedCnt++
 	} else {
@@ -77,7 +78,8 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 
 	//  4. Makes sure that the last block inside is == last if allow_missing == false, < otherwise
 	report.CheckedCnt++
-	last := mustParseUint(strings.Split(appearances[len(appearances)-1], "\t")[1])
+	trimmed = strings.TrimLeft(strings.Split(appearances[len(appearances)-1], "\t")[1], "0")
+	last := base.MustParseBlknum(trimmed)
 	if last == fileRange.Last || (allow_missing && last <= fileRange.Last) {
 		report.PassedCnt++
 	} else {
@@ -85,9 +87,4 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 	}
 
 	return nil
-}
-
-func mustParseUint(input string) (result uint64) {
-	result, _ = strconv.ParseUint(strings.TrimLeft(input, "0"), 0, 64)
-	return
 }

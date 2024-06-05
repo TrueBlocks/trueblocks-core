@@ -3,7 +3,6 @@ package call
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -12,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 var ErrAbiNotFound = errors.New("abi not found ")
@@ -19,9 +19,9 @@ var ErrAbiNotFound = errors.New("abi not found ")
 type ContractCall struct {
 	Conn        *rpc.Connection
 	Address     base.Address
-	Method      *types.SimpleFunction
+	Method      *types.Function
 	Arguments   []any
-	BlockNumber uint64
+	BlockNumber base.Blknum
 	encoded     string
 }
 
@@ -32,7 +32,7 @@ func NewContractCallWithAbi(conn *rpc.Connection, callAddress base.Address, theC
 		return nil, []string{}, err
 	}
 
-	var function *types.SimpleFunction
+	var function *types.Function
 	var callArguments []*parser.ContractArgument
 	suggestions := make([]string, 0)
 	if parsed.Encoded != "" {
@@ -104,7 +104,7 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 		return nil, []string{}, err
 	}
 
-	var function *types.SimpleFunction
+	var function *types.Function
 	var callArguments []*parser.ContractArgument
 	suggestions := make([]string, 0)
 	if parsed.Encoded != "" {
@@ -161,7 +161,7 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 	return contactCall, suggestions, nil
 }
 
-func convertArguments(callArguments []*parser.ContractArgument, function *types.SimpleFunction) (args []any, err error) {
+func convertArguments(callArguments []*parser.ContractArgument, function *types.Function) (args []any, err error) {
 	abiMethod, err := function.GetAbiMethod()
 	if err != nil {
 		return
@@ -186,33 +186,27 @@ func (call *ContractCall) forceEncoding(encoding string) {
 	call.encoded = encoding
 }
 
-func (call *ContractCall) Call(artFunc func(string, *types.SimpleFunction) error) (results *types.SimpleResult, err error) {
-	if artFunc == nil {
-		logger.Fatal("should not happen ==> implementation error: artFunc is nil")
-	}
-
+func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (results *types.Result, err error) {
 	blockTs := base.Timestamp(0)
 	if call.Conn.StoreReadable() {
-		results = &types.SimpleResult{
-			Address:     call.Address,
+		// walk.Cache_Results
+		results = &types.Result{
 			BlockNumber: call.BlockNumber,
+			Address:     call.Address,
 			Encoding:    call.Method.Encoding,
 		}
 		if err := call.Conn.Store.Read(results, nil); err == nil {
-			// logger.Info("cache read:", results.Address, results.BlockNumber, call.Method.Encoding)
 			return results, nil
-			// } else {
-			// 	logger.Info("no cache read:", results.Address, results.BlockNumber, call.Method.Encoding, err)
 		}
 		blockTs = call.Conn.GetBlockTimestamp(call.BlockNumber)
 	}
 
-	blockNumberHex := "0x" + strconv.FormatUint(call.BlockNumber, 16)
-	if err != nil {
-		return
+	if artFunc == nil {
+		logger.Fatal("should not happen ==> implementation error: artFunc is nil")
 	}
 
 	var packed []byte
+	blockNumberHex := fmt.Sprintf("0x%x", call.BlockNumber)
 	if call.encoded != "" {
 		packed = base.Hex2Bytes(call.encoded[2:])
 	} else {
@@ -237,21 +231,21 @@ func (call *ContractCall) Call(artFunc func(string, *types.SimpleFunction) error
 		blockNumberHex,
 	}
 
-	rawBytes, err := query.Query[string](call.Conn.Chain, method, params)
+	theBytes, err := query.Query[string](call.Conn.Chain, method, params)
 	if err != nil {
 		return nil, err
 	}
 
 	function := call.Method.Clone()
 	// articulate it if possible
-	if rawBytes != nil {
-		str := *rawBytes
+	if theBytes != nil {
+		str := *theBytes
 		if err = artFunc(str, function); err != nil {
 			return nil, err
 		}
 	}
 
-	results = &types.SimpleResult{
+	results = &types.Result{
 		BlockNumber:      call.BlockNumber,
 		Timestamp:        blockTs,
 		Address:          call.Address,
@@ -259,7 +253,7 @@ func (call *ContractCall) Call(artFunc func(string, *types.SimpleFunction) error
 		Encoding:         call.Method.Encoding,
 		Signature:        call.Method.Signature,
 		EncodedArguments: encodedArguments,
-		ReturnedBytes:    *rawBytes,
+		ReturnedBytes:    *theBytes,
 		ArticulatedOut:   function,
 	}
 	results.Values = make(map[string]string)
@@ -267,14 +261,10 @@ func (call *ContractCall) Call(artFunc func(string, *types.SimpleFunction) error
 		results.Values[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 
-	if call.Conn.StoreWritable() && call.Conn.EnabledMap["results"] && base.IsFinal(call.Conn.LatestBlockTimestamp, blockTs) {
-		_ = call.Conn.Store.Write(results, nil)
-		// logger.Info("Writing call results to the database...", results.Address, results.BlockNumber, call.Method.Encoding)
-		// if err := call.Conn.Store.Write(results, nil); err != nil {
-		// 	logger.Warn("Failed to write call results to the database", err) // report but don't fail
-		// }
-		// } else if !isFin {
-		// 	logger.Info("Not caching result (not ripe)...", results.Address, results.BlockNumber, call.Method.Encoding)
+	conn := call.Conn
+	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
+	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Results] {
+		_ = conn.Store.Write(results, nil)
 	}
 
 	return results, nil

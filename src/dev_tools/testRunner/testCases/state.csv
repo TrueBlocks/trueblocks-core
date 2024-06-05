@@ -1,0 +1,126 @@
+enabled ,mode ,speed ,route ,path  ,tool     ,filename                       ,post ,options
+on      ,cmd  ,fast  ,state ,tools ,getState ,help                           ,n    ,@h
+on      ,cmd  ,fast  ,state ,tools ,getState ,help_long                      ,n    ,help
+on      ,cmd  ,fast  ,state ,tools ,getState ,help_verbose                   ,n    ,help & verbose
+on      ,both ,fast  ,state ,tools ,getState ,noparams                       ,y    ,
+on      ,both ,fast  ,state ,tools ,getState ,bad_block                      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = -1
+on      ,both ,fast  ,state ,tools ,getState ,bad_address                    ,y    ,addrs = $doa & 0x12
+on      ,both ,fast  ,state ,tools ,getState ,no_address                     ,y    ,addrs = 12
+on      ,both ,fast  ,state ,tools ,getState ,invalid_address_1              ,y    ,addrs = 0x12
+on      ,both ,fast  ,state ,tools ,getState ,invalid_address_2              ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592
+on      ,both ,fast  ,state ,tools ,getState ,invalid_block_1                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 fdfsdf
+on      ,both ,fast  ,state ,tools ,getState ,two_accts                      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 & fmt = json
+on      ,both ,fast  ,state ,tools ,getState ,tip_4                          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 2000000 2500000 3000000
+on      ,both ,fast  ,state ,tools ,getState ,multiple_accounts              ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 & blocks = 4000000
+on      ,both ,fast  ,state ,tools ,getState ,multiple_accounts_and_blocks_1 ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 & blocks = 3500000 4000000 & fmt = txt
+on      ,both ,fast  ,state ,tools ,getState ,multiple_accounts_and_blocks_2 ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & blocks = 3500000 3700000 4000000 & fmt = txt & no_header
+on      ,both ,fast  ,state ,tools ,getState ,display_tab_format             ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & data & fmt = json
+on      ,both ,fast  ,state ,tools ,getState ,display_tab_format_long        ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & data
+on      ,both ,fast  ,state ,tools ,getState ,no_zero_1                      ,y    ,addrs = 0xf27daff52c38b2c373ad2b9392652ddf433303c5 & blocks = 3500000 & no_zero
+on      ,both ,fast  ,state ,tools ,getState ,no_zero_2                      ,y    ,addrs = 0xf27daff52c38b2c373ad2b9392652ddf433303c5 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 3500000 & no_zero
+on      ,both ,fast  ,state ,tools ,getState ,no_zero_3                      ,y    ,addrs = 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & blocks = 0 4000000 & no_zero
+on      ,both ,fast  ,state ,tools ,getState ,no_zero_4                      ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & blocks = 3500000 3700000 4000000 & no_zero
+on      ,both ,fast  ,state ,tools ,getState ,no_zero_long_1                 ,n    ,addrs = 0xf27daff52c38b2c373ad2b9392652ddf433303c5 & blocks = 3500000 & fmt = txt & no_zero
+on      ,both ,fast  ,state ,tools ,getState ,no_zero_long_2                 ,n    ,addrs = 0xf27daff52c38b2c373ad2b9392652ddf433303c5 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 3500000 & fmt = txt & no_zero
+on      ,both ,fast  ,state ,tools ,getState ,no_zero_long_3                 ,n    ,addrs = 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & blocks = 0 4000000 & fmt = txt & no_zero
+on      ,both ,fast  ,state ,tools ,getState ,no_zero_long_4                 ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & blocks = 3500000 3700000 4000000 & fmt = txt & no_zero
+on      ,both ,fast  ,state ,tools ,getState ,verbose                        ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & verbose
+on      ,both ,fast  ,state ,tools ,getState ,verbose_long                   ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & verbose
+on      ,both ,fast  ,state ,tools ,getState ,special_block_1                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = iceage
+on      ,both ,fast  ,state ,tools ,getState ,special_block_2                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = stateclear
+on      ,both ,fast  ,state ,tools ,getState ,special_block_3                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = frontier
+on      ,both ,fast  ,state ,tools ,getState ,wei                            ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & wei
+on      ,both ,fast  ,state ,tools ,getState ,ether                          ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & ether & fmt = txt
+on      ,both ,medi  ,state ,tools ,getState ,changes                        ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1430957-1430966 & changes & fmt = txt
+on      ,both ,fast  ,state ,tools ,getState ,e_dao_1500000                  ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1500000 & ether & fmt = txt
+on      ,both ,fast  ,state ,tools ,getState ,e_two_accts                    ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x7cb57b5a97eabe94205c07890be4c1ad31e486a8 & blocks = 1500000 & ether & fmt = txt
+on      ,both ,fast  ,state ,tools ,getState ,e_tip_4                        ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 2000000 2500000 3000000 & ether & fmt = txt
+on      ,both ,fast  ,state ,tools ,getState ,mode_bal                       ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = balance & blocks = 2500000
+on      ,both ,fast  ,state ,tools ,getState ,mode_nonce                     ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = nonce & blocks = 2500000
+on      ,both ,fast  ,state ,tools ,getState ,mode_code                      ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = code & blocks = 2500000
+on      ,both ,fast  ,state ,tools ,getState ,mode_storage                   ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = storage & blocks = 2500000
+on      ,both ,slow  ,state ,tools ,getState ,mode_deployed                  ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = deployed & blocks = 2500000
+on      ,both ,fast  ,state ,tools ,getState ,mode_accttype                  ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = accttype & blocks = 2500000
+on      ,both ,fast  ,state ,tools ,getState ,mode_some                      ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = some & blocks = 2500000
+on      ,both ,medi  ,state ,tools ,getState ,mode_all                       ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = all & blocks = 2500000
+on      ,both ,fast  ,state ,tools ,getState ,mode_nonce_only                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = nonce & blocks = 2500000
+on      ,both ,fast  ,state ,tools ,getState ,mode_fail                      ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = junk & blocks = 2500000
+on      ,both ,fast  ,state ,tools ,getState ,fmt_txt                        ,n    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = txt & blocks = 2000000 & ether
+on      ,both ,fast  ,state ,tools ,getState ,fmt_csv                        ,n    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = csv & blocks = 2000000
+on      ,both ,fast  ,state ,tools ,getState ,fmt_api                        ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = api & blocks = 2000000
+on      ,both ,fast  ,state ,tools ,getState ,fmt_json                       ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = json & blocks = 2000000 & dollars
+on      ,both ,fast  ,state ,tools ,getState ,fmt_junk                       ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = junk & blocks = 2000000
+on      ,both ,fast  ,state ,tools ,getState ,get_range                      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1428000-1438000:200
+on      ,both ,fast  ,state ,tools ,getState ,ens_test                       ,y    ,addrs = trueblocks.eth & blocks = 8854700-8854900:20
+
+on      ,both ,fast  ,state ,tools ,getState ,contract_call_fail1            ,y    ,call = '0x12065fe0()' & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875 & blocks = 6523977-6540000:2000
+on      ,both ,fast  ,state ,tools ,getState ,contract_call_fail2            ,y    ,call = '12065fe0()' & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
+on      ,both ,fast  ,state ,tools ,getState ,contract_call_fail4            ,y    ,call = '0x12065fe01()' & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
+on      ,both ,fast  ,state ,tools ,getState ,contract_call                  ,y    ,call = '0x12065fe0()' & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
+on      ,api  ,fast  ,state ,tools ,getState ,contract_call2_api             ,y    ,"call = 'manifestHashMap(0xf503017d7baf7fbc0fff7492b751025c6a78179b,""mainnet"")' & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
+on      ,cmd  ,fast  ,state ,tools ,getState ,contract_call2_cmd             ,y    ,"call = 'manifestHashMap(0xf503017d7baf7fbc0fff7492b751025c6a78179b,""mainnet"")' & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
+on      ,api  ,fast  ,state ,tools ,getState ,contract_call2_api_ens         ,y    ,"call = 'manifestHashMap(trueblocks.eth,""mainnet"")' & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
+on      ,cmd  ,fast  ,state ,tools ,getState ,contract_call2_cmd_ens         ,y    ,"call = 'manifestHashMap(trueblocks.eth,""mainnet"")' & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
+on      ,both ,fast  ,state ,tools ,getState ,contract_call3_two             ,y    ,"call = 'manifestHashMap(0xf503017d7baf7fbc0fff7492b751025c6a78179b,""mainnet""):owner()' & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
+on      ,both ,fast  ,state ,tools ,getState ,contract_call3_two_ens         ,y    ,"call = 'manifestHashMap(trueblocks.eth,""mainnet""):0x8da5cb5b' & addrs = unchainedindex.eth & blocks = 14976122 & fmt = json"
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_factory_getPair        ,n    ,call = 0xe6a439050000000000000000000000002260fac5e5542a773aa44fbcfedf7c193bc2c599000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 & addrs = 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f & blocks = 10092000 & fmt = csv
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_token0                 ,y    ,call = '0x0dfe1681()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_token0_name            ,n    ,call = '0x06fdde03()' & addrs = 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599 & blocks = 10092000 & fmt = txt
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_token1                 ,y    ,call = '0xd21220a7()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+local   ,both ,fast  ,state ,tools ,getState ,uniswap_token1_name            ,y    ,call = '0x06fdde03()' & addrs = 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_name                   ,y    ,call = '0x06fdde03()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_reserve                ,n    ,call = '0x0902f1ac()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000 & fmt = csv
+on      ,both ,fast  ,state ,tools ,getState ,uniswap_fail                   ,y    ,call = '0x0902f1ad()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,proxy_fail                     ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,proxy_call_direct              ,y    ,call = '0x0902f1ac()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,proxy_for                      ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & proxy_for = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+on      ,both ,fast  ,state ,tools ,getState ,proxy_2                        ,y    ,parts = all & addrs = 0x7cfb89D6DF1b89A678Dcaf42B9c262593e881E22 & fmt = json & blocks = 14000000
+on      ,both ,fast  ,state ,tools ,getState ,fail_art_not_call              ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = accttype & blocks = 2500000 & articulate
+
+# Not sure why this fails...
+on      ,both ,fast  ,state ,tools ,getState ,contract_call_fail3            ,y    ,call & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
+
+# This started failing when we went to sync.Map for the abiMap and at the same time started using IterateOverMap. Possibly ordering changes in the map?
+on      ,both ,fast  ,state ,tools ,getState ,proxy_imp                      ,n    ,call = '0xbb82aa5e()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & blocks = 10092000 & fmt = csv
+
+on      ,both ,fast  ,state ,tools ,getState ,not_call_and_parts             ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & parts = some
+on      ,both ,fast  ,state ,tools ,getState ,not_call_and_changes           ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & changes
+on      ,both ,fast  ,state ,tools ,getState ,not_call_and_nozero            ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & no_zero
+on      ,both ,fast  ,state ,tools ,getState ,with_no_block                  ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
+
+on      ,both ,fast  ,state ,tools ,getState ,not_not_call_and_proxy         ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & proxy_for = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940
+on      ,both ,fast  ,state ,tools ,getState ,no_addrs                       ,y    ,proxy_for = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940
+on      ,both ,fast  ,state ,tools ,getState ,bad_addrs                      ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb9
+on      ,both ,fast  ,state ,tools ,getState ,bad_block_range                ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & 1000-orange:10
+
+on      ,both ,fast  ,state ,tools ,getState ,block_not_found                ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & blocks = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
+
+on      ,both ,fast  ,state ,tools ,getState ,balance_10                     ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 46100-46300:10
+on      ,both ,fast  ,state ,tools ,getState ,balance_annually               ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-4900000:annually
+on      ,both ,fast  ,state ,tools ,getState ,balance_quarterly              ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-2900000:quarterly
+on      ,both ,fast  ,state ,tools ,getState ,balance_monthly                ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-780000:monthly
+on      ,both ,fast  ,state ,tools ,getState ,balance_weekly                 ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-260000:weekly
+on      ,both ,fast  ,state ,tools ,getState ,balance_daily                  ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 25000-60000:daily
+on      ,both ,fast  ,state ,tools ,getState ,balance_hourly                 ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 46000-48000:hourly
+
+on      ,cmd  ,fast  ,state ,tools ,getState ,from_file                      ,y    ,file = cmd_file
+
+on      ,both ,fast  ,state ,tools ,getState ,redir_output                   ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & blocks = 2000000 & fmt = txt & output = output_test_file
+on      ,both ,fast  ,state ,tools ,getState ,redir_output_append            ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & blocks = 2000001 & fmt = txt & output = output_test_file & no_header & append
+
+on      ,both ,fast  ,state ,tools ,getState ,cache_and_decache              ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 & blocks = 12000000 & cache & decache
+on      ,both ,fast  ,state ,tools ,getState ,cache_one                      ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 & blocks = 12000000 & cache
+on      ,both ,fast  ,state ,tools ,getState ,decache_one                    ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 & blocks = 12000000 & decache
+
+# Capabilities
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
+on      ,both ,fast  ,state ,tools ,getState ,caps_allowed                   ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & fail_on_purpose
+on      ,both ,fast  ,state ,tools ,getState ,caps_disallowed_2              ,y    ,addrs = trueblocks.eth & wei
+
+# See issue #3004
+# invalid bytes length
+# invalid four-bytes length
+# weird abi for a function within a function alla Ben D.s smart contract
+# use an actual abi signature
+# use a abi function call
+# why fail if there is no ABI? just report bytes

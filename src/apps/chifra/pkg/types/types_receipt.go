@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -17,63 +18,40 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // EXISTING_CODE
 
-type RawReceipt struct {
-	BlockHash         string   `json:"blockHash"`
-	BlockNumber       string   `json:"blockNumber"`
-	ContractAddress   string   `json:"contractAddress"`
-	CumulativeGasUsed string   `json:"cumulativeGasUsed"`
-	EffectiveGasPrice string   `json:"effectiveGasPrice"`
-	From              string   `json:"from"`
-	GasUsed           string   `json:"gasUsed"`
-	Logs              []RawLog `json:"logs"`
-	LogsBloom         string   `json:"logsBloom"`
-	Status            string   `json:"status"`
-	To                string   `json:"to"`
-	TransactionHash   string   `json:"transactionHash"`
-	TransactionIndex  string   `json:"transactionIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
-type SimpleReceipt struct {
+type Receipt struct {
 	BlockHash         base.Hash    `json:"blockHash,omitempty"`
 	BlockNumber       base.Blknum  `json:"blockNumber"`
 	ContractAddress   base.Address `json:"contractAddress,omitempty"`
-	CumulativeGasUsed string       `json:"cumulativeGasUsed,omitempty"`
+	CumulativeGasUsed base.Gas     `json:"cumulativeGasUsed,omitempty"`
 	EffectiveGasPrice base.Gas     `json:"effectiveGasPrice,omitempty"`
 	From              base.Address `json:"from,omitempty"`
 	GasUsed           base.Gas     `json:"gasUsed"`
 	IsError           bool         `json:"isError,omitempty"`
-	Logs              []SimpleLog  `json:"logs"`
-	Status            uint32       `json:"status"`
+	Logs              []Log        `json:"logs"`
+	Status            base.Value   `json:"status"`
 	To                base.Address `json:"to,omitempty"`
 	TransactionHash   base.Hash    `json:"transactionHash"`
-	TransactionIndex  base.Blknum  `json:"transactionIndex"`
-	raw               *RawReceipt  `json:"-"`
+	TransactionIndex  base.Txnum   `json:"transactionIndex"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleReceipt) Raw() *RawReceipt {
-	return s.raw
+func (s Receipt) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *SimpleReceipt) SetRaw(raw *RawReceipt) {
-	s.raw = raw
-}
-
-func (s *SimpleReceipt) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"blockNumber":      s.BlockNumber,
 		"gasUsed":          s.GasUsed,
 		"status":           s.Status,
@@ -100,11 +78,11 @@ func (s *SimpleReceipt) Model(chain, format string, verbose bool, extraOptions m
 		}
 
 		if s.Logs == nil {
-			model["logs"] = []SimpleLog{}
+			model["logs"] = []Log{}
 		} else {
 			logs := make([]map[string]any, 0, len(s.Logs))
 			for _, log := range s.Logs {
-				logs = append(logs, log.Model(chain, format, verbose, extraOptions).Data)
+				logs = append(logs, log.Model(chain, format, verbose, extraOpts).Data)
 			}
 			model["logs"] = logs
 		}
@@ -115,15 +93,14 @@ func (s *SimpleReceipt) Model(chain, format string, verbose bool, extraOptions m
 
 			model["cumulativeGasUsed"] = s.CumulativeGasUsed
 			order = append(order, "cumulativeGasUsed")
-
-			if !s.From.IsZero() {
-				model["from"] = s.From
-			}
-
-			if !s.To.IsZero() {
-				model["to"] = s.To
-			}
 		}
+		if !s.From.IsZero() {
+			model["from"] = s.From
+		}
+		if !s.To.IsZero() {
+			model["to"] = s.To
+		}
+
 	} else {
 		model["logsCnt"] = len(s.Logs)
 		order = append(order, "logsCnt")
@@ -144,22 +121,21 @@ func (s *SimpleReceipt) Model(chain, format string, verbose bool, extraOptions m
 	}
 }
 
-// --> cacheable by block as group
-type SimpleReceiptGroup struct {
+type ReceiptGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
-	Receipts         []SimpleReceipt
+	Receipts         []Receipt
 }
 
-func (s *SimpleReceiptGroup) CacheName() string {
+func (s *ReceiptGroup) CacheName() string {
 	return "Receipt"
 }
 
-func (s *SimpleReceiptGroup) CacheId() string {
+func (s *ReceiptGroup) CacheId() string {
 	return fmt.Sprintf("%09d", s.BlockNumber)
 }
 
-func (s *SimpleReceiptGroup) CacheLocation() (directory string, extension string) {
+func (s *ReceiptGroup) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -173,15 +149,15 @@ func (s *SimpleReceiptGroup) CacheLocation() (directory string, extension string
 	return
 }
 
-func (s *SimpleReceiptGroup) MarshalCache(writer io.Writer) (err error) {
+func (s *ReceiptGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Receipts)
 }
 
-func (s *SimpleReceiptGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Receipts, version)
+func (s *ReceiptGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Receipts, vers)
 }
 
-func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
+func (s *Receipt) MarshalCache(writer io.Writer) (err error) {
 	// BlockHash
 	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
@@ -254,70 +230,94 @@ func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleReceipt) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Receipt) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// BlockHash
-	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockHash, vers); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
 	// ContractAddress
-	if err = cache.ReadValue(reader, &s.ContractAddress, version); err != nil {
+	if err = cache.ReadValue(reader, &s.ContractAddress, vers); err != nil {
 		return err
 	}
 
 	// CumulativeGasUsed
-	if err = cache.ReadValue(reader, &s.CumulativeGasUsed, version); err != nil {
-		return err
+	vCumulativeGasUsed := version.NewVersion("2.5.8")
+	if vers <= vCumulativeGasUsed.Uint64() {
+		var val string
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
+			return err
+		}
+		s.CumulativeGasUsed = base.MustParseGas(val)
+	} else {
+		// CumulativeGasUsed
+		if err = cache.ReadValue(reader, &s.CumulativeGasUsed, vers); err != nil {
+			return err
+		}
 	}
 
 	// EffectiveGasPrice
-	if err = cache.ReadValue(reader, &s.EffectiveGasPrice, version); err != nil {
+	if err = cache.ReadValue(reader, &s.EffectiveGasPrice, vers); err != nil {
 		return err
 	}
 
 	// From
-	if err = cache.ReadValue(reader, &s.From, version); err != nil {
+	if err = cache.ReadValue(reader, &s.From, vers); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasUsed, vers); err != nil {
 		return err
 	}
 
 	// IsError
-	if err = cache.ReadValue(reader, &s.IsError, version); err != nil {
+	if err = cache.ReadValue(reader, &s.IsError, vers); err != nil {
 		return err
 	}
 
 	// Logs
-	s.Logs = make([]SimpleLog, 0)
-	if err = cache.ReadValue(reader, &s.Logs, version); err != nil {
+	s.Logs = make([]Log, 0)
+	if err = cache.ReadValue(reader, &s.Logs, vers); err != nil {
 		return err
 	}
 
 	// Status
-	if err = cache.ReadValue(reader, &s.Status, version); err != nil {
-		return err
+	vStatus := version.NewVersion("2.5.9")
+	if vers <= vStatus.Uint64() {
+		var val uint32
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
+			return err
+		}
+		s.Status = base.Value(val)
+	} else {
+		// Status
+		if err = cache.ReadValue(reader, &s.Status, vers); err != nil {
+			return err
+		}
 	}
 
 	// To
-	if err = cache.ReadValue(reader, &s.To, version); err != nil {
+	if err = cache.ReadValue(reader, &s.To, vers); err != nil {
 		return err
 	}
 
 	// TransactionHash
-	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionHash, vers); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionIndex, vers); err != nil {
 		return err
 	}
 
@@ -326,7 +326,8 @@ func (s *SimpleReceipt) UnmarshalCache(version uint64, reader io.Reader) (err er
 	return nil
 }
 
-func (s *SimpleReceipt) FinishUnmarshal() {
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *Receipt) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -334,7 +335,7 @@ func (s *SimpleReceipt) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleReceipt) IsDefault() bool {
+func (s *Receipt) IsDefault() bool {
 	a := s.ContractAddress.IsZero()
 	b := s.EffectiveGasPrice == 0
 	c := s.GasUsed == 0
@@ -342,35 +343,4 @@ func (s *SimpleReceipt) IsDefault() bool {
 	return a && b && c && d
 }
 
-func (r *RawReceipt) RawToSimple(vals map[string]any) (SimpleReceipt, error) {
-	logs := []SimpleLog{}
-	for _, rawLog := range r.Logs {
-		simpleLog, _ := rawLog.RawToSimple(vals)
-		logs = append(logs, simpleLog)
-	}
-
-	cumulativeGasUsed, err := hexutil.DecodeUint64(r.CumulativeGasUsed)
-	if err != nil {
-		return SimpleReceipt{}, err
-	}
-
-	receipt := SimpleReceipt{
-		BlockHash:         base.HexToHash(r.BlockHash),
-		BlockNumber:       utils.MustParseUint(r.BlockNumber),
-		ContractAddress:   base.HexToAddress(r.ContractAddress),
-		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
-		EffectiveGasPrice: utils.MustParseUint(r.EffectiveGasPrice),
-		GasUsed:           utils.MustParseUint(r.GasUsed),
-		Status:            uint32(utils.MustParseUint(r.Status)),
-		IsError:           utils.MustParseUint(r.Status) == 0,
-		TransactionHash:   base.HexToHash(r.TransactionHash),
-		TransactionIndex:  utils.MustParseUint(r.TransactionIndex),
-		Logs:              logs,
-		raw:               r,
-	}
-
-	return receipt, nil
-}
-
 // EXISTING_CODE
-

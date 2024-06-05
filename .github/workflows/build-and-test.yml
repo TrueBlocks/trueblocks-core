@@ -7,14 +7,13 @@ env:
   GO_VERSION: ^1.22
 
 jobs:
-  golangci:
-    name: Lint
+  Lint:
     runs-on: ubuntu-latest
     steps:
       -
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       -
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
@@ -24,23 +23,23 @@ jobs:
         uses: golangci/golangci-lint-action@v3
         with:
           # Optional: version of golangci-lint to use in form of v1.2 or v1.2.3 or `latest` to use the latest version
-          version: latest
+          version: v1.54.2
 
           # Optional: working directory, useful for monorepos
           working-directory: ${{ env.CHIFRA_PATH }}
 
           # Optional: set location of the config file (if it is not in the root directory)
-          args: --timeout=5m --verbose
+          args: --timeout=5m --verbose --out-format=colored-line-number
   Build:
-    needs: golangci
+    needs: Lint
     runs-on: ubuntu-20.04
     steps:
       -
         name: Checkout TrueBlocks repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       -
         name: Use a certain version of go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
       -
@@ -51,17 +50,19 @@ jobs:
           sudo apt-get upgrade
           sudo apt-get install build-essential git cmake
           sudo apt-get install python3 tree jq
-          sudo apt-get install libcurl3-dev clang-format
+          sudo apt-get install libcurl3-dev
       -
         name: Run basic golang unit tests
         run: |
           mkdir -p build
           cd build
+          ../scripts/go-work-sync.sh
           cmake ../src
           cd other/install
           make
           cd ../../../
           cd ${{ env.CHIFRA_PATH }}
+          export TB_NO_PROVIDER_CHECK=true
           go test ./...
   RemoteTests:
     needs: Build
@@ -84,7 +85,8 @@ jobs:
             git clone --quiet https://github.com/${{ github.repository }}
             cd trueblocks-core
             git checkout ${{ github.head_ref }}
-            cd src/other/build_assets/remote_testing
-            CONFIG_FILE=$HOME/trueBlocks.toml bash test_with_docker.sh ${{ github.repository }} ${{ github.sha }} ${{ github.head_ref }} test-all
+            git submodule update --init --recursive
+            cd scripts
+            CONFIG_FILE=$HOME/trueBlocks.toml bash test-with-docker.sh ${{ github.repository }} ${{ github.sha }} ${{ github.head_ref }}
             docker system prune -af --filter "until=1h"
             echo "Results placed in /home/testuser/testing/${{ github.sha }}"

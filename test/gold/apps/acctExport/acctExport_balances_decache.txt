@@ -1,9 +1,0 @@
-chifra export  meriam.eth --decache
-TEST[DATE|TIME] Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6]
-TEST[DATE|TIME] Decache:  true
-TEST[DATE|TIME] Caps:  cache,decache,ether
-TEST[DATE|TIME] Format:  txt
-INFO[DATE|TIME] 0 items totaling 0 bytes were removed from the statements cache.
-INFO[DATE|TIME] 0 items totaling 0 bytes were removed from the traces cache.
-INFO[DATE|TIME] 0 items totaling 0 bytes were removed from the transactions cache.
-Monitor for 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 was permanently removed.

@@ -7,26 +7,27 @@ package blocksPkg
 import (
 	"context"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *BlocksOptions) HandleDecache() error {
-	silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
-
-	itemsToRemove, err := decache.LocationsFromBlockIds(opts.Conn, opts.BlockIds, opts.Logs, opts.Traces)
+	itemsToRemove, err := opts.getItemsToRemove()
 	if err != nil {
 		return err
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, opts.getCacheType()); err != nil {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		showProgress := opts.Globals.ShowProgress()
+		if msg, err := decache.Decache(opts.Conn, itemsToRemove, showProgress, opts.getCacheType()); err != nil {
 			errorChan <- err
 		} else {
-			s := types.SimpleMessage{
+			s := types.Message{
 				Msg: msg,
 			}
 			modelChan <- &s
@@ -38,11 +39,29 @@ func (opts *BlocksOptions) HandleDecache() error {
 }
 
 func (opts *BlocksOptions) getCacheType() walk.CacheType {
-	cT := walk.Cache_Blocks
 	if opts.Logs {
-		cT = walk.Cache_Logs
+		return walk.Cache_Logs
 	} else if opts.Traces {
-		cT = walk.Cache_Traces
+		return walk.Cache_Traces
+	} else {
+		return walk.Cache_Blocks
 	}
-	return cT
+}
+
+func (opts *BlocksOptions) getItemsToRemove() ([]cache.Locator, error) {
+	cT := opts.getCacheType()
+	switch cT {
+	case walk.Cache_Logs:
+		itemsToRemove, err := decache.LocationsFromLogs(opts.Conn, opts.BlockIds)
+		return itemsToRemove, err
+	case walk.Cache_Traces:
+		itemsToRemove, err := decache.LocationsFromTraces(opts.Conn, opts.BlockIds)
+		return itemsToRemove, err
+	case walk.Cache_Blocks:
+		itemsToRemove, err := decache.LocationsFromBlocks(opts.Conn, opts.BlockIds)
+		return itemsToRemove, err
+	default:
+		logger.Fatal("Unknown cache type. Should not happen.")
+		return []cache.Locator{}, nil
+	}
 }

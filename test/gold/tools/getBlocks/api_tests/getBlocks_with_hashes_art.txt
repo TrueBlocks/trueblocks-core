@@ -1,6 +1,0 @@
-blocks?blocks=4012000-4012001&hashes&articulate
-{
-  "errors": [
-    "The --articulate option is only available with the --logs option."
-  ]
-}

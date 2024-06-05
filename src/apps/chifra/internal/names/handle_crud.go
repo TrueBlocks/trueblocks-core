@@ -19,7 +19,7 @@ func (opts *NamesOptions) HandleCrud() (err error) {
 		return err
 	}
 
-	var name *types.SimpleName
+	var name *types.Name
 	if opts.Create || opts.Update {
 		name, err = handleCreate(chain, opts.crudData)
 		if err != nil {
@@ -45,17 +45,17 @@ func (opts *NamesOptions) HandleCrud() (err error) {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		modelChan <- name
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"crud": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
-func handleCreate(chain string, data *CrudData) (name *types.SimpleName, err error) {
+func handleCreate(chain string, data *CrudData) (name *types.Name, err error) {
 	var decimals uint64
 	if data.Decimals.Updated {
 		decimals, err = strconv.ParseUint(data.Decimals.Value, 10, 64)
@@ -64,7 +64,7 @@ func handleCreate(chain string, data *CrudData) (name *types.SimpleName, err err
 		}
 	}
 
-	name = &types.SimpleName{
+	name = &types.Name{
 		Address:  data.Address.Value,
 		Name:     data.Name.Value,
 		Tags:     data.Tag.Value,
@@ -78,14 +78,14 @@ func handleCreate(chain string, data *CrudData) (name *types.SimpleName, err err
 	return name, names.CreateName(names.DatabaseCustom, chain, name)
 }
 
-func handleDelete(chain string, data *CrudData) (*types.SimpleName, error) {
+func handleDelete(chain string, data *CrudData) (*types.Name, error) {
 	return names.SetDeleted(names.DatabaseCustom, chain, data.Address.Value, true)
 }
 
-func handleUndelete(chain string, data *CrudData) (*types.SimpleName, error) {
+func handleUndelete(chain string, data *CrudData) (*types.Name, error) {
 	return names.SetDeleted(names.DatabaseCustom, chain, data.Address.Value, false)
 }
 
-func handleRemove(chain string, data *CrudData) (*types.SimpleName, error) {
+func handleRemove(chain string, data *CrudData) (*types.Name, error) {
 	return names.RemoveName(names.DatabaseCustom, chain, data.Address.Value)
 }

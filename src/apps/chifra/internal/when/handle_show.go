@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -20,7 +21,7 @@ func (opts *WhenOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawNamedBlock], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
@@ -31,6 +32,12 @@ func (opts *WhenOptions) HandleShow() error {
 				cancel()
 				return
 			}
+
+			showProgress := opts.Globals.ShowProgress()
+			bar := logger.NewBar(logger.BarOptions{
+				Enabled: showProgress,
+				Total:   int64(len(blockNums)),
+			})
 
 			for _, bn := range blockNums {
 				block, err := opts.Conn.GetBlockHeaderByNumber(bn)
@@ -49,14 +56,16 @@ func (opts *WhenOptions) HandleShow() error {
 
 				nb, _ := tslib.FromBnToNamedBlock(chain, block.BlockNumber)
 				if nb == nil {
-					modelChan <- &types.SimpleNamedBlock{
+					modelChan <- &types.NamedBlock{
 						BlockNumber: block.BlockNumber,
 						Timestamp:   block.Timestamp,
 					}
 				} else {
 					modelChan <- nb
 				}
+				bar.Tick()
 			}
+			bar.Finish(true)
 		}
 	}
 

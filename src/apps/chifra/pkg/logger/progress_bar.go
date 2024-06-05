@@ -2,7 +2,6 @@ package logger
 
 import (
 	"fmt"
-	"os"
 	"sync/atomic"
 	"time"
 
@@ -60,6 +59,10 @@ func NewBar(opts BarOptions) (bar *ProgressBar) {
 	return bar
 }
 
+func (bar *ProgressBar) Bump() {
+	atomic.AddInt64(&bar.cur, 1)
+}
+
 func (bar *ProgressBar) Tick() {
 	atomic.AddInt64(&bar.cur, 1)
 	if bar.Type == Expanding && bar.cur >= bar.Total {
@@ -75,7 +78,7 @@ func (bar *ProgressBar) Tick() {
 }
 
 func (bar *ProgressBar) Finish(newLine bool) time.Duration {
-	if bar.Enabled {
+	if bar.Enabled && loggerWriter != nil {
 		atomic.StoreInt64(&bar.Total, bar.cur)
 		if bar.Type == Expanding {
 			bar.cur = bar.Total
@@ -87,43 +90,41 @@ func (bar *ProgressBar) Finish(newLine bool) time.Duration {
 		}
 		bar.display()
 		if newLine {
-			fmt.Fprintf(os.Stderr, "\n")
+			fmt.Fprintf(loggerWriter, "\n")
 		}
 	}
 	return time.Since(bar.startTime)
 }
 
 func (bar *ProgressBar) display() {
-	if !bar.Enabled {
-		return
+	if bar.Enabled && loggerWriter != nil {
+		last := bar.percent
+		if bar.Total == 0 {
+			bar.percent = 99
+		} else {
+			bar.percent = int64(float32(bar.cur) * 100 / float32(bar.Total))
+		}
+		if bar.percent != last && bar.percent%2 == 0 {
+			bar.graphic += bar.Fill
+		}
+		if bar.Total == 0 {
+			bar.percent = 100
+		}
+		timeDatePart := "DATE|TIME"
+		if timingMode {
+			now := time.Now()
+			timeDatePart = now.Format("02-01|15:04:05.000")
+		}
+		ofMarker := ""
+		fmt.Fprintf(loggerWriter, "\r%s[%s] [%s%-50s%s]%3d%% %5d/% 5d %s\r",
+			severityToLabel[progress],
+			timeDatePart,
+			colors.BrightGreen,
+			bar.graphic,
+			colors.Off,
+			bar.percent,
+			bar.cur,
+			bar.Total,
+			colors.BrightGreen+ofMarker+bar.Prefix+colors.Off)
 	}
-
-	last := bar.percent
-	if bar.Total == 0 {
-		bar.percent = 99
-	} else {
-		bar.percent = int64(float32(bar.cur) * 100 / float32(bar.Total))
-	}
-	if bar.percent != last && bar.percent%2 == 0 {
-		bar.graphic += bar.Fill
-	}
-	if bar.Total == 0 {
-		bar.percent = 100
-	}
-	timeDatePart := "DATE|TIME"
-	if timingMode {
-		now := time.Now()
-		timeDatePart = now.Format("02-01|15:04:05.000")
-	}
-	ofMarker := ""
-	fmt.Fprintf(os.Stderr, "\r%s[%s] [%s%-50s%s]%3d%% %5d/% 5d %s\r",
-		severityToLabel[progress],
-		timeDatePart,
-		colors.BrightGreen,
-		bar.graphic,
-		colors.Off,
-		bar.percent,
-		bar.cur,
-		bar.Total,
-		colors.BrightGreen+ofMarker+bar.Prefix+colors.Off)
 }

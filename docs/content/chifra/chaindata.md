@@ -1,6 +1,6 @@
 ---
 title: "Chain data"
-description: ""
+description: "Access and cache blockchain-related data"
 lead: ""
 lastmod:
   - :git
@@ -12,11 +12,11 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 1200
+weight: 21000
 toc: true
 ---
 
-The Chain Data group of tools extract raw blockchain data directly from the node. You may extract
+The Chain Data group of tools extract blockchain data directly from the node. You may extract
 block data, transactional data, receipts, logs, traces, and other information. Each tool has it own
 set of options, allowing you to get exactly the data you need.
 
@@ -57,10 +57,10 @@ Flags:
   -B, --topic strings     for the --logs option only, filter logs to show only those with this topic(s)
   -i, --withdrawals       export the withdrawals from the block as opposed to the block data
   -a, --articulate        for the --logs option only, articulate the retrieved data if ABIs can be found
-  -r, --big_range uint    for the --logs option only, allow for block ranges larger than 500 (default 500)
   -U, --count             display only the count of appearances for --addrs or --uniq
+  -X, --cache_txs         force a write of the block's transactions to the cache (slow)
+  -R, --cache_traces      force a write of the block's traces to the cache (slower)
   -H, --ether             specify value in ether
-  -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
@@ -74,33 +74,36 @@ Notes:
   - With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
-  - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.
   - The --decache option removes the block(s), all transactions in those block(s), and all traces in those transactions from the cache.
   - The --withdrawals option is only available on certain chains. It is ignored otherwise.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
 - [block](/data-model/chaindata/#block)
-- [withdrawal](/data-model/chaindata/#withdrawal)
+- [blockcount](/data-model/chaindata/#blockcount)
+- [lightblock](/data-model/chaindata/#lightblock)
 - [log](/data-model/chaindata/#log)
+- [message](/data-model/other/#message)
 - [trace](/data-model/chaindata/#trace)
-- [logfilter](/data-model/chaindata/#logfilter)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
-- [blockcount](/data-model/chaindata/#blockcount)
+- [withdrawal](/data-model/chaindata/#withdrawal)
 
 Links:
 
 - [api docs](/api/#operation/chaindata-blocks)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getBlocks.csv)
+
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
 
 ## chifra transactions
 
-The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw`
-option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
+The `chifra transactions` tool retrieves transactions directly from the Ethereum node or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
 per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt
 and generated logs.
 
@@ -130,8 +133,8 @@ Flags:
   -l, --logs              display only the logs found in the transaction(s)
   -m, --emitter strings   for the --logs option only, filter logs to show only those logs emitted by the given address(es)
   -B, --topic strings     for the --logs option only, filter logs to show only those with this topic(s)
+  -R, --cache_traces      force the transaction's traces into the cache
   -H, --ether             specify value in ether
-  -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
@@ -143,17 +146,26 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
 
+- [appearance](/data-model/accounts/#appearance)
+- [function](/data-model/other/#function)
+- [log](/data-model/chaindata/#log)
+- [message](/data-model/other/#message)
+- [parameter](/data-model/other/#parameter)
 - [transaction](/data-model/chaindata/#transaction)
 
 Links:
 
 - [api docs](/api/#operation/chaindata-transactions)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getTrans.csv)
+
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
 
 ## chifra receipts
 
@@ -179,7 +191,6 @@ Arguments:
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
-  -w, --raw          report JSON data from the source with minimal processing
   -o, --cache        force the results of the query into the cache
   -D, --decache      removes related items from the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]
@@ -194,13 +205,14 @@ Notes:
 
 Data models produced by this tool:
 
+- [function](/data-model/other/#function)
+- [parameter](/data-model/other/#parameter)
 - [receipt](/data-model/chaindata/#receipt)
 
 Links:
 
 - [api docs](/api/#operation/chaindata-receipts)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getReceipts.csv)
 
 ## chifra logs
 
@@ -224,7 +236,6 @@ Flags:
   -m, --emitter strings   filter logs to show only those logs emitted by the given address(es)
   -B, --topic strings     filter logs to show only those with this topic(s)
   -a, --articulate        articulate the retrieved data if ABIs can be found
-  -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
@@ -240,14 +251,15 @@ Notes:
 
 Data models produced by this tool:
 
+- [function](/data-model/other/#function)
 - [log](/data-model/chaindata/#log)
-- [logfilter](/data-model/chaindata/#logfilter)
+- [message](/data-model/other/#message)
+- [parameter](/data-model/other/#parameter)
 
 Links:
 
 - [api docs](/api/#operation/chaindata-logs)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getLogs.csv)
 
 ## chifra traces
 
@@ -275,7 +287,6 @@ Flags:
   -f, --filter string   call the node's trace_filter routine with bang-separated filter
   -U, --count           display only the number of traces for the transaction (fast)
   -H, --ether           specify value in ether
-  -w, --raw             report JSON data from the source with minimal processing
   -o, --cache           force the results of the query into the cache
   -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
@@ -287,21 +298,36 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
+  - This command requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
 
+- [function](/data-model/other/#function)
+- [message](/data-model/other/#message)
+- [parameter](/data-model/other/#parameter)
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
-- [traceresult](/data-model/chaindata/#traceresult)
 - [tracecount](/data-model/chaindata/#tracecount)
 - [tracefilter](/data-model/chaindata/#tracefilter)
+- [traceresult](/data-model/chaindata/#traceresult)
 
 Links:
 
 - [api docs](/api/#operation/chaindata-traces)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getTraces.csv)
+
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Many remote RPC providers do not enable these endpoints due to the additional load they can place on the node. If you are running your own node, you can enable these endpoints by adding `trace` to your node's startup.
+
+The test for tracing assumes your node provides tracing starting at block 1. If your is partially synced, you may export the following enviroment variable before running the command to instruct `chifra` where to test.
+
+```[bash]
+export TB_<chain>_FIRSTTRACE=<bn>
+```
+
+where `<chain>` is the chain you are running and `<bn>` is the block number at which tracing starts. For example, to start tracing at block 1000 on the mainnet, you would export `TB_MAINNET_FIRSTTRACE=1000`.
 
 ## chifra when
 
@@ -349,7 +375,7 @@ Notes:
 
 Data models produced by this tool:
 
-- [block](/data-model/chaindata/#block)
+- [message](/data-model/other/#message)
 - [namedblock](/data-model/chaindata/#namedblock)
 - [timestamp](/data-model/chaindata/#timestamp)
 - [timestampcount](/data-model/chaindata/#timestampcount)
@@ -358,5 +384,5 @@ Links:
 
 - [api docs](/api/#operation/chaindata-when)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/when)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/whenBlock.csv)
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

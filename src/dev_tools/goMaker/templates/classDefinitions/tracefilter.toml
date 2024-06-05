@@ -1,0 +1,7 @@
+[settings]
+    class = "TraceFilter"
+    doc_group = "02-Chain Data"
+    doc_descr = "used by chifra traces --filter option to query for traces"
+    doc_route = "233-traceFilter"
+    attributes = ""
+    produced_by = "traces"

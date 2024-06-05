@@ -1,6 +1,0 @@
-slurp?addrs=0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0&blocks=4186279&cache&decache
-{
-  "errors": [
-    "The --cache and --decache options are mutually exclusive."
-  ]
-}

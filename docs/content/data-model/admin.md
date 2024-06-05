@@ -1,6 +1,6 @@
 ---
 title: "Admin"
-description: ""
+description: "Control the scraper and build the index"
 lead: ""
 lastmod:
   - :git
@@ -9,8 +9,8 @@ lastmod:
 draft: false
 menu:
   data:
-    parent: "collections"
-weight: 1700
+    parent: collections
+weight: 41000
 toc: true
 ---
 
@@ -22,22 +22,16 @@ Each data structure is created by one or more tools which are detailed below.
 
 ## Status
 
-The [chifra config](/chifra/admin/#chifra-config) tool reports on the state (and size) of the
-various TrueBlocks local binary caches. TrueBlocks produces nine difference caches: `abis`, `blocks`,
-`monitors`, `names`, `objs`, `recons`, `slurps`, `traces`, `transactions`. In general practice, these caches
-may take up a few GB of hard drive space, however, for very popular smart contract the size of the
-caches may grow rather large. Keep an eye on it.
-
 The `status` data model is a complex beast. It contains various information including a list of
 registered chains, information about many of the internal binary caches maintained by `chifra`
 as well as current status information about the system including version information for both
 `chifra` and the node it's running against.
 
-The following commands produce and manage Statuses:
+The following commands produce and manage Status:
 
 - [chifra status](/chifra/admin/#chifra-status)
 
-Statuses consist of the following fields:
+Status consist of the following fields:
 
 | Field         | Description                                              | Type                                        |
 | ------------- | -------------------------------------------------------- | ------------------------------------------- |
@@ -113,11 +107,11 @@ ChunkRecords consist of the following fields:
 The `indexchunk` data model represents internal information about each Unchained Index index chunk.
 It is used mostly interenally to study the characteristics of the Unchained Index.
 
-The following commands produce and manage ChunkIndexes:
+The following commands produce and manage ChunkIndexs:
 
 - [chifra chunks](/chifra/admin/#chifra-chunks)
 
-ChunkIndexes consist of the following fields:
+ChunkIndexs consist of the following fields:
 
 | Field        | Description                                                        | Type     |
 | ------------ | ------------------------------------------------------------------ | -------- |
@@ -210,10 +204,10 @@ ChunkStats consist of the following fields:
 | recWid        | the record width of a single bloom filter         | uint64   |
 | bloomSz       | the size of the bloom filters on disc in bytes    | uint64   |
 | chunkSz       | the size of the chunks on disc in bytes           | uint64   |
-| addrsPerBlock | the average number of addresses per block         | double   |
-| appsPerBlock  | the average number of appearances per block       | double   |
-| appsPerAddr   | the average number of appearances per address     | double   |
-| ratio         | the ratio of appearances to addresses             | double   |
+| addrsPerBlock | the average number of addresses per block         | float64  |
+| appsPerBlock  | the average number of appearances per block       | float64  |
+| appsPerAddr   | the average number of appearances per address     | float64  |
+| ratio         | the ratio of appearances to addresses             | float64  |
 
 ## MonitorClean
 
@@ -243,15 +237,15 @@ The following commands produce and manage CacheItems:
 
 CacheItems consist of the following fields:
 
-| Field       | Description                                         | Type      |
-| ----------- | --------------------------------------------------- | --------- |
-| type        | the type of the cache                               | string    |
-| items       | the individual items in the cache (if --verbose)    | Any       |
-| lastCached  | the date of the most recent item added to the cache | string    |
-| nFiles      | the number of items in the cache                    | uint64    |
-| nFolders    | the number of folders holding that many items       | uint64    |
-| path        | the path to the top of the given cache              | string    |
-| sizeInBytes | the size of the cache in bytes                      | int64     |
+| Field       | Description                                         | Type   |
+| ----------- | --------------------------------------------------- | ------ |
+| type        | the type of the cache                               | string |
+| items       | the individual items in the cache (if --verbose)    | any[]  |
+| lastCached  | the date of the most recent item added to the cache | string |
+| nFiles      | the number of items in the cache                    | uint64 |
+| nFolders    | the number of folders holding that many items       | uint64 |
+| path        | the path to the top of the given cache              | string |
+| sizeInBytes | the size of the cache in bytes                      | int64  |
 
 ## ReportCheck
 
@@ -266,23 +260,23 @@ ReportChecks consist of the following fields:
 | Field      | Description                                   | Type     |
 | ---------- | --------------------------------------------- | -------- |
 | result     | the result of the check                       | string   |
-| visitedCnt | the number of visited items in the cache      | uint32   |
-| checkedCnt | the number of checks                          | uint32   |
-| skippedCnt | the number of skipped checks                  | uint32   |
-| passedCnt  | the number of passed checks                   | uint32   |
-| failedCnt  | the number of failed checks                   | uint32   |
-| msgStrings | an array of messages explaining failed checks | []string |
+| visitedCnt | the number of visited items in the cache      | uint64   |
+| checkedCnt | the number of checks                          | uint64   |
+| skippedCnt | the number of skipped checks                  | uint64   |
+| passedCnt  | the number of passed checks                   | uint64   |
+| failedCnt  | the number of failed checks                   | uint64   |
+| msgStrings | an array of messages explaining failed checks | string[] |
 | reason     | the reason for the test                       | string   |
 
-## ChunkPinReport
+## ChunkPin
 
 Reports on the result of the command `chifra chunks manifest --pin [--deep]`.
 
-The following commands produce and manage ChunkPinReports:
+The following commands produce and manage ChunkPins:
 
 - [chifra chunks](/chifra/admin/#chifra-chunks)
 
-ChunkPinReports consist of the following fields:
+ChunkPins consist of the following fields:
 
 | Field         | Description                                             | Type     |
 | ------------- | ------------------------------------------------------- | -------- |
@@ -318,18 +312,18 @@ Chains consist of the following fields:
 
 This documentation mentions the following basic data types.
 
-| Type     | Description                         | Notes       |
-| -------- | ----------------------------------- | ----------- |
-| []string | an array of strings                 |             |
-| address  | an '0x'-prefixed 20-byte hex string | lowercase   |
-| blkrange | a pair of nine-digit block numbers  | zero padded |
-| bool     | either `true`, `false`, `1`, or `0` |             |
-| datetime | a JSON formatted date               | as a string |
-| double   | a double precision float            | 64 bits     |
-| hash     | an '0x'-prefixed 32-byte hex string | lowercase   |
-| int64    | a 64-bit signed integer             |             |
-| ipfshash | a multi-hash produced by IPFS       | mixed-case  |
-| string   | a normal character string           |             |
-| uint32   | a 32-bit unsigned integer           |             |
-| uint64   | a 64-bit unsigned integer           |             |
+| Type     | Description                              | Notes       |
+| -------- | ---------------------------------------- | ----------- |
+| address  | an '0x'-prefixed 20-byte hex string      | lowercase   |
+| any      | any cache item found in the binary cache |             |
+| blkrange | a pair of nine-digit block numbers       | zero padded |
+| bool     | either `true`, `false`, `1`, or `0`      |             |
+| datetime | a JSON formatted date                    | as a string |
+| float64  | a double precision float                 | 64 bits     |
+| hash     | an '0x'-prefixed 32-byte hex string      | lowercase   |
+| int64    | a 64-bit signed integer                  |             |
+| ipfshash | a multi-hash produced by IPFS            | mixed-case  |
+| string   | a normal character string                |             |
+| uint64   | a 64-bit unsigned integer                |             |
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

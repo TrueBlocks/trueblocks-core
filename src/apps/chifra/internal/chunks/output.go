@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -14,13 +14,9 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/spf13/cobra"
 )
 
@@ -29,7 +25,6 @@ import (
 // RunChunks handles the chunks command for the command line. Returns error only as per cobra.
 func RunChunks(cmd *cobra.Command, args []string) error {
 	opts := chunksFinishParse(args)
-	outputHelpers.EnableCommand("chunks", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("chunks", &opts.Globals)
@@ -39,7 +34,6 @@ func RunChunks(cmd *cobra.Command, args []string) error {
 // ServeChunks handles the chunks command for the API. Returns an error.
 func ServeChunks(w http.ResponseWriter, r *http.Request) error {
 	opts := chunksFinishParseApi(w, r)
-	outputHelpers.EnableCommand("chunks", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("chunks", w, &opts.Globals)
@@ -48,7 +42,7 @@ func ServeChunks(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// ChunksInternal handles the internal workings of the chunks command.  Returns an error.
+// ChunksInternal handles the internal workings of the chunks command. Returns an error.
 func (opts *ChunksOptions) ChunksInternal() error {
 	var err error
 	if err = opts.validateChunks(); err != nil {
@@ -66,56 +60,26 @@ func (opts *ChunksOptions) ChunksInternal() error {
 	if opts.Globals.TestMode && len(blockNums) > 200 {
 		blockNums = blockNums[:200]
 	}
-
+	// EXISTING_CODE
 	if opts.Check {
 		err = opts.HandleCheck(blockNums)
-
 	} else if opts.List {
 		err = opts.HandleList(blockNums)
-
 	} else if opts.Unpin {
 		err = opts.HandleUnpin(blockNums)
-
 	} else if len(opts.Tag) > 0 {
 		err = opts.HandleTag(blockNums)
-
 	} else if opts.Diff {
 		err = opts.HandleDiff(blockNums)
-
 	} else if opts.Pin {
 		err = opts.HandlePin(blockNums)
-
 	} else if opts.Publish {
 		err = opts.HandlePublish(blockNums)
-
-	} else if opts.Truncate != utils.NOPOS {
+	} else if opts.Truncate != base.NOPOSN {
 		err = opts.HandleTruncate(blockNums)
-
 	} else {
-		switch opts.Mode {
-		case "manifest":
-			err = opts.HandleManifest(blockNums)
-
-		case "index":
-			err = opts.HandleIndex(blockNums)
-
-		case "blooms":
-			err = opts.HandleBlooms(blockNums)
-
-		case "addresses":
-			err = opts.HandleAddresses(blockNums)
-
-		case "appearances":
-			err = opts.HandleAppearances(blockNums)
-
-		case "stats":
-			err = opts.HandleStats(blockNums)
-
-		default:
-			logger.Fatal("should not happen ==> in NamesInternal")
-		}
+		err = opts.HandleShow(blockNums)
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -129,28 +93,3 @@ func GetChunksOptions(args []string, g *globals.GlobalOptions) *ChunksOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
-	if opts.Mode == "addresses" || opts.Mode == "appearances" {
-		return opts.Globals.Verbose
-	}
-
-	for _, addr := range opts.Belongs {
-		if hexutil.Encode(obj.Address.Bytes()) == addr {
-			return true
-		}
-	}
-	return false
-}
-
-func FormattedTag(verbose bool, hash base.Hash) string {
-	if tag, ok := config.VersionTags[hash.Hex()]; !ok {
-		return utils.FormattedHash(verbose, hash.Hex())
-	} else {
-		return tag
-	}
-}
-
-// EXISTING_CODE
-

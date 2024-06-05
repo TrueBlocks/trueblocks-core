@@ -1,6 +1,6 @@
 ---
 title: "Accounts"
-description: ""
+description: "Access and cache transactional data"
 lead: ""
 lastmod:
   - :git
@@ -9,8 +9,8 @@ lastmod:
 draft: false
 menu:
   data:
-    parent: "collections"
-weight: 1000
+    parent: collections
+weight: 11000
 toc: true
 ---
 
@@ -45,17 +45,18 @@ The following commands produce and manage Appearances:
 - [chifra export](/chifra/accounts/#chifra-export)
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
 - [chifra chunks](/chifra/admin/#chifra-chunks)
+- [chifra slurp](/chifra/other/#chifra-slurp)
+- [chifra transactions](/chifra/chaindata/#chifra-transactions)
 
 Appearances consist of the following fields:
 
 | Field            | Description                                             | Type      |
 | ---------------- | ------------------------------------------------------- | --------- |
 | address          | the address of the appearance                           | address   |
-| blockNumber      | the number of the block                                 | blknum    |
-| transactionIndex | the index of the transaction in the block               | blknum    |
-| traceIndex       | the zero-based index of the trace in the transaction    | blknum    |
+| blockNumber      | the number of the block                                 | uint32    |
+| transactionIndex | the index of the transaction in the block               | uint32    |
+| traceIndex       | the zero-based index of the trace in the transaction    | uint32    |
 | reason           | the location in the data where the appearance was found | string    |
-| name             | the name of the address, if found                       | string    |
 | timestamp        | the timestamp for this appearance                       | timestamp |
 | date             | the timestamp as a date (calculated)                    | datetime  |
 
@@ -76,24 +77,17 @@ The following commands produce and manage Monitors:
 - [chifra monitors](/chifra/accounts/#chifra-monitors)
 - [chifra list](/chifra/accounts/#chifra-list)
 - [chifra export](/chifra/accounts/#chifra-export)
+- [chifra slurp](/chifra/other/#chifra-slurp)
 
 Monitors consist of the following fields:
 
-| Field       | Description                                    | Type    |
-| ----------- | ---------------------------------------------- | ------- |
-| nApps       | the number of appearances for this monitor     | blknum  |
-| firstApp    | the first block at which this address appears  | blknum  |
-| latestApp   | the latest block at which this address appears | blknum  |
-| sizeInBytes | the size of this monitor on disc               | uint64  |
-| tags        | the tag given to this address                  | string  |
-| address     | the address being monitored                    | address |
-| name        | the name given to this address                 | string  |
-| isCustom    | `true` if this address is customized           | bool    |
-| deleted     | `true` if deleted, `false` otherwise           | bool    |
-| symbol      |                                                | string  |
-| source      |                                                | string  |
-| decimals    |                                                | uint64  |
-| isContract  |                                                | bool    |
+| Field       | Description                                | Type    |
+| ----------- | ------------------------------------------ | ------- |
+| address     | the address of this monitor                | address |
+| nRecords    | the number of appearances for this monitor | int64   |
+| fileSize    | the size of this monitor on disc           | int64   |
+| lastScanned | the last scanned block number              | uint32  |
+| deleted     | `true` if this monitor has been deleted    | bool    |
 
 ## Name
 
@@ -134,24 +128,6 @@ Names consist of the following fields:
 | isErc20    | `true` if the address is an ERC20, `false` otherwise                                | bool    |
 | isErc721   | `true` if the address is an ERC720, `false` otherwise                               | bool    |
 
-## AppearanceCount
-
-The `appearanceCount` data model is used mostly by the frontend explorer application. It carries
-various information about the monitor data for an address.
-
-The following commands produce and manage AppearanceCounts:
-
-- [chifra list](/chifra/accounts/#chifra-list)
-- [chifra export](/chifra/accounts/#chifra-export)
-
-AppearanceCounts consist of the following fields:
-
-| Field    | Description                                               | Type    |
-| -------- | --------------------------------------------------------- | ------- |
-| address  | the address for this count                                | address |
-| nRecords | the number of appearances for the given address           | uint64  |
-| fileSize | the size of the monitor file containing those appearances | uint64  |
-
 ## Bounds
 
 The Bounds data model displays information about a given address including how many times it's appeared on the chain and when the first and most recent blocks, timestamps, and dates are.
@@ -162,15 +138,15 @@ The following commands produce and manage Bounds:
 
 Bounds consist of the following fields:
 
-| Field      | Description                                                                  | Type          |
-| ---------- | ---------------------------------------------------------------------------- | ------------- |
-| count      | the number of appearances for this address                                   | uint64        |
-| firstApp   | the block number and transaction id of the first appearance of this address  | RawAppearance |
-| firstTs    | the timestamp of the first appearance of this address                        | timestamp     |
-| firstDate  | the first appearance timestamp as a date (calculated)                        | datetime      |
-| latestApp  | the block number and transaction id of the latest appearance of this address | RawAppearance |
-| latestTs   | the timestamp of the latest appearance of this address                       | timestamp     |
-| latestDate | the latest appearance timestamp as a date (calculated)                       | datetime      |
+| Field      | Description                                                                  | Type                                           |
+| ---------- | ---------------------------------------------------------------------------- | ---------------------------------------------- |
+| count      | the number of appearances for this address                                   | uint64                                         |
+| firstApp   | the block number and transaction id of the first appearance of this address  | [Appearance](/data-model/accounts/#appearance) |
+| firstTs    | the timestamp of the first appearance of this address                        | timestamp                                      |
+| firstDate  | the first appearance timestamp as a date (calculated)                        | datetime                                       |
+| latestApp  | the block number and transaction id of the latest appearance of this address | [Appearance](/data-model/accounts/#appearance) |
+| latestTs   | the timestamp of the latest appearance of this address                       | timestamp                                      |
+| latestDate | the latest appearance timestamp as a date (calculated)                       | datetime                                       |
 
 ## Statement
 
@@ -198,15 +174,15 @@ Statements consist of the following fields:
 | Field               | Description                                                                                                                           | Type      |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------- |
 | blockNumber         | the number of the block                                                                                                               | blknum    |
-| transactionIndex    | the zero-indexed position of the transaction in the block                                                                             | blknum    |
-| logIndex            | the zero-indexed position the log in the block, if applicable                                                                         | blknum    |
+| transactionIndex    | the zero-indexed position of the transaction in the block                                                                             | txnum     |
+| logIndex            | the zero-indexed position the log in the block, if applicable                                                                         | lognum    |
 | transactionHash     | the hash of the transaction that triggered this reconciliation                                                                        | hash      |
 | timestamp           | the Unix timestamp of the object                                                                                                      | timestamp |
 | date                | the timestamp as a date (calculated)                                                                                                  | datetime  |
 | assetAddr           | 0xeeee...eeee for ETH reconciliations, the token address otherwise                                                                    | address   |
 | assetSymbol         | either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain                                              | string    |
-| decimals            | the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                             | uint64    |
-| spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                              | double    |
+| decimals            | the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                             | value     |
+| spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                              | float     |
 | priceSource         | the on-chain source from which the spot price was taken                                                                               | string    |
 | accountedFor        | the address being accounted for in this reconciliation                                                                                | address   |
 | sender              | the initiator of the transfer (the sender)                                                                                            | address   |
@@ -239,19 +215,40 @@ Statements consist of the following fields:
 | endBalCalc          | begBal + amountNet (calculated)                                                                                                       | int256    |
 | correctingReason    | the reason for the correcting entries, if any                                                                                         | string    |
 
+## AppearanceTable
+
+The `appearanceTable` data model carries an address and all appearances for that address found in any given chunk.
+
+The following commands produce and manage AppearanceTables:
+
+- [chifra chunks](/chifra/admin/#chifra-chunks)
+
+AppearanceTables consist of the following fields:
+
+| Field         | Description                              | Type        |
+| ------------- | ---------------------------------------- | ----------- |
+| AddressRecord | the address record for these appearances | AddrRecord  |
+| Appearances   | all the appearances for this address     | AppRecord[] |
+
 ## Base types
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                         | Notes          |
-| --------- | ----------------------------------- | -------------- |
-| address   | an '0x'-prefixed 20-byte hex string | lowercase      |
-| blknum    | an alias for a uint64               |                |
-| bool      | either `true`, `false`, `1`, or `0` |                |
-| datetime  | a JSON formatted date               | as a string    |
-| double    | a double precision float            | 64 bits        |
-| hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
-| int256    | a signed big number                 | as a string    |
-| string    | a normal character string           |                |
-| timestamp | a 64-bit unsigned integer           | Unix timestamp |
-| uint64    | a 64-bit unsigned integer           |                |
+| Type      | Description                            | Notes          |
+| --------- | -------------------------------------- | -------------- |
+| address   | an '0x'-prefixed 20-byte hex string    | lowercase      |
+| blknum    | an alias for a uint64                  |                |
+| bool      | either `true`, `false`, `1`, or `0`    |                |
+| datetime  | a JSON formatted date                  | as a string    |
+| hash      | an '0x'-prefixed 32-byte hex string    | lowercase      |
+| int256    | a signed big number                    | as a string    |
+| int64     | a 64-bit signed integer                |                |
+| lognum    | an alias for a uint64                  |                |
+| string    | a normal character string              |                |
+| timestamp | a 64-bit unsigned integer              | Unix timestamp |
+| txnum     | an alias for a uint64                  |                |
+| uint32    | a 32-bit unsigned integer              |                |
+| uint64    | a 64-bit unsigned integer              |                |
+| value     | an alias for a 64-bit unsigned integer |                |
+
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

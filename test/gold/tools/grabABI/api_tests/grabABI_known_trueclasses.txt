@@ -1,6 +1,0 @@
-abis?addrs=truebit&classes&fmt=json
-{
-  "errors": [
-    "Invalid key (classes) in abis route."
-  ]
-}

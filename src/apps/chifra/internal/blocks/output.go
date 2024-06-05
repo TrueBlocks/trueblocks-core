@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -23,7 +23,6 @@ import (
 // RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
 func RunBlocks(cmd *cobra.Command, args []string) error {
 	opts := blocksFinishParse(args)
-	outputHelpers.EnableCommand("blocks", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("blocks", &opts.Globals)
@@ -33,7 +32,6 @@ func RunBlocks(cmd *cobra.Command, args []string) error {
 // ServeBlocks handles the blocks command for the API. Returns an error.
 func ServeBlocks(w http.ResponseWriter, r *http.Request) error {
 	opts := blocksFinishParseApi(w, r)
-	outputHelpers.EnableCommand("blocks", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("blocks", w, &opts.Globals)
@@ -42,7 +40,7 @@ func ServeBlocks(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// BlocksInternal handles the internal workings of the blocks command.  Returns an error.
+// BlocksInternal handles the internal workings of the blocks command. Returns an error.
 func (opts *BlocksOptions) BlocksInternal() error {
 	var err error
 	if err = opts.validateBlocks(); err != nil {
@@ -52,37 +50,26 @@ func (opts *BlocksOptions) BlocksInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra blocks"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
-
 	} else if opts.Count {
-		err = opts.HandleCounts()
-
+		err = opts.HandleCount()
 	} else if opts.Logs {
 		err = opts.HandleLogs()
-
 	} else if opts.Withdrawals {
 		err = opts.HandleWithdrawals()
-
 	} else if opts.Traces {
 		err = opts.HandleTraces()
-
 	} else if opts.Uncles {
 		err = opts.HandleUncles()
-
-	} else if opts.List > 0 {
-		err = opts.HandleList()
-
 	} else if opts.Uniq {
 		err = opts.HandleUniq()
-
 	} else if opts.Hashes {
 		err = opts.HandleHashes()
-
 	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -96,7 +83,3 @@ func GetBlocksOptions(args []string, g *globals.GlobalOptions) *BlocksOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
-

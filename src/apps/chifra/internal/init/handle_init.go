@@ -7,6 +7,7 @@ package initPkg
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
@@ -41,7 +42,7 @@ func (opts *InitOptions) HandleInit() error {
 	}
 
 	// Get the list of things we need to download
-	chunksToDownload, nToDownload, nDeleted, err := opts.prepareDownloadList(chain, remote, []uint64{})
+	chunksToDownload, nToDownload, nDeleted, err := opts.prepareDownloadList(chain, remote, []base.Blknum{})
 	if err != nil {
 		return err
 	}
@@ -79,7 +80,7 @@ func (opts *InitOptions) HandleInit() error {
 		// The download finished...
 		if len(failedChunks) > 0 {
 			// ...if there were failed downloads, try them again (3 times if necessary)...
-			retry(failedChunks, 3, func(items []types.SimpleChunkRecord) ([]types.SimpleChunkRecord, bool) {
+			retry(failedChunks, 3, func(items []types.ChunkRecord) ([]types.ChunkRecord, bool) {
 				logger.Info("Retrying", len(items), "bloom(s)")
 				return opts.downloadAndReportProgress(items, chunkType, nToDownload)
 			})
@@ -110,4 +111,9 @@ func (opts *InitOptions) HandleInit() error {
 	}
 
 	return nil
+}
+
+// HandleShow initializes local copy of UnchainedIndex by downloading manifests and chunks
+func (opts *InitOptions) HandleShow() error {
+	return opts.HandleInit()
 }

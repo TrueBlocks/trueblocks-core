@@ -17,7 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 const asciiAppearanceSize = 59
@@ -118,13 +117,13 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				report.FileSize = file.FileSize(chunkPath)
 				report.Report()
 			}
-			if err = NotifyChunkWritten(chunk, chunkPath); err != nil {
+			if err = bm.opts.NotifyChunkWritten(chunk, chunkPath); err != nil {
 				return err, true
 			}
 
 			// reset for next chunk
 			bm.meta, _ = bm.opts.Conn.GetMetaData(bm.IsTestMode())
-			appMap = make(map[string][]index.AppearanceRecord, 0)
+			appMap = make(map[string][]types.AppRecord, 0)
 			chunkRange.First = chunkRange.Last + 1
 			chunkRange.Last = chunkRange.Last + 1
 			nAppearances = 0
@@ -142,7 +141,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 			for _, app := range apps {
 				record := fmt.Sprintf("%s\t%09d\t%05d", addr, app.BlockNumber, app.TransactionIndex)
 				appearances = append(appearances, record)
-				newRange.Last = utils.Max(newRange.Last, uint64(app.BlockNumber))
+				newRange.Last = base.Max(newRange.Last, base.Blknum(app.BlockNumber))
 			}
 		}
 
@@ -160,12 +159,14 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
 	bm.report(len(blocks), int(bm.PerChunk()), nChunks, nAppsNow, nAppsFound, nAddrsFound)
 
-	if err := Notify(notify.Notification[string]{
-		Msg:     notify.MessageStageUpdated,
-		Meta:    bm.meta,
-		Payload: newRange.String(),
-	}); err != nil {
-		return err, true
+	if bm.opts.Notify {
+		if err := Notify(notify.Notification[string]{
+			Msg:     notify.MessageStageUpdated,
+			Meta:    bm.meta,
+			Payload: newRange.String(),
+		}); err != nil {
+			return err, true
+		}
 	}
 
 	// Commit the change by deleting the backup file.
@@ -175,12 +176,12 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 }
 
 // AsciiFileToAppearanceMap reads the appearances from the stage file and returns them as a map
-func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]index.AppearanceRecord, base.FileRange, int) {
+func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.AppRecord, base.FileRange, int) {
 	appearances := file.AsciiFileToLines(fn)
 	os.Remove(fn) // It's okay to remove this. If it fails, we'll just start over.
 
-	appMap := make(map[string][]index.AppearanceRecord, len(appearances))
-	fileRange := base.FileRange{First: utils.NOPOS, Last: 0}
+	appMap := make(map[string][]types.AppRecord, len(appearances))
+	fileRange := base.FileRange{First: base.NOPOSN, Last: 0}
 
 	if len(appearances) == 0 {
 		return appMap, base.FileRange{First: 0, Last: 0}, 0
@@ -191,15 +192,15 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]index.
 		parts := strings.Split(line, "\t")
 		if len(parts) == 3 { // shouldn't be needed, but just in case...
 			addr := strings.ToLower(parts[0])
-			bn := utils.MustParseUint(strings.TrimLeft(parts[1], "0"))
-			txid := utils.MustParseUint(strings.TrimLeft(parts[2], "0"))
+			bn := base.MustParseBlknum(strings.TrimLeft(parts[1], "0"))
+			txid := base.MustParseTxnum(strings.TrimLeft(parts[2], "0"))
 			// See #3252
 			if addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
 				continue
 			}
-			fileRange.First = utils.Min(fileRange.First, bn)
-			fileRange.Last = utils.Max(fileRange.Last, bn)
-			appMap[addr] = append(appMap[addr], index.AppearanceRecord{
+			fileRange.First = base.Min(fileRange.First, bn)
+			fileRange.Last = base.Max(fileRange.Last, bn)
+			appMap[addr] = append(appMap[addr], types.AppRecord{
 				BlockNumber:      uint32(bn),
 				TransactionIndex: uint32(txid),
 			})

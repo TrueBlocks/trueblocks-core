@@ -1,7 +1,0 @@
-chifra logs  46147.0 --cache
-TEST[DATE|TIME] Transactions:  [46147.0]
-TEST[DATE|TIME] Enabled:  transactions
-TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
-TEST[DATE|TIME] Format:  txt
-EROR[DATE|TIME] transaction at 46147.0 has no logs

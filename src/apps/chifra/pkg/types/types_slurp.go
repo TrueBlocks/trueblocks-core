@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -17,82 +18,47 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // EXISTING_CODE
 
-type RawSlurp struct {
-	BlockHash         string `json:"blockHash"`
-	BlockNumber       string `json:"blockNumber"`
-	ContractAddress   string `json:"contractAddress"`
-	CumulativeGasUsed string `json:"cumulativeGasUsed"`
-	Ether             string `json:"ether"`
-	From              string `json:"from"`
-	FunctionName      string `json:"functionName"`
-	Gas               string `json:"gas"`
-	GasPrice          string `json:"gasPrice"`
-	GasUsed           string `json:"gasUsed"`
-	HasToken          string `json:"hasToken"`
-	Hash              string `json:"hash"`
-	Input             string `json:"input"`
-	MethodId          string `json:"methodId"`
-	Nonce             string `json:"nonce"`
-	Timestamp         string `json:"timestamp"`
-	To                string `json:"to"`
-	TransactionIndex  string `json:"transactionIndex"`
-	TxReceiptStatus   string `json:"txReceiptStatus"`
-	ValidatorIndex    string `json:"validatorIndex"`
-	Value             string `json:"value"`
-	WithdrawalIndex   string `json:"withdrawalIndex"`
+type Slurp struct {
+	ArticulatedTx     *Function      `json:"articulatedTx"`
+	BlockHash         base.Hash      `json:"blockHash"`
+	BlockNumber       base.Blknum    `json:"blockNumber"`
+	ContractAddress   base.Address   `json:"contractAddress"`
+	CumulativeGasUsed string         `json:"cumulativeGasUsed"`
+	From              base.Address   `json:"from"`
+	FunctionName      string         `json:"functionName"`
+	Gas               base.Gas       `json:"gas"`
+	GasPrice          base.Gas       `json:"gasPrice"`
+	GasUsed           base.Gas       `json:"gasUsed"`
+	HasToken          bool           `json:"hasToken"`
+	Hash              base.Hash      `json:"hash"`
+	Input             string         `json:"input"`
+	IsError           bool           `json:"-"`
+	MethodId          string         `json:"methodId"`
+	Nonce             base.Value     `json:"nonce"`
+	Timestamp         base.Timestamp `json:"timestamp"`
+	To                base.Address   `json:"to"`
+	TransactionIndex  base.Txnum     `json:"transactionIndex"`
+	TxReceiptStatus   string         `json:"txReceiptStatus"`
+	ValidatorIndex    base.Value     `json:"validatorIndex"`
+	Value             base.Wei       `json:"value"`
+	WithdrawalIndex   base.Value     `json:"withdrawalIndex"`
 	// EXISTING_CODE
-	Address string `json:"address"`
-	Amount  string `json:"amount"`
-	// EXISTING_CODE
-}
-
-type SimpleSlurp struct {
-	ArticulatedTx     *SimpleFunction `json:"articulatedTx"`
-	BlockHash         base.Hash       `json:"blockHash"`
-	BlockNumber       base.Blknum     `json:"blockNumber"`
-	CompressedTx      string          `json:"compressedTx"`
-	ContractAddress   base.Address    `json:"contractAddress"`
-	CumulativeGasUsed string          `json:"cumulativeGasUsed"`
-	Ether             string          `json:"ether"`
-	From              base.Address    `json:"from"`
-	FunctionName      string          `json:"functionName"`
-	Gas               base.Gas        `json:"gas"`
-	GasPrice          base.Gas        `json:"gasPrice"`
-	GasUsed           base.Gas        `json:"gasUsed"`
-	HasToken          bool            `json:"hasToken"`
-	Hash              base.Hash       `json:"hash"`
-	Input             string          `json:"input"`
-	IsError           bool            `json:"isError"`
-	MethodId          string          `json:"methodId"`
-	Nonce             uint64          `json:"nonce"`
-	Timestamp         base.Timestamp  `json:"timestamp"`
-	To                base.Address    `json:"to"`
-	TransactionIndex  base.Blknum     `json:"transactionIndex"`
-	TxReceiptStatus   string          `json:"txReceiptStatus"`
-	ValidatorIndex    uint64          `json:"validatorIndex"`
-	Value             base.Wei        `json:"value"`
-	WithdrawalIndex   uint64          `json:"withdrawalIndex"`
-	raw               *RawSlurp       `json:"-"`
-	// EXISTING_CODE
+	Amount base.Wei `json:"amount"`
 	// EXISTING_CODE
 }
 
-func (s *SimpleSlurp) Raw() *RawSlurp {
-	return s.raw
+func (s Slurp) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *SimpleSlurp) SetRaw(raw *RawSlurp) {
-	s.raw = raw
-}
-
-func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -101,14 +67,13 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
-	asEther := extraOptions["ether"] == true
-	model = map[string]interface{}{
+	model = map[string]any{
 		"blockNumber": s.BlockNumber,
 		"from":        s.From,
 		"timestamp":   s.Timestamp,
 		"date":        s.Date(),
 		"to":          s.To,
-		"value":       utils.FormattedValue(s.Value, asEther, 18),
+		"value":       s.Value.String(),
 	}
 
 	if s.From == base.BlockRewardSender || s.From == base.UncleRewardSender {
@@ -176,15 +141,15 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 	model["transactionIndex"] = s.TransactionIndex
 
 	// TODO: Turn this back on
-	var articulatedTx map[string]interface{}
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTx != nil
+	var articulatedTx map[string]any
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTx != nil
 	if isArticulated && format != "json" {
 		order = append(order, "compressedTx")
 	}
 
 	// TODO: ARTICULATE SLURP
 	if isArticulated {
-		articulatedTx = map[string]interface{}{
+		articulatedTx = map[string]any{
 			"name": s.ArticulatedTx.Name,
 		}
 		inputModels := parametersToMap(s.ArticulatedTx.Inputs)
@@ -245,6 +210,12 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 		}
 	}
 
+	asEther := true // like transactions, we always export ether for slurps -- extraOpts["ether"] == true
+	if asEther {
+		model["ether"] = s.Value.ToEtherStr(18)
+		order = append(order, "ether")
+	}
+
 	// EXISTING_CODE
 
 	return Model{
@@ -253,27 +224,26 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 	}
 }
 
-func (s *SimpleSlurp) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+func (s *Slurp) Date() string {
+	return base.FormattedDate(s.Timestamp)
 }
 
-// --> cacheable by address,tx as group
-type SimpleSlurpGroup struct {
+type SlurpGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
 	Address          base.Address
-	Slurps           []SimpleSlurp
+	Slurps           []Slurp
 }
 
-func (s *SimpleSlurpGroup) CacheName() string {
+func (s *SlurpGroup) CacheName() string {
 	return "Slurp"
 }
 
-func (s *SimpleSlurpGroup) CacheId() string {
+func (s *SlurpGroup) CacheId() string {
 	return fmt.Sprintf("%s-%09d-%05d", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)
 }
 
-func (s *SimpleSlurpGroup) CacheLocation() (directory string, extension string) {
+func (s *SlurpGroup) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -287,17 +257,17 @@ func (s *SimpleSlurpGroup) CacheLocation() (directory string, extension string) 
 	return
 }
 
-func (s *SimpleSlurpGroup) MarshalCache(writer io.Writer) (err error) {
+func (s *SlurpGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Slurps)
 }
 
-func (s *SimpleSlurpGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Slurps, version)
+func (s *SlurpGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Slurps, vers)
 }
 
-func (s *SimpleSlurp) MarshalCache(writer io.Writer) (err error) {
+func (s *Slurp) MarshalCache(writer io.Writer) (err error) {
 	// ArticulatedTx
-	optArticulatedTx := &cache.Optional[SimpleFunction]{
+	optArticulatedTx := &cache.Optional[Function]{
 		Value: s.ArticulatedTx,
 	}
 	if err = cache.WriteValue(writer, optArticulatedTx); err != nil {
@@ -314,11 +284,6 @@ func (s *SimpleSlurp) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// CompressedTx
-	if err = cache.WriteValue(writer, s.CompressedTx); err != nil {
-		return err
-	}
-
 	// ContractAddress
 	if err = cache.WriteValue(writer, s.ContractAddress); err != nil {
 		return err
@@ -326,11 +291,6 @@ func (s *SimpleSlurp) MarshalCache(writer io.Writer) (err error) {
 
 	// CumulativeGasUsed
 	if err = cache.WriteValue(writer, s.CumulativeGasUsed); err != nil {
-		return err
-	}
-
-	// Ether
-	if err = cache.WriteValue(writer, s.Ether); err != nil {
 		return err
 	}
 
@@ -427,133 +387,127 @@ func (s *SimpleSlurp) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleSlurp) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Slurp) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// ArticulatedTx
-	optArticulatedTx := &cache.Optional[SimpleFunction]{
+	optArticulatedTx := &cache.Optional[Function]{
 		Value: s.ArticulatedTx,
 	}
-	if err = cache.ReadValue(reader, optArticulatedTx, version); err != nil {
+	if err = cache.ReadValue(reader, optArticulatedTx, vers); err != nil {
 		return err
 	}
 	s.ArticulatedTx = optArticulatedTx.Get()
 
 	// BlockHash
-	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockHash, vers); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
-		return err
-	}
-
-	// CompressedTx
-	if err = cache.ReadValue(reader, &s.CompressedTx, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
 	// ContractAddress
-	if err = cache.ReadValue(reader, &s.ContractAddress, version); err != nil {
+	if err = cache.ReadValue(reader, &s.ContractAddress, vers); err != nil {
 		return err
 	}
 
 	// CumulativeGasUsed
-	if err = cache.ReadValue(reader, &s.CumulativeGasUsed, version); err != nil {
-		return err
-	}
-
-	// Ether
-	if err = cache.ReadValue(reader, &s.Ether, version); err != nil {
+	if err = cache.ReadValue(reader, &s.CumulativeGasUsed, vers); err != nil {
 		return err
 	}
 
 	// From
-	if err = cache.ReadValue(reader, &s.From, version); err != nil {
+	if err = cache.ReadValue(reader, &s.From, vers); err != nil {
 		return err
 	}
 
 	// FunctionName
-	if err = cache.ReadValue(reader, &s.FunctionName, version); err != nil {
+	if err = cache.ReadValue(reader, &s.FunctionName, vers); err != nil {
 		return err
 	}
 
 	// Gas
-	if err = cache.ReadValue(reader, &s.Gas, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Gas, vers); err != nil {
 		return err
 	}
 
 	// GasPrice
-	if err = cache.ReadValue(reader, &s.GasPrice, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasPrice, vers); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasUsed, vers); err != nil {
 		return err
 	}
 
 	// HasToken
-	if err = cache.ReadValue(reader, &s.HasToken, version); err != nil {
+	if err = cache.ReadValue(reader, &s.HasToken, vers); err != nil {
 		return err
 	}
 
 	// Hash
-	if err = cache.ReadValue(reader, &s.Hash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Hash, vers); err != nil {
 		return err
 	}
 
 	// Input
-	if err = cache.ReadValue(reader, &s.Input, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Input, vers); err != nil {
 		return err
 	}
 
 	// IsError
-	if err = cache.ReadValue(reader, &s.IsError, version); err != nil {
+	if err = cache.ReadValue(reader, &s.IsError, vers); err != nil {
 		return err
 	}
 
 	// MethodId
-	if err = cache.ReadValue(reader, &s.MethodId, version); err != nil {
+	if err = cache.ReadValue(reader, &s.MethodId, vers); err != nil {
 		return err
 	}
 
 	// Nonce
-	if err = cache.ReadValue(reader, &s.Nonce, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Nonce, vers); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
 		return err
 	}
 
 	// To
-	if err = cache.ReadValue(reader, &s.To, version); err != nil {
+	if err = cache.ReadValue(reader, &s.To, vers); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionIndex, vers); err != nil {
 		return err
 	}
 
 	// TxReceiptStatus
-	if err = cache.ReadValue(reader, &s.TxReceiptStatus, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TxReceiptStatus, vers); err != nil {
 		return err
 	}
 
 	// ValidatorIndex
-	if err = cache.ReadValue(reader, &s.ValidatorIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.ValidatorIndex, vers); err != nil {
 		return err
 	}
 
 	// Value
-	if err = cache.ReadValue(reader, &s.Value, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Value, vers); err != nil {
 		return err
 	}
 
 	// WithdrawalIndex
-	if err = cache.ReadValue(reader, &s.WithdrawalIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.WithdrawalIndex, vers); err != nil {
 		return err
 	}
 
@@ -562,7 +516,8 @@ func (s *SimpleSlurp) UnmarshalCache(version uint64, reader io.Reader) (err erro
 	return nil
 }
 
-func (s *SimpleSlurp) FinishUnmarshal() {
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *Slurp) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -570,9 +525,8 @@ func (s *SimpleSlurp) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleSlurp) GasCost() base.Gas {
+func (s *Slurp) GasCost() base.Gas {
 	return s.GasPrice * s.GasUsed
 }
 
 // EXISTING_CODE
-

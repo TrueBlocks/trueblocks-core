@@ -85,7 +85,7 @@ func TestArticulateArgumentsMixedIndexed(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	argNameToResultParam := make(map[string]types.SimpleParameter)
+	argNameToResultParam := make(map[string]types.Parameter)
 	for _, param := range result.Inputs {
 		argNameToResultParam[param.Name] = param
 	}
@@ -101,14 +101,21 @@ func TestArticulateArgumentsMixedIndexed(t *testing.T) {
 	}
 }
 
-func TestArticulateArgumentsSimpleData(t *testing.T) {
+// We use this type alias and the following function only to encapsulate the big .Int
+// type. Note that unlike elsewhere, we need to use the big .Int as an alias because
+// the Go Ethereum code expects big.Ints for int256 types.
+type myBig = big.Int
+
+func newMyBig(v int64) *myBig { return big.NewInt(v) }
+
+func TestArticulateArgumentsData(t *testing.T) {
 	parsedAbi, err := abi.JSON(strings.NewReader(ensRegistrar))
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	var abiMethod abi.Method
-	var result *types.SimpleFunction
+	var result *types.Function
 	var expected any
 	var packed []byte
 
@@ -131,8 +138,8 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	// type: uint256
 	abiMethod = parsedAbi.Methods["getAllowedTime"]
 	result = types.FunctionFromAbiMethod(&abiMethod)
-	expected = big.NewInt(123).String()
-	packed, err = abiMethod.Inputs.Pack(big.NewInt(123))
+	expected = newMyBig(123).String()
+	packed, err = abiMethod.Inputs.Pack(newMyBig(123))
 	if err != nil {
 		return
 	}
@@ -382,37 +389,37 @@ func TestArticulateArgumentsTupleTuple(t *testing.T) {
 	result := types.FunctionFromAbiMethod(&abiMethod)
 
 	first := struct {
-		A *big.Int   `json:"a"`
-		B []*big.Int `json:"b"`
+		A *myBig   `json:"a"`
+		B []*myBig `json:"b"`
 		C []struct {
-			X *big.Int `json:"x"`
-			Y *big.Int `json:"y"`
+			X *myBig `json:"x"`
+			Y *myBig `json:"y"`
 		} `json:"c"`
 	}{
-		A: big.NewInt(1),
-		B: []*big.Int{},
+		A: newMyBig(1),
+		B: []*myBig{},
 		C: []struct {
-			X *big.Int `json:"x"`
-			Y *big.Int `json:"y"`
+			X *myBig `json:"x"`
+			Y *myBig `json:"y"`
 		}{{
-			X: big.NewInt(1),
-			Y: big.NewInt(2),
+			X: newMyBig(1),
+			Y: newMyBig(2),
 		}},
 	}
 	second := struct {
-		X *big.Int `json:"x"`
-		Y *big.Int `json:"y"`
+		X *myBig `json:"x"`
+		Y *myBig `json:"y"`
 	}{
-		X: big.NewInt(1),
-		Y: big.NewInt(2),
+		X: newMyBig(1),
+		Y: newMyBig(2),
 	}
-	third := big.NewInt(3)
+	third := newMyBig(3)
 
-	rawPayload, err := abiMethod.Inputs.Pack(first, second, third)
+	payload, err := abiMethod.Inputs.Pack(first, second, third)
 	if err != nil {
 		t.Fatal(err)
 	}
-	txData := base.Bytes2Hex(rawPayload)
+	txData := base.Bytes2Hex(payload)
 
 	if err = articulateArguments(abiMethod.Inputs, txData, nil, result.Inputs); err != nil {
 		t.Fatal(err)

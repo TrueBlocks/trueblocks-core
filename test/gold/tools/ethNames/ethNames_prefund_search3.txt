@@ -1,6 +1,0 @@
-chifra names  --prefund etwork
-TEST[DATE|TIME] Terms:  [etwork]
-TEST[DATE|TIME] Prefund:  true
-TEST[DATE|TIME] Format:  txt
-WARN[DATE|TIME] No known names found for [etwork]
-WARN[DATE|TIME] Original command: [chifra names --prefund etwork]

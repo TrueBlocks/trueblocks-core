@@ -1,7 +1,6 @@
 package pricing
 
 import (
-	"math/big"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -19,18 +18,18 @@ type priceDebugger struct {
 	first       base.Address
 	second      base.Address
 	reversed    bool
-	float0      *big.Float
-	float1      *big.Float
-	float2      *big.Float
-	int0        *big.Int
-	int1        *big.Int
-	bigPrice    *big.Float
-	price       float64
+	float0      *base.Ether
+	float1      *base.Ether
+	float2      *base.Ether
+	int0        *base.Wei
+	int1        *base.Wei
+	bigPrice    *base.Ether
+	price       base.Float
 	source      string
 }
 
-// TODO: Much of this reporting could be removed by using a String function on the types.SimpleStatement
-func (r *priceDebugger) report(msg string, testMode bool) {
+// TODO: Much of this reporting could be removed by using a String function on the types.Statement
+func (r *priceDebugger) report(msg string) {
 	isStable := strings.Contains(msg, "stable-coin")
 	if isStable {
 		msg = ""

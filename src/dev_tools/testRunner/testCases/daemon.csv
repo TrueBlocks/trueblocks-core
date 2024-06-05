@@ -1,0 +1,17 @@
+enabled ,mode ,speed ,route  ,path ,tool   ,filename          ,post ,options
+on      ,cmd  ,fast  ,daemon ,apps ,daemon ,help              ,n    ,@h
+on      ,cmd  ,fast  ,daemon ,apps ,daemon ,help_long         ,n    ,help
+on      ,both ,fast  ,daemon ,apps ,daemon ,bad_cmd           ,n    ,not-an-option
+on      ,both ,fast  ,daemon ,apps ,daemon ,port              ,n    ,not-an-option & port = :8080
+
+# Capabilities
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & ether
+on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_allowed      ,y    ,nocolor & noop & version & verbose & fail_on_purpose
+on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_1 ,y    ,chain
+on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_2 ,y    ,no_header
+on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_3 ,y    ,output
+on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_4 ,y    ,append
+on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_5 ,y    ,cache
+on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_7 ,y    ,ether
+on      ,cmd  ,fast  ,daemon ,apps ,daemon ,caps_disallowed_8 ,y    ,wei
+# caps not tested: fmt, file

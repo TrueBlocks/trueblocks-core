@@ -30,25 +30,25 @@ func (opts *SlurpOptions) validateSlurp() error {
 		return err
 	}
 
-	err = validate.ValidateEnumSlice("--types", opts.Types, "[ext|int|token|nfts|1155|miner|uncles|withdrawals|all]")
+	err = validate.ValidateEnumSlice("--types", opts.Parts, "[ext|int|token|nfts|1155|miner|uncles|withdrawals|some|all]")
 	if err != nil {
 		return err
 	}
 
-	err = validate.ValidateEnum("--source", opts.Source, "[etherscan|key]")
+	err = validate.ValidateEnum("--source", opts.Source, "[etherscan|key|covalent|alchemy]")
 	if err != nil {
 		return err
 	}
 
 	if opts.Source == "key" {
-		if !opts.Appearances && !opts.Count {
-			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "--appearances or --count")
-		}
-		key := config.GetKey("trueblocks").ApiKey
+		key := config.GetChain(chain).KeyEndpoint
 		if len(key) == 0 {
-			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "a valid api key")
+			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "a valid TrueBlocks Key endpoint")
 		}
-		opts.Types = []string{"not-used"} // key returns everything
+		opts.Parts = []string{"not-used"} // key returns everything
+		if !opts.Appearances && !opts.Count {
+			return validate.Usage("The {0} option is only available with {1} or {2}.", "--source=key", "--appearances", "--count")
+		}
 	}
 
 	if chain != "mainnet" {

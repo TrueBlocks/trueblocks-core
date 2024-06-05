@@ -50,7 +50,7 @@ Flags:
   -f, --flow string         for the accounting options only, export statements with incoming, outgoing, or zero value
                             One of [ in | out | zero ]
   -y, --factory             for --traces only, report addresses created by (or self-destructed by) the given address(es)
-  -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
+  -u, --unripe              export transactions labeled unripe (i.e. less than 28 blocks old)
   -E, --reversed            produce results in reverse chronological order
   -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
   -F, --first_block uint    first block to process (inclusive)
@@ -74,23 +74,29 @@ Notes:
   - If the --reversed option is present, the appearance list is reversed prior to all processing (including filtering).
   - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).
   - The --withdrawals option is only available on certain chains. It is ignored otherwise.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
-- [monitor](/data-model/accounts/#monitor)
-- [appearancecount](/data-model/accounts/#appearancecount)
-- [statement](/data-model/accounts/#statement)
-- [transaction](/data-model/chaindata/#transaction)
-- [receipt](/data-model/chaindata/#receipt)
+- [function](/data-model/other/#function)
 - [log](/data-model/chaindata/#log)
+- [message](/data-model/other/#message)
+- [monitor](/data-model/accounts/#monitor)
+- [parameter](/data-model/other/#parameter)
+- [receipt](/data-model/chaindata/#receipt)
+- [statement](/data-model/accounts/#statement)
+- [token](/data-model/chainstate/#token)
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
-- [token](/data-model/chainstate/#token)
-- [function](/data-model/other/#function)
-- [parameter](/data-model/other/#parameter)
+- [transaction](/data-model/chaindata/#transaction)
+- [withdrawal](/data-model/chaindata/#withdrawal)
+
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
 
 ### Other Options
 
@@ -101,7 +107,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  ```
+```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
@@ -111,3 +117,4 @@ of any line makes it a comment.
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

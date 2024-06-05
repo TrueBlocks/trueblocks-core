@@ -1,6 +1,0 @@
-scrape?ether
-{
-  "errors": [
-    "Invalid key (ether) in scrape route."
-  ]
-}

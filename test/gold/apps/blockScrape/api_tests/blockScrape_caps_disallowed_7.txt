@@ -1,6 +1,0 @@
-scrape?raw
-{
-  "errors": [
-    "Invalid key (raw) in scrape route."
-  ]
-}

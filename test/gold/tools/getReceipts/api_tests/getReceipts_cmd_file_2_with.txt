@@ -1,6 +1,0 @@
-receipts?file=cmd_file.2&raw&fmt=txt
-{
-  "errors": [
-    "The --file option is not available in api mode."
-  ]
-}

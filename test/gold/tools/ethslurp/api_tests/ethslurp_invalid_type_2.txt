@@ -1,6 +1,0 @@
-slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types%20
-{
-  "errors": [
-    "Invalid key (types ) in slurp route."
-  ]
-}

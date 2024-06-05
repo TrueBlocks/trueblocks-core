@@ -88,7 +88,6 @@ func (bm *BlazeManager) ProcessBlocks(blockChannel chan base.Blknum, blockWg *sy
 		}
 
 		// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
-		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
 		var err error
 		if sd.traces, err = bm.opts.Conn.GetTracesByBlockNumber(bn); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
@@ -193,13 +192,15 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		}
 	}
 
-	if bn <= bm.ripeBlock {
+	if bm.opts.Notify && bn <= bm.ripeBlock {
 		err = Notify(notify.Notification[[]notify.NotificationPayloadAppearance]{
 			Msg:     notify.MessageAppearance,
 			Meta:    bm.meta,
 			Payload: notificationPayload,
 		})
 		if err != nil {
+			// We need this warning, otherwise errors don't show up for 2,000 blocks
+			logger.Error("error sending notification", err)
 			return err
 		}
 	}
@@ -231,7 +232,7 @@ func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 
 	// Only report once in a while (17 blocks)
 	if bm.nProcessed()%17 == 0 || force {
-		dist := uint64(0)
+		dist := base.Blknum(0)
 		if bm.ripeBlock > bn {
 			dist = (bm.ripeBlock - bn)
 		}
@@ -250,8 +251,8 @@ func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 type scrapedData struct {
 	bn          base.Blknum
 	ts          tslib.TimestampRecord
-	traces      []types.SimpleTrace
-	receipts    []types.SimpleReceipt
-	withdrawals []types.SimpleWithdrawal
+	traces      []types.Trace
+	receipts    []types.Receipt
+	withdrawals []types.Withdrawal
 	miner       base.Address
 }

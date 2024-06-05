@@ -10,6 +10,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
@@ -51,20 +52,19 @@ func (conn *Connection) GetClientIDs() (uint64, uint64, error) {
 }
 
 // GetLatestBlockNumber returns the block number at the front of the chain (i.e. latest)
-func (conn *Connection) GetLatestBlockNumber() uint64 {
+func (conn *Connection) GetLatestBlockNumber() base.Blknum {
 	if ec, err := conn.getClient(); err != nil {
 		logger.Error("Could not connect to RPC client", err)
 		return 0
 	} else {
 		defer ec.Close()
 
-		r, err := ec.BlockNumber(context.Background())
+		bn, err := ec.BlockNumber(context.Background())
 		if err != nil {
 			logger.Error("Could not connect to RPC client", err)
 			return 0
 		}
-
-		return r
+		return base.Blknum(bn)
 	}
 }
 

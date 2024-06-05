@@ -71,7 +71,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 		man = newManifest
 	}
 
-	man.ChunkMap = make(map[string]*types.SimpleChunkRecord)
+	man.ChunkMap = make(map[string]*types.ChunkRecord)
 	for i := range man.Chunks {
 		man.ChunkMap[man.Chunks[i].Range] = &man.Chunks[i]
 	}

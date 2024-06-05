@@ -1,24 +1,30 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package whenPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	// EXISTING_CODE
 )
 
 // WhenOptions provides all command options for the chifra when command.
@@ -28,7 +34,7 @@ type WhenOptions struct {
 	List       bool                     `json:"list,omitempty"`       // Export a list of the 'special' blocks
 	Timestamps bool                     `json:"timestamps,omitempty"` // Display or process timestamps
 	Count      bool                     `json:"count,omitempty"`      // With --timestamps only, returns the number of timestamps in the cache
-	Truncate   uint64                   `json:"truncate,omitempty"`   // With --timestamps only, truncates the timestamp file at this block
+	Truncate   base.Blknum              `json:"truncate,omitempty"`   // With --timestamps only, truncates the timestamp file at this block
 	Repair     bool                     `json:"repair,omitempty"`     // With --timestamps only, repairs block(s) in the block range by re-querying from the chain
 	Check      bool                     `json:"check,omitempty"`      // With --timestamps only, checks the validity of the timestamp data
 	Update     bool                     `json:"update,omitempty"`     // With --timestamps only, bring the timestamp database forward to the latest block
@@ -41,7 +47,7 @@ type WhenOptions struct {
 }
 
 var defaultWhenOptions = WhenOptions{
-	Truncate: utils.NOPOS,
+	Truncate: base.NOPOSN,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -50,7 +56,7 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
+	logger.TestLog(opts.Truncate != base.NOPOSN, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Repair, "Repair: ", opts.Repair)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
@@ -67,10 +73,19 @@ func (opts *WhenOptions) String() string {
 
 // whenFinishParseApi finishes the parsing for server invocations. Returns a new WhenOptions.
 func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return WhenFinishParseInternal(w, values)
+}
+
+func WhenFinishParseInternal(w io.Writer, values url.Values) *WhenOptions {
 	copy := defaultWhenOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
-	opts.Truncate = utils.NOPOS
-	for key, value := range r.URL.Query() {
+	opts.Truncate = base.NOPOSN
+	for key, value := range values {
 		switch key {
 		case "blocks":
 			for _, val := range value {
@@ -84,7 +99,7 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 		case "count":
 			opts.Count = true
 		case "truncate":
-			opts.Truncate = globals.ToUint64(value[0])
+			opts.Truncate = base.MustParseBlknum(value[0])
 		case "repair":
 			opts.Repair = true
 		case "check":
@@ -95,11 +110,14 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			opts.Deep = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "when")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "when")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -129,7 +147,7 @@ func whenFinishParse(args []string) *WhenOptions {
 	// EXISTING_CODE
 	opts.Blocks = args
 	if opts.Truncate == 0 {
-		opts.Truncate = utils.NOPOS
+		opts.Truncate = base.NOPOSN
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
@@ -145,26 +163,31 @@ func GetOptions() *WhenOptions {
 	return &defaultWhenOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra when
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultWhenOptions = WhenOptions{}
-	globals.SetDefaults(&defaultWhenOptions.Globals)
-	defaultWhenOptions.Globals.TestMode = testMode
-	defaultWhenOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra when
-	// EXISTING_CODE
-	capabilities = capabilities.Add(caps.Caching)
-	// EXISTING_CODE
-	defaultWhenOptions.Globals.Caps = capabilities
+	opts := WhenOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	opts.Truncate = base.NOPOSN
+	defaultWhenOptions = opts
 }
 
-func (opts *WhenOptions) getCaches() (m map[string]bool) {
+func (opts *WhenOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
-	if !opts.Timestamps {
-		m = map[string]bool{
-			"blocks": true,
-		}
+	caches = map[walk.CacheType]bool{
+		walk.Cache_Blocks: !opts.Timestamps,
 	}
 	// EXISTING_CODE
 	return
@@ -172,4 +195,3 @@ func (opts *WhenOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

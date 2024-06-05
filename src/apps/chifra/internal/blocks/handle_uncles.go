@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -22,14 +23,14 @@ func (opts *BlocksOptions) HandleUncles() error {
 	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleBlock[string]](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.LightBlock](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -38,19 +39,20 @@ func (opts *BlocksOptions) HandleUncles() error {
 			cancel()
 
 		} else {
+			showProgress := opts.Globals.ShowProgress()
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !utils.IsTerminal(),
+				Enabled: showProgress,
 				Total:   int64(cnt),
 			})
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.SimpleBlock[string])
+					thisMap[app] = new(types.LightBlock)
 				}
 
-				items := make([]*types.SimpleBlock[types.SimpleTransaction], 0, len(thisMap))
-				iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[string]) error {
-					bn := uint64(app.BlockNumber)
+				items := make([]*types.Block, 0, len(thisMap))
+				iterFunc := func(app types.Appearance, value *types.LightBlock) error {
+					bn := base.Blknum(app.BlockNumber)
 					if uncles, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
 						delete(thisMap, app)
 						return err
@@ -89,11 +91,11 @@ func (opts *BlocksOptions) HandleUncles() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"hashes":     opts.Hashes,
 		"uncles":     opts.Uncles,
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

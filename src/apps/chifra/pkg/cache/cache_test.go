@@ -34,7 +34,6 @@ func (e *ExampleBlock) MarshalCache(writer io.Writer) (err error) {
 	if err = WriteValue(writer, e.Timestamp); err != nil {
 		return err
 	}
-	// We are not saving e.raw, although it's possible
 
 	return
 }

@@ -18,7 +18,7 @@ import (
 )
 
 func Test_FreshenMonitors(t *testing.T) {
-	_ = config.GetRootConfig()
+	config.GetRootConfig()
 	addrs := []string{"0x846a9cb5593483b59bb386f5a878fbb2a0d1d8dc"}
 
 	// This is an address that we use for testing...early transactor but not for long so unlikely to be used for real
@@ -33,7 +33,7 @@ func Test_FreshenMonitors(t *testing.T) {
 
 	os.Setenv("FAKE_FINAL_BLOCK", "2500000")
 	monitorArray := make([]Monitor, 0, len(addrs))
-	var updater = NewUpdater(utils.GetTestChain(), true, true, addrs)
+	var updater = NewUpdater(utils.GetTestChain(), true, false /* skipFreshen */, addrs)
 	_, err := updater.FreshenMonitors(&monitorArray)
 	if err != nil {
 		t.Error(err)
@@ -48,7 +48,7 @@ func Test_FreshenMonitors(t *testing.T) {
 
 	os.Setenv("FAKE_FINAL_BLOCK", "")
 	// Must reset this or use a different one. We'll just reset it.
-	updater = NewUpdater(utils.GetTestChain(), true, true, addrs)
+	updater = NewUpdater(utils.GetTestChain(), true, false /* skipFreshen */, addrs)
 	_, err = updater.FreshenMonitors(&monitorArray)
 	if err != nil {
 		t.Error(err)

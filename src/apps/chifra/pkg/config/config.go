@@ -5,15 +5,23 @@
 package config
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
+	"log"
+	"net/http"
 	"os"
 	"os/user"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/spf13/viper"
 )
@@ -74,10 +82,10 @@ func GetRootConfig() *ConfigFile {
 	trueBlocksViper.AutomaticEnv()
 	trueBlocksViper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	if err := trueBlocksViper.ReadInConfig(); err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 	if err := trueBlocksViper.Unmarshal(&trueBlocksConfig); err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 
 	user, _ := user.Current()
@@ -132,6 +140,9 @@ func GetRootConfig() *ConfigFile {
 		ch.LocalExplorer = clean(ch.LocalExplorer)
 		ch.RemoteExplorer = clean(ch.RemoteExplorer)
 		ch.RpcProvider = strings.Trim(clean(ch.RpcProvider), "/") // Infura, for example, doesn't like the trailing slash
+		if err := validateRpcEndpoint(ch.Chain, ch.RpcProvider); err != nil {
+			logger.Fatal(err)
+		}
 		ch.IpfsGateway = clean(ch.IpfsGateway)
 		if ch.Scrape.AppsPerChunk == 0 {
 			settings := ScrapeSettings{
@@ -164,7 +175,7 @@ func PathToConfigFile() string {
 func PathToRootConfig() string {
 	configPath, err := pathFromXDG("XDG_CONFIG_HOME")
 	if err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	} else if len(configPath) > 0 {
 		return configPath
 	}
@@ -201,3 +212,84 @@ func pathFromXDG(envVar string) (string, error) {
 
 	return filepath.Join(xdg, "") + "/", nil
 }
+
+func validateRpcEndpoint(chain, provider string) error {
+	if utils.IsPermitted() {
+		return nil
+	}
+
+	if provider == "https:" {
+		problem := `No rpcProvider found.`
+		return usage.Usage(rpcWarning, chain, provider, problem)
+	}
+
+	if !strings.HasPrefix(provider, "http") {
+		problem := `Invalid rpcProvider found (must be a url).`
+		return usage.Usage(rpcWarning, chain, provider, problem)
+	}
+
+	if chain == "mainnet" {
+		// TODO: Eventually this will be parameterized, for example, when we start publishing to Optimism
+		deployed := uint64(14957097) // block where the unchained index was deployed to mainnet
+		if err := checkUnchainedProvider(chain, deployed); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func checkUnchainedProvider(chain string, deployed uint64) error {
+	// TODO: Clean this up
+	// TODO: We need to check that the unchained index has been deployed on the chain
+	if os.Getenv("TB_NO_PROVIDER_CHECK") == "true" {
+		logger.Info("Skipping rpcProvider check")
+		return nil
+	}
+	url := trueBlocksViper.Get("chains." + chain + ".rpcProvider").(string)
+	str := `{ "jsonrpc": "2.0", "method": "eth_getBlockByNumber", "params": [ "{0}", true ], "id": 1 }`
+	payLoad := []byte(strings.Replace(str, "{0}", fmt.Sprintf("0x%x", deployed), -1))
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payLoad))
+	if err != nil {
+		return fmt.Errorf("error creating request to rpcProvider (%s): %v", url, err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return fmt.Errorf("error making request to rpcProvider (%s): %v", url, err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("unexpected status code from rpcProvider (%s): %d, expected: %d", url, resp.StatusCode, http.StatusOK)
+	}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("error reading response body: %v", err)
+	}
+	var result map[string]interface{}
+	if err := json.Unmarshal(body, &result); err != nil {
+		return fmt.Errorf("error unmarshalling response: %v", err)
+	}
+	s := result["result"].(map[string]interface{})["number"].(string)
+	if bn, _ := strconv.ParseUint(s, 0, 64); bn != deployed {
+		msg := `the unchained index was deployed at block %d. Is your node synced that far?`
+		return fmt.Errorf(msg, deployed)
+	}
+	return nil
+}
+
+var rpcWarning string = `
+We found a problem with the rpcProvider for the {0} chain.
+
+	Provider: {1}
+	Chain:    {0}
+	Problem:  {2}
+
+Confirm the value for the given provider. You may edit this value with
+"chifra config edit".
+
+Also, try the following curl command. If this command does not work, neither will chifra.
+
+curl -X POST -H "Content-Type: application/json" --data '{ "jsonrpc": "2.0", "method": "web3_clientVersion", "id": 6 }' {1}
+`

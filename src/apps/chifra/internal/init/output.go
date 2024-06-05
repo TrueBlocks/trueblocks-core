@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -23,7 +23,6 @@ import (
 // RunInit handles the init command for the command line. Returns error only as per cobra.
 func RunInit(cmd *cobra.Command, args []string) error {
 	opts := initFinishParse(args)
-	outputHelpers.EnableCommand("init", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("init", &opts.Globals)
@@ -33,7 +32,6 @@ func RunInit(cmd *cobra.Command, args []string) error {
 // ServeInit handles the init command for the API. Returns an error.
 func ServeInit(w http.ResponseWriter, r *http.Request) error {
 	opts := initFinishParseApi(w, r)
-	outputHelpers.EnableCommand("init", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("init", w, &opts.Globals)
@@ -42,7 +40,7 @@ func ServeInit(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// InitInternal handles the internal workings of the init command.  Returns an error.
+// InitInternal handles the internal workings of the init command. Returns an error.
 func (opts *InitOptions) InitInternal() error {
 	var err error
 	if err = opts.validateInit(); err != nil {
@@ -52,13 +50,14 @@ func (opts *InitOptions) InitInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra init"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.DryRun {
 		err = opts.HandleDryRun()
+	} else if len(opts.Example) > 0 {
+		err = opts.HandleExample()
 	} else {
-		err = opts.HandleInit()
+		err = opts.HandleShow()
 	}
-
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -72,7 +71,3 @@ func GetInitOptions(args []string, g *globals.GlobalOptions) *InitOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
-

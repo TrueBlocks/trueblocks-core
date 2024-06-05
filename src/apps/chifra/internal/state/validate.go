@@ -7,7 +7,6 @@ package statePkg
 import (
 	"errors"
 	"fmt"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
@@ -29,13 +28,9 @@ func (opts *StateOptions) validateState() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[none|some|all|balance|nonce|code|proxy|deployed|accttype]")
+	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[balance|nonce|code|proxy|deployed|accttype|some|all]")
 	if err != nil {
 		return err
-	}
-
-	if strings.Contains(strings.Join(opts.Parts, " "), "nonce") {
-		return validate.Usage("The {0} value is currently not available{1}.", "nonce", " with the --parts option")
 	}
 
 	if len(opts.Globals.File) > 0 {
@@ -59,12 +54,8 @@ func (opts *StateOptions) validateState() error {
 				return validate.Usage("Exactly one address is required for the {0} option.", "--call")
 			}
 
-			contract := opts.Addrs[0]
-			if len(opts.ProxyFor) > 0 {
-				contract = opts.ProxyFor
-			}
-
-			err := opts.Conn.IsContractAt(base.HexToAddress(contract), nil)
+			callAddress := opts.GetCallAddress()
+			err := opts.Conn.IsContractAtLatest(base.HexToAddress(callAddress.Hex()))
 			if err != nil {
 				if errors.Is(err, rpc.ErrNotAContract) {
 					return validate.Usage("The address for the --call option must be a smart contract.")
@@ -73,25 +64,22 @@ func (opts *StateOptions) validateState() error {
 			}
 
 			// Before we do anythinng, let's just make sure we have a valid four-byte
-			callAddress := base.HexToAddress(opts.Addrs[0])
-			if opts.ProxyFor != "" {
-				callAddress = base.HexToAddress(opts.ProxyFor)
-			}
-			// TODO: Can't we preserve the results of this so we don't have to do it later?
-			if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
-				message := fmt.Sprintf("the --call value provided (%s) was not found: %s", opts.Call, err)
-				if len(suggestions) > 0 {
+			for _, c := range opts.Calls {
+				if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
+					message := fmt.Sprintf("the --call value provided (%s) was not found: %s", c, err)
 					if len(suggestions) > 0 {
-						message += " Suggestions: "
-						for index, suggestion := range suggestions {
-							if index > 0 {
-								message += " "
+						if len(suggestions) > 0 {
+							message += " Suggestions: "
+							for index, suggestion := range suggestions {
+								if index > 0 {
+									message += " "
+								}
+								message += fmt.Sprintf("%d: %s.", index+1, suggestion)
 							}
-							message += fmt.Sprintf("%d: %s.", index+1, suggestion)
 						}
 					}
+					return errors.New(message)
 				}
-				return errors.New(message)
 			}
 
 		} else {
@@ -99,7 +87,8 @@ func (opts *StateOptions) validateState() error {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--call")
 			}
 
-			if len(opts.ProxyFor) > 0 {
+			proxy := base.HexToAddress(opts.ProxyFor)
+			if !proxy.IsZero() {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--proxy_for", "--call")
 			}
 

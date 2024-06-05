@@ -24,24 +24,20 @@ func (opts *StateOptions) HandleCall() error {
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
-	artFunc := func(str string, function *types.SimpleFunction) error {
+	artFunc := func(str string, function *types.Function) error {
 		return articulate.ArticulateFunction(function, "", str[2:])
 	}
 
-	callAddress := base.HexToAddress(opts.Addrs[0])
-	if opts.ProxyFor != "" {
-		callAddress = base.HexToAddress(opts.ProxyFor)
-	}
-
+	callAddress := opts.GetCallAddress()
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawResult], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleResult](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[[]types.Result](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -50,31 +46,34 @@ func (opts *StateOptions) HandleCall() error {
 			cancel()
 
 		} else {
+			showProgress := opts.Globals.ShowProgress()
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !utils.IsTerminal(),
+				Enabled: showProgress,
 				Total:   int64(cnt),
 			})
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.SimpleResult)
+					thisMap[app] = new([]types.Result)
 				}
 
-				iterFunc := func(app types.SimpleAppearance, value *types.SimpleResult) error {
-					bn := uint64(app.BlockNumber)
-					if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
-						delete(thisMap, app)
-						return fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)
-
-					} else {
-						contractCall.BlockNumber = bn
-						results, err := contractCall.Call(artFunc)
-						if err != nil {
+				iterFunc := func(app types.Appearance, value *[]types.Result) error {
+					bn := base.Blknum(app.BlockNumber)
+					for _, c := range opts.Calls {
+						if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
 							delete(thisMap, app)
-							return err
+							return fmt.Errorf("the --call value provided (%s) was not found: %s", c, err)
+
 						} else {
-							bar.Tick()
-							*value = *results
+							contractCall.BlockNumber = bn
+							results, err := contractCall.Call(artFunc)
+							if err != nil {
+								delete(thisMap, app)
+								return err
+							} else {
+								bar.Tick()
+								*value = append(*value, *results)
+							}
 						}
 					}
 					return nil
@@ -91,9 +90,9 @@ func (opts *StateOptions) HandleCall() error {
 					}
 				}
 
-				items := make([]types.SimpleResult, 0, len(thisMap))
+				items := make([]types.Result, 0, len(thisMap))
 				for _, v := range thisMap {
-					items = append(items, *v)
+					items = append(items, *v...)
 				}
 
 				sort.Slice(items, func(i, j int) bool {
@@ -108,9 +107,20 @@ func (opts *StateOptions) HandleCall() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+}
+
+func (opts *StateOptions) GetCallAddress() base.Address {
+	// Note that the validator precludes the possibility of having more than one address
+	// if the call option is present.
+	callAddress := base.HexToAddress(opts.Addrs[0])
+	proxy := base.HexToAddress(opts.ProxyFor)
+	if !proxy.IsZero() {
+		callAddress = proxy
+	}
+	return callAddress
 }

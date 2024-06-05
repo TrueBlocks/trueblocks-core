@@ -1,6 +1,6 @@
 ---
 title: "Admin"
-description: ""
+description: "Control the scraper and build the index"
 lead: ""
 lastmod:
   - :git
@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 1600
+weight: 41000
 toc: true
 ---
 
@@ -60,9 +60,14 @@ Links:
 
 - [api docs](/api/#operation/admin-config)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/config.csv)
 
 ## chifra status
+
+The `chifra status` tool reports on the state (and size) of the various TrueBlocks local binary
+caches. TrueBlocks produces nine difference caches: `abis`, `blocks`, `monitors`, `names`, `objs`,
+`recons`, `slurps`, `traces`, `transactions`. In general practice, these caches may take up a
+few GB of hard drive space, however, for very popular smart contract the size of the caches may
+grow rather large. Keep an eye on it.
 
 The `chifra status` program allows you to manage the various TrueBlocks caches. You may list all of the
 caches, some of the cache, or even individual caches either in terse or full detail. The cache of
@@ -87,6 +92,7 @@ Flags:
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 10000)
   -a, --chains              include a list of chain configurations in the output
+  -k, --healthcheck         an alias for the diagnose endpoint
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose output
   -h, --help                display this help screen
@@ -98,15 +104,14 @@ Notes:
 
 Data models produced by this tool:
 
-- [status](/data-model/admin/#status)
 - [cacheitem](/data-model/admin/#cacheitem)
 - [chain](/data-model/admin/#chain)
+- [status](/data-model/admin/#status)
 
 Links:
 
 - [api docs](/api/#operation/admin-status)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/status)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/cacheStatus.csv)
 
 ## chifra daemon
 
@@ -142,13 +147,14 @@ Aliases:
 Flags:
   -u, --url string   specify the API server's url and optionally its port (default "localhost:8080")
   -g, --grpc         run gRPC server to serve names
-  -x, --fmt string   export format, one of [none|json*|txt|csv]
+      --silent       disable logging (for use in SDK for example)
   -v, --verbose      enable verbose output
   -h, --help         display this help screen
 
 Notes:
   - To start API open terminal window and run chifra daemon.
   - See the API documentation (https://trueblocks.io/api) for more information.
+  - The --port option is deprecated, use --url instead.
 ```
 
 Data models produced by this tool:
@@ -159,9 +165,8 @@ Links:
 
 - no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
-- no tests for this command
 
-### notes
+### further information
 
 To convert the options for a command line tool to an API call, do the following:
 
@@ -206,53 +211,57 @@ Flags:
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
   -s, --sleep float      seconds to sleep between scraper passes (default 14)
   -l, --touch uint       first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+  -u, --run_count uint   run the scraper this many times, then quit
+  -d, --dry_run          show the configuration that would be applied if run,no changes are made
+  -o, --notify           enable the notify feature
   -v, --verbose          enable verbose output
   -h, --help             display this help screen
 
 Notes:
   - The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
+  - This command requires your RPC to provide trace data. See the README for more information.
+  - The --notify option requires proper configuration. Additionally, IPFS must be running locally. See the README.md file.
 ```
 
 Data models produced by this tool:
 
-- [manifest](/data-model/admin/#manifest)
 - [chunkrecord](/data-model/admin/#chunkrecord)
+- [manifest](/data-model/admin/#manifest)
 
 Links:
 
-- [api docs](/api/#operation/admin-scrape)
+- no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/blockScrape.csv)
 
 ### configuration
 
 Each of the following additional configurable command line options are available.
 
 **Configuration file:** `trueBlocks.toml`  
-**Configuration group:** `[scrape.<chain>]`  
+**Configuration group:** `[scrape.<chain>]`
 
-| Item               | Type         | Default      | Description / Default |
-| ------------------ | ------------ | ------------ | --------- |
-| appsPerChunk       | uint64       | 2000000      | the number of appearances to build into a chunk before consolidating it |
-| snapToGrid         | uint64       | 250000       | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
-| firstSnap          | uint64       | 2000000      | the first block at which snap_to_grid is enabled |
-| unripeDist         | uint64       | 28           | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe |
-| channelCount       | uint64       | 20           | number of concurrent processing channels |
-| allowMissing       | bool         | true         | do not report errors for blockchains that contain blocks with zero addresses |
+| Item         | Type   | Default | Description / Default                                                                                                    |
+| ------------ | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------ |
+| appsPerChunk | uint64 | 2000000 | the number of appearances to build into a chunk before consolidating it                                                  |
+| snapToGrid   | blknum | 250000  | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
+| firstSnap    | blknum | 2000000 | the first block at which snap_to_grid is enabled                                                                         |
+| unripeDist   | blknum | 28      | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                |
+| channelCount | uint64 | 20      | number of concurrent processing channels                                                                                 |
+| allowMissing | bool   | false   | do not report errors for blockchains that contain blocks with zero addresses                                             |
 
 Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 respectively. See the specification for a justification of these values.
 
 These items may be set in three ways, each overriding the preceding method:
 
 -- in the above configuration file under the `[scrape.<chain>]` group,  
--- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  
--- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).  
+-- in the environment by exporting the configuration item as upper case (with underbars removed) and prepended with (TB underbar SCRAPE underbar CHAIN) with the underbars included, or  
+-- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).
 
 ### further information
 
 Each time `chifra scrape` runs, it begins at the last block it completed processing (plus one). With
-each pass, the scraper descends as deeply as is possible into each block's data. (This is why
-TrueBlocks requires a `--tracing` node.) As the scraper encounters appearances of address in the
+each pass, the scraper descends into each block's complete data. (This is why TrueBlocks requires
+a `--tracing` node.) As the scraper encounters appearances of address in the
 block's data, it adds those appearances to a growing index. Periodically (after processing the
 block that contains the 2,000,000th appearance), the system consolidates an **index chunk**.
 
@@ -264,29 +273,47 @@ chunk and the Bloom filter to IPFS. In this way, TrueBlocks creates an immutable
 index of appearances that can be used not only by TrueBlocks, but any member of the community who
 needs it. (Hint: We all need it.)
 
-Users of the [TrueBlocks Explorer](https://github.com/TrueBlocks/trueblocks-explorer) (or any other
-software) may subsequently download the Bloom filters, query them to determine which **index
-chunks** need to be downloaded, and thereby build a historical list of transactions for a given
-address. This is accomplished while imposing a minimum amount of resource requirement on the end
-user's machine.
+Users of of any of the TrueBlocks applications (or anyone else's applications) may subsequently
+download the Bloom filters, query them to determine which **index chunks** need to be downloaded,
+and thereby build a historical list of transactions for a given address. This is accomplished
+while imposing a minimum amount of resource requirement on the end user's machine.
 
 Recently, we enabled the ability for the end user to pin these downloaded index chunks and blooms
 on their own machines. The user needs the data for the software to operate--sharing requires
 minimal effort and makes the data available to other people. Everyone is better off. A
 naturally-occuring network effect.
 
+### tracing
+
+The `chifra scrape` command requires your node to provide the `trace_block` (and related) RPC endpoints. Please see the
+README file for the `chifra traces` command for more information.
+
 ### prerequisites
 
 `chifra scrape` works with any EVM-based blockchain, but does not currently work without a "tracing,
-archive" RPC endpoint. The Erigon blockchain node, given its minimal disc footprint for an archive
-node and its support of the required `trace_` endpoint routines, is highly recommended.
+archive" RPC endpoint. The Erigon and Reth blockchain nodes, given their minimal disc footprint for an
+archive node and their support of the required `trace_` endpoint routines, are recommended.
 
 Please [see this article](https://trueblocks.io/blog/a-long-winded-explanation-of-trueblocks/) for
 more information about running the scraper and building and sharing the index of appearances.
 
+### notifications
+
+The `chifra scrape` command provides a notification feature which is used primarily for `trueblocks-key`.
+To configure it, you must edit the `trueBlocks.toml` file. You may edit the configuration file with
+`chifra config edit`. Add the following configuration items to the `[settings]` group:
+
+```toml
+[settings.notify]
+    url = "http://localhost:5555" # or other
+    author = "TrueBlocks" #optional
+```
+
+In addition, you must enable the feature by adding the `--notify` option to the command line.
+
 ## chifra chunks
 
-The chifra chunks routine provides tools for interacting with, checking the validity of, cleaning up,
+The `chifra chunks` routine provides tools for interacting with, checking the validity of, cleaning up,
 and analyzing the Unchained Index. It provides options to list pins, the Manifest, summary data
 on the index, Bloom filters, addresses, and appearances. While still in its early stages, this
 tool will eventually allow users to clean their local index, clean their remote index, study
@@ -337,21 +364,22 @@ Notes:
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
-- [manifest](/data-model/admin/#manifest)
-- [chunkrecord](/data-model/admin/#chunkrecord)
-- [chunkindex](/data-model/admin/#chunkindex)
-- [chunkbloom](/data-model/admin/#chunkbloom)
+- [appearancetable](/data-model/accounts/#appearancetable)
 - [chunkaddress](/data-model/admin/#chunkaddress)
-- [ipfspin](/data-model/admin/#ipfspin)
+- [chunkbloom](/data-model/admin/#chunkbloom)
+- [chunkindex](/data-model/admin/#chunkindex)
+- [chunkpin](/data-model/admin/#chunkpin)
+- [chunkrecord](/data-model/admin/#chunkrecord)
 - [chunkstats](/data-model/admin/#chunkstats)
+- [ipfspin](/data-model/admin/#ipfspin)
+- [manifest](/data-model/admin/#manifest)
+- [message](/data-model/other/#message)
 - [reportcheck](/data-model/admin/#reportcheck)
-- [chunkpinreport](/data-model/admin/#chunkpinreport)
 
 Links:
 
 - [api docs](/api/#operation/admin-chunks)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/chunkMan.csv)
 
 ## chifra init
 
@@ -385,6 +413,7 @@ Usage:
 
 Flags:
   -a, --all                in addition to Bloom filters, download full index chunks (recommended)
+  -e, --example string     create an example for the SDK with the given name
   -d, --dry_run            display the results of the download without actually downloading
   -F, --first_block uint   do not download any chunks earlier than this block
   -s, --sleep float        seconds to sleep between downloads
@@ -399,12 +428,12 @@ Notes:
 
 Data models produced by this tool:
 
-- [manifest](/data-model/admin/#manifest)
 - [chunkrecord](/data-model/admin/#chunkrecord)
+- [manifest](/data-model/admin/#manifest)
 
 Links:
 
 - [api docs](/api/#operation/admin-init)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/init.csv)
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

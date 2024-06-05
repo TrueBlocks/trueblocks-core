@@ -1,7 +1,6 @@
 package prefunds
 
 import (
-	"math/big"
 	"os"
 	"path/filepath"
 
@@ -17,11 +16,11 @@ func GetPrefundPath(chain string) string {
 // Allocation is a single allocation in the genesis file
 type Allocation struct {
 	Address base.Address `json:"address" csv:"address"`
-	Balance big.Int      `json:"balance" csv:"balance"`
+	Balance base.Wei     `json:"balance" csv:"balance"`
 }
 
 // emptyAllocs is a list of empty allocations. We use this to return at least one allocation
-var emptyAllocs = []Allocation{{Address: base.ZeroAddr, Balance: *big.NewInt(0)}}
+var emptyAllocs = []Allocation{}
 
 type allocCallback func(*Allocation, *any) (bool, error)
 

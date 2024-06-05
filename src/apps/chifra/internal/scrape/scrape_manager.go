@@ -5,8 +5,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // BlazeManager manages the scraper by keeping track of the progress of the scrape and
@@ -17,7 +17,7 @@ type BlazeManager struct {
 	timestamps   map[base.Blknum]tslib.TimestampRecord
 	processedMap map[base.Blknum]bool
 	opts         *ScrapeOptions
-	meta         *rpc.MetaData
+	meta         *types.MetaData
 	startBlock   base.Blknum
 	blockCount   base.Blknum
 	ripeBlock    base.Blknum
@@ -70,18 +70,18 @@ func (bm *BlazeManager) AllowMissing() bool {
 }
 
 // PerChunk returns the number of blocks to process per chunk.
-func (bm *BlazeManager) PerChunk() base.Blknum {
+func (bm *BlazeManager) PerChunk() uint64 {
 	return config.GetScrape(bm.chain).AppsPerChunk
 }
 
 // FirstSnap returns the first block to process.
 func (bm *BlazeManager) FirstSnap() base.Blknum {
-	return config.GetScrape(bm.chain).FirstSnap
+	return base.Blknum(config.GetScrape(bm.chain).FirstSnap)
 }
 
 // SnapTo returns the number of blocks to process per chunk.
 func (bm *BlazeManager) SnapTo() base.Blknum {
-	return config.GetScrape(bm.chain).SnapToGrid
+	return base.Blknum(config.GetScrape(bm.chain).SnapToGrid)
 }
 
 // IsSnap returns true if the block is a snap point.

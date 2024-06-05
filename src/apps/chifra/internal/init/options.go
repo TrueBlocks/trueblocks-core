@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package initPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -18,14 +22,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	// EXISTING_CODE
 )
 
 // InitOptions provides all command options for the chifra init command.
 type InitOptions struct {
 	All        bool                  `json:"all,omitempty"`        // In addition to Bloom filters, download full index chunks (recommended)
+	Example    string                `json:"example,omitempty"`    // Create an example for the SDK with the given name
 	DryRun     bool                  `json:"dryRun,omitempty"`     // Display the results of the download without actually downloading
 	Publisher  string                `json:"publisher,omitempty"`  // The publisher of the index to download
-	FirstBlock uint64                `json:"firstBlock,omitempty"` // Do not download any chunks earlier than this block
+	FirstBlock base.Blknum           `json:"firstBlock,omitempty"` // Do not download any chunks earlier than this block
 	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between downloads
 	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
 	Conn       *rpc.Connection       `json:"conn,omitempty"`       // The connection to the RPC server
@@ -40,6 +47,7 @@ var defaultInitOptions = InitOptions{}
 // testLog is used only during testing to export the options for this test case.
 func (opts *InitOptions) testLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
+	logger.TestLog(len(opts.Example) > 0, "Example: ", opts.Example)
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
@@ -56,29 +64,41 @@ func (opts *InitOptions) String() string {
 
 // initFinishParseApi finishes the parsing for server invocations. Returns a new InitOptions.
 func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return InitFinishParseInternal(w, values)
+}
+
+func InitFinishParseInternal(w io.Writer, values url.Values) *InitOptions {
 	copy := defaultInitOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
-	opts.FirstBlock = 0
-	opts.Sleep = 0.0
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "all":
 			opts.All = true
+		case "example":
+			opts.Example = value[0]
 		case "dryRun":
 			opts.DryRun = true
 		case "publisher":
 			opts.Publisher = value[0]
 		case "firstBlock":
-			opts.FirstBlock = globals.ToUint64(value[0])
+			opts.FirstBlock = base.MustParseBlknum(value[0])
 		case "sleep":
-			opts.Sleep = globals.ToFloat64(value[0])
+			opts.Sleep = base.MustParseFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "init")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "init")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
@@ -127,25 +147,30 @@ func GetOptions() *InitOptions {
 	return &defaultInitOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra init
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.NoColor)
+	capabilities = capabilities.Add(caps.Chain)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultInitOptions = InitOptions{}
-	globals.SetDefaults(&defaultInitOptions.Globals)
-	defaultInitOptions.Globals.TestMode = testMode
-	defaultInitOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra init
-	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Fmt)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.File)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
-	// EXISTING_CODE
-	defaultInitOptions.Globals.Caps = capabilities
+	opts := InitOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	defaultInitOptions = opts
 }
 
-func (opts *InitOptions) getCaches() (m map[string]bool) {
+func (opts *InitOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return
@@ -153,4 +178,3 @@ func (opts *InitOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

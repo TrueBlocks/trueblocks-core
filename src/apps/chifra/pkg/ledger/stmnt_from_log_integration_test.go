@@ -15,9 +15,9 @@ import (
 )
 
 func TestGetStatementFromLog(t *testing.T) {
-	bn := uint64(9279453)
-	txid := uint64(208)
-	log := types.SimpleLog{
+	bn := base.Blknum(9279453)
+	txid := base.Txnum(208)
+	log := types.Log{
 		Address: base.HexToAddress("0x6b175474e89094c44da98b954eedeac495271d0f"),
 		Topics: []base.Hash{
 			transferTopic,
@@ -33,7 +33,7 @@ func TestGetStatementFromLog(t *testing.T) {
 		conn,
 		base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 		0,
-		utils.NOPOS,
+		base.NOPOSN,
 		true,
 		false,
 		false,
@@ -41,14 +41,14 @@ func TestGetStatementFromLog(t *testing.T) {
 		false,
 		nil,
 	)
-	tx := types.SimpleTransaction{
+	tx := types.Transaction{
 		BlockNumber:      bn,
 		TransactionIndex: txid,
-		Receipt:          &types.SimpleReceipt{},
+		Receipt:          &types.Receipt{},
 	}
 	l.theTx = &tx
-	apps := make([]types.SimpleAppearance, 0, 100)
-	apps = append(apps, types.SimpleAppearance{
+	apps := make([]types.Appearance, 0, 100)
+	apps = append(apps, types.Appearance{
 		BlockNumber:      uint32(bn),
 		TransactionIndex: uint32(txid),
 	})

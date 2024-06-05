@@ -1,6 +1,0 @@
-when?blocks=12345&blocks=54321&blocks=2016-12-01&blocks=2016-12-01T01&timestamps
-{
-  "errors": [
-    "--timestamp option not tested in testMode"
-  ]
-}

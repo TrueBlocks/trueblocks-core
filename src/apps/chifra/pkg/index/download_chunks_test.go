@@ -13,7 +13,7 @@ package index
 // 		"013348862-013351760": true,
 // 	}
 
-// 	inManifest := []types.SimpleChunkRecord{
+// 	inManifest := []types.ChunkRecord{
 // 		{
 // 			Range: "013337527-013340418",
 // 		},

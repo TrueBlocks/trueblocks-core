@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package tracesPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -18,6 +22,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	// EXISTING_CODE
 )
 
 // TracesOptions provides all command options for the chifra traces command.
@@ -54,9 +60,18 @@ func (opts *TracesOptions) String() string {
 
 // tracesFinishParseApi finishes the parsing for server invocations. Returns a new TracesOptions.
 func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return TracesFinishParseInternal(w, values)
+}
+
+func TracesFinishParseInternal(w io.Writer, values url.Values) *TracesOptions {
 	copy := defaultTracesOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "transactions":
 			for _, val := range value {
@@ -71,11 +86,14 @@ func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 			opts.Count = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "traces")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "traces")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -118,27 +136,32 @@ func GetOptions() *TracesOptions {
 	return &defaultTracesOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra traces
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultTracesOptions = TracesOptions{}
-	globals.SetDefaults(&defaultTracesOptions.Globals)
-	defaultTracesOptions.Globals.TestMode = testMode
-	defaultTracesOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra traces
-	// EXISTING_CODE
-	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Ether)
-	capabilities = capabilities.Add(caps.Raw)
-	// EXISTING_CODE
-	defaultTracesOptions.Globals.Caps = capabilities
+	opts := TracesOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	defaultTracesOptions = opts
 }
 
-func (opts *TracesOptions) getCaches() (m map[string]bool) {
+func (opts *TracesOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
-	m = map[string]bool{
-		"transactions": true,
-		"traces":       true,
+	caches = map[walk.CacheType]bool{
+		walk.Cache_Transactions: true,
+		walk.Cache_Traces:       true,
 	}
 	// EXISTING_CODE
 	return
@@ -146,4 +169,3 @@ func (opts *TracesOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

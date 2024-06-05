@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) error {
+func (abiCache *AbiCache) ArticulateTransaction(tx *types.Transaction) error {
 	// TODO: This `Articulate` function is different from the other ones (for Log, etc.) because it
 	// TODO: doesn't try to articulate the transaction by selector first.  It should.  But it doesn't.
 	// TODO: The reason it doesn't is because of conflicting four-bytes (for example, `donate`)
@@ -59,10 +59,10 @@ func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) err
 	return nil
 }
 
-func articulateTx(tx *types.SimpleTransaction, abiMap *abi.SelectorSyncMap) (*types.SimpleFunction, string, error) {
-	var found *types.SimpleFunction
+func articulateTx(tx *types.Transaction, abiMap *abi.SelectorSyncMap) (*types.Function, string, error) {
+	var found *types.Function
 	var message string
-	var art *types.SimpleFunction
+	var art *types.Function
 	var selector string
 	var input = tx.Input
 	var outputData string

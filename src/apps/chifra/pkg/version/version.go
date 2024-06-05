@@ -6,9 +6,8 @@ package version
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Version struct {
@@ -25,13 +24,13 @@ func NewVersion(str string) Version {
 
 	var vers Version
 	if len(parts) > 0 {
-		vers.Major = utils.MustParseInt(parts[0])
+		vers.Major, _ = strconv.ParseInt(parts[0], 0, 64)
 	}
 	if len(parts) > 1 {
-		vers.Minor = utils.MustParseInt(parts[1])
+		vers.Minor, _ = strconv.ParseInt(parts[1], 0, 64)
 	}
 	if len(parts) > 2 {
-		vers.Build = utils.MustParseInt(parts[2])
+		vers.Build, _ = strconv.ParseInt(parts[2], 0, 64)
 	}
 
 	if len(parts) > 3 {

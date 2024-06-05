@@ -25,7 +25,7 @@ Flags:
   -U, --count               display only the count of records for each monitor
   -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
   -b, --bounds              report first and last block this address appears
-  -u, --unripe              list transactions labeled upripe (i.e. less than 28 blocks old)
+  -u, --unripe              list transactions labeled unripe (i.e. less than 28 blocks old)
   -s, --silent              freshen the monitor only (no reporting)
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 250)
@@ -44,9 +44,8 @@ Notes:
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
-- [monitor](/data-model/accounts/#monitor)
-- [appearancecount](/data-model/accounts/#appearancecount)
 - [bounds](/data-model/accounts/#bounds)
+- [monitor](/data-model/accounts/#monitor)
 
 ### Other Options
 
@@ -57,7 +56,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  ```
+```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
@@ -67,3 +66,4 @@ of any line makes it a comment.
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

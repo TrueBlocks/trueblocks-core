@@ -56,14 +56,14 @@ func PinOneFile(chain, dbName, fileName string, remote bool) (base.IpfsHash, bas
 }
 
 // PinOneChunk pins the named chunk given a path to the local and/or remote pinning service
-func PinOneChunk(chain, path string, remote bool) (types.SimpleChunkRecord, types.SimpleChunkRecord, error) {
+func PinOneChunk(chain, path string, remote bool) (types.ChunkRecord, types.ChunkRecord, error) {
 	bloomFile := index.ToBloomPath(path)
 	indexFile := index.ToIndexPath(path)
 	local := config.IpfsRunning()
 
 	rng := base.RangeFromFilename(bloomFile)
-	localPin := types.SimpleChunkRecord{Range: rng.String()}
-	remotePin := types.SimpleChunkRecord{Range: rng.String()}
+	localPin := types.ChunkRecord{Range: rng.String()}
+	remotePin := types.ChunkRecord{Range: rng.String()}
 	var err error
 
 	if !local && !remote {

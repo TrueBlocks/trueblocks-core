@@ -17,19 +17,19 @@ import (
 )
 
 // ResolveBlocks resolves a list of identifiers to a list of blocks (excluding the last block)
-func (id *Identifier) ResolveBlocks(chain string) ([]uint64, error) {
+func (id *Identifier) ResolveBlocks(chain string) ([]base.Blknum, error) {
 	bound, err := id.getBounds(chain)
 	if err != nil {
-		return []uint64{}, err
+		return []base.Blknum{}, err
 	}
 
-	blocks := []uint64{}
+	blocks := []base.Blknum{}
 	current, end := bound.First, bound.Last
 	for current < end {
 		blocks = append(blocks, current)
 		current, err = id.nextBlock(chain, current)
 		if err != nil {
-			return []uint64{}, err
+			return []base.Blknum{}, err
 		}
 	}
 	return blocks, nil
@@ -38,7 +38,7 @@ func (id *Identifier) ResolveBlocks(chain string) ([]uint64, error) {
 // GetBounds returns the earliest and latest blocks for an array of identifiers
 func GetBounds(chain string, ids *[]Identifier) (ret base.BlockRange, err error) {
 	ret = base.BlockRange{
-		First: utils.NOPOS,
+		First: base.NOPOSN,
 		Last:  0,
 	}
 
@@ -47,8 +47,8 @@ func GetBounds(chain string, ids *[]Identifier) (ret base.BlockRange, err error)
 		if err != nil {
 			return ret, err
 		}
-		ret.First = utils.Min(ret.First, idRange.First)
-		ret.Last = utils.Max(ret.Last, idRange.Last)
+		ret.First = base.Min(ret.First, idRange.First)
+		ret.Last = base.Max(ret.Last, idRange.Last)
 	}
 
 	return ret, nil
@@ -64,14 +64,14 @@ func (id *Identifier) getBounds(chain string) (ret base.BlockRange, err error) {
 		// do nothing
 	}
 	ret.Last = id.End.resolvePoint(chain)
-	if ret.Last == utils.NOPOS || ret.Last == 0 {
+	if ret.Last == base.NOPOSN || ret.Last == 0 {
 		ret.Last = ret.First + 1
 	}
 
 	return ret, nil
 }
 
-func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
+func snapBnToPeriod(bn base.Blknum, chain, period string) (base.Blknum, error) {
 	conn := rpc.TempConnection(chain)
 
 	dt, err := tslib.FromBnToDate(chain, bn)
@@ -109,20 +109,21 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorYear()
 	}
 
-	firstDate := gostradamus.FromUnixTimestamp(conn.GetBlockTimestamp(uint64(0)))
+	zeroTs := conn.GetBlockTimestamp(0)
+	firstDate := gostradamus.FromUnixTimestamp(zeroTs.Int64())
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
 
 	ts := dt.UnixTimestamp()
-	return tslib.FromTsToBn(chain, ts)
+	return tslib.FromTsToBn(chain, base.Timestamp(ts))
 }
 
-func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
+func (id *Identifier) nextBlock(chain string, current base.Blknum) (base.Blknum, error) {
 	bn := current
 
 	if id.ModifierType == Step {
-		bn = bn + uint64(id.Modifier.Step)
+		bn = bn + base.Blknum(id.Modifier.Step)
 
 	} else if id.ModifierType == Period {
 		dt, err := tslib.FromBnToDate(chain, bn)
@@ -161,9 +162,13 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 			}
 
 			ts := dt.UnixTimestamp()
-			bn, err = tslib.FromTsToBn(chain, ts)
+			bn, err = tslib.FromTsToBn(chain, base.Timestamp(ts))
 			if err != nil {
 				return bn, err
+			}
+			if bn == current {
+				// might happen if the block spans the period
+				bn++ // ensure at least one block's advancement
 			}
 		}
 
@@ -174,10 +179,10 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 	return bn, nil
 }
 
-func (p *Point) resolvePoint(chain string) uint64 {
+func (p *Point) resolvePoint(chain string) base.Blknum {
 	conn := rpc.TempConnection(chain)
 
-	var bn uint64
+	var bn base.Blknum
 	if p.Hash != "" {
 		bn, _ = conn.GetBlockNumberByHash(p.Hash)
 	} else if p.Date != "" {
@@ -190,35 +195,35 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		if err == tslib.ErrInTheFuture {
 			latest := conn.GetLatestBlockNumber()
 			tsFuture := conn.GetBlockTimestamp(latest)
-			secs := uint64(tsFuture - base.Timestamp(p.Number))
+			secs := base.Blknum(tsFuture - base.Timestamp(p.Number))
 			blks := (secs / 13)
 			bn = latest + blks
 		}
 	} else {
-		bn = uint64(p.Number)
+		bn = base.Blknum(p.Number)
 	}
 	return bn
 }
 
-func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
+func (id *Identifier) ResolveTxs(chain string) ([]types.Appearance, error) {
 	conn := rpc.TempConnection(chain)
-	txs := []types.RawAppearance{}
+	txs := []types.Appearance{}
 
 	if id.StartType == BlockNumber {
 		if id.Modifier.Period == "all" {
-			cnt, err := conn.GetTransactionCountInBlock(uint64(id.Start.Number))
+			cnt, err := conn.GetTransactionCountInBlock(base.Blknum(id.Start.Number))
 			if err != nil {
 				return txs, err
 			}
 			for i := uint32(0); i < uint32(cnt); i++ {
-				app := types.RawAppearance{BlockNumber: uint32(id.Start.Number), TransactionIndex: i}
+				app := types.Appearance{BlockNumber: uint32(id.Start.Number), TransactionIndex: i}
 				txs = append(txs, app)
 			}
 			return txs, nil
 		}
 
 		if id.EndType == TransactionIndex {
-			app := types.RawAppearance{BlockNumber: uint32(id.Start.Number), TransactionIndex: uint32(id.End.Number)}
+			app := types.Appearance{BlockNumber: uint32(id.Start.Number), TransactionIndex: uint32(id.End.Number)}
 			return append(txs, app), nil
 		}
 
@@ -228,18 +233,18 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockHash && id.EndType == TransactionIndex {
 		if id.Modifier.Period == "all" {
-			cnt, err := conn.GetTransactionCountInBlock(uint64(id.Start.resolvePoint(chain)))
+			cnt, err := conn.GetTransactionCountInBlock(base.Blknum(id.Start.resolvePoint(chain)))
 			if err != nil {
 				return txs, err
 			}
 			for i := uint32(0); i < uint32(cnt); i++ {
-				app := types.RawAppearance{BlockNumber: uint32(id.Start.resolvePoint(chain)), TransactionIndex: i}
+				app := types.Appearance{BlockNumber: uint32(id.Start.resolvePoint(chain)), TransactionIndex: i}
 				txs = append(txs, app)
 			}
 			return txs, nil
 		}
 
-		app := types.RawAppearance{BlockNumber: uint32(id.Start.resolvePoint(chain)), TransactionIndex: uint32(id.End.Number)}
+		app := types.Appearance{BlockNumber: uint32(id.Start.resolvePoint(chain)), TransactionIndex: uint32(id.End.Number)}
 		return append(txs, app), nil
 	}
 
@@ -248,7 +253,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 		return append(txs, app), err
 	}
 
-	app := types.RawAppearance{BlockNumber: uint32(0), TransactionIndex: uint32(0)}
+	app := types.Appearance{BlockNumber: uint32(0), TransactionIndex: uint32(0)}
 	msg := fmt.Sprintf("unknown transaction type %s", id)
 	return append(txs, app), errors.New(msg)
 }
@@ -321,7 +326,7 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
 }
 
 //--------------------------------------------------------------------------------
-bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg) {
+bool getDirectionalTxId(blknum_t bn, tx num_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg) {
     blknum_t lastBlock = getLatestBlock_client();
 
     if (bn < firstTransactionBlock()) {
@@ -333,7 +338,7 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
     getBlock(block, bn);
 
     argOut = "";
-    txnum_t nextid = txid + 1;
+    tx num_t nextid = txid + 1;
     while (argOut.empty() && bn >= firstTransactionBlock() && bn <= lastBlock) {
         if (dir == "next") {
             if (nextid < block.transactions.size()) {
@@ -360,8 +365,8 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
 }
 */
 
-func GetBlockNumberMap(chain string, ids []Identifier) (map[uint64]bool, error) {
-	numMap := make(map[uint64]bool, 1000)
+func GetBlockNumberMap(chain string, ids []Identifier) (map[base.Blknum]bool, error) {
+	numMap := make(map[base.Blknum]bool, 1000)
 	for _, br := range ids {
 		blockNums, err := br.ResolveBlocks(chain)
 		if err != nil {
@@ -374,24 +379,24 @@ func GetBlockNumberMap(chain string, ids []Identifier) (map[uint64]bool, error) 
 	return numMap, nil
 }
 
-func GetBlockNumbers(chain string, ids []Identifier) ([]uint64, error) {
-	var nums []uint64
+func GetBlockNumbers(chain string, ids []Identifier) ([]base.Blknum, error) {
+	var nums []base.Blknum
 	for _, br := range ids {
 		blockNums, err := br.ResolveBlocks(chain)
 		if err != nil {
-			return []uint64{}, err
+			return []base.Blknum{}, err
 		}
 		nums = append(nums, blockNums...)
 	}
 	return nums, nil
 }
 
-func GetTransactionIds(chain string, ids []Identifier) ([]types.RawAppearance, error) {
-	var txids []types.RawAppearance
+func GetTransactionIds(chain string, ids []Identifier) ([]types.Appearance, error) {
+	var txids []types.Appearance
 	for _, br := range ids {
 		blockNums, err := br.ResolveTxs(chain)
 		if err != nil {
-			return []types.RawAppearance{}, err
+			return []types.Appearance{}, err
 		}
 		txids = append(txids, blockNums...)
 	}

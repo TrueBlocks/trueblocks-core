@@ -9,14 +9,13 @@ import (
 )
 
 func (opts *ConfigOptions) HandleEdit() error {
-	testMode := opts.Globals.TestMode
-	if testMode {
-		logger.Info("would have opened config file for edit")
-	} else {
-		editor := os.Getenv("EDITOR")
-		configFile := config.PathToConfigFile()
-		utils.System(editor + " \"" + configFile + "\"")
+	if opts.Globals.TestMode {
+		logger.Info("Can not process this command in test mode.")
+		return nil
 	}
 
+	editor := os.Getenv("EDITOR")
+	configFile := config.PathToConfigFile()
+	utils.System(editor + " \"" + configFile + "\"")
 	return nil
 }

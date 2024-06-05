@@ -19,9 +19,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleTag(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
 	if opts.Globals.TestMode {
 		logger.Warn("Tag option not tested.")
 		return nil
@@ -36,14 +35,15 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 	userHitCtrlC := false
 	ctx, cancel := context.WithCancel(context.Background())
 
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		nChunksTagged := 0
 		man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 		if err != nil {
 			return
 		}
+		showProgress := opts.Globals.ShowProgress()
 		bar := logger.NewBar(logger.BarOptions{
-			Enabled: !testMode,
+			Enabled: showProgress,
 			Total:   int64(len(man.Chunks)),
 		})
 		tagIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
@@ -92,7 +92,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 				msg += colors.Yellow + "Finishing work. please wait..." + colors.Off
 			}
 			if opts.Globals.Format == "json" {
-				s := types.SimpleMessage{
+				s := types.Message{
 					Msg: msg,
 				}
 				modelChan <- &s

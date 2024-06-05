@@ -7,7 +7,6 @@ package tracesPkg
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -32,8 +31,9 @@ func (opts *TracesOptions) validateTraces() error {
 			return validate.Usage("Please supply one or more transaction identifiers or filters.")
 		}
 
-		if !opts.Conn.IsNodeTracing() {
-			return validate.Usage("{0} requires tracing, err: {1}", "chifra traces", rpc.ErrTraceBlockMissing)
+		err, ok := opts.Conn.IsNodeTracing()
+		if !ok {
+			return validate.Usage("{0} requires tracing, err: {1}", "chifra traces", err.Error())
 		}
 
 		if !validate.HasArticulationKey(opts.Articulate) {
@@ -43,7 +43,7 @@ func (opts *TracesOptions) validateTraces() error {
 		if len(opts.Filter) > 0 {
 			// TODO: Check validity of the filter string
 			if opts.Globals.TestMode {
-				v := types.SimpleTraceFilter{}
+				v := types.TraceFilter{}
 				logger.Info(v.ParseBangString(chain, opts.Filter))
 			}
 		}

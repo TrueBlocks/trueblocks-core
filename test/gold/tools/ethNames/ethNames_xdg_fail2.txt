@@ -1,3 +1,0 @@
-Env: XDG_CONFIG_HOME=/NOTAPATH_QUALIFIED
-chifra names  test
-The XDG_CONFIG_HOME folder (/NOTAPATH_QUALIFIED) must exist.

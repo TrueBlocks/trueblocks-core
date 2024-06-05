@@ -5,6 +5,6 @@ import (
 )
 
 func (opts *ExportOptions) FreshenMonitorsForExport(monitorArray *[]monitor.Monitor) (bool, error) {
-	var updater = monitor.NewUpdater(opts.Globals.Chain, opts.Globals.TestMode, true, opts.Addrs)
+	var updater = monitor.NewUpdater(opts.Globals.Chain, opts.Globals.TestMode, opts.Globals.Decache /* skipFreshen */, opts.Addrs)
 	return updater.FreshenMonitors(monitorArray)
 }

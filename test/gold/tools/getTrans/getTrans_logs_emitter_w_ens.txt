@@ -1,8 +1,0 @@
-chifra transactions  17900008.54 --logs --emitter giveth.eth
-TEST[DATE|TIME] Transactions:  [17900008.54]
-TEST[DATE|TIME] Logs:  true
-TEST[DATE|TIME] Emitter:  [0x4d9339dd97db55e3b9bcbe65de39ff9c04d1c2cd]
-TEST[DATE|TIME] Caps:  cache,decache,raw,ether
-TEST[DATE|TIME] Format:  txt
-blockNumber	transactionIndex	logIndex	blockHash	transactionHash	timestamp	date	address	topic0	topic1	topic2	topic3	data
-17900008	54	155	0x34c5bb928e1179c2bde356ea1bded6a5facb9ecee772a904dcfa7ed8e6c1850e	0x52ad4306bd368803fccf4f52475945b9101bd071c53aad6343531a06b96ee9fb	1691858111	2023-08-12 16:35:11 UTC	0x4d9339dd97db55e3b9bcbe65de39ff9c04d1c2cd	0x3d0ce9bfc3ed7d6862dbb28b2dea94561fe714a1b4d019aa8af39730d1ad7c3d	0x000000000000000000000000984b18b1823fef04a4ca7cf1e8a0ef5359fa522f			0x0000000000000000000000000000000000000000000000000000e35fa931a000

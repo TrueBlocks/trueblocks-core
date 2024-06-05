@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package blocksPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -18,6 +22,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	// EXISTING_CODE
 )
 
 // BlocksOptions provides all command options for the chifra blocks command.
@@ -34,12 +40,9 @@ type BlocksOptions struct {
 	Topic       []string                 `json:"topic,omitempty"`       // For the --logs option only, filter logs to show only those with this topic(s)
 	Withdrawals bool                     `json:"withdrawals,omitempty"` // Export the withdrawals from the block as opposed to the block data
 	Articulate  bool                     `json:"articulate,omitempty"`  // For the --logs option only, articulate the retrieved data if ABIs can be found
-	BigRange    uint64                   `json:"bigRange,omitempty"`    // For the --logs option only, allow for block ranges larger than 500
 	Count       bool                     `json:"count,omitempty"`       // Display only the count of appearances for --addrs or --uniq
 	CacheTxs    bool                     `json:"cacheTxs,omitempty"`    // Force a write of the block's transactions to the cache (slow)
 	CacheTraces bool                     `json:"cacheTraces,omitempty"` // Force a write of the block's traces to the cache (slower)
-	List        uint64                   `json:"list,omitempty"`        // Summary list of blocks running backwards from latest block minus num
-	ListCount   uint64                   `json:"listCount,omitempty"`   // The number of blocks to report for --list option
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection          `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
@@ -47,9 +50,7 @@ type BlocksOptions struct {
 	// EXISTING_CODE
 }
 
-var defaultBlocksOptions = BlocksOptions{
-	BigRange: 500,
-}
+var defaultBlocksOptions = BlocksOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *BlocksOptions) testLog() {
@@ -64,12 +65,9 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(opts.Withdrawals, "Withdrawals: ", opts.Withdrawals)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
-	logger.TestLog(opts.BigRange != 500, "BigRange: ", opts.BigRange)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.CacheTxs, "CacheTxs: ", opts.CacheTxs)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
-	logger.TestLog(opts.List != 0, "List: ", opts.List)
-	logger.TestLog(opts.ListCount != 0, "ListCount: ", opts.ListCount)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -82,12 +80,18 @@ func (opts *BlocksOptions) String() string {
 
 // blocksFinishParseApi finishes the parsing for server invocations. Returns a new BlocksOptions.
 func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return BlocksFinishParseInternal(w, values)
+}
+
+func BlocksFinishParseInternal(w io.Writer, values url.Values) *BlocksOptions {
 	copy := defaultBlocksOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
-	opts.BigRange = 500
-	opts.List = 0
-	opts.ListCount = 0
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "blocks":
 			for _, val := range value {
@@ -120,25 +124,22 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			opts.Withdrawals = true
 		case "articulate":
 			opts.Articulate = true
-		case "bigRange":
-			opts.BigRange = globals.ToUint64(value[0])
 		case "count":
 			opts.Count = true
 		case "cacheTxs":
 			opts.CacheTxs = true
 		case "cacheTraces":
 			opts.CacheTraces = true
-		case "list":
-			opts.List = globals.ToUint64(value[0])
-		case "listCount":
-			opts.ListCount = globals.ToUint64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -168,7 +169,7 @@ func blocksFinishParse(args []string) *BlocksOptions {
 
 	// EXISTING_CODE
 	opts.Blocks = args
-	if !opts.Uniq && opts.List == 0 {
+	if !opts.Uniq {
 		defFmt = "json"
 	}
 	// EXISTING_CODE
@@ -186,30 +187,35 @@ func GetOptions() *BlocksOptions {
 	return &defaultBlocksOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra blocks
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultBlocksOptions = BlocksOptions{}
-	globals.SetDefaults(&defaultBlocksOptions.Globals)
-	defaultBlocksOptions.Globals.TestMode = testMode
-	defaultBlocksOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra blocks
-	// EXISTING_CODE
-	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Ether)
-	capabilities = capabilities.Add(caps.Raw)
-	// EXISTING_CODE
-	defaultBlocksOptions.Globals.Caps = capabilities
+	opts := BlocksOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	defaultBlocksOptions = opts
 }
 
-func (opts *BlocksOptions) getCaches() (m map[string]bool) {
+func (opts *BlocksOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
-	m = map[string]bool{
-		"blocks":       !opts.Uncles,
-		"receipts":     !opts.Uncles,
-		"transactions": opts.CacheTxs || opts.Uniq,
-		"traces":       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Uniq)),
-		"logs":         opts.Logs,
+	caches = map[walk.CacheType]bool{
+		walk.Cache_Blocks:       !opts.Uncles,
+		walk.Cache_Receipts:     !opts.Uncles,
+		walk.Cache_Transactions: opts.CacheTxs || opts.Uniq,
+		walk.Cache_Traces:       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Uniq)),
+		walk.Cache_Logs:         opts.Logs,
 	}
 	// EXISTING_CODE
 	return
@@ -217,4 +223,3 @@ func (opts *BlocksOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package logsPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -18,6 +22,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	// EXISTING_CODE
 )
 
 // LogsOptions provides all command options for the chifra logs command.
@@ -54,9 +60,18 @@ func (opts *LogsOptions) String() string {
 
 // logsFinishParseApi finishes the parsing for server invocations. Returns a new LogsOptions.
 func logsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return LogsFinishParseInternal(w, values)
+}
+
+func LogsFinishParseInternal(w io.Writer, values url.Values) *LogsOptions {
 	copy := defaultLogsOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "transactions":
 			for _, val := range value {
@@ -77,11 +92,14 @@ func logsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
 			opts.Articulate = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "logs")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "logs")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -126,25 +144,30 @@ func GetOptions() *LogsOptions {
 	return &defaultLogsOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra logs
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultLogsOptions = LogsOptions{}
-	globals.SetDefaults(&defaultLogsOptions.Globals)
-	defaultLogsOptions.Globals.TestMode = testMode
-	defaultLogsOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra logs
-	// EXISTING_CODE
-	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Raw)
-	// EXISTING_CODE
-	defaultLogsOptions.Globals.Caps = capabilities
+	opts := LogsOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	defaultLogsOptions = opts
 }
 
-func (opts *LogsOptions) getCaches() (m map[string]bool) {
+func (opts *LogsOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
-	m = map[string]bool{
-		"transactions": true,
+	caches = map[walk.CacheType]bool{
+		walk.Cache_Transactions: true,
 	}
 	// EXISTING_CODE
 	return
@@ -152,4 +175,3 @@ func (opts *LogsOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

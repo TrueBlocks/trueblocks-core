@@ -1,0 +1,8 @@
+[settings]
+    class = "Status"
+    doc_group = "04-Admin"
+    doc_descr = "status-related data about the TrueBlocks system including the server and local binary caches"
+    doc_route = "403-status"
+    attributes = ""
+    produced_by = "status"
+    contains = "cacheitem, chain"

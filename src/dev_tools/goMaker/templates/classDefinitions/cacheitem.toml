@@ -1,0 +1,8 @@
+[settings]
+    class = "CacheItem"
+    contained_by = "status"
+    doc_group = "04-Admin"
+    doc_descr = "a single entry in the results of a status query when `--verbose` is enabled"
+    doc_route = "430-cacheItem"
+    attributes = ""
+    produced_by = "status"

@@ -1,6 +1,0 @@
-export?addrs=trueblocks.eth&wei
-{
-  "errors": [
-    "Invalid key (wei) in export route."
-  ]
-}

@@ -16,14 +16,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleIndex(blockNums []base.Blknum) error {
 	if len(opts.Belongs) > 0 {
 		return opts.HandleIndexBelongs(blockNums)
 	}
 
 	chain := opts.Globals.Chain
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showIndex := func(walker *walk.CacheWalker, fileName string, first bool) (bool, error) {
 			if fileName != index.ToBloomPath(fileName) {
 				return false, fmt.Errorf("should not happen in showIndex")
@@ -46,7 +46,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 				return false, err
 			}
 
-			s := simpleChunkIndex{
+			s := types.ChunkIndex{
 				Range:        rng.String(),
 				Magic:        fmt.Sprintf("0x%x", indexChunk.Header.Magic),
 				Hash:         indexChunk.Header.Hash,

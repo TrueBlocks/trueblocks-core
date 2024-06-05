@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var perfTiming bool
@@ -67,7 +68,7 @@ func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) e
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --clean.
-		if !perfTiming {
+		if !perfTiming && os.Getenv("TEST_MODE") != "true" && !utils.IsFuzzing() {
 			logger.Warn("provider responded with:", address.Hex(), data["message"], ss)
 		}
 

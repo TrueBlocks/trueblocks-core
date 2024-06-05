@@ -33,7 +33,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
@@ -44,14 +44,15 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 				continue
 
 			} else {
-				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, filter.Reversed); err != nil {
+				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					cancel()
 
 				} else {
+					showProgress := opts.Globals.ShowProgress()
 					bar := logger.NewBar(logger.BarOptions{
 						Prefix:  mon.Address.Hex(),
-						Enabled: !testMode && !utils.IsTerminal(),
+						Enabled: showProgress,
 						Total:   int64(cnt),
 					})
 
@@ -63,10 +64,10 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 						}
 
 						for app := range thisMap {
-							thisMap[app] = new(types.SimpleTransaction)
+							thisMap[app] = new(types.Transaction)
 						}
 
-						iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+						iterFunc := func(app types.Appearance, value *types.Transaction) error {
 							if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
 								return err
 							} else {
@@ -91,10 +92,10 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 							return
 						}
 
-						items := make([]*types.SimpleTrace, 0, len(thisMap))
+						items := make([]*types.Trace, 0, len(thisMap))
 						for _, tx := range thisMap {
 							for index, trace := range tx.Traces {
-								trace.TraceIndex = uint64(index)
+								trace.TraceIndex = base.Tracenum(index)
 								isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
 								if !opts.Factory || isCreate {
 									if opts.Articulate {
@@ -139,7 +140,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
@@ -150,11 +151,11 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
 		} else {
-			extra["namesMap"] = namesMap
+			extraOpts["namesMap"] = namesMap
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 /*

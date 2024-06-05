@@ -1,10 +1,14 @@
 /* eslint object-curly-newline: ["error", "never"] */
 /* eslint max-len: ["error", 160] */
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
 /*
- * This file was generated with makeClass --sdk. Do not edit it.
+ * This file was auto generated. DO NOT EDIT.
  */
+
 import * as ApiCallers from '../lib/api_callers';
-import { CacheItem, Chain, Config, uint64 } from '../types';
+import { Status, uint64 } from '../types';
 
 export function getStatus(
   parameters?: {
@@ -13,18 +17,14 @@ export function getStatus(
     firstRecord?: uint64,
     maxRecords?: uint64,
     chains?: boolean,
+    healthcheck?: boolean,
+    fmt?: string,
     chain: string,
     noHeader?: boolean,
-    fmt?: string,
-    verbose?: boolean,
-    ether?: boolean,
-    raw?: boolean,
-    cache?: boolean,
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<CacheItem[] | Chain[] | Config[]>(
+  return ApiCallers.fetch<Status[]>(
     { endpoint: '/status', method: 'get', parameters, options },
   );
 }
-

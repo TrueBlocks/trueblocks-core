@@ -2,38 +2,39 @@ package monitorsPkg
 
 import (
 	"context"
-	"os"
-	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *MonitorsOptions) HandleDecache() error {
-	for _, addr := range opts.Addrs {
-		if !opts.Globals.IsApiMode() && !usage.QueryUser(getWarning(addr), "Not decaching") {
-			return nil
-		}
-		os.Setenv("NO_USERQUERY", "true")
-		_ = utils.System("chifra export --decache " + addr)
+	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
+	var updater = monitor.NewUpdater(opts.Globals.Chain, opts.Globals.TestMode, true /* skipFreshen */, opts.Addrs)
+	if canceled, err := updater.FreshenMonitors(&monitorArray); err != nil || canceled {
+		return err
 	}
 
-	message := "Decaching complete"
-	logger.Info(message)
-	if opts.Globals.IsApiMode() {
-		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-			modelChan <- &types.SimpleMessage{
-				Msg: message,
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		doIt := true
+		for _, mon := range monitorArray {
+			if doIt && !opts.Globals.IsApiMode() && !usage.QueryUser(mon.GetRemoveWarning(), "Not decaching") {
+				continue
 			}
-		}, opts.Globals.OutputOpts())
+			doIt = false
+			showProgress := opts.Globals.ShowProgressNotTesting()
+			if result, err := mon.Decache(opts.Conn, showProgress); err != nil {
+				errorChan <- err
+				continue
+			} else {
+				modelChan <- &types.Message{
+					Msg: result,
+				}
+			}
+		}
 	}
-
-	return nil
-}
-
-func getWarning(addr string) string {
-	return strings.Replace("Are sure you want to decache {0}{1} (Yn)?", "{0}", addr, -1)
+	opts.Globals.NoHeader = true
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }

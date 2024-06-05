@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -24,7 +25,6 @@ import (
 // receiptsCmd represents the receipts command
 var receiptsCmd = &cobra.Command{
 	Use:     usageReceipts,
-	Short:   shortReceipts,
 	Long:    longReceipts,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("receipts", func() *globals.GlobalOptions {
@@ -41,8 +41,6 @@ const usageReceipts = `receipts [flags] <tx_id> [tx_id...]
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)`
 
-const shortReceipts = "retrieve receipts for the given transaction(s)"
-
 const longReceipts = `Purpose:
   Retrieve receipts for the given transaction(s).`
 
@@ -53,15 +51,13 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra receipts
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra receipts
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Raw)
-	// EXISTING_CODE
 
 	receiptsCmd.Flags().SortFlags = false
 
-	receiptsCmd.Flags().BoolVarP(&receiptsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	receiptsCmd.Flags().BoolVarP(&receiptsPkg.GetOptions().Articulate, "articulate", "a", false, `articulate the retrieved data if ABIs can be found`)
 	globals.InitGlobals("receipts", receiptsCmd, &receiptsPkg.GetOptions().Globals, capabilities)
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
@@ -72,4 +68,3 @@ func init() {
 
 	chifraCmd.AddCommand(receiptsCmd)
 }
-

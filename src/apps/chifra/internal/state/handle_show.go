@@ -3,7 +3,6 @@ package statePkg
 import (
 	"context"
 	"errors"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
@@ -17,11 +16,11 @@ import (
 func (opts *StateOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 
-	previousBalance := make(map[base.Address]*big.Int, len(opts.Addrs))
+	previousBalance := make(map[base.Address]*base.Wei, len(opts.Addrs))
 	var filters rpc.StateFilters
 	if opts.Changes || opts.NoZero {
 		filters = rpc.StateFilters{
-			Balance: func(address base.Address, balance *big.Int) bool {
+			BalanceCheck: func(address base.Address, balance *base.Wei) bool {
 				if opts.Changes {
 					previous := previousBalance[address]
 					if balance.Text(10) == previous.Text(10) {
@@ -39,14 +38,14 @@ func (opts *StateOptions) HandleShow() error {
 		}
 	}
 
-	stateFields, outputFields, none := opts.Conn.GetFieldsFromParts(opts.Parts, opts.Globals.Ether)
+	stateFields, outputFields, none := types.SliceToStateParts(opts.Parts)
 
 	cnt := 0
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawState], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, addressStr := range opts.Addrs {
 			address := base.HexToAddress(addressStr)
-			currentBn := uint64(0)
+			currentBn := base.Blknum(0)
 			currentTs := base.Timestamp(0)
 			for _, br := range opts.BlockIds { // TODO: use the regular way to do this
 				blockNums, err := br.ResolveBlocks(chain)
@@ -61,7 +60,7 @@ func (opts *StateOptions) HandleShow() error {
 
 				for _, bn := range blockNums {
 					if none {
-						modelChan <- &types.SimpleState{
+						modelChan <- &types.State{
 							Address:     address,
 							BlockNumber: bn,
 						}
@@ -101,8 +100,9 @@ func (opts *StateOptions) HandleShow() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"fields": outputFields,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

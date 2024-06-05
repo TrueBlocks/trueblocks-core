@@ -8,9 +8,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type AppearanceFilter struct {
@@ -36,7 +34,7 @@ func NewFilter(reversed, reverted bool, fourBytes []string, exportRange base.Blo
 	return &AppearanceFilter{
 		exportRange: exportRange,
 		recordRange: recordRange,
-		OuterBounds: base.BlockRange{First: 0, Last: utils.NOPOS},
+		OuterBounds: base.BlockRange{First: 0, Last: base.NOPOSN},
 		sortBy:      sortBy,
 		Reversed:    reversed,
 		reverted:    reverted,
@@ -50,8 +48,8 @@ func NewEmptyFilter() *AppearanceFilter {
 		false,
 		false,
 		[]string{},
-		base.BlockRange{First: 0, Last: utils.NOPOS},
-		base.RecordRange{First: 0, Last: utils.NOPOS},
+		base.BlockRange{First: 0, Last: base.NOPOSN},
+		base.RecordRange{First: 0, Last: base.NOPOS},
 	)
 }
 
@@ -69,8 +67,8 @@ func (f *AppearanceFilter) GetOuterBounds() base.BlockRange {
 }
 
 // ApplyFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
-func (f *AppearanceFilter) ApplyFilter(app *index.AppearanceRecord) (passed, finished bool) {
-	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)} // --first_block/--last_block
+func (f *AppearanceFilter) ApplyFilter(app *types.AppRecord) (passed, finished bool) {
+	appRange := base.FileRange{First: base.Blknum(app.BlockNumber), Last: base.Blknum(app.BlockNumber)} // --first_block/--last_block
 	if !appRange.Intersects(base.FileRange(f.exportRange)) {
 		return false, false
 	}
@@ -78,8 +76,8 @@ func (f *AppearanceFilter) ApplyFilter(app *index.AppearanceRecord) (passed, fin
 }
 
 // ApplyRangeFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
-func (f *AppearanceFilter) ApplyRangeFilter(app *index.AppearanceRecord) (passed, finished bool) {
-	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)} // --first_block/--last_block
+func (f *AppearanceFilter) ApplyRangeFilter(app *types.AppRecord) (passed, finished bool) {
+	appRange := base.FileRange{First: base.Blknum(app.BlockNumber), Last: base.Blknum(app.BlockNumber)} // --first_block/--last_block
 	return appRange.Intersects(base.FileRange(f.exportRange)), false
 }
 
@@ -100,7 +98,7 @@ func (f *AppearanceFilter) ApplyCountFilter() (passed, finished bool) {
 }
 
 // ApplyTxFilters applies other filters such as the four byte and reverted filters.
-func (f *AppearanceFilter) ApplyTxFilters(tx *types.SimpleTransaction) (passed, finished bool) {
+func (f *AppearanceFilter) ApplyTxFilters(tx *types.Transaction) (passed, finished bool) {
 	matchesReverted := !f.reverted || tx.IsError
 	matchesFourbyte := len(f.fourBytes) == 0
 	for _, fourBytes := range f.fourBytes {
@@ -113,7 +111,7 @@ func (f *AppearanceFilter) ApplyTxFilters(tx *types.SimpleTransaction) (passed, 
 	return matchesFourbyte && matchesReverted, false
 }
 
-func (f *AppearanceFilter) ApplyLogFilter(log *types.SimpleLog, addrArray []base.Address) bool {
+func (f *AppearanceFilter) ApplyLogFilter(log *types.Log, addrArray []base.Address) bool {
 	haystack := make([]byte, 66*len(log.Topics)+len(log.Data))
 	haystack = append(haystack, log.Address.Hex()[2:]...)
 	for _, topic := range log.Topics {

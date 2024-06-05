@@ -34,15 +34,15 @@ func (opts *ListOptions) HandleCount(monitorArray []monitor.Monitor) error {
 	)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, true /* withCount */); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
-				s := types.SimpleMonitor{
-					Address:     mon.Address.Hex(),
-					NRecords:    len(apps),
+				s := types.Monitor{
+					Address:     mon.Address,
+					NRecords:    int64(len(apps)),
 					FileSize:    file.FileSize(mon.Path()),
 					LastScanned: mon.LastScanned,
 					Deleted:     mon.Deleted,

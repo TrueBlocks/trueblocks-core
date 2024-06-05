@@ -23,25 +23,24 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 		return err
 	}
 
-	var cnt uint64
-	cnt, err = tslib.NTimestamps(chain)
+	cnt, err := tslib.NTimestamps(chain)
 	if err != nil {
 		return err
 	}
 
 	ctx := context.Background()
 	prev := base.Timestamp(0)
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		for bn := uint64(0); bn < cnt; bn++ {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		for bn := base.Blknum(0); bn < cnt; bn++ {
 			if len(bnMap) == 0 || bnMap[bn] {
 				ts, err := tslib.FromBn(chain, bn)
 				if err != nil {
 					errorChan <- err
 				}
-				s := simpleTimestamp{
-					BlockNumber: uint64(ts.Bn),
+				s := types.Timestamp{
+					BlockNumber: base.Blknum(ts.Bn),
 					Timestamp:   base.Timestamp(ts.Ts),
-					Diff:        base.Timestamp(ts.Ts) - prev,
+					Diff:        int64(base.Timestamp(ts.Ts) - prev),
 				}
 				if bn == 0 {
 					s.Diff = 0

@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -23,7 +23,6 @@ import (
 // RunConfig handles the config command for the command line. Returns error only as per cobra.
 func RunConfig(cmd *cobra.Command, args []string) error {
 	opts := configFinishParse(args)
-	outputHelpers.EnableCommand("config", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("config", &opts.Globals)
@@ -33,7 +32,6 @@ func RunConfig(cmd *cobra.Command, args []string) error {
 // ServeConfig handles the config command for the API. Returns an error.
 func ServeConfig(w http.ResponseWriter, r *http.Request) error {
 	opts := configFinishParseApi(w, r)
-	outputHelpers.EnableCommand("config", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("config", w, &opts.Globals)
@@ -42,7 +40,7 @@ func ServeConfig(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// ConfigInternal handles the internal workings of the config command.  Returns an error.
+// ConfigInternal handles the internal workings of the config command. Returns an error.
 func (opts *ConfigOptions) ConfigInternal() error {
 	var err error
 	if err = opts.validateConfig(); err != nil {
@@ -52,14 +50,12 @@ func (opts *ConfigOptions) ConfigInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra config"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Paths {
 		err = opts.HandlePaths()
-	} else if opts.Mode == "edit" {
-		err = opts.HandleEdit()
-	} else if opts.Mode == "show" {
+	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -73,7 +69,3 @@ func GetConfigOptions(args []string, g *globals.GlobalOptions) *ConfigOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
-

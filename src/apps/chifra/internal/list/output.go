@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -24,7 +24,6 @@ import (
 // RunList handles the list command for the command line. Returns error only as per cobra.
 func RunList(cmd *cobra.Command, args []string) error {
 	opts := listFinishParse(args)
-	outputHelpers.EnableCommand("list", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("list", &opts.Globals)
@@ -34,7 +33,6 @@ func RunList(cmd *cobra.Command, args []string) error {
 // ServeList handles the list command for the API. Returns an error.
 func ServeList(w http.ResponseWriter, r *http.Request) error {
 	opts := listFinishParseApi(w, r)
-	outputHelpers.EnableCommand("list", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("list", w, &opts.Globals)
@@ -43,7 +41,7 @@ func ServeList(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// ListInternal handles the internal workings of the list command.  Returns an error.
+// ListInternal handles the internal workings of the list command. Returns an error.
 func (opts *ListOptions) ListInternal() error {
 	var err error
 	if err = opts.validateList(); err != nil {
@@ -53,22 +51,18 @@ func (opts *ListOptions) ListInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra list"
 	// EXISTING_CODE
-	// We always freshen the monitors. This call fills the monitors array.
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
-	var updater = monitor.NewUpdater(opts.Globals.Chain, opts.Globals.TestMode, true, opts.Addrs)
-	updater.PublisherAddr = opts.PublisherAddr
-	if canceled, err := updater.FreshenMonitors(&monitorArray); err != nil || canceled {
+	if canceled, err := opts.FreshenMonitorsForList(&monitorArray); err != nil || canceled {
 		return err
 	}
-
+	// EXISTING_CODE
 	if opts.Count {
 		err = opts.HandleCount(monitorArray)
 	} else if opts.Bounds {
 		err = opts.HandleBounds(monitorArray)
-	} else if !opts.Silent {
+	} else {
 		err = opts.HandleShow(monitorArray)
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -82,7 +76,3 @@ func GetListOptions(args []string, g *globals.GlobalOptions) *ListOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
-

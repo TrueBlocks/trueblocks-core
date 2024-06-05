@@ -1,6 +1,0 @@
-status?modes=config&verbose
-{
-  "errors": [
-    "The mode option (config) must be one of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]"
-  ]
-}

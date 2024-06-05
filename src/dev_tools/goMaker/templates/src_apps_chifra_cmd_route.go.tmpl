@@ -1,0 +1,61 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
+package cmd
+
+// EXISTING_CODE
+// EXISTING_CODE
+
+// {{.Route}}Cmd represents the {{.Route}} command
+var {{.Route}}Cmd = &cobra.Command{
+	Use:     usage{{toProper .Route}},
+	Long:    long{{toProper .Route}},
+	Version: versionText,
+	PreRun: outputHelpers.PreRunWithJsonWriter("{{.Route}}", func() *globals.GlobalOptions {
+		return &{{.Route}}Pkg.GetOptions().Globals
+	}),
+	RunE: file.RunWithFileSupport("{{.Route}}", {{.Route}}Pkg.Run{{toProper .Route}}, {{.Route}}Pkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &{{.Route}}Pkg.GetOptions().Globals
+	}),
+{{.AliasStr}}}
+
+const usage{{toProper .Route}} = `{{.Route}} {{.Usage}}{{if .HasPositionals}}
+
+Arguments:{{range .Options}}{{if .IsPositional}}
+  {{.LongName}} - {{.DescriptionEx}}{{if .IsEnum}}
+	{{.EnumChoices}}{{end}}{{end}}{{end}}{{end}}`
+
+const long{{toProper .Route}} = `Purpose:
+  {{.Description}}`
+
+const notes{{toProper .Route}} = `{{if .HasNotes}}
+Notes:{{range .Notes}}
+  - {{.}}{{end}}{{end}}`
+
+func init() {
+	{{.AddCaps}}
+
+	{{.Route}}Cmd.Flags().SortFlags = false
+
+{{range .Options}}{{if .IsFlag}}
+{{.Route}}Cmd.Flags().{{.CobraType}}VarP({{.CobraPart}}, "{{.LongName}}", "{{.HotKey}}", {{.CmdDefault}}, `{{.DescriptionEx}}{{if .IsEnum}}
+{{.EnumChoices}}{{end}}`){{end}}{{end}}
+{{if .HasHidden}}	if os.Getenv("TEST_MODE") != "true" {
+{{range .Options}}{{if .IsHidden}}	_ = {{.Route}}Cmd.Flags().MarkHidden("{{.LongName}}")
+{{end}}{{end}}	}
+{{end}}{{if .HasDeprecated}}{{.Deprecated}}{{end}}	globals.InitGlobals("{{.Route}}", {{.Route}}Cmd, &{{.Route}}Pkg.GetOptions().Globals, capabilities)
+
+	{{.Route}}Cmd.SetUsageTemplate(UsageWithNotes(notes{{toProper .Route}}))
+	{{.Route}}Cmd.SetOut(os.Stderr)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	chifraCmd.AddCommand({{.Route}}Cmd)
+}

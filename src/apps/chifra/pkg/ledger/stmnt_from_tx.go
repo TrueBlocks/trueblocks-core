@@ -1,25 +1,29 @@
 package ledger
 
 import (
-	"math/big"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetStatements returns a statement from a given transaction
-func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFilter, trans *types.SimpleTransaction) ([]types.SimpleStatement, error) {
+func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	// We need this below...
 	l.theTx = trans
 
 	if false && conn.StoreReadable() {
-		statementGroup := &types.SimpleStatementGroup{
-			Address:          l.AccountFor,
+		// walk.Cache_Statements
+		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
+			Address:          l.AccountFor,
 		}
 		if err := conn.Store.Read(statementGroup, nil); err == nil {
 			return statementGroup.Statements, nil
@@ -27,7 +31,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	}
 
 	// make room for our results
-	statements := make([]types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
+	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
 	key := l.ctxKey(trans.BlockNumber, trans.TransactionIndex)
 	ctx := l.Contexts[key]
@@ -37,12 +41,12 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		// TODO: BOGUS PERF - This greatly increases the number of times we call into eth_getBalance which is quite slow
 		prevBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.PrevBlock)
 		if trans.BlockNumber == 0 {
-			prevBal = new(big.Int)
+			prevBal = new(base.Wei)
 		}
 		begBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock-1)
 		endBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock)
 
-		ret := types.SimpleStatement{
+		ret := types.Statement{
 			AccountedFor:     l.AccountFor,
 			Sender:           trans.From,
 			Recipient:        trans.To,
@@ -68,12 +72,12 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 
 		// Do not collapse. A single transaction may have many movements of money
 		if l.AccountFor == ret.Sender {
-			gasUsed := new(big.Int)
+			gasUsed := new(base.Wei)
 			if trans.Receipt != nil {
-				gasUsed.SetUint64(trans.Receipt.GasUsed)
+				gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
 			}
-			gasPrice := new(big.Int).SetUint64(trans.GasPrice)
-			gasOut := new(big.Int).Mul(gasUsed, gasPrice)
+			gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
+			gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
 
 			ret.AmountOut = trans.Value
 			ret.GasOut = *gasOut
@@ -111,7 +115,9 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 				logger.TestLog(!l.UseTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), "need to decend into traces")
 			}
 			if traceStatements, err := l.getStatementsFromTraces(conn, trans, &ret); err != nil {
-				logger.Warn(l.TestMode, "Error getting statement from traces")
+				if !utils.IsFuzzing() {
+					logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
+				}
 			} else {
 				statements = append(statements, traceStatements...)
 			}
@@ -124,11 +130,12 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		statements = append(statements, receiptStatements...)
 	}
 
-	if false && l.Conn.StoreWritable() && l.Conn.EnabledMap["statements"] && base.IsFinal(l.Conn.LatestBlockTimestamp, trans.Timestamp) {
-		statementGroup := &types.SimpleStatementGroup{
-			Address:          l.AccountFor,
+	isFinal := base.IsFinal(conn.LatestBlockTimestamp, trans.Timestamp)
+	if false && isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Statements] {
+		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
+			Address:          l.AccountFor,
 			Statements:       statements,
 		}
 		_ = conn.Store.Write(statementGroup, nil)

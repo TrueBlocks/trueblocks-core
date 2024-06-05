@@ -7,7 +7,6 @@ package exportPkg
 import (
 	"context"
 	"fmt"
-	"math/big"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -35,9 +34,9 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
-		currentBn := uint64(0)
-		prevBalance := big.NewInt(0)
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		currentBn := base.Blknum(0)
+		prevBalance := base.NewWei(0)
 
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
@@ -49,14 +48,15 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 				continue
 
 			} else {
-				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.SimpleToken](apps, filter.Reversed); err != nil {
+				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Token](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					cancel()
 
 				} else {
+					showProgress := opts.Globals.ShowProgress()
 					bar := logger.NewBar(logger.BarOptions{
 						Prefix:  mon.Address.Hex(),
-						Enabled: !testMode && !utils.IsTerminal(),
+						Enabled: showProgress,
 						Total:   int64(cnt),
 					})
 
@@ -69,18 +69,18 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						}
 
 						for app := range thisMap {
-							thisMap[app] = new(types.SimpleToken)
+							thisMap[app] = new(types.Token)
 						}
 
-						iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {
-							var balance *big.Int
-							if balance, err = opts.Conn.GetBalanceAt(mon.Address, uint64(app.BlockNumber)); err != nil {
+						iterFunc := func(app types.Appearance, value *types.Token) error {
+							var balance *base.Wei
+							if balance, err = opts.Conn.GetBalanceAt(mon.Address, base.Blknum(app.BlockNumber)); err != nil {
 								return err
 							}
 							value.Address = base.FAKE_ETH_ADDRESS
 							value.Holder = mon.Address
-							value.BlockNumber = uint64(app.BlockNumber)
-							value.TransactionIndex = uint64(app.TransactionIndex)
+							value.BlockNumber = base.Blknum(app.BlockNumber)
+							value.TransactionIndex = base.Txnum(app.TransactionIndex)
 							value.Balance = *balance
 							value.Timestamp = app.Timestamp
 							bar.Tick()
@@ -98,7 +98,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 							}
 						}
 
-						items := make([]*types.SimpleToken, 0, len(thisMap))
+						items := make([]*types.Token, 0, len(thisMap))
 						for _, tx := range thisMap {
 							items = append(items, tx)
 						}
@@ -111,14 +111,13 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						})
 
 						for idx, item := range items {
-							visitToken := func(idx int, item *types.SimpleToken) error {
+							visitToken := func(idx int, item *types.Token) error {
 								item.PriorBalance = *prevBalance
 								if item.BlockNumber == 0 || item.BlockNumber != currentBn || item.Timestamp == 0xdeadbeef {
 									item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
 								}
 								currentBn = item.BlockNumber
 								if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
-									item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
 									var passes bool
 									passes, finished = filter.ApplyCountFilter()
 									if passes {
@@ -139,16 +138,16 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					}
 					bar.Finish(true /* newLine */)
 				}
-				prevBalance = big.NewInt(0)
+				prevBalance = base.NewWei(0)
 			}
 
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 		"export":   true,
-		"parts":    []string{"blockNumber", "date", "holder", "balance", "diff", "units"},
+		"parts":    []string{"blockNumber", "date", "holder", "balance", "diff", "balanceDec"},
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {
@@ -156,9 +155,9 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
 		} else {
-			extra["namesMap"] = namesMap
+			extraOpts["namesMap"] = namesMap
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

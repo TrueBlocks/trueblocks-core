@@ -26,7 +26,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *AbisOptions) HandleAbiFind() error {
+func (opts *AbisOptions) HandleFind() error {
 	testMode := opts.Globals.TestMode
 	/* wanted */ /* freq */ /* max */
 	scanBar := progress.NewScanBar(uint64(len(opts.Find)), 13919, 50000000, .5)
@@ -34,11 +34,11 @@ func (opts *AbisOptions) HandleAbiFind() error {
 	// TODO: we might want to use utils.IterateOver Map here
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
-		var results []types.SimpleFunction
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		var results []types.Function
 		var wg sync.WaitGroup
 		mutex := sync.Mutex{}
-		checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2, func(testSig interface{}) {
+		checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2, func(testSig any) {
 			defer wg.Done()
 			byts := []byte(testSig.(string))
 			sigBytes := crypto.Keccak256(byts)
@@ -49,8 +49,11 @@ func (opts *AbisOptions) HandleAbiFind() error {
 				str, _ := hex.DecodeString(arg[2:])
 				if bytes.Equal(sigBytes[:len(str)], str) {
 					scanBar.Found++
-					logger.Progress(!testMode || len(opts.Find) < 2, "Found", scanBar.Found, "of", scanBar.Wanted, arg, testSig)
-					found := types.SimpleFunction{Encoding: arg, Signature: testSig.(string)}
+					logger.Progress(len(opts.Find) < 2, "Found", scanBar.Found, "of", scanBar.Wanted, arg, testSig)
+					found := types.Function{
+						Encoding:  arg,
+						Signature: testSig.(string),
+					}
 					if testMode {
 						mutex.Lock()
 						results = append(results, found)
@@ -120,10 +123,10 @@ func (opts *AbisOptions) HandleAbiFind() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"encodingSignatureOnly": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func (opts *AbisOptions) hitsHint(test string) bool {

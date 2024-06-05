@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // Connection carries additional context to rpc calls
@@ -15,7 +15,7 @@ type Connection struct {
 	Chain                string
 	Store                *cache.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
 	LatestBlockTimestamp base.Timestamp
-	EnabledMap           map[string]bool
+	EnabledMap           map[walk.CacheType]bool
 }
 
 // settings allows every command has its own options type, we have to
@@ -24,14 +24,14 @@ type settings struct {
 	Chain         string
 	ReadonlyCache bool
 	CacheEnabled  bool
-	EnabledMap    map[string]bool
+	EnabledMap    map[walk.CacheType]bool
 }
 
-func NewConnection(chain string, cacheEnabled bool, enabledMap map[string]bool) *Connection {
+func NewConnection(chain string, cacheEnabled bool, caches map[walk.CacheType]bool) *Connection {
 	settings := settings{
 		Chain:        chain,
 		CacheEnabled: cacheEnabled,
-		EnabledMap:   enabledMap,
+		EnabledMap:   caches,
 	}
 	return settings.GetRpcConnection()
 }
@@ -73,7 +73,7 @@ func (settings settings) GetRpcConnection() *Connection {
 	}
 
 	if store != nil && !store.ReadOnly() {
-		ret.LatestBlockTimestamp = ret.GetBlockTimestamp(utils.NOPOS)
+		ret.LatestBlockTimestamp = ret.GetBlockTimestamp(base.NOPOSN)
 	}
 
 	return ret
@@ -97,12 +97,12 @@ func (conn *Connection) StoreWritable() bool {
 }
 
 // TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
-func (conn *Connection) TestLog(enabledMap map[string]bool) {
+func (conn *Connection) TestLog(caches map[walk.CacheType]bool) {
 	if conn.StoreWritable() {
 		enabled := []string{}
-		for k, v := range enabledMap {
+		for k, v := range caches {
 			if v {
-				enabled = append(enabled, k)
+				enabled = append(enabled, k.String())
 			}
 		}
 		sort.Strings(enabled)

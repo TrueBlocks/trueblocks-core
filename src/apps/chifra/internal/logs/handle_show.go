@@ -8,14 +8,18 @@ import (
 	"context"
 	"fmt"
 	"sort"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
+
+var mMutex = sync.Mutex{}
 
 func (opts *LogsOptions) HandleShow() error {
 	chain := opts.Globals.Chain
@@ -23,17 +27,17 @@ func (opts *LogsOptions) HandleShow() error {
 	nErrors := 0
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
-	logFilter := types.NewLogFilter(opts.Emitter, opts.Topic)
+	logFilter := rpc.NewLogFilter(opts.Emitter, opts.Topic)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Transaction](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -42,22 +46,27 @@ func (opts *LogsOptions) HandleShow() error {
 			cancel()
 
 		} else {
+			showProgress := opts.Globals.ShowProgress()
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !utils.IsTerminal(),
+				Enabled: showProgress,
 				Total:   int64(cnt),
 			})
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.SimpleTransaction)
+					thisMap[app] = new(types.Transaction)
 				}
 
-				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+				iterFunc := func(app types.Appearance, value *types.Transaction) error {
 					if tx, err := opts.Conn.GetTransactionByAppearance(&app, false /* needsTraces */); err != nil {
+						mMutex.Lock()
+						defer mMutex.Unlock()
 						delete(thisMap, app)
 						return fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
 
 					} else if tx == nil || tx.Receipt == nil || len(tx.Receipt.Logs) == 0 {
+						mMutex.Lock()
+						defer mMutex.Unlock()
 						delete(thisMap, app)
 						return fmt.Errorf("transaction at %s has no logs", app.Orig())
 
@@ -86,7 +95,7 @@ func (opts *LogsOptions) HandleShow() error {
 					}
 				}
 
-				items := make([]types.SimpleLog, 0, len(thisMap))
+				items := make([]types.Log, 0, len(thisMap))
 				for _, tx := range thisMap {
 					if tx.Receipt != nil {
 						items = append(items, tx.Receipt.Logs...)
@@ -113,9 +122,9 @@ func (opts *LogsOptions) HandleShow() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

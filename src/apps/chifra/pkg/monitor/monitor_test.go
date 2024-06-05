@@ -12,7 +12,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -33,7 +32,7 @@ func Test_Monitor_Print(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := testClean(fmt.Sprintln(mon.toJson()))
-	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":6,\"fileSize\":56,\"lastScanned\":2002003,\"deleted\":false}"
+	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"deleted\":false,\"fileSize\":56,\"lastScanned\":2002003,\"nRecords\":6}"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -51,25 +50,25 @@ func Test_Monitor_ReadApp(t *testing.T) {
 		RemoveTestMonitor(&mon, t)
 	}()
 
-	var got index.AppearanceRecord
+	var got types.AppRecord
 	err := mon.ReadAppearanceAt(0, &got)
 	if err == nil {
 		t.Error("Should have been 'index out of range in ReadAppearanceAt[0]' error")
 	}
 
-	expected := index.AppearanceRecord{BlockNumber: 1001001, TransactionIndex: 0}
+	expected := types.AppRecord{BlockNumber: 1001001, TransactionIndex: 0}
 	err = mon.ReadAppearanceAt(1, &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
 	}
 
-	expected = index.AppearanceRecord{BlockNumber: 1001002, TransactionIndex: 1}
+	expected = types.AppRecord{BlockNumber: 1001002, TransactionIndex: 1}
 	err = mon.ReadAppearanceAt(2, &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
 	}
 
-	expected = index.AppearanceRecord{BlockNumber: 1001003, TransactionIndex: 2}
+	expected = types.AppRecord{BlockNumber: 1001003, TransactionIndex: 2}
 	err = mon.ReadAppearanceAt(mon.Count(), &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
@@ -119,7 +118,7 @@ func Test_Monitor_Delete(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := testClean(fmt.Sprintln(mon.toJson()))
-	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":3,\"fileSize\":32,\"lastScanned\":2002003,\"deleted\":false}"
+	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"deleted\":false,\"fileSize\":32,\"lastScanned\":2002003,\"nRecords\":3}"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -229,7 +228,7 @@ func RemoveTestMonitor(mon *Monitor, t *testing.T) {
 
 const nTests = 3
 
-var testApps = []index.AppearanceRecord{
+var testApps = []types.AppRecord{
 	{BlockNumber: 1001001, TransactionIndex: 0},
 	{BlockNumber: 1001002, TransactionIndex: 1},
 	{BlockNumber: 1001003, TransactionIndex: 2},
@@ -242,9 +241,9 @@ func testClean(s string) string {
 // TODO: ...and this - making this the String and the above ToTxt?
 // toJson returns a JSON object from a Monitor
 func (mon Monitor) toJson() string {
-	sm := types.SimpleMonitor{
-		Address:     mon.Address.Hex(),
-		NRecords:    int(mon.Count()),
+	sm := types.Monitor{
+		Address:     mon.Address,
+		NRecords:    mon.Count(),
 		FileSize:    file.FileSize(mon.Path()),
 		LastScanned: mon.LastScanned,
 		Deleted:     mon.Deleted,

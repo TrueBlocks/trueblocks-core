@@ -8,12 +8,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-var loadedPrefundNames map[base.Address]types.SimpleName = map[base.Address]types.SimpleName{}
+var loadedPrefundNames map[base.Address]types.Name = map[base.Address]types.Name{}
 var loadedPrefundNamesMutex sync.Mutex
 
 // LoadPrefundMap loads the prefund names from file if not already loaded or from the cache
 // if it is. A pointer to the data is returned, so the caller should not modify it.
-func LoadPrefundMap(chain string, thePath string) (*map[base.Address]types.SimpleName, error) {
+func LoadPrefundMap(chain string, thePath string) (*map[base.Address]types.Name, error) {
 	if len(loadedPrefundNames) != 0 {
 		return &loadedPrefundNames, nil
 	}
@@ -25,7 +25,7 @@ func LoadPrefundMap(chain string, thePath string) (*map[base.Address]types.Simpl
 		return nil, err
 	} else {
 		for i, prefund := range prefunds {
-			n := types.SimpleName{
+			n := types.Name{
 				Tags:      "80-Prefund",
 				Address:   prefund.Address,
 				Name:      "Prefund_" + fmt.Sprintf("%04d", i),

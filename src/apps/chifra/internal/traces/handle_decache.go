@@ -14,19 +14,18 @@ import (
 )
 
 func (opts *TracesOptions) HandleDecache() error {
-	silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
-
-	itemsToRemove, err := decache.LocationsFromTransactionIds(opts.Conn, opts.TransactionIds)
+	itemsToRemove, err := decache.LocationsFromTransactions(opts.Conn, opts.TransactionIds)
 	if err != nil {
 		return err
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, walk.Cache_Traces); err != nil {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		showProgress := opts.Globals.ShowProgress()
+		if msg, err := decache.Decache(opts.Conn, itemsToRemove, showProgress, walk.Cache_Traces); err != nil {
 			errorChan <- err
 		} else {
-			s := types.SimpleMessage{
+			s := types.Message{
 				Msg: msg,
 			}
 			modelChan <- &s

@@ -12,12 +12,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *WhenOptions) HandleTimestampCount() error {
+func (opts *WhenOptions) HandleTimestampsCount() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		if count, err := tslib.NTimestamps(chain); err != nil {
 			errorChan <- err
 			return
@@ -27,8 +27,8 @@ func (opts *WhenOptions) HandleTimestampCount() error {
 				count = 5000000
 			}
 
-			s := simpleTimestampCount{
-				Count: count,
+			s := types.TimestampCount{
+				Count: uint64(count),
 			}
 
 			modelChan <- &s

@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package abisPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -18,6 +22,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	// EXISTING_CODE
 )
 
 // AbisOptions provides all command options for the chifra abis command.
@@ -32,7 +38,6 @@ type AbisOptions struct {
 	Conn     *rpc.Connection       `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                 `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
-	ProxyForAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -58,9 +63,18 @@ func (opts *AbisOptions) String() string {
 
 // abisFinishParseApi finishes the parsing for server invocations. Returns a new AbisOptions.
 func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return AbisFinishParseInternal(w, values)
+}
+
+func AbisFinishParseInternal(w io.Writer, values url.Values) *AbisOptions {
 	copy := defaultAbisOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -85,17 +99,19 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 			opts.Encode = value[0]
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
-	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	return opts
 }
@@ -118,8 +134,6 @@ func abisFinishParse(args []string) *AbisOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
-	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	for _, arg := range args {
@@ -129,6 +143,7 @@ func abisFinishParse(args []string) *AbisOptions {
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
@@ -142,21 +157,27 @@ func GetOptions() *AbisOptions {
 	return &defaultAbisOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra abis
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultAbisOptions = AbisOptions{}
-	globals.SetDefaults(&defaultAbisOptions.Globals)
-	defaultAbisOptions.Globals.TestMode = testMode
-	defaultAbisOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra abis
-	// EXISTING_CODE
-	capabilities = capabilities.Add(caps.Caching)
-	// EXISTING_CODE
-	defaultAbisOptions.Globals.Caps = capabilities
+	opts := AbisOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	defaultAbisOptions = opts
 }
 
-func (opts *AbisOptions) getCaches() (m map[string]bool) {
+func (opts *AbisOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return
@@ -164,4 +185,3 @@ func (opts *AbisOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

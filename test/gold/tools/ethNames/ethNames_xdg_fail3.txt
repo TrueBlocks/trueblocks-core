@@ -1,3 +1,0 @@
-Env: XDG_CACHE_HOME=NOTAPATH
-chifra names  test
-The XDG_CACHE_HOME value (NOTAPATH), must be fully qualified.

@@ -1,84 +1,91 @@
 cmake_minimum_required (VERSION 3.5)
 
 # ----------------------------------------------------------------------------------------
-# C++17 required
-if(NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 17)
-elseif(CMAKE_CXX_STANDARD LESS 17)
-    message(WARNING "CMAKE_CXX_STANDARD has been set to '${CMAKE_CXX_STANDARD}' which is lower than the minimum required standard (c++17).")
+if(NOT WIN32)
+        string(ASCII 27 Esc)
+        set(COff "${Esc}[m")
+        set(CColor "${Esc}[1;35m") # magenta
 endif()
 
-message(STATUS "Using c++ standard c++${CMAKE_CXX_STANDARD}")
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 # ----------------------------------------------------------------------------------------
-# folder project
 project(trueBlocks)
 
 # ----------------------------------------------------------------------------------------
-# Allow targets in cascade
-set_property(GLOBAL PROPERTY ALLOW_DUPLICATE_CUSTOM_TARGETS 1)
-
-# ----------------------------------------------------------------------------------------
-# Mandatory python3 interpret, the directive PythonInterp sets the following variables
 message(STATUS "======== LOOKING FOR PYTHON ========================")
 find_package(Python COMPONENTS Interpreter Development)
 
 # ----------------------------------------------------------------------------------------
-# We require the CURL library to be installed for most apps and tools
-# if found add its include path to includes section and link with it
 message(STATUS "======== LOOKING FOR CURL ========================")
 find_package(CURL REQUIRED)
 include_directories(${CURL_INCLUDE_DIRS})
 
 # ----------------------------------------------------------------------------------------
-# Globally available C++ settings
-set(DL_LIB "-ldl")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wall -O2 -fPIC")
-if(APPLE)
-    set(DL_LIB "")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wconversion -Wall -O2 -fPIC")
+message(STATUS "======== LOOKING FOR GOLANG ========================")
+find_program(GO_EXECUTABLE NAMES go)
+if (NOT GO_EXECUTABLE)
+    message(STATUS "${CColor}GoLang not found!${COff}")
+    message(STATUS "${CColor}Please install Go from https://golang.org/doc/install.${COff}")
+    return()
+endif()
+execute_process(
+    COMMAND ${GO_EXECUTABLE} version
+    OUTPUT_VARIABLE GO_VERSION_OUTPUT
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+string(REGEX MATCH "go([0-9]+)\\.([0-9]+)\\.[0-9]+" GO_VERSION_MATCH "${GO_VERSION_OUTPUT}")
+if (NOT GO_VERSION_MATCH)
+    message(STATUS "${CColor}Could not determine GoLang version from output: ${GO_VERSION_OUTPUT}.${COff}")
+    message(STATUS "${CColor}Please install Go from https://golang.org/doc/install.${COff}")
+    return()
+endif()
+set(GO_MAJOR_VERSION ${CMAKE_MATCH_1})
+set(GO_MINOR_VERSION ${CMAKE_MATCH_2})
+if (GO_MAJOR_VERSION LESS 1 OR (GO_MAJOR_VERSION EQUAL 1 AND GO_MINOR_VERSION LESS 22))
+    message(STATUS "${CColor}The build failed.${COff}")
+    message(STATUS "${CColor}Found ${GO_VERSION_OUTPUT}. Version 1.22 or higher is required.${COff}")
+    message(STATUS "${CColor}Please install or update Go from https://golang.org/doc/install.${COff}")
+    return()
+else()
+    message(STATUS "Found GoLang: ${GO_VERSION_OUTPUT}")
 endif()
 
 # ----------------------------------------------------------------------------------------
 set(BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
 set(EXAMPLES_DIR ${CMAKE_SOURCE_DIR}/../bin/examples)
-set(BIN_CMDS_DIR $ENV{HOME}/.local/bin/chifra)
-set(BIN_TEST_DIR ${BIN_CMDS_DIR}/test)
 
 # ----------------------------------------------------------------------------------------
 set(CMAKE_INSTALL_PREFIX "/usr/local/" CACHE PATH "Default install directory")
 
 # ----------------------------------------------------------------------------------------
-function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC DEST_DIR)
+set(REPO_DIR ${CMAKE_SOURCE_DIR}/..)
+set(SCRIPTS_DIR ${REPO_DIR}/scripts)
+
+add_custom_target(lint COMMAND "golangci-lint" "run" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra")
+add_custom_target(generate COMMAND ${BIN_DIR}/goMaker WORKING_DIRECTORY ${REPO_DIR})
+add_custom_target(test-all COMMAND ${SCRIPTS_DIR}/test-all.sh WORKING_DIRECTORY ${REPO_DIR}/build)
+add_custom_target(examples ALL COMMAND ${SCRIPTS_DIR}/build-examples.sh WORKING_DIRECTORY ${REPO_DIR})
+
+# ----------------------------------------------------------------------------------------
+function(ADD_GO_INSTALLABLE_PROGRAM2 NAME MAIN_SRC DEST_DIR)
     get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
-    add_custom_target(${NAME})
+    add_custom_target(${NAME} ALL)
     add_custom_command(TARGET ${NAME}
                     COMMAND go build
                     -o "${DEST_DIR}/${NAME}"
                     ${CMAKE_GO_FLAGS} ${MAIN_SRC}
                     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
                     DEPENDS ${MAIN_SRC_ABS} ${MAIN_SRC})
-    add_custom_target(${NAME}_all ALL DEPENDS ${NAME})
-endfunction(ADD_GO_INSTALLABLE_PROGRAM)
+endfunction(ADD_GO_INSTALLABLE_PROGRAM2)
 
 # ----------------------------------------------------------------------------------------
-# Enable testing
-# enable_testing()
-add_custom_target(lint COMMAND "golangci-lint" "run" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra")
-add_custom_target(format COMMAND "${BIN_DIR}/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(options COMMAND "${BIN_DIR}/makeClass" "--options --openapi" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(generate COMMAND "${BIN_DIR}/makeClass" "--all --readmes --openapi --options --gocmds --sdk --protobuf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(sdk COMMAND "${BIN_DIR}/makeClass" "--sdk" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(gocmds COMMAND "${BIN_DIR}/makeClass" "--options --gocmds" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(readmes COMMAND "${BIN_DIR}/makeClass" "--readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(finish COMMAND "${BIN_DIR}/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(tests COMMAND "${BIN_TEST_DIR}/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
-add_custom_target(test-all COMMAND "${BIN_TEST_DIR}/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_subdirectory(other/install)
 
-# ----------------------------------------------------------------------------------------
-# Compilation order for the subfolders
-add_subdirectory(dev_tools)
-add_subdirectory(apps)
-add_subdirectory(examples)
-add_subdirectory(other)
+ADD_GO_INSTALLABLE_PROGRAM2(chifra ${CMAKE_SOURCE_DIR}/apps/chifra/*.go ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM2(goMaker ${CMAKE_SOURCE_DIR}/dev_tools/goMaker/*.go ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM2(testRunner ${CMAKE_SOURCE_DIR}/dev_tools/testRunner/*.go ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM2(sdkFuzzer ${CMAKE_SOURCE_DIR}/dev_tools/sdkFuzzer/*.go ${BIN_DIR})
+
+add_dependencies(testRunner goMaker)
+add_dependencies(sdkFuzzer goMaker)
+add_dependencies(chifra testRunner)
+add_dependencies(examples chifra)

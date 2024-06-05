@@ -8,20 +8,20 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetMinerAndWithdrawals returns the miner and withdrawals for a block
-func (conn *Connection) GetMinerAndWithdrawals(bn base.Blknum) ([]types.SimpleWithdrawal, base.Address, error) {
+func (conn *Connection) GetMinerAndWithdrawals(bn base.Blknum) ([]types.Withdrawal, base.Address, error) {
 	if bn < base.KnownBlock(conn.Chain, base.Merge) {
-		return []types.SimpleWithdrawal{}, base.ZeroAddr, nil
+		return []types.Withdrawal{}, base.ZeroAddr, nil
 	}
 
 	if block, err := conn.GetBlockHeaderByNumber(bn); err != nil {
-		return []types.SimpleWithdrawal{}, base.ZeroAddr, nil
+		return []types.Withdrawal{}, base.ZeroAddr, nil
 	} else {
 		if withdrawals, err := conn.GetWithdrawalsByNumber(bn); err != nil {
-			return []types.SimpleWithdrawal{}, base.ZeroAddr, nil
+			return []types.Withdrawal{}, base.ZeroAddr, nil
 		} else {
 			return withdrawals, block.Miner, nil
 		}
@@ -29,29 +29,31 @@ func (conn *Connection) GetMinerAndWithdrawals(bn base.Blknum) ([]types.SimpleWi
 }
 
 // GetWithdrawalsByNumber returns all withdrawals in a block
-func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.SimpleWithdrawal, error) {
+func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdrawal, error) {
 	if bn < base.KnownBlock(conn.Chain, base.Shanghai) {
-		return []types.SimpleWithdrawal{}, nil
+		return []types.Withdrawal{}, nil
 	}
 
 	if conn.StoreReadable() {
-		withdrawalGroup := &types.SimpleWithdrawalGroup{
+		// walk.Cache_Withdrawals
+		withdrawalGroup := &types.WithdrawalGroup{
 			BlockNumber:      bn,
-			TransactionIndex: utils.NOPOS,
+			TransactionIndex: base.NOPOSN,
 		}
 		if err := conn.Store.Read(withdrawalGroup, nil); err == nil {
 			return withdrawalGroup.Withdrawals, nil
 		}
 	}
 
-	if withdrawals, ts, err := conn.getWithdrawalsSimple(bn); err != nil {
+	if withdrawals, ts, err := conn.getWithdrawals(bn); err != nil {
 		return withdrawals, err
 	} else {
-		if conn.StoreWritable() && conn.EnabledMap["withdrawals"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
-			withdrawalGroup := &types.SimpleWithdrawalGroup{
-				Withdrawals:      withdrawals,
+		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
+		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Withdrawals] {
+			withdrawalGroup := &types.WithdrawalGroup{
 				BlockNumber:      bn,
-				TransactionIndex: utils.NOPOS,
+				TransactionIndex: base.NOPOSN,
+				Withdrawals:      withdrawals,
 			}
 			if err = conn.Store.Write(withdrawalGroup, nil); err != nil {
 				logger.Warn("Failed to write withdrawals to cache", err)
@@ -62,10 +64,10 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.SimpleWi
 	}
 }
 
-// getWithdrawalsSimple fetches the withdrawals from a block
-func (conn *Connection) getWithdrawalsSimple(bn base.Blknum) ([]types.SimpleWithdrawal, base.Timestamp, error) {
+// getWithdrawals fetches the withdrawals from a block
+func (conn *Connection) getWithdrawals(bn base.Blknum) ([]types.Withdrawal, base.Timestamp, error) {
 	if block, err := conn.GetBlockHeaderByNumber(bn); err != nil {
-		return []types.SimpleWithdrawal{}, utils.NOPOSI, err
+		return []types.Withdrawal{}, base.NOPOSI, err
 	} else {
 		return block.Withdrawals, block.Timestamp, nil
 	}

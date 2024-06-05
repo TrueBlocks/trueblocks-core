@@ -1,7 +1,6 @@
 package types
 
 import (
-	"math/big"
 	"reflect"
 	"testing"
 
@@ -10,12 +9,12 @@ import (
 )
 
 func TestBlockCache(t *testing.T) {
-	expected := &SimpleBlock[string]{
+	expected := &LightBlock{
 		BlockNumber:   4000001,
-		BaseFeePerGas: *(big.NewInt(0)),
-		Difficulty:    uint64(1097113993909745),
-		GasLimit:      uint64(6712392),
-		GasUsed:       uint64(337966),
+		BaseFeePerGas: 0,
+		Difficulty:    1097113993909745,
+		GasLimit:      6712392,
+		GasUsed:       337966,
 		Hash:          base.HexToHash("0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39"),
 		Miner:         base.HexToAddress("0xea674fdde714fd979de3edf0f56aa9716b898ec8"),
 		ParentHash:    base.HexToHash("0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853"),
@@ -34,7 +33,7 @@ func TestBlockCache(t *testing.T) {
 	}
 
 	// Read
-	readBack := &SimpleBlock[string]{
+	readBack := &LightBlock{
 		BlockNumber: expected.BlockNumber,
 	}
 	if err := store.Read(readBack, nil); err != nil {

@@ -35,8 +35,8 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 	)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
-		visitAppearance := func(app *types.SimpleAppearance) error {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		visitAppearance := func(app *types.Appearance) error {
 			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
 				errorChan <- err
 				return nil
@@ -97,7 +97,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
@@ -109,8 +109,8 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 		if err != nil {
 			return err
 		}
-		extra["namesMap"] = namesMap
+		extraOpts["namesMap"] = namesMap
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

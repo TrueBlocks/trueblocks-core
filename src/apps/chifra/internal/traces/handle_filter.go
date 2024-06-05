@@ -10,6 +10,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -24,7 +25,7 @@ func (opts *TracesOptions) HandleFilter() error {
 	nErrors := 0
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
-	traceFilter := types.SimpleTraceFilter{}
+	traceFilter := types.TraceFilter{}
 	_, br := traceFilter.ParseBangString(chain, opts.Filter)
 
 	ids := make([]identifiers.Identifier, 0)
@@ -34,14 +35,14 @@ func (opts *TracesOptions) HandleFilter() error {
 	opts.TransactionIds = ids
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Transaction](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -50,18 +51,19 @@ func (opts *TracesOptions) HandleFilter() error {
 			cancel()
 
 		} else {
+			showProgress := opts.Globals.ShowProgress()
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !utils.IsTerminal(),
+				Enabled: showProgress,
 				Total:   int64(cnt),
 			})
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.SimpleTransaction)
+					thisMap[app] = new(types.Transaction)
 				}
 
-				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
-					if block, err := opts.Conn.GetBlockBodyByNumber(uint64(app.BlockNumber)); err != nil {
+				iterFunc := func(app types.Appearance, value *types.Transaction) error {
+					if block, err := opts.Conn.GetBlockBodyByNumber(base.Blknum(app.BlockNumber)); err != nil {
 						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
 						return nil
 
@@ -76,14 +78,14 @@ func (opts *TracesOptions) HandleFilter() error {
 								return fmt.Errorf("block at %s has no traces", app.Orig())
 
 							} else {
-								tr := make([]types.SimpleTrace, 0, len(traces))
+								tr := make([]types.Trace, 0, len(traces))
 								for index := range traces {
 									if opts.Articulate {
 										if err = abiCache.ArticulateTrace(&traces[index]); err != nil {
 											errorChan <- err // continue even with an error
 										}
 									}
-									traces[index].TraceIndex = uint64(index)
+									traces[index].TraceIndex = base.Tracenum(index)
 									tr = append(tr, traces[index])
 								}
 								value.Traces = append(value.Traces, tr...)
@@ -105,7 +107,7 @@ func (opts *TracesOptions) HandleFilter() error {
 					}
 				}
 
-				items := make([]types.SimpleTrace, 0, len(thisMap))
+				items := make([]types.Trace, 0, len(thisMap))
 				for _, tx := range thisMap {
 					items = append(items, tx.Traces...)
 				}
@@ -136,11 +138,11 @@ func (opts *TracesOptions) HandleFilter() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 /*
@@ -273,8 +275,8 @@ bool COptions::extractBlocksFromFilter(blknum_t& b1, const string_q& p1, blknum_
 }
 
 name        ,type    ,strDefault ,array ,omitempty ,doc ,example ,description
-fromBlock   ,blknum  ,           ,      ,          ,    ,        ,
-toBlock     ,blknum  ,           ,      ,          ,    ,        ,
+fromBlock   ,blk num  ,           ,      ,          ,    ,        ,
+toBlock     ,blk num  ,           ,      ,          ,    ,        ,
 fromAddress ,address ,           ,true  ,          ,    ,        ,
 toAddress   ,address ,           ,true  ,          ,    ,        ,
 after       ,uint64  ,           ,      ,          ,    ,        ,
@@ -835,7 +837,7 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
 }
 
 //--------------------------------------------------------------------------------
-bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg) {
+bool getDirectionalTxId(blknum_t bn, tx num_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg) {
     blknum_t lastBlock = getLatestBlock_client();
 
     if (bn < firstTransactionBlock()) {
@@ -847,7 +849,7 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
     getBlock(block, bn);
 
     argOut = "";
-    txnum_t nextid = txid + 1;
+    tx num_t nextid = txid + 1;
     while (argOut.empty() && bn >= firstTransactionBlock() && bn <= lastBlock) {
         if (dir == "next") {
             if (nextid < block.transactions.size()) {
@@ -1021,7 +1023,7 @@ parseBlockOption
     }
 
     ASSERT(opts);
-    if (opts->isEnabled(OPT_CHECKLATEST) && ret > lastBlock) {
+    if (opts->isE nabled(OPT_CHECKLATEST) && ret > lastBlock) {
         string_q lateStr = (isTestMode() ? "--" : uint_2_Str(lastBlock));
         msg = "Block " + arg + " is later than the last valid block " + lateStr + "." + (isApi Mode() ? "" : "\n");
         return NOPOS;
@@ -1148,7 +1150,7 @@ void ::Init(void) {
 }
 
 //--------------------------------------------------------------------------------
-bool ::forEveryBlockNumber(UINT64VISITFUNC func, void* data) const {
+bool ::forEveryBlock Number(UINT64VISITFUNC func, void* data) const {
     if (!func)
         return false;
 
@@ -1200,7 +1202,7 @@ class  {
     (const COptionsBase* o);
     void Init(void);
     string_q parseBlockList_inner(const string_q& arg, blknum_t latest);
-    bool forEveryBlockNumber(UINT64VISITFUNC func, void*) const;
+    bool forEveryBlock Number(UINT64VISITFUNC func, void*) const;
     bool empty(void) const {
         return !(hashList.size() || numList.size() || (start != stop));
     }

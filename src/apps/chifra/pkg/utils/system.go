@@ -28,3 +28,26 @@ func System(cmd string) int {
 
 	return -1
 }
+
+/*
+func systemToString(cmd string) string {
+	c := exec.Command("sh", "-c", cmd)
+	c.Stdin = os.Stdin
+
+	if ff, err := os.Create("/tmp/output.txt"); err != nil {
+		return err.Error()
+
+	} else {
+		c.Stdout = ff
+		c.Stderr = ff
+
+		if err := c.Run(); err != nil {
+			return err.Error()
+		}
+
+		ret := file.AsciiFileToString("/tmp/output.txt")
+		os.Remove("/tmp/output.txt")
+		return strings.Trim(ret, "\n\r\t ,")
+	}
+}
+*/

@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -24,7 +25,6 @@ import (
 // configCmd represents the config command
 var configCmd = &cobra.Command{
 	Use:     usageConfig,
-	Short:   shortConfig,
 	Long:    longConfig,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("config", func() *globals.GlobalOptions {
@@ -42,21 +42,18 @@ Arguments:
   mode - either show or edit the configuration
 	One of [ show | edit ]`
 
-const shortConfig = "report on and edit the configuration of the TrueBlocks system"
-
 const longConfig = `Purpose:
   Report on and edit the configuration of the TrueBlocks system.`
 
 const notesConfig = ``
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra config
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra config
+	capabilities = capabilities.Add(caps.Default)
 
 	configCmd.Flags().SortFlags = false
 
-	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, "show the configuration paths for the system")
+	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, `show the configuration paths for the system`)
 	globals.InitGlobals("config", configCmd, &configPkg.GetOptions().Globals, capabilities)
 
 	configCmd.SetUsageTemplate(UsageWithNotes(notesConfig))
@@ -67,4 +64,3 @@ func init() {
 
 	chifraCmd.AddCommand(configCmd)
 }
-

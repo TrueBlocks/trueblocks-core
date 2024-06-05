@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -23,7 +23,6 @@ import (
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
 func RunReceipts(cmd *cobra.Command, args []string) error {
 	opts := receiptsFinishParse(args)
-	outputHelpers.EnableCommand("receipts", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("receipts", &opts.Globals)
@@ -33,7 +32,6 @@ func RunReceipts(cmd *cobra.Command, args []string) error {
 // ServeReceipts handles the receipts command for the API. Returns an error.
 func ServeReceipts(w http.ResponseWriter, r *http.Request) error {
 	opts := receiptsFinishParseApi(w, r)
-	outputHelpers.EnableCommand("receipts", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("receipts", w, &opts.Globals)
@@ -42,7 +40,7 @@ func ServeReceipts(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// ReceiptsInternal handles the internal workings of the receipts command.  Returns an error.
+// ReceiptsInternal handles the internal workings of the receipts command. Returns an error.
 func (opts *ReceiptsOptions) ReceiptsInternal() error {
 	var err error
 	if err = opts.validateReceipts(); err != nil {
@@ -52,12 +50,12 @@ func (opts *ReceiptsOptions) ReceiptsInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra receipts"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -71,7 +69,3 @@ func GetReceiptsOptions(args []string, g *globals.GlobalOptions) *ReceiptsOption
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
-

@@ -14,11 +14,11 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *BlocksOptions) HandleCounts() error {
+func (opts *BlocksOptions) HandleCount() error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
@@ -31,7 +31,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 			}
 
 			for _, bn := range blockNums {
-				var block types.SimpleBlock[string]
+				var block types.LightBlock
 				if block, err = opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -41,7 +41,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 					return
 				}
 
-				blockCount := simpleBlockCount{
+				blockCount := types.BlockCount{
 					BlockNumber:     block.BlockNumber,
 					Timestamp:       block.Timestamp,
 					TransactionsCnt: uint64(len(block.Transactions)),
@@ -82,7 +82,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Uniq {
-					countFunc := func(s *types.SimpleAppearance) error {
+					countFunc := func(s *types.Appearance) error {
 						blockCount.AddressCnt++
 						return nil
 					}
@@ -102,12 +102,12 @@ func (opts *BlocksOptions) HandleCounts() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"count":  opts.Count,
 		"uncles": opts.Uncles,
 		"logs":   opts.Logs,
 		"traces": opts.Traces,
 		"uniqs":  opts.Uniq,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

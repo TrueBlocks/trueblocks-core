@@ -1,6 +1,6 @@
 ## chifra chunks
 
-The chifra chunks routine provides tools for interacting with, checking the validity of, cleaning up,
+The `chifra chunks` routine provides tools for interacting with, checking the validity of, cleaning up,
 and analyzing the Unchained Index. It provides options to list pins, the Manifest, summary data
 on the index, Bloom filters, addresses, and appearances. While still in its early stages, this
 tool will eventually allow users to clean their local index, clean their remote index, study
@@ -51,15 +51,17 @@ Notes:
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
-- [manifest](/data-model/admin/#manifest)
-- [chunkrecord](/data-model/admin/#chunkrecord)
-- [chunkindex](/data-model/admin/#chunkindex)
-- [chunkbloom](/data-model/admin/#chunkbloom)
+- [appearancetable](/data-model/accounts/#appearancetable)
 - [chunkaddress](/data-model/admin/#chunkaddress)
-- [ipfspin](/data-model/admin/#ipfspin)
+- [chunkbloom](/data-model/admin/#chunkbloom)
+- [chunkindex](/data-model/admin/#chunkindex)
+- [chunkpin](/data-model/admin/#chunkpin)
+- [chunkrecord](/data-model/admin/#chunkrecord)
 - [chunkstats](/data-model/admin/#chunkstats)
+- [ipfspin](/data-model/admin/#ipfspin)
+- [manifest](/data-model/admin/#manifest)
+- [message](/data-model/other/#message)
 - [reportcheck](/data-model/admin/#reportcheck)
-- [chunkpinreport](/data-model/admin/#chunkpinreport)
 
 ### Other Options
 
@@ -70,7 +72,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  ```
+```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
@@ -80,3 +82,4 @@ of any line makes it a comment.
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

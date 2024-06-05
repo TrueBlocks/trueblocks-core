@@ -12,7 +12,7 @@
 
 - [Introduction](#introduction)
 - [Installing](#installing)
-- [Command line](#command-line)
+- [Command Line](#command-line)
 - [Chifra Serve](#chifra-serve)
 - [Troubleshooting](#troubleshooting)
 - [The unchained index](#the-unchained-index)
@@ -25,7 +25,7 @@
 
 ## Introduction
 
-TrueBlocks improves access to blockchain data for any EVM-compatible chain (particularly Ethereum mainnet) while remaining entirely local.
+TrueBlocks improves access to blockchain data for EVM-compatible chains (particularly Ethereum mainnet) while remaining entirely local.
 
 Features:
 
@@ -99,7 +99,7 @@ Let's look at the first subcommand, called `status`.
 chifra status
 ```
 
-If you get a bunch of data, congratulations, your installation is working.  Try this command which shows every 10th block between the first and the 100,000th:
+If you get a bunch of data, congratulations, your installation is working. Try this command which shows every 10th block between the first and the 100,000th:
 
 ```[shell]
 chifra blocks 0-100000:10
@@ -196,3 +196,4 @@ Thanks to the following people who have contributed to this project:
 - [@MysticRyuujin](https://github.com/MysticRyuujin)
 - [@MattDodsonEnglish](https://github.com/MattDodsonEnglish)
 - [@crodnun](https://github.com/crodnun)
+- many others

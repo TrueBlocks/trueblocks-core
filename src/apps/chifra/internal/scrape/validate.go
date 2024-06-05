@@ -9,8 +9,10 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -20,6 +22,7 @@ import (
 
 func (opts *ScrapeOptions) validateScrape() error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 
 	opts.testLog()
 
@@ -31,8 +34,21 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	if !opts.Conn.IsNodeTracing() {
-		return validate.Usage("{0} requires {1}, try {2} instead.", "chifra scrape", "tracing", "chifra init")
+	if opts.Notify {
+		if !NotifyConfigured() {
+			return validate.Usage("The {0} feature is {1}.", "--notify", "not properly configured. See the README.md")
+		}
+		if !config.IpfsRunning() {
+			return validate.Usage("The {0} option requires {1}.", "--notify", "a locally running IPFS daemon")
+		}
+	} else if !testMode && NotifyConfigured() {
+		msg := validate.Usage("The notify feature is configured but not running. Enable it with the {0} flag.", "--notify").Error()
+		logger.Warn(msg)
+	}
+
+	err, ok := opts.Conn.IsNodeTracing()
+	if !ok {
+		return validate.Usage("{0} requires {1}, try {2} instead. Error: {3}", "chifra scrape", "tracing", "chifra init", err.Error())
 	}
 
 	if !opts.Conn.IsNodeArchive() {
@@ -60,8 +76,8 @@ func (opts *ScrapeOptions) validateScrape() error {
 	if err != nil {
 		return err
 	}
-	m := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized)) + 1
-	if m > meta.Latest {
+	m := base.Max(meta.Ripe, base.Max(meta.Staging, meta.Finalized)) + 1
+	if !opts.DryRun && m > meta.Latest {
 		fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", meta.Latest)))
 	}
 
@@ -76,7 +92,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	pidPath := filepath.Join(config.PathToCache(chain), "tmp/scrape.pid")
 	if file.FileExists(pidPath) {
-		pid := utils.MustParseInt(file.AsciiFileToString(pidPath))
+		pid := base.MustParseInt64(file.AsciiFileToString(pidPath))
 		// fmt.Println("Pid file exists with contents:", pid)
 		if running, err := utils.PidExists(pid); err == nil && running {
 			return validate.Usage("The {0} is already running. If it is not, remove {1} and try again.", "scraper", pidPath)

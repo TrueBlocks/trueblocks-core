@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -24,7 +25,6 @@ import (
 // exploreCmd represents the explore command
 var exploreCmd = &cobra.Command{
 	Use:     usageExplore,
-	Short:   shortExplore,
 	Long:    longExplore,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("explore", func() *globals.GlobalOptions {
@@ -36,12 +36,10 @@ var exploreCmd = &cobra.Command{
 	}),
 }
 
-const usageExplore = `explore [flags] <term> [term...]
+const usageExplore = `explore [flags] [terms...]
 
 Arguments:
   terms - one or more address, name, block, or transaction identifier`
-
-const shortExplore = "open a local or remote explorer for one or more addresses, blocks, or transactions"
 
 const longExplore = `Purpose:
   Open a local or remote explorer for one or more addresses, blocks, or transactions.`
@@ -49,28 +47,27 @@ const longExplore = `Purpose:
 const notesExplore = ``
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra explore
-	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Fmt)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra explore
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.NoColor)
+	capabilities = capabilities.Add(caps.Chain)
+	capabilities = capabilities.Add(caps.File)
 
 	exploreCmd.Flags().SortFlags = false
 
-	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Local, "local", "l", false, "open the local TrueBlocks explorer")
-	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Google, "google", "g", false, "search google excluding popular blockchain explorers")
+	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Local, "local", "l", false, `open the local TrueBlocks explorer`)
+	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Google, "google", "g", false, `search google excluding popular blockchain explorers`)
 	globals.InitGlobals("explore", exploreCmd, &explorePkg.GetOptions().Globals, capabilities)
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
 	exploreCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
-	exploreCmd.Flags().MarkHidden("verbose")
-	exploreCmd.Flags().MarkHidden("fmt")
+	_ = exploreCmd.Flags().MarkHidden("verbose")
+	_ = exploreCmd.Flags().MarkHidden("fmt")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(exploreCmd)
 }
-

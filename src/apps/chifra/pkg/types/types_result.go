@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -17,49 +18,32 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
 
-type RawResult struct {
-	Address          string `json:"address"`
-	BlockNumber      string `json:"blockNumber"`
-	EncodedArguments string `json:"encodedArguments"`
-	Encoding         string `json:"encoding"`
-	Name             string `json:"name"`
-	Signature        string `json:"signature"`
-	Timestamp        string `json:"timestamp"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
-type SimpleResult struct {
-	Address          base.Address    `json:"address"`
-	ArticulatedOut   *SimpleFunction `json:"articulatedOut"`
-	BlockNumber      base.Blknum     `json:"blockNumber"`
-	EncodedArguments string          `json:"encodedArguments"`
-	Encoding         string          `json:"encoding"`
-	Name             string          `json:"name"`
-	Signature        string          `json:"signature"`
-	Timestamp        base.Timestamp  `json:"timestamp"`
-	raw              *RawResult      `json:"-"`
+type Result struct {
+	Address          base.Address   `json:"address"`
+	ArticulatedOut   *Function      `json:"articulatedOut"`
+	BlockNumber      base.Blknum    `json:"blockNumber"`
+	EncodedArguments string         `json:"encodedArguments"`
+	Encoding         string         `json:"encoding"`
+	Name             string         `json:"name"`
+	Signature        string         `json:"signature"`
+	Timestamp        base.Timestamp `json:"timestamp"`
 	// EXISTING_CODE
 	Values        map[string]string `json:"values"`
 	ReturnedBytes string
 	// EXISTING_CODE
 }
 
-func (s *SimpleResult) Raw() *RawResult {
-	return s.raw
+func (s Result) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *SimpleResult) SetRaw(raw *RawResult) {
-	s.raw = raw
-}
-
-func (s *SimpleResult) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -103,10 +87,10 @@ func (s *SimpleResult) Model(chain, format string, verbose bool, extraOptions ma
 		delete(model, "date")
 	}
 
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedOut != nil
-	var articulatedOut map[string]interface{}
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedOut != nil
+	var articulatedOut map[string]any
 	if isArticulated {
-		articulatedOut = map[string]interface{}{
+		articulatedOut = map[string]any{
 			"name": s.ArticulatedOut.Name,
 		}
 		outputModels := parametersToMap(s.ArticulatedOut.Outputs)
@@ -130,21 +114,19 @@ func (s *SimpleResult) Model(chain, format string, verbose bool, extraOptions ma
 	}
 }
 
-func (s *SimpleResult) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+func (s *Result) Date() string {
+	return base.FormattedDate(s.Timestamp)
 }
 
-// --> cacheable by address,block,fourbyte
-func (s *SimpleResult) CacheName() string {
+func (s *Result) CacheName() string {
 	return "Result"
 }
 
-func (s *SimpleResult) CacheId() string {
+func (s *Result) CacheId() string {
 	return fmt.Sprintf("%s-%s-%09d", s.Address.Hex()[2:], s.Encoding[2:], s.BlockNumber)
-	// TODO: The above creates a very large number of files for a large contract.
 }
 
-func (s *SimpleResult) CacheLocation() (directory string, extension string) {
+func (s *Result) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -158,14 +140,14 @@ func (s *SimpleResult) CacheLocation() (directory string, extension string) {
 	return
 }
 
-func (s *SimpleResult) MarshalCache(writer io.Writer) (err error) {
+func (s *Result) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
 	// ArticulatedOut
-	optArticulatedOut := &cache.Optional[SimpleFunction]{
+	optArticulatedOut := &cache.Optional[Function]{
 		Value: s.ArticulatedOut,
 	}
 	if err = cache.WriteValue(writer, optArticulatedOut); err != nil {
@@ -205,48 +187,52 @@ func (s *SimpleResult) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleResult) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Result) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
 		return err
 	}
 
 	// ArticulatedOut
-	optArticulatedOut := &cache.Optional[SimpleFunction]{
+	optArticulatedOut := &cache.Optional[Function]{
 		Value: s.ArticulatedOut,
 	}
-	if err = cache.ReadValue(reader, optArticulatedOut, version); err != nil {
+	if err = cache.ReadValue(reader, optArticulatedOut, vers); err != nil {
 		return err
 	}
 	s.ArticulatedOut = optArticulatedOut.Get()
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
 	// EncodedArguments
-	if err = cache.ReadValue(reader, &s.EncodedArguments, version); err != nil {
+	if err = cache.ReadValue(reader, &s.EncodedArguments, vers); err != nil {
 		return err
 	}
 
 	// Encoding
-	if err = cache.ReadValue(reader, &s.Encoding, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Encoding, vers); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Name, vers); err != nil {
 		return err
 	}
 
 	// Signature
-	if err = cache.ReadValue(reader, &s.Signature, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Signature, vers); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
 		return err
 	}
 
@@ -255,7 +241,8 @@ func (s *SimpleResult) UnmarshalCache(version uint64, reader io.Reader) (err err
 	return nil
 }
 
-func (s *SimpleResult) FinishUnmarshal() {
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *Result) FinishUnmarshal() {
 	// EXISTING_CODE
 	s.Values = make(map[string]string)
 	for index, output := range s.ArticulatedOut.Outputs {
@@ -265,5 +252,5 @@ func (s *SimpleResult) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
+// TODO: The above CacheId makes a very large number of files for a large contract.
 // EXISTING_CODE
-

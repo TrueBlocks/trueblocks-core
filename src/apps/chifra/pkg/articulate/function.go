@@ -13,7 +13,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func ArticulateFunction(function *types.SimpleFunction, inputData string, outputData string) (err error) {
+func ArticulateFunction(function *types.Function, inputData string, outputData string) (err error) {
 	abiMethod, err := function.GetAbiMethod()
 	if err != nil {
 		return
@@ -34,7 +34,7 @@ func ArticulateFunction(function *types.SimpleFunction, inputData string, output
 	return
 }
 
-func articulateArguments(args abi.Arguments, data string, topics []base.Hash, abiMap []types.SimpleParameter) (err error) {
+func articulateArguments(args abi.Arguments, data string, topics []base.Hash, abiMap []types.Parameter) (err error) {
 	dataBytes, err := hex.DecodeString(data)
 	if err != nil {
 		return
@@ -105,7 +105,7 @@ func articulateArguments(args abi.Arguments, data string, topics []base.Hash, ab
 	}
 
 	// Set values of indexed arguments
-	out := make(map[string]interface{}, len(indexed))
+	out := make(map[string]any, len(indexed))
 	tops := []common.Hash{}
 	for _, hash := range topics {
 		tops = append(tops, hash.Common())
@@ -185,7 +185,7 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 		// We could return numbers or strings depending on whether or not the value is safe,
 		// but the consumer would then have to check the type of returned value first and only
 		// then try to interpet the actual value.
-		// In at least some languages, strings can be used to create big.Int equivalents, so
+		// In at least some languages, strings can be used to create big Int equivalents, so
 		// using strings only should make it easier for the consumers.
 		result = fmt.Sprint(value)
 	case abi.BoolTy:

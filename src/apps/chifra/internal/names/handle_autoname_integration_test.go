@@ -28,7 +28,7 @@ func TestNamesOptions_autoname(t *testing.T) {
 		name     string
 		fields   fields
 		wantErr  bool
-		expected *types.SimpleName
+		expected *types.Name
 	}{
 		{
 			name: "a token",
@@ -36,7 +36,7 @@ func TestNamesOptions_autoname(t *testing.T) {
 				// PEPE
 				Autoname: "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
 			},
-			expected: &types.SimpleName{
+			expected: &types.Name{
 				Tags:       "50-Tokens:ERC20",
 				Address:    base.HexToAddress("0x6982508145454Ce325dDbE47a25d4ec3d2311933"),
 				Name:       "Pepe",
@@ -55,7 +55,7 @@ func TestNamesOptions_autoname(t *testing.T) {
 		// 		Autoname: "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
 		// 	},
 		// 	wantErr: true,
-		// 	expected: &types.SimpleName{
+		// 	expected: &types.Name{
 		// 		Address:  base.HexToAddress("0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"),
 		// 		Name:     "M-Wallet 0x5499",
 		// 		Petname:  "sadly-settling-anteater",

@@ -12,7 +12,7 @@ import (
 
 func Test_retry(t *testing.T) {
 	callCounter := 0
-	failingPins := []types.SimpleChunkRecord{
+	failingPins := []types.ChunkRecord{
 		{
 			Range: "first",
 		},
@@ -23,7 +23,7 @@ func Test_retry(t *testing.T) {
 			Range: "third",
 		},
 	}
-	fakeDownload := func(p []types.SimpleChunkRecord) ([]types.SimpleChunkRecord, bool) {
+	fakeDownload := func(p []types.ChunkRecord) ([]types.ChunkRecord, bool) {
 		defer func() { callCounter++ }()
 		switch callCounter {
 		case 0:
@@ -37,7 +37,7 @@ func Test_retry(t *testing.T) {
 			if len(p) != len(failingPins[2:]) {
 				t.Error("Wrong count for 3nd call", len(p))
 			}
-			return []types.SimpleChunkRecord{}, false
+			return []types.ChunkRecord{}, false
 		}
 
 		t.Fatal("Too many calls")

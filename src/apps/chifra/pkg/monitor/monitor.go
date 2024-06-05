@@ -22,7 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// Header is the header of the Monitor file. Note that it's the same width as an index.AppearanceRecord
+// Header is the header of the Monitor file. Note that it's the same width as an types.AppRecord
 // therefor one should not change its size
 type Header struct {
 	Magic       uint16 `json:"-"`
@@ -165,6 +165,10 @@ func (mon *Monitor) UnDelete() (prev bool) {
 func (mon *Monitor) Remove() (bool, error) {
 	if !mon.IsDeleted() {
 		return false, errors.New("cannot remove a monitor that is not deleted")
+	}
+	if mon.Staged {
+		file.Remove(mon.Path())
+		mon.Staged = false
 	}
 	file.Remove(mon.Path())
 	return !file.FileExists(mon.Path()), nil

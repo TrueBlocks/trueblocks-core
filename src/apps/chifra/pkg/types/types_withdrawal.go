@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -17,51 +18,34 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
 
-type RawWithdrawal struct {
-	Address        string `json:"address"`
-	Amount         string `json:"amount"`
-	BlockNumber    string `json:"blockNumber"`
-	Index          string `json:"index"`
-	Timestamp      string `json:"timestamp"`
-	ValidatorIndex string `json:"validatorIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
-type SimpleWithdrawal struct {
+type Withdrawal struct {
 	Address        base.Address   `json:"address"`
 	Amount         base.Wei       `json:"amount"`
 	BlockNumber    base.Blknum    `json:"blockNumber"`
-	Index          uint64         `json:"index"`
+	Index          base.Value     `json:"index"`
 	Timestamp      base.Timestamp `json:"timestamp"`
-	ValidatorIndex uint64         `json:"validatorIndex"`
-	raw            *RawWithdrawal `json:"-"`
+	ValidatorIndex base.Value     `json:"validatorIndex"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleWithdrawal) Raw() *RawWithdrawal {
-	return s.raw
+func (s Withdrawal) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *SimpleWithdrawal) SetRaw(raw *RawWithdrawal) {
-	s.raw = raw
-}
-
-func (s *SimpleWithdrawal) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Withdrawal) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	asEther := extraOptions["ether"] == true
-	model = map[string]interface{}{
+	model = map[string]any{
 		"address":        s.Address,
-		"amount":         utils.FormattedValue(s.Amount, asEther, 18),
+		"amount":         s.Amount.String(),
 		"blockNumber":    s.BlockNumber,
 		"date":           s.Date(),
 		"index":          s.Index,
@@ -78,6 +62,13 @@ func (s *SimpleWithdrawal) Model(chain, format string, verbose bool, extraOption
 		"date",
 		"amount",
 	}
+
+	asEther := extraOpts["ether"] == true
+	if asEther {
+		model["ether"] = s.Amount.ToEtherStr(18)
+		order = append(order, "ether")
+	}
+
 	// EXISTING_CODE
 
 	return Model{
@@ -86,26 +77,25 @@ func (s *SimpleWithdrawal) Model(chain, format string, verbose bool, extraOption
 	}
 }
 
-func (s *SimpleWithdrawal) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+func (s *Withdrawal) Date() string {
+	return base.FormattedDate(s.Timestamp)
 }
 
-// --> cacheable by block as group
-type SimpleWithdrawalGroup struct {
+type WithdrawalGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
-	Withdrawals      []SimpleWithdrawal
+	Withdrawals      []Withdrawal
 }
 
-func (s *SimpleWithdrawalGroup) CacheName() string {
+func (s *WithdrawalGroup) CacheName() string {
 	return "Withdrawal"
 }
 
-func (s *SimpleWithdrawalGroup) CacheId() string {
+func (s *WithdrawalGroup) CacheId() string {
 	return fmt.Sprintf("%09d", s.BlockNumber)
 }
 
-func (s *SimpleWithdrawalGroup) CacheLocation() (directory string, extension string) {
+func (s *WithdrawalGroup) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -119,15 +109,15 @@ func (s *SimpleWithdrawalGroup) CacheLocation() (directory string, extension str
 	return
 }
 
-func (s *SimpleWithdrawalGroup) MarshalCache(writer io.Writer) (err error) {
+func (s *WithdrawalGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Withdrawals)
 }
 
-func (s *SimpleWithdrawalGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Withdrawals, version)
+func (s *WithdrawalGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Withdrawals, vers)
 }
 
-func (s *SimpleWithdrawal) MarshalCache(writer io.Writer) (err error) {
+func (s *Withdrawal) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
@@ -161,34 +151,38 @@ func (s *SimpleWithdrawal) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleWithdrawal) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Withdrawal) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
 		return err
 	}
 
 	// Amount
-	if err = cache.ReadValue(reader, &s.Amount, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Amount, vers); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
 	// Index
-	if err = cache.ReadValue(reader, &s.Index, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Index, vers); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
 		return err
 	}
 
 	// ValidatorIndex
-	if err = cache.ReadValue(reader, &s.ValidatorIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.ValidatorIndex, vers); err != nil {
 		return err
 	}
 
@@ -197,11 +191,11 @@ func (s *SimpleWithdrawal) UnmarshalCache(version uint64, reader io.Reader) (err
 	return nil
 }
 
-func (s *SimpleWithdrawal) FinishUnmarshal() {
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *Withdrawal) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -24,7 +25,6 @@ import (
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:     usageInit,
-	Short:   shortInit,
 	Long:    longInit,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("init", func() *globals.GlobalOptions {
@@ -38,8 +38,6 @@ var initCmd = &cobra.Command{
 
 const usageInit = `init [flags]`
 
-const shortInit = "initialize the TrueBlocks system by downloading the Unchained Index from IPFS"
-
 const longInit = `Purpose:
   Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.`
 
@@ -50,24 +48,23 @@ Notes:
   - You may re-run the tool as often as you wish. It will repair or freshen the index.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra init
-	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Fmt)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.File)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra init
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.NoColor)
+	capabilities = capabilities.Add(caps.Chain)
 
 	initCmd.Flags().SortFlags = false
 
-	initCmd.Flags().BoolVarP(&initPkg.GetOptions().All, "all", "a", false, "in addition to Bloom filters, download full index chunks (recommended)")
-	initCmd.Flags().BoolVarP(&initPkg.GetOptions().DryRun, "dry_run", "d", false, "display the results of the download without actually downloading")
-	initCmd.Flags().StringVarP(&initPkg.GetOptions().Publisher, "publisher", "P", "", "the publisher of the index to download (hidden)")
-	initCmd.Flags().Uint64VarP(&initPkg.GetOptions().FirstBlock, "first_block", "F", 0, "do not download any chunks earlier than this block")
-	initCmd.Flags().Float64VarP(&initPkg.GetOptions().Sleep, "sleep", "s", 0.0, "seconds to sleep between downloads")
+	initCmd.Flags().BoolVarP(&initPkg.GetOptions().All, "all", "a", false, `in addition to Bloom filters, download full index chunks (recommended)`)
+	initCmd.Flags().StringVarP(&initPkg.GetOptions().Example, "example", "e", "", `create an example for the SDK with the given name`)
+	initCmd.Flags().BoolVarP(&initPkg.GetOptions().DryRun, "dry_run", "d", false, `display the results of the download without actually downloading`)
+	initCmd.Flags().StringVarP(&initPkg.GetOptions().Publisher, "publisher", "P", "", `the publisher of the index to download (hidden)`)
+	initCmd.Flags().Uint64VarP((*uint64)(&initPkg.GetOptions().FirstBlock), "first_block", "F", 0, `do not download any chunks earlier than this block`)
+	initCmd.Flags().Float64VarP(&initPkg.GetOptions().Sleep, "sleep", "s", 0.0, `seconds to sleep between downloads`)
 	if os.Getenv("TEST_MODE") != "true" {
-		initCmd.Flags().MarkHidden("publisher")
+		_ = initCmd.Flags().MarkHidden("publisher")
 	}
 	globals.InitGlobals("init", initCmd, &initPkg.GetOptions().Globals, capabilities)
 
@@ -79,4 +76,3 @@ func init() {
 
 	chifraCmd.AddCommand(initCmd)
 }
-

@@ -9,7 +9,7 @@ func TestTraceFilter(t *testing.T) {
 	// for traceIndex, trace := range traces {
 	// 	fmt.Println(strings.Repeat("-", 80))
 	// 	for _, filter := range filters {
-	// 		f := SimpleTraceFilter{}
+	// 		f := TraceFilter{}
 	// 		f.ParseBangString(chain, filter.bang)
 	// 		// if index > 0 && w > 7 {
 	// 		// 	filter.exp = false
@@ -37,17 +37,17 @@ func TestTraceFilter(t *testing.T) {
 // 	exp  bool
 // }
 
-// var traces = []SimpleTrace{
+// var traces = []Trace{
 // 	{
 // 		BlockNumber: 30,
-// 		Action: &SimpleTraceAction{
+// 		Action: &TraceAction{
 // 			From: base.HexToAddress("0xffffffff00000000000000000000000000000000"),
 // 			To:   base.HexToAddress("0x0000000000000000000000000000000011111111"),
 // 		},
 // 	},
 // 	{
 // 		BlockNumber: 30,
-// 		Action: &SimpleTraceAction{
+// 		Action: &TraceAction{
 // 			From: base.HexToAddress("0xffffffff00000000000000000000000000000000"),
 // 			To:   base.HexToAddress("0x0000000000000000000000000000000011111111"),
 // 		},

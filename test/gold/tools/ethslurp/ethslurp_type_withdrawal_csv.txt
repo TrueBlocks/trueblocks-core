@@ -1,8 +1,0 @@
-chifra slurp  0xdefae2ee3146e258a4383c15bb90239e85ba3cad --types withdrawals 17034900-17034910 --fmt csv
-TEST[DATE|TIME] Addrs:  [0xdefae2ee3146e258a4383c15bb90239e85ba3cad]
-TEST[DATE|TIME] Blocks:  [17034900-17034910]
-TEST[DATE|TIME] Types:  [withdrawals]
-TEST[DATE|TIME] Caps:  cache,decache,raw,ether
-TEST[DATE|TIME] Format:  csv
-blockNumber,validatorIndex,withdrawalIndex,timestamp,date,from,to,value
-17034904,154891,449,1681338983,2023-04-12 22:36:23 UTC,0x000000000000000000005769746864726177616c,0xdefae2ee3146e258a4383c15bb90239e85ba3cad,2899644110

@@ -40,7 +40,7 @@ import (
 // Upon return, if a chunk is in the download list, then either its indexHash, its bloomHash, or both contains
 // the IPFS hash that needs to be downloaded. Any chunks that are not in the download list are valid and remain
 // on disc.
-func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifest, blockNums []uint64) ([]types.SimpleChunkRecord, int, int, error) {
+func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifest, blockNums []base.Blknum) ([]types.ChunkRecord, int, int, error) {
 	// The list of files on disc that need to be removed because they are invalid in some way or not in the manifest
 	deleteMap := make(map[base.FileRange]InitReason, len(man.Chunks))
 
@@ -128,7 +128,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 
 	nDeleted := 0
 	for rng, reason := range deleteMap {
-		_, indexPath := rng.RangeToFilename(chain)
+		indexPath := rng.RangeToFilename(chain)
 		bloomPath := index.ToBloomPath(indexPath)
 		indexExists := file.FileExists(indexPath)
 		bloomExists := file.FileExists(bloomPath)
@@ -153,14 +153,14 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 		}
 	}
 
-	downloadList := make([]types.SimpleChunkRecord, 0, len(man.ChunkMap))
+	downloadList := make([]types.ChunkRecord, 0, len(man.ChunkMap))
 	nToDownload := 0
 	for _, chunk := range man.ChunkMap {
 		rng := base.RangeFromRangeString(chunk.Range)
 		if downloadMap[rng] == OKAY || rng.Last < opts.FirstBlock {
 			continue
 		}
-		_, indexPath := rng.RangeToFilename(chain)
+		indexPath := rng.RangeToFilename(chain)
 		bloomStatus, indexStatus, err := isValidChunk(index.ToBloomPath(indexPath), chunk.BloomSize, chunk.IndexSize, opts.All)
 		if err != nil {
 			return nil, 0, nDeleted, err

@@ -1,9 +1,9 @@
 package monitor
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
@@ -19,16 +19,16 @@ func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
 		return false, nil
 
 	} else {
-		var keep []index.AppearanceRecord
+		var keep []types.AppRecord
 		for _, app := range apps {
 			if app.BlockNumber <= num {
-				keep = append(keep, index.AppearanceRecord{
+				keep = append(keep, types.AppRecord{
 					BlockNumber:      app.BlockNumber,
 					TransactionIndex: app.TransactionIndex,
 				})
 			}
 		}
-		lastScanned := utils.Min(num, mon.Header.LastScanned)
+		lastScanned := base.Min(num, mon.Header.LastScanned)
 
 		mon.Close() // so when we open it, it gets replaced
 		// Very important to note - if you use false for append, the header gets overwritten

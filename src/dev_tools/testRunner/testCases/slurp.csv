@@ -1,0 +1,62 @@
+enabled ,mode ,speed ,route ,path  ,tool     ,filename            ,post ,options
+on      ,cmd  ,fast  ,slurp ,tools ,ethslurp ,help                ,n    ,@h
+on      ,cmd  ,fast  ,slurp ,tools ,ethslurp ,help_long           ,n    ,help
+on      ,both ,fast  ,slurp ,tools ,ethslurp ,no_params           ,y    ,
+on      ,both ,fast  ,slurp ,tools ,ethslurp ,invalid_param       ,y    ,junk
+on      ,both ,fast  ,slurp ,tools ,ethslurp ,invalid_address     ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58f
+on      ,both ,fast  ,slurp ,tools ,ethslurp ,invalid_type_1      ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & parts = junk
+on      ,both ,fast  ,slurp ,tools ,ethslurp ,invalid_type_2      ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & parts =
+on      ,both ,medi  ,slurp ,tools ,ethslurp ,empty_result_1      ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 0-1
+on      ,both ,medi  ,slurp ,tools ,ethslurp ,empty_result_2      ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
+
+on      ,both ,medi  ,slurp ,tools ,ethslurp ,type_ext            ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & parts = ext & blocks = 0-7000000 & fmt = json & ether
+on      ,both ,medi  ,slurp ,tools ,ethslurp ,type_int            ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & parts = int & blocks = 0-7000000 & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_token          ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & types = token & blocks = 0-1500000 & fmt = json & ether
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_nft            ,y    ,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & parts = nfts & blocks = 0-8500000 & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_1155           ,y    ,addrs = 0x83f564d180b58ad9a02a449105568189ee7de8cb & parts = 1155 & blocks = 13103657-13255822 & fmt = json & ether
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_miner          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & parts = miner & blocks = 0-1000 & fmt = json
+on      ,both ,medi  ,slurp ,tools ,ethslurp ,type_uncle          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & parts = uncles & blocks = 1-1000 & fmt = json & ether
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_withdrawal     ,y    ,addrs = 0xdefae2ee3146e258a4383c15bb90239e85ba3cad & parts = withdrawals & blocks = 17034900-17034910 & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_withdrawal_csv ,n    ,addrs = 0xdefae2ee3146e258a4383c15bb90239e85ba3cad & parts = withdrawals & blocks = 17034900-17034910 & fmt = csv
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_withdrawal_2   ,n    ,addrs = 0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63 & parts = withdrawals & blocks = 0-18000000 & fmt = txt
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_withdrawal_3   ,n    ,addrs = 0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63 & parts = withdrawals & blocks = 18000000-18200000 & fmt = txt & ether
+slow    ,both ,fast  ,slurp ,tools ,ethslurp ,type_all            ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & parts = all & blocks = 0-3793420 & fmt = json & articulate & ether
+slow    ,both ,fast  ,slurp ,tools ,ethslurp ,type_all_articulate ,y    ,addrs = trueblocks.eth & blocks = 8860500-8860520 & articulate & fmt = json & parts = all
+
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_1155_csv       ,n    ,addrs = 0x83f564d180b58ad9a02a449105568189ee7de8cb & parts = 1155 & blocks = 13103657-13255822 & fmt = csv
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,type_miner_csv      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & parts = miner & blocks = 0-1000 & fmt = csv
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,appearances         ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & parts = token & blocks = 0-1500000 & appearances & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,appearances_csv     ,n    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & parts = token & blocks = 0-1500000 & appearances & fmt = csv
+
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,bad_source          ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & source = bad & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,not_apps_es         ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & source = etherscan & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,not_apps_key        ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & source = key & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,apps_es             ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & appearances & source = etherscan & fmt = json
+local   ,both ,slow  ,slurp ,tools ,ethslurp ,apps_key_type       ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & parts = ext & appearances & source = key & fmt = json
+local   ,both ,slow  ,slurp ,tools ,ethslurp ,apps_key            ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & appearances & source = key & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,count_not_key       ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & appearances & source = etherscan & count & fmt = json
+local   ,both ,slow  ,slurp ,tools ,ethslurp ,count_key           ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & appearances & source = key & count & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,no_page_count       ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & appearances & source = key & count & page = 2 & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,no_perpage_count    ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & appearances & source = key & count & per_page = 12 & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,no_either_count     ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & appearances & source = key & count & page_id = invalid & per_page = 12 & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,es_no_page_count    ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & appearances & source = etherscan & count & page = 2 & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,es_no_perpage_count ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & appearances & source = etherscan & count & per_page = 12 & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,es_no_either_count  ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & appearances & source = etherscan & count & page = 2 & per_page = 12 & fmt = json
+on      ,both ,slow  ,slurp ,tools ,ethslurp ,too_few             ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & per_page = 2 & fmt = json
+
+on      ,both ,medi  ,slurp ,tools ,ethslurp ,ens_test            ,y    ,addrs = wolfofethereum.eth & parts = int & blocks = 12524380-13675400 & fmt = json
+on      ,both ,medi  ,slurp ,tools ,ethslurp ,block_range         ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279-4186301 & fmt = json
+
+on      ,both ,fast  ,slurp ,tools ,ethslurp ,redir_output        ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & parts = ext & blocks = 3730547-3730590 & output = output_test_file
+on      ,both ,fast  ,slurp ,tools ,ethslurp ,redir_output_append ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & parts = ext & blocks = 3730590-3730700 & output = output_test_file & no_header & append
+
+on      ,both ,fast  ,slurp ,tools ,ethslurp ,cache_and_decache   ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279 & cache & decache
+on      ,both ,fast  ,slurp ,tools ,ethslurp ,cache_one           ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279 & cache
+on      ,both ,fast  ,slurp ,tools ,ethslurp ,decache_one         ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279 & decache
+
+shit    ,both ,fast  ,slurp ,tools ,ethslurp ,internal            ,y    ,addrs = 0x839395e20bbb182fa440d08f850e6c7a8f6f0780 & per_page = 1999 & parts = int & cache & fmt json
+
+# Capabilities
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
+on      ,both ,fast  ,slurp ,tools ,ethslurp ,caps_allowed        ,y    ,addrs=trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & fail_on_purpose
+on      ,both ,fast  ,slurp ,tools ,ethslurp ,caps_disallowed_1   ,y    ,addrs=trueblocks.eth & wei

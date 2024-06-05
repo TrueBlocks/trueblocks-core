@@ -12,15 +12,15 @@ type SelectorSyncMap struct {
 	sync.Map
 }
 
-func (abiMap *SelectorSyncMap) GetValue(encoding string) *types.SimpleFunction {
+func (abiMap *SelectorSyncMap) GetValue(encoding string) *types.Function {
 	if function, ok := abiMap.Load(encoding); !ok {
 		return nil
 	} else {
-		return function.(*types.SimpleFunction)
+		return function.(*types.Function)
 	}
 }
 
-func (abiMap *SelectorSyncMap) SetValue(encoding string, function *types.SimpleFunction) {
+func (abiMap *SelectorSyncMap) SetValue(encoding string, function *types.Function) {
 	abiMap.Store(encoding, function)
 }
 
@@ -45,10 +45,10 @@ func (abiMap *SelectorSyncMap) Keys() []string {
 	return ret
 }
 
-func (abiMap *SelectorSyncMap) Values() []types.SimpleFunction {
-	ret := make([]types.SimpleFunction, 0, abiMap.Count())
+func (abiMap *SelectorSyncMap) Values() []types.Function {
+	ret := make([]types.Function, 0, abiMap.Count())
 	visit := func(k any, b any) bool {
-		function, _ := b.(*types.SimpleFunction)
+		function, _ := b.(*types.Function)
 		ret = append(ret, *function)
 		return true
 	}

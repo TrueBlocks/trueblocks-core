@@ -2,7 +2,6 @@ package pricing
 
 import (
 	"fmt"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -19,8 +18,8 @@ var (
 )
 
 // priceUsdUniswap returns the price of the given asset in USD as of the given block number.
-func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
-	multiplier := float64(1.0)
+func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price base.Float, source string, err error) {
+	multiplier := base.Float(1.0)
 	var first base.Address
 	var second base.Address
 	if statement.IsEth() {
@@ -31,7 +30,7 @@ func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 		temp := *statement
 		temp.AssetAddr = base.FAKE_ETH_ADDRESS
 		temp.AssetSymbol = "WEI"
-		multiplier, _, err = priceUsdUniswap(conn, testMode, &temp)
+		multiplier, _, err = priceUsdUniswap(conn, &temp)
 		if err != nil {
 			return 0.0, "not-priced", err
 		}
@@ -55,7 +54,7 @@ func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 	}
 	contractCall.BlockNumber = statement.BlockNumber
 
-	artFunc := func(str string, function *types.SimpleFunction) error {
+	artFunc := func(str string, function *types.Function) error {
 		return articulate.ArticulateFunction(function, "", str[2:])
 	}
 	result, err := contractCall.Call(artFunc)
@@ -78,22 +77,22 @@ func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
-	reserve0 := new(big.Float)
+	reserve0 := new(base.Ether)
 	if result.Values != nil && (result.Values["_reserve0"] == "" || result.Values["_reserve0"] == "0") {
 		reserve0.SetString("1")
 	} else {
 		reserve0.SetString(result.Values["_reserve0"])
 	}
-	reserve1 := new(big.Float)
+	reserve1 := new(base.Ether)
 	if result.Values != nil && (result.Values["_reserve1"] == "" || result.Values["_reserve1"] == "0") {
 		reserve1.SetString("1")
 	} else {
 		reserve1.SetString(result.Values["_reserve1"])
 	}
-	bigPrice := new(big.Float)
+	bigPrice := new(base.Ether)
 	bigPrice = bigPrice.Quo(reserve0, reserve1)
 
-	price, _ = bigPrice.Float64()
+	price = base.Float(bigPrice.Float64())
 	price *= multiplier
 	source = "uniswap"
 
@@ -110,12 +109,12 @@ func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 		reversed:    reversed,
 		float0:      reserve0,
 		float1:      reserve1,
-		float2:      new(big.Float).SetFloat64(multiplier),
+		float2:      new(base.Ether).SetFloat64(float64(multiplier)),
 		bigPrice:    bigPrice,
 		price:       price,
 		source:      source,
 	}
-	r.report("using Uniswap", testMode)
+	r.report("using Uniswap")
 
 	return price, source, nil
 }

@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -19,45 +19,29 @@ import (
 
 // EXISTING_CODE
 
-type RawParameter struct {
-	Components    string `json:"components"`
-	Indexed       string `json:"indexed"`
-	InternalType  string `json:"internalType"`
-	Name          string `json:"name"`
-	StrDefault    string `json:"strDefault"`
-	ParameterType string `json:"type"`
-	Value         string `json:"value"`
+type Parameter struct {
+	Components    []Parameter `json:"components,omitempty"`
+	Indexed       bool        `json:"indexed,omitempty"`
+	InternalType  string      `json:"internalType,omitempty"`
+	Name          string      `json:"name"`
+	StrDefault    string      `json:"strDefault,omitempty"`
+	ParameterType string      `json:"type"`
+	Value         any         `json:"value,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-type SimpleParameter struct {
-	Components    []SimpleParameter `json:"components,omitempty"`
-	Indexed       bool              `json:"indexed,omitempty"`
-	InternalType  string            `json:"internalType,omitempty"`
-	Name          string            `json:"name"`
-	StrDefault    string            `json:"strDefault,omitempty"`
-	ParameterType string            `json:"type"`
-	Value         any               `json:"value,omitempty"`
-	raw           *RawParameter     `json:"-"`
-	// EXISTING_CODE
-	// EXISTING_CODE
+func (s Parameter) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *SimpleParameter) Raw() *RawParameter {
-	return s.raw
-}
-
-func (s *SimpleParameter) SetRaw(raw *RawParameter) {
-	s.raw = raw
-}
-
-func (s *SimpleParameter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Parameter) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"name": s.Name,
 		"type": s.ParameterType,
 	}
@@ -89,8 +73,7 @@ func (s *SimpleParameter) Model(chain, format string, verbose bool, extraOptions
 	}
 }
 
-// --> marshal_only
-func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
+func (s *Parameter) MarshalCache(writer io.Writer) (err error) {
 	// Components
 	components := make([]cache.Marshaler, 0, len(s.Components))
 	for _, component := range s.Components {
@@ -137,41 +120,45 @@ func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleParameter) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Parameter) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// Components
-	s.Components = make([]SimpleParameter, 0)
-	if err = cache.ReadValue(reader, &s.Components, version); err != nil {
+	s.Components = make([]Parameter, 0)
+	if err = cache.ReadValue(reader, &s.Components, vers); err != nil {
 		return err
 	}
 
 	// Indexed
-	if err = cache.ReadValue(reader, &s.Indexed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Indexed, vers); err != nil {
 		return err
 	}
 
 	// InternalType
-	if err = cache.ReadValue(reader, &s.InternalType, version); err != nil {
+	if err = cache.ReadValue(reader, &s.InternalType, vers); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Name, vers); err != nil {
 		return err
 	}
 
 	// StrDefault
-	if err = cache.ReadValue(reader, &s.StrDefault, version); err != nil {
+	if err = cache.ReadValue(reader, &s.StrDefault, vers); err != nil {
 		return err
 	}
 
 	// ParameterType
-	if err = cache.ReadValue(reader, &s.ParameterType, version); err != nil {
+	if err = cache.ReadValue(reader, &s.ParameterType, vers); err != nil {
 		return err
 	}
 
 	// Value
 	var value string
-	if err = cache.ReadValue(reader, &value, version); err != nil {
+	if err = cache.ReadValue(reader, &value, vers); err != nil {
 		return err
 	}
 	if err = json.Unmarshal([]byte(value), &s.Value); err != nil {
@@ -183,7 +170,8 @@ func (s *SimpleParameter) UnmarshalCache(version uint64, reader io.Reader) (err 
 	return nil
 }
 
-func (s *SimpleParameter) FinishUnmarshal() {
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *Parameter) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -192,14 +180,14 @@ func (s *SimpleParameter) FinishUnmarshal() {
 //
 
 // DisplayName returns parameter name if defined, or a default name "val_" + index
-func (s *SimpleParameter) DisplayName(index int) string {
+func (s *Parameter) DisplayName(index int) string {
 	if s.Name != "" {
 		return s.Name
 	}
 	return "val_" + fmt.Sprint(index)
 }
 
-func parametersToMap(params []SimpleParameter) (result map[string]any) {
+func parametersToMap(params []Parameter) (result map[string]any) {
 	// This produces `null` in JSON instead of an empty object (`{}`)
 	if len(params) == 0 {
 		return nil
@@ -215,4 +203,3 @@ func parametersToMap(params []SimpleParameter) (result map[string]any) {
 }
 
 // EXISTING_CODE
-

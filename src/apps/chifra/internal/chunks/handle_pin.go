@@ -18,11 +18,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
+func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	if opts.Globals.TestMode {
 		logger.Warn("Pinning option not tested.")
@@ -35,10 +34,10 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 		}
 	}
 
-	firstBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
-	lastBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINLASTBLOCK"))
+	firstBlock := base.MustParseBlknum(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
+	lastBlock := base.MustParseBlknum(os.Getenv("TB_CHUNKS_PINLASTBLOCK"))
 	if lastBlock == 0 {
-		lastBlock = utils.NOPOS
+		lastBlock = base.NOPOSN
 	}
 
 	outPath := filepath.Join(config.PathToCache(chain), "tmp", "manifest.json")
@@ -52,9 +51,9 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		hash := base.BytesToHash(config.HeaderHash(config.ExpectedVersion()))
-		report := simpleChunkPinReport{
+		report := types.ChunkPin{
 			Version:  config.VersionTags[hash.Hex()],
 			Chain:    chain,
 			SpecHash: base.IpfsHash(manifest.Specification()),
@@ -67,7 +66,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 				return false, err
 			}
 			if rng.Last < firstBlock || rng.First > lastBlock {
-				logger.Info("Skipping", path)
+				logger.Progress(true, "Skipping", path)
 				return true, nil
 			}
 			if path != index.ToBloomPath(path) {
@@ -137,7 +136,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			}
 		}
 
-		if len(blockNums) == 0 && firstBlock == 0 && lastBlock == utils.NOPOS {
+		if len(blockNums) == 0 && firstBlock == 0 && lastBlock == base.NOPOSN {
 			tsPath := config.PathToTimestamps(chain)
 			if localHash, remoteHash, err := pinning.PinOneFile(chain, "timestamps", tsPath, opts.Remote); err != nil {
 				errorChan <- err
@@ -169,7 +168,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 }
 
 // matches returns true if the Result has both local and remote hashes for both the index and the bloom and they match
-func matches(local, remote *types.SimpleChunkRecord) (bool, bool) {
+func matches(local, remote *types.ChunkRecord) (bool, bool) {
 	return local.BloomHash == remote.BloomHash, local.IndexHash == remote.IndexHash
 }
 
@@ -185,7 +184,7 @@ func (opts *ChunksOptions) matchReport(matches bool, localHash, remoteHash base.
 	}
 }
 
-func (opts *ChunksOptions) doCheck(blockNums []uint64) error {
+func (opts *ChunksOptions) doCheck(blockNums []base.Blknum) error {
 	if err, ok := opts.check(blockNums, false /* silent */); err != nil {
 		return err
 	} else if !ok {

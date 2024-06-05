@@ -1,16 +1,14 @@
 package ledger
 
 import (
-	"math/big"
-
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.SimpleTransaction, s *types.SimpleStatement) ([]types.SimpleStatement, error) {
-	statements := make([]types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
+func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
+	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
 	ret := *s
 	// clear all the internal accounting values. Keeps AmountIn, AmountOut and GasOut because
@@ -44,23 +42,16 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 			}
 			if trace.Action.CallType == "delegatecall" && trace.Action.To != s.AccountedFor {
 				// delegate calls are not included in the transaction's gas cost, so we skip them
-				logger.Info(
-					"Skipping",
-					trace.Action.CallType,
-					"to",
-					trace.Action.To.Hex(),
-					utils.FormattedValue(trace.Action.Value, true, 18),
-				)
 				continue
 			}
 
-			plusEq := func(a1, a2 big.Int) big.Int {
-				return *a1.Add(&a1, &a2)
+			plusEq := func(a1, a2 *base.Wei) base.Wei {
+				return *a1.Add(a1, a2)
 			}
 
 			// Do not collapse, more than one of these can be true at the same time
 			if trace.Action.From == s.AccountedFor {
-				ret.InternalOut = plusEq(ret.InternalOut, trace.Action.Value)
+				ret.InternalOut = plusEq(&ret.InternalOut, &trace.Action.Value)
 				ret.Sender = trace.Action.From
 				if trace.Action.To.IsZero() {
 					if trace.Result != nil {
@@ -72,13 +63,13 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 			}
 
 			if trace.Action.To == s.AccountedFor {
-				ret.InternalIn = plusEq(ret.InternalIn, trace.Action.Value)
+				ret.InternalIn = plusEq(&ret.InternalIn, &trace.Action.Value)
 				ret.Sender = trace.Action.From
 				ret.Recipient = trace.Action.To
 			}
 
 			if trace.Action.SelfDestructed == s.AccountedFor {
-				ret.SelfDestructOut = plusEq(ret.SelfDestructOut, trace.Action.Balance)
+				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, &trace.Action.Balance)
 				ret.Sender = trace.Action.SelfDestructed
 				if ret.Sender.IsZero() {
 					ret.Sender = trace.Action.Address
@@ -87,7 +78,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 			}
 
 			if trace.Action.RefundAddress == s.AccountedFor {
-				ret.SelfDestructIn = plusEq(ret.SelfDestructIn, trace.Action.Balance)
+				ret.SelfDestructIn = plusEq(&ret.SelfDestructIn, &trace.Action.Balance)
 				ret.Sender = trace.Action.SelfDestructed
 				if ret.Sender.IsZero() {
 					ret.Sender = trace.Action.Address
@@ -96,7 +87,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 			}
 
 			if trace.Action.Address == s.AccountedFor && !trace.Action.RefundAddress.IsZero() {
-				ret.SelfDestructOut = plusEq(ret.SelfDestructOut, trace.Action.Balance)
+				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, &trace.Action.Balance)
 				// self destructed send
 				ret.Sender = trace.Action.Address
 				ret.Recipient = trace.Action.RefundAddress
@@ -104,7 +95,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 
 			if trace.Result != nil {
 				if trace.Result.Address == s.AccountedFor {
-					ret.InternalIn = plusEq(ret.InternalIn, trace.Action.Value)
+					ret.InternalIn = plusEq(&ret.InternalIn, &trace.Action.Value)
 					ret.Sender = trace.Action.From
 					ret.Recipient = trace.Result.Address
 				}
@@ -120,7 +111,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 		}
 	} else {
 		// TODO: BOGUS PERF
-		// logger.Warn("Transaction", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), "does not reconcile")
+		// logger.Warn("Trace statement at", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile.")
 		statements = append(statements, ret)
 	}
 

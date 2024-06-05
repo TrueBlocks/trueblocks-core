@@ -1,23 +1,29 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package exportPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	// EXISTING_CODE
 )
 
 // ExportOptions provides all command options for the chifra export command.
@@ -46,12 +52,11 @@ type ExportOptions struct {
 	Asset       []string              `json:"asset,omitempty"`       // For the accounting options only, export statements only for this asset
 	Flow        string                `json:"flow,omitempty"`        // For the accounting options only, export statements with incoming, outgoing, or zero value
 	Factory     bool                  `json:"factory,omitempty"`     // For --traces only, report addresses created by (or self-destructed by) the given address(es)
-	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled upripe (i.e. less than 28 blocks old)
-	Load        string                `json:"load,omitempty"`        // A comma separated list of dynamic traversers to load
+	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled unripe (i.e. less than 28 blocks old)
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
 	NoZero      bool                  `json:"noZero,omitempty"`      // For the --count option only, suppress the display of zero appearance accounts
-	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to process (inclusive)
-	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
+	FirstBlock  base.Blknum           `json:"firstBlock,omitempty"`  // First block to process (inclusive)
+	LastBlock   base.Blknum           `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
@@ -61,7 +66,7 @@ type ExportOptions struct {
 
 var defaultExportOptions = ExportOptions{
 	MaxRecords: 250,
-	LastBlock:  utils.NOPOS,
+	LastBlock:  base.NOPOSN,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -91,11 +96,10 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
 	logger.TestLog(opts.Factory, "Factory: ", opts.Factory)
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
-	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != base.NOPOSN && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -108,13 +112,20 @@ func (opts *ExportOptions) String() string {
 
 // exportFinishParseApi finishes the parsing for server invocations. Returns a new ExportOptions.
 func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ExportFinishParseInternal(w, values)
+}
+
+func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 	copy := defaultExportOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
-	opts.FirstRecord = 0
 	opts.MaxRecords = 250
-	opts.FirstBlock = 0
-	opts.LastBlock = utils.NOPOS
-	for key, value := range r.URL.Query() {
+	opts.LastBlock = base.NOPOSN
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -156,9 +167,9 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 		case "count":
 			opts.Count = true
 		case "firstRecord":
-			opts.FirstRecord = globals.ToUint64(value[0])
+			opts.FirstRecord = base.MustParseUint64(value[0])
 		case "maxRecords":
-			opts.MaxRecords = globals.ToUint64(value[0])
+			opts.MaxRecords = base.MustParseUint64(value[0])
 		case "relevant":
 			opts.Relevant = true
 		case "emitter":
@@ -184,23 +195,24 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Factory = true
 		case "unripe":
 			opts.Unripe = true
-		case "load":
-			opts.Load = value[0]
 		case "reversed":
 			opts.Reversed = true
 		case "noZero":
 			opts.NoZero = true
 		case "firstBlock":
-			opts.FirstBlock = globals.ToUint64(value[0])
+			opts.FirstBlock = base.MustParseBlknum(value[0])
 		case "lastBlock":
-			opts.LastBlock = globals.ToUint64(value[0])
+			opts.LastBlock = base.MustParseBlknum(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "export")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "export")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	if len(opts.Addrs) > 0 {
@@ -272,33 +284,60 @@ func GetOptions() *ExportOptions {
 	return &defaultExportOptions
 }
 
-func ResetOptions(testMode bool) {
-	// We want to keep writer between command file calls
-	w := GetOptions().Globals.Writer
-	defaultExportOptions = ExportOptions{}
-	globals.SetDefaults(&defaultExportOptions.Globals)
-	defaultExportOptions.Globals.TestMode = testMode
-	defaultExportOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra export
-	// EXISTING_CODE
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra export
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
 	// EXISTING_CODE
-	defaultExportOptions.Globals.Caps = capabilities
+	// EXISTING_CODE
+	return capabilities
 }
 
-func (opts *ExportOptions) getCaches() (m map[string]bool) {
+func ResetOptions(testMode bool) {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	opts := ExportOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	opts.MaxRecords = 250
+	opts.LastBlock = base.NOPOSN
+	defaultExportOptions = opts
+}
+
+func (opts *ExportOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
-	m = map[string]bool{
-		// TODO: Enabled neighbors cache
-		"transactions": true,
-		"statements":   opts.Accounting,
-		"traces":       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Neighbors)),
+	caches = map[walk.CacheType]bool{
+		// TODO: Enable neighbors cache
+		walk.Cache_Transactions: true,
+		walk.Cache_Statements:   opts.Accounting,
+		walk.Cache_Traces:       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Neighbors)),
 	}
 	// EXISTING_CODE
 	return
 }
 
 // EXISTING_CODE
-// EXISTING_CODE
+// Validate calls into the opts validateExport routine
+func (opts *ExportOptions) Validate() error {
+	return opts.validateExport()
+}
 
+// TODO: If an abi file is newer than the monitor file - clear the cache
+// TODO: accounting disallows freshen, apps, logs, receipts, statements, traces, but requires articulate
+// TODO: accounting must be for one monitor address - why?
+// TODO: accounting requires node balances - why?
+// TODO: Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
+// TODO: Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
+// TODO: If a monitor file is locked, remove the lock and move on (don't read) but don't wait either
+
+// TODO: In the old C++ code, we used to be able to customize the display of the output with a configuration string. This is a VERY important feature as it captures users
+// TODO: In the old C++ code, the first address on the command line was `accountedFor`. Is that still true? Or do we now do accounting for multiple addresses? There should be testing.
+// TODO: In the old C++ code, we used to load knownABIs if we were articulating. Is this still true? Do we load the known ABIs and then overlay them with contract specific clashes? (We should.)
+// TODO: In the old C++ code, we used to be able to configure certain things - for example, `--cache` is on by default for all queries, `--cache_traces` is on by default, display strings, max_records, max_traces for dDos protection, etc.
+// TODO: Need much better testing surrounding fourBytes, topics, emitters, relevant, etc. It's also very poorly documented.
+// TODO: In the old C++ code, the ArticulateAll routine used to identify transactions as token related. Do we still do that? Must we? Why did we do that?
+
+// EXISTING_CODE

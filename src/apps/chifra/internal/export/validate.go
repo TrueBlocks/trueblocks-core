@@ -13,8 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -27,7 +25,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.LastBlock == 0 {
-		opts.LastBlock = utils.NOPOS
+		opts.LastBlock = base.NOPOSN
 	}
 
 	if opts.MaxRecords == 0 {
@@ -46,17 +44,15 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
 	}
 
-	if len(opts.Load) > 0 {
-		// See https://pkg.go.dev/plugin
-		return validate.Usage("The {0} option is currenlty disabled.", "--load")
-	}
-
 	if opts.tooMany() {
 		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.)")
 	}
 
-	if opts.Traces && !opts.Conn.IsNodeTracing() {
-		return validate.Usage("{0} requires tracing, err: {1}", "chifra export --traces", rpc.ErrTraceBlockMissing)
+	if opts.Traces {
+		err, ok := opts.Conn.IsNodeTracing()
+		if !ok {
+			return validate.Usage("{0} requires tracing, err: {1}", "chifra export --traces", err.Error())
+		}
 	}
 
 	if opts.Count {
@@ -91,7 +87,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.LastBlock == 0 {
-		opts.LastBlock = utils.NOPOS
+		opts.LastBlock = base.NOPOSN
 	}
 
 	if opts.FirstBlock >= opts.LastBlock {
@@ -99,7 +95,7 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage(msg)
 	}
 
-	if opts.LastBlock != utils.NOPOS {
+	if opts.LastBlock != base.NOPOSN {
 		latest := opts.Conn.GetLatestBlockNumber()
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)

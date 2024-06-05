@@ -1,6 +1,6 @@
 ---
 title: "Chain state"
-description: ""
+description: "Access to account and token state"
 lead: ""
 lastmod:
   - :git
@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 1400
+weight: 31000
 toc: true
 ---
 
@@ -52,10 +52,10 @@ Arguments:
 
 Flags:
   -p, --parts strings      control which state to export
-                           One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
+                           One or more of [ balance | nonce | code | proxy | deployed | accttype | some | all ]
   -c, --changes            only report a balance when it changes from one block to the next
   -z, --no_zero            suppress the display of zero balance accounts
-  -l, --call string        call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
+  -l, --call string        call a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
   -a, --articulate         for the --call option only, articulate the retrieved data if ABIs can be found
   -r, --proxy_for string   for the --call option only, redirects calls to this implementation
   -H, --ether              specify value in ether
@@ -72,11 +72,15 @@ Notes:
   - Special blocks are detailed under chifra when --list.
   - Balance is the default mode. To select a single mode use none first, followed by that mode.
   - Valid parameters for --call include Solidity-like syntax: balanceOf(0x316b...183d), a four-byte followed by parameters: 0x70a08231(0x316b...183d), or encoded input data.
-  - You may specify multiple modes on a single line.
+  - You may specify multiple parts on a single line.
+  - In the --call string, you may separate multiple calls with a colon.
 ```
 
 Data models produced by this tool:
 
+- [function](/data-model/other/#function)
+- [message](/data-model/other/#message)
+- [parameter](/data-model/other/#parameter)
 - [result](/data-model/chainstate/#result)
 - [state](/data-model/chainstate/#state)
 
@@ -84,7 +88,6 @@ Links:
 
 - [api docs](/api/#operation/chainstate-state)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getState.csv)
 
 ## chifra tokens
 
@@ -115,7 +118,7 @@ Arguments:
 
 Flags:
   -p, --parts strings   which parts of the token information to retrieve
-                        One or more of [ name | symbol | decimals | totalSupply | version | all ]
+                        One or more of [ name | symbol | decimals | totalSupply | version | some | all ]
   -b, --by_acct         consider each address an ERC20 token except the last, whose balance is reported for each token
   -c, --changes         only report a balance when it changes from one block to the next
   -z, --no_zero         suppress the display of zero balance accounts
@@ -142,5 +145,5 @@ Links:
 
 - [api docs](/api/#operation/chainstate-tokens)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getTokens.csv)
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

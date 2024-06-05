@@ -24,7 +24,7 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 	)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		if len(monitorArray) == 0 {
 			errorChan <- errors.New("no monitors found in HandleBounds")
 			return
@@ -35,18 +35,18 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 				errorChan <- err
 				return
 			} else if cnt > 0 {
-				firstTs, _ := tslib.FromBnToTs(chain, uint64(apps[0].BlockNumber))
-				latestTs, _ := tslib.FromBnToTs(chain, uint64(apps[len(apps)-1].BlockNumber))
-				s := simpleBounds{
+				firstTs, _ := tslib.FromBnToTs(chain, base.Blknum(apps[0].BlockNumber))
+				latestTs, _ := tslib.FromBnToTs(chain, base.Blknum(apps[len(apps)-1].BlockNumber))
+				s := types.Bounds{
 					Count: uint64(cnt),
-					FirstApp: types.RawAppearance{
-						Address:          mon.Address.Hex(),
+					FirstApp: types.Appearance{
+						Address:          mon.Address,
 						BlockNumber:      apps[0].BlockNumber,
 						TransactionIndex: apps[0].TransactionIndex,
 					},
 					FirstTs: firstTs,
-					LatestApp: types.RawAppearance{
-						Address:          mon.Address.Hex(),
+					LatestApp: types.Appearance{
+						Address:          mon.Address,
 						BlockNumber:      apps[len(apps)-1].BlockNumber,
 						TransactionIndex: apps[len(apps)-1].TransactionIndex,
 					},

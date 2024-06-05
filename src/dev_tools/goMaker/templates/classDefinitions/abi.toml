@@ -1,0 +1,8 @@
+[settings]
+    class = "Abi"
+    doc_group = "05-Other"
+    doc_descr = "a human-readable representation of a Solidity smart contract"
+    doc_route = "503-abi"
+    attributes = ""
+    produced_by = "abis"
+    contains = "function"

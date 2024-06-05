@@ -11,10 +11,10 @@ import (
 )
 
 func TestFunctionToAbiMethod(t *testing.T) {
-	input := &SimpleFunction{
+	input := &Function{
 		Name:         "deploy",
 		FunctionType: "function",
-		Inputs: []SimpleParameter{
+		Inputs: []Parameter{
 			{
 				Name:          "where",
 				ParameterType: "address",
@@ -23,7 +23,7 @@ func TestFunctionToAbiMethod(t *testing.T) {
 				Name:          "options",
 				ParameterType: "tuple",
 				InternalType:  "struct Options",
-				Components: []SimpleParameter{
+				Components: []Parameter{
 					{Name: "force", ParameterType: "bool"},
 					{Name: "mode", ParameterType: "uint8"},
 				},
@@ -107,7 +107,7 @@ func TestPack(t *testing.T) {
 		t.Fatal("cannot set uint256 value")
 	}
 
-	functions := make(map[string]SimpleFunction)
+	functions := make(map[string]Function)
 	for _, abiMethod := range abi.Methods {
 		functions[abiMethod.Name] = *FunctionFromAbiMethod(&abiMethod)
 	}
@@ -117,7 +117,7 @@ func TestPack(t *testing.T) {
 
 	type args struct {
 		callArguments []any
-		function      SimpleFunction
+		function      Function
 	}
 	tests := []struct {
 		name    string

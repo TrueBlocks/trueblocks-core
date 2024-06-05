@@ -33,10 +33,10 @@ Flags:
   -B, --topic strings     for the --logs option only, filter logs to show only those with this topic(s)
   -i, --withdrawals       export the withdrawals from the block as opposed to the block data
   -a, --articulate        for the --logs option only, articulate the retrieved data if ABIs can be found
-  -r, --big_range uint    for the --logs option only, allow for block ranges larger than 500 (default 500)
   -U, --count             display only the count of appearances for --addrs or --uniq
+  -X, --cache_txs         force a write of the block's transactions to the cache (slow)
+  -R, --cache_traces      force a write of the block's traces to the cache (slower)
   -H, --ether             specify value in ether
-  -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
@@ -50,22 +50,27 @@ Notes:
   - With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
-  - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.
   - The --decache option removes the block(s), all transactions in those block(s), and all traces in those transactions from the cache.
   - The --withdrawals option is only available on certain chains. It is ignored otherwise.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
 - [block](/data-model/chaindata/#block)
-- [withdrawal](/data-model/chaindata/#withdrawal)
+- [blockcount](/data-model/chaindata/#blockcount)
+- [lightblock](/data-model/chaindata/#lightblock)
 - [log](/data-model/chaindata/#log)
+- [message](/data-model/other/#message)
 - [trace](/data-model/chaindata/#trace)
-- [logfilter](/data-model/chaindata/#logfilter)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
-- [blockcount](/data-model/chaindata/#blockcount)
+- [withdrawal](/data-model/chaindata/#withdrawal)
+
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
 
 ### Other Options
 
@@ -76,7 +81,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  ```
+```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
@@ -86,3 +91,4 @@ of any line makes it a comment.
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

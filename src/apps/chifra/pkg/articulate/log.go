@@ -10,7 +10,7 @@ import (
 )
 
 // ArticulateLog articulates a log by attaching the Articulated log structure if the ABI is found.
-func (abiCache *AbiCache) ArticulateLog(log *types.SimpleLog) error {
+func (abiCache *AbiCache) ArticulateLog(log *types.Log) error {
 	if found, err := articulateLogFromMap(log, &abiCache.AbiMap); err != nil {
 		return err
 
@@ -41,7 +41,7 @@ func (abiCache *AbiCache) ArticulateLog(log *types.SimpleLog) error {
 	}
 }
 
-func articulateLogFromMap(log *types.SimpleLog, abiMap *abi.SelectorSyncMap) (*types.SimpleFunction, error) {
+func articulateLogFromMap(log *types.Log, abiMap *abi.SelectorSyncMap) (*types.Function, error) {
 	if len(log.Topics) < 1 {
 		return nil, nil
 	}
@@ -76,7 +76,7 @@ func articulateLogFromMap(log *types.SimpleLog, abiMap *abi.SelectorSyncMap) (*t
 	return artLog, nil
 }
 
-func findCommonEvent(log *types.SimpleLog) *types.SimpleFunction {
+func findCommonEvent(log *types.Log) *types.Function {
 	if artLog := parseTransferEvent(log); artLog != nil {
 		return artLog
 

@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -27,7 +27,6 @@ import (
 // RunDaemon handles the daemon command for the command line. Returns error only as per cobra.
 func RunDaemon(cmd *cobra.Command, args []string) error {
 	opts := daemonFinishParse(args)
-	outputHelpers.EnableCommand("daemon", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("daemon", &opts.Globals)
@@ -37,7 +36,6 @@ func RunDaemon(cmd *cobra.Command, args []string) error {
 // ServeDaemon handles the daemon command for the API. Returns an error.
 func ServeDaemon(w http.ResponseWriter, r *http.Request) error {
 	opts := daemonFinishParseApi(w, r)
-	outputHelpers.EnableCommand("daemon", true)
 	// EXISTING_CODE
 	if true { // defeats linter
 		logger.Fatal("should not happen ==> Daemon is an invalid route for server")
@@ -49,7 +47,7 @@ func ServeDaemon(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// DaemonInternal handles the internal workings of the daemon command.  Returns an error.
+// DaemonInternal handles the internal workings of the daemon command. Returns an error.
 func (opts *DaemonOptions) DaemonInternal() error {
 	var err error
 	if err = opts.validateDaemon(); err != nil {
@@ -99,9 +97,10 @@ func (opts *DaemonOptions) DaemonInternal() error {
 	// Start listening to the web sockets
 	RunWebsocketPool()
 	// Start listening for requests
-	logger.Fatal(http.ListenAndServe(opts.Url, NewRouter()))
+	logger.Fatal(http.ListenAndServe(opts.Url, NewRouter(opts.Silent)))
 
 	// EXISTING_CODE
+
 	timer.Report(msg)
 
 	return err
@@ -115,7 +114,3 @@ func GetDaemonOptions(args []string, g *globals.GlobalOptions) *DaemonOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
-

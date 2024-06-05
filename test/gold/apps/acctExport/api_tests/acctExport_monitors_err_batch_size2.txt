@@ -1,6 +1,0 @@
-monitors?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&batchSize=1
-{
-  "errors": [
-    "The --batch_size option is not available without --watch."
-  ]
-}

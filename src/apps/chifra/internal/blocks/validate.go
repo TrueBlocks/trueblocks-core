@@ -9,7 +9,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -44,32 +43,23 @@ func (opts *BlocksOptions) validateBlocks() error {
 		return validate.Usage("Please choose only a single mode (--uncles, --logs, --withdrawal, etc.)")
 	}
 
-	if opts.ListCount == 0 {
-		err := validate.ValidateIdentifiers(
-			chain,
-			opts.Blocks,
-			validate.ValidBlockIdWithRange,
-			1,
-			&opts.BlockIds,
-		)
-		if err != nil {
-			if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
-				return invalidLiteral
-			}
+	err := validate.ValidateIdentifiers(
+		chain,
+		opts.Blocks,
+		validate.ValidBlockIdWithRange,
+		1,
+		&opts.BlockIds,
+	)
+	if err != nil {
+		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
+			return invalidLiteral
+		}
 
-			if errors.Is(err, validate.ErrTooManyRanges) {
-				return validate.Usage("Specify only a single block range at a time.")
-			}
+		if errors.Is(err, validate.ErrTooManyRanges) {
+			return validate.Usage("Specify only a single block range at a time.")
+		}
 
-			return err
-		}
-		if opts.List > 0 {
-			return validate.Usage("You must supply a non-zero value for the {0} option with {1}.", "--list_count", "--list")
-		}
-	} else {
-		if opts.List == 0 {
-			return validate.Usage("You must supply a non-zero value for the {0} option with {1}.", "--list", "--list_count")
-		}
+		return err
 	}
 
 	if len(opts.Flow) > 0 {
@@ -85,48 +75,43 @@ func (opts *BlocksOptions) validateBlocks() error {
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
-		if opts.List == 0 {
-			if len(opts.Blocks) == 0 && opts.ListCount == 0 {
-				return validate.Usage("Please supply either a block identifier or the --list_count option.")
+		if len(opts.Blocks) == 0 {
+			return validate.Usage("Please supply at least one {0}.", "block identifier")
+		}
+		if !opts.Logs && (len(opts.Emitter) > 0 || len(opts.Topic) > 0) {
+			return validate.Usage("The {0} option are only available with the {1} option.", "--emitter and --topic", "--log")
+		}
+		if opts.Traces && opts.Hashes {
+			return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --hashes option")
+		}
+		if !validate.HasArticulationKey(opts.Articulate) {
+			return validate.Usage("The {0} option requires an Etherscan API key.", "--articulate")
+		}
+		if opts.Articulate && !opts.Logs {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--logs")
+		}
+		if opts.Uniq && !opts.Count {
+			if opts.Traces {
+				return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --uniq option")
 			}
-			if !opts.Logs && (len(opts.Emitter) > 0 || len(opts.Topic) > 0) {
-				return validate.Usage("The {0} option are only available with the {1} option.", "--emitter and --topic", "--log")
+			if opts.Uncles {
+				return validate.Usage("The {0} option is not available{1}.", "--uncles", " with the --uniq option")
 			}
-			if opts.Traces && opts.Hashes {
-				return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --hashes option")
+			if opts.Logs {
+				return validate.Usage("The {0} option is not available{1}.", "--logs", " with the --uniq option")
 			}
-			if !validate.HasArticulationKey(opts.Articulate) {
-				return validate.Usage("The {0} option requires an Etherscan API key.", "--articulate")
-			}
-			if opts.Articulate && !opts.Logs {
-				return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--logs")
-			}
-			if opts.Uniq && !opts.Count {
-				if opts.Traces {
-					return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --uniq option")
-				}
-				if opts.Uncles {
-					return validate.Usage("The {0} option is not available{1}.", "--uncles", " with the --uniq option")
-				}
-				if opts.Logs {
-					return validate.Usage("The {0} option is not available{1}.", "--logs", " with the --uniq option")
-				}
-			}
-			if opts.BigRange != 500 && !opts.Logs {
-				return validate.Usage("The {0} option is only available with the {1} option.", "--big_range", "--logs")
-			}
+		}
 
-			if opts.Traces && !opts.Conn.IsNodeTracing() {
-				return validate.Usage("{0} requires tracing, err: {1}", "chifra blocks --traces", rpc.ErrTraceBlockMissing)
+		if opts.Traces {
+			err, ok := opts.Conn.IsNodeTracing()
+			if !ok {
+				return validate.Usage("{0} requires tracing, err: {1}", "chifra blocks --traces", err.Error())
 			}
 		}
 
 		if opts.Articulate {
 			if opts.Uncles {
 				return validate.Usage("The {0} option is not available{1}.", "--articulate", " with the --uncles option")
-			}
-			if opts.List != 0 {
-				return validate.Usage("The {0} option is not available{1}.", "--articulate", " with the --list option")
 			}
 		}
 

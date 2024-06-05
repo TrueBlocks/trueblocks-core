@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -17,56 +18,37 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // EXISTING_CODE
 
-type RawLog struct {
-	Address          string   `json:"address"`
-	BlockHash        string   `json:"blockHash"`
-	BlockNumber      string   `json:"blockNumber"`
-	Data             string   `json:"data"`
-	LogIndex         string   `json:"logIndex"`
-	Topics           []string `json:"topics"`
-	TransactionHash  string   `json:"transactionHash"`
-	TransactionIndex string   `json:"transactionIndex"`
+type Log struct {
+	Address          base.Address   `json:"address"`
+	ArticulatedLog   *Function      `json:"articulatedLog,omitempty"`
+	BlockHash        base.Hash      `json:"blockHash"`
+	BlockNumber      base.Blknum    `json:"blockNumber"`
+	Data             string         `json:"data,omitempty"`
+	LogIndex         base.Lognum    `json:"logIndex"`
+	Timestamp        base.Timestamp `json:"timestamp,omitempty"`
+	Topics           []base.Hash    `json:"topics,omitempty"`
+	TransactionHash  base.Hash      `json:"transactionHash"`
+	TransactionIndex base.Txnum     `json:"transactionIndex"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-type SimpleLog struct {
-	Address          base.Address    `json:"address"`
-	ArticulatedLog   *SimpleFunction `json:"articulatedLog,omitempty"`
-	BlockHash        base.Hash       `json:"blockHash"`
-	BlockNumber      base.Blknum     `json:"blockNumber"`
-	CompressedLog    string          `json:"compressedLog,omitempty"`
-	Data             string          `json:"data,omitempty"`
-	LogIndex         uint64          `json:"logIndex"`
-	Timestamp        base.Timestamp  `json:"timestamp,omitempty"`
-	Topics           []base.Hash     `json:"topics,omitempty"`
-	TransactionHash  base.Hash       `json:"transactionHash"`
-	TransactionIndex uint64          `json:"transactionIndex"`
-	raw              *RawLog         `json:"-"`
-	// EXISTING_CODE
-	// EXISTING_CODE
+func (s Log) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *SimpleLog) Raw() *RawLog {
-	return s.raw
-}
-
-func (s *SimpleLog) SetRaw(raw *RawLog) {
-	s.raw = raw
-}
-
-func (s *SimpleLog) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"address":          s.Address,
 		"blockHash":        s.BlockHash,
 		"blockNumber":      s.BlockNumber,
@@ -93,7 +75,7 @@ func (s *SimpleLog) Model(chain, format string, verbose bool, extraOptions map[s
 		"data",
 	}
 
-	isArticulated := extraOptions["articulate"] == true && s.ArticulatedLog != nil
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedLog != nil
 	var articulatedLog = make(map[string]any)
 	if isArticulated {
 		articulatedLog["name"] = s.ArticulatedLog.Name
@@ -150,26 +132,25 @@ func (s *SimpleLog) Model(chain, format string, verbose bool, extraOptions map[s
 	}
 }
 
-func (s *SimpleLog) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+func (s *Log) Date() string {
+	return base.FormattedDate(s.Timestamp)
 }
 
-// --> cacheable by block as group
-type SimpleLogGroup struct {
+type LogGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
-	Logs             []SimpleLog
+	Logs             []Log
 }
 
-func (s *SimpleLogGroup) CacheName() string {
+func (s *LogGroup) CacheName() string {
 	return "Log"
 }
 
-func (s *SimpleLogGroup) CacheId() string {
+func (s *LogGroup) CacheId() string {
 	return fmt.Sprintf("%09d", s.BlockNumber)
 }
 
-func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
+func (s *LogGroup) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -183,22 +164,22 @@ func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
 	return
 }
 
-func (s *SimpleLogGroup) MarshalCache(writer io.Writer) (err error) {
+func (s *LogGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Logs)
 }
 
-func (s *SimpleLogGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Logs, version)
+func (s *LogGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Logs, vers)
 }
 
-func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
+func (s *Log) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
 	// ArticulatedLog
-	optArticulatedLog := &cache.Optional[SimpleFunction]{
+	optArticulatedLog := &cache.Optional[Function]{
 		Value: s.ArticulatedLog,
 	}
 	if err = cache.WriteValue(writer, optArticulatedLog); err != nil {
@@ -212,11 +193,6 @@ func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
 
 	// BlockNumber
 	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
-		return err
-	}
-
-	// CompressedLog
-	if err = cache.WriteValue(writer, s.CompressedLog); err != nil {
 		return err
 	}
 
@@ -253,64 +229,72 @@ func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Log) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
 		return err
 	}
 
 	// ArticulatedLog
-	optArticulatedLog := &cache.Optional[SimpleFunction]{
+	optArticulatedLog := &cache.Optional[Function]{
 		Value: s.ArticulatedLog,
 	}
-	if err = cache.ReadValue(reader, optArticulatedLog, version); err != nil {
+	if err = cache.ReadValue(reader, optArticulatedLog, vers); err != nil {
 		return err
 	}
 	s.ArticulatedLog = optArticulatedLog.Get()
 
 	// BlockHash
-	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockHash, vers); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
-	// CompressedLog
-	if err = cache.ReadValue(reader, &s.CompressedLog, version); err != nil {
-		return err
+	// Used to be CompressedLog, since removed
+	vCompressedLog := version.NewVersion("2.5.10")
+	if vers <= vCompressedLog.Uint64() {
+		var val string
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
+			return err
+		}
 	}
 
 	// Data
-	if err = cache.ReadValue(reader, &s.Data, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Data, vers); err != nil {
 		return err
 	}
 
 	// LogIndex
-	if err = cache.ReadValue(reader, &s.LogIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.LogIndex, vers); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
 		return err
 	}
 
 	// Topics
 	s.Topics = make([]base.Hash, 0)
-	if err = cache.ReadValue(reader, &s.Topics, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Topics, vers); err != nil {
 		return err
 	}
 
 	// TransactionHash
-	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionHash, vers); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionIndex, vers); err != nil {
 		return err
 	}
 
@@ -319,40 +303,11 @@ func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error)
 	return nil
 }
 
-func (s *SimpleLog) FinishUnmarshal() {
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *Log) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 // EXISTING_CODE
-//
-
-func (r *RawLog) RawToSimple(vals map[string]any) (SimpleLog, error) {
-	hash, ok := vals["hash"].(base.Hash)
-	if !ok {
-		logger.Fatal("should not happen ==> hash not found in raw log values")
-	}
-
-	log := SimpleLog{
-		Address:          base.HexToAddress(r.Address),
-		BlockNumber:      utils.MustParseUint(r.BlockNumber),
-		BlockHash:        base.HexToHash(r.BlockHash),
-		TransactionIndex: utils.MustParseUint(r.TransactionIndex),
-		TransactionHash:  hash,
-		LogIndex:         utils.MustParseUint(r.LogIndex),
-		Data:             r.Data,
-		raw:              r,
-	}
-	for _, topic := range r.Topics {
-		log.Topics = append(log.Topics, base.HexToHash(topic))
-	}
-
-	if ts, ok := vals["timestamp"].(base.Timestamp); ok && ts != utils.NOPOSI {
-		log.Timestamp = ts
-	}
-
-	return log, nil
-}
-
 // EXISTING_CODE
-

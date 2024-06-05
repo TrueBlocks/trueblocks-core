@@ -6,9 +6,9 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // AddMiner adds the miner address (for use with post-merge)
@@ -18,16 +18,15 @@ func AddMiner(chain string, miner base.Address, bn base.Blknum, addrMap AddressB
 }
 
 // UniqFromWithdrawals extracts addresses from an array of receipts
-func UniqFromWithdrawals(chain string, withdrawals []types.SimpleWithdrawal, bn base.Blknum, addrMap AddressBooleanMap) (err error) {
+func UniqFromWithdrawals(chain string, withdrawals []types.Withdrawal, bn base.Blknum, addrMap AddressBooleanMap) (err error) {
 	for _, withdrawal := range withdrawals {
-		// #WITHDRAWALS
-		addAddressToMaps(withdrawal.Address.Hex(), bn, types.Withdrawal, addrMap)
+		addAddressToMaps(withdrawal.Address.Hex(), bn, types.WithdrawalAmt, addrMap)
 	}
 	return nil
 }
 
 // UniqFromReceipts extracts addresses from an array of receipts
-func UniqFromReceipts(chain string, receipts []types.SimpleReceipt, addrMap AddressBooleanMap) (err error) {
+func UniqFromReceipts(chain string, receipts []types.Receipt, addrMap AddressBooleanMap) (err error) {
 	for _, receipt := range receipts {
 		created := receipt.ContractAddress
 		addAddressToMaps(created.Hex(), receipt.BlockNumber, receipt.TransactionIndex, addrMap)
@@ -39,7 +38,7 @@ func UniqFromReceipts(chain string, receipts []types.SimpleReceipt, addrMap Addr
 }
 
 // uniqFromLogs extracts addresses from the logs
-func uniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMap) (err error) {
+func uniqFromLogs(chain string, logs []types.Log, addrMap AddressBooleanMap) (err error) {
 	for _, log := range logs {
 		for _, topic := range log.Topics {
 			str := string(topic.Hex()[2:])
@@ -63,12 +62,12 @@ func uniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMa
 }
 
 // UniqFromTraces extracts addresses from traces
-func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBooleanMap) (err error) {
+func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMap) (err error) {
 	conn := rpc.TempConnection(chain)
 
 	for _, trace := range traces {
 		bn := base.Blknum(trace.BlockNumber)
-		txid := uint64(trace.TransactionIndex)
+		txid := trace.TransactionIndex
 
 		from := trace.Action.From.Hex()
 		addAddressToMaps(from, bn, txid, addrMap)
@@ -104,7 +103,7 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 				addAddressToMaps(author, bn, types.ExternalReward, addrMap)
 
 			} else {
-				fmt.Println("Unknown reward type", trace.Action.RewardType)
+				logger.Warn(fmt.Sprintf("Unknown reward type %s for trace: %d.%d.%d", trace.Action.RewardType, trace.BlockNumber, trace.TransactionIndex, trace.TraceIndex))
 				return err
 			}
 
@@ -142,15 +141,17 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 				if trace.Result != nil && trace.Result.Address.IsZero() {
 					if trace.Error != "" {
 						if receipt, err := conn.GetReceiptNoTimestamp(bn, txid); err == nil {
-							addr := hexutil.Encode(receipt.ContractAddress.Bytes())
-							addAddressToMaps(addr, bn, txid, addrMap)
+							address := receipt.ContractAddress.Hex()
+							addAddressToMaps(address, bn, txid, addrMap)
 						}
 					}
 				}
 			}
 
 		} else {
-			fmt.Println("Unknown trace type", trace.TraceType)
+			if len(trace.TraceType) > 0 && trace.BlockNumber != 0 {
+				logger.Warn(fmt.Sprintf("Unknown trace type %s for trace: %d.%d.%d", trace.TraceType, trace.BlockNumber, trace.TransactionIndex, trace.TraceIndex))
+			}
 			return err
 		}
 
@@ -182,11 +183,11 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 
 var mapSync sync.Mutex
 
-// addAddressToMaps help keep track of appearances for an address. An appearance is inserted into `appsMap`
+// addAddressToMaps helps keep track of appearances for an address. An appearance is inserted into `appsMap`
 // if we've never seen this appearance before. `appsMap` is used to build the appearance table when writing the
 // chunk. `addrMap` helps eliminate duplicates and is used to build the address table when writing the chunk.
 // Precompiles are ignored. If the given address string does not start with a lead `0x`, it is normalized.
-func addAddressToMaps(address string, bn, txid uint64, addrMap AddressBooleanMap) {
+func addAddressToMaps(address string, bn base.Blknum, txid base.Txnum, addrMap AddressBooleanMap) {
 	if base.IsPrecompile(address) {
 		return
 	}

@@ -6,20 +6,27 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/proto"
 	"google.golang.org/grpc"
 )
 
 func (opts *NamesOptions) HandleShow() error {
+	if opts.anyCrud() {
+		return opts.HandleCrud()
+	}
+
 	chain := opts.Globals.Chain
-	var fetchData func(modelChan chan types.Modeler[types.RawName], errorChan chan error)
+	var fetchData func(modelChan chan types.Modeler, errorChan chan error)
 
 	apiMode := opts.Globals.IsApiMode()
+	testMode := opts.Globals.TestMode
 
 	var conn *grpc.ClientConn
 	var client proto.NamesClient
@@ -34,13 +41,13 @@ func (opts *NamesOptions) HandleShow() error {
 	if !apiMode && grpcErr == nil {
 		defer conn.Close()
 		// RPC server is running and available
-		fetchData = func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
+		fetchData = func(modelChan chan types.Modeler, errorChan chan error) {
 			opts.fetchFromGrpc(client, modelChan, errorChan)
 		}
 	} else {
 		// Report the error only if we know that the server is running or the user wants us
 		// to be verbose
-		if grpcErr != nil && (!errors.Is(grpcErr, proto.ErrServerNotRunning) || opts.Globals.Verbose) {
+		if (grpcErr != nil && (!errors.Is(grpcErr, proto.ErrServerNotRunning) || opts.Globals.Verbose)) && !utils.IsFuzzing() {
 			logger.Error("gRPC connection error:", grpcErr)
 			logger.Warn("falling back to file-based search")
 		}
@@ -51,30 +58,34 @@ func (opts *NamesOptions) HandleShow() error {
 		}
 		if len(namesArray) == 0 {
 			logger.Warn("No known names found for", opts.Terms)
-			logger.Warn("Original command:", os.Args)
+			if !testMode {
+				args := os.Args
+				args[0] = filepath.Base(args[0])
+				logger.Warn("Original command:", args)
+			}
 			return nil
 		}
 
-		fetchData = func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
+		fetchData = func(modelChan chan types.Modeler, errorChan chan error) {
 			for _, name := range namesArray {
 				modelChan <- &name
 			}
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"expand":  opts.Expand,
 		"prefund": opts.Prefund,
 	}
 	if opts.Addr {
-		extra["single"] = "address"
+		extraOpts["single"] = "address"
 		opts.Globals.NoHeader = true
 	}
 	ctx := context.Background()
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
-func (opts *NamesOptions) fetchFromGrpc(client proto.NamesClient, modelChan chan types.Modeler[types.RawName], errorChan chan error) {
+func (opts *NamesOptions) fetchFromGrpc(client proto.NamesClient, modelChan chan types.Modeler, errorChan chan error) {
 	stream, err := client.SearchStream(context.Background(), &proto.SearchRequest{
 		Parts: int64(opts.getType()),
 		Terms: opts.Terms,

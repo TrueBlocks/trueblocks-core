@@ -8,7 +8,9 @@ import (
 	"context"
 	"fmt"
 	"sort"
+	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -16,20 +18,22 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
+var errMutex sync.Mutex
+
 func (opts *BlocksOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleBlock[types.SimpleTransaction]](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Block](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -38,20 +42,23 @@ func (opts *BlocksOptions) HandleShow() error {
 			cancel()
 
 		} else {
+			showProgress := opts.Globals.ShowProgress()
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !testMode && !utils.IsTerminal(),
+				Enabled: showProgress,
 				Total:   int64(cnt),
 			})
 
 			for _, thisMap := range sliceOfMaps {
 				for app := range thisMap {
-					thisMap[app] = new(types.SimpleBlock[types.SimpleTransaction])
+					thisMap[app] = new(types.Block)
 				}
 
-				items := make([]*types.SimpleBlock[types.SimpleTransaction], 0, len(thisMap))
-				iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[types.SimpleTransaction]) error {
-					bn := uint64(app.BlockNumber)
+				items := make([]*types.Block, 0, len(thisMap))
+				iterFunc := func(app types.Appearance, value *types.Block) error {
+					bn := base.Blknum(app.BlockNumber)
 					if block, err := opts.Conn.GetBlockBodyByNumber(bn); err != nil {
+						errMutex.Lock()
+						defer errMutex.Unlock()
 						delete(thisMap, app)
 						return err
 					} else {
@@ -90,11 +97,11 @@ func (opts *BlocksOptions) HandleShow() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"hashes":     opts.Hashes,
 		"uncles":     opts.Uncles,
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

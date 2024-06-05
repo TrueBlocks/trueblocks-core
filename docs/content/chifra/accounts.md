@@ -1,6 +1,6 @@
 ---
 title: "Accounts"
-description: ""
+description: "Access and cache transactional data"
 lead: ""
 lastmod:
   - :git
@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 1000
+weight: 11000
 toc: true
 ---
 
@@ -52,7 +52,7 @@ Flags:
   -U, --count               display only the count of records for each monitor
   -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
   -b, --bounds              report first and last block this address appears
-  -u, --unripe              list transactions labeled upripe (i.e. less than 28 blocks old)
+  -u, --unripe              list transactions labeled unripe (i.e. less than 28 blocks old)
   -s, --silent              freshen the monitor only (no reporting)
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 250)
@@ -71,15 +71,13 @@ Notes:
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
-- [monitor](/data-model/accounts/#monitor)
-- [appearancecount](/data-model/accounts/#appearancecount)
 - [bounds](/data-model/accounts/#bounds)
+- [monitor](/data-model/accounts/#monitor)
 
 Links:
 
 - [api docs](/api/#operation/accounts-list)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/acctExport.csv)
 
 ## chifra export
 
@@ -133,7 +131,7 @@ Flags:
   -f, --flow string         for the accounting options only, export statements with incoming, outgoing, or zero value
                             One of [ in | out | zero ]
   -y, --factory             for --traces only, report addresses created by (or self-destructed by) the given address(es)
-  -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
+  -u, --unripe              export transactions labeled unripe (i.e. less than 28 blocks old)
   -E, --reversed            produce results in reverse chronological order
   -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
   -F, --first_block uint    first block to process (inclusive)
@@ -157,29 +155,34 @@ Notes:
   - If the --reversed option is present, the appearance list is reversed prior to all processing (including filtering).
   - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).
   - The --withdrawals option is only available on certain chains. It is ignored otherwise.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.
 ```
 
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
-- [monitor](/data-model/accounts/#monitor)
-- [appearancecount](/data-model/accounts/#appearancecount)
-- [statement](/data-model/accounts/#statement)
-- [transaction](/data-model/chaindata/#transaction)
-- [receipt](/data-model/chaindata/#receipt)
+- [function](/data-model/other/#function)
 - [log](/data-model/chaindata/#log)
+- [message](/data-model/other/#message)
+- [monitor](/data-model/accounts/#monitor)
+- [parameter](/data-model/other/#parameter)
+- [receipt](/data-model/chaindata/#receipt)
+- [statement](/data-model/accounts/#statement)
+- [token](/data-model/chainstate/#token)
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
-- [token](/data-model/chainstate/#token)
-- [function](/data-model/other/#function)
-- [parameter](/data-model/other/#parameter)
+- [transaction](/data-model/chaindata/#transaction)
+- [withdrawal](/data-model/chaindata/#withdrawal)
 
 Links:
 
 - [api docs](/api/#operation/accounts-export)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/acctExport.csv)
+
+### further information
+
+The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Please see the README file for the `chifra traces` command for more information.
 
 ## chifra monitors
 
@@ -202,7 +205,7 @@ for the fact that the cache can be easily re-created with `chifra list <address>
 
 ### Watching addresses
 
-The `--watch` command is special. It starts a long-running process that continually reads the blockchain looking for appearances of the addresses it is instructed to watch. It command requires two additional parameters: `--watchlist <filename>` and `--commands <filename>`.  The `--watchlist` file is simply a list of addresses or ENS names, one per line:
+The `--watch` command is special. It starts a long-running process that continually reads the blockchain looking for appearances of the addresses it is instructed to watch. It command requires two additional parameters: `--watchlist <filename>` and `--commands <filename>`. The `--watchlist` file is simply a list of addresses or ENS names, one per line:
 
 ```[bash]
 0x5e349eca2dc61abcd9dd99ce94d04136151a09ee
@@ -245,6 +248,7 @@ Flags:
   -a, --watchlist string   available with --watch option only, a file containing the addresses to watch
   -c, --commands string    available with --watch option only, the file containing the list of commands to apply to each watched address
   -b, --batch_size uint    available with --watch option only, the number of monitors to process in each batch (default 8)
+  -u, --run_count uint     available with --watch option only, run the monitor this many times, then quit
   -s, --sleep float        available with --watch option only, the number of seconds to sleep between runs (default 14)
   -D, --decache            removes related items from the cache
   -x, --fmt string         export format, one of [none|json*|txt|csv]
@@ -261,6 +265,7 @@ Notes:
 
 Data models produced by this tool:
 
+- [message](/data-model/other/#message)
 - [monitor](/data-model/accounts/#monitor)
 - [monitorclean](/data-model/admin/#monitorclean)
 
@@ -268,7 +273,6 @@ Links:
 
 - [api docs](/api/#operation/accounts-monitors)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/acctExport.csv)
 
 ## chifra names
 
@@ -319,13 +323,13 @@ Notes:
 
 Data models produced by this tool:
 
+- [message](/data-model/other/#message)
 - [name](/data-model/accounts/#name)
 
 Links:
 
 - [api docs](/api/#operation/accounts-names)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/ethNames.csv)
 
 ## chifra abis
 
@@ -388,9 +392,8 @@ Links:
 
 - [api docs](/api/#operation/accounts-abis)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/grabABI.csv)
 
-### notes
+### further information
 
 Without the --verbose option, the result is a compacted form of the ABI. Add --verbose for full details.
 
@@ -399,3 +402,4 @@ names. The second set contains approximately 700 function signatures. The cross 
 combinations of name(signature) each of which is hashed to create either a four-byte or a 32-byte hash. Very infrequently,
 the tool will find matches for an otherwise unknown signatures.
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

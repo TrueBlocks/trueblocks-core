@@ -13,10 +13,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-var loadedCustomNames map[base.Address]types.SimpleName = map[base.Address]types.SimpleName{}
+var loadedCustomNames map[base.Address]types.Name = map[base.Address]types.Name{}
 var loadedCustomNamesMutex sync.Mutex
 
-func loadCustomMap(chain string, terms []string, parts Parts, namesMap *map[base.Address]types.SimpleName) (err error) {
+func loadCustomMap(chain string, terms []string, parts Parts, namesMap *map[base.Address]types.Name) (err error) {
 	if len(loadedCustomNames) != 0 {
 		// We have already loaded the data
 		for _, name := range loadedCustomNames {
@@ -45,8 +45,8 @@ func loadCustomMap(chain string, terms []string, parts Parts, namesMap *map[base
 	return
 }
 
-func unmarshallCustomNames(source io.Reader, terms []string, parts Parts, namesMap *map[base.Address]types.SimpleName) (customNames map[base.Address]types.SimpleName, err error) {
-	customNames = map[base.Address]types.SimpleName{}
+func unmarshallCustomNames(source io.Reader, terms []string, parts Parts, namesMap *map[base.Address]types.Name) (customNames map[base.Address]types.Name, err error) {
+	customNames = map[base.Address]types.Name{}
 
 	var reader NameReader
 	reader, err = NewNameReader(source, NameReaderTab)
@@ -59,7 +59,7 @@ func unmarshallCustomNames(source io.Reader, terms []string, parts Parts, namesM
 	}
 
 	for {
-		var name types.SimpleName
+		var name types.Name
 		name, err = reader.Read()
 		if err == io.EOF {
 			// Supress EOF, the file can be empty
@@ -77,12 +77,12 @@ func unmarshallCustomNames(source io.Reader, terms []string, parts Parts, namesM
 	return
 }
 
-func loadTestNames(terms []string, parts Parts, all *map[base.Address]types.SimpleName, namesMap *map[base.Address]types.SimpleName) {
+func loadTestNames(terms []string, parts Parts, all *map[base.Address]types.Name, namesMap *map[base.Address]types.Name) {
 	for i := 1; i < 5; i++ {
 		addressStr := fmt.Sprintf("0x%040d", i)
 		num := fmt.Sprintf("%d", i)
 		address := base.HexToAddress(addressStr)
-		name := types.SimpleName{
+		name := types.Name{
 			Address:  address,
 			Name:     "Account_" + num,
 			Tags:     "81-Custom",
@@ -117,7 +117,7 @@ func writeCustomNames(output *os.File) (err error) {
 		"0x0000000000000000000000000000000000000004": true,
 	}
 
-	sorted := make([]types.SimpleName, 0, len(loadedCustomNames))
+	sorted := make([]types.Name, 0, len(loadedCustomNames))
 	for _, name := range loadedCustomNames {
 		sorted = append(sorted, name)
 	}

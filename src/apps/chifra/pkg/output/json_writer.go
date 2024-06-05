@@ -7,7 +7,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type FieldType int
@@ -54,7 +54,7 @@ type JsonWriter struct {
 	// errors to output
 	errs []string
 	// function to get meta data
-	GetMeta func() (*rpc.MetaData, error)
+	GetMeta func() (*types.MetaData, error)
 	// flag indicating if we should output `meta` object as
 	// well
 	ShouldWriteMeta bool
@@ -68,8 +68,8 @@ func NewJsonWriter(w io.Writer) *JsonWriter {
 	return &JsonWriter{
 		outputWriter: w,
 		indentString: "  ",
-		GetMeta: func() (*rpc.MetaData, error) {
-			return &rpc.MetaData{}, nil
+		GetMeta: func() (*types.MetaData, error) {
+			return &types.MetaData{}, nil
 		},
 	}
 }
@@ -92,15 +92,15 @@ func (w *JsonWriter) popState() (prevState state) {
 	return
 }
 
-// writeRaw writes directly to `outputWriter` without performing any
+// writeBase writes directly to `outputWriter` without performing any
 // additional operations. It is a foundation for all other Write*
 // functions
-func (w *JsonWriter) writeRaw(toWrite []byte) (n int, err error) {
+func (w *JsonWriter) writeBase(toWrite []byte) (n int, err error) {
 	return w.outputWriter.Write(toWrite)
 }
 
 func (w *JsonWriter) writeNewline() (n int, err error) {
-	return w.writeRaw([]byte("\n"))
+	return w.writeBase([]byte("\n"))
 }
 
 // writeErrors writes `errors` array
@@ -116,7 +116,7 @@ func (w *JsonWriter) openRoot() (n int, err error) {
 		return
 	}
 
-	n, err = w.writeRaw([]byte("{"))
+	n, err = w.writeBase([]byte("{"))
 	w.indentLevel = 1
 	w.previousStates = append(w.previousStates, w.state)
 	w.state.position = positionInRoot
@@ -151,7 +151,7 @@ func (w *JsonWriter) GetCurrentPrefix() (prefix string) {
 // Indent writes indentation string
 func (w *JsonWriter) Indent() {
 	prefix := w.GetCurrentPrefix()
-	_, _ = w.writeRaw([]byte(prefix))
+	_, _ = w.writeBase([]byte(prefix))
 }
 
 // Write writes bytes p, adding indentation and comma before if needed.
@@ -164,7 +164,7 @@ func (w *JsonWriter) Write(p []byte) (n int, err error) {
 		return
 	}
 	if shouldInsertComma(w.state) {
-		bw, cerr := w.writeRaw([]byte(comma))
+		bw, cerr := w.writeBase([]byte(comma))
 		n += bw
 		err = cerr
 		if err != nil {
@@ -180,7 +180,7 @@ func (w *JsonWriter) Write(p []byte) (n int, err error) {
 	if w.state.position == positionInArray || w.state.position == positionInObject || w.state.position == positionInRoot {
 		w.state.children++
 	}
-	return w.writeRaw(p)
+	return w.writeBase(p)
 }
 
 // WriteItem writes `value` under the key `key`
@@ -243,7 +243,7 @@ func (w *JsonWriter) Close() error {
 	}
 	// Print closing bracket
 	if w.state.position == positionEmpty && w.DefaultField.Key == "" {
-		_, err := w.writeRaw([]byte("{}"))
+		_, err := w.writeBase([]byte("{}"))
 		return err
 	}
 	_, _ = w.CloseField(FieldObject)
@@ -260,7 +260,7 @@ func (w *JsonWriter) OpenField(key string, fieldType FieldType) (n int, err erro
 	}
 
 	if shouldInsertComma(w.state) {
-		bw, err := w.writeRaw([]byte(comma))
+		bw, err := w.writeBase([]byte(comma))
 		n += bw
 		if err != nil {
 			return n, err
@@ -278,9 +278,9 @@ func (w *JsonWriter) OpenField(key string, fieldType FieldType) (n int, err erro
 	}
 
 	if key == "" {
-		n, err = w.writeRaw([]byte(bracket))
+		n, err = w.writeBase([]byte(bracket))
 	} else {
-		n, err = w.writeRaw([]byte(fmt.Sprintf(`"%s": %s`, key, bracket)))
+		n, err = w.writeBase([]byte(fmt.Sprintf(`"%s": %s`, key, bracket)))
 	}
 	if err != nil {
 		return
@@ -308,7 +308,7 @@ func (w *JsonWriter) CloseField(fieldType FieldType) (n int, err error) {
 		_, _ = w.writeNewline()
 		w.Indent()
 	}
-	n, err = w.writeRaw([]byte(bracket))
+	n, err = w.writeBase([]byte(bracket))
 	if err != nil {
 		return
 	}

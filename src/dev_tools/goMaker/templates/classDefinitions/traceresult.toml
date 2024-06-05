@@ -1,0 +1,9 @@
+[settings]
+    class = "TraceResult"
+    contained_by = "trace"
+    doc_group = "02-Chain Data"
+    doc_descr = "trace result data as returned from the RPC (with slight enhancements)"
+    doc_route = "227-traceResult"
+    attributes = ""
+    produced_by = "traces, export, blocks"
+    cache_type = "marshal_only"

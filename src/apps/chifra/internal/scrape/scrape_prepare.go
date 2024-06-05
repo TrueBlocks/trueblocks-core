@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // Prepare performs actions that need to be done prior to entering the
@@ -21,13 +22,6 @@ import (
 // block (reads the allocation file, if present) is processed.
 func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	chain := opts.Globals.Chain
-
-	// Notify feature requires IPFS daemon to be running.
-	if ok, _ := NotifyConfigured(); ok {
-		if !config.IpfsRunning() {
-			logger.Fatal("notify requires IPFS daemon")
-		}
-	}
 
 	// We always clean the temporary folders (other than staging) when starting
 	_ = cleanEphemeralIndexFolders(chain)
@@ -45,10 +39,10 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 		return false, err
 	}
 
-	appMap := make(map[string][]index.AppearanceRecord, len(prefunds))
+	appMap := make(map[string][]types.AppRecord, len(prefunds))
 	for i, prefund := range prefunds {
 		addr := prefund.Address.Hex()
-		appMap[addr] = append(appMap[addr], index.AppearanceRecord{
+		appMap[addr] = append(appMap[addr], types.AppRecord{
 			BlockNumber:      0,
 			TransactionIndex: uint32(i),
 		})
@@ -73,7 +67,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 		report.FileSize = file.FileSize(indexPath)
 		report.Report()
 	}
-	if err = NotifyChunkWritten(chunk, indexPath); err != nil {
+	if err = opts.NotifyChunkWritten(chunk, indexPath); err != nil {
 		return false, err
 	}
 

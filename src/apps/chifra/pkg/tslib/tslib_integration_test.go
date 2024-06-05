@@ -17,7 +17,7 @@ import (
 
 type Expected struct {
 	name string
-	bn   uint64
+	bn   base.Blknum
 	ts   base.Timestamp
 	date string
 }
@@ -28,7 +28,7 @@ func TestLoadTimestampsPass(t *testing.T) {
 		{name: "Block 1 Mil", bn: 1000000, ts: 1455404053, date: "2016-02-13 22:54:13"},
 	}
 
-	_ = config.GetRootConfig()
+	config.GetRootConfig()
 	for _, e := range expected {
 		bn, err := FromTsToBn(utils.GetTestChain(), e.ts)
 		if err != nil {

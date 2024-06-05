@@ -51,7 +51,7 @@ func NewNameWriter(destWriter io.Writer) *NameWriter {
 	return writer
 }
 
-func (w *NameWriter) Write(name *types.SimpleName) (err error) {
+func (w *NameWriter) Write(name *types.Name) (err error) {
 	if w.WriteHeader && !w.headerWritten {
 		if err = w.writeHeader(); err != nil {
 			return

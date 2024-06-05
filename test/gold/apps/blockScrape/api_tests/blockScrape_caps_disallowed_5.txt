@@ -1,6 +1,0 @@
-scrape?append
-{
-  "errors": [
-    "Invalid key (append) in scrape route."
-  ]
-}

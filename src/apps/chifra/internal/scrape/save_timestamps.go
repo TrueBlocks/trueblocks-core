@@ -39,15 +39,23 @@ func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 
 	} else if blocks[0] > nTimestamps {
 		// we need to catch up (for example, the user truncated the timestamps file while debugging)
-		for block := nTimestamps; block < blocks[0]; block++ {
+		// don't get more than maxBlocks at a time
+		cnt := 0
+		maxBlocks := 1000
+		for block := nTimestamps; block < blocks[0] && cnt < maxBlocks; block++ {
 			ts := tslib.TimestampRecord{
 				Bn: uint32(block),
 				Ts: uint32(bm.opts.Conn.GetBlockTimestamp(block)),
 			}
-			if err := writeOne(fp, &ts, block, blocks); err != nil {
+			msg := fmt.Sprintf("Backfilling timestamps (%d-%d) at ", cnt, maxBlocks)
+			logProgressTs(msg, block, blocks[len(blocks)-1])
+			if err := binary.Write(fp, binary.LittleEndian, &ts); err != nil {
 				return err
 			}
+			cnt++
 		}
+		// we must return early here, otherwise there will be skipped records
+		return nil
 	}
 
 	// Append to the timestamps file all the new timestamps but as we do that make sure we're
@@ -63,7 +71,8 @@ func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 		}
 
 		ts := bm.timestamps[block]
-		if err := writeOne(fp, &ts, block, blocks); err != nil {
+		logProgressTs("Updating timestamps ", block, blocks[len(blocks)-1])
+		if err := binary.Write(fp, binary.LittleEndian, &ts); err != nil {
 			return err
 		}
 
@@ -76,12 +85,14 @@ func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 	return nil
 }
 
-func writeOne(fp *os.File, ts *tslib.TimestampRecord, block base.Blknum, blocks []base.Blknum) error {
-	logger.Progress((block%13) == 0, fmt.Sprintf("Updating timestamps %-04d of %-04d (%-04d remaining)"+spaces,
-		// logger.Info(fmt.Sprintf("Updating timestamps %-04d of %-04d (%-04d remaining)"+spaces,
-		block,
-		blocks[len(blocks)-1],
-		blocks[len(blocks)-1]-block,
-	))
-	return binary.Write(fp, binary.LittleEndian, ts)
+func logProgressTs(msgIn string, cur, total base.Blknum) {
+	frequency := base.Blknum(13)
+	left := total - cur
+	msg := fmt.Sprintf("%s%-04d of %-04d (%-04d remaining)"+spaces,
+		msgIn,
+		cur,
+		total,
+		left,
+	)
+	logger.Progress((cur%frequency) == 0, msg)
 }

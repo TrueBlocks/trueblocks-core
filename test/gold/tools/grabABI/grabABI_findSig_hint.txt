@@ -1,7 +1,0 @@
-chifra abis  --find 0xdbde1988 --hint Reward
-TEST[DATE|TIME] Find:  [0xdbde1988]
-TEST[DATE|TIME] Hint:  [Reward]
-TEST[DATE|TIME] Caps:  cache,decache
-TEST[DATE|TIME] Format:  txt
-encoding	signature
-0xdbde1988	transferFromWithoutReward(address,address,uint256)

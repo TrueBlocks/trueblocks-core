@@ -1,8 +1,11 @@
 package chunksPkg
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+)
 
-func (opts *ChunksOptions) HandleDump(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleDump(blockNums []base.Blknum) error {
 	return validate.Usage("Extractor for {0} not yet implemented.", opts.Mode)
 }
 

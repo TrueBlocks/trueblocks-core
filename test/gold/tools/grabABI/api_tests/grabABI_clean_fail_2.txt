@@ -1,6 +1,0 @@
-abis?decache&find=0x1aa3a008
-{
-  "errors": [
-    "The --decache option is not available in API mode."
-  ]
-}

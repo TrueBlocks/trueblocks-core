@@ -1,0 +1,6 @@
+name        ,type    ,strDefault ,attributes ,docOrder ,description
+address     ,address ,           ,simponly   ,       1 ,the address of this monitor
+deleted     ,bool    ,           ,simponly   ,       5 ,`true` if this monitor has been deleted
+fileSize    ,int64   ,           ,simponly   ,       3 ,the size of this monitor on disc
+lastScanned ,uint32  ,           ,simponly   ,       4 ,the last scanned block number
+nRecords    ,int64   ,           ,simponly   ,       2 ,the number of appearances for this monitor

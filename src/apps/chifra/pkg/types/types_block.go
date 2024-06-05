@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -17,75 +18,44 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // EXISTING_CODE
 
-type RawBlock struct {
-	Author           string          `json:"author"`
-	BaseFeePerGas    string          `json:"baseFeePerGas"`
-	BlockNumber      string          `json:"number"`
-	Difficulty       string          `json:"difficulty"`
-	ExtraData        string          `json:"extraData"`
-	GasLimit         string          `json:"gasLimit"`
-	GasUsed          string          `json:"gasUsed"`
-	Hash             string          `json:"hash"`
-	LogsBloom        string          `json:"logsBloom"`
-	Miner            string          `json:"miner"`
-	MixHash          string          `json:"mixHash"`
-	Nonce            string          `json:"nonce"`
-	ParentHash       string          `json:"parentHash"`
-	ReceiptsRoot     string          `json:"receiptsRoot"`
-	Sha3Uncles       string          `json:"sha3Uncles"`
-	Size             string          `json:"size"`
-	StateRoot        string          `json:"stateRoot"`
-	Timestamp        string          `json:"timestamp"`
-	TotalDifficulty  string          `json:"totalDifficulty"`
-	Transactions     []any           `json:"transactions"`
-	TransactionsRoot string          `json:"transactionsRoot"`
-	Uncles           []string        `json:"uncles"`
-	Withdrawals      []RawWithdrawal `json:"withdrawals"`
+type Block struct {
+	BaseFeePerGas base.Gas       `json:"baseFeePerGas"`
+	BlockNumber   base.Blknum    `json:"blockNumber"`
+	Difficulty    base.Value     `json:"difficulty"`
+	GasLimit      base.Gas       `json:"gasLimit"`
+	GasUsed       base.Gas       `json:"gasUsed"`
+	Hash          base.Hash      `json:"hash"`
+	Miner         base.Address   `json:"miner"`
+	ParentHash    base.Hash      `json:"parentHash"`
+	Timestamp     base.Timestamp `json:"timestamp"`
+	Transactions  []Transaction  `json:"transactions"`
+	Uncles        []base.Hash    `json:"uncles,omitempty"`
+	Withdrawals   []Withdrawal   `json:"withdrawals,omitempty"`
 	// EXISTING_CODE
+	Number base.Blknum `json:"number"`
 	// EXISTING_CODE
 }
 
-type SimpleBlock[Tx string | SimpleTransaction] struct {
-	BaseFeePerGas base.Wei           `json:"baseFeePerGas"`
-	BlockNumber   base.Blknum        `json:"blockNumber"`
-	Difficulty    uint64             `json:"difficulty"`
-	GasLimit      base.Gas           `json:"gasLimit"`
-	GasUsed       base.Gas           `json:"gasUsed"`
-	Hash          base.Hash          `json:"hash"`
-	Miner         base.Address       `json:"miner"`
-	ParentHash    base.Hash          `json:"parentHash"`
-	Timestamp     base.Timestamp     `json:"timestamp"`
-	Transactions  []Tx               `json:"transactions"`
-	Uncles        []base.Hash        `json:"uncles,omitempty"`
-	Withdrawals   []SimpleWithdrawal `json:"withdrawals,omitempty"`
-	raw           *RawBlock          `json:"-"`
-	// EXISTING_CODE
-	// EXISTING_CODE
+func (s Block) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *SimpleBlock[Tx]) Raw() *RawBlock {
-	return s.raw
-}
-
-func (s *SimpleBlock[Tx]) SetRaw(raw *RawBlock) {
-	s.raw = raw
-}
-
-func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["hashes"] == true {
+	if extraOpts["hashes"] == true {
 		txHashes := make([]string, 0, len(s.Transactions))
 		// Check what type Tx is
 		switch txs := any(s.Transactions).(type) {
-		case []SimpleTransaction:
+		case []Transaction:
 			for _, tx := range txs {
 				txHashes = append(txHashes, tx.Hash.String())
 			}
@@ -94,7 +64,7 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 			// TODO: no error if can't cast?
 		}
 		model := Model{
-			Data: map[string]interface{}{
+			Data: map[string]any{
 				"hash":        s.Hash,
 				"blockNumber": s.BlockNumber,
 				"parentHash":  s.ParentHash,
@@ -115,7 +85,7 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 			if s.BlockNumber >= base.KnownBlock(chain, base.Shanghai) {
 				withs := make([]map[string]any, 0, len(s.Withdrawals))
 				for _, w := range s.Withdrawals {
-					withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
+					withs = append(withs, w.Model(chain, format, verbose, extraOpts).Data)
 				}
 				model.Data["withdrawals"] = withs
 			}
@@ -131,7 +101,7 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 		return model
 	}
 
-	model = map[string]interface{}{
+	model = map[string]any{
 		"gasUsed":       s.GasUsed,
 		"gasLimit":      s.GasLimit,
 		"hash":          s.Hash,
@@ -141,7 +111,7 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 		"difficulty":    s.Difficulty,
 		"timestamp":     s.Timestamp,
 		"date":          s.Date(),
-		"baseFeePerGas": s.BaseFeePerGas.Uint64(),
+		"baseFeePerGas": s.BaseFeePerGas,
 	}
 
 	order = []string{
@@ -158,50 +128,40 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 	}
 
 	if format == "json" {
-		if extraOptions["list"] == true {
-			model["transactionsCnt"] = len(s.Transactions)
-			model["unclesCnt"] = len(s.Uncles)
-			model["withdrawalsCnt"] = len(s.Withdrawals)
+		// If we wanted just transactions' hashes, we would return earlier. So here we know that we
+		// have transactions as objects and want to load models for them to be able to display them
+		txs, ok := any(s.Transactions).([]Transaction)
+		if ok {
+			items := make([]map[string]any, 0, len(txs))
+			for _, txObject := range txs {
+				items = append(items, txObject.Model(chain, format, verbose, extraOpts).Data)
+			}
+			model["transactions"] = items
 		} else {
-			// If we wanted just transactions' hashes, we would return earlier. So here we know that we
-			// have transactions as objects and want to load models for them to be able to display them
-			txs, ok := any(s.Transactions).([]SimpleTransaction)
-			if ok {
-				items := make([]map[string]interface{}, 0, len(txs))
-				for _, txObject := range txs {
-					items = append(items, txObject.Model(chain, format, verbose, extraOptions).Data)
-				}
-				model["transactions"] = items
-			} else {
-				model["transactions"] = s.Transactions
+			model["transactions"] = s.Transactions
+		}
+		order = append(order, "transactions")
+		if s.Uncles == nil {
+			model["uncles"] = []base.Hash{}
+		} else {
+			model["uncles"] = s.Uncles
+		}
+		order = append(order, "uncles")
+		if len(s.Withdrawals) > 0 {
+			withs := make([]map[string]any, 0, len(s.Withdrawals))
+			for _, w := range s.Withdrawals {
+				withs = append(withs, w.Model(chain, format, verbose, extraOpts).Data)
 			}
-			order = append(order, "transactions")
-			if s.Uncles == nil {
-				model["uncles"] = []base.Hash{}
-			} else {
-				model["uncles"] = s.Uncles
-			}
-			order = append(order, "uncles")
-			if len(s.Withdrawals) > 0 {
-				withs := make([]map[string]any, 0, len(s.Withdrawals))
-				for _, w := range s.Withdrawals {
-					withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
-				}
-				model["withdrawals"] = withs
-				order = append(order, "withdrawals")
-			} else {
-				model["withdrawals"] = []SimpleWithdrawal{}
-			}
+			model["withdrawals"] = withs
+			order = append(order, "withdrawals")
+		} else {
+			model["withdrawals"] = []Withdrawal{}
 		}
 	} else {
 		model["transactionsCnt"] = len(s.Transactions)
 		order = append(order, "transactionsCnt")
 		model["withdrawalsCnt"] = len(s.Withdrawals)
 		order = append(order, "withdrawalsCnt")
-		if extraOptions["list"] == true {
-			model["unclesCnt"] = len(s.Uncles)
-			order = append(order, "unclesCnt")
-		}
 	}
 	// EXISTING_CODE
 
@@ -211,20 +171,19 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 	}
 }
 
-func (s *SimpleBlock[Tx]) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+func (s *Block) Date() string {
+	return base.FormattedDate(s.Timestamp)
 }
 
-// --> cacheable by block
-func (s *SimpleBlock[Tx]) CacheName() string {
+func (s *Block) CacheName() string {
 	return "Block"
 }
 
-func (s *SimpleBlock[Tx]) CacheId() string {
+func (s *Block) CacheId() string {
 	return fmt.Sprintf("%09d", s.BlockNumber)
 }
 
-func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
+func (s *Block) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -238,9 +197,9 @@ func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
 	return
 }
 
-func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
+func (s *Block) MarshalCache(writer io.Writer) (err error) {
 	// BaseFeePerGas
-	if err = cache.WriteValue(writer, &s.BaseFeePerGas); err != nil {
+	if err = cache.WriteValue(writer, s.BaseFeePerGas); err != nil {
 		return err
 	}
 
@@ -285,15 +244,9 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 	}
 
 	// Transactions
-	var txHashes []string
-	switch v := any(s.Transactions).(type) {
-	case []string:
-		txHashes = v
-	case []SimpleTransaction:
-		txHashes = make([]string, 0, len(s.Transactions))
-		for _, tx := range v {
-			txHashes = append(txHashes, tx.Hash.Hex())
-		}
+	txHashes := make([]string, 0, len(s.Transactions))
+	for _, tx := range s.Transactions {
+		txHashes = append(txHashes, tx.Hash.Hex())
 	}
 	if err = cache.WriteValue(writer, txHashes); err != nil {
 		return err
@@ -316,67 +269,85 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *Block) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// BaseFeePerGas
-	if err = cache.ReadValue(reader, &s.BaseFeePerGas, version); err != nil {
-		return err
+	vBaseFeePerGas := version.NewVersion("2.5.8")
+	if vers <= vBaseFeePerGas.Uint64() {
+		var val base.Wei
+		if err = cache.ReadValue(reader, &val, vers); err != nil {
+			return err
+		}
+		s.BaseFeePerGas = weiToGas(val)
+	} else {
+		// BaseFeePerGas
+		if err = cache.ReadValue(reader, &s.BaseFeePerGas, vers); err != nil {
+			return err
+		}
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
 		return err
 	}
 
 	// Difficulty
-	if err = cache.ReadValue(reader, &s.Difficulty, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Difficulty, vers); err != nil {
 		return err
 	}
 
 	// GasLimit
-	if err = cache.ReadValue(reader, &s.GasLimit, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasLimit, vers); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasUsed, vers); err != nil {
 		return err
 	}
 
 	// Hash
-	if err = cache.ReadValue(reader, &s.Hash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Hash, vers); err != nil {
 		return err
 	}
 
 	// Miner
-	if err = cache.ReadValue(reader, &s.Miner, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Miner, vers); err != nil {
 		return err
 	}
 
 	// ParentHash
-	if err = cache.ReadValue(reader, &s.ParentHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.ParentHash, vers); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
 		return err
 	}
 
 	// Transactions
-	s.Transactions = make([]string, 0)
-	if err = cache.ReadValue(reader, &s.Transactions, version); err != nil {
+	hashes := make([]string, 0, len(s.Transactions))
+	if err = cache.ReadValue(reader, &hashes, vers); err != nil {
 		return err
+	}
+	s.Transactions = make([]Transaction, 0, len(hashes))
+	for i := 0; i < len(hashes); i++ {
+		s.Transactions[i].Hash = base.HexToHash(hashes[i])
 	}
 
 	// Uncles
 	s.Uncles = make([]base.Hash, 0)
-	if err = cache.ReadValue(reader, &s.Uncles, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Uncles, vers); err != nil {
 		return err
 	}
 
 	// Withdrawals
-	s.Withdrawals = make([]SimpleWithdrawal, 0)
-	if err = cache.ReadValue(reader, &s.Withdrawals, version); err != nil {
+	s.Withdrawals = make([]Withdrawal, 0)
+	if err = cache.ReadValue(reader, &s.Withdrawals, vers); err != nil {
 		return err
 	}
 
@@ -385,7 +356,8 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 	return nil
 }
 
-func (s *SimpleBlock[Tx]) FinishUnmarshal() {
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *Block) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -393,22 +365,8 @@ func (s *SimpleBlock[Tx]) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-// Dup duplicates all fields but Transactions into target
-func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
-	target.BaseFeePerGas = s.BaseFeePerGas
-	target.BlockNumber = s.BlockNumber
-	target.Difficulty = s.Difficulty
-	target.GasLimit = s.GasLimit
-	target.GasUsed = s.GasUsed
-	target.Hash = s.Hash
-	target.Miner = s.Miner
-	target.ParentHash = s.ParentHash
-	target.Timestamp = s.Timestamp
-	// TODO: This copy of an array possibly doesn't do what we expect
-	target.Uncles = s.Uncles
-	target.Withdrawals = s.Withdrawals
-	target.raw = s.raw
+func weiToGas(w base.Wei) base.Gas {
+	return base.Gas(w.Uint64())
 }
 
 // EXISTING_CODE
-

@@ -9,12 +9,12 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
@@ -30,13 +30,13 @@ func (opts *ChunksOptions) validateChunks() error {
 
 	if opts.Globals.IsApiMode() {
 		if len(opts.Tag) > 0 {
-			return validate.Usage("The {0} option is not available {1}.", "--tag", "in api mode")
+			return validate.Usage("The {0} option is not available{1}.", "--tag", " in api mode")
 		}
-		if opts.Truncate != utils.NOPOS {
-			return validate.Usage("The {0} option is not available {1}.", "--truncate", "in api mode")
+		if opts.Truncate != base.NOPOSN {
+			return validate.Usage("The {0} option is not available{1}.", "--truncate", " in api mode")
 		}
 		if opts.Mode == "pins" {
-			return validate.Usage("The {0} mode is not available {1}.", "pins", "in api mode")
+			return validate.Usage("The {0} mode is not available{1}.", "pins", " in api mode")
 		}
 	} else if len(opts.Tag) > 0 {
 		if !version.IsValidVersion(opts.Tag) {
@@ -48,13 +48,15 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Mode == "pins" {
-		if !opts.List && !opts.Unpin {
-			return validate.Usage("{0} mode requires {1}.", "pins", "either --list or --unpin")
+		if !opts.List && !opts.Unpin && !opts.Count {
+			return validate.Usage("{0} mode requires {1}.", "pins", "either --list, --count, or --unpin")
 		}
+
 		if opts.Unpin {
 			if !file.FileExists("./unpins") {
-				return validate.Usage("The {0} file does not exist.", "./unpins")
+				return validate.Usage("The file {0} was not found in the local folder.", "./unpins")
 			}
+
 			hasOne := false
 			lines := file.AsciiFileToLines("./unpins")
 			for _, line := range lines {
@@ -67,23 +69,22 @@ func (opts *ChunksOptions) validateChunks() error {
 				return validate.Usage("The {0} file does not contain any valid CIDs.", "./unpins")
 			}
 		}
-	} else if opts.List {
-		return validate.Usage("The {0} option is only available in {1} mode.", "--list", "pins")
-	} else if opts.Unpin {
-		return validate.Usage("The {0} option is only available in {1} mode.", "--unpin", "pins")
-	} else if opts.Count {
-		return validate.Usage("The {0} option is only available in {1} mode.", "--count", "pins")
+
+	} else {
+		if opts.List {
+			return validate.Usage("The {0} option is only available in {1} mode.", "--list", "pins")
+		} else if opts.Unpin {
+			return validate.Usage("The {0} option is only available in {1} mode.", "--unpin", "pins")
+		} else if opts.Count {
+			return validate.Usage("The {0} option is only available in {1} mode.", "--count", "pins")
+		}
 	}
 
 	if !config.IsChainConfigured(chain) {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	if len(opts.Mode) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[manifest|index|blooms|pins|addresses|appearances|stats]")
-	}
-
-	err := validate.ValidateEnum("mode", opts.Mode, "[manifest|index|blooms|pins|addresses|appearances|stats]")
+	err := validate.ValidateEnumRequired("mode", opts.Mode, "[manifest|index|blooms|pins|addresses|appearances|stats]")
 	if err != nil {
 		return err
 	}
@@ -108,7 +109,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 
 		if opts.Check {
-			return validate.Usage("The {0} option is not available in {1} mode.", "--check", opts.Mode)
+			return validate.Usage("The {0} option is not available{1}.", "--check", " in "+opts.Mode+" mode")
 		}
 	}
 
@@ -161,7 +162,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		if len(opts.Tag) > 0 {
 			return validate.Usage("The {0} option is only available {1}.", "--tag", "in index mode")
 		}
-		if opts.Truncate != utils.NOPOS {
+		if opts.Truncate != base.NOPOSN {
 			return validate.Usage("The {0} option is only available {1}.", "--truncate", "in index mode")
 		}
 		if len(opts.Belongs) > 0 {
@@ -222,7 +223,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		return validate.Usage("The {0} option requires exactly one block identifier.", "--diff")
 	}
 
-	if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS || opts.MaxAddrs != utils.NOPOS {
+	if opts.FirstBlock != 0 || opts.LastBlock != base.NOPOSN || opts.MaxAddrs != base.NOPOS {
 		if opts.FirstBlock >= opts.LastBlock {
 			msg := fmt.Sprintf("first_block (%d) must be strictly earlier than last_block (%d).", opts.FirstBlock, opts.LastBlock)
 			return validate.Usage(msg)
@@ -255,16 +256,16 @@ func (opts *ChunksOptions) validateChunks() error {
 func (opts *ChunksOptions) isDisallowed(test bool, mode string) error {
 	if test {
 		if opts.Pin {
-			return validate.Usage("The {0} option is not available in {1} mode.", "--pin", mode)
+			return validate.Usage("The {0} option is not available{1}.", "--pin", " in "+mode+" mode")
 		}
 		if opts.Publish {
-			return validate.Usage("The {0} option is not available in {1} mode.", "--publish", mode)
+			return validate.Usage("The {0} option is not available{1}.", "--publish", " in "+mode+" mode")
 		}
 		if opts.Remote {
-			return validate.Usage("The {0} option is not available in {1} mode.", "--remote", mode)
+			return validate.Usage("The {0} option is not available{1}.", "--remote", " in "+mode+" mode")
 		}
-		if opts.Truncate != utils.NOPOS {
-			return validate.Usage("The {0} option is not available in {1} mode.", "--truncate", mode)
+		if opts.Truncate != base.NOPOSN {
+			return validate.Usage("The {0} option is not available{1}.", "--truncate", " in "+mode+" mode")
 		}
 	}
 	return nil

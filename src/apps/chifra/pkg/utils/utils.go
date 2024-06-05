@@ -9,16 +9,12 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"math/big"
 	"net/http"
-	"os"
 	"os/exec"
 	"reflect"
 	"runtime"
 	"strconv"
 	"strings"
-
-	"golang.org/x/term"
 )
 
 // IsServerWriter tries to cast `w` into `http.ResponseWriter`
@@ -26,10 +22,6 @@ import (
 func IsServerWriter(w io.Writer) bool {
 	_, ok := w.(http.ResponseWriter)
 	return ok
-}
-
-func IsTerminal() bool {
-	return term.IsTerminal(int(os.Stdout.Fd()))
 }
 
 func OpenBrowser(url string) {
@@ -79,28 +71,6 @@ func PadRight(str string, totalLen int, pad rune) string {
 		tail += string(pad)
 	}
 	return str + tail
-}
-
-// TODO: Might be nice if the below two values were the same so we could cast between them.
-// TODO: Trouble is that these values may be stored on disc.
-
-const NOPOS = uint64(^uint64(0))
-const NOPOSI = int64(0xdeadbeef)
-
-// Min calculates the minimum between two unsigned integers (golang has no such function)
-func Min[T int | float64 | uint32 | int64 | uint64](x, y T) T {
-	if x < y {
-		return x
-	}
-	return y
-}
-
-// Max calculates the max between two unsigned integers (golang has no such function)
-func Max[T int | float64 | uint32 | int64 | uint64](x, y T) T {
-	if x > y {
-		return x
-	}
-	return y
 }
 
 func MakeFirstLowerCase(s string) string {
@@ -175,31 +145,8 @@ func GetFields(t *reflect.Type, format string, header bool) (fields []string, se
 	return fields, sep, quote
 }
 
-func Str_2_BigInt(str string) big.Int {
-	ret := big.Int{}
-	if str == "0" || str == "0x0" || str == "" {
-		return ret
-	}
-	if len(str) > 2 && str[:2] == "0x" {
-		ret.SetString(str[2:], 16)
-	} else {
-		ret.SetString(str, 10)
-	}
-	return ret
-}
-
 func PointerOf[T any](value T) *T {
 	return &value
-}
-
-func MustParseUint(input any) (result uint64) {
-	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
-	return
-}
-
-func MustParseInt(input any) (result int64) {
-	result, _ = strconv.ParseInt(fmt.Sprint(input), 0, 64)
-	return
 }
 
 func LowerIfHex(addr string) string {

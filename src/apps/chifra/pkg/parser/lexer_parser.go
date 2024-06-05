@@ -7,7 +7,7 @@ import (
 
 // Input syntax:
 //
-// - Raw input data:            chifra state --call '0xcdba2fd40000000000000000000000000000000000000000000000000000000000007a69'
+// - Input data:                chifra state --call '0xcdba2fd40000000000000000000000000000000000000000000000000000000000007a69'
 // - Four-byte plus params:     chifra state --call '0xdeadbeef("hello", 110)'
 // - Function name plus params: chifra state --call 'readMessage("hello", 110)'
 

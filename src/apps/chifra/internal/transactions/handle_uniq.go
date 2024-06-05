@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -13,34 +14,34 @@ import (
 
 func (opts *TransactionsOptions) HandleUniq() (err error) {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		showProgress := opts.Globals.ShowProgress()
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
-			Enabled: !testMode,
+			Enabled: showProgress,
 			Total:   250, // estimate since we have no idea how many there are
 		})
-		procFunc := func(s *types.SimpleAppearance) error {
+		procFunc := func(s *types.Appearance) error {
 			bar.Tick()
 			modelChan <- s
 			return nil
 		}
 
 		for _, rng := range opts.TransactionIds {
-			txIds, err := rng.ResolveTxs(chain)
+			apps, err := rng.ResolveTxs(chain)
 			if err != nil && !errors.Is(err, ethereum.NotFound) {
 				errorChan <- err
 				cancel()
 			}
 
-			for _, raw := range txIds {
-				app := types.SimpleAppearance{
-					BlockNumber:      raw.BlockNumber,
-					TransactionIndex: raw.TransactionIndex,
+			for _, app := range apps {
+				app := types.Appearance{
+					BlockNumber:      app.BlockNumber,
+					TransactionIndex: app.TransactionIndex,
 				}
-				bn := uint64(app.BlockNumber)
+				bn := base.Blknum(app.BlockNumber)
 				ts := opts.Conn.GetBlockTimestamp(bn)
 				addrMap := make(uniq.AddressBooleanMap)
 				if trans, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
@@ -55,8 +56,8 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 		bar.Finish(true /* newLine */)
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"uniq": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

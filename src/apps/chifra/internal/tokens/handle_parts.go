@@ -18,10 +18,10 @@ func (opts *TokensOptions) HandleParts() error {
 	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, address := range opts.Addrs {
 			addr := base.HexToAddress(address)
-			currentBn := uint64(0)
+			currentBn := base.Blknum(0)
 			currentTs := base.Timestamp(0)
 			for _, br := range opts.BlockIds {
 				blockNums, err := br.ResolveBlocks(chain)
@@ -38,7 +38,7 @@ func (opts *TokensOptions) HandleParts() error {
 					if state, err := opts.Conn.GetTokenState(addr, fmt.Sprintf("0x%x", bn)); err != nil {
 						errorChan <- err
 					} else {
-						s := &types.SimpleToken{
+						s := &types.Token{
 							Address:     state.Address,
 							BlockNumber: bn,
 							TotalSupply: state.TotalSupply,
@@ -64,11 +64,11 @@ func (opts *TokensOptions) HandleParts() error {
 		return err
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 		"namesMap": namesMap,
 		"parts":    opts.Parts,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

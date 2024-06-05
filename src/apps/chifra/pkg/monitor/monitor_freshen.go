@@ -10,11 +10,9 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-	"strconv"
 	"strings"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -23,7 +21,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -35,19 +33,19 @@ type MonitorUpdate struct {
 	Chain         string
 	PublisherAddr base.Address
 	TestMode      bool
-	Silent        bool
-	FirstBlock    uint64
+	SkipFreshen   bool
+	FirstBlock    base.Blknum
 	Addrs         []string
 }
 
-func NewUpdater(chain string, testMode, silent bool, addrs []string) MonitorUpdate {
+func NewUpdater(chain string, testMode, skipFreshen bool, addrs []string) MonitorUpdate {
 	return MonitorUpdate{
 		MaxTasks:      12,
-		FirstBlock:    utils.NOPOS,
+		FirstBlock:    base.NOPOSN,
 		Chain:         chain,
 		PublisherAddr: base.Address{},
 		TestMode:      testMode,
-		Silent:        silent,
+		SkipFreshen:   skipFreshen,
 		Addrs:         addrs,
 		MonitorMap:    make(map[base.Address]*Monitor, len(addrs)),
 	}
@@ -116,13 +114,18 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 		if updater.MonitorMap[base.HexToAddress(addr)] == nil {
 			mon, _ := NewMonitorStaged(updater.Chain, addr)
 			_ = mon.ReadMonitorHeader()
-			if uint64(mon.LastScanned) < updater.FirstBlock {
-				updater.FirstBlock = uint64(mon.LastScanned)
+			bn := base.Blknum(mon.LastScanned)
+			if bn < updater.FirstBlock {
+				updater.FirstBlock = bn
 			}
 			*monitorArray = append(*monitorArray, mon)
 			// we need the address here because we want to modify this object below
 			updater.MonitorMap[mon.Address] = &(*monitorArray)[len(*monitorArray)-1]
 		}
+	}
+
+	if updater.SkipFreshen {
+		return canceled, nil
 	}
 
 	bloomPath := filepath.Join(config.PathToIndex(updater.Chain), "blooms/")
@@ -154,8 +157,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 
 			max := os.Getenv("FAKE_FINAL_BLOCK") // This is for testing only, please ignore
 			if len(max) > 0 {
-				m, _ := strconv.ParseUint(max, 10, 32)
-				if fileRange.Last > m {
+				if fileRange.Last > base.MustParseBlknum(max) {
 					continue
 				}
 			}
@@ -199,7 +201,8 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 		rng := base.RangeFromFilename(stageFn)
 		lines := []string{}
 		for addr, mon := range updater.MonitorMap {
-			if !rng.LaterThanB(uint64(mon.LastScanned)) { // the range preceeds the block number
+			bn := base.Blknum(mon.LastScanned)
+			if !rng.LaterThanB(bn) { // the range preceeds the block number
 				if len(lines) == 0 {
 					lines = file.AsciiFileToLines(stageFn)
 					sort.Slice(lines, func(i, j int) bool {
@@ -284,7 +287,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 			return
 		}
 
-		_, err = index.DownloadOneChunk(chain, man, bl.Range)
+		err = index.DownloadOneChunk(chain, man, bl.Range)
 		if err != nil {
 			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return
@@ -346,9 +349,9 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 				_, err := mon.WriteAppearances(*result.AppRecords, true /* append */)
 				if err != nil {
 					logger.Error(err)
-				} else if !updater.TestMode && !updater.Silent {
-					msg := fmt.Sprintf("%s appended %d apps at %s", mon.Address.Hex(), nWritten, result.Range)
-					logger.Info(msg)
+				} else {
+					msg := fmt.Sprintf("%s%s appended %5d apps at %s%s", colors.Green, mon.Address.Hex(), nWritten, result.Range, colors.Off)
+					logger.Progress(!updater.TestMode, msg)
 				}
 			}
 		}
@@ -377,15 +380,15 @@ const (
 	endOfTxId           = 42 + 1 + 9 + 1 + 5
 )
 
-func getAppearances(addrStr string, lines []string, lastVisited uint32, found int) *[]index.AppearanceRecord {
-	results := make([]index.AppearanceRecord, 0, 1000)
+func getAppearances(addrStr string, lines []string, lastVisited uint32, found int) *[]types.AppRecord {
+	results := make([]types.AppRecord, 0, 1000)
 	for idx := found; idx < len(lines); idx++ {
 		if !strings.HasPrefix(lines[idx], addrStr) {
 			break
 		}
-		r := index.AppearanceRecord{
-			BlockNumber:      uint32(globals.ToUint64(lines[idx][startOfBlockNum:endOfBlockNum])),
-			TransactionIndex: uint32(globals.ToUint64(lines[idx][startOfTxId:endOfTxId])),
+		r := types.AppRecord{
+			BlockNumber:      uint32(base.MustParseUint64(lines[idx][startOfBlockNum:endOfBlockNum])),
+			TransactionIndex: uint32(base.MustParseUint64(lines[idx][startOfTxId:endOfTxId])),
 		}
 		if r.BlockNumber > lastVisited {
 			results = append(results, r)

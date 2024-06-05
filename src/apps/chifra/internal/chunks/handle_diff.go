@@ -23,12 +23,12 @@ import (
 
 var nVisited int
 
-func (opts *ChunksOptions) HandleDiff(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleDiff(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		walker := walk.NewCacheWalker(
 			chain,
 			testMode,
@@ -103,17 +103,18 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 		return false, err
 	}
 
-	apps := make([]types.SimpleAppearance, 0, 500000)
+	apps := make([]types.Appearance, 0, 500000)
 	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-		s := simpleAppearanceTable{}
+		s := types.AppearanceTable{}
 		if err := binary.Read(indexChunk.File, binary.LittleEndian, &s.AddressRecord); err != nil {
 			return false, err
 		}
 		if s.Appearances, err = indexChunk.ReadAppearancesAndReset(&s.AddressRecord); err != nil {
 			return false, err
 		}
+		s.AddressRecord.Count = uint32(len(s.Appearances))
 		for _, app := range s.Appearances {
-			apps = append(apps, types.SimpleAppearance{
+			apps = append(apps, types.Appearance{
 				Address:          s.AddressRecord.Address,
 				BlockNumber:      app.BlockNumber,
 				TransactionIndex: app.TransactionIndex,
@@ -131,8 +132,8 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 		return apps[i].BlockNumber < apps[j].BlockNumber
 	})
 
-	filtered := func(app types.SimpleAppearance) bool {
-		return uint64(app.TransactionIndex) == types.Withdrawal
+	filtered := func(app types.Appearance) bool {
+		return base.Txnum(app.TransactionIndex) == types.WithdrawalAmt
 		// return false
 	}
 
@@ -141,9 +142,9 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 	post := make([]string, 0, len(apps))
 	for _, app := range apps {
 		if !filtered(app) &&
-			(app.Address != base.SentinalAddr || uint64(app.TransactionIndex) != types.MisconfigReward) {
+			(app.Address != base.SentinalAddr || base.Txnum(app.TransactionIndex) != types.MisconfigReward) {
 			line := fmt.Sprintf("%d\t%d\t%s", app.BlockNumber, app.TransactionIndex, app.Address)
-			bn := uint64(app.BlockNumber)
+			bn := base.Blknum(app.BlockNumber)
 			if bn < rd.In {
 				pre = append(pre, line)
 			} else if bn > rd.Out {
@@ -210,20 +211,20 @@ func findFileByBlockNumber(chain, path string, bn base.Blknum) (fileName string,
 func (opts *ChunksOptions) getParams(chain, path string) (string, string, base.RangeDiff) {
 	srcPath := index.ToIndexPath(path)
 	thisRange := base.RangeFromFilename(srcPath)
-	tmpMark := thisRange.First + (thisRange.Last-thisRange.First)/2 // this mark is used to find the diffPath
-	diffPath := toDiffPath(chain, tmpMark)
+	middleMark := thisRange.First + (thisRange.Last-thisRange.First)/2 // this mark is used to find the diffPath
+	diffPath := toDiffPath(chain, middleMark)
 	diffRange := base.RangeFromFilename(diffPath)
 
 	return srcPath, diffPath, thisRange.Overlaps(diffRange)
 }
 
-func toDiffPath(chain string, tmpMark uint64) string {
+func toDiffPath(chain string, middleMark base.Blknum) string {
 	diffPath := os.Getenv("TB_CHUNKS_DIFFPATH")
 	if !strings.Contains(diffPath, "unchained/") {
 		diffPath = filepath.Join(diffPath, "unchained/", chain, "finalized")
 	}
 	diffPath, _ = filepath.Abs(diffPath)
-	diffPath, _ = findFileByBlockNumber(chain, diffPath, tmpMark)
+	diffPath, _ = findFileByBlockNumber(chain, diffPath, middleMark)
 	if !file.FileExists(diffPath) {
 		logger.Fatal(fmt.Sprintf("The diff path does not exist: [%s]", diffPath))
 	}

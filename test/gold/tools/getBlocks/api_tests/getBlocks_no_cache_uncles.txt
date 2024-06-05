@@ -1,6 +1,0 @@
-blocks?blocks=4012000-4012001&cache&uncles
-{
-  "errors": [
-    "The --cache option is currently not available with the --uncles option."
-  ]
-}

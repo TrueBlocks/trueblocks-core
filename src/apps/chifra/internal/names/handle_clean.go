@@ -45,16 +45,20 @@ func (opts *NamesOptions) HandleClean() error {
 		message = fmt.Sprintf("The %s names database was not cleaned", label)
 		logger.Warn(message)
 	} else {
-		message = fmt.Sprintf("The %s names database was cleaned. %d name(s) has been modified", label, modifiedCount)
+		message = fmt.Sprintf("The %s names database was cleaned. %d names have been modified", label, modifiedCount)
+		if modifiedCount == 1 {
+			message = strings.Replace(message, "names have been", "name has been", 1)
+		}
 		logger.Info(message)
 	}
 
 	if opts.Globals.IsApiMode() {
-		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-			modelChan <- &types.SimpleMessage{
+		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+			modelChan <- &types.Message{
 				Msg: message,
 			}
-		}, opts.Globals.OutputOpts())
+		}
+		_ = output.StreamMany(context.Background(), fetchData, opts.Globals.OutputOpts())
 	}
 	return err
 }
@@ -105,7 +109,7 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 		}
 	}()
 
-	iterFunc := func(address base.Address, name types.SimpleName) error {
+	iterFunc := func(address base.Address, name types.Name) error {
 		modified, err := cleanName(chain, &name)
 		if err != nil {
 			return wrapErrorWithAddr(&address, err)
@@ -183,9 +187,9 @@ func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
 	return
 }
 
-func cleanName(chain string, name *types.SimpleName) (modified bool, err error) {
+func cleanName(chain string, name *types.Name) (modified bool, err error) {
 	conn := rpc.TempConnection(chain)
-	if err = conn.IsContractAt(name.Address, nil); err != nil && !errors.Is(err, rpc.ErrNotAContract) {
+	if err = conn.IsContractAtLatest(name.Address); err != nil && !errors.Is(err, rpc.ErrNotAContract) {
 		return
 	}
 
@@ -215,7 +219,7 @@ func cleanName(chain string, name *types.SimpleName) (modified bool, err error) 
 	return
 }
 
-func cleanCommon(name *types.SimpleName) (modified bool) {
+func cleanCommon(name *types.Name) (modified bool) {
 	if name.Tags > "79999" {
 		return false
 	}
@@ -251,7 +255,7 @@ func removeDoubleSpaces(str string) (string, bool) {
 	return result, true
 }
 
-func cleanContract(token *types.SimpleToken, address base.Address, name *types.SimpleName) (modified bool, err error) {
+func cleanContract(token *types.Token, address base.Address, name *types.Name) (modified bool, err error) {
 	if !name.IsContract {
 		name.IsContract = true
 		modified = true
@@ -296,7 +300,7 @@ func cleanContract(token *types.SimpleToken, address base.Address, name *types.S
 	return
 }
 
-func cleanToken(name *types.SimpleName, token *types.SimpleToken) (modified bool) {
+func cleanToken(name *types.Name, token *types.Token) (modified bool) {
 	if !name.IsErc20 && token.TokenType.IsErc20() {
 		name.IsErc20 = true
 		modified = true
@@ -382,7 +386,7 @@ func cleanToken(name *types.SimpleName, token *types.SimpleToken) (modified bool
 	return
 }
 
-func cleanNonContract(name *types.SimpleName, wasContract bool) (modified bool) {
+func cleanNonContract(name *types.Name, wasContract bool) (modified bool) {
 	if name.Tags == "30-Contracts:Humanity DAO" {
 		name.Tags = "90-Individuals:Humanity DAO"
 		modified = true

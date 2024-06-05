@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -20,35 +21,22 @@ import (
 
 // EXISTING_CODE
 
-type RawTraceResult struct {
-	Address string `json:"address"`
-	Code    string `json:"code"`
-	GasUsed string `json:"gasUsed"`
-	Output  string `json:"output"`
+type TraceResult struct {
+	Address base.Address `json:"address,omitempty"`
+	Code    string       `json:"code,omitempty"`
+	GasUsed base.Gas     `json:"gasUsed,omitempty"`
+	Output  string       `json:"output,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-type SimpleTraceResult struct {
-	Address base.Address    `json:"address,omitempty"`
-	Code    string          `json:"code,omitempty"`
-	GasUsed base.Gas        `json:"gasUsed,omitempty"`
-	Output  string          `json:"output,omitempty"`
-	raw     *RawTraceResult `json:"-"`
-	// EXISTING_CODE
-	// EXISTING_CODE
+func (s TraceResult) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *SimpleTraceResult) Raw() *RawTraceResult {
-	return s.raw
-}
-
-func (s *SimpleTraceResult) SetRaw(raw *RawTraceResult) {
-	s.raw = raw
-}
-
-func (s *SimpleTraceResult) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
@@ -65,12 +53,12 @@ func (s *SimpleTraceResult) Model(chain, format string, verbose bool, extraOptio
 			model["address"] = s.Address
 			order = append(order, "address")
 		}
-		if extraOptions["traces"] != true && len(s.Code) > 2 { // "0x" is empty
+		if extraOpts["traces"] != true && len(s.Code) > 2 { // "0x" is empty
 			model["code"] = utils.FormattedCode(verbose, s.Code)
 			order = append(order, "code")
 		}
 	} else {
-		model = map[string]interface{}{
+		model = map[string]any{
 			"gasUsed": s.GasUsed,
 			"output":  s.Output,
 		}
@@ -96,8 +84,7 @@ func (s *SimpleTraceResult) Model(chain, format string, verbose bool, extraOptio
 	}
 }
 
-// --> marshal_only
-func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
+func (s *TraceResult) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
@@ -121,24 +108,28 @@ func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleTraceResult) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *TraceResult) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
 		return err
 	}
 
 	// Code
-	if err = cache.ReadValue(reader, &s.Code, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Code, vers); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasUsed, vers); err != nil {
 		return err
 	}
 
 	// Output
-	if err = cache.ReadValue(reader, &s.Output, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Output, vers); err != nil {
 		return err
 	}
 
@@ -147,11 +138,11 @@ func (s *SimpleTraceResult) UnmarshalCache(version uint64, reader io.Reader) (er
 	return nil
 }
 
-func (s *SimpleTraceResult) FinishUnmarshal() {
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *TraceResult) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -24,7 +25,6 @@ import (
 // slurpCmd represents the slurp command
 var slurpCmd = &cobra.Command{
 	Use:     usageSlurp,
-	Short:   shortSlurp,
 	Long:    longSlurp,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("slurp", func() *globals.GlobalOptions {
@@ -42,42 +42,42 @@ Arguments:
   addrs - one or more addresses to slurp from Etherscan (required)
   blocks - an optional range of blocks to slurp`
 
-const shortSlurp = "fetch data from Etherscan for any address"
-
 const longSlurp = `Purpose:
-  Fetch data from Etherscan for any address.`
+  Fetch data from Etherscan and other APIs for any address.`
 
 const notesSlurp = `
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
-  - Portions of this software are Powered by Etherscan.io APIs.
+  - Portions of this software are Powered by Etherscan.io, Covalent, Alchemy, TrueBlocks Key APIs.
+  - See slurp/README on how to configure keys for API providers.
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
-  - If the value of --source is key, --types is ignored and only appearances or counts are returned.`
+  - If the value of --source is key, --parts is ignored.
+  - The --types option is deprecated, use --parts instead.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra slurp
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra slurp
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
-	capabilities = capabilities.Add(caps.Raw)
-	// EXISTING_CODE
 
 	slurpCmd.Flags().SortFlags = false
 
-	slurpCmd.Flags().StringSliceVarP(&slurpPkg.GetOptions().Types, "types", "t", nil, `which types of transactions to request
-One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]`)
-	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Appearances, "appearances", "p", false, "show only the blocknumber.tx_id appearances of the exported transactions")
-	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	slurpCmd.Flags().StringSliceVarP(&slurpPkg.GetOptions().Parts, "parts", "r", nil, `which types of transactions to request
+One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | some | all ]`)
+	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Appearances, "appearances", "p", false, `show only the blocknumber.tx_id appearances of the exported transactions`)
+	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Articulate, "articulate", "a", false, `articulate the retrieved data if ABIs can be found`)
 	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().Source, "source", "S", "etherscan", `the source of the slurped data
-One of [ etherscan | key ]`)
-	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Count, "count", "U", false, "for --appearances mode only, display only the count of records")
-	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().Page, "page", "g", 0, "the page to retrieve (hidden)")
-	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 3000, "the number of records to request on each page (hidden)")
-	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, "seconds to sleep between requests")
+One of [ etherscan | key | covalent | alchemy ]`)
+	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Count, "count", "U", false, `for --appearances mode only, display only the count of records`)
+	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().Page, "page", "g", 0, `the page to retrieve (page number)`)
+	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().PageId, "page_id", "", "", `the page to retrieve (page ID)`)
+	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 1000, `the number of records to request on each page`)
+	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, `seconds to sleep between requests`)
+	slurpCmd.Flags().StringSliceVarP(&slurpPkg.GetOptions().Types, "types", "t", nil, `deprecated, use --parts instead (hidden)`)
 	if os.Getenv("TEST_MODE") != "true" {
-		slurpCmd.Flags().MarkHidden("page")
-		slurpCmd.Flags().MarkHidden("per_page")
+		_ = slurpCmd.Flags().MarkHidden("types")
 	}
+	_ = slurpCmd.Flags().MarkDeprecated("types", "The --types option has been deprecated.")
 	globals.InitGlobals("slurp", slurpCmd, &slurpPkg.GetOptions().Globals, capabilities)
 
 	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))
@@ -88,4 +88,3 @@ One of [ etherscan | key ]`)
 
 	chifraCmd.AddCommand(slurpCmd)
 }
-

@@ -1,6 +1,0 @@
-explore?terms=12.0&raw
-{
-  "errors": [
-    "Invalid key (raw) in explore route."
-  ]
-}

@@ -1,6 +1,0 @@
-transactions?transactions=9004225.10&logs&fmt=json&emitter=0xbbbbca6a901c926f240b89eacb641d8aec7aeaf
-{
-  "errors": [
-    "hex string must be an even length"
-  ]
-}

@@ -1,6 +1,0 @@
-scrape?noHeader
-{
-  "errors": [
-    "Invalid key (noHeader) in scrape route."
-  ]
-}

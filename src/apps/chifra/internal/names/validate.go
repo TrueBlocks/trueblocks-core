@@ -26,30 +26,30 @@ func (opts *NamesOptions) validateNames() error {
 
 	isDryRunnable := opts.Clean || len(opts.Autoname) > 0
 	if opts.DryRun && !isDryRunnable {
-		return validate.Usage("The {0} option is is only available with the {1} options.", "--dry_run", "--clean or --autoname")
+		return validate.Usage("The {0} option is only available with the {1} options.", "--dry_run", "--clean or --autoname")
 	}
 
 	if opts.Tags {
 		if opts.Addr {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--tags", "--addr")
+			return validate.Usage("The {0} option is not available{1}.", "--tags", " with the --addr option")
 		}
 		if opts.Clean {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--tags", "--clean")
+			return validate.Usage("The {0} option is not available{1}.", "--tags", " with the --clean option")
 		}
 		if opts.anyCrud() {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--tags", "any CRUD")
+			return validate.Usage("The {0} option is not available{1}.", "--tags", " with the any CRUD option")
 		}
 	}
 
 	if opts.Addr {
 		if opts.Tags {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--addr", "--tag")
+			return validate.Usage("The {0} option is not available{1}.", "--addr", " with the --tag option")
 		}
 		if opts.Clean {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--addr", "--clean")
+			return validate.Usage("The {0} option is not available{1}.", "--addr", " with the --clean option")
 		}
 		if opts.anyCrud() {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--addr", "any CRUD")
+			return validate.Usage("The {0} option is not available{1}.", "--addr", " with the any CRUD option")
 		}
 	}
 
@@ -65,13 +65,13 @@ func (opts *NamesOptions) validateNames() error {
 
 	if len(opts.Autoname) > 0 {
 		if opts.Regular {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--regular", "--autoname")
+			return validate.Usage("The {0} option is not available{1}.", "--regular", " with the --autoname option")
 		}
 
 		if !base.IsValidAddress(opts.Autoname) || opts.AutonameAddr.IsZero() {
 			return validate.Usage("You must provide an address to the {0} option.", "--autoname")
 		}
-		if err := opts.Conn.IsContractAt(opts.AutonameAddr, nil); err != nil {
+		if err := opts.Conn.IsContractAtLatest(opts.AutonameAddr); err != nil {
 			if err == rpc.ErrNotAContract {
 				return validate.Usage("The address provided to the {0} option is not a token contract.", "--autoname")
 			}

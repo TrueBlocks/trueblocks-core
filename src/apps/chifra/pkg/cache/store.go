@@ -9,8 +9,8 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
+	"github.com/ethereum/go-ethereum/log"
 )
 
 // In verbose mode we print cache errors. It's useful for debugging.
@@ -95,7 +95,7 @@ func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	cleanOnQuit := func() {
-		logger.Warn(sigintTrap.TrapMessage)
+		log.Warn(sigintTrap.TrapMessage)
 	}
 	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
 	defer sigintTrap.Disable(trapChannel)
@@ -179,15 +179,16 @@ func (s *Store) Remove(value Locator) (err error) {
 	return
 }
 
-func (s *Store) Decache(locators []Locator, processor func(*locations.ItemInfo) bool) (err error) {
+func (s *Store) Decache(locators []Locator, procFunc, skipFunc func(*locations.ItemInfo) bool) (err error) {
 	for _, locator := range locators {
 		stats, err := s.Stat(locator)
 		if err != nil {
-			// we silently ignore this for folders as an example
+			// many locations will not have been cached, but we want to report
+			skipFunc(stats)
 			continue
 		}
 		// If processor returns false, we don't want to remove this item from the cache
-		if !processor(stats) {
+		if !procFunc(stats) {
 			continue
 		}
 		if err := s.Remove(locator); err != nil {
@@ -207,5 +208,5 @@ func printErr(desc string, err error) {
 		return
 	}
 
-	logger.Warn("cache error:", desc+":", err)
+	log.Warn("cache error:", desc+":", err)
 }

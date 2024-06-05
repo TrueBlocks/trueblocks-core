@@ -13,7 +13,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 2100
+weight: 61000
 toc: true
 ---
 
@@ -28,16 +28,17 @@ to running a `chifra` command.
 
 The name of those environment variables is as follows:
 
-1. The environment variable is `ALL_UPPER_CASE`
-2. The environment variable name preserves underbars in the `item_name`
-3. The name of the variable starts with the `group` the item belongs to
+1. The environment variable beings with `TB_`
+2. The environment variable is `ALL_UPPER_CASE`
+3. The environment variable name removes underbars from the `item_name` (`item_name` becomes `ITEMNAME`)
+4. The environment variable name starts with the `group` the item belongs to
 
-For example: `GROUP_ITEM_NAME`.
+For example: `TB_GROUP_ITEMNAME`.
 
 A more concrete example might be:
 
 ```[shell]
-export SETTINGS_RPCPROVIDER=http://localhost:9876
+export TB_SETTINGS_RPCPROVIDER=http://localhost:9876
 chifra blocks 100
 ```
 
@@ -53,8 +54,11 @@ The configuration files for `chifra` are stored in the operating system specific
 
 ## Separate files
 
-A single global configuration, called `trueBlocks.toml`, is stored at the root of the configuration
-folder.
+A single global configuration, called `trueBlocks.toml`, which stores all the configuration items, is located at the root of the configuration folder.
+
+# The remained of this documentation is incorrect. See the configuration file itself or the source code for more information.
+
+Note: As of version 2.5.2, this is no longer true.
 
 In addition, each individual tool may have its own configuration file with items peculuar to that tool.
 If a configuration item is found in a particular file, it applies only to that tool.
@@ -71,8 +75,6 @@ If you're running against mutliple chains, you may place any of these files in t
 chain's configuration folder, and the values found there will replace any values found at the
 top level. In this way, you may configure all chains for certain values, but customize your
 configuration per chain.
-
-Note: As of version 2.5.2, this is no longer true.
 
 ## Configuration files
 
@@ -132,9 +134,9 @@ Note: As of version 2.5.2, this is no longer true.
 |                |        |
 | [settings]     |        |
 | apps_per_chunk | uint64 | 200000  | the number of appearances to build into a chunk before consolidating it                                                  |
-| snap_to_grid   | uint64 | 100000  | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
-| first_snap     | uint64 | 0       | the first block at which snap_to_grid is enabled                                                                         |
-| unripe_dist    | uint64 | 28      | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                |
+| snap_to_grid   | blknum | 100000  | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
+| first_snap     | blknum | 0       | the first block at which snap_to_grid is enabled                                                                         |
+| unripe_dist    | blknum | 28      | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                |
 | channel_count  | uint64 | 20      | number of concurrent processing channels                                                                                 |
 | allow_missing  | bool   | false   | do not report errors for blockchains that contain blocks with zero addresses                                             |
 
@@ -196,7 +198,6 @@ The follow values are defined for each classDefinition file
 |              |                                                                    |
 | [settings]   |                                                                    |
 | class        | The name of the C++ class                                          |
-| base_class   | The baseclass for class<br />CBaseNode                             |
 | fields       | The name of the file holding the field definitions for the class   |
 | includes     | The include files for the class's header file                      |
 | cpp_includes | The include files for the class's c++ file                         |

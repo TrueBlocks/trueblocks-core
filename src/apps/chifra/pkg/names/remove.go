@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func RemoveName(dbType DatabaseType, chain string, address base.Address) (name *types.SimpleName, err error) {
+func RemoveName(dbType DatabaseType, chain string, address base.Address) (name *types.Name, err error) {
 	switch dbType {
 	case DatabaseCustom:
 		return customRemoveName(chain, address)
@@ -22,7 +22,7 @@ func RemoveName(dbType DatabaseType, chain string, address base.Address) (name *
 	return
 }
 
-func customRemoveName(chain string, address base.Address) (*types.SimpleName, error) {
+func customRemoveName(chain string, address base.Address) (*types.Name, error) {
 	name, exists := loadedCustomNames[address]
 	if !exists {
 		return nil, fmt.Errorf("cannot remove non-existant custom name for address %s", address.Hex())

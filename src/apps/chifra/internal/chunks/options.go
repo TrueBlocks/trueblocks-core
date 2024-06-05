@@ -1,26 +1,37 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package chunksPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	// EXISTING_CODE
 )
 
 // ChunksOptions provides all command options for the chifra chunks command.
@@ -32,12 +43,12 @@ type ChunksOptions struct {
 	Pin        bool                     `json:"pin,omitempty"`        // Pin the manifest or each index chunk and bloom
 	Publish    bool                     `json:"publish,omitempty"`    // Publish the manifest to the Unchained Index smart contract
 	Publisher  string                   `json:"publisher,omitempty"`  // For some query options, the publisher of the index
-	Truncate   uint64                   `json:"truncate,omitempty"`   // Truncate the entire index at this block (requires a block identifier)
+	Truncate   base.Blknum              `json:"truncate,omitempty"`   // Truncate the entire index at this block (requires a block identifier)
 	Remote     bool                     `json:"remote,omitempty"`     // Prior to processing, retrieve the manifest from the Unchained Index smart contract
 	Belongs    []string                 `json:"belongs,omitempty"`    // In index mode only, checks the address(es) for inclusion in the given index chunk
 	Diff       bool                     `json:"diff,omitempty"`       // Compare two index portions (see notes)
-	FirstBlock uint64                   `json:"firstBlock,omitempty"` // First block to process (inclusive)
-	LastBlock  uint64                   `json:"lastBlock,omitempty"`  // Last block to process (inclusive)
+	FirstBlock base.Blknum              `json:"firstBlock,omitempty"` // First block to process (inclusive)
+	LastBlock  base.Blknum              `json:"lastBlock,omitempty"`  // Last block to process (inclusive)
 	MaxAddrs   uint64                   `json:"maxAddrs,omitempty"`   // The max number of addresses to process in a given chunk
 	Deep       bool                     `json:"deep,omitempty"`       // If true, dig more deeply during checking (manifest only)
 	Rewrite    bool                     `json:"rewrite,omitempty"`    // For the --pin --deep mode only, writes the manifest back to the index folder (see notes)
@@ -55,9 +66,9 @@ type ChunksOptions struct {
 }
 
 var defaultChunksOptions = ChunksOptions{
-	Truncate:  utils.NOPOS,
-	LastBlock: utils.NOPOS,
-	MaxAddrs:  utils.NOPOS,
+	Truncate:  base.NOPOSN,
+	LastBlock: base.NOPOSN,
+	MaxAddrs:  base.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -68,13 +79,13 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
 	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
-	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
+	logger.TestLog(opts.Truncate != base.NOPOSN, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
 	logger.TestLog(opts.Diff, "Diff: ", opts.Diff)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
-	logger.TestLog(opts.MaxAddrs != utils.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
+	logger.TestLog(opts.LastBlock != base.NOPOSN && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.MaxAddrs != base.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.Rewrite, "Rewrite: ", opts.Rewrite)
 	logger.TestLog(opts.List, "List: ", opts.List)
@@ -94,14 +105,21 @@ func (opts *ChunksOptions) String() string {
 
 // chunksFinishParseApi finishes the parsing for server invocations. Returns a new ChunksOptions.
 func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ChunksFinishParseInternal(w, values)
+}
+
+func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 	copy := defaultChunksOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
-	opts.Truncate = utils.NOPOS
-	opts.FirstBlock = 0
-	opts.LastBlock = utils.NOPOS
-	opts.MaxAddrs = utils.NOPOS
-	opts.Sleep = 0.0
-	for key, value := range r.URL.Query() {
+	opts.Truncate = base.NOPOSN
+	opts.LastBlock = base.NOPOSN
+	opts.MaxAddrs = base.NOPOS
+	for key, value := range values {
 		switch key {
 		case "mode":
 			opts.Mode = value[0]
@@ -119,7 +137,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 		case "publisher":
 			opts.Publisher = value[0]
 		case "truncate":
-			opts.Truncate = globals.ToUint64(value[0])
+			opts.Truncate = base.MustParseBlknum(value[0])
 		case "remote":
 			opts.Remote = true
 		case "belongs":
@@ -130,11 +148,11 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 		case "diff":
 			opts.Diff = true
 		case "firstBlock":
-			opts.FirstBlock = globals.ToUint64(value[0])
+			opts.FirstBlock = base.MustParseBlknum(value[0])
 		case "lastBlock":
-			opts.LastBlock = globals.ToUint64(value[0])
+			opts.LastBlock = base.MustParseBlknum(value[0])
 		case "maxAddrs":
-			opts.MaxAddrs = globals.ToUint64(value[0])
+			opts.MaxAddrs = base.MustParseUint64(value[0])
 		case "deep":
 			opts.Deep = true
 		case "rewrite":
@@ -148,14 +166,17 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 		case "tag":
 			opts.Tag = value[0]
 		case "sleep":
-			opts.Sleep = globals.ToFloat64(value[0])
+			opts.Sleep = base.MustParseFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
@@ -201,16 +222,16 @@ func chunksFinishParse(args []string) *ChunksOptions {
 		}
 	}
 	if opts.Truncate == 0 {
-		opts.Truncate = utils.NOPOS
+		opts.Truncate = base.NOPOSN
 	}
 	if opts.LastBlock == 0 {
-		opts.LastBlock = utils.NOPOS
+		opts.LastBlock = base.NOPOSN
 	}
 	if opts.MaxAddrs == 0 {
-		opts.MaxAddrs = utils.NOPOS
+		opts.MaxAddrs = base.NOPOS
 	}
 	getDef := func(def string) string {
-		if opts.Truncate != utils.NOPOS || len(opts.Belongs) > 0 || opts.Pin {
+		if opts.Truncate != base.NOPOSN || len(opts.Belongs) > 0 || opts.Pin {
 			return "json"
 		}
 		return def
@@ -231,25 +252,82 @@ func GetOptions() *ChunksOptions {
 	return &defaultChunksOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra chunks
+	capabilities = capabilities.Add(caps.Default)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultChunksOptions = ChunksOptions{}
-	globals.SetDefaults(&defaultChunksOptions.Globals)
-	defaultChunksOptions.Globals.TestMode = testMode
-	defaultChunksOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra chunks
-	// EXISTING_CODE
-	// EXISTING_CODE
-	defaultChunksOptions.Globals.Caps = capabilities
+	opts := ChunksOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	opts.Truncate = base.NOPOSN
+	opts.LastBlock = base.NOPOSN
+	opts.MaxAddrs = base.NOPOS
+	defaultChunksOptions = opts
 }
 
-func (opts *ChunksOptions) getCaches() (m map[string]bool) {
+func (opts *ChunksOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return
 }
 
 // EXISTING_CODE
-// EXISTING_CODE
+func (opts *ChunksOptions) shouldShow(obj types.AddrRecord) bool {
+	if opts.Mode == "addresses" || opts.Mode == "appearances" {
+		return opts.Globals.Verbose
+	}
 
+	for _, addr := range opts.Belongs {
+		if hexutil.Encode(obj.Address.Bytes()) == addr {
+			return true
+		}
+	}
+	return false
+}
+
+func GetChunkStats(chain, path string) (s types.ChunkStats, err error) {
+	chunk, err := index.OpenChunk(path, true /* check */)
+	if err != nil && !os.IsNotExist(err) {
+		return s, err
+	}
+	defer chunk.Close()
+
+	ts, _ := tslib.FromBnToTs(chain, chunk.Range.Last)
+	s = types.ChunkStats{
+		Range:    chunk.Range.String(),
+		RangeEnd: base.FormattedDate(ts),
+		NBlocks:  uint64(chunk.Range.Last - chunk.Range.First + 1),
+		NAddrs:   uint64(chunk.Index.Header.AddressCount),
+		NApps:    uint64(chunk.Index.Header.AppearanceCount),
+		NBlooms:  uint64(chunk.Bloom.Count),
+		BloomSz:  uint64(file.FileSize(index.ToBloomPath(path))),
+		ChunkSz:  uint64(file.FileSize(index.ToIndexPath(path))),
+		RecWid:   4 + index.BLOOM_WIDTH_IN_BYTES,
+	}
+
+	if s.NBlocks > 0 {
+		s.AddrsPerBlock = float64(s.NAddrs) / float64(s.NBlocks)
+		s.AppsPerBlock = float64(s.NApps) / float64(s.NBlocks)
+	}
+
+	if s.NAddrs > 0 {
+		s.AppsPerAddr = float64(s.NApps) / float64(s.NAddrs)
+	}
+
+	if s.BloomSz > 0 {
+		s.Ratio = float64(s.ChunkSz) / float64(s.BloomSz)
+	}
+
+	return s, nil
+}
+
+// EXISTING_CODE

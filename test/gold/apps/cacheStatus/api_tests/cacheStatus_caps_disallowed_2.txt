@@ -1,6 +1,0 @@
-status?modes=blooms&raw
-{
-  "errors": [
-    "Invalid key (raw) in status route."
-  ]
-}

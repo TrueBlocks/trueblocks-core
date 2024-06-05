@@ -1,0 +1,13 @@
+## {{.Class}}
+
+{{.ModelIntro}}
+
+The following commands produce and manage {{toPlural .Class}}:
+
+{{.ModelProducers}}
+
+{{toPlural .Class}} consist of the following fields:
+
+{{.ModelMembers}}{{if .HasNotes}}
+
+{{.ModelNotes}}{{end}}

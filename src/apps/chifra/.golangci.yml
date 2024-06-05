@@ -1,6 +1,5 @@
 run:
-  skip-files:
-    - ".*_test.go"
+  tests: false
 linters:
   disable:
     - ineffassign

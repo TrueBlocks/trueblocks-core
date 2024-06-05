@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package slurpPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -18,7 +22,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/provider"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	// EXISTING_CODE
 )
 
 // SlurpOptions provides all command options for the chifra slurp command.
@@ -26,14 +33,16 @@ type SlurpOptions struct {
 	Addrs       []string                 `json:"addrs,omitempty"`       // One or more addresses to slurp from Etherscan
 	Blocks      []string                 `json:"blocks,omitempty"`      // An optional range of blocks to slurp
 	BlockIds    []identifiers.Identifier `json:"blockIds,omitempty"`    // Block identifiers
-	Types       []string                 `json:"types,omitempty"`       // Which types of transactions to request
+	Parts       []string                 `json:"parts,omitempty"`       // Which types of transactions to request
 	Appearances bool                     `json:"appearances,omitempty"` // Show only the blocknumber.tx_id appearances of the exported transactions
 	Articulate  bool                     `json:"articulate,omitempty"`  // Articulate the retrieved data if ABIs can be found
 	Source      string                   `json:"source,omitempty"`      // The source of the slurped data
 	Count       bool                     `json:"count,omitempty"`       // For --appearances mode only, display only the count of records
-	Page        uint64                   `json:"page,omitempty"`        // The page to retrieve
+	Page        uint64                   `json:"page,omitempty"`        // The page to retrieve (page number)
+	PageId      string                   `json:"pageId,omitempty"`      // The page to retrieve (page ID)
 	PerPage     uint64                   `json:"perPage,omitempty"`     // The number of records to request on each page
 	Sleep       float64                  `json:"sleep,omitempty"`       // Seconds to sleep between requests
+	Types       []string                 `json:"types,omitempty"`       // Deprecated, use --parts instead
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection          `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
@@ -43,20 +52,22 @@ type SlurpOptions struct {
 
 var defaultSlurpOptions = SlurpOptions{
 	Source:  "etherscan",
-	PerPage: 3000,
+	PerPage: 1000,
+	Sleep:   .25,
 }
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *SlurpOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
-	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
+	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.Source) > 0 && opts.Source != "etherscan", "Source: ", opts.Source)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Page != 0, "Page: ", opts.Page)
-	logger.TestLog(opts.PerPage != 3000, "PerPage: ", opts.PerPage)
+	logger.TestLog(len(opts.PageId) > 0, "PageId: ", opts.PageId)
+	logger.TestLog(opts.PerPage != 1000, "PerPage: ", opts.PerPage)
 	logger.TestLog(opts.Sleep != float64(.25), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -70,12 +81,21 @@ func (opts *SlurpOptions) String() string {
 
 // slurpFinishParseApi finishes the parsing for server invocations. Returns a new SlurpOptions.
 func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return SlurpFinishParseInternal(w, values)
+}
+
+func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 	copy := defaultSlurpOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
-	opts.Page = 0
-	opts.PerPage = 3000
+	opts.Source = "etherscan"
+	opts.PerPage = 1000
 	opts.Sleep = .25
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -87,10 +107,10 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Blocks = append(opts.Blocks, s...)
 			}
-		case "types":
+		case "parts":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
-				opts.Types = append(opts.Types, s...)
+				opts.Parts = append(opts.Parts, s...)
 			}
 		case "appearances":
 			opts.Appearances = true
@@ -101,28 +121,45 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 		case "count":
 			opts.Count = true
 		case "page":
-			opts.Page = globals.ToUint64(value[0])
+			opts.Page = base.MustParseUint64(value[0])
+		case "pageId":
+			opts.PageId = value[0]
 		case "perPage":
-			opts.PerPage = globals.ToUint64(value[0])
+			opts.PerPage = base.MustParseUint64(value[0])
 		case "sleep":
-			opts.Sleep = globals.ToFloat64(value[0])
+			opts.Sleep = base.MustParseFloat64(value[0])
+		case "types":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Types = append(opts.Types, s...)
+			}
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "slurp")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "slurp")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
+
+	// Deprecated, but still supported
+	if len(opts.Types) > 0 && len(opts.Parts) == 0 {
+		logger.Warn("The --types flag is deprecated. Please use --parts instead.")
+		opts.Parts = opts.Types
+		opts.Types = []string{}
+	}
 
 	// EXISTING_CODE
-	for _, t := range opts.Types {
+	for _, t := range opts.Parts {
 		if t == "all" {
-			opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles", "withdrawals"}
+			opts.Parts = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles", "withdrawals"}
 			break
 		}
 	}
-	if len(opts.Types) == 0 {
-		opts.Types = []string{"ext"}
+	if len(opts.Parts) == 0 {
+		opts.Parts = []string{"ext"}
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
@@ -149,6 +186,13 @@ func slurpFinishParse(args []string) *SlurpOptions {
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
+	// Deprecated, but still supported
+	if len(opts.Types) > 0 && len(opts.Parts) == 0 {
+		logger.Warn("The --types flag is deprecated. Please use --parts instead.")
+		opts.Parts = opts.Types
+		opts.Types = []string{}
+	}
+
 	// EXISTING_CODE
 	for _, arg := range args {
 		if base.IsValidAddress(arg) {
@@ -157,14 +201,14 @@ func slurpFinishParse(args []string) *SlurpOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	for _, t := range opts.Types {
+	for _, t := range opts.Parts {
 		if t == "all" {
-			opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles", "withdrawals"}
+			opts.Parts = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles", "withdrawals"}
 			break
 		}
 	}
-	if len(opts.Types) == 0 {
-		opts.Types = []string{"ext"}
+	if len(opts.Parts) == 0 {
+		opts.Parts = []string{"ext"}
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
@@ -181,31 +225,73 @@ func GetOptions() *SlurpOptions {
 	return &defaultSlurpOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra slurp
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultSlurpOptions = SlurpOptions{}
-	globals.SetDefaults(&defaultSlurpOptions.Globals)
-	defaultSlurpOptions.Globals.TestMode = testMode
-	defaultSlurpOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra slurp
-	// EXISTING_CODE
-	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Ether)
-	capabilities = capabilities.Add(caps.Raw)
-	// EXISTING_CODE
-	defaultSlurpOptions.Globals.Caps = capabilities
+	opts := SlurpOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	opts.Source = "etherscan"
+	opts.PerPage = 1000
+	opts.Sleep = .25
+	defaultSlurpOptions = opts
 }
 
-func (opts *SlurpOptions) getCaches() (m map[string]bool) {
+func (opts *SlurpOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
-	m = map[string]bool{
-		"transactions": true,
+	caches = map[walk.CacheType]bool{
+		walk.Cache_Transactions: true,
 	}
 	// EXISTING_CODE
 	return
 }
 
 // EXISTING_CODE
-// EXISTING_CODE
+func (opts *SlurpOptions) Addresses() []base.Address {
+	addresses := make([]base.Address, 0, len(opts.Addrs))
+	for _, addr := range opts.Addrs {
+		addresses = append(addresses, base.HexToAddress(addr))
+	}
+	return addresses
+}
 
+func (opts *SlurpOptions) Query() *provider.Query {
+	return &provider.Query{
+		Addresses:   opts.Addresses(),
+		Resources:   opts.Parts,
+		PerPage:     uint(opts.PerPage),
+		StartPage:   uint(opts.Page),
+		StartPageId: opts.PageId,
+		BlockRange:  opts.BlockIds,
+	}
+}
+
+// Provider returns 3rd party RPC provider based on --source
+func (opts *SlurpOptions) Provider() (provider.Provider, error) {
+	switch opts.Source {
+	case "key":
+		return provider.NewKeyProvider(opts.Conn, opts.Globals.Chain)
+	case "covalent":
+		return provider.NewCovalentProvider(opts.Conn, opts.Globals.Chain)
+	case "alchemy":
+		return provider.NewAlchemyProvider(opts.Conn, opts.Globals.Chain)
+	case "etherscan":
+		fallthrough
+	default:
+		return provider.NewEtherscanProvider(opts.Conn)
+	}
+}
+
+// EXISTING_CODE

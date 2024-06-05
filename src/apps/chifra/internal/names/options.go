@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package namesPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -18,6 +22,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	// EXISTING_CODE
 )
 
 // NamesOptions provides all command options for the chifra names command.
@@ -43,7 +49,7 @@ type NamesOptions struct {
 	Conn      *rpc.Connection       `json:"conn,omitempty"`      // The connection to the RPC server
 	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
 	// EXISTING_CODE
-	crudData *CrudData
+	crudData     *CrudData
 	AutonameAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
@@ -81,9 +87,18 @@ func (opts *NamesOptions) String() string {
 
 // namesFinishParseApi finishes the parsing for server invocations. Returns a new NamesOptions.
 func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return NamesFinishParseInternal(w, values)
+}
+
+func NamesFinishParseInternal(w io.Writer, values url.Values) *NamesOptions {
 	copy := defaultNamesOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "terms":
 			for _, val := range value {
@@ -124,11 +139,14 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Remove = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "names")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "names")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.Autoname, _ = opts.Conn.GetEnsAddress(opts.Autoname)
 	opts.AutonameAddr = base.HexToAddress(opts.Autoname)
 
@@ -177,20 +195,26 @@ func GetOptions() *NamesOptions {
 	return &defaultNamesOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra names
+	capabilities = capabilities.Add(caps.Default)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultNamesOptions = NamesOptions{}
-	globals.SetDefaults(&defaultNamesOptions.Globals)
-	defaultNamesOptions.Globals.TestMode = testMode
-	defaultNamesOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra names
-	// EXISTING_CODE
-	// EXISTING_CODE
-	defaultNamesOptions.Globals.Caps = capabilities
+	opts := NamesOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	defaultNamesOptions = opts
 }
 
-func (opts *NamesOptions) getCaches() (m map[string]bool) {
+func (opts *NamesOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return
@@ -198,4 +222,3 @@ func (opts *NamesOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

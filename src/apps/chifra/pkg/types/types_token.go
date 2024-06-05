@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -10,68 +10,45 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
 
-type RawToken struct {
-	Address          string `json:"address"`
-	Balance          string `json:"balance"`
-	BlockNumber      string `json:"blockNumber"`
-	Decimals         string `json:"decimals"`
-	Diff             string `json:"diff"`
-	Holder           string `json:"holder"`
-	Name             string `json:"name"`
-	PriorBalance     string `json:"priorBalance"`
-	Symbol           string `json:"symbol"`
-	Timestamp        string `json:"timestamp"`
-	TotalSupply      string `json:"totalSupply"`
-	TransactionIndex string `json:"transactionIndex"`
-	TokenType        string `json:"type"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
-type SimpleToken struct {
+type Token struct {
 	Address          base.Address   `json:"address"`
-	Balance          big.Int        `json:"balance"`
+	Balance          base.Wei       `json:"balance"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	Decimals         uint64         `json:"decimals"`
-	Diff             big.Int        `json:"diff,omitempty"`
 	Holder           base.Address   `json:"holder"`
 	Name             string         `json:"name"`
-	PriorBalance     big.Int        `json:"priorBalance,omitempty"`
+	PriorBalance     base.Wei       `json:"priorBalance,omitempty"`
 	Symbol           string         `json:"symbol"`
 	Timestamp        base.Timestamp `json:"timestamp"`
-	TotalSupply      big.Int        `json:"totalSupply"`
-	TransactionIndex base.Blknum    `json:"transactionIndex,omitempty"`
+	TotalSupply      base.Wei       `json:"totalSupply"`
+	TransactionIndex base.Txnum     `json:"transactionIndex,omitempty"`
 	TokenType        TokenType      `json:"type"`
-	raw              *RawToken      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleToken) Raw() *RawToken {
-	return s.raw
+func (s Token) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *SimpleToken) SetRaw(raw *RawToken) {
-	s.raw = raw
-}
-
-func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	name := SimpleName{}
+	name := Name{}
 	name.Name = "Unknown"
-	if extraOptions["namesMap"] != nil {
-		name = extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
+	if extraOpts["namesMap"] != nil {
+		name = extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 	}
 	if name.Decimals == 0 {
 		name.Decimals = 18
@@ -80,7 +57,7 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 		name.Symbol = name.Address.Prefix(6)
 	}
 
-	wanted := extraOptions["parts"].([]string)
+	wanted := extraOpts["parts"].([]string)
 	if len(wanted) == 1 {
 		if wanted[0] == "all" {
 			if verbose {
@@ -91,11 +68,11 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 		} else if wanted[0] == "all_held" {
 			if verbose {
 				wanted = []string{
-					"blockNumber", "timestamp", "date", "holder", "address", "name", "symbol", "decimals", "balance", "units",
+					"blockNumber", "timestamp", "date", "holder", "address", "name", "symbol", "decimals", "balance", "balanceDec",
 				}
 			} else {
 				wanted = []string{
-					"blockNumber", "holder", "address", "name", "symbol", "decimals", "balance", "units",
+					"blockNumber", "holder", "address", "name", "symbol", "decimals", "balance", "balanceDec",
 				}
 			}
 		}
@@ -115,7 +92,9 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 		case "address":
 			model["address"] = s.Address
 		case "balance":
-			model["balance"] = utils.FormattedValue(s.Balance, true, int(name.Decimals))
+			model["balance"] = s.Balance.String()
+		case "balanceDec":
+			model["balanceDec"] = s.Balance.ToEtherStr(int(name.Decimals))
 		case "blockNumber":
 			model["blockNumber"] = s.BlockNumber
 		case "date":
@@ -123,7 +102,7 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 		case "decimals":
 			model["decimals"] = name.Decimals
 		case "diff":
-			model["diff"] = utils.FormattedValue(s.Diff, true, int(name.Decimals))
+			model["diff"] = s.formattedDiff(name.Decimals)
 		case "holder":
 			model["holder"] = s.Holder
 		case "name":
@@ -133,11 +112,9 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 		case "timestamp":
 			model["timestamp"] = s.Timestamp
 		case "totalSupply":
-			model["totalSupply"] = utils.FormattedValue(s.TotalSupply, true, int(name.Decimals))
+			model["totalSupply"] = s.TotalSupply.ToEtherStr(int(name.Decimals))
 		case "transactionIndex":
 			model["transactionIndex"] = s.TransactionIndex
-		case "units":
-			model["units"] = utils.FormattedValue(s.Balance, false, int(name.Decimals)) // present underlying units
 		case "version":
 			model["version"] = ""
 		}
@@ -150,19 +127,36 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 	}
 }
 
-func (s *SimpleToken) Date() string {
-	return utils.FormattedDate(s.Timestamp)
+func (s *Token) Date() string {
+	return base.FormattedDate(s.Timestamp)
+}
+
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *Token) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE
 //
 
-func (s *SimpleToken) IsErc20() bool {
+func (s *Token) IsErc20() bool {
 	return s.TokenType.IsErc20()
 }
 
-func (s *SimpleToken) IsErc721() bool {
+func (s *Token) IsErc721() bool {
 	return s.TokenType.IsErc721()
+}
+
+func (s *Token) formattedDiff(dec uint64) string {
+	b := s.Balance.BigInt()
+	pB := s.PriorBalance.BigInt()
+	diff := new(big.Int).Sub(b, pB)
+	if diff.Sign() == -1 {
+		diff = diff.Neg(diff)
+		return "-" + (*base.Wei)(diff).ToEtherStr(int(dec))
+	}
+	return (*base.Wei)(diff).ToEtherStr(int(dec))
 }
 
 type TokenType int
@@ -181,4 +175,3 @@ func (t TokenType) IsErc721() bool {
 }
 
 // EXISTING_CODE
-

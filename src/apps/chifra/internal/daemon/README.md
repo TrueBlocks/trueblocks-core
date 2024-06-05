@@ -32,20 +32,21 @@ Aliases:
 Flags:
   -u, --url string   specify the API server's url and optionally its port (default "localhost:8080")
   -g, --grpc         run gRPC server to serve names
-  -x, --fmt string   export format, one of [none|json*|txt|csv]
+      --silent       disable logging (for use in SDK for example)
   -v, --verbose      enable verbose output
   -h, --help         display this help screen
 
 Notes:
   - To start API open terminal window and run chifra daemon.
   - See the API documentation (https://trueblocks.io/api) for more information.
+  - The --port option is deprecated, use --url instead.
 ```
 
 Data models produced by this tool:
 
 - none
 
-### notes
+### further information
 
 To convert the options for a command line tool to an API call, do the following:
 
@@ -68,7 +69,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  ```
+```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
@@ -78,3 +79,4 @@ of any line makes it a comment.
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

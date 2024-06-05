@@ -7,39 +7,36 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-// GetLogsByFilter returns the logs given a filter
-func (conn *Connection) GetLogsByFilter(filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
-	return conn.getLogsSimple(filter)
-}
-
 // GetLogsByNumber returns the logs of a block
-func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.SimpleLog, error) {
+func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.Log, error) {
 	if conn.StoreReadable() {
-		logGroup := &types.SimpleLogGroup{
+		// walk.Cache_Logs
+		logGroup := &types.LogGroup{
 			BlockNumber:      bn,
-			TransactionIndex: utils.NOPOS,
+			TransactionIndex: base.NOPOSN,
 		}
 		if err := conn.Store.Read(logGroup, nil); err == nil {
 			return logGroup.Logs, nil
 		}
 	}
 
-	filter := types.SimpleLogFilter{
+	filter := LogFilter{
 		FromBlock: bn,
 		ToBlock:   bn,
 	}
 
-	if logs, err := conn.getLogsSimple(filter); err != nil {
+	if logs, err := conn.getLogsFromRpc(filter); err != nil {
 		return logs, err
 	} else {
-		if conn.StoreWritable() && conn.EnabledMap["logs"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
-			logGroup := &types.SimpleLogGroup{
-				Logs:             logs,
+		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
+		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Logs] {
+			logGroup := &types.LogGroup{
 				BlockNumber:      bn,
-				TransactionIndex: utils.NOPOS,
+				TransactionIndex: base.NOPOSN,
+				Logs:             logs,
 			}
 			if err = conn.Store.Write(logGroup, nil); err != nil {
 				logger.Warn("Failed to write logs to cache", err)
@@ -58,7 +55,7 @@ func (conn *Connection) GetLogsCountInBlock(bn base.Blknum, ts base.Timestamp) (
 	}
 }
 
-func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
+func (conn *Connection) getLogsFromRpc(filter LogFilter) ([]types.Log, error) {
 	p := struct {
 		FromBlock string   `json:"fromBlock"`
 		ToBlock   string   `json:"toBlock"`
@@ -78,29 +75,73 @@ func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.Sim
 	method := "eth_getLogs"
 	params := query.Params{p}
 
-	if rawLogs, err := query.Query[[]types.RawLog](conn.Chain, method, params); err != nil {
-		return []types.SimpleLog{}, err
+	if logs, err := query.Query[[]types.Log](conn.Chain, method, params); err != nil {
+		return []types.Log{}, err
 
-	} else if rawLogs == nil || len(*rawLogs) == 0 {
-		return []types.SimpleLog{}, nil
+	} else if logs == nil || len(*logs) == 0 {
+		return []types.Log{}, nil
 
 	} else {
-		curBlock := utils.NOPOS
-		curTs := utils.NOPOSI
-		var ret []types.SimpleLog
-		for _, rawLog := range *rawLogs {
-			bn := utils.MustParseUint(rawLog.BlockNumber)
-			if bn != curBlock {
-				curTs = conn.GetBlockTimestamp(bn)
-				curBlock = bn
-			}
-			txHash := base.HexToHash(rawLog.TransactionHash)
-			simpleLog, _ := rawLog.RawToSimple(map[string]any{
-				"hash":      txHash,
-				"timestamp": curTs,
-			})
-			ret = append(ret, simpleLog)
+		curBlock := types.LightBlock{
+			BlockNumber: base.NOPOSN,
+			Timestamp:   base.NOPOSI,
 		}
-		return ret, nil
+		for i := range *logs {
+			r := &(*logs)[i] // avoid a copy, don't change
+			if r.BlockNumber != curBlock.BlockNumber {
+				curBlock = types.LightBlock{
+					BlockNumber: (*logs)[i].BlockNumber,
+					Timestamp:   conn.GetBlockTimestamp(r.BlockNumber),
+				}
+			}
+			r.BlockNumber = curBlock.BlockNumber
+			r.Timestamp = curBlock.Timestamp
+		}
+
+		// TODO: BOGUS - avoid copy
+		return *logs, nil
 	}
+}
+
+type LogFilter struct {
+	BlockHash base.Hash      `json:"blockHash"`
+	Emitters  []base.Address `json:"emitters"`
+	FromBlock base.Blknum    `json:"fromBlock"`
+	ToBlock   base.Blknum    `json:"toBlock"`
+	Topics    []base.Hash    `json:"topics"`
+}
+
+func NewLogFilter(emitters []string, topics []string) *LogFilter {
+	logFilter := &LogFilter{}
+	for _, e := range emitters {
+		logFilter.Emitters = append(logFilter.Emitters, base.HexToAddress(e))
+	}
+	for _, t := range topics {
+		logFilter.Topics = append(logFilter.Topics, base.HexToHash(t))
+	}
+	return logFilter
+}
+
+func (filter *LogFilter) PassesFilter(log *types.Log) bool {
+	foundEmitter := false
+	for _, e := range filter.Emitters {
+		if e == log.Address {
+			foundEmitter = true
+			break
+		}
+	}
+
+	topicsFound := 0
+	for _, t := range filter.Topics {
+		for _, lt := range log.Topics {
+			if t == lt {
+				topicsFound++
+			}
+		}
+	}
+
+	passesEmitter := len(filter.Emitters) == 0 || foundEmitter
+	passesTopic := len(filter.Topics) == 0 || topicsFound > 0
+
+	return passesEmitter && passesTopic
 }

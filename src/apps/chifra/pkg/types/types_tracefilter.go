@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -10,52 +10,37 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
 
-type RawTraceFilter struct {
-	After       string `json:"after"`
-	Count       string `json:"count"`
-	FromAddress string `json:"fromAddress"`
-	FromBlock   string `json:"fromBlock"`
-	ToAddress   string `json:"toAddress"`
-	ToBlock     string `json:"toBlock"`
+type TraceFilter struct {
+	After       uint64       `json:"after,omitempty"`
+	Count       uint64       `json:"count,omitempty"`
+	FromAddress base.Address `json:"fromAddress,omitempty"`
+	FromBlock   base.Blknum  `json:"fromBlock,omitempty"`
+	ToAddress   base.Address `json:"toAddress,omitempty"`
+	ToBlock     base.Blknum  `json:"toBlock,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-type SimpleTraceFilter struct {
-	After       uint64          `json:"after,omitempty"`
-	Count       uint64          `json:"count,omitempty"`
-	FromAddress base.Address    `json:"fromAddress,omitempty"`
-	FromBlock   base.Blknum     `json:"fromBlock,omitempty"`
-	ToAddress   base.Address    `json:"toAddress,omitempty"`
-	ToBlock     base.Blknum     `json:"toBlock,omitempty"`
-	raw         *RawTraceFilter `json:"-"`
-	// EXISTING_CODE
-	// EXISTING_CODE
+func (s TraceFilter) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *SimpleTraceFilter) Raw() *RawTraceFilter {
-	return s.raw
-}
-
-func (s *SimpleTraceFilter) SetRaw(raw *RawTraceFilter) {
-	s.raw = raw
-}
-
-func (s *SimpleTraceFilter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *TraceFilter) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
+	model = map[string]any{
 		"after":       s.After,
 		"count":       s.Count,
 		"fromAddress": s.FromAddress,
@@ -80,10 +65,16 @@ func (s *SimpleTraceFilter) Model(chain, format string, verbose bool, extraOptio
 	}
 }
 
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *TraceFilter) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
 // EXISTING_CODE
 //
 
-func (s *SimpleTraceFilter) PassesBasic(trace *SimpleTrace, nTested uint64, nPassed uint64) (bool, string) {
+func (s *TraceFilter) PassesBasic(trace *Trace, nTested uint64, nPassed uint64) (bool, string) {
 	if s.FromBlock != 0 && trace.BlockNumber < s.FromBlock {
 		reason := fmt.Sprintf("block number (%d) less than fromBlock (%d)", trace.BlockNumber, s.FromBlock)
 		return false, reason
@@ -103,7 +94,7 @@ func (s *SimpleTraceFilter) PassesBasic(trace *SimpleTrace, nTested uint64, nPas
 	return true, ""
 }
 
-func (s *SimpleTraceFilter) ParseBangString(chain, filter string) (ret map[string]interface{}, br base.BlockRange) {
+func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]any, br base.BlockRange) {
 	parts := strings.Split(filter, "!")
 	for {
 		if len(parts) >= 6 {
@@ -113,10 +104,10 @@ func (s *SimpleTraceFilter) ParseBangString(chain, filter string) (ret map[strin
 	}
 
 	// ret = make(map[string]any)
-	s.FromBlock = mustParseUint(parts[0])
-	s.ToBlock = mustParseUint(parts[1])
+	s.FromBlock = base.MustParseBlknum(parts[0])
+	s.ToBlock = base.MustParseBlknum(parts[1])
 	if s.ToBlock < s.FromBlock || s.ToBlock < 1 {
-		s.ToBlock = utils.NOPOS
+		s.ToBlock = base.NOPOSN
 	}
 	if base.IsValidAddress(parts[2]) {
 		s.FromAddress = base.HexToAddress(parts[2])
@@ -124,13 +115,12 @@ func (s *SimpleTraceFilter) ParseBangString(chain, filter string) (ret map[strin
 	if base.IsValidAddress(parts[3]) {
 		s.ToAddress = base.HexToAddress(parts[3])
 	}
-	s.After = mustParseUint(parts[4])
-	s.Count = mustParseUint(parts[5])
+	s.After = base.MustParseUint64(parts[4])
+	s.Count = base.MustParseUint64(parts[5])
 	if s.Count == 0 {
-		s.Count = utils.NOPOS
+		s.Count = base.NOPOS
 	}
 	return s.Model(chain, "", false, nil).Data, base.BlockRange{First: s.FromBlock, Last: s.ToBlock}
 }
 
 // EXISTING_CODE
-

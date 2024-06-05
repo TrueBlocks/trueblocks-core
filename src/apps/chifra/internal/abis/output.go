@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -23,7 +23,6 @@ import (
 // RunAbis handles the abis command for the command line. Returns error only as per cobra.
 func RunAbis(cmd *cobra.Command, args []string) error {
 	opts := abisFinishParse(args)
-	outputHelpers.EnableCommand("abis", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("abis", &opts.Globals)
@@ -33,7 +32,6 @@ func RunAbis(cmd *cobra.Command, args []string) error {
 // ServeAbis handles the abis command for the API. Returns an error.
 func ServeAbis(w http.ResponseWriter, r *http.Request) error {
 	opts := abisFinishParseApi(w, r)
-	outputHelpers.EnableCommand("abis", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("abis", w, &opts.Globals)
@@ -42,7 +40,7 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
-// AbisInternal handles the internal workings of the abis command.  Returns an error.
+// AbisInternal handles the internal workings of the abis command. Returns an error.
 func (opts *AbisOptions) AbisInternal() error {
 	var err error
 	if err = opts.validateAbis(); err != nil {
@@ -52,16 +50,16 @@ func (opts *AbisOptions) AbisInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra abis"
 	// EXISTING_CODE
+	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if len(opts.Find) > 0 {
-		err = opts.HandleAbiFind()
+		err = opts.HandleFind()
 	} else if len(opts.Encode) > 0 {
 		err = opts.HandleEncode()
 	} else {
 		err = opts.HandleShow()
 	}
-	// EXISTING_CODE
 	timer.Report(msg)
 
 	return err
@@ -75,7 +73,3 @@ func GetAbisOptions(args []string, g *globals.GlobalOptions) *AbisOptions {
 	}
 	return ret
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
-

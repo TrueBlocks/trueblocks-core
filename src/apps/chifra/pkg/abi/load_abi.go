@@ -21,16 +21,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
 func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *SelectorSyncMap) error {
-	err := conn.IsContractAt(address, nil)
+	err := conn.IsContractAtLatest(address)
 	if err != nil {
-		if errors.Is(err, rpc.ErrNotAContract) {
-			logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
+		if errors.Is(err, rpc.ErrNotAContract) && !utils.IsFuzzing() {
+			logger.Progress(logger.IsTerminal(), fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
 		}
 		return err
 	}
@@ -139,8 +140,8 @@ type arrayItem interface {
 	~string |
 		base.Hash |
 		base.Address |
-		types.SimpleParameter |
-		types.SimpleFunction
+		types.Parameter |
+		types.Function
 }
 
 func writeArray[Item arrayItem](
@@ -198,7 +199,7 @@ func readFromArray[Item arrayItem](
 }
 
 // readAbis reads ABI cache (known.bin)
-func readAbis(reader *bufio.Reader) (result []types.SimpleFunction, err error) {
+func readAbis(reader *bufio.Reader) (result []types.Function, err error) {
 	header := &cacheHeader{}
 	if err = readCacheHeader(reader, header); err != nil {
 		return
@@ -217,8 +218,8 @@ func readAbis(reader *bufio.Reader) (result []types.SimpleFunction, err error) {
 	return
 }
 
-func readParameter(reader *bufio.Reader) (param *types.SimpleParameter, err error) {
-	param = &types.SimpleParameter{}
+func readParameter(reader *bufio.Reader) (param *types.Parameter, err error) {
+	param = &types.Parameter{}
 	header := &cacheHeader{}
 	err = readCacheHeader(reader, header)
 	if err != nil {
@@ -316,8 +317,8 @@ func readString(reader *bufio.Reader, target *string) (err error) {
 	return
 }
 
-func readFunction(reader *bufio.Reader) (function *types.SimpleFunction, err error) {
-	function = &types.SimpleFunction{}
+func readFunction(reader *bufio.Reader) (function *types.Function, err error) {
+	function = &types.Function{}
 	header := &cacheHeader{}
 	err = readCacheHeader(reader, header)
 	if err != nil {
@@ -383,7 +384,7 @@ func readFunction(reader *bufio.Reader) (function *types.SimpleFunction, err err
 }
 
 // getAbis reads all ABIs stored in the cache
-func getAbis(chain string) ([]types.SimpleFunction, error) {
+func getAbis(chain string) ([]types.Function, error) {
 	fullPath := path.Join(config.PathToCache(chain), walk.CacheTypeToFolder[walk.Cache_Abis], "known.bin")
 	if f, err := os.OpenFile(fullPath, os.O_RDONLY, 0); err != nil {
 		return nil, err
@@ -449,7 +450,7 @@ func writeDefaultHeader(writer *bufio.Writer, className string) (err error) {
 	return
 }
 
-func writeFunction(writer *bufio.Writer, function *types.SimpleFunction) (err error) {
+func writeFunction(writer *bufio.Writer, function *types.Function) (err error) {
 	err = writeDefaultHeader(writer, "CFunction")
 	if err != nil {
 		return
@@ -509,7 +510,7 @@ func writeFunction(writer *bufio.Writer, function *types.SimpleFunction) (err er
 	return
 }
 
-func writeParameter(writer *bufio.Writer, param *types.SimpleParameter) (err error) {
+func writeParameter(writer *bufio.Writer, param *types.Parameter) (err error) {
 	err = writeDefaultHeader(writer, "CParameter")
 	if err != nil {
 		return
@@ -579,7 +580,7 @@ func writeAddress(writer *bufio.Writer, address *base.Address) (err error) {
 }
 
 // writeAbis writes ABI cache (known.bin)
-func writeAbis(writer *bufio.Writer, abis []types.SimpleFunction) (err error) {
+func writeAbis(writer *bufio.Writer, abis []types.Function) (err error) {
 	err = writeDefaultHeader(writer, "CAbi")
 	if err != nil {
 		return
@@ -595,7 +596,7 @@ func writeAbis(writer *bufio.Writer, abis []types.SimpleFunction) (err error) {
 }
 
 // setAbis writes ABIs to the cache
-func setAbis(chain string, abis []types.SimpleFunction) (err error) {
+func setAbis(chain string, abis []types.Function) (err error) {
 	var abisFilePath = path.Join(walk.CacheTypeToFolder[walk.Cache_Abis], "known.bin")
 	buf := bytes.Buffer{}
 	writer := bufio.NewWriter(&buf)
@@ -764,7 +765,7 @@ func insertAbi(chain string, address base.Address, inputReader io.Reader) error 
 }
 
 // getAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
-func getAbi(chain string, address base.Address) (simpleAbis []types.SimpleFunction, err error) {
+func getAbi(chain string, address base.Address) (simpleAbis []types.Function, err error) {
 	filePath := path.Join(walk.CacheTypeToFolder[walk.Cache_Abis], address.Hex()+".json")
 	fullPath := path.Join(config.PathToCache(chain), filePath)
 	f, err := os.OpenFile(fullPath, os.O_RDONLY, 0)
@@ -778,12 +779,12 @@ func getAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 		return
 	}
 
-	functions := make([]types.SimpleFunction, 0, len(ethAbi.Methods))
+	functions := make([]types.Function, 0, len(ethAbi.Methods))
 	for _, method := range ethAbi.Methods {
 		functions = append(functions, *types.FunctionFromAbiMethod(&method))
 	}
 
-	events := make([]types.SimpleFunction, 0, len(ethAbi.Events))
+	events := make([]types.Function, 0, len(ethAbi.Events))
 	for _, event := range ethAbi.Events {
 		events = append(events, *types.FunctionFromAbiEvent(&event))
 	}

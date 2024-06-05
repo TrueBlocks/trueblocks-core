@@ -1,15 +1,19 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package monitorsPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -18,6 +22,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	// EXISTING_CODE
 )
 
 // MonitorsOptions provides all command options for the chifra monitors command.
@@ -43,6 +49,7 @@ type MonitorsOptions struct {
 
 var defaultMonitorsOptions = MonitorsOptions{
 	BatchSize: 8,
+	Sleep:     14,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -71,12 +78,20 @@ func (opts *MonitorsOptions) String() string {
 
 // monitorsFinishParseApi finishes the parsing for server invocations. Returns a new MonitorsOptions.
 func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return MonitorsFinishParseInternal(w, values)
+}
+
+func MonitorsFinishParseInternal(w io.Writer, values url.Values) *MonitorsOptions {
 	copy := defaultMonitorsOptions
+	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.BatchSize = 8
-	opts.RunCount = 0
 	opts.Sleep = 14
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -100,18 +115,21 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 		case "commands":
 			opts.Commands = value[0]
 		case "batchSize":
-			opts.BatchSize = globals.ToUint64(value[0])
+			opts.BatchSize = base.MustParseUint64(value[0])
 		case "runCount":
-			opts.RunCount = globals.ToUint64(value[0])
+			opts.RunCount = base.MustParseUint64(value[0])
 		case "sleep":
-			opts.Sleep = globals.ToFloat64(value[0])
+			opts.Sleep = base.MustParseFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "monitors")
+				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "monitors")
+				if opts.BadFlag == nil || opts.BadFlag.Error() > err.Error() {
+					opts.BadFlag = err
+				}
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -160,21 +178,29 @@ func GetOptions() *MonitorsOptions {
 	return &defaultMonitorsOptions
 }
 
+func getCaps() caps.Capability {
+	var capabilities caps.Capability // capabilities for chifra monitors
+	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return capabilities
+}
+
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultMonitorsOptions = MonitorsOptions{}
-	globals.SetDefaults(&defaultMonitorsOptions.Globals)
-	defaultMonitorsOptions.Globals.TestMode = testMode
-	defaultMonitorsOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra monitors
-	// EXISTING_CODE
-	capabilities = capabilities.Add(caps.Caching)
-	// EXISTING_CODE
-	defaultMonitorsOptions.Globals.Caps = capabilities
+	opts := MonitorsOptions{}
+	globals.SetDefaults(&opts.Globals)
+	opts.Globals.TestMode = testMode
+	opts.Globals.Writer = w
+	opts.Globals.Caps = getCaps()
+	opts.BatchSize = 8
+	opts.Sleep = 14
+	defaultMonitorsOptions = opts
 }
 
-func (opts *MonitorsOptions) getCaches() (m map[string]bool) {
+func (opts *MonitorsOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return
@@ -182,4 +208,3 @@ func (opts *MonitorsOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

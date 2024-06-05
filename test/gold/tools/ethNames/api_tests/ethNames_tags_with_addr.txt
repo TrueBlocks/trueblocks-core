@@ -1,6 +1,0 @@
-names?tags&addr
-{
-  "errors": [
-    "The --tags option is not available with the --addr option."
-  ]
-}

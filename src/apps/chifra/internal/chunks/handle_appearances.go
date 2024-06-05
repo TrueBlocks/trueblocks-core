@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -17,11 +18,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleAppearances(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showAppearances := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showAppearances")
@@ -48,12 +49,12 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 				if opts.Globals.TestMode && i > walker.MaxTests() {
 					continue
 				}
-				rec := index.AppearanceRecord{}
+				rec := types.AppRecord{}
 				if err := binary.Read(indexChunk.File, binary.LittleEndian, &rec); err != nil {
 					return false, err
 				}
 
-				s := types.SimpleAppearance{
+				s := types.Appearance{
 					BlockNumber:      rec.BlockNumber,
 					TransactionIndex: rec.TransactionIndex,
 				}
@@ -77,8 +78,8 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 		}
 	}
 
-	extra := map[string]any{
+	extraOpts := map[string]any{
 		"appearances": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

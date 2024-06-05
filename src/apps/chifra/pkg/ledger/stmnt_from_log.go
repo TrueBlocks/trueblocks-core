@@ -2,7 +2,6 @@ package ledger
 
 import (
 	"fmt"
-	"math/big"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -10,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var transferTopic = base.HexToHash(
@@ -19,34 +19,34 @@ var transferTopic = base.HexToHash(
 var ErrNonIndexedTransfer = fmt.Errorf("non-indexed transfer")
 
 // getStatementsFromLog returns a statement from a given log
-func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleLog) (types.SimpleStatement, error) {
+func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (types.Statement, error) {
 	if logIn.Topics[0] != transferTopic {
 		// Not a transfer
-		return types.SimpleStatement{}, nil
+		return types.Statement{}, nil
 	}
 
 	if log, err := l.normalizeTransfer(logIn); err != nil {
-		return types.SimpleStatement{}, err
+		return types.Statement{}, err
 
 	} else {
 		sym := log.Address.Prefix(6)
-		decimals := uint64(18)
+		decimals := base.Value(18)
 		name := l.Names[log.Address]
 		if name.Address == log.Address {
 			if name.Symbol != "" {
 				sym = name.Symbol
 			}
 			if name.Decimals != 0 {
-				decimals = name.Decimals
+				decimals = base.Value(name.Decimals)
 			}
 		}
 
 		sender := base.HexToAddress(log.Topics[1].Hex())
 		recipient := base.HexToAddress(log.Topics[2].Hex())
-		var amountIn, amountOut big.Int
-		var amt *big.Int
-		if amt, _ = new(big.Int).SetString(strings.Replace(log.Data, "0x", "", -1), 16); amt == nil {
-			amt = big.NewInt(0)
+		var amountIn, amountOut base.Wei
+		var amt *base.Wei
+		if amt, _ = new(base.Wei).SetString(strings.Replace(log.Data, "0x", "", -1), 16); amt == nil {
+			amt = base.NewWei(0)
 		}
 
 		ofInterest := false
@@ -63,7 +63,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleL
 			ofInterest = true
 		}
 
-		s := types.SimpleStatement{
+		s := types.Statement{
 			AccountedFor:     l.AccountFor,
 			Sender:           sender,
 			Recipient:        recipient,
@@ -88,29 +88,33 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleL
 
 		if ofInterest {
 			var err error
-			pBal := new(big.Int)
+			pBal := new(base.Wei)
 			if pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
 				return s, err
 			}
 			s.PrevBal = *pBal
 
-			bBal := new(big.Int)
+			bBal := new(base.Wei)
 			if bBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
 				return s, err
 			}
 			s.BegBal = *bBal
 
-			eBal := new(big.Int)
+			eBal := new(base.Wei)
 			if eBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
 				return s, err
 			}
 			s.EndBal = *eBal
 
-			id := fmt.Sprintf("%d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
+			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 			if !l.trialBalance("token", &s) {
-				logger.Warn(colors.Yellow+"Transaction", id, "does not reconcile"+colors.Off)
+				if !utils.IsFuzzing() {
+					logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
+				}
 			} else {
-				logger.Progress(true, colors.Green+"Transaction", id, "reconciled"+colors.Off)
+				if !utils.IsFuzzing() {
+					logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
+				}
 			}
 		}
 
@@ -118,7 +122,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleL
 	}
 }
 
-func (l *Ledger) normalizeTransfer(log *types.SimpleLog) (*types.SimpleLog, error) {
+func (l *Ledger) normalizeTransfer(log *types.Log) (*types.Log, error) {
 	if len(log.Topics) < 3 {
 		// Transfer(address _from, address _to, uint256 _tokenId) - no indexed topics
 		// Transfer(address indexed _from, address indexed _to, uint256 _value) - two indexed topics

@@ -1,4 +1,0 @@
-// Go Version
-go 1.22
-
-use ./src/apps/chifra

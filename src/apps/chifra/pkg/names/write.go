@@ -51,7 +51,7 @@ func regularWriteNames(chain string, dryRun bool) (err error) {
 	)
 }
 
-func writeDatabase(chain string, kind Parts, database DatabaseType, names map[base.Address]types.SimpleName) (err error) {
+func writeDatabase(chain string, kind Parts, database DatabaseType, names map[base.Address]types.Name) (err error) {
 	switch kind {
 	case Regular:
 		loadedRegularNamesMutex.Lock()
@@ -69,7 +69,7 @@ func writeDatabase(chain string, kind Parts, database DatabaseType, names map[ba
 	}
 	defer db.Close()
 
-	sorted := make([]types.SimpleName, 0, len(names))
+	sorted := make([]types.Name, 0, len(names))
 	for _, name := range names {
 		sorted = append(sorted, name)
 	}

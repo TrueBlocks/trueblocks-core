@@ -1,8 +1,0 @@
-{
-  "error": {
-    "code": -32000,
-    "message": "unrecognized trace type: invalid"
-  },
-  "id": "1",
-  "jsonrpc": "2.0"
-}

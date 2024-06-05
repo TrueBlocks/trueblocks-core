@@ -5,17 +5,20 @@
 package globals
 
 import (
-	"net/http"
+	"io"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	"github.com/spf13/cobra"
 )
 
@@ -40,7 +43,6 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Wei, "Wei: ", opts.Wei)
 	logger.TestLog(opts.Ether, "Ether: ", opts.Ether)
 	logger.TestLog(opts.Help, "Help: ", opts.Help)
-	logger.TestLog(opts.ShowRaw, "ShowRaw: ", opts.ShowRaw)
 	logger.TestLog(len(opts.File) > 0, "File: ", opts.File)
 	logger.TestLog(opts.Version, "Version: ", opts.Version)
 	logger.TestLog(opts.Noop, "Noop: ", opts.Noop)
@@ -58,10 +60,6 @@ func SetDefaults(opts *GlobalOptions) {
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetSettings().DefaultChain
 	}
-
-	if opts.ShowRaw {
-		opts.Format = "json"
-	}
 }
 
 // TODO: These options should be in a data file
@@ -77,10 +75,6 @@ func InitGlobals(whoAmI string, cmd *cobra.Command, opts *GlobalOptions, c caps.
 		cmd.Flags().BoolVarP(&opts.Wei, "wei", "W", false, "specify value in wei (the default)")
 	}
 	_ = cmd.Flags().MarkHidden("wei")
-
-	if opts.Caps.Has(caps.Raw) {
-		cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "w", false, "report JSON data from the source with minimal processing")
-	}
 
 	if opts.Caps.Has(caps.Caching) {
 		if whoAmI != "monitors" {
@@ -142,11 +136,10 @@ func InitGlobals(whoAmI string, cmd *cobra.Command, opts *GlobalOptions, c caps.
 	SetDefaults(opts)
 }
 
-func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request, caches map[string]bool) *rpc.Connection {
-	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
+func (opts *GlobalOptions) FinishParseApi(w io.Writer, values url.Values, caches map[walk.CacheType]bool) *rpc.Connection {
 	opts.Writer = w
 
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "append":
 			opts.Append = true
@@ -170,20 +163,21 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 			// do nothing
 		case "output":
 			opts.OutputFn = value[0]
-		case "raw":
-			opts.ShowRaw = true
 		case "verbose":
 			opts.Verbose = true
 		case "version":
 			opts.Version = true
 		case "wei":
 			opts.Wei = true
+		case "testRunner":
+			opts.TestMode = true
+			colors.ColorsOff()
 		}
 	}
 
-	if len(opts.Format) == 0 || opts.Format == "none" || opts.ShowRaw {
+	if len(opts.Format) == 0 || opts.Format == "none" {
 		opts.Format = "json"
-		if !opts.ShowRaw && len(opts.OutputFn) > 0 {
+		if len(opts.OutputFn) > 0 {
 			parts := strings.Split(opts.OutputFn, ".")
 			if len(parts) > 0 {
 				last := parts[len(parts)-1]
@@ -199,7 +193,7 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 	}
 
 	if config.IsChainConfigured(opts.Chain) {
-		conn := rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+		conn := rpc.NewConnection(opts.Chain, opts.Cache, caches)
 		publisher, _ := conn.GetEnsAddress(config.GetPublisher(""))
 		publisherAddr := base.HexToAddress(publisher)
 		if err := tslib.EstablishTimestamps(opts.Chain, publisherAddr); err != nil {
@@ -212,7 +206,7 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 	}
 }
 
-func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *rpc.Connection {
+func (opts *GlobalOptions) FinishParse(args []string, caches map[walk.CacheType]bool) *rpc.Connection {
 	if (len(opts.Format) == 0 || opts.Format == "none") && len(opts.OutputFn) > 0 {
 		parts := strings.Split(opts.OutputFn, ".")
 		if len(parts) > 0 {
@@ -228,7 +222,7 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 	}
 
 	if config.IsChainConfigured(opts.Chain) {
-		conn := rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+		conn := rpc.NewConnection(opts.Chain, opts.Cache, caches)
 		publisher, _ := conn.GetEnsAddress(config.GetPublisher(""))
 		publisherAddr := base.HexToAddress(publisher)
 		if err := tslib.EstablishTimestamps(opts.Chain, publisherAddr); err != nil {

@@ -11,6 +11,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // TODO: Protect against overwriting files on disc
@@ -36,7 +37,7 @@ func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32, force bool)
 // WriteAppearancesAppend appends appearances to the end of the file, updates the header with
 // lastScanned (if later) and returns the number of records written. Note that we should
 // be writing to a temporary file.
-func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.AppearanceRecord) error {
+func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]types.AppRecord) error {
 	if !mon.Staged {
 		logger.Fatal("should not happen ==> trying to write to a non-staged file")
 
@@ -64,7 +65,7 @@ func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.App
 // TODO: Protect against overwriting files on disc
 
 // WriteAppearances writes appearances to a Monitor
-func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, append bool) (int64, error) {
+func (mon *Monitor) WriteAppearances(apps []types.AppRecord, append bool) (int64, error) {
 	var f *os.File
 	var err error
 	path := mon.Path()

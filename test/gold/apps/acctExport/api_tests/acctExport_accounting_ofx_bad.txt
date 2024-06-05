@@ -1,6 +1,0 @@
-export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&fmt=ofx
-{
-  "errors": [
-    "The --fmt ofx option is only available with the --accounting option."
-  ]
-}

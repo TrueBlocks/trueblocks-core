@@ -23,17 +23,20 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
-	first := utils.Max(base.KnownBlock(chain, "shanghai"), opts.FirstBlock)
+	first := base.Max(base.KnownBlock(chain, "shanghai"), opts.FirstBlock)
 	filter := filter.NewFilter(
 		opts.Reversed,
 		false,
 		[]string{},
 		base.BlockRange{First: first, Last: opts.LastBlock},
-		base.RecordRange{First: first, Last: opts.GetMax()},
+		// TODO: I feel (but have not investigated) that this may be a misake
+		// TODO: Shouldn't the RecordRange start with zero not block number?
+		// TODO: It means firstRecord, after all.
+		base.RecordRange{First: uint64(first), Last: opts.GetMax()},
 	)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawWithdrawal], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
@@ -44,14 +47,15 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 				continue
 
 			} else {
-				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.SimpleBlock[string]](apps, filter.Reversed); err != nil {
+				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.LightBlock](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					cancel()
 
 				} else {
+					showProgress := opts.Globals.ShowProgress()
 					bar := logger.NewBar(logger.BarOptions{
 						Prefix:  mon.Address.Hex(),
-						Enabled: !testMode && !utils.IsTerminal(),
+						Enabled: showProgress,
 						Total:   int64(cnt),
 					})
 
@@ -63,16 +67,16 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 						}
 
 						for app := range thisMap {
-							thisMap[app] = new(types.SimpleBlock[string])
+							thisMap[app] = new(types.LightBlock)
 						}
 
-						iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[string]) error {
-							var block types.SimpleBlock[string]
-							if block, err = opts.Conn.GetBlockHeaderByNumber(uint64(app.BlockNumber)); err != nil {
+						iterFunc := func(app types.Appearance, value *types.LightBlock) error {
+							var block types.LightBlock
+							if block, err = opts.Conn.GetBlockHeaderByNumber(base.Blknum(app.BlockNumber)); err != nil {
 								return err
 							}
 
-							withdrawals := make([]types.SimpleWithdrawal, 0, 16)
+							withdrawals := make([]types.Withdrawal, 0, 16)
 							for _, w := range block.Withdrawals {
 								if w.Address == mon.Address {
 									withdrawals = append(withdrawals, w)
@@ -99,7 +103,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 						}
 
 						// Sort the items back into an ordered array by block number
-						items := make([]*types.SimpleWithdrawal, 0, len(thisMap))
+						items := make([]*types.Withdrawal, 0, len(thisMap))
 						for _, block := range thisMap {
 							for _, with := range block.Withdrawals {
 								items = append(items, &with)
@@ -130,7 +134,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 		"export":   true,
 	}
@@ -140,9 +144,9 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
 		} else {
-			extra["namesMap"] = namesMap
+			extraOpts["namesMap"] = namesMap
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

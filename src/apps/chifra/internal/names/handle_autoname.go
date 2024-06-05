@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *NamesOptions) HandleAutoname() error {
@@ -29,23 +30,26 @@ func (opts *NamesOptions) HandleAutoname() error {
 			name.Decimals,
 		)
 	}
-	logger.Info(message)
+	if !utils.IsFuzzing() {
+		logger.Info(message)
+	}
 
 	if opts.Globals.IsApiMode() {
-		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-			modelChan <- &types.SimpleMessage{
+		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+			modelChan <- &types.Message{
 				Msg: message,
 			}
-		}, opts.Globals.OutputOpts())
+		}
+		_ = output.StreamMany(context.Background(), fetchData, opts.Globals.OutputOpts())
 	}
 	return nil
 }
 
 // readContractAndClean will read contract data and call `cleanName` for the given address
-func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err error) {
+func (opts *NamesOptions) readContractAndClean() (name *types.Name, err error) {
 	chain := opts.Globals.Chain
 
-	name = &types.SimpleName{
+	name = &types.Name{
 		Address:  opts.AutonameAddr,
 		Name:     base.AddrToPetname(opts.AutonameAddr.Hex(), "-"),
 		Source:   "TrueBlocks.io",

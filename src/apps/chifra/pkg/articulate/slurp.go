@@ -4,8 +4,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (abiCache *AbiCache) ArticulateSlurp(slurp *types.SimpleSlurp) error {
-	tx := types.SimpleTransaction{
+func (abiCache *AbiCache) ArticulateSlurp(slurp *types.Slurp) error {
+	tx := types.Transaction{
 		To:    slurp.To,
 		Input: slurp.Input,
 	}
@@ -15,6 +15,6 @@ func (abiCache *AbiCache) ArticulateSlurp(slurp *types.SimpleSlurp) error {
 	}
 
 	slurp.ArticulatedTx = tx.ArticulatedTx
-	// TODO: We could add `message` here, but we'd have to modify the `types.SimpleSlurp` struct
+	// TODO: We could add `message` here, but we'd have to modify the `types.Slurp` struct
 	return nil
 }

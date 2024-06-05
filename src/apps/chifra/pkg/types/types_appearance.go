@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -10,11 +10,11 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 const (
@@ -23,49 +23,39 @@ const (
 	UncleReward     base.Txnum = 99998
 	MisconfigReward base.Txnum = 99997
 	ExternalReward  base.Txnum = 99996
-	Withdrawal      base.Txnum = 99995
+	WithdrawalAmt   base.Txnum = 99995
 	// above are stored in cache, do not change
 	NephewReward base.Txnum = 99994
 	TxFeeReward  base.Txnum = 99993
 )
 
+type ChunkAppearance = Appearance
+
 // EXISTING_CODE
 
-type RawAppearance struct {
-	Address          string `json:"address"`
-	BlockNumber      uint32 `json:"blockNumber"`
-	TransactionIndex uint32 `json:"transactionIndex"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
-type SimpleAppearance struct {
+type Appearance struct {
 	Address          base.Address   `json:"address"`
 	BlockNumber      uint32         `json:"blockNumber"`
 	Reason           string         `json:"reason,omitempty"`
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TraceIndex       uint32         `json:"traceIndex,omitempty"`
 	TransactionIndex uint32         `json:"transactionIndex"`
-	raw              *RawAppearance `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleAppearance) Raw() *RawAppearance {
-	return s.raw
+func (s Appearance) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *SimpleAppearance) SetRaw(raw *RawAppearance) {
-	s.raw = raw
-}
-
-func (s *SimpleAppearance) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["appearances"] == true {
-		model = map[string]interface{}{
+	if extraOpts["appearances"] == true {
+		model = map[string]any{
 			"blockNumber":      s.BlockNumber,
 			"transactionIndex": s.TransactionIndex,
 		}
@@ -80,7 +70,7 @@ func (s *SimpleAppearance) Model(chain, format string, verbose bool, extraOption
 		}
 	}
 
-	model = map[string]interface{}{
+	model = map[string]any{
 		"address":          s.Address,
 		"blockNumber":      s.BlockNumber,
 		"transactionIndex": s.TransactionIndex,
@@ -91,15 +81,15 @@ func (s *SimpleAppearance) Model(chain, format string, verbose bool, extraOption
 		"transactionIndex",
 	}
 
-	if extraOptions["namesMap"] != nil {
-		name := extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
+	if extraOpts["namesMap"] != nil {
+		name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 		if name.Address.Hex() != "0x0" {
 			model["name"] = name
 			order = append(order, "name")
 		}
 	}
 
-	if extraOptions["uniq"] == true {
+	if extraOpts["uniq"] == true {
 		if s.TraceIndex > 0 {
 			model["traceIndex"] = s.TraceIndex
 			order = append(order, "traceIndex")
@@ -119,15 +109,15 @@ func (s *SimpleAppearance) Model(chain, format string, verbose bool, extraOption
 				"date",
 			}...)
 		}
-	} else if extraOptions["export"] == true && format == "json" {
+	} else if extraOpts["export"] == true && format == "json" {
 		if verbose {
-			if s.Timestamp != utils.NOPOSI {
+			if s.Timestamp != base.NOPOSI {
 				model["timestamp"] = s.Timestamp
 			}
 			model["date"] = s.Date()
 		}
-		if extraOptions["namesMap"] != nil {
-			name := extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
+		if extraOpts["namesMap"] != nil {
+			name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 			if name.Address.Hex() != "0x0" {
 				model["name"] = name.Name
 				order = append(order, "name")
@@ -161,36 +151,42 @@ func (s *SimpleAppearance) Model(chain, format string, verbose bool, extraOption
 	}
 }
 
+func (s *Appearance) Date() string {
+	return base.FormattedDate(s.Timestamp)
+}
+
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *Appearance) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
 // EXISTING_CODE
 //
 
-func (s *SimpleAppearance) GetKey() string {
+func (s *Appearance) GetKey() string {
 	return fmt.Sprintf("%s\t%09d\t%05d", s.Address, s.BlockNumber, s.TransactionIndex)
 }
 
-func (s *SimpleAppearance) Date() string {
-	return utils.FormattedDate(s.Timestamp)
-}
-
-func (s *SimpleAppearance) Orig() string {
+func (s *Appearance) Orig() string {
 	return s.Reason // when converted from an Identifier, this is the original string
 }
 
 type MappedType interface {
-	SimpleTransaction |
-		SimpleBlock[string] |
-		SimpleBlock[SimpleTransaction] |
-		SimpleAppearance |
-		SimpleWithdrawal |
-		SimpleResult |
-		SimpleToken |
+	Transaction |
+		Block |
+		LightBlock |
+		Appearance |
+		Withdrawal |
+		[]Result |
+		Token |
 		bool
 }
 
 // TODO: Do we want this to be configurable? Maybe, maybe not
 var AppMapSize int = 20
 
-func AsSliceOfMaps[T MappedType](apps []SimpleAppearance, reversed bool) ([]map[SimpleAppearance]*T, int, error) {
+func AsSliceOfMaps[T MappedType](apps []Appearance, reversed bool) ([]map[Appearance]*T, int, error) {
 	sort.Slice(apps, func(i, j int) bool {
 		if reversed {
 			i, j = j, i
@@ -201,13 +197,13 @@ func AsSliceOfMaps[T MappedType](apps []SimpleAppearance, reversed bool) ([]map[
 		return apps[i].BlockNumber < apps[j].BlockNumber
 	})
 
-	arrayOfMaps := make([]map[SimpleAppearance]*T, 0, len(apps))
-	curMap := make(map[SimpleAppearance]*T)
+	arrayOfMaps := make([]map[Appearance]*T, 0, len(apps))
+	curMap := make(map[Appearance]*T)
 	for i := 0; i < len(apps); i++ {
 		// TODO: Do we want this to be configurable? Maybe, maybe not
 		if len(curMap) == AppMapSize {
 			arrayOfMaps = append(arrayOfMaps, curMap)
-			curMap = make(map[SimpleAppearance]*T)
+			curMap = make(map[Appearance]*T)
 		}
 		curMap[apps[i]] = nil
 	}

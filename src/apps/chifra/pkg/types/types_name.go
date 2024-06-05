@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -10,7 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
-	"math/big"
+	"encoding/json"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -20,25 +20,7 @@ import (
 
 // EXISTING_CODE
 
-type RawName struct {
-	Address    string `json:"address"`
-	Decimals   string `json:"decimals"`
-	Deleted    string `json:"deleted"`
-	IsContract string `json:"isContract"`
-	IsCustom   string `json:"isCustom"`
-	IsErc20    string `json:"isErc20"`
-	IsErc721   string `json:"isErc721"`
-	IsPrefund  string `json:"isPrefund"`
-	Name       string `json:"name"`
-	Petname    string `json:"petname"`
-	Source     string `json:"source"`
-	Symbol     string `json:"symbol"`
-	Tags       string `json:"tags"`
-	// EXISTING_CODE
-	// EXISTING_CODE
-}
-
-type SimpleName struct {
+type Name struct {
 	Address    base.Address `json:"address"`
 	Decimals   uint64       `json:"decimals"`
 	Deleted    bool         `json:"deleted,omitempty"`
@@ -52,39 +34,35 @@ type SimpleName struct {
 	Source     string       `json:"source"`
 	Symbol     string       `json:"symbol"`
 	Tags       string       `json:"tags"`
-	raw        *RawName     `json:"-"`
 	// EXISTING_CODE
-	Prefund big.Int `json:"prefund,omitempty"`
+	Prefund base.Wei `json:"prefund,omitempty"`
 	// EXISTING_CODE
 }
 
-func (s *SimpleName) Raw() *RawName {
-	return s.raw
+func (s Name) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
-func (s *SimpleName) SetRaw(raw *RawName) {
-	s.raw = raw
-}
-
-func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
-	var model = map[string]interface{}{}
+func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["single"] == "tags" || extraOptions["single"] == "address" {
-		if extraOptions["single"] == "tags" {
+	if extraOpts["single"] == "tags" || extraOpts["single"] == "address" {
+		if extraOpts["single"] == "tags" {
 			model["tags"] = s.Tags
 		} else {
 			model["address"] = s.Address.Hex()
 		}
-		order = append(order, extraOptions["single"].(string))
+		order = append(order, extraOpts["single"].(string))
 		return Model{
 			Data:  model,
 			Order: order,
 		}
 	}
 
-	model = map[string]interface{}{
+	model = map[string]any{
 		"address":  s.Address,
 		"decimals": s.Decimals,
 		"name":     s.Name,
@@ -108,7 +86,9 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 		model["address"] = strings.ToLower(s.Address.String())
 	}
 
-	if extraOptions["expand"] != true && extraOptions["prefund"] != true {
+	isExpanded := extraOpts["expand"] == true
+	isPrefund := extraOpts["prefund"] == true
+	if !isExpanded && !isPrefund {
 		x := []string{}
 		for _, v := range order {
 			if v != "source" {
@@ -117,6 +97,11 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 		}
 		order = x
 		delete(model, "source")
+	}
+
+	if isExpanded && isPrefund {
+		model["prefund"] = s.Prefund.String()
+		order = append(order, "prefund")
 	}
 
 	if format == "json" {
@@ -178,7 +163,7 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 			model["decimals"] = ""
 		}
 
-		if extraOptions["expand"] == true {
+		if isExpanded {
 			model["deleted"] = s.Deleted
 			order = append(order, "deleted")
 			model["isCustom"] = s.IsCustom
@@ -202,10 +187,16 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 	}
 }
 
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *Name) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
 // EXISTING_CODE
 //
 
-func (s *SimpleName) ToMessage() *proto.Name {
+func (s *Name) ToMessage() *proto.Name {
 	return &proto.Name{
 		Address:    s.Address.Hex(),
 		Decimals:   utils.PointerOf(s.Decimals),
@@ -223,12 +214,12 @@ func (s *SimpleName) ToMessage() *proto.Name {
 	}
 }
 
-func (s *SimpleName) Send(stream proto.Names_SearchStreamServer) error {
+func (s *Name) Send(stream proto.Names_SearchStreamServer) error {
 	return stream.Send(s.ToMessage())
 }
 
-func NewNameFromGrpc(gRpcName *proto.Name) *SimpleName {
-	return &SimpleName{
+func NewNameFromGrpc(gRpcName *proto.Name) *Name {
+	return &Name{
 		Address:    base.HexToAddress(gRpcName.GetAddress()),
 		Decimals:   gRpcName.GetDecimals(),
 		Deleted:    gRpcName.GetDeleted(),
@@ -246,4 +237,3 @@ func NewNameFromGrpc(gRpcName *proto.Name) *SimpleName {
 }
 
 // EXISTING_CODE
-

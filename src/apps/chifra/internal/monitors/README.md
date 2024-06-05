@@ -19,7 +19,7 @@ for the fact that the cache can be easily re-created with `chifra list <address>
 
 ### Watching addresses
 
-The `--watch` command is special. It starts a long-running process that continually reads the blockchain looking for appearances of the addresses it is instructed to watch. It command requires two additional parameters: `--watchlist <filename>` and `--commands <filename>`.  The `--watchlist` file is simply a list of addresses or ENS names, one per line:
+The `--watch` command is special. It starts a long-running process that continually reads the blockchain looking for appearances of the addresses it is instructed to watch. It command requires two additional parameters: `--watchlist <filename>` and `--commands <filename>`. The `--watchlist` file is simply a list of addresses or ENS names, one per line:
 
 ```[bash]
 0x5e349eca2dc61abcd9dd99ce94d04136151a09ee
@@ -62,6 +62,7 @@ Flags:
   -a, --watchlist string   available with --watch option only, a file containing the addresses to watch
   -c, --commands string    available with --watch option only, the file containing the list of commands to apply to each watched address
   -b, --batch_size uint    available with --watch option only, the number of monitors to process in each batch (default 8)
+  -u, --run_count uint     available with --watch option only, run the monitor this many times, then quit
   -s, --sleep float        available with --watch option only, the number of seconds to sleep between runs (default 14)
   -D, --decache            removes related items from the cache
   -x, --fmt string         export format, one of [none|json*|txt|csv]
@@ -78,6 +79,7 @@ Notes:
 
 Data models produced by this tool:
 
+- [message](/data-model/other/#message)
 - [monitor](/data-model/accounts/#monitor)
 - [monitorclean](/data-model/admin/#monitorclean)
 
@@ -90,7 +92,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  ```
+```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
@@ -100,3 +102,4 @@ of any line makes it a comment.
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

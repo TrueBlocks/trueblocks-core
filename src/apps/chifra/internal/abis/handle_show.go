@@ -22,12 +22,13 @@ func (opts *AbisOptions) HandleShow() (err error) {
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
 		for _, addr := range opts.Addrs {
 			address := base.HexToAddress(addr)
-			if len(opts.ProxyFor) > 0 {
-				address = base.HexToAddress(opts.ProxyFor)
+			proxy := base.HexToAddress(opts.ProxyFor)
+			if !proxy.IsZero() {
+				address = proxy
 			}
 			err = abi.LoadAbi(opts.Conn, address, &abiCache.AbiMap)
 			if err != nil {

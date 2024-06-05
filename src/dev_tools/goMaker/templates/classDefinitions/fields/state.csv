@@ -1,0 +1,13 @@
+name        ,type      ,strDefault ,attributes ,docOrder ,description
+blockNumber ,blknum    ,           ,           ,       1 ,the block number at which this call was made
+timestamp   ,timestamp ,           ,           ,       2 ,the timestamp of the block for this call
+date        ,datetime  ,           ,calc       ,       3 ,the timestamp as a date
+address     ,address   ,           ,           ,       4 ,the address of contract being called
+accountType ,string    ,           ,           ,       5 ,the type of account at the given block
+balance     ,wei       ,           ,           ,       6 ,the balance of the account at the given block
+ether       ,ether     ,           ,calc       ,       7 ,if --ether is specified&#44; the balance in ether
+code        ,string    ,           ,           ,       8 ,the code of the account
+deployed    ,blknum    ,           ,           ,       9 ,for smart contracts only&#44; the block number at which the contract was deployed
+nonce       ,value     ,           ,           ,      10 ,the nonce of the account at the given block
+proxy       ,address   ,           ,           ,      11 ,the proxy address of the account at the given block
+parts       ,StatePart ,           ,           ,         ,the parts of the state in the cache

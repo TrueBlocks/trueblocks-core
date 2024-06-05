@@ -8,10 +8,10 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -29,7 +29,7 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	if opts.LastBlock == 0 {
-		opts.LastBlock = utils.NOPOS
+		opts.LastBlock = base.NOPOSN
 	}
 
 	if opts.MaxRecords == 0 {
@@ -41,7 +41,7 @@ func (opts *ListOptions) validateList() error {
 		return validate.Usage(msg)
 	}
 
-	if opts.LastBlock != utils.NOPOS && !opts.Globals.TestMode {
+	if opts.LastBlock != base.NOPOSN && !opts.Globals.TestMode {
 		latest := opts.Conn.GetLatestBlockNumber()
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
@@ -54,7 +54,8 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	if opts.Count && opts.MaxRecords != 250 {
-		return validate.Usage("The {0} option is not available with the {1}-{2} option.", "--count", "--max_records", fmt.Sprintf("%d", opts.MaxRecords))
+		x := fmt.Sprintf("%d", opts.MaxRecords)
+		return validate.Usage("The {0} option is not available{1}.", "--count", "with the --max_records-"+x+" option")
 	}
 
 	if opts.NoZero && !opts.Count {

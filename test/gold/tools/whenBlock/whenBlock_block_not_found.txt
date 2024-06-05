@@ -1,5 +1,0 @@
-chifra when  0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
-TEST[DATE|TIME] Blocks:  [0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2]
-TEST[DATE|TIME] Caps:  cache,decache
-TEST[DATE|TIME] Format:  txt
-EROR[DATE|TIME] block hash not found

@@ -1,6 +1,0 @@
-scrape?chain&nocolor&noop&version&verbose&failOnPurpose
-{
-  "errors": [
-    "Invalid key (failOnPurpose) in scrape route."
-  ]
-}

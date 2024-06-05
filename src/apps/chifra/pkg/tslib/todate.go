@@ -8,7 +8,7 @@ import (
 )
 
 // FromBnToDate returns a chain-specific date given a block number.
-func FromBnToDate(chain string, bn uint64) (gostradamus.DateTime, error) {
+func FromBnToDate(chain string, bn base.Blknum) (gostradamus.DateTime, error) {
 	ts, err := FromBnToTs(chain, bn)
 	if err != nil {
 		dt, _ := FromTsToDate(utils.EarliestEvmTs)
@@ -43,5 +43,5 @@ func FromNameToDate(chain, name string) (gostradamus.DateTime, error) {
 
 // FromTsToDate returns a date given a Linux timestamp (not chain-specific)
 func FromTsToDate(ts base.Timestamp) (gostradamus.DateTime, error) {
-	return gostradamus.FromUnixTimestamp(ts), nil
+	return gostradamus.FromUnixTimestamp(ts.Int64()), nil
 }

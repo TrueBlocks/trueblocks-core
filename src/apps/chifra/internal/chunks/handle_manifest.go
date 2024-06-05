@@ -7,6 +7,7 @@ package chunksPkg
 import (
 	"context"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -17,7 +18,7 @@ var sourceMap = map[bool]manifest.Source{
 	true:  manifest.FromContract,
 }
 
-func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleManifest(blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, sourceMap[opts.Remote])
@@ -33,9 +34,9 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 
 	ctx := context.Background()
 	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
-		fetchData := func(modelChan chan types.Modeler[types.RawChunkRecord], errorChan chan error) {
+		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 			for _, chunk := range man.Chunks {
-				s := types.SimpleChunkRecord{
+				s := types.ChunkRecord{
 					Range:     chunk.Range,
 					BloomHash: chunk.BloomHash,
 					BloomSize: chunk.BloomSize,
@@ -49,14 +50,14 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 		return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 
 	} else {
-		fetchData := func(modelChan chan types.Modeler[types.RawManifest], errorChan chan error) {
-			s := types.SimpleManifest{
+		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+			s := types.Manifest{
 				Version:       man.Version,
 				Chain:         man.Chain,
 				Specification: man.Specification,
 			}
 			for _, chunk := range man.Chunks {
-				s.Chunks = append(s.Chunks, types.SimpleChunkRecord{
+				s.Chunks = append(s.Chunks, types.ChunkRecord{
 					Range:     chunk.Range,
 					BloomHash: chunk.BloomHash,
 					BloomSize: chunk.BloomSize,

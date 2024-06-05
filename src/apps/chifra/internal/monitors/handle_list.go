@@ -39,16 +39,16 @@ func (opts *MonitorsOptions) HandleList() error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, e := range errors {
 			errorChan <- e
 		}
 
 		for _, mon := range monArray {
 			if len(addrMap) == 0 || addrMap[mon.Address] {
-				s := types.SimpleMonitor{
-					Address:     mon.Address.Hex(),
-					NRecords:    int(mon.Count()),
+				s := types.Monitor{
+					Address:     mon.Address,
+					NRecords:    mon.Count(),
 					FileSize:    file.FileSize(mon.Path()),
 					LastScanned: mon.LastScanned,
 					Deleted:     mon.Deleted,
@@ -58,7 +58,7 @@ func (opts *MonitorsOptions) HandleList() error {
 		}
 	}
 
-	extra := map[string]interface{}{
+	extraOpts := map[string]any{
 		"testMode": testMode,
 	}
 
@@ -68,8 +68,8 @@ func (opts *MonitorsOptions) HandleList() error {
 		if err != nil {
 			return err
 		}
-		extra["namesMap"] = namesMap
+		extraOpts["namesMap"] = namesMap
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

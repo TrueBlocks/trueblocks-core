@@ -1,6 +1,0 @@
-chunks?mode=blooms&raw
-{
-  "errors": [
-    "Invalid key (raw) in chunks route."
-  ]
-}

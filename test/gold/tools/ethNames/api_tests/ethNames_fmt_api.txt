@@ -1,6 +1,0 @@
-names?terms=tip&fmt=api
-{
-  "errors": [
-    "The --fmt option (api) must be one of [ json | txt | csv ]"
-  ]
-}

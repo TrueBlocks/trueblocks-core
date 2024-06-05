@@ -24,8 +24,14 @@ func (opts *ConfigOptions) validateConfig() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	if err := validate.ValidateEnum("modes", opts.Mode, "[show|edit]"); err != nil {
-		return err
+	if opts.Paths {
+		if len(opts.Mode) > 0 && opts.Mode != "<empty>" {
+			return validate.Usage("You must supply either {0} or {1}.", "a mode", "--paths")
+		}
+	} else {
+		if err := validate.ValidateEnum("modes", opts.Mode, "[show|edit]"); err != nil {
+			return err
+		}
 	}
 
 	if !opts.Globals.TestMode && opts.Mode == "edit" && os.Getenv("EDITOR") == "" {

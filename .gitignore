@@ -1,3 +1,6 @@
+go.work
+go.work.sum
+
 *__debug_bin*
 FAQ.md
 SAVEME

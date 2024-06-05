@@ -6,32 +6,22 @@ package rpc
 
 import (
 	"context"
-	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-type MetaData struct {
-	Latest    uint64 `json:"client"`
-	Finalized uint64 `json:"finalized"`
-	Staging   uint64 `json:"staging"`
-	Ripe      uint64 `json:"ripe"`
-	Unripe    uint64 `json:"unripe"`
-	ChainId   uint64 `json:"chainId,omitempty"`
-	NetworkId uint64 `json:"networkId,omitempty"`
-	Chain     string `json:"chain,omitempty"`
-}
+// TODO: use types.MetaData throughout
 
-func (conn *Connection) GetMetaData(testmode bool) (*MetaData, error) {
+func (conn *Connection) GetMetaData(testmode bool) (*types.MetaData, error) {
 	chainId, networkId, err := conn.GetClientIDs()
 	if err != nil {
 		return nil, err
 	}
 
 	if testmode {
-		return &MetaData{
+		return &types.MetaData{
 			Unripe:    0xdeadbeef,
 			Ripe:      0xdeadbeef,
 			Staging:   0xdeadbeef,
@@ -43,7 +33,7 @@ func (conn *Connection) GetMetaData(testmode bool) (*MetaData, error) {
 		}, nil
 	}
 
-	var meta MetaData
+	var meta types.MetaData
 	meta.Chain = conn.Chain
 	meta.ChainId = chainId
 	meta.NetworkId = networkId
@@ -62,13 +52,13 @@ func (conn *Connection) GetMetaData(testmode bool) (*MetaData, error) {
 		case walk.Index_Bloom:
 			fallthrough
 		case walk.Index_Final:
-			meta.Finalized = utils.Max(meta.Finalized, result.FileRange.Last)
+			meta.Finalized = base.Max(meta.Finalized, result.FileRange.Last)
 		case walk.Index_Staging:
-			meta.Staging = utils.Max(meta.Staging, result.FileRange.Last)
+			meta.Staging = base.Max(meta.Staging, result.FileRange.Last)
 		case walk.Index_Ripe:
-			meta.Ripe = utils.Max(meta.Ripe, result.FileRange.Last)
+			meta.Ripe = base.Max(meta.Ripe, result.FileRange.Last)
 		case walk.Index_Unripe:
-			meta.Unripe = utils.Max(meta.Unripe, result.FileRange.Last)
+			meta.Unripe = base.Max(meta.Unripe, result.FileRange.Last)
 		case walk.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
@@ -80,33 +70,8 @@ func (conn *Connection) GetMetaData(testmode bool) (*MetaData, error) {
 	if meta.Staging == 0 {
 		meta.Staging = meta.Finalized
 	}
-	meta.Ripe = utils.Max(meta.Staging, meta.Ripe)
-	meta.Unripe = utils.Max(meta.Ripe, meta.Unripe)
+	meta.Ripe = base.Max(meta.Staging, meta.Ripe)
+	meta.Unripe = base.Max(meta.Ripe, meta.Unripe)
 
 	return &meta, nil
-}
-
-func (m *MetaData) String() string {
-	ret, _ := json.MarshalIndent(m, "", "  ")
-	return string(ret)
-}
-
-// Highest returns the height of the index (i.e., max between the finalized, staging, and ripe indexes).
-func (m *MetaData) IndexHeight() base.Blknum {
-	return utils.Max(m.Finalized, utils.Max(m.Staging, m.Ripe))
-}
-
-// NextIndexHeight returns the block after the height of the index.
-func (m *MetaData) NextIndexHeight() base.Blknum {
-	return m.IndexHeight() + 1
-}
-
-// ChainHeight returns the block after the height of the index.
-func (m *MetaData) ChainHeight() base.Blknum {
-	return m.Latest
-}
-
-// StageHieght returns the highest block that's been staged
-func (m *MetaData) StageHeight() base.Blknum {
-	return m.Staging
 }

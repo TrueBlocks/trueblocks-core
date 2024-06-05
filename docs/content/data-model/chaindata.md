@@ -1,6 +1,6 @@
 ---
 title: "Chain data"
-description: ""
+description: "Access and cache blockchain-related data"
 lead: ""
 lastmod:
   - :git
@@ -9,8 +9,8 @@ lastmod:
 draft: false
 menu:
   data:
-    parent: "collections"
-weight: 1200
+    parent: collections
+weight: 21000
 toc: true
 ---
 
@@ -27,7 +27,6 @@ blocks' transactions.
 The following commands produce and manage Blocks:
 
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
-- [chifra when](/chifra/chaindata/#chifra-when)
 
 Blocks consist of the following fields:
 
@@ -38,12 +37,12 @@ Blocks consist of the following fields:
 | blockNumber   | the number of the block                                       | blknum                                              |
 | parentHash    | hash of previous block                                        | hash                                                |
 | miner         | address of block's winning miner                              | address                                             |
-| difficulty    | the computational difficulty at this block                    | uint64                                              |
+| difficulty    | the computational difficulty at this block                    | value                                               |
 | timestamp     | the Unix timestamp of the object                              | timestamp                                           |
 | date          | the timestamp as a date (calculated)                          | datetime                                            |
-| transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
-| baseFeePerGas | the base fee for this block                                   | wei                                                 |
-| uncles        | a possibly empty array of uncle hashes                        | Hash                                                |
+| transactions  | a possibly empty array of transactions                        | [Transaction[]](/data-model/chaindata/#transaction) |
+| baseFeePerGas | the base fee for this block                                   | gas                                                 |
+| uncles        | a possibly empty array of uncle hashes                        | hash[]                                              |
 | withdrawals   | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal)   |
 
 ## Transaction
@@ -67,22 +66,23 @@ Transactions consist of the following fields:
 | hash             | the hash of the transaction                                                                           | hash                                           |
 | blockHash        | the hash of the block containing this transaction                                                     | hash                                           |
 | blockNumber      | the number of the block                                                                               | blknum                                         |
-| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                         |
-| nonce            | sequence number of the transactions sent by the sender                                                | uint64                                         |
+| transactionIndex | the zero-indexed position of the transaction in the block                                             | txnum                                          |
+| nonce            | sequence number of the transactions sent by the sender                                                | value                                          |
 | timestamp        | the Unix timestamp of the object                                                                      | timestamp                                      |
 | date             | the timestamp as a date (calculated)                                                                  | datetime                                       |
 | from             | address from which the transaction was sent                                                           | address                                        |
 | to               | address to which the transaction was sent                                                             | address                                        |
 | value            | the amount of wei sent with this transactions                                                         | wei                                            |
+| ether            | if --ether is specified, the value in ether (calculated)                                              | ether                                          |
 | gas              | the maximum number of gas allowed for this transaction                                                | gas                                            |
 | gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                            |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                          |
 | receipt          |                                                                                                       | [Receipt](/data-model/chaindata/#receipt)      |
-| statements       | array of reconciliations                                                                              | [Statement[]](/data-model/accounts/#statement) |
+| statements       | array of reconciliations (calculated)                                                                 | [Statement[]](/data-model/accounts/#statement) |
 | articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)        |
-| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                                          |
-| isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                                          |
-| compressedTx     | truncated, more readable version of the articulation                                                  | string                                         |
+| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | bool                                           |
+| isError          | `true` if the transaction ended in error, `false` otherwise                                           | bool                                           |
+| compressedTx     | truncated, more readable version of the articulation (calculated)                                     | string                                         |
 
 ## Withdrawal
 
@@ -91,6 +91,7 @@ Transactions consist of the following fields:
 The following commands produce and manage Withdrawals:
 
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 Withdrawals consist of the following fields:
 
@@ -98,11 +99,12 @@ Withdrawals consist of the following fields:
 | -------------- | -------------------------------------------------------------------------------------------------------------------- | --------- |
 | address        | the recipient for the withdrawn ether                                                                                | address   |
 | amount         | a nonzero amount of ether given in gwei (1e9 wei)                                                                    | wei       |
+| ether          | if --ether is specified, the amount in ether (calculated)                                                            | ether     |
 | blockNumber    | the number of this block                                                                                             | blknum    |
-| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | uint64    |
+| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | value     |
 | timestamp      | the timestamp for this block                                                                                         | timestamp |
 | date           | the timestamp as a date (calculated)                                                                                 | datetime  |
-| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | uint64    |
+| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | value     |
 
 ## Receipt
 
@@ -128,9 +130,9 @@ Receipts consist of the following fields:
 | gasUsed          | the amount of gas actually used by the transaction                         | gas                                 |
 | isError          |                                                                            | bool                                |
 | logs             | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
-| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
+| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | value                               |
 | transactionHash  |                                                                            | hash                                |
-| transactionIndex |                                                                            | blknum                              |
+| transactionIndex |                                                                            | txnum                               |
 
 ## Log
 
@@ -144,14 +146,15 @@ The following commands produce and manage Logs:
 - [chifra logs](/chifra/chaindata/#chifra-logs)
 - [chifra export](/chifra/accounts/#chifra-export)
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra transactions](/chifra/chaindata/#chifra-transactions)
 
 Logs consist of the following fields:
 
 | Field            | Description                                                                                       | Type                                    |
 | ---------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------- |
 | blockNumber      | the number of the block                                                                           | blknum                                  |
-| transactionIndex | the zero-indexed position of the transaction in the block                                         | uint64                                  |
-| logIndex         | the zero-indexed position of this log relative to the block                                       | uint64                                  |
+| transactionIndex | the zero-indexed position of the transaction in the block                                         | txnum                                   |
+| logIndex         | the zero-indexed position of this log relative to the block                                       | lognum                                  |
 | timestamp        | the timestamp of the block this log appears in                                                    | timestamp                               |
 | date             | the timestamp as a date (calculated)                                                              | datetime                                |
 | address          | the smart contract that emitted this log                                                          | address                                 |
@@ -160,7 +163,7 @@ Logs consist of the following fields:
 | transactionHash  | the hash of the transction                                                                        | hash                                    |
 | blockHash        | the hash of the block                                                                             | hash                                    |
 | articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
-| compressedLog    | a truncated, more readable version of the articulation                                            | string                                  |
+| compressedLog    | a truncated, more readable version of the articulation (calculated)                               | string                                  |
 
 ## Trace
 
@@ -181,25 +184,23 @@ The following commands produce and manage Traces:
 
 Traces consist of the following fields:
 
-| Field            | Description                                               | Type                                              |
-| ---------------- | --------------------------------------------------------- | ------------------------------------------------- |
-| blockHash        | the hash of the block containing this trace               | hash                                              |
-| blockNumber      | the number of the block                                   | blknum                                            |
-| timestamp        | the timestamp of the block                                | timestamp                                         |
-| date             | the timestamp as a date (calculated)                      | datetime                                          |
-| transactionHash  | the transaction's hash containing this trace              | hash                                              |
-| transactionIndex | the zero-indexed position of the transaction in the block | blknum                                            |
-| traceAddress     | a particular trace's address in the trace tree            | uint64[]                                          |
-| subtraces        | the number of children traces that the trace hash         | uint64                                            |
-| type             | the type of the trace                                     | string                                            |
-| action           | the trace action for this trace                           | [TraceAction](/data-model/chaindata/#traceaction) |
-| result           | the trace result of this trace                            | [TraceResult](/data-model/chaindata/#traceresult) |
-| articulatedTrace | human readable version of the trace action input data     | [Function](/data-model/other/#function)           |
-| compressedTrace  | a compressed string version of the articulated trace      | string                                            |
+| Field            | Description                                                       | Type                                              |
+| ---------------- | ----------------------------------------------------------------- | ------------------------------------------------- |
+| blockHash        | the hash of the block containing this trace                       | hash                                              |
+| blockNumber      | the number of the block                                           | blknum                                            |
+| timestamp        | the timestamp of the block                                        | timestamp                                         |
+| date             | the timestamp as a date (calculated)                              | datetime                                          |
+| transactionHash  | the transaction's hash containing this trace                      | hash                                              |
+| transactionIndex | the zero-indexed position of the transaction in the block         | txnum                                             |
+| traceAddress     | a particular trace's address in the trace tree                    | uint64[]                                          |
+| subtraces        | the number of children traces that the trace hash                 | uint64                                            |
+| type             | the type of the trace                                             | string                                            |
+| action           | the trace action for this trace                                   | [TraceAction](/data-model/chaindata/#traceaction) |
+| result           | the trace result of this trace                                    | [TraceResult](/data-model/chaindata/#traceresult) |
+| articulatedTrace | human readable version of the trace action input data             | [Function](/data-model/other/#function)           |
+| compressedTrace  | a compressed string version of the articulated trace (calculated) | string                                            |
 
 ### Notes
-
-When produced using the `--raw` option to `chifra traces`, this data model actually produces `transactionPosition` instead of `transactionIndex`. When produced without the `--raw` option, the model uses `transactionIndex` to be consistent with other data models such as the `transaction`.
 
 Traces and TraceActions, when produced during a self-destruct, export different fields when rendered in JSON. In CSV and TXT output, these fields change thier meaning while retaining the header of the original fields. The following table describes these differences:
 
@@ -212,25 +213,6 @@ Fields that change during self-destruct transaction:
 | Action::Value |                       | Action.Balance           |
 |               | Action.RefundAddress  |                          |
 |               | Action.Balance        |                          |
-
-## LogFilter
-
-Log filters are used to speed up querying of the node when searching for logs.
-
-The following commands produce and manage LogFilters:
-
-- [chifra blocks](/chifra/chaindata/#chifra-blocks)
-- [chifra logs](/chifra/chaindata/#chifra-logs)
-
-LogFilters consist of the following fields:
-
-| Field     | Description                                                            | Type      |
-| --------- | ---------------------------------------------------------------------- | --------- |
-| fromBlock | the first block in the block range to query with eth_getLogs           | blknum    |
-| toBlock   | the last block in the range to query with eth_getLogs                  | blknum    |
-| blockHash | an alternative to blocks specification, the hash of the block to query | hash      |
-| emitters  | one or more emitting addresses from which logs were emitted            | address[] |
-| topics    | one or more topics which logs represent                                | topic[]   |
 
 ## TraceAction
 
@@ -246,15 +228,20 @@ The following commands produce and manage TraceActions:
 
 TraceActions consist of the following fields:
 
-| Field         | Description                                                                | Type    |
-| ------------- | -------------------------------------------------------------------------- | ------- |
-| from          | address from which the trace was sent                                      | address |
-| to            | address to which the trace was sent                                        | address |
-| gas           | the maximum number of gas allowed for this trace                           | gas     |
-| input         | an encoded version of the function call                                    | bytes   |
-| callType      | the type of call                                                           | string  |
-| refundAddress | if the call type is self-destruct, the address to which the refund is sent | address |
-| rewardType    | the type of reward                                                         | string  |
+| Field          | Description                                                                | Type    |
+| -------------- | -------------------------------------------------------------------------- | ------- |
+| from           | address from which the trace was sent                                      | address |
+| to             | address to which the trace was sent                                        | address |
+| gas            | the maximum number of gas allowed for this trace                           | gas     |
+| input          | an encoded version of the function call                                    | bytes   |
+| callType       | the type of call                                                           | string  |
+| refundAddress  | if the call type is self-destruct, the address to which the refund is sent | address |
+| rewardType     | the type of reward                                                         | string  |
+| value          | the value (in wei) of this trace action                                    | wei     |
+| ether          | if --ether is specified, the value in ether (calculated)                   | ether   |
+| selfDestructed | `true` if the contract self-destructed, `false` otherwise                  | address |
+| balance        | if self-destructed, the balance of the contract at that time               | wei     |
+| balanceEth     | if --ether is specified, the balance in ether (calculated)                 | ether   |
 
 ## TraceResult
 
@@ -289,7 +276,7 @@ TraceCounts consist of the following fields:
 | Field            | Description                             | Type      |
 | ---------------- | --------------------------------------- | --------- |
 | blockNumber      | the block number                        | blknum    |
-| transactionIndex | the transaction index                   | blknum    |
+| transactionIndex | the transaction index                   | txnum     |
 | transactionHash  | the transaction's hash                  | hash      |
 | timestamp        | the timestamp of the block              | timestamp |
 | date             | the timestamp as a date (calculated)    | datetime  |
@@ -390,24 +377,55 @@ TimestampCounts consist of the following fields:
 | ----- | --------------------------------------------------- | ------ |
 | count | the number of timestamps in the timestamps database | uint64 |
 
+## LightBlock
+
+`chifra blocks --hashes` returns top level data specified block with only
+the hashes of the block's transactions.
+
+The following commands produce and manage LightBlocks:
+
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
+
+LightBlocks consist of the following fields:
+
+| Field         | Description                                                   | Type                                              |
+| ------------- | ------------------------------------------------------------- | ------------------------------------------------- |
+| gasLimit      | the system-wide maximum amount of gas permitted in this block | gas                                               |
+| hash          | the hash of the current block                                 | hash                                              |
+| blockNumber   | the number of the block                                       | blknum                                            |
+| parentHash    | hash of previous block                                        | hash                                              |
+| miner         | address of block's winning miner                              | address                                           |
+| difficulty    | the computational difficulty at this block                    | value                                             |
+| timestamp     | the Unix timestamp of the object                              | timestamp                                         |
+| date          | the timestamp as a date (calculated)                          | datetime                                          |
+| transactions  | a possibly empty array of transaction hashes                  | string[]                                          |
+| baseFeePerGas | the base fee for this block                                   | gas                                               |
+| uncles        | a possibly empty array of uncle hashes                        | hash[]                                            |
+| withdrawals   | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal) |
+
 ## Base types
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                         | Notes          |
-| --------- | ----------------------------------- | -------------- |
-| address   | an '0x'-prefixed 20-byte hex string | lowercase      |
-| blknum    | an alias for a uint64               |                |
-| bool      | either `true`, `false`, `1`, or `0` |                |
-| bytes     | an arbitrarily long string of bytes |                |
-| datetime  | a JSON formatted date               | as a string    |
-| gas       | an unsigned big number              | as a string    |
-| hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
-| int64     | a 64-bit signed integer             |                |
-| string    | a normal character string           |                |
-| timestamp | a 64-bit unsigned integer           | Unix timestamp |
-| uint32    | a 32-bit unsigned integer           |                |
-| uint64    | a 64-bit unsigned integer           |                |
-| uint8     | an alias for the boolean type       |                |
-| wei       | an unsigned big number              | as a string    |
+| Type      | Description                            | Notes          |
+| --------- | -------------------------------------- | -------------- |
+| address   | an '0x'-prefixed 20-byte hex string    | lowercase      |
+| blknum    | an alias for a uint64                  |                |
+| bool      | either `true`, `false`, `1`, or `0`    |                |
+| bytes     | an arbitrarily long string of bytes    |                |
+| datetime  | a JSON formatted date                  | as a string    |
+| ether     | a big number float                     | as a string    |
+| gas       | a 64-bit unsigned integer              |                |
+| hash      | an '0x'-prefixed 32-byte hex string    | lowercase      |
+| int64     | a 64-bit signed integer                |                |
+| lognum    | an alias for a uint64                  |                |
+| string    | a normal character string              |                |
+| timestamp | a 64-bit unsigned integer              | Unix timestamp |
+| topic     | an '0x'-prefixed 32-byte hex string    | lowercase      |
+| txnum     | an alias for a uint64                  |                |
+| uint256   | a 256-bit unsigned integer             |                |
+| uint64    | a 64-bit unsigned integer              |                |
+| value     | an alias for a 64-bit unsigned integer |                |
+| wei       | an unsigned big number                 | as a string    |
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

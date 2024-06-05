@@ -1,29 +1,41 @@
 package base
 
 import (
-	"math/big"
+	"github.com/bykof/gostradamus"
 )
 
-type Wei = big.Int
-type Gas = uint64
-type Blknum = uint64
-type Txnum = uint64
+// make -j 12 && time make test-all shows:
+// 306.71 and 353.82 when Value is its own type
+// 375.40 and 332.51 when Value is an alias
+// Conclusion: Minimal difference, but concrete type is slightly faster
+// and more useful because it supports Json parsing and future needs
+// Some more testing of speed
+// When				Seconds		nTests	Seconds/Test
+// Two weeks ago	505			579		0.8721
+// Currently		1036.2		1200	0.8635 (a bit faster)
+// As an alias		1056		1200	0.8800 (a bit slower)
+
+// type Value = uint64 // as an alias
+type Value uint64 // allows for json parsing
+type Blknum = Value
+type Txnum = Value
+type Tracenum = Value
+type Lognum = Value
+type Gas = Value
 type Topic = string
-type Timestamp = int64
+type Timestamp int64
+type Float float64
 
-func HexToWei(hex string) (result *Wei) {
-	result = new(Wei)
-	if hex == "" {
-		return
-	}
+const NOPOS = uint64(^uint64(0))
+const NOPOSI = Timestamp(0xdeadbeef)
+const NOPOSN = Value(^uint64(0))
 
-	if len(hex) > 66 {
-		// Cut garbage off if hex is too long
-		result.SetString(hex[2:66], 16)
-	} else {
-		result.SetString(hex[2:], 16)
-	}
-	return
+func (t *Timestamp) Int64() int64 {
+	return int64(*t)
+}
+
+func FormattedDate(ts Timestamp) string {
+	return gostradamus.FromUnixTimestamp(int64(ts)).Format("2006-01-02 15:04:05 UTC")
 }
 
 func IsFinal(latestTs, blockTs Timestamp) bool {

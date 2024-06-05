@@ -1,6 +1,0 @@
-blocks?blocks=1001001-1001005&fmt=csv&output=output_test_file
-{
-  "errors": [
-    "The --output option is not available in api mode."
-  ]
-}

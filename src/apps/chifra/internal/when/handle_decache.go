@@ -14,19 +14,18 @@ import (
 )
 
 func (opts *WhenOptions) HandleDecache() error {
-	silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
-
-	itemsToRemove, err := decache.LocationsFromBlockIds(opts.Conn, opts.BlockIds, false, false)
+	itemsToRemove, err := decache.LocationsFromBlocks(opts.Conn, opts.BlockIds)
 	if err != nil {
 		return err
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, walk.Cache_Blocks); err != nil {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		showProgress := opts.Globals.ShowProgress()
+		if msg, err := decache.Decache(opts.Conn, itemsToRemove, showProgress, walk.Cache_Blocks); err != nil {
 			errorChan <- err
 		} else {
-			s := types.SimpleMessage{
+			s := types.Message{
 				Msg: msg,
 			}
 			modelChan <- &s
