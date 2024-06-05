@@ -66,7 +66,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 				return false, err
 			}
 			if rng.Last < firstBlock || rng.First > lastBlock {
-				logger.Info("Skipping", path)
+				logger.Progress(true, "Skipping", path)
 				return true, nil
 			}
 			if path != index.ToBloomPath(path) {
