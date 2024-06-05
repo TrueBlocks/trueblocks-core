@@ -2,6 +2,7 @@ package chunksPkg
 
 import (
 	"context"
+	"sort"
 	"strings"
 	"time"
 
@@ -26,7 +27,8 @@ func (opts *ChunksOptions) HandleList(unusedBns []base.Blknum) error {
 			perPage = -100
 		}
 
-		showProgress := opts.Globals.ShowProgress()
+		showProgress := opts.Globals.ShowProgressNotTesting()
+		chunks := map[string]types.ChunkRecord{}
 		if array, err := pinning.ListPins(opts.Globals.Chain, "pinned", showProgress, opts.Count, perPage, time.Millisecond*500); err != nil {
 			errorChan <- err
 		} else {
@@ -40,9 +42,32 @@ func (opts *ChunksOptions) HandleList(unusedBns []base.Blknum) error {
 						Size:       base.MustParseInt64(parts[3]),
 						Status:     parts[4],
 					}
-					modelChan <- &s
+					rng := strings.Split(s.FileName, ".")[0]
+					chunk := chunks[rng]
+					chunk.Range = rng
+					if strings.HasSuffix(s.FileName, ".bloom") {
+						chunk.BloomHash = s.Cid
+						chunk.BloomSize = s.Size
+					} else if strings.HasSuffix(s.FileName, ".bin") {
+						chunk.IndexHash = s.Cid
+						chunk.IndexSize = s.Size
+					} else {
+						logger.Info("Skipping:", s.FileName)
+					}
+					chunks[rng] = chunk
 				}
 			}
+		}
+
+		chunkArray := []types.ChunkRecord{}
+		for _, chunk := range chunks {
+			chunkArray = append(chunkArray, chunk)
+		}
+		sort.Slice(chunkArray, func(i, j int) bool {
+			return chunkArray[i].Range < chunkArray[j].Range
+		})
+		for _, chunk := range chunkArray {
+			modelChan <- &chunk
 		}
 	}
 
