@@ -668,57 +668,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: watch
-          description: continually scan for new blocks and extract data as per the command file
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: watchlist
-          description: available with --watch option only, a file containing the addresses to watch
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: string
-        - name: commands
-          description: available with --watch option only, the file containing the list of commands to apply to each watched address
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: string
-        - name: batchSize
-          description: available with --watch option only, the number of monitors to process in each batch
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: number
-            format: uint64
-        - name: runCount
-          description: available with --watch option only, run the monitor this many times, then quit
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: number
-            format: uint64
-        - name: sleep
-          description: available with --watch option only, the number of seconds to sleep between runs
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: number
-            format: float64
         - name: chain
           description: the chain to use
           required: false
@@ -2631,30 +2580,6 @@ paths:
               format: blknum
         - name: check
           description: check the manifest, index, or blooms for internal consistency
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: pin
-          description: pin the manifest or each index chunk and bloom
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: publish
-          description: publish the manifest to the Unchained Index smart contract
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: remote
-          description: prior to processing, retrieve the manifest from the Unchained Index smart contract
           required: false
           style: form
           in: query

@@ -112,6 +112,10 @@ func readCmdOption(op *Option, data *any) (bool, error) {
 	return true, nil
 }
 
+func (op *Option) IsApiHidden() bool {
+	return strings.Contains(op.Attributes, "notApi") || op.IsHidden()
+}
+
 func (op *Option) IsHidden() bool {
 	return !op.IsVisibleDocs() ||
 		(!op.IsRequired() && !op.IsVisible() && op.IsVisibleDocs())

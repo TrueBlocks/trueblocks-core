@@ -20,6 +20,7 @@ type Command struct {
 	Description  string       `json:"description,omitempty"`
 	Options      []Option     `json:"options,omitempty"`
 	ReturnType   string       `json:"return_type,omitempty"`
+	Attributes   string       `json:"attributes,omitempty"`
 	Capabilities string       `json:"capabilities,omitempty"`
 	Handlers     []Handler    `json:"handlers,omitempty"`
 	Usage        string       `json:"usage,omitempty"`
@@ -471,13 +472,7 @@ func (c *Command) IsRoute() bool {
 	if len(c.Route) == 0 {
 		return false
 	}
-
-	excludedRoutes := map[string]bool{
-		"daemon":  true,
-		"explore": true,
-		"scrape":  true,
-	}
-	return !excludedRoutes[c.Route]
+	return !strings.Contains(c.Attributes, "notApi")
 }
 
 func (c *Command) Example() string {
