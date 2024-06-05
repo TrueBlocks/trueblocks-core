@@ -6,6 +6,7 @@ This file details changes made to TrueBlocks over time. All version prior to ver
 
 **Summary**
 
+- Bumped version to v3.0.0-release.
 - Many, many changes, some breaking.
 - Most important was the addition of a complete GoLang SDK (still alpha, but working).
 - Major improvements and expansions to caching.
