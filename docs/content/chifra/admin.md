@@ -230,7 +230,7 @@ Data models produced by this tool:
 
 Links:
 
-- [api docs](/api/#operation/admin-scrape)
+- no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
 
 ### configuration

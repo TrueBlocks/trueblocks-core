@@ -20,6 +20,7 @@ type Command struct {
 	Description  string       `json:"description,omitempty"`
 	Options      []Option     `json:"options,omitempty"`
 	ReturnType   string       `json:"return_type,omitempty"`
+	Attributes   string       `json:"attributes,omitempty"`
 	Capabilities string       `json:"capabilities,omitempty"`
 	Handlers     []Handler    `json:"handlers,omitempty"`
 	Usage        string       `json:"usage,omitempty"`
@@ -213,7 +214,7 @@ func (c *Command) PyGlobals() string {
 
 func (c *Command) YamlGlobals() string {
 	ret := []string{}
-	caps := strings.Replace(strings.Replace(strings.ToLower(c.Capabilities)+"|", "default|", "verbose|fmt|version|noop|nocolor|chain|noheader|file|output|append|", -1), "caching|", "cache|decache|", -1)
+	caps := strings.Replace(strings.Replace(strings.ToLower(c.Capabilities)+"|", "default|", "verbose|fmt|version|chain|noheader|", -1), "caching|", "cache|decache|", -1)
 	if c.Route == "names" {
 		caps = "create|update|delete|undelete|remove|" + caps
 	}
@@ -471,12 +472,7 @@ func (c *Command) IsRoute() bool {
 	if len(c.Route) == 0 {
 		return false
 	}
-
-	excludedRoutes := map[string]bool{
-		"daemon":  true,
-		"explore": true,
-	}
-	return !excludedRoutes[c.Route]
+	return !strings.Contains(c.Attributes, "notApi")
 }
 
 func (c *Command) Example() string {

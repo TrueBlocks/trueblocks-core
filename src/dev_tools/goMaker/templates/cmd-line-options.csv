@@ -67,12 +67,12 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 14050,apps,Accounts,monitors,acctExport,remove,,,visible|docs,,switch,<boolean>,,,,,remove a previously deleted monitor
 14060,apps,Accounts,monitors,acctExport,clean,C,,visible|docs,1,switch,<boolean>,monitorClean,,,,clean (i.e. remove duplicate appearances) from monitors
 14070,apps,Accounts,monitors,acctExport,list,l,,visible|docs,2,switch,<boolean>,monitor,,,,list monitors in the cache (--verbose for more detail)
-14080,apps,Accounts,monitors,acctExport,watch,w,,visible|docs,3,switch,<boolean>,,,,,continually scan for new blocks and extract data as per the command file
-14090,apps,Accounts,monitors,acctExport,watchlist,a,,visible|docs,,flag,<string>,,,,,available with --watch option only&#44; a file containing the addresses to watch
-14100,apps,Accounts,monitors,acctExport,commands,c,,visible|docs,,flag,<string>,,,,,available with --watch option only&#44; the file containing the list of commands to apply to each watched address
-14110,apps,Accounts,monitors,acctExport,batch_size,b,8,visible|docs,,flag,<uint64>,,,,,available with --watch option only&#44; the number of monitors to process in each batch
-14120,apps,Accounts,monitors,acctExport,run_count,u,,visible|docs,,flag,<uint64>,,,,,available with --watch option only&#44; run the monitor this many times&#44; then quit
-14130,apps,Accounts,monitors,acctExport,sleep,s,14,visible|docs,,flag,<float64>,,,,,available with --watch option only&#44; the number of seconds to sleep between runs
+14080,apps,Accounts,monitors,acctExport,watch,w,,visible|docs|notApi,3,switch,<boolean>,,,,,continually scan for new blocks and extract data as per the command file
+14090,apps,Accounts,monitors,acctExport,watchlist,a,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; a file containing the addresses to watch
+14100,apps,Accounts,monitors,acctExport,commands,c,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; the file containing the list of commands to apply to each watched address
+14110,apps,Accounts,monitors,acctExport,batch_size,b,8,visible|docs|notApi,,flag,<uint64>,,,,,available with --watch option only&#44; the number of monitors to process in each batch
+14120,apps,Accounts,monitors,acctExport,run_count,u,,visible|docs|notApi,,flag,<uint64>,,,,,available with --watch option only&#44; run the monitor this many times&#44; then quit
+14130,apps,Accounts,monitors,acctExport,sleep,s,14,visible|docs|notApi,,flag,<float64>,,,,,available with --watch option only&#44; the number of seconds to sleep between runs
 14140,apps,Accounts,monitors,acctExport,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 14150,apps,Accounts,monitors,acctExport,n2,,,,,note,,,,,,If no address is presented to the --clean command&#44; all existing monitors will be cleaned.
 14160,apps,Accounts,monitors,acctExport,n3,,,,,note,,,,,,The --watch option requires two additional parameters to be specified: `--watchlist` and `--commands`.
@@ -244,7 +244,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 43070,apps,Admin,status,cacheStatus,n1,,,,,note,,,,,,The `some` mode includes index&#44; monitors&#44; names&#44; slurps&#44; and abis.
 43080,apps,Admin,status,cacheStatus,n2,,,,,note,,,,,,If no mode is supplied&#44; a terse report is generated.
 #
-44000,apps,Admin,daemon,flame,,,,visible|docs,,command,,,Start the Api server,[flags],verbose|version|noop|noColor|,Initialize and control long-running processes such as the API and the scrapers.
+44000,apps,Admin,daemon,flame,,,,visible|docs|notApi,,command,,,Start the Api server,[flags],verbose|version|noop|noColor|,Initialize and control long-running processes such as the API and the scrapers.
 44020,apps,Admin,daemon,flame,url,u,localhost:8080,visible|docs,,flag,<string>,,,,,specify the API server's url and optionally its port
 44030,apps,Admin,daemon,flame,api,a,on,,,flag,enum[off|on*]>,,,,,instruct the node to start the API server
 44040,apps,Admin,daemon,flame,scrape,s,,,,flag,enum[off|blooms|index]>,,,,,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
@@ -256,7 +256,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 44090,apps,Admin,daemon,flame,n2,,,,,note,,,,,,See the API documentation (https://trueblocks.io/api) for more information.
 44100,apps,Admin,daemon,flame,a1,,,,,alias,,,,,,serve
 #
-45000,apps,Admin,scrape,blockScrape,,,,visible|docs,,command,,,Scrape index,[flags],verbose|version|noop|noColor|chain|,Scan the chain and update the TrueBlocks index of appearances.
+45000,apps,Admin,scrape,blockScrape,,,,visible|docs|notApi,,command,,,Scrape index,[flags],verbose|version|noop|noColor|chain|,Scan the chain and update the TrueBlocks index of appearances.
 45020,apps,Admin,scrape,blockScrape,block_cnt,n,2000,visible|docs,2,flag,<uint64>,,,,,maximum number of blocks to process per pass
 45030,apps,Admin,scrape,blockScrape,sleep,s,14,visible|docs,,flag,<float64>,,,,,seconds to sleep between scraper passes
 45040,apps,Admin,scrape,blockScrape,touch,l,,visible|docs,1,flag,<blknum>,,,,,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
@@ -278,11 +278,11 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 46020,apps,Admin,chunks,chunkMan,mode,,,required|visible|docs,9,positional,enum[manifest|index|blooms|pins|addresses|appearances|stats],mode,,,,the type of data to process
 46030,apps,Admin,chunks,chunkMan,blocks,,,visible|docs,,positional,list<blknum>,,,,,an optional list of blocks to intersect with chunk ranges
 46040,apps,Admin,chunks,chunkMan,check,c,,visible|docs,1,switch,<boolean>,,,,,check the manifest&#44; index&#44; or blooms for internal consistency
-46050,apps,Admin,chunks,chunkMan,pin,i,,visible|docs,6,switch,<boolean>,,,,,pin the manifest or each index chunk and bloom
-46060,apps,Admin,chunks,chunkMan,publish,p,,visible|docs,7,switch,<boolean>,,,,,publish the manifest to the Unchained Index smart contract
+46050,apps,Admin,chunks,chunkMan,pin,i,,visible|docs|notApi,6,switch,<boolean>,,,,,pin the manifest or each index chunk and bloom
+46060,apps,Admin,chunks,chunkMan,publish,p,,visible|docs|notApi,7,switch,<boolean>,,,,,publish the manifest to the Unchained Index smart contract
 46070,apps,Admin,chunks,chunkMan,publisher,P,,,,flag,<address>,,,,,for some query options&#44; the publisher of the index
 46080,apps,Admin,chunks,chunkMan,truncate,n,NOPOSN,,8,flag,<blknum>,message,,,,truncate the entire index at this block (requires a block identifier)
-46090,apps,Admin,chunks,chunkMan,remote,r,,visible|docs,,switch,<boolean>,,,,,prior to processing&#44; retrieve the manifest from the Unchained Index smart contract
+46090,apps,Admin,chunks,chunkMan,remote,r,,visible|docs|notApi,,switch,<boolean>,,,,,prior to processing&#44; retrieve the manifest from the Unchained Index smart contract
 46100,apps,Admin,chunks,chunkMan,belongs,b,,visible|docs,,flag,list<addr>,,,,,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
 46110,apps,Admin,chunks,chunkMan,diff,f,,,5,switch,<boolean>,message,,,,compare two index portions (see notes)
 46120,apps,Admin,chunks,chunkMan,first_block,F,,visible|docs,,flag,<blknum>,,,,,first block to process (inclusive)
@@ -319,7 +319,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 #
 51000,,Other,,,,,,,,group,,,,,,Access to other and external data
 #
-52000,apps,Other,explore,fireStorm,,,,visible|docs,,command,,,Open the explorer,[flags] [terms...],verbose|version|noop|noColor|chain|file|,Open a local or remote explorer for one or more addresses&#44; blocks&#44; or transactions.
+52000,apps,Other,explore,fireStorm,,,,visible|docs|notApi,,command,,,Open the explorer,[flags] [terms...],verbose|version|noop|noColor|chain|file|,Open a local or remote explorer for one or more addresses&#44; blocks&#44; or transactions.
 52020,apps,Other,explore,fireStorm,terms,,,visible|docs,1,positional,list<string>,,,,,one or more address&#44; name&#44; block&#44; or transaction identifier
 52030,apps,Other,explore,fireStorm,local,l,,visible|docs,,switch,<boolean>,,,,,open the local TrueBlocks explorer
 52040,apps,Other,explore,fireStorm,google,g,,visible|docs,,switch,<boolean>,,,,,search google excluding popular blockchain explorers
