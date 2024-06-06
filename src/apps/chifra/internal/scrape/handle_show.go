@@ -20,6 +20,21 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
+// criticalError means that we have to stop scraper
+type criticalError struct {
+	err error
+}
+
+func (c *criticalError) Error() string {
+	return c.err.Error()
+}
+
+func NewCriticalError(err error) *criticalError {
+	return &criticalError{
+		err,
+	}
+}
+
 // HandleScrape enters a forever loop and continually scrapes --block_cnt blocks
 // (or less if close to the head). The forever loop pauses each round for
 // --sleep seconds (or, if not close to the head, for .25 seconds).
@@ -175,7 +190,8 @@ func (opts *ScrapeOptions) HandleScrape() error {
 				if err != nil {
 					logger.Error(colors.BrightRed+err.Error(), colors.Off)
 				}
-				if sigintCtx.Err() != nil {
+				_, critical := err.(*criticalError)
+				if critical || sigintCtx.Err() != nil {
 					break
 				}
 				goto PAUSE

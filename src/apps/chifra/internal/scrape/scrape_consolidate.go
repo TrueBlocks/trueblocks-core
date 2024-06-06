@@ -104,7 +104,9 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 			publisher := base.ZeroAddr
 			var chunk index.Chunk
 			if report, err := chunk.Write(chain, publisher, chunkPath, appMap, nAppearances); err != nil {
-				return err
+				// Remove file if it exists, because it might not be correct
+				_ = os.Remove(index.ToIndexPath(chunkPath))
+				return NewCriticalError(err)
 			} else if report == nil {
 				logger.Fatal("should not happen ==> write chunk returned empty report")
 			} else {
