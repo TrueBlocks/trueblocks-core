@@ -3,7 +3,7 @@ module github.com/TrueBlocks/trueblocks-core/examples/findFirst
 // Go Version
 go 1.22
 
-replace github.com/TrueBlocks/trueblocks-core/sdk => ../../sdk
+replace github.com/TrueBlocks/trueblocks-core/sdk/v3 => ../../sdk
 
 replace github.com/TrueBlocks/trueblocks-core/src/apps/chifra => ../../src/apps/chifra
 
