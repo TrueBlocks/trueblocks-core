@@ -3,13 +3,9 @@ module github.com/TrueBlocks/trueblocks-core/sdkFuzzer
 // Go Version
 go 1.22
 
-replace github.com/TrueBlocks/trueblocks-core/sdk => ../../../sdk
-
-replace github.com/TrueBlocks/trueblocks-core/src/apps/chifra => ../../../src/apps/chifra
-
 require (
-	github.com/TrueBlocks/trueblocks-core/sdk v0.0.0-00010101000000-000000000000
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240419175527-3f8eaf44105d
+	github.com/TrueBlocks/trueblocks-core/sdk v0.0.0-20240605222744-1cbeec2938e0
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240605222744-1cbeec2938e0
 )
 
 require (

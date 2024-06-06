@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/sdk/v3"
+	"github.com/TrueBlocks/trueblocks-core/sdk"
 )
 
 func main() {
