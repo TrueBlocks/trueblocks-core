@@ -29,7 +29,7 @@ const usage{{toProper .Route}} = `{{.Route}} {{.Usage}}{{if .HasPositionals}}
 
 Arguments:{{range .Options}}{{if .IsPositional}}
   {{.LongName}} - {{.DescriptionEx}}{{if .IsEnum}}
-	{{.EnumChoices}}{{end}}{{end}}{{end}}{{end}}`
+    {{.EnumChoices}}{{end}}{{end}}{{end}}{{end}}`
 
 const long{{toProper .Route}} = `Purpose:
   {{.Description}}`

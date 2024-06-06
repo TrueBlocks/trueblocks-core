@@ -43,7 +43,7 @@ Usage:
 
 Arguments:
   mode - either show or edit the configuration
-  One of [ show | edit ]
+    One of [ show | edit ]
 
 Flags:
   -a, --paths        show the configuration paths for the system
@@ -85,7 +85,7 @@ Usage:
 
 Arguments:
   modes - the (optional) name of the binary cache to report on, terse otherwise
-  One or more of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]
+    One or more of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]
 
 Flags:
   -d, --diagnose            same as the default but with additional diagnostics
@@ -325,7 +325,7 @@ Usage:
 
 Arguments:
   mode - the type of data to process (required)
-  One of [ manifest | index | blooms | pins | addresses | appearances | stats ]
+    One of [ manifest | index | blooms | pins | addresses | appearances | stats ]
   blocks - an optional list of blocks to intersect with chunk ranges
 
 Flags:

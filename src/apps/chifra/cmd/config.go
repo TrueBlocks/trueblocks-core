@@ -40,7 +40,7 @@ const usageConfig = `config <mode> [flags]
 
 Arguments:
   mode - either show or edit the configuration
-	One of [ show | edit ]`
+    One of [ show | edit ]`
 
 const longConfig = `Purpose:
   Report on and edit the configuration of the TrueBlocks system.`
