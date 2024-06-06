@@ -149,7 +149,6 @@ func (gr *NameReader) Read() (types.Name, error) {
 		Decimals:   base.MustParseUint64(record[gr.header["decimals"]]),
 		Symbol:     record[gr.header["symbol"]],
 		Source:     record[gr.header["source"]],
-		Petname:    record[gr.header["petname"]],
 		Deleted:    record[gr.header["deleted"]] == "true",
 		IsCustom:   record[gr.header["isCustom"]] == "true",
 		IsPrefund:  record[gr.header["isPrefund"]] == "true",

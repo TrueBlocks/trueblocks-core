@@ -4,7 +4,6 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -269,9 +268,8 @@ func Test_cleanToken(t *testing.T) {
 
 func Test_cleanContract(t *testing.T) {
 	type args struct {
-		token   *types.Token
-		address base.Address
-		name    *types.Name
+		token *types.Token
+		name  *types.Name
 	}
 	tests := []struct {
 		name         string
@@ -312,7 +310,7 @@ func Test_cleanContract(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotModified, err := cleanContract(tt.args.token, tt.args.address, tt.args.name)
+			gotModified, err := cleanContract(tt.args.token, tt.args.name)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("cleanContract() error = %v, wantErr %v", err, tt.wantErr)
 				return

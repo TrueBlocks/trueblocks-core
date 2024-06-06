@@ -43,7 +43,6 @@ func TestNamesOptions_autoname(t *testing.T) {
 				Symbol:     "PEPE",
 				Source:     "On chain",
 				Decimals:   18,
-				Petname:    "properly-sincere-filly",
 				IsContract: true,
 				IsErc20:    true,
 				IsCustom:   true,
@@ -58,7 +57,6 @@ func TestNamesOptions_autoname(t *testing.T) {
 		// 	expected: &types.Name{
 		// 		Address:  base.HexToAddress("0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"),
 		// 		Name:     "M-Wallet 0x5499",
-		// 		Petname:  "sadly-settling-anteater",
 		// 		Source:   "EtherScan.io",
 		// 		Tags:     "00-Active",
 		// 		IsCustom: true,

@@ -3095,10 +3095,6 @@ components:
           type: number
           format: uint64
           description: "number of decimals retrieved from an ERC20 smart contract, defaults to 18"
-        petname:
-          type: string
-          format: string
-          description: "the petname such as described here http://www.erights.org/elib/capability/pnml.html"
         deleted:
           type: boolean
           format: boolean

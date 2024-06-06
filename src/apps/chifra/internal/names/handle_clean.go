@@ -211,7 +211,7 @@ func cleanName(chain string, name *types.Name) (modified bool, err error) {
 		err = nil
 	}
 
-	contractModified, err := cleanContract(tokenState, name.Address, name)
+	contractModified, err := cleanContract(tokenState, name)
 	if err != nil {
 		return
 	}
@@ -239,10 +239,6 @@ func cleanCommon(name *types.Name) (modified bool) {
 		modified = true
 	}
 
-	if len(name.Petname) == 0 {
-		name.Petname = base.AddrToPetname(name.Address.Hex(), "-")
-		modified = true
-	}
 	return
 }
 
@@ -255,7 +251,7 @@ func removeDoubleSpaces(str string) (string, bool) {
 	return result, true
 }
 
-func cleanContract(token *types.Token, address base.Address, name *types.Name) (modified bool, err error) {
+func cleanContract(token *types.Token, name *types.Name) (modified bool, err error) {
 	if !name.IsContract {
 		name.IsContract = true
 		modified = true

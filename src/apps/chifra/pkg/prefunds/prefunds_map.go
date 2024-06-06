@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-var loadedPrefundNames map[base.Address]types.Name = map[base.Address]types.Name{}
+var loadedPrefundNames = map[base.Address]types.Name{}
 var loadedPrefundNamesMutex sync.Mutex
 
 // LoadPrefundMap loads the prefund names from file if not already loaded or from the cache
@@ -30,7 +30,6 @@ func LoadPrefundMap(chain string, thePath string) (*map[base.Address]types.Name,
 				Address:   prefund.Address,
 				Name:      "Prefund_" + fmt.Sprintf("%04d", i),
 				Source:    "Genesis",
-				Petname:   base.AddrToPetname(prefund.Address.Hex(), "-"),
 				IsPrefund: true,
 				Prefund:   prefund.Balance,
 			}

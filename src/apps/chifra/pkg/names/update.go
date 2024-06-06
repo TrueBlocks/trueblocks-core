@@ -10,16 +10,16 @@ import (
 func UpdateName(dbType DatabaseType, chain string, name *types.Name) (err error) {
 	switch dbType {
 	case DatabaseCustom:
-		return updateCustomName(chain, name)
+		return updateCustomName(name)
 	case DatabaseRegular:
-		return updateRegularName(chain, name)
+		return updateRegularName(name)
 	default:
 		logger.Fatal("should not happen ==> unknown database type")
 	}
 	return
 }
 
-func updateCustomName(chain string, name *types.Name) (err error) {
+func updateCustomName(name *types.Name) (err error) {
 	loadedCustomNamesMutex.Lock()
 	defer loadedCustomNamesMutex.Unlock()
 
@@ -33,11 +33,11 @@ func updateCustomName(chain string, name *types.Name) (err error) {
 	return
 }
 
-func updateRegularName(chain string, name *types.Name) (err error) {
+func updateRegularName(name *types.Name) (err error) {
 	if _, ok := loadedRegularNames[name.Address]; !ok {
 		err = fmt.Errorf("no name for address: %s", name.Address)
 		return
 	}
 
-	return regularCreateName(chain, name)
+	return regularCreateName(name)
 }

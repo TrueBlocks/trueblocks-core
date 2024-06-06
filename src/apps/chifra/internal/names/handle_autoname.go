@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -51,7 +50,7 @@ func (opts *NamesOptions) readContractAndClean() (name *types.Name, err error) {
 
 	name = &types.Name{
 		Address:  opts.AutonameAddr,
-		Name:     base.AddrToPetname(opts.AutonameAddr.Hex(), "-"),
+		Name:     "petname",
 		Source:   "TrueBlocks.io",
 		IsCustom: true,
 	}

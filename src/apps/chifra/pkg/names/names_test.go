@@ -39,7 +39,6 @@ func TestNewNameReader(t *testing.T) {
 			Address: base.HexToAddress("0x000000000000000000000000000000000000dead"),
 			Name:    "ENS: Burn Address",
 			Source:  "EtherScan.io",
-			Petname: "abnormally-able-bee",
 		},
 		{
 			Tags:       "50-Tokens:ERC721",
@@ -48,7 +47,6 @@ func TestNewNameReader(t *testing.T) {
 			Symbol:     "HWK",
 			Decimals:   18,
 			Source:     "On chain",
-			Petname:    "absolutely-normal-hawk",
 			IsContract: true,
 			IsErc20:    true,
 			IsErc721:   true,
@@ -60,7 +58,6 @@ func TestNewNameReader(t *testing.T) {
 			Symbol:     "CHI",
 			Decimals:   18,
 			Source:     "On chain",
-			Petname:    "actually-suitable-finch",
 			IsContract: true,
 			IsErc20:    true,
 			IsErc721:   false,
@@ -70,7 +67,6 @@ func TestNewNameReader(t *testing.T) {
 			Address:    base.HexToAddress("0x000000000000541e251335090ac5b47176af4f7e"),
 			Name:       "dex.blue",
 			Source:     "EtherScan.io",
-			Petname:    "adequately-probable-werewolf",
 			IsContract: true,
 		},
 	}

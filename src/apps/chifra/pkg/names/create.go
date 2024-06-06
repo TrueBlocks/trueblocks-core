@@ -12,7 +12,7 @@ func CreateName(dbType DatabaseType, chain string, name *types.Name) (err error)
 	case DatabaseCustom:
 		return customCreateName(chain, name)
 	case DatabaseRegular:
-		return regularCreateName(chain, name)
+		return regularCreateName(name)
 	default:
 		logger.Fatal("should not happen ==> unknown database type")
 	}
@@ -33,7 +33,7 @@ func customCreateName(chain string, name *types.Name) (err error) {
 	return writeCustomNames(db)
 }
 
-func regularCreateName(chain string, name *types.Name) (err error) {
+func regularCreateName(name *types.Name) (err error) {
 	loadedRegularNamesMutex.Lock()
 	defer loadedRegularNamesMutex.Unlock()
 

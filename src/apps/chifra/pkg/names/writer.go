@@ -69,7 +69,7 @@ func (w *NameWriter) Write(name *types.Name) (err error) {
 		name.Symbol,
 		name.Source,
 		decimals,
-		name.Petname,
+		"petname",
 		fmt.Sprint(name.Deleted),
 		fmt.Sprint(name.IsCustom),
 		fmt.Sprint(name.IsPrefund),
