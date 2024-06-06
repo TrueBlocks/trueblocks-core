@@ -22,10 +22,6 @@ func shouldProcess(source, tag string) (bool, error) {
 	}
 
 	if strings.Contains(source, "sdk_") || strings.Contains(source, "sdkFuzzer") {
-		if strings.Contains(source, "python") {
-			return false, nil
-		}
-
 		skip := tag == "explore" || tag == "scrape" || tag == "daemon"
 		if skip {
 			return false, nil
