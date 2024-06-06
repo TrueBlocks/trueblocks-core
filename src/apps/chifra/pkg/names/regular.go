@@ -10,12 +10,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TODO: Test if there's a performance differnce between using an array here (which would work just as well) and a map
-var loadedRegularNames map[base.Address]types.Name = map[base.Address]types.Name{}
+var loadedRegularNames = map[base.Address]types.Name{}
 var loadedRegularNamesMutex sync.Mutex
 
 // loadRegularMap loads the regular names from the cache
-func loadRegularMap(chain string, thePath string, terms []string, parts Parts, ret *map[base.Address]types.Name) error {
+func loadRegularMap(chain string, terms []string, parts Parts, ret *map[base.Address]types.Name) error {
 	if len(loadedRegularNames) != 0 {
 		// We have already loaded the data
 		for _, name := range loadedRegularNames {
@@ -35,7 +34,7 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 	}
 	defer db.Close()
 
-	reader, err := NewNameReader(db, NameReaderTab)
+	reader, err := NewNameReader(db)
 	if err != nil {
 		return err
 	}

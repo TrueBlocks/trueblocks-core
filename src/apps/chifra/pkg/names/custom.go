@@ -49,7 +49,7 @@ func unmarshallCustomNames(source io.Reader, terms []string, parts Parts, namesM
 	customNames = map[base.Address]types.Name{}
 
 	var reader NameReader
-	reader, err = NewNameReader(source, NameReaderTab)
+	reader, err = NewNameReader(source)
 	if err != nil {
 		// Supress EOF, the file can be empty
 		if errors.Is(err, io.EOF) {
