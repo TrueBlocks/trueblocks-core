@@ -3,6 +3,7 @@ package utils
 import "os"
 
 func IsPermitted() bool {
+	isVersion := false
 	isStatus := false
 	isConfig := false
 	hasPaths := false
@@ -17,6 +18,8 @@ func IsPermitted() bool {
 			isConfig = true
 		} else if arg == "--paths" {
 			hasPaths = true
+		} else if arg == "--version" || arg == "version" {
+			isVersion = true
 		} else if arg == "edit" {
 			hasEdit = true
 		} else if arg != "--verbose" {
@@ -25,6 +28,10 @@ func IsPermitted() bool {
 		} else {
 			cnt-- // allow --verbose
 		}
+	}
+
+	if isVersion {
+		return true
 	}
 
 	if isStatus && cnt == 2 {
