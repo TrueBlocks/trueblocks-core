@@ -113,7 +113,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 				report.Report()
 			}
 			if err = bm.opts.NotifyChunkWritten(chunk, chunkPath); err != nil {
-				return err, true
+				return err
 			}
 
 			// reset for next chunk
@@ -164,7 +164,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 			Meta:    bm.meta,
 			Payload: newRange.String(),
 		}); err != nil {
-			return err, true
+			return err
 		}
 	}
 
