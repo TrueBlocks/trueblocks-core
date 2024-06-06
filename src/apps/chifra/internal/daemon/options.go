@@ -30,9 +30,9 @@ type DaemonOptions struct {
 	Api     string                `json:"api,omitempty"`     // Instruct the node to start the API server
 	Scrape  string                `json:"scrape,omitempty"`  // Start the scraper, initialize it with either just blooms or entire index, generate for new blocks
 	Monitor bool                  `json:"monitor,omitempty"` // Instruct the node to start the monitors tool
-	Grpc    bool                  `json:"grpc,omitempty"`    // Run gRPC server to serve names
 	Silent  bool                  `json:"silent,omitempty"`  // Disable logging (for use in SDK for example)
 	Port    string                `json:"port,omitempty"`    // Deprecated, use --url instead
+	Grpc    bool                  `json:"grpc,omitempty"`    // Deprecated, there is no replacement
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	Conn    *rpc.Connection       `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
@@ -52,7 +52,6 @@ func (opts *DaemonOptions) testLog() {
 	logger.TestLog(len(opts.Api) > 0 && opts.Api != "on", "Api: ", opts.Api)
 	logger.TestLog(len(opts.Scrape) > 0, "Scrape: ", opts.Scrape)
 	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
-	logger.TestLog(opts.Grpc, "Grpc: ", opts.Grpc)
 	logger.TestLog(opts.Silent, "Silent: ", opts.Silent)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -90,12 +89,12 @@ func DaemonFinishParseInternal(w io.Writer, values url.Values) *DaemonOptions {
 			opts.Scrape = value[0]
 		case "monitor":
 			opts.Monitor = true
-		case "grpc":
-			opts.Grpc = true
 		case "silent":
 			opts.Silent = true
 		case "port":
 			opts.Port = value[0]
+		case "grpc":
+			opts.Grpc = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")

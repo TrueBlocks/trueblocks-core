@@ -163,6 +163,9 @@ func (c *Command) Clean() {
 		if op.IsDeprecated() {
 			parts := strings.Split(op.Attributes, "=")
 			msg := "deprecated, use --" + parts[1] + " instead"
+			if len(parts[1]) == 0 {
+				msg = "deprecated, there is no replacement"
+			}
 			cleaned[index].Description = msg
 			c.Notes = append(c.Notes, "The --"+op.LongName+" option is "+msg+".")
 		}
@@ -1023,21 +1026,33 @@ func (c *Command) HasDeprecated() bool {
 
 func (op *Option) FindDeprecator() *Option {
 	parts := strings.Split(op.Attributes, "=")
+	if len(parts[1]) == 0 {
+		return nil
+	}
+
 	for _, op := range op.cmdPtr.Options {
 		if op.LongName == parts[1] {
 			return &op
 		}
 	}
+
 	logger.Fatal(fmt.Sprintf("Deprecator (%s) not found for: %s", parts[1], op.LongName))
 	return nil
 }
 
 func (op *Option) Deprecator() string {
-	return op.FindDeprecator().LongName
+	ret := op.FindDeprecator()
+	if ret == nil {
+		return ""
+	}
+	return ret.LongName
 }
 
 func (op *Option) DeprecatorIsDefault() string {
 	dep := op.FindDeprecator()
+	if dep == nil {
+		return ""
+	}
 	if dep.IsArray() {
 		return "len(opts." + dep.GoName + ") == 0"
 	}
@@ -1062,15 +1077,17 @@ func (c *Command) DeprecatedTransfer() string {
 	ret := []string{}
 	for _, op := range c.Options {
 		if op.IsDeprecated() {
-			tmplName := "deprecatedTransfer"
-			tmpl := `	// Deprecated, but still supported
+			if op.FindDeprecator() != nil {
+				tmplName := "deprecatedTransfer"
+				tmpl := `	// Deprecated, but still supported
 	if {{.DeprecatedNotDefault}} && {{.DeprecatorIsDefault}} {
 		logger.Warn("The --{{.LongName}} flag is deprecated. Please use --{{.Deprecator}} instead.")
 		opts.{{firstUpper .Deprecator}} = opts.{{.GoName}}
 		opts.{{.GoName}} = {{.Clear}}
 	}
 `
-			ret = append(ret, op.executeTemplate(tmplName, tmpl))
+				ret = append(ret, op.executeTemplate(tmplName, tmpl))
+			}
 		}
 	}
 	return strings.Join(ret, "\n") + "\n"
