@@ -124,7 +124,6 @@ var requiredColumns = []string{
 	"name",
 	"symbol",
 	"source",
-	"petname",
 }
 
 type NameReader struct {

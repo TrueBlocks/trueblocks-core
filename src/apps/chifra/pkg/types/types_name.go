@@ -28,7 +28,6 @@ type Name struct {
 	IsErc721   bool         `json:"isErc721,omitempty"`
 	IsPrefund  bool         `json:"isPrefund,omitempty"`
 	Name       string       `json:"name"`
-	Petname    string       `json:"petname"`
 	Source     string       `json:"source"`
 	Symbol     string       `json:"symbol"`
 	Tags       string       `json:"tags"`
@@ -64,7 +63,6 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 		"address":  s.Address,
 		"decimals": s.Decimals,
 		"name":     s.Name,
-		"petname":  s.Petname,
 		"source":   s.Source,
 		"symbol":   s.Symbol,
 		"tags":     s.Tags,
@@ -77,7 +75,6 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 		"symbol",
 		"source",
 		"decimals",
-		"petname",
 	}
 
 	if len(s.Address.Bytes()) > 0 && s.Address != base.ZeroAddr {

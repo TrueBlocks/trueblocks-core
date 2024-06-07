@@ -919,8 +919,7 @@ paths:
                       "name": "LibraToken",
                       "symbol": "LBA",
                       "source": "On chain",
-                      "decimals": 18,
-                      "petname": "actively-happy-mite"
+                      "decimals": 18
                     },
                     { "...": "..." }
                   ]
