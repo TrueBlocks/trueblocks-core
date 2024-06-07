@@ -50,7 +50,6 @@ func (opts *NamesOptions) readContractAndClean() (name *types.Name, err error) {
 
 	name = &types.Name{
 		Address:  opts.AutonameAddr,
-		Name:     "Name",
 		Source:   "TrueBlocks.io",
 		IsCustom: true,
 	}

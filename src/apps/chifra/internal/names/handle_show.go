@@ -17,7 +17,6 @@ func (opts *NamesOptions) HandleShow() error {
 	}
 
 	chain := opts.Globals.Chain
-	var fetchData func(modelChan chan types.Modeler, errorChan chan error)
 
 	testMode := opts.Globals.TestMode
 	namesArray, err := names.LoadNamesArray(chain, opts.getType(), names.SortByAddress, opts.Terms)
@@ -34,7 +33,7 @@ func (opts *NamesOptions) HandleShow() error {
 		return nil
 	}
 
-	fetchData = func(modelChan chan types.Modeler, errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, name := range namesArray {
 			modelChan <- &name
 		}
