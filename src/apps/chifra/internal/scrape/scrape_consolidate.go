@@ -15,14 +15,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 const asciiAppearanceSize = 59
 
 // Consolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
-func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
+func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) error {
 	var err error
 	chain := bm.chain
 
@@ -33,7 +32,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 	if file.FileExists(stageFn) {
 		backupFn, err = file.MakeBackup(filepath.Join(config.PathToCache(chain)+"tmp"), stageFn)
 		if err != nil {
-			return errors.New("Could not create backup file: " + err.Error()), true
+			return errors.New("Could not create backup file: " + err.Error())
 		}
 		defer func() {
 			// If the backup file exists, the function did not complete. In that case, we replace the original file.
@@ -46,14 +45,6 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 
 	// After this point if we fail the backup file will replace the original file, so
 	// we can safely remove these the stage file (and ripe files) and it will get replaced
-
-	// Make sure the user can't interrupt us...
-	ctx, cancel := context.WithCancel(context.Background())
-	cleanOnQuit := func() {
-		logger.Warn(sigintTrap.TrapMessage)
-	}
-	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
-	defer sigintTrap.Disable(trapChannel)
 
 	// Some counters...
 	nAppsFound := 0
@@ -70,6 +61,10 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 	// For each block...
 	nChunks := 0
 	for _, block := range blocks {
+		if ctx.Err() != nil {
+			// This means the context got cancelled, i.e. we got a SIGINT.
+			return nil
+		}
 		fn := fmt.Sprintf("%09d.txt", block)
 		if file.FileExists(filepath.Join(bm.UnripeFolder(), fn)) {
 			continue // skip unripe files
@@ -83,7 +78,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				msg := fmt.Sprintf("ripe file not found for block %d", block) + spaces
 				if !bm.AllowMissing() {
 					_ = cleanEphemeralIndexFolders(chain)
-					return errors.New(msg), true
+					return errors.New(msg)
 				} else {
 					logger.Warn(msg)
 				}
@@ -109,7 +104,9 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 			publisher := base.ZeroAddr
 			var chunk index.Chunk
 			if report, err := chunk.Write(chain, publisher, chunkPath, appMap, nAppearances); err != nil {
-				return err, false
+				// Remove file if it exists, because it might not be correct
+				_ = os.Remove(index.ToIndexPath(chunkPath))
+				return NewCriticalError(err)
 			} else if report == nil {
 				logger.Fatal("should not happen ==> write chunk returned empty report")
 			} else {
@@ -118,7 +115,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				report.Report()
 			}
 			if err = bm.opts.NotifyChunkWritten(chunk, chunkPath); err != nil {
-				return err, true
+				return err
 			}
 
 			// reset for next chunk
@@ -139,6 +136,10 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		appearances := make([]string, 0, nAppearances)
 		for addr, apps := range appMap {
 			for _, app := range apps {
+				if ctx.Err() != nil {
+					// This means the context got cancelled, i.e. we got a SIGINT.
+					return nil
+				}
 				record := fmt.Sprintf("%s\t%09d\t%05d", addr, app.BlockNumber, app.TransactionIndex)
 				appearances = append(appearances, record)
 				newRange.Last = base.Max(newRange.Last, base.Blknum(app.BlockNumber))
@@ -151,7 +152,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		stageFn = filepath.Join(bm.StageFolder(), fmt.Sprintf("%s.txt", newRange))
 		if err := file.LinesToAsciiFile(stageFn, appearances); err != nil {
 			os.Remove(stageFn)
-			return err, true
+			return err
 		}
 	}
 
@@ -165,14 +166,14 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 			Meta:    bm.meta,
 			Payload: newRange.String(),
 		}); err != nil {
-			return err, true
+			return err
 		}
 	}
 
 	// Commit the change by deleting the backup file.
 	os.Remove(backupFn)
 
-	return nil, true
+	return nil
 }
 
 // AsciiFileToAppearanceMap reads the appearances from the stage file and returns them as a map
