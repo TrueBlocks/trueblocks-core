@@ -25,6 +25,12 @@ var tbChainToCovalent = map[string]string{
 	"mainnet": "eth-mainnet",
 }
 
+func covalentPrepareQuery(q *Query) (result *Query) {
+	result = q.Dup()
+	result.Resources = []string{"covalent"}
+	return
+}
+
 type CovalentProvider struct {
 	printProgress bool
 	conn          *rpc.Connection
@@ -68,7 +74,8 @@ func (p *CovalentProvider) NewPaginator(query *Query) Paginator {
 func (p *CovalentProvider) TransactionsByAddress(ctx context.Context, query *Query, errorChan chan error) (txChan chan types.Slurp) {
 	txChan = make(chan types.Slurp, providerChannelBufferSize)
 
-	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
+	prepQuery := covalentPrepareQuery(query)
+	slurpedChan := fetchAndFilterData(ctx, p, prepQuery, errorChan, p.fetchData)
 	go func() {
 		defer close(txChan)
 		for {
@@ -90,7 +97,8 @@ func (p *CovalentProvider) TransactionsByAddress(ctx context.Context, query *Que
 func (p *CovalentProvider) Appearances(ctx context.Context, query *Query, errorChan chan error) (appChan chan types.Appearance) {
 	appChan = make(chan types.Appearance, providerChannelBufferSize)
 
-	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
+	prepQuery := covalentPrepareQuery(query)
+	slurpedChan := fetchAndFilterData(ctx, p, prepQuery, errorChan, p.fetchData)
 	go func() {
 		defer close(appChan)
 		for {
@@ -110,7 +118,8 @@ func (p *CovalentProvider) Appearances(ctx context.Context, query *Query, errorC
 }
 
 func (p *CovalentProvider) Count(ctx context.Context, query *Query, errorChan chan error) (monitorChan chan types.Monitor) {
-	slurpedChan := fetchAndFilterData(ctx, p, query, errorChan, p.fetchData)
+	prepQuery := covalentPrepareQuery(query)
+	slurpedChan := fetchAndFilterData(ctx, p, prepQuery, errorChan, p.fetchData)
 	return countSlurped(ctx, query, slurpedChan)
 }
 
