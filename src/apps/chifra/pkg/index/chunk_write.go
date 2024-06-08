@@ -80,13 +80,9 @@ func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string,
 	// First, we backup the existing chunk if there is one...
 	indexFn := ToIndexPath(fileName)
 	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
-	if backupFn, err := file.MakeBackup(tmpPath, indexFn); err == nil {
+	if backup, err := file.MakeBackup(tmpPath, indexFn); err == nil {
 		defer func() {
-			if file.FileExists(backupFn) {
-				// If the backup file exists, something failed, so we replace the original file.
-				_ = os.Rename(backupFn, indexFn)
-				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
-			}
+			backup.Restore()
 		}()
 
 		if fp, err := os.OpenFile(indexFn, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
@@ -125,7 +121,7 @@ func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string,
 
 			// We're sucessfully written the chunk, so we don't need this any more. If the pin
 			// fails we don't want to have to re-do this chunk, so remove this here.
-			os.Remove(backupFn)
+			backup.Clear()
 			return &writeReport{
 				Range:        base.RangeFromFilename(indexFn),
 				nAddresses:   len(addressTable),

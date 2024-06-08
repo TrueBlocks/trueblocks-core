@@ -28,19 +28,15 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 
 	indexPath := config.PathToIndex(chain)
 
-	backupFn := ""
+	backup := file.BackupFile{}
 	stageFn, _ := file.LatestFileInFolder(bm.StageFolder()) // it may not exist...
 	if file.FileExists(stageFn) {
-		backupFn, err = file.MakeBackup(filepath.Join(config.PathToCache(chain)+"tmp"), stageFn)
+		backup, err = file.MakeBackup(filepath.Join(config.PathToCache(chain)+"tmp"), stageFn)
 		if err != nil {
 			return errors.New("Could not create backup file: " + err.Error()), true
 		}
 		defer func() {
-			// If the backup file exists, the function did not complete. In that case, we replace the original file.
-			if backupFn != "" && file.FileExists(backupFn) {
-				_ = os.Rename(backupFn, stageFn)
-				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
-			}
+			backup.Restore()
 		}()
 	}
 
@@ -170,7 +166,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 	}
 
 	// Commit the change by deleting the backup file.
-	os.Remove(backupFn)
+	backup.Clear()
 
 	return nil, true
 }
