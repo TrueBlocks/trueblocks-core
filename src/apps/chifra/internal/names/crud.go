@@ -59,10 +59,6 @@ func (opts *NamesOptions) anyCrud() bool {
 		opts.Remove
 }
 
-func (opts *NamesOptions) createOrUpdate() bool {
-	return opts.Create || opts.Update
-}
-
 type CrudData struct {
 	Address  crudDataField[base.Address]
 	Name     crudDataField[string]
@@ -176,26 +172,25 @@ func (opts *NamesOptions) validateCrudData(data *CrudData) error {
 	return nil
 }
 
-func (opts *NamesOptions) LoadCrudDataIfNeeded(request *http.Request) (err error) {
+func (opts *NamesOptions) LoadCrudDataIfNeeded(request *http.Request) error {
 	if opts.Delete || opts.Undelete || opts.Remove {
 		opts.crudData = &CrudData{
 			Address: crudDataField[base.Address]{
 				Value: base.HexToAddress(opts.Terms[0]),
 			},
 		}
-		return
-	}
-	if !opts.createOrUpdate() {
-		return
+		return nil
 	}
 
-	var data *CrudData
+	if !opts.Create && !opts.Update {
+		return nil
+	}
+
+	var err error
 	if request == nil {
-		data, err = opts.getCrudDataEnv()
+		opts.crudData, err = opts.getCrudDataEnv()
 	} else {
-		data, err = opts.getCrudDataHttp(request)
+		opts.crudData, err = opts.getCrudDataHttp(request)
 	}
-
-	opts.crudData = data
-	return
+	return err
 }
