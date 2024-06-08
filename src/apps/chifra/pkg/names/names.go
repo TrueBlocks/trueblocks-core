@@ -192,9 +192,16 @@ type DatabaseType string
 const (
 	DatabaseRegular DatabaseType = "names.tab"
 	DatabaseCustom  DatabaseType = "names_custom.tab"
-	DatabasePrefund DatabaseType = "allocs.csv"
 	DatabaseDryRun  DatabaseType = "<dryrun>"
 )
+
+func openDatabaseForEdit(chain string, kind DatabaseType) (*os.File, error) {
+	return openDatabaseFile(chain, kind, os.O_WRONLY|os.O_TRUNC)
+}
+
+func openDatabaseForRead(chain string, kind DatabaseType) (*os.File, error) {
+	return openDatabaseFile(chain, kind, os.O_RDONLY)
+}
 
 func openDatabaseFile(chain string, kind DatabaseType, openFlag int) (*os.File, error) {
 	if kind == DatabaseDryRun {

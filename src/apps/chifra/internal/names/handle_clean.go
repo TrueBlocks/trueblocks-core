@@ -152,17 +152,15 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 		return 0, stepErr
 	}
 
-	// If nothing has been changed, we can exit here
 	if modifiedCount == 0 {
 		return 0, nil
 	}
 
-	// Write to disk
 	if opts.Regular {
-		return modifiedCount, names.WriteNames(names.DatabaseRegular, chain, opts.DryRun)
+		return modifiedCount, names.RegularWriteNames(chain, opts.DryRun)
 	}
 
-	return modifiedCount, names.WriteNames(names.DatabaseCustom, chain, opts.DryRun)
+	return modifiedCount, names.CustomWriteNames(chain, opts.DryRun)
 }
 
 // wrapErrorWithAddr prepends `err` with `address`, so that we can learn which name caused troubles

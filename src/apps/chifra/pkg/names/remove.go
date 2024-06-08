@@ -2,7 +2,6 @@ package names
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -28,7 +27,7 @@ func customRemoveName(chain string, address base.Address) (*types.Name, error) {
 		return nil, fmt.Errorf("cannot remove non-existant custom name for address %s", address.Hex())
 	}
 
-	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
+	db, err := openDatabaseForEdit(chain, DatabaseCustom)
 	if err != nil {
 		return nil, err
 	}

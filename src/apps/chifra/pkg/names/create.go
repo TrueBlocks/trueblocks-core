@@ -1,8 +1,6 @@
 package names
 
 import (
-	"os"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -20,7 +18,7 @@ func CreateName(dbType DatabaseType, chain string, name *types.Name) (err error)
 }
 
 func customCreateName(chain string, name *types.Name) (err error) {
-	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
+	db, err := openDatabaseForEdit(chain, DatabaseCustom)
 	if err != nil {
 		return
 	}

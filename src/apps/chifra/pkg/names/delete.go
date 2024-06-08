@@ -23,7 +23,7 @@ func SetDeleted(dbType DatabaseType, chain string, address base.Address, deleted
 }
 
 func customSetDeleted(chain string, address base.Address, deleted bool) (name *types.Name, err error) {
-	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
+	db, err := openDatabaseForEdit(chain, DatabaseCustom)
 	if err != nil {
 		return
 	}

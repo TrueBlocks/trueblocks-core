@@ -2,7 +2,6 @@ package names
 
 import (
 	"io"
-	"os"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -28,7 +27,7 @@ func loadRegularMap(chain string, terms []string, parts Parts, ret *map[base.Add
 	loadedRegularNamesMutex.Lock()
 	defer loadedRegularNamesMutex.Unlock()
 
-	db, err := openDatabaseFile(chain, DatabaseRegular, os.O_RDONLY)
+	db, err := openDatabaseForRead(chain, DatabaseRegular)
 	if err != nil {
 		return err
 	}

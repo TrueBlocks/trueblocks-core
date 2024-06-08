@@ -29,7 +29,7 @@ func loadCustomMap(chain string, terms []string, parts Parts, namesMap *map[base
 	loadedCustomNamesMutex.Lock()
 	defer loadedCustomNamesMutex.Unlock()
 
-	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_RDONLY)
+	db, err := openDatabaseForRead(chain, DatabaseCustom)
 	if err != nil {
 		return err
 	}
