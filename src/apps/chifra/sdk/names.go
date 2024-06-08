@@ -21,6 +21,10 @@ func Names(w io.Writer, values url.Values) error {
 	names.ResetOptions(sdkTestMode)
 	opts := names.NamesFinishParseInternal(w, values)
 	// EXISTING_CODE
+	var err1 error
+	if err1 = opts.LoadCrudDataIfNeeded(nil); err1 != nil {
+		return err1
+	}
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("names", w, &opts.Globals)
 	err := opts.NamesInternal()

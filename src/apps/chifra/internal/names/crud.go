@@ -186,7 +186,7 @@ func (opts *NamesOptions) validateCrudData(data *CrudData) error {
 	return nil
 }
 
-func (opts *NamesOptions) loadCrudDataIfNeeded(request *http.Request) (err error) {
+func (opts *NamesOptions) LoadCrudDataIfNeeded(request *http.Request) (err error) {
 	// These three read address from command arguments
 	if opts.Delete || opts.Undelete || opts.Remove {
 		if len(opts.Terms) != 1 {
