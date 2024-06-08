@@ -178,9 +178,6 @@ func (opts *NamesOptions) validateCrudData(data *CrudData) error {
 
 func (opts *NamesOptions) LoadCrudDataIfNeeded(request *http.Request) (err error) {
 	if opts.Delete || opts.Undelete || opts.Remove {
-		if len(opts.Terms) != 1 {
-			return errors.New("exactly 1 address required")
-		}
 		opts.crudData = &CrudData{
 			Address: crudDataField[base.Address]{
 				Value: base.HexToAddress(opts.Terms[0]),
