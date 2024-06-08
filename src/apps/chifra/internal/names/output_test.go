@@ -117,9 +117,6 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 		if data.Decimals.Value != "" {
 			os.Setenv("TB_NAME_DECIMALS", data.Decimals.Value)
 		}
-		if data.Description.Value != "" {
-			os.Setenv("TB_NAME_DESCR", data.Description.Value)
-		}
 	}
 	var expected *CrudData
 	var result *CrudData
