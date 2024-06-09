@@ -77,15 +77,15 @@ on      ,both ,medi  ,names ,tools ,ethNames ,duplicated_option_1    ,n    ,term
 
 # Various parts of editing names does not work
 on      ,both ,fast  ,names ,tools ,ethNames ,edit_invalid           ,y    ,invalid & fmt = json
-delay2  ,both ,fast  ,names ,tools ,ethNames ,edit_add               ,y    ,create & fmt = json
+on      ,both ,fast  ,names ,tools ,ethNames ,edit_add               ,y    ,create & fmt = json
 delay   ,both ,fast  ,names ,tools ,ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
-delay2  ,both ,fast  ,names ,tools ,ethNames ,edit_edit              ,y    ,update & fmt = json
+delay   ,both ,fast  ,names ,tools ,ethNames ,edit_edit              ,y    ,update & fmt = json
 delay   ,both ,fast  ,names ,tools ,ethNames ,show_edit              ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
-delay2  ,both ,fast  ,names ,tools ,ethNames ,edit_delete            ,y    ,delete & terms = 0x0000000000000000000000000000000010101010 & fmt = json
+delay   ,both ,fast  ,names ,tools ,ethNames ,edit_delete            ,y    ,delete & terms = 0x0000000000000000000000000000000010101010 & fmt = json
 delay   ,both ,fast  ,names ,tools ,ethNames ,show_delete            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
-delay2  ,both ,fast  ,names ,tools ,ethNames ,edit_undelete          ,y    ,undelete & terms = 0x0000000000000000000000000000000010101010 & fmt = json
-delay2  ,both ,fast  ,names ,tools ,ethNames ,show_undelete          ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
-delay2  ,both ,fast  ,names ,tools ,ethNames ,edit_remove            ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & fmt = json
+delay   ,both ,fast  ,names ,tools ,ethNames ,edit_undelete          ,y    ,undelete & terms = 0x0000000000000000000000000000000010101010 & fmt = json
+delay   ,both ,fast  ,names ,tools ,ethNames ,show_undelete          ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
+delay   ,both ,fast  ,names ,tools ,ethNames ,edit_remove            ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & fmt = json
 delay   ,both ,fast  ,names ,tools ,ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
 
 # Capabilities
