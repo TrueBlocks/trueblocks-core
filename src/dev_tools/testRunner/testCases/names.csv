@@ -40,7 +40,7 @@ on      ,both ,fast  ,names ,tools ,ethNames ,edit_custom_delete     ,y    ,dele
 on      ,both ,fast  ,names ,tools ,ethNames ,edit_custom_undelete   ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & to_custom & all
 
 on      ,both ,fast  ,names ,tools ,ethNames ,named                  ,y    ,
-delay   ,both ,fast  ,names ,tools ,ethNames ,all                    ,y    ,all
+on      ,both ,fast  ,names ,tools ,ethNames ,all                    ,y    ,all
 on      ,both ,medi  ,names ,tools ,ethNames ,upgrade_fail           ,y    ,fmt = json
 on      ,both ,medi  ,names ,tools ,ethNames ,name_match             ,n    ,noop & terms = torj & fmt = csv
 on      ,cmd  ,fast  ,names ,tools ,ethNames ,show_version           ,n    ,version
