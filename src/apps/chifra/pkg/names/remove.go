@@ -30,6 +30,10 @@ func customRemoveName(chain string, address base.Address) (*types.Name, error) {
 		return nil, fmt.Errorf("cannot remove non-existant custom name for address %s", address.Hex())
 	}
 
+	if !name.Deleted {
+		return nil, fmt.Errorf("cannot remove non-deleted custom name for address %s", address.Hex())
+	}
+
 	namesPath := getDatabasePath(chain, DatabaseCustom)
 	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
 

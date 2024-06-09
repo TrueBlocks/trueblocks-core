@@ -25,7 +25,18 @@ func SetDeleted(dbType DatabaseType, chain string, address base.Address, deleted
 	return
 }
 
-func customSetDeleted(chain string, address base.Address, deleted bool) (name *types.Name, err error) {
+func customSetDeleted(chain string, address base.Address, deleted bool) (*types.Name, error) {
+	existing, ok := loadedCustomNames[address]
+	if !ok {
+		return nil, fmt.Errorf("no custom name for address %s", address.Hex())
+	}
+
+	if existing.Deleted && deleted {
+		return nil, fmt.Errorf("name for address %s is already deleted, cannot delete", address.Hex())
+	} else if !existing.Deleted && !deleted {
+		return nil, fmt.Errorf("name for address %s is not deleted, cannot undelete", address.Hex())
+	}
+
 	namesPath := getDatabasePath(chain, DatabaseCustom)
 	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
 
@@ -48,7 +59,7 @@ func customSetDeleted(chain string, address base.Address, deleted bool) (name *t
 		backup.Restore()
 	}()
 
-	name, err = changeDeleted(db, address, deleted)
+	name, err := changeDeleted(db, address, deleted)
 	if err == nil {
 		// Everything went okay, so we can remove the backup.
 		backup.Clear()
@@ -57,11 +68,7 @@ func customSetDeleted(chain string, address base.Address, deleted bool) (name *t
 }
 
 func changeDeleted(output *os.File, address base.Address, deleted bool) (*types.Name, error) {
-	name, ok := loadedCustomNames[address]
-	if !ok {
-		return nil, fmt.Errorf("no custom name for address %s", address.Hex())
-	}
-
+	name := loadedCustomNames[address]
 	name.Deleted = deleted
 	name.IsCustom = true
 	loadedCustomNamesMutex.Lock()
