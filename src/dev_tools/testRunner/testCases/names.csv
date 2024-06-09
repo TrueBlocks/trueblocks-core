@@ -25,19 +25,19 @@ on      ,both ,fast  ,names ,tools ,ethNames ,prefund_search1        ,y    ,pref
 on      ,both ,fast  ,names ,tools ,ethNames ,prefund_search2        ,y    ,prefund & terms = _004
 on      ,both ,fast  ,names ,tools ,ethNames ,prefund_search3        ,y    ,prefund & terms = etwork
 
-delay   ,both ,fast  ,names ,tools ,ethNames ,custom                 ,n    ,custom & fmt = txt
-delay   ,both ,fast  ,names ,tools ,ethNames ,custom_search1         ,y    ,custom & terms = Account_1
-delay   ,both ,fast  ,names ,tools ,ethNames ,custom_search2         ,y    ,custom & terms = Account_1 & match_case
-delay   ,both ,fast  ,names ,tools ,ethNames ,custom_search3         ,y    ,custom & terms = account_1 & match_case
-delay   ,both ,fast  ,names ,tools ,ethNames ,prefund_custom         ,y    ,prefund & custom
-delay   ,both ,fast  ,names ,tools ,ethNames ,prefund_custom_search  ,y    ,prefund & custom & terms = 0001 & verbose
-delay   ,both ,fast  ,names ,tools ,ethNames ,prefund_custom_search2 ,y    ,prefund & custom & terms = 0001 & terms = Genesis & expand
-delay   ,both ,fast  ,names ,tools ,ethNames ,prefund_custom_named   ,y    ,prefund & custom & all
-delay   ,both ,fast  ,names ,tools ,ethNames ,tags_custom            ,y    ,tags & custom
-delay   ,both ,fast  ,names ,tools ,ethNames ,tags_custom_2          ,y    ,terms = 81 & tags & custom
-delay   ,both ,fast  ,names ,tools ,ethNames ,simple_addr_all_custom ,y    ,addr & custom
-delay   ,both ,fast  ,names ,tools ,ethNames ,edit_custom_delete     ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & to_custom & all
-delay   ,both ,fast  ,names ,tools ,ethNames ,edit_custom_undelete   ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & to_custom & all
+on      ,both ,fast  ,names ,tools ,ethNames ,custom                 ,n    ,custom & fmt = txt
+on      ,both ,fast  ,names ,tools ,ethNames ,custom_search1         ,y    ,custom & terms = Account_1
+on      ,both ,fast  ,names ,tools ,ethNames ,custom_search2         ,y    ,custom & terms = Account_1 & match_case
+on      ,both ,fast  ,names ,tools ,ethNames ,custom_search3         ,y    ,custom & terms = account_1 & match_case
+on      ,both ,fast  ,names ,tools ,ethNames ,prefund_custom         ,y    ,prefund & custom
+on      ,both ,fast  ,names ,tools ,ethNames ,prefund_custom_search  ,y    ,prefund & custom & terms = 0001 & verbose
+on      ,both ,fast  ,names ,tools ,ethNames ,prefund_custom_search2 ,y    ,prefund & custom & terms = 0001 & terms = Genesis & expand
+on      ,both ,fast  ,names ,tools ,ethNames ,prefund_custom_named   ,y    ,prefund & custom & all
+on      ,both ,fast  ,names ,tools ,ethNames ,tags_custom            ,y    ,tags & custom
+on      ,both ,fast  ,names ,tools ,ethNames ,tags_custom_2          ,y    ,terms = 81 & tags & custom
+on      ,both ,fast  ,names ,tools ,ethNames ,simple_addr_all_custom ,y    ,addr & custom
+on      ,both ,fast  ,names ,tools ,ethNames ,edit_custom_delete     ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & to_custom & all
+on      ,both ,fast  ,names ,tools ,ethNames ,edit_custom_undelete   ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & to_custom & all
 
 on      ,both ,fast  ,names ,tools ,ethNames ,named                  ,y    ,
 delay   ,both ,fast  ,names ,tools ,ethNames ,all                    ,y    ,all

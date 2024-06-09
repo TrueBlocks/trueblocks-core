@@ -6,7 +6,6 @@ import (
 	"io"
 	"io/fs"
 	"os"
-	"path"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -200,9 +199,6 @@ func getDatabasePath(chain string, dbType DatabaseType) string {
 		return ""
 	}
 	filePath := filepath.Join(config.MustGetPathToChainConfig(chain), string(dbType))
-	if dbType == DatabaseCustom && os.Getenv("TEST_MODE") == "true" {
-		filePath = path.Join(os.TempDir(), "trueblocks", "names_custom.tab")
-	}
 	return filePath
 }
 
@@ -226,11 +222,6 @@ func openDatabaseFile(chain string, dbType DatabaseType, openFlag int) (*os.File
 
 	if dbType == DatabaseCustom && os.Getenv("TEST_MODE") == "true" {
 		// Create temp database, just for tests. On Mac, the permissions must be set to 0777
-		if err := os.MkdirAll(path.Join(os.TempDir(), "trueblocks"), 0777); err != nil {
-			return nil, err
-		}
-
-		filePath = path.Join(os.TempDir(), "trueblocks", "names_custom.tab")
 		openFlag |= os.O_CREATE
 		// On Mac, the permissions must be set to 0777
 		permissions = 0777

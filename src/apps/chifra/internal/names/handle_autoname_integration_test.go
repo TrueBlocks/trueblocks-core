@@ -8,11 +8,14 @@
 package namesPkg
 
 import (
+	"path/filepath"
 	"reflect"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -21,6 +24,15 @@ import (
 
 func TestNamesOptions_autoname(t *testing.T) {
 	chain := utils.GetTestChain()
+	// Search: getDatabasePath
+	namesPath := filepath.Join(config.MustGetPathToChainConfig(chain), string(names.DatabaseCustom))
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
+	backup, err := file.MakeBackup(tmpPath, namesPath)
+	if err != nil {
+		t.Errorf("Error making backup = %+v", err)
+	}
+	defer backup.Restore() // put the file back
+
 	type fields struct {
 		Autoname string
 	}
