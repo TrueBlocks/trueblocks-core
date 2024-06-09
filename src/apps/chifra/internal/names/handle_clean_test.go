@@ -17,7 +17,7 @@ func Test_cleanCommon(t *testing.T) {
 		wantModified bool
 	}{
 		{
-			name: "Tag lower than 8",
+			name: "Tags lower than 8",
 			args: args{
 				name: &types.Name{
 					Tags: "80",
@@ -135,7 +135,7 @@ func Test_cleanToken(t *testing.T) {
 			},
 		},
 		{
-			name: "Fix airdrops tag",
+			name: "Fix airdrops tags",
 			args: args{
 				name: &types.Name{
 					Tags: "60-Airdrops",
@@ -152,7 +152,7 @@ func Test_cleanToken(t *testing.T) {
 			},
 		},
 		{
-			name: "Fix token tag",
+			name: "Fix token tags",
 			args: args{
 				name: &types.Name{
 					Tags: "token",
@@ -169,7 +169,7 @@ func Test_cleanToken(t *testing.T) {
 			},
 		},
 		{
-			name: "Fix contracts tag",
+			name: "Fix contracts tags",
 			args: args{
 				name: &types.Name{
 					Tags: "30-contracts",
@@ -186,7 +186,7 @@ func Test_cleanToken(t *testing.T) {
 			},
 		},
 		{
-			name: "Fix defi tag",
+			name: "Fix defi tags",
 			args: args{
 				name: &types.Name{
 					Tags: "55-defi",

@@ -406,7 +406,7 @@ func cleanNonContract(name *types.Name, wasContract bool) (modified bool) {
 // Finish clean
 //
 // Prequisite:
-//		if tag is >= 8 (as a string), return without modification noting that tags over '8' character are reserved
+//		if tags is >= 8 (as a string), return without modification noting that tags over '8' character are reserved
 //		latestBlock = testMode ? 10800000 : getLatestBlock_client()
 //
 // Source:

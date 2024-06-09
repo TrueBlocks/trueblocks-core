@@ -62,7 +62,7 @@ func (opts *NamesOptions) anyCrud() bool {
 type CrudData struct {
 	Address  crudDataField[base.Address]
 	Name     crudDataField[string]
-	Tag      crudDataField[string]
+	Tags     crudDataField[string]
 	Source   crudDataField[string]
 	Symbol   crudDataField[string]
 	Decimals crudDataField[string]
@@ -93,9 +93,9 @@ func (opts *NamesOptions) getCrudDataHttp(r *http.Request) (data *CrudData, err 
 			Value:   r.PostForm.Get("name"),
 			Updated: r.PostForm.Has("name"),
 		},
-		Tag: crudDataField[string]{
-			Value:   r.PostForm.Get("tag"),
-			Updated: r.PostForm.Has("tag"),
+		Tags: crudDataField[string]{
+			Value:   r.PostForm.Get("tags"),
+			Updated: r.PostForm.Has("tags"),
 		},
 		Source: crudDataField[string]{
 			Value:   r.PostForm.Get("source"),
@@ -129,10 +129,10 @@ func (opts *NamesOptions) getCrudDataEnv() (data *CrudData, err error) {
 		Value:   name,
 		Updated: nameUpdated,
 	}
-	tag, tagUpdated := os.LookupEnv("TB_NAME_TAG")
-	data.Tag = crudDataField[string]{
-		Value:   tag,
-		Updated: tagUpdated,
+	tags, tagsUpdated := os.LookupEnv("TB_NAME_TAGS")
+	data.Tags = crudDataField[string]{
+		Value:   tags,
+		Updated: tagsUpdated,
 	}
 	source, sourceUpdated := os.LookupEnv("TB_NAME_SOURCE")
 	data.Source = crudDataField[string]{

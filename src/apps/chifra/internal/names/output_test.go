@@ -56,7 +56,7 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 					Value:   "some name 1",
 					Updated: true,
 				},
-				// Tag:         "",
+				// Tags:         "",
 				// Source:      "",
 				// Symbol:      "",
 				// Decimals:    "",
@@ -105,8 +105,8 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 		if data.Name.Value != "" {
 			os.Setenv("TB_NAME_NAME", data.Name.Value)
 		}
-		if data.Tag.Value != "" {
-			os.Setenv("TB_NAME_TAG", data.Tag.Value)
+		if data.Tags.Value != "" {
+			os.Setenv("TB_NAME_TAGS", data.Tags.Value)
 		}
 		if data.Source.Value != "" {
 			os.Setenv("TB_NAME_SOURCE", data.Source.Value)
