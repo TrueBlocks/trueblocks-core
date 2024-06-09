@@ -2,8 +2,11 @@ package names
 
 import (
 	"fmt"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -27,14 +30,35 @@ func customRemoveName(chain string, address base.Address) (*types.Name, error) {
 		return nil, fmt.Errorf("cannot remove non-existant custom name for address %s", address.Hex())
 	}
 
-	db, err := openDatabaseForEdit(chain, DatabaseCustom)
+	namesPath := getDatabasePath(chain, DatabaseCustom)
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
+
+	// openDatabaseForEdit truncates the file when it opens. We make
+	// a backup so we can restore it on an error if we need to.
+	backup, err := file.MakeBackup(tmpPath, namesPath)
 	if err != nil {
 		return nil, err
 	}
-	defer db.Close()
+
+	db, err := openDatabaseForEdit(chain, DatabaseCustom)
+	if err != nil {
+		// The backup will replace the now truncated file.
+		return nil, err
+	}
+
+	defer func() {
+		_ = db.Close()
+		// If the backup exists, it will replace the now truncated file.
+		backup.Restore()
+	}()
 
 	loadedCustomNamesMutex.Lock()
 	defer loadedCustomNamesMutex.Unlock()
 	delete(loadedCustomNames, address)
-	return &name, writeCustomNames(db)
+	err = writeCustomNames(db)
+	if err == nil {
+		// Everything went okay, so we can remove the backup.
+		backup.Clear()
+	}
+	return &name, err
 }

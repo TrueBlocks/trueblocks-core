@@ -1,10 +1,11 @@
 package names
 
 import (
-	"errors"
+	"path/filepath"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -15,9 +16,11 @@ func CustomWriteNames(chain string, dryRun bool) (err error) {
 		database = DatabaseDryRun
 	}
 
+	loadedCustomNamesMutex.Lock()
+	defer loadedCustomNamesMutex.Unlock()
+
 	return writeDatabase(
 		chain,
-		Custom,
 		database,
 		loadedCustomNames,
 	)
@@ -29,31 +32,32 @@ func RegularWriteNames(chain string, dryRun bool) (err error) {
 		database = DatabaseDryRun
 	}
 
+	loadedRegularNamesMutex.Lock()
+	defer loadedRegularNamesMutex.Unlock()
+
 	return writeDatabase(
 		chain,
-		Regular,
 		database,
 		loadedRegularNames,
 	)
 }
 
-func writeDatabase(chain string, kind Parts, database DatabaseType, names map[base.Address]types.Name) (err error) {
-	switch kind {
-	case Regular:
-		loadedRegularNamesMutex.Lock()
-		defer loadedRegularNamesMutex.Unlock()
-	case Custom:
-		loadedCustomNamesMutex.Lock()
-		defer loadedCustomNamesMutex.Unlock()
-	default:
-		return errors.New("kind should be Regular or Custom")
+func writeDatabase(chain string, database DatabaseType, names map[base.Address]types.Name) error {
+	namesPath := getDatabasePath(chain, database)
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
+
+	// openDatabaseForEdit truncates the file when it opens. We make
+	// a backup so we can restore it on an error if we need to.
+	backup, err := file.MakeBackup(tmpPath, namesPath)
+	if err != nil {
+		return err
 	}
 
 	db, err := openDatabaseForEdit(chain, database)
 	if err != nil {
-		return
+		// The backup will replace the now truncated file.
+		return err
 	}
-	defer db.Close()
 
 	if database != DatabaseDryRun {
 		if err = file.Lock(db); err != nil {
@@ -63,6 +67,12 @@ func writeDatabase(chain string, kind Parts, database DatabaseType, names map[ba
 			_ = file.Unlock(db)
 		}()
 	}
+
+	defer func() {
+		_ = db.Close()
+		// If the backup exists, it will replace the now truncated file.
+		backup.Restore()
+	}()
 
 	sorted := make([]types.Name, 0, len(names))
 	for _, name := range names {
@@ -80,5 +90,10 @@ func writeDatabase(chain string, kind Parts, database DatabaseType, names map[ba
 	}
 	writer.Flush()
 
-	return writer.Error()
+	err = writer.Error()
+	if err == nil {
+		// Everything went okay, so we can remove the backup.
+		backup.Clear()
+	}
+	return err
 }

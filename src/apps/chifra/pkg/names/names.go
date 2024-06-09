@@ -195,23 +195,36 @@ const (
 	DatabaseDryRun  DatabaseType = "<dryrun>"
 )
 
-func openDatabaseForEdit(chain string, kind DatabaseType) (*os.File, error) {
-	return openDatabaseFile(chain, kind, os.O_WRONLY|os.O_TRUNC)
+func getDatabasePath(chain string, dbType DatabaseType) string {
+	if dbType == DatabaseDryRun {
+		return ""
+	}
+	filePath := filepath.Join(config.MustGetPathToChainConfig(chain), string(dbType))
+	if dbType == DatabaseCustom && os.Getenv("TEST_MODE") == "true" {
+		filePath = path.Join(os.TempDir(), "trueblocks", "names_custom.tab")
+	}
+	return filePath
 }
 
-func openDatabaseForRead(chain string, kind DatabaseType) (*os.File, error) {
-	return openDatabaseFile(chain, kind, os.O_RDONLY)
+func openDatabaseForEdit(chain string, dbType DatabaseType) (*os.File, error) {
+	// This opens the file destructively, truncating it to zero length.
+	// Make sure to make a backup before calling this function.
+	return openDatabaseFile(chain, dbType, os.O_WRONLY|os.O_TRUNC)
 }
 
-func openDatabaseFile(chain string, kind DatabaseType, openFlag int) (*os.File, error) {
-	if kind == DatabaseDryRun {
+func openDatabaseForRead(chain string, dbType DatabaseType) (*os.File, error) {
+	return openDatabaseFile(chain, dbType, os.O_RDONLY)
+}
+
+func openDatabaseFile(chain string, dbType DatabaseType, openFlag int) (*os.File, error) {
+	if dbType == DatabaseDryRun {
 		return os.Stdout, nil
 	}
 
-	filePath := filepath.Join(config.MustGetPathToChainConfig(chain), string(kind))
+	filePath := filepath.Join(config.MustGetPathToChainConfig(chain), string(dbType))
 	var permissions fs.FileMode = 0666
 
-	if kind == DatabaseCustom && os.Getenv("TEST_MODE") == "true" {
+	if dbType == DatabaseCustom && os.Getenv("TEST_MODE") == "true" {
 		// Create temp database, just for tests. On Mac, the permissions must be set to 0777
 		if err := os.MkdirAll(path.Join(os.TempDir(), "trueblocks"), 0777); err != nil {
 			return nil, err

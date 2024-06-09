@@ -3,8 +3,11 @@ package names
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -23,13 +26,34 @@ func SetDeleted(dbType DatabaseType, chain string, address base.Address, deleted
 }
 
 func customSetDeleted(chain string, address base.Address, deleted bool) (name *types.Name, err error) {
+	namesPath := getDatabasePath(chain, DatabaseCustom)
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
+
+	// openDatabaseForEdit truncates the file when it opens. We make
+	// a backup so we can restore it on an error if we need to.
+	backup, err := file.MakeBackup(tmpPath, namesPath)
+	if err != nil {
+		return nil, err
+	}
+
 	db, err := openDatabaseForEdit(chain, DatabaseCustom)
 	if err != nil {
-		return
+		// The backup will replace the now truncated file.
+		return nil, err
 	}
-	defer db.Close()
 
-	return changeDeleted(db, address, deleted)
+	defer func() {
+		_ = db.Close()
+		// If the backup exists, it will replace the now truncated file.
+		backup.Restore()
+	}()
+
+	name, err = changeDeleted(db, address, deleted)
+	if err == nil {
+		// Everything went okay, so we can remove the backup.
+		backup.Clear()
+	}
+	return name, err
 }
 
 func changeDeleted(output *os.File, address base.Address, deleted bool) (*types.Name, error) {
