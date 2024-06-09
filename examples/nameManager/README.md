@@ -11,6 +11,6 @@ nameManager [options] address name [tags] [source] [symbol] [decimals]
 ## Building
 
 ```bash
-go build -o ../../bin/nameManager main.go
+go build -o ../../bin/nameManager main.go actions.go help.go parseArgs.go
 ./nameManager --help
 ```
