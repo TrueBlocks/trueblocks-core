@@ -15,8 +15,6 @@ import (
 
 func (opts *TokensOptions) HandleParts() error {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
-
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, address := range opts.Addrs {
@@ -65,7 +63,6 @@ func (opts *TokensOptions) HandleParts() error {
 	}
 
 	extraOpts := map[string]any{
-		"testMode": testMode,
 		"namesMap": namesMap,
 		"parts":    opts.Parts,
 	}

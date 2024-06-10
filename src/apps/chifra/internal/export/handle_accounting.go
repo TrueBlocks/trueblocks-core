@@ -99,7 +99,6 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 
 	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
-		"testMode":   testMode,
 		"export":     true,
 	}
 

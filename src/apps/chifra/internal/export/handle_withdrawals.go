@@ -135,8 +135,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 	}
 
 	extraOpts := map[string]any{
-		"testMode": testMode,
-		"export":   true,
+		"export": true,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

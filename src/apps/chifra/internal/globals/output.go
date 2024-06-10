@@ -32,6 +32,7 @@ func (opts *GlobalOptions) OutputOpts() output.OutputOptions {
 func (opts *GlobalOptions) OutputOptsWithExtra(extraOpts map[string]any) output.OutputOptions {
 	if extraOpts != nil {
 		extraOpts["ether"] = opts.Ether
+		extraOpts["testMode"] = opts.TestMode
 	}
 
 	return output.OutputOptions{

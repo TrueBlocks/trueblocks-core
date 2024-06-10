@@ -24,7 +24,6 @@ import (
 func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
-	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
 		opts.Reversed,
 		opts.Reverted,
@@ -148,7 +147,6 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 
 	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
-		"testMode":   testMode,
 		"export":     true,
 	}
 

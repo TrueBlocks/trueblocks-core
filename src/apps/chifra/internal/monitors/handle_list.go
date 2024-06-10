@@ -19,7 +19,6 @@ import (
 // HandleList handles the chifra monitors --list command.
 func (opts *MonitorsOptions) HandleList() error {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
 	monitorMap, monArray := monitor.GetMonitorMap(chain)
 	if opts.Globals.Verbose {
 		for i := 0; i < len(monArray); i++ {
@@ -58,10 +57,7 @@ func (opts *MonitorsOptions) HandleList() error {
 		}
 	}
 
-	extraOpts := map[string]any{
-		"testMode": testMode,
-	}
-
+	extraOpts := map[string]any{}
 	if opts.Globals.Verbose && opts.Globals.Format == "json" {
 		parts := names.Custom | names.Prefund | names.Regular
 		namesMap, err := names.LoadNamesMap(chain, parts, nil)

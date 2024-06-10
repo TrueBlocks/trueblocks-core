@@ -167,7 +167,6 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 
 	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
-		"testMode":   testMode,
 		"export":     true,
 	}
 

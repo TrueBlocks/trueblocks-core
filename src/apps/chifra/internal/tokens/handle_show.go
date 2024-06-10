@@ -15,7 +15,6 @@ import (
 
 func (opts *TokensOptions) HandleShow() error {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
 	tokenAddr := base.HexToAddress(opts.Addrs[0])
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -67,7 +66,6 @@ func (opts *TokensOptions) HandleShow() error {
 	}
 
 	extraOpts := map[string]any{
-		"testMode": testMode,
 		"namesMap": namesMap,
 		"parts":    []string{"all_held"},
 	}
