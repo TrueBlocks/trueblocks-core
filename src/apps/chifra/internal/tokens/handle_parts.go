@@ -56,8 +56,8 @@ func (opts *TokensOptions) HandleParts() error {
 		}
 	}
 
-	nameTypes := names.Custom | names.Prefund | names.Regular
-	namesMap, err := names.LoadNamesMap(chain, nameTypes, nil)
+	parts := names.Custom | names.Prefund | names.Regular
+	namesMap, err := names.LoadNamesMap(chain, parts, nil)
 	if err != nil {
 		return err
 	}
