@@ -12,7 +12,7 @@ import (
 
 func (opts *NamesOptions) HandleTags() error {
 	chain := opts.Globals.Chain
-	namesArray, err := names.LoadNamesArray(chain, opts.getType(), names.SortByTags, opts.Terms)
+	namesArray, err := loadNamesArray(chain, opts.getType(), names.SortByTags, opts.Terms)
 	if err != nil {
 		return err
 	}

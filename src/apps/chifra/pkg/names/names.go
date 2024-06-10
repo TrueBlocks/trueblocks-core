@@ -7,7 +7,6 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -38,42 +37,6 @@ const (
 	SortByAddress SortBy = iota
 	SortByTags
 )
-
-// LoadNamesArray loads the names from the cache and returns an array of names
-func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) ([]types.Name, error) {
-	var names []types.Name
-	if namesMap, err := LoadNamesMap(chain, parts, terms); err != nil {
-		return nil, err
-	} else {
-		for _, name := range namesMap {
-			// Custom names with Individual tag or tags under 30 are private during testing
-			isTesting := parts&Testing != 0
-			isPrivate := strings.Contains(name.Tags, "Individual") || (name.IsCustom && name.Tags < "3")
-			if !isTesting || !isPrivate {
-				names = append(names, name)
-			}
-		}
-	}
-
-	sort.Slice(names, func(i, j int) bool {
-		switch sortBy {
-		case SortByTags:
-			return names[i].Tags < names[j].Tags
-		case SortByAddress:
-			fallthrough
-		default:
-			return names[i].Address.Hex() < names[j].Address.Hex()
-		}
-	})
-
-	isTesting := parts&Testing != 0
-	isTags := sortBy == SortByTags
-	if isTesting && !isTags {
-		names = names[:base.Min(200, len(names))]
-	}
-
-	return names, nil
-}
 
 // LoadNamesMap loads the names from the cache and returns a map of names
 func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]types.Name, error) {

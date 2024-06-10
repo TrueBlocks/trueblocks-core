@@ -14,7 +14,7 @@ import (
 func (opts *NamesOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
-	namesArray, err := names.LoadNamesArray(chain, opts.getType(), names.SortByAddress, opts.Terms)
+	namesArray, err := loadNamesArray(chain, opts.getType(), names.SortByAddress, opts.Terms)
 	if err != nil {
 		return err
 	}
