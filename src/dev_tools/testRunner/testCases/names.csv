@@ -48,6 +48,7 @@ on      ,cmd  ,fast  ,names ,tools ,ethNames ,show_version           ,n    ,vers
 on      ,both ,fast  ,names ,tools ,ethNames ,ens_test               ,y    ,terms = wolfofethereum.eth
 on      ,both ,fast  ,names ,tools ,ethNames ,ens_test_fail          ,y    ,terms = notathingy.eth
 on      ,both ,fast  ,names ,tools ,ethNames ,ens_not_in_db          ,y    ,terms = nick.eth
+on      ,both ,fast  ,names ,tools ,ethNames ,ens_multi              ,y    ,terms = trueblocks.eth & terms = meriam.eth & terms = 0xff9e5c77edf2a26bfd6f60dc4937e5baa1727378 & terms = vitalik.eth
 
 # These two fail but only because we use `log` instead of `logger`. We do this because
 # logger cause import cycles in config package. Trouble is, these two tests report timestamps

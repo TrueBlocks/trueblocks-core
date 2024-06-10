@@ -2,9 +2,9 @@ package namesPkg
 
 import (
 	"context"
-	"os"
-	"path/filepath"
+	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -17,25 +17,44 @@ func (opts *NamesOptions) HandleShow() error {
 	}
 
 	chain := opts.Globals.Chain
-
 	testMode := opts.Globals.TestMode
 	namesArray, err := names.LoadNamesArray(chain, opts.getType(), names.SortByAddress, opts.Terms)
 	if err != nil {
 		return err
 	}
-	if len(namesArray) == 0 {
-		logger.Warn("No known names found for", opts.Terms)
-		if !testMode {
-			args := os.Args
-			args[0] = filepath.Base(args[0])
-			logger.Warn("Original command:", args)
-		}
-		return nil
-	}
 
+	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		for _, name := range namesArray {
-			modelChan <- &name
+		if len(namesArray) == 0 {
+			hasAddr := strings.Contains(strings.Join(opts.Terms, " "), "0x")
+			hadEths := strings.Contains(strings.Join(opts.OrigTerms, " "), ".eth")
+			if hadEths && hasAddr {
+				for i, t := range opts.Terms {
+					orig := opts.OrigTerms[i]
+					if strings.Contains(orig, ".eth") {
+						modelChan <- &types.Name{
+							Tags:    "66-ENS",
+							Name:    orig,
+							Address: base.HexToAddress(t),
+						}
+					} else if strings.Contains(orig, "0x") {
+						modelChan <- &types.Name{
+							Tags:    "Not found",
+							Address: base.HexToAddress(orig),
+						}
+					}
+				}
+			} else {
+				logger.Warn("No known names found for", opts.Terms)
+				if !testMode {
+					logger.Warn("Original command:", opts.OrigTerms)
+				}
+			}
+			return
+		} else {
+			for _, name := range namesArray {
+				modelChan <- &name
+			}
 		}
 	}
 
@@ -43,10 +62,11 @@ func (opts *NamesOptions) HandleShow() error {
 		"expand":  opts.Expand,
 		"prefund": opts.Prefund,
 	}
+
 	if opts.Addr {
 		extraOpts["single"] = "address"
 		opts.Globals.NoHeader = true
 	}
-	ctx := context.Background()
+
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
