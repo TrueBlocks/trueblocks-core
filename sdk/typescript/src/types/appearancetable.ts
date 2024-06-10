@@ -6,10 +6,8 @@
 /*
  * This file was auto generated. DO NOT EDIT.
  */
-import { address, Function } from '.';
+import { /* types */ } from '.';
 
-export type Abi = {
-  address: address
-  functions: Function[]
+export type AppearanceTable = {
+  // fields
 }
-
