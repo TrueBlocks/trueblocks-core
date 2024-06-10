@@ -9,7 +9,7 @@ import (
 )
 
 func TestMainFunction(t *testing.T) {
-	os.Setenv("TEST_MODE", "true:cmd")
+	os.Setenv("TEST_MODE", "true")
 	os.Setenv("TB_TEST_FILTER", "names")
 	err := os.Chdir("../../../build/")
 	if err != nil {

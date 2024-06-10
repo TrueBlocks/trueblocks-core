@@ -75,9 +75,9 @@ on      ,both ,fast  ,names ,tools ,ethNames ,simple_addr_all        ,y    ,addr
 on      ,both ,fast  ,names ,tools ,ethNames ,simple_addr_only       ,y    ,terms = 0xb6 & addr
 on      ,both ,medi  ,names ,tools ,ethNames ,duplicated_option_1    ,n    ,terms = 0xb6 & terms = torj & addr & addr & addr & addr
 
-# Various parts of editing names does not work
+# Editing names works but tests don't - need curl --config to work
 on      ,both ,fast  ,names ,tools ,ethNames ,edit_invalid           ,y    ,invalid & fmt = json
-on      ,both ,fast  ,names ,tools ,ethNames ,edit_add               ,y    ,create & fmt = json
+delay   ,both ,fast  ,names ,tools ,ethNames ,edit_add               ,y    ,create & fmt = json
 delay   ,both ,fast  ,names ,tools ,ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
 delay   ,both ,fast  ,names ,tools ,ethNames ,edit_edit              ,y    ,update & fmt = json
 delay   ,both ,fast  ,names ,tools ,ethNames ,show_edit              ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json
