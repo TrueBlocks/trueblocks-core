@@ -99,5 +99,7 @@ func GetMonitorsOptions(args []string, g *globals.GlobalOptions) *MonitorsOption
 }
 
 func (opts *MonitorsOptions) anyCrud() bool {
-	return true
+	return opts.Delete ||
+		opts.Undelete ||
+		opts.Remove
 }

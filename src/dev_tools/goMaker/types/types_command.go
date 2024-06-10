@@ -1120,3 +1120,32 @@ func (c *Command) FlagAliases() string {
 	}
 	return ""
 }
+
+func (c *Command) HasCrud() bool {
+	for _, op := range c.Options {
+		if op.IsCrud() {
+			return true
+		}
+	}
+	return false
+}
+
+func (c *Command) Cruds() string {
+	ret := []string{}
+	for _, op := range c.Options {
+		if op.IsCrud() {
+			ret = append(ret, "opts."+FirstUpper(op.LongName))
+		}
+	}
+	return strings.Join(ret, " ||\n")
+}
+
+func (c *Command) AnyCrud() string {
+	tmplName := "anyCrud"
+	tmpl := `
+
+func (opts *{{toProper .Route}}Options) anyCrud() bool {
+	return {{.Cruds}}
+}`
+	return c.executeTemplate(tmplName, tmpl)
+}
