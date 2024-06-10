@@ -86,7 +86,7 @@ func TestNamesOptions_autoname(t *testing.T) {
 					},
 				},
 			}
-			_, err := opts.readContractAndClean()
+			_, err := opts.readContractAndClean("")
 			wanted := tt.wantErr
 			have := err != nil
 			if (wanted && !have) || (have && !wanted) {

@@ -51,14 +51,6 @@ func (opts *NamesOptions) getType() names.Parts {
 	return ret
 }
 
-func (opts *NamesOptions) anyCrud() bool {
-	return opts.Create ||
-		opts.Update ||
-		opts.Delete ||
-		opts.Undelete ||
-		opts.Remove
-}
-
 type CrudData struct {
 	Address  crudDataField[base.Address]
 	Name     crudDataField[string]

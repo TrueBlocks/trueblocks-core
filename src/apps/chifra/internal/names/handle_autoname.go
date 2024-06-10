@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -12,9 +13,22 @@ import (
 )
 
 func (opts *NamesOptions) HandleAutoname() error {
-	name, err := opts.readContractAndClean()
+	name, err := opts.readContractAndClean("")
 	if err != nil {
 		return err
+	} else if name == nil {
+		latest := opts.Conn.GetLatestBlockNumber()
+		proxy, err := opts.Conn.GetContractProxyAt(opts.AutonameAddr, latest)
+		if err != nil {
+			return err
+		}
+		if proxy != base.ZeroAddr {
+			opts.AutonameAddr = proxy
+			name, err = opts.readContractAndClean("proxy")
+			if err != nil {
+				return err
+			}
+		}
 	}
 
 	message := "No name has been updated. Is the contract a token?"
@@ -29,6 +43,7 @@ func (opts *NamesOptions) HandleAutoname() error {
 			name.Decimals,
 		)
 	}
+
 	if !utils.IsFuzzing() {
 		logger.Info(message)
 	}
@@ -45,7 +60,7 @@ func (opts *NamesOptions) HandleAutoname() error {
 }
 
 // readContractAndClean will read contract data and call `cleanName` for the given address
-func (opts *NamesOptions) readContractAndClean() (name *types.Name, err error) {
+func (opts *NamesOptions) readContractAndClean(s string) (name *types.Name, err error) {
 	chain := opts.Globals.Chain
 
 	name = &types.Name{
@@ -59,7 +74,11 @@ func (opts *NamesOptions) readContractAndClean() (name *types.Name, err error) {
 	}
 
 	if !name.IsErc20 && !name.IsErc721 {
-		logger.Warn("address", name.Address, "is not a token, ignoring...")
+		a := "address"
+		if s != "" {
+			a = s
+		}
+		logger.Warn(a, name.Address, "is not a token, ignoring...")
 		name = nil
 		return
 	}

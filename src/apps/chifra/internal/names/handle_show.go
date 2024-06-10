@@ -12,10 +12,6 @@ import (
 )
 
 func (opts *NamesOptions) HandleShow() error {
-	if opts.anyCrud() {
-		return opts.HandleCrud()
-	}
-
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	namesArray, err := names.LoadNamesArray(chain, opts.getType(), names.SortByAddress, opts.Terms)

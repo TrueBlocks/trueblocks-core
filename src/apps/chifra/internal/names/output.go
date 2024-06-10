@@ -65,6 +65,8 @@ func (opts *NamesOptions) NamesInternal() error {
 		err = opts.HandleClean()
 	} else if opts.Tags {
 		err = opts.HandleTags()
+	} else if opts.anyCrud() {
+		err = opts.HandleCrud()
 	} else {
 		err = opts.HandleShow()
 	}
@@ -80,4 +82,12 @@ func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *NamesOptions) anyCrud() bool {
+	return opts.Create ||
+		opts.Update ||
+		opts.Delete ||
+		opts.Undelete ||
+		opts.Remove
 }
