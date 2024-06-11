@@ -154,9 +154,12 @@ func (c *covalentTransaction) Slurp() (s types.Slurp) {
 		Gas:              base.Gas(*c.GasSpent),
 		IsError:          !(*c.Successful),
 		Timestamp:        base.Timestamp(c.BlockSignedAt.Unix()),
-		To:               base.HexToAddress(*c.To),
 		TransactionIndex: base.Txnum(*c.TxOffset),
 		Value:            *c.Value,
+	}
+
+	if c.To != nil {
+		s.To = base.HexToAddress(*c.To)
 	}
 
 	return
