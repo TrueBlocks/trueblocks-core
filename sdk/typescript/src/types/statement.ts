@@ -8,7 +8,7 @@
  * This file was auto generated. DO NOT EDIT.
  */
 
-import { address, blknum, datetime, float64, hash, int256, lognum, timestamp, txnum, uint64 } from '.';
+import { address, blknum, datetime, float, hash, int256, lognum, timestamp, txnum, uint64 } from '.';
 
 export type Statement = {
   accountedFor: address
@@ -45,7 +45,7 @@ export type Statement = {
   selfDestructIn?: int256
   selfDestructOut?: int256
   sender: address
-  spotPrice: float64
+  spotPrice: float
   timestamp: timestamp
   totalIn?: int256
   totalOut?: int256

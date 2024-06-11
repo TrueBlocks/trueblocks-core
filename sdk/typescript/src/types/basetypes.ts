@@ -8,6 +8,7 @@ export type bytes32 = string;
 export type ChunkAppearance = any;
 export type ChunkManifest = any;
 export type datetime = string;
+export type float = number;
 export type float64 = number;
 export type fourbyte = string;
 export type gas = string;
