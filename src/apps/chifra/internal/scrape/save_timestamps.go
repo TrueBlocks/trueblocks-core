@@ -1,6 +1,7 @@
 package scrapePkg
 
 import (
+	"context"
 	"encoding/binary"
 	"fmt"
 	"os"
@@ -13,7 +14,7 @@ import (
 
 // TODO: Protect against overwriting files on disc
 
-func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
+func (bm *BlazeManager) WriteTimestamps(ctx context.Context, blocks []base.Blknum) error {
 	chain := bm.chain
 
 	// At all times, the timestamp file is complete (that is, there are no missing pieces
@@ -43,6 +44,10 @@ func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 		cnt := 0
 		maxBlocks := 1000
 		for block := nTimestamps; block < blocks[0] && cnt < maxBlocks; block++ {
+			if ctx.Err() != nil {
+				// This means the context got cancelled, i.e. we got a SIGINT.
+				return nil
+			}
 			ts := tslib.TimestampRecord{
 				Bn: uint32(block),
 				Ts: uint32(bm.opts.Conn.GetBlockTimestamp(block)),
@@ -55,6 +60,11 @@ func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 			cnt++
 		}
 		// we must return early here, otherwise there will be skipped records
+		return nil
+	}
+
+	if ctx.Err() != nil {
+		// This means the context got cancelled, i.e. we got a SIGINT.
 		return nil
 	}
 

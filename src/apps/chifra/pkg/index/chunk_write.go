@@ -116,6 +116,8 @@ func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string,
 			}
 
 			if _, err = bl.writeBloom(ToBloomPath(indexFn)); err != nil {
+				// Cleanup possibly corrupted bloom file
+				_ = os.Remove(ToBloomPath(indexFn))
 				return nil, err
 			}
 
