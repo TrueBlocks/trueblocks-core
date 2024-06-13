@@ -8,7 +8,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -42,7 +41,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	defer func() {
-		pidPath := filepath.Join(config.PathToCache(chain), "tmp/scrape.pid")
+		pidPath := opts.getPidFilePath()
 		_ = os.Remove(pidPath)
 	}()
 
