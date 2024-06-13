@@ -90,7 +90,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	ret := opts.Globals.Validate()
 
-	pidPath := filepath.Join(config.PathToCache(chain), "tmp/scrape.pid")
+	pidPath := opts.getPidFilePath()
 	if file.FileExists(pidPath) {
 		pid := base.MustParseInt64(file.AsciiFileToString(pidPath))
 		// fmt.Println("Pid file exists with contents:", pid)
@@ -105,7 +105,12 @@ func (opts *ScrapeOptions) validateScrape() error {
 	// If we've gotten this far, we're the only one running. As we enter the forever
 	// loop, we want to make sure no-one else runs. We do this by writing our pid to
 	// a file. Note that this probably doesn't work in the server.
-	_ = file.StringToAsciiFile(pidPath, fmt.Sprintf("%d", os.Getpid()))
+	if err := os.MkdirAll(filepath.Dir(pidPath), 0700); err != nil {
+		return fmt.Errorf("creating temp directory: %w", err)
+	}
+	if err := file.StringToAsciiFile(pidPath, fmt.Sprintf("%d", os.Getpid())); err != nil {
+		return fmt.Errorf("creating scrape.pid file: %w", err)
+	}
 
 	return ret
 }
