@@ -23,11 +23,19 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
-	"github.com/spf13/viper"
+	"github.com/knadh/koanf/parsers/toml"
+	envProvider "github.com/knadh/koanf/providers/env"
+	fileProvider "github.com/knadh/koanf/providers/file"
+	structProvider "github.com/knadh/koanf/providers/structs"
+	"github.com/knadh/koanf/v2"
 )
 
-var trueBlocksViper = viper.New()
+const envPrefix = "TB_"
+
+var config = koanf.New(".")
 var trueBlocksConfig ConfigFile
+var cachePath string
+var indexPath string
 
 type ConfigFile struct {
 	Version   versionGroup          `toml:"version"`
@@ -40,32 +48,21 @@ type ConfigFile struct {
 
 // init sets up default values for the given configuration
 func init() {
-	trueBlocksViper.SetConfigName("trueBlocks") // trueBlocks.toml (so we can find it)
 	// The location of the per chain caches
-	trueBlocksViper.SetDefault("Settings.CachePath", PathToRootConfig()+"cache/")
+	cachePath = PathToRootConfig() + "cache/"
 	// The location of the per chain unchained indexes
-	trueBlocksViper.SetDefault("Settings.IndexPath", PathToRootConfig()+"unchained/")
-	// The default chain to use if none is provided
-	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
-	// Declare defaults for Notify so that it is read from env variables
-	trueBlocksViper.SetDefault("Settings.Notify.Url", "")
-	trueBlocksViper.SetDefault("Settings.Notify.Author", "")
-	// The pinning gateway to query when downloading the unchained index
-	trueBlocksViper.SetDefault("Pinning.GatewayUrl", defaultIpfsGateway)
-	// The local endpoint for the IPFS daemon
-	trueBlocksViper.SetDefault("Pinning.LocalPinUrl", "http://localhost:5001")
-	// The remote endpoint for pinning on Pinata
-	trueBlocksViper.SetDefault("Pinning.RemotePinUrl", "https://api.pinata.cloud/pinning/pinFileToIPFS")
-	// A warning to the user not to edit the [unchained] section of the config file
-	trueBlocksViper.SetDefault("Unchained.Comment", "Use this to customize the Unchained Index")
-	// The default publisher of the index of none other is provided
-	trueBlocksViper.SetDefault("Unchained.PreferredPublisher", "publisher.unchainedindex.eth")
-	// V2: The address of the current version of the Unchained Index
-	trueBlocksViper.SetDefault("Unchained.SmartContract", "0x0c316b7042b419d07d343f2f4f5bd54ff731183d")
+	indexPath = PathToRootConfig() + "unchained/"
 }
 
 var configMutex sync.Mutex
 var configLoaded = false
+
+func loadFromTomlFile(config *koanf.Koanf, filePath string) error {
+	return config.Load(
+		fileProvider.Provider(filePath),
+		toml.Parser(),
+	)
+}
 
 // GetRootConfig reads and the configuration located in trueBlocks.toml file. Note
 // that this routine is local to the package
@@ -77,15 +74,32 @@ func GetRootConfig() *ConfigFile {
 	defer configMutex.Unlock()
 
 	configPath := PathToRootConfig()
-	trueBlocksViper.AddConfigPath(configPath)
-	trueBlocksViper.SetEnvPrefix("TB")
-	trueBlocksViper.AutomaticEnv()
-	trueBlocksViper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-	if err := trueBlocksViper.ReadInConfig(); err != nil {
-		log.Fatal(err)
+
+	// First load the default config
+	if err := config.Load(structProvider.Provider(defaultConfig, ""), nil); err != nil {
+		log.Fatal("loading default config:", err)
 	}
-	if err := trueBlocksViper.Unmarshal(&trueBlocksConfig); err != nil {
-		log.Fatal(err)
+
+	// Load TOML file
+	if err := loadFromTomlFile(config, filepath.Join(configPath, "trueBlocks.toml")); err != nil {
+		log.Fatal("loading config:", err)
+	}
+
+	// Load ENV variables
+	translateEnv := func(s string) string {
+		return strings.Replace(
+			strings.ToLower(strings.TrimPrefix(s, envPrefix)),
+			"_",
+			".",
+			-1,
+		)
+	}
+	if err := config.Load(envProvider.Provider(envPrefix, ".", translateEnv), nil); err != nil {
+		log.Fatal("loading config from env variables:", err)
+	}
+
+	if err := config.Unmarshal("", &trueBlocksConfig); err != nil {
+		log.Fatal("unmarshal config:", err)
 	}
 
 	user, _ := user.Current()
@@ -246,7 +260,7 @@ func checkUnchainedProvider(chain string, deployed uint64) error {
 		logger.Info("Skipping rpcProvider check")
 		return nil
 	}
-	url := trueBlocksViper.Get("chains." + chain + ".rpcProvider").(string)
+	url := config.Get("chains." + chain + ".rpcProvider").(string)
 	str := `{ "jsonrpc": "2.0", "method": "eth_getBlockByNumber", "params": [ "{0}", true ], "id": 1 }`
 	payLoad := []byte(strings.Replace(str, "{0}", fmt.Sprintf("0x%x", deployed), -1))
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payLoad))
