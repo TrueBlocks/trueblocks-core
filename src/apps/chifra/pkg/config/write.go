@@ -1,13 +1,11 @@
 package config
 
 import (
-	"fmt"
+	"bytes"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
-	"github.com/knadh/koanf/parsers/toml"
-	"github.com/knadh/koanf/providers/structs"
-	"github.com/knadh/koanf/v2"
+	"github.com/pelletier/go-toml/v2"
 )
 
 // writeFile writes the toml config file from the given struct
@@ -19,14 +17,15 @@ func (cfg *ConfigFile) writeFile(outFn string, vers version.Version) error {
 	}
 	defer f.Close()
 
-	config := koanf.New(".")
-	if err := config.Load(structs.Provider(cfg, ""), nil); err != nil {
-		return fmt.Errorf("write: loading config: %w", err)
-	}
-	content, err := config.Marshal(toml.Parser())
-	if err != nil {
+	// koanf doesn't keep key order nor comments when unmarshalling,
+	// so we will use TOML package directly. We use the same TOML
+	// package as koanf.
+	var buf bytes.Buffer
+	enc := toml.NewEncoder(&buf)
+	enc.SetIndentTables(true)
+	if err = enc.Encode(cfg); err != nil {
 		return err
 	}
-	_, err = f.Write(content)
+	_, err = f.Write(buf.Bytes())
 	return err
 }

@@ -42,7 +42,7 @@ type ConfigFile struct {
 	Settings  settingsGroup         `toml:"settings"`
 	Keys      map[string]keyGroup   `toml:"keys"`
 	Pinning   pinningGroup          `toml:"pinning"`
-	Unchained unchainedGroup        `toml:"unchained"`
+	Unchained unchainedGroup        `toml:"unchained,omitempty" comment:"Do not edit these values unless instructed to do so."`
 	Chains    map[string]chainGroup `toml:"chains"`
 }
 
@@ -76,7 +76,7 @@ func GetRootConfig() *ConfigFile {
 	configPath := PathToRootConfig()
 
 	// First load the default config
-	if err := config.Load(structProvider.Provider(defaultConfig, ""), nil); err != nil {
+	if err := config.Load(structProvider.Provider(defaultConfig, "toml"), nil); err != nil {
 		log.Fatal("loading default config:", err)
 	}
 

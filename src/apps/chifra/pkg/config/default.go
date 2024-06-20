@@ -16,11 +16,9 @@ var defaultConfig = &ConfigFile{
 		LocalPinUrl: "http://localhost:5001",
 		// The remote endpoint for pinning on Pinata
 		RemotePinUrl: "https://api.pinata.cloud/pinning/pinFileToIPFS",
-		// A warning to the user not to edit the [unchained] section of the config file
 	},
 	Unchained: unchainedGroup{
-		Comment: "Use this to customize the Unchained Index",
-		// The default publisher of the index of none other is provided
+		// The default publisher of the index if none other is provided
 		PreferredPublisher: "publisher.unchainedindex.eth",
 		// V2: The address of the current version of the Unchained Index
 		SmartContract: "0x0c316b7042b419d07d343f2f4f5bd54ff731183d",
