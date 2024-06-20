@@ -2,6 +2,7 @@ package config
 
 import (
 	"bytes"
+	"io"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -17,6 +18,10 @@ func (cfg *ConfigFile) writeFile(outFn string, vers version.Version) error {
 	}
 	defer f.Close()
 
+	return write(f, cfg)
+}
+
+func write(w io.Writer, cfg *ConfigFile) (err error) {
 	// koanf doesn't keep key order nor comments when unmarshalling,
 	// so we will use TOML package directly. We use the same TOML
 	// package as koanf.
@@ -24,8 +29,8 @@ func (cfg *ConfigFile) writeFile(outFn string, vers version.Version) error {
 	enc := toml.NewEncoder(&buf)
 	enc.SetIndentTables(true)
 	if err = enc.Encode(cfg); err != nil {
-		return err
+		return
 	}
-	_, err = f.Write(buf.Bytes())
-	return err
+	_, err = w.Write(buf.Bytes())
+	return
 }
