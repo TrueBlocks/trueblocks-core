@@ -54,6 +54,7 @@ func init() {
 	capabilities = capabilities.Add(caps.Noop)
 	capabilities = capabilities.Add(caps.NoColor)
 	capabilities = capabilities.Add(caps.Chain)
+	capabilities = capabilities.Add(caps.Names)
 
 	initCmd.Flags().SortFlags = false
 

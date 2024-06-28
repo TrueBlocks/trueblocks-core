@@ -197,6 +197,8 @@ var globals = []Option{
 	{LongName: "decache", HotKey: "D", OptionType: "switch", Description: "removes related items from the cache", DataType: "boolean"},
 	{LongName: "ether", HotKey: "H", OptionType: "switch", Description: "export values in ether", DataType: "boolean"},
 	{LongName: "fmt", HotKey: "x", OptionType: "flag", Description: "export format, one of [ txt | csv | json ]", DataType: "string"},
+	// Not available for API or Python SDK:
+	// "append","file","names","noColor","noop","output","verbose","version","wei",
 }
 
 func (c *Command) PyGlobals() string {
@@ -882,10 +884,12 @@ func (c *Command) TsOptions() string {
 				ret = append(ret, "    decache?: boolean,")
 			case "chain":
 				ret = append(ret, "    chain: string,")
-			case "version", "noop", "noColor", "verbose":
+			case "ether":
+				ret = append(ret, "    "+cap+"?: boolean,")
+			case "names", "noColor", "noop", "verbose", "version":
 				// do nothing
 			default:
-				ret = append(ret, "    "+cap+"?: boolean,")
+				logger.Fatal("Should not happen: " + cap)
 			}
 		}
 	}

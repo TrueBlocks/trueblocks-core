@@ -62,6 +62,7 @@ Notes:
 func init() {
 	var capabilities caps.Capability // capabilities for chifra chunks
 	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Names)
 
 	chunksCmd.Flags().SortFlags = false
 

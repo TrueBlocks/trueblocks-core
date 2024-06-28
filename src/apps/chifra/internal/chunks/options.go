@@ -255,6 +255,7 @@ func GetOptions() *ChunksOptions {
 func getCaps() caps.Capability {
 	var capabilities caps.Capability // capabilities for chifra chunks
 	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Names)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return capabilities

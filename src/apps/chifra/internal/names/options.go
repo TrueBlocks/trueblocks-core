@@ -201,6 +201,7 @@ func GetOptions() *NamesOptions {
 func getCaps() caps.Capability {
 	var capabilities caps.Capability // capabilities for chifra names
 	capabilities = capabilities.Add(caps.Default)
+	capabilities = capabilities.Add(caps.Names)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return capabilities
