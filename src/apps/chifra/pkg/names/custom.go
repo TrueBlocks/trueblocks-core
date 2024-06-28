@@ -13,21 +13,25 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-var loadedCustomNames map[base.Address]types.Name = map[base.Address]types.Name{}
-var loadedCustomNamesMutex sync.Mutex
+var customNamesLoaded = false
+var customNames map[base.Address]types.Name = map[base.Address]types.Name{}
+var customNamesMutex sync.Mutex
 
 func loadCustomMap(chain string, terms []string, parts Parts, namesMap *map[base.Address]types.Name) (err error) {
-	if len(loadedCustomNames) != 0 {
+	if customNamesLoaded {
 		// We have already loaded the data
-		for _, name := range loadedCustomNames {
+		for _, name := range customNames {
 			if doSearch(&name, terms, parts) {
 				(*namesMap)[name.Address] = name
 			}
 		}
 		return
 	}
-	loadedCustomNamesMutex.Lock()
-	defer loadedCustomNamesMutex.Unlock()
+	customNamesMutex.Lock()
+	defer func() {
+		customNamesLoaded = true
+		customNamesMutex.Unlock()
+	}()
 
 	db, err := openDatabaseForRead(chain, DatabaseCustom)
 	if err != nil {
@@ -35,12 +39,12 @@ func loadCustomMap(chain string, terms []string, parts Parts, namesMap *map[base
 	}
 	defer db.Close()
 
-	loadedCustomNames, err = unmarshallCustomNames(db, terms, parts, namesMap)
+	customNames, err = unmarshallCustomNames(db, terms, parts, namesMap)
 	if err != nil {
 		return err
 	}
 	if parts&Testing != 0 {
-		loadTestNames(terms, parts, &loadedCustomNames, namesMap)
+		loadTestNames(terms, parts, &customNames, namesMap)
 	}
 	return
 }
@@ -116,8 +120,8 @@ func writeCustomNames(output *os.File) (err error) {
 		"0x0000000000000000000000000000000000000004": true,
 	}
 
-	sorted := make([]types.Name, 0, len(loadedCustomNames))
-	for _, name := range loadedCustomNames {
+	sorted := make([]types.Name, 0, len(customNames))
+	for _, name := range customNames {
 		sorted = append(sorted, name)
 	}
 	sort.Slice(sorted, func(i, j int) bool {

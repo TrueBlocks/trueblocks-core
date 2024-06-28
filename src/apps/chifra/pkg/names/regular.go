@@ -9,14 +9,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-var loadedRegularNames = map[base.Address]types.Name{}
-var loadedRegularNamesMutex sync.Mutex
+var regularNamesLoaded = false
+var regularNames = map[base.Address]types.Name{}
+var regularNamesMutex sync.Mutex
 
 // loadRegularMap loads the regular names from the cache
 func loadRegularMap(chain string, terms []string, parts Parts, ret *map[base.Address]types.Name) error {
-	if len(loadedRegularNames) != 0 {
-		// We have already loaded the data
-		for _, name := range loadedRegularNames {
+	if regularNamesLoaded {
+		for _, name := range regularNames {
 			if doSearch(&name, terms, parts) {
 				(*ret)[name.Address] = name
 			}
@@ -24,8 +24,11 @@ func loadRegularMap(chain string, terms []string, parts Parts, ret *map[base.Add
 		return nil
 	}
 
-	loadedRegularNamesMutex.Lock()
-	defer loadedRegularNamesMutex.Unlock()
+	regularNamesMutex.Lock()
+	defer func() {
+		regularNamesLoaded = true
+		regularNamesMutex.Unlock()
+	}()
 
 	db, err := openDatabaseForRead(chain, DatabaseRegular)
 	if err != nil {
@@ -46,7 +49,7 @@ func loadRegularMap(chain string, terms []string, parts Parts, ret *map[base.Add
 		if err != nil {
 			logger.Fatal(err)
 		}
-		loadedRegularNames[n.Address] = n
+		regularNames[n.Address] = n
 		if doSearch(&n, terms, parts) {
 			(*ret)[n.Address] = n
 		}

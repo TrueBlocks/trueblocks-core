@@ -45,9 +45,9 @@ func customCreateName(chain string, name *types.Name) error {
 	}()
 
 	name.IsCustom = true
-	loadedCustomNamesMutex.Lock()
-	defer loadedCustomNamesMutex.Unlock()
-	loadedCustomNames[name.Address] = *name
+	customNamesMutex.Lock()
+	defer customNamesMutex.Unlock()
+	customNames[name.Address] = *name
 	err = writeCustomNames(db)
 	if err == nil {
 		// Everything went okay, so we can remove the backup.
@@ -57,10 +57,10 @@ func customCreateName(chain string, name *types.Name) error {
 }
 
 func regularCreateName(name *types.Name) (err error) {
-	loadedRegularNamesMutex.Lock()
-	defer loadedRegularNamesMutex.Unlock()
+	regularNamesMutex.Lock()
+	defer regularNamesMutex.Unlock()
 
 	name.IsCustom = false
-	loadedRegularNames[name.Address] = *name
+	regularNames[name.Address] = *name
 	return
 }

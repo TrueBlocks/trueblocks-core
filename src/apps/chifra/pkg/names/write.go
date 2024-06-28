@@ -16,13 +16,13 @@ func CustomWriteNames(chain string, dryRun bool) (err error) {
 		database = DatabaseDryRun
 	}
 
-	loadedCustomNamesMutex.Lock()
-	defer loadedCustomNamesMutex.Unlock()
+	customNamesMutex.Lock()
+	defer customNamesMutex.Unlock()
 
 	return writeDatabase(
 		chain,
 		database,
-		loadedCustomNames,
+		customNames,
 	)
 }
 
@@ -32,13 +32,13 @@ func RegularWriteNames(chain string, dryRun bool) (err error) {
 		database = DatabaseDryRun
 	}
 
-	loadedRegularNamesMutex.Lock()
-	defer loadedRegularNamesMutex.Unlock()
+	regularNamesMutex.Lock()
+	defer regularNamesMutex.Unlock()
 
 	return writeDatabase(
 		chain,
 		database,
-		loadedRegularNames,
+		regularNames,
 	)
 }
 

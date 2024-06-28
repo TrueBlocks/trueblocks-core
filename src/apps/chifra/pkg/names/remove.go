@@ -25,7 +25,7 @@ func RemoveName(dbType DatabaseType, chain string, address base.Address) (name *
 }
 
 func customRemoveName(chain string, address base.Address) (*types.Name, error) {
-	name, exists := loadedCustomNames[address]
+	name, exists := customNames[address]
 	if !exists {
 		return nil, fmt.Errorf("cannot remove non-existant custom name for address %s", address.Hex())
 	}
@@ -56,9 +56,9 @@ func customRemoveName(chain string, address base.Address) (*types.Name, error) {
 		backup.Restore()
 	}()
 
-	loadedCustomNamesMutex.Lock()
-	defer loadedCustomNamesMutex.Unlock()
-	delete(loadedCustomNames, address)
+	customNamesMutex.Lock()
+	defer customNamesMutex.Unlock()
+	delete(customNames, address)
 	err = writeCustomNames(db)
 	if err == nil {
 		// Everything went okay, so we can remove the backup.

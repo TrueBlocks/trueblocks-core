@@ -26,7 +26,7 @@ func SetDeleted(dbType DatabaseType, chain string, address base.Address, deleted
 }
 
 func customSetDeleted(chain string, address base.Address, deleted bool) (*types.Name, error) {
-	existing, ok := loadedCustomNames[address]
+	existing, ok := customNames[address]
 	if !ok {
 		return nil, fmt.Errorf("no custom name for address %s", address.Hex())
 	}
@@ -68,11 +68,11 @@ func customSetDeleted(chain string, address base.Address, deleted bool) (*types.
 }
 
 func changeDeleted(output *os.File, address base.Address, deleted bool) (*types.Name, error) {
-	name := loadedCustomNames[address]
+	name := customNames[address]
 	name.Deleted = deleted
 	name.IsCustom = true
-	loadedCustomNamesMutex.Lock()
-	defer loadedCustomNamesMutex.Unlock()
-	loadedCustomNames[name.Address] = name
+	customNamesMutex.Lock()
+	defer customNamesMutex.Unlock()
+	customNames[name.Address] = name
 	return &name, writeCustomNames(output)
 }

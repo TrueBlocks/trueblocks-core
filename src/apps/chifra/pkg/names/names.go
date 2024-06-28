@@ -70,14 +70,14 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]t
 
 // ClearCache removes names that are cached in-memory
 func ClearCache() {
-	loadedRegularNamesMutex.Lock()
-	defer loadedRegularNamesMutex.Unlock()
+	regularNamesMutex.Lock()
+	defer regularNamesMutex.Unlock()
 
-	loadedCustomNamesMutex.Lock()
-	defer loadedCustomNamesMutex.Unlock()
+	customNamesMutex.Lock()
+	defer customNamesMutex.Unlock()
 
-	loadedRegularNames = make(map[base.Address]types.Name)
-	loadedCustomNames = make(map[base.Address]types.Name)
+	regularNames = make(map[base.Address]types.Name)
+	customNames = make(map[base.Address]types.Name)
 }
 
 var requiredColumns = []string{
