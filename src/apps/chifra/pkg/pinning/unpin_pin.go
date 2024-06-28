@@ -13,7 +13,7 @@ import (
 
 var unpinPin = "https://api.pinata.cloud/pinning/unpin/%s"
 
-// unpinPin unpins a pin
+// unpinOne unpins a pin
 func unpinOne(chain string, i, total int, hash base.IpfsHash) error {
 	url := fmt.Sprintf(unpinPin, hash.String())
 
