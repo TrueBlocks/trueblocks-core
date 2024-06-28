@@ -84,7 +84,12 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[str
 	if extraOpts["namesMap"] != nil {
 		name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 		if name.Address.Hex() != "0x0" {
-			model["name"] = name
+			name.Address = base.Address{}
+			if format == "json" {
+				model["name"] = name.Model(chain, format, verbose, extraOpts).Data
+			} else {
+				model["name"] = name.Name
+			}
 			order = append(order, "name")
 		}
 	}
@@ -92,22 +97,17 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[str
 	if extraOpts["uniq"] == true {
 		if s.TraceIndex > 0 {
 			model["traceIndex"] = s.TraceIndex
-			order = append(order, "traceIndex")
 		} else if format != "json" {
 			model["traceIndex"] = ""
-			order = append(order, "traceIndex")
 		}
+		order = append(order, "traceIndex")
 		model["reason"] = s.Reason
-		order = append(order, []string{
-			"reason",
-		}...)
+		order = append(order, "reason")
 		if verbose {
 			model["timestamp"] = s.Timestamp
+			order = append(order, "timestamp")
 			model["date"] = s.Date()
-			order = append(order, []string{
-				"timestamp",
-				"date",
-			}...)
+			order = append(order, "date")
 		}
 	} else if extraOpts["export"] == true && format == "json" {
 		if verbose {
@@ -127,19 +127,16 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[str
 		if verbose {
 			if s.TraceIndex > 0 {
 				model["traceIndex"] = s.TraceIndex
-				order = append(order, "traceIndex")
 			} else if format != "json" {
 				model["traceIndex"] = ""
-				order = append(order, "traceIndex")
 			}
+			order = append(order, "traceIndex")
 			model["reason"] = s.Reason
+			order = append(order, "reason")
 			model["timestamp"] = s.Timestamp
+			order = append(order, "timestamp")
 			model["date"] = s.Date()
-			order = append(order, []string{
-				"reason",
-				"timestamp",
-				"date",
-			}...)
+			order = append(order, "date")
 		}
 	}
 

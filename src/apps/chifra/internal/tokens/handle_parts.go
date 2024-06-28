@@ -56,15 +56,16 @@ func (opts *TokensOptions) HandleParts() error {
 		}
 	}
 
-	parts := names.Custom | names.Prefund | names.Regular
-	namesMap, err := names.LoadNamesMap(chain, parts, nil)
-	if err != nil {
-		return err
-	}
-
 	extraOpts := map[string]any{
-		"namesMap": namesMap,
-		"parts":    opts.Parts,
+		"parts": opts.Parts,
+	}
+	if opts.Globals.ShouldLoadNames(true) {
+		parts := names.Custom | names.Prefund | names.Regular
+		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
+			return err
+		} else {
+			extraOpts["namesMap"] = namesMap
+		}
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

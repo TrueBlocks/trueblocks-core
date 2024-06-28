@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -22,7 +21,6 @@ import (
 )
 
 func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
-	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	filter := filter.NewFilter(
 		opts.Reversed,
@@ -148,15 +146,6 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 		"export":     true,
-	}
-
-	if opts.Globals.Verbose || opts.Globals.Format == "json" {
-		parts := names.Custom | names.Prefund | names.Regular
-		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
-			return err
-		} else {
-			extraOpts["namesMap"] = namesMap
-		}
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

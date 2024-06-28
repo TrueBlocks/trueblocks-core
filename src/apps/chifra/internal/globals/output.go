@@ -6,13 +6,24 @@ package globals
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *GlobalOptions) OutputOpts() output.OutputOptions {
 	extraOpts := map[string]any{
-		"ether": opts.Ether,
+		"ether":    opts.Ether,
+		"testMode": opts.TestMode,
+	}
+	if opts.ShouldLoadNames(false) {
+		parts := names.Custom | names.Prefund | names.Regular
+		if opts.TestMode {
+			parts |= names.Testing
+		}
+		if namesMap, err := names.LoadNamesMap(opts.Chain, parts, nil); err == nil {
+			extraOpts["namesMap"] = namesMap
+		}
 	}
 
 	return output.OutputOptions{
@@ -33,6 +44,15 @@ func (opts *GlobalOptions) OutputOptsWithExtra(extraOpts map[string]any) output.
 	if extraOpts != nil {
 		extraOpts["ether"] = opts.Ether
 		extraOpts["testMode"] = opts.TestMode
+		if opts.ShouldLoadNames(false) {
+			parts := names.Custom | names.Prefund | names.Regular
+			if opts.TestMode {
+				parts |= names.Testing
+			}
+			if namesMap, err := names.LoadNamesMap(opts.Chain, parts, nil); err == nil {
+				extraOpts["namesMap"] = namesMap
+			}
+		}
 	}
 
 	return output.OutputOptions{

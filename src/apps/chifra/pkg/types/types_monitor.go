@@ -62,7 +62,8 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string
 		if extraOpts["namesMap"] != nil {
 			name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 			if name.Address.Hex() != "0x0" {
-				model["name"] = name
+				name.Address = base.Address{}
+				model["name"] = name.Model(chain, format, verbose, extraOpts).Data
 				order = append(order, "name")
 			}
 		}

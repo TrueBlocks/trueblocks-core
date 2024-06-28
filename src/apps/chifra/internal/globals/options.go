@@ -37,6 +37,9 @@ type GlobalOptions struct {
 }
 
 func (opts *GlobalOptions) TestLog() {
+	// Names is internal use only
+	cc := opts.Caps.Remove(caps.Names)
+
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
 	logger.TestLog(opts.NoHeader, "NoHeader: ", opts.NoHeader)
 	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetSettings().DefaultChain, "Chain: ", opts.Chain)
@@ -51,7 +54,7 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Append, "Append: ", opts.Append)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
-	logger.TestLog(opts.Caps != caps.Default, "Caps: ", opts.Caps.Show())
+	logger.TestLog(cc != caps.Default, "Caps: ", opts.Caps.Show())
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
 }
@@ -60,6 +63,10 @@ func SetDefaults(opts *GlobalOptions) {
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetSettings().DefaultChain
 	}
+}
+
+func (opts *GlobalOptions) ShouldLoadNames(force bool) bool {
+	return opts.Caps.Has(caps.Names) && (force || opts.Verbose || opts.Format == "json")
 }
 
 // TODO: These options should be in a data file
