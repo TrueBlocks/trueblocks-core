@@ -51,56 +51,6 @@ func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]a
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOpts["hashes"] == true {
-		txHashes := make([]string, 0, len(s.Transactions))
-		// Check what type Tx is
-		switch txs := any(s.Transactions).(type) {
-		case []Transaction:
-			for _, tx := range txs {
-				txHashes = append(txHashes, tx.Hash.String())
-			}
-		case []string:
-			txHashes = append(txHashes, txs...)
-			// TODO: no error if can't cast?
-		}
-		model := Model{
-			Data: map[string]any{
-				"hash":        s.Hash,
-				"blockNumber": s.BlockNumber,
-				"parentHash":  s.ParentHash,
-				"timestamp":   s.Timestamp,
-				"date":        s.Date(),
-			},
-			Order: []string{
-				"hash",
-				"blockNumber",
-				"parentHash",
-				"timestamp",
-				"date",
-			},
-		}
-
-		if format == "json" {
-			model.Data["tx_hashes"] = txHashes
-			if s.BlockNumber >= base.KnownBlock(chain, base.Shanghai) {
-				withs := make([]map[string]any, 0, len(s.Withdrawals))
-				for _, w := range s.Withdrawals {
-					withs = append(withs, w.Model(chain, format, verbose, extraOpts).Data)
-				}
-				model.Data["withdrawals"] = withs
-			}
-		} else {
-			model.Data["transactionsCnt"] = len(txHashes)
-			model.Order = append(model.Order, "transactionsCnt")
-			if s.BlockNumber > base.KnownBlock(chain, base.Shanghai) {
-				model.Data["withdrawalsCnt"] = len(s.Withdrawals)
-				model.Order = append(model.Order, "withdrawalsCnt")
-			}
-		}
-
-		return model
-	}
-
 	model = map[string]any{
 		"gasUsed":       s.GasUsed,
 		"gasLimit":      s.GasLimit,
@@ -162,6 +112,15 @@ func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]a
 		order = append(order, "transactionsCnt")
 		model["withdrawalsCnt"] = len(s.Withdrawals)
 		order = append(order, "withdrawalsCnt")
+	}
+
+	if name, ok := nameAddress(extraOpts, s.Miner); ok {
+		if format == "json" {
+			model["minerName"] = name.Model(chain, format, verbose, extraOpts).Data
+		} else {
+			model["minerName"] = name.Name
+			order = append(order, "minerName")
+		}
 	}
 	// EXISTING_CODE
 

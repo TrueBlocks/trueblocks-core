@@ -76,6 +76,15 @@ func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[st
 		// 	order = append(order, "output")
 		// }
 	}
+
+	if name, ok := nameAddress(extraOpts, s.Address); ok {
+		if format == "json" {
+			model["addressName"] = name.Model(chain, format, verbose, extraOpts).Data
+		} else {
+			model["addressName"] = name.Name
+			order = append(order, "addressName")
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{

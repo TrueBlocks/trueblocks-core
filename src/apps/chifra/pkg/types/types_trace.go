@@ -126,16 +126,15 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 		}
 
 	} else {
-		to := hexutil.Encode(s.Action.To.Bytes())
-		if to == "0x0000000000000000000000000000000000000000" {
-			to = "0x0"
-		}
-
 		model["blockNumber"] = s.BlockNumber
 		model["transactionIndex"] = s.TransactionIndex
 		model["error"] = s.Error
 		model["timestamp"] = s.Timestamp
 		if s.Action != nil {
+			to := hexutil.Encode(s.Action.To.Bytes())
+			if to == "0x0000000000000000000000000000000000000000" {
+				to = "0x0"
+			}
 			model["action::callType"] = s.Action.CallType
 			model["action::gas"] = s.Action.Gas
 			model["action::input"] = s.Action.Input
@@ -152,6 +151,20 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 				model["action::value"] = s.Action.Value.String()
 				model["action::ether"] = s.Action.Value.ToEtherStr(18)
 			}
+			items := []namer{
+				{addr: s.Action.From, name: "fromName"},
+				{addr: s.Action.To, name: "toName"},
+			}
+			for _, item := range items {
+				if name, ok := nameAddress(extraOpts, item.addr); ok {
+					if format == "json" {
+						model[item.name] = name.Model(chain, format, verbose, extraOpts).Data
+					} else {
+						model[item.name] = name.Name
+						order = append(order, item.name)
+					}
+				}
+			}
 		}
 		if s.Result != nil {
 			model["result::gasUsed"] = s.Result.GasUsed
@@ -160,7 +173,6 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 			model["result::gasUsed"] = "0"
 			model["result::output"] = ""
 		}
-
 		if isArticulated {
 			model["compressedTrace"] = makeCompressed(articulatedTrace)
 			order = append(order, "compressedTrace")

@@ -215,7 +215,12 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 					logModel["articulatedLog"] = articulatedLog
 				}
 				if name, ok := nameAddress(extraOpts, log.Address); ok {
-					logModel["emitterName"] = name
+					if format == "json" {
+						logModel["emitterName"] = name.Model(chain, format, verbose, extraOpts).Data
+					} else {
+						logModel["emitterName"] = name.Name
+						order = append(order, "emitterName")
+					}
 				}
 				logs = append(logs, logModel)
 			}

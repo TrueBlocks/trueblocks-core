@@ -100,6 +100,25 @@ func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[st
 		if len(s.RewardType) > 0 {
 			model["rewardType"] = s.RewardType
 		}
+
+		items := []namer{
+			{addr: s.Address, name: "addressName"},
+			{addr: s.Author, name: "authorName"},
+			{addr: s.From, name: "fromName"},
+			{addr: s.RefundAddress, name: "refundAddressName"},
+			{addr: s.SelfDestructed, name: "selfDestructedName"},
+			{addr: s.To, name: "toName"},
+		}
+		for _, item := range items {
+			if name, ok := nameAddress(extraOpts, item.addr); ok {
+				if format == "json" {
+					model[item.name] = name.Model(chain, format, verbose, extraOpts).Data
+				} else {
+					model[item.name] = name.Name
+					order = append(order, item.name)
+				}
+			}
+		}
 	}
 
 	// EXISTING_CODE

@@ -83,6 +83,16 @@ func (s *LightBlock) Model(chain, format string, verbose bool, extraOpts map[str
 			order = append(order, "withdrawalsCnt")
 		}
 	}
+
+	if name, ok := nameAddress(extraOpts, s.Miner); ok {
+		if format == "json" {
+			model["minerName"] = name.Model(chain, format, verbose, extraOpts).Data
+		} else {
+			model["minerName"] = name.Name
+			order = append(order, "minerName")
+		}
+	}
+
 	// EXISTING_CODE
 
 	return Model{
