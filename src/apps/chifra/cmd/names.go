@@ -52,7 +52,6 @@ Notes:
 func init() {
 	var capabilities caps.Capability // capabilities for chifra names
 	capabilities = capabilities.Add(caps.Default)
-	capabilities = capabilities.Add(caps.Names)
 
 	namesCmd.Flags().SortFlags = false
 

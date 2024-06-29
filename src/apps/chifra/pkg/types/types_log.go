@@ -127,10 +127,10 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 
 	if name, ok := nameAddress(extraOpts, s.Address); ok {
 		if format == "json" {
-			model["addressName"] = name.Model(chain, format, verbose, extraOpts).Data
+			model["emitterName"] = name.Model(chain, format, verbose, extraOpts).Data
 		} else {
-			model["addressName"] = name.Name
-			order = append(order, "addressName")
+			model["emitterName"] = name.Name
+			order = append(order, "emitterName")
 		}
 	}
 

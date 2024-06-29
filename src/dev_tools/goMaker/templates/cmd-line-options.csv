@@ -79,7 +79,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 14170,apps,Accounts,monitors,acctExport,n4,,,,,note,,,,,,Addresses provided on the command line are ignored in `--watch` mode.
 14180,apps,Accounts,monitors,acctExport,n5,,,,,note,,,,,,Providing the value `existing` to the `--watchlist` monitors all existing monitor files (see --list).
 #
-15000,tools,Accounts,names,ethNames,,,,visible|docs,,command,,,Manage names,[flags] <term> [term...],default|names|,Query addresses or names of well-known accounts.
+15000,tools,Accounts,names,ethNames,,,,visible|docs,,command,,,Manage names,[flags] <term> [term...],default|,Query addresses or names of well-known accounts.
 15020,tools,Accounts,names,ethNames,terms,,,required|visible|docs,4,positional,list<string>,name,,,,a space separated list of one or more search terms
 15030,tools,Accounts,names,ethNames,expand,e,,visible|docs,,switch,<boolean>,,,,,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
 15040,tools,Accounts,names,ethNames,match_case,m,,visible|docs,,switch,<boolean>,,,,,do case-sensitive search
@@ -169,7 +169,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 25080,tools,Chain Data,logs,getLogs,n3,,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 25090,tools,Chain Data,logs,getLogs,n4,,,,,note,,,,,,If you specify a 32-byte hash&#44; it will be assumed to be a transaction hash&#44; if it is not&#44; the hash will be used as a topic.
 #
-26000,tools,Chain Data,traces,getTraces,,,,visible|docs,,command,,,Get traces,[flags] <tx_id> [tx_id...],default|caching|ether|,Retrieve traces for the given transaction(s).
+26000,tools,Chain Data,traces,getTraces,,,,visible|docs,,command,,,Get traces,[flags] <tx_id> [tx_id...],default|caching|ether|names|,Retrieve traces for the given transaction(s).
 26020,tools,Chain Data,traces,getTraces,transactions,,,required|visible|docs,3,positional,list<tx_id>,trace,,,,a space-separated list of one or more transaction identifiers
 26030,tools,Chain Data,traces,getTraces,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 26040,tools,Chain Data,traces,getTraces,filter,f,,visible|docs,2,flag,<string>,,,,,call the node's trace_filter routine with bang-separated filter
