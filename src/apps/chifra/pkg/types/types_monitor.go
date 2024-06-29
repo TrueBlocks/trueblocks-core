@@ -63,7 +63,11 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string
 			name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
 			if name.Address.Hex() != "0x0" {
 				name.Address = base.Address{}
-				model["name"] = name.Model(chain, format, verbose, extraOpts).Data
+				if format == "json" {
+					model["name"] = name.Model(chain, format, verbose, extraOpts).Data
+				} else {
+					model["name"] = name.Name
+				}
 				order = append(order, "name")
 			}
 		}
