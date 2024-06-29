@@ -46,9 +46,8 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 
 	// EXISTING_CODE
 	name := Name{}
-	name.Name = "Unknown"
-	if extraOpts["namesMap"] != nil {
-		name = extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
+	if addressName, ok := nameAddress(extraOpts, s.Address); ok {
+		name = addressName
 	}
 	if name.Decimals == 0 {
 		name.Decimals = 18
@@ -80,11 +79,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 
 	order = wanted
 	if len(wanted) > 0 && (wanted[0] != "address" && wanted[0] != "blockNumber") {
-		if verbose && false {
-			order = append([]string{"address", "blockNumber", "date"}, wanted...)
-		} else {
-			order = append([]string{"address", "blockNumber"}, wanted...)
-		}
+		order = append([]string{"address", "blockNumber"}, wanted...)
 	}
 
 	for _, part := range order {
@@ -108,7 +103,11 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 		case "name":
 			model["name"] = name.Name
 		case "symbol":
-			model["symbol"] = name.Symbol
+			if name.Symbol != "" && name.Symbol != "0x0" {
+				model["symbol"] = name.Symbol
+			} else {
+				model["symbol"] = ""
+			}
 		case "timestamp":
 			model["timestamp"] = s.Timestamp
 		case "totalSupply":
@@ -119,6 +118,21 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 			model["version"] = ""
 		}
 	}
+
+	if verbose {
+		if name, ok := nameAddress(extraOpts, s.Holder); ok {
+			if format == "json" {
+				model["holderName"] = name.Model(chain, format, verbose, extraOpts).Data
+			} else {
+				model["holderName"] = name.Name
+				order = append(order, "holderName")
+			}
+		} else if format != "json" && extraOpts["namesMap"] != nil {
+			model["holderName"] = ""
+			order = append(order, "holderName")
+		}
+	}
+
 	// EXISTING_CODE
 
 	return Model{

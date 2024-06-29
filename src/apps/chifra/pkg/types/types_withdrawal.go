@@ -69,6 +69,14 @@ func (s *Withdrawal) Model(chain, format string, verbose bool, extraOpts map[str
 		order = append(order, "ether")
 	}
 
+	if name, ok := nameAddress(extraOpts, s.Address); ok {
+		if format == "json" {
+			model["addressName"] = name.Model(chain, format, verbose, extraOpts).Data
+		} else {
+			model["addressName"] = name.Name
+			order = append(order, "addressName")
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{

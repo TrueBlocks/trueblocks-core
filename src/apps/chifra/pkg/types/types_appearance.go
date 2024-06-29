@@ -81,15 +81,11 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[str
 		"transactionIndex",
 	}
 
-	if extraOpts["namesMap"] != nil {
-		name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
-		if name.Address.Hex() != "0x0" {
-			name.Address = base.Address{}
-			if format == "json" {
-				model["name"] = name.Model(chain, format, verbose, extraOpts).Data
-			} else {
-				model["name"] = name.Name
-			}
+	if name, ok := nameAddress(extraOpts, s.Address); ok {
+		if format == "json" {
+			model["name"] = name.Model(chain, format, verbose, extraOpts).Data
+		} else {
+			model["name"] = name.Name
 			order = append(order, "name")
 		}
 	}
@@ -115,13 +111,6 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[str
 				model["timestamp"] = s.Timestamp
 			}
 			model["date"] = s.Date()
-		}
-		if extraOpts["namesMap"] != nil {
-			name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
-			if name.Address.Hex() != "0x0" {
-				model["name"] = name.Name
-				order = append(order, "name")
-			}
 		}
 	} else {
 		if verbose {

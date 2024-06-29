@@ -36,6 +36,14 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 	// EXISTING_CODE
 	model[s.Address.Hex()] = s.Functions
 	order = append(order, s.Address.Hex())
+	if name, ok := nameAddress(extraOpts, s.Address); ok {
+		if format == "json" {
+			model["addressName"] = name.Model(chain, format, verbose, extraOpts).Data
+		} else {
+			model["addressName"] = name.Name
+			order = append(order, "addressName")
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{

@@ -106,6 +106,15 @@ func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]
 		model["signature"] = s.Signature
 		model["compressedResult"] = makeCompressed(s.Values)
 	}
+
+	if name, ok := nameAddress(extraOpts, s.Address); ok {
+		if format == "json" {
+			model["addressName"] = name.Model(chain, format, verbose, extraOpts).Data
+		} else {
+			model["addressName"] = name.Name
+			order = append(order, "addressName")
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{

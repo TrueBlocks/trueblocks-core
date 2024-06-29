@@ -113,6 +113,22 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 			order = append(order, "contractAddress")
 		}
 	}
+
+	items := []namer{
+		{addr: s.ContractAddress, name: "contractName"},
+		{addr: s.From, name: "fromName"},
+		{addr: s.To, name: "toName"},
+	}
+	for _, item := range items {
+		if name, ok := nameAddress(extraOpts, item.addr); ok {
+			if format == "json" {
+				model[item.name] = name.Model(chain, format, verbose, extraOpts).Data
+			} else {
+				model[item.name] = name.Name
+				order = append(order, item.name)
+			}
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{
