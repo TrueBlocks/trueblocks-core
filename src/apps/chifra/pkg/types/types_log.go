@@ -124,6 +124,16 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 			model["topic3"] = s.Topics[3]
 		}
 	}
+
+	if name, ok := nameAddress(extraOpts, s.Address); ok {
+		if format == "json" {
+			model["addressName"] = name.Model(chain, format, verbose, extraOpts).Data
+		} else {
+			model["addressName"] = name.Name
+			order = append(order, "addressName")
+		}
+	}
+
 	// EXISTING_CODE
 
 	return Model{

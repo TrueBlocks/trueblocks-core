@@ -66,7 +66,7 @@ func SetDefaults(opts *GlobalOptions) {
 }
 
 func (opts *GlobalOptions) ShouldLoadNames(force bool) bool {
-	return opts.Caps.Has(caps.Names) && (force || opts.Verbose || opts.Format == "json")
+	return opts.Caps.Has(caps.Names) && (force || opts.Verbose)
 }
 
 // TODO: These options should be in a data file
