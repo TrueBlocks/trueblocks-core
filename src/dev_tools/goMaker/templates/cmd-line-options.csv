@@ -256,7 +256,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 44090,apps,Admin,daemon,flame,n2,,,,,note,,,,,,See the API documentation (https://trueblocks.io/api) for more information.
 44100,apps,Admin,daemon,flame,a1,,,,,alias,,,,,,serve
 #
-45000,apps,Admin,scrape,blockScrape,,,,visible|docs|notApi,,command,,,Scrape index,[flags],verbose|version|noop|noColor|chain|names|,Scan the chain and update the TrueBlocks index of appearances.
+45000,apps,Admin,scrape,blockScrape,,,,visible|docs|notApi,,command,,,Scrape index,[flags],verbose|version|noop|noColor|chain|,Scan the chain and update the TrueBlocks index of appearances.
 45020,apps,Admin,scrape,blockScrape,block_cnt,n,2000,visible|docs,2,flag,<uint64>,,,,,maximum number of blocks to process per pass
 45030,apps,Admin,scrape,blockScrape,sleep,s,14,visible|docs,,flag,<float64>,,,,,seconds to sleep between scraper passes
 45040,apps,Admin,scrape,blockScrape,touch,l,,visible|docs,1,flag,<blknum>,,,,,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
@@ -274,7 +274,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 45150,apps,Admin,scrape,blockScrape,n2,,,,,note,,,,,,This command requires your RPC to provide trace data. See the README for more information.
 45150,apps,Admin,scrape,blockScrape,n3,,,,,note,,,,,,The --notify option requires proper configuration. Additionally&#44; IPFS must be running locally. See the README.md file.
 #
-46000,apps,Admin,chunks,chunkMan,,,,visible|docs,,command,,,Manage chunks,<mode> [flags] [blocks...] [address...],default|names|,Manage&#44; investigate&#44; and display the Unchained Index.
+46000,apps,Admin,chunks,chunkMan,,,,visible|docs,,command,,,Manage chunks,<mode> [flags] [blocks...] [address...],default|,Manage&#44; investigate&#44; and display the Unchained Index.
 46020,apps,Admin,chunks,chunkMan,mode,,,required|visible|docs,9,positional,enum[manifest|index|blooms|pins|addresses|appearances|stats],mode,,,,the type of data to process
 46030,apps,Admin,chunks,chunkMan,blocks,,,visible|docs,,positional,list<blknum>,,,,,an optional list of blocks to intersect with chunk ranges
 46040,apps,Admin,chunks,chunkMan,check,c,,visible|docs,1,switch,<boolean>,,,,,check the manifest&#44; index&#44; or blooms for internal consistency
@@ -306,7 +306,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 46300,apps,Admin,chunks,chunkMan,n10,,,,,note,,,,,,The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
 46310,apps,Admin,chunks,chunkMan,n11,,,,,note,,,,,,Without --rewrite&#44; the manifest is written to the temporary cache. With it&#44; the manifest is rewritten to the index folder.
 #
-47000,apps,Admin,init,init,,,,visible|docs,,command,,,Initialize index,[flags],verbose|version|noop|noColor|chain|names|,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
+47000,apps,Admin,init,init,,,,visible|docs,,command,,,Initialize index,[flags],verbose|version|noop|noColor|chain|,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
 47020,apps,Admin,init,init,all,a,,visible|docs,3,switch,<boolean>,message,,,,in addition to Bloom filters&#44; download full index chunks (recommended)
 47025,apps,Admin,init,init,example,e,,visible|docs,2,flag,<string>,message,,,,create an example for the SDK with the given name
 47030,apps,Admin,init,init,dry_run,d,,visible|docs,1,switch,<boolean>,message,,,,display the results of the download without actually downloading
@@ -319,7 +319,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 #
 51000,,Other,,,,,,,,group,,,,,,Access to other and external data
 #
-52000,apps,Other,explore,fireStorm,,,,visible|docs|notApi,,command,,,Open the explorer,[flags] [terms...],verbose|version|noop|noColor|chain|file|names|,Open a local or remote explorer for one or more addresses&#44; blocks&#44; or transactions.
+52000,apps,Other,explore,fireStorm,,,,visible|docs|notApi,,command,,,Open the explorer,[flags] [terms...],verbose|version|noop|noColor|chain|file|,Open a local or remote explorer for one or more addresses&#44; blocks&#44; or transactions.
 52020,apps,Other,explore,fireStorm,terms,,,visible|docs,1,positional,list<string>,,,,,one or more address&#44; name&#44; block&#44; or transaction identifier
 52030,apps,Other,explore,fireStorm,local,l,,visible|docs,,switch,<boolean>,,,,,open the local TrueBlocks explorer
 52040,apps,Other,explore,fireStorm,google,g,,visible|docs,,switch,<boolean>,,,,,search google excluding popular blockchain explorers

@@ -194,7 +194,6 @@ func getCaps() caps.Capability {
 	capabilities = capabilities.Add(caps.Noop)
 	capabilities = capabilities.Add(caps.NoColor)
 	capabilities = capabilities.Add(caps.Chain)
-	capabilities = capabilities.Add(caps.Names)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return capabilities
