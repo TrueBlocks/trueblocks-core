@@ -53,11 +53,12 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 	model["address"] = s.Address
 
 	order = []string{"blockNumber", "address"}
-	if verbose && s.Timestamp > 0 {
-		model["timestamp"] = s.Timestamp
-		model["date"] = s.Date()
-		order = []string{"blockNumber", "address", "timestamp", "date"}
-	} else if verbose {
+	if verbose {
+		if s.Timestamp > 0 {
+			model["timestamp"] = s.Timestamp
+			model["date"] = s.Date()
+			order = []string{"blockNumber", "address", "timestamp", "date"}
+		}
 		model["parts"] = s.Parts.String()
 		order = append(order, "parts")
 	}
