@@ -46,7 +46,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 
 	// EXISTING_CODE
 	name := Name{}
-	if addressName, ok := nameAddress(extraOpts, s.Address); ok {
+	if addressName, _, found := nameAddress(extraOpts, s.Address); found {
 		name = addressName
 	}
 	if name.Decimals == 0 {
@@ -120,18 +120,15 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 	}
 
 	if verbose {
-		if name, ok := nameAddress(extraOpts, s.Holder); ok {
-			if format == "json" {
-				model["holderName"] = name.Model(chain, format, verbose, extraOpts).Data
-			} else {
-				model["holderName"] = name.Name
-				order = append(order, "holderName")
-			}
-		} else if format != "json" && extraOpts["namesMap"] != nil {
+		if name, loaded, found := nameAddress(extraOpts, s.Holder); found {
+			model["holderName"] = name.Name
+			order = append(order, "holderName")
+		} else if loaded && format != "json" {
 			model["holderName"] = ""
 			order = append(order, "holderName")
 		}
 	}
+	order = reorderOrdering(order)
 
 	// EXISTING_CODE
 

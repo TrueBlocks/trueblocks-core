@@ -222,15 +222,15 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		{addr: s.ContractAddress, name: "contractName"},
 	}
 	for _, item := range items {
-		if name, ok := nameAddress(extraOpts, item.addr); ok {
-			if format == "json" {
-				model[item.name] = name.Model(chain, format, verbose, extraOpts).Data
-			} else {
-				model[item.name] = name.Name
-				order = append(order, item.name)
-			}
+		if name, loaded, found := nameAddress(extraOpts, item.addr); found {
+			model[item.name] = name.Name
+			order = append(order, item.name)
+		} else if loaded && format != "json" {
+			model[item.name] = ""
+			order = append(order, item.name)
 		}
 	}
+	order = reorderOrdering(order)
 	// EXISTING_CODE
 
 	return Model{

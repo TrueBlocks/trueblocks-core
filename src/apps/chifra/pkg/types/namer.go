@@ -11,14 +11,14 @@ type namer struct {
 	name string
 }
 
-func nameAddress(extraOpts map[string]any, address base.Address) (Name, bool) {
+func nameAddress(extraOpts map[string]any, address base.Address) (Name, bool, bool) {
 	if extraOpts["namesMap"] == nil {
-		return Name{}, false
+		return Name{}, false, false
 	}
 
 	name := extraOpts["namesMap"].(map[base.Address]Name)[address]
 	if name.Address.Hex() == "0x0" {
-		return Name{}, false
+		return Name{}, true, false
 	}
 
 	isTesting := extraOpts["testMode"] == true
@@ -26,11 +26,33 @@ func nameAddress(extraOpts map[string]any, address base.Address) (Name, bool) {
 		isCustom := name.IsCustom
 		isIndividual := strings.Contains(name.Tags, "90-Individuals")
 		if isIndividual || isCustom {
-			return Name{}, false // makes testing with local customizations easier
+			return Name{}, true, false // makes testing with local customizations easier
 		}
 	}
 
-	isNotZero := name.Address.Hex() != "0x0"
-	name.Address = base.Address{}
-	return name, isNotZero
+	return name, true, true
+}
+
+func reorderOrdering(fields []string) []string {
+	var normalFields []string
+	nameFieldsMap := make(map[string]string)
+
+	for _, field := range fields {
+		if strings.HasSuffix(field, "Name") {
+			baseField := strings.TrimSuffix(field, "Name")
+			nameFieldsMap[baseField] = field
+		} else {
+			normalFields = append(normalFields, field)
+		}
+	}
+
+	var result []string
+	for _, field := range normalFields {
+		result = append(result, field)
+		if nameField, found := nameFieldsMap[field]; found {
+			result = append(result, nameField)
+		}
+	}
+
+	return result
 }

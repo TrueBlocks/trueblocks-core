@@ -61,6 +61,7 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 		order = append(order, "parts")
 	}
 
+	hasProxy := false
 	if extraOpts != nil {
 		if fields, ok := extraOpts["fields"]; ok {
 			if fields, ok := fields.([]string); ok {
@@ -73,6 +74,7 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 					case "code":
 						model["code"] = utils.FormattedCode(verbose, s.Code)
 					case "proxy":
+						hasProxy = true
 						model["proxy"] = s.Proxy
 					case "deployed":
 						if s.Deployed == base.NOPOSN {
@@ -99,19 +101,20 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 
 	items := []namer{
 		{addr: s.Address, name: "addressName"},
-		{addr: s.Proxy, name: "proxyName"},
+	}
+	if hasProxy {
+		items = append(items, namer{addr: s.Proxy, name: "proxyName"})
 	}
 	for _, item := range items {
-		if name, ok := nameAddress(extraOpts, item.addr); ok {
-			if format == "json" {
-				model[item.name] = name.Model(chain, format, verbose, extraOpts).Data
-			} else {
-				model[item.name] = name.Name
-				order = append(order, item.name)
-			}
+		if name, loaded, found := nameAddress(extraOpts, item.addr); found {
+			model[item.name] = name.Name
+			order = append(order, item.name)
+		} else if loaded && format != "json" {
+			model[item.name] = ""
+			order = append(order, item.name)
 		}
 	}
-
+	order = reorderOrdering(order)
 	// EXISTING_CODE
 
 	return Model{
