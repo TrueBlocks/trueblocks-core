@@ -57,6 +57,7 @@ func init() {
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
+	capabilities = capabilities.Add(caps.Names)
 
 	transactionsCmd.Flags().SortFlags = false
 

@@ -175,7 +175,7 @@ func PathToConfigFile() string {
 func PathToRootConfig() string {
 	configPath, err := pathFromXDG("XDG_CONFIG_HOME")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	} else if len(configPath) > 0 {
 		return configPath
 	}
