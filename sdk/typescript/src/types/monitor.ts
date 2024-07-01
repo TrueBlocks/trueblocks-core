@@ -17,7 +17,6 @@ export type Monitor = {
   latestApp: blknum
   address: address
   decimals: uint64
-  petname?: string
   isContract: boolean
   isCustom: boolean
   isErc20?: boolean
@@ -29,4 +28,3 @@ export type Monitor = {
   tags: string
   deleted: boolean
 }
-

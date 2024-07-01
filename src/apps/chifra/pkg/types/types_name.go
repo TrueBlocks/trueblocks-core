@@ -30,7 +30,6 @@ type Name struct {
 	IsErc721   bool         `json:"isErc721,omitempty"`
 	IsPrefund  bool         `json:"isPrefund,omitempty"`
 	Name       string       `json:"name"`
-	Petname    string       `json:"petname"`
 	Source     string       `json:"source"`
 	Symbol     string       `json:"symbol"`
 	Tags       string       `json:"tags"`
@@ -66,7 +65,6 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 		"address":  s.Address,
 		"decimals": s.Decimals,
 		"name":     s.Name,
-		"petname":  s.Petname,
 		"source":   s.Source,
 		"symbol":   s.Symbol,
 		"tags":     s.Tags,
@@ -79,7 +77,6 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 		"symbol",
 		"source",
 		"decimals",
-		"petname",
 	}
 
 	if len(s.Address.Bytes()) > 0 && s.Address != base.ZeroAddr {
@@ -207,7 +204,6 @@ func (s *Name) ToMessage() *proto.Name {
 		IsErc721:   utils.PointerOf(s.IsErc721),
 		IsPrefund:  utils.PointerOf(s.IsPrefund),
 		Name:       s.Name,
-		Petname:    utils.PointerOf(s.Petname),
 		Source:     utils.PointerOf(s.Source),
 		Symbol:     utils.PointerOf(s.Symbol),
 		Tags:       utils.PointerOf(s.Tags),
@@ -229,7 +225,6 @@ func NewNameFromGrpc(gRpcName *proto.Name) *Name {
 		IsErc721:   gRpcName.GetIsErc721(),
 		IsPrefund:  gRpcName.GetIsPrefund(),
 		Name:       gRpcName.GetName(),
-		Petname:    gRpcName.GetPetname(),
 		Source:     gRpcName.GetSource(),
 		Symbol:     gRpcName.GetSymbol(),
 		Tags:       gRpcName.GetTags(),

@@ -89,7 +89,6 @@ func loadTestNames(terms []string, parts Parts, all *map[base.Address]types.Name
 			Decimals: uint64(i),
 			Symbol:   "SYM_" + num,
 			Source:   "Testing",
-			Petname:  base.AddrToPetname(addressStr, "-"),
 			IsCustom: true,
 		}
 		if _, ok := (*all)[address]; !ok {

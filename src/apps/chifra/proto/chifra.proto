@@ -33,7 +33,6 @@ message Name {
     optional bool isErc721 = 7;
     optional bool isPrefund = 8;
     string name = 9;
-    optional string petname = 10;
     optional string source = 11;
     optional string symbol = 12;
     optional string tags = 13;

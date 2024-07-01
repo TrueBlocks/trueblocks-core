@@ -2,6 +2,11 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
+## v3.0.0-alpha (2024/07/01)
+
+- Removes petnames throughout
+- 
+
 ## v3.0.0-alpha (2024/06/01)
 
 **Summary**

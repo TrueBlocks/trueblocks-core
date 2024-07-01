@@ -14,7 +14,7 @@ func doSearch(name *types.Name, terms []string, parts Parts) bool {
 	cnt := 0
 	searchStr := name.Name + "\t" + name.Symbol + "\t" + name.Address.Hex() + "\t" + name.Tags
 	if parts&Expanded != 0 {
-		searchStr += "\t" + name.Source + "\t" + name.Petname
+		searchStr += "\t" + name.Source
 	}
 	if parts&Tags != 0 {
 		// only search tags

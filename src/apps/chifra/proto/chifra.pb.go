@@ -144,7 +144,6 @@ type Name struct {
 	IsErc721   *bool   `protobuf:"varint,7,opt,name=isErc721,proto3,oneof" json:"isErc721,omitempty"`
 	IsPrefund  *bool   `protobuf:"varint,8,opt,name=isPrefund,proto3,oneof" json:"isPrefund,omitempty"`
 	Name       string  `protobuf:"bytes,9,opt,name=name,proto3" json:"name,omitempty"`
-	Petname    *string `protobuf:"bytes,10,opt,name=petname,proto3,oneof" json:"petname,omitempty"`
 	Source     *string `protobuf:"bytes,11,opt,name=source,proto3,oneof" json:"source,omitempty"`
 	Symbol     *string `protobuf:"bytes,12,opt,name=symbol,proto3,oneof" json:"symbol,omitempty"`
 	Tags       *string `protobuf:"bytes,13,opt,name=tags,proto3,oneof" json:"tags,omitempty"`
@@ -241,13 +240,6 @@ func (x *Name) GetIsPrefund() bool {
 func (x *Name) GetName() string {
 	if x != nil {
 		return x.Name
-	}
-	return ""
-}
-
-func (x *Name) GetPetname() string {
-	if x != nil && x.Petname != nil {
-		return *x.Petname
 	}
 	return ""
 }

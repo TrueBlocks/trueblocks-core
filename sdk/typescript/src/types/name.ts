@@ -12,7 +12,6 @@ export type Name = {
   symbol: string
   source: string
   decimals: uint64
-  petname: string
   isCustom?: boolean
   isPrefund?: boolean
   isContract?: boolean
@@ -20,4 +19,3 @@ export type Name = {
   isErc721?: boolean
   deleted?: boolean
 }
-

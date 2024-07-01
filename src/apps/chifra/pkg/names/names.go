@@ -42,7 +42,6 @@ const (
 	// SortBySource
 	// SortByDecimals
 	SortByTags
-	// SortByPetname
 )
 
 // LoadNamesArray loads the names from the cache and returns an array of names
@@ -132,7 +131,6 @@ var requiredColumns = []string{
 	"name",
 	"symbol",
 	"source",
-	"petname",
 }
 
 type NameReader struct {
@@ -157,7 +155,6 @@ func (gr *NameReader) Read() (types.Name, error) {
 		Decimals:   base.MustParseUint64(record[gr.header["decimals"]]),
 		Symbol:     record[gr.header["symbol"]],
 		Source:     record[gr.header["source"]],
-		Petname:    record[gr.header["petname"]],
 		Deleted:    record[gr.header["deleted"]] == "true",
 		IsCustom:   record[gr.header["isCustom"]] == "true",
 		IsPrefund:  record[gr.header["isPrefund"]] == "true",
@@ -259,7 +256,6 @@ type NameOnDisc struct {
 	Name     [120 + 1]byte `json:"-"` // + 121 bytes = 195 bytes
 	Symbol   [30 + 1]byte  `json:"-"` // + 31 bytes = 226 bytes
 	Source   [180 + 1]byte `json:"-"` // + 181 bytes = 407 bytes
-	Petname  [40 + 1]byte  `json:"-"` // + 41 bytes = 448 bytes
 	Decimals uint16        `json:"-"` // + 2 bytes = 450 bytes
 	Flags    uint16        `json:"-"` // + 2 bytes = 452 bytes
 }
@@ -312,7 +308,6 @@ func asString(which string, b []byte) string {
 		// 			Symbol:     asString("symbol", v.Symbol[:]),
 		// 			Decimals:   fmt.Sprintf("%d", v.Decimals),
 		// 			Source:     asString("source", v.Source[:]),
-		// 			Petname:    asString("petname", v.Petname[:]),
 		// 			IsCustom:   v.Flags&IsCustom != 0,
 		// 			IsPrefund:  v.Flags&IsPrefund != 0,
 		// 			IsContract: v.Flags&IsContract != 0,

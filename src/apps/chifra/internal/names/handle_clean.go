@@ -238,11 +238,6 @@ func cleanCommon(name *types.Name) (modified bool) {
 		name.Source = sourceDedup
 		modified = true
 	}
-
-	if len(name.Petname) == 0 {
-		name.Petname = base.AddrToPetname(name.Address.Hex(), "-")
-		modified = true
-	}
 	return
 }
 
@@ -419,9 +414,6 @@ func cleanNonContract(name *types.Name, wasContract bool) (modified bool) {
 //		if contains (ignore case) 'etherscan' then the entire string becomes Etherscan.io
 //		if contains (ignore case) 'trueblocks' then the entire string becomes TrueBlocks.io
 //		change any white space to spaces, change double spaces to single spaces
-//
-// Petname:
-//		based on address assign it without asking (never user assigned)
 //
 // IsPrefund:
 //		is the address a prefund for this chain?

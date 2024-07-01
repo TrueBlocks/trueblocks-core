@@ -30,7 +30,6 @@ func LoadPrefundMap(chain string, thePath string) (*map[base.Address]types.Name,
 				Address:   prefund.Address,
 				Name:      "Prefund_" + fmt.Sprintf("%04d", i),
 				Source:    "Genesis",
-				Petname:   base.AddrToPetname(prefund.Address.Hex(), "-"),
 				IsPrefund: true,
 				Prefund:   prefund.Balance,
 			}

@@ -11,20 +11,20 @@ import (
 )
 
 var inputValid = `
-tags	address	name	symbol	source	decimals	petname	deleted	isCustom	isPrefund	isContract	isErc20	isErc721
-55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address		EtherScan.io		abnormally-able-bee	false	false	false	false	false	false
-50-Tokens:ERC721	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18	absolutely-normal-hawk	false	false	false	true	true	true
-50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI	On chain	18	actually-suitable-finch	false	false	false	true	true	false
-30-Contracts	0x000000000000541e251335090ac5b47176af4f7e	dex.blue		EtherScan.io		adequately-probable-werewolf	false	false	false	true	false	false
+tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	isErc20	isErc721
+55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address		EtherScan.io		false	false	false	false	false	false
+50-Tokens:ERC721	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18	false	false	false	true	true	true
+50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI	On chain	18	false	false	false	true	true	false
+30-Contracts	0x000000000000541e251335090ac5b47176af4f7e	dex.blue		EtherScan.io		false	false	false	true	false	false
 `
 
 // missing "address" field
 var inputMissingFields = `
-tags	name	symbol	source	decimals	petname	deleted	isCustom	isPrefund	isContract	isErc20	isErc721
-55-Defi	ENS: Burn Address		EtherScan.io		abnormally-able-bee	false	false	false	false	false	false
-50-Tokens:ERC721	HomeWork 🏠🛠️	HWK	On chain	18	absolutely-normal-hawk	false	false	false	true	true	true
-50-Tokens:ERC20	Chi Gastoken by 1inch	CHI	On chain	18	actually-suitable-finch	false	false	false	true	true	false
-30-Contracts	dex.blue		EtherScan.io		adequately-probable-werewolf	false	false	false	true	false	false
+tags	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	isErc20	isErc721
+55-Defi	ENS: Burn Address		EtherScan.io		false	false	false	false	false	false
+50-Tokens:ERC721	HomeWork 🏠🛠️	HWK	On chain	18	false	false	false	true	true	true
+50-Tokens:ERC20	Chi Gastoken by 1inch	CHI	On chain	18	false	false	false	true	true	false
+30-Contracts	dex.blue		EtherScan.io		false	false	false	true	false	false
 `
 
 func TestNewNameReader(t *testing.T) {
@@ -39,7 +39,6 @@ func TestNewNameReader(t *testing.T) {
 			Address: base.HexToAddress("0x000000000000000000000000000000000000dead"),
 			Name:    "ENS: Burn Address",
 			Source:  "EtherScan.io",
-			Petname: "abnormally-able-bee",
 		},
 		{
 			Tags:       "50-Tokens:ERC721",
@@ -48,7 +47,6 @@ func TestNewNameReader(t *testing.T) {
 			Symbol:     "HWK",
 			Decimals:   18,
 			Source:     "On chain",
-			Petname:    "absolutely-normal-hawk",
 			IsContract: true,
 			IsErc20:    true,
 			IsErc721:   true,
@@ -60,7 +58,6 @@ func TestNewNameReader(t *testing.T) {
 			Symbol:     "CHI",
 			Decimals:   18,
 			Source:     "On chain",
-			Petname:    "actually-suitable-finch",
 			IsContract: true,
 			IsErc20:    true,
 			IsErc721:   false,
@@ -70,7 +67,6 @@ func TestNewNameReader(t *testing.T) {
 			Address:    base.HexToAddress("0x000000000000541e251335090ac5b47176af4f7e"),
 			Name:       "dex.blue",
 			Source:     "EtherScan.io",
-			Petname:    "adequately-probable-werewolf",
 			IsContract: true,
 		},
 	}
