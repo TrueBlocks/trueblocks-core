@@ -216,6 +216,21 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		order = append(order, "ether")
 	}
 
+	items := []namer{
+		{addr: s.From, name: "fromName"},
+		{addr: s.To, name: "toName"},
+		{addr: s.ContractAddress, name: "contractName"},
+	}
+	for _, item := range items {
+		if name, loaded, found := nameAddress(extraOpts, item.addr); found {
+			model[item.name] = name.Name
+			order = append(order, item.name)
+		} else if loaded && format != "json" {
+			model[item.name] = ""
+			order = append(order, item.name)
+		}
+	}
+	order = reorderOrdering(order)
 	// EXISTING_CODE
 
 	return Model{

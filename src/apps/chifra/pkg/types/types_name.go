@@ -79,18 +79,29 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 
 	if len(s.Address.Bytes()) > 0 && s.Address != base.ZeroAddr {
 		model["address"] = strings.ToLower(s.Address.String())
+	} else {
+		n := 0
+		for _, v := range order {
+			if v != "address" {
+				order[n] = v
+				n++
+			}
+		}
+		order = order[:n]
+		delete(model, "address")
 	}
 
 	isExpanded := extraOpts["expand"] == true
 	isPrefund := extraOpts["prefund"] == true
 	if !isExpanded && !isPrefund {
-		x := []string{}
+		n := 0
 		for _, v := range order {
 			if v != "source" {
-				x = append(x, v)
+				order[n] = v
+				n++
 			}
 		}
-		order = x
+		order = order[:n]
 		delete(model, "source")
 	}
 
@@ -101,25 +112,27 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 
 	if format == "json" {
 		if len(s.Symbol) == 0 {
-			x := []string{}
+			n := 0
 			for _, v := range order {
 				if v != "symbol" {
-					x = append(x, v)
+					order[n] = v
+					n++
 				}
 			}
-			order = x
+			order = order[:n]
 			delete(model, "symbol")
 		} else {
 			model["symbol"] = s.Symbol
 		}
 		if s.Decimals == 0 {
-			x := []string{}
+			n := 0
 			for _, v := range order {
 				if v != "decimals" {
-					x = append(x, v)
+					order[n] = v
+					n++
 				}
 			}
-			order = x
+			order = order[:n]
 			delete(model, "decimals")
 		}
 		if len(s.Source) > 0 {
@@ -189,6 +202,4 @@ func (s *Name) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
-//
-
 // EXISTING_CODE

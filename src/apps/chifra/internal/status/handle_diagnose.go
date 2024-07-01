@@ -27,8 +27,5 @@ func (opts *StatusOptions) HandleDiagnose() error {
 		modelChan <- s
 	}
 
-	extraOpts := map[string]any{
-		"testMode": testMode,
-	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }

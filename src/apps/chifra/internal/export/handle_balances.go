@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -145,18 +144,8 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	}
 
 	extraOpts := map[string]any{
-		"testMode": testMode,
-		"export":   true,
-		"parts":    []string{"blockNumber", "date", "holder", "balance", "diff", "balanceDec"},
-	}
-
-	if opts.Globals.Verbose || opts.Globals.Format == "json" {
-		parts := names.Custom | names.Prefund | names.Regular
-		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
-			return err
-		} else {
-			extraOpts["namesMap"] = namesMap
-		}
+		"export": true,
+		"parts":  []string{"blockNumber", "date", "holder", "balance", "diff", "balanceDec"},
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

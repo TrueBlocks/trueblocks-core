@@ -14,16 +14,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
-	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
-	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
 		opts.Reversed,
 		opts.Reverted,
@@ -134,17 +131,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 
 	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
-		"testMode":   testMode,
 		"export":     true,
-	}
-
-	if opts.Globals.Verbose || opts.Globals.Format == "json" {
-		parts := names.Custom | names.Prefund | names.Regular
-		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
-			return err
-		} else {
-			extraOpts["namesMap"] = namesMap
-		}
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
