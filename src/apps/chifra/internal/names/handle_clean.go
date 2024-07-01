@@ -152,17 +152,15 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 		return 0, stepErr
 	}
 
-	// If nothing has been changed, we can exit here
 	if modifiedCount == 0 {
 		return 0, nil
 	}
 
-	// Write to disk
 	if opts.Regular {
-		return modifiedCount, names.WriteNames(names.DatabaseRegular, chain, opts.DryRun)
+		return modifiedCount, names.RegularWriteNames(chain, opts.DryRun)
 	}
 
-	return modifiedCount, names.WriteNames(names.DatabaseCustom, chain, opts.DryRun)
+	return modifiedCount, names.CustomWriteNames(chain, opts.DryRun)
 }
 
 // wrapErrorWithAddr prepends `err` with `address`, so that we can learn which name caused troubles
@@ -211,7 +209,7 @@ func cleanName(chain string, name *types.Name) (modified bool, err error) {
 		err = nil
 	}
 
-	contractModified, err := cleanContract(tokenState, name.Address, name)
+	contractModified, err := cleanContract(tokenState, name)
 	if err != nil {
 		return
 	}
@@ -238,6 +236,7 @@ func cleanCommon(name *types.Name) (modified bool) {
 		name.Source = sourceDedup
 		modified = true
 	}
+
 	return
 }
 
@@ -250,7 +249,7 @@ func removeDoubleSpaces(str string) (string, bool) {
 	return result, true
 }
 
-func cleanContract(token *types.Token, address base.Address, name *types.Name) (modified bool, err error) {
+func cleanContract(token *types.Token, name *types.Name) (modified bool, err error) {
 	if !name.IsContract {
 		name.IsContract = true
 		modified = true
@@ -407,7 +406,7 @@ func cleanNonContract(name *types.Name, wasContract bool) (modified bool) {
 // Finish clean
 //
 // Prequisite:
-//		if tag is >= 8 (as a string), return without modification noting that tags over '8' character are reserved
+//		if tags is >= 8 (as a string), return without modification noting that tags over '8' character are reserved
 //		latestBlock = testMode ? 10800000 : getLatestBlock_client()
 //
 // Source:

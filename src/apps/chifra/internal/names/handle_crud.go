@@ -66,7 +66,7 @@ func handleCreate(chain string, data *CrudData) (name *types.Name, err error) {
 	name = &types.Name{
 		Address:  data.Address.Value,
 		Name:     data.Name.Value,
-		Tags:     data.Tag.Value,
+		Tags:     data.Tags.Value,
 		Source:   data.Source.Value,
 		Symbol:   data.Symbol.Value,
 		Decimals: decimals,

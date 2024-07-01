@@ -28,7 +28,7 @@ tags	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	isErc20	i
 `
 
 func TestNewNameReader(t *testing.T) {
-	r, err := NewNameReader(strings.NewReader(inputValid), NameReaderTab)
+	r, err := NewNameReader(strings.NewReader(inputValid))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -94,7 +94,7 @@ func TestNewNameReader(t *testing.T) {
 	}
 
 	// Test invalid input (missing required fields)
-	r, err = NewNameReader(strings.NewReader(inputMissingFields), NameReaderTab)
+	r, err = NewNameReader(strings.NewReader(inputMissingFields))
 	if err == nil {
 		t.Fatal("error expected")
 	}

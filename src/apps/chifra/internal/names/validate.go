@@ -24,6 +24,16 @@ func (opts *NamesOptions) validateNames() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
+	if len(opts.Terms) != 1 {
+		if opts.Delete {
+			return validate.Usage("The {0} option requires exactly one address.", "--delete")
+		} else if opts.Undelete {
+			return validate.Usage("The {0} option requires exactly one address.", "--undelete")
+		} else if opts.Remove {
+			return validate.Usage("The {0} option requires exactly one address.", "--remove")
+		}
+	}
+
 	isDryRunnable := opts.Clean || len(opts.Autoname) > 0
 	if opts.DryRun && !isDryRunnable {
 		return validate.Usage("The {0} option is only available with the {1} options.", "--dry_run", "--clean or --autoname")
@@ -43,7 +53,7 @@ func (opts *NamesOptions) validateNames() error {
 
 	if opts.Addr {
 		if opts.Tags {
-			return validate.Usage("The {0} option is not available{1}.", "--addr", " with the --tag option")
+			return validate.Usage("The {0} option is not available{1}.", "--addr", " with the --tags option")
 		}
 		if opts.Clean {
 			return validate.Usage("The {0} option is not available{1}.", "--addr", " with the --clean option")

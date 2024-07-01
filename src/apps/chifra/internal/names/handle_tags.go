@@ -12,7 +12,7 @@ import (
 
 func (opts *NamesOptions) HandleTags() error {
 	chain := opts.Globals.Chain
-	namesArray, err := names.LoadNamesArray(chain, opts.getType(), names.SortByTags, opts.Terms)
+	namesArray, err := loadNamesArray(chain, opts.getType(), names.SortByTags, opts.Terms)
 	if err != nil {
 		return err
 	}
@@ -24,7 +24,6 @@ func (opts *NamesOptions) HandleTags() error {
 	tagsMap := make(map[string]bool, len(namesArray)/10)
 	ctx := context.Background()
 
-	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, name := range namesArray {
 			if len(name.Tags) > 0 && !tagsMap[name.Tags] {
