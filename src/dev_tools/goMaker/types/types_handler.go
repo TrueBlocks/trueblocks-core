@@ -11,6 +11,8 @@ type Handler struct {
 func (h *Handler) Test() string {
 	if h.Name == "Show" {
 		return ""
+	} else if h.Name == "Crud" {
+		return "opts.anyCrud()"
 	} else if h.Name == "Decache" {
 		return "opts.Globals." + h.Name
 	} else if strings.Contains(h.Option.DataType, "blknum") {

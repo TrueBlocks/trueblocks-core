@@ -10,25 +10,25 @@
 
 import { CacheItem, Chain } from '.';
 
-export type Config = {
+export type Status = {
   cachePath?: string
   caches: CacheItem[]
   chain?: string
   chainConfig?: string
-  clientVersion?: string
   chainId?: string
+  chains: Chain[]
+  clientVersion?: string
   hasEsKey?: boolean
   hasPinKey?: boolean
   indexPath?: string
   isApi?: boolean
   isArchive?: boolean
+  isScraping?: boolean
   isTesting?: boolean
   isTracing?: boolean
-  isScraping?: boolean
   networkId?: string
   progress?: string
   rootConfig?: string
   rpcProvider?: string
   version?: string
-  chains: Chain[]
 }

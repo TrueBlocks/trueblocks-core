@@ -8,9 +8,9 @@
  * This file was auto generated. DO NOT EDIT.
  */
 
-import { address, blknum, datetime, gas, hash, timestamp, Transaction, uint64, wei, Withdrawal } from '.';
+import { address, blknum, datetime, gas, hash, timestamp, uint64, wei, Withdrawal } from '.';
 
-export type Block = {
+export type LightBlock = {
   author: address
   baseFeePerGas: gas
   blockNumber: blknum
@@ -31,7 +31,7 @@ export type Block = {
   stateRoot: hash
   timestamp: timestamp
   totalDifficulty: wei
-  transactions: Transaction[]
+  transactions: string[]
   transactionsRoot: hash
   uncles?: hash[]
   withdrawals?: Withdrawal[]

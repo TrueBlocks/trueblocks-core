@@ -8,8 +8,8 @@
  * This file was auto generated. DO NOT EDIT.
  */
 
-import { uint64 } from '.';
+{{if .HasTsTypesTypes}}import { {{.TsTypesTypes}} } from '.';
 
-export type TimestampCount = {
-  count: uint64
+{{end}}export type {{.Class}} = {
+{{.TsTypeMembers}}
 }

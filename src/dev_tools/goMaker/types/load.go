@@ -225,6 +225,7 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 	}
 
 	handlerMap := make(map[string][]Handler)
+	crudMap := make(map[string]bool)
 	for _, op := range options {
 		if op.Handler > 0.0 {
 			if len(handlerMap[op.Route]) == 0 {
@@ -235,6 +236,8 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 				Name:     FirstUpper(CamelCase(op.LongName)),
 				Option:   &op,
 			})
+		} else if op.IsCrud() {
+			crudMap[op.Route] = true
 		}
 	}
 
@@ -257,6 +260,17 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 			return handlers[i].Position < handlers[j].Position
 		})
 		handlers[len(handlers)-1].Name = "Show"
+		if crudMap[route] {
+			save := handlers[len(handlers)-1]
+			handlers[len(handlers)-1] = Handler{
+				Position: 0.0,
+				Name:     FirstUpper(CamelCase("Crud")),
+				Option: &Option{
+					Route: route,
+				},
+			}
+			handlers = append(handlers, save)
+		}
 		route := routeMap[route]
 		route.Handlers = handlers
 		routeMap[route.Route] = route

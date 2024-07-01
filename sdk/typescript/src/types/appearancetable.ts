@@ -8,8 +8,9 @@
  * This file was auto generated. DO NOT EDIT.
  */
 
-import { uint64 } from '.';
+import { AddrRecord, AppRecord } from '.';
 
-export type TimestampCount = {
-  count: uint64
+export type AppearanceTable = {
+  AddressRecord: AddrRecord
+  Appearances: AppRecord[]
 }
