@@ -143,7 +143,6 @@ Aliases:
 
 Flags:
   -u, --url string   specify the API server's url and optionally its port (default "localhost:8080")
-  -g, --grpc         run gRPC server to serve names
       --silent       disable logging (for use in SDK for example)
   -v, --verbose      enable verbose output
   -h, --help         display this help screen
@@ -152,6 +151,7 @@ Notes:
   - To start API open terminal window and run chifra daemon.
   - See the API documentation (https://trueblocks.io/api) for more information.
   - The --port option is deprecated, use --url instead.
+  - The --grpc option is deprecated, there is no replacement.
 ```
 
 Data models produced by this tool:

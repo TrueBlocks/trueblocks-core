@@ -2174,7 +2174,7 @@ Changes in this release are in support of [the docker version](https://github.co
   - Added `timestamp` to the Trace data structure as exported by `chifra traces`, `chifra transactions --traces`, and `chifra export --traces`
 
 - **Name:**
-  - Removed `description` field and replaced with an auto-generated `petname` field. (Petnames are described [here](http://www.erights.org/elib/capability/pnml.html).)
+  - Removed `description` field and replaced with an auto-generated `pet name` field. (Petnames are described [here](http://www.erights.org/elib/capability/pnml.html).)
 
 ### Changes to Config Files
 

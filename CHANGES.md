@@ -5,7 +5,8 @@ This file details changes made to TrueBlocks over time. All version prior to ver
 ## v3.0.0-alpha (2024/07/01)
 
 - Removes petnames throughout
-- 
+- Updates typescript and Python SDKs to version 3.0.2
+- Removes gRpc names server as unused
 
 ## v3.0.0-alpha (2024/06/01)
 

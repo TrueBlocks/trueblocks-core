@@ -14,8 +14,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/proto"
 )
 
 // EXISTING_CODE
@@ -192,43 +190,5 @@ func (s *Name) FinishUnmarshal() {
 
 // EXISTING_CODE
 //
-
-func (s *Name) ToMessage() *proto.Name {
-	return &proto.Name{
-		Address:    s.Address.Hex(),
-		Decimals:   utils.PointerOf(s.Decimals),
-		Deleted:    utils.PointerOf(s.Deleted),
-		IsContract: utils.PointerOf(s.IsContract),
-		IsCustom:   utils.PointerOf(s.IsCustom),
-		IsErc20:    utils.PointerOf(s.IsErc20),
-		IsErc721:   utils.PointerOf(s.IsErc721),
-		IsPrefund:  utils.PointerOf(s.IsPrefund),
-		Name:       s.Name,
-		Source:     utils.PointerOf(s.Source),
-		Symbol:     utils.PointerOf(s.Symbol),
-		Tags:       utils.PointerOf(s.Tags),
-	}
-}
-
-func (s *Name) Send(stream proto.Names_SearchStreamServer) error {
-	return stream.Send(s.ToMessage())
-}
-
-func NewNameFromGrpc(gRpcName *proto.Name) *Name {
-	return &Name{
-		Address:    base.HexToAddress(gRpcName.GetAddress()),
-		Decimals:   gRpcName.GetDecimals(),
-		Deleted:    gRpcName.GetDeleted(),
-		IsContract: gRpcName.GetIsContract(),
-		IsCustom:   gRpcName.GetIsCustom(),
-		IsErc20:    gRpcName.GetIsErc20(),
-		IsErc721:   gRpcName.GetIsErc721(),
-		IsPrefund:  gRpcName.GetIsPrefund(),
-		Name:       gRpcName.GetName(),
-		Source:     gRpcName.GetSource(),
-		Symbol:     gRpcName.GetSymbol(),
-		Tags:       gRpcName.GetTags(),
-	}
-}
 
 // EXISTING_CODE
