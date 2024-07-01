@@ -5,7 +5,7 @@
 package config
 
 type versionGroup struct {
-	Current string `toml:"current"`
+	Current string `toml:"current" comment:"Do not edit"`
 }
 
 func GetVersion() versionGroup {

@@ -1,11 +1,14 @@
 package config
 
 import (
-	"github.com/BurntSushi/toml"
+	"github.com/knadh/koanf/v2"
 )
 
 // ReadToml reads the toml config file into the given struct
 func ReadToml(inFile string, contents interface{}) error {
-	_, err := toml.DecodeFile(inFile, contents)
-	return err
+	config := koanf.New(".")
+	if err := loadFromTomlFile(config, inFile); err != nil {
+		return err
+	}
+	return config.Unmarshal("", contents)
 }

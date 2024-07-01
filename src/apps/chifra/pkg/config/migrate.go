@@ -79,11 +79,6 @@ func migrate(currentVer version.Version) error {
 		}
 		cfg.Settings.DefaultGateway = ""
 		cfg.Pinning = pinning
-
-		unchained := unchainedGroup{
-			Comment: "Do not edit these values unless instructed to do so.",
-		}
-		cfg.Unchained = unchained
 	}
 
 	// Re-write the file (after making a backup) with the new version
