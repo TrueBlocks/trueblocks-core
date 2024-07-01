@@ -89,3 +89,7 @@ add_dependencies(testRunner goMaker)
 add_dependencies(sdkFuzzer goMaker)
 add_dependencies(chifra testRunner)
 add_dependencies(examples chifra)
+add_custom_target(chifra-for-docker ALL
+    COMMAND ${GO_EXECUTABLE} build -o ${BIN_DIR}/chifra ${CMAKE_SOURCE_DIR}/apps/chifra/*.go
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/apps/chifra
+    DEPENDS ${CMAKE_SOURCE_DIR}/apps/chifra/*.go)
