@@ -79,6 +79,8 @@ func (opts *MonitorsOptions) MonitorsInternal() error {
 		err = opts.HandleList()
 	} else if opts.Watch {
 		err = opts.HandleWatch()
+	} else if opts.anyCrud() {
+		err = opts.HandleCrud()
 	} else {
 		err = opts.HandleShow()
 	}
@@ -94,4 +96,10 @@ func GetMonitorsOptions(args []string, g *globals.GlobalOptions) *MonitorsOption
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *MonitorsOptions) anyCrud() bool {
+	return opts.Delete ||
+		opts.Undelete ||
+		opts.Remove
 }

@@ -25,7 +25,7 @@ func RunNames(cmd *cobra.Command, args []string) error {
 	opts := namesFinishParse(args)
 	// EXISTING_CODE
 	var err1 error
-	if err1 = opts.loadCrudDataIfNeeded(nil); err1 != nil {
+	if err1 = opts.LoadCrudDataIfNeeded(nil); err1 != nil {
 		return err1
 	}
 	// EXISTING_CODE
@@ -38,7 +38,7 @@ func ServeNames(w http.ResponseWriter, r *http.Request) error {
 	opts := namesFinishParseApi(w, r)
 	// EXISTING_CODE
 	var err1 error
-	if err1 = opts.loadCrudDataIfNeeded(r); err1 != nil {
+	if err1 = opts.LoadCrudDataIfNeeded(r); err1 != nil {
 		return err1
 	}
 	// EXISTING_CODE
@@ -65,6 +65,8 @@ func (opts *NamesOptions) NamesInternal() error {
 		err = opts.HandleClean()
 	} else if opts.Tags {
 		err = opts.HandleTags()
+	} else if opts.anyCrud() {
+		err = opts.HandleCrud()
 	} else {
 		err = opts.HandleShow()
 	}
@@ -80,4 +82,12 @@ func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *NamesOptions) anyCrud() bool {
+	return opts.Create ||
+		opts.Update ||
+		opts.Delete ||
+		opts.Undelete ||
+		opts.Remove
 }
