@@ -66,7 +66,7 @@ on      ,cmd  ,fast  ,transactions ,tools ,getTrans ,by_file              ,n    
 on      ,cmd  ,fast  ,transactions ,tools ,getTrans ,by_file_1            ,n    ,file = cmd_file & fmt = csv
 
 on      ,both ,fast  ,transactions ,tools ,getTrans ,redir_output         ,y    ,transactions = 3657480.12 & verbose & fmt = csv & output = output_test_file
-on      ,both ,fast  ,transactions ,tools ,getTrans ,redir_output_append  ,n    ,transactions = 3657480.9 & fmt = csv & output = output_test_file & no_header & append
+on      ,both ,fast  ,transactions ,tools ,getTrans ,redir_output_append  ,n    ,transactions = 3657480.9 & verbose & fmt = csv & output = output_test_file & no_header & append
 
 on      ,both ,fast  ,transactions ,tools ,getTrans ,bad_hash             ,y    ,transactions = 0x0012
 

@@ -523,7 +523,6 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
     for (auto addr : theMap) {
         CName acct;
         acct.address = addr.first;
-        acct.petname = addr_2_Petname(acct.address, '-');
         findName(addr.first, acct);
         if (acct.name.empty()) {
             CNameStats stats(acct, addr.second);

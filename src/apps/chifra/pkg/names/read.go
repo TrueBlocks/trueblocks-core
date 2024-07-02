@@ -17,7 +17,7 @@ func ReadName(dbType DatabaseType, chain string, address base.Address) (name *ty
 }
 
 func customReadName(address base.Address) (name *types.Name) {
-	found, ok := loadedCustomNames[address]
+	found, ok := customNames[address]
 	if ok {
 		return &found
 	}
@@ -25,7 +25,7 @@ func customReadName(address base.Address) (name *types.Name) {
 }
 
 func regularReadName(address base.Address) (name *types.Name) {
-	found, ok := loadedRegularNames[address]
+	found, ok := regularNames[address]
 	if ok {
 		return &found
 	}

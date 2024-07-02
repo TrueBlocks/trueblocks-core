@@ -64,7 +64,6 @@ func (opts *ScrapeOptions) pause(ctx context.Context, dist base.Blknum) {
 		logger.Progress(sleep > 1, "Sleeping for", sleep, "seconds -", dist, "away from head.")
 		halfSecs := (sleep * 2) - 1 // we already slept one quarter of a second
 		for i := 0; i < int(halfSecs); i++ {
-			// time.Sleep(time.Duration(500) * time.Millisecond)
 			if !sleepOrCancel(500 * time.Millisecond) {
 				return
 			}

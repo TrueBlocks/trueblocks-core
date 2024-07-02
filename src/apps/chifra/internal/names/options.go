@@ -51,6 +51,7 @@ type NamesOptions struct {
 	// EXISTING_CODE
 	crudData     *CrudData
 	AutonameAddr base.Address `json:"-"`
+	OrigTerms    []string     `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -151,6 +152,7 @@ func NamesFinishParseInternal(w io.Writer, values url.Values) *NamesOptions {
 	opts.AutonameAddr = base.HexToAddress(opts.Autoname)
 
 	// EXISTING_CODE
+	opts.OrigTerms = opts.Terms
 	opts.Terms, _ = opts.Conn.GetEnsAddresses(opts.Terms)
 	// EXISTING_CODE
 
@@ -180,6 +182,7 @@ func namesFinishParse(args []string) *NamesOptions {
 
 	// EXISTING_CODE
 	opts.Terms = append(opts.Terms, args...)
+	opts.OrigTerms = opts.Terms
 	opts.Terms, _ = opts.Conn.GetEnsAddresses(opts.Terms)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

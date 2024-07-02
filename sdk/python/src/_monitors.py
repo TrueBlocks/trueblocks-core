@@ -1,9 +1,11 @@
-// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
-// Use of this source code is governed by a license that can
-// be found in the LICENSE file.
-/*
- * This file was auto generated. DO NOT EDIT.
- */
+# Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+# Use of this source code is governed by a license that can
+# be found in the LICENSE file.
+
+"""
+This file was auto generated. DO NOT EDIT.
+"""
+
 from . import session
 
 monitorsCmd = "monitors"
@@ -19,6 +21,7 @@ monitorsOpts = {
     "watchlist": {"hotkey": "-a", "type": "flag"},
     "commands": {"hotkey": "-c", "type": "flag"},
     "batchSize": {"hotkey": "-b", "type": "flag"},
+    "runCount": {"hotkey": "-u", "type": "flag"},
     "sleep": {"hotkey": "-s", "type": "flag"},
     "chain": {"hotkey": "", "type": "flag"},
     "noHeader": {"hotkey": "", "type": "switch"},

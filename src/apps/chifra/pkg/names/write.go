@@ -1,81 +1,63 @@
 package names
 
 import (
-	"errors"
-	"os"
+	"path/filepath"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func WriteNames(dbType DatabaseType, chain string, dryRun bool) (err error) {
-	switch dbType {
-	case DatabaseCustom:
-		return customWriteNames(chain, dryRun)
-	case DatabaseRegular:
-		return regularWriteNames(chain, dryRun)
-	default:
-		logger.Fatal("should not happen ==> unknown database type")
-	}
-	return
-}
-
-func customWriteNames(chain string, dryRun bool) (err error) {
+func CustomWriteNames(chain string, dryRun bool) (err error) {
 	database := DatabaseCustom
 	if dryRun {
 		database = DatabaseDryRun
 	}
 
+	customNamesMutex.Lock()
+	defer customNamesMutex.Unlock()
+
 	return writeDatabase(
 		chain,
-		Custom,
 		database,
-		loadedCustomNames,
+		customNames,
 	)
 }
 
-func regularWriteNames(chain string, dryRun bool) (err error) {
+func RegularWriteNames(chain string, dryRun bool) (err error) {
 	database := DatabaseRegular
 	if dryRun {
 		database = DatabaseDryRun
 	}
 
+	regularNamesMutex.Lock()
+	defer regularNamesMutex.Unlock()
+
 	return writeDatabase(
 		chain,
-		Regular,
 		database,
-		loadedRegularNames,
+		regularNames,
 	)
 }
 
-func writeDatabase(chain string, kind Parts, database DatabaseType, names map[base.Address]types.Name) (err error) {
-	switch kind {
-	case Regular:
-		loadedRegularNamesMutex.Lock()
-		defer loadedRegularNamesMutex.Unlock()
-	case Custom:
-		loadedCustomNamesMutex.Lock()
-		defer loadedCustomNamesMutex.Unlock()
-	default:
-		return errors.New("kind should be Regular or Custom")
-	}
+func writeDatabase(chain string, database DatabaseType, names map[base.Address]types.Name) error {
+	namesPath := getDatabasePath(chain, database)
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
 
-	db, err := openDatabaseFile(chain, database, os.O_RDWR|os.O_TRUNC)
+	// openDatabaseForEdit truncates the file when it opens. We make
+	// a backup so we can restore it on an error if we need to.
+	backup, err := file.MakeBackup(tmpPath, namesPath)
 	if err != nil {
-		return
+		return err
 	}
-	defer db.Close()
 
-	sorted := make([]types.Name, 0, len(names))
-	for _, name := range names {
-		sorted = append(sorted, name)
+	db, err := openDatabaseForEdit(chain, database)
+	if err != nil {
+		// The backup will replace the now truncated file.
+		return err
 	}
-	sort.SliceStable(sorted, func(i, j int) bool {
-		return sorted[i].Address.Hex() < sorted[j].Address.Hex()
-	})
 
 	if database != DatabaseDryRun {
 		if err = file.Lock(db); err != nil {
@@ -86,6 +68,20 @@ func writeDatabase(chain string, kind Parts, database DatabaseType, names map[ba
 		}()
 	}
 
+	defer func() {
+		_ = db.Close()
+		// If the backup exists, it will replace the now truncated file.
+		backup.Restore()
+	}()
+
+	sorted := make([]types.Name, 0, len(names))
+	for _, name := range names {
+		sorted = append(sorted, name)
+	}
+	sort.SliceStable(sorted, func(i, j int) bool {
+		return sorted[i].Address.Hex() < sorted[j].Address.Hex()
+	})
+
 	writer := NewNameWriter(db)
 	for _, name := range sorted {
 		if err = writer.Write(&name); err != nil {
@@ -94,5 +90,10 @@ func writeDatabase(chain string, kind Parts, database DatabaseType, names map[ba
 	}
 	writer.Flush()
 
-	return writer.Error()
+	err = writer.Error()
+	if err == nil {
+		// Everything went okay, so we can remove the backup.
+		backup.Clear()
+	}
+	return err
 }

@@ -8,11 +8,14 @@
 package namesPkg
 
 import (
+	"path/filepath"
 	"reflect"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -21,6 +24,15 @@ import (
 
 func TestNamesOptions_autoname(t *testing.T) {
 	chain := utils.GetTestChain()
+	// Search: getDatabasePath
+	namesPath := filepath.Join(config.MustGetPathToChainConfig(chain), string(names.DatabaseCustom))
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
+	backup, err := file.MakeBackup(tmpPath, namesPath)
+	if err != nil {
+		t.Errorf("Error making backup = %+v", err)
+	}
+	defer backup.Restore() // put the file back
+
 	type fields struct {
 		Autoname string
 	}
@@ -43,7 +55,6 @@ func TestNamesOptions_autoname(t *testing.T) {
 				Symbol:     "PEPE",
 				Source:     "On chain",
 				Decimals:   18,
-				Petname:    "properly-sincere-filly",
 				IsContract: true,
 				IsErc20:    true,
 				IsCustom:   true,
@@ -58,7 +69,6 @@ func TestNamesOptions_autoname(t *testing.T) {
 		// 	expected: &types.Name{
 		// 		Address:  base.HexToAddress("0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"),
 		// 		Name:     "M-Wallet 0x5499",
-		// 		Petname:  "sadly-settling-anteater",
 		// 		Source:   "EtherScan.io",
 		// 		Tags:     "00-Active",
 		// 		IsCustom: true,
@@ -76,7 +86,7 @@ func TestNamesOptions_autoname(t *testing.T) {
 					},
 				},
 			}
-			_, err := opts.readContractAndClean()
+			_, err := opts.readContractAndClean("")
 			wanted := tt.wantErr
 			have := err != nil
 			if (wanted && !have) || (have && !wanted) {

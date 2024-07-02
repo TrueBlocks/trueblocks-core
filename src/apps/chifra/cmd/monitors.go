@@ -56,6 +56,7 @@ func init() {
 	var capabilities caps.Capability // capabilities for chifra monitors
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Names)
 
 	monitorsCmd.Flags().SortFlags = false
 

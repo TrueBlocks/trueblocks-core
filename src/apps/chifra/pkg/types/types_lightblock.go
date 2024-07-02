@@ -83,6 +83,15 @@ func (s *LightBlock) Model(chain, format string, verbose bool, extraOpts map[str
 			order = append(order, "withdrawalsCnt")
 		}
 	}
+
+	if name, loaded, found := nameAddress(extraOpts, s.Miner); found {
+		model["minerName"] = name.Name
+		order = append(order, "minerName")
+	} else if loaded && format != "json" {
+		model["minerName"] = ""
+		order = append(order, "minerName")
+	}
+	order = reorderOrdering(order)
 	// EXISTING_CODE
 
 	return Model{

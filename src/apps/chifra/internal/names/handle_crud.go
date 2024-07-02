@@ -4,7 +4,6 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -67,12 +66,11 @@ func handleCreate(chain string, data *CrudData) (name *types.Name, err error) {
 	name = &types.Name{
 		Address:  data.Address.Value,
 		Name:     data.Name.Value,
-		Tags:     data.Tag.Value,
+		Tags:     data.Tags.Value,
 		Source:   data.Source.Value,
 		Symbol:   data.Symbol.Value,
 		Decimals: decimals,
 		Deleted:  false,
-		Petname:  base.AddrToPetname(data.Address.Value.Hex(), "-"),
 	}
 
 	return name, names.CreateName(names.DatabaseCustom, chain, name)

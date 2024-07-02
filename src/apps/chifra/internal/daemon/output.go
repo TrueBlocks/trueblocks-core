@@ -87,9 +87,6 @@ func (opts *DaemonOptions) DaemonInternal() error {
 	go func() {
 		_ = opts.HandleMonitor()
 	}()
-	go func() {
-		_ = opts.HandleGrpc()
-	}()
 
 	// do not remove, this fixes a lint warning that happens in the boilerplate because of the Fatal just below
 	timer.Report(msg)

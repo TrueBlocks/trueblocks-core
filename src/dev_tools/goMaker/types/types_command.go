@@ -163,6 +163,9 @@ func (c *Command) Clean() {
 		if op.IsDeprecated() {
 			parts := strings.Split(op.Attributes, "=")
 			msg := "deprecated, use --" + parts[1] + " instead"
+			if len(parts[1]) == 0 {
+				msg = "deprecated, there is no replacement"
+			}
 			cleaned[index].Description = msg
 			c.Notes = append(c.Notes, "The --"+op.LongName+" option is "+msg+".")
 		}
@@ -194,6 +197,8 @@ var globals = []Option{
 	{LongName: "decache", HotKey: "D", OptionType: "switch", Description: "removes related items from the cache", DataType: "boolean"},
 	{LongName: "ether", HotKey: "H", OptionType: "switch", Description: "export values in ether", DataType: "boolean"},
 	{LongName: "fmt", HotKey: "x", OptionType: "flag", Description: "export format, one of [ txt | csv | json ]", DataType: "string"},
+	// Not available for API or Python SDK:
+	// "append","file","names","noColor","noop","output","verbose","version","wei",
 }
 
 func (c *Command) PyGlobals() string {
@@ -879,10 +884,12 @@ func (c *Command) TsOptions() string {
 				ret = append(ret, "    decache?: boolean,")
 			case "chain":
 				ret = append(ret, "    chain: string,")
-			case "version", "noop", "noColor", "verbose":
+			case "ether":
+				ret = append(ret, "    "+cap+"?: boolean,")
+			case "names", "noColor", "noop", "verbose", "version":
 				// do nothing
 			default:
-				ret = append(ret, "    "+cap+"?: boolean,")
+				logger.Fatal("Should not happen: " + cap)
 			}
 		}
 	}
@@ -1023,21 +1030,33 @@ func (c *Command) HasDeprecated() bool {
 
 func (op *Option) FindDeprecator() *Option {
 	parts := strings.Split(op.Attributes, "=")
+	if len(parts[1]) == 0 {
+		return nil
+	}
+
 	for _, op := range op.cmdPtr.Options {
 		if op.LongName == parts[1] {
 			return &op
 		}
 	}
+
 	logger.Fatal(fmt.Sprintf("Deprecator (%s) not found for: %s", parts[1], op.LongName))
 	return nil
 }
 
 func (op *Option) Deprecator() string {
-	return op.FindDeprecator().LongName
+	ret := op.FindDeprecator()
+	if ret == nil {
+		return ""
+	}
+	return ret.LongName
 }
 
 func (op *Option) DeprecatorIsDefault() string {
 	dep := op.FindDeprecator()
+	if dep == nil {
+		return ""
+	}
 	if dep.IsArray() {
 		return "len(opts." + dep.GoName + ") == 0"
 	}
@@ -1062,15 +1081,17 @@ func (c *Command) DeprecatedTransfer() string {
 	ret := []string{}
 	for _, op := range c.Options {
 		if op.IsDeprecated() {
-			tmplName := "deprecatedTransfer"
-			tmpl := `	// Deprecated, but still supported
+			if op.FindDeprecator() != nil {
+				tmplName := "deprecatedTransfer"
+				tmpl := `	// Deprecated, but still supported
 	if {{.DeprecatedNotDefault}} && {{.DeprecatorIsDefault}} {
 		logger.Warn("The --{{.LongName}} flag is deprecated. Please use --{{.Deprecator}} instead.")
 		opts.{{firstUpper .Deprecator}} = opts.{{.GoName}}
 		opts.{{.GoName}} = {{.Clear}}
 	}
 `
-			ret = append(ret, op.executeTemplate(tmplName, tmpl))
+				ret = append(ret, op.executeTemplate(tmplName, tmpl))
+			}
 		}
 	}
 	return strings.Join(ret, "\n") + "\n"
@@ -1102,4 +1123,33 @@ func (c *Command) FlagAliases() string {
 		}
 	}
 	return ""
+}
+
+func (c *Command) HasCrud() bool {
+	for _, op := range c.Options {
+		if op.IsCrud() {
+			return true
+		}
+	}
+	return false
+}
+
+func (c *Command) Cruds() string {
+	ret := []string{}
+	for _, op := range c.Options {
+		if op.IsCrud() {
+			ret = append(ret, "opts."+FirstUpper(op.LongName))
+		}
+	}
+	return strings.Join(ret, " ||\n")
+}
+
+func (c *Command) AnyCrud() string {
+	tmplName := "anyCrud"
+	tmpl := `
+
+func (opts *{{toProper .Route}}Options) anyCrud() bool {
+	return {{.Cruds}}
+}`
+	return c.executeTemplate(tmplName, tmpl)
 }

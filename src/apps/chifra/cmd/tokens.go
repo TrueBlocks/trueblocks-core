@@ -58,6 +58,7 @@ func init() {
 	var capabilities caps.Capability // capabilities for chifra tokens
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Names)
 
 	tokensCmd.Flags().SortFlags = false
 

@@ -92,7 +92,6 @@ func (opts *BlocksOptions) HandleUncles() error {
 	}
 
 	extraOpts := map[string]any{
-		"hashes":     opts.Hashes,
 		"uncles":     opts.Uncles,
 		"articulate": opts.Articulate,
 	}

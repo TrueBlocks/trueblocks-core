@@ -14,8 +14,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/proto"
 )
 
 // EXISTING_CODE
@@ -30,7 +28,6 @@ type Name struct {
 	IsErc721   bool         `json:"isErc721,omitempty"`
 	IsPrefund  bool         `json:"isPrefund,omitempty"`
 	Name       string       `json:"name"`
-	Petname    string       `json:"petname"`
 	Source     string       `json:"source"`
 	Symbol     string       `json:"symbol"`
 	Tags       string       `json:"tags"`
@@ -66,7 +63,6 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 		"address":  s.Address,
 		"decimals": s.Decimals,
 		"name":     s.Name,
-		"petname":  s.Petname,
 		"source":   s.Source,
 		"symbol":   s.Symbol,
 		"tags":     s.Tags,
@@ -79,23 +75,33 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 		"symbol",
 		"source",
 		"decimals",
-		"petname",
 	}
 
 	if len(s.Address.Bytes()) > 0 && s.Address != base.ZeroAddr {
 		model["address"] = strings.ToLower(s.Address.String())
+	} else {
+		n := 0
+		for _, v := range order {
+			if v != "address" {
+				order[n] = v
+				n++
+			}
+		}
+		order = order[:n]
+		delete(model, "address")
 	}
 
 	isExpanded := extraOpts["expand"] == true
 	isPrefund := extraOpts["prefund"] == true
 	if !isExpanded && !isPrefund {
-		x := []string{}
+		n := 0
 		for _, v := range order {
 			if v != "source" {
-				x = append(x, v)
+				order[n] = v
+				n++
 			}
 		}
-		order = x
+		order = order[:n]
 		delete(model, "source")
 	}
 
@@ -106,25 +112,27 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 
 	if format == "json" {
 		if len(s.Symbol) == 0 {
-			x := []string{}
+			n := 0
 			for _, v := range order {
 				if v != "symbol" {
-					x = append(x, v)
+					order[n] = v
+					n++
 				}
 			}
-			order = x
+			order = order[:n]
 			delete(model, "symbol")
 		} else {
 			model["symbol"] = s.Symbol
 		}
 		if s.Decimals == 0 {
-			x := []string{}
+			n := 0
 			for _, v := range order {
 				if v != "decimals" {
-					x = append(x, v)
+					order[n] = v
+					n++
 				}
 			}
-			order = x
+			order = order[:n]
 			delete(model, "decimals")
 		}
 		if len(s.Source) > 0 {
@@ -194,46 +202,4 @@ func (s *Name) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
-//
-
-func (s *Name) ToMessage() *proto.Name {
-	return &proto.Name{
-		Address:    s.Address.Hex(),
-		Decimals:   utils.PointerOf(s.Decimals),
-		Deleted:    utils.PointerOf(s.Deleted),
-		IsContract: utils.PointerOf(s.IsContract),
-		IsCustom:   utils.PointerOf(s.IsCustom),
-		IsErc20:    utils.PointerOf(s.IsErc20),
-		IsErc721:   utils.PointerOf(s.IsErc721),
-		IsPrefund:  utils.PointerOf(s.IsPrefund),
-		Name:       s.Name,
-		Petname:    utils.PointerOf(s.Petname),
-		Source:     utils.PointerOf(s.Source),
-		Symbol:     utils.PointerOf(s.Symbol),
-		Tags:       utils.PointerOf(s.Tags),
-	}
-}
-
-func (s *Name) Send(stream proto.Names_SearchStreamServer) error {
-	return stream.Send(s.ToMessage())
-}
-
-func NewNameFromGrpc(gRpcName *proto.Name) *Name {
-	return &Name{
-		Address:    base.HexToAddress(gRpcName.GetAddress()),
-		Decimals:   gRpcName.GetDecimals(),
-		Deleted:    gRpcName.GetDeleted(),
-		IsContract: gRpcName.GetIsContract(),
-		IsCustom:   gRpcName.GetIsCustom(),
-		IsErc20:    gRpcName.GetIsErc20(),
-		IsErc721:   gRpcName.GetIsErc721(),
-		IsPrefund:  gRpcName.GetIsPrefund(),
-		Name:       gRpcName.GetName(),
-		Petname:    gRpcName.GetPetname(),
-		Source:     gRpcName.GetSource(),
-		Symbol:     gRpcName.GetSymbol(),
-		Tags:       gRpcName.GetTags(),
-	}
-}
-
 // EXISTING_CODE

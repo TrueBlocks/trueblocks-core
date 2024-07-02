@@ -5,10 +5,7 @@ are provided not only by the command line, but also the API server. We call this
 In the future, this daemon may also manage other long-running processes such as `chifra scrape`
 and `chifra monitors`, but for now, it's only managing the API server.
 
-The `--grpc` option turns on a GRPC server that may speed up certain command such as `chifra names`,
-although this option is experimental and therefore not recommended for production use.
-
-If the default port for the API server is in use, you may change it with the `--port` option.
+If the default port for the API server is in use, you may change it with the `--url` option.
 
 To get help for any command, please see the API documentation on our website. But, you may
 also run `chifra --help` or `chifra <cmd> --help` on your command line to get help.

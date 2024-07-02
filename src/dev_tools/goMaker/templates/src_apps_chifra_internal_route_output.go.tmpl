@@ -55,4 +55,4 @@ func Get{{toProper .Route}}Options(args []string, g *globals.GlobalOptions) *{{t
 		ret.Globals = *g
 	}
 	return ret
-}
+}{{if .HasCrud}}{{.AnyCrud}}{{end}}

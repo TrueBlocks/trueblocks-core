@@ -59,14 +59,16 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string
 		}
 		order = append(order, "lastScanned")
 		order = append(order, "deleted")
-		if extraOpts["namesMap"] != nil {
-			name := extraOpts["namesMap"].(map[base.Address]Name)[s.Address]
-			if name.Address.Hex() != "0x0" {
-				model["name"] = name
-				order = append(order, "name")
-			}
-		}
 	}
+
+	if name, loaded, found := nameAddress(extraOpts, s.Address); found {
+		model["addressName"] = name.Name
+		order = append(order, "addressName")
+	} else if loaded && format != "json" {
+		model["addressName"] = ""
+		order = append(order, "addressName")
+	}
+	order = reorderOrdering(order)
 	// EXISTING_CODE
 
 	return Model{

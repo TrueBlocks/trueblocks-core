@@ -15,7 +15,6 @@ import (
 
 func (opts *TokensOptions) HandleShow() error {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
 	tokenAddr := base.HexToAddress(opts.Addrs[0])
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -60,16 +59,16 @@ func (opts *TokensOptions) HandleShow() error {
 		}
 	}
 
-	nameParts := names.Custom | names.Prefund | names.Regular
-	namesMap, err := names.LoadNamesMap(chain, nameParts, nil)
-	if err != nil {
-		return err
-	}
-
 	extraOpts := map[string]any{
-		"testMode": testMode,
-		"namesMap": namesMap,
-		"parts":    []string{"all_held"},
+		"parts": []string{"all_held"},
+	}
+	if opts.Globals.ShouldLoadNames(true) {
+		parts := names.Custom | names.Prefund | names.Regular
+		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
+			return err
+		} else {
+			extraOpts["namesMap"] = namesMap
+		}
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

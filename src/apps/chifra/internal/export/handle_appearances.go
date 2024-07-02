@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -53,15 +52,6 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 
 	extraOpts := map[string]any{
 		"export": true,
-	}
-
-	if opts.Globals.Verbose || opts.Globals.Format == "json" {
-		parts := names.Custom | names.Prefund | names.Regular
-		namesMap, err := names.LoadNamesMap(chain, parts, nil)
-		if err != nil {
-			return err
-		}
-		extraOpts["namesMap"] = namesMap
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
