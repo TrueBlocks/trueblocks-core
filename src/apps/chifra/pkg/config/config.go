@@ -23,16 +23,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
-	"github.com/knadh/koanf/parsers/toml"
-	envProvider "github.com/knadh/koanf/providers/env"
-	fileProvider "github.com/knadh/koanf/providers/file"
-	structProvider "github.com/knadh/koanf/providers/structs"
-	"github.com/knadh/koanf/v2"
 )
 
 const envPrefix = "TB_"
 
-var config = koanf.New(".")
 var trueBlocksConfig ConfigFile
 var cachePath string
 var indexPath string
@@ -57,11 +51,8 @@ func init() {
 var configMutex sync.Mutex
 var configLoaded = false
 
-func loadFromTomlFile(config *koanf.Koanf, filePath string) error {
-	return config.Load(
-		fileProvider.Provider(filePath),
-		toml.Parser(),
-	)
+func loadFromTomlFile(filePath string, dest *ConfigFile) error {
+	return ReadToml(filePath, dest)
 }
 
 // GetRootConfig reads and the configuration located in trueBlocks.toml file. Note
@@ -76,30 +67,16 @@ func GetRootConfig() *ConfigFile {
 	configPath := PathToRootConfig()
 
 	// First load the default config
-	if err := config.Load(structProvider.Provider(defaultConfig, "toml"), nil); err != nil {
-		log.Fatal("loading default config:", err)
-	}
+	trueBlocksConfig = *defaultConfig
 
 	// Load TOML file
-	if err := loadFromTomlFile(config, filepath.Join(configPath, "trueBlocks.toml")); err != nil {
-		log.Fatal("loading config:", err)
+	if err := loadFromTomlFile(filepath.Join(configPath, "trueBlocks.toml"), &trueBlocksConfig); err != nil {
+		log.Fatal("loading config from .toml file:", err)
 	}
 
 	// Load ENV variables
-	translateEnv := func(s string) string {
-		return strings.Replace(
-			strings.ToLower(strings.TrimPrefix(s, envPrefix)),
-			"_",
-			".",
-			-1,
-		)
-	}
-	if err := config.Load(envProvider.Provider(envPrefix, ".", translateEnv), nil); err != nil {
-		log.Fatal("loading config from env variables:", err)
-	}
-
-	if err := config.Unmarshal("", &trueBlocksConfig); err != nil {
-		log.Fatal("unmarshal config:", err)
+	if err := loadFromEnv(envPrefix, &trueBlocksConfig); err != nil {
+		log.Fatal("loading config from environment variables:", err)
 	}
 
 	user, _ := user.Current()
@@ -260,7 +237,7 @@ func checkUnchainedProvider(chain string, deployed uint64) error {
 		logger.Info("Skipping rpcProvider check")
 		return nil
 	}
-	url := config.Get("chains." + chain + ".rpcProvider").(string)
+	url := trueBlocksConfig.Chains[chain].RpcProvider
 	str := `{ "jsonrpc": "2.0", "method": "eth_getBlockByNumber", "params": [ "{0}", true ], "id": 1 }`
 	payLoad := []byte(strings.Replace(str, "{0}", fmt.Sprintf("0x%x", deployed), -1))
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payLoad))

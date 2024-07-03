@@ -1,14 +1,17 @@
 package config
 
 import (
-	"github.com/knadh/koanf/v2"
+	"os"
+
+	"github.com/pelletier/go-toml/v2"
 )
 
 // ReadToml reads the toml config file into the given struct
-func ReadToml(inFile string, contents interface{}) error {
-	config := koanf.New(".")
-	if err := loadFromTomlFile(config, inFile); err != nil {
+func ReadToml(inFile string, destination interface{}) error {
+	bytes, err := os.ReadFile(inFile)
+	if err != nil {
 		return err
 	}
-	return config.Unmarshal("", contents)
+
+	return toml.Unmarshal(bytes, destination)
 }
