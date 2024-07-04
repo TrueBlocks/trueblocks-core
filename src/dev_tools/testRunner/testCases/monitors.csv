@@ -27,7 +27,7 @@ on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_clean_2         ,y   
 
 on      ,both ,fast  ,list     ,apps ,acctExport ,list_prepare_3           ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & fmt = json & last_block = 2873700
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list1           ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = json
-names   ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list1_v         ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = json & verbose
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list1_v         ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = json & verbose
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_decache         ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_decache_again   ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list2           ,n    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = csv

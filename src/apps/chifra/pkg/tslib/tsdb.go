@@ -137,7 +137,7 @@ func FromBn(chain string, bn base.Blknum) (*TimestampRecord, error) {
 		return &TimestampRecord{}, err
 	}
 
-	if bn > base.Blknum(cnt) {
+	if bn >= base.Blknum(cnt) {
 		return &TimestampRecord{}, errors.New("invalid block number " + fmt.Sprintf("%d of %d", bn, cnt))
 	}
 

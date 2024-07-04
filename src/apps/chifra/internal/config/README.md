@@ -16,7 +16,7 @@ Usage:
 
 Arguments:
   mode - either show or edit the configuration
-	One of [ show | edit ]
+    One of [ show | edit ]
 
 Flags:
   -a, --paths        show the configuration paths for the system

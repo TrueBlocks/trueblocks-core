@@ -33,14 +33,10 @@ func Truncate(chain string, maxBn base.Blknum) error {
 
 	tsFn := config.PathToTimestamps(chain)
 	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
-	if backupFn, err := file.MakeBackup(tmpPath, tsFn); err == nil {
+	if backup, err := file.MakeBackup(tmpPath, tsFn); err == nil {
 		defer func() {
 			ClearCache(chain)
-			if file.FileExists(backupFn) {
-				// If the backup file exists, something failed, so we replace the original file.
-				_ = os.Rename(backupFn, tsFn)
-				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
-			}
+			backup.Restore()
 		}()
 
 		// remove the file and...
@@ -61,7 +57,7 @@ func Truncate(chain string, maxBn base.Blknum) error {
 			}
 			_ = fp.Sync()
 
-			os.Remove(backupFn)
+			backup.Clear()
 			return nil
 		} else {
 			return err

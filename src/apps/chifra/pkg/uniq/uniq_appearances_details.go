@@ -3,6 +3,7 @@ package uniq
 import (
 	"errors"
 	"fmt"
+	"sort"
 	"strings"
 	"sync"
 
@@ -31,9 +32,16 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 	addrMap := AddressBooleanMap{}
 	traceid := base.NOPOSN
 	if bn == 0 {
-		if namesArray, err := names.LoadNamesArray(chain, names.Prefund, names.SortByAddress, []string{}); err != nil {
+		if namesMap, err := names.LoadNamesMap(chain, names.Prefund, []string{}); err != nil {
 			return err
 		} else {
+			namesArray := make([]*types.Name, 0, len(namesMap))
+			for _, name := range namesMap {
+				namesArray = append(namesArray, &name)
+			}
+			sort.Slice(namesArray, func(i, j int) bool {
+				return namesArray[i].Name < namesArray[j].Name
+			})
 			for i, name := range namesArray {
 				tx_id := base.Txnum(i)
 				address := name.Address.Hex()

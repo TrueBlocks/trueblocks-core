@@ -1,20 +1,25 @@
-// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
-// Use of this source code is governed by a license that can
-// be found in the LICENSE file.
-/*
- * This file was auto generated. DO NOT EDIT.
- */
+# Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+# Use of this source code is governed by a license that can
+# be found in the LICENSE file.
+
+"""
+This file was auto generated. DO NOT EDIT.
+"""
+
 from . import session
 
 slurpCmd = "slurp"
 slurpPos = "addrs"
 slurpFmt = "json"
 slurpOpts = {
-    "types": {"hotkey": "-t", "type": "flag"},
+    "parts": {"hotkey": "-r", "type": "flag"},
     "appearances": {"hotkey": "-p", "type": "switch"},
     "articulate": {"hotkey": "-a", "type": "switch"},
     "source": {"hotkey": "-S", "type": "flag"},
     "count": {"hotkey": "-U", "type": "switch"},
+    "page": {"hotkey": "-g", "type": "flag"},
+    "pageId": {"hotkey": "", "type": "flag"},
+    "perPage": {"hotkey": "-P", "type": "flag"},
     "sleep": {"hotkey": "-s", "type": "flag"},
     "chain": {"hotkey": "", "type": "flag"},
     "noHeader": {"hotkey": "", "type": "switch"},

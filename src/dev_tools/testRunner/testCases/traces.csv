@@ -90,7 +90,7 @@ delay   ,both ,fast  ,traces ,tools ,getTraces ,nav_next2           ,y    ,trans
 
 on      ,cmd  ,fast  ,traces ,tools ,getTraces ,by_file_v           ,y    ,verbose & file = cmd_file & fmt = json
 on      ,both ,fast  ,traces ,tools ,getTraces ,redir_output        ,y    ,transactions = 3657480.12 & verbose & fmt = json & output = output_test_file
-on      ,both ,fast  ,traces ,tools ,getTraces ,redir_output_append ,n    ,transactions = 3657480.9 & fmt = json & output = output_test_file & no_header & append
+on      ,both ,fast  ,traces ,tools ,getTraces ,redir_output_append ,n    ,transactions = 3657480.9 & verbose & fmt = json & output = output_test_file & no_header & append
 
 on      ,both ,fast  ,traces ,tools ,getTraces ,cache_and_decache   ,y    ,transactions = 46147.0 & cache & decache
 on      ,both ,fast  ,traces ,tools ,getTraces ,cache_one           ,y    ,transactions = 46147.0 & cache

@@ -58,6 +58,10 @@ func (m *Member) IsObject() bool {
 	return m.Type != FirstLower(m.Type)
 }
 
+func (m *Member) IsRequired() bool {
+	return (strings.Contains(m.Attributes, "required") || !m.IsOmitEmpty()) && !m.IsCalc()
+}
+
 func (m *Member) IsOmitEmpty() bool {
 	return strings.Contains(m.Attributes, "omitempty")
 }
@@ -473,4 +477,30 @@ func readMember(m *Member, data *any) (bool, error) {
 
 func (m *Member) executeTemplate(name, tmplCode string) string {
 	return executeTemplate(m, "member", name, tmplCode)
+}
+
+func (m *Member) BaseType() string {
+	t := m.Type
+	t = strings.ReplaceAll(t, "ether", "float64")
+	t = strings.ReplaceAll(t, "uint256", "wei")
+	t = strings.ReplaceAll(t, "value", "uint64")
+	t = strings.ReplaceAll(t, "uint32", "uint64")
+	t = strings.ReplaceAll(t, "bool", "boolean")
+	// t = strings.ReplaceAll(t, "blknum", "uint64")
+	// t = strings.ReplaceAll(t, "txnum", "uint64")
+	// t = strings.ReplaceAll(t, "lognum", "uint64")
+	// t = strings.ReplaceAll(t, "gas", "uint64")
+	return t
+}
+
+func (m *Member) TsType() string {
+	val := "  " + m.Name
+	if !m.IsRequired() {
+		val += "?"
+	}
+	val += ": " + m.BaseType()
+	if m.IsArray {
+		val += "[]"
+	}
+	return val
 }

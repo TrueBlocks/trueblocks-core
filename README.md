@@ -12,7 +12,7 @@
 
 - [Introduction](#introduction)
 - [Installing](#installing)
-- [Command Line](#command-line)
+- [Command line](#command-line)
 - [Chifra Serve](#chifra-serve)
 - [Troubleshooting](#troubleshooting)
 - [The unchained index](#the-unchained-index)
@@ -57,15 +57,6 @@ chifra daemon
 ```
 
 Use `curl` to pull data or use it to drive our "pre-beta" Account Explorer. See [installing the explorer](https://trueblocks.io/docs/install/install-explorer/). The API provides the identical tools and options as the command line and it [documented here](https://trueblocks.io/api/).
-
-**Generate gRPC files (developers only)**
-
-To regenerate gRPC files, you have to install protobuf tools:
-```[shell]
-brew install protobuf # Mac
-go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
-```
 
 ## Command line
 

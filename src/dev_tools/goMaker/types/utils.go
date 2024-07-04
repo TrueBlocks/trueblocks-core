@@ -22,10 +22,6 @@ func shouldProcess(source, tag string) (bool, error) {
 	}
 
 	if strings.Contains(source, "sdk_") || strings.Contains(source, "sdkFuzzer") {
-		if strings.Contains(source, "python") {
-			return false, nil
-		}
-
 		skip := tag == "explore" || tag == "scrape" || tag == "daemon"
 		if skip {
 			return false, nil
@@ -40,31 +36,32 @@ func shouldProcess(source, tag string) (bool, error) {
 }
 
 func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) string {
-	dest := strings.Replace(source, templateFolder, "", -1)
-	dest = strings.Replace(dest, ".tmpl", "", -1)
-	dest = strings.Replace(dest, "_route_", "/"+routeTag+"/", -1)
-	dest = strings.Replace(dest, "route+internal", routeTag+"+internal", -1)
-	dest = strings.Replace(dest, "route.go", routeTag+".go", -1)
-	dest = strings.Replace(dest, "route.md", routeTag+".md", -1)
-	dest = strings.Replace(dest, "route.py", routeTag+".py", -1)
-	dest = strings.Replace(dest, "route.ts", routeTag+".ts", -1)
-	dest = strings.Replace(dest, "type.go", typeTag+".go", -1)
-	dest = strings.Replace(dest, "type.md", typeTag+".md", -1)
-	dest = strings.Replace(dest, "group.md", groupTag+".md", -1)
+	dest := strings.ReplaceAll(source, templateFolder, "")
+	dest = strings.ReplaceAll(dest, ".tmpl", "")
+	dest = strings.ReplaceAll(dest, "_route_", "/"+routeTag+"/")
+	dest = strings.ReplaceAll(dest, "route+internal", routeTag+"+internal")
+	dest = strings.ReplaceAll(dest, "route.go", routeTag+".go")
+	dest = strings.ReplaceAll(dest, "route.md", routeTag+".md")
+	dest = strings.ReplaceAll(dest, "route.py", routeTag+".py")
+	dest = strings.ReplaceAll(dest, "route.ts", routeTag+".ts")
+	dest = strings.ReplaceAll(dest, "type.go", typeTag+".go")
+	dest = strings.ReplaceAll(dest, "type.md", typeTag+".md")
+	dest = strings.ReplaceAll(dest, "type.ts", typeTag+".ts")
+	dest = strings.ReplaceAll(dest, "group.md", groupTag+".md")
 	if reason == "readme" {
-		dest = strings.Replace(dest, "_reason_", "_chifra_", -1)
+		dest = strings.ReplaceAll(dest, "_reason_", "_chifra_")
 	} else if reason == "model" {
-		dest = strings.Replace(dest, "_reason_", "_data-model_", -1)
+		dest = strings.ReplaceAll(dest, "_reason_", "_data-model_")
 	}
 	dest = strings.ReplaceAll(dest, "_", "/")
 	dest = strings.ReplaceAll(dest, "+", "_")
-	return strings.Replace(dest, "//", "/", -1)
+	return strings.ReplaceAll(dest, "//", "/")
 }
 
 var templateFolder = "src/dev_tools/goMaker/templates"
 
 func LowerNoSpaces(s string) string {
-	return strings.ToLower(strings.Replace(s, " ", "", -1))
+	return strings.ToLower(strings.ReplaceAll(s, " ", ""))
 }
 
 func GoName(s string) string {
@@ -90,7 +87,7 @@ func CamelCase(s string) string {
 			result += string(c)
 		}
 	}
-	return strings.Replace(strings.ToLower(result[0:1])+result[1:], " ", "", -1)
+	return strings.ReplaceAll(strings.ToLower(result[0:1])+result[1:], " ", "")
 }
 
 func Pad(s string, width int) string {

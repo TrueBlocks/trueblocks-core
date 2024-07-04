@@ -22,7 +22,7 @@ Usage:
 
 Arguments:
   modes - the (optional) name of the binary cache to report on, terse otherwise
-	One or more of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]
+    One or more of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]
 
 Flags:
   -d, --diagnose            same as the default but with additional diagnostics

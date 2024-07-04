@@ -2,6 +2,16 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
+## v3.0.0-alpha (2024/07/01)
+
+- Removes petnames throughout
+- Updates typescript and Python SDKs to version 3.0.2
+- Removes gRpc names server as unused
+- Adds namesManager example application
+- For any command that renders an address, adding `--verbose` now automatically names those addresses if they are found in the names database.
+- Added nearly 10,000 new names to the names database
+- Improved crud commands for `chifra names` and `chifra monitors`
+
 ## v3.0.0-alpha (2024/06/01)
 
 **Summary**
