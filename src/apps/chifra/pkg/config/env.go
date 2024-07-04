@@ -8,46 +8,53 @@ import (
 	"strings"
 )
 
-func loadFromEnv(prefix string, dest *ConfigFile) (err error) {
+// loadFromEnv loads configuration from environment variables
+func loadFromEnv(prefix string, destination *ConfigFile) (err error) {
+	// First we get all env variables then filter by prefix and finally parse the values
 	envs := os.Environ()
 	for i := 0; i < len(envs); i++ {
+		// Turn VAR=value into []string{"VAR", "value"}
 		parsed := strings.Split(envs[i], "=")
 		if !strings.HasPrefix(parsed[0], prefix) {
 			continue
 		}
 
+		// Turn PARENT_CHILD into []string{"PARENT", "CHILD"}
 		path := strings.Split(parsed[0][len(prefix):], "_")
-		if err := setByPath(dest, path, parsed[1]); err != nil {
+		if err := setByPath(destination, path, parsed[1]); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
+// setByPath matches struct field by a string path and sets its value
 func setByPath(structure any, path []string, value string) error {
 	v := reflect.ValueOf(structure)
 	return deepSetByPath(&v, path, value)
 }
 
-func deepSetByPath(field *reflect.Value, path []string, value string) error {
-	v := *field
+// deepSetByPath follows path recursively until it reaches a single struct field.
+// Then it parses the value and sets the field.
+func deepSetByPath(structure *reflect.Value, path []string, value string) error {
+	structValue := *structure
 	// Follow pointers
-	if v.Kind() == reflect.Pointer {
-		v = v.Elem()
+	if structValue.Kind() == reflect.Pointer {
+		structValue = structValue.Elem()
 	}
 
-	t := v.Type()
-	fieldCount := t.NumField()
+	structType := structValue.Type()
+	fieldCount := structType.NumField()
 	makeParseError := func(err error) error {
 		return fmt.Errorf("parsing %v value: %w", path, err)
 	}
 	for i := 0; i < fieldCount; i++ {
-		field := t.Field(i)
+		field := structType.Field(i)
 		if !strings.EqualFold(field.Name, path[0]) {
 			continue
 		}
 
-		fieldValue := v.Field(i)
+		fieldValue := structValue.Field(i)
 		if !fieldValue.CanSet() {
 			return fmt.Errorf("cannot set %s", field.Name)
 		}
@@ -118,8 +125,10 @@ func deepSetByPath(field *reflect.Value, path []string, value string) error {
 	return nil
 }
 
-func cloneStruct(dest *reflect.Value, src *reflect.Value) error {
-	v := *src
+// cloneStruct sets fields of destination to the same values as found in source.
+// The two structs have to be of the same type.
+func cloneStruct(destination *reflect.Value, source *reflect.Value) error {
+	v := *source
 	// Follow pointers
 	if v.Kind() == reflect.Pointer {
 		v = v.Elem()
@@ -133,10 +142,10 @@ func cloneStruct(dest *reflect.Value, src *reflect.Value) error {
 			continue
 		}
 
-		if kind := dest.Kind(); kind != reflect.Pointer && kind != reflect.Interface {
+		if kind := destination.Kind(); kind != reflect.Pointer && kind != reflect.Interface {
 			return fmt.Errorf("expected pointer to %s", fieldType.Name)
 		}
-		destValue := dest.Elem()
+		destValue := destination.Elem()
 		if destValue.Kind() != reflect.Struct {
 			return fmt.Errorf("expected %s to be a struct", fieldType.Name)
 		}
