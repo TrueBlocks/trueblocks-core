@@ -147,6 +147,10 @@ type covalentTransaction struct {
 }
 
 func (c *covalentTransaction) Slurp() (s types.Slurp) {
+	to := ""
+	if c.To != nil {
+		to = *c.To
+	}
 	s = types.Slurp{
 		BlockHash:        base.HexToHash(*c.BlockHash),
 		BlockNumber:      base.Blknum(*c.BlockHeight),
@@ -154,7 +158,7 @@ func (c *covalentTransaction) Slurp() (s types.Slurp) {
 		Gas:              base.Gas(*c.GasSpent),
 		IsError:          !(*c.Successful),
 		Timestamp:        base.Timestamp(c.BlockSignedAt.Unix()),
-		To:               base.HexToAddress(*c.To),
+		To:               base.HexToAddress(to),
 		TransactionIndex: base.Txnum(*c.TxOffset),
 		Value:            *c.Value,
 	}
