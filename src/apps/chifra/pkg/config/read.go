@@ -1,11 +1,17 @@
 package config
 
 import (
-	"github.com/BurntSushi/toml"
+	"os"
+
+	"github.com/pelletier/go-toml/v2"
 )
 
 // ReadToml reads the toml config file into the given struct
-func ReadToml(inFile string, contents interface{}) error {
-	_, err := toml.DecodeFile(inFile, contents)
-	return err
+func ReadToml(inFile string, destination interface{}) error {
+	bytes, err := os.ReadFile(inFile)
+	if err != nil {
+		return err
+	}
+
+	return toml.Unmarshal(bytes, destination)
 }
