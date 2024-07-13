@@ -28,8 +28,10 @@ func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 		return nil
 	}
 
+	ctx, cancel := context.WithCancel(context.Background())
 	if !opts.Globals.IsApiMode() && usage.QueryUser(pinWarning, "Check skipped") {
-		if err := opts.doCheck(blockNums); err != nil {
+		if err := opts.doCheck(ctx, blockNums); err != nil {
+			cancel()
 			return err
 		}
 	}
@@ -47,10 +49,10 @@ func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 
 	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 	if err != nil {
+		cancel()
 		return err
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		hash := base.BytesToHash(config.HeaderHash(config.ExpectedVersion()))
 		report := types.ChunkPin{
@@ -86,7 +88,6 @@ func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 		)
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
-			// TODO: cancel probably doesn't cancel anything here does it? The walker doesn't even see it.
 			cancel()
 			return
 		}
@@ -184,8 +185,8 @@ func (opts *ChunksOptions) matchReport(matches bool, localHash, remoteHash base.
 	}
 }
 
-func (opts *ChunksOptions) doCheck(blockNums []base.Blknum) error {
-	if err, ok := opts.check(blockNums, false /* silent */); err != nil {
+func (opts *ChunksOptions) doCheck(ctx context.Context, blockNums []base.Blknum) error {
+	if err, ok := opts.check(ctx, blockNums, false /* silent */); err != nil {
 		return err
 	} else if !ok {
 		return fmt.Errorf("checks failed")

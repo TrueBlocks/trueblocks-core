@@ -24,7 +24,7 @@ import (
 // and manifest in the smart contract. It tries to check these three sources for
 // cosnsistency. Smart contract rules, so it is checked more thoroughly.
 func (opts *ChunksOptions) HandleCheck(blockNums []base.Blknum) error {
-	ctx = context.Background()
+	ctx := context.Background()
 	err, _ := opts.check(ctx, blockNums, false /* silent */)
 	return err
 }

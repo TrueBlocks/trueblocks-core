@@ -23,7 +23,7 @@ func (opts *AbisOptions) HandleDecache() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
-	ctx = context.Background()
+	ctx := context.Background()
 	if len(opts.Addrs) == 0 {
 		if testMode {
 			logger.Info("Cleaning empty abis is not tested in test mode.")

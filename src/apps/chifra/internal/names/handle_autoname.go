@@ -13,7 +13,7 @@ import (
 )
 
 func (opts *NamesOptions) HandleAutoname() error {
-	ctx = context.Background()
+	ctx := context.Background()
 	name, err := opts.readContractAndClean("")
 	if err != nil {
 		return err
