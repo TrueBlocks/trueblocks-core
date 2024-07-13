@@ -5,6 +5,7 @@
 package chunksPkg
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
@@ -21,6 +22,7 @@ import (
 //  3. Makes sure that the first block inside is == first if allow_missing == false, > otherwise
 //  4. Makes sure that the last block inside is == last if allow_missing == false, < otherwise
 func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, report *types.ReportCheck) error {
+	_ = context.TODO()
 	chain := opts.Globals.Chain
 	stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)

@@ -5,6 +5,8 @@
 package monitorsPkg
 
 import (
+	"context"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -20,6 +22,7 @@ import (
 // Deleted     | Error  | Undelete | Remove |
 // ------------|--------|-------------------|
 func (opts *MonitorsOptions) HandleCrud() error {
+	_ = context.TODO()
 	chain := opts.Globals.Chain
 	for _, addr := range opts.Addrs {
 		m, _ := monitor.NewMonitor(chain, base.HexToAddress(addr), false)

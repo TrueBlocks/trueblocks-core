@@ -5,11 +5,14 @@
 package chunksPkg
 
 import (
+	"context"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 func (opts *ChunksOptions) HandleShow(blockNums []base.Blknum) error {
+	_ = context.TODO()
 	var err error
 	switch opts.Mode {
 	case "manifest":

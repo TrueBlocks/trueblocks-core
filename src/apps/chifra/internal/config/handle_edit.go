@@ -1,6 +1,7 @@
 package configPkg
 
 import (
+	"context"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -9,6 +10,7 @@ import (
 )
 
 func (opts *ConfigOptions) HandleEdit() error {
+	_ = context.TODO()
 	if opts.Globals.TestMode {
 		logger.Info("Can not process this command in test mode.")
 		return nil

@@ -1,6 +1,7 @@
 package whenPkg
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
@@ -14,6 +15,7 @@ import (
 
 // HandleTimestampsCheck handles chifra when --timestamps --check
 func (opts *WhenOptions) HandleTimestampsCheck() error {
+	_ = context.TODO()
 	chain := opts.Globals.Chain
 
 	cnt, err := tslib.NTimestamps(chain)

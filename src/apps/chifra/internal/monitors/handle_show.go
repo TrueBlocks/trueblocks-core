@@ -5,10 +5,13 @@
 package monitorsPkg
 
 import (
+	"context"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 func (opts *MonitorsOptions) HandleShow() error {
+	_ = context.TODO()
 	logger.Fatal("Should not happen for chifra monitors.")
 	return nil
 }

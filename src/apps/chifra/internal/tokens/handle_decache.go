@@ -5,11 +5,14 @@
 package tokensPkg
 
 import (
+	"context"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 func (opts *TokensOptions) HandleDecache() error {
 	// TODO: decache.Decache --decache not implemented
+	_ = context.TODO()
 	logger.Error("chifra tokens --decache is not yet implemented")
 	return nil
 }
