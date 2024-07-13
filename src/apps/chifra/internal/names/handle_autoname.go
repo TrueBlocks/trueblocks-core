@@ -13,6 +13,7 @@ import (
 )
 
 func (opts *NamesOptions) HandleAutoname() error {
+	ctx = context.Background()
 	name, err := opts.readContractAndClean("")
 	if err != nil {
 		return err
@@ -54,7 +55,7 @@ func (opts *NamesOptions) HandleAutoname() error {
 				Msg: message,
 			}
 		}
-		_ = output.StreamMany(context.Background(), fetchData, opts.Globals.OutputOpts())
+		_ = output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 	}
 	return nil
 }

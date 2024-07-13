@@ -23,13 +23,14 @@ func (opts *AbisOptions) HandleDecache() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
+	ctx = context.Background()
 	if len(opts.Addrs) == 0 {
 		if testMode {
 			logger.Info("Cleaning empty abis is not tested in test mode.")
 		} else {
 			filenameChan := make(chan walk.CacheFileInfo)
 			var nRoutines = 1
-			go walk.WalkCacheFolder(context.Background(), chain, walk.Cache_Abis, nil, filenameChan)
+			go walk.WalkCacheFolder(ctx, chain, walk.Cache_Abis, nil, filenameChan)
 			for result := range filenameChan {
 				switch result.Type {
 				case walk.Cache_Abis:
