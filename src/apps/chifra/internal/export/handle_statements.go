@@ -19,7 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleStatements(rCtx output.RenderCtx, monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
@@ -30,12 +30,11 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
-				cancel()
+				rCtx.Cancel()
 
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no blocks found for the query")
@@ -44,7 +43,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 			} else {
 				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, filter.Reversed); err != nil {
 					errorChan <- err
-					cancel()
+					rCtx.Cancel()
 
 				} else {
 					showProgress := opts.Globals.ShowProgress()
@@ -169,5 +168,5 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 		"export":     true,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

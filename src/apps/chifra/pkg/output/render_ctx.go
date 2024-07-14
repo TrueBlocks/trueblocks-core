@@ -1,0 +1,25 @@
+package output
+
+import "context"
+
+type RenderCtx struct {
+	Ctx    context.Context
+	Cancel context.CancelFunc
+}
+
+func NewRenderContext() RenderCtx {
+	ctx, cancel := context.WithCancel(context.Background())
+	return RenderCtx{
+		Ctx:    ctx,
+		Cancel: cancel,
+	}
+}
+
+func (r *RenderCtx) ShouldQuit() bool {
+	select {
+	case <-r.Ctx.Done():
+		return true
+	default:
+		return false
+	}
+}
