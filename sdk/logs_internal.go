@@ -15,6 +15,7 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -41,7 +42,9 @@ func (opts *logsOptionsInternal) LogsBytes(w io.Writer) error {
 		return fmt.Errorf("error converting logs struct to URL values: %v", err)
 	}
 
-	return logs.Logs(opts.Globals.rCtx, w, values)
+	rCtx := output.NewRenderContext()
+	opts.Globals.RenderCtx = &rCtx
+	return logs.Logs(rCtx, w, values)
 }
 
 // logsParseFunc handles special cases such as structs and enums (if any).

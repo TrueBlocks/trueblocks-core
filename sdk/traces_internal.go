@@ -15,6 +15,7 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -41,7 +42,9 @@ func (opts *tracesOptionsInternal) TracesBytes(w io.Writer) error {
 		return fmt.Errorf("error converting traces struct to URL values: %v", err)
 	}
 
-	return traces.Traces(opts.Globals.rCtx, w, values)
+	rCtx := output.NewRenderContext()
+	opts.Globals.RenderCtx = &rCtx
+	return traces.Traces(rCtx, w, values)
 }
 
 // tracesParseFunc handles special cases such as structs and enums (if any).

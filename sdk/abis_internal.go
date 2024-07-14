@@ -16,6 +16,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -44,7 +45,9 @@ func (opts *abisOptionsInternal) AbisBytes(w io.Writer) error {
 		return fmt.Errorf("error converting abis struct to URL values: %v", err)
 	}
 
-	return abis.Abis(opts.Globals.rCtx, w, values)
+	rCtx := output.NewRenderContext()
+	opts.Globals.RenderCtx = &rCtx
+	return abis.Abis(rCtx, w, values)
 }
 
 // abisParseFunc handles special cases such as structs and enums (if any).

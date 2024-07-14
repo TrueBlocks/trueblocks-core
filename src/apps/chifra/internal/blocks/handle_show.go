@@ -48,6 +48,10 @@ func (opts *BlocksOptions) HandleShow(rCtx output.RenderCtx) error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
+				if rCtx.ShouldQuit() {
+					return
+				}
+
 				for app := range thisMap {
 					thisMap[app] = new(types.Block)
 				}

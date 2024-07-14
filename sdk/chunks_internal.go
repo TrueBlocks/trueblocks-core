@@ -17,6 +17,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	chunks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -59,7 +60,9 @@ func (opts *chunksOptionsInternal) ChunksBytes(w io.Writer) error {
 		return fmt.Errorf("error converting chunks struct to URL values: %v", err)
 	}
 
-	return chunks.Chunks(opts.Globals.rCtx, w, values)
+	rCtx := output.NewRenderContext()
+	opts.Globals.RenderCtx = &rCtx
+	return chunks.Chunks(rCtx, w, values)
 }
 
 // chunksParseFunc handles special cases such as structs and enums (if any).

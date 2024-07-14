@@ -17,6 +17,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -47,7 +48,9 @@ func (opts *stateOptionsInternal) StateBytes(w io.Writer) error {
 		return fmt.Errorf("error converting state struct to URL values: %v", err)
 	}
 
-	return state.State(opts.Globals.rCtx, w, values)
+	rCtx := output.NewRenderContext()
+	opts.Globals.RenderCtx = &rCtx
+	return state.State(rCtx, w, values)
 }
 
 // stateParseFunc handles special cases such as structs and enums (if any).

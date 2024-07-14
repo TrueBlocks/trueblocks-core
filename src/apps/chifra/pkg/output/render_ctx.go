@@ -3,8 +3,10 @@ package output
 import "context"
 
 type RenderCtx struct {
-	Ctx    context.Context
-	Cancel context.CancelFunc
+	Ctx    context.Context    `json:"-"`
+	Cancel context.CancelFunc `json:"-"`
+	// TODO: Add a place for references to caller-level channels
+	// TODO: for progress, errors, and data
 }
 
 func NewRenderContext() RenderCtx {
