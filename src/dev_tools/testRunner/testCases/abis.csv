@@ -61,7 +61,7 @@ on       ,both ,fast  ,abis  ,tools ,grabABI ,clean_fail_2        ,y    ,decache
 on       ,both ,fast  ,abis  ,tools ,grabABI ,clean_fail_3        ,y    ,decache & file = signatures.txt
 on       ,both ,fast  ,abis  ,tools ,grabABI ,no_abi_found_1      ,y    ,addrs = 0x713b73c3994442b533e6a083ec968e40606810ec
 on       ,both ,fast  ,abis  ,tools ,grabABI ,clean_with          ,y    ,addrs = 0x713b73c3994442b533e6a083ec968e40606810ec & decache
-on       ,both ,fast  ,abis  ,tools ,grabABI ,no_abi_found_2      ,y    ,addrs = 0x713b73c3994442b533e6a083ec968e40606810ec
+local    ,both ,fast  ,abis  ,tools ,grabABI ,no_abi_found_2      ,y    ,addrs = 0x713b73c3994442b533e6a083ec968e40606810ec
 on       ,both ,fast  ,abis  ,tools ,grabABI ,clean_alone         ,y    ,decache
 
 # Reports inconsistent results on subsequent runs
