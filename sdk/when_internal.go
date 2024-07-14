@@ -23,15 +23,16 @@ import (
 )
 
 type whenOptionsInternal struct {
-	BlockIds   []string    `json:"blocks,omitempty"`
-	List       bool        `json:"list,omitempty"`
-	Timestamps bool        `json:"timestamps,omitempty"`
-	Count      bool        `json:"count,omitempty"`
-	Truncate   base.Blknum `json:"truncate,omitempty"`
-	Repair     bool        `json:"repair,omitempty"`
-	Check      bool        `json:"check,omitempty"`
-	Update     bool        `json:"update,omitempty"`
-	Deep       bool        `json:"deep,omitempty"`
+	BlockIds   []string     `json:"blocks,omitempty"`
+	List       bool         `json:"list,omitempty"`
+	Timestamps bool         `json:"timestamps,omitempty"`
+	Count      bool         `json:"count,omitempty"`
+	Truncate   base.Blknum  `json:"truncate,omitempty"`
+	Repair     bool         `json:"repair,omitempty"`
+	Check      bool         `json:"check,omitempty"`
+	Update     bool         `json:"update,omitempty"`
+	Deep       bool         `json:"deep,omitempty"`
+	OrigOpts   *WhenOptions `json:"-"`
 	Globals
 }
 
@@ -49,7 +50,9 @@ func (opts *whenOptionsInternal) WhenBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return when.When(rCtx, w, values)
 }
 
@@ -115,6 +118,7 @@ func (opts *WhenOptions) toInternal() *whenOptionsInternal {
 		Check:    opts.Check,
 		Update:   opts.Update,
 		Deep:     opts.Deep,
+		OrigOpts: opts,
 		Globals:  opts.Globals,
 	}
 }

@@ -23,12 +23,13 @@ import (
 )
 
 type tokensOptionsInternal struct {
-	Addrs    []string    `json:"addrs,omitempty"`
-	BlockIds []string    `json:"blocks,omitempty"`
-	Parts    TokensParts `json:"parts,omitempty"`
-	ByAcct   bool        `json:"byAcct,omitempty"`
-	Changes  bool        `json:"changes,omitempty"`
-	NoZero   bool        `json:"noZero,omitempty"`
+	Addrs    []string       `json:"addrs,omitempty"`
+	BlockIds []string       `json:"blocks,omitempty"`
+	Parts    TokensParts    `json:"parts,omitempty"`
+	ByAcct   bool           `json:"byAcct,omitempty"`
+	Changes  bool           `json:"changes,omitempty"`
+	NoZero   bool           `json:"noZero,omitempty"`
+	OrigOpts *TokensOptions `json:"-"`
 	Globals
 }
 
@@ -46,7 +47,9 @@ func (opts *tokensOptionsInternal) TokensBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return tokens.Tokens(rCtx, w, values)
 }
 
@@ -119,6 +122,7 @@ func (opts *TokensOptions) toInternal() *tokensOptionsInternal {
 		ByAcct:   opts.ByAcct,
 		Changes:  opts.Changes,
 		NoZero:   opts.NoZero,
+		OrigOpts: opts,
 		Globals:  opts.Globals,
 	}
 }

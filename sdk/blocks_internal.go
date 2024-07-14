@@ -23,20 +23,21 @@ import (
 )
 
 type blocksOptionsInternal struct {
-	BlockIds    []string   `json:"blocks,omitempty"`
-	Hashes      bool       `json:"hashes,omitempty"`
-	Uncles      bool       `json:"uncles,omitempty"`
-	Traces      bool       `json:"traces,omitempty"`
-	Uniq        bool       `json:"uniq,omitempty"`
-	Flow        BlocksFlow `json:"flow,omitempty"`
-	Logs        bool       `json:"logs,omitempty"`
-	Emitter     []string   `json:"emitter,omitempty"`
-	Topic       []string   `json:"topic,omitempty"`
-	Withdrawals bool       `json:"withdrawals,omitempty"`
-	Articulate  bool       `json:"articulate,omitempty"`
-	Count       bool       `json:"count,omitempty"`
-	CacheTxs    bool       `json:"cacheTxs,omitempty"`
-	CacheTraces bool       `json:"cacheTraces,omitempty"`
+	BlockIds    []string       `json:"blocks,omitempty"`
+	Hashes      bool           `json:"hashes,omitempty"`
+	Uncles      bool           `json:"uncles,omitempty"`
+	Traces      bool           `json:"traces,omitempty"`
+	Uniq        bool           `json:"uniq,omitempty"`
+	Flow        BlocksFlow     `json:"flow,omitempty"`
+	Logs        bool           `json:"logs,omitempty"`
+	Emitter     []string       `json:"emitter,omitempty"`
+	Topic       []string       `json:"topic,omitempty"`
+	Withdrawals bool           `json:"withdrawals,omitempty"`
+	Articulate  bool           `json:"articulate,omitempty"`
+	Count       bool           `json:"count,omitempty"`
+	CacheTxs    bool           `json:"cacheTxs,omitempty"`
+	CacheTraces bool           `json:"cacheTraces,omitempty"`
+	OrigOpts    *BlocksOptions `json:"-"`
 	Globals
 }
 
@@ -54,7 +55,9 @@ func (opts *blocksOptionsInternal) BlocksBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return blocks.Blocks(rCtx, w, values)
 }
 
@@ -136,6 +139,7 @@ func (opts *BlocksOptions) toInternal() *blocksOptionsInternal {
 		Articulate:  opts.Articulate,
 		CacheTxs:    opts.CacheTxs,
 		CacheTraces: opts.CacheTraces,
+		OrigOpts:    opts,
 		Globals:     opts.Globals,
 	}
 }

@@ -23,15 +23,16 @@ import (
 )
 
 type transactionsOptionsInternal struct {
-	TransactionIds []string         `json:"transactions,omitempty"`
-	Articulate     bool             `json:"articulate,omitempty"`
-	Traces         bool             `json:"traces,omitempty"`
-	Uniq           bool             `json:"uniq,omitempty"`
-	Flow           TransactionsFlow `json:"flow,omitempty"`
-	Logs           bool             `json:"logs,omitempty"`
-	Emitter        []string         `json:"emitter,omitempty"`
-	Topic          []string         `json:"topic,omitempty"`
-	CacheTraces    bool             `json:"cacheTraces,omitempty"`
+	TransactionIds []string             `json:"transactions,omitempty"`
+	Articulate     bool                 `json:"articulate,omitempty"`
+	Traces         bool                 `json:"traces,omitempty"`
+	Uniq           bool                 `json:"uniq,omitempty"`
+	Flow           TransactionsFlow     `json:"flow,omitempty"`
+	Logs           bool                 `json:"logs,omitempty"`
+	Emitter        []string             `json:"emitter,omitempty"`
+	Topic          []string             `json:"topic,omitempty"`
+	CacheTraces    bool                 `json:"cacheTraces,omitempty"`
+	OrigOpts       *TransactionsOptions `json:"-"`
 	Globals
 }
 
@@ -49,7 +50,9 @@ func (opts *transactionsOptionsInternal) TransactionsBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return transactions.Transactions(rCtx, w, values)
 }
 
@@ -127,6 +130,7 @@ func (opts *TransactionsOptions) toInternal() *transactionsOptionsInternal {
 		Emitter:        opts.Emitter,
 		Topic:          opts.Topic,
 		CacheTraces:    opts.CacheTraces,
+		OrigOpts:       opts,
 		Globals:        opts.Globals,
 	}
 }

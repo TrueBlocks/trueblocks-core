@@ -22,18 +22,19 @@ import (
 )
 
 type monitorsOptionsInternal struct {
-	Addrs     []string `json:"addrs,omitempty"`
-	Delete    bool     `json:"delete,omitempty"`
-	Undelete  bool     `json:"undelete,omitempty"`
-	Remove    bool     `json:"remove,omitempty"`
-	Clean     bool     `json:"clean,omitempty"`
-	List      bool     `json:"list,omitempty"`
-	Watch     bool     `json:"watch,omitempty"`
-	Watchlist string   `json:"watchlist,omitempty"`
-	Commands  string   `json:"commands,omitempty"`
-	BatchSize uint64   `json:"batchSize,omitempty"`
-	RunCount  uint64   `json:"runCount,omitempty"`
-	Sleep     float64  `json:"sleep,omitempty"`
+	Addrs     []string         `json:"addrs,omitempty"`
+	Delete    bool             `json:"delete,omitempty"`
+	Undelete  bool             `json:"undelete,omitempty"`
+	Remove    bool             `json:"remove,omitempty"`
+	Clean     bool             `json:"clean,omitempty"`
+	List      bool             `json:"list,omitempty"`
+	Watch     bool             `json:"watch,omitempty"`
+	Watchlist string           `json:"watchlist,omitempty"`
+	Commands  string           `json:"commands,omitempty"`
+	BatchSize uint64           `json:"batchSize,omitempty"`
+	RunCount  uint64           `json:"runCount,omitempty"`
+	Sleep     float64          `json:"sleep,omitempty"`
+	OrigOpts  *MonitorsOptions `json:"-"`
 	Globals
 }
 
@@ -51,7 +52,9 @@ func (opts *monitorsOptionsInternal) MonitorsBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return monitors.Monitors(rCtx, w, values)
 }
 
@@ -121,6 +124,7 @@ func (opts *MonitorsOptions) toInternal() *monitorsOptionsInternal {
 		BatchSize: opts.BatchSize,
 		RunCount:  opts.RunCount,
 		Sleep:     opts.Sleep,
+		OrigOpts:  opts,
 		Globals:   opts.Globals,
 	}
 }

@@ -71,7 +71,9 @@ func (opts *exportOptionsInternal) ExportBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.OrigOpts.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return export.Export(rCtx, w, values)
 }
 
@@ -172,8 +174,8 @@ func (opts *ExportOptions) toInternal() *exportOptionsInternal {
 		NoZero:      opts.NoZero,
 		FirstBlock:  opts.FirstBlock,
 		LastBlock:   opts.LastBlock,
-		Globals:     opts.Globals,
 		OrigOpts:    opts,
+		Globals:     opts.Globals,
 	}
 }
 

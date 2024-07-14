@@ -23,23 +23,24 @@ import (
 )
 
 type namesOptionsInternal struct {
-	Terms     []string     `json:"terms,omitempty"`
-	Expand    bool         `json:"expand,omitempty"`
-	MatchCase bool         `json:"matchCase,omitempty"`
-	All       bool         `json:"all,omitempty"`
-	Custom    bool         `json:"custom,omitempty"`
-	Prefund   bool         `json:"prefund,omitempty"`
-	Addr      bool         `json:"addr,omitempty"`
-	Tags      bool         `json:"tags,omitempty"`
-	Clean     bool         `json:"clean,omitempty"`
-	Regular   bool         `json:"regular,omitempty"`
-	DryRun    bool         `json:"dryRun,omitempty"`
-	Autoname  base.Address `json:"autoname,omitempty"`
-	Create    bool         `json:"create,omitempty"`
-	Update    bool         `json:"update,omitempty"`
-	Delete    bool         `json:"delete,omitempty"`
-	Undelete  bool         `json:"undelete,omitempty"`
-	Remove    bool         `json:"remove,omitempty"`
+	Terms     []string      `json:"terms,omitempty"`
+	Expand    bool          `json:"expand,omitempty"`
+	MatchCase bool          `json:"matchCase,omitempty"`
+	All       bool          `json:"all,omitempty"`
+	Custom    bool          `json:"custom,omitempty"`
+	Prefund   bool          `json:"prefund,omitempty"`
+	Addr      bool          `json:"addr,omitempty"`
+	Tags      bool          `json:"tags,omitempty"`
+	Clean     bool          `json:"clean,omitempty"`
+	Regular   bool          `json:"regular,omitempty"`
+	DryRun    bool          `json:"dryRun,omitempty"`
+	Autoname  base.Address  `json:"autoname,omitempty"`
+	Create    bool          `json:"create,omitempty"`
+	Update    bool          `json:"update,omitempty"`
+	Delete    bool          `json:"delete,omitempty"`
+	Undelete  bool          `json:"undelete,omitempty"`
+	Remove    bool          `json:"remove,omitempty"`
+	OrigOpts  *NamesOptions `json:"-"`
 	Globals
 }
 
@@ -57,7 +58,9 @@ func (opts *namesOptionsInternal) NamesBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return names.Names(rCtx, w, values)
 }
 
@@ -124,6 +127,7 @@ func (opts *NamesOptions) toInternal() *namesOptionsInternal {
 		Prefund:   opts.Prefund,
 		Regular:   opts.Regular,
 		DryRun:    opts.DryRun,
+		OrigOpts:  opts,
 		Globals:   opts.Globals,
 	}
 }

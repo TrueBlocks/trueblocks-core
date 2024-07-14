@@ -29,6 +29,7 @@ type initOptionsInternal struct {
 	Publisher  base.Address `json:"publisher,omitempty"`
 	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
 	Sleep      float64      `json:"sleep,omitempty"`
+	OrigOpts   *InitOptions `json:"-"`
 	Globals
 }
 
@@ -46,7 +47,9 @@ func (opts *initOptionsInternal) InitBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return initPkg.Init(rCtx, w, values)
 }
 
@@ -107,6 +110,7 @@ func (opts *InitOptions) toInternal() *initOptionsInternal {
 		Publisher:  opts.Publisher,
 		FirstBlock: opts.FirstBlock,
 		Sleep:      opts.Sleep,
+		OrigOpts:   opts,
 		Globals:    opts.Globals,
 	}
 }

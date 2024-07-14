@@ -23,17 +23,18 @@ import (
 )
 
 type slurpOptionsInternal struct {
-	Addrs       []string    `json:"addrs,omitempty"`
-	BlockIds    []string    `json:"blocks,omitempty"`
-	Parts       SlurpParts  `json:"parts,omitempty"`
-	Appearances bool        `json:"appearances,omitempty"`
-	Articulate  bool        `json:"articulate,omitempty"`
-	Source      SlurpSource `json:"source,omitempty"`
-	Count       bool        `json:"count,omitempty"`
-	Page        uint64      `json:"page,omitempty"`
-	PageId      string      `json:"pageId,omitempty"`
-	PerPage     uint64      `json:"perPage,omitempty"`
-	Sleep       float64     `json:"sleep,omitempty"`
+	Addrs       []string      `json:"addrs,omitempty"`
+	BlockIds    []string      `json:"blocks,omitempty"`
+	Parts       SlurpParts    `json:"parts,omitempty"`
+	Appearances bool          `json:"appearances,omitempty"`
+	Articulate  bool          `json:"articulate,omitempty"`
+	Source      SlurpSource   `json:"source,omitempty"`
+	Count       bool          `json:"count,omitempty"`
+	Page        uint64        `json:"page,omitempty"`
+	PageId      string        `json:"pageId,omitempty"`
+	PerPage     uint64        `json:"perPage,omitempty"`
+	Sleep       float64       `json:"sleep,omitempty"`
+	OrigOpts    *SlurpOptions `json:"-"`
 	Globals
 }
 
@@ -51,7 +52,9 @@ func (opts *slurpOptionsInternal) SlurpBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return slurp.Slurp(rCtx, w, values)
 }
 
@@ -140,6 +143,7 @@ func (opts *SlurpOptions) toInternal() *slurpOptionsInternal {
 		PageId:     opts.PageId,
 		PerPage:    opts.PerPage,
 		Sleep:      opts.Sleep,
+		OrigOpts:   opts,
 		Globals:    opts.Globals,
 	}
 }

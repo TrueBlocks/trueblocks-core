@@ -24,12 +24,13 @@ import (
 )
 
 type statusOptionsInternal struct {
-	Modes       StatusModes `json:"modes,omitempty"`
-	Diagnose    bool        `json:"diagnose,omitempty"`
-	FirstRecord uint64      `json:"firstRecord,omitempty"`
-	MaxRecords  uint64      `json:"maxRecords,omitempty"`
-	Chains      bool        `json:"chains,omitempty"`
-	Healthcheck bool        `json:"healthcheck,omitempty"`
+	Modes       StatusModes    `json:"modes,omitempty"`
+	Diagnose    bool           `json:"diagnose,omitempty"`
+	FirstRecord uint64         `json:"firstRecord,omitempty"`
+	MaxRecords  uint64         `json:"maxRecords,omitempty"`
+	Chains      bool           `json:"chains,omitempty"`
+	Healthcheck bool           `json:"healthcheck,omitempty"`
+	OrigOpts    *StatusOptions `json:"-"`
 	Globals
 }
 
@@ -47,7 +48,9 @@ func (opts *statusOptionsInternal) StatusBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return status.Status(rCtx, w, values)
 }
 
@@ -117,6 +120,7 @@ func (opts *StatusOptions) toInternal() *statusOptionsInternal {
 		FirstRecord: opts.FirstRecord,
 		MaxRecords:  opts.MaxRecords,
 		Chains:      opts.Chains,
+		OrigOpts:    opts,
 		Globals:     opts.Globals,
 	}
 }

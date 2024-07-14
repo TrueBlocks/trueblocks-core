@@ -22,8 +22,9 @@ import (
 )
 
 type receiptsOptionsInternal struct {
-	TransactionIds []string `json:"transactions,omitempty"`
-	Articulate     bool     `json:"articulate,omitempty"`
+	TransactionIds []string         `json:"transactions,omitempty"`
+	Articulate     bool             `json:"articulate,omitempty"`
+	OrigOpts       *ReceiptsOptions `json:"-"`
 	Globals
 }
 
@@ -41,7 +42,9 @@ func (opts *receiptsOptionsInternal) ReceiptsBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return receipts.Receipts(rCtx, w, values)
 }
 
@@ -104,6 +107,7 @@ func (opts *ReceiptsOptions) toInternal() *receiptsOptionsInternal {
 	return &receiptsOptionsInternal{
 		TransactionIds: opts.TransactionIds,
 		Articulate:     opts.Articulate,
+		OrigOpts:       opts,
 		Globals:        opts.Globals,
 	}
 }

@@ -15,7 +15,8 @@ import (
 
 type {{toCamel .Route}}OptionsInternal struct {
 {{range .Options}}{{if not .IsDeprecated}}	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
-{{end}}{{end}}	Globals
+{{end}}{{end}}	OrigOpts *{{toProper .Route}}Options `json:"-"`
+	Globals
 }
 
 // String implements the stringer interface
@@ -32,7 +33,9 @@ func (opts *{{toCamel .Route}}OptionsInternal) {{toProper .Route}}Bytes(w io.Wri
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return {{.Pkg}}.{{toProper .Route}}(rCtx, w, values)
 }
 
@@ -91,7 +94,8 @@ func query{{toProper .Route}}[T {{toCamel .Route}}Generic](opts *{{toCamel .Rout
 func (opts *{{toProper .Route}}Options) toInternal() *{{toCamel .Route}}OptionsInternal {
 	return &{{toCamel .Route}}OptionsInternal{
 {{range .Options}}{{if .SdkIsPublic}}		{{.GoSdkName}}: opts.{{.GoSdkName}},
-{{end}}{{end}}		Globals: opts.Globals,
+{{end}}{{end}}		OrigOpts: opts,
+		Globals: opts.Globals,
 	}
 }{{end}}
 

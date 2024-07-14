@@ -22,10 +22,11 @@ import (
 )
 
 type tracesOptionsInternal struct {
-	TransactionIds []string `json:"transactions,omitempty"`
-	Articulate     bool     `json:"articulate,omitempty"`
-	Filter         string   `json:"filter,omitempty"`
-	Count          bool     `json:"count,omitempty"`
+	TransactionIds []string       `json:"transactions,omitempty"`
+	Articulate     bool           `json:"articulate,omitempty"`
+	Filter         string         `json:"filter,omitempty"`
+	Count          bool           `json:"count,omitempty"`
+	OrigOpts       *TracesOptions `json:"-"`
 	Globals
 }
 
@@ -43,7 +44,9 @@ func (opts *tracesOptionsInternal) TracesBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return traces.Traces(rCtx, w, values)
 }
 
@@ -109,6 +112,7 @@ func (opts *TracesOptions) toInternal() *tracesOptionsInternal {
 		TransactionIds: opts.TransactionIds,
 		Articulate:     opts.Articulate,
 		Filter:         opts.Filter,
+		OrigOpts:       opts,
 		Globals:        opts.Globals,
 	}
 }

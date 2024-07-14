@@ -29,6 +29,7 @@ type abisOptionsInternal struct {
 	Find     []string     `json:"find,omitempty"`
 	Hint     []string     `json:"hint,omitempty"`
 	Encode   string       `json:"encode,omitempty"`
+	OrigOpts *AbisOptions `json:"-"`
 	Globals
 }
 
@@ -46,7 +47,9 @@ func (opts *abisOptionsInternal) AbisBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return abis.Abis(rCtx, w, values)
 }
 
@@ -113,6 +116,7 @@ func (opts *AbisOptions) toInternal() *abisOptionsInternal {
 		Known:    opts.Known,
 		ProxyFor: opts.ProxyFor,
 		Hint:     opts.Hint,
+		OrigOpts: opts,
 		Globals:  opts.Globals,
 	}
 }

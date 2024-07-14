@@ -22,10 +22,11 @@ import (
 )
 
 type logsOptionsInternal struct {
-	TransactionIds []string `json:"transactions,omitempty"`
-	Emitter        []string `json:"emitter,omitempty"`
-	Topic          []string `json:"topic,omitempty"`
-	Articulate     bool     `json:"articulate,omitempty"`
+	TransactionIds []string     `json:"transactions,omitempty"`
+	Emitter        []string     `json:"emitter,omitempty"`
+	Topic          []string     `json:"topic,omitempty"`
+	Articulate     bool         `json:"articulate,omitempty"`
+	OrigOpts       *LogsOptions `json:"-"`
 	Globals
 }
 
@@ -43,7 +44,9 @@ func (opts *logsOptionsInternal) LogsBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return logs.Logs(rCtx, w, values)
 }
 
@@ -107,6 +110,7 @@ func (opts *LogsOptions) toInternal() *logsOptionsInternal {
 		Emitter:        opts.Emitter,
 		Topic:          opts.Topic,
 		Articulate:     opts.Articulate,
+		OrigOpts:       opts,
 		Globals:        opts.Globals,
 	}
 }

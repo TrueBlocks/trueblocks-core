@@ -35,6 +35,7 @@ type listOptionsInternal struct {
 	Publisher   base.Address `json:"publisher,omitempty"`
 	FirstBlock  base.Blknum  `json:"firstBlock,omitempty"`
 	LastBlock   base.Blknum  `json:"lastBlock,omitempty"`
+	OrigOpts    *ListOptions `json:"-"`
 	Globals
 }
 
@@ -52,7 +53,9 @@ func (opts *listOptionsInternal) ListBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return list.List(rCtx, w, values)
 }
 
@@ -122,6 +125,7 @@ func (opts *ListOptions) toInternal() *listOptionsInternal {
 		Publisher:   opts.Publisher,
 		FirstBlock:  opts.FirstBlock,
 		LastBlock:   opts.LastBlock,
+		OrigOpts:    opts,
 		Globals:     opts.Globals,
 	}
 }

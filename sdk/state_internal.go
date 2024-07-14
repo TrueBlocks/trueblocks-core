@@ -24,14 +24,15 @@ import (
 )
 
 type stateOptionsInternal struct {
-	Addrs      []string     `json:"addrs,omitempty"`
-	BlockIds   []string     `json:"blocks,omitempty"`
-	Parts      StateParts   `json:"parts,omitempty"`
-	Changes    bool         `json:"changes,omitempty"`
-	NoZero     bool         `json:"noZero,omitempty"`
-	Call       string       `json:"call,omitempty"`
-	Articulate bool         `json:"articulate,omitempty"`
-	ProxyFor   base.Address `json:"proxyFor,omitempty"`
+	Addrs      []string      `json:"addrs,omitempty"`
+	BlockIds   []string      `json:"blocks,omitempty"`
+	Parts      StateParts    `json:"parts,omitempty"`
+	Changes    bool          `json:"changes,omitempty"`
+	NoZero     bool          `json:"noZero,omitempty"`
+	Call       string        `json:"call,omitempty"`
+	Articulate bool          `json:"articulate,omitempty"`
+	ProxyFor   base.Address  `json:"proxyFor,omitempty"`
+	OrigOpts   *StateOptions `json:"-"`
 	Globals
 }
 
@@ -49,7 +50,9 @@ func (opts *stateOptionsInternal) StateBytes(w io.Writer) error {
 	}
 
 	rCtx := output.NewRenderContext()
-	opts.Globals.RenderCtx = &rCtx
+	if opts.OrigOpts != nil {
+		opts.OrigOpts.RenderCtx = &rCtx
+	}
 	return state.State(rCtx, w, values)
 }
 
@@ -130,6 +133,7 @@ func (opts *StateOptions) toInternal() *stateOptionsInternal {
 		NoZero:     opts.NoZero,
 		Articulate: opts.Articulate,
 		ProxyFor:   opts.ProxyFor,
+		OrigOpts:   opts,
 		Globals:    opts.Globals,
 	}
 }
