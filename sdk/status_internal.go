@@ -17,6 +17,7 @@ import (
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -45,7 +46,8 @@ func (opts *statusOptionsInternal) StatusBytes(w io.Writer) error {
 		return fmt.Errorf("error converting status struct to URL values: %v", err)
 	}
 
-	return status.Status(w, values)
+	rCtx := output.NewRenderContext()
+	return status.Status(rCtx, w, values)
 }
 
 // statusParseFunc handles special cases such as structs and enums (if any).

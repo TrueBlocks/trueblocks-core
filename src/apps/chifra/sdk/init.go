@@ -18,10 +18,9 @@ import (
 )
 
 // Init provides an interface to the command line chifra init through the SDK.
-func Init(w io.Writer, values url.Values) error {
+func Init(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
 	initPkg.ResetOptions(sdkTestMode)
 	opts := initPkg.InitFinishParseInternal(w, values)
-	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("init", w, &opts.Globals)

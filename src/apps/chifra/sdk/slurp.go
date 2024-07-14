@@ -18,10 +18,9 @@ import (
 )
 
 // Slurp provides an interface to the command line chifra slurp through the SDK.
-func Slurp(w io.Writer, values url.Values) error {
+func Slurp(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
 	slurp.ResetOptions(sdkTestMode)
 	opts := slurp.SlurpFinishParseInternal(w, values)
-	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("slurp", w, &opts.Globals)

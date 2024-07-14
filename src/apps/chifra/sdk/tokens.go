@@ -18,10 +18,9 @@ import (
 )
 
 // Tokens provides an interface to the command line chifra tokens through the SDK.
-func Tokens(w io.Writer, values url.Values) error {
+func Tokens(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
 	tokens.ResetOptions(sdkTestMode)
 	opts := tokens.TokensFinishParseInternal(w, values)
-	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("tokens", w, &opts.Globals)

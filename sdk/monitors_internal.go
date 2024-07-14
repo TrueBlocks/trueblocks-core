@@ -15,6 +15,7 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -49,7 +50,8 @@ func (opts *monitorsOptionsInternal) MonitorsBytes(w io.Writer) error {
 		return fmt.Errorf("error converting monitors struct to URL values: %v", err)
 	}
 
-	return monitors.Monitors(w, values)
+	rCtx := output.NewRenderContext()
+	return monitors.Monitors(rCtx, w, values)
 }
 
 // monitorsParseFunc handles special cases such as structs and enums (if any).

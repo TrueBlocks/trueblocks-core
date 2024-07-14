@@ -18,10 +18,9 @@ import (
 )
 
 // List provides an interface to the command line chifra list through the SDK.
-func List(w io.Writer, values url.Values) error {
+func List(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
 	list.ResetOptions(sdkTestMode)
 	opts := list.ListFinishParseInternal(w, values)
-	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("list", w, &opts.Globals)

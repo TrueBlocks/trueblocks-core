@@ -16,6 +16,7 @@ import (
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -44,7 +45,8 @@ func (opts *tokensOptionsInternal) TokensBytes(w io.Writer) error {
 		return fmt.Errorf("error converting tokens struct to URL values: %v", err)
 	}
 
-	return tokens.Tokens(w, values)
+	rCtx := output.NewRenderContext()
+	return tokens.Tokens(rCtx, w, values)
 }
 
 // tokensParseFunc handles special cases such as structs and enums (if any).

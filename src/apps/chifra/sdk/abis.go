@@ -18,10 +18,9 @@ import (
 )
 
 // Abis provides an interface to the command line chifra abis through the SDK.
-func Abis(w io.Writer, values url.Values) error {
+func Abis(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
 	abis.ResetOptions(sdkTestMode)
 	opts := abis.AbisFinishParseInternal(w, values)
-	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("abis", w, &opts.Globals)

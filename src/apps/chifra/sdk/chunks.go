@@ -18,10 +18,9 @@ import (
 )
 
 // Chunks provides an interface to the command line chifra chunks through the SDK.
-func Chunks(w io.Writer, values url.Values) error {
+func Chunks(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
 	chunks.ResetOptions(sdkTestMode)
 	opts := chunks.ChunksFinishParseInternal(w, values)
-	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("chunks", w, &opts.Globals)

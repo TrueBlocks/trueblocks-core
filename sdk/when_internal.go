@@ -16,6 +16,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -47,7 +48,8 @@ func (opts *whenOptionsInternal) WhenBytes(w io.Writer) error {
 		return fmt.Errorf("error converting when struct to URL values: %v", err)
 	}
 
-	return when.When(w, values)
+	rCtx := output.NewRenderContext()
+	return when.When(rCtx, w, values)
 }
 
 // whenParseFunc handles special cases such as structs and enums (if any).

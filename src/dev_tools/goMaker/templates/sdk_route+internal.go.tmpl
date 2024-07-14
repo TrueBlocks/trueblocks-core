@@ -31,7 +31,8 @@ func (opts *{{toCamel .Route}}OptionsInternal) {{toProper .Route}}Bytes(w io.Wri
 		return fmt.Errorf("error converting {{toLower .Route}} struct to URL values: %v", err)
 	}
 
-	return {{.Pkg}}.{{toProper .Route}}(w, values)
+	rCtx := output.NewRenderContext()
+	return {{.Pkg}}.{{toProper .Route}}(rCtx, w, values)
 }
 
 // {{toLower .Route}}ParseFunc handles special cases such as structs and enums (if any).

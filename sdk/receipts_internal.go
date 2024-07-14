@@ -15,6 +15,7 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -39,7 +40,8 @@ func (opts *receiptsOptionsInternal) ReceiptsBytes(w io.Writer) error {
 		return fmt.Errorf("error converting receipts struct to URL values: %v", err)
 	}
 
-	return receipts.Receipts(w, values)
+	rCtx := output.NewRenderContext()
+	return receipts.Receipts(rCtx, w, values)
 }
 
 // receiptsParseFunc handles special cases such as structs and enums (if any).

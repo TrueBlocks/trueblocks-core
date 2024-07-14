@@ -18,10 +18,9 @@ import (
 )
 
 // Names provides an interface to the command line chifra names through the SDK.
-func Names(w io.Writer, values url.Values) error {
+func Names(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
 	names.ResetOptions(sdkTestMode)
 	opts := names.NamesFinishParseInternal(w, values)
-	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	var err1 error
 	if err1 = opts.LoadCrudDataIfNeeded(nil); err1 != nil {

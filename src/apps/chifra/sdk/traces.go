@@ -18,10 +18,9 @@ import (
 )
 
 // Traces provides an interface to the command line chifra traces through the SDK.
-func Traces(w io.Writer, values url.Values) error {
+func Traces(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
 	traces.ResetOptions(sdkTestMode)
 	opts := traces.TracesFinishParseInternal(w, values)
-	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("traces", w, &opts.Globals)

@@ -18,10 +18,9 @@ import (
 )
 
 // Logs provides an interface to the command line chifra logs through the SDK.
-func Logs(w io.Writer, values url.Values) error {
+func Logs(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
 	logs.ResetOptions(sdkTestMode)
 	opts := logs.LogsFinishParseInternal(w, values)
-	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("logs", w, &opts.Globals)
