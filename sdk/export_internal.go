@@ -17,7 +17,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -69,8 +68,7 @@ func (opts *exportOptionsInternal) ExportBytes(w io.Writer) error {
 		return fmt.Errorf("error converting export struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	return export.Export(rCtx, w, values)
+	return export.Export(opts.Globals.rCtx, w, values)
 }
 
 // exportParseFunc handles special cases such as structs and enums (if any).

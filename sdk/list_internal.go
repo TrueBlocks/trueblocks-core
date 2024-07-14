@@ -16,7 +16,6 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -51,8 +50,7 @@ func (opts *listOptionsInternal) ListBytes(w io.Writer) error {
 		return fmt.Errorf("error converting list struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	return list.List(rCtx, w, values)
+	return list.List(opts.Globals.rCtx, w, values)
 }
 
 // listParseFunc handles special cases such as structs and enums (if any).

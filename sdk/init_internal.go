@@ -16,7 +16,6 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -45,8 +44,7 @@ func (opts *initOptionsInternal) InitBytes(w io.Writer) error {
 		return fmt.Errorf("error converting init struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	return initPkg.Init(rCtx, w, values)
+	return initPkg.Init(opts.Globals.rCtx, w, values)
 }
 
 // initParseFunc handles special cases such as structs and enums (if any).

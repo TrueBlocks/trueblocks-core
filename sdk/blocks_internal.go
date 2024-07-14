@@ -16,7 +16,6 @@ import (
 	"io"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -53,8 +52,7 @@ func (opts *blocksOptionsInternal) BlocksBytes(w io.Writer) error {
 		return fmt.Errorf("error converting blocks struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	return blocks.Blocks(rCtx, w, values)
+	return blocks.Blocks(opts.Globals.rCtx, w, values)
 }
 
 // blocksParseFunc handles special cases such as structs and enums (if any).

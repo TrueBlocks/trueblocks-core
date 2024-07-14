@@ -6,6 +6,8 @@ import (
 	"os"
 	"reflect"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
 // Globals is a subset of globally available options from the command line
@@ -18,6 +20,7 @@ type Globals struct {
 	Chain   string `json:"chain,omitempty"`
 	Output  string `json:"output,omitempty"`
 	Append  bool   `json:"append,omitempty"`
+	rCtx    output.RenderCtx
 	// Probably can't support
 	// --file
 	// Global things ignored in the SDK

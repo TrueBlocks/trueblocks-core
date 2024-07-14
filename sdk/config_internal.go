@@ -16,7 +16,6 @@ import (
 	"io"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -41,8 +40,7 @@ func (opts *configOptionsInternal) ConfigBytes(w io.Writer) error {
 		return fmt.Errorf("error converting config struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	return config.Config(rCtx, w, values)
+	return config.Config(opts.Globals.rCtx, w, values)
 }
 
 // configParseFunc handles special cases such as structs and enums (if any).

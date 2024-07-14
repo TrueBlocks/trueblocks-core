@@ -16,7 +16,6 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -56,8 +55,7 @@ func (opts *namesOptionsInternal) NamesBytes(w io.Writer) error {
 		return fmt.Errorf("error converting names struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	return names.Names(rCtx, w, values)
+	return names.Names(opts.Globals.rCtx, w, values)
 }
 
 // namesParseFunc handles special cases such as structs and enums (if any).
