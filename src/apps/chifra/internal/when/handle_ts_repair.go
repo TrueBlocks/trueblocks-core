@@ -5,8 +5,6 @@
 package whenPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -15,7 +13,6 @@ import (
 
 // HandleTimestampsRepair handles chifra when --timestamps --reset <bn> to reset a single block's timestamps (call repeatedly if needed)
 func (opts *WhenOptions) HandleTimestampsRepair(rCtx output.RenderCtx) error {
-	_ = context.TODO()
 	chain := opts.Globals.Chain
 
 	cnt, err := tslib.NTimestamps(chain)

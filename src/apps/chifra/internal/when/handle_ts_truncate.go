@@ -5,8 +5,6 @@
 package whenPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -14,7 +12,6 @@ import (
 
 // HandleTimestampsTruncate handles chifra when --timestamps --drop <bn>
 func (opts *WhenOptions) HandleTimestampsTruncate(rCtx output.RenderCtx) error {
-	_ = context.TODO()
 	chain := opts.Globals.Chain
 
 	if err := tslib.Truncate(chain, opts.Truncate+1); err != nil {

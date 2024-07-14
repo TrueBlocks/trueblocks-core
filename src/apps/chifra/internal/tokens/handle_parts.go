@@ -1,7 +1,6 @@
 package tokensPkg
 
 import (
-	"context"
 	"errors"
 	"fmt"
 
@@ -15,7 +14,6 @@ import (
 
 func (opts *TokensOptions) HandleParts(rCtx output.RenderCtx) error {
 	chain := opts.Globals.Chain
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, address := range opts.Addrs {
 			addr := base.HexToAddress(address)
@@ -28,7 +26,7 @@ func (opts *TokensOptions) HandleParts(rCtx output.RenderCtx) error {
 					if errors.Is(err, ethereum.NotFound) {
 						continue
 					}
-					cancel()
+					rCtx.Cancel()
 					return
 				}
 
@@ -68,5 +66,5 @@ func (opts *TokensOptions) HandleParts(rCtx output.RenderCtx) error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

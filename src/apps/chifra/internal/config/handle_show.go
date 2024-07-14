@@ -1,7 +1,6 @@
 package configPkg
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -11,7 +10,6 @@ import (
 )
 
 func (opts *ConfigOptions) HandleShow(rCtx output.RenderCtx) error {
-	_ = context.TODO()
 	if opts.Mode == "edit" {
 		return opts.HandleEdit(rCtx)
 	}

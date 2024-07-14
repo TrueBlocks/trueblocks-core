@@ -23,21 +23,20 @@ func (opts *TransactionsOptions) HandleShow(rCtx output.RenderCtx) (err error) {
 	nErrors := 0
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 		}
 
 		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Transaction](apps, false); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 
 		} else if cnt == 0 {
 			errorChan <- fmt.Errorf("transaction not found")
-			cancel()
+			rCtx.Cancel()
 
 		} else {
 			showProgress := opts.Globals.ShowProgress()
@@ -107,5 +106,5 @@ func (opts *TransactionsOptions) HandleShow(rCtx output.RenderCtx) (err error) {
 		"traces":     opts.Traces,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

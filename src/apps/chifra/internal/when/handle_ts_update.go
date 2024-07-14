@@ -5,7 +5,6 @@
 package whenPkg
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -15,7 +14,6 @@ import (
 
 // HandleTimestampsUpdate update the timestamp file to the latest block
 func (opts *WhenOptions) HandleTimestampsUpdate(rCtx output.RenderCtx) error {
-	_ = context.TODO()
 	chain := opts.Globals.Chain
 
 	if opts.Globals.TestMode {

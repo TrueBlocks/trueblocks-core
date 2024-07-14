@@ -5,7 +5,6 @@
 package initPkg
 
 import (
-	"context"
 	"os"
 	"strings"
 
@@ -19,7 +18,6 @@ import (
 // of the files needed to run an example. This is a convenience function for
 // developers to quickly get started with the example.
 func (opts *InitOptions) HandleExample(rCtx output.RenderCtx) error {
-	_ = context.TODO()
 	template := "base/"                     // will use opts.Template in the future
 	tmplFolder := "./templates/" + template // will later support opts.Template
 

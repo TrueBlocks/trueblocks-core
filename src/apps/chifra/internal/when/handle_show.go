@@ -5,7 +5,6 @@
 package whenPkg
 
 import (
-	"context"
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -20,7 +19,6 @@ import (
 func (opts *WhenOptions) HandleShow(rCtx output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(chain)
@@ -29,7 +27,7 @@ func (opts *WhenOptions) HandleShow(rCtx output.RenderCtx) error {
 				if errors.Is(err, ethereum.NotFound) {
 					continue
 				}
-				cancel()
+				rCtx.Cancel()
 				return
 			}
 
@@ -46,7 +44,7 @@ func (opts *WhenOptions) HandleShow(rCtx output.RenderCtx) error {
 					if errors.Is(err, ethereum.NotFound) {
 						continue
 					}
-					cancel()
+					rCtx.Cancel()
 					return
 				}
 				if br.StartType == identifiers.BlockHash && base.HexToHash(br.Orig) != block.Hash {
@@ -69,5 +67,5 @@ func (opts *WhenOptions) HandleShow(rCtx output.RenderCtx) error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }

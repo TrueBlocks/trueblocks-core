@@ -5,7 +5,6 @@
 package initPkg
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -21,7 +20,6 @@ import (
 
 // HandleInit initializes local copy of UnchainedIndex by downloading manifests and chunks
 func (opts *InitOptions) HandleInit(rCtx output.RenderCtx) error {
-	_ = context.TODO()
 	// Make the code below cleaner...
 	chain := opts.Globals.Chain
 

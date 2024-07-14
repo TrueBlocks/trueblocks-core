@@ -5,15 +5,12 @@
 package slurpPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
 func (opts *SlurpOptions) HandleDecache(rCtx output.RenderCtx) error {
 	// TODO: decache.Decache --decache is not yet implemented
-	_ = context.TODO()
 	logger.Error("chifra slurp --decache is not yet implemented")
 	return nil
 }

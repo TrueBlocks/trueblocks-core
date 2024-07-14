@@ -5,15 +5,12 @@
 package whenPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
 // HandleTimestampsShow handles chifra when --timestamps
 func (opts *WhenOptions) HandleTimestamps(rCtx output.RenderCtx) error {
-	_ = context.TODO()
 	var err error
 	if opts.Update {
 		err = opts.HandleTimestampsUpdate(rCtx)

@@ -1,8 +1,6 @@
 package chunksPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -10,7 +8,6 @@ import (
 )
 
 func (opts *ChunksOptions) HandleUnpin(rCtx output.RenderCtx, unusedBns []base.Blknum) error {
-	_ = context.TODO()
 	testMode := opts.Globals.TestMode
 	if testMode {
 		logger.Info("Test mode: unpin not tested")

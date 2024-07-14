@@ -22,7 +22,6 @@ func (opts *StatusOptions) HandleModes(rCtx output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		now := time.Now()
 
@@ -144,7 +143,7 @@ func (opts *StatusOptions) HandleModes(rCtx output.RenderCtx) error {
 		"chains": opts.Chains,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 type CacheWalker struct {

@@ -26,21 +26,20 @@ func (opts *TransactionsOptions) HandleLogs(rCtx output.RenderCtx) error {
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	logFilter := rpc.NewLogFilter(opts.Emitter, opts.Topic)
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 		}
 
 		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Transaction](apps, false); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 
 		} else if cnt == 0 {
 			errorChan <- fmt.Errorf("no transactions found")
-			cancel()
+			rCtx.Cancel()
 
 		} else {
 			showProgress := opts.Globals.ShowProgress()
@@ -115,5 +114,5 @@ func (opts *TransactionsOptions) HandleLogs(rCtx output.RenderCtx) error {
 		"addresses": opts.Uniq,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

@@ -5,8 +5,6 @@
 package chunksPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -14,7 +12,6 @@ import (
 // CheckVersion reads the header of each chunk on disc looking for the Magic number and
 // the hash of the spec version for expected values.
 func (opts *ChunksOptions) CheckVersion(fileNames []string, blockNums []base.Blknum, report *types.ReportCheck) error {
-	_ = context.TODO()
 	for _, fileName := range fileNames {
 		opts.checkIndexChunkInternal(fileName, true /* checkVersion */, report)
 		// opts.checkBloomInternal(testId, fileName, report)

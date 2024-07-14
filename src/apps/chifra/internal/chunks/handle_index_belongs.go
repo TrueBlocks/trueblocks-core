@@ -5,7 +5,6 @@
 package chunksPkg
 
 import (
-	"context"
 	"encoding/binary"
 	"fmt"
 	"io"
@@ -22,7 +21,6 @@ import (
 func (opts *ChunksOptions) HandleIndexBelongs(rCtx output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showAddressesBelongs := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 			return opts.handleResolvedRecords(modelChan, walker, path)
@@ -37,11 +35,11 @@ func (opts *ChunksOptions) HandleIndexBelongs(rCtx output.RenderCtx, blockNums [
 
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 // handleResolvedRecords is a helper function for HandleIndexBelongs and verbose versions of

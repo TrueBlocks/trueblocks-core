@@ -5,15 +5,12 @@
 package chunksPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
 func (opts *ChunksOptions) HandleShow(rCtx output.RenderCtx, blockNums []base.Blknum) error {
-	_ = context.TODO()
 	var err error
 	switch opts.Mode {
 	case "manifest":

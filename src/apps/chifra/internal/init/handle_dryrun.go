@@ -1,7 +1,6 @@
 package initPkg
 
 import (
-	"context"
 	"errors"
 	"fmt"
 
@@ -14,7 +13,6 @@ import (
 )
 
 func (opts *InitOptions) HandleDryRun(rCtx output.RenderCtx) error {
-	_ = context.TODO()
 	chain := opts.Globals.Chain
 
 	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.TempContract)

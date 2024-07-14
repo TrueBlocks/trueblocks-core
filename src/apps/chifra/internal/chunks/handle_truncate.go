@@ -1,7 +1,6 @@
 package chunksPkg
 
 import (
-	"context"
 	"fmt"
 	"io/fs"
 	"os"
@@ -44,7 +43,6 @@ func (opts *ChunksOptions) HandleTruncate(rCtx output.RenderCtx, blockNums []bas
 		Type:    logger.Expanding,
 	})
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 
 		// First, we will remove the chunks and update the manifest. We do this separately for
@@ -92,7 +90,7 @@ func (opts *ChunksOptions) HandleTruncate(rCtx output.RenderCtx, blockNums []bas
 		)
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 
 		} else {
 			bar.Prefix = fmt.Sprintf("Truncated to %d                    ", opts.Truncate)
@@ -152,7 +150,7 @@ func (opts *ChunksOptions) HandleTruncate(rCtx output.RenderCtx, blockNums []bas
 	}
 
 	opts.Globals.NoHeader = true
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 var truncateWarning = `Are sure you want to remove index chunks after and including block {0} (Yn)? `

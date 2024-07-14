@@ -5,7 +5,6 @@
 package monitorsPkg
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"path/filepath"
@@ -26,7 +25,6 @@ import (
 
 // HandleWatch starts the monitor watcher
 func (opts *MonitorsOptions) HandleWatch(rCtx output.RenderCtx) error {
-	_ = context.TODO()
 	opts.Globals.Cache = true
 	scraper := NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, 0)
 

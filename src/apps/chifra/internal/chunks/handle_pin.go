@@ -28,10 +28,9 @@ func (opts *ChunksOptions) HandlePin(rCtx output.RenderCtx, blockNums []base.Blk
 		return nil
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
 	if !opts.Globals.IsApiMode() && usage.QueryUser(pinWarning, "Check skipped") {
-		if err := opts.doCheck(ctx, blockNums); err != nil {
-			cancel()
+		if err := opts.doCheck(rCtx.Ctx, blockNums); err != nil {
+			rCtx.Cancel()
 			return err
 		}
 	}
@@ -49,7 +48,7 @@ func (opts *ChunksOptions) HandlePin(rCtx output.RenderCtx, blockNums []base.Blk
 
 	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 	if err != nil {
-		cancel()
+		rCtx.Cancel()
 		return err
 	}
 
@@ -88,7 +87,7 @@ func (opts *ChunksOptions) HandlePin(rCtx output.RenderCtx, blockNums []base.Blk
 		)
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 			return
 		}
 
@@ -165,7 +164,7 @@ func (opts *ChunksOptions) HandlePin(rCtx output.RenderCtx, blockNums []base.Blk
 		modelChan <- &report
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 // matches returns true if the Result has both local and remote hashes for both the index and the bloom and they match
