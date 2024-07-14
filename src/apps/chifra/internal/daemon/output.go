@@ -85,10 +85,10 @@ func (opts *DaemonOptions) DaemonInternal(rCtx output.RenderCtx) error {
 	}
 
 	go func() {
-		_ = opts.HandleScraper()
+		_ = opts.HandleScraper(rCtx)
 	}()
 	go func() {
-		_ = opts.HandleMonitor()
+		_ = opts.HandleMonitor(rCtx)
 	}()
 
 	// do not remove, this fixes a lint warning that happens in the boilerplate because of the Fatal just below

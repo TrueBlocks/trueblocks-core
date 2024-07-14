@@ -55,11 +55,11 @@ func (opts *InitOptions) InitInternal(rCtx output.RenderCtx) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.DryRun {
-		err = opts.HandleDryRun()
+		err = opts.HandleDryRun(rCtx)
 	} else if len(opts.Example) > 0 {
-		err = opts.HandleExample()
+		err = opts.HandleExample(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

@@ -8,9 +8,10 @@ import (
 	"context"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-func (opts *MonitorsOptions) HandleShow() error {
+func (opts *MonitorsOptions) HandleShow(rCtx output.RenderCtx) error {
 	_ = context.TODO()
 	logger.Fatal("Should not happen for chifra monitors.")
 	return nil

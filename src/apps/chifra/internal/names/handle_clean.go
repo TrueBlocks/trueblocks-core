@@ -22,7 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *NamesOptions) HandleClean() error {
+func (opts *NamesOptions) HandleClean(rCtx output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
 	label := "custom"

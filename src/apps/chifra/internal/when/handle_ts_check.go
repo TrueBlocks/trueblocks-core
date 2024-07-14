@@ -8,13 +8,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // HandleTimestampsCheck handles chifra when --timestamps --check
-func (opts *WhenOptions) HandleTimestampsCheck() error {
+func (opts *WhenOptions) HandleTimestampsCheck(rCtx output.RenderCtx) error {
 	_ = context.TODO()
 	chain := opts.Globals.Chain
 

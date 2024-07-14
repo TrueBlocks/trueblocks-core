@@ -5,10 +5,11 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 )
 
-func (opts *ChunksOptions) HandleUnpin(unusedBns []base.Blknum) error {
+func (opts *ChunksOptions) HandleUnpin(rCtx output.RenderCtx, unusedBns []base.Blknum) error {
 	_ = context.TODO()
 	testMode := opts.Globals.TestMode
 	if testMode {

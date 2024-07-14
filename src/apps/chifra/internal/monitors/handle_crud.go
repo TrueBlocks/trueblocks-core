@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -21,7 +22,7 @@ import (
 // Not Deleted | Delete	| Error    | Error  |
 // Deleted     | Error  | Undelete | Remove |
 // ------------|--------|-------------------|
-func (opts *MonitorsOptions) HandleCrud() error {
+func (opts *MonitorsOptions) HandleCrud(rCtx output.RenderCtx) error {
 	_ = context.TODO()
 	chain := opts.Globals.Chain
 	for _, addr := range opts.Addrs {

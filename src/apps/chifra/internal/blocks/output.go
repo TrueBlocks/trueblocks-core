@@ -55,23 +55,23 @@ func (opts *BlocksOptions) BlocksInternal(rCtx output.RenderCtx) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if opts.Count {
-		err = opts.HandleCount()
+		err = opts.HandleCount(rCtx)
 	} else if opts.Logs {
-		err = opts.HandleLogs()
+		err = opts.HandleLogs(rCtx)
 	} else if opts.Withdrawals {
-		err = opts.HandleWithdrawals()
+		err = opts.HandleWithdrawals(rCtx)
 	} else if opts.Traces {
-		err = opts.HandleTraces()
+		err = opts.HandleTraces(rCtx)
 	} else if opts.Uncles {
-		err = opts.HandleUncles()
+		err = opts.HandleUncles(rCtx)
 	} else if opts.Uniq {
-		err = opts.HandleUniq()
+		err = opts.HandleUniq(rCtx)
 	} else if opts.Hashes {
-		err = opts.HandleHashes()
+		err = opts.HandleHashes(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

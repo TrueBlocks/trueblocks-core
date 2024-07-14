@@ -9,11 +9,12 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 // HandleTimestampsUpdate update the timestamp file to the latest block
-func (opts *WhenOptions) HandleTimestampsUpdate() error {
+func (opts *WhenOptions) HandleTimestampsUpdate(rCtx output.RenderCtx) error {
 	_ = context.TODO()
 	chain := opts.Globals.Chain
 

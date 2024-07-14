@@ -55,9 +55,9 @@ func (opts *StatusOptions) StatusInternal(rCtx output.RenderCtx) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Diagnose {
-		err = opts.HandleDiagnose()
+		err = opts.HandleDiagnose(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

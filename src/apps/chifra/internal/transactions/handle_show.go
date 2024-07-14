@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *TransactionsOptions) HandleShow() (err error) {
+func (opts *TransactionsOptions) HandleShow(rCtx output.RenderCtx) (err error) {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0

@@ -12,7 +12,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *TransactionsOptions) HandleUniq() (err error) {
+func (opts *TransactionsOptions) HandleUniq(rCtx output.RenderCtx) (err error) {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())

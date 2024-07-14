@@ -10,9 +10,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-func (opts *InitOptions) HandleDryRun() error {
+func (opts *InitOptions) HandleDryRun(rCtx output.RenderCtx) error {
 	_ = context.TODO()
 	chain := opts.Globals.Chain
 

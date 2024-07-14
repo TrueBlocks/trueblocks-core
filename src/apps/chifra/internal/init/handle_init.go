@@ -14,12 +14,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // HandleInit initializes local copy of UnchainedIndex by downloading manifests and chunks
-func (opts *InitOptions) HandleInit() error {
+func (opts *InitOptions) HandleInit(rCtx output.RenderCtx) error {
 	_ = context.TODO()
 	// Make the code below cleaner...
 	chain := opts.Globals.Chain
@@ -116,6 +117,6 @@ func (opts *InitOptions) HandleInit() error {
 }
 
 // HandleShow initializes local copy of UnchainedIndex by downloading manifests and chunks
-func (opts *InitOptions) HandleShow() error {
-	return opts.HandleInit()
+func (opts *InitOptions) HandleShow(rCtx output.RenderCtx) error {
+	return opts.HandleInit(rCtx)
 }

@@ -23,7 +23,7 @@ import (
 
 // TODO: We need to make sure, when we truncate, that we truncate the corresponding maps files as well.
 
-func (opts *ChunksOptions) HandleTruncate(blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleTruncate(rCtx output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	if opts.Globals.TestMode {
 		logger.Warn("Truncate option not tested.")

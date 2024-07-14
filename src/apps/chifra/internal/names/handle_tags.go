@@ -10,7 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *NamesOptions) HandleTags() error {
+func (opts *NamesOptions) HandleTags(rCtx output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	namesArray, err := loadNamesArray(chain, opts.getType(), names.SortByTags, opts.Terms)
 	if err != nil {

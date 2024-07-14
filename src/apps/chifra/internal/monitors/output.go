@@ -75,17 +75,17 @@ func (opts *MonitorsOptions) MonitorsInternal(rCtx output.RenderCtx) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if opts.Clean {
-		err = opts.HandleClean()
+		err = opts.HandleClean(rCtx)
 	} else if opts.List {
-		err = opts.HandleList()
+		err = opts.HandleList(rCtx)
 	} else if opts.Watch {
-		err = opts.HandleWatch()
+		err = opts.HandleWatch(rCtx)
 	} else if opts.anyCrud() {
-		err = opts.HandleCrud()
+		err = opts.HandleCrud(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

@@ -20,7 +20,7 @@ import (
 
 var errMutex sync.Mutex
 
-func (opts *BlocksOptions) HandleShow() error {
+func (opts *BlocksOptions) HandleShow(rCtx output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0

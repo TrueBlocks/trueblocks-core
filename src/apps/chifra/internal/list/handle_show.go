@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
+func (opts *ListOptions) HandleShow(rCtx output.RenderCtx, monitorArray []monitor.Monitor) error {
 	if opts.Silent {
 		return nil
 	}

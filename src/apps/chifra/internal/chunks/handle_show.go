@@ -9,29 +9,30 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-func (opts *ChunksOptions) HandleShow(blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleShow(rCtx output.RenderCtx, blockNums []base.Blknum) error {
 	_ = context.TODO()
 	var err error
 	switch opts.Mode {
 	case "manifest":
-		err = opts.HandleManifest(blockNums)
+		err = opts.HandleManifest(rCtx, blockNums)
 
 	case "index":
-		err = opts.HandleIndex(blockNums)
+		err = opts.HandleIndex(rCtx, blockNums)
 
 	case "blooms":
-		err = opts.HandleBlooms(blockNums)
+		err = opts.HandleBlooms(rCtx, blockNums)
 
 	case "addresses":
-		err = opts.HandleAddresses(blockNums)
+		err = opts.HandleAddresses(rCtx, blockNums)
 
 	case "appearances":
-		err = opts.HandleAppearances(blockNums)
+		err = opts.HandleAppearances(rCtx, blockNums)
 
 	case "stats":
-		err = opts.HandleStats(blockNums)
+		err = opts.HandleStats(rCtx, blockNums)
 
 	default:
 		logger.Fatal("should not happen ==> in NamesInternal")

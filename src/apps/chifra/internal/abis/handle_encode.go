@@ -15,7 +15,7 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-func (opts *AbisOptions) HandleEncode() error {
+func (opts *AbisOptions) HandleEncode(rCtx output.RenderCtx) error {
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		funcs := abi.ExtractSigs(opts.Encode)

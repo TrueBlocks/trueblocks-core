@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
@@ -37,7 +38,7 @@ func NewCriticalError(err error) *criticalError {
 // HandleScrape enters a forever loop and continually scrapes --block_cnt blocks
 // (or less if close to the head). The forever loop pauses each round for
 // --sleep seconds (or, if not close to the head, for .25 seconds).
-func (opts *ScrapeOptions) HandleScrape() error {
+func (opts *ScrapeOptions) HandleScrape(rCtx output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	defer func() {
@@ -242,7 +243,7 @@ func cleanEphemeralIndexFolders(chain string) error {
 	return file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe"})
 }
 
-func (opts *ScrapeOptions) HandleShow() error {
+func (opts *ScrapeOptions) HandleShow(rCtx output.RenderCtx) error {
 	// Note this never returns
-	return opts.HandleScrape()
+	return opts.HandleScrape(rCtx)
 }

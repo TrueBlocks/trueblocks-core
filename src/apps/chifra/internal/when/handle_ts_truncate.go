@@ -8,11 +8,12 @@ import (
 	"context"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 // HandleTimestampsTruncate handles chifra when --timestamps --drop <bn>
-func (opts *WhenOptions) HandleTimestampsTruncate() error {
+func (opts *WhenOptions) HandleTimestampsTruncate(rCtx output.RenderCtx) error {
 	_ = context.TODO()
 	chain := opts.Globals.Chain
 

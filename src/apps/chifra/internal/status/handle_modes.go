@@ -18,7 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *StatusOptions) HandleModes() error {
+func (opts *StatusOptions) HandleModes(rCtx output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 

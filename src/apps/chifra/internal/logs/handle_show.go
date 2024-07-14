@@ -21,7 +21,7 @@ import (
 
 var mMutex = sync.Mutex{}
 
-func (opts *LogsOptions) HandleShow() error {
+func (opts *LogsOptions) HandleShow(rCtx output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0

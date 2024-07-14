@@ -13,7 +13,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *TokensOptions) HandleShow() error {
+func (opts *TokensOptions) HandleShow(rCtx output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	tokenAddr := base.HexToAddress(opts.Addrs[0])
 

@@ -13,7 +13,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *TokensOptions) HandleParts() error {
+func (opts *TokensOptions) HandleParts(rCtx output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {

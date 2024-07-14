@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ListOptions) HandleCount(monitorArray []monitor.Monitor) error {
+func (opts *ListOptions) HandleCount(rCtx output.RenderCtx, monitorArray []monitor.Monitor) error {
 	if opts.Globals.Verbose {
 		for i := 0; i < len(monitorArray); i++ {
 			_ = monitorArray[i].ReadMonitorHeader()

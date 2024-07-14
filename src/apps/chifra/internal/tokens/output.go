@@ -55,11 +55,11 @@ func (opts *TokensOptions) TokensInternal(rCtx output.RenderCtx) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if len(opts.Parts) > 0 {
-		err = opts.HandleParts()
+		err = opts.HandleParts(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

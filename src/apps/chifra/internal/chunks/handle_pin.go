@@ -21,7 +21,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandlePin(rCtx output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	if opts.Globals.TestMode {
 		logger.Warn("Pinning option not tested.")

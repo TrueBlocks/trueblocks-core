@@ -54,7 +54,7 @@ func (opts *ExploreOptions) ExploreInternal(rCtx output.RenderCtx) error {
 	msg := "chifra explore"
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = opts.HandleShow()
+	err = opts.HandleShow(rCtx)
 	timer.Report(msg)
 
 	return err

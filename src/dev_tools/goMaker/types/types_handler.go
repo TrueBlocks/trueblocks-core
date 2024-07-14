@@ -1,6 +1,8 @@
 package types
 
-import "strings"
+import (
+	"strings"
+)
 
 type Handler struct {
 	Position float64 `json:"position"`
@@ -36,11 +38,11 @@ func (h *Handler) Test() string {
 
 func (h *Handler) Handler() string {
 	if h.Option.Route == "export" || h.Option.Route == "list" {
-		return "err = opts.Handle" + h.Name + "(monitorArray)"
+		return "err = opts.Handle" + h.Name + "(rCtx, monitorArray)"
 	} else if h.Option.Route == "chunks" {
-		return "err = opts.Handle" + h.Name + "(blockNums)"
+		return "err = opts.Handle" + h.Name + "(rCtx, blockNums)"
 	}
-	return "err = opts.Handle" + h.Name + "()"
+	return "err = opts.Handle" + h.Name + "(rCtx)"
 }
 
 func (h *Handler) executeTemplate(name, tmplCode string) string {

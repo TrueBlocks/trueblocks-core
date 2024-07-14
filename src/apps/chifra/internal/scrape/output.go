@@ -56,9 +56,9 @@ func (opts *ScrapeOptions) ScrapeInternal(rCtx output.RenderCtx) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Touch > 0 {
-		err = opts.HandleTouch()
+		err = opts.HandleTouch(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 
