@@ -13,6 +13,7 @@ import (
 	"net/url"
 
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
@@ -20,10 +21,11 @@ import (
 func Status(w io.Writer, values url.Values) error {
 	status.ResetOptions(sdkTestMode)
 	opts := status.StatusFinishParseInternal(w, values)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("status", w, &opts.Globals)
-	err := opts.StatusInternal()
+	err := opts.StatusInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("status", err, &opts.Globals)
 
 	return err

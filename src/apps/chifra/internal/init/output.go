@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunInit handles the init command for the command line. Returns error only as per cobra.
 func RunInit(cmd *cobra.Command, args []string) error {
 	opts := initFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("init", &opts.Globals)
-	return opts.InitInternal()
+	return opts.InitInternal(rCtx)
 }
 
 // ServeInit handles the init command for the API. Returns an error.
 func ServeInit(w http.ResponseWriter, r *http.Request) error {
 	opts := initFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("init", w, &opts.Globals)
-	err := opts.InitInternal()
+	err := opts.InitInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("init", err, &opts.Globals)
 	return err
 }
 
 // InitInternal handles the internal workings of the init command. Returns an error.
-func (opts *InitOptions) InitInternal() error {
+func (opts *InitOptions) InitInternal(rCtx output.RenderCtx) error {
 	var err error
 	if err = opts.validateInit(); err != nil {
 		return err

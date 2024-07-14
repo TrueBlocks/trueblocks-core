@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunAbis handles the abis command for the command line. Returns error only as per cobra.
 func RunAbis(cmd *cobra.Command, args []string) error {
 	opts := abisFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("abis", &opts.Globals)
-	return opts.AbisInternal()
+	return opts.AbisInternal(rCtx)
 }
 
 // ServeAbis handles the abis command for the API. Returns an error.
 func ServeAbis(w http.ResponseWriter, r *http.Request) error {
 	opts := abisFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("abis", w, &opts.Globals)
-	err := opts.AbisInternal()
+	err := opts.AbisInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("abis", err, &opts.Globals)
 	return err
 }
 
 // AbisInternal handles the internal workings of the abis command. Returns an error.
-func (opts *AbisOptions) AbisInternal() error {
+func (opts *AbisOptions) AbisInternal(rCtx output.RenderCtx) error {
 	var err error
 	if err = opts.validateAbis(); err != nil {
 		return err

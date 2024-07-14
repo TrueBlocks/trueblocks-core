@@ -13,6 +13,7 @@ import (
 	"net/url"
 
 	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
@@ -20,10 +21,11 @@ import (
 func Transactions(w io.Writer, values url.Values) error {
 	transactions.ResetOptions(sdkTestMode)
 	opts := transactions.TransactionsFinishParseInternal(w, values)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("transactions", w, &opts.Globals)
-	err := opts.TransactionsInternal()
+	err := opts.TransactionsInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("transactions", err, &opts.Globals)
 
 	return err

@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunLogs handles the logs command for the command line. Returns error only as per cobra.
 func RunLogs(cmd *cobra.Command, args []string) error {
 	opts := logsFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("logs", &opts.Globals)
-	return opts.LogsInternal()
+	return opts.LogsInternal(rCtx)
 }
 
 // ServeLogs handles the logs command for the API. Returns an error.
 func ServeLogs(w http.ResponseWriter, r *http.Request) error {
 	opts := logsFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("logs", w, &opts.Globals)
-	err := opts.LogsInternal()
+	err := opts.LogsInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("logs", err, &opts.Globals)
 	return err
 }
 
 // LogsInternal handles the internal workings of the logs command. Returns an error.
-func (opts *LogsOptions) LogsInternal() error {
+func (opts *LogsOptions) LogsInternal(rCtx output.RenderCtx) error {
 	var err error
 	if err = opts.validateLogs(); err != nil {
 		return err

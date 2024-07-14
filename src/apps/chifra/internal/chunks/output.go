@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -25,25 +26,27 @@ import (
 // RunChunks handles the chunks command for the command line. Returns error only as per cobra.
 func RunChunks(cmd *cobra.Command, args []string) error {
 	opts := chunksFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("chunks", &opts.Globals)
-	return opts.ChunksInternal()
+	return opts.ChunksInternal(rCtx)
 }
 
 // ServeChunks handles the chunks command for the API. Returns an error.
 func ServeChunks(w http.ResponseWriter, r *http.Request) error {
 	opts := chunksFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("chunks", w, &opts.Globals)
-	err := opts.ChunksInternal()
+	err := opts.ChunksInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("chunks", err, &opts.Globals)
 	return err
 }
 
 // ChunksInternal handles the internal workings of the chunks command. Returns an error.
-func (opts *ChunksOptions) ChunksInternal() error {
+func (opts *ChunksOptions) ChunksInternal(rCtx output.RenderCtx) error {
 	var err error
 	if err = opts.validateChunks(); err != nil {
 		return err

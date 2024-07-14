@@ -13,6 +13,7 @@ import (
 	"net/url"
 
 	daemon "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/daemon"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
@@ -20,10 +21,11 @@ import (
 func Daemon(w io.Writer, values url.Values) error {
 	daemon.ResetOptions(sdkTestMode)
 	opts := daemon.DaemonFinishParseInternal(w, values)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)
-	err := opts.DaemonInternal()
+	err := opts.DaemonInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("daemon", err, &opts.Globals)
 
 	return err

@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunConfig handles the config command for the command line. Returns error only as per cobra.
 func RunConfig(cmd *cobra.Command, args []string) error {
 	opts := configFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("config", &opts.Globals)
-	return opts.ConfigInternal()
+	return opts.ConfigInternal(rCtx)
 }
 
 // ServeConfig handles the config command for the API. Returns an error.
 func ServeConfig(w http.ResponseWriter, r *http.Request) error {
 	opts := configFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("config", w, &opts.Globals)
-	err := opts.ConfigInternal()
+	err := opts.ConfigInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("config", err, &opts.Globals)
 	return err
 }
 
 // ConfigInternal handles the internal workings of the config command. Returns an error.
-func (opts *ConfigOptions) ConfigInternal() error {
+func (opts *ConfigOptions) ConfigInternal(rCtx output.RenderCtx) error {
 	var err error
 	if err = opts.validateConfig(); err != nil {
 		return err

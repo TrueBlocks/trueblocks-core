@@ -13,6 +13,7 @@ import (
 	"net/url"
 
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
@@ -20,10 +21,11 @@ import (
 func Slurp(w io.Writer, values url.Values) error {
 	slurp.ResetOptions(sdkTestMode)
 	opts := slurp.SlurpFinishParseInternal(w, values)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("slurp", w, &opts.Globals)
-	err := opts.SlurpInternal()
+	err := opts.SlurpInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("slurp", err, &opts.Globals)
 
 	return err

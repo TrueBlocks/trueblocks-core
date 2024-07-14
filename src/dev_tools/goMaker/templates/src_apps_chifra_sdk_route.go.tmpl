@@ -13,6 +13,7 @@ import (
 	"net/url"
 
 	{{.Pkg}} "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/{{toLower .Route}}"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
@@ -20,10 +21,11 @@ import (
 func {{toProper .Route}}(w io.Writer, values url.Values) error {
 	{{.Pkg}}.ResetOptions(sdkTestMode)
 	opts := {{.Pkg}}.{{toProper .Route}}FinishParseInternal(w, values)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("{{toLower .Route}}", w, &opts.Globals)
-	err := opts.{{toProper .Route}}Internal()
+	err := opts.{{toProper .Route}}Internal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("{{toLower .Route}}", err, &opts.Globals)
 
 	return err

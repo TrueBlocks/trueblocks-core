@@ -4,6 +4,7 @@ import (
 	"context"
 
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
 // HandleScraper starts and manages the scraper process
@@ -14,6 +15,7 @@ func (opts *DaemonOptions) HandleScraper() error {
 	}
 
 	scrapeOpts := scrapePkg.GetScrapeOptions([]string{}, &opts.Globals)
-	err := scrapeOpts.ScrapeInternal()
+	rCtx := output.NewRenderContext()
+	err := scrapeOpts.ScrapeInternal(rCtx)
 	return err
 }

@@ -13,6 +13,7 @@ import (
 	"net/url"
 
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
@@ -20,10 +21,11 @@ import (
 func Receipts(w io.Writer, values url.Values) error {
 	receipts.ResetOptions(sdkTestMode)
 	opts := receipts.ReceiptsFinishParseInternal(w, values)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("receipts", w, &opts.Globals)
-	err := opts.ReceiptsInternal()
+	err := opts.ReceiptsInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("receipts", err, &opts.Globals)
 
 	return err

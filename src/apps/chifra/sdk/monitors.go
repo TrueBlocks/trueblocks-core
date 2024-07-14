@@ -13,6 +13,7 @@ import (
 	"net/url"
 
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
@@ -20,10 +21,11 @@ import (
 func Monitors(w io.Writer, values url.Values) error {
 	monitors.ResetOptions(sdkTestMode)
 	opts := monitors.MonitorsFinishParseInternal(w, values)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("monitors", w, &opts.Globals)
-	err := opts.MonitorsInternal()
+	err := opts.MonitorsInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("monitors", err, &opts.Globals)
 
 	return err

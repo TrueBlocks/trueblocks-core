@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -24,25 +25,27 @@ import (
 // RunList handles the list command for the command line. Returns error only as per cobra.
 func RunList(cmd *cobra.Command, args []string) error {
 	opts := listFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("list", &opts.Globals)
-	return opts.ListInternal()
+	return opts.ListInternal(rCtx)
 }
 
 // ServeList handles the list command for the API. Returns an error.
 func ServeList(w http.ResponseWriter, r *http.Request) error {
 	opts := listFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("list", w, &opts.Globals)
-	err := opts.ListInternal()
+	err := opts.ListInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("list", err, &opts.Globals)
 	return err
 }
 
 // ListInternal handles the internal workings of the list command. Returns an error.
-func (opts *ListOptions) ListInternal() error {
+func (opts *ListOptions) ListInternal(rCtx output.RenderCtx) error {
 	var err error
 	if err = opts.validateList(); err != nil {
 		return err

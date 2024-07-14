@@ -13,6 +13,7 @@ import (
 	"net/url"
 
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
@@ -20,10 +21,11 @@ import (
 func Blocks(w io.Writer, values url.Values) error {
 	blocks.ResetOptions(sdkTestMode)
 	opts := blocks.BlocksFinishParseInternal(w, values)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("blocks", w, &opts.Globals)
-	err := opts.BlocksInternal()
+	err := opts.BlocksInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("blocks", err, &opts.Globals)
 
 	return err

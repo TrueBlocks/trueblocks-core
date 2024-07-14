@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
 func RunBlocks(cmd *cobra.Command, args []string) error {
 	opts := blocksFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("blocks", &opts.Globals)
-	return opts.BlocksInternal()
+	return opts.BlocksInternal(rCtx)
 }
 
 // ServeBlocks handles the blocks command for the API. Returns an error.
 func ServeBlocks(w http.ResponseWriter, r *http.Request) error {
 	opts := blocksFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("blocks", w, &opts.Globals)
-	err := opts.BlocksInternal()
+	err := opts.BlocksInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("blocks", err, &opts.Globals)
 	return err
 }
 
 // BlocksInternal handles the internal workings of the blocks command. Returns an error.
-func (opts *BlocksOptions) BlocksInternal() error {
+func (opts *BlocksOptions) BlocksInternal(rCtx output.RenderCtx) error {
 	var err error
 	if err = opts.validateBlocks(); err != nil {
 		return err

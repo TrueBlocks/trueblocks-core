@@ -13,6 +13,7 @@ import (
 	"net/url"
 
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
@@ -20,6 +21,7 @@ import (
 func Names(w io.Writer, values url.Values) error {
 	names.ResetOptions(sdkTestMode)
 	opts := names.NamesFinishParseInternal(w, values)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	var err1 error
 	if err1 = opts.LoadCrudDataIfNeeded(nil); err1 != nil {
@@ -27,7 +29,7 @@ func Names(w io.Writer, values url.Values) error {
 	}
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("names", w, &opts.Globals)
-	err := opts.NamesInternal()
+	err := opts.NamesInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("names", err, &opts.Globals)
 
 	return err
