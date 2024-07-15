@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunTransactions handles the transactions command for the command line. Returns error only as per cobra.
 func RunTransactions(cmd *cobra.Command, args []string) error {
 	opts := transactionsFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("transactions", &opts.Globals)
-	return opts.TransactionsInternal()
+	return opts.TransactionsInternal(rCtx)
 }
 
 // ServeTransactions handles the transactions command for the API. Returns an error.
 func ServeTransactions(w http.ResponseWriter, r *http.Request) error {
 	opts := transactionsFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("transactions", w, &opts.Globals)
-	err := opts.TransactionsInternal()
+	err := opts.TransactionsInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("transactions", err, &opts.Globals)
 	return err
 }
 
 // TransactionsInternal handles the internal workings of the transactions command. Returns an error.
-func (opts *TransactionsOptions) TransactionsInternal() error {
+func (opts *TransactionsOptions) TransactionsInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateTransactions(); err != nil {
 		return err

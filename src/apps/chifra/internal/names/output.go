@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,6 +24,7 @@ import (
 // RunNames handles the names command for the command line. Returns error only as per cobra.
 func RunNames(cmd *cobra.Command, args []string) error {
 	opts := namesFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	var err1 error
 	if err1 = opts.LoadCrudDataIfNeeded(nil); err1 != nil {
@@ -30,12 +32,13 @@ func RunNames(cmd *cobra.Command, args []string) error {
 	}
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("names", &opts.Globals)
-	return opts.NamesInternal()
+	return opts.NamesInternal(rCtx)
 }
 
 // ServeNames handles the names command for the API. Returns an error.
 func ServeNames(w http.ResponseWriter, r *http.Request) error {
 	opts := namesFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	var err1 error
 	if err1 = opts.LoadCrudDataIfNeeded(r); err1 != nil {
@@ -43,13 +46,13 @@ func ServeNames(w http.ResponseWriter, r *http.Request) error {
 	}
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("names", w, &opts.Globals)
-	err := opts.NamesInternal()
+	err := opts.NamesInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("names", err, &opts.Globals)
 	return err
 }
 
 // NamesInternal handles the internal workings of the names command. Returns an error.
-func (opts *NamesOptions) NamesInternal() error {
+func (opts *NamesOptions) NamesInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateNames(); err != nil {
 		return err

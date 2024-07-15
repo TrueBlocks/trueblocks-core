@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunStatus handles the status command for the command line. Returns error only as per cobra.
 func RunStatus(cmd *cobra.Command, args []string) error {
 	opts := statusFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("status", &opts.Globals)
-	return opts.StatusInternal()
+	return opts.StatusInternal(rCtx)
 }
 
 // ServeStatus handles the status command for the API. Returns an error.
 func ServeStatus(w http.ResponseWriter, r *http.Request) error {
 	opts := statusFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("status", w, &opts.Globals)
-	err := opts.StatusInternal()
+	err := opts.StatusInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("status", err, &opts.Globals)
 	return err
 }
 
 // StatusInternal handles the internal workings of the status command. Returns an error.
-func (opts *StatusOptions) StatusInternal() error {
+func (opts *StatusOptions) StatusInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateStatus(); err != nil {
 		return err

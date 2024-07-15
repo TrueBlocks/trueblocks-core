@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunExplore handles the explore command for the command line. Returns error only as per cobra.
 func RunExplore(cmd *cobra.Command, args []string) error {
 	opts := exploreFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("explore", &opts.Globals)
-	return opts.ExploreInternal()
+	return opts.ExploreInternal(rCtx)
 }
 
 // ServeExplore handles the explore command for the API. Returns an error.
 func ServeExplore(w http.ResponseWriter, r *http.Request) error {
 	opts := exploreFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("explore", w, &opts.Globals)
-	err := opts.ExploreInternal()
+	err := opts.ExploreInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("explore", err, &opts.Globals)
 	return err
 }
 
 // ExploreInternal handles the internal workings of the explore command. Returns an error.
-func (opts *ExploreOptions) ExploreInternal() error {
+func (opts *ExploreOptions) ExploreInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateExplore(); err != nil {
 		return err

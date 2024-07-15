@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -24,25 +25,27 @@ import (
 // RunExport handles the export command for the command line. Returns error only as per cobra.
 func RunExport(cmd *cobra.Command, args []string) error {
 	opts := exportFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("export", &opts.Globals)
-	return opts.ExportInternal()
+	return opts.ExportInternal(rCtx)
 }
 
 // ServeExport handles the export command for the API. Returns an error.
 func ServeExport(w http.ResponseWriter, r *http.Request) error {
 	opts := exportFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("export", w, &opts.Globals)
-	err := opts.ExportInternal()
+	err := opts.ExportInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("export", err, &opts.Globals)
 	return err
 }
 
 // ExportInternal handles the internal workings of the export command. Returns an error.
-func (opts *ExportOptions) ExportInternal() error {
+func (opts *ExportOptions) ExportInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateExport(); err != nil {
 		return err

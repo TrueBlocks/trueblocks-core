@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunTraces handles the traces command for the command line. Returns error only as per cobra.
 func RunTraces(cmd *cobra.Command, args []string) error {
 	opts := tracesFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("traces", &opts.Globals)
-	return opts.TracesInternal()
+	return opts.TracesInternal(rCtx)
 }
 
 // ServeTraces handles the traces command for the API. Returns an error.
 func ServeTraces(w http.ResponseWriter, r *http.Request) error {
 	opts := tracesFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("traces", w, &opts.Globals)
-	err := opts.TracesInternal()
+	err := opts.TracesInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("traces", err, &opts.Globals)
 	return err
 }
 
 // TracesInternal handles the internal workings of the traces command. Returns an error.
-func (opts *TracesOptions) TracesInternal() error {
+func (opts *TracesOptions) TracesInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateTraces(); err != nil {
 		return err

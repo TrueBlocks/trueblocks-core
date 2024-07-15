@@ -24,7 +24,7 @@ func Transactions(rCtx *output.RenderCtx, w io.Writer, values url.Values) error 
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("transactions", w, &opts.Globals)
-	err := opts.TransactionsInternal()
+	err := opts.TransactionsInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("transactions", err, &opts.Globals)
 
 	return err

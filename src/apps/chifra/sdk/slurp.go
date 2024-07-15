@@ -24,7 +24,7 @@ func Slurp(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("slurp", w, &opts.Globals)
-	err := opts.SlurpInternal()
+	err := opts.SlurpInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("slurp", err, &opts.Globals)
 
 	return err

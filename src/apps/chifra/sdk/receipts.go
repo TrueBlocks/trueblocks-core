@@ -24,7 +24,7 @@ func Receipts(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("receipts", w, &opts.Globals)
-	err := opts.ReceiptsInternal()
+	err := opts.ReceiptsInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("receipts", err, &opts.Globals)
 
 	return err

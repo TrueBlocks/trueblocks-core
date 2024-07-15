@@ -24,7 +24,7 @@ func List(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("list", w, &opts.Globals)
-	err := opts.ListInternal()
+	err := opts.ListInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("list", err, &opts.Globals)
 
 	return err

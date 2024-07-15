@@ -24,7 +24,7 @@ func Init(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("init", w, &opts.Globals)
-	err := opts.InitInternal()
+	err := opts.InitInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("init", err, &opts.Globals)
 
 	return err

@@ -24,7 +24,7 @@ func Config(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("config", w, &opts.Globals)
-	err := opts.ConfigInternal()
+	err := opts.ConfigInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("config", err, &opts.Globals)
 
 	return err

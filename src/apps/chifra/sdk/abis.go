@@ -24,7 +24,7 @@ func Abis(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("abis", w, &opts.Globals)
-	err := opts.AbisInternal()
+	err := opts.AbisInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("abis", err, &opts.Globals)
 
 	return err

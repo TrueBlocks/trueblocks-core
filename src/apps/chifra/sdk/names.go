@@ -28,7 +28,7 @@ func Names(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	}
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("names", w, &opts.Globals)
-	err := opts.NamesInternal()
+	err := opts.NamesInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("names", err, &opts.Globals)
 
 	return err

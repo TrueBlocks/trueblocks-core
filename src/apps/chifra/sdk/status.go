@@ -24,7 +24,7 @@ func Status(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("status", w, &opts.Globals)
-	err := opts.StatusInternal()
+	err := opts.StatusInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("status", err, &opts.Globals)
 
 	return err

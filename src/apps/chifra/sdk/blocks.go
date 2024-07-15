@@ -24,7 +24,7 @@ func Blocks(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("blocks", w, &opts.Globals)
-	err := opts.BlocksInternal()
+	err := opts.BlocksInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("blocks", err, &opts.Globals)
 
 	return err

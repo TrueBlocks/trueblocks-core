@@ -24,7 +24,7 @@ func When(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("when", w, &opts.Globals)
-	err := opts.WhenInternal()
+	err := opts.WhenInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("when", err, &opts.Globals)
 
 	return err

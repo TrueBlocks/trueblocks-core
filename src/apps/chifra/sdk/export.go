@@ -24,7 +24,7 @@ func Export(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("export", w, &opts.Globals)
-	err := opts.ExportInternal()
+	err := opts.ExportInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("export", err, &opts.Globals)
 
 	return err

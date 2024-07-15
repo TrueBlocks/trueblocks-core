@@ -24,7 +24,7 @@ func Tokens(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("tokens", w, &opts.Globals)
-	err := opts.TokensInternal()
+	err := opts.TokensInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("tokens", err, &opts.Globals)
 
 	return err

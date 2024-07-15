@@ -24,7 +24,7 @@ func Daemon(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)
-	err := opts.DaemonInternal()
+	err := opts.DaemonInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("daemon", err, &opts.Globals)
 
 	return err

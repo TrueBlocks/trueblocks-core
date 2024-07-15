@@ -24,7 +24,7 @@ func Traces(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("traces", w, &opts.Globals)
-	err := opts.TracesInternal()
+	err := opts.TracesInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("traces", err, &opts.Globals)
 
 	return err

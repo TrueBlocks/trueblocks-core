@@ -24,7 +24,7 @@ func {{toProper .Route}}(rCtx *output.RenderCtx, w io.Writer, values url.Values)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("{{toLower .Route}}", w, &opts.Globals)
-	err := opts.{{toProper .Route}}Internal()
+	err := opts.{{toProper .Route}}Internal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("{{toLower .Route}}", err, &opts.Globals)
 
 	return err

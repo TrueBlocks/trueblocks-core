@@ -24,7 +24,7 @@ func State(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("state", w, &opts.Globals)
-	err := opts.StateInternal()
+	err := opts.StateInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("state", err, &opts.Globals)
 
 	return err

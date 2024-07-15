@@ -24,7 +24,7 @@ func Chunks(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("chunks", w, &opts.Globals)
-	err := opts.ChunksInternal()
+	err := opts.ChunksInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("chunks", err, &opts.Globals)
 
 	return err

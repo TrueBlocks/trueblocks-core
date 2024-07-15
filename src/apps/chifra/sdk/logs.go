@@ -24,7 +24,7 @@ func Logs(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("logs", w, &opts.Globals)
-	err := opts.LogsInternal()
+	err := opts.LogsInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("logs", err, &opts.Globals)
 
 	return err
