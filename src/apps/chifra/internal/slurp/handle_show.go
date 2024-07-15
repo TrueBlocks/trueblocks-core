@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *SlurpOptions) HandleShow() error {
+func (opts *SlurpOptions) HandleShow(rCtx *output.RenderCtx) error {
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 
 	provider, err := opts.Provider()

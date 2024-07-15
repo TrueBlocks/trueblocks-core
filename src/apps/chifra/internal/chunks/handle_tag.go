@@ -19,7 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandleTag(blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	if opts.Globals.TestMode {
 		logger.Warn("Tag option not tested.")

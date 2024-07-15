@@ -20,7 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandleAddresses(blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleAddresses(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	been_here := 0
 	ctx, cancel := context.WithCancel(context.Background())

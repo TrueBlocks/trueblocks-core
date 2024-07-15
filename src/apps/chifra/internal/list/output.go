@@ -60,11 +60,11 @@ func (opts *ListOptions) ListInternal(rCtx *output.RenderCtx) error {
 	}
 	// EXISTING_CODE
 	if opts.Count {
-		err = opts.HandleCount(monitorArray)
+		err = opts.HandleCount(rCtx, monitorArray)
 	} else if opts.Bounds {
-		err = opts.HandleBounds(monitorArray)
+		err = opts.HandleBounds(rCtx, monitorArray)
 	} else {
-		err = opts.HandleShow(monitorArray)
+		err = opts.HandleShow(rCtx, monitorArray)
 	}
 	timer.Report(msg)
 

@@ -55,9 +55,9 @@ func (opts *ConfigOptions) ConfigInternal(rCtx *output.RenderCtx) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Paths {
-		err = opts.HandlePaths()
+		err = opts.HandlePaths(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

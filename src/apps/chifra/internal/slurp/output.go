@@ -55,13 +55,13 @@ func (opts *SlurpOptions) SlurpInternal(rCtx *output.RenderCtx) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if opts.Count {
-		err = opts.HandleCount()
+		err = opts.HandleCount(rCtx)
 	} else if opts.Appearances {
-		err = opts.HandleAppearances()
+		err = opts.HandleAppearances(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *NamesOptions) HandleCrud() (err error) {
+func (opts *NamesOptions) HandleCrud(rCtx *output.RenderCtx) (err error) {
 	chain := opts.Globals.Chain
 
 	parts := opts.getType()

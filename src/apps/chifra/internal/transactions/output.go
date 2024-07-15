@@ -55,13 +55,13 @@ func (opts *TransactionsOptions) TransactionsInternal(rCtx *output.RenderCtx) er
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if opts.Logs {
-		err = opts.HandleLogs()
+		err = opts.HandleLogs(rCtx)
 	} else if opts.Uniq {
-		err = opts.HandleUniq()
+		err = opts.HandleUniq(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

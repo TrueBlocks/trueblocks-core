@@ -14,7 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *AbisOptions) HandleMany() (err error) {
+func (opts *AbisOptions) HandleMany(rCtx *output.RenderCtx) (err error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, addr := range opts.Addrs {

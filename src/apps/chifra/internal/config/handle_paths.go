@@ -9,7 +9,7 @@ import (
 )
 
 // HandlePaths handles the paths command for the command line. Returns error only as per cobra.
-func (opts *ConfigOptions) HandlePaths() error {
+func (opts *ConfigOptions) HandlePaths(rCtx *output.RenderCtx) error {
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()

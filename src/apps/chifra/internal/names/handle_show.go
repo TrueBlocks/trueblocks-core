@@ -11,7 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *NamesOptions) HandleShow() error {
+func (opts *NamesOptions) HandleShow(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	namesArray, err := loadNamesArray(chain, opts.getType(), names.SortByAddress, opts.Terms)

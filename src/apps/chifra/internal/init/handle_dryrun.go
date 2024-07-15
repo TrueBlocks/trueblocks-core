@@ -9,9 +9,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-func (opts *InitOptions) HandleDryRun() error {
+func (opts *InitOptions) HandleDryRun(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
 	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.TempContract)

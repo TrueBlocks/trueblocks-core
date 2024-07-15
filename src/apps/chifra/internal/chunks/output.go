@@ -65,23 +65,23 @@ func (opts *ChunksOptions) ChunksInternal(rCtx *output.RenderCtx) error {
 	}
 	// EXISTING_CODE
 	if opts.Check {
-		err = opts.HandleCheck(blockNums)
+		err = opts.HandleCheck(rCtx, blockNums)
 	} else if opts.List {
-		err = opts.HandleList(blockNums)
+		err = opts.HandleList(rCtx, blockNums)
 	} else if opts.Unpin {
-		err = opts.HandleUnpin(blockNums)
+		err = opts.HandleUnpin(rCtx, blockNums)
 	} else if len(opts.Tag) > 0 {
-		err = opts.HandleTag(blockNums)
+		err = opts.HandleTag(rCtx, blockNums)
 	} else if opts.Diff {
-		err = opts.HandleDiff(blockNums)
+		err = opts.HandleDiff(rCtx, blockNums)
 	} else if opts.Pin {
-		err = opts.HandlePin(blockNums)
+		err = opts.HandlePin(rCtx, blockNums)
 	} else if opts.Publish {
-		err = opts.HandlePublish(blockNums)
+		err = opts.HandlePublish(rCtx, blockNums)
 	} else if opts.Truncate != base.NOPOSN {
-		err = opts.HandleTruncate(blockNums)
+		err = opts.HandleTruncate(rCtx, blockNums)
 	} else {
-		err = opts.HandleShow(blockNums)
+		err = opts.HandleShow(rCtx, blockNums)
 	}
 	timer.Report(msg)
 

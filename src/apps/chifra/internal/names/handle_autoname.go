@@ -12,7 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *NamesOptions) HandleAutoname() error {
+func (opts *NamesOptions) HandleAutoname(rCtx *output.RenderCtx) error {
 	name, err := opts.readContractAndClean("")
 	if err != nil {
 		return err

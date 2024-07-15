@@ -976,7 +976,7 @@ func (c *Command) TsTypes() string {
 func (c *Command) HandlerCode() string {
 	ret := []string{}
 	if c.Route == "explore" {
-		ret = append(ret, "err = opts.HandleShow()")
+		ret = append(ret, "err = opts.HandleShow(rCtx)")
 	} else {
 		for i, handler := range c.Handlers {
 			if i == 0 {

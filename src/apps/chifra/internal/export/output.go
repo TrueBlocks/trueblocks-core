@@ -55,34 +55,34 @@ func (opts *ExportOptions) ExportInternal(rCtx *output.RenderCtx) error {
 	msg := "chifra export"
 	// EXISTING_CODE
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
-	if canceled, err := opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
+	if canceled, err := opts.FreshenMonitorsForExport(rCtx, &monitorArray); err != nil || canceled {
 		return err
 	}
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache(monitorArray)
+		err = opts.HandleDecache(rCtx, monitorArray)
 	} else if opts.Count {
-		err = opts.HandleCount(monitorArray)
+		err = opts.HandleCount(rCtx, monitorArray)
 	} else if opts.Receipts {
-		err = opts.HandleReceipts(monitorArray)
+		err = opts.HandleReceipts(rCtx, monitorArray)
 	} else if opts.Logs {
-		err = opts.HandleLogs(monitorArray)
+		err = opts.HandleLogs(rCtx, monitorArray)
 	} else if opts.Traces {
-		err = opts.HandleTraces(monitorArray)
+		err = opts.HandleTraces(rCtx, monitorArray)
 	} else if opts.Withdrawals {
-		err = opts.HandleWithdrawals(monitorArray)
+		err = opts.HandleWithdrawals(rCtx, monitorArray)
 	} else if opts.Appearances {
-		err = opts.HandleAppearances(monitorArray)
+		err = opts.HandleAppearances(rCtx, monitorArray)
 	} else if opts.Balances {
-		err = opts.HandleBalances(monitorArray)
+		err = opts.HandleBalances(rCtx, monitorArray)
 	} else if opts.Neighbors {
-		err = opts.HandleNeighbors(monitorArray)
+		err = opts.HandleNeighbors(rCtx, monitorArray)
 	} else if opts.Statements {
-		err = opts.HandleStatements(monitorArray)
+		err = opts.HandleStatements(rCtx, monitorArray)
 	} else if opts.Accounting {
-		err = opts.HandleAccounting(monitorArray)
+		err = opts.HandleAccounting(rCtx, monitorArray)
 	} else {
-		err = opts.HandleShow(monitorArray)
+		err = opts.HandleShow(rCtx, monitorArray)
 	}
 	timer.Report(msg)
 

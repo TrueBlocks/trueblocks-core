@@ -63,15 +63,15 @@ func (opts *NamesOptions) NamesInternal(rCtx *output.RenderCtx) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if len(opts.Autoname) > 0 {
-		err = opts.HandleAutoname()
+		err = opts.HandleAutoname(rCtx)
 	} else if opts.Clean {
-		err = opts.HandleClean()
+		err = opts.HandleClean(rCtx)
 	} else if opts.Tags {
-		err = opts.HandleTags()
+		err = opts.HandleTags(rCtx)
 	} else if opts.anyCrud() {
-		err = opts.HandleCrud()
+		err = opts.HandleCrud(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

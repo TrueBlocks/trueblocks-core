@@ -15,7 +15,7 @@ import (
 )
 
 // HandleTimestampsShow handles chifra when --timestamps
-func (opts *WhenOptions) HandleTimestampsShow() error {
+func (opts *WhenOptions) HandleTimestampsShow(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
 	bnMap, err := identifiers.GetBlockNumberMap(chain, opts.BlockIds)

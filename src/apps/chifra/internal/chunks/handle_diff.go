@@ -23,7 +23,7 @@ import (
 
 var nVisited int
 
-func (opts *ChunksOptions) HandleDiff(blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleDiff(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 

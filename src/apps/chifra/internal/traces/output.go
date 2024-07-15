@@ -55,13 +55,13 @@ func (opts *TracesOptions) TracesInternal(rCtx *output.RenderCtx) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if opts.Count {
-		err = opts.HandleCount()
+		err = opts.HandleCount(rCtx)
 	} else if len(opts.Filter) > 0 {
-		err = opts.HandleFilter()
+		err = opts.HandleFilter(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

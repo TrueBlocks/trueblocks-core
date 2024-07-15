@@ -7,11 +7,12 @@ package whenPkg
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 // HandleTimestampsRepair handles chifra when --timestamps --reset <bn> to reset a single block's timestamps (call repeatedly if needed)
-func (opts *WhenOptions) HandleTimestampsRepair() error {
+func (opts *WhenOptions) HandleTimestampsRepair(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
 	cnt, err := tslib.NTimestamps(chain)

@@ -14,7 +14,7 @@ import (
 )
 
 // HandleDecache handles the command chifra monitors --decache
-func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleDecache(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		doIt := true

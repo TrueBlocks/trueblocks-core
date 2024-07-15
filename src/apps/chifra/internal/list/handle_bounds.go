@@ -13,7 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
+func (opts *ListOptions) HandleBounds(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	filter := filter.NewFilter(
 		opts.Reversed,

@@ -10,13 +10,14 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // HandleExample populates a subfolder of the ./examples folder with a skeleton
 // of the files needed to run an example. This is a convenience function for
 // developers to quickly get started with the example.
-func (opts *InitOptions) HandleExample() error {
+func (opts *InitOptions) HandleExample(rCtx *output.RenderCtx) error {
 	template := "base/"                     // will use opts.Template in the future
 	tmplFolder := "./templates/" + template // will later support opts.Template
 

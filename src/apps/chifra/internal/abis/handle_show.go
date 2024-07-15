@@ -14,9 +14,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *AbisOptions) HandleShow() (err error) {
+func (opts *AbisOptions) HandleShow(rCtx *output.RenderCtx) (err error) {
 	if len(opts.Addrs) > 1 && opts.Globals.Format == "json" {
-		return opts.HandleMany()
+		return opts.HandleMany(rCtx)
 	}
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)

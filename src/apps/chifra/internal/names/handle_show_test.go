@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
 func BenchmarkNamesOptions_HandleShow_CommandLine(b *testing.B) {
@@ -21,7 +22,8 @@ func BenchmarkNamesOptions_HandleShow_CommandLine(b *testing.B) {
 	// Emptying in-memory cache simulates calling this code multiple times
 	// on the command line
 	names.ClearCache()
-	err := opts.HandleShow()
+	rCtx := output.NewRenderContext()
+	err := opts.HandleShow(rCtx)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -38,7 +40,8 @@ func BenchmarkNamesOptions_HandleShow_Api(b *testing.B) {
 
 	b.StartTimer()
 	// Note: we are not calling names.ClearCache() here
-	err := opts.HandleShow()
+	rCtx := output.NewRenderContext()
+	err := opts.HandleShow(rCtx)
 	if err != nil {
 		b.Fatal(err)
 	}

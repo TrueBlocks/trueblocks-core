@@ -55,13 +55,13 @@ func (opts *AbisOptions) AbisInternal(rCtx *output.RenderCtx) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if len(opts.Find) > 0 {
-		err = opts.HandleFind()
+		err = opts.HandleFind(rCtx)
 	} else if len(opts.Encode) > 0 {
-		err = opts.HandleEncode()
+		err = opts.HandleEncode(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

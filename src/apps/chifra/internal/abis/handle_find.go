@@ -26,7 +26,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *AbisOptions) HandleFind() error {
+func (opts *AbisOptions) HandleFind(rCtx *output.RenderCtx) error {
 	testMode := opts.Globals.TestMode
 	/* wanted */ /* freq */ /* max */
 	scanBar := progress.NewScanBar(uint64(len(opts.Find)), 13919, 50000000, .5)

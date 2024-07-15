@@ -55,13 +55,13 @@ func (opts *WhenOptions) WhenInternal(rCtx *output.RenderCtx) error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if opts.List {
-		err = opts.HandleList()
+		err = opts.HandleList(rCtx)
 	} else if opts.Timestamps {
-		err = opts.HandleTimestamps()
+		err = opts.HandleTimestamps(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 
