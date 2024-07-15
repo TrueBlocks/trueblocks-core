@@ -50,7 +50,7 @@ func (opts *statusOptionsInternal) StatusBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return status.Status(w, values)
+	return status.Status(opts.RenderCtx, w, values)
 }
 
 // statusParseFunc handles special cases such as structs and enums (if any).

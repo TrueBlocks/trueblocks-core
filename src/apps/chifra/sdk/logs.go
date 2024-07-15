@@ -13,11 +13,12 @@ import (
 	"net/url"
 
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Logs provides an interface to the command line chifra logs through the SDK.
-func Logs(w io.Writer, values url.Values) error {
+func Logs(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	logs.ResetOptions(sdkTestMode)
 	opts := logs.LogsFinishParseInternal(w, values)
 	// EXISTING_CODE

@@ -55,7 +55,7 @@ func (opts *listOptionsInternal) ListBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return list.List(w, values)
+	return list.List(opts.RenderCtx, w, values)
 }
 
 // listParseFunc handles special cases such as structs and enums (if any).

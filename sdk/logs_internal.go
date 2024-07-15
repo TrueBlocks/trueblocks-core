@@ -46,7 +46,7 @@ func (opts *logsOptionsInternal) LogsBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return logs.Logs(w, values)
+	return logs.Logs(opts.RenderCtx, w, values)
 }
 
 // logsParseFunc handles special cases such as structs and enums (if any).

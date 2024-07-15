@@ -35,7 +35,7 @@ func (opts *{{toCamel .Route}}OptionsInternal) {{toProper .Route}}Bytes(w io.Wri
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return {{.Pkg}}.{{toProper .Route}}(w, values)
+	return {{.Pkg}}.{{toProper .Route}}(opts.RenderCtx, w, values)
 }
 
 // {{toLower .Route}}ParseFunc handles special cases such as structs and enums (if any).

@@ -44,7 +44,7 @@ func (opts *receiptsOptionsInternal) ReceiptsBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return receipts.Receipts(w, values)
+	return receipts.Receipts(opts.RenderCtx, w, values)
 }
 
 // receiptsParseFunc handles special cases such as structs and enums (if any).

@@ -13,11 +13,12 @@ import (
 	"net/url"
 
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Receipts provides an interface to the command line chifra receipts through the SDK.
-func Receipts(w io.Writer, values url.Values) error {
+func Receipts(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	receipts.ResetOptions(sdkTestMode)
 	opts := receipts.ReceiptsFinishParseInternal(w, values)
 	// EXISTING_CODE

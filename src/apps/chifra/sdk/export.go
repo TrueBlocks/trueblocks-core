@@ -13,11 +13,12 @@ import (
 	"net/url"
 
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Export provides an interface to the command line chifra export through the SDK.
-func Export(w io.Writer, values url.Values) error {
+func Export(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	export.ResetOptions(sdkTestMode)
 	opts := export.ExportFinishParseInternal(w, values)
 	// EXISTING_CODE

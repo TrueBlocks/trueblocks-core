@@ -57,7 +57,7 @@ func (opts *blocksOptionsInternal) BlocksBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return blocks.Blocks(w, values)
+	return blocks.Blocks(opts.RenderCtx, w, values)
 }
 
 // blocksParseFunc handles special cases such as structs and enums (if any).

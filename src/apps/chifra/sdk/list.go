@@ -13,11 +13,12 @@ import (
 	"net/url"
 
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // List provides an interface to the command line chifra list through the SDK.
-func List(w io.Writer, values url.Values) error {
+func List(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	list.ResetOptions(sdkTestMode)
 	opts := list.ListFinishParseInternal(w, values)
 	// EXISTING_CODE

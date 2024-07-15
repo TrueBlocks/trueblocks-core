@@ -64,7 +64,7 @@ func (opts *chunksOptionsInternal) ChunksBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return chunks.Chunks(w, values)
+	return chunks.Chunks(opts.RenderCtx, w, values)
 }
 
 // chunksParseFunc handles special cases such as structs and enums (if any).

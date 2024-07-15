@@ -13,11 +13,12 @@ import (
 	"net/url"
 
 	{{.Pkg}} "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/{{toLower .Route}}"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // {{toProper .Route}} provides an interface to the command line chifra {{toLower .Route}} through the SDK.
-func {{toProper .Route}}(w io.Writer, values url.Values) error {
+func {{toProper .Route}}(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	{{.Pkg}}.ResetOptions(sdkTestMode)
 	opts := {{.Pkg}}.{{toProper .Route}}FinishParseInternal(w, values)
 	// EXISTING_CODE

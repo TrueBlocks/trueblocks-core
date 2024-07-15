@@ -52,7 +52,7 @@ func (opts *stateOptionsInternal) StateBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return state.State(w, values)
+	return state.State(opts.RenderCtx, w, values)
 }
 
 // stateParseFunc handles special cases such as structs and enums (if any).

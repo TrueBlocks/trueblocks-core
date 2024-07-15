@@ -13,11 +13,12 @@ import (
 	"net/url"
 
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Slurp provides an interface to the command line chifra slurp through the SDK.
-func Slurp(w io.Writer, values url.Values) error {
+func Slurp(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	slurp.ResetOptions(sdkTestMode)
 	opts := slurp.SlurpFinishParseInternal(w, values)
 	// EXISTING_CODE

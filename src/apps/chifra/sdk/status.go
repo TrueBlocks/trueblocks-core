@@ -13,11 +13,12 @@ import (
 	"net/url"
 
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Status provides an interface to the command line chifra status through the SDK.
-func Status(w io.Writer, values url.Values) error {
+func Status(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	status.ResetOptions(sdkTestMode)
 	opts := status.StatusFinishParseInternal(w, values)
 	// EXISTING_CODE

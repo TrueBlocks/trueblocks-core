@@ -45,7 +45,7 @@ func (opts *configOptionsInternal) ConfigBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return config.Config(w, values)
+	return config.Config(opts.RenderCtx, w, values)
 }
 
 // configParseFunc handles special cases such as structs and enums (if any).

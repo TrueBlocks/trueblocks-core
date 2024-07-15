@@ -13,11 +13,12 @@ import (
 	"net/url"
 
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Init provides an interface to the command line chifra init through the SDK.
-func Init(w io.Writer, values url.Values) error {
+func Init(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	initPkg.ResetOptions(sdkTestMode)
 	opts := initPkg.InitFinishParseInternal(w, values)
 	// EXISTING_CODE

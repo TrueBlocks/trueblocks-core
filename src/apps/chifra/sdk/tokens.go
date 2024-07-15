@@ -13,11 +13,12 @@ import (
 	"net/url"
 
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Tokens provides an interface to the command line chifra tokens through the SDK.
-func Tokens(w io.Writer, values url.Values) error {
+func Tokens(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	tokens.ResetOptions(sdkTestMode)
 	opts := tokens.TokensFinishParseInternal(w, values)
 	// EXISTING_CODE

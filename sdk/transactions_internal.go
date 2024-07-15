@@ -52,7 +52,7 @@ func (opts *transactionsOptionsInternal) TransactionsBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return transactions.Transactions(w, values)
+	return transactions.Transactions(opts.RenderCtx, w, values)
 }
 
 // transactionsParseFunc handles special cases such as structs and enums (if any).

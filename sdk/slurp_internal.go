@@ -54,7 +54,7 @@ func (opts *slurpOptionsInternal) SlurpBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return slurp.Slurp(w, values)
+	return slurp.Slurp(opts.RenderCtx, w, values)
 }
 
 // slurpParseFunc handles special cases such as structs and enums (if any).

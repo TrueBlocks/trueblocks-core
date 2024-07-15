@@ -54,7 +54,7 @@ func (opts *monitorsOptionsInternal) MonitorsBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return monitors.Monitors(w, values)
+	return monitors.Monitors(opts.RenderCtx, w, values)
 }
 
 // monitorsParseFunc handles special cases such as structs and enums (if any).

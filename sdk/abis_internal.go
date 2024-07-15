@@ -49,7 +49,7 @@ func (opts *abisOptionsInternal) AbisBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return abis.Abis(w, values)
+	return abis.Abis(opts.RenderCtx, w, values)
 }
 
 // abisParseFunc handles special cases such as structs and enums (if any).

@@ -73,7 +73,7 @@ func (opts *exportOptionsInternal) ExportBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return export.Export(w, values)
+	return export.Export(opts.RenderCtx, w, values)
 }
 
 // exportParseFunc handles special cases such as structs and enums (if any).

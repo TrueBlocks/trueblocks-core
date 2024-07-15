@@ -60,7 +60,7 @@ func (opts *namesOptionsInternal) NamesBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return names.Names(w, values)
+	return names.Names(opts.RenderCtx, w, values)
 }
 
 // namesParseFunc handles special cases such as structs and enums (if any).

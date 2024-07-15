@@ -46,7 +46,7 @@ func (opts *tracesOptionsInternal) TracesBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return traces.Traces(w, values)
+	return traces.Traces(opts.RenderCtx, w, values)
 }
 
 // tracesParseFunc handles special cases such as structs and enums (if any).

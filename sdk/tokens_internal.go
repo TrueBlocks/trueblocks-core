@@ -49,7 +49,7 @@ func (opts *tokensOptionsInternal) TokensBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return tokens.Tokens(w, values)
+	return tokens.Tokens(opts.RenderCtx, w, values)
 }
 
 // tokensParseFunc handles special cases such as structs and enums (if any).

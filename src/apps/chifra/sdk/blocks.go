@@ -13,11 +13,12 @@ import (
 	"net/url"
 
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Blocks provides an interface to the command line chifra blocks through the SDK.
-func Blocks(w io.Writer, values url.Values) error {
+func Blocks(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	blocks.ResetOptions(sdkTestMode)
 	opts := blocks.BlocksFinishParseInternal(w, values)
 	// EXISTING_CODE

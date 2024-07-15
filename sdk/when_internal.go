@@ -52,7 +52,7 @@ func (opts *whenOptionsInternal) WhenBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return when.When(w, values)
+	return when.When(opts.RenderCtx, w, values)
 }
 
 // whenParseFunc handles special cases such as structs and enums (if any).

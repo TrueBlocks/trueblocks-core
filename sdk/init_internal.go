@@ -49,7 +49,7 @@ func (opts *initOptionsInternal) InitBytes(w io.Writer) error {
 	if opts.RenderCtx == nil {
 		opts.RenderCtx = output.NewRenderContext()
 	}
-	return initPkg.Init(w, values)
+	return initPkg.Init(opts.RenderCtx, w, values)
 }
 
 // initParseFunc handles special cases such as structs and enums (if any).
