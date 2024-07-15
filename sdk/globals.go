@@ -2,10 +2,11 @@ package sdk
 
 import (
 	"encoding/json"
-	"fmt"
-	"os"
 	"reflect"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // Globals is a subset of globally available options from the command line
@@ -135,10 +136,11 @@ func convertEmptyStrToZero(field, strIn string) string {
 }
 
 func debugPrint(str string, t any, err error) {
-	fmt.Println("======================================")
-	fmt.Println(err)
-	fmt.Println(reflect.TypeOf(t))
-	fmt.Println(str[:2000])
-	fmt.Println("======================================")
-	os.Exit(1)
+	logger.Error("======================================")
+	logger.Error(err)
+	logger.Error(reflect.TypeOf(t))
+	max := base.Min(2000, len(str))
+	logger.Error(str[:max])
+	logger.Error("======================================")
+	// os.Exit(1)
 }

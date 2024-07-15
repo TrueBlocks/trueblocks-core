@@ -5,7 +5,6 @@
 package chunksPkg
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"sort"
@@ -23,20 +22,20 @@ import (
 // HandleCheck looks at three different arrays: index files on disc, manifest on disc,
 // and manifest in the smart contract. It tries to check these three sources for
 // cosnsistency. Smart contract rules, so it is checked more thoroughly.
-func (opts *ChunksOptions) HandleCheck(blockNums []base.Blknum) error {
-	err, _ := opts.check(blockNums, false /* silent */)
+func (opts *ChunksOptions) HandleCheck(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
+	err, _ := opts.check(rCtx, blockNums, false /* silent */)
 	return err
 }
 
 // check provides internal checks against the index used from the command line and internally before pinning
-func (opts *ChunksOptions) check(blockNums []base.Blknum, silent bool) (error, bool) {
+func (opts *ChunksOptions) check(rCtx *output.RenderCtx, blockNums []base.Blknum, silent bool) (error, bool) {
 	chain := opts.Globals.Chain
 
 	maxTestItems := 10
 	filenameChan := make(chan walk.CacheFileInfo)
 
 	var nRoutines = 1
-	go walk.WalkCacheFolder(context.Background(), chain, walk.Index_Bloom, nil, filenameChan)
+	go walk.WalkCacheFolder(rCtx.Ctx, chain, walk.Index_Bloom, nil, filenameChan)
 
 	fileNames := []string{}
 	for result := range filenameChan {
@@ -196,7 +195,6 @@ func (opts *ChunksOptions) check(blockNums []base.Blknum, silent bool) (error, b
 		nFailed += int(reports[i].FailedCnt)
 	}
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, report := range reports {
 			if !silent {
@@ -205,6 +203,6 @@ func (opts *ChunksOptions) check(blockNums []base.Blknum, silent bool) (error, b
 		}
 	}
 
-	err = output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	err = output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 	return err, nFailed == 0
 }

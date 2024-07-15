@@ -1,18 +1,15 @@
 package configPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // HandlePaths handles the paths command for the command line. Returns error only as per cobra.
-func (opts *ConfigOptions) HandlePaths() error {
+func (opts *ConfigOptions) HandlePaths(rCtx *output.RenderCtx) error {
 	testMode := opts.Globals.TestMode
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		root, cache, index := config.PathToRootConfig(),
 			config.PathToCache(opts.Globals.Chain),
@@ -43,5 +40,5 @@ func (opts *ConfigOptions) HandlePaths() error {
 	extraOpts := map[string]any{
 		"configPaths": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

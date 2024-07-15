@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunTokens handles the tokens command for the command line. Returns error only as per cobra.
 func RunTokens(cmd *cobra.Command, args []string) error {
 	opts := tokensFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("tokens", &opts.Globals)
-	return opts.TokensInternal()
+	return opts.TokensInternal(rCtx)
 }
 
 // ServeTokens handles the tokens command for the API. Returns an error.
 func ServeTokens(w http.ResponseWriter, r *http.Request) error {
 	opts := tokensFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("tokens", w, &opts.Globals)
-	err := opts.TokensInternal()
+	err := opts.TokensInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("tokens", err, &opts.Globals)
 	return err
 }
 
 // TokensInternal handles the internal workings of the tokens command. Returns an error.
-func (opts *TokensOptions) TokensInternal() error {
+func (opts *TokensOptions) TokensInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateTokens(); err != nil {
 		return err
@@ -52,11 +55,11 @@ func (opts *TokensOptions) TokensInternal() error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if len(opts.Parts) > 0 {
-		err = opts.HandleParts()
+		err = opts.HandleParts(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

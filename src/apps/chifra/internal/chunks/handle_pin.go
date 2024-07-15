@@ -1,7 +1,6 @@
 package chunksPkg
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -21,7 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	if opts.Globals.TestMode {
 		logger.Warn("Pinning option not tested.")
@@ -29,7 +28,8 @@ func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 	}
 
 	if !opts.Globals.IsApiMode() && usage.QueryUser(pinWarning, "Check skipped") {
-		if err := opts.doCheck(blockNums); err != nil {
+		if err := opts.doCheck(rCtx, blockNums); err != nil {
+			rCtx.Cancel()
 			return err
 		}
 	}
@@ -47,10 +47,10 @@ func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 
 	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 	if err != nil {
+		rCtx.Cancel()
 		return err
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		hash := base.BytesToHash(config.HeaderHash(config.ExpectedVersion()))
 		report := types.ChunkPin{
@@ -86,8 +86,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 		)
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
-			// TODO: cancel probably doesn't cancel anything here does it? The walker doesn't even see it.
-			cancel()
+			rCtx.Cancel()
 			return
 		}
 
@@ -164,7 +163,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []base.Blknum) error {
 		modelChan <- &report
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 // matches returns true if the Result has both local and remote hashes for both the index and the bloom and they match
@@ -184,8 +183,8 @@ func (opts *ChunksOptions) matchReport(matches bool, localHash, remoteHash base.
 	}
 }
 
-func (opts *ChunksOptions) doCheck(blockNums []base.Blknum) error {
-	if err, ok := opts.check(blockNums, false /* silent */); err != nil {
+func (opts *ChunksOptions) doCheck(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
+	if err, ok := opts.check(rCtx, blockNums, false /* silent */); err != nil {
 		return err
 	} else if !ok {
 		return fmt.Errorf("checks failed")

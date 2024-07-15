@@ -1,7 +1,6 @@
 package namesPkg
 
 import (
-	"context"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -10,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *NamesOptions) HandleTags() error {
+func (opts *NamesOptions) HandleTags(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	namesArray, err := loadNamesArray(chain, opts.getType(), names.SortByTags, opts.Terms)
 	if err != nil {
@@ -22,7 +21,6 @@ func (opts *NamesOptions) HandleTags() error {
 	}
 
 	tagsMap := make(map[string]bool, len(namesArray)/10)
-	ctx := context.Background()
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, name := range namesArray {
@@ -39,5 +37,5 @@ func (opts *NamesOptions) HandleTags() error {
 	extraOpts := map[string]any{
 		"single": "tags",
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

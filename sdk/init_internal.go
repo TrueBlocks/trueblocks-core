@@ -16,18 +16,20 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type initOptionsInternal struct {
-	All        bool         `json:"all,omitempty"`
-	Example    string       `json:"example,omitempty"`
-	DryRun     bool         `json:"dryRun,omitempty"`
-	Publisher  base.Address `json:"publisher,omitempty"`
-	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
-	Sleep      float64      `json:"sleep,omitempty"`
+	All        bool              `json:"all,omitempty"`
+	Example    string            `json:"example,omitempty"`
+	DryRun     bool              `json:"dryRun,omitempty"`
+	Publisher  base.Address      `json:"publisher,omitempty"`
+	FirstBlock base.Blknum       `json:"firstBlock,omitempty"`
+	Sleep      float64           `json:"sleep,omitempty"`
+	RenderCtx  *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -44,7 +46,10 @@ func (opts *initOptionsInternal) InitBytes(w io.Writer) error {
 		return fmt.Errorf("error converting init struct to URL values: %v", err)
 	}
 
-	return initPkg.Init(w, values)
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
+	return initPkg.Init(opts.RenderCtx, w, values)
 }
 
 // initParseFunc handles special cases such as structs and enums (if any).
@@ -104,6 +109,7 @@ func (opts *InitOptions) toInternal() *initOptionsInternal {
 		Publisher:  opts.Publisher,
 		FirstBlock: opts.FirstBlock,
 		Sleep:      opts.Sleep,
+		RenderCtx:  opts.RenderCtx,
 		Globals:    opts.Globals,
 	}
 }

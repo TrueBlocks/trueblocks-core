@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 
 	"github.com/spf13/cobra"
@@ -24,25 +25,27 @@ import (
 // RunScrape handles the scrape command for the command line. Returns error only as per cobra.
 func RunScrape(cmd *cobra.Command, args []string) error {
 	opts := scrapeFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("scrape", &opts.Globals)
-	return opts.ScrapeInternal()
+	return opts.ScrapeInternal(rCtx)
 }
 
 // ServeScrape handles the scrape command for the API. Returns an error.
 func ServeScrape(w http.ResponseWriter, r *http.Request) error {
 	opts := scrapeFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("scrape", w, &opts.Globals)
-	err := opts.ScrapeInternal()
+	err := opts.ScrapeInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("scrape", err, &opts.Globals)
 	return err
 }
 
 // ScrapeInternal handles the internal workings of the scrape command. Returns an error.
-func (opts *ScrapeOptions) ScrapeInternal() error {
+func (opts *ScrapeOptions) ScrapeInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateScrape(); err != nil {
 		return err
@@ -53,9 +56,9 @@ func (opts *ScrapeOptions) ScrapeInternal() error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Touch > 0 {
-		err = opts.HandleTouch()
+		err = opts.HandleTouch(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

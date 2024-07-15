@@ -59,8 +59,10 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 			model["date"] = s.Date()
 			order = []string{"blockNumber", "address", "timestamp", "date"}
 		}
-		model["parts"] = s.Parts.String()
-		order = append(order, "parts")
+		// This old code used to export the Parts enum as a string which breaks
+		// JSON unmarshaling.
+		// model["parts"] = s.Parts.String()
+		// order = append(order, "parts")
 	}
 
 	hasProxy := false

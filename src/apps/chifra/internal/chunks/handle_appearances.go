@@ -5,7 +5,6 @@
 package chunksPkg
 
 import (
-	"context"
 	"encoding/binary"
 	"fmt"
 	"io"
@@ -18,10 +17,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandleAppearances(blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleAppearances(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showAppearances := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 			if path != index.ToBloomPath(path) {
@@ -74,12 +72,12 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []base.Blknum) error {
 
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 		}
 	}
 
 	extraOpts := map[string]any{
 		"appearances": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

@@ -14,20 +14,22 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type SlurpOptions struct {
-	Addrs      []string    `json:"addrs,omitempty"`
-	BlockIds   []string    `json:"blocks,omitempty"`
-	Parts      SlurpParts  `json:"parts,omitempty"`
-	Articulate bool        `json:"articulate,omitempty"`
-	Source     SlurpSource `json:"source,omitempty"`
-	Page       uint64      `json:"page,omitempty"`
-	PageId     string      `json:"pageId,omitempty"`
-	PerPage    uint64      `json:"perPage,omitempty"`
-	Sleep      float64     `json:"sleep,omitempty"`
+	Addrs      []string          `json:"addrs,omitempty"`
+	BlockIds   []string          `json:"blocks,omitempty"`
+	Parts      SlurpParts        `json:"parts,omitempty"`
+	Articulate bool              `json:"articulate,omitempty"`
+	Source     SlurpSource       `json:"source,omitempty"`
+	Page       uint64            `json:"page,omitempty"`
+	PageId     string            `json:"pageId,omitempty"`
+	PerPage    uint64            `json:"perPage,omitempty"`
+	Sleep      float64           `json:"sleep,omitempty"`
+	RenderCtx  *output.RenderCtx `json:"-"`
 	Globals
 }
 

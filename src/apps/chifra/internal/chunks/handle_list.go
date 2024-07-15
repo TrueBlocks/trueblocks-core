@@ -1,7 +1,6 @@
 package chunksPkg
 
 import (
-	"context"
 	"sort"
 	"strings"
 	"time"
@@ -13,14 +12,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) HandleList(unusedBns []base.Blknum) error {
+func (opts *ChunksOptions) HandleList(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	testMode := opts.Globals.TestMode
 	if testMode {
 		logger.Info("Test mode: list pins not tested")
 		return nil
 	}
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		var perPage = 1000
 		if testMode {
@@ -71,5 +69,5 @@ func (opts *ChunksOptions) HandleList(unusedBns []base.Blknum) error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }

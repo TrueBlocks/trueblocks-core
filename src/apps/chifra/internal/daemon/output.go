@@ -17,6 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
@@ -27,28 +28,30 @@ import (
 // RunDaemon handles the daemon command for the command line. Returns error only as per cobra.
 func RunDaemon(cmd *cobra.Command, args []string) error {
 	opts := daemonFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("daemon", &opts.Globals)
-	return opts.DaemonInternal()
+	return opts.DaemonInternal(rCtx)
 }
 
 // ServeDaemon handles the daemon command for the API. Returns an error.
 func ServeDaemon(w http.ResponseWriter, r *http.Request) error {
 	opts := daemonFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	if true { // defeats linter
 		logger.Fatal("should not happen ==> Daemon is an invalid route for server")
 	}
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)
-	err := opts.DaemonInternal()
+	err := opts.DaemonInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("daemon", err, &opts.Globals)
 	return err
 }
 
 // DaemonInternal handles the internal workings of the daemon command. Returns an error.
-func (opts *DaemonOptions) DaemonInternal() error {
+func (opts *DaemonOptions) DaemonInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateDaemon(); err != nil {
 		return err
@@ -82,10 +85,10 @@ func (opts *DaemonOptions) DaemonInternal() error {
 	}
 
 	go func() {
-		_ = opts.HandleScraper()
+		_ = opts.HandleScraper(rCtx)
 	}()
 	go func() {
-		_ = opts.HandleMonitor()
+		_ = opts.HandleMonitor(rCtx)
 	}()
 
 	// do not remove, this fixes a lint warning that happens in the boilerplate because of the Fatal just below

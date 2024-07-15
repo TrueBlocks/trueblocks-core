@@ -21,7 +21,7 @@ import (
 
 var mMutex = sync.Mutex{}
 
-func (opts *LogsOptions) HandleShow() error {
+func (opts *LogsOptions) HandleShow(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
@@ -29,21 +29,20 @@ func (opts *LogsOptions) HandleShow() error {
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	logFilter := rpc.NewLogFilter(opts.Emitter, opts.Topic)
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 		}
 
 		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Transaction](apps, false); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 
 		} else if cnt == 0 {
 			errorChan <- fmt.Errorf("transaction has no logs")
-			cancel()
+			rCtx.Cancel()
 
 		} else {
 			showProgress := opts.Globals.ShowProgress()
@@ -53,6 +52,10 @@ func (opts *LogsOptions) HandleShow() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
+				if rCtx.WasCanceled() {
+					return
+				}
+
 				for app := range thisMap {
 					thisMap[app] = new(types.Transaction)
 				}
@@ -126,5 +129,5 @@ func (opts *LogsOptions) HandleShow() error {
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

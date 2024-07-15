@@ -1,7 +1,6 @@
 package statusPkg
 
 import (
-	"context"
 	"fmt"
 	"io"
 	"strings"
@@ -18,14 +17,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-func (opts *StatusOptions) HandleShow() error {
+func (opts *StatusOptions) HandleShow(rCtx *output.RenderCtx) error {
 	if len(opts.Modes) > 0 {
-		return opts.HandleModes()
+		return opts.HandleModes(rCtx)
 	}
 
 	testMode := opts.Globals.TestMode
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		s, err := opts.GetStatus(opts.Diagnose)
 		if err != nil {
@@ -41,7 +39,7 @@ func (opts *StatusOptions) HandleShow() error {
 		modelChan <- s
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 func ToProgress(chain string, diagnose bool, meta *types.MetaData) string {

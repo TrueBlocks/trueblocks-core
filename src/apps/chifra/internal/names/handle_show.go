@@ -1,7 +1,6 @@
 package namesPkg
 
 import (
-	"context"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -11,7 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *NamesOptions) HandleShow() error {
+func (opts *NamesOptions) HandleShow(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	namesArray, err := loadNamesArray(chain, opts.getType(), names.SortByAddress, opts.Terms)
@@ -19,7 +18,6 @@ func (opts *NamesOptions) HandleShow() error {
 		return err
 	}
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		if len(namesArray) == 0 {
 			hasAddr := strings.Contains(strings.Join(opts.Terms, " "), "0x")
@@ -64,5 +62,5 @@ func (opts *NamesOptions) HandleShow() error {
 		opts.Globals.NoHeader = true
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

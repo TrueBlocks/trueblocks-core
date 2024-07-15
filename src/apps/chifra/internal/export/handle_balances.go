@@ -19,7 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleBalances(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
@@ -32,7 +32,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		currentBn := base.Blknum(0)
 		prevBalance := base.NewWei(0)
@@ -40,7 +39,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
-				cancel()
+				rCtx.Cancel()
 
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no blocks found for the query")
@@ -49,7 +48,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 			} else {
 				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Token](apps, filter.Reversed); err != nil {
 					errorChan <- err
-					cancel()
+					rCtx.Cancel()
 
 				} else {
 					showProgress := opts.Globals.ShowProgress()
@@ -63,6 +62,10 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					finished := false
 					prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
 					for _, thisMap := range sliceOfMaps {
+						if rCtx.WasCanceled() {
+							return
+						}
+
 						if finished {
 							continue
 						}
@@ -148,5 +151,5 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		"parts":  []string{"blockNumber", "date", "holder", "balance", "diff", "balanceDec"},
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

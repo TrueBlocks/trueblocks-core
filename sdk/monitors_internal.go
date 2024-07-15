@@ -15,24 +15,26 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type monitorsOptionsInternal struct {
-	Addrs     []string `json:"addrs,omitempty"`
-	Delete    bool     `json:"delete,omitempty"`
-	Undelete  bool     `json:"undelete,omitempty"`
-	Remove    bool     `json:"remove,omitempty"`
-	Clean     bool     `json:"clean,omitempty"`
-	List      bool     `json:"list,omitempty"`
-	Watch     bool     `json:"watch,omitempty"`
-	Watchlist string   `json:"watchlist,omitempty"`
-	Commands  string   `json:"commands,omitempty"`
-	BatchSize uint64   `json:"batchSize,omitempty"`
-	RunCount  uint64   `json:"runCount,omitempty"`
-	Sleep     float64  `json:"sleep,omitempty"`
+	Addrs     []string          `json:"addrs,omitempty"`
+	Delete    bool              `json:"delete,omitempty"`
+	Undelete  bool              `json:"undelete,omitempty"`
+	Remove    bool              `json:"remove,omitempty"`
+	Clean     bool              `json:"clean,omitempty"`
+	List      bool              `json:"list,omitempty"`
+	Watch     bool              `json:"watch,omitempty"`
+	Watchlist string            `json:"watchlist,omitempty"`
+	Commands  string            `json:"commands,omitempty"`
+	BatchSize uint64            `json:"batchSize,omitempty"`
+	RunCount  uint64            `json:"runCount,omitempty"`
+	Sleep     float64           `json:"sleep,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -49,7 +51,10 @@ func (opts *monitorsOptionsInternal) MonitorsBytes(w io.Writer) error {
 		return fmt.Errorf("error converting monitors struct to URL values: %v", err)
 	}
 
-	return monitors.Monitors(w, values)
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
+	return monitors.Monitors(opts.RenderCtx, w, values)
 }
 
 // monitorsParseFunc handles special cases such as structs and enums (if any).
@@ -118,6 +123,7 @@ func (opts *MonitorsOptions) toInternal() *monitorsOptionsInternal {
 		BatchSize: opts.BatchSize,
 		RunCount:  opts.RunCount,
 		Sleep:     opts.Sleep,
+		RenderCtx: opts.RenderCtx,
 		Globals:   opts.Globals,
 	}
 }

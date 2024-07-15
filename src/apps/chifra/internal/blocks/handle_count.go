@@ -5,7 +5,6 @@
 package blocksPkg
 
 import (
-	"context"
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -14,10 +13,9 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *BlocksOptions) HandleCount() error {
+func (opts *BlocksOptions) HandleCount(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(chain)
@@ -26,7 +24,7 @@ func (opts *BlocksOptions) HandleCount() error {
 				if errors.Is(err, ethereum.NotFound) {
 					continue
 				}
-				cancel()
+				rCtx.Cancel()
 				return
 			}
 
@@ -37,7 +35,7 @@ func (opts *BlocksOptions) HandleCount() error {
 					if errors.Is(err, ethereum.NotFound) {
 						continue
 					}
-					cancel()
+					rCtx.Cancel()
 					return
 				}
 
@@ -54,7 +52,7 @@ func (opts *BlocksOptions) HandleCount() error {
 						if errors.Is(err, ethereum.NotFound) {
 							continue
 						}
-						cancel()
+						rCtx.Cancel()
 						return
 					}
 				}
@@ -65,7 +63,7 @@ func (opts *BlocksOptions) HandleCount() error {
 						if errors.Is(err, ethereum.NotFound) {
 							continue
 						}
-						cancel()
+						rCtx.Cancel()
 						return
 					}
 				}
@@ -76,7 +74,7 @@ func (opts *BlocksOptions) HandleCount() error {
 						if errors.Is(err, ethereum.NotFound) {
 							continue
 						}
-						cancel()
+						rCtx.Cancel()
 						return
 					}
 				}
@@ -92,7 +90,7 @@ func (opts *BlocksOptions) HandleCount() error {
 						if errors.Is(err, ethereum.NotFound) {
 							continue
 						}
-						cancel()
+						rCtx.Cancel()
 						return
 					}
 				}
@@ -109,5 +107,5 @@ func (opts *BlocksOptions) HandleCount() error {
 		"traces": opts.Traces,
 		"uniqs":  opts.Uniq,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

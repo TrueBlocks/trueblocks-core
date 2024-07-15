@@ -10,24 +10,32 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // HandleExample populates a subfolder of the ./examples folder with a skeleton
 // of the files needed to run an example. This is a convenience function for
 // developers to quickly get started with the example.
-func (opts *InitOptions) HandleExample() error {
+func (opts *InitOptions) HandleExample(rCtx *output.RenderCtx) error {
 	template := "base/"                     // will use opts.Template in the future
 	tmplFolder := "./templates/" + template // will later support opts.Template
+	exampleDir := "./" + opts.Example
 
 	// We already know that the folder does not exist since it passed validation...
-	_ = os.MkdirAll("./"+opts.Example, 0755)
+	_ = os.MkdirAll(exampleDir, 0755)
 
 	logger.Info("Example created in ./" + opts.Example + " from " + tmplFolder)
 
 	for _, fn := range []string{"main.go", "main_test.go", "go.mod", "README.md"} {
 		copyOne(fn, opts.Example, tmplFolder)
 	}
+
+	// tidy
+	cmd := "cd " + exampleDir + " && "
+	cmd += "go get github.com/btcsuite/btcd@v0.22.0-beta && "
+	cmd += "go mod tidy"
+	utils.System(cmd)
 
 	// update the go.work file
 	os.Remove("../go.work")

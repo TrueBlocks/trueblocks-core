@@ -13,17 +13,18 @@ import (
 	"net/url"
 
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Config provides an interface to the command line chifra config through the SDK.
-func Config(w io.Writer, values url.Values) error {
+func Config(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	config.ResetOptions(sdkTestMode)
 	opts := config.ConfigFinishParseInternal(w, values)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("config", w, &opts.Globals)
-	err := opts.ConfigInternal()
+	err := opts.ConfigInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("config", err, &opts.Globals)
 
 	return err

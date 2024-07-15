@@ -13,17 +13,18 @@ import (
 	"net/url"
 
 	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // State provides an interface to the command line chifra state through the SDK.
-func State(w io.Writer, values url.Values) error {
+func State(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	state.ResetOptions(sdkTestMode)
 	opts := state.StateFinishParseInternal(w, values)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("state", w, &opts.Globals)
-	err := opts.StateInternal()
+	err := opts.StateInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("state", err, &opts.Globals)
 
 	return err

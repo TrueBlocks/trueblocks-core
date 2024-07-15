@@ -1,7 +1,6 @@
 package namesPkg
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
@@ -9,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *NamesOptions) HandleCrud() (err error) {
+func (opts *NamesOptions) HandleCrud(rCtx *output.RenderCtx) (err error) {
 	chain := opts.Globals.Chain
 
 	parts := opts.getType()
@@ -43,7 +42,6 @@ func (opts *NamesOptions) HandleCrud() (err error) {
 		return
 	}
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		modelChan <- name
 	}
@@ -51,7 +49,7 @@ func (opts *NamesOptions) HandleCrud() (err error) {
 	extraOpts := map[string]any{
 		"crud": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func handleCreate(chain string, data *CrudData) (name *types.Name, err error) {

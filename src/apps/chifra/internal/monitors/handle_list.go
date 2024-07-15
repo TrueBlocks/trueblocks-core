@@ -5,7 +5,6 @@
 package monitorsPkg
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -16,7 +15,7 @@ import (
 )
 
 // HandleList handles the chifra monitors --list command.
-func (opts *MonitorsOptions) HandleList() error {
+func (opts *MonitorsOptions) HandleList(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	monitorMap, monArray := monitor.GetMonitorMap(chain)
 	if opts.Globals.Verbose {
@@ -36,7 +35,6 @@ func (opts *MonitorsOptions) HandleList() error {
 		}
 	}
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, e := range errors {
 			errorChan <- e
@@ -56,5 +54,5 @@ func (opts *MonitorsOptions) HandleList() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }

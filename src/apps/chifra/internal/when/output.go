@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunWhen handles the when command for the command line. Returns error only as per cobra.
 func RunWhen(cmd *cobra.Command, args []string) error {
 	opts := whenFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("when", &opts.Globals)
-	return opts.WhenInternal()
+	return opts.WhenInternal(rCtx)
 }
 
 // ServeWhen handles the when command for the API. Returns an error.
 func ServeWhen(w http.ResponseWriter, r *http.Request) error {
 	opts := whenFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("when", w, &opts.Globals)
-	err := opts.WhenInternal()
+	err := opts.WhenInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("when", err, &opts.Globals)
 	return err
 }
 
 // WhenInternal handles the internal workings of the when command. Returns an error.
-func (opts *WhenOptions) WhenInternal() error {
+func (opts *WhenOptions) WhenInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateWhen(); err != nil {
 		return err
@@ -52,13 +55,13 @@ func (opts *WhenOptions) WhenInternal() error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if opts.List {
-		err = opts.HandleList()
+		err = opts.HandleList(rCtx)
 	} else if opts.Timestamps {
-		err = opts.HandleTimestamps()
+		err = opts.HandleTimestamps(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

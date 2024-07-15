@@ -17,18 +17,20 @@ import (
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type statusOptionsInternal struct {
-	Modes       StatusModes `json:"modes,omitempty"`
-	Diagnose    bool        `json:"diagnose,omitempty"`
-	FirstRecord uint64      `json:"firstRecord,omitempty"`
-	MaxRecords  uint64      `json:"maxRecords,omitempty"`
-	Chains      bool        `json:"chains,omitempty"`
-	Healthcheck bool        `json:"healthcheck,omitempty"`
+	Modes       StatusModes       `json:"modes,omitempty"`
+	Diagnose    bool              `json:"diagnose,omitempty"`
+	FirstRecord uint64            `json:"firstRecord,omitempty"`
+	MaxRecords  uint64            `json:"maxRecords,omitempty"`
+	Chains      bool              `json:"chains,omitempty"`
+	Healthcheck bool              `json:"healthcheck,omitempty"`
+	RenderCtx   *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -45,7 +47,10 @@ func (opts *statusOptionsInternal) StatusBytes(w io.Writer) error {
 		return fmt.Errorf("error converting status struct to URL values: %v", err)
 	}
 
-	return status.Status(w, values)
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
+	return status.Status(opts.RenderCtx, w, values)
 }
 
 // statusParseFunc handles special cases such as structs and enums (if any).
@@ -114,6 +119,7 @@ func (opts *StatusOptions) toInternal() *statusOptionsInternal {
 		FirstRecord: opts.FirstRecord,
 		MaxRecords:  opts.MaxRecords,
 		Chains:      opts.Chains,
+		RenderCtx:   opts.RenderCtx,
 		Globals:     opts.Globals,
 	}
 }

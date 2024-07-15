@@ -1,7 +1,6 @@
 package chunksPkg
 
 import (
-	"context"
 	"encoding/binary"
 	"fmt"
 	"io"
@@ -23,11 +22,10 @@ import (
 
 var nVisited int
 
-func (opts *ChunksOptions) HandleDiff(blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleDiff(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		walker := walk.NewCacheWalker(
 			chain,
@@ -45,7 +43,7 @@ func (opts *ChunksOptions) HandleDiff(blockNums []base.Blknum) error {
 
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 		}
 
 		if nVisited == 0 {
@@ -53,7 +51,7 @@ func (opts *ChunksOptions) HandleDiff(blockNums []base.Blknum) error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 func (opts *ChunksOptions) handleDiff(chain, path string) (bool, error) {

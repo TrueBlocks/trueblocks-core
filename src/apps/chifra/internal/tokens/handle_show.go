@@ -1,7 +1,6 @@
 package tokensPkg
 
 import (
-	"context"
 	"errors"
 	"fmt"
 
@@ -13,11 +12,10 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *TokensOptions) HandleShow() error {
+func (opts *TokensOptions) HandleShow(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	tokenAddr := base.HexToAddress(opts.Addrs[0])
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, address := range opts.Addrs[1:] {
 			addr := base.HexToAddress(address)
@@ -30,7 +28,7 @@ func (opts *TokensOptions) HandleShow() error {
 					if errors.Is(err, ethereum.NotFound) {
 						continue
 					}
-					cancel()
+					rCtx.Cancel()
 					return
 				}
 
@@ -71,7 +69,7 @@ func (opts *TokensOptions) HandleShow() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 // TODO: NOTE THIS - DOES IT STILL WORK THIS WAY?

@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunSlurp handles the slurp command for the command line. Returns error only as per cobra.
 func RunSlurp(cmd *cobra.Command, args []string) error {
 	opts := slurpFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("slurp", &opts.Globals)
-	return opts.SlurpInternal()
+	return opts.SlurpInternal(rCtx)
 }
 
 // ServeSlurp handles the slurp command for the API. Returns an error.
 func ServeSlurp(w http.ResponseWriter, r *http.Request) error {
 	opts := slurpFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("slurp", w, &opts.Globals)
-	err := opts.SlurpInternal()
+	err := opts.SlurpInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("slurp", err, &opts.Globals)
 	return err
 }
 
 // SlurpInternal handles the internal workings of the slurp command. Returns an error.
-func (opts *SlurpOptions) SlurpInternal() error {
+func (opts *SlurpOptions) SlurpInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateSlurp(); err != nil {
 		return err
@@ -52,13 +55,13 @@ func (opts *SlurpOptions) SlurpInternal() error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if opts.Count {
-		err = opts.HandleCount()
+		err = opts.HandleCount(rCtx)
 	} else if opts.Appearances {
-		err = opts.HandleAppearances()
+		err = opts.HandleAppearances(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

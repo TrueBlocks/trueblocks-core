@@ -16,18 +16,20 @@ import (
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type tokensOptionsInternal struct {
-	Addrs    []string    `json:"addrs,omitempty"`
-	BlockIds []string    `json:"blocks,omitempty"`
-	Parts    TokensParts `json:"parts,omitempty"`
-	ByAcct   bool        `json:"byAcct,omitempty"`
-	Changes  bool        `json:"changes,omitempty"`
-	NoZero   bool        `json:"noZero,omitempty"`
+	Addrs     []string          `json:"addrs,omitempty"`
+	BlockIds  []string          `json:"blocks,omitempty"`
+	Parts     TokensParts       `json:"parts,omitempty"`
+	ByAcct    bool              `json:"byAcct,omitempty"`
+	Changes   bool              `json:"changes,omitempty"`
+	NoZero    bool              `json:"noZero,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -44,7 +46,10 @@ func (opts *tokensOptionsInternal) TokensBytes(w io.Writer) error {
 		return fmt.Errorf("error converting tokens struct to URL values: %v", err)
 	}
 
-	return tokens.Tokens(w, values)
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
+	return tokens.Tokens(opts.RenderCtx, w, values)
 }
 
 // tokensParseFunc handles special cases such as structs and enums (if any).
@@ -110,13 +115,14 @@ func queryTokens[T tokensGeneric](opts *tokensOptionsInternal) ([]T, *types.Meta
 // toInternal converts the SDK options to the internal options format.
 func (opts *TokensOptions) toInternal() *tokensOptionsInternal {
 	return &tokensOptionsInternal{
-		Addrs:    opts.Addrs,
-		BlockIds: opts.BlockIds,
-		Parts:    opts.Parts,
-		ByAcct:   opts.ByAcct,
-		Changes:  opts.Changes,
-		NoZero:   opts.NoZero,
-		Globals:  opts.Globals,
+		Addrs:     opts.Addrs,
+		BlockIds:  opts.BlockIds,
+		Parts:     opts.Parts,
+		ByAcct:    opts.ByAcct,
+		Changes:   opts.Changes,
+		NoZero:    opts.NoZero,
+		RenderCtx: opts.RenderCtx,
+		Globals:   opts.Globals,
 	}
 }
 

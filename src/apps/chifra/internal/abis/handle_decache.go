@@ -5,7 +5,6 @@
 package abisPkg
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -16,10 +15,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *AbisOptions) HandleDecache() error {
+func (opts *AbisOptions) HandleDecache(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
@@ -29,7 +29,7 @@ func (opts *AbisOptions) HandleDecache() error {
 		} else {
 			filenameChan := make(chan walk.CacheFileInfo)
 			var nRoutines = 1
-			go walk.WalkCacheFolder(context.Background(), chain, walk.Cache_Abis, nil, filenameChan)
+			go walk.WalkCacheFolder(rCtx.Ctx, chain, walk.Cache_Abis, nil, filenameChan)
 			for result := range filenameChan {
 				switch result.Type {
 				case walk.Cache_Abis:

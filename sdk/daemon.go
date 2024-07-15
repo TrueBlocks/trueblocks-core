@@ -17,15 +17,17 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	// EXISTING_CODE
 )
 
 type DaemonOptions struct {
-	Url     string       `json:"url,omitempty"`
-	Api     DaemonApi    `json:"api,omitempty"`
-	Scrape  DaemonScrape `json:"scrape,omitempty"`
-	Monitor bool         `json:"monitor,omitempty"`
-	Silent  bool         `json:"silent,omitempty"`
+	Url       string            `json:"url,omitempty"`
+	Api       DaemonApi         `json:"api,omitempty"`
+	Scrape    DaemonScrape      `json:"scrape,omitempty"`
+	Monitor   bool              `json:"monitor,omitempty"`
+	Silent    bool              `json:"silent,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 

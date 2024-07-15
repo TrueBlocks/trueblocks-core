@@ -13,17 +13,18 @@ import (
 	"net/url"
 
 	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Traces provides an interface to the command line chifra traces through the SDK.
-func Traces(w io.Writer, values url.Values) error {
+func Traces(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	traces.ResetOptions(sdkTestMode)
 	opts := traces.TracesFinishParseInternal(w, values)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("traces", w, &opts.Globals)
-	err := opts.TracesInternal()
+	err := opts.TracesInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("traces", err, &opts.Globals)
 
 	return err

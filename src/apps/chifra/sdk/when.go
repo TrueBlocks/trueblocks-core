@@ -13,17 +13,18 @@ import (
 	"net/url"
 
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // When provides an interface to the command line chifra when through the SDK.
-func When(w io.Writer, values url.Values) error {
+func When(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	when.ResetOptions(sdkTestMode)
 	opts := when.WhenFinishParseInternal(w, values)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("when", w, &opts.Globals)
-	err := opts.WhenInternal()
+	err := opts.WhenInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("when", err, &opts.Globals)
 
 	return err

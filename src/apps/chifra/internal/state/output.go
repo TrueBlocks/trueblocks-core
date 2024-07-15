@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunState handles the state command for the command line. Returns error only as per cobra.
 func RunState(cmd *cobra.Command, args []string) error {
 	opts := stateFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("state", &opts.Globals)
-	return opts.StateInternal()
+	return opts.StateInternal(rCtx)
 }
 
 // ServeState handles the state command for the API. Returns an error.
 func ServeState(w http.ResponseWriter, r *http.Request) error {
 	opts := stateFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("state", w, &opts.Globals)
-	err := opts.StateInternal()
+	err := opts.StateInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("state", err, &opts.Globals)
 	return err
 }
 
 // StateInternal handles the internal workings of the state command. Returns an error.
-func (opts *StateOptions) StateInternal() error {
+func (opts *StateOptions) StateInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateState(); err != nil {
 		return err
@@ -52,11 +55,11 @@ func (opts *StateOptions) StateInternal() error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if len(opts.Call) > 0 {
-		err = opts.HandleCall()
+		err = opts.HandleCall(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

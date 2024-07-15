@@ -20,7 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleReceipts(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	filter := filter.NewFilter(
 		opts.Reversed,
@@ -36,12 +36,11 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 	}
 	logFilter := rpc.NewLogFilter(opts.Emitter, opts.Topic)
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
-				cancel()
+				rCtx.Cancel()
 
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no blocks found for the query")
@@ -50,7 +49,7 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 			} else {
 				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, filter.Reversed); err != nil {
 					errorChan <- err
-					cancel()
+					rCtx.Cancel()
 
 				} else {
 					showProgress := opts.Globals.ShowProgress()
@@ -63,6 +62,10 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 					finished := false
 					for _, thisMap := range sliceOfMaps {
+						if rCtx.WasCanceled() {
+							return
+						}
+
 						if finished {
 							continue
 						}
@@ -148,5 +151,5 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 		"export":     true,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

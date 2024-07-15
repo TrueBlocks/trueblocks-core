@@ -15,16 +15,18 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type logsOptionsInternal struct {
-	TransactionIds []string `json:"transactions,omitempty"`
-	Emitter        []string `json:"emitter,omitempty"`
-	Topic          []string `json:"topic,omitempty"`
-	Articulate     bool     `json:"articulate,omitempty"`
+	TransactionIds []string          `json:"transactions,omitempty"`
+	Emitter        []string          `json:"emitter,omitempty"`
+	Topic          []string          `json:"topic,omitempty"`
+	Articulate     bool              `json:"articulate,omitempty"`
+	RenderCtx      *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -41,7 +43,10 @@ func (opts *logsOptionsInternal) LogsBytes(w io.Writer) error {
 		return fmt.Errorf("error converting logs struct to URL values: %v", err)
 	}
 
-	return logs.Logs(w, values)
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
+	return logs.Logs(opts.RenderCtx, w, values)
 }
 
 // logsParseFunc handles special cases such as structs and enums (if any).
@@ -104,6 +109,7 @@ func (opts *LogsOptions) toInternal() *logsOptionsInternal {
 		Emitter:        opts.Emitter,
 		Topic:          opts.Topic,
 		Articulate:     opts.Articulate,
+		RenderCtx:      opts.RenderCtx,
 		Globals:        opts.Globals,
 	}
 }

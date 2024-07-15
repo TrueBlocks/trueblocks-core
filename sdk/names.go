@@ -13,19 +13,21 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type NamesOptions struct {
-	Terms     []string `json:"terms,omitempty"`
-	Expand    bool     `json:"expand,omitempty"`
-	MatchCase bool     `json:"matchCase,omitempty"`
-	All       bool     `json:"all,omitempty"`
-	Custom    bool     `json:"custom,omitempty"`
-	Prefund   bool     `json:"prefund,omitempty"`
-	Regular   bool     `json:"regular,omitempty"`
-	DryRun    bool     `json:"dryRun,omitempty"`
+	Terms     []string          `json:"terms,omitempty"`
+	Expand    bool              `json:"expand,omitempty"`
+	MatchCase bool              `json:"matchCase,omitempty"`
+	All       bool              `json:"all,omitempty"`
+	Custom    bool              `json:"custom,omitempty"`
+	Prefund   bool              `json:"prefund,omitempty"`
+	Regular   bool              `json:"regular,omitempty"`
+	DryRun    bool              `json:"dryRun,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 
