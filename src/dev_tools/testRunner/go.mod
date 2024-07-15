@@ -3,6 +3,8 @@ module github.com/TrueBlocks/trueblocks-core/testRunner
 // Go Version
 go 1.22
 
+replace github.com/TrueBlocks/trueblocks-core/sdk => ../../../sdk
+
 require (
 	github.com/TrueBlocks/trueblocks-core/sdk v0.0.0-20240605222744-1cbeec2938e0
 	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240605222744-1cbeec2938e0
@@ -67,7 +69,6 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.9.0 // indirect
-	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
 	github.com/supranational/blst v0.3.11 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
