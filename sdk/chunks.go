@@ -15,27 +15,29 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type ChunksOptions struct {
-	BlockIds   []string     `json:"blocks,omitempty"`
-	Check      bool         `json:"check,omitempty"`
-	Pin        bool         `json:"pin,omitempty"`
-	Publish    bool         `json:"publish,omitempty"`
-	Publisher  base.Address `json:"publisher,omitempty"`
-	Remote     bool         `json:"remote,omitempty"`
-	Belongs    []string     `json:"belongs,omitempty"`
-	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
-	LastBlock  base.Blknum  `json:"lastBlock,omitempty"`
-	MaxAddrs   uint64       `json:"maxAddrs,omitempty"`
-	Deep       bool         `json:"deep,omitempty"`
-	Rewrite    bool         `json:"rewrite,omitempty"`
-	List       bool         `json:"list,omitempty"`
-	Unpin      bool         `json:"unpin,omitempty"`
-	Count      bool         `json:"count,omitempty"`
-	Sleep      float64      `json:"sleep,omitempty"`
+	BlockIds   []string          `json:"blocks,omitempty"`
+	Check      bool              `json:"check,omitempty"`
+	Pin        bool              `json:"pin,omitempty"`
+	Publish    bool              `json:"publish,omitempty"`
+	Publisher  base.Address      `json:"publisher,omitempty"`
+	Remote     bool              `json:"remote,omitempty"`
+	Belongs    []string          `json:"belongs,omitempty"`
+	FirstBlock base.Blknum       `json:"firstBlock,omitempty"`
+	LastBlock  base.Blknum       `json:"lastBlock,omitempty"`
+	MaxAddrs   uint64            `json:"maxAddrs,omitempty"`
+	Deep       bool              `json:"deep,omitempty"`
+	Rewrite    bool              `json:"rewrite,omitempty"`
+	List       bool              `json:"list,omitempty"`
+	Unpin      bool              `json:"unpin,omitempty"`
+	Count      bool              `json:"count,omitempty"`
+	Sleep      float64           `json:"sleep,omitempty"`
+	RenderCtx  *output.RenderCtx `json:"-"`
 	Globals
 }
 

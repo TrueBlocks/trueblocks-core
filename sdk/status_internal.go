@@ -24,13 +24,13 @@ import (
 )
 
 type statusOptionsInternal struct {
-	Modes       StatusModes    `json:"modes,omitempty"`
-	Diagnose    bool           `json:"diagnose,omitempty"`
-	FirstRecord uint64         `json:"firstRecord,omitempty"`
-	MaxRecords  uint64         `json:"maxRecords,omitempty"`
-	Chains      bool           `json:"chains,omitempty"`
-	Healthcheck bool           `json:"healthcheck,omitempty"`
-	OrigOpts    *StatusOptions `json:"-"`
+	Modes       StatusModes       `json:"modes,omitempty"`
+	Diagnose    bool              `json:"diagnose,omitempty"`
+	FirstRecord uint64            `json:"firstRecord,omitempty"`
+	MaxRecords  uint64            `json:"maxRecords,omitempty"`
+	Chains      bool              `json:"chains,omitempty"`
+	Healthcheck bool              `json:"healthcheck,omitempty"`
+	RenderCtx   *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -47,11 +47,10 @@ func (opts *statusOptionsInternal) StatusBytes(w io.Writer) error {
 		return fmt.Errorf("error converting status struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return status.Status(rCtx, w, values)
+	return status.Status(opts.RenderCtx, w, values)
 }
 
 // statusParseFunc handles special cases such as structs and enums (if any).
@@ -120,7 +119,7 @@ func (opts *StatusOptions) toInternal() *statusOptionsInternal {
 		FirstRecord: opts.FirstRecord,
 		MaxRecords:  opts.MaxRecords,
 		Chains:      opts.Chains,
-		OrigOpts:    opts,
+		RenderCtx:   opts.RenderCtx,
 		Globals:     opts.Globals,
 	}
 }

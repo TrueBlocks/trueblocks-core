@@ -18,7 +18,7 @@ import (
 )
 
 // Monitors provides an interface to the command line chifra monitors through the SDK.
-func Monitors(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
+func Monitors(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	monitors.ResetOptions(sdkTestMode)
 	opts := monitors.MonitorsFinishParseInternal(w, values)
 	// EXISTING_CODE

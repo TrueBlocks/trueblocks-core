@@ -18,7 +18,7 @@ import (
 )
 
 // Status provides an interface to the command line chifra status through the SDK.
-func Status(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
+func Status(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	status.ResetOptions(sdkTestMode)
 	opts := status.StatusFinishParseInternal(w, values)
 	// EXISTING_CODE

@@ -5,7 +5,7 @@ import (
 )
 
 // HandleMonitor starts and manages the monitor process
-func (opts *DaemonOptions) HandleMonitor(rCtx output.RenderCtx) error {
+func (opts *DaemonOptions) HandleMonitor(rCtx *output.RenderCtx) error {
 	// monitorOpts := monitorsPkg.GetMonitorsOptions([]string{}, &opts.Globals)
 	// monitorOpts.Watch:   true,
 	// monitorOpts.Sleep:   opts.Sleep,

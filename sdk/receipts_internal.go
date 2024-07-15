@@ -22,9 +22,9 @@ import (
 )
 
 type receiptsOptionsInternal struct {
-	TransactionIds []string         `json:"transactions,omitempty"`
-	Articulate     bool             `json:"articulate,omitempty"`
-	OrigOpts       *ReceiptsOptions `json:"-"`
+	TransactionIds []string          `json:"transactions,omitempty"`
+	Articulate     bool              `json:"articulate,omitempty"`
+	RenderCtx      *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -41,11 +41,10 @@ func (opts *receiptsOptionsInternal) ReceiptsBytes(w io.Writer) error {
 		return fmt.Errorf("error converting receipts struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return receipts.Receipts(rCtx, w, values)
+	return receipts.Receipts(opts.RenderCtx, w, values)
 }
 
 // receiptsParseFunc handles special cases such as structs and enums (if any).
@@ -107,7 +106,7 @@ func (opts *ReceiptsOptions) toInternal() *receiptsOptionsInternal {
 	return &receiptsOptionsInternal{
 		TransactionIds: opts.TransactionIds,
 		Articulate:     opts.Articulate,
-		OrigOpts:       opts,
+		RenderCtx:      opts.RenderCtx,
 		Globals:        opts.Globals,
 	}
 }

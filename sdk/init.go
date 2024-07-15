@@ -13,14 +13,16 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type InitOptions struct {
-	Publisher  base.Address `json:"publisher,omitempty"`
-	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
-	Sleep      float64      `json:"sleep,omitempty"`
+	Publisher  base.Address      `json:"publisher,omitempty"`
+	FirstBlock base.Blknum       `json:"firstBlock,omitempty"`
+	Sleep      float64           `json:"sleep,omitempty"`
+	RenderCtx  *output.RenderCtx `json:"-"`
 	Globals
 }
 

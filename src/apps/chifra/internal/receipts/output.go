@@ -44,7 +44,7 @@ func ServeReceipts(w http.ResponseWriter, r *http.Request) error {
 }
 
 // ReceiptsInternal handles the internal workings of the receipts command. Returns an error.
-func (opts *ReceiptsOptions) ReceiptsInternal(rCtx output.RenderCtx) error {
+func (opts *ReceiptsOptions) ReceiptsInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateReceipts(); err != nil {
 		return err

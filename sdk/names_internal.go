@@ -23,24 +23,24 @@ import (
 )
 
 type namesOptionsInternal struct {
-	Terms     []string      `json:"terms,omitempty"`
-	Expand    bool          `json:"expand,omitempty"`
-	MatchCase bool          `json:"matchCase,omitempty"`
-	All       bool          `json:"all,omitempty"`
-	Custom    bool          `json:"custom,omitempty"`
-	Prefund   bool          `json:"prefund,omitempty"`
-	Addr      bool          `json:"addr,omitempty"`
-	Tags      bool          `json:"tags,omitempty"`
-	Clean     bool          `json:"clean,omitempty"`
-	Regular   bool          `json:"regular,omitempty"`
-	DryRun    bool          `json:"dryRun,omitempty"`
-	Autoname  base.Address  `json:"autoname,omitempty"`
-	Create    bool          `json:"create,omitempty"`
-	Update    bool          `json:"update,omitempty"`
-	Delete    bool          `json:"delete,omitempty"`
-	Undelete  bool          `json:"undelete,omitempty"`
-	Remove    bool          `json:"remove,omitempty"`
-	OrigOpts  *NamesOptions `json:"-"`
+	Terms     []string          `json:"terms,omitempty"`
+	Expand    bool              `json:"expand,omitempty"`
+	MatchCase bool              `json:"matchCase,omitempty"`
+	All       bool              `json:"all,omitempty"`
+	Custom    bool              `json:"custom,omitempty"`
+	Prefund   bool              `json:"prefund,omitempty"`
+	Addr      bool              `json:"addr,omitempty"`
+	Tags      bool              `json:"tags,omitempty"`
+	Clean     bool              `json:"clean,omitempty"`
+	Regular   bool              `json:"regular,omitempty"`
+	DryRun    bool              `json:"dryRun,omitempty"`
+	Autoname  base.Address      `json:"autoname,omitempty"`
+	Create    bool              `json:"create,omitempty"`
+	Update    bool              `json:"update,omitempty"`
+	Delete    bool              `json:"delete,omitempty"`
+	Undelete  bool              `json:"undelete,omitempty"`
+	Remove    bool              `json:"remove,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -57,11 +57,10 @@ func (opts *namesOptionsInternal) NamesBytes(w io.Writer) error {
 		return fmt.Errorf("error converting names struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return names.Names(rCtx, w, values)
+	return names.Names(opts.RenderCtx, w, values)
 }
 
 // namesParseFunc handles special cases such as structs and enums (if any).
@@ -127,7 +126,7 @@ func (opts *NamesOptions) toInternal() *namesOptionsInternal {
 		Prefund:   opts.Prefund,
 		Regular:   opts.Regular,
 		DryRun:    opts.DryRun,
-		OrigOpts:  opts,
+		RenderCtx: opts.RenderCtx,
 		Globals:   opts.Globals,
 	}
 }

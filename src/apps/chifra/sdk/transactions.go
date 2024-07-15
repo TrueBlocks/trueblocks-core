@@ -18,7 +18,7 @@ import (
 )
 
 // Transactions provides an interface to the command line chifra transactions through the SDK.
-func Transactions(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
+func Transactions(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	transactions.ResetOptions(sdkTestMode)
 	opts := transactions.TransactionsFinishParseInternal(w, values)
 	// EXISTING_CODE

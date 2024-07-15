@@ -20,7 +20,7 @@ import (
 // Not Deleted | Delete	| Error    | Error  |
 // Deleted     | Error  | Undelete | Remove |
 // ------------|--------|-------------------|
-func (opts *MonitorsOptions) HandleCrud(rCtx output.RenderCtx) error {
+func (opts *MonitorsOptions) HandleCrud(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	for _, addr := range opts.Addrs {
 		m, _ := monitor.NewMonitor(chain, base.HexToAddress(addr), false)

@@ -15,31 +15,33 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type ExportOptions struct {
-	Addrs       []string    `json:"addrs,omitempty"`
-	Topics      []string    `json:"topics,omitempty"`
-	Fourbytes   []string    `json:"fourbytes,omitempty"`
-	Accounting  bool        `json:"accounting,omitempty"`
-	Articulate  bool        `json:"articulate,omitempty"`
-	CacheTraces bool        `json:"cacheTraces,omitempty"`
-	FirstRecord uint64      `json:"firstRecord,omitempty"`
-	MaxRecords  uint64      `json:"maxRecords,omitempty"`
-	Relevant    bool        `json:"relevant,omitempty"`
-	Emitter     []string    `json:"emitter,omitempty"`
-	Topic       []string    `json:"topic,omitempty"`
-	Reverted    bool        `json:"reverted,omitempty"`
-	Asset       []string    `json:"asset,omitempty"`
-	Flow        ExportFlow  `json:"flow,omitempty"`
-	Factory     bool        `json:"factory,omitempty"`
-	Unripe      bool        `json:"unripe,omitempty"`
-	Reversed    bool        `json:"reversed,omitempty"`
-	NoZero      bool        `json:"noZero,omitempty"`
-	FirstBlock  base.Blknum `json:"firstBlock,omitempty"`
-	LastBlock   base.Blknum `json:"lastBlock,omitempty"`
+	Addrs       []string          `json:"addrs,omitempty"`
+	Topics      []string          `json:"topics,omitempty"`
+	Fourbytes   []string          `json:"fourbytes,omitempty"`
+	Accounting  bool              `json:"accounting,omitempty"`
+	Articulate  bool              `json:"articulate,omitempty"`
+	CacheTraces bool              `json:"cacheTraces,omitempty"`
+	FirstRecord uint64            `json:"firstRecord,omitempty"`
+	MaxRecords  uint64            `json:"maxRecords,omitempty"`
+	Relevant    bool              `json:"relevant,omitempty"`
+	Emitter     []string          `json:"emitter,omitempty"`
+	Topic       []string          `json:"topic,omitempty"`
+	Reverted    bool              `json:"reverted,omitempty"`
+	Asset       []string          `json:"asset,omitempty"`
+	Flow        ExportFlow        `json:"flow,omitempty"`
+	Factory     bool              `json:"factory,omitempty"`
+	Unripe      bool              `json:"unripe,omitempty"`
+	Reversed    bool              `json:"reversed,omitempty"`
+	NoZero      bool              `json:"noZero,omitempty"`
+	FirstBlock  base.Blknum       `json:"firstBlock,omitempty"`
+	LastBlock   base.Blknum       `json:"lastBlock,omitempty"`
+	RenderCtx   *output.RenderCtx `json:"-"`
 	Globals
 }
 

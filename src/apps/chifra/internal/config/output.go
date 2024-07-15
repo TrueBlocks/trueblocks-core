@@ -44,7 +44,7 @@ func ServeConfig(w http.ResponseWriter, r *http.Request) error {
 }
 
 // ConfigInternal handles the internal workings of the config command. Returns an error.
-func (opts *ConfigOptions) ConfigInternal(rCtx output.RenderCtx) error {
+func (opts *ConfigOptions) ConfigInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateConfig(); err != nil {
 		return err

@@ -13,14 +13,13 @@ import (
 // Globals is a subset of globally available options from the command line
 // that make sense in the SDK context
 type Globals struct {
-	Ether     bool              `json:"ether,omitempty"`
-	Cache     bool              `json:"cache,omitempty"`
-	Decache   bool              `json:"decache,omitempty"`
-	Verbose   bool              `json:"verbose,omitempty"`
-	Chain     string            `json:"chain,omitempty"`
-	Output    string            `json:"output,omitempty"`
-	Append    bool              `json:"append,omitempty"`
-	RenderCtx *output.RenderCtx `json:"-"`
+	Ether   bool   `json:"ether,omitempty"`
+	Cache   bool   `json:"cache,omitempty"`
+	Decache bool   `json:"decache,omitempty"`
+	Verbose bool   `json:"verbose,omitempty"`
+	Chain   string `json:"chain,omitempty"`
+	Output  string `json:"output,omitempty"`
+	Append  bool   `json:"append,omitempty"`
 	// Probably can't support
 	// --file
 	// Global things ignored in the SDK
@@ -144,4 +143,8 @@ func debugPrint(str string, t any, err error) {
 	fmt.Println(str[:2000])
 	fmt.Println("======================================")
 	os.Exit(1)
+}
+
+func NewRenderContext() *output.RenderCtx {
+	return output.NewRenderContext()
 }

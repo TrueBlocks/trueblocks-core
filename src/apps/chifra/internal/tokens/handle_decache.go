@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-func (opts *TokensOptions) HandleDecache(rCtx output.RenderCtx) error {
+func (opts *TokensOptions) HandleDecache(rCtx *output.RenderCtx) error {
 	// TODO: decache.Decache --decache not implemented
 	logger.Error("chifra tokens --decache is not yet implemented")
 	return nil

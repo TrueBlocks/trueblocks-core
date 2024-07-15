@@ -13,7 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) HandleList(rCtx output.RenderCtx, unusedBns []base.Blknum) error {
+func (opts *ChunksOptions) HandleList(rCtx *output.RenderCtx, unusedBns []base.Blknum) error {
 	testMode := opts.Globals.TestMode
 	if testMode {
 		logger.Info("Test mode: list pins not tested")

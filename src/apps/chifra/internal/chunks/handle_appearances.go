@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandleAppearances(rCtx output.RenderCtx, blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleAppearances(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {

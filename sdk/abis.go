@@ -14,15 +14,17 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type AbisOptions struct {
-	Addrs    []string     `json:"addrs,omitempty"`
-	Known    bool         `json:"known,omitempty"`
-	ProxyFor base.Address `json:"proxyFor,omitempty"`
-	Hint     []string     `json:"hint,omitempty"`
+	Addrs     []string          `json:"addrs,omitempty"`
+	Known     bool              `json:"known,omitempty"`
+	ProxyFor  base.Address      `json:"proxyFor,omitempty"`
+	Hint      []string          `json:"hint,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 

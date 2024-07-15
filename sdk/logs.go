@@ -12,15 +12,17 @@ import (
 	// EXISTING_CODE
 	"encoding/json"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type LogsOptions struct {
-	TransactionIds []string `json:"transactions,omitempty"`
-	Emitter        []string `json:"emitter,omitempty"`
-	Topic          []string `json:"topic,omitempty"`
-	Articulate     bool     `json:"articulate,omitempty"`
+	TransactionIds []string          `json:"transactions,omitempty"`
+	Emitter        []string          `json:"emitter,omitempty"`
+	Topic          []string          `json:"topic,omitempty"`
+	Articulate     bool              `json:"articulate,omitempty"`
+	RenderCtx      *output.RenderCtx `json:"-"`
 	Globals
 }
 

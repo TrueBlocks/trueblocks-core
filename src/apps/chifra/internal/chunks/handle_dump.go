@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *ChunksOptions) HandleDump(rCtx output.RenderCtx, blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleDump(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	return validate.Usage("Extractor for {0} not yet implemented.", opts.Mode)
 }
 

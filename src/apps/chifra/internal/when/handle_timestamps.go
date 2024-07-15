@@ -10,7 +10,7 @@ import (
 )
 
 // HandleTimestampsShow handles chifra when --timestamps
-func (opts *WhenOptions) HandleTimestamps(rCtx output.RenderCtx) error {
+func (opts *WhenOptions) HandleTimestamps(rCtx *output.RenderCtx) error {
 	var err error
 	if opts.Update {
 		err = opts.HandleTimestampsUpdate(rCtx)

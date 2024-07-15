@@ -45,7 +45,7 @@ func ServeScrape(w http.ResponseWriter, r *http.Request) error {
 }
 
 // ScrapeInternal handles the internal workings of the scrape command. Returns an error.
-func (opts *ScrapeOptions) ScrapeInternal(rCtx output.RenderCtx) error {
+func (opts *ScrapeOptions) ScrapeInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateScrape(); err != nil {
 		return err

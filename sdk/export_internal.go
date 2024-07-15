@@ -24,36 +24,36 @@ import (
 )
 
 type exportOptionsInternal struct {
-	Addrs       []string       `json:"addrs,omitempty"`
-	Topics      []string       `json:"topics,omitempty"`
-	Fourbytes   []string       `json:"fourbytes,omitempty"`
-	Appearances bool           `json:"appearances,omitempty"`
-	Receipts    bool           `json:"receipts,omitempty"`
-	Logs        bool           `json:"logs,omitempty"`
-	Traces      bool           `json:"traces,omitempty"`
-	Neighbors   bool           `json:"neighbors,omitempty"`
-	Accounting  bool           `json:"accounting,omitempty"`
-	Statements  bool           `json:"statements,omitempty"`
-	Balances    bool           `json:"balances,omitempty"`
-	Withdrawals bool           `json:"withdrawals,omitempty"`
-	Articulate  bool           `json:"articulate,omitempty"`
-	CacheTraces bool           `json:"cacheTraces,omitempty"`
-	Count       bool           `json:"count,omitempty"`
-	FirstRecord uint64         `json:"firstRecord,omitempty"`
-	MaxRecords  uint64         `json:"maxRecords,omitempty"`
-	Relevant    bool           `json:"relevant,omitempty"`
-	Emitter     []string       `json:"emitter,omitempty"`
-	Topic       []string       `json:"topic,omitempty"`
-	Reverted    bool           `json:"reverted,omitempty"`
-	Asset       []string       `json:"asset,omitempty"`
-	Flow        ExportFlow     `json:"flow,omitempty"`
-	Factory     bool           `json:"factory,omitempty"`
-	Unripe      bool           `json:"unripe,omitempty"`
-	Reversed    bool           `json:"reversed,omitempty"`
-	NoZero      bool           `json:"noZero,omitempty"`
-	FirstBlock  base.Blknum    `json:"firstBlock,omitempty"`
-	LastBlock   base.Blknum    `json:"lastBlock,omitempty"`
-	OrigOpts    *ExportOptions `json:"-"`
+	Addrs       []string          `json:"addrs,omitempty"`
+	Topics      []string          `json:"topics,omitempty"`
+	Fourbytes   []string          `json:"fourbytes,omitempty"`
+	Appearances bool              `json:"appearances,omitempty"`
+	Receipts    bool              `json:"receipts,omitempty"`
+	Logs        bool              `json:"logs,omitempty"`
+	Traces      bool              `json:"traces,omitempty"`
+	Neighbors   bool              `json:"neighbors,omitempty"`
+	Accounting  bool              `json:"accounting,omitempty"`
+	Statements  bool              `json:"statements,omitempty"`
+	Balances    bool              `json:"balances,omitempty"`
+	Withdrawals bool              `json:"withdrawals,omitempty"`
+	Articulate  bool              `json:"articulate,omitempty"`
+	CacheTraces bool              `json:"cacheTraces,omitempty"`
+	Count       bool              `json:"count,omitempty"`
+	FirstRecord uint64            `json:"firstRecord,omitempty"`
+	MaxRecords  uint64            `json:"maxRecords,omitempty"`
+	Relevant    bool              `json:"relevant,omitempty"`
+	Emitter     []string          `json:"emitter,omitempty"`
+	Topic       []string          `json:"topic,omitempty"`
+	Reverted    bool              `json:"reverted,omitempty"`
+	Asset       []string          `json:"asset,omitempty"`
+	Flow        ExportFlow        `json:"flow,omitempty"`
+	Factory     bool              `json:"factory,omitempty"`
+	Unripe      bool              `json:"unripe,omitempty"`
+	Reversed    bool              `json:"reversed,omitempty"`
+	NoZero      bool              `json:"noZero,omitempty"`
+	FirstBlock  base.Blknum       `json:"firstBlock,omitempty"`
+	LastBlock   base.Blknum       `json:"lastBlock,omitempty"`
+	RenderCtx   *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -70,11 +70,10 @@ func (opts *exportOptionsInternal) ExportBytes(w io.Writer) error {
 		return fmt.Errorf("error converting export struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return export.Export(rCtx, w, values)
+	return export.Export(opts.RenderCtx, w, values)
 }
 
 // exportParseFunc handles special cases such as structs and enums (if any).
@@ -174,7 +173,7 @@ func (opts *ExportOptions) toInternal() *exportOptionsInternal {
 		NoZero:      opts.NoZero,
 		FirstBlock:  opts.FirstBlock,
 		LastBlock:   opts.LastBlock,
-		OrigOpts:    opts,
+		RenderCtx:   opts.RenderCtx,
 		Globals:     opts.Globals,
 	}
 }

@@ -46,7 +46,7 @@ func ServeChunks(w http.ResponseWriter, r *http.Request) error {
 }
 
 // ChunksInternal handles the internal workings of the chunks command. Returns an error.
-func (opts *ChunksOptions) ChunksInternal(rCtx output.RenderCtx) error {
+func (opts *ChunksOptions) ChunksInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateChunks(); err != nil {
 		return err

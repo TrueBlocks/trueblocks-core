@@ -12,7 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *WhenOptions) HandleTimestampsCount(rCtx output.RenderCtx) error {
+func (opts *WhenOptions) HandleTimestampsCount(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 

@@ -19,7 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ExportOptions) HandleTraces(rCtx output.RenderCtx, monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleTraces(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	filter := filter.NewFilter(
 		opts.Reversed,

@@ -23,18 +23,18 @@ import (
 )
 
 type slurpOptionsInternal struct {
-	Addrs       []string      `json:"addrs,omitempty"`
-	BlockIds    []string      `json:"blocks,omitempty"`
-	Parts       SlurpParts    `json:"parts,omitempty"`
-	Appearances bool          `json:"appearances,omitempty"`
-	Articulate  bool          `json:"articulate,omitempty"`
-	Source      SlurpSource   `json:"source,omitempty"`
-	Count       bool          `json:"count,omitempty"`
-	Page        uint64        `json:"page,omitempty"`
-	PageId      string        `json:"pageId,omitempty"`
-	PerPage     uint64        `json:"perPage,omitempty"`
-	Sleep       float64       `json:"sleep,omitempty"`
-	OrigOpts    *SlurpOptions `json:"-"`
+	Addrs       []string          `json:"addrs,omitempty"`
+	BlockIds    []string          `json:"blocks,omitempty"`
+	Parts       SlurpParts        `json:"parts,omitempty"`
+	Appearances bool              `json:"appearances,omitempty"`
+	Articulate  bool              `json:"articulate,omitempty"`
+	Source      SlurpSource       `json:"source,omitempty"`
+	Count       bool              `json:"count,omitempty"`
+	Page        uint64            `json:"page,omitempty"`
+	PageId      string            `json:"pageId,omitempty"`
+	PerPage     uint64            `json:"perPage,omitempty"`
+	Sleep       float64           `json:"sleep,omitempty"`
+	RenderCtx   *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -51,11 +51,10 @@ func (opts *slurpOptionsInternal) SlurpBytes(w io.Writer) error {
 		return fmt.Errorf("error converting slurp struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return slurp.Slurp(rCtx, w, values)
+	return slurp.Slurp(opts.RenderCtx, w, values)
 }
 
 // slurpParseFunc handles special cases such as structs and enums (if any).
@@ -143,7 +142,7 @@ func (opts *SlurpOptions) toInternal() *slurpOptionsInternal {
 		PageId:     opts.PageId,
 		PerPage:    opts.PerPage,
 		Sleep:      opts.Sleep,
-		OrigOpts:   opts,
+		RenderCtx:  opts.RenderCtx,
 		Globals:    opts.Globals,
 	}
 }

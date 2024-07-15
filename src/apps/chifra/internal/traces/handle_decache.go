@@ -13,7 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *TracesOptions) HandleDecache(rCtx output.RenderCtx) error {
+func (opts *TracesOptions) HandleDecache(rCtx *output.RenderCtx) error {
 	itemsToRemove, err := decache.LocationsFromTransactions(opts.Conn, opts.TransactionIds)
 	if err != nil {
 		return err

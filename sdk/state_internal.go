@@ -24,15 +24,15 @@ import (
 )
 
 type stateOptionsInternal struct {
-	Addrs      []string      `json:"addrs,omitempty"`
-	BlockIds   []string      `json:"blocks,omitempty"`
-	Parts      StateParts    `json:"parts,omitempty"`
-	Changes    bool          `json:"changes,omitempty"`
-	NoZero     bool          `json:"noZero,omitempty"`
-	Call       string        `json:"call,omitempty"`
-	Articulate bool          `json:"articulate,omitempty"`
-	ProxyFor   base.Address  `json:"proxyFor,omitempty"`
-	OrigOpts   *StateOptions `json:"-"`
+	Addrs      []string          `json:"addrs,omitempty"`
+	BlockIds   []string          `json:"blocks,omitempty"`
+	Parts      StateParts        `json:"parts,omitempty"`
+	Changes    bool              `json:"changes,omitempty"`
+	NoZero     bool              `json:"noZero,omitempty"`
+	Call       string            `json:"call,omitempty"`
+	Articulate bool              `json:"articulate,omitempty"`
+	ProxyFor   base.Address      `json:"proxyFor,omitempty"`
+	RenderCtx  *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -49,11 +49,10 @@ func (opts *stateOptionsInternal) StateBytes(w io.Writer) error {
 		return fmt.Errorf("error converting state struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return state.State(rCtx, w, values)
+	return state.State(opts.RenderCtx, w, values)
 }
 
 // stateParseFunc handles special cases such as structs and enums (if any).
@@ -133,7 +132,7 @@ func (opts *StateOptions) toInternal() *stateOptionsInternal {
 		NoZero:     opts.NoZero,
 		Articulate: opts.Articulate,
 		ProxyFor:   opts.ProxyFor,
-		OrigOpts:   opts,
+		RenderCtx:  opts.RenderCtx,
 		Globals:    opts.Globals,
 	}
 }

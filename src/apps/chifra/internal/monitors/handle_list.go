@@ -16,7 +16,7 @@ import (
 )
 
 // HandleList handles the chifra monitors --list command.
-func (opts *MonitorsOptions) HandleList(rCtx output.RenderCtx) error {
+func (opts *MonitorsOptions) HandleList(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	monitorMap, monArray := monitor.GetMonitorMap(chain)
 	if opts.Globals.Verbose {

@@ -10,7 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-func (opts *ChunksOptions) HandleShow(rCtx output.RenderCtx, blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleShow(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	var err error
 	switch opts.Mode {
 	case "manifest":

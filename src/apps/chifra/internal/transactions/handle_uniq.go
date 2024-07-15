@@ -11,7 +11,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *TransactionsOptions) HandleUniq(rCtx output.RenderCtx) (err error) {
+func (opts *TransactionsOptions) HandleUniq(rCtx *output.RenderCtx) (err error) {
 	chain := opts.Globals.Chain
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {

@@ -18,7 +18,7 @@ import (
 )
 
 // HandleIndexBelongs displays the resolved records in a chunk given a single address
-func (opts *ChunksOptions) HandleIndexBelongs(rCtx output.RenderCtx, blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleIndexBelongs(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {

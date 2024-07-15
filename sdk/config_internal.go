@@ -23,9 +23,9 @@ import (
 )
 
 type configOptionsInternal struct {
-	Mode     ConfigMode     `json:"mode,omitempty"`
-	Paths    bool           `json:"paths,omitempty"`
-	OrigOpts *ConfigOptions `json:"-"`
+	Mode      ConfigMode        `json:"mode,omitempty"`
+	Paths     bool              `json:"paths,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -42,11 +42,10 @@ func (opts *configOptionsInternal) ConfigBytes(w io.Writer) error {
 		return fmt.Errorf("error converting config struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return config.Config(rCtx, w, values)
+	return config.Config(opts.RenderCtx, w, values)
 }
 
 // configParseFunc handles special cases such as structs and enums (if any).
@@ -112,9 +111,9 @@ func queryConfig[T configGeneric](opts *configOptionsInternal) ([]T, *types.Meta
 // toInternal converts the SDK options to the internal options format.
 func (opts *ConfigOptions) toInternal() *configOptionsInternal {
 	return &configOptionsInternal{
-		Mode:     opts.Mode,
-		OrigOpts: opts,
-		Globals:  opts.Globals,
+		Mode:      opts.Mode,
+		RenderCtx: opts.RenderCtx,
+		Globals:   opts.Globals,
 	}
 }
 

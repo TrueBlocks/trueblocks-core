@@ -13,7 +13,7 @@ import (
 )
 
 // HandleClean handles the chifra monitors --clean command.
-func (opts *MonitorsOptions) HandleClean(rCtx output.RenderCtx) error {
+func (opts *MonitorsOptions) HandleClean(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	_, monArray := monitor.GetMonitorMap(chain)

@@ -18,7 +18,7 @@ import (
 )
 
 // Names provides an interface to the command line chifra names through the SDK.
-func Names(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
+func Names(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	names.ResetOptions(sdkTestMode)
 	opts := names.NamesFinishParseInternal(w, values)
 	// EXISTING_CODE

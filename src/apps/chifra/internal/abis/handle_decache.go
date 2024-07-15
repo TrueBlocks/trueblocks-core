@@ -20,7 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *AbisOptions) HandleDecache(rCtx output.RenderCtx) error {
+func (opts *AbisOptions) HandleDecache(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 

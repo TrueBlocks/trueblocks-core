@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-func (opts *ScrapeOptions) HandleTouch(rCtx output.RenderCtx) error {
+func (opts *ScrapeOptions) HandleTouch(rCtx *output.RenderCtx) error {
 	// TODO: implement
 	logger.Error("chifra scrape --touch is not yet implemented")
 	return nil

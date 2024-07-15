@@ -44,7 +44,7 @@ func ServeTraces(w http.ResponseWriter, r *http.Request) error {
 }
 
 // TracesInternal handles the internal workings of the traces command. Returns an error.
-func (opts *TracesOptions) TracesInternal(rCtx output.RenderCtx) error {
+func (opts *TracesOptions) TracesInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateTraces(); err != nil {
 		return err

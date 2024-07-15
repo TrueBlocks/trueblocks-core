@@ -51,7 +51,7 @@ func ServeDaemon(w http.ResponseWriter, r *http.Request) error {
 }
 
 // DaemonInternal handles the internal workings of the daemon command. Returns an error.
-func (opts *DaemonOptions) DaemonInternal(rCtx output.RenderCtx) error {
+func (opts *DaemonOptions) DaemonInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateDaemon(); err != nil {
 		return err

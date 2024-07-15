@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *BlocksOptions) HandleDecache(rCtx output.RenderCtx) error {
+func (opts *BlocksOptions) HandleDecache(rCtx *output.RenderCtx) error {
 	itemsToRemove, err := opts.getItemsToRemove()
 	if err != nil {
 		return err

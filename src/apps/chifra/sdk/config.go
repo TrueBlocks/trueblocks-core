@@ -18,7 +18,7 @@ import (
 )
 
 // Config provides an interface to the command line chifra config through the SDK.
-func Config(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
+func Config(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	config.ResetOptions(sdkTestMode)
 	opts := config.ConfigFinishParseInternal(w, values)
 	// EXISTING_CODE

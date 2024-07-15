@@ -18,7 +18,7 @@ import (
 )
 
 // When provides an interface to the command line chifra when through the SDK.
-func When(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
+func When(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	when.ResetOptions(sdkTestMode)
 	opts := when.WhenFinishParseInternal(w, values)
 	// EXISTING_CODE

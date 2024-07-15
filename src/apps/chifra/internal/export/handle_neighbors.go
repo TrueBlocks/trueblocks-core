@@ -18,7 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ExportOptions) HandleNeighbors(rCtx output.RenderCtx, monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleNeighbors(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 	filter := filter.NewFilter(

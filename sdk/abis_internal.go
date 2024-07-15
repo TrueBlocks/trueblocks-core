@@ -23,13 +23,13 @@ import (
 )
 
 type abisOptionsInternal struct {
-	Addrs    []string     `json:"addrs,omitempty"`
-	Known    bool         `json:"known,omitempty"`
-	ProxyFor base.Address `json:"proxyFor,omitempty"`
-	Find     []string     `json:"find,omitempty"`
-	Hint     []string     `json:"hint,omitempty"`
-	Encode   string       `json:"encode,omitempty"`
-	OrigOpts *AbisOptions `json:"-"`
+	Addrs     []string          `json:"addrs,omitempty"`
+	Known     bool              `json:"known,omitempty"`
+	ProxyFor  base.Address      `json:"proxyFor,omitempty"`
+	Find      []string          `json:"find,omitempty"`
+	Hint      []string          `json:"hint,omitempty"`
+	Encode    string            `json:"encode,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -46,11 +46,10 @@ func (opts *abisOptionsInternal) AbisBytes(w io.Writer) error {
 		return fmt.Errorf("error converting abis struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return abis.Abis(rCtx, w, values)
+	return abis.Abis(opts.RenderCtx, w, values)
 }
 
 // abisParseFunc handles special cases such as structs and enums (if any).
@@ -112,12 +111,12 @@ func queryAbis[T abisGeneric](opts *abisOptionsInternal) ([]T, *types.MetaData, 
 // toInternal converts the SDK options to the internal options format.
 func (opts *AbisOptions) toInternal() *abisOptionsInternal {
 	return &abisOptionsInternal{
-		Addrs:    opts.Addrs,
-		Known:    opts.Known,
-		ProxyFor: opts.ProxyFor,
-		Hint:     opts.Hint,
-		OrigOpts: opts,
-		Globals:  opts.Globals,
+		Addrs:     opts.Addrs,
+		Known:     opts.Known,
+		ProxyFor:  opts.ProxyFor,
+		Hint:      opts.Hint,
+		RenderCtx: opts.RenderCtx,
+		Globals:   opts.Globals,
 	}
 }
 

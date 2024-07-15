@@ -23,16 +23,16 @@ import (
 )
 
 type whenOptionsInternal struct {
-	BlockIds   []string     `json:"blocks,omitempty"`
-	List       bool         `json:"list,omitempty"`
-	Timestamps bool         `json:"timestamps,omitempty"`
-	Count      bool         `json:"count,omitempty"`
-	Truncate   base.Blknum  `json:"truncate,omitempty"`
-	Repair     bool         `json:"repair,omitempty"`
-	Check      bool         `json:"check,omitempty"`
-	Update     bool         `json:"update,omitempty"`
-	Deep       bool         `json:"deep,omitempty"`
-	OrigOpts   *WhenOptions `json:"-"`
+	BlockIds   []string          `json:"blocks,omitempty"`
+	List       bool              `json:"list,omitempty"`
+	Timestamps bool              `json:"timestamps,omitempty"`
+	Count      bool              `json:"count,omitempty"`
+	Truncate   base.Blknum       `json:"truncate,omitempty"`
+	Repair     bool              `json:"repair,omitempty"`
+	Check      bool              `json:"check,omitempty"`
+	Update     bool              `json:"update,omitempty"`
+	Deep       bool              `json:"deep,omitempty"`
+	RenderCtx  *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -49,11 +49,10 @@ func (opts *whenOptionsInternal) WhenBytes(w io.Writer) error {
 		return fmt.Errorf("error converting when struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return when.When(rCtx, w, values)
+	return when.When(opts.RenderCtx, w, values)
 }
 
 // whenParseFunc handles special cases such as structs and enums (if any).
@@ -112,14 +111,14 @@ func queryWhen[T whenGeneric](opts *whenOptionsInternal) ([]T, *types.MetaData, 
 // toInternal converts the SDK options to the internal options format.
 func (opts *WhenOptions) toInternal() *whenOptionsInternal {
 	return &whenOptionsInternal{
-		BlockIds: opts.BlockIds,
-		Truncate: opts.Truncate,
-		Repair:   opts.Repair,
-		Check:    opts.Check,
-		Update:   opts.Update,
-		Deep:     opts.Deep,
-		OrigOpts: opts,
-		Globals:  opts.Globals,
+		BlockIds:  opts.BlockIds,
+		Truncate:  opts.Truncate,
+		Repair:    opts.Repair,
+		Check:     opts.Check,
+		Update:    opts.Update,
+		Deep:      opts.Deep,
+		RenderCtx: opts.RenderCtx,
+		Globals:   opts.Globals,
 	}
 }
 

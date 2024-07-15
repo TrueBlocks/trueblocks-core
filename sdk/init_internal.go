@@ -23,13 +23,13 @@ import (
 )
 
 type initOptionsInternal struct {
-	All        bool         `json:"all,omitempty"`
-	Example    string       `json:"example,omitempty"`
-	DryRun     bool         `json:"dryRun,omitempty"`
-	Publisher  base.Address `json:"publisher,omitempty"`
-	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
-	Sleep      float64      `json:"sleep,omitempty"`
-	OrigOpts   *InitOptions `json:"-"`
+	All        bool              `json:"all,omitempty"`
+	Example    string            `json:"example,omitempty"`
+	DryRun     bool              `json:"dryRun,omitempty"`
+	Publisher  base.Address      `json:"publisher,omitempty"`
+	FirstBlock base.Blknum       `json:"firstBlock,omitempty"`
+	Sleep      float64           `json:"sleep,omitempty"`
+	RenderCtx  *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -46,11 +46,10 @@ func (opts *initOptionsInternal) InitBytes(w io.Writer) error {
 		return fmt.Errorf("error converting init struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return initPkg.Init(rCtx, w, values)
+	return initPkg.Init(opts.RenderCtx, w, values)
 }
 
 // initParseFunc handles special cases such as structs and enums (if any).
@@ -110,7 +109,7 @@ func (opts *InitOptions) toInternal() *initOptionsInternal {
 		Publisher:  opts.Publisher,
 		FirstBlock: opts.FirstBlock,
 		Sleep:      opts.Sleep,
-		OrigOpts:   opts,
+		RenderCtx:  opts.RenderCtx,
 		Globals:    opts.Globals,
 	}
 }

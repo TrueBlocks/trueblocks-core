@@ -44,7 +44,7 @@ func ServeInit(w http.ResponseWriter, r *http.Request) error {
 }
 
 // InitInternal handles the internal workings of the init command. Returns an error.
-func (opts *InitOptions) InitInternal(rCtx output.RenderCtx) error {
+func (opts *InitOptions) InitInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateInit(); err != nil {
 		return err

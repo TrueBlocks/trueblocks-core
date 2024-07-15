@@ -19,7 +19,7 @@ import (
 )
 
 // HandleInit initializes local copy of UnchainedIndex by downloading manifests and chunks
-func (opts *InitOptions) HandleInit(rCtx output.RenderCtx) error {
+func (opts *InitOptions) HandleInit(rCtx *output.RenderCtx) error {
 	// Make the code below cleaner...
 	chain := opts.Globals.Chain
 
@@ -115,6 +115,6 @@ func (opts *InitOptions) HandleInit(rCtx output.RenderCtx) error {
 }
 
 // HandleShow initializes local copy of UnchainedIndex by downloading manifests and chunks
-func (opts *InitOptions) HandleShow(rCtx output.RenderCtx) error {
+func (opts *InitOptions) HandleShow(rCtx *output.RenderCtx) error {
 	return opts.HandleInit(rCtx)
 }

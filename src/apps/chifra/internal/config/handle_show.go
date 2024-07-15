@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-func (opts *ConfigOptions) HandleShow(rCtx output.RenderCtx) error {
+func (opts *ConfigOptions) HandleShow(rCtx *output.RenderCtx) error {
 	if opts.Mode == "edit" {
 		return opts.HandleEdit(rCtx)
 	}

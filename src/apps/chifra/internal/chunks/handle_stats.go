@@ -14,7 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *ChunksOptions) HandleStats(rCtx output.RenderCtx, blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleStats(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showFinalizedStats := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {

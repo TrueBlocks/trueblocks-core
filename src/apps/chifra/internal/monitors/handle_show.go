@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-func (opts *MonitorsOptions) HandleShow(rCtx output.RenderCtx) error {
+func (opts *MonitorsOptions) HandleShow(rCtx *output.RenderCtx) error {
 	logger.Fatal("Should not happen for chifra monitors.")
 	return nil
 }

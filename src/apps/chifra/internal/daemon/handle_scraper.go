@@ -6,7 +6,7 @@ import (
 )
 
 // HandleScraper starts and manages the scraper process
-func (opts *DaemonOptions) HandleScraper(rCtx output.RenderCtx) error {
+func (opts *DaemonOptions) HandleScraper(rCtx *output.RenderCtx) error {
 	if len(opts.Scrape) == 0 {
 		return nil
 	}

@@ -44,7 +44,7 @@ func ServeTokens(w http.ResponseWriter, r *http.Request) error {
 }
 
 // TokensInternal handles the internal workings of the tokens command. Returns an error.
-func (opts *TokensOptions) TokensInternal(rCtx output.RenderCtx) error {
+func (opts *TokensOptions) TokensInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateTokens(); err != nil {
 		return err

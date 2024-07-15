@@ -11,7 +11,7 @@ import (
 )
 
 // HandleTimestampsTruncate handles chifra when --timestamps --drop <bn>
-func (opts *WhenOptions) HandleTimestampsTruncate(rCtx output.RenderCtx) error {
+func (opts *WhenOptions) HandleTimestampsTruncate(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
 	if err := tslib.Truncate(chain, opts.Truncate+1); err != nil {

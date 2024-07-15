@@ -18,7 +18,7 @@ var sourceMap = map[bool]manifest.Source{
 	true:  manifest.FromContract,
 }
 
-func (opts *ChunksOptions) HandleManifest(rCtx output.RenderCtx, blockNums []base.Blknum) error {
+func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, sourceMap[opts.Remote])

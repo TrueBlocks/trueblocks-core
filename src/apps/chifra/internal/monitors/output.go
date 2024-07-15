@@ -64,7 +64,7 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) error {
 }
 
 // MonitorsInternal handles the internal workings of the monitors command. Returns an error.
-func (opts *MonitorsOptions) MonitorsInternal(rCtx output.RenderCtx) error {
+func (opts *MonitorsOptions) MonitorsInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateMonitors(); err != nil {
 		return err

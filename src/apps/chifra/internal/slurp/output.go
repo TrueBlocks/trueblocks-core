@@ -44,7 +44,7 @@ func ServeSlurp(w http.ResponseWriter, r *http.Request) error {
 }
 
 // SlurpInternal handles the internal workings of the slurp command. Returns an error.
-func (opts *SlurpOptions) SlurpInternal(rCtx output.RenderCtx) error {
+func (opts *SlurpOptions) SlurpInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateSlurp(); err != nil {
 		return err

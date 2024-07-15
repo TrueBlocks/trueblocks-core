@@ -23,21 +23,21 @@ import (
 )
 
 type blocksOptionsInternal struct {
-	BlockIds    []string       `json:"blocks,omitempty"`
-	Hashes      bool           `json:"hashes,omitempty"`
-	Uncles      bool           `json:"uncles,omitempty"`
-	Traces      bool           `json:"traces,omitempty"`
-	Uniq        bool           `json:"uniq,omitempty"`
-	Flow        BlocksFlow     `json:"flow,omitempty"`
-	Logs        bool           `json:"logs,omitempty"`
-	Emitter     []string       `json:"emitter,omitempty"`
-	Topic       []string       `json:"topic,omitempty"`
-	Withdrawals bool           `json:"withdrawals,omitempty"`
-	Articulate  bool           `json:"articulate,omitempty"`
-	Count       bool           `json:"count,omitempty"`
-	CacheTxs    bool           `json:"cacheTxs,omitempty"`
-	CacheTraces bool           `json:"cacheTraces,omitempty"`
-	OrigOpts    *BlocksOptions `json:"-"`
+	BlockIds    []string          `json:"blocks,omitempty"`
+	Hashes      bool              `json:"hashes,omitempty"`
+	Uncles      bool              `json:"uncles,omitempty"`
+	Traces      bool              `json:"traces,omitempty"`
+	Uniq        bool              `json:"uniq,omitempty"`
+	Flow        BlocksFlow        `json:"flow,omitempty"`
+	Logs        bool              `json:"logs,omitempty"`
+	Emitter     []string          `json:"emitter,omitempty"`
+	Topic       []string          `json:"topic,omitempty"`
+	Withdrawals bool              `json:"withdrawals,omitempty"`
+	Articulate  bool              `json:"articulate,omitempty"`
+	Count       bool              `json:"count,omitempty"`
+	CacheTxs    bool              `json:"cacheTxs,omitempty"`
+	CacheTraces bool              `json:"cacheTraces,omitempty"`
+	RenderCtx   *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -54,11 +54,10 @@ func (opts *blocksOptionsInternal) BlocksBytes(w io.Writer) error {
 		return fmt.Errorf("error converting blocks struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return blocks.Blocks(rCtx, w, values)
+	return blocks.Blocks(opts.RenderCtx, w, values)
 }
 
 // blocksParseFunc handles special cases such as structs and enums (if any).
@@ -139,7 +138,7 @@ func (opts *BlocksOptions) toInternal() *blocksOptionsInternal {
 		Articulate:  opts.Articulate,
 		CacheTxs:    opts.CacheTxs,
 		CacheTraces: opts.CacheTraces,
-		OrigOpts:    opts,
+		RenderCtx:   opts.RenderCtx,
 		Globals:     opts.Globals,
 	}
 }

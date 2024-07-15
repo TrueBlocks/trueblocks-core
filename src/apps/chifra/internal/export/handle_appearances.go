@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ExportOptions) HandleAppearances(rCtx output.RenderCtx, monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleAppearances(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	filter := filter.NewFilter(
 		opts.Reversed,

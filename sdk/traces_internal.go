@@ -22,11 +22,11 @@ import (
 )
 
 type tracesOptionsInternal struct {
-	TransactionIds []string       `json:"transactions,omitempty"`
-	Articulate     bool           `json:"articulate,omitempty"`
-	Filter         string         `json:"filter,omitempty"`
-	Count          bool           `json:"count,omitempty"`
-	OrigOpts       *TracesOptions `json:"-"`
+	TransactionIds []string          `json:"transactions,omitempty"`
+	Articulate     bool              `json:"articulate,omitempty"`
+	Filter         string            `json:"filter,omitempty"`
+	Count          bool              `json:"count,omitempty"`
+	RenderCtx      *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -43,11 +43,10 @@ func (opts *tracesOptionsInternal) TracesBytes(w io.Writer) error {
 		return fmt.Errorf("error converting traces struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return traces.Traces(rCtx, w, values)
+	return traces.Traces(opts.RenderCtx, w, values)
 }
 
 // tracesParseFunc handles special cases such as structs and enums (if any).
@@ -112,7 +111,7 @@ func (opts *TracesOptions) toInternal() *tracesOptionsInternal {
 		TransactionIds: opts.TransactionIds,
 		Articulate:     opts.Articulate,
 		Filter:         opts.Filter,
-		OrigOpts:       opts,
+		RenderCtx:      opts.RenderCtx,
 		Globals:        opts.Globals,
 	}
 }

@@ -9,9 +9,9 @@ type RenderCtx struct {
 	// TODO: for progress, errors, and data
 }
 
-func NewRenderContext() RenderCtx {
+func NewRenderContext() *RenderCtx {
 	ctx, cancel := context.WithCancel(context.Background())
-	return RenderCtx{
+	return &RenderCtx{
 		Ctx:    ctx,
 		Cancel: cancel,
 	}

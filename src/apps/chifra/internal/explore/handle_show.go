@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ExploreOptions) HandleShow(rCtx output.RenderCtx) error {
+func (opts *ExploreOptions) HandleShow(rCtx *output.RenderCtx) error {
 	for _, url := range urls {
 		ret := url.getUrl(opts)
 		if !opts.Globals.TestMode {

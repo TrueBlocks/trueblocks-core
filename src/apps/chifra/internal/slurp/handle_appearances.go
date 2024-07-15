@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *SlurpOptions) HandleAppearances(rCtx output.RenderCtx) error {
+func (opts *SlurpOptions) HandleAppearances(rCtx *output.RenderCtx) error {
 	provider, err := opts.Provider()
 	if err != nil {
 		return err

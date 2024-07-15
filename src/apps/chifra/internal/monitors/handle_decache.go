@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 )
 
-func (opts *MonitorsOptions) HandleDecache(rCtx output.RenderCtx) error {
+func (opts *MonitorsOptions) HandleDecache(rCtx *output.RenderCtx) error {
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
 	var updater = monitor.NewUpdater(opts.Globals.Chain, opts.Globals.TestMode, true /* skipFreshen */, opts.Addrs)
 	if canceled, err := updater.FreshenMonitors(&monitorArray); err != nil || canceled {

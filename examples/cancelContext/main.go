@@ -16,22 +16,20 @@ func main() {
 	}
 
 	opts := sdk.ExportOptions{
-		Addrs: []string{"0x1f98431c8ad98523631ae4a59f267346ea31f984"}, // Uniswap V3 Factory
+		Addrs:     []string{"0x1f98431c8ad98523631ae4a59f267346ea31f984"}, // Uniswap V3 Factory
+		RenderCtx: sdk.NewRenderContext(),
 	}
 
 	go func() {
-		secondsElapsed := 0
-		for {
-			// Spin until the cancelAfter time has elapsed
-			secondsElapsed++
-			fmt.Printf("Canceling in %d seconds...\n", cancelAfter-secondsElapsed+1)
-			if opts.Globals.RenderCtx != nil && secondsElapsed >= cancelAfter {
-				opts.Globals.RenderCtx.Cancel()
-				fmt.Println("Rendering txs...")
-				return
-			}
+		cnt := 0
+		for i := 0; i < cancelAfter; i++ {
+			fmt.Printf("Sleeping for %d seconds...\n", cancelAfter-cnt)
 			time.Sleep(1 * time.Second)
+			cnt++
 		}
+		fmt.Println("Canceling context...")
+		opts.RenderCtx.Cancel()
+		fmt.Println("Rendering txs...")
 	}()
 
 	// The Uniswap V3 Factory takes a very long time

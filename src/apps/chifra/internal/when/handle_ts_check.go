@@ -14,7 +14,7 @@ import (
 )
 
 // HandleTimestampsCheck handles chifra when --timestamps --check
-func (opts *WhenOptions) HandleTimestampsCheck(rCtx output.RenderCtx) error {
+func (opts *WhenOptions) HandleTimestampsCheck(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
 	cnt, err := tslib.NTimestamps(chain)

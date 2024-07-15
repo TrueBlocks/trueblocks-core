@@ -15,18 +15,20 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type StateOptions struct {
-	Addrs      []string     `json:"addrs,omitempty"`
-	BlockIds   []string     `json:"blocks,omitempty"`
-	Parts      StateParts   `json:"parts,omitempty"`
-	Changes    bool         `json:"changes,omitempty"`
-	NoZero     bool         `json:"noZero,omitempty"`
-	Articulate bool         `json:"articulate,omitempty"`
-	ProxyFor   base.Address `json:"proxyFor,omitempty"`
+	Addrs      []string          `json:"addrs,omitempty"`
+	BlockIds   []string          `json:"blocks,omitempty"`
+	Parts      StateParts        `json:"parts,omitempty"`
+	Changes    bool              `json:"changes,omitempty"`
+	NoZero     bool              `json:"noZero,omitempty"`
+	Articulate bool              `json:"articulate,omitempty"`
+	ProxyFor   base.Address      `json:"proxyFor,omitempty"`
+	RenderCtx  *output.RenderCtx `json:"-"`
 	Globals
 }
 

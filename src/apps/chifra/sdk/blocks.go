@@ -18,7 +18,7 @@ import (
 )
 
 // Blocks provides an interface to the command line chifra blocks through the SDK.
-func Blocks(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
+func Blocks(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	blocks.ResetOptions(sdkTestMode)
 	opts := blocks.BlocksFinishParseInternal(w, values)
 	// EXISTING_CODE

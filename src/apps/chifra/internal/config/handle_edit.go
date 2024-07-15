@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ConfigOptions) HandleEdit(rCtx output.RenderCtx) error {
+func (opts *ConfigOptions) HandleEdit(rCtx *output.RenderCtx) error {
 	if opts.Globals.TestMode {
 		logger.Info("Can not process this command in test mode.")
 		return nil

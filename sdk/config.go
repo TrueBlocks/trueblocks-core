@@ -14,12 +14,14 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type ConfigOptions struct {
-	Mode ConfigMode `json:"mode,omitempty"`
+	Mode      ConfigMode        `json:"mode,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 

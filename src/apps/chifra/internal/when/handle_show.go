@@ -16,7 +16,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *WhenOptions) HandleShow(rCtx output.RenderCtx) error {
+func (opts *WhenOptions) HandleShow(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {

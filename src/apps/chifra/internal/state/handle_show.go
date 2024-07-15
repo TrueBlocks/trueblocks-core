@@ -12,7 +12,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *StateOptions) HandleShow(rCtx output.RenderCtx) error {
+func (opts *StateOptions) HandleShow(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
 	previousBalance := make(map[base.Address]*base.Wei, len(opts.Addrs))

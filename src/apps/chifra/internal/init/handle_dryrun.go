@@ -12,7 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-func (opts *InitOptions) HandleDryRun(rCtx output.RenderCtx) error {
+func (opts *InitOptions) HandleDryRun(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
 	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.TempContract)

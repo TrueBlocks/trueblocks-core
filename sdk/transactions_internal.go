@@ -23,16 +23,16 @@ import (
 )
 
 type transactionsOptionsInternal struct {
-	TransactionIds []string             `json:"transactions,omitempty"`
-	Articulate     bool                 `json:"articulate,omitempty"`
-	Traces         bool                 `json:"traces,omitempty"`
-	Uniq           bool                 `json:"uniq,omitempty"`
-	Flow           TransactionsFlow     `json:"flow,omitempty"`
-	Logs           bool                 `json:"logs,omitempty"`
-	Emitter        []string             `json:"emitter,omitempty"`
-	Topic          []string             `json:"topic,omitempty"`
-	CacheTraces    bool                 `json:"cacheTraces,omitempty"`
-	OrigOpts       *TransactionsOptions `json:"-"`
+	TransactionIds []string          `json:"transactions,omitempty"`
+	Articulate     bool              `json:"articulate,omitempty"`
+	Traces         bool              `json:"traces,omitempty"`
+	Uniq           bool              `json:"uniq,omitempty"`
+	Flow           TransactionsFlow  `json:"flow,omitempty"`
+	Logs           bool              `json:"logs,omitempty"`
+	Emitter        []string          `json:"emitter,omitempty"`
+	Topic          []string          `json:"topic,omitempty"`
+	CacheTraces    bool              `json:"cacheTraces,omitempty"`
+	RenderCtx      *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -49,11 +49,10 @@ func (opts *transactionsOptionsInternal) TransactionsBytes(w io.Writer) error {
 		return fmt.Errorf("error converting transactions struct to URL values: %v", err)
 	}
 
-	rCtx := output.NewRenderContext()
-	if opts.OrigOpts != nil {
-		opts.OrigOpts.RenderCtx = &rCtx
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
 	}
-	return transactions.Transactions(rCtx, w, values)
+	return transactions.Transactions(opts.RenderCtx, w, values)
 }
 
 // transactionsParseFunc handles special cases such as structs and enums (if any).
@@ -130,7 +129,7 @@ func (opts *TransactionsOptions) toInternal() *transactionsOptionsInternal {
 		Emitter:        opts.Emitter,
 		Topic:          opts.Topic,
 		CacheTraces:    opts.CacheTraces,
-		OrigOpts:       opts,
+		RenderCtx:      opts.RenderCtx,
 		Globals:        opts.Globals,
 	}
 }

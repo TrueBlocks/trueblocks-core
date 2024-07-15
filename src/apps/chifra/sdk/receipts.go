@@ -18,7 +18,7 @@ import (
 )
 
 // Receipts provides an interface to the command line chifra receipts through the SDK.
-func Receipts(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
+func Receipts(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	receipts.ResetOptions(sdkTestMode)
 	opts := receipts.ReceiptsFinishParseInternal(w, values)
 	// EXISTING_CODE

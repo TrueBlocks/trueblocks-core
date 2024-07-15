@@ -18,7 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-func (opts *StatusOptions) HandleShow(rCtx output.RenderCtx) error {
+func (opts *StatusOptions) HandleShow(rCtx *output.RenderCtx) error {
 	if len(opts.Modes) > 0 {
 		return opts.HandleModes(rCtx)
 	}

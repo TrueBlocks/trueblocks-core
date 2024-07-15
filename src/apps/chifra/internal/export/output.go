@@ -45,7 +45,7 @@ func ServeExport(w http.ResponseWriter, r *http.Request) error {
 }
 
 // ExportInternal handles the internal workings of the export command. Returns an error.
-func (opts *ExportOptions) ExportInternal(rCtx output.RenderCtx) error {
+func (opts *ExportOptions) ExportInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateExport(); err != nil {
 		return err

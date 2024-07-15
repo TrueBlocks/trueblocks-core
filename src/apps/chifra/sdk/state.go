@@ -18,7 +18,7 @@ import (
 )
 
 // State provides an interface to the command line chifra state through the SDK.
-func State(rCtx output.RenderCtx, w io.Writer, values url.Values) error {
+func State(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	state.ResetOptions(sdkTestMode)
 	opts := state.StateFinishParseInternal(w, values)
 	// EXISTING_CODE

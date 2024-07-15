@@ -44,7 +44,7 @@ func ServeBlocks(w http.ResponseWriter, r *http.Request) error {
 }
 
 // BlocksInternal handles the internal workings of the blocks command. Returns an error.
-func (opts *BlocksOptions) BlocksInternal(rCtx output.RenderCtx) error {
+func (opts *BlocksOptions) BlocksInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateBlocks(); err != nil {
 		return err
