@@ -1,7 +1,6 @@
 package namesPkg
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -54,7 +53,7 @@ func (opts *NamesOptions) HandleAutoname(rCtx *output.RenderCtx) error {
 				Msg: message,
 			}
 		}
-		_ = output.StreamMany(context.Background(), fetchData, opts.Globals.OutputOpts())
+		_ = output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 	}
 	return nil
 }

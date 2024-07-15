@@ -5,8 +5,6 @@
 package transactionsPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -19,7 +17,6 @@ func (opts *TransactionsOptions) HandleDecache(rCtx *output.RenderCtx) error {
 		return err
 	}
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showProgress := opts.Globals.ShowProgress()
 		if msg, err := decache.Decache(opts.Conn, itemsToRemove, showProgress, walk.Cache_Transactions); err != nil {
@@ -33,5 +30,5 @@ func (opts *TransactionsOptions) HandleDecache(rCtx *output.RenderCtx) error {
 	}
 
 	opts.Globals.NoHeader = true
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }

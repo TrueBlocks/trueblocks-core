@@ -36,12 +36,11 @@ func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []mon
 	}
 	logFilter := rpc.NewLogFilter(opts.Emitter, opts.Topic)
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
-				cancel()
+				rCtx.Cancel()
 
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no blocks found for the query")
@@ -50,7 +49,7 @@ func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []mon
 			} else {
 				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, filter.Reversed); err != nil {
 					errorChan <- err
-					cancel()
+					rCtx.Cancel()
 
 				} else {
 					showProgress := opts.Globals.ShowProgress()
@@ -148,5 +147,5 @@ func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []mon
 		"export":     true,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

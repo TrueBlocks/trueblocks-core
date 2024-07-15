@@ -1,7 +1,6 @@
 package chunksPkg
 
 import (
-	"context"
 	"fmt"
 	"strings"
 
@@ -33,7 +32,6 @@ func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Bl
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
 	userHitCtrlC := false
-	ctx, cancel := context.WithCancel(context.Background())
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		nChunksTagged := 0
@@ -77,7 +75,7 @@ func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Bl
 
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 
 		} else {
 			bar.Finish(true /* newLine */)
@@ -107,11 +105,11 @@ func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Bl
 		logger.Error("Tagging did not complete. The index is in an unknown state. Rerun the command (and")
 		logger.Error("allow it to complete), or run chifra init to correct the inconsistency.")
 	}
-	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
+	trapChannel := sigintTrap.Enable(rCtx.Ctx, rCtx.Cancel, cleanOnQuit)
 	defer sigintTrap.Disable(trapChannel)
 
 	opts.Globals.NoHeader = true
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 var tagWarning = `Tag the index with version {0}? This is a non-recoverable operation. (Yn)? `

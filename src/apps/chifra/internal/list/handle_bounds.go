@@ -1,7 +1,6 @@
 package listPkg
 
 import (
-	"context"
 	"errors"
 	"fmt"
 
@@ -23,7 +22,6 @@ func (opts *ListOptions) HandleBounds(rCtx *output.RenderCtx, monitorArray []mon
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		if len(monitorArray) == 0 {
 			errorChan <- errors.New("no monitors found in HandleBounds")
@@ -60,5 +58,5 @@ func (opts *ListOptions) HandleBounds(rCtx *output.RenderCtx, monitorArray []mon
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }

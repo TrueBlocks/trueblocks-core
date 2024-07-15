@@ -1,7 +1,6 @@
 package chunksPkg
 
 import (
-	"context"
 	"sort"
 	"strings"
 	"time"
@@ -20,7 +19,6 @@ func (opts *ChunksOptions) HandleList(rCtx *output.RenderCtx, blockNums []base.B
 		return nil
 	}
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		var perPage = 1000
 		if testMode {
@@ -71,5 +69,5 @@ func (opts *ChunksOptions) HandleList(rCtx *output.RenderCtx, blockNums []base.B
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }

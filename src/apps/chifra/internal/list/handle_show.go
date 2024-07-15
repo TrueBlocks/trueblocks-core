@@ -5,7 +5,6 @@
 package listPkg
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -30,7 +29,6 @@ func (opts *ListOptions) HandleShow(rCtx *output.RenderCtx, monitorArray []monit
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		currentBn := uint32(0)
 		currentTs := base.Timestamp(0)
@@ -64,7 +62,7 @@ func (opts *ListOptions) HandleShow(rCtx *output.RenderCtx, monitorArray []monit
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 func (opts *ListOptions) IsMax(cnt uint64) bool {

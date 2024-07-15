@@ -1,7 +1,6 @@
 package statusPkg
 
 import (
-	"context"
 	"fmt"
 	"io"
 	"strings"
@@ -25,7 +24,6 @@ func (opts *StatusOptions) HandleShow(rCtx *output.RenderCtx) error {
 
 	testMode := opts.Globals.TestMode
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		s, err := opts.GetStatus(opts.Diagnose)
 		if err != nil {
@@ -41,7 +39,7 @@ func (opts *StatusOptions) HandleShow(rCtx *output.RenderCtx) error {
 		modelChan <- s
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 func ToProgress(chain string, diagnose bool, meta *types.MetaData) string {

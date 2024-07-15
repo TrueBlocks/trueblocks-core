@@ -1,7 +1,6 @@
 package abisPkg
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"sort"
@@ -15,7 +14,6 @@ import (
 )
 
 func (opts *AbisOptions) HandleMany(rCtx *output.RenderCtx) (err error) {
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, addr := range opts.Addrs {
 			abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)
@@ -33,7 +31,7 @@ func (opts *AbisOptions) HandleMany(rCtx *output.RenderCtx) (err error) {
 				} else {
 					// Cancel on all other errors
 					errorChan <- err
-					cancel()
+					rCtx.Cancel()
 				}
 				// } else if len(opts.ProxyFor) > 0 {
 				// TODO: We need to copy the proxied-to ABI to the proxy (replacing)
@@ -53,5 +51,5 @@ func (opts *AbisOptions) HandleMany(rCtx *output.RenderCtx) (err error) {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }

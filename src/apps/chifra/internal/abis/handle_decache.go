@@ -5,7 +5,6 @@
 package abisPkg
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -30,7 +29,7 @@ func (opts *AbisOptions) HandleDecache(rCtx *output.RenderCtx) error {
 		} else {
 			filenameChan := make(chan walk.CacheFileInfo)
 			var nRoutines = 1
-			go walk.WalkCacheFolder(context.Background(), chain, walk.Cache_Abis, nil, filenameChan)
+			go walk.WalkCacheFolder(rCtx.Ctx, chain, walk.Cache_Abis, nil, filenameChan)
 			for result := range filenameChan {
 				switch result.Type {
 				case walk.Cache_Abis:

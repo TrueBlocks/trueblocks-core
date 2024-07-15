@@ -1,7 +1,6 @@
 package transactionsPkg
 
 import (
-	"context"
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -15,7 +14,6 @@ import (
 func (opts *TransactionsOptions) HandleUniq(rCtx *output.RenderCtx) (err error) {
 	chain := opts.Globals.Chain
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showProgress := opts.Globals.ShowProgress()
 		bar := logger.NewBar(logger.BarOptions{
@@ -33,7 +31,7 @@ func (opts *TransactionsOptions) HandleUniq(rCtx *output.RenderCtx) (err error) 
 			apps, err := rng.ResolveTxs(chain)
 			if err != nil && !errors.Is(err, ethereum.NotFound) {
 				errorChan <- err
-				cancel()
+				rCtx.Cancel()
 			}
 
 			for _, app := range apps {
@@ -59,5 +57,5 @@ func (opts *TransactionsOptions) HandleUniq(rCtx *output.RenderCtx) (err error) 
 	extraOpts := map[string]any{
 		"uniq": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

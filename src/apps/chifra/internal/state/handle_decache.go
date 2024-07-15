@@ -5,7 +5,6 @@
 package statePkg
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -23,7 +22,6 @@ func (opts *StateOptions) HandleDecache(rCtx *output.RenderCtx) error {
 		return err
 	}
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showProgress := opts.Globals.ShowProgress()
 		monitorCacheTypes := []walk.CacheType{
@@ -43,7 +41,7 @@ func (opts *StateOptions) HandleDecache(rCtx *output.RenderCtx) error {
 	}
 
 	opts.Globals.NoHeader = true
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 func (opts *StateOptions) getItemsToRemove() ([]cache.Locator, error) {

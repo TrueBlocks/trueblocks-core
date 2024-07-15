@@ -5,7 +5,6 @@
 package exportPkg
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -26,7 +25,6 @@ func (opts *ExportOptions) HandleAppearances(rCtx *output.RenderCtx, monitorArra
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		currentBn := uint32(0)
 		for _, mon := range monitorArray {
@@ -54,7 +52,7 @@ func (opts *ExportOptions) HandleAppearances(rCtx *output.RenderCtx, monitorArra
 		"export": true,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func (opts *ExportOptions) IsMax(cnt uint64) bool {

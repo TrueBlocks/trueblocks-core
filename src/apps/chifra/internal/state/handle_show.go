@@ -1,7 +1,6 @@
 package statePkg
 
 import (
-	"context"
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -41,7 +40,6 @@ func (opts *StateOptions) HandleShow(rCtx *output.RenderCtx) error {
 	stateFields, outputFields, none := types.SliceToStateParts(opts.Parts)
 
 	cnt := 0
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, addressStr := range opts.Addrs {
 			address := base.HexToAddress(addressStr)
@@ -54,7 +52,7 @@ func (opts *StateOptions) HandleShow(rCtx *output.RenderCtx) error {
 					if errors.Is(err, ethereum.NotFound) {
 						continue
 					}
-					cancel()
+					rCtx.Cancel()
 					return
 				}
 
@@ -104,5 +102,5 @@ func (opts *StateOptions) HandleShow(rCtx *output.RenderCtx) error {
 		"fields": outputFields,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

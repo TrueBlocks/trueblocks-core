@@ -1,8 +1,6 @@
 package monitorsPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -16,7 +14,6 @@ func (opts *MonitorsOptions) HandleDecache(rCtx *output.RenderCtx) error {
 		return err
 	}
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		doIt := true
 		for _, mon := range monitorArray {
@@ -36,5 +33,5 @@ func (opts *MonitorsOptions) HandleDecache(rCtx *output.RenderCtx) error {
 		}
 	}
 	opts.Globals.NoHeader = true
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }

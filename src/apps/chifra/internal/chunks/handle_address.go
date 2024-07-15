@@ -5,7 +5,6 @@
 package chunksPkg
 
 import (
-	"context"
 	"encoding/binary"
 	"fmt"
 	"io"
@@ -23,7 +22,6 @@ import (
 func (opts *ChunksOptions) HandleAddresses(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	been_here := 0
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		var showAddresses func(walker *walk.CacheWalker, path string, first bool) (bool, error)
 		if opts.Globals.Verbose {
@@ -97,9 +95,9 @@ func (opts *ChunksOptions) HandleAddresses(rCtx *output.RenderCtx, blockNums []b
 		)
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }

@@ -23,21 +23,20 @@ func (opts *BlocksOptions) HandleUniq(rCtx *output.RenderCtx) error {
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 		}
 
 		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Appearance](apps, false); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 
 		} else if cnt == 0 {
 			errorChan <- fmt.Errorf("no blocks found for the query")
-			cancel()
+			rCtx.Cancel()
 
 		} else {
 			showProgress := opts.Globals.ShowProgress()
@@ -103,5 +102,5 @@ func (opts *BlocksOptions) HandleUniq(rCtx *output.RenderCtx) error {
 		"uniq": true,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

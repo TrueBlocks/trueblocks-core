@@ -29,12 +29,11 @@ func (opts *ExportOptions) HandleNeighbors(rCtx *output.RenderCtx, monitorArray 
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
-				cancel()
+				rCtx.Cancel()
 
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no blocks found for the query")
@@ -43,7 +42,7 @@ func (opts *ExportOptions) HandleNeighbors(rCtx *output.RenderCtx, monitorArray 
 			} else {
 				if sliceOfMaps, _, err := types.AsSliceOfMaps[bool](apps, filter.Reversed); err != nil {
 					errorChan <- err
-					cancel()
+					rCtx.Cancel()
 
 				} else {
 					showProgress := opts.Globals.ShowProgress()
@@ -130,7 +129,7 @@ func (opts *ExportOptions) HandleNeighbors(rCtx *output.RenderCtx, monitorArray 
 		"uniq": true,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 /*

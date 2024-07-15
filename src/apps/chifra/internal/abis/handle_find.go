@@ -7,7 +7,6 @@ package abisPkg
 import (
 	"bufio"
 	"bytes"
-	"context"
 	"encoding/hex"
 	"io"
 	"os"
@@ -33,7 +32,6 @@ func (opts *AbisOptions) HandleFind(rCtx *output.RenderCtx) error {
 
 	// TODO: we might want to use utils.IterateOver Map here
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		var results []types.Function
 		var wg sync.WaitGroup
@@ -71,7 +69,7 @@ func (opts *AbisOptions) HandleFind(rCtx *output.RenderCtx) error {
 		sigsFile, err := os.OpenFile(config.PathToRootConfig()+"abis/known-000/uniq_sigs.tab", os.O_RDONLY, 0)
 		if err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 			return
 		}
 		defer func() {
@@ -126,7 +124,7 @@ func (opts *AbisOptions) HandleFind(rCtx *output.RenderCtx) error {
 	extraOpts := map[string]any{
 		"encodingSignatureOnly": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func (opts *AbisOptions) hitsHint(test string) bool {

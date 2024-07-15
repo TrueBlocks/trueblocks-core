@@ -5,7 +5,6 @@
 package exportPkg
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -33,7 +32,6 @@ func (opts *ExportOptions) HandleCount(rCtx *output.RenderCtx, monitorArray []mo
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, true /* withCount */); err != nil {
@@ -60,7 +58,7 @@ func (opts *ExportOptions) HandleCount(rCtx *output.RenderCtx, monitorArray []mo
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 const maxTestingBlock = 17000000
