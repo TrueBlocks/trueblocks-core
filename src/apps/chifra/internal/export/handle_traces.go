@@ -55,6 +55,10 @@ func (opts *ExportOptions) HandleTraces(rCtx *output.RenderCtx, monitorArray []m
 					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 					finished := false
 					for _, thisMap := range sliceOfMaps {
+						if rCtx.WasCanceled() {
+							return
+						}
+
 						if finished {
 							continue
 						}

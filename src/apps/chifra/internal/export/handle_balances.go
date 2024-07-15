@@ -62,6 +62,10 @@ func (opts *ExportOptions) HandleBalances(rCtx *output.RenderCtx, monitorArray [
 					finished := false
 					prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
 					for _, thisMap := range sliceOfMaps {
+						if rCtx.WasCanceled() {
+							return
+						}
+
 						if finished {
 							continue
 						}

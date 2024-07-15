@@ -48,6 +48,10 @@ func (opts *BlocksOptions) HandleTraces(rCtx *output.RenderCtx) error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
+				if rCtx.WasCanceled() {
+					return
+				}
+
 				for app := range thisMap {
 					thisMap[app] = new(types.Transaction)
 				}

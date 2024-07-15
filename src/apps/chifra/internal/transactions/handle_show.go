@@ -46,6 +46,10 @@ func (opts *TransactionsOptions) HandleShow(rCtx *output.RenderCtx) (err error) 
 			})
 
 			for _, thisMap := range sliceOfMaps {
+				if rCtx.WasCanceled() {
+					return
+				}
+
 				for app := range thisMap {
 					thisMap[app] = new(types.Transaction)
 				}

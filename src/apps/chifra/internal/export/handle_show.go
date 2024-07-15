@@ -55,6 +55,10 @@ func (opts *ExportOptions) HandleShow(rCtx *output.RenderCtx, monitorArray []mon
 					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 					finished := false
 					for _, thisMap := range sliceOfMaps {
+						if rCtx.WasCanceled() {
+							return
+						}
+
 						if finished {
 							continue
 						}

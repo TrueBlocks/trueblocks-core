@@ -17,7 +17,7 @@ func NewRenderContext() *RenderCtx {
 	}
 }
 
-func (r *RenderCtx) ShouldQuit() bool {
+func (r *RenderCtx) WasCanceled() bool {
 	select {
 	case <-r.Ctx.Done():
 		return true
