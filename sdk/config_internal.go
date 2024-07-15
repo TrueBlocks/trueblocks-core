@@ -16,14 +16,16 @@ import (
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type configOptionsInternal struct {
-	Mode  ConfigMode `json:"mode,omitempty"`
-	Paths bool       `json:"paths,omitempty"`
+	Mode      ConfigMode        `json:"mode,omitempty"`
+	Paths     bool              `json:"paths,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -40,6 +42,9 @@ func (opts *configOptionsInternal) ConfigBytes(w io.Writer) error {
 		return fmt.Errorf("error converting config struct to URL values: %v", err)
 	}
 
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
 	return config.Config(w, values)
 }
 
@@ -106,8 +111,9 @@ func queryConfig[T configGeneric](opts *configOptionsInternal) ([]T, *types.Meta
 // toInternal converts the SDK options to the internal options format.
 func (opts *ConfigOptions) toInternal() *configOptionsInternal {
 	return &configOptionsInternal{
-		Mode:    opts.Mode,
-		Globals: opts.Globals,
+		Mode:      opts.Mode,
+		RenderCtx: opts.RenderCtx,
+		Globals:   opts.Globals,
 	}
 }
 

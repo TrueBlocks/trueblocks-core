@@ -16,18 +16,20 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type abisOptionsInternal struct {
-	Addrs    []string     `json:"addrs,omitempty"`
-	Known    bool         `json:"known,omitempty"`
-	ProxyFor base.Address `json:"proxyFor,omitempty"`
-	Find     []string     `json:"find,omitempty"`
-	Hint     []string     `json:"hint,omitempty"`
-	Encode   string       `json:"encode,omitempty"`
+	Addrs     []string          `json:"addrs,omitempty"`
+	Known     bool              `json:"known,omitempty"`
+	ProxyFor  base.Address      `json:"proxyFor,omitempty"`
+	Find      []string          `json:"find,omitempty"`
+	Hint      []string          `json:"hint,omitempty"`
+	Encode    string            `json:"encode,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -44,6 +46,9 @@ func (opts *abisOptionsInternal) AbisBytes(w io.Writer) error {
 		return fmt.Errorf("error converting abis struct to URL values: %v", err)
 	}
 
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
 	return abis.Abis(w, values)
 }
 
@@ -106,11 +111,12 @@ func queryAbis[T abisGeneric](opts *abisOptionsInternal) ([]T, *types.MetaData, 
 // toInternal converts the SDK options to the internal options format.
 func (opts *AbisOptions) toInternal() *abisOptionsInternal {
 	return &abisOptionsInternal{
-		Addrs:    opts.Addrs,
-		Known:    opts.Known,
-		ProxyFor: opts.ProxyFor,
-		Hint:     opts.Hint,
-		Globals:  opts.Globals,
+		Addrs:     opts.Addrs,
+		Known:     opts.Known,
+		ProxyFor:  opts.ProxyFor,
+		Hint:      opts.Hint,
+		RenderCtx: opts.RenderCtx,
+		Globals:   opts.Globals,
 	}
 }
 

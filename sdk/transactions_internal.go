@@ -16,21 +16,23 @@ import (
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type transactionsOptionsInternal struct {
-	TransactionIds []string         `json:"transactions,omitempty"`
-	Articulate     bool             `json:"articulate,omitempty"`
-	Traces         bool             `json:"traces,omitempty"`
-	Uniq           bool             `json:"uniq,omitempty"`
-	Flow           TransactionsFlow `json:"flow,omitempty"`
-	Logs           bool             `json:"logs,omitempty"`
-	Emitter        []string         `json:"emitter,omitempty"`
-	Topic          []string         `json:"topic,omitempty"`
-	CacheTraces    bool             `json:"cacheTraces,omitempty"`
+	TransactionIds []string          `json:"transactions,omitempty"`
+	Articulate     bool              `json:"articulate,omitempty"`
+	Traces         bool              `json:"traces,omitempty"`
+	Uniq           bool              `json:"uniq,omitempty"`
+	Flow           TransactionsFlow  `json:"flow,omitempty"`
+	Logs           bool              `json:"logs,omitempty"`
+	Emitter        []string          `json:"emitter,omitempty"`
+	Topic          []string          `json:"topic,omitempty"`
+	CacheTraces    bool              `json:"cacheTraces,omitempty"`
+	RenderCtx      *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -47,6 +49,9 @@ func (opts *transactionsOptionsInternal) TransactionsBytes(w io.Writer) error {
 		return fmt.Errorf("error converting transactions struct to URL values: %v", err)
 	}
 
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
 	return transactions.Transactions(w, values)
 }
 
@@ -124,6 +129,7 @@ func (opts *TransactionsOptions) toInternal() *transactionsOptionsInternal {
 		Emitter:        opts.Emitter,
 		Topic:          opts.Topic,
 		CacheTraces:    opts.CacheTraces,
+		RenderCtx:      opts.RenderCtx,
 		Globals:        opts.Globals,
 	}
 }

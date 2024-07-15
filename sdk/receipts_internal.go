@@ -15,14 +15,16 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type receiptsOptionsInternal struct {
-	TransactionIds []string `json:"transactions,omitempty"`
-	Articulate     bool     `json:"articulate,omitempty"`
+	TransactionIds []string          `json:"transactions,omitempty"`
+	Articulate     bool              `json:"articulate,omitempty"`
+	RenderCtx      *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -39,6 +41,9 @@ func (opts *receiptsOptionsInternal) ReceiptsBytes(w io.Writer) error {
 		return fmt.Errorf("error converting receipts struct to URL values: %v", err)
 	}
 
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
 	return receipts.Receipts(w, values)
 }
 
@@ -101,6 +106,7 @@ func (opts *ReceiptsOptions) toInternal() *receiptsOptionsInternal {
 	return &receiptsOptionsInternal{
 		TransactionIds: opts.TransactionIds,
 		Articulate:     opts.Articulate,
+		RenderCtx:      opts.RenderCtx,
 		Globals:        opts.Globals,
 	}
 }

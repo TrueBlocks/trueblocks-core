@@ -17,32 +17,34 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	chunks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type chunksOptionsInternal struct {
-	Mode       ChunksMode   `json:"mode,omitempty"`
-	BlockIds   []string     `json:"blocks,omitempty"`
-	Check      bool         `json:"check,omitempty"`
-	Pin        bool         `json:"pin,omitempty"`
-	Publish    bool         `json:"publish,omitempty"`
-	Publisher  base.Address `json:"publisher,omitempty"`
-	Truncate   base.Blknum  `json:"truncate,omitempty"`
-	Remote     bool         `json:"remote,omitempty"`
-	Belongs    []string     `json:"belongs,omitempty"`
-	Diff       bool         `json:"diff,omitempty"`
-	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
-	LastBlock  base.Blknum  `json:"lastBlock,omitempty"`
-	MaxAddrs   uint64       `json:"maxAddrs,omitempty"`
-	Deep       bool         `json:"deep,omitempty"`
-	Rewrite    bool         `json:"rewrite,omitempty"`
-	List       bool         `json:"list,omitempty"`
-	Unpin      bool         `json:"unpin,omitempty"`
-	Count      bool         `json:"count,omitempty"`
-	Tag        string       `json:"tag,omitempty"`
-	Sleep      float64      `json:"sleep,omitempty"`
+	Mode       ChunksMode        `json:"mode,omitempty"`
+	BlockIds   []string          `json:"blocks,omitempty"`
+	Check      bool              `json:"check,omitempty"`
+	Pin        bool              `json:"pin,omitempty"`
+	Publish    bool              `json:"publish,omitempty"`
+	Publisher  base.Address      `json:"publisher,omitempty"`
+	Truncate   base.Blknum       `json:"truncate,omitempty"`
+	Remote     bool              `json:"remote,omitempty"`
+	Belongs    []string          `json:"belongs,omitempty"`
+	Diff       bool              `json:"diff,omitempty"`
+	FirstBlock base.Blknum       `json:"firstBlock,omitempty"`
+	LastBlock  base.Blknum       `json:"lastBlock,omitempty"`
+	MaxAddrs   uint64            `json:"maxAddrs,omitempty"`
+	Deep       bool              `json:"deep,omitempty"`
+	Rewrite    bool              `json:"rewrite,omitempty"`
+	List       bool              `json:"list,omitempty"`
+	Unpin      bool              `json:"unpin,omitempty"`
+	Count      bool              `json:"count,omitempty"`
+	Tag        string            `json:"tag,omitempty"`
+	Sleep      float64           `json:"sleep,omitempty"`
+	RenderCtx  *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -59,6 +61,9 @@ func (opts *chunksOptionsInternal) ChunksBytes(w io.Writer) error {
 		return fmt.Errorf("error converting chunks struct to URL values: %v", err)
 	}
 
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
 	return chunks.Chunks(w, values)
 }
 
@@ -148,6 +153,7 @@ func (opts *ChunksOptions) toInternal() *chunksOptionsInternal {
 		Unpin:      opts.Unpin,
 		Count:      opts.Count,
 		Sleep:      opts.Sleep,
+		RenderCtx:  opts.RenderCtx,
 		Globals:    opts.Globals,
 	}
 }
