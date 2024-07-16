@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func TestStreamNames() {
@@ -17,8 +17,8 @@ func TestStreamNames() {
 		for {
 			select {
 			case name := <-opts.RenderCtx.ModelChan:
-				if n, ok := name.(*types.Name); !ok {
-					fmt.Println("Not a name")
+				if n, ok := name.(*sdk.Name); !ok {
+					logger.Fatal("This should never happen")
 				} else {
 					fmt.Printf("%s\t%s\t%s\n", n.Tags, n.Address, n.Name)
 				}
@@ -30,9 +30,5 @@ func TestStreamNames() {
 
 	if _, _, err := opts.Names(); err != nil {
 		fmt.Println(err)
-		// } else {
-		// 	for _, name := range names {
-		// 		fmt.Printf("%s,%s,%s\n", name.Address, name.Name, name.Symbol)
-		// 	}
 	}
 }
