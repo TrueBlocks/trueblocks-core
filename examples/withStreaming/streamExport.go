@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -47,9 +46,6 @@ func TestStreamExport() {
 					}
 				case err := <-opts.RenderCtx.ErrorChan:
 					fmt.Println("Error returned by fetchData:", err)
-				case i := <-opts.RenderCtx.ProgressChan:
-					logger.Progress(true, i)
-					return
 				}
 			}
 		}()

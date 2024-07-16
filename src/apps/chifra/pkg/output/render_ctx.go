@@ -7,11 +7,10 @@ import (
 )
 
 type RenderCtx struct {
-	Ctx          context.Context    `json:"-"`
-	Cancel       context.CancelFunc `json:"-"`
-	ModelChan    chan types.Modeler `json:"-"`
-	ErrorChan    chan error         `json:"-"`
-	ProgressChan chan int           `json:"-"` // place holder
+	Ctx       context.Context    `json:"-"`
+	Cancel    context.CancelFunc `json:"-"`
+	ModelChan chan types.Modeler `json:"-"`
+	ErrorChan chan error         `json:"-"`
 }
 
 func NewRenderContext() *RenderCtx {
@@ -27,7 +26,6 @@ func WithChannels() *RenderCtx {
 	// TODO: Should these be buffered channels? Issue #3821
 	rCtx.ModelChan = make(chan types.Modeler)
 	rCtx.ErrorChan = make(chan error)
-	rCtx.ProgressChan = make(chan int)
 	return rCtx
 }
 

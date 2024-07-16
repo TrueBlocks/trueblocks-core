@@ -20,13 +20,10 @@ func TestStreamNames() {
 				if n, ok := name.(*types.Name); !ok {
 					fmt.Println("Not a name")
 				} else {
-					fmt.Printf("%s,%s,%s\n", n.Tags, n.Address, n.Name)
+					fmt.Printf("%s\t%s\t%s\n", n.Tags, n.Address, n.Name)
 				}
 			case err := <-opts.RenderCtx.ErrorChan:
 				fmt.Println("Error returned by fetchData:", err)
-			case i := <-opts.RenderCtx.ProgressChan:
-				fmt.Println(i)
-				return
 			}
 		}
 	}()
