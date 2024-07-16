@@ -10,6 +10,8 @@ import (
 	"github.com/schollz/progressbar/v3"
 )
 
+// TestProgressReporting is a simple example just demonstrating how to use
+// the progress bar to report progress of the stream.
 func TestProgressReporting() {
 	nBlocks := 1000
 	bar := newProgressBar(nBlocks)
@@ -34,12 +36,15 @@ func TestProgressReporting() {
 		}
 	}()
 
+	// This will stream the blocks. Note that they are LightBlocks
+	// which is what BlocksHashes returns.
 	if _, _, err := opts.BlocksHashes(); err != nil {
 		panic(err)
 	}
 	bar.Finish()
 }
 
+// newProgressBar creates a new progress bar with the given count
 func newProgressBar(cnt int) *progressbar.ProgressBar {
 	return progressbar.NewOptions(cnt,
 		progressbar.OptionSetWriter(os.Stdout), //you should install "github.com/k0kubun/go-ansi"
