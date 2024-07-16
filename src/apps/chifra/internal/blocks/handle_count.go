@@ -107,5 +107,5 @@ func (opts *BlocksOptions) HandleCount(rCtx *output.RenderCtx) error {
 		"traces": opts.Traces,
 		"uniqs":  opts.Uniq,
 	}
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

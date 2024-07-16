@@ -53,7 +53,7 @@ func (opts *NamesOptions) HandleAutoname(rCtx *output.RenderCtx) error {
 				Msg: message,
 			}
 		}
-		_ = output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+		_ = output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 	}
 	return nil
 }

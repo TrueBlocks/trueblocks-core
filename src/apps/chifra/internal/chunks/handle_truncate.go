@@ -150,7 +150,7 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 	}
 
 	opts.Globals.NoHeader = true
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 var truncateWarning = `Are sure you want to remove index chunks after and including block {0} (Yn)? `

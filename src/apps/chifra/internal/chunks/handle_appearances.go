@@ -79,5 +79,5 @@ func (opts *ChunksOptions) HandleAppearances(rCtx *output.RenderCtx, blockNums [
 	extraOpts := map[string]any{
 		"appearances": true,
 	}
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

@@ -110,5 +110,5 @@ func (opts *TransactionsOptions) HandleShow(rCtx *output.RenderCtx) (err error) 
 		"traces":     opts.Traces,
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

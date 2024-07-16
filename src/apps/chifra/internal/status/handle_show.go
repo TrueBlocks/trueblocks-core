@@ -39,7 +39,7 @@ func (opts *StatusOptions) HandleShow(rCtx *output.RenderCtx) error {
 		modelChan <- s
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 func ToProgress(chain string, diagnose bool, meta *types.MetaData) string {

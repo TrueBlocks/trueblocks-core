@@ -133,7 +133,7 @@ func (opts *ExportOptions) HandleNeighbors(rCtx *output.RenderCtx, monitorArray 
 		"uniq": true,
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 /*

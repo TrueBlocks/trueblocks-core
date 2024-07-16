@@ -151,5 +151,5 @@ func (opts *ExportOptions) HandleBalances(rCtx *output.RenderCtx, monitorArray [
 		"parts":  []string{"blockNumber", "date", "holder", "balance", "diff", "balanceDec"},
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

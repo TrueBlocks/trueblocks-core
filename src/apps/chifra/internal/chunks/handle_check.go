@@ -203,6 +203,6 @@ func (opts *ChunksOptions) check(rCtx *output.RenderCtx, blockNums []base.Blknum
 		}
 	}
 
-	err = output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	err = output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 	return err, nFailed == 0
 }

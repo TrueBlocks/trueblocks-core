@@ -124,7 +124,7 @@ func (opts *AbisOptions) HandleFind(rCtx *output.RenderCtx) error {
 	extraOpts := map[string]any{
 		"encodingSignatureOnly": true,
 	}
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func (opts *AbisOptions) hitsHint(test string) bool {

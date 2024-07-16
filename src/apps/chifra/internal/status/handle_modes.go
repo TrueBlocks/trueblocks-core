@@ -143,7 +143,7 @@ func (opts *StatusOptions) HandleModes(rCtx *output.RenderCtx) error {
 		"chains": opts.Chains,
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 type CacheWalker struct {

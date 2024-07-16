@@ -49,7 +49,7 @@ func (opts *NamesOptions) HandleCrud(rCtx *output.RenderCtx) (err error) {
 	extraOpts := map[string]any{
 		"crud": true,
 	}
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func handleCreate(chain string, data *CrudData) (name *types.Name, err error) {

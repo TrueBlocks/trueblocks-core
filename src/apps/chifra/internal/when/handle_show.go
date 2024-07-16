@@ -67,5 +67,5 @@ func (opts *WhenOptions) HandleShow(rCtx *output.RenderCtx) error {
 		}
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

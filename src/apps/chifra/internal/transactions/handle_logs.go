@@ -118,5 +118,5 @@ func (opts *TransactionsOptions) HandleLogs(rCtx *output.RenderCtx) error {
 		"addresses": opts.Uniq,
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

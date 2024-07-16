@@ -66,5 +66,5 @@ func (opts *TokensOptions) HandleParts(rCtx *output.RenderCtx) error {
 		}
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

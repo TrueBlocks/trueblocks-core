@@ -30,5 +30,5 @@ func (opts *AbisOptions) HandleEncode(rCtx *output.RenderCtx) error {
 			modelChan <- &f
 		}
 	}
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

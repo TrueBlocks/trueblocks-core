@@ -102,5 +102,5 @@ func (opts *StateOptions) HandleShow(rCtx *output.RenderCtx) error {
 		"fields": outputFields,
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

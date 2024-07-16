@@ -109,7 +109,7 @@ func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Bl
 	defer sigintTrap.Disable(trapChannel)
 
 	opts.Globals.NoHeader = true
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 var tagWarning = `Tag the index with version {0}? This is a non-recoverable operation. (Yn)? `
