@@ -25,10 +25,10 @@ func TestStreamProgress() {
 		for {
 			select {
 			case block := <-opts.RenderCtx.ModelChan:
-				if _, ok := block.(*types.LightBlock); !ok {
-					panic("This should never happen")
-				} else {
+				if _, ok := block.(*types.LightBlock); ok {
 					bar.Add(1)
+				} else {
+					panic("This should never happen")
 				}
 			case err := <-opts.RenderCtx.ErrorChan:
 				panic(err)

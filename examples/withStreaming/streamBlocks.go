@@ -14,9 +14,9 @@ type BlockType interface {
 	*types.Block | *types.LightBlock | *types.Log | *types.Trace | *types.Appearance | *types.Withdrawal
 }
 
-func TestBlocks[T BlockType](str string) {
+func TestBlocks[T BlockType](mode ...string) {
 	opts := sdk.BlocksOptions{
-		BlockIds:  []string{"14000000-14000100:25"},
+		BlockIds:  []string{"3-20000003:1000000"},
 		RenderCtx: output.WithChannels(),
 	}
 
@@ -41,32 +41,35 @@ func TestBlocks[T BlockType](str string) {
 		}
 	}()
 
-	switch str {
-	case "block":
-		if _, _, err := opts.Blocks(); err != nil {
-			logger.Error(err.Error())
+	var v T
+	switch any(v).(type) {
+	case *types.Block:
+		if len(mode) > 0 && mode[0] == "uncles" {
+			if _, _, err := opts.BlocksUncles(); err != nil {
+				logger.Error(err.Error())
+			}
+			// } else {
+			// 	if _, _, err := opts.Blocks(); err != nil {
+			// 		logger.Error(err.Error())
+			// 	}
 		}
-	case "lightblock":
+	case *types.LightBlock:
 		if _, _, err := opts.BlocksHashes(); err != nil {
 			logger.Error(err.Error())
 		}
-	case "logs":
+	case *types.Log:
 		if _, _, err := opts.BlocksLogs(); err != nil {
 			logger.Error(err.Error())
 		}
-	case "traces":
+	case *types.Trace:
 		if _, _, err := opts.BlocksTraces(); err != nil {
 			logger.Error(err.Error())
 		}
-	case "uncles":
-		if _, _, err := opts.BlocksUncles(); err != nil {
-			logger.Error(err.Error())
-		}
-	case "uniq":
+	case *types.Appearance:
 		if _, _, err := opts.BlocksUniq(); err != nil {
 			logger.Error(err.Error())
 		}
-	case "withdrawals":
+	case *types.Withdrawal:
 		if _, _, err := opts.BlocksWithdrawals(); err != nil {
 			logger.Error(err.Error())
 		}
@@ -75,11 +78,11 @@ func TestBlocks[T BlockType](str string) {
 }
 
 func TestStreamBlocks() {
-	TestBlocks[*types.Block]("block")
-	TestBlocks[*types.LightBlock]("lightblock")
-	TestBlocks[*types.Log]("logs")
-	TestBlocks[*types.Trace]("traces")
+	TestBlocks[*types.Block]()
+	TestBlocks[*types.LightBlock]()
+	TestBlocks[*types.Log]()
+	TestBlocks[*types.Trace]()
 	TestBlocks[*types.Block]("uncles")
-	// TestBlocks[*types.Appearance]("uniq")
-	TestBlocks[*types.Withdrawal]("withdrawals")
+	// TestBlocks[*types.Appearance]()
+	TestBlocks[*types.Withdrawal]()
 }
