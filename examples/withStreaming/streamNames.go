@@ -13,7 +13,7 @@ import (
 // creating a Rendering Context with channels.
 func TestStreamNames() {
 	opts := sdk.NamesOptions{
-		RenderCtx: output.WithChannels(),
+		RenderCtx: output.NewStreamingContext(),
 	}
 
 	go func() {

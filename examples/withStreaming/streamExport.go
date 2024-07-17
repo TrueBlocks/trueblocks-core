@@ -16,7 +16,7 @@ func TestStreamExport() {
 	opts := sdk.ExportOptions{
 		Addrs:     []string{"0x1f98431c8ad98523631ae4a59f267346ea31f984"}, // Uniswap V3 Factory
 		Unripe:    true,                                                   // to the head of the chain
-		RenderCtx: output.WithChannels(),
+		RenderCtx: output.NewStreamingContext(),
 	}
 	opts.Globals.Cache = true // Write to the cache
 

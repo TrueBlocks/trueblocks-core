@@ -18,7 +18,7 @@ func TestStreamProgress() {
 
 	opts := sdk.BlocksOptions{
 		BlockIds:  []string{fmt.Sprintf("0-%d", nBlocks)},
-		RenderCtx: output.WithChannels(),
+		RenderCtx: output.NewStreamingContext(),
 	}
 
 	go func() {

@@ -20,7 +20,7 @@ func TestStreamAbis() {
 			"0xba100000625a3754423978a60c9317c58a424e3d", // Balancer
 			"0xd533a949740bb3306d119cc777fa900ba034cd52", // Curve Finance
 		},
-		RenderCtx: output.WithChannels(),
+		RenderCtx: output.NewStreamingContext(),
 	}
 
 	fmt.Println("fnName,nInputs,nOutputs")

@@ -17,7 +17,7 @@ type BlockType interface {
 func TestBlocks[T BlockType](mode ...string) {
 	opts := sdk.BlocksOptions{
 		BlockIds:  []string{"3-20000003:1000000"},
-		RenderCtx: output.WithChannels(),
+		RenderCtx: output.NewStreamingContext(),
 	}
 
 	cnt := 0
