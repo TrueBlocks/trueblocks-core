@@ -6,6 +6,7 @@ go 1.22
 require (
 	github.com/TrueBlocks/trueblocks-core/sdk v0.0.0-20240605222744-1cbeec2938e0
 	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240605222744-1cbeec2938e0
+	github.com/schollz/progressbar/v3 v3.14.4
 )
 
 require (
@@ -61,7 +62,6 @@ require (
 	github.com/pelletier/go-toml v1.9.4 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
-	github.com/schollz/progressbar/v3 v3.14.4 // indirect
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/afero v1.6.0 // indirect

@@ -33,7 +33,7 @@ func main() {
 		fmt.Println("Rendering txs...")
 	}()
 
-	// The Uniswap V3 Factory takes a very long time
+	// The Uniswap V3 Factory takes a very long time but will be cancled in cancelAfter seconds
 	txs, _, err := opts.Export()
 	if err != nil {
 		fmt.Println(err)
