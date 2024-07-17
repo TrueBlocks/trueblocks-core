@@ -10,9 +10,9 @@ import (
 	"github.com/schollz/progressbar/v3"
 )
 
-// TestProgressReporting is a simple example just demonstrating how to use
+// TestStreamProgress is a simple example just demonstrating how to use
 // the progress bar to report progress of the stream.
-func TestProgressReporting() {
+func TestStreamProgress() {
 	nBlocks := 1000
 	bar := newProgressBar(nBlocks)
 

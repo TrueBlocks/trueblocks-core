@@ -1,10 +1,33 @@
 package main
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+)
+
 func main() {
-	// Tests stream results from Export command. Includes time out cancel
+	namesMap, _ = names.LoadNamesMap("mainnet", names.Custom|names.Prefund|names.Regular, nil)
+
+	TestStreamAbis()
+	TestStreamBlocks()
+	// TestStreamChunks()
+	// TestStreamConfig()
 	TestStreamExport()
-	// Streams names database
+	// TestStreamInit()
+	// TestStreamList()
+	// TestStreamLogs()
+	// TestStreamMonitors()
 	TestStreamNames()
-	// Shows how to use a progress bar with streaming SDK
-	TestProgressReporting()
+	// TestStreamReceipts()
+	// TestStreamSlurp()
+	// TestStreamState()
+	// TestStreamStatus()
+	// TestStreamTokens()
+	// TestStreamTraces()
+	// TestStreamTransactions()
+	// TestStreamWhen()
+	TestStreamProgress()
 }
+
+var namesMap = map[base.Address]types.Name{}
