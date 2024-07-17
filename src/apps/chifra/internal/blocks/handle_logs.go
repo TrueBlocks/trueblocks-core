@@ -106,7 +106,9 @@ func (opts *BlocksOptions) HandleLogs(rCtx *output.RenderCtx) error {
 
 				items := make([]types.Log, 0, len(thisMap))
 				for _, tx := range thisMap {
-					items = append(items, tx.Receipt.Logs...)
+					if tx.Receipt != nil {
+						items = append(items, tx.Receipt.Logs...)
+					}
 				}
 				sort.Slice(items, func(i, j int) bool {
 					if items[i].BlockNumber == items[j].BlockNumber {
