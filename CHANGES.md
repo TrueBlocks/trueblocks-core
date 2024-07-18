@@ -2,15 +2,16 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
-## v3.1.0-release - Streaming SDK - Huntingdon (2024/07/01)
+## v3.1.2-release - Streaming SDK - Huntingdon (2024/07/18)
 
 **Summary**
 
-- Bumped version to v3.1.0-release.
+- Bumped version to v3.1.2-release.
 - Major changes to the SDK to support streaming data models.
 - Re-write of the chifra names command for easier usage.
 - Re-write of most examples for clarity and ease of understanding.
 - Added the RenderCtx to all Options types in the SDK to support cancel contexts and streaming data models.
+- Changes GoLang SDK version to v3. It's not a breaking change, but if you want to use the latest SDK code (you do), then change all imports of "github.com/TrueBlocks/trueblocks-core/sdk" to "github.com/TrueBlocks/trueblocks-core/sdk/v3".
 
 ## Changes to the Unchained Index Specification
 
