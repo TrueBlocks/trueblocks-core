@@ -40,8 +40,8 @@ github.com/Microsoft/go-winio v0.6.1 h1:9/kr64B9VUZrLm5YYwbGtUJnMgqWVOdUAXu6Migc
 github.com/Microsoft/go-winio v0.6.1/go.mod h1:LRdKpFKfdobln8UmuiYcKPot9D2v6svN5+sAH+4kjUM=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/StackExchange/wmi v0.0.0-20180116203802-5d049714c4a6/go.mod h1:3eOhrUMpNV+6aFIbp5/iudMxNCF27Vw2OZgy4xEx0Fg=
-github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240718044519-2c9304344dd6 h1:LNfFuvmDvIIJP8B2Y3Hepx9AkDxsb8eLroP7xGiCRVc=
-github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240718044519-2c9304344dd6/go.mod h1:rLDLHdHmjdwV+hAp1YoFSNNfSVtOULOsqG1w+fEdF6U=
+github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240718213142-3cffd1bf17f0 h1:wWeaGbu8mv+NLwDJ3EKPNpoX4UxYxL8jjtFNQdhP2tg=
+github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240718213142-3cffd1bf17f0/go.mod h1:r01Zts5Fl/rEdb5iU94jg5cMu+fPn8msgiAL3u1MIxg=
 github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240718044519-2c9304344dd6 h1:5kZTCjvtX9/PhxlswLLcCnhDoKxiKpgvr3xJijRXX+0=
 github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240718044519-2c9304344dd6/go.mod h1:YKuaek8RSyh681TFMK6Ua8MsHtuY+c1VJWi78Y35+J8=
 github.com/VictoriaMetrics/fastcache v1.6.0/go.mod h1:0qHz5QP0GMX4pfmMA/zt5RgfNuXJrTP0zS7DqpHGGTw=
