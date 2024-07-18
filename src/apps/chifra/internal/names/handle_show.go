@@ -1,72 +1,51 @@
 package namesPkg
 
 import (
-	"context"
-	"errors"
-	"fmt"
-	"io"
-	"os"
-	"path/filepath"
+	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/proto"
-	"google.golang.org/grpc"
 )
 
-func (opts *NamesOptions) HandleShow() error {
-	if opts.anyCrud() {
-		return opts.HandleCrud()
-	}
-
+func (opts *NamesOptions) HandleShow(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
-	var fetchData func(modelChan chan types.Modeler, errorChan chan error)
-
-	apiMode := opts.Globals.IsApiMode()
 	testMode := opts.Globals.TestMode
-
-	var conn *grpc.ClientConn
-	var client proto.NamesClient
-	var grpcErr error
-
-	if !apiMode {
-		// Try RPC
-		grpcCtx, grpcCancel := proto.GetContext()
-		defer grpcCancel()
-		conn, client, grpcErr = proto.Connect(grpcCtx)
+	namesArray, err := loadNamesArray(chain, opts.getType(), names.SortByAddress, opts.Terms)
+	if err != nil {
+		return err
 	}
-	if !apiMode && grpcErr == nil {
-		defer conn.Close()
-		// RPC server is running and available
-		fetchData = func(modelChan chan types.Modeler, errorChan chan error) {
-			opts.fetchFromGrpc(client, modelChan, errorChan)
-		}
-	} else {
-		// Report the error only if we know that the server is running or the user wants us
-		// to be verbose
-		if (grpcErr != nil && (!errors.Is(grpcErr, proto.ErrServerNotRunning) || opts.Globals.Verbose)) && !utils.IsFuzzing() {
-			logger.Error("gRPC connection error:", grpcErr)
-			logger.Warn("falling back to file-based search")
-		}
 
-		namesArray, err := names.LoadNamesArray(chain, opts.getType(), names.SortByAddress, opts.Terms)
-		if err != nil {
-			return err
-		}
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		if len(namesArray) == 0 {
-			logger.Warn("No known names found for", opts.Terms)
-			if !testMode {
-				args := os.Args
-				args[0] = filepath.Base(args[0])
-				logger.Warn("Original command:", args)
+			hasAddr := strings.Contains(strings.Join(opts.Terms, " "), "0x")
+			hadEths := strings.Contains(strings.Join(opts.OrigTerms, " "), ".eth")
+			if hadEths && hasAddr {
+				for i, t := range opts.Terms {
+					orig := opts.OrigTerms[i]
+					if strings.Contains(orig, ".eth") {
+						modelChan <- &types.Name{
+							Tags:    "66-ENS",
+							Name:    orig,
+							Address: base.HexToAddress(t),
+						}
+					} else if strings.Contains(orig, "0x") {
+						modelChan <- &types.Name{
+							Tags:    "Not found",
+							Address: base.HexToAddress(orig),
+						}
+					}
+				}
+			} else {
+				logger.Warn("No known names found for", opts.Terms)
+				if !testMode {
+					logger.Warn("Original command:", opts.OrigTerms)
+				}
 			}
-			return nil
-		}
-
-		fetchData = func(modelChan chan types.Modeler, errorChan chan error) {
+			return
+		} else {
 			for _, name := range namesArray {
 				modelChan <- &name
 			}
@@ -77,36 +56,11 @@ func (opts *NamesOptions) HandleShow() error {
 		"expand":  opts.Expand,
 		"prefund": opts.Prefund,
 	}
+
 	if opts.Addr {
 		extraOpts["single"] = "address"
 		opts.Globals.NoHeader = true
 	}
-	ctx := context.Background()
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
-}
 
-func (opts *NamesOptions) fetchFromGrpc(client proto.NamesClient, modelChan chan types.Modeler, errorChan chan error) {
-	stream, err := client.SearchStream(context.Background(), &proto.SearchRequest{
-		Parts: int64(opts.getType()),
-		Terms: opts.Terms,
-		Sort:  int64(names.SortByAddress),
-	})
-	if err != nil {
-		errorChan <- err
-	}
-	hasResults := false
-	for {
-		result, err := stream.Recv()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			errorChan <- err
-		}
-		hasResults = true
-		modelChan <- types.NewNameFromGrpc(result)
-	}
-	if !hasResults {
-		errorChan <- fmt.Errorf("no known names found for %v", opts.Terms)
-	}
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

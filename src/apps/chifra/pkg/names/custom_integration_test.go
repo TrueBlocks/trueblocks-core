@@ -37,7 +37,7 @@ func TestCrudIntegration(t *testing.T) {
 		return tempFile
 	}
 	tempFile := loadTestDatabase()
-	loadedCustomNames = map[base.Address]types.Name{}
+	customNames = map[base.Address]types.Name{}
 	addrStr := "0x1f9090aae28b8a3dceadf281b0f12828e676c326"
 	addr := base.HexToAddress(addrStr)
 	expected := types.Name{
@@ -46,9 +46,9 @@ func TestCrudIntegration(t *testing.T) {
 	}
 
 	expected.IsCustom = true
-	loadedCustomNamesMutex.Lock()
-	loadedCustomNames[expected.Address] = expected
-	loadedCustomNamesMutex.Unlock()
+	customNamesMutex.Lock()
+	customNames[expected.Address] = expected
+	customNamesMutex.Unlock()
 	if err := writeCustomNames(tempFile); err != nil {
 		t.Fatal(err)
 	}
@@ -154,25 +154,25 @@ func TestCrudIntegration(t *testing.T) {
 }
 
 func setIfExists(output *os.File, name *types.Name) (result *types.Name, err error) {
-	if _, ok := loadedCustomNames[name.Address]; !ok {
+	if _, ok := customNames[name.Address]; !ok {
 		return nil, fmt.Errorf("no custom name for address %s", name.Address.Hex())
 	}
 
 	name.IsCustom = true
-	loadedCustomNamesMutex.Lock()
-	defer loadedCustomNamesMutex.Unlock()
-	loadedCustomNames[name.Address] = *name
+	customNamesMutex.Lock()
+	defer customNamesMutex.Unlock()
+	customNames[name.Address] = *name
 	return name, writeCustomNames(output)
 }
 
 func removeIfExists(output *os.File, address base.Address) (name *types.Name, err error) {
-	found, ok := loadedCustomNames[address]
+	found, ok := customNames[address]
 	if !ok {
 		return nil, fmt.Errorf("no custom name for address %s", address.Hex())
 	}
-	loadedCustomNamesMutex.Lock()
-	defer loadedCustomNamesMutex.Unlock()
+	customNamesMutex.Lock()
+	defer customNamesMutex.Unlock()
 
-	delete(loadedCustomNames, address)
+	delete(customNames, address)
 	return &found, writeCustomNames(output)
 }

@@ -14,17 +14,19 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type TransactionsOptions struct {
-	TransactionIds []string         `json:"transactions,omitempty"`
-	Articulate     bool             `json:"articulate,omitempty"`
-	Flow           TransactionsFlow `json:"flow,omitempty"`
-	Emitter        []string         `json:"emitter,omitempty"`
-	Topic          []string         `json:"topic,omitempty"`
-	CacheTraces    bool             `json:"cacheTraces,omitempty"`
+	TransactionIds []string          `json:"transactions,omitempty"`
+	Articulate     bool              `json:"articulate,omitempty"`
+	Flow           TransactionsFlow  `json:"flow,omitempty"`
+	Emitter        []string          `json:"emitter,omitempty"`
+	Topic          []string          `json:"topic,omitempty"`
+	CacheTraces    bool              `json:"cacheTraces,omitempty"`
+	RenderCtx      *output.RenderCtx `json:"-"`
 	Globals
 }
 

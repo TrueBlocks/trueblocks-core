@@ -15,7 +15,8 @@ import (
 
 type {{toProper .Route}}Options struct {
 {{range .Options}}{{if .SdkIsPublic}}	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
-{{end}}{{end}}	Globals
+{{end}}{{end}}	RenderCtx *output.RenderCtx `json:"-"`
+	Globals
 }
 
 // String implements the stringer interface

@@ -5,8 +5,6 @@
 package blocksPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -15,13 +13,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *BlocksOptions) HandleDecache() error {
+func (opts *BlocksOptions) HandleDecache(rCtx *output.RenderCtx) error {
 	itemsToRemove, err := opts.getItemsToRemove()
 	if err != nil {
 		return err
 	}
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showProgress := opts.Globals.ShowProgress()
 		if msg, err := decache.Decache(opts.Conn, itemsToRemove, showProgress, opts.getCacheType()); err != nil {
@@ -35,7 +32,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 	}
 
 	opts.Globals.NoHeader = true
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 func (opts *BlocksOptions) getCacheType() walk.CacheType {

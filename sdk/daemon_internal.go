@@ -15,17 +15,18 @@ import (
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	daemon "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type daemonOptionsInternal struct {
-	Url     string       `json:"url,omitempty"`
-	Api     DaemonApi    `json:"api,omitempty"`
-	Scrape  DaemonScrape `json:"scrape,omitempty"`
-	Monitor bool         `json:"monitor,omitempty"`
-	Grpc    bool         `json:"grpc,omitempty"`
-	Silent  bool         `json:"silent,omitempty"`
+	Url       string            `json:"url,omitempty"`
+	Api       DaemonApi         `json:"api,omitempty"`
+	Scrape    DaemonScrape      `json:"scrape,omitempty"`
+	Monitor   bool              `json:"monitor,omitempty"`
+	Silent    bool              `json:"silent,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -42,7 +43,10 @@ func (opts *daemonOptionsInternal) DaemonBytes(w io.Writer) error {
 		return fmt.Errorf("error converting daemon struct to URL values: %v", err)
 	}
 
-	return daemon.Daemon(w, values)
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
+	return daemon.Daemon(opts.RenderCtx, w, values)
 }
 
 // daemonParseFunc handles special cases such as structs and enums (if any).
@@ -91,13 +95,13 @@ func GetDaemonOptions(args []string) (*daemonOptionsInternal, error) {
 // EXISTING_CODE
 func (opts *DaemonOptions) toInternal() *daemonOptionsInternal {
 	return &daemonOptionsInternal{
-		Url:     opts.Url,
-		Api:     opts.Api,
-		Scrape:  opts.Scrape,
-		Monitor: opts.Monitor,
-		Grpc:    opts.Grpc,
-		Silent:  opts.Silent,
-		Globals: opts.Globals,
+		Url:       opts.Url,
+		Api:       opts.Api,
+		Scrape:    opts.Scrape,
+		Monitor:   opts.Monitor,
+		Silent:    opts.Silent,
+		RenderCtx: opts.RenderCtx,
+		Globals:   opts.Globals,
 	}
 }
 

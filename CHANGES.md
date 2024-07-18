@@ -2,6 +2,259 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
+## v3.1.0-release - Streaming SDK - Huntingdon (2024/07/01)
+
+**Summary**
+
+- Bumped version to v3.1.0-release.
+- Major changes to the SDK to support streaming data models.
+- Re-write of the chifra names command for easier usage.
+- Re-write of most examples for clarity and ease of understanding.
+- Added the RenderCtx to all Options types in the SDK to support cancel contexts and streaming data models.
+
+## Changes to the Unchained Index Specification
+
+- No changes.
+
+## Breaking Changes
+
+- No changes.
+
+## System Wide Changes
+
+- No changes.
+
+## Changes to Data Models
+
+- No changes.
+
+### Modified data models
+
+| model  | description                                                            |
+| ------ | ---------------------------------------------------------------------- |
+| Blocks | No longer generic for --hashes option. Now just transactional details. |
+
+### New data models
+
+| model      | description                                                        |
+| ---------- | ------------------------------------------------------------------ |
+| LightBlock | Used to be generic string version of Block, now a type of its own. |
+
+### Removed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### Renamed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+## Tool Specific Changes
+
+**chifra list**
+
+- No changes.
+
+**chifra export**
+
+- No changes.
+
+**chifra monitors**
+
+- No changes.
+
+**chifra names**
+
+- Removed pentane from Names data type
+- Remove --grpc option from chifra names as unneeded
+- Added nearly 12,000 names to the names database
+- Near complete re-write of chifra names component - lots of cleanups
+- Adds namesManager example application
+- For any command that renders an address, adding `--verbose` now automatically names those addresses if they are found in the names database.
+- Improved crud commands for `chifra names` and `chifra monitors`
+
+**chifra abis**
+
+- No changes.
+
+**chifra blocks**
+
+- No changes.
+
+**chifra transactions**
+
+- No changes.
+
+**chifra receipts**
+
+- No changes.
+
+**chifra logs**
+
+- No changes.
+
+**chifra traces**
+
+- No changes.
+
+**chifra when**
+
+- Minor bugfix related to TimeStamps
+- Better backups for Timestamp editing
+
+**chifra state**
+
+- No changes.
+
+**chifra tokens**
+
+- No changes.
+
+**chifra config**
+
+- No changes.
+
+**chifra status**
+
+- No changes.
+
+**chifra daemon**
+
+- No changes.
+
+**chifra scrape**
+
+- Improvements to scraper including better Control+C handling in Docker version
+- Better support for TOML file loading and environment variable overrides
+
+**chifra chunks**
+
+- No changes.
+
+**chifra init**
+
+- Added chifra init --examples option
+
+**chifra explore**
+
+- No changes.
+
+**chifra slurp**
+
+- No changes.
+
+**makeClass**
+
+- No changes.
+
+**testRunner**
+
+- No changes.
+
+## Pull Requests (156)
+
+<!--
+gh pr list --search "is:pr is:closed closed:>2024-07-18" --limit 300 --state merged | cut -f1,2 | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- #3822 Epic: Streaming SDK - #3814
+- #3812 Feature/cancel contexts 1
+- #3811 Updates go.mod and go.sum throughout.
+- #3798 Fixed panic when slurping Covalent
+- #3797 Names epic
+- #3796 Feature/3783 replace viper
+- #3794 Bump braces from 3.0.2 to 3.0.3 in /sdk/typescript
+- #3793 Bump golang.org/x/image from 0.10.0 to 0.18.0 in /examples/balanceChart
+- #3786 chore: make function comment match function names
+- #3785 Move scrape.pid to temp dir
+- #3784 chore: make function comment match function name
+- #3768 Make sure we only call covalent once
+- #3762 Allows --version without an RPC endpoint
+- #3760 Follow on to v3.0.0 release (#3759)
+- #3759 Follow on to v3.0.0 release
+- #3757 Develop
+- #3755 Final cleaning for chifra chunks --pins tools
+- #3750 v3.0.0 - Green - GoLang SDK
+
+## Issues Closed (133)
+
+<!--
+gh issue list --search "closed:>2024-07-18 is:closed is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- #3823 Do we need progress reporting in core if we have streaming?
+- #3821 Figure out if we need a buffered channel or a not buffered channel
+- #3820 Extend this code into all Handlers
+- #3819 Try to cause an error that gets pumped through the ErrorChan
+- #3818 Feed an error through in the opts input (errors out before calling into fetchData)
+- #3817 Push down into the HandleShow of ExportOptions. Should pass all tests
+- #3816 Write a new example based on cancelChan that attaches channels
+- #3815 Add ModelChan, ErrorChan, and ProgressChan to RenderCtx
+- #3814 Epic: Streaming SDK
+- #3810 Update go.mod files
+- #3808 cancel ctx: Esc key
+- #3807 cancel ctx: Push up one more level to the Wails app
+- #3806 cancel ctx: Push cancel context up one level
+- #3805 cancel ctx: Change Handler interfaces throughout
+- #3804 cancel ctx: New type - RenderContext
+- #3803 cancel ctx: Add missing contexts to Handlers
+- #3802 cancel ctx: Make consistent
+- #3801 cancel ctx: Review
+- #3800 Cancel Contexts
+- #3799 Cancel Contexts
+- #3795 Add as many new names to the names database as possible
+- #3782 chifra names - can we provide "aliases"?
+- #3781 chifra names - need an "on-chain" name and a "user-supplied" name
+- #3780 chifra names - testing
+- #3779 chifra names - why do we have two files?
+- #3778 chifra names - all tools that output any address (nearly all) should have --names option
+- #3777 Names sharing
+- #3776 Use a binary backing store for the names database
+- #3775 ENS search names is not properly handled.
+- #3774 Do not store names database in the repo - move it to the smart contract
+- #3773 Simplify Crud Processing for chifra names
+- #3772 chifra names - other notes
+- #3771 openDatabaseFile destroy content of the file on open, does not recover on err. Empty file
+- #3770 chifra names - create an example using Names to add, edit names.
+- #3769 Crud processing
+- #3767 chifra names - remove petnames as unused
+- #3766 Why do we use PointerOf?
+- #3764 chifra names - remove unused gRPC server code
+- #3763 chifra names - epic
+- #3749 chifra names autonamer doesn't work
+- #3748 Timestamp file for unchained index for sepolia is currupted in smart contract
+- #3742 Some commands and options are not available in the API
+- #3705 use the names database when articulating
+- #3321 chifra scrape - improved bloom filters
+- #3288 chifra names -- names database should not be part of the repo
+- #3287 chifra names - ERC20 tokens that are proxied are not identified as ERC20
+- #2933 chifra names - --custom (and --all) test cases fail.
+
+## Issues Opened (13)
+
+<!--
+gh issue list --search "created:>2024-07-18 is:open is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/'  | tr '\t' ' '
+-->
+
+- #3826 Unneeded load of names
+- #3825 FAQ: current directory is contained in a module that is not one of the workspace modules listed in go.work. You can add the module to the workspace using: go work use .
+- #3824 Possible speedups for getting data from the node
+- #3792 User comments
+- #3791 Check for valid rpc provider during `func init`
+- #3790 Change instructions to run chifra config --check
+- #3789 Better Configuration
+- #3788 state: add send functionality
+- #3787 Automatic Index Publishing
+- #3783 Replace viper for reading configuration
+- #3761 Feat: Offer easier install methods
+- #3758 Auto code gen should update something on the website that shows the current version.
+- #3753 chifra chunks manifest --remote rewrites the manifest - it should not without --rewrite
+- #3752 chifra chunks - could have a --generate option
+- #3751 chifra manifest --pins
+
 ## v3.0.0-alpha (2024/06/01)
 
 **Summary**

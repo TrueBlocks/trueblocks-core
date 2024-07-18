@@ -15,11 +15,16 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"os/user"
+	"path/filepath"
+	"runtime"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -219,6 +224,30 @@ func (opts *ScrapeOptions) getCaches() (caches map[walk.CacheType]bool) {
 }
 
 // EXISTING_CODE
+// getPidFilePath finds the best path for a pid file. It first tries to use
+// "variable directory" (e.g. /run/{user}/ on Linux), if that fails it falls back
+// to os.TempDir()
+func (opts *ScrapeOptions) getPidFilePath() string {
+	var pidfileDir string
+	if runtime.GOOS == "darwin" {
+		// MacOS
+		pidfileDir = "/usr/local/var/run"
+	} else {
+		// Linux
+		// On Linux only root can write to the main directory /run, but every logged-in
+		// user has its own writable subdirectory with the same name as user's UID
+		user, err := user.Current()
+		if err == nil {
+			pidfileDir = filepath.Join("/run/user/", user.Uid)
+		}
+	}
+	// Fallback to temp dir
+	if pidfileDir == "" || !file.FolderExists(pidfileDir) {
+		pidfileDir = os.TempDir()
+	}
+	return filepath.Join(pidfileDir, "chifra/scrape", strings.ToLower(opts.Globals.Chain)+".pid")
+}
+
 func getConfigCmdsFromArgs() map[string]string {
 	configs := make(map[string]string, 10)
 	for i := 0; i < len(os.Args); i++ {

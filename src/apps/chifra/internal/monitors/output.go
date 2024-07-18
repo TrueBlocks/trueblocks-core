@@ -15,6 +15,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
@@ -25,15 +26,17 @@ import (
 // RunMonitors handles the monitors command for the command line. Returns error only as per cobra.
 func RunMonitors(cmd *cobra.Command, args []string) error {
 	opts := monitorsFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("monitors", &opts.Globals)
-	return opts.MonitorsInternal()
+	return opts.MonitorsInternal(rCtx)
 }
 
 // ServeMonitors handles the monitors command for the API. Returns an error.
 func ServeMonitors(w http.ResponseWriter, r *http.Request) error {
 	opts := monitorsFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// TODO: can we move this to Validate?
 	var err1 error
@@ -55,13 +58,13 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) error {
 	}
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("monitors", w, &opts.Globals)
-	err := opts.MonitorsInternal()
+	err := opts.MonitorsInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("monitors", err, &opts.Globals)
 	return err
 }
 
 // MonitorsInternal handles the internal workings of the monitors command. Returns an error.
-func (opts *MonitorsOptions) MonitorsInternal() error {
+func (opts *MonitorsOptions) MonitorsInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateMonitors(); err != nil {
 		return err
@@ -72,15 +75,17 @@ func (opts *MonitorsOptions) MonitorsInternal() error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if opts.Clean {
-		err = opts.HandleClean()
+		err = opts.HandleClean(rCtx)
 	} else if opts.List {
-		err = opts.HandleList()
+		err = opts.HandleList(rCtx)
 	} else if opts.Watch {
-		err = opts.HandleWatch()
+		err = opts.HandleWatch(rCtx)
+	} else if opts.anyCrud() {
+		err = opts.HandleCrud(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 
@@ -94,4 +99,10 @@ func GetMonitorsOptions(args []string, g *globals.GlobalOptions) *MonitorsOption
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *MonitorsOptions) anyCrud() bool {
+	return opts.Delete ||
+		opts.Undelete ||
+		opts.Remove
 }

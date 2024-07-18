@@ -5,8 +5,6 @@
 package exportPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -14,8 +12,7 @@ import (
 )
 
 // HandleDecache handles the command chifra monitors --decache
-func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
-	ctx := context.Background()
+func (opts *ExportOptions) HandleDecache(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		doIt := true
 		for _, mon := range monitorArray {
@@ -35,5 +32,5 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 		}
 	}
 	opts.Globals.NoHeader = true
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

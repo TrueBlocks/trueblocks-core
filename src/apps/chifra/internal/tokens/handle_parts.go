@@ -1,7 +1,6 @@
 package tokensPkg
 
 import (
-	"context"
 	"errors"
 	"fmt"
 
@@ -13,11 +12,8 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *TokensOptions) HandleParts() error {
+func (opts *TokensOptions) HandleParts(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
-
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, address := range opts.Addrs {
 			addr := base.HexToAddress(address)
@@ -30,7 +26,7 @@ func (opts *TokensOptions) HandleParts() error {
 					if errors.Is(err, ethereum.NotFound) {
 						continue
 					}
-					cancel()
+					rCtx.Cancel()
 					return
 				}
 
@@ -58,17 +54,17 @@ func (opts *TokensOptions) HandleParts() error {
 		}
 	}
 
-	nameTypes := names.Custom | names.Prefund | names.Regular
-	namesMap, err := names.LoadNamesMap(chain, nameTypes, nil)
-	if err != nil {
-		return err
-	}
-
 	extraOpts := map[string]any{
-		"testMode": testMode,
-		"namesMap": namesMap,
-		"parts":    opts.Parts,
+		"parts": opts.Parts,
+	}
+	if opts.Globals.ShouldLoadNames(true) {
+		parts := names.Custom | names.Prefund | names.Regular
+		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
+			return err
+		} else {
+			extraOpts["namesMap"] = namesMap
+		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

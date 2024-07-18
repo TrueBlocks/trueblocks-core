@@ -4,7 +4,6 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -18,7 +17,7 @@ func Test_cleanCommon(t *testing.T) {
 		wantModified bool
 	}{
 		{
-			name: "Tag lower than 8",
+			name: "Tags lower than 8",
 			args: args{
 				name: &types.Name{
 					Tags: "80",
@@ -136,7 +135,7 @@ func Test_cleanToken(t *testing.T) {
 			},
 		},
 		{
-			name: "Fix airdrops tag",
+			name: "Fix airdrops tags",
 			args: args{
 				name: &types.Name{
 					Tags: "60-Airdrops",
@@ -153,7 +152,7 @@ func Test_cleanToken(t *testing.T) {
 			},
 		},
 		{
-			name: "Fix token tag",
+			name: "Fix token tags",
 			args: args{
 				name: &types.Name{
 					Tags: "token",
@@ -170,7 +169,7 @@ func Test_cleanToken(t *testing.T) {
 			},
 		},
 		{
-			name: "Fix contracts tag",
+			name: "Fix contracts tags",
 			args: args{
 				name: &types.Name{
 					Tags: "30-contracts",
@@ -187,7 +186,7 @@ func Test_cleanToken(t *testing.T) {
 			},
 		},
 		{
-			name: "Fix defi tag",
+			name: "Fix defi tags",
 			args: args{
 				name: &types.Name{
 					Tags: "55-defi",
@@ -269,9 +268,8 @@ func Test_cleanToken(t *testing.T) {
 
 func Test_cleanContract(t *testing.T) {
 	type args struct {
-		token   *types.Token
-		address base.Address
-		name    *types.Name
+		token *types.Token
+		name  *types.Name
 	}
 	tests := []struct {
 		name         string
@@ -312,7 +310,7 @@ func Test_cleanContract(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotModified, err := cleanContract(tt.args.token, tt.args.address, tt.args.name)
+			gotModified, err := cleanContract(tt.args.token, tt.args.name)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("cleanContract() error = %v, wantErr %v", err, tt.wantErr)
 				return

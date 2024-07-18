@@ -1,14 +1,12 @@
 package slurpPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *SlurpOptions) HandleShow() error {
+func (opts *SlurpOptions) HandleShow(rCtx *output.RenderCtx) error {
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 
 	provider, err := opts.Provider()
@@ -17,9 +15,8 @@ func (opts *SlurpOptions) HandleShow() error {
 	}
 	provider.SetPrintProgress(opts.Globals.ShowProgress())
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		txChan := provider.TransactionsByAddress(ctx, opts.Query(), errorChan)
+		txChan := provider.TransactionsByAddress(rCtx.Ctx, opts.Query(), errorChan)
 		for tx := range txChan {
 			if opts.Articulate {
 				if err := abiCache.ArticulateSlurp(&tx); err != nil {
@@ -34,5 +31,5 @@ func (opts *SlurpOptions) HandleShow() error {
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

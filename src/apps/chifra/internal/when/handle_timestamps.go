@@ -4,23 +4,26 @@
 
 package whenPkg
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+)
 
 // HandleTimestampsShow handles chifra when --timestamps
-func (opts *WhenOptions) HandleTimestamps() error {
+func (opts *WhenOptions) HandleTimestamps(rCtx *output.RenderCtx) error {
 	var err error
 	if opts.Update {
-		err = opts.HandleTimestampsUpdate()
+		err = opts.HandleTimestampsUpdate(rCtx)
 	} else if opts.Count {
-		err = opts.HandleTimestampsCount()
+		err = opts.HandleTimestampsCount(rCtx)
 	} else if opts.Truncate != base.NOPOSN {
-		err = opts.HandleTimestampsTruncate()
+		err = opts.HandleTimestampsTruncate(rCtx)
 	} else if opts.Check {
-		err = opts.HandleTimestampsCheck()
+		err = opts.HandleTimestampsCheck(rCtx)
 	} else if opts.Repair {
-		err = opts.HandleTimestampsRepair()
+		err = opts.HandleTimestampsRepair(rCtx)
 	} else {
-		err = opts.HandleTimestampsShow()
+		err = opts.HandleTimestampsShow(rCtx)
 	}
 	return err
 }

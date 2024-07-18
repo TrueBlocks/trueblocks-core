@@ -18,11 +18,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *StatusOptions) HandleModes() error {
+func (opts *StatusOptions) HandleModes(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		now := time.Now()
 
@@ -141,11 +140,10 @@ func (opts *StatusOptions) HandleModes() error {
 	}
 
 	extraOpts := map[string]any{
-		"testMode": testMode,
-		"chains":   opts.Chains,
+		"chains": opts.Chains,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 type CacheWalker struct {

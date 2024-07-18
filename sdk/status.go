@@ -14,14 +14,16 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type StatusOptions struct {
-	FirstRecord uint64 `json:"firstRecord,omitempty"`
-	MaxRecords  uint64 `json:"maxRecords,omitempty"`
-	Chains      bool   `json:"chains,omitempty"`
+	FirstRecord uint64            `json:"firstRecord,omitempty"`
+	MaxRecords  uint64            `json:"maxRecords,omitempty"`
+	Chains      bool              `json:"chains,omitempty"`
+	RenderCtx   *output.RenderCtx `json:"-"`
 	Globals
 }
 

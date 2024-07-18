@@ -120,7 +120,6 @@ Names consist of the following fields:
 | symbol     | the symbol for this address (retrieved from on-chain data if available)             | string  |
 | source     | user supplied source of where this name was found (or on-chain if name is on-chain) | string  |
 | decimals   | number of decimals retrieved from an ERC20 smart contract, defaults to 18           | uint64  |
-| petname    | the petname such as described here http://www.erights.org/elib/capability/pnml.html | string  |
 | deleted    | `true` if deleted, `false` otherwise                                                | bool    |
 | isCustom   | `true` if the address is a custom address, `false` otherwise                        | bool    |
 | isPrefund  | `true` if the address was one of the prefund addresses, `false` otherwise           | bool    |

@@ -5,20 +5,17 @@
 package monitorsPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // HandleClean handles the chifra monitors --clean command.
-func (opts *MonitorsOptions) HandleClean() error {
+func (opts *MonitorsOptions) HandleClean(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	_, monArray := monitor.GetMonitorMap(chain)
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monArray {
 			addr := mon.Address.Hex()
@@ -49,5 +46,5 @@ func (opts *MonitorsOptions) HandleClean() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

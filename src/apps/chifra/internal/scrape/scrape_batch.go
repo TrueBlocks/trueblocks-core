@@ -5,6 +5,7 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"context"
 	"errors"
 	"fmt"
 
@@ -14,16 +15,19 @@ import (
 
 // ScrapeBatch is called each time around the forever loop. It calls into
 // HandleBlaze and writes the timestamps if there's no error.
-func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
+func (bm *BlazeManager) ScrapeBatch(ctx context.Context, blocks []base.Blknum) error {
 	chain := bm.chain
 
-	_, _ = bm.HandleBlaze(blocks)
+	_ = bm.HandleBlaze(ctx, blocks)
 	if len(bm.errors) > 0 {
 		for _, err := range bm.errors {
 			logger.Error(fmt.Sprintf("error at block %d: %v", err.block, err.err))
 		}
 		_ = cleanEphemeralIndexFolders(chain)
-		return errors.New("encountered errors while scraping"), true
+		return errors.New("encountered errors while scraping")
+	}
+	if ctx.Err() != nil {
+		return nil
 	}
 
 	// Check to see if we missed any blocks...
@@ -36,7 +40,7 @@ func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
 			// next time around the loop. This may happen if the
 			// node returns an error for example.
 			_ = cleanEphemeralIndexFolders(chain)
-			return fmt.Errorf("a block (%d) was not processed", block), true
+			return fmt.Errorf("a block (%d) was not processed", block)
 		}
 	}
 
@@ -55,8 +59,13 @@ func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
 			bm.nUnripe,
 			bm.nProcessed(),
 			bm.nTimestamps,
-		), true
+		)
 	}
 
-	return bm.WriteTimestamps(blocks), true
+	if ctx.Err() != nil {
+		// This means the context got cancelled, i.e. we got a SIGINT.
+		return nil
+	}
+
+	return bm.WriteTimestamps(ctx, blocks)
 }

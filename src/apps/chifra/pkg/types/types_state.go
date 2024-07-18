@@ -54,13 +54,18 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 
 	order = []string{"blockNumber", "address"}
 	if verbose {
-		model["timestamp"] = s.Timestamp
-		model["date"] = s.Date()
-		order = []string{"blockNumber", "address", "timestamp", "date"}
-		model["parts"] = s.Parts.String()
-		order = append(order, "parts")
+		if s.Timestamp > 0 {
+			model["timestamp"] = s.Timestamp
+			model["date"] = s.Date()
+			order = []string{"blockNumber", "address", "timestamp", "date"}
+		}
+		// This old code used to export the Parts enum as a string which breaks
+		// JSON unmarshaling.
+		// model["parts"] = s.Parts.String()
+		// order = append(order, "parts")
 	}
 
+	hasProxy := false
 	if extraOpts != nil {
 		if fields, ok := extraOpts["fields"]; ok {
 			if fields, ok := fields.([]string); ok {
@@ -73,6 +78,7 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 					case "code":
 						model["code"] = utils.FormattedCode(verbose, s.Code)
 					case "proxy":
+						hasProxy = true
 						model["proxy"] = s.Proxy
 					case "deployed":
 						if s.Deployed == base.NOPOSN {
@@ -97,6 +103,22 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 		}
 	}
 
+	items := []namer{
+		{addr: s.Address, name: "addressName"},
+	}
+	if hasProxy {
+		items = append(items, namer{addr: s.Proxy, name: "proxyName"})
+	}
+	for _, item := range items {
+		if name, loaded, found := nameAddress(extraOpts, item.addr); found {
+			model[item.name] = name.Name
+			order = append(order, item.name)
+		} else if loaded && format != "json" {
+			model[item.name] = ""
+			order = append(order, item.name)
+		}
+	}
+	order = reorderOrdering(order)
 	// EXISTING_CODE
 
 	return Model{

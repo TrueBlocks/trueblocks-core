@@ -12,13 +12,15 @@ import (
 	// EXISTING_CODE
 	"encoding/json"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type ReceiptsOptions struct {
-	TransactionIds []string `json:"transactions,omitempty"`
-	Articulate     bool     `json:"articulate,omitempty"`
+	TransactionIds []string          `json:"transactions,omitempty"`
+	Articulate     bool              `json:"articulate,omitempty"`
+	RenderCtx      *output.RenderCtx `json:"-"`
 	Globals
 }
 

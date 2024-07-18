@@ -5,8 +5,6 @@
 package whenPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -15,7 +13,7 @@ import (
 )
 
 // HandleTimestampsShow handles chifra when --timestamps
-func (opts *WhenOptions) HandleTimestampsShow() error {
+func (opts *WhenOptions) HandleTimestampsShow(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
 	bnMap, err := identifiers.GetBlockNumberMap(chain, opts.BlockIds)
@@ -28,7 +26,6 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 		return err
 	}
 
-	ctx := context.Background()
 	prev := base.Timestamp(0)
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for bn := base.Blknum(0); bn < cnt; bn++ {
@@ -51,5 +48,5 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

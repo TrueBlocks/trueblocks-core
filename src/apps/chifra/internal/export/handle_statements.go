@@ -14,13 +14,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
@@ -31,12 +30,11 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
-				cancel()
+				rCtx.Cancel()
 
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no blocks found for the query")
@@ -45,7 +43,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 			} else {
 				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, filter.Reversed); err != nil {
 					errorChan <- err
-					cancel()
+					rCtx.Cancel()
 
 				} else {
 					showProgress := opts.Globals.ShowProgress()
@@ -58,6 +56,10 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 					finished := false
 					for _, thisMap := range sliceOfMaps {
+						if rCtx.WasCanceled() {
+							return
+						}
+
 						if finished {
 							continue
 						}
@@ -167,18 +169,8 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 
 	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
-		"testMode":   testMode,
 		"export":     true,
 	}
 
-	if opts.Globals.Verbose || opts.Globals.Format == "json" {
-		parts := names.Custom | names.Prefund | names.Regular
-		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
-			return err
-		} else {
-			extraOpts["namesMap"] = namesMap
-		}
-	}
-
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

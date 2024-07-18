@@ -43,7 +43,7 @@ Usage:
 
 Arguments:
   mode - either show or edit the configuration
-	One of [ show | edit ]
+    One of [ show | edit ]
 
 Flags:
   -a, --paths        show the configuration paths for the system
@@ -85,7 +85,7 @@ Usage:
 
 Arguments:
   modes - the (optional) name of the binary cache to report on, terse otherwise
-	One or more of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]
+    One or more of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]
 
 Flags:
   -d, --diagnose            same as the default but with additional diagnostics
@@ -122,10 +122,7 @@ are provided not only by the command line, but also the API server. We call this
 In the future, this daemon may also manage other long-running processes such as `chifra scrape`
 and `chifra monitors`, but for now, it's only managing the API server.
 
-The `--grpc` option turns on a GRPC server that may speed up certain command such as `chifra names`,
-although this option is experimental and therefore not recommended for production use.
-
-If the default port for the API server is in use, you may change it with the `--port` option.
+If the default port for the API server is in use, you may change it with the `--url` option.
 
 To get help for any command, please see the API documentation on our website. But, you may
 also run `chifra --help` or `chifra <cmd> --help` on your command line to get help.
@@ -146,7 +143,6 @@ Aliases:
 
 Flags:
   -u, --url string   specify the API server's url and optionally its port (default "localhost:8080")
-  -g, --grpc         run gRPC server to serve names
       --silent       disable logging (for use in SDK for example)
   -v, --verbose      enable verbose output
   -h, --help         display this help screen
@@ -155,6 +151,7 @@ Notes:
   - To start API open terminal window and run chifra daemon.
   - See the API documentation (https://trueblocks.io/api) for more information.
   - The --port option is deprecated, use --url instead.
+  - The --grpc option is deprecated, there is no replacement.
 ```
 
 Data models produced by this tool:
@@ -328,7 +325,7 @@ Usage:
 
 Arguments:
   mode - the type of data to process (required)
-	One of [ manifest | index | blooms | pins | addresses | appearances | stats ]
+    One of [ manifest | index | blooms | pins | addresses | appearances | stats ]
   blocks - an optional list of blocks to intersect with chunk ranges
 
 Flags:

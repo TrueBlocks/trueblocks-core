@@ -5,7 +5,6 @@
 package listPkg
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -16,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
+func (opts *ListOptions) HandleShow(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	if opts.Silent {
 		return nil
 	}
@@ -30,7 +29,6 @@ func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		currentBn := uint32(0)
 		currentTs := base.Timestamp(0)
@@ -64,7 +62,7 @@ func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 func (opts *ListOptions) IsMax(cnt uint64) bool {

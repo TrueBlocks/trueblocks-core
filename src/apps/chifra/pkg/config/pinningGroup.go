@@ -13,9 +13,9 @@ import (
 const defaultIpfsGateway = "https://ipfs.unchainedindex.io/ipfs/"
 
 type pinningGroup struct {
-	GatewayUrl   string `toml:"gatewayUrl"`
-	LocalPinUrl  string `toml:"localPinUrl"`
-	RemotePinUrl string `toml:"remotePinUrl"`
+	GatewayUrl   string `toml:"gatewayUrl" comment:"The pinning gateway to query when downloading the unchained index"`
+	LocalPinUrl  string `toml:"localPinUrl" comment:"The local endpoint for the IPFS daemon"`
+	RemotePinUrl string `toml:"remotePinUrl" comment:"The remote endpoint for pinning on Pinata"`
 }
 
 func GetPinning() pinningGroup {

@@ -1,7 +1,7 @@
 num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_type,data_type,return_type,summary,usage,capabilities,description
 11000,,Accounts,,,,,,,,group,,,,,,Access and cache transactional data
 #
-12000,apps,Accounts,list,acctExport,,,,visible|docs,,command,,,List transactions,[flags] <address> [address...],default|,List every appearance of an address anywhere on the chain.
+12000,apps,Accounts,list,acctExport,,,,visible|docs,,command,,,List transactions,[flags] <address> [address...],default|names|,List every appearance of an address anywhere on the chain.
 12020,apps,Accounts,list,acctExport,addrs,,,required|visible|docs,3,positional,list<addr>,appearance,,,,one or more addresses (0x...) to list
 12030,apps,Accounts,list,acctExport,count,U,,visible|docs,1,switch,<boolean>,monitor,,,,display only the count of records for each monitor
 12040,apps,Accounts,list,acctExport,no_zero,z,,visible|docs,,switch,<boolean>,,,,,for the --count option only&#44; suppress the display of zero appearance accounts
@@ -17,7 +17,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 12140,apps,Accounts,list,acctExport,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 12150,apps,Accounts,list,acctExport,n2,,,,,note,,,,,,No other options are permitted when --silent is selected.
 #
-13000,apps,Accounts,export,acctExport,,,,visible|docs,,command,,,Export details,[flags] <address> [address...] [topics...] [fourbytes...],default|caching|ether|,Export full details of transactions for one or more addresses.
+13000,apps,Accounts,export,acctExport,,,,visible|docs,,command,,,Export details,[flags] <address> [address...] [topics...] [fourbytes...],default|caching|ether|names|,Export full details of transactions for one or more addresses.
 13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,11,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
 13030,apps,Accounts,export,acctExport,topics,,,visible|docs,,positional,list<topic>,,,,,filter by one or more log topics (only for --logs option)
 13040,apps,Accounts,export,acctExport,fourbytes,,,visible|docs,,positional,list<fourbyte>,,,,,filter by one or more fourbytes (only for transactions and trace options)
@@ -60,11 +60,11 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13420,apps,Accounts,export,acctExport,n11,,,,,note,,,,,,The --withdrawals option is only available on certain chains. It is ignored otherwise.
 13430,apps,Accounts,export,acctExport,n12,,,,,note,,,,,,The --traces option requires your RPC to provide trace data. See the README for more information.
 #
-14000,apps,Accounts,monitors,acctExport,,,,visible|docs,,command,,,Manage monitors,[flags] <address> [address...],default|caching|,Add&#44; remove&#44; clean&#44; and list address monitors.
+14000,apps,Accounts,monitors,acctExport,,,,visible|docs,,command,,,Manage monitors,[flags] <address> [address...],default|caching|names|,Add&#44; remove&#44; clean&#44; and list address monitors.
 14020,apps,Accounts,monitors,acctExport,addrs,,,visible|docs,4,positional,list<addr>,message,,,,one or more addresses (0x...) to process
-14030,apps,Accounts,monitors,acctExport,delete,,,visible|docs,,switch,<boolean>,,,,,delete a monitor&#44; but do not remove it
-14040,apps,Accounts,monitors,acctExport,undelete,,,visible|docs,,switch,<boolean>,,,,,undelete a previously deleted monitor
-14050,apps,Accounts,monitors,acctExport,remove,,,visible|docs,,switch,<boolean>,,,,,remove a previously deleted monitor
+14030,apps,Accounts,monitors,acctExport,delete,,,visible|docs|crud,,switch,<boolean>,,,,,delete a monitor&#44; but do not remove it
+14040,apps,Accounts,monitors,acctExport,undelete,,,visible|docs|crud,,switch,<boolean>,,,,,undelete a previously deleted monitor
+14050,apps,Accounts,monitors,acctExport,remove,,,visible|docs|crud,,switch,<boolean>,,,,,remove a previously deleted monitor
 14060,apps,Accounts,monitors,acctExport,clean,C,,visible|docs,1,switch,<boolean>,monitorClean,,,,clean (i.e. remove duplicate appearances) from monitors
 14070,apps,Accounts,monitors,acctExport,list,l,,visible|docs,2,switch,<boolean>,monitor,,,,list monitors in the cache (--verbose for more detail)
 14080,apps,Accounts,monitors,acctExport,watch,w,,visible|docs|notApi,3,switch,<boolean>,,,,,continually scan for new blocks and extract data as per the command file
@@ -92,15 +92,15 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 15110,tools,Accounts,names,ethNames,regular,r,,visible|docs,,switch,<boolean>,,,,,only available with --clean&#44; cleans regular names database
 15120,tools,Accounts,names,ethNames,dry_run,d,,visible|docs,,switch,<boolean>,,,,,only available with --clean or --autoname&#44; outputs changes to stdout instead of updating databases
 15130,tools,Accounts,names,ethNames,autoname,A,,visible|docs,1,flag,<address>,message,,,,an address assumed to be a token&#44; added automatically to names database if true
-15140,tools,Accounts,names,ethNames,create,,,docs,,switch,<boolean>,name,,,,create a new name record
-15150,tools,Accounts,names,ethNames,update,,,docs,,switch,<boolean>,name,,,,edit an existing name
-15160,tools,Accounts,names,ethNames,delete,,,docs,,switch,<boolean>,name,,,,delete a name&#44; but do not remove it
-15170,tools,Accounts,names,ethNames,undelete,,,docs,,switch,<boolean>,name,,,,undelete a previously deleted name
-15180,tools,Accounts,names,ethNames,remove,,,docs,,switch,<boolean>,name,,,,remove a previously deleted name
+15140,tools,Accounts,names,ethNames,create,,,docs|crud,,switch,<boolean>,name,,,,create a new name record
+15150,tools,Accounts,names,ethNames,update,,,docs|crud,,switch,<boolean>,name,,,,edit an existing name
+15160,tools,Accounts,names,ethNames,delete,,,docs|crud,,switch,<boolean>,name,,,,delete a name&#44; but do not remove it
+15170,tools,Accounts,names,ethNames,undelete,,,docs|crud,,switch,<boolean>,name,,,,undelete a previously deleted name
+15180,tools,Accounts,names,ethNames,remove,,,docs|crud,,switch,<boolean>,name,,,,remove a previously deleted name
 15190,tools,Accounts,names,ethNames,n1,,,,,note,,,,,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 15200,tools,Accounts,names,ethNames,n2,,,,,note,,,,,,The `--match_case` option enables case sensitive matching.
 #
-16000,tools,Accounts,abis,grabABI,,,,visible|docs,,command,,,Manage Abi files,[flags] <address> [address...],default|caching|,Fetches the ABI for a smart contract.
+16000,tools,Accounts,abis,grabABI,,,,visible|docs,,command,,,Manage Abi files,[flags] <address> [address...],default|caching|names|,Fetches the ABI for a smart contract.
 16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,3,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
 16030,tools,Accounts,abis,grabABI,known,k,,visible|docs,,switch,<boolean>,,,,,load common 'known' ABIs from cache
 16040,tools,Accounts,abis,grabABI,proxy_for,r,,visible|docs,,flag,<address>,,,,,redirects the query to this implementation
@@ -111,7 +111,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 #
 21000,,Chain Data,,,,,,,,group,,,,,,Access and cache blockchain-related data
 #
-22000,tools,Chain Data,blocks,getBlocks,,,,visible|docs,,command,,,Get blocks,[flags] <block> [block...],default|caching|ether|,Retrieve one or more blocks from the chain or local cache.
+22000,tools,Chain Data,blocks,getBlocks,,,,visible|docs,,command,,,Get blocks,[flags] <block> [block...],default|caching|ether|names|,Retrieve one or more blocks from the chain or local cache.
 22020,tools,Chain Data,blocks,getBlocks,blocks,,,required|visible|docs,8,positional,list<blknum>,block,,,,a space-separated list of one or more block identifiers
 22030,tools,Chain Data,blocks,getBlocks,hashes,e,,visible|docs,7,switch,<boolean>,lightBlock,,,,display only transaction hashes&#44; default is to display full transaction detail
 22040,tools,Chain Data,blocks,getBlocks,uncles,c,,visible|docs,5,switch,<boolean>,lightBlock,,,,display uncle blocks (if any) instead of the requested block
@@ -136,7 +136,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 22270,tools,Chain Data,blocks,getBlocks,n9,,,,,note,,,,,,The --withdrawals option is only available on certain chains. It is ignored otherwise.
 22280,tools,Chain Data,blocks,getBlocks,n10,,,,,note,,,,,,The --traces option requires your RPC to provide trace data. See the README for more information.
 #
-23000,tools,Chain Data,transactions,getTrans,,,,visible|docs,,command,,,Get transactions,[flags] <tx_id> [tx_id...],default|caching|ether|,Retrieve one or more transactions from the chain or local cache.
+23000,tools,Chain Data,transactions,getTrans,,,,visible|docs,,command,,,Get transactions,[flags] <tx_id> [tx_id...],default|caching|ether|names|,Retrieve one or more transactions from the chain or local cache.
 23020,tools,Chain Data,transactions,getTrans,transactions,,,required|visible|docs,4,positional,list<tx_id>,transaction,,,,a space-separated list of one or more transaction identifiers
 23030,tools,Chain Data,transactions,getTrans,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 23040,tools,Chain Data,transactions,getTrans,traces,t,,visible|docs,,switch,<boolean>,trace,,,,include the transaction's traces in the results
@@ -159,7 +159,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 24050,tools,Chain Data,receipts,getReceipts,n2,,,,,note,,,,,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 24060,tools,Chain Data,receipts,getReceipts,n3,,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 #
-25000,tools,Chain Data,logs,getLogs,,,,visible|docs,,command,,,Get logs,[flags] <tx_id> [tx_id...],default|caching|,Retrieve logs for the given transaction(s).
+25000,tools,Chain Data,logs,getLogs,,,,visible|docs,,command,,,Get logs,[flags] <tx_id> [tx_id...],default|caching|names|,Retrieve logs for the given transaction(s).
 25020,tools,Chain Data,logs,getLogs,transactions,,,required|visible|docs,1,positional,list<tx_id>,log,,,,a space-separated list of one or more transaction identifiers
 25030,tools,Chain Data,logs,getLogs,emitter,m,,visible|docs,,flag,list<addr>,,,,,filter logs to show only those logs emitted by the given address(es)
 25040,tools,Chain Data,logs,getLogs,topic,B,,visible|docs,,flag,list<topic>,,,,,filter logs to show only those with this topic(s)
@@ -169,7 +169,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 25080,tools,Chain Data,logs,getLogs,n3,,,,,note,,,,,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 25090,tools,Chain Data,logs,getLogs,n4,,,,,note,,,,,,If you specify a 32-byte hash&#44; it will be assumed to be a transaction hash&#44; if it is not&#44; the hash will be used as a topic.
 #
-26000,tools,Chain Data,traces,getTraces,,,,visible|docs,,command,,,Get traces,[flags] <tx_id> [tx_id...],default|caching|ether|,Retrieve traces for the given transaction(s).
+26000,tools,Chain Data,traces,getTraces,,,,visible|docs,,command,,,Get traces,[flags] <tx_id> [tx_id...],default|caching|ether|names|,Retrieve traces for the given transaction(s).
 26020,tools,Chain Data,traces,getTraces,transactions,,,required|visible|docs,3,positional,list<tx_id>,trace,,,,a space-separated list of one or more transaction identifiers
 26030,tools,Chain Data,traces,getTraces,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 26040,tools,Chain Data,traces,getTraces,filter,f,,visible|docs,2,flag,<string>,,,,,call the node's trace_filter routine with bang-separated filter
@@ -196,7 +196,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 #
 31000,,Chain State,,,,,,,,group,,,,,,Access to account and token state
 #
-32000,tools,Chain State,state,getState,,,,visible|docs,,command,,,Get balance(s),[flags] <address> [address...] [block...],default|caching|ether|,Retrieve account balance(s) for one or more addresses at given block(s).
+32000,tools,Chain State,state,getState,,,,visible|docs,,command,,,Get balance(s),[flags] <address> [address...] [block...],default|caching|ether|names|,Retrieve account balance(s) for one or more addresses at given block(s).
 32020,tools,Chain State,state,getState,addrs,,,required|visible|docs,2,positional,list<addr>,state,,,,one or more addresses (0x...) from which to retrieve balances
 32030,tools,Chain State,state,getState,blocks,,,visible|docs,,positional,list<blknum>,,,,,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
 32040,tools,Chain State,state,getState,parts,p,,visible|docs,,flag,list<enum[balance|nonce|code|proxy|deployed|accttype|some*|all]>,,,,,control which state to export
@@ -214,7 +214,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 32160,tools,Chain State,state,getState,n7,,,,,note,,,,,,You may specify multiple `parts` on a single line.
 32170,tools,Chain State,state,getState,n8,,,,,note,,,,,,In the --call string&#44; you may separate multiple calls with a colon.
 #
-33000,tools,Chain State,tokens,getTokens,,,,visible|docs,,command,,,Get token balance(s),[flags] <address> <address> [address...] [block...],default|caching|,Retrieve token balance(s) for one or more addresses at given block(s).
+33000,tools,Chain State,tokens,getTokens,,,,visible|docs,,command,,,Get token balance(s),[flags] <address> <address> [address...] [block...],default|caching|names|,Retrieve token balance(s) for one or more addresses at given block(s).
 33020,tools,Chain State,tokens,getTokens,addrs,,,required|visible|docs,2,positional,list<addr>,token,,,,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
 33030,tools,Chain State,tokens,getTokens,blocks,,,visible|docs,,positional,list<blknum>,,,,,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
 33040,tools,Chain State,tokens,getTokens,parts,p,,visible|docs,1,flag,list<enum[name|symbol|decimals|totalSupply|version|some|all*]>,,,,,which parts of the token information to retrieve
@@ -249,9 +249,9 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 44030,apps,Admin,daemon,flame,api,a,on,,,flag,enum[off|on*]>,,,,,instruct the node to start the API server
 44040,apps,Admin,daemon,flame,scrape,s,,,,flag,enum[off|blooms|index]>,,,,,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
 44050,apps,Admin,daemon,flame,monitor,m,,,,switch,<boolean>,,,,,instruct the node to start the monitors tool
-44060,apps,Admin,daemon,flame,grpc,g,,visible|docs,,switch,<boolean>,,,,,run gRPC server to serve names
 44070,apps,Admin,daemon,flame,silent,,,visible|docs,,switch,<boolean>,,,,,disable logging (for use in SDK for example)
 44070,apps,Admin,daemon,flame,port,p,:8080,deprecated=url,,flag,<string>,,,,,deprecated
+44060,apps,Admin,daemon,flame,grpc,g,,deprecated=,,switch,<boolean>,,,,,run gRPC server to serve names
 44080,apps,Admin,daemon,flame,n1,,,,,note,,,,,,To start API open terminal window and run chifra daemon.
 44090,apps,Admin,daemon,flame,n2,,,,,note,,,,,,See the API documentation (https://trueblocks.io/api) for more information.
 44100,apps,Admin,daemon,flame,a1,,,,,alias,,,,,,serve
@@ -324,7 +324,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 52030,apps,Other,explore,fireStorm,local,l,,visible|docs,,switch,<boolean>,,,,,open the local TrueBlocks explorer
 52040,apps,Other,explore,fireStorm,google,g,,visible|docs,,switch,<boolean>,,,,,search google excluding popular blockchain explorers
 #
-53000,tools,Other,slurp,ethslurp,,,,visible|docs,,command,,,Slurp Api services,[flags] <address> [address...] [block...],default|caching|ether|,Fetch data from Etherscan and other APIs for any address.
+53000,tools,Other,slurp,ethslurp,,,,visible|docs,,command,,,Slurp Api services,[flags] <address> [address...] [block...],default|caching|ether|names|,Fetch data from Etherscan and other APIs for any address.
 53020,tools,Other,slurp,ethslurp,addrs,,,required|visible|docs,3,positional,list<addr>,slurp,,,,one or more addresses to slurp from Etherscan
 53030,tools,Other,slurp,ethslurp,blocks,,,visible|docs,,positional,list<blknum>,,,,,an optional range of blocks to slurp
 53040,tools,Other,slurp,ethslurp,parts,r,,visible|docs,,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|some|all]>,,,,,which types of transactions to request

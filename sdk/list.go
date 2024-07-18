@@ -13,21 +13,23 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type ListOptions struct {
-	Addrs       []string     `json:"addrs,omitempty"`
-	NoZero      bool         `json:"noZero,omitempty"`
-	Unripe      bool         `json:"unripe,omitempty"`
-	Silent      bool         `json:"silent,omitempty"`
-	FirstRecord uint64       `json:"firstRecord,omitempty"`
-	MaxRecords  uint64       `json:"maxRecords,omitempty"`
-	Reversed    bool         `json:"reversed,omitempty"`
-	Publisher   base.Address `json:"publisher,omitempty"`
-	FirstBlock  base.Blknum  `json:"firstBlock,omitempty"`
-	LastBlock   base.Blknum  `json:"lastBlock,omitempty"`
+	Addrs       []string          `json:"addrs,omitempty"`
+	NoZero      bool              `json:"noZero,omitempty"`
+	Unripe      bool              `json:"unripe,omitempty"`
+	Silent      bool              `json:"silent,omitempty"`
+	FirstRecord uint64            `json:"firstRecord,omitempty"`
+	MaxRecords  uint64            `json:"maxRecords,omitempty"`
+	Reversed    bool              `json:"reversed,omitempty"`
+	Publisher   base.Address      `json:"publisher,omitempty"`
+	FirstBlock  base.Blknum       `json:"firstBlock,omitempty"`
+	LastBlock   base.Blknum       `json:"lastBlock,omitempty"`
+	RenderCtx   *output.RenderCtx `json:"-"`
 	Globals
 }
 

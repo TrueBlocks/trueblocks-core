@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,33 +24,35 @@ import (
 // RunNames handles the names command for the command line. Returns error only as per cobra.
 func RunNames(cmd *cobra.Command, args []string) error {
 	opts := namesFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	var err1 error
-	if err1 = opts.loadCrudDataIfNeeded(nil); err1 != nil {
+	if err1 = opts.LoadCrudDataIfNeeded(nil); err1 != nil {
 		return err1
 	}
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("names", &opts.Globals)
-	return opts.NamesInternal()
+	return opts.NamesInternal(rCtx)
 }
 
 // ServeNames handles the names command for the API. Returns an error.
 func ServeNames(w http.ResponseWriter, r *http.Request) error {
 	opts := namesFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	var err1 error
-	if err1 = opts.loadCrudDataIfNeeded(r); err1 != nil {
+	if err1 = opts.LoadCrudDataIfNeeded(r); err1 != nil {
 		return err1
 	}
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("names", w, &opts.Globals)
-	err := opts.NamesInternal()
+	err := opts.NamesInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("names", err, &opts.Globals)
 	return err
 }
 
 // NamesInternal handles the internal workings of the names command. Returns an error.
-func (opts *NamesOptions) NamesInternal() error {
+func (opts *NamesOptions) NamesInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateNames(); err != nil {
 		return err
@@ -60,13 +63,15 @@ func (opts *NamesOptions) NamesInternal() error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if len(opts.Autoname) > 0 {
-		err = opts.HandleAutoname()
+		err = opts.HandleAutoname(rCtx)
 	} else if opts.Clean {
-		err = opts.HandleClean()
+		err = opts.HandleClean(rCtx)
 	} else if opts.Tags {
-		err = opts.HandleTags()
+		err = opts.HandleTags(rCtx)
+	} else if opts.anyCrud() {
+		err = opts.HandleCrud(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 
@@ -80,4 +85,12 @@ func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *NamesOptions) anyCrud() bool {
+	return opts.Create ||
+		opts.Update ||
+		opts.Delete ||
+		opts.Undelete ||
+		opts.Remove
 }

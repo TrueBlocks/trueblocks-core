@@ -13,17 +13,18 @@ import (
 	"net/url"
 
 	chunks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Chunks provides an interface to the command line chifra chunks through the SDK.
-func Chunks(w io.Writer, values url.Values) error {
+func Chunks(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	chunks.ResetOptions(sdkTestMode)
 	opts := chunks.ChunksFinishParseInternal(w, values)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("chunks", w, &opts.Globals)
-	err := opts.ChunksInternal()
+	err := opts.ChunksInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("chunks", err, &opts.Globals)
 
 	return err

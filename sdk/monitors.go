@@ -12,21 +12,23 @@ import (
 	// EXISTING_CODE
 	"encoding/json"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type MonitorsOptions struct {
-	Addrs     []string `json:"addrs,omitempty"`
-	Delete    bool     `json:"delete,omitempty"`
-	Undelete  bool     `json:"undelete,omitempty"`
-	Remove    bool     `json:"remove,omitempty"`
-	Watch     bool     `json:"watch,omitempty"`
-	Watchlist string   `json:"watchlist,omitempty"`
-	Commands  string   `json:"commands,omitempty"`
-	BatchSize uint64   `json:"batchSize,omitempty"`
-	RunCount  uint64   `json:"runCount,omitempty"`
-	Sleep     float64  `json:"sleep,omitempty"`
+	Addrs     []string          `json:"addrs,omitempty"`
+	Delete    bool              `json:"delete,omitempty"`
+	Undelete  bool              `json:"undelete,omitempty"`
+	Remove    bool              `json:"remove,omitempty"`
+	Watch     bool              `json:"watch,omitempty"`
+	Watchlist string            `json:"watchlist,omitempty"`
+	Commands  string            `json:"commands,omitempty"`
+	BatchSize uint64            `json:"batchSize,omitempty"`
+	RunCount  uint64            `json:"runCount,omitempty"`
+	Sleep     float64           `json:"sleep,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 

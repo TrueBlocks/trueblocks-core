@@ -9,7 +9,6 @@ export * from './logs';
 export * from './monitors';
 export * from './names';
 export * from './receipts';
-export * from './scrape';
 export * from './slurp';
 export * from './state';
 export * from './status';

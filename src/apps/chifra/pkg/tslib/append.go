@@ -12,13 +12,10 @@ import (
 func Append(chain string, tsArray []TimestampRecord) error {
 	tsFn := config.PathToTimestamps(chain)
 	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
-	if backupFn, err := file.MakeBackup(tmpPath, tsFn); err == nil {
+	if backup, err := file.MakeBackup(tmpPath, tsFn); err == nil {
 		ClearCache(chain)
 		defer func() {
-			if file.FileExists(backupFn) {
-				_ = os.Rename(backupFn, tsFn)
-				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
-			}
+			backup.Restore()
 		}()
 
 		fp, err := os.OpenFile(tsFn, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
@@ -34,7 +31,7 @@ func Append(chain string, tsArray []TimestampRecord) error {
 			return err
 		}
 
-		os.Remove(backupFn)
+		backup.Clear()
 		return nil
 
 	} else {

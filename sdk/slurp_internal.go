@@ -16,23 +16,25 @@ import (
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type slurpOptionsInternal struct {
-	Addrs       []string    `json:"addrs,omitempty"`
-	BlockIds    []string    `json:"blocks,omitempty"`
-	Parts       SlurpParts  `json:"parts,omitempty"`
-	Appearances bool        `json:"appearances,omitempty"`
-	Articulate  bool        `json:"articulate,omitempty"`
-	Source      SlurpSource `json:"source,omitempty"`
-	Count       bool        `json:"count,omitempty"`
-	Page        uint64      `json:"page,omitempty"`
-	PageId      string      `json:"pageId,omitempty"`
-	PerPage     uint64      `json:"perPage,omitempty"`
-	Sleep       float64     `json:"sleep,omitempty"`
+	Addrs       []string          `json:"addrs,omitempty"`
+	BlockIds    []string          `json:"blocks,omitempty"`
+	Parts       SlurpParts        `json:"parts,omitempty"`
+	Appearances bool              `json:"appearances,omitempty"`
+	Articulate  bool              `json:"articulate,omitempty"`
+	Source      SlurpSource       `json:"source,omitempty"`
+	Count       bool              `json:"count,omitempty"`
+	Page        uint64            `json:"page,omitempty"`
+	PageId      string            `json:"pageId,omitempty"`
+	PerPage     uint64            `json:"perPage,omitempty"`
+	Sleep       float64           `json:"sleep,omitempty"`
+	RenderCtx   *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -49,7 +51,10 @@ func (opts *slurpOptionsInternal) SlurpBytes(w io.Writer) error {
 		return fmt.Errorf("error converting slurp struct to URL values: %v", err)
 	}
 
-	return slurp.Slurp(w, values)
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
+	return slurp.Slurp(opts.RenderCtx, w, values)
 }
 
 // slurpParseFunc handles special cases such as structs and enums (if any).
@@ -137,6 +142,7 @@ func (opts *SlurpOptions) toInternal() *slurpOptionsInternal {
 		PageId:     opts.PageId,
 		PerPage:    opts.PerPage,
 		Sleep:      opts.Sleep,
+		RenderCtx:  opts.RenderCtx,
 		Globals:    opts.Globals,
 	}
 }

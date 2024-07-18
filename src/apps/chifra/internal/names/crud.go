@@ -51,26 +51,13 @@ func (opts *NamesOptions) getType() names.Parts {
 	return ret
 }
 
-func (opts *NamesOptions) anyCrud() bool {
-	return opts.Create ||
-		opts.Update ||
-		opts.Delete ||
-		opts.Undelete ||
-		opts.Remove
-}
-
-func (opts *NamesOptions) createOrUpdate() bool {
-	return opts.Create || opts.Update
-}
-
 type CrudData struct {
-	Address     crudDataField[base.Address]
-	Name        crudDataField[string]
-	Tag         crudDataField[string]
-	Source      crudDataField[string]
-	Symbol      crudDataField[string]
-	Decimals    crudDataField[string]
-	Description crudDataField[string]
+	Address  crudDataField[base.Address]
+	Name     crudDataField[string]
+	Tags     crudDataField[string]
+	Source   crudDataField[string]
+	Symbol   crudDataField[string]
+	Decimals crudDataField[string]
 }
 type crudValue interface {
 	base.Address | string
@@ -98,9 +85,9 @@ func (opts *NamesOptions) getCrudDataHttp(r *http.Request) (data *CrudData, err 
 			Value:   r.PostForm.Get("name"),
 			Updated: r.PostForm.Has("name"),
 		},
-		Tag: crudDataField[string]{
-			Value:   r.PostForm.Get("tag"),
-			Updated: r.PostForm.Has("tag"),
+		Tags: crudDataField[string]{
+			Value:   r.PostForm.Get("tags"),
+			Updated: r.PostForm.Has("tags"),
 		},
 		Source: crudDataField[string]{
 			Value:   r.PostForm.Get("source"),
@@ -113,10 +100,6 @@ func (opts *NamesOptions) getCrudDataHttp(r *http.Request) (data *CrudData, err 
 		Decimals: crudDataField[string]{
 			Value:   r.PostForm.Get("decimals"),
 			Updated: r.PostForm.Has("decimals"),
-		},
-		Description: crudDataField[string]{
-			Value:   r.PostForm.Get("description"),
-			Updated: r.PostForm.Has("description"),
 		},
 	}
 	if err = opts.validateCrudData(data); err != nil {
@@ -138,10 +121,10 @@ func (opts *NamesOptions) getCrudDataEnv() (data *CrudData, err error) {
 		Value:   name,
 		Updated: nameUpdated,
 	}
-	tag, tagUpdated := os.LookupEnv("TB_NAME_TAG")
-	data.Tag = crudDataField[string]{
-		Value:   tag,
-		Updated: tagUpdated,
+	tags, tagsUpdated := os.LookupEnv("TB_NAME_TAGS")
+	data.Tags = crudDataField[string]{
+		Value:   tags,
+		Updated: tagsUpdated,
 	}
 	source, sourceUpdated := os.LookupEnv("TB_NAME_SOURCE")
 	data.Source = crudDataField[string]{
@@ -157,11 +140,6 @@ func (opts *NamesOptions) getCrudDataEnv() (data *CrudData, err error) {
 	data.Decimals = crudDataField[string]{
 		Value:   decimals,
 		Updated: decimalsUpdated,
-	}
-	description, descriptionUpdated := os.LookupEnv("TB_NAME_DESCR")
-	data.Description = crudDataField[string]{
-		Value:   description,
-		Updated: descriptionUpdated,
 	}
 
 	if err = opts.validateCrudData(data); err != nil {
@@ -186,30 +164,25 @@ func (opts *NamesOptions) validateCrudData(data *CrudData) error {
 	return nil
 }
 
-func (opts *NamesOptions) loadCrudDataIfNeeded(request *http.Request) (err error) {
-	// These three read address from command arguments
+func (opts *NamesOptions) LoadCrudDataIfNeeded(request *http.Request) error {
 	if opts.Delete || opts.Undelete || opts.Remove {
-		if len(opts.Terms) != 1 {
-			return errors.New("exactly 1 address required")
-		}
 		opts.crudData = &CrudData{
 			Address: crudDataField[base.Address]{
 				Value: base.HexToAddress(opts.Terms[0]),
 			},
 		}
-		return
-	}
-	if !opts.createOrUpdate() {
-		return
+		return nil
 	}
 
-	var data *CrudData
+	if !opts.Create && !opts.Update {
+		return nil
+	}
+
+	var err error
 	if request == nil {
-		data, err = opts.getCrudDataEnv()
+		opts.crudData, err = opts.getCrudDataEnv()
 	} else {
-		data, err = opts.getCrudDataHttp(request)
+		opts.crudData, err = opts.getCrudDataHttp(request)
 	}
-
-	opts.crudData = data
-	return
+	return err
 }

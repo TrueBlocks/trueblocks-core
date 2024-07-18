@@ -5,7 +5,6 @@
 package abisPkg
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
@@ -15,8 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-func (opts *AbisOptions) HandleEncode() error {
-	ctx := context.Background()
+func (opts *AbisOptions) HandleEncode(rCtx *output.RenderCtx) error {
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		funcs := abi.ExtractSigs(opts.Encode)
 		if len(funcs) == 0 {
@@ -32,5 +30,5 @@ func (opts *AbisOptions) HandleEncode() error {
 			modelChan <- &f
 		}
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

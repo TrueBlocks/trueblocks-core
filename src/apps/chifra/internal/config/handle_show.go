@@ -6,11 +6,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-func (opts *ConfigOptions) HandleShow() error {
+func (opts *ConfigOptions) HandleShow(rCtx *output.RenderCtx) error {
 	if opts.Mode == "edit" {
-		return opts.HandleEdit()
+		return opts.HandleEdit(rCtx)
 	}
 
 	if opts.Globals.TestMode {

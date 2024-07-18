@@ -2,7 +2,6 @@ package names
 
 import (
 	"io"
-	"os"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -10,15 +9,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TODO: Test if there's a performance differnce between using an array here (which would work just as well) and a map
-var loadedRegularNames map[base.Address]types.Name = map[base.Address]types.Name{}
-var loadedRegularNamesMutex sync.Mutex
+var regularNamesLoaded = false
+var regularNames = map[base.Address]types.Name{}
+var regularNamesMutex sync.Mutex
 
 // loadRegularMap loads the regular names from the cache
-func loadRegularMap(chain string, thePath string, terms []string, parts Parts, ret *map[base.Address]types.Name) error {
-	if len(loadedRegularNames) != 0 {
-		// We have already loaded the data
-		for _, name := range loadedRegularNames {
+func loadRegularMap(chain string, terms []string, parts Parts, ret *map[base.Address]types.Name) error {
+	if regularNamesLoaded {
+		for _, name := range regularNames {
 			if doSearch(&name, terms, parts) {
 				(*ret)[name.Address] = name
 			}
@@ -26,16 +24,19 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 		return nil
 	}
 
-	loadedRegularNamesMutex.Lock()
-	defer loadedRegularNamesMutex.Unlock()
+	regularNamesMutex.Lock()
+	defer func() {
+		regularNamesLoaded = true
+		regularNamesMutex.Unlock()
+	}()
 
-	db, err := openDatabaseFile(chain, DatabaseRegular, os.O_RDONLY)
+	db, err := openDatabaseForRead(chain, DatabaseRegular)
 	if err != nil {
 		return err
 	}
 	defer db.Close()
 
-	reader, err := NewNameReader(db, NameReaderTab)
+	reader, err := NewNameReader(db)
 	if err != nil {
 		return err
 	}
@@ -48,7 +49,7 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 		if err != nil {
 			logger.Fatal(err)
 		}
-		loadedRegularNames[n.Address] = n
+		regularNames[n.Address] = n
 		if doSearch(&n, terms, parts) {
 			(*ret)[n.Address] = n
 		}

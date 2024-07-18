@@ -15,16 +15,18 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type tracesOptionsInternal struct {
-	TransactionIds []string `json:"transactions,omitempty"`
-	Articulate     bool     `json:"articulate,omitempty"`
-	Filter         string   `json:"filter,omitempty"`
-	Count          bool     `json:"count,omitempty"`
+	TransactionIds []string          `json:"transactions,omitempty"`
+	Articulate     bool              `json:"articulate,omitempty"`
+	Filter         string            `json:"filter,omitempty"`
+	Count          bool              `json:"count,omitempty"`
+	RenderCtx      *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -41,7 +43,10 @@ func (opts *tracesOptionsInternal) TracesBytes(w io.Writer) error {
 		return fmt.Errorf("error converting traces struct to URL values: %v", err)
 	}
 
-	return traces.Traces(w, values)
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
+	return traces.Traces(opts.RenderCtx, w, values)
 }
 
 // tracesParseFunc handles special cases such as structs and enums (if any).
@@ -106,6 +111,7 @@ func (opts *TracesOptions) toInternal() *tracesOptionsInternal {
 		TransactionIds: opts.TransactionIds,
 		Articulate:     opts.Articulate,
 		Filter:         opts.Filter,
+		RenderCtx:      opts.RenderCtx,
 		Globals:        opts.Globals,
 	}
 }

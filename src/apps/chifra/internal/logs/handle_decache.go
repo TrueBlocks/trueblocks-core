@@ -5,21 +5,18 @@
 package logsPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *LogsOptions) HandleDecache() error {
+func (opts *LogsOptions) HandleDecache(rCtx *output.RenderCtx) error {
 	itemsToRemove, err := decache.LocationsFromTransactions(opts.Conn, opts.TransactionIds)
 	if err != nil {
 		return err
 	}
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showProgress := opts.Globals.ShowProgress()
 		if msg, err := decache.Decache(opts.Conn, itemsToRemove, showProgress, walk.Cache_Logs); err != nil {
@@ -33,5 +30,5 @@ func (opts *LogsOptions) HandleDecache() error {
 	}
 
 	opts.Globals.NoHeader = true
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

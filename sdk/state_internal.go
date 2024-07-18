@@ -17,20 +17,22 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type stateOptionsInternal struct {
-	Addrs      []string     `json:"addrs,omitempty"`
-	BlockIds   []string     `json:"blocks,omitempty"`
-	Parts      StateParts   `json:"parts,omitempty"`
-	Changes    bool         `json:"changes,omitempty"`
-	NoZero     bool         `json:"noZero,omitempty"`
-	Call       string       `json:"call,omitempty"`
-	Articulate bool         `json:"articulate,omitempty"`
-	ProxyFor   base.Address `json:"proxyFor,omitempty"`
+	Addrs      []string          `json:"addrs,omitempty"`
+	BlockIds   []string          `json:"blocks,omitempty"`
+	Parts      StateParts        `json:"parts,omitempty"`
+	Changes    bool              `json:"changes,omitempty"`
+	NoZero     bool              `json:"noZero,omitempty"`
+	Call       string            `json:"call,omitempty"`
+	Articulate bool              `json:"articulate,omitempty"`
+	ProxyFor   base.Address      `json:"proxyFor,omitempty"`
+	RenderCtx  *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -47,7 +49,10 @@ func (opts *stateOptionsInternal) StateBytes(w io.Writer) error {
 		return fmt.Errorf("error converting state struct to URL values: %v", err)
 	}
 
-	return state.State(w, values)
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
+	return state.State(opts.RenderCtx, w, values)
 }
 
 // stateParseFunc handles special cases such as structs and enums (if any).
@@ -127,6 +132,7 @@ func (opts *StateOptions) toInternal() *stateOptionsInternal {
 		NoZero:     opts.NoZero,
 		Articulate: opts.Articulate,
 		ProxyFor:   opts.ProxyFor,
+		RenderCtx:  opts.RenderCtx,
 		Globals:    opts.Globals,
 	}
 }

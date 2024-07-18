@@ -2,7 +2,6 @@ package output
 
 import (
 	"bytes"
-	"context"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
@@ -169,7 +168,8 @@ func TestStreamMany(t *testing.T) {
 
 	// Print the values and try to re-parse them to check if
 	// we get the same data
-	StreamMany(context.Background(), renderData, OutputOptions{
+	rCtx := NewRenderContext()
+	StreamMany(rCtx, renderData, OutputOptions{
 		Writer: jw,
 		Format: "json",
 	})
@@ -205,7 +205,8 @@ func TestApiFormat(t *testing.T) {
 			IsError:          false,
 		}
 	}
-	err := StreamMany(context.Background(), fetchData, OutputOptions{
+	rCtx := NewRenderContext()
+	err := StreamMany(rCtx, fetchData, OutputOptions{
 		Writer: outputBuffer,
 		Format: "api",
 	})

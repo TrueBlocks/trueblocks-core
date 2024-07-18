@@ -52,6 +52,7 @@ var cbTemplates = []types.Generator{
 		Against: "types",
 		Templates: []string{
 			"src_dev+tools_goMaker_generated_model+type.md.tmpl",
+			"sdk_typescript_src_types_type.ts.tmpl",
 			"src_apps_chifra_pkg_types_type.go.tmpl",
 		},
 	},

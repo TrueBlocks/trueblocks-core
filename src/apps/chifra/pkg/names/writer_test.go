@@ -16,8 +16,8 @@ func TestNewNameWriter(t *testing.T) {
 	if w.WriteHeader != true {
 		t.Fatal("expected WriteHeader to be set")
 	}
-	if len(w.Header) != 13 {
-		t.Fatal("expected Header to have 13 items")
+	if len(w.Header) != 12 {
+		t.Fatal("expected Header to have 12 items")
 	}
 	if w.csvWriter == nil {
 		t.Fatal("expected csvWriter to be initialized")

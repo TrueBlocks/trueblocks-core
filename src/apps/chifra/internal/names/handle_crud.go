@@ -1,16 +1,14 @@
 package namesPkg
 
 import (
-	"context"
 	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *NamesOptions) HandleCrud() (err error) {
+func (opts *NamesOptions) HandleCrud(rCtx *output.RenderCtx) (err error) {
 	chain := opts.Globals.Chain
 
 	parts := opts.getType()
@@ -44,7 +42,6 @@ func (opts *NamesOptions) HandleCrud() (err error) {
 		return
 	}
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		modelChan <- name
 	}
@@ -52,7 +49,7 @@ func (opts *NamesOptions) HandleCrud() (err error) {
 	extraOpts := map[string]any{
 		"crud": true,
 	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func handleCreate(chain string, data *CrudData) (name *types.Name, err error) {
@@ -67,12 +64,11 @@ func handleCreate(chain string, data *CrudData) (name *types.Name, err error) {
 	name = &types.Name{
 		Address:  data.Address.Value,
 		Name:     data.Name.Value,
-		Tags:     data.Tag.Value,
+		Tags:     data.Tags.Value,
 		Source:   data.Source.Value,
 		Symbol:   data.Symbol.Value,
 		Decimals: decimals,
 		Deleted:  false,
-		Petname:  base.AddrToPetname(data.Address.Value.Hex(), "-"),
 	}
 
 	return name, names.CreateName(names.DatabaseCustom, chain, name)

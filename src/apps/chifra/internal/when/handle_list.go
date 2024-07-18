@@ -1,7 +1,6 @@
 package whenPkg
 
 import (
-	"context"
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -10,10 +9,9 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *WhenOptions) HandleList() error {
+func (opts *WhenOptions) HandleList(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		results, err := tslib.GetSpecials(chain)
 		if err != nil {
@@ -21,7 +19,7 @@ func (opts *WhenOptions) HandleList() error {
 			if errors.Is(err, ethereum.NotFound) {
 				return
 			}
-			cancel()
+			rCtx.Cancel()
 			return
 		}
 
@@ -32,5 +30,5 @@ func (opts *WhenOptions) HandleList() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

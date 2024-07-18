@@ -5,9 +5,9 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"context"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -15,17 +15,34 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
+
+// criticalError means that we have to stop scraper
+type criticalError struct {
+	err error
+}
+
+func (c *criticalError) Error() string {
+	return c.err.Error()
+}
+
+func NewCriticalError(err error) *criticalError {
+	return &criticalError{
+		err,
+	}
+}
 
 // HandleScrape enters a forever loop and continually scrapes --block_cnt blocks
 // (or less if close to the head). The forever loop pauses each round for
 // --sleep seconds (or, if not close to the head, for .25 seconds).
-func (opts *ScrapeOptions) HandleScrape() error {
+func (opts *ScrapeOptions) HandleScrape(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	defer func() {
-		pidPath := filepath.Join(config.PathToCache(chain), "tmp/scrape.pid")
+		pidPath := opts.getPidFilePath()
 		_ = os.Remove(pidPath)
 	}()
 
@@ -43,9 +60,19 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		return nil
 	}
 
+	// Handle Ctr-C, docker stop and docker compose down (provided they
+	// send SIGINT)
+	sigintCtx, cancel := context.WithCancel(context.Background())
+	cleanOnQuit := func() {
+		// We only print a warning here, as the scrape.pid file will be
+		// removed by the deferred function
+		logger.Warn(sigintTrap.TrapMessage)
+	}
+	trapChannel := sigintTrap.Enable(sigintCtx, cancel, cleanOnQuit)
+	defer sigintTrap.Disable(trapChannel)
+
 	var blocks = make([]base.Blknum, 0, opts.BlockCnt)
 	var err error
-	var ok bool
 
 	// Clean the temporary files and makes sure block zero has been processed
 	if ok, err := opts.Prepare(); !ok || err != nil {
@@ -56,6 +83,11 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	// Loop until the user hits Cntl+C, until runCount runs out, or until
 	// the server tells us to stop.
 	for {
+		if sigintCtx.Err() != nil {
+			// This means the context got cancelled, i.e. we got a SIGINT.
+			return nil
+		}
+
 		// We create a new manager for each loop...we will populate it in a minute...
 		bm := BlazeManager{
 			chain: chain,
@@ -138,11 +170,11 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 		// Scrape this round. Only quit on catostrophic errors. Report and sleep otherwise.
-		if err, ok = bm.ScrapeBatch(blocks); !ok || err != nil {
+		if err = bm.ScrapeBatch(sigintCtx, blocks); err != nil || sigintCtx.Err() != nil {
 			if err != nil {
 				logger.Error(colors.BrightRed+err.Error(), colors.Off)
 			}
-			if !ok {
+			if sigintCtx.Err() != nil {
 				break
 			}
 			goto PAUSE
@@ -154,11 +186,12 @@ func (opts *ScrapeOptions) HandleScrape() error {
 
 		} else {
 			// Consilidate a chunk (if possible). Only quit on catostrophic errors. Report and sleep otherwise.
-			if err, ok = bm.Consolidate(blocks); !ok || err != nil {
+			if err = bm.Consolidate(sigintCtx, blocks); err != nil || sigintCtx.Err() != nil {
 				if err != nil {
 					logger.Error(colors.BrightRed+err.Error(), colors.Off)
 				}
-				if !ok {
+				_, critical := err.(*criticalError)
+				if critical || sigintCtx.Err() != nil {
 					break
 				}
 				goto PAUSE
@@ -178,7 +211,10 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		if bm.meta != nil { // it may be nil if the node died
 			distanceFromHead = bm.meta.ChainHeight() - bm.meta.StageHeight()
 		}
-		opts.pause(distanceFromHead)
+		opts.pause(sigintCtx, distanceFromHead)
+		if sigintCtx.Err() != nil {
+			return nil
+		}
 
 		// defensive programming - just double checking our own understanding...
 		count := file.NFilesInFolder(bm.RipeFolder())
@@ -207,7 +243,7 @@ func cleanEphemeralIndexFolders(chain string) error {
 	return file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe"})
 }
 
-func (opts *ScrapeOptions) HandleShow() error {
+func (opts *ScrapeOptions) HandleShow(rCtx *output.RenderCtx) error {
 	// Note this never returns
-	return opts.HandleScrape()
+	return opts.HandleScrape(rCtx)
 }

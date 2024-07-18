@@ -8,18 +8,22 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-var loadedPrefundNames map[base.Address]types.Name = map[base.Address]types.Name{}
-var loadedPrefundNamesMutex sync.Mutex
+var prefundNamesLoaded = false
+var prefundNames = map[base.Address]types.Name{}
+var prefundNamesMutex sync.Mutex
 
 // LoadPrefundMap loads the prefund names from file if not already loaded or from the cache
 // if it is. A pointer to the data is returned, so the caller should not modify it.
 func LoadPrefundMap(chain string, thePath string) (*map[base.Address]types.Name, error) {
-	if len(loadedPrefundNames) != 0 {
-		return &loadedPrefundNames, nil
+	if prefundNamesLoaded {
+		return &prefundNames, nil
 	}
 
-	loadedPrefundNamesMutex.Lock()
-	defer loadedPrefundNamesMutex.Unlock()
+	prefundNamesMutex.Lock()
+	defer func() {
+		prefundNamesLoaded = true
+		prefundNamesMutex.Unlock()
+	}()
 
 	if prefunds, err := LoadPrefunds(chain, thePath, nil); err != nil {
 		return nil, err
@@ -30,13 +34,12 @@ func LoadPrefundMap(chain string, thePath string) (*map[base.Address]types.Name,
 				Address:   prefund.Address,
 				Name:      "Prefund_" + fmt.Sprintf("%04d", i),
 				Source:    "Genesis",
-				Petname:   base.AddrToPetname(prefund.Address.Hex(), "-"),
 				IsPrefund: true,
 				Prefund:   prefund.Balance,
 			}
-			loadedPrefundNames[n.Address] = n
+			prefundNames[n.Address] = n
 		}
 	}
 
-	return &loadedPrefundNames, nil
+	return &prefundNames, nil
 }

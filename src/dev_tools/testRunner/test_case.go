@@ -88,7 +88,10 @@ func (t *TestCase) GetOutputPaths(mode string) (string, string, string, string) 
 
 	workFn := filepath.Join(working, t.Tool+"_"+t.Filename+".txt")
 	goldFn := filepath.Join(gold, t.Tool+"_"+t.Filename+".txt")
-	envFn := filepath.Join(gold, t.Filename+".env")
+	testRoot := func(s string) string {
+		return strings.ReplaceAll(strings.ReplaceAll(s, "sdk_tests/", ""), "api_tests/", "")
+	}
+	envFn := filepath.Join(testRoot(gold), t.Filename+".env")
 	if !file.FileExists(envFn) {
 		envFn = ""
 	}

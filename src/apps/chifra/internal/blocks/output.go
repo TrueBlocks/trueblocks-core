@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
 func RunBlocks(cmd *cobra.Command, args []string) error {
 	opts := blocksFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("blocks", &opts.Globals)
-	return opts.BlocksInternal()
+	return opts.BlocksInternal(rCtx)
 }
 
 // ServeBlocks handles the blocks command for the API. Returns an error.
 func ServeBlocks(w http.ResponseWriter, r *http.Request) error {
 	opts := blocksFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("blocks", w, &opts.Globals)
-	err := opts.BlocksInternal()
+	err := opts.BlocksInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("blocks", err, &opts.Globals)
 	return err
 }
 
 // BlocksInternal handles the internal workings of the blocks command. Returns an error.
-func (opts *BlocksOptions) BlocksInternal() error {
+func (opts *BlocksOptions) BlocksInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateBlocks(); err != nil {
 		return err
@@ -52,23 +55,23 @@ func (opts *BlocksOptions) BlocksInternal() error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else if opts.Count {
-		err = opts.HandleCount()
+		err = opts.HandleCount(rCtx)
 	} else if opts.Logs {
-		err = opts.HandleLogs()
+		err = opts.HandleLogs(rCtx)
 	} else if opts.Withdrawals {
-		err = opts.HandleWithdrawals()
+		err = opts.HandleWithdrawals(rCtx)
 	} else if opts.Traces {
-		err = opts.HandleTraces()
+		err = opts.HandleTraces(rCtx)
 	} else if opts.Uncles {
-		err = opts.HandleUncles()
+		err = opts.HandleUncles(rCtx)
 	} else if opts.Uniq {
-		err = opts.HandleUniq()
+		err = opts.HandleUniq(rCtx)
 	} else if opts.Hashes {
-		err = opts.HandleHashes()
+		err = opts.HandleHashes(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

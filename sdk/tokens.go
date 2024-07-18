@@ -14,17 +14,19 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type TokensOptions struct {
-	Addrs    []string    `json:"addrs,omitempty"`
-	BlockIds []string    `json:"blocks,omitempty"`
-	Parts    TokensParts `json:"parts,omitempty"`
-	ByAcct   bool        `json:"byAcct,omitempty"`
-	Changes  bool        `json:"changes,omitempty"`
-	NoZero   bool        `json:"noZero,omitempty"`
+	Addrs     []string          `json:"addrs,omitempty"`
+	BlockIds  []string          `json:"blocks,omitempty"`
+	Parts     TokensParts       `json:"parts,omitempty"`
+	ByAcct    bool              `json:"byAcct,omitempty"`
+	Changes   bool              `json:"changes,omitempty"`
+	NoZero    bool              `json:"noZero,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 

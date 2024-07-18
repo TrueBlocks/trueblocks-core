@@ -13,17 +13,19 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
 )
 
 type WhenOptions struct {
-	BlockIds []string    `json:"blocks,omitempty"`
-	Truncate base.Blknum `json:"truncate,omitempty"`
-	Repair   bool        `json:"repair,omitempty"`
-	Check    bool        `json:"check,omitempty"`
-	Update   bool        `json:"update,omitempty"`
-	Deep     bool        `json:"deep,omitempty"`
+	BlockIds  []string          `json:"blocks,omitempty"`
+	Truncate  base.Blknum       `json:"truncate,omitempty"`
+	Repair    bool              `json:"repair,omitempty"`
+	Check     bool              `json:"check,omitempty"`
+	Update    bool              `json:"update,omitempty"`
+	Deep      bool              `json:"deep,omitempty"`
+	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 

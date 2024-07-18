@@ -163,3 +163,35 @@ func (s *Structure) CacheIdStr() string {
 		return ""
 	}
 }
+
+func (s *Structure) HasTsTypesTypes() bool {
+	return len(s.TsTypesTypes()) > 0
+}
+
+func (s *Structure) TsTypesTypes() string {
+	theMap := map[string]bool{}
+	for _, m := range s.Members {
+		t := m.BaseType()
+		common := t == "string" || t == "any" || t == "boolean" || t == "number"
+		isParam := s.Class == "Parameter" && t == "Parameter"
+		if !common && !isParam {
+			theMap[t] = true
+		}
+	}
+	ret := []string{}
+	for key := range theMap {
+		ret = append(ret, key)
+	}
+	sort.Slice(ret, func(i, j int) bool {
+		return strings.ToLower(ret[i]) < strings.ToLower(ret[j])
+	})
+	return strings.Join(ret, ", ")
+}
+
+func (s *Structure) TsTypeMembers() string {
+	ret := []string{}
+	for _, m := range s.Members {
+		ret = append(ret, m.TsType())
+	}
+	return strings.Join(ret, "\n")
+}

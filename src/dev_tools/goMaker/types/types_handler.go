@@ -1,6 +1,8 @@
 package types
 
-import "strings"
+import (
+	"strings"
+)
 
 type Handler struct {
 	Position float64 `json:"position"`
@@ -11,6 +13,8 @@ type Handler struct {
 func (h *Handler) Test() string {
 	if h.Name == "Show" {
 		return ""
+	} else if h.Name == "Crud" {
+		return "opts.anyCrud()"
 	} else if h.Name == "Decache" {
 		return "opts.Globals." + h.Name
 	} else if strings.Contains(h.Option.DataType, "blknum") {
@@ -34,11 +38,11 @@ func (h *Handler) Test() string {
 
 func (h *Handler) Handler() string {
 	if h.Option.Route == "export" || h.Option.Route == "list" {
-		return "err = opts.Handle" + h.Name + "(monitorArray)"
+		return "err = opts.Handle" + h.Name + "(rCtx, monitorArray)"
 	} else if h.Option.Route == "chunks" {
-		return "err = opts.Handle" + h.Name + "(blockNums)"
+		return "err = opts.Handle" + h.Name + "(rCtx, blockNums)"
 	}
-	return "err = opts.Handle" + h.Name + "()"
+	return "err = opts.Handle" + h.Name + "(rCtx)"
 }
 
 func (h *Handler) executeTemplate(name, tmplCode string) string {

@@ -17,26 +17,25 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *BlocksOptions) HandleWithdrawals() error {
+func (opts *BlocksOptions) HandleWithdrawals(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 		}
 
 		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.LightBlock](apps, false); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 
 		} else if cnt == 0 {
 			errorChan <- fmt.Errorf("no blocks found for the query")
-			cancel()
+			rCtx.Cancel()
 
 		} else {
 			showProgress := opts.Globals.ShowProgress()
@@ -46,6 +45,10 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
+				if rCtx.WasCanceled() {
+					return
+				}
+
 				for app := range thisMap {
 					thisMap[app] = new(types.LightBlock)
 				}
@@ -96,5 +99,5 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

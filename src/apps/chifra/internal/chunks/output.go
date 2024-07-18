@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -25,25 +26,27 @@ import (
 // RunChunks handles the chunks command for the command line. Returns error only as per cobra.
 func RunChunks(cmd *cobra.Command, args []string) error {
 	opts := chunksFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("chunks", &opts.Globals)
-	return opts.ChunksInternal()
+	return opts.ChunksInternal(rCtx)
 }
 
 // ServeChunks handles the chunks command for the API. Returns an error.
 func ServeChunks(w http.ResponseWriter, r *http.Request) error {
 	opts := chunksFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("chunks", w, &opts.Globals)
-	err := opts.ChunksInternal()
+	err := opts.ChunksInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("chunks", err, &opts.Globals)
 	return err
 }
 
 // ChunksInternal handles the internal workings of the chunks command. Returns an error.
-func (opts *ChunksOptions) ChunksInternal() error {
+func (opts *ChunksOptions) ChunksInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateChunks(); err != nil {
 		return err
@@ -62,23 +65,23 @@ func (opts *ChunksOptions) ChunksInternal() error {
 	}
 	// EXISTING_CODE
 	if opts.Check {
-		err = opts.HandleCheck(blockNums)
+		err = opts.HandleCheck(rCtx, blockNums)
 	} else if opts.List {
-		err = opts.HandleList(blockNums)
+		err = opts.HandleList(rCtx, blockNums)
 	} else if opts.Unpin {
-		err = opts.HandleUnpin(blockNums)
+		err = opts.HandleUnpin(rCtx, blockNums)
 	} else if len(opts.Tag) > 0 {
-		err = opts.HandleTag(blockNums)
+		err = opts.HandleTag(rCtx, blockNums)
 	} else if opts.Diff {
-		err = opts.HandleDiff(blockNums)
+		err = opts.HandleDiff(rCtx, blockNums)
 	} else if opts.Pin {
-		err = opts.HandlePin(blockNums)
+		err = opts.HandlePin(rCtx, blockNums)
 	} else if opts.Publish {
-		err = opts.HandlePublish(blockNums)
+		err = opts.HandlePublish(rCtx, blockNums)
 	} else if opts.Truncate != base.NOPOSN {
-		err = opts.HandleTruncate(blockNums)
+		err = opts.HandleTruncate(rCtx, blockNums)
 	} else {
-		err = opts.HandleShow(blockNums)
+		err = opts.HandleShow(rCtx, blockNums)
 	}
 	timer.Report(msg)
 

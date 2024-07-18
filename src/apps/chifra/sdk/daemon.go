@@ -13,17 +13,18 @@ import (
 	"net/url"
 
 	daemon "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/daemon"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Daemon provides an interface to the command line chifra daemon through the SDK.
-func Daemon(w io.Writer, values url.Values) error {
+func Daemon(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	daemon.ResetOptions(sdkTestMode)
 	opts := daemon.DaemonFinishParseInternal(w, values)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)
-	err := opts.DaemonInternal()
+	err := opts.DaemonInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("daemon", err, &opts.Globals)
 
 	return err

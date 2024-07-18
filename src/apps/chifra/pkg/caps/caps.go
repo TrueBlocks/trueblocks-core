@@ -18,10 +18,11 @@ const (
 	Noop
 	NoColor
 	Chain
+	Names
 	Default = Verbose | Fmt | Version | Noop | NoColor | Chain | NoHeader | File | Output | Append
 )
 
-var AllCaps = []Capability{
+var allCaps = []Capability{
 	Default,
 	Caching,
 	Fmt,
@@ -36,6 +37,7 @@ var AllCaps = []Capability{
 	Noop,
 	NoColor,
 	Chain,
+	Names,
 }
 
 func (c Capability) Has(cap Capability) bool {
@@ -83,6 +85,8 @@ func (c Capability) Text() string {
 		return "nocolor"
 	case Chain:
 		return "chain"
+	case Names:
+		return "names"
 	case Default:
 		return "default"
 	default:
@@ -99,7 +103,7 @@ func (c Capability) HasKey(key string) bool {
 		return c.Has(Caching)
 	}
 
-	for _, cap := range AllCaps {
+	for _, cap := range allCaps {
 		if key == cap.Text() {
 			return c.Has(cap)
 		}
@@ -110,7 +114,7 @@ func (c Capability) HasKey(key string) bool {
 
 func (c Capability) String() string {
 	ret := []string{}
-	for _, cap := range AllCaps {
+	for _, cap := range allCaps {
 		if c.Has(cap) {
 			ret = append(ret, cap.Text())
 		}
@@ -119,14 +123,15 @@ func (c Capability) String() string {
 }
 
 func (c Capability) Show() string {
+	cc := c.Remove(Names) // Names has no --names flag. It's for internal use only.
 	ret := []string{}
-	for _, cap := range AllCaps {
-		if c.Has(cap) && !Default.Has(cap) {
+	for _, cap := range allCaps {
+		if cc.Has(cap) && !Default.Has(cap) {
 			ret = append(ret, cap.Text())
 		}
 	}
-	for _, cap := range AllCaps {
-		if !c.Has(cap) && Default.Has(cap) {
+	for _, cap := range allCaps {
+		if !cc.Has(cap) && Default.Has(cap) {
 			ret = append(ret, "-"+cap.Text())
 		}
 	}

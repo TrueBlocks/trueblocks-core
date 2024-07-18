@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,25 +24,27 @@ import (
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
 func RunReceipts(cmd *cobra.Command, args []string) error {
 	opts := receiptsFinishParse(args)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("receipts", &opts.Globals)
-	return opts.ReceiptsInternal()
+	return opts.ReceiptsInternal(rCtx)
 }
 
 // ServeReceipts handles the receipts command for the API. Returns an error.
 func ServeReceipts(w http.ResponseWriter, r *http.Request) error {
 	opts := receiptsFinishParseApi(w, r)
+	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("receipts", w, &opts.Globals)
-	err := opts.ReceiptsInternal()
+	err := opts.ReceiptsInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("receipts", err, &opts.Globals)
 	return err
 }
 
 // ReceiptsInternal handles the internal workings of the receipts command. Returns an error.
-func (opts *ReceiptsOptions) ReceiptsInternal() error {
+func (opts *ReceiptsOptions) ReceiptsInternal(rCtx *output.RenderCtx) error {
 	var err error
 	if err = opts.validateReceipts(); err != nil {
 		return err
@@ -52,9 +55,9 @@ func (opts *ReceiptsOptions) ReceiptsInternal() error {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if opts.Globals.Decache {
-		err = opts.HandleDecache()
+		err = opts.HandleDecache(rCtx)
 	} else {
-		err = opts.HandleShow()
+		err = opts.HandleShow(rCtx)
 	}
 	timer.Report(msg)
 

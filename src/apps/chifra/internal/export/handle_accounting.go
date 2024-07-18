@@ -5,7 +5,6 @@
 package exportPkg
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
@@ -13,12 +12,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	// TODO: BOGUS - RECONSIDER THIS
 	opts.Articulate = true
 
@@ -34,7 +32,6 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		visitAppearance := func(app *types.Appearance) error {
 			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
@@ -99,18 +96,8 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 
 	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
-		"testMode":   testMode,
 		"export":     true,
 	}
 
-	if opts.Globals.Verbose || opts.Globals.Format == "json" {
-		parts := names.Custom | names.Prefund | names.Regular
-		namesMap, err := names.LoadNamesMap(chain, parts, nil)
-		if err != nil {
-			return err
-		}
-		extraOpts["namesMap"] = namesMap
-	}
-
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

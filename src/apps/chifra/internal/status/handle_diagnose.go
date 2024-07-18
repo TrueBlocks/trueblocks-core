@@ -1,17 +1,14 @@
 package statusPkg
 
 import (
-	"context"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *StatusOptions) HandleDiagnose() error {
+func (opts *StatusOptions) HandleDiagnose(rCtx *output.RenderCtx) error {
 	testMode := opts.Globals.TestMode
 
-	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		s, err := opts.GetStatus(opts.Diagnose)
 		if err != nil {
@@ -27,8 +24,5 @@ func (opts *StatusOptions) HandleDiagnose() error {
 		modelChan <- s
 	}
 
-	extraOpts := map[string]any{
-		"testMode": testMode,
-	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

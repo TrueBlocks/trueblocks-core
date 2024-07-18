@@ -16,24 +16,26 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type listOptionsInternal struct {
-	Addrs       []string     `json:"addrs,omitempty"`
-	Count       bool         `json:"count,omitempty"`
-	NoZero      bool         `json:"noZero,omitempty"`
-	Bounds      bool         `json:"bounds,omitempty"`
-	Unripe      bool         `json:"unripe,omitempty"`
-	Silent      bool         `json:"silent,omitempty"`
-	FirstRecord uint64       `json:"firstRecord,omitempty"`
-	MaxRecords  uint64       `json:"maxRecords,omitempty"`
-	Reversed    bool         `json:"reversed,omitempty"`
-	Publisher   base.Address `json:"publisher,omitempty"`
-	FirstBlock  base.Blknum  `json:"firstBlock,omitempty"`
-	LastBlock   base.Blknum  `json:"lastBlock,omitempty"`
+	Addrs       []string          `json:"addrs,omitempty"`
+	Count       bool              `json:"count,omitempty"`
+	NoZero      bool              `json:"noZero,omitempty"`
+	Bounds      bool              `json:"bounds,omitempty"`
+	Unripe      bool              `json:"unripe,omitempty"`
+	Silent      bool              `json:"silent,omitempty"`
+	FirstRecord uint64            `json:"firstRecord,omitempty"`
+	MaxRecords  uint64            `json:"maxRecords,omitempty"`
+	Reversed    bool              `json:"reversed,omitempty"`
+	Publisher   base.Address      `json:"publisher,omitempty"`
+	FirstBlock  base.Blknum       `json:"firstBlock,omitempty"`
+	LastBlock   base.Blknum       `json:"lastBlock,omitempty"`
+	RenderCtx   *output.RenderCtx `json:"-"`
 	Globals
 }
 
@@ -50,7 +52,10 @@ func (opts *listOptionsInternal) ListBytes(w io.Writer) error {
 		return fmt.Errorf("error converting list struct to URL values: %v", err)
 	}
 
-	return list.List(w, values)
+	if opts.RenderCtx == nil {
+		opts.RenderCtx = output.NewRenderContext()
+	}
+	return list.List(opts.RenderCtx, w, values)
 }
 
 // listParseFunc handles special cases such as structs and enums (if any).
@@ -119,6 +124,7 @@ func (opts *ListOptions) toInternal() *listOptionsInternal {
 		Publisher:   opts.Publisher,
 		FirstBlock:  opts.FirstBlock,
 		LastBlock:   opts.LastBlock,
+		RenderCtx:   opts.RenderCtx,
 		Globals:     opts.Globals,
 	}
 }

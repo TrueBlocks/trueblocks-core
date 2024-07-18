@@ -13,17 +13,22 @@ import (
 	"net/url"
 
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
 // Names provides an interface to the command line chifra names through the SDK.
-func Names(w io.Writer, values url.Values) error {
+func Names(rCtx *output.RenderCtx, w io.Writer, values url.Values) error {
 	names.ResetOptions(sdkTestMode)
 	opts := names.NamesFinishParseInternal(w, values)
 	// EXISTING_CODE
+	var err1 error
+	if err1 = opts.LoadCrudDataIfNeeded(nil); err1 != nil {
+		return err1
+	}
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("names", w, &opts.Globals)
-	err := opts.NamesInternal()
+	err := opts.NamesInternal(rCtx)
 	outputHelpers.CloseJsonWriterIfNeededApi("names", err, &opts.Globals)
 
 	return err

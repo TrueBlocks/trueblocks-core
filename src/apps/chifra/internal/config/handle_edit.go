@@ -5,10 +5,11 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ConfigOptions) HandleEdit() error {
+func (opts *ConfigOptions) HandleEdit(rCtx *output.RenderCtx) error {
 	if opts.Globals.TestMode {
 		logger.Info("Can not process this command in test mode.")
 		return nil

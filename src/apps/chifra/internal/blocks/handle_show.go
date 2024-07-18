@@ -20,26 +20,25 @@ import (
 
 var errMutex sync.Mutex
 
-func (opts *BlocksOptions) HandleShow() error {
+func (opts *BlocksOptions) HandleShow(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
-	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 		}
 
 		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.Block](apps, false); err != nil {
 			errorChan <- err
-			cancel()
+			rCtx.Cancel()
 
 		} else if cnt == 0 {
 			errorChan <- fmt.Errorf("no blocks found for the query")
-			cancel()
+			rCtx.Cancel()
 
 		} else {
 			showProgress := opts.Globals.ShowProgress()
@@ -49,6 +48,10 @@ func (opts *BlocksOptions) HandleShow() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
+				if rCtx.WasCanceled() {
+					return
+				}
+
 				for app := range thisMap {
 					thisMap[app] = new(types.Block)
 				}
@@ -98,10 +101,9 @@ func (opts *BlocksOptions) HandleShow() error {
 	}
 
 	extraOpts := map[string]any{
-		"hashes":     opts.Hashes,
 		"uncles":     opts.Uncles,
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

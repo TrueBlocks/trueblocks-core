@@ -214,6 +214,13 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 					}
 					logModel["articulatedLog"] = articulatedLog
 				}
+				if name, loaded, found := nameAddress(extraOpts, log.Address); found {
+					logModel["addressName"] = name.Name
+					order = append(order, "addressName")
+				} else if loaded && format != "json" {
+					model["addressName"] = ""
+					order = append(order, "addressName")
+				}
 				logs = append(logs, logModel)
 			}
 			receiptModel["logs"] = logs
@@ -282,6 +289,23 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 		order = append(order, "ether")
 	}
 
+	items := []namer{
+		{addr: s.From, name: "fromName"},
+		{addr: s.To, name: "toName"},
+	}
+	for _, item := range items {
+		if name, loaded, found := nameAddress(extraOpts, item.addr); found {
+			model[item.name] = name.Name
+			order = append(order, item.name)
+		} else if loaded && format != "json" {
+			model[item.name] = ""
+			order = append(order, item.name)
+		} else if len(name.Name) > 0 {
+			model[item.name] = name.Name
+			order = append(order, item.name)
+		}
+	}
+	order = reorderOrdering(order)
 	// EXISTING_CODE
 
 	return Model{
