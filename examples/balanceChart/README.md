@@ -11,7 +11,7 @@ quarter, year), and plots the results as a grouped bar chart.
 Ensure you have the following installed and running:
 
 - Go 1.22 or higher
-- TrueBlocks Core version 3.0.0 or later
+- TrueBlocks Core 3.0.0 or higher
 
 ## Installation
 

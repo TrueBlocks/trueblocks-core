@@ -2,14 +2,12 @@
 
 ## Overview
 
-This is a purposefully simple example intended to get your started.
+This is a purposefully simple example intended to get your started with the Streaming SDK.
 
-The example application retrieves blocks at a monthly interval using the TrueBlocks SDK.
-The application then prints the block numbers and their corresponding dates and quits. Simple.
-
-This version does not use the streaming SDK. See the `simpleStreaming` example for a streaming version
-which is about twice as fast. While slightly more complicated, we recommend you use streaming
-whenever possible.
+The example application retrieves blocks at a monthly interval and sends them through a GoLang
+channel to the calling application. The data is identical to that produced by the `simple`
+example, but is about twice as fast. While slightly more complicated, we recommend you
+use streaming whenever possible.
 
 ## Prerequisites
 
@@ -29,7 +27,7 @@ git clone https://github.com/TrueBlocks/trueblocks-core.git
 Build TrueBlocks Core by following the ([installation instructions](https://trueblocks.io/docs/install/install-core/)), and then navigate to the example directory:
 
 ```bash
-cd ../examples/simple
+cd ../examples/simpleStreaming
 ```
 
 ## Usage
