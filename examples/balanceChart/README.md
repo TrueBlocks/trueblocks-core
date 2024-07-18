@@ -53,7 +53,7 @@ go run . 15 30000 quarterly
 
 The above will save the chart in the local folder as **ether_balances.png**. It should look something like this.
 
-![Ether Balances Chart](./ether_balances.png)
+![Ether Balances Chart](./ether_balances_ref.png)
 
 ## Code Structure
 

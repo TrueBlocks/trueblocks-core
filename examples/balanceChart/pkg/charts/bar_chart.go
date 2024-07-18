@@ -93,7 +93,7 @@ func BarChart(names []types.Name, balances []types.State, labels Labels, fileNam
 	}
 
 	// Save the plot to a PNG file with added padding
-	const width, height = 12 * vg.Inch, 6 * vg.Inch
+	const width, height = 10 * vg.Inch, 6 * vg.Inch
 	img := vgimg.New(width+vg.Points(10), height)
 	dc := draw.New(img)
 	dc = draw.Crop(dc, 0, -vg.Points(10), 0, 0)
