@@ -4,6 +4,7 @@ module github.com/TrueBlocks/trueblocks-core/examples/balanceChart
 go 1.22
 
 require (
+	github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240718044519-2c9304344dd6
 	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240718044519-2c9304344dd6
 	github.com/bykof/gostradamus v1.0.4
 	gonum.org/v1/plot v0.0.0-20190515093506-e2840ee46a6b
@@ -11,7 +12,6 @@ require (
 
 require (
 	github.com/Microsoft/go-winio v0.6.1 // indirect
-	github.com/TrueBlocks/trueblocks-core/sdk v0.0.0-20240605222744-1cbeec2938e0 // indirect
 	github.com/ajstarks/svgo v0.0.0-20180226025133-644b8db467af // indirect
 	github.com/alecthomas/participle/v2 v2.0.0 // indirect
 	github.com/benbjohnson/clock v1.3.0 // indirect
