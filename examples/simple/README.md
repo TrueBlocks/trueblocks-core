@@ -7,10 +7,6 @@ This is a purposefully simple example intended to get your started.
 The example application retrieves blocks at a monthly interval using the TrueBlocks SDK.
 The application then prints the block numbers and their corresponding dates and quits. Simple.
 
-This version does not use the streaming SDK. See the `simpleStreaming` example for a streaming version
-which is about twice as fast. While slightly more complicated, we recommend you use streaming
-whenever possible.
-
 ## Prerequisites
 
 Ensure you have the following installed and running:
