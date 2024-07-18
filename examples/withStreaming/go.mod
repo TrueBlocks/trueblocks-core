@@ -4,7 +4,7 @@ module github.com/TrueBlocks/trueblocks-core/examples/withStreaming
 go 1.22
 
 require (
-	github.com/TrueBlocks/trueblocks-core/sdk v0.0.0-20240605222744-1cbeec2938e0
+	github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240718044519-2c9304344dd6
 	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240605222744-1cbeec2938e0
 	github.com/schollz/progressbar/v3 v3.14.4
 )
@@ -70,7 +70,6 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.9.0 // indirect
-	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
 	github.com/supranational/blst v0.3.11 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
