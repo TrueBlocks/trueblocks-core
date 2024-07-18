@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/sdk"
+	"github.com/TrueBlocks/trueblocks-core/sdk/v3"
 )
 
 // SaveToFile writes the content of the slice to a file specified by fn.

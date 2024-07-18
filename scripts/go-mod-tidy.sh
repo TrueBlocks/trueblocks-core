@@ -14,6 +14,6 @@ cd $SCRIPT_DIR/..
 #------------------------------------------------
 find . -type f -name 'go.mod' | while read -r modfile; do
     moddir=$(dirname "$modfile")
-    echo "Tidying $moddir"
+    echo "    Tidying $moddir"
     cd "$moddir" ; go mod tidy ; cd - >/dev/null
 done

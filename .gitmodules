@@ -1,3 +1,6 @@
 [submodule "tests"]
 	path = tests
 	url = https://github.com/TrueBlocks/trueblocks-tests
+[submodule "docs"]
+	path = docs
+	url = https://github.com/TrueBlocks/trueblocks-docs.git
