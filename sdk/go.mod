@@ -3,7 +3,7 @@ module github.com/TrueBlocks/trueblocks-core/sdk/v3
 // Go Version
 go 1.22
 
-require github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240605222744-1cbeec2938e0
+require github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240718044519-2c9304344dd6
 
 require (
 	github.com/BurntSushi/toml v1.3.2 // indirect
@@ -56,6 +56,7 @@ require (
 	github.com/multiformats/go-varint v0.0.7 // indirect
 	github.com/panjf2000/ants/v2 v2.4.8 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
+	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
