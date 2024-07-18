@@ -66,7 +66,7 @@ func (opts *ChunksOptions) HandleBlooms(rCtx *output.RenderCtx, blockNums []base
 		}
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 func displayBloom(bl *index.Bloom, verbose int) {

@@ -145,7 +145,7 @@ func (opts *ExportOptions) HandleTraces(rCtx *output.RenderCtx, monitorArray []m
 		"export":     true,
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 /*

@@ -52,7 +52,7 @@ func (opts *ExportOptions) HandleAppearances(rCtx *output.RenderCtx, monitorArra
 		"export": true,
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func (opts *ExportOptions) IsMax(cnt uint64) bool {

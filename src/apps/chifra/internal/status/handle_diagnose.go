@@ -24,5 +24,5 @@ func (opts *StatusOptions) HandleDiagnose(rCtx *output.RenderCtx) error {
 		modelChan <- s
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

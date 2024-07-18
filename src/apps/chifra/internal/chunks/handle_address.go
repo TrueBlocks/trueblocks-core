@@ -99,5 +99,5 @@ func (opts *ChunksOptions) HandleAddresses(rCtx *output.RenderCtx, blockNums []b
 		}
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

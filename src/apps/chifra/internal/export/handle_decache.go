@@ -32,5 +32,5 @@ func (opts *ExportOptions) HandleDecache(rCtx *output.RenderCtx, monitorArray []
 		}
 	}
 	opts.Globals.NoHeader = true
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

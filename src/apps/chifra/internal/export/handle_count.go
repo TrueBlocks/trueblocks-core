@@ -58,7 +58,7 @@ func (opts *ExportOptions) HandleCount(rCtx *output.RenderCtx, monitorArray []mo
 		}
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 const maxTestingBlock = 17000000

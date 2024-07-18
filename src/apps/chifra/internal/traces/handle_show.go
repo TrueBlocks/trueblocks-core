@@ -114,5 +114,5 @@ func (opts *TracesOptions) HandleShow(rCtx *output.RenderCtx) error {
 		"articulate": opts.Articulate,
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

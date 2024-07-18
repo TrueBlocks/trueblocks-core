@@ -20,6 +20,7 @@ func main() {
 		Addrs:     []string{"0x1f98431c8ad98523631ae4a59f267346ea31f984"}, // Uniswap V3 Factory
 		RenderCtx: output.NewRenderContext(),
 	}
+	opts.Globals.Cache = true // Write to the cache
 
 	go func() {
 		cnt := 0
@@ -33,7 +34,7 @@ func main() {
 		fmt.Println("Rendering txs...")
 	}()
 
-	// The Uniswap V3 Factory takes a very long time
+	// The Uniswap V3 Factory takes a very long time but will be cancled in cancelAfter seconds
 	txs, _, err := opts.Export()
 	if err != nil {
 		fmt.Println(err)

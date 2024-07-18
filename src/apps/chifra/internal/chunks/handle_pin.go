@@ -163,7 +163,7 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 		modelChan <- &report
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 // matches returns true if the Result has both local and remote hashes for both the index and the bloom and they match

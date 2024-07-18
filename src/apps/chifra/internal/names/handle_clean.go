@@ -58,7 +58,8 @@ func (opts *NamesOptions) HandleClean(rCtx *output.RenderCtx) error {
 				Msg: message,
 			}
 		}
-		_ = output.StreamMany(context.Background(), fetchData, opts.Globals.OutputOpts())
+		rCtx := output.NewRenderContext()
+		_ = output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 	}
 	return err
 }

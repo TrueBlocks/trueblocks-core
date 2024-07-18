@@ -40,5 +40,5 @@ func (opts *ConfigOptions) HandlePaths(rCtx *output.RenderCtx) error {
 	extraOpts := map[string]any{
 		"configPaths": true,
 	}
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

@@ -51,7 +51,7 @@ func (opts *ChunksOptions) HandleDiff(rCtx *output.RenderCtx, blockNums []base.B
 		}
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 func (opts *ChunksOptions) handleDiff(chain, path string) (bool, error) {

@@ -19,7 +19,7 @@ func (opts *SlurpOptions) HandleCount(rCtx *output.RenderCtx) error {
 		}
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 // const maxTestingBlock = 17000000

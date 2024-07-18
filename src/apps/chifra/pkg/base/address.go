@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/ethereum/go-ethereum/common"
+	"golang.org/x/crypto/sha3"
 )
 
 // Address is a wrapper for go-ethereum's Address type that always
@@ -175,4 +176,24 @@ var FAKE_ETH_ADDRESS = HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 // GetTestPublisher does not get customized per chain. We can only test against mainnet currently
 func GetTestPublisher() Address {
 	return HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b")
+}
+
+// CheckSum returns the checksum address of the given address. We might want this, for example,
+// to pick up ABIs and source code from Sourcify which requires checksum addresses.
+func (a Address) CheckSum() string {
+	str := a.Hex()[2:]
+	str = strings.ToLower(str)
+	hash := sha3.NewLegacyKeccak256()
+	hash.Write([]byte(str))
+	hashSum := hash.Sum(nil)
+	hashStr := hex.EncodeToString(hashSum)
+	result := "0x"
+	for i := 0; i < len(str); i++ {
+		if hashStr[i] >= '8' {
+			result += strings.ToUpper(string(str[i]))
+		} else {
+			result += string(str[i])
+		}
+	}
+	return result
 }

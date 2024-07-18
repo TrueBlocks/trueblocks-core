@@ -57,5 +57,5 @@ func (opts *TransactionsOptions) HandleUniq(rCtx *output.RenderCtx) (err error) 
 	extraOpts := map[string]any{
 		"uniq": true,
 	}
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

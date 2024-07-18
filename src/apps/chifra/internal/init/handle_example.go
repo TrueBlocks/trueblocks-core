@@ -33,7 +33,7 @@ func (opts *InitOptions) HandleExample(rCtx *output.RenderCtx) error {
 
 	// tidy
 	cmd := "cd " + exampleDir + " && "
-	cmd += "go get github.com/btcsuite/btcd@v0.22.0-beta && "
+	cmd += "go get github.com/btcsuite/btcd && "
 	cmd += "go mod tidy"
 	utils.System(cmd)
 

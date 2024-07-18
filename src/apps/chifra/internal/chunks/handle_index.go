@@ -69,5 +69,5 @@ func (opts *ChunksOptions) HandleIndex(rCtx *output.RenderCtx, blockNums []base.
 		}
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

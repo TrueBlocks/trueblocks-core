@@ -39,7 +39,7 @@ func (opts *ChunksOptions) HandleIndexBelongs(rCtx *output.RenderCtx, blockNums 
 		}
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 // handleResolvedRecords is a helper function for HandleIndexBelongs and verbose versions of

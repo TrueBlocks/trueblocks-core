@@ -105,7 +105,12 @@ func logErrors(errsToReport []string) {
 type fetchDataFunc func(modelChan chan types.Modeler, errorChan chan error)
 
 // StreamMany outputs models as they are acquired
-func StreamMany(ctx context.Context, fetchData fetchDataFunc, options OutputOptions) error {
+func StreamMany(rCtx *RenderCtx, fetchData fetchDataFunc, options OutputOptions) error {
+	if rCtx.ModelChan != nil {
+		fetchData(rCtx.ModelChan, rCtx.ErrorChan)
+		return nil
+	}
+
 	errsToReport := make([]string, 0)
 
 	modelChan := make(chan types.Modeler)
@@ -175,8 +180,8 @@ func StreamMany(ctx context.Context, fetchData fetchDataFunc, options OutputOpti
 			}
 			errsMutex.Unlock()
 
-		case <-ctx.Done():
-			err = ctx.Err()
+		case <-rCtx.Ctx.Done():
+			err = rCtx.Ctx.Err()
 			if err == context.Canceled {
 				return nil
 			}

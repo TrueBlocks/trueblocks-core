@@ -44,7 +44,7 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 			}
 		}
 
-		return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+		return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 
 	} else {
 		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
@@ -65,6 +65,6 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 			modelChan <- &s
 		}
 
-		return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+		return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 	}
 }

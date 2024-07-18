@@ -62,7 +62,7 @@ func (opts *ListOptions) HandleShow(rCtx *output.RenderCtx, monitorArray []monit
 		}
 	}
 
-	return output.StreamMany(rCtx.Ctx, fetchData, opts.Globals.OutputOpts())
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 func (opts *ListOptions) IsMax(cnt uint64) bool {
