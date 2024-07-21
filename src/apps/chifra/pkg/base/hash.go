@@ -13,7 +13,7 @@ import (
 // Hash is a wrapper for go-ethereum's Hash type that always
 // return lower case hex.
 type Hash struct {
-	common.Hash
+	common.Hash `json:"hash"`
 }
 
 // Hex returns string representation of an hash. Unlike addresses, we do not shorten zero hashes.
