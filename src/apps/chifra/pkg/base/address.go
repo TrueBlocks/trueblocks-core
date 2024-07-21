@@ -15,7 +15,7 @@ import (
 // Address is a wrapper for go-ethereum's Address type that always
 // return lower case hex.
 type Address struct {
-	common.Address
+	common.Address `json:"address"`
 }
 
 // A few well-known address. ZeroAddr, of course, is 0x0. NotAMonitor is a marker to signify the end
