@@ -70,7 +70,7 @@ Get more help on any sub-command with `chifra <cmd> --help`. Full documentation 
 
 ## Chifra Serve
 
-One of `chifra's` command line tools is called `serve`. This tool provides a simple API mimicing the command line. It is intended to be used only for single user enviroments.
+One of `chifra's` command line tools is called `serve`. This tool provides a simple API mimicking the command line. It is intended to be used only for single user environments.
 
 To start the server, run:  
 
