@@ -101,7 +101,7 @@ func (walker *CacheWalker) WalkBloomFilters(blockNums []base.Blknum) error {
 }
 
 // TODO: This should accept unresolved block ranges, not lists of block numbers
-// This routine accepts the 'resolved' block numbers. If, instead, it it received the unresolved block ranges
+// This routine accepts the 'resolved' block numbers. If, instead, it received the unresolved block ranges
 // from the command line, it would be much more efficient. Using resolved block numbers means we have to
 // provide a block range that is fine-grained enough to hit on every file inside the range. For example, if
 // there are 100 files in the range 100000-200000, we need to create block numbers that cover every
