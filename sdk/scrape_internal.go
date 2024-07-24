@@ -9,8 +9,15 @@
 package sdk
 
 import (
-// EXISTING_CODE
-// EXISTING_CODE
+	// EXISTING_CODE
+	"encoding/json"
+	"fmt"
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	scrape "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 type scrapeOptionsInternal struct {
