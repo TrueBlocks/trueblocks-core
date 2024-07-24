@@ -810,6 +810,9 @@ func (op *Option) executeTemplate(name, tmplCode string) string {
 }
 
 func (op *Option) SdkIsPublic() bool {
+	if op.IsConfig() {
+		return false
+	}
 	return (len(op.ReturnType) == 0 || (op.IsPositional() && !op.IsMode())) && !op.IsDeprecated()
 }
 
