@@ -162,7 +162,11 @@ func (c *Command) Clean() {
 	for index, op := range cleaned {
 		if op.IsDeprecated() {
 			parts := strings.Split(op.Attributes, "=")
-			msg := "deprecated, use --" + parts[1] + " instead"
+			msg := "deprecated, use "
+			if !strings.Contains(parts[1], "chifra") {
+				msg += "--"
+			}
+			msg += parts[1] + " instead"
 			if len(parts[1]) == 0 {
 				msg = "deprecated, there is no replacement"
 			}
@@ -1040,16 +1044,32 @@ func (op *Option) FindDeprecator() *Option {
 		}
 	}
 
+	if strings.Contains(parts[1], "chifra") {
+		op := Option{
+			LongName: parts[1],
+		}
+		return &op
+	}
+
 	logger.Fatal(fmt.Sprintf("Deprecator (%s) not found for: %s", parts[1], op.LongName))
 	return nil
 }
 
+func (op *Option) DeprecatorRep() string {
+	dep := op.Deprecator()
+	if strings.Contains(dep, "chifra") {
+		return dep
+	} else {
+		return "--" + dep
+	}
+}
+
 func (op *Option) Deprecator() string {
-	ret := op.FindDeprecator()
-	if ret == nil {
+	dep := op.FindDeprecator()
+	if dep == nil {
 		return ""
 	}
-	return ret.LongName
+	return dep.LongName
 }
 
 func (op *Option) DeprecatorIsDefault() string {
@@ -1067,12 +1087,17 @@ func (op *Option) DeprecatedNotDefault() string {
 	if op.IsArray() {
 		return "len(opts." + op.GoName + ") > 0"
 	}
+	if op.IsBool() {
+		return "opts." + op.GoName
+	}
 	return "opts." + op.GoName + " != \"" + op.DefVal + "\""
 }
 
 func (op *Option) Clear() string {
 	if op.IsArray() {
 		return "[]string{}"
+	} else if op.IsBool() {
+		return "false"
 	}
 	return "\"\""
 }
@@ -1083,13 +1108,22 @@ func (c *Command) DeprecatedTransfer() string {
 		if op.IsDeprecated() {
 			if op.FindDeprecator() != nil {
 				tmplName := "deprecatedTransfer"
-				tmpl := `	// Deprecated, but still supported
+				tmpl := `	// Deprecated...
 	if {{.DeprecatedNotDefault}} && {{.DeprecatorIsDefault}} {
-		logger.Warn("The --{{.LongName}} flag is deprecated. Please use --{{.Deprecator}} instead.")
+		logger.Warn("The --{{.LongName}} flag is deprecated. Please use {{.DeprecatorRep}} instead.")
 		opts.{{firstUpper .Deprecator}} = opts.{{.GoName}}
 		opts.{{.GoName}} = {{.Clear}}
 	}
 `
+				if strings.Contains(op.Deprecator(), "chifra") {
+					tmplName = "deprecatedTransfer2"
+					tmpl = `	// Deprecated...
+	if {{.DeprecatedNotDefault}} {
+		logger.Warn("The --{{.LongName}} flag is deprecated. Please use {{.DeprecatorRep}} instead.")
+		opts.{{.GoName}} = {{.Clear}}
+	}
+`
+				}
 				ret = append(ret, op.executeTemplate(tmplName, tmpl))
 			}
 		}
