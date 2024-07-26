@@ -73,7 +73,7 @@ func LoadCodebase() (CodeBase, error) {
 
 func checkRootDirectory() bool {
 	cwd, _ := os.Getwd()
-	test := path.Join(cwd, "src/apps/chifra")
+	test := path.Join(cwd, "src/dev_tools/goMaker/templates/")
 	_, err := os.Stat(test)
 	return err == nil
 }

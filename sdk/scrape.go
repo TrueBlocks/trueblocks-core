@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -37,4 +38,34 @@ func (opts ScrapeOptions) String() string {
 
 // No enums
 // EXISTING_CODE
+func (opts *ScrapeOptions) Scrape() error {
+	in := opts.toInternal()
+	buffer := bytes.Buffer{}
+	return in.ScrapeBytes(&buffer)
+}
+
+func (opts *ScrapeOptions) toInternal() *scrapeOptionsInternal {
+	return &scrapeOptionsInternal{
+		BlockCnt:  opts.BlockCnt,
+		Sleep:     opts.Sleep,
+		Touch:     opts.Touch,
+		RunCount:  opts.RunCount,
+		Publisher: opts.Publisher,
+		DryRun:    opts.DryRun,
+		Notify:    opts.Notify,
+	}
+}
+
+// // ScrapeBytes implements the chifra slurp command for the SDK.
+// func (opts *scrapeOptionsInternal) ScrapeBytes(w io.Writer) error {
+// 	values, err := structToValues(*opts)
+// 	if err != nil {
+// 		return fmt.Errorf("error converting scrape struct to URL values: %v", err)
+// 	}
+// 	if opts.RenderCtx == nil {
+// 		opts.RenderCtx = output.NewRenderContext()
+// 	}
+// 	return scrape.Scrape(opts.RenderCtx, w, values)
+// }
+
 // EXISTING_CODE
