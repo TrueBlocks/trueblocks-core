@@ -20,7 +20,7 @@ func (item *CodeBase) ProcessFile(sourceIn, group, reason string) error {
 	}
 
 	tmpl := getGeneratorContents(fullPath, group, reason)
-	dest := convertToDestPath(fullPath, "", "", "", "")
+	dest := convertToDestPath(fullPath, "", "", group, reason)
 
 	tmplName := fullPath + group + reason
 	result := item.executeTemplate(tmplName, tmpl)

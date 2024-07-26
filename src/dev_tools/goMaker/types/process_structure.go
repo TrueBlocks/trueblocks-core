@@ -3,7 +3,6 @@ package types
 import (
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
 )
@@ -21,8 +20,7 @@ func (item *Structure) ProcessFile(sourceIn, group, reason string) error {
 	}
 
 	tmpl := getGeneratorContents(fullPath, group, reason)
-	dest := convertToDestPath(fullPath, "", item.Name(), "", "")
-	dest = strings.ReplaceAll(dest, "/src/apps/chifra/pkg/types/", "/src/apps/chifra/pkg/types/types_")
+	dest := convertToDestPath(fullPath, "", item.Name(), group, reason)
 
 	tmplName := fullPath + group + reason
 	result := item.executeTemplate(tmplName, tmpl)

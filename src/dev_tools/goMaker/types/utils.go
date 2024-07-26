@@ -79,6 +79,8 @@ func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) strin
 	}
 	dest = strings.ReplaceAll(dest, "_", "/")
 	dest = strings.ReplaceAll(dest, "+", "_")
+	// Hack alert
+	dest = strings.ReplaceAll(dest, "/src/apps/chifra/pkg/types/", "/src/apps/chifra/pkg/types/types_")
 	return strings.ReplaceAll(dest, "//", "/")
 }
 
