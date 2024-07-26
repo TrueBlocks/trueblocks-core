@@ -12,7 +12,7 @@ import (
 // writing the result to the destination.
 func (c *Command) ProcessFile(source string) error {
 	cwd, _ := os.Getwd()
-	source = filepath.Join(cwd, templateFolder, source)
+	source = filepath.Join(cwd, GetTemplatePath(), source)
 	if ok, err := shouldProcess(source, c.Route); err != nil {
 		return err
 	} else if !ok {
@@ -20,7 +20,8 @@ func (c *Command) ProcessFile(source string) error {
 	}
 
 	tmpl := file.AsciiFileToString(source)
+	dest := convertToDestPath(source, c.Route, "", "", "")
 	result := c.executeTemplate(source, tmpl)
-	_, err := codeWriter.WriteCode(convertToDestPath(source, c.Route, "", "", ""), result)
+	_, err := codeWriter.WriteCode(dest, result)
 	return err
 }

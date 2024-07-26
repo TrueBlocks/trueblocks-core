@@ -46,7 +46,7 @@ func shouldProcess(source, tag string) (bool, error) {
 }
 
 func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) string {
-	dest := strings.ReplaceAll(source, templateFolder, "")
+	dest := strings.ReplaceAll(source, GetTemplatePath(), "")
 	dest = strings.ReplaceAll(dest, ".tmpl", "")
 	dest = strings.ReplaceAll(dest, "_route_", "/"+routeTag+"/")
 	dest = strings.ReplaceAll(dest, "route+internal", routeTag+"+internal")
@@ -69,6 +69,10 @@ func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) strin
 }
 
 var templateFolder = "src/dev_tools/goMaker/templates"
+
+func GetTemplatePath() string {
+	return templateFolder
+}
 
 func LowerNoSpaces(s string) string {
 	return strings.ToLower(strings.ReplaceAll(s, " ", ""))
