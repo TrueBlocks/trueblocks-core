@@ -2,6 +2,10 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
+## Working
+
+- better auto-gen
+
 ## v3.1.2-release - Streaming SDK - Huntingdon (2024/07/18)
 
 **Summary**
