@@ -15,23 +15,23 @@ type Generator struct {
 
 // Generate generates the code for the codebase using the given templates.
 func (cb *CodeBase) Generate(generators []Generator) {
-	for _, gen := range generators {
-		switch gen.Against {
+	for _, generator := range generators {
+		switch generator.Against {
 		case "codebase":
-			for _, source := range gen.Templates {
+			for _, source := range generator.Templates {
 				if err := cb.ProcessFile(source); err != nil {
 					logger.Fatal(err)
 				}
 			}
 		case "groups":
-			for _, source := range gen.Templates {
+			for _, source := range generator.Templates {
 				for _, group := range cb.GroupList("") {
 					if err := cb.ProcessGroupFile(source, "readme", group.GroupName()); err != nil {
 						logger.Fatal(err)
 					}
 				}
 			}
-			for _, source := range gen.Templates {
+			for _, source := range generator.Templates {
 				for _, group := range cb.GroupList("") {
 					if err := cb.ProcessGroupFile(source, "model", group.GroupName()); err != nil {
 						logger.Fatal(err)
@@ -39,7 +39,7 @@ func (cb *CodeBase) Generate(generators []Generator) {
 				}
 			}
 		case "routes":
-			for _, source := range gen.Templates {
+			for _, source := range generator.Templates {
 				for _, c := range cb.Commands {
 					if err := c.ProcessFile(source); err != nil {
 						logger.Fatal(err)
@@ -47,7 +47,7 @@ func (cb *CodeBase) Generate(generators []Generator) {
 				}
 			}
 		case "types":
-			for _, source := range gen.Templates {
+			for _, source := range generator.Templates {
 				for _, s := range cb.Structures {
 					sort.Slice(s.Members, func(i, j int) bool {
 						return s.Members[i].SortName() < s.Members[j].SortName()
