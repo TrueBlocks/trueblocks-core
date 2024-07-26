@@ -95,6 +95,23 @@ func setRootFolder(folder string) {
 	rootFolder = folder
 }
 
+func getTemplatesPath() (string, error) {
+	paths := []string{
+		"src/dev_tools/goMaker/",
+		"code_gen/",
+	}
+
+	for _, path := range paths {
+		thePath := filepath.Join(path, "templates/")
+		if file.FolderExists(thePath) {
+			setRootFolder(path)
+			return thePath, nil
+		}
+	}
+
+	return "", fmt.Errorf("could not find the templates directory")
+}
+
 func GetTemplatePath() string {
 	return filepath.Join(getRootFolder(), "templates/")
 }

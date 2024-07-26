@@ -1,6 +1,7 @@
 package types
 
 import (
+	"fmt"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -21,7 +22,11 @@ func (cb *CodeBase) Generate() {
 	generatedPath := GetGeneratedPath()
 	file.EstablishFolder(generatedPath)
 
-	generators := getGenerators()
+	generators, err := getGenerators()
+	if err != nil {
+		logger.Fatal(err)
+	}
+
 	for _, generator := range generators {
 		switch generator.Against {
 		case "codebase":
@@ -72,15 +77,29 @@ func (cb *CodeBase) Generate() {
 }
 
 // getGenerators returns the generators we will be using
-func getGenerators() []Generator {
+func getGenerators() ([]Generator, error) {
+	theMap := make(map[string][]string)
 	vFunc := func(file string, vP any) (bool, error) {
 		if strings.HasSuffix(file, ".tmpl") {
-			logger.Info("Found template file: ", file)
+			parts := strings.Split(file, "_")
+			theMap[parts[0]] = append(theMap[parts[0]], file)
 		}
 		return true, nil
 	}
-	walk.ForEveryFileInFolder(filepath.Join(GetTemplatePath(), "generators/"), vFunc, nil)
-	return cbTemplates
+
+	thePath, err := getTemplatesPath()
+	if err != nil {
+		return []Generator{}, err
+	}
+	walk.ForEveryFileInFolder(filepath.Join(thePath, "generators/"), vFunc, nil)
+	for k, v := range theMap {
+		fmt.Println("key:", k)
+		for _, val := range v {
+			fmt.Println("\tval:", val)
+		}
+	}
+
+	return cbTemplates, nil
 }
 
 // generators are the templates for the codebase

@@ -58,23 +58,6 @@ func LoadCodebase() (CodeBase, error) {
 	return cb, nil
 }
 
-func getTemplatesPath() (string, error) {
-	paths := []string{
-		"src/dev_tools/goMaker/",
-		"code_gen/",
-	}
-
-	for _, path := range paths {
-		thePath := filepath.Join(path, "templates/")
-		if file.FolderExists(thePath) {
-			setRootFolder(path)
-			return thePath, nil
-		}
-	}
-
-	return "", fmt.Errorf("could not find the templates directory")
-}
-
 func readStructure(st *Structure, data *any) (bool, error) {
 	st.DocDescr = strings.ReplaceAll(st.DocDescr, "&#44;", ",")
 	st.ProducedBy = strings.Replace(st.ProducedBy, " ", "", -1)
