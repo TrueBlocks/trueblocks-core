@@ -547,13 +547,13 @@ func (c *Command) HelpLinks() string {
 }
 
 func (c *Command) HelpNotes() string {
-	thePath := filepath.Join(GetTemplatePath(), "readme-intros/"+c.ReadmeName())
-	thePath = strings.Replace(thePath, ".md", ".notes.md", -1)
-	if file.FileExists(thePath) {
+	readmePath := filepath.Join(GetTemplatePath(), "readme-intros/"+c.ReadmeName())
+	readmePath = strings.Replace(readmePath, ".md", ".notes.md", -1)
+	if file.FileExists(readmePath) {
 		tmplName := "Notes" + c.ReadmeName()
-		tmpl := file.AsciiFileToString(thePath)
+		tmpl := file.AsciiFileToString(readmePath)
 		if tmpl == "" {
-			logger.Fatal("Could not read template file: ", thePath)
+			logger.Fatal("Could not read template file: ", readmePath)
 		}
 		return "\n\n" + strings.Trim(c.executeTemplate(tmplName, tmpl), ws)
 	}
@@ -561,8 +561,8 @@ func (c *Command) HelpNotes() string {
 }
 
 func (c *Command) ReadmeFooter() string {
-	thePath := filepath.Join(GetTemplatePath(), "readme-intros/README.footer.md")
-	return strings.Trim(file.AsciiFileToString(thePath), ws)
+	footerFile := filepath.Join(GetTemplatePath(), "readme-intros/README.footer.md")
+	return strings.Trim(file.AsciiFileToString(footerFile), ws)
 }
 
 func (c *Command) executeTemplate(name, tmplCode string) string {
