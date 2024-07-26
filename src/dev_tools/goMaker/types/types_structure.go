@@ -2,6 +2,7 @@ package types
 
 import (
 	"encoding/json"
+	"path/filepath"
 	"sort"
 	"strings"
 
@@ -73,8 +74,8 @@ func (s *Structure) IsSimpOnly() bool {
 }
 
 func (s *Structure) HasNotes() bool {
-	thePath := "src/dev_tools/goMaker/templates/model-intros/" + CamelCase(s.Class) + ".notes.md"
-	return file.FileExists(thePath)
+	notePath := filepath.Join(GetTemplatePath(), "model-intros/", CamelCase(s.Class)+".notes.md")
+	return file.FileExists(notePath)
 }
 
 func (s *Structure) HasTimestamp() bool {
@@ -101,7 +102,7 @@ func (s *Structure) GroupName() string {
 
 func (s *Structure) ModelIntro() string {
 	tmplName := "modelIntro" + s.Class
-	tmpl := strings.Trim(getContents("templates/model-intros/"+CamelCase(s.Class)), ws)
+	tmpl := strings.Trim(getTemplateContents("model-intros/"+CamelCase(s.Class)), ws)
 	return s.executeTemplate(tmplName, tmpl)
 }
 
@@ -135,7 +136,7 @@ func (s *Structure) ModelMembers() string {
 
 func (s *Structure) ModelNotes() string {
 	tmplName := "Notes" + s.Class
-	tmpl := strings.Trim(getContents("templates/model-intros/"+CamelCase(s.Class)+".notes"), ws)
+	tmpl := strings.Trim(getTemplateContents("model-intros/"+CamelCase(s.Class)+".notes"), ws)
 	return strings.Trim(s.executeTemplate(tmplName, tmpl), ws)
 }
 

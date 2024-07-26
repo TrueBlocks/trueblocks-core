@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 
@@ -85,7 +86,8 @@ func (c *Command) HasNotes() bool {
 }
 
 func (c *Command) HasExample() bool {
-	return file.FileExists("./src/dev_tools/goMaker/templates/api/examples/" + c.Route + ".json")
+	examplePath := filepath.Join(GetTemplatePath(), "api/examples/"+c.Route+".json")
+	return file.FileExists(examplePath)
 }
 
 func (c *Command) HasHidden() bool {
@@ -462,7 +464,7 @@ func (c *Command) TestLogs() string {
 }
 
 func (c *Command) PackageComments() string {
-	docsPath := "src/dev_tools/goMaker/templates/readme-intros/" + c.Route + ".md"
+	docsPath := filepath.Join(GetTemplatePath(), "readme-intros/"+c.Route+".md")
 	lines := file.AsciiFileToLines(docsPath)
 
 	ret := []string{"// " + c.Route + "Pkg implements the chifra " + c.Route + " command.\n//"}
@@ -485,7 +487,8 @@ func (c *Command) IsRoute() bool {
 }
 
 func (c *Command) Example() string {
-	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/api/examples/"+c.Route+".json"), ws)
+	examplePath := filepath.Join(GetTemplatePath(), "api/examples/"+c.Route+".json")
+	contents := strings.Trim(file.AsciiFileToString(examplePath), ws)
 	contents = strings.Replace(contents, "\n", "\n                  ", -1)
 	return strings.Trim(contents, ws) + "\n"
 }
@@ -495,17 +498,20 @@ func (c *Command) ReadmeName() string {
 }
 
 func (c *Command) HelpIntro() string {
-	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + c.ReadmeName()
+	readmePath := filepath.Join(GetTemplatePath(), "readme-intros/", c.ReadmeName())
 	tmplName := "helpIntro" + c.ReadmeName()
-	tmpl := file.AsciiFileToString(thePath)
+	tmpl := file.AsciiFileToString(readmePath)
+	if tmpl == "" {
+		logger.Fatal("Could not read template file: ", readmePath)
+	}
 	return strings.Trim(c.executeTemplate(tmplName, tmpl), ws)
 }
 
 func (c *Command) HelpText() string {
-	thePath := "src/dev_tools/goMaker/generated/" + c.ReadmeName() + ".tmp"
-	defer os.Remove(thePath)
-	utils.System("chifra " + c.Route + " --help 2>" + thePath)
-	helpText := strings.Trim(file.AsciiFileToString(thePath), wss)
+	readmePath := filepath.Join(GetTemplatePath(), c.ReadmeName()+".tmp")
+	defer os.Remove(readmePath)
+	utils.System("chifra " + c.Route + " --help 2>" + readmePath)
+	helpText := strings.Trim(file.AsciiFileToString(readmePath), wss)
 	if strings.Contains(helpText, "unknown") {
 		logger.Fatal("Error: " + helpText)
 	}
@@ -541,18 +547,21 @@ func (c *Command) HelpLinks() string {
 }
 
 func (c *Command) HelpNotes() string {
-	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + c.ReadmeName()
+	thePath := filepath.Join(GetTemplatePath(), "readme-intros/"+c.ReadmeName())
 	thePath = strings.Replace(thePath, ".md", ".notes.md", -1)
 	if file.FileExists(thePath) {
 		tmplName := "Notes" + c.ReadmeName()
 		tmpl := file.AsciiFileToString(thePath)
+		if tmpl == "" {
+			logger.Fatal("Could not read template file: ", thePath)
+		}
 		return "\n\n" + strings.Trim(c.executeTemplate(tmplName, tmpl), ws)
 	}
 	return ""
 }
 
 func (c *Command) ReadmeFooter() string {
-	thePath := "src/dev_tools/goMaker/templates/readme-intros/README.footer.md"
+	thePath := filepath.Join(GetTemplatePath(), "readme-intros/README.footer.md")
 	return strings.Trim(file.AsciiFileToString(thePath), ws)
 }
 
@@ -588,16 +597,8 @@ func (c *Command) GroupAlias(reason string) string {
 `, "[{GN}]", c.GroupName())
 }
 
-func getContents(fnIn string) string {
-	fn := "./src/dev_tools/goMaker/" + fnIn + ".md"
-	if !file.FileExists(fn) {
-		logger.Fatal("Error: file does not exist: " + fn)
-	}
-	return file.AsciiFileToString(fn)
-}
-
 func (c *Command) GroupIntro(reason string) string {
-	return getContents("templates/" + reason + "-groups/" + c.GroupName())
+	return getTemplateContents(reason + "-groups/" + c.GroupName())
 }
 
 func (c *Command) GroupMarkdowns(reason, filter string) string {
@@ -608,7 +609,7 @@ func (c *Command) GroupMarkdowns(reason, filter string) string {
 		})
 		for _, st := range c.cbPtr.Structures {
 			if st.GroupName() == filter && st.Name() != "" {
-				ret = append(ret, getContents("generated/model_"+st.Name()))
+				ret = append(ret, getGeneratedContents("model_"+st.Name()))
 			}
 		}
 	} else if reason == "readme" {
@@ -617,7 +618,7 @@ func (c *Command) GroupMarkdowns(reason, filter string) string {
 		})
 		for _, cmd := range c.cbPtr.Commands {
 			if cmd.GroupName() == filter && cmd.Route != "" {
-				ret = append(ret, getContents("generated/readme_"+cmd.Route))
+				ret = append(ret, getGeneratedContents("readme_"+cmd.Route))
 			}
 		}
 	} else {

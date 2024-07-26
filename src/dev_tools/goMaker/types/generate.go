@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -15,6 +16,9 @@ type Generator struct {
 
 // Generate generates the code for the codebase using the given templates.
 func (cb *CodeBase) Generate(generators []Generator) {
+	generatedPath := GetGeneratedPath()
+	file.EstablishFolder(generatedPath)
+
 	for _, generator := range generators {
 		switch generator.Against {
 		case "codebase":

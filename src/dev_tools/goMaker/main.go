@@ -2,9 +2,12 @@ package main
 
 import (
 	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func main() {
@@ -14,7 +17,19 @@ func main() {
 		os.Exit(1)
 	}
 
-	codeBase.Generate(cbTemplates)
+	codeBase.Generate(getGenerators())
+}
+
+// getGenerators returns the generators we will be using
+func getGenerators() []types.Generator {
+	vFunc := func(file string, vP any) (bool, error) {
+		if strings.HasSuffix(file, ".tmpl") {
+			logger.Info("Found template file: ", file)
+		}
+		return true, nil
+	}
+	walk.ForEveryFileInFolder(filepath.Join(types.GetTemplatePath(), "generators/"), vFunc, nil)
+	return cbTemplates
 }
 
 // generators are the templates for the codebase

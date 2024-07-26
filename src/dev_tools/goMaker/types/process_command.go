@@ -3,9 +3,11 @@ package types
 import (
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // ProcessFile processes a single file, applying the template to it and
@@ -19,7 +21,11 @@ func (c *Command) ProcessFile(source string) error {
 		return nil
 	}
 
-	tmpl := file.AsciiFileToString(source)
+	gSource := strings.ReplaceAll(source, "/templates/", "/templates/generators/")
+	tmpl := file.AsciiFileToString(gSource)
+	if tmpl == "" {
+		logger.Fatal("Could not read template file: ", gSource)
+	}
 	dest := convertToDestPath(source, c.Route, "", "", "")
 	result := c.executeTemplate(source, tmpl)
 	_, err := codeWriter.WriteCode(dest, result)

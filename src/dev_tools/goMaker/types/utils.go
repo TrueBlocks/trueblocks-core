@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -38,6 +39,7 @@ func shouldProcess(source, tag string) (bool, error) {
 		}
 	}
 
+	source = strings.ReplaceAll(source, "/templates/", "/templates/generators/")
 	if !file.FileExists(source) {
 		return false, fmt.Errorf("file does not exist %s", source)
 	}
@@ -68,10 +70,32 @@ func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) strin
 	return strings.ReplaceAll(dest, "//", "/")
 }
 
-var templateFolder = "src/dev_tools/goMaker/templates"
+var rootFolder = "src/dev_tools/goMaker/"
+
+func getRootFolder() string {
+	return filepath.Join(rootFolder)
+}
+
+func setRootFolder(folder string) {
+	rootFolder = folder
+}
 
 func GetTemplatePath() string {
-	return templateFolder
+	return filepath.Join(getRootFolder(), "templates/")
+}
+
+func getTemplateContents(fnIn string) string {
+	fn := filepath.Join(GetTemplatePath(), fnIn+".md")
+	return file.AsciiFileToString(fn)
+}
+
+func GetGeneratedPath() string {
+	return filepath.Join(getRootFolder(), "generated/")
+}
+
+func getGeneratedContents(fnIn string) string {
+	fn := filepath.Join(GetGeneratedPath(), fnIn+".md")
+	return file.AsciiFileToString(fn)
 }
 
 func LowerNoSpaces(s string) string {

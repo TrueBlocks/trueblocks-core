@@ -7,6 +7,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // ProcessGroupFile processes a single file, applying the template to it and
@@ -20,7 +21,11 @@ func (cb *CodeBase) ProcessGroupFile(source, reason, group string) error {
 		return nil
 	}
 
-	tmpl := file.AsciiFileToString(source)
+	gSource := strings.ReplaceAll(source, "/templates/", "/templates/generators/")
+	tmpl := file.AsciiFileToString(gSource)
+	if tmpl == "" {
+		logger.Fatal("Could not read template file: ", gSource)
+	}
 	dest := convertToDestPath(source, "", "", group, reason)
 	tmpl = strings.ReplaceAll(tmpl, "[{GROUP}]", group)
 	tmpl = strings.ReplaceAll(tmpl, "[{REASON}]", reason)
