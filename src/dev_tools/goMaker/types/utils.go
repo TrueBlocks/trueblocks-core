@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
@@ -45,6 +46,17 @@ func shouldProcess(source, tag string) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func getGeneratorContents(fullPath, group, reason string) string {
+	gPath := strings.ReplaceAll(fullPath, "/templates/", "/templates/generators/")
+	tmpl := file.AsciiFileToString(gPath)
+	if tmpl == "" {
+		logger.Fatal("Could not read template file: ", gPath)
+	}
+	tmpl = strings.ReplaceAll(tmpl, "[{GROUP}]", group)
+	tmpl = strings.ReplaceAll(tmpl, "[{REASON}]", reason)
+	return tmpl
 }
 
 func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) string {
