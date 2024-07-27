@@ -3,14 +3,16 @@ package types
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
 
-func shouldProcess(source, tag string) (bool, error) {
+func shouldProcess(source, subPath, tag string) (bool, error) {
 	single := os.Getenv("TB_MAKER_SINGLE")
 	if single != "" && !strings.Contains(source, single) {
 		// logger.Warn("skipping ", source, " because of ", single)
@@ -38,6 +40,7 @@ func shouldProcess(source, tag string) (bool, error) {
 		}
 	}
 
+	source = strings.ReplaceAll(source, "/templates/", "/templates/generators/"+subPath+"/")
 	if !file.FileExists(source) {
 		return false, fmt.Errorf("file does not exist %s", source)
 	}
@@ -45,8 +48,20 @@ func shouldProcess(source, tag string) (bool, error) {
 	return true, nil
 }
 
+func getGeneratorContents(fullPath, subPath, group, reason string) string {
+	gPath := strings.ReplaceAll(fullPath, "/templates/", "/templates/generators/"+subPath+"/")
+	if !file.FileExists(gPath) {
+		logger.Fatal("Could not find generator file: ", gPath)
+	}
+
+	tmpl := file.AsciiFileToString(gPath)
+	tmpl = strings.ReplaceAll(tmpl, "[{GROUP}]", group)
+	tmpl = strings.ReplaceAll(tmpl, "[{REASON}]", reason)
+	return tmpl
+}
+
 func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) string {
-	dest := strings.ReplaceAll(source, templateFolder, "")
+	dest := strings.ReplaceAll(source, GetTemplatePath(), "")
 	dest = strings.ReplaceAll(dest, ".tmpl", "")
 	dest = strings.ReplaceAll(dest, "_route_", "/"+routeTag+"/")
 	dest = strings.ReplaceAll(dest, "route+internal", routeTag+"+internal")
@@ -65,10 +80,55 @@ func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) strin
 	}
 	dest = strings.ReplaceAll(dest, "_", "/")
 	dest = strings.ReplaceAll(dest, "+", "_")
+	// Hack alert
+	dest = strings.ReplaceAll(dest, "/src/apps/chifra/pkg/types/", "/src/apps/chifra/pkg/types/types_")
 	return strings.ReplaceAll(dest, "//", "/")
 }
 
-var templateFolder = "src/dev_tools/goMaker/templates"
+var rootFolder = "src/dev_tools/goMaker/"
+
+func getRootFolder() string {
+	return filepath.Join(rootFolder)
+}
+
+func setRootFolder(folder string) {
+	rootFolder = folder
+}
+
+func getTemplatesPath() (string, error) {
+	paths := []string{
+		"src/dev_tools/goMaker/",
+		"code_gen/",
+	}
+
+	for _, path := range paths {
+		thePath := filepath.Join(path, "templates/")
+		if file.FolderExists(thePath) {
+			setRootFolder(path)
+			return thePath, nil
+		}
+	}
+
+	return "", fmt.Errorf("could not find the templates directory")
+}
+
+func GetTemplatePath() string {
+	return filepath.Join(getRootFolder(), "templates/")
+}
+
+func getTemplateContents(fnIn string) string {
+	fn := filepath.Join(GetTemplatePath(), fnIn+".md")
+	return file.AsciiFileToString(fn)
+}
+
+func GetGeneratedPath() string {
+	return filepath.Join(getRootFolder(), "generated/")
+}
+
+func getGeneratedContents(fnIn string) string {
+	fn := filepath.Join(GetGeneratedPath(), fnIn+".md")
+	return file.AsciiFileToString(fn)
+}
 
 func LowerNoSpaces(s string) string {
 	return strings.ToLower(strings.ReplaceAll(s, " ", ""))
@@ -131,8 +191,8 @@ func Proper(s string) string {
 }
 
 func Singular(s string) string {
-	if s == "Addresses" {
-		return "Address"
+	if strings.ToLower(s) == "addresses" {
+		return s[:len(s)-2]
 	}
 
 	if s != "Status" && s != "Stats" && strings.HasSuffix(s, "s") {

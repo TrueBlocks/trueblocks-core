@@ -3,6 +3,7 @@ package types
 import (
 	"encoding/json"
 	"fmt"
+	"path/filepath"
 	"sort"
 	"strings"
 
@@ -36,7 +37,8 @@ func (cb *CodeBase) Version(verbose bool) string {
 
 // Description - returns the description of the codebase for the openapi.yaml file
 func (cb *CodeBase) Description() string {
-	return strings.Trim(file.AsciiFileToString("src/dev_tools/goMaker/templates/api/description.txt"), ws)
+	apiPath := filepath.Join(GetTemplatePath(), "api/description.txt")
+	return strings.Trim(file.AsciiFileToString(apiPath), ws)
 }
 
 // RouteToGroup - returns the group given a route

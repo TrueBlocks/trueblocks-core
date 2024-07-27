@@ -1,63 +1,118 @@
 package types
 
 import (
+	"path/filepath"
 	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 type Generator struct {
-	Against   string
-	Templates []string
+	Against   string   `json:"against"`
+	Templates []string `json:"templates"`
 }
 
 // Generate generates the code for the codebase using the given templates.
-func (cb *CodeBase) Generate(generators []Generator) {
-	for _, gen := range generators {
-		switch gen.Against {
+func (cb *CodeBase) Generate() {
+	generatedPath := GetGeneratedPath()
+	file.EstablishFolder(generatedPath)
+
+	generators, err := getGenerators()
+	if err != nil {
+		logger.Fatal(err)
+	}
+
+	for _, generator := range generators {
+		switch generator.Against {
 		case "codebase":
-			for _, source := range gen.Templates {
-				if err := cb.ProcessFile(source); err != nil {
+			for _, source := range generator.Templates {
+				if err := cb.ProcessFile(source, "", ""); err != nil {
 					logger.Fatal(err)
 				}
 			}
 		case "groups":
-			for _, source := range gen.Templates {
+			for _, source := range generator.Templates {
 				for _, group := range cb.GroupList("") {
-					if err := cb.ProcessGroupFile(source, "readme", group.GroupName()); err != nil {
+					if err := cb.ProcessGroupFile(source, group.GroupName(), "readme"); err != nil {
 						logger.Fatal(err)
 					}
 				}
 			}
-			for _, source := range gen.Templates {
+			for _, source := range generator.Templates {
 				for _, group := range cb.GroupList("") {
-					if err := cb.ProcessGroupFile(source, "model", group.GroupName()); err != nil {
+					if err := cb.ProcessGroupFile(source, group.GroupName(), "model"); err != nil {
 						logger.Fatal(err)
 					}
 				}
 			}
 		case "routes":
-			for _, source := range gen.Templates {
+			for _, source := range generator.Templates {
 				for _, c := range cb.Commands {
-					if err := c.ProcessFile(source); err != nil {
+					if err := c.ProcessFile(source, "", ""); err != nil {
 						logger.Fatal(err)
 					}
 				}
 			}
 		case "types":
-			for _, source := range gen.Templates {
+			for _, source := range generator.Templates {
 				for _, s := range cb.Structures {
 					sort.Slice(s.Members, func(i, j int) bool {
 						return s.Members[i].SortName() < s.Members[j].SortName()
 					})
-					if err := s.ProcessFile(source); err != nil {
-						logger.Fatal(err)
+					if !s.DisableGo {
+						if err := s.ProcessFile(source, "", ""); err != nil {
+							logger.Fatal(err)
+						}
 					}
 				}
 			}
 		}
 	}
 	logger.Info(colors.Green + "Done..." + strings.Repeat(" ", 120) + colors.Off + "\033[K")
+}
+
+// getGenerators returns the generators we will be using
+func getGenerators() ([]Generator, error) {
+	thePath, err := getTemplatesPath()
+	if err != nil {
+		return []Generator{}, err
+	}
+	generatorsPath := filepath.Join(thePath, "generators/") + "/"
+
+	theMap := make(map[string][]string)
+	vFunc := func(file string, vP any) (bool, error) {
+		if strings.HasSuffix(file, ".tmpl") {
+			file = strings.ReplaceAll(file, generatorsPath, "")
+			if strings.Contains(file, "/") {
+				parts := strings.Split(file, "/")
+				theMap[parts[0]] = append(theMap[parts[0]], file)
+			}
+		}
+		return true, nil
+	}
+
+	walk.ForEveryFileInFolder(generatorsPath, vFunc, nil)
+
+	ret := []Generator{}
+	for against, templates := range theMap {
+		g := Generator{
+			Against: against,
+		}
+		sort.Strings(templates)
+		for _, template := range templates {
+			template = strings.ReplaceAll(template, g.Against+"/", "")
+			g.Templates = append(g.Templates, template)
+		}
+		ret = append(ret, g)
+	}
+	sort.Slice(ret, func(i, j int) bool {
+		sort.Strings(ret[i].Templates)
+		return ret[i].Against < ret[j].Against
+	})
+
+	return ret, nil
 }

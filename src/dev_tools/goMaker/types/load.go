@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
-	"path"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -16,66 +15,54 @@ import (
 // LoadCodebase loads the two csv files and returns the codebase which
 // contains all the commands (each with its own set of options).
 func LoadCodebase() (CodeBase, error) {
-	if !checkRootDirectory() {
-		return CodeBase{}, fmt.Errorf("this program must be run from the ./trueblocks-core folder")
+	thePath, err := getTemplatesPath()
+	if err != nil {
+		return CodeBase{}, err
 	}
 
-	thePath := "src/dev_tools/goMaker/templates/"
-	if !file.FolderExists(thePath) {
-		return CodeBase{}, fmt.Errorf("the path %s does not exist", thePath)
-	}
-
-	baseTypes, err := LoadCsv[Structure, any](thePath+"base-types.csv", readStructure, nil)
+	baseTypes, err := LoadCsv[Structure, any](filepath.Join(thePath, "base-types.csv"), readStructure, nil)
 	if err != nil {
 		return CodeBase{}, err
 	}
 
 	var cb CodeBase
-	options, err := LoadCsv[Option, any](thePath+"cmd-line-options.csv", readCmdOption, nil)
+	options, err := LoadCsv[Option, any](filepath.Join(thePath, "cmd-line-options.csv"), readCmdOption, nil)
 	if err != nil {
 		return cb, err
 	}
-	dupMap := make(map[string]bool, len(options))
-	for _, op := range options {
-		key := op.Route + ":" + op.LongName
-		if len(key) > 1 && dupMap[key] {
-			return cb, fmt.Errorf("duplicate option %s", key)
-		}
-		dupMap[key] = true
+	err = checkForDups(options)
+	if err != nil {
+		return cb, err
 	}
 
 	structMap := make(map[string]Structure)
-	err = cb.LoadStructures(thePath+"classDefinitions/", readStructure, structMap)
+	err = cb.LoadStructures(filepath.Join(thePath, "classDefinitions/"), readStructure, structMap)
 	if err != nil {
 		return cb, err
 	}
 
-	err = cb.LoadMembers(thePath+"classDefinitions/", structMap)
+	err = cb.LoadMembers(filepath.Join(thePath, "classDefinitions/"), structMap)
 	if err != nil {
 		return cb, err
 	}
 
-	err = cb.FinishLoad(baseTypes, options, structMap)
+	err = cb.FinishLoad(thePath, baseTypes, options, structMap)
 	if err != nil {
 		return cb, err
-	}
-
-	if len(cb.Commands) == 0 {
-		return cb, fmt.Errorf("no commands were found in %s", thePath)
-	}
-
-	if len(cb.Structures) == 0 {
-		return cb, fmt.Errorf("no structures were found in %s", thePath)
 	}
 
 	return cb, nil
 }
 
-func checkRootDirectory() bool {
-	cwd, _ := os.Getwd()
-	test := path.Join(cwd, "src/apps/chifra")
-	_, err := os.Stat(test)
-	return err == nil
+func readStructure(st *Structure, data *any) (bool, error) {
+	st.DocDescr = strings.ReplaceAll(st.DocDescr, "&#44;", ",")
+	st.ProducedBy = strings.Replace(st.ProducedBy, " ", "", -1)
+	st.Producers = strings.Split(st.ProducedBy, ",")
+	st.Class = strings.Trim(st.Class, " ")
+	st.DocGroup = strings.Trim(st.DocGroup, " ")
+	st.DocDescr = strings.Trim(st.DocDescr, " ")
+	st.DocNotes = strings.Trim(st.DocNotes, " ")
+	return true, nil
 }
 
 func (cb *CodeBase) LoadStructures(thePath string, callBack func(*Structure, *any) (bool, error), structMap map[string]Structure) error {
@@ -155,7 +142,7 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 	return nil
 }
 
-func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMap map[string]Structure) error {
+func (cb *CodeBase) FinishLoad(thePath string, baseTypes []Structure, options []Option, structMap map[string]Structure) error {
 	cb.BaseTypes = baseTypes
 	for i := 0; i < len(cb.BaseTypes); i++ {
 		cb.BaseTypes[i].cbPtr = cb
@@ -295,8 +282,9 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 		return err
 	}
 
-	current := file.AsciiFileToString("src/dev_tools/goMaker/generated/codebase.json")
-	file.StringToAsciiFile("src/dev_tools/goMaker/generated/codebase.json", cb.String())
+	codeBase := filepath.Join(GetGeneratedPath(), "codebase.json")
+	current := file.AsciiFileToString(codeBase)
+	file.StringToAsciiFile(codeBase, cb.String())
 	if current == cb.String() {
 		return nil
 	}
@@ -306,4 +294,16 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 	}
 
 	return fmt.Errorf("quitting: codebase.json has changed. Rerun the command to ignore this warning")
+}
+
+func checkForDups(options []Option) error {
+	dupMap := make(map[string]bool, len(options))
+	for _, op := range options {
+		key := op.Route + ":" + op.LongName
+		if len(key) > 1 && dupMap[key] {
+			return fmt.Errorf("duplicate option %s", key)
+		}
+		dupMap[key] = true
+	}
+	return nil
 }
