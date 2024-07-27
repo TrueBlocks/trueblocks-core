@@ -10,12 +10,14 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	scrape "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -74,6 +76,44 @@ func GetScrapeOptions(args []string) (*scrapeOptionsInternal, error) {
 	}
 
 	return &opts, nil
+}
+
+type scrapeGeneric interface {
+	types.Message
+}
+
+func queryScrape[T scrapeGeneric](opts *scrapeOptionsInternal) ([]T, *types.MetaData, error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	buffer := bytes.Buffer{}
+	if err := opts.ScrapeBytes(&buffer); err != nil {
+		return nil, nil, err
+	}
+
+	str := buffer.String()
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	var result Result[T]
+	if err := json.Unmarshal([]byte(str), &result); err != nil {
+		debugPrint(str, result, err)
+		return nil, nil, err
+	} else {
+		return result.Data, &result.Meta, nil
+	}
+}
+
+// toInternal converts the SDK options to the internal options format.
+func (opts *ScrapeOptions) toInternal() *scrapeOptionsInternal {
+	return &scrapeOptionsInternal{
+		BlockCnt:  opts.BlockCnt,
+		Sleep:     opts.Sleep,
+		Publisher: opts.Publisher,
+		Notify:    opts.Notify,
+		RenderCtx: opts.RenderCtx,
+		Globals:   opts.Globals,
+	}
 }
 
 // EXISTING_CODE
