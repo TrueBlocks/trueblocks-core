@@ -159,6 +159,8 @@ func (s *Structure) CacheIdStr() string {
 		return "\"%09d\", s.BlockNumber"
 	case "tx":
 		return "\"%09d-%05d\", s.BlockNumber, s.TransactionIndex"
+	case "string":
+		return "\"%0s\", s.GetCacheName()"
 	default:
 		logger.Fatal("Unknown cache by format:", s.CacheBy)
 		return ""

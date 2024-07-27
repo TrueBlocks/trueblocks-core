@@ -30,13 +30,9 @@ func LoadCodebase() (CodeBase, error) {
 	if err != nil {
 		return cb, err
 	}
-	dupMap := make(map[string]bool, len(options))
-	for _, op := range options {
-		key := op.Route + ":" + op.LongName
-		if len(key) > 1 && dupMap[key] {
-			return cb, fmt.Errorf("duplicate option %s", key)
-		}
-		dupMap[key] = true
+	err = checkForDups(options)
+	if err != nil {
+		return cb, err
 	}
 
 	structMap := make(map[string]Structure)
@@ -298,4 +294,16 @@ func (cb *CodeBase) FinishLoad(thePath string, baseTypes []Structure, options []
 	}
 
 	return fmt.Errorf("quitting: codebase.json has changed. Rerun the command to ignore this warning")
+}
+
+func checkForDups(options []Option) error {
+	dupMap := make(map[string]bool, len(options))
+	for _, op := range options {
+		key := op.Route + ":" + op.LongName
+		if len(key) > 1 && dupMap[key] {
+			return fmt.Errorf("duplicate option %s", key)
+		}
+		dupMap[key] = true
+	}
+	return nil
 }

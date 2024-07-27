@@ -12,7 +12,7 @@ import (
 	"golang.org/x/text/language"
 )
 
-func shouldProcess(source, tag string) (bool, error) {
+func shouldProcess(source, subPath, tag string) (bool, error) {
 	single := os.Getenv("TB_MAKER_SINGLE")
 	if single != "" && !strings.Contains(source, single) {
 		// logger.Warn("skipping ", source, " because of ", single)
@@ -40,7 +40,7 @@ func shouldProcess(source, tag string) (bool, error) {
 		}
 	}
 
-	source = strings.ReplaceAll(source, "/templates/", "/templates/generators/")
+	source = strings.ReplaceAll(source, "/templates/", "/templates/generators/"+subPath+"/")
 	if !file.FileExists(source) {
 		return false, fmt.Errorf("file does not exist %s", source)
 	}
@@ -48,8 +48,8 @@ func shouldProcess(source, tag string) (bool, error) {
 	return true, nil
 }
 
-func getGeneratorContents(fullPath, group, reason string) string {
-	gPath := strings.ReplaceAll(fullPath, "/templates/", "/templates/generators/")
+func getGeneratorContents(fullPath, subPath, group, reason string) string {
+	gPath := strings.ReplaceAll(fullPath, "/templates/", "/templates/generators/"+subPath+"/")
 	if !file.FileExists(gPath) {
 		logger.Fatal("Could not find generator file: ", gPath)
 	}
@@ -191,8 +191,8 @@ func Proper(s string) string {
 }
 
 func Singular(s string) string {
-	if s == "Addresses" {
-		return "Address"
+	if strings.ToLower(s) == "addresses" {
+		return s[:len(s)-2]
 	}
 
 	if s != "Status" && s != "Stats" && strings.HasSuffix(s, "s") {

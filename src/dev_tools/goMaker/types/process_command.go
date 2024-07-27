@@ -13,13 +13,14 @@ import (
 func (item *Command) ProcessFile(sourceIn, group, reason string) error {
 	cwd, _ := os.Getwd()
 	fullPath := filepath.Join(cwd, GetTemplatePath(), sourceIn)
-	if ok, err := shouldProcess(fullPath, item.Route); err != nil {
+	subPath := "routes"
+	if ok, err := shouldProcess(fullPath, subPath, item.Route); err != nil {
 		return err
 	} else if !ok {
 		return nil
 	}
 
-	tmpl := getGeneratorContents(fullPath, group, reason)
+	tmpl := getGeneratorContents(fullPath, subPath, group, reason)
 	dest := convertToDestPath(fullPath, item.Route, "", group, reason)
 
 	tmplName := fullPath + group + reason
