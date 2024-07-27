@@ -203,7 +203,7 @@ func findFileByBlockNumber(chain, path string, bn base.Blknum) (fileName string,
 			return true, nil // continue walking
 		},
 	)
-	return fileName, walker.WalkRegularFolder(path, []base.Blknum{bn})
+	return fileName, walker.WalkRegularFolder(path)
 }
 
 func (opts *ChunksOptions) getParams(chain, path string) (string, string, base.RangeDiff) {
