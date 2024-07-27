@@ -25,7 +25,7 @@ var cbTemplates = []types.Generator{
 			"docs_content_api_openapi.yaml.tmpl",
 			"src_dev+tools_goMaker_generated_readme+chifra.md.tmpl",
 			// "src_dev+tools_goMaker_generated_handlers.csv.tmpl",
-			"src_apps_chifra_pkg_types_modeler.go.tmpl",
+			"src_apps_chifra_pkg_types_types+modeler.go.tmpl",
 		},
 	},
 	{

@@ -23,9 +23,9 @@ import (
 type scrapeOptionsInternal struct {
 	BlockCnt  uint64            `json:"blockCnt,omitempty"`
 	Sleep     float64           `json:"sleep,omitempty"`
+	Publisher base.Address      `json:"publisher,omitempty"`
 	Touch     base.Blknum       `json:"touch,omitempty"`
 	RunCount  uint64            `json:"runCount,omitempty"`
-	Publisher base.Address      `json:"publisher,omitempty"`
 	DryRun    bool              `json:"dryRun,omitempty"`
 	Notify    bool              `json:"notify,omitempty"`
 	RenderCtx *output.RenderCtx `json:"-"`
