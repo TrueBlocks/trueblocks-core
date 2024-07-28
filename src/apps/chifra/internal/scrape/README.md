@@ -45,6 +45,7 @@ Data models produced by this tool:
 
 - [chunkrecord](/data-model/admin/#chunkrecord)
 - [manifest](/data-model/admin/#manifest)
+- [message](/data-model/other/#message)
 
 ### configuration
 

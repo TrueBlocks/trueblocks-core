@@ -41,7 +41,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 		if !config.IpfsRunning() {
 			return validate.Usage("The {0} option requires {1}.", "--notify", "a locally running IPFS daemon")
 		}
-	} else if !testMode && NotifyConfigured() {
+	} else if !testMode && NotifyConfigured() && !opts.DryRun {
 		msg := validate.Usage("The notify feature is configured but not running. Enable it with the {0} flag.", "--notify").Error()
 		logger.Warn(msg)
 	}

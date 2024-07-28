@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // criticalError means that we have to stop scraper
@@ -52,12 +53,24 @@ func (opts *ScrapeOptions) HandleScrape(rCtx *output.RenderCtx) error {
 		path = "--unchained-path--"
 		provider = "--rpc-provider--"
 	}
-	logger.Info("Scraping:")
-	logger.Info("  RPC:     ", provider)
-	logger.Info("  Path:    ", path)
-	logger.Info("  Settings:", config.GetScrape(chain))
+
+	msg1 := fmt.Sprintf("Scraping %s", chain)
+	msg2 := fmt.Sprintf("  Rpc %s", provider)
+	msg3 := fmt.Sprintf("  Path %s", path)
+	msg4 := fmt.Sprintf("  Settings %v", config.GetScrape(chain))
+
 	if opts.DryRun {
-		return nil
+		opts.Globals.NoHeader = true
+		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+			nl := "\n"
+			modelChan <- &types.Message{Msg: msg1 + nl + msg2 + nl + msg3 + nl + msg4}
+		}
+		return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
+	} else {
+		logger.Info(msg1)
+		logger.Info(msg2)
+		logger.Info(msg3)
+		logger.Info(msg4)
 	}
 
 	// Handle Ctr-C, docker stop and docker compose down (provided they
