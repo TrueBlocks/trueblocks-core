@@ -1,8 +1,8 @@
-name             ,type      ,strDefault ,attributes         ,docOrder ,description
-address          ,address   ,           ,                   ,       1 ,the address of the appearance
-blockNumber      ,uint32    ,           ,                   ,       2 ,the number of the block
-transactionIndex ,uint32    ,           ,                   ,       3 ,the index of the transaction in the block
-traceIndex       ,uint32    ,           ,omitempty|simponly ,       4 ,the zero-based index of the trace in the transaction
-reason           ,string    ,           ,omitempty|simponly ,       5 ,the location in the data where the appearance was found
-timestamp        ,timestamp ,           ,simponly           ,       6 ,the timestamp for this appearance
-date             ,datetime  ,           ,calc|simponly      ,       7 ,the timestamp as a date
+name,type,strDefault,attributes,docOrder,description
+address,address,,,1,the address of the appearance
+blockNumber,uint32,,,2,the number of the block
+transactionIndex,uint32,,,3,the index of the transaction in the block
+traceIndex,uint32,,omitempty,4,the zero-based index of the trace in the transaction
+reason,string,,omitempty,5,the location in the data where the appearance was found
+timestamp,timestamp,,,6,the timestamp for this appearance
+date,datetime,,calc,7,the timestamp as a date

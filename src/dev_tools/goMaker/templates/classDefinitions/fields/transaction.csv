@@ -1,28 +1,28 @@
-name                 ,type          ,strDefault ,attributes    ,docOrder ,description
-accessList           ,[]StorageSlot ,           ,removed       ,         ,
-chainId              ,string        ,           ,removed       ,         ,
-blockNumber          ,blknum        ,           ,              ,       3 ,the number of the block
-transactionIndex     ,txnum         ,           ,              ,       4 ,the zero-indexed position of the transaction in the block
-timestamp            ,timestamp     ,           ,simponly      ,       6 ,the Unix timestamp of the object
-date                 ,datetime      ,           ,calc          ,       7 ,the timestamp as a date
-hash                 ,hash          ,           ,              ,       1 ,the hash of the transaction
-blockHash            ,hash          ,           ,              ,       2 ,the hash of the block containing this transaction
-from                 ,address       ,           ,              ,       8 ,address from which the transaction was sent
-to                   ,address       ,           ,              ,       9 ,address to which the transaction was sent
-nonce                ,value         ,           ,              ,       5 ,sequence number of the transactions sent by the sender
-value                ,wei           ,           ,              ,      10 ,the amount of wei sent with this transactions
-ether                ,ether         ,           ,calc          ,      11 ,if --ether is specified&#44; the value in ether
-gas                  ,gas           ,           ,              ,      12 ,the maximum number of gas allowed for this transaction
-gasPrice             ,gas           ,           ,              ,      13 ,the number of wei per unit of gas the sender is willing to spend
-maxFeePerGas         ,gas           ,           ,              ,         ,
-maxPriorityFeePerGas ,gas           ,           ,              ,         ,
-input                ,bytes         ,           ,              ,      14 ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
-isError              ,bool          ,           ,simponly      ,      19 ,`true` if the transaction ended in error&#44; `false` otherwise
-hasToken             ,bool          ,           ,simponly      ,      18 ,`true` if the transaction is token related&#44; `false` otherwise
-receipt              ,*Receipt      ,           ,simponly      ,      15 ,
-traces               ,[]Trace       ,           ,simponly      ,         ,
-articulatedTx        ,*Function     ,           ,simponly      ,      17 ,
-compressedTx         ,string        ,           ,calc          ,      20 ,truncated&#44; more readable version of the articulation
-statements           ,[]Statement   ,           ,simponly|calc ,      16 ,array of reconciliations
-gasUsed              ,gas           ,           ,simponly      ,         ,
-type                 ,string        ,           ,              ,         ,
+name                 ,type          ,strDefault ,attributes ,docOrder ,description
+accessList           ,[]StorageSlot ,           ,removed    ,         ,
+chainId              ,string        ,           ,removed    ,         ,
+blockNumber          ,blknum        ,           ,           ,       3 ,the number of the block
+transactionIndex     ,txnum         ,           ,           ,       4 ,the zero-indexed position of the transaction in the block
+timestamp            ,timestamp     ,           ,           ,       6 ,the Unix timestamp of the object
+date                 ,datetime      ,           ,calc       ,       7 ,the timestamp as a date
+hash                 ,hash          ,           ,           ,       1 ,the hash of the transaction
+blockHash            ,hash          ,           ,           ,       2 ,the hash of the block containing this transaction
+from                 ,address       ,           ,           ,       8 ,address from which the transaction was sent
+to                   ,address       ,           ,           ,       9 ,address to which the transaction was sent
+nonce                ,value         ,           ,           ,       5 ,sequence number of the transactions sent by the sender
+value                ,wei           ,           ,           ,      10 ,the amount of wei sent with this transactions
+ether                ,ether         ,           ,calc       ,      11 ,if --ether is specified&#44; the value in ether
+gas                  ,gas           ,           ,           ,      12 ,the maximum number of gas allowed for this transaction
+gasPrice             ,gas           ,           ,           ,      13 ,the number of wei per unit of gas the sender is willing to spend
+maxFeePerGas         ,gas           ,           ,           ,         ,
+maxPriorityFeePerGas ,gas           ,           ,           ,         ,
+input                ,bytes         ,           ,           ,      14 ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
+isError              ,bool          ,           ,           ,      19 ,`true` if the transaction ended in error&#44; `false` otherwise
+hasToken             ,bool          ,           ,           ,      18 ,`true` if the transaction is token related&#44; `false` otherwise
+receipt              ,*Receipt      ,           ,           ,      15 ,
+traces               ,[]Trace       ,           ,           ,         ,
+articulatedTx        ,*Function     ,           ,           ,      17 ,
+compressedTx         ,string        ,           ,calc       ,      20 ,truncated&#44; more readable version of the articulation
+statements           ,[]Statement   ,           ,calc       ,      16 ,array of reconciliations
+gasUsed              ,gas           ,           ,           ,         ,
+type                 ,string        ,           ,           ,         ,

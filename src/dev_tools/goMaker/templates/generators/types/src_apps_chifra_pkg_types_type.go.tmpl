@@ -44,22 +44,22 @@ func (s *{{.Class}}) Date() string {
 {{if .IsCachable}}
 {{if not .IsMarshalOnly}}
 {{if .IsCacheAsGroup}}
-type {{.Class}}{{if .IsCacheAsGroup}}Group{{end}} struct {
+type {{.ClassOrClassGroup}} struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
 	{{if .NeedsAddress}}Address          base.Address
 	{{end}}{{.Class}}s      []{{.Class}}
 }
 {{end}}
-func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheName() string {
+func (s *{{.ClassOrClassGroup}}) CacheName() string {
 	return "{{.CacheLoc}}"
 }
 
-func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheId() string {
+func (s *{{.ClassOrClassGroup}}) CacheId() string {
 	return fmt.Sprintf({{.CacheIdStr}})
 }
 
-func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheLocation() (directory string, extension string) {
+func (s *{{.ClassOrClassGroup}}) CacheLocation() (directory string, extension string) {
 {{if .IsFilenameCache}}// directory is stored in the filename, as is extention
 	return "", ""{{else}}	paddedId := s.CacheId()
 	parts := make([]string, 3)
@@ -75,11 +75,11 @@ func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheLocation() (director
 }
 
 {{if .IsCacheAsGroup}}
-func (s *{{.Class}}Group) MarshalCache(writer io.Writer) (err error) {
+func (s *{{.ClassOrClassGroup}}) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.{{.Class}}s)
 }
 
-func (s *{{.Class}}Group) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *{{.ClassOrClassGroup}}) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	return cache.ReadValue(reader, &s.{{.Class}}s, vers)
 }
 

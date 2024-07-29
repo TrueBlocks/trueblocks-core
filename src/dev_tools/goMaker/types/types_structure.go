@@ -69,12 +69,15 @@ func (s *Structure) IsMarshalOnly() bool {
 	return s.CacheType == "marshal_only"
 }
 
-func (s *Structure) IsCacheAsGroup() bool {
-	return s.CacheAs == "group"
+func (s *Structure) ClassOrClassGroup() string {
+	if s.IsCacheAsGroup() {
+		return s.Class + "Group"
+	}
+	return s.Class
 }
 
-func (s *Structure) IsSimpOnly() bool {
-	return strings.Contains(s.Attributes, "simponly")
+func (s *Structure) IsCacheAsGroup() bool {
+	return s.CacheAs == "group"
 }
 
 func (s *Structure) HasNotes() bool {
