@@ -137,12 +137,6 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 	}
 }
 
-type ReceiptGroup struct {
-	BlockNumber      base.Blknum
-	TransactionIndex base.Txnum
-	Receipts         []Receipt
-}
-
 func (s *ReceiptGroup) CacheName() string {
 	return "Receipt"
 }
@@ -163,6 +157,12 @@ func (s *ReceiptGroup) CacheLocation() (directory string, extension string) {
 	extension = "bin"
 
 	return
+}
+
+type ReceiptGroup struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Receipts         []Receipt
 }
 
 func (s *ReceiptGroup) MarshalCache(writer io.Writer) (err error) {

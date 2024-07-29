@@ -145,12 +145,6 @@ func (s *Log) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
-type LogGroup struct {
-	BlockNumber      base.Blknum
-	TransactionIndex base.Txnum
-	Logs             []Log
-}
-
 func (s *LogGroup) CacheName() string {
 	return "Log"
 }
@@ -171,6 +165,12 @@ func (s *LogGroup) CacheLocation() (directory string, extension string) {
 	extension = "bin"
 
 	return
+}
+
+type LogGroup struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Logs             []Log
 }
 
 func (s *LogGroup) MarshalCache(writer io.Writer) (err error) {

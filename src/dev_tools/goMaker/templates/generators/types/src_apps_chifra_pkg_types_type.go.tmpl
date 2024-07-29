@@ -43,14 +43,6 @@ func (s *{{.Class}}) Date() string {
 
 {{if .IsCachable}}
 {{if not .IsMarshalOnly}}
-{{if .IsCacheAsGroup}}
-type {{.ClassOrClassGroup}} struct {
-	BlockNumber      base.Blknum
-	TransactionIndex base.Txnum
-	{{if .NeedsAddress}}Address          base.Address
-	{{end}}{{.Class}}s      []{{.Class}}
-}
-{{end}}
 func (s *{{.ClassOrClassGroup}}) CacheName() string {
 	return "{{.CacheLoc}}"
 }
@@ -60,8 +52,7 @@ func (s *{{.ClassOrClassGroup}}) CacheId() string {
 }
 
 func (s *{{.ClassOrClassGroup}}) CacheLocation() (directory string, extension string) {
-{{if .IsFilenameCache}}// directory is stored in the filename, as is extention
-	return "", ""{{else}}	paddedId := s.CacheId()
+	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
@@ -71,10 +62,17 @@ func (s *{{.ClassOrClassGroup}}) CacheLocation() (directory string, extension st
 	directory = filepath.Join(subFolder, filepath.Join(parts...))
 	extension = "bin"
 
-	return{{end}}
+	return
 }
 
 {{if .IsCacheAsGroup}}
+type {{.ClassOrClassGroup}} struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	{{if .NeedsAddress}}Address          base.Address
+	{{end}}{{.Class}}s      []{{.Class}}
+}
+
 func (s *{{.ClassOrClassGroup}}) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.{{.Class}}s)
 }

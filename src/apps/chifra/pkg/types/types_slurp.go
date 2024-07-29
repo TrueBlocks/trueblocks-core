@@ -243,13 +243,6 @@ func (s *Slurp) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
-type SlurpGroup struct {
-	BlockNumber      base.Blknum
-	TransactionIndex base.Txnum
-	Address          base.Address
-	Slurps           []Slurp
-}
-
 func (s *SlurpGroup) CacheName() string {
 	return "Slurp"
 }
@@ -270,6 +263,13 @@ func (s *SlurpGroup) CacheLocation() (directory string, extension string) {
 	extension = "bin"
 
 	return
+}
+
+type SlurpGroup struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Address          base.Address
+	Slurps           []Slurp
 }
 
 func (s *SlurpGroup) MarshalCache(writer io.Writer) (err error) {

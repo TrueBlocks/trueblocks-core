@@ -182,13 +182,6 @@ func (s *Statement) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
-type StatementGroup struct {
-	BlockNumber      base.Blknum
-	TransactionIndex base.Txnum
-	Address          base.Address
-	Statements       []Statement
-}
-
 func (s *StatementGroup) CacheName() string {
 	return "Statement"
 }
@@ -209,6 +202,13 @@ func (s *StatementGroup) CacheLocation() (directory string, extension string) {
 	extension = "bin"
 
 	return
+}
+
+type StatementGroup struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Address          base.Address
+	Statements       []Statement
 }
 
 func (s *StatementGroup) MarshalCache(writer io.Writer) (err error) {

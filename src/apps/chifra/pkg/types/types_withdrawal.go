@@ -89,12 +89,6 @@ func (s *Withdrawal) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
-type WithdrawalGroup struct {
-	BlockNumber      base.Blknum
-	TransactionIndex base.Txnum
-	Withdrawals      []Withdrawal
-}
-
 func (s *WithdrawalGroup) CacheName() string {
 	return "Withdrawal"
 }
@@ -115,6 +109,12 @@ func (s *WithdrawalGroup) CacheLocation() (directory string, extension string) {
 	extension = "bin"
 
 	return
+}
+
+type WithdrawalGroup struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Withdrawals      []Withdrawal
 }
 
 func (s *WithdrawalGroup) MarshalCache(writer io.Writer) (err error) {

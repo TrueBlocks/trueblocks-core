@@ -191,12 +191,6 @@ func (s *Trace) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
-type TraceGroup struct {
-	BlockNumber      base.Blknum
-	TransactionIndex base.Txnum
-	Traces           []Trace
-}
-
 func (s *TraceGroup) CacheName() string {
 	return "Trace"
 }
@@ -217,6 +211,12 @@ func (s *TraceGroup) CacheLocation() (directory string, extension string) {
 	extension = "bin"
 
 	return
+}
+
+type TraceGroup struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Traces           []Trace
 }
 
 func (s *TraceGroup) MarshalCache(writer io.Writer) (err error) {
