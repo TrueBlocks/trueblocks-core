@@ -60,7 +60,8 @@ func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheId() string {
 }
 
 func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheLocation() (directory string, extension string) {
-	paddedId := s.CacheId()
+{{if .IsFilenameCache}}// directory is stored in the filename, as is extention
+	return "", ""{{else}}	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
@@ -70,7 +71,7 @@ func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheLocation() (director
 	directory = filepath.Join(subFolder, filepath.Join(parts...))
 	extension = "bin"
 
-	return
+	return{{end}}
 }
 
 {{if .IsCacheAsGroup}}
