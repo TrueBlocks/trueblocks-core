@@ -137,26 +137,15 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 	}
 }
 
-func (s *ReceiptGroup) CacheName() string {
-	return "Receipt"
-}
-
-func (s *ReceiptGroup) CacheId() string {
-	return fmt.Sprintf("%09d", s.BlockNumber)
-}
-
-func (s *ReceiptGroup) CacheLocation() (directory string, extension string) {
-	paddedId := s.CacheId()
+func (s *ReceiptGroup) CacheLocations() (string, string, string) {
+	paddedId := fmt.Sprintf("%09d", s.BlockNumber)
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
 	parts[2] = paddedId[4:6]
-
-	subFolder := strings.ToLower(s.CacheName()) + "s"
-	directory = filepath.Join(subFolder, filepath.Join(parts...))
-	extension = "bin"
-
-	return
+	subFolder := strings.ToLower("Receipt") + "s"
+	directory := filepath.Join(subFolder, filepath.Join(parts...))
+	return directory, paddedId, "bin"
 }
 
 type ReceiptGroup struct {

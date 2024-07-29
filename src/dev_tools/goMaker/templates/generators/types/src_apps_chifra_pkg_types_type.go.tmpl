@@ -43,26 +43,15 @@ func (s *{{.Class}}) Date() string {
 
 {{if .IsCachable}}
 {{if not .IsMarshalOnly}}
-func (s *{{.ClassOrClassGroup}}) CacheName() string {
-	return "{{.CacheLoc}}"
-}
-
-func (s *{{.ClassOrClassGroup}}) CacheId() string {
-	return fmt.Sprintf({{.CacheIdStr}})
-}
-
-func (s *{{.ClassOrClassGroup}}) CacheLocation() (directory string, extension string) {
-	paddedId := s.CacheId()
+func (s *{{.ClassOrClassGroup}}) CacheLocations() (string, string, string) {
+	paddedId := fmt.Sprintf({{.CacheIdStr}})
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
 	parts[2] = paddedId[4:6]
-
-	subFolder := strings.ToLower(s.CacheName()) + "s"
-	directory = filepath.Join(subFolder, filepath.Join(parts...))
-	extension = "bin"
-
-	return
+	subFolder := strings.ToLower("{{.CacheLoc}}") + "s"
+	directory := filepath.Join(subFolder, filepath.Join(parts...))
+	return directory, paddedId, "bin"
 }
 
 {{if .IsCacheAsGroup}}

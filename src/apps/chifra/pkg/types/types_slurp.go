@@ -243,26 +243,15 @@ func (s *Slurp) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
-func (s *SlurpGroup) CacheName() string {
-	return "Slurp"
-}
-
-func (s *SlurpGroup) CacheId() string {
-	return fmt.Sprintf("%s-%09d-%05d", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)
-}
-
-func (s *SlurpGroup) CacheLocation() (directory string, extension string) {
-	paddedId := s.CacheId()
+func (s *SlurpGroup) CacheLocations() (string, string, string) {
+	paddedId := fmt.Sprintf("%s-%09d-%05d", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
 	parts[2] = paddedId[4:6]
-
-	subFolder := strings.ToLower(s.CacheName()) + "s"
-	directory = filepath.Join(subFolder, filepath.Join(parts...))
-	extension = "bin"
-
-	return
+	subFolder := strings.ToLower("Slurp") + "s"
+	directory := filepath.Join(subFolder, filepath.Join(parts...))
+	return directory, paddedId, "bin"
 }
 
 type SlurpGroup struct {

@@ -191,26 +191,15 @@ func (s *Trace) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
-func (s *TraceGroup) CacheName() string {
-	return "Trace"
-}
-
-func (s *TraceGroup) CacheId() string {
-	return fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
-}
-
-func (s *TraceGroup) CacheLocation() (directory string, extension string) {
-	paddedId := s.CacheId()
+func (s *TraceGroup) CacheLocations() (string, string, string) {
+	paddedId := fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
 	parts[2] = paddedId[4:6]
-
-	subFolder := strings.ToLower(s.CacheName()) + "s"
-	directory = filepath.Join(subFolder, filepath.Join(parts...))
-	extension = "bin"
-
-	return
+	subFolder := strings.ToLower("Trace") + "s"
+	directory := filepath.Join(subFolder, filepath.Join(parts...))
+	return directory, paddedId, "bin"
 }
 
 type TraceGroup struct {

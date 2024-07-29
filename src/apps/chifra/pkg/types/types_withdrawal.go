@@ -89,26 +89,15 @@ func (s *Withdrawal) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
-func (s *WithdrawalGroup) CacheName() string {
-	return "Withdrawal"
-}
-
-func (s *WithdrawalGroup) CacheId() string {
-	return fmt.Sprintf("%09d", s.BlockNumber)
-}
-
-func (s *WithdrawalGroup) CacheLocation() (directory string, extension string) {
-	paddedId := s.CacheId()
+func (s *WithdrawalGroup) CacheLocations() (string, string, string) {
+	paddedId := fmt.Sprintf("%09d", s.BlockNumber)
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
 	parts[2] = paddedId[4:6]
-
-	subFolder := strings.ToLower(s.CacheName()) + "s"
-	directory = filepath.Join(subFolder, filepath.Join(parts...))
-	extension = "bin"
-
-	return
+	subFolder := strings.ToLower("Withdrawal") + "s"
+	directory := filepath.Join(subFolder, filepath.Join(parts...))
+	return directory, paddedId, "bin"
 }
 
 type WithdrawalGroup struct {

@@ -145,26 +145,15 @@ func (s *Log) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
-func (s *LogGroup) CacheName() string {
-	return "Log"
-}
-
-func (s *LogGroup) CacheId() string {
-	return fmt.Sprintf("%09d", s.BlockNumber)
-}
-
-func (s *LogGroup) CacheLocation() (directory string, extension string) {
-	paddedId := s.CacheId()
+func (s *LogGroup) CacheLocations() (string, string, string) {
+	paddedId := fmt.Sprintf("%09d", s.BlockNumber)
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
 	parts[2] = paddedId[4:6]
-
-	subFolder := strings.ToLower(s.CacheName()) + "s"
-	directory = filepath.Join(subFolder, filepath.Join(parts...))
-	extension = "bin"
-
-	return
+	subFolder := strings.ToLower("Log") + "s"
+	directory := filepath.Join(subFolder, filepath.Join(parts...))
+	return directory, paddedId, "bin"
 }
 
 type LogGroup struct {
