@@ -44,8 +44,7 @@ func (s *{{.Class}}) Date() string {
 {{if .IsCachable}}
 {{if not .IsMarshalOnly}}
 func (s *{{.ClassOrClassGroup}}) CacheLocations() (string, string, string) {
-{{if .IsFilenameCache}}	return file.GetPathParts(s.Filename)
-{{else}}paddedId := fmt.Sprintf({{.CacheIdStr}})
+{{if .IsFilenameCache}}	return file.GetPathParts(s.Filename){{else}}	paddedId := fmt.Sprintf({{.CacheIdStr}})
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
