@@ -209,9 +209,9 @@ func (s *Store) ReadOnly() bool {
 }
 
 func printErr(desc string, err error) {
-	// if !verboseMode {
-	// 	return
-	// }
+	if !verboseMode {
+		return
+	}
 
 	log.Warn("cache error:", desc+":", err)
 }
