@@ -6,6 +6,7 @@ import (
 	"errors"
 	"os"
 	"path"
+	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
@@ -69,7 +70,12 @@ func (s *Store) resolvePath(value Locator) (resolved string, err error) {
 		err = errors.New("empty CacheLocations")
 		return
 	}
-	resolved = path.Join(s.rootDir, directory, (id + "." + extension))
+	if strings.HasPrefix(directory, "/") {
+		resolved = path.Join(directory, (id + "." + extension))
+	} else {
+		resolved = path.Join(s.rootDir, directory, (id + "." + extension))
+	}
+
 	return
 }
 
@@ -203,9 +209,9 @@ func (s *Store) ReadOnly() bool {
 }
 
 func printErr(desc string, err error) {
-	if !verboseMode {
-		return
-	}
+	// if !verboseMode {
+	// 	return
+	// }
 
 	log.Warn("cache error:", desc+":", err)
 }
