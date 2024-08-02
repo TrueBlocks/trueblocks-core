@@ -52,7 +52,7 @@ func (opts *AbisOptions) HandleList(rCtx *output.RenderCtx) error {
 	}
 
 	for _, path := range paths {
-		walk.ForEveryFileInFolder(path, vFunc, nil)
+		_ = walk.ForEveryFileInFolder(path, vFunc, nil)
 	}
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
