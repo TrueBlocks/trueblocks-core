@@ -134,26 +134,15 @@ func (s *Block) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
-func (s *Block) CacheName() string {
-	return "Block"
-}
-
-func (s *Block) CacheId() string {
-	return fmt.Sprintf("%09d", s.BlockNumber)
-}
-
-func (s *Block) CacheLocation() (directory string, extension string) {
-	paddedId := s.CacheId()
+func (s *Block) CacheLocations() (string, string, string) {
+	paddedId := fmt.Sprintf("%09d", s.BlockNumber)
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
 	parts[2] = paddedId[4:6]
-
-	subFolder := strings.ToLower(s.CacheName()) + "s"
-	directory = filepath.Join(subFolder, filepath.Join(parts...))
-	extension = "bin"
-
-	return
+	subFolder := strings.ToLower("Block") + "s"
+	directory := filepath.Join(subFolder, filepath.Join(parts...))
+	return directory, paddedId, "bin"
 }
 
 func (s *Block) MarshalCache(writer io.Writer) (err error) {

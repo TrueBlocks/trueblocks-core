@@ -61,8 +61,19 @@ func (s *Structure) IsCachable() bool {
 	return s.CacheType != ""
 }
 
+func (s *Structure) IsFilenameCache() bool {
+	return s.CacheBy == "filename"
+}
+
 func (s *Structure) IsMarshalOnly() bool {
 	return s.CacheType == "marshal_only"
+}
+
+func (s *Structure) ClassOrClassGroup() string {
+	if s.IsCacheAsGroup() {
+		return s.Class + "Group"
+	}
+	return s.Class
 }
 
 func (s *Structure) IsCacheAsGroup() bool {
@@ -155,8 +166,8 @@ func (s *Structure) CacheIdStr() string {
 		return "\"%09d\", s.BlockNumber"
 	case "tx":
 		return "\"%09d-%05d\", s.BlockNumber, s.TransactionIndex"
-	case "string":
-		return "\"%0s\", s.GetCacheName()"
+	case "filename":
+		return "\"%0s\", s.Filename"
 	default:
 		logger.Fatal("Unknown cache by format:", s.CacheBy)
 		return ""

@@ -68,20 +68,8 @@ func (e *ExampleBlock) UnmarshalCache(itemVersion uint64, reader io.Reader) (err
 // We we also implement all the methods needed for ExampleBlock to become Locator.
 // Locator interface job is to locate an item in cache.
 
-// First of all, we need to tell the cache what the ID should be for ExampleBlock.
-// We will make BlockNumber our ID:
-func (e *ExampleBlock) CacheId() string {
-	return strconv.FormatUint(e.BlockNumber, 10)
-}
-
-// We also have to provide some low level details like directory and file extension:
-func (e *ExampleBlock) CacheLocation() (directory string, extension string) {
-	return "example", "bin"
-}
-
-// Sometimes (e.g. in `chifra status`) we also need human readable name:
-func (e *ExampleBlock) CacheName() string {
-	return "ExampleBlock"
+func (e *ExampleBlock) CacheLocations() (string, string, string) {
+	return "example", strconv.FormatUint(e.BlockNumber, 10), "bin"
 }
 
 func Example() {
@@ -95,8 +83,9 @@ func Example() {
 		Timestamp:   1688667358,
 	}
 
-	// We made `BlockNumber` our cache ID (see implementation of ExampleBlock.CacheId above)
-	fmt.Println(block.CacheId())
+	// We made `BlockNumber` our cache ID
+	_, id, _ := block.CacheLocations()
+	fmt.Println(id)
 
 	// we will store it in memory cache (if StoreOptions is nil, then file system
 	// cache is used)
