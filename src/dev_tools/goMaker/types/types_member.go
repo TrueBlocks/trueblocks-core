@@ -70,10 +70,6 @@ func (m *Member) IsRemoved() bool {
 	return strings.Contains(m.Attributes, "removed")
 }
 
-func (m *Member) IsSimpOnly() bool {
-	return strings.Contains(m.Attributes, "simponly")
-}
-
 func (m *Member) IsNoTag() bool {
 	return strings.Contains(m.Attributes, "notag")
 }

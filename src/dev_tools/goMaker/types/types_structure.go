@@ -69,10 +69,6 @@ func (s *Structure) IsCacheAsGroup() bool {
 	return s.CacheAs == "group"
 }
 
-func (s *Structure) IsSimpOnly() bool {
-	return strings.Contains(s.Attributes, "simponly")
-}
-
 func (s *Structure) HasNotes() bool {
 	notePath := filepath.Join(GetTemplatePath(), "model-intros/", CamelCase(s.Class)+".notes.md")
 	return file.FileExists(notePath)
