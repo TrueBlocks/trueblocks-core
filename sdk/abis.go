@@ -40,6 +40,13 @@ func (opts *AbisOptions) Abis() ([]types.Function, *types.MetaData, error) {
 	return queryAbis[types.Function](in)
 }
 
+// AbisList implements the chifra abis --list command.
+func (opts *AbisOptions) AbisList() ([]types.AbiFile, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.List = true
+	return queryAbis[types.AbiFile](in)
+}
+
 // AbisFind implements the chifra abis --find command.
 func (opts *AbisOptions) AbisFind(val []string) ([]types.Function, *types.MetaData, error) {
 	in := opts.toInternal()

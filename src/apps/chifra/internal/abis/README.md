@@ -36,6 +36,7 @@ Arguments:
 Flags:
   -k, --known              load common 'known' ABIs from cache
   -r, --proxy_for string   redirects the query to this implementation
+  -l, --list               a list of downloaded abi files
   -f, --find strings       search for function or event declarations given a four- or 32-byte code(s)
   -n, --hint strings       for the --find option only, provide hints to speed up the search
   -e, --encode string      generate the 32-byte encoding for a given cannonical function or event signature
@@ -52,6 +53,7 @@ Notes:
 Data models produced by this tool:
 
 - [abi](/data-model/other/#abi)
+- [abifile](/data-model/other/#abifile)
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 
