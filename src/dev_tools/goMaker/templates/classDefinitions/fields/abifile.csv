@@ -1,0 +1,5 @@
+name        ,type   ,strDefault ,attributes ,docOrder ,description
+path        ,string ,           ,           ,       1 ,the folder holding the abi file
+name        ,string ,           ,           ,       2 ,the filename of the ABI (likely the smart contract address)
+fileSize    ,int64  ,           ,           ,       3 ,the size of this file on disc
+lastModDate ,string ,           ,           ,       4 ,the last update date of the file

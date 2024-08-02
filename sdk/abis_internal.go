@@ -26,6 +26,7 @@ type abisOptionsInternal struct {
 	Addrs     []string          `json:"addrs,omitempty"`
 	Known     bool              `json:"known,omitempty"`
 	ProxyFor  base.Address      `json:"proxyFor,omitempty"`
+	List      bool              `json:"list,omitempty"`
 	Find      []string          `json:"find,omitempty"`
 	Hint      []string          `json:"hint,omitempty"`
 	Encode    string            `json:"encode,omitempty"`
@@ -83,7 +84,8 @@ func GetAbisOptions(args []string) (*abisOptionsInternal, error) {
 }
 
 type abisGeneric interface {
-	types.Function
+	types.Function |
+		types.AbiFile
 }
 
 func queryAbis[T abisGeneric](opts *abisOptionsInternal) ([]T, *types.MetaData, error) {
