@@ -43,42 +43,30 @@ func (s *{{.Class}}) Date() string {
 
 {{if .IsCachable}}
 {{if not .IsMarshalOnly}}
+func (s *{{.ClassOrClassGroup}}) CacheLocations() (string, string, string) {
+{{if .IsFilenameCache}}	return file.GetPathParts(s.Filename){{else}}	paddedId := fmt.Sprintf({{.CacheIdStr}})
+	parts := make([]string, 3)
+	parts[0] = paddedId[:2]
+	parts[1] = paddedId[2:4]
+	parts[2] = paddedId[4:6]
+	subFolder := strings.ToLower("{{.CacheLoc}}") + "s"
+	directory := filepath.Join(subFolder, filepath.Join(parts...))
+	return directory, paddedId, "bin"{{end}}
+}
+
 {{if .IsCacheAsGroup}}
-type {{.Class}}{{if .IsCacheAsGroup}}Group{{end}} struct {
+type {{.ClassOrClassGroup}} struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
 	{{if .NeedsAddress}}Address          base.Address
 	{{end}}{{.Class}}s      []{{.Class}}
 }
-{{end}}
-func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheName() string {
-	return "{{.CacheLoc}}"
-}
 
-func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheId() string {
-	return fmt.Sprintf({{.CacheIdStr}})
-}
-
-func (s *{{.Class}}{{if .IsCacheAsGroup}}Group{{end}}) CacheLocation() (directory string, extension string) {
-	paddedId := s.CacheId()
-	parts := make([]string, 3)
-	parts[0] = paddedId[:2]
-	parts[1] = paddedId[2:4]
-	parts[2] = paddedId[4:6]
-
-	subFolder := strings.ToLower(s.CacheName()) + "s"
-	directory = filepath.Join(subFolder, filepath.Join(parts...))
-	extension = "bin"
-
-	return
-}
-
-{{if .IsCacheAsGroup}}
-func (s *{{.Class}}Group) MarshalCache(writer io.Writer) (err error) {
+func (s *{{.ClassOrClassGroup}}) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.{{.Class}}s)
 }
 
-func (s *{{.Class}}Group) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *{{.ClassOrClassGroup}}) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	return cache.ReadValue(reader, &s.{{.Class}}s, vers)
 }
 

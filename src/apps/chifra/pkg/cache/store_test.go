@@ -26,16 +26,8 @@ func (t *testStoreData) UnmarshalCache(version uint64, reader io.Reader) error {
 	return nil
 }
 
-func (t *testStoreData) CacheLocation() (string, string) {
-	return "test", "bin"
-}
-
-func (t *testStoreData) CacheId() string {
-	return t.Id
-}
-
-func (t *testStoreData) CacheName() string {
-	return "StoreDataTest"
+func (t *testStoreData) CacheLocations() (string, string, string) {
+	return "test", t.Id, "bin"
 }
 
 func TestStoreWrite(t *testing.T) {

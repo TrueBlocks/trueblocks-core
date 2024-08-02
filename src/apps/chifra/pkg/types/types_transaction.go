@@ -318,26 +318,15 @@ func (s *Transaction) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
-func (s *Transaction) CacheName() string {
-	return "Transaction"
-}
-
-func (s *Transaction) CacheId() string {
-	return fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
-}
-
-func (s *Transaction) CacheLocation() (directory string, extension string) {
-	paddedId := s.CacheId()
+func (s *Transaction) CacheLocations() (string, string, string) {
+	paddedId := fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
 	parts[2] = paddedId[4:6]
-
-	subFolder := strings.ToLower(s.CacheName()) + "s"
-	directory = filepath.Join(subFolder, filepath.Join(parts...))
-	extension = "bin"
-
-	return
+	subFolder := strings.ToLower("Transaction") + "s"
+	directory := filepath.Join(subFolder, filepath.Join(parts...))
+	return directory, paddedId, "bin"
 }
 
 func (s *Transaction) MarshalCache(writer io.Writer) (err error) {

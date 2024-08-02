@@ -366,7 +366,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 			"firstApp": cacheInfo.FileRange.First,
 			"firstTs":  cacheInfo.TsRange.First,
 			// "indexSizeBytes": file.FileSize(index.ToIndexPath(cacheInfo.Path)),
-			"itemType":  cacheItemName(cT),
+			"itemType":  WalkCacheName(cT) + "Item",
 			"latestApp": cacheInfo.FileRange.Last,
 			"latestTs":  cacheInfo.TsRange.Last,
 		}, nil
@@ -392,7 +392,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 			"address":     address,
 			"fileDate":    date,
 			"filename":    display,
-			"itemType":    cacheItemName(cT),
+			"itemType":    WalkCacheName(cT) + "Item",
 			"sizeInBytes": size,
 		}
 		if cT == Cache_Monitors {
@@ -406,17 +406,13 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 		return map[string]any{
 			"fileDate":    date,
 			"filename":    display,
-			"itemType":    cacheItemName(cT),
+			"itemType":    WalkCacheName(cT) + "Item",
 			"sizeInBytes": size,
 		}, nil
 	}
 }
 
-func cacheItemName(ct CacheType) string {
-	return CacheName(ct) + "Item"
-}
-
-func CacheName(ct CacheType) string {
+func WalkCacheName(ct CacheType) string {
 	// TODO: Names of caches, names of folders, names of commands are all different. This is a mess.
 	ret := CacheTypeToFolder[ct] + "Cache"
 	ret = strings.Replace(ret, "blooms", "bloom", -1)

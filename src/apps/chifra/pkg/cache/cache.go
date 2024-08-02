@@ -33,9 +33,7 @@ type Storer interface {
 // Locator is a struct implementing the Locator interface. It can describe its
 // location in the cache
 type Locator interface {
-	CacheLocation() (directory string, extension string)
-	CacheId() string
-	CacheName() string
+	CacheLocations() (string, string, string)
 }
 
 // Unmarshaler is a struct implementing Unmarshaler can be read from binary by
