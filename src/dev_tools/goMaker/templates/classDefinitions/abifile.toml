@@ -1,7 +1,0 @@
-[settings]
-    class = "AbiFile"
-    doc_group = "05-Other"
-    doc_descr = "represents an abi file stored in the cache or configuration folders"
-    doc_route = "512-abiFile"
-    attributes = ""
-    produced_by = "abis"

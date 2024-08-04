@@ -85,7 +85,7 @@ func GetAbisOptions(args []string) (*abisOptionsInternal, error) {
 
 type abisGeneric interface {
 	types.Function |
-		types.AbiFile
+		types.Abi
 }
 
 func queryAbis[T abisGeneric](opts *abisOptionsInternal) ([]T, *types.MetaData, error) {

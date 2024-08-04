@@ -18,8 +18,15 @@ import (
 // EXISTING_CODE
 
 type Abi struct {
-	Address   base.Address `json:"address"`
-	Functions []Function   `json:"functions"`
+	Address     base.Address `json:"address"`
+	FileSize    int64        `json:"fileSize"`
+	Functions   []Function   `json:"functions"`
+	IsKnown     bool         `json:"isKnown"`
+	LastModDate string       `json:"lastModDate"`
+	NEvents     int64        `json:"nEvents"`
+	NFunctions  int64        `json:"nFunctions"`
+	Name        string       `json:"name"`
+	Path        string       `json:"path"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -34,14 +41,43 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 	var order = []string{}
 
 	// EXISTING_CODE
-	model[s.Address.Hex()] = s.Functions
-	order = append(order, s.Address.Hex())
-	if name, loaded, found := nameAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
+	if extraOpts["list"] == true {
+		model = map[string]any{
+			"name":        s.Name,
+			"lastModDate": s.LastModDate,
+			"fileSize":    s.FileSize,
+			"isKnown":     s.IsKnown,
+		}
+		order = []string{
+			"name",
+			"lastModDate",
+			"fileSize",
+			"isKnown",
+		}
+		if !s.Address.IsZero() {
+			model["address"] = s.Address
+			order = append([]string{"address"}, order...)
+		}
+
+		if verbose {
+			model["nFunctions"] = s.NFunctions
+			order = append(order, "nFunctions")
+			model["nEvents"] = s.NEvents
+			order = append(order, "nEvents")
+			model["path"] = s.Path
+			order = append(order, "path")
+		}
+
+	} else {
+		model[s.Address.Hex()] = s.Functions
+		order = append(order, s.Address.Hex())
+		if name, loaded, found := nameAddress(extraOpts, s.Address); found {
+			model["addressName"] = name.Name
+			order = append(order, "addressName")
+		} else if loaded && format != "json" {
+			model["addressName"] = ""
+			order = append(order, "addressName")
+		}
 	}
 	order = reorderOrdering(order)
 	// EXISTING_CODE

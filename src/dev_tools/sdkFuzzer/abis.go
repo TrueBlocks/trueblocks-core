@@ -130,7 +130,7 @@ func TestAbis(which, value, fn string, opts *sdk.AbisOptions) {
 		if list, _, err := opts.AbisList(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.AbiFile](fn, list); err != nil {
+			if err := SaveToFile[types.Abi](fn, list); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
