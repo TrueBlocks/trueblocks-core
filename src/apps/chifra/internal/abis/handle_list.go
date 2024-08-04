@@ -37,7 +37,9 @@ func (opts *AbisOptions) HandleList(rCtx *output.RenderCtx) error {
 				IsKnown:     strings.Contains(fn, "known"),
 			}
 			abi.Path, abi.Name = filepath.Split(fn)
-			abi.Address = base.HexToAddress(strings.Replace(abi.Name, ".json", "", -1))
+			if strings.HasPrefix(abi.Name, "0x") {
+				abi.Address = base.HexToAddress(strings.Replace(abi.Name, ".json", "", -1))
+			}
 
 			if len(abi.Name) > 0 {
 				abiArray = append(abiArray, abi)
