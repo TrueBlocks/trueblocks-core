@@ -5,12 +5,10 @@
 package abisPkg
 
 import (
-	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -28,25 +26,25 @@ func (opts *AbisOptions) HandleList(rCtx *output.RenderCtx) error {
 		paths = paths[:1]
 	}
 
-	abiArray := make([]types.AbiFile, 0, 100)
+	abiArray := make([]types.Abi, 0, 100)
 	vFunc := func(fn string, vP any) (bool, error) {
 		if strings.HasSuffix(fn, ".json") {
-			info, _ := os.Stat(fn)
-			date := info.ModTime().Format("2006-01-02 15:04:05")
-			if testMode {
-				date = "--date--"
-			}
-			abiFile := types.AbiFile{
-				FileSize:    file.FileSize(fn),
-				LastModDate: date,
-			}
-			abiFile.Path, abiFile.Name = filepath.Split(fn)
-			if testMode {
-				abiFile.Path = strings.ReplaceAll(abiFile.Path, config.PathToRootConfig(), "./")
-			}
-			if len(abiFile.Name) > 0 {
-				abiArray = append(abiArray, abiFile)
-			}
+			// info, _ := os.Stat(fn)
+			// date := info.ModTime().Format("2006-01-02 15:04:05")
+			// if testMode {
+			// 	date = "--date--"
+			// }
+			// abiFile := types.Abi{
+			// 	FileSize:    file.FileSize(fn),
+			// 	LastModDate: date,
+			// }
+			// abiFile.Path, abiFile.Name = filepath.Split(fn)
+			// if testMode {
+			// 	abiFile.Path = strings.ReplaceAll(abiFile.Path, config.PathToRootConfig(), "./")
+			// }
+			// if len(abiFile.Name) > 0 {
+			// 	abiArray = append(abiArray, abiFile)
+			// }
 		}
 		return true, nil
 	}

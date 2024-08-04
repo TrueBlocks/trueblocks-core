@@ -41,10 +41,10 @@ func (opts *AbisOptions) Abis() ([]types.Function, *types.MetaData, error) {
 }
 
 // AbisList implements the chifra abis --list command.
-func (opts *AbisOptions) AbisList() ([]types.AbiFile, *types.MetaData, error) {
+func (opts *AbisOptions) AbisList() ([]types.Abi, *types.MetaData, error) {
 	in := opts.toInternal()
 	in.List = true
-	return queryAbis[types.AbiFile](in)
+	return queryAbis[types.Abi](in)
 }
 
 // AbisFind implements the chifra abis --find command.

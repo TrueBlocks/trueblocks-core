@@ -8,9 +8,16 @@
  * This file was auto generated. DO NOT EDIT.
  */
 
-import { address, Function } from '.';
+import { address, Function, int64 } from '.';
 
 export type Abi = {
   address: address
+  fileSize: int64
   functions: Function[]
+  isKnown: boolean
+  lastModDate: string
+  nEvents: int64
+  nFunctions: int64
+  name: string
+  path: string
 }

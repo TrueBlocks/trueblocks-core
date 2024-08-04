@@ -1,3 +1,10 @@
-name      ,type       ,strDefault ,attributes ,docOrder ,description
-address   ,address    ,           ,           ,       1 ,the address for the ABI
-functions ,[]Function ,           ,           ,       2 ,the functions for this address
+name        ,type       ,strDefault ,attributes ,docOrder ,description
+address     ,address    ,           ,           ,       1 ,the address for the ABI
+name        ,string     ,           ,           ,       2 ,the filename of the ABI (likely the smart contract address)
+path        ,string     ,           ,           ,       3 ,the folder holding the abi file
+fileSize    ,int64      ,           ,           ,       4 ,the size of this file on disc
+lastModDate ,string     ,           ,           ,       5 ,the last update date of the file
+isKnown     ,bool       ,           ,           ,       6 ,true if this is the ABI for a known smart contract or protocol
+nFunctions  ,int64      ,           ,           ,       7 ,if verbose&#44; the number of functions in the ABI
+nEvents     ,int64      ,           ,           ,       8 ,if verbose&#44; the number of events in the ABI
+functions   ,[]Function ,           ,           ,       9 ,the functions for this address

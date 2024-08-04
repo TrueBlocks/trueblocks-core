@@ -9,7 +9,7 @@
  */
 
 import * as ApiCallers from '../lib/api_callers';
-import { AbiFile, address, Function } from '../types';
+import { Abi, address, Function } from '../types';
 
 export function getAbis(
   parameters?: {
@@ -28,7 +28,7 @@ export function getAbis(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<AbiFile[] | Function[]>(
+  return ApiCallers.fetch<Abi[] | Function[]>(
     { endpoint: '/abis', method: 'get', parameters, options },
   );
 }
