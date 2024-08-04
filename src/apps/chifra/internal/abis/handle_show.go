@@ -18,40 +18,53 @@ func (opts *AbisOptions) HandleShow(rCtx *output.RenderCtx) (err error) {
 		return opts.HandleMany(rCtx)
 	}
 
-	abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)
-
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
-		for _, addr := range opts.Addrs {
-			address := base.HexToAddress(addr)
-			proxy := base.HexToAddress(opts.ProxyFor)
-			if !proxy.IsZero() {
-				address = proxy
-			}
-			err = abi.LoadAbi(opts.Conn, address, &abiCache.AbiMap)
-			if err != nil {
-				if errors.Is(err, rpc.ErrNotAContract) {
-					msg := fmt.Errorf("address %s is not a smart contract", address.Hex())
-					errorChan <- msg
-					// Report but don't quit processing
-				} else {
-					// Cancel on all other errors
-					errorChan <- err
-					rCtx.Cancel()
-				}
+		functions, which, err := opts.LoadAbis(opts.Addrs, false /* known */)
+		if err != nil {
+			if errors.Is(err, rpc.ErrNotAContract) {
+				msg := fmt.Errorf("address %s is not a smart contract", which)
+				errorChan <- msg
+				// Report but don't quit processing
+			} else {
+				// Cancel on all other errors
+				errorChan <- err
+				rCtx.Cancel()
 				// } else if len(opts.ProxyFor) > 0 {
 				// TODO: We need to copy the proxied-to ABI to the proxy (replacing)
 			}
 		}
 
-		names := abiCache.AbiMap.Keys()
-		sort.Strings(names)
-
-		for _, name := range names {
-			function := abiCache.AbiMap.GetValue(name)
-			modelChan <- function
+		for _, f := range functions {
+			modelChan <- f
 		}
 	}
 
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
+}
+
+func (opts *AbisOptions) LoadAbis(addrs []string, loadKnown bool) ([]*types.Function, string, error) {
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)
+	for _, addr := range addrs {
+		address := base.HexToAddress(addr)
+		proxy := base.HexToAddress(opts.ProxyFor)
+		if !proxy.IsZero() {
+			address = proxy
+		}
+		err := abi.LoadAbi(opts.Conn, address, &abiCache.AbiMap)
+		if err != nil {
+			return []*types.Function{}, address.Hex(), err
+		}
+	}
+
+	names := abiCache.AbiMap.Keys()
+	sort.Strings(names)
+
+	var funcs = make([]*types.Function, 0, len(names))
+	for _, name := range names {
+		f := abiCache.AbiMap.GetValue(name)
+		if f != nil {
+			funcs = append(funcs, f)
+		}
+	}
+	return funcs, "", nil
 }
