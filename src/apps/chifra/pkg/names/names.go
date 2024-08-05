@@ -31,7 +31,7 @@ func LoadNamesMap(chain string, parts types.Parts, terms []string) (map[base.Add
 
 	// Add in the baddresses
 	if parts&types.Baddress != 0 {
-		loadKnownBadresses(chain, terms, parts, &namesMap)
+		_ = loadKnownBadresses(chain, terms, parts, &namesMap)
 	}
 
 	// Load the custom names (note that these may overwrite the prefund and regular names)
