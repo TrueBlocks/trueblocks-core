@@ -60,6 +60,7 @@ func loadRegularMap(chain string, terms []string, parts types.Parts, ret *map[ba
 
 // loadKnownBadresses loads the known bad addresses from the cache
 func loadKnownBadresses(unused string, terms []string, parts types.Parts, ret *map[base.Address]types.Name) error {
+	_ = unused
 	knownBadAddresses := []types.Name{
 		{
 			Address: base.PrefundSender,
