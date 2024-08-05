@@ -16,4 +16,5 @@ export type Monitor = {
   fileSize: int64
   lastScanned: uint64
   nRecords: int64
+  name: string
 }
