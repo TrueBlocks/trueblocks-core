@@ -11,8 +11,10 @@ package types
 // EXISTING_CODE
 import (
 	"encoding/json"
+	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 // EXISTING_CODE
@@ -23,6 +25,7 @@ type Monitor struct {
 	FileSize    int64        `json:"fileSize"`
 	LastScanned uint32       `json:"lastScanned"`
 	NRecords    int64        `json:"nRecords"`
+	Name        string       `json:"name"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -75,6 +78,80 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *Monitor) MarshalCache(writer io.Writer) (err error) {
+	// Address
+	if err = cache.WriteValue(writer, s.Address); err != nil {
+		return err
+	}
+
+	// Deleted
+	if err = cache.WriteValue(writer, s.Deleted); err != nil {
+		return err
+	}
+
+	// FileSize
+	if err = cache.WriteValue(writer, s.FileSize); err != nil {
+		return err
+	}
+
+	// LastScanned
+	if err = cache.WriteValue(writer, s.LastScanned); err != nil {
+		return err
+	}
+
+	// NRecords
+	if err = cache.WriteValue(writer, s.NRecords); err != nil {
+		return err
+	}
+
+	// Name
+	if err = cache.WriteValue(writer, s.Name); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *Monitor) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	// Address
+	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
+		return err
+	}
+
+	// Deleted
+	if err = cache.ReadValue(reader, &s.Deleted, vers); err != nil {
+		return err
+	}
+
+	// FileSize
+	if err = cache.ReadValue(reader, &s.FileSize, vers); err != nil {
+		return err
+	}
+
+	// LastScanned
+	if err = cache.ReadValue(reader, &s.LastScanned, vers); err != nil {
+		return err
+	}
+
+	// NRecords
+	if err = cache.ReadValue(reader, &s.NRecords, vers); err != nil {
+		return err
+	}
+
+	// Name
+	if err = cache.ReadValue(reader, &s.Name, vers); err != nil {
+		return err
+	}
+
+	s.FinishUnmarshal()
+
+	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
