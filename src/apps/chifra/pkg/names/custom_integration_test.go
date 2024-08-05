@@ -144,7 +144,7 @@ func TestCrudIntegration(t *testing.T) {
 
 	// Check what was written to the file
 	tempFile = loadTestDatabase()
-	testDb, err := unmarshallCustomNames(tempFile, nil, Parts(Custom), &map[base.Address]types.Name{})
+	testDb, err := unmarshallCustomNames(tempFile, nil, types.Custom, &map[base.Address]types.Name{})
 	if err != nil && !errors.Is(err, io.EOF) {
 		t.Fatal("remove: unmarshallCustomNames:", err)
 	}

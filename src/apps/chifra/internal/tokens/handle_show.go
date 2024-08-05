@@ -61,7 +61,7 @@ func (opts *TokensOptions) HandleShow(rCtx *output.RenderCtx) error {
 		"parts": []string{"all_held"},
 	}
 	if opts.Globals.ShouldLoadNames(true) {
-		parts := names.Custom | names.Prefund | names.Regular
+		parts := types.Custom | types.Prefund | types.Regular
 		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
 		} else {

@@ -14,38 +14,38 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *NamesOptions) getType() names.Parts {
-	var ret names.Parts
+func (opts *NamesOptions) getType() types.Parts {
+	var ret types.Parts
 
 	if opts.Custom || opts.All || opts.anyCrud() {
-		ret |= names.Custom
+		ret |= types.Custom
 	}
 
 	if opts.Prefund || opts.All {
-		ret |= names.Prefund
+		ret |= types.Prefund
 	}
 
 	if (!opts.Custom && !opts.Prefund) || opts.All {
-		ret |= names.Regular
+		ret |= types.Regular
 	}
 
 	if opts.MatchCase {
-		ret |= names.MatchCase
+		ret |= types.MatchCase
 	}
 
 	if opts.Expand {
-		ret |= names.Expanded
+		ret |= types.Expanded
 	}
 
 	if opts.Tags {
-		ret |= names.Tags
+		ret |= types.Tags
 	}
 
 	if opts.Globals.TestMode {
-		ret |= names.Testing
+		ret |= types.Testing
 	}
 
 	return ret

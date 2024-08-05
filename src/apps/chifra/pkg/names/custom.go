@@ -17,7 +17,7 @@ var customNamesLoaded = false
 var customNames map[base.Address]types.Name = map[base.Address]types.Name{}
 var customNamesMutex sync.Mutex
 
-func loadCustomMap(chain string, terms []string, parts Parts, namesMap *map[base.Address]types.Name) (err error) {
+func loadCustomMap(chain string, terms []string, parts types.Parts, namesMap *map[base.Address]types.Name) (err error) {
 	if customNamesLoaded {
 		// We have already loaded the data
 		for _, name := range customNames {
@@ -43,13 +43,13 @@ func loadCustomMap(chain string, terms []string, parts Parts, namesMap *map[base
 	if err != nil {
 		return err
 	}
-	if parts&Testing != 0 {
+	if parts&types.Testing != 0 {
 		loadTestNames(terms, parts, &customNames, namesMap)
 	}
 	return
 }
 
-func unmarshallCustomNames(source io.Reader, terms []string, parts Parts, namesMap *map[base.Address]types.Name) (customNames map[base.Address]types.Name, err error) {
+func unmarshallCustomNames(source io.Reader, terms []string, parts types.Parts, namesMap *map[base.Address]types.Name) (customNames map[base.Address]types.Name, err error) {
 	customNames = map[base.Address]types.Name{}
 
 	var reader NameReader
@@ -81,7 +81,7 @@ func unmarshallCustomNames(source io.Reader, terms []string, parts Parts, namesM
 	return
 }
 
-func loadTestNames(terms []string, parts Parts, all *map[base.Address]types.Name, namesMap *map[base.Address]types.Name) {
+func loadTestNames(terms []string, parts types.Parts, all *map[base.Address]types.Name, namesMap *map[base.Address]types.Name) {
 	for i := 1; i < 5; i++ {
 		addressStr := fmt.Sprintf("0x%040d", i)
 		num := fmt.Sprintf("%d", i)

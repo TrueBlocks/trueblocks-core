@@ -67,9 +67,9 @@ func (opts *NamesOptions) HandleClean(rCtx *output.RenderCtx) error {
 func (opts *NamesOptions) cleanNames() (int, error) {
 	chain := opts.Globals.Chain
 
-	parts := names.Custom
+	parts := types.Custom
 	if opts.Regular {
-		parts = names.Regular
+		parts = types.Regular
 	}
 
 	// Load databases

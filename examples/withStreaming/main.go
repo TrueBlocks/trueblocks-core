@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	namesMap, _ = names.LoadNamesMap("mainnet", names.Custom|names.Prefund|names.Regular, nil)
+	namesMap, _ = names.LoadNamesMap("mainnet", types.Custom|types.Prefund|types.Regular, nil)
 
 	TestStreamAbis()
 	TestStreamBlocks()
