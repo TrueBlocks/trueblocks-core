@@ -14,7 +14,7 @@ var regularNames = map[base.Address]types.Name{}
 var regularNamesMutex sync.Mutex
 
 // loadRegularMap loads the regular names from the cache
-func loadRegularMap(chain string, terms []string, parts Parts, ret *map[base.Address]types.Name) error {
+func loadRegularMap(chain string, terms []string, parts types.Parts, ret *map[base.Address]types.Name) error {
 	if regularNamesLoaded {
 		for _, name := range regularNames {
 			if doSearch(&name, terms, parts) {
@@ -55,15 +55,11 @@ func loadRegularMap(chain string, terms []string, parts Parts, ret *map[base.Add
 		}
 	}
 
-	if parts&Baddress != 0 {
-		loadKnownBadresses(terms, parts, ret)
-	}
-
 	return nil
 }
 
 // loadKnownBadresses loads the known bad addresses from the cache
-func loadKnownBadresses(terms []string, parts Parts, ret *map[base.Address]types.Name) {
+func loadKnownBadresses(unused string, terms []string, parts types.Parts, ret *map[base.Address]types.Name) error {
 	knownBadAddresses := []types.Name{
 		{
 			Address: base.PrefundSender,
@@ -91,4 +87,5 @@ func loadKnownBadresses(terms []string, parts Parts, ret *map[base.Address]types
 			(*ret)[n.Address] = n
 		}
 	}
+	return nil
 }

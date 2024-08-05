@@ -194,7 +194,7 @@ var benchmarkLimit = 50
 
 func BenchmarkCleanSync(b *testing.B) {
 	chain := utils.GetTestChain()
-	parts := names.Regular
+	parts := types.Regular
 
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
@@ -241,7 +241,7 @@ func BenchmarkCleanSync(b *testing.B) {
 
 func BenchmarkCleanConcurrent(b *testing.B) {
 	chain := utils.GetTestChain()
-	parts := names.Regular
+	parts := types.Regular
 
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()

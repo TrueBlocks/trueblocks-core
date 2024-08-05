@@ -4,14 +4,13 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *NamesOptions) HandleTags(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
-	namesArray, err := loadNamesArray(chain, opts.getType(), names.SortByTags, opts.Terms)
+	namesArray, err := loadNamesArray(chain, opts.getType(), types.SortByTags, opts.Terms)
 	if err != nil {
 		return err
 	}
