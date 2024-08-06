@@ -347,8 +347,8 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 	}
 
 	display := cacheInfo.Path
-	display = strings.Replace(display, config.PathToCache(chain), "./", -1)
-	display = strings.Replace(display, config.PathToIndex(chain), "./", -1)
+	display = strings.Replace(display, config.PathToCache(chain), "." + string(os.PathSeparator), -1)
+	display = strings.Replace(display, config.PathToIndex(chain), "." + string(os.PathSeparator), -1)
 
 	switch cT {
 	case Index_Maps:

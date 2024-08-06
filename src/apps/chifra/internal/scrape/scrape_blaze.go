@@ -161,8 +161,8 @@ var writeMutex sync.Mutex
 
 // WriteAppearances writes the appearance for a chunk to a file
 func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBooleanMap) (err error) {
-	ripePath := config.PathToIndex(bm.chain) + "ripe/"
-	unripePath := config.PathToIndex(bm.chain) + "unripe/"
+	ripePath := config.PathToIndex(bm.chain) + "ripe" + string(os.PathSeparator)
+	unripePath := config.PathToIndex(bm.chain) + "unripe" + string(os.PathSeparator)
 	appendScrapeError := func(err error) {
 		bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 	}

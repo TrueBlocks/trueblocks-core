@@ -362,7 +362,7 @@ func needsMigration(addr string) error {
 	mon := Monitor{Address: base.HexToAddress(addr)}
 	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
 	if file.FileExists(path) {
-		path = strings.Replace(path, config.PathToCache(mon.Chain), "./", -1)
+		path = strings.Replace(path, config.PathToCache(mon.Chain), "." + string(os.PathSeparator), -1)
 		return validate.Usage("Old style monitor found at {0}. Please run '{1}'", path, "chifra config --migrate cache")
 	}
 	return nil

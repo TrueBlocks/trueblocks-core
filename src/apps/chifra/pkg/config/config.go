@@ -43,9 +43,9 @@ type ConfigFile struct {
 // init sets up default values for the given configuration
 func init() {
 	// The location of the per chain caches
-	cachePath = PathToRootConfig() + "cache/"
+	cachePath = PathToRootConfig() + "cache" + string(os.PathSeparator);
 	// The location of the per chain unchained indexes
-	indexPath = PathToRootConfig() + "unchained/"
+	indexPath = PathToRootConfig() + "unchained" + string(os.PathSeparator);
 }
 
 var configMutex sync.Mutex
@@ -185,7 +185,7 @@ func PathToRootConfig() string {
 	    osPath = "AppData/Local/trueblocks"
 	}
 
-	return filepath.Join(user.HomeDir, osPath) + "/"
+	return filepath.Join(user.HomeDir, osPath) + string(os.PathSeparator)
 }
 
 func pathFromXDG(envVar string) (string, error) {

@@ -11,6 +11,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -42,7 +43,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup, s *Scraper) {
 	defer wg.Done()
 
 	chain := opts.Globals.Chain
-	tmpPath := config.PathToCache(chain) + "tmp/"
+	tmpPath := config.PathToCache(chain) + "tmp" + string(os.PathSeparator)
 
 	s.ChangeState(true, tmpPath)
 

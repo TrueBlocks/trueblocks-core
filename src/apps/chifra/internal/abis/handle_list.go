@@ -61,7 +61,7 @@ func (opts *AbisOptions) HandleList(rCtx *output.RenderCtx) error {
 			}
 			if testMode {
 				abi.LastModDate = "--date--"
-				abi.Path = strings.ReplaceAll(abi.Path, config.PathToRootConfig(), "./")
+				abi.Path = strings.ReplaceAll(abi.Path, config.PathToRootConfig(), "." + string(os.PathSeparator))
 			}
 			modelChan <- &abi
 		}
