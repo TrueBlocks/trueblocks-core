@@ -8,8 +8,11 @@ set ROOT_DIR=%SCRIPT_DIR%\..
 
 :: Find all go.mod files and tidy them
 cd /d %ROOT_DIR%\examples\balanceChart    && go mod tidy
+cd /d %ROOT_DIR%\examples\cancelContext   && go mod tidy
 cd /d %ROOT_DIR%\examples\findFirst       && go mod tidy
+cd /d %ROOT_DIR%\examples\nameManager     && go mod tidy
 cd /d %ROOT_DIR%\examples\simple          && go mod tidy
+cd /d %ROOT_DIR%\examples\withStreaming   && go mod tidy
 cd /d %ROOT_DIR%\src\apps\chifra          && go mod tidy
 cd /d %ROOT_DIR%\src\dev_tools\goMaker    && go mod tidy
 cd /d %ROOT_DIR%\src\dev_tools\sdkFuzzer  && go mod tidy

@@ -13,8 +13,11 @@ echo go 1.22 >> "%GO_WORK_FILE%"
 
 :: Find all go.mod files in the src directory and add their directories to go.work
 cd %ROOT_DIR% && go work use .\examples\balanceChart
+cd %ROOT_DIR% && go work use .\examples\cancelContext
 cd %ROOT_DIR% && go work use .\examples\findFirst
+cd %ROOT_DIR% && go work use .\examples\nameManager
 cd %ROOT_DIR% && go work use .\examples\simple
+cd %ROOT_DIR% && go work use .\examples\withStreaming
 cd %ROOT_DIR% && go work use .\src\apps\chifra
 cd %ROOT_DIR% && go work use .\src\dev_tools\goMaker
 cd %ROOT_DIR% && go work use .\src\dev_tools\sdkFuzzer
