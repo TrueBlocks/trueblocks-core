@@ -5,9 +5,6 @@
 package progress
 
 import (
-	"fmt"
-	"io"
-	"strings"
 	"syscall"
 	"unsafe"
 )
