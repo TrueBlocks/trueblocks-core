@@ -144,7 +144,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 			continue
 		}
 		if !info.IsDir() {
-			fileName := bloomPath + string(os.PathSeparator) + info.Name()
+			fileName := filepath.Join(bloomPath, info.Name())
 			if !walk.IsCacheType(fileName, walk.Index_Bloom, true /* checkExt */) {
 				continue // sometimes there are .gz files in this folder, for example
 			}

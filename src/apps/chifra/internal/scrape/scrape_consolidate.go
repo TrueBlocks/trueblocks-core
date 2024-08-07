@@ -96,7 +96,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 		isOvertop := nAppearances >= int(bm.PerChunk()) // Does this block overtop a chunk?
 		if isSnap || isOvertop {
 			// Make a chunk - i.e., consolidate
-			chunkPath := indexPath + "finalized" + string(os.PathSeparator) + chunkRange.String() + ".bin"
+			chunkPath := filepath.Join(indexPath, "finalized", chunkRange.String() + ".bin")
 			publisher := base.ZeroAddr
 			var chunk index.Chunk
 			if report, err := chunk.Write(chain, publisher, chunkPath, appMap, nAppearances); err != nil {

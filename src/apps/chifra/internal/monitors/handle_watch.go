@@ -43,7 +43,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup, s *Scraper) {
 	defer wg.Done()
 
 	chain := opts.Globals.Chain
-	tmpPath := config.PathToCache(chain) + "tmp" + string(os.PathSeparator)
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp") + string(os.PathSeparator)
 
 	s.ChangeState(true, tmpPath)
 

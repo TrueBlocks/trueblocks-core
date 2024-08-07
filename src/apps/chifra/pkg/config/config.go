@@ -43,9 +43,9 @@ type ConfigFile struct {
 // init sets up default values for the given configuration
 func init() {
 	// The location of the per chain caches
-	cachePath = PathToRootConfig() + "cache" + string(os.PathSeparator);
+	cachePath = filepath.Join(PathToRootConfig(), "cache") + string(os.PathSeparator)
 	// The location of the per chain unchained indexes
-	indexPath = PathToRootConfig() + "unchained" + string(os.PathSeparator);
+	indexPath = filepath.Join(PathToRootConfig(), "unchained") + string(os.PathSeparator)
 }
 
 var configMutex sync.Mutex
