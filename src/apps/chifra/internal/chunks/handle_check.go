@@ -74,12 +74,12 @@ func (opts *ChunksOptions) check(rCtx *output.RenderCtx, blockNums []base.Blknum
 		return fileNames[i] < fileNames[j]
 	})
 
-	cacheManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
+	cacheManifest, err := manifest.LoadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 	if err != nil {
 		return err, false
 	}
 
-	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.TempContract)
+	remoteManifest, err := manifest.LoadManifest(chain, opts.PublisherAddr, manifest.TempContract)
 	if err != nil {
 		return err, false
 	}

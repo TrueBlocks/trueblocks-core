@@ -13,14 +13,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// ReadManifest reads the manifest from a file or from the Unchained Index smart contract.
+// LoadManifest reads the manifest from a file or from the Unchained Index smart contract.
 //
 // It first checks if the manifest file exists. If it does, it reads the manifest from the file.
 // If the caller requests the contract or the cached manifest does not exist, it reads the
 // manifest from the contract. It then checks if the new manifest has more chunks than the existing
 // one. If it does (or if the file didn't exist), it saves the new manifest to the file. Finally, it
 // creates a map of chunks for easy lookup and sets the specification if it is not already set.
-func ReadManifest(chain string, publisher base.Address, source Source) (man *Manifest, err error) {
+func LoadManifest(chain string, publisher base.Address, source Source) (man *Manifest, err error) {
 	manifestFn := config.PathToManifest(chain)
 	exists := file.FileExists(manifestFn)
 	man = &Manifest{}

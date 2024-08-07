@@ -24,7 +24,7 @@ func (opts *WhenOptions) HandleTimestampsCount(rCtx *output.RenderCtx) error {
 				count = 5000000
 			}
 
-			s := types.TimestampCount{
+			s := types.Count{
 				Count: uint64(count),
 			}
 

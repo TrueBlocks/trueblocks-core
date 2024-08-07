@@ -281,7 +281,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	if !file.FileExists(indexFilename) {
 		chain := updater.Chain
 		var man *manifest.Manifest
-		man, err = manifest.ReadManifest(chain, updater.PublisherAddr, manifest.LocalCache)
+		man, err = manifest.LoadManifest(chain, updater.PublisherAddr, manifest.LocalCache)
 		if err != nil {
 			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return
