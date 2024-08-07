@@ -1518,7 +1518,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
   - `MonitorClean` (for `chifra monitors --clean`)
   - `ReportCheck` (for `chifra chunks index --check`)
   - `Timestamp` (for `chifra when --timestamps`)
-  - `TimestampCount` (for `chifra when --timestamps --count`)
+  - `Count` (for `chifra when --timestamps --count`)
   - `TraceFilter` (for `chifra traces <filter>`)
 
 ## Tool Specific Changes
