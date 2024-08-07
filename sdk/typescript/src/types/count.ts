@@ -10,6 +10,6 @@
 
 import { uint64 } from '.';
 
-export type TimestampCount = {
+export type Count = {
   count: uint64
 }

@@ -37,7 +37,6 @@ func DoChunks() {
 	rewrite := []bool{false, true}
 	list := []bool{false, true}
 	unpin := []bool{false, true}
-	count := []bool{false, true}
 	// firstBlock is a <blknum> --other
 	// lastBlock is a <blknum> --other
 	// maxAddrs is a <uint64> --other
@@ -57,7 +56,6 @@ func DoChunks() {
 	_ = rewrite
 	_ = list
 	_ = unpin
-	_ = count
 	opts = sdk.ChunksOptions{
 		FirstBlock: 0,
 		LastBlock:  base.NOPOSN,
@@ -186,6 +184,16 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Message](fn, diff); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "count":
+		if count, _, err := opts.ChunksCount(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Count](fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

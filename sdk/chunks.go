@@ -35,7 +35,6 @@ type ChunksOptions struct {
 	Rewrite    bool              `json:"rewrite,omitempty"`
 	List       bool              `json:"list,omitempty"`
 	Unpin      bool              `json:"unpin,omitempty"`
-	Count      bool              `json:"count,omitempty"`
 	Sleep      float64           `json:"sleep,omitempty"`
 	RenderCtx  *output.RenderCtx `json:"-"`
 	Globals
@@ -108,6 +107,13 @@ func (opts *ChunksOptions) ChunksDiff() ([]types.Message, *types.MetaData, error
 	in := opts.toInternal()
 	in.Diff = true
 	return queryChunks[types.Message](in)
+}
+
+// ChunksCount implements the chifra chunks --count command.
+func (opts *ChunksOptions) ChunksCount() ([]types.Count, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Count = true
+	return queryChunks[types.Count](in)
 }
 
 // ChunksTag implements the chifra chunks --tag command.

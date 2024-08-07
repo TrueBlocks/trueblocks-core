@@ -185,7 +185,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 27020,tools,Chain Data,when,whenBlock,blocks,,,visible|docs,3,positional,list<string>,namedBlock,,,,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
 27030,tools,Chain Data,when,whenBlock,list,l,,visible|docs,1,switch,<boolean>,namedBlock,,,,export a list of the 'special' blocks
 27040,tools,Chain Data,when,whenBlock,timestamps,t,,visible|docs,2,switch,<boolean>,timestamp,,,,display or process timestamps
-27050,tools,Chain Data,when,whenBlock,count,U,,visible|docs,,switch,<boolean>,timestampCount,,,,with --timestamps only&#44; returns the number of timestamps in the cache
+27050,tools,Chain Data,when,whenBlock,count,U,,visible|docs,,switch,<boolean>,count,,,,with --timestamps only&#44; returns the number of timestamps in the cache
 27060,tools,Chain Data,when,whenBlock,truncate,n,NOPOSN,,,flag,<blknum>,,,,,with --timestamps only&#44; truncates the timestamp file at this block
 27070,tools,Chain Data,when,whenBlock,repair,r,,visible|docs,,switch,<boolean>,,,,,with --timestamps only&#44; repairs block(s) in the block range by re-querying from the chain
 27080,tools,Chain Data,when,whenBlock,check,c,,visible|docs,,switch,<boolean>,,,,,with --timestamps only&#44; checks the validity of the timestamp data
@@ -293,7 +293,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 46160,apps,Admin,chunks,chunkMan,rewrite,e,,visible|docs,,switch,<boolean>,,,,,for the --pin --deep mode only&#44; writes the manifest back to the index folder (see notes)
 46170,apps,Admin,chunks,chunkMan,list,l,,,2,switch,<boolean>,,,,,for the pins mode only&#44; list the remote pins
 46180,apps,Admin,chunks,chunkMan,unpin,u,,,3,switch,<boolean>,,,,,for the pins mode only&#44; if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs)
-46190,apps,Admin,chunks,chunkMan,count,U,,visible|docs,,switch,<boolean>,,,,,for the pins mode only&#44; display only the count of records
+46190,apps,Admin,chunks,chunkMan,count,U,,visible|docs,,switch,<boolean>,count,,,,for certain modes only&#44; display the count of records
 46200,apps,Admin,chunks,chunkMan,tag,t,,,4,flag,<string>,message,,,,visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
 46210,apps,Admin,chunks,chunkMan,sleep,s,,visible|docs,,flag,<float64>,,,,,for --remote pinning only&#44; seconds to sleep between API calls
 46220,apps,Admin,chunks,chunkMan,n1,,,,,note,,,,,,Mode determines which type of data to display or process.

@@ -54,7 +54,7 @@ type ChunksOptions struct {
 	Rewrite    bool                     `json:"rewrite,omitempty"`    // For the --pin --deep mode only, writes the manifest back to the index folder (see notes)
 	List       bool                     `json:"list,omitempty"`       // For the pins mode only, list the remote pins
 	Unpin      bool                     `json:"unpin,omitempty"`      // For the pins mode only, if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs)
-	Count      bool                     `json:"count,omitempty"`      // For the pins mode only, display only the count of records
+	Count      bool                     `json:"count,omitempty"`      // For certain modes only, display the count of records
 	Tag        string                   `json:"tag,omitempty"`        // Visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
 	Sleep      float64                  `json:"sleep,omitempty"`      // For --remote pinning only, seconds to sleep between API calls
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
