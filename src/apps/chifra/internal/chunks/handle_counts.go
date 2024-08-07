@@ -28,10 +28,10 @@ func (opts *ChunksOptions) HandleCounts(rCtx *output.RenderCtx, blockNums []base
 		switch opts.Mode {
 		case "blooms":
 			path := walk.GetRootPathFromCacheType(chain, walk.Index_Bloom)
-			walk.ForEveryFileInFolder(path, vFunc, nil)
+			_ = walk.ForEveryFileInFolder(path, vFunc, nil)
 		case "index", "stats":
 			path := walk.GetRootPathFromCacheType(chain, walk.Index_Final)
-			walk.ForEveryFileInFolder(path, vFunc, nil)
+			_ = walk.ForEveryFileInFolder(path, vFunc, nil)
 		case "manifest":
 			man, _ := manifest.LoadManifest(chain, opts.PublisherAddr, sourceMap[opts.Remote])
 			counter.Count = uint64(len(man.Chunks))
