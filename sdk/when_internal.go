@@ -83,7 +83,7 @@ func GetWhenOptions(args []string) (*whenOptionsInternal, error) {
 type whenGeneric interface {
 	types.NamedBlock |
 		types.Timestamp |
-		types.TimestampCount
+		types.Count
 }
 
 func queryWhen[T whenGeneric](opts *whenOptionsInternal) ([]T, *types.MetaData, error) {

@@ -152,4 +152,12 @@ func (s *Status) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
+func (s *Status) ShallowCopy() Status {
+	caches := s.Caches
+	s.Caches = nil
+	ret := *s
+	s.Caches = caches
+	return ret
+}
+
 // EXISTING_CODE

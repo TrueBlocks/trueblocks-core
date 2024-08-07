@@ -1,0 +1,7 @@
+[settings]
+    class = "Count"
+    doc_group = "05-Other"
+    doc_descr = "the number of items in the given database"
+    doc_route = "521-count"
+    attributes = ""
+    produced_by = "when, chunks"

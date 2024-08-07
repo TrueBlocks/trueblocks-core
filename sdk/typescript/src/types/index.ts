@@ -32,7 +32,7 @@ export * from './state';
 export * from './statement';
 export * from './status';
 export * from './timestamp';
-export * from './timestampCount';
+export * from './count';
 export * from './token';
 export * from './trace';
 export * from './traceAction';

@@ -16,7 +16,7 @@ List of types that support the Modeler interface
 | ./internal/status   | types_status.go          | simpleStatus          | <--- missing ---> |         | x      |               |
 | ./internal/traces   | types_tracecount.go      | simpleTraceCount      | traceCount        |         | x      |               |
 | ./internal/when     | types_timestamp.go       | simpleTimestamp       | timestamp         |         |        |               |
-| ./internal/when     | types_timestampCount.go  | simpleTimestampCount  | timestampCount    |         |        |               |
+| ./internal/when     | types_count.go           | simpleCount           | count             |         |        |               |
 |                     |                          |                       |                   |         |        |               |
 | ./pkg/types         | types_appearance.go      | Appearance            | appearance        | x       |        | not turned on |
 | ./pkg/types         | types_block.go           | Block                 | block             | x       | x      |               |

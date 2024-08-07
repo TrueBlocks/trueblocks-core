@@ -15,7 +15,7 @@ import (
 func (opts *InitOptions) HandleDryRun(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
-	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.TempContract)
+	remoteManifest, err := manifest.LoadManifest(chain, opts.PublisherAddr, manifest.TempContract)
 	if err != nil {
 		return err
 	}

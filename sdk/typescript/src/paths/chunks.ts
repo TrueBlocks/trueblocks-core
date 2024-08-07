@@ -9,7 +9,7 @@
  */
 
 import * as ApiCallers from '../lib/api_callers';
-import { address, blknum, ChunkAddress, ChunkAppearance, ChunkBloom, ChunkIndex, ChunkManifest, ChunkPin, ChunkStats, float64, Message, uint64 } from '../types';
+import { address, blknum, ChunkAddress, ChunkAppearance, ChunkBloom, ChunkIndex, ChunkManifest, ChunkPin, ChunkStats, Count, float64, Message, uint64 } from '../types';
 
 export function getChunks(
   parameters?: {
@@ -33,7 +33,7 @@ export function getChunks(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<ChunkAddress[] | ChunkAppearance[] | ChunkBloom[] | ChunkIndex[] | ChunkManifest[] | ChunkPin[] | ChunkStats[] | Message[]>(
+  return ApiCallers.fetch<ChunkAddress[] | ChunkAppearance[] | ChunkBloom[] | ChunkIndex[] | ChunkManifest[] | ChunkPin[] | ChunkStats[] | Count[] | Message[]>(
     { endpoint: '/chunks', method: 'get', parameters, options },
   );
 }

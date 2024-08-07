@@ -45,7 +45,7 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 		outPath = config.PathToManifest(chain)
 	}
 
-	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
+	man, err := manifest.LoadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 	if err != nil {
 		rCtx.Cancel()
 		return err

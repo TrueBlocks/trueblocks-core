@@ -44,10 +44,10 @@ Notes:
 
 Data models produced by this tool:
 
+- [count](/data-model/other/#count)
 - [message](/data-model/other/#message)
 - [namedblock](/data-model/chaindata/#namedblock)
 - [timestamp](/data-model/chaindata/#timestamp)
-- [timestampcount](/data-model/chaindata/#timestampcount)
 
 ### Other Options
 

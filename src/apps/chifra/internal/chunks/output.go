@@ -63,6 +63,9 @@ func (opts *ChunksOptions) ChunksInternal(rCtx *output.RenderCtx) error {
 	if opts.Globals.TestMode && len(blockNums) > 200 {
 		blockNums = blockNums[:200]
 	}
+	if opts.Count {
+		err = opts.HandleCounts(rCtx, blockNums)
+	} else
 	// EXISTING_CODE
 	if opts.Check {
 		err = opts.HandleCheck(rCtx, blockNums)

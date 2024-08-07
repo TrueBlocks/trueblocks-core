@@ -9,7 +9,7 @@
  */
 
 import * as ApiCallers from '../lib/api_callers';
-import { NamedBlock, Timestamp, TimestampCount } from '../types';
+import { Count, NamedBlock, Timestamp } from '../types';
 
 export function getWhen(
   parameters?: {
@@ -29,7 +29,7 @@ export function getWhen(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<NamedBlock[] | TimestampCount[] | Timestamp[]>(
+  return ApiCallers.fetch<Count[] | NamedBlock[] | Timestamp[]>(
     { endpoint: '/when', method: 'get', parameters, options },
   );
 }

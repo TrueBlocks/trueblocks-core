@@ -41,6 +41,12 @@ func getPins(chain, status string, first, cnt int) (int, []Pin) {
 	}
 }
 
+// CountPins returns the number of remote piuns
+func CountPins(chain, status string) uint64 {
+	count, _ := getPins(chain, status, 0, 1)
+	return uint64(count)
+}
+
 // ListPins pins a file remotely to the pinning service
 func ListPins(chain, status string, showProgress, countOnly bool, perPage int, dur time.Duration) ([]string, error) {
 	count, _ := getPins(chain, status, 0, 1)

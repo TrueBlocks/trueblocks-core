@@ -104,7 +104,7 @@ func TestWhen(which, value, fn string, opts *sdk.WhenOptions) {
 		if count, _, err := opts.WhenCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.TimestampCount](fn, count); err != nil {
+			if err := SaveToFile[types.Count](fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

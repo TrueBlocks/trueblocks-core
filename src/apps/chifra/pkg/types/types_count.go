@@ -15,18 +15,18 @@ import (
 
 // EXISTING_CODE
 
-type TimestampCount struct {
+type Count struct {
 	Count uint64 `json:"count"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s TimestampCount) String() string {
+func (s Count) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *TimestampCount) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+func (s *Count) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -46,7 +46,7 @@ func (s *TimestampCount) Model(chain, format string, verbose bool, extraOpts map
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *TimestampCount) FinishUnmarshal() {
+func (s *Count) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
