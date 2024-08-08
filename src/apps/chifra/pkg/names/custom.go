@@ -17,11 +17,19 @@ var customNamesLoaded = false
 var customNames map[base.Address]types.Name = map[base.Address]types.Name{}
 var customNamesMutex sync.Mutex
 
+func ClearCustomNames() {
+	customNamesLoaded = false
+}
+
 func loadCustomMap(chain string, terms []string, parts types.Parts, namesMap *map[base.Address]types.Name) (err error) {
 	if customNamesLoaded {
 		// We have already loaded the data
 		for _, name := range customNames {
 			if doSearch(&name, terms, parts) {
+				name.Parts = types.Custom
+				if existing, ok := (*namesMap)[name.Address]; ok {
+					name.Parts |= existing.Parts
+				}
 				(*namesMap)[name.Address] = name
 			}
 		}
@@ -46,6 +54,7 @@ func loadCustomMap(chain string, terms []string, parts types.Parts, namesMap *ma
 	if parts&types.Testing != 0 {
 		loadTestNames(terms, parts, &customNames, namesMap)
 	}
+
 	return
 }
 
@@ -75,6 +84,10 @@ func unmarshallCustomNames(source io.Reader, terms []string, parts types.Parts, 
 		}
 		customNames[name.Address] = name
 		if doSearch(&name, terms, parts) {
+			name.Parts = types.Custom
+			if existing, ok := (*namesMap)[name.Address]; ok {
+				name.Parts |= existing.Parts
+			}
 			(*namesMap)[name.Address] = name
 		}
 	}

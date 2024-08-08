@@ -18,6 +18,10 @@ func loadRegularMap(chain string, terms []string, parts types.Parts, ret *map[ba
 	if regularNamesLoaded {
 		for _, name := range regularNames {
 			if doSearch(&name, terms, parts) {
+				name.Parts = types.Regular
+				if existing, ok := (*ret)[name.Address]; ok {
+					name.Parts |= existing.Parts
+				}
 				(*ret)[name.Address] = name
 			}
 		}
@@ -42,16 +46,20 @@ func loadRegularMap(chain string, terms []string, parts types.Parts, ret *map[ba
 	}
 
 	for {
-		n, err := reader.Read()
+		name, err := reader.Read()
 		if err == io.EOF {
 			break
 		}
 		if err != nil {
 			logger.Fatal(err)
 		}
-		regularNames[n.Address] = n
-		if doSearch(&n, terms, parts) {
-			(*ret)[n.Address] = n
+		regularNames[name.Address] = name
+		if doSearch(&name, terms, parts) {
+			name.Parts = types.Regular
+			if existing, ok := (*ret)[name.Address]; ok {
+				name.Parts |= existing.Parts
+			}
+			(*ret)[name.Address] = name
 		}
 	}
 
@@ -83,9 +91,10 @@ func loadKnownBadresses(unused string, terms []string, parts types.Parts, ret *m
 			Tags:    "75-Baddress",
 		},
 	}
-	for _, n := range knownBadAddresses {
-		if doSearch(&n, terms, parts) {
-			(*ret)[n.Address] = n
+	for _, name := range knownBadAddresses {
+		if doSearch(&name, terms, parts) {
+			name.Parts = types.Baddress
+			(*ret)[name.Address] = name
 		}
 	}
 	return nil
