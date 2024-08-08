@@ -4,10 +4,9 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
-	"os"
 	"path/filepath"
 	"sort"
-	"strings"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -75,7 +74,7 @@ func (opts *ChunksOptions) handleDiff(chain, path string) (bool, error) {
 }
 
 func writeArray(disp, dest, fn string, lines []string) error {
-	outputFolder, _ := filepath.Abs("." + string(os.PathSeparator) + dest)
+	outputFolder, _ := filepath.Abs("./" + dest)
 	if !file.FolderExists(outputFolder) {
 		if err := os.MkdirAll(outputFolder, os.ModePerm); err != nil {
 			return err
@@ -218,7 +217,7 @@ func (opts *ChunksOptions) getParams(chain, path string) (string, string, base.R
 
 func toDiffPath(chain string, middleMark base.Blknum) string {
 	diffPath := os.Getenv("TB_CHUNKS_DIFFPATH")
-	if !strings.Contains(diffPath, "unchained" + string(os.PathSeparator)) {
+	if filepath.Base(diffPath) != "unchained" {
 		diffPath = filepath.Join(diffPath, "unchained", chain, "finalized")
 	}
 	diffPath, _ = filepath.Abs(diffPath)

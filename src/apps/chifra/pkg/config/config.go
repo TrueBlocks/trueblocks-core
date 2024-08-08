@@ -43,9 +43,9 @@ type ConfigFile struct {
 // init sets up default values for the given configuration
 func init() {
 	// The location of the per chain caches
-	cachePath = filepath.Join(PathToRootConfig(), "cache") + string(os.PathSeparator)
+	cachePath = filepath.Join(PathToRootConfig(), "cache")
 	// The location of the per chain unchained indexes
-	indexPath = filepath.Join(PathToRootConfig(), "unchained") + string(os.PathSeparator)
+	indexPath = filepath.Join(PathToRootConfig(), "unchained")
 }
 
 var configMutex sync.Mutex
@@ -83,22 +83,22 @@ func GetRootConfig() *ConfigFile {
 
 	cachePath := trueBlocksConfig.Settings.CachePath
 	if len(cachePath) == 0 || cachePath == "<not_set>" {
-		cachePath = filepath.Join(configPath, "cache") + string(os.PathSeparator)
+		cachePath = filepath.Join(configPath, "cache")
 	}
 	cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
 	cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
-	if !strings.Contains(cachePath, string(os.PathSeparator) + "cache") {
+	if filepath.Base(cachePath) != "cache" {
 		cachePath = filepath.Join(cachePath, "cache")
 	}
 	trueBlocksConfig.Settings.CachePath = cachePath
 
 	indexPath := trueBlocksConfig.Settings.IndexPath
 	if len(indexPath) == 0 || indexPath == "<not_set>" {
-		indexPath = filepath.Join(configPath, "unchained") + string(os.PathSeparator)
+		indexPath = filepath.Join(configPath, "unchained")
 	}
 	indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
 	indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
-	if !strings.Contains(indexPath, string(os.PathSeparator) + "unchained") {
+	if filepath.Base(indexPath) != "unchained" {
 		indexPath = filepath.Join(indexPath, "unchained")
 	}
 	trueBlocksConfig.Settings.IndexPath = indexPath
@@ -185,7 +185,7 @@ func PathToRootConfig() string {
 	    osPath = "AppData/Local/trueblocks"
 	}
 
-	return filepath.Join(user.HomeDir, osPath) + string(os.PathSeparator)
+	return filepath.Join(user.HomeDir, filepath.Clean(osPath))
 }
 
 func pathFromXDG(envVar string) (string, error) {

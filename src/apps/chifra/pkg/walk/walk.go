@@ -154,7 +154,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_Names:
 		fallthrough
 	case Cache_Tmp:
-		return filepath.Join(config.PathToCache(chain), CacheTypeToFolder[cacheType]) + string(os.PathSeparator)
+		return filepath.Join(config.PathToCache(chain), CacheTypeToFolder[cacheType])
 
 	case Cache_Blocks:
 		fallthrough
@@ -177,7 +177,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_Transactions:
 		fallthrough
 	case Cache_Withdrawals:
-		return filepath.Join(config.PathToCache(chain), "v1", CacheTypeToFolder[cacheType]) + string(os.PathSeparator)
+		return filepath.Join(config.PathToCache(chain), "v1", CacheTypeToFolder[cacheType])
 
 	case Index_Bloom:
 		fallthrough
@@ -190,7 +190,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Index_Unripe:
 		fallthrough
 	case Index_Maps:
-		return filepath.Join(config.PathToIndex(chain), CacheTypeToFolder[cacheType]) + string(os.PathSeparator)
+		return filepath.Join(config.PathToIndex(chain), CacheTypeToFolder[cacheType])
 	case Config:
 		return config.PathToRootConfig()
 	case Cache_NotACache:
@@ -347,8 +347,8 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 	}
 
 	display := cacheInfo.Path
-	display = strings.Replace(display, config.PathToCache(chain), "." + string(os.PathSeparator), -1)
-	display = strings.Replace(display, config.PathToIndex(chain), "." + string(os.PathSeparator), -1)
+	display = filepath.Clean(strings.Replace(display, config.PathToCache(chain), "./", -1))
+	display = filepath.Clean(strings.Replace(display, config.PathToIndex(chain), "./", -1))
 
 	switch cT {
 	case Index_Maps:

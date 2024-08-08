@@ -128,7 +128,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 		return canceled, nil
 	}
 
-	bloomPath := filepath.Join(config.PathToIndex(updater.Chain), "blooms" + string(os.PathSeparator))
+	bloomPath := filepath.Join(config.PathToIndex(updater.Chain), "blooms")
 	files, err := os.ReadDir(bloomPath)
 	if err != nil {
 		return canceled, err
@@ -362,7 +362,7 @@ func needsMigration(addr string) error {
 	mon := Monitor{Address: base.HexToAddress(addr)}
 	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
 	if file.FileExists(path) {
-		path = strings.Replace(path, config.PathToCache(mon.Chain), "." + string(os.PathSeparator), -1)
+		path = filepath.Clean(strings.Replace(path, config.PathToCache(mon.Chain), "./", -1))
 		return validate.Usage("Old style monitor found at {0}. Please run '{1}'", path, "chifra config --migrate cache")
 	}
 	return nil
