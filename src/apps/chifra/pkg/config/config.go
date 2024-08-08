@@ -185,7 +185,7 @@ func PathToRootConfig() string {
 	    osPath = "AppData/Local/trueblocks"
 	}
 
-	return filepath.Join(user.HomeDir, filepath.Clean(osPath))
+	return filepath.Join(user.HomeDir, osPath)
 }
 
 func pathFromXDG(envVar string) (string, error) {
