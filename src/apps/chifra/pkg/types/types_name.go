@@ -164,7 +164,7 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 			model["isErc721"] = true
 			order = append(order, "isErc721")
 		}
-		if s.Parts != 0 && s.Parts != None {
+		if verbose && s.Parts != 0 && s.Parts != None {
 			model["parts"] = s.Parts
 			order = append(order, "parts")
 		}

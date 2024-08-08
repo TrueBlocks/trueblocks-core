@@ -50,6 +50,10 @@ func loadPrefundMap(chain string, terms []string, parts types.Parts, ret *map[ba
 	} else {
 		for k, v := range *prefundMap {
 			if doSearch(&v, terms, parts) {
+				v.Parts = types.Prefund
+				if existing, ok := (*ret)[k]; ok {
+					v.Parts |= existing.Parts
+				}
 				(*ret)[k] = v
 			}
 		}
