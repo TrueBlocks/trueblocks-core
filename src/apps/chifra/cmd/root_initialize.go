@@ -67,7 +67,7 @@ func VerifyMigrations() {
 	}
 
 	// ...and the config file better exist.
-	configFile := filepath.Join(configFolder + "trueBlocks.toml")
+	configFile := filepath.Join(configFolder, "trueBlocks.toml")
 	if _, err := os.Stat(configFile); err != nil {
 		msg := strings.Replace(doesNotExist, "{0}", "{"+configFile+"}", -1)
 		msg = colors.ColoredWith(msg, colors.Yellow)
