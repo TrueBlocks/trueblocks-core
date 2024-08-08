@@ -7,6 +7,7 @@ package chunksPkg
 import (
 	"errors"
 	"fmt"
+	"path/filepath"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -83,7 +84,7 @@ func (opts *ChunksOptions) check(rCtx *output.RenderCtx, blockNums []base.Blknum
 	if err != nil {
 		return err, false
 	}
-	historyFile := config.PathToRootConfig() + "unchained.txt"
+	historyFile := filepath.Join(config.PathToRootConfig(), "unchained.txt")
 	saved := history.FromHistory(historyFile, "headerVersion")
 	defer func() {
 		_ = history.ToHistory(historyFile, "headerVersion", saved)

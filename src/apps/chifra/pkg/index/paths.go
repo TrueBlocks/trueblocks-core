@@ -27,7 +27,7 @@ func ToBloomPath(pathIn string) string {
 	if isCacheType(pathIn, "blooms", "bloom") {
 		return pathIn
 	}
-	ret := strings.Replace(filepath.Clean(pathIn), ".bin", ".bloom", -1))
+	ret := strings.Replace(filepath.Clean(pathIn), ".bin", ".bloom", -1)
 	ret = strings.Replace(ret, ".txt", ".bloom", -1)
 	ret = strings.Replace(ret, finalized_str, blooms_str, -1)
 	ret = strings.Replace(ret, staging_str, blooms_str, -1)
@@ -40,7 +40,7 @@ func ToIndexPath(pathIn string) string {
 		return pathIn
 	}
 
-	ret := strings.Replace(filepath.Clean(pathIn), ".bloom", ".bin", -1))
+	ret := strings.Replace(filepath.Clean(pathIn), ".bloom", ".bin", -1)
 	ret = strings.Replace(ret, ".txt", ".bin", -1)
 	ret = strings.Replace(ret, blooms_str, finalized_str, -1)
 	ret = strings.Replace(ret, staging_str, finalized_str, -1)
@@ -53,7 +53,7 @@ func ToStagingPath(pathIn string) string {
 		return pathIn
 	}
 
-	ret := strings.Replace(filepath.Clean(pathIn), ".bin", ".txt", -1))
+	ret := strings.Replace(filepath.Clean(pathIn), ".bin", ".txt", -1)
 	ret = strings.Replace(ret, ".bloom", ".txt", -1)
 	ret = strings.Replace(ret, finalized_str, staging_str, -1)
 	ret = strings.Replace(ret, blooms_str, staging_str, -1)

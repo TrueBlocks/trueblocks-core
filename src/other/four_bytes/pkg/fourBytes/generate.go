@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path"
+	"path/filepath"
 	"runtime"
 	"sync"
 
@@ -93,15 +93,15 @@ func writeWorker(i interface{}) {
 // GenerateFromFiles reads input files and creates four bytes database. It then sends it to writeWorkers to save
 // chunk files.
 func GenerateFromFiles(outDir string) (err error) {
-	sigsFile, err := os.OpenFile(path.Join(config.PathToRootConfig(), "abis/known-000/uniq_sigs.tab"), os.O_RDONLY, 0)
+	sigsFile, err := os.OpenFile(filepath.Join(config.PathToRootConfig(), "abis/known-000/uniq_sigs.tab"), os.O_RDONLY, 0)
 	if err != nil {
 		return
 	}
-	funcsFile, err := os.OpenFile(path.Join(config.PathToRootConfig(), "abis/known-000/uniq_funcs.tab"), os.O_RDONLY, 0)
+	funcsFile, err := os.OpenFile(filepath.Join(config.PathToRootConfig(), "abis/known-000/uniq_funcs.tab"), os.O_RDONLY, 0)
 	if err != nil {
 		return
 	}
-	eventsFile, err := os.OpenFile(path.Join(config.PathToRootConfig(), "abis/known-000/uniq_events.tab"), os.O_RDONLY, 0)
+	eventsFile, err := os.OpenFile(filepath.Join(config.PathToRootConfig(), "abis/known-000/uniq_events.tab"), os.O_RDONLY, 0)
 	if err != nil {
 		return
 	}
