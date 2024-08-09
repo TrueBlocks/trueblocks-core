@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -114,7 +115,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 
 				if workerArgs.ctx.Err() != nil {
 					// User hit control + c - clean up both peices for the current chunk
-					chunkPath := config.PathToIndex(chain) + "finalized/" + chunk.Range + ".bin"
+					chunkPath := filepath.Join(config.PathToIndex(chain), "finalized", chunk.Range+".bin")
 					removeLocalFile(ToIndexPath(chunkPath), "user canceled", progressChannel)
 					removeLocalFile(ToBloomPath(chunkPath), "user canceled", progressChannel)
 					progressChannel <- &progress.ProgressMsg{
@@ -153,7 +154,7 @@ type fetchResult struct {
 // fetchFromIpfsGateway downloads a chunk from an IPFS gateway using HTTP
 func fetchFromIpfsGateway(ctx context.Context, gateway, hash string) (*fetchResult, error) {
 	url, _ := url.Parse(gateway)
-	url.Path = filepath.Join(url.Path, hash)
+	url.Path = path.Join(url.Path, hash)
 
 	debug.DebugCurlStr(url.String())
 	request, err := http.NewRequestWithContext(ctx, "GET", url.String(), nil)
@@ -308,7 +309,7 @@ func DownloadChunks(chain string, chunksToDownload []types.ChunkRecord, chunkTyp
 
 // writeBytesToDisc save the downloaded bytes to disc
 func writeBytesToDisc(chain string, chunkType walk.CacheType, res *jobResult) error {
-	fullPath := config.PathToIndex(chain) + "finalized/" + res.rng + ".bin"
+	fullPath := filepath.Join(config.PathToIndex(chain), "finalized", res.rng+".bin")
 	if chunkType == walk.Index_Bloom {
 		fullPath = ToBloomPath(fullPath)
 	}

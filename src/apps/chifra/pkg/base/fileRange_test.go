@@ -6,6 +6,7 @@ package base
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"testing"
 )
@@ -88,7 +89,7 @@ func TestFilenameFromRange(t *testing.T) {
 	fR := FileRange{0, 100}
 	want := "mainnet/finalized/000000000-000000100.bin"
 	got := fR.RangeToFilename("mainnet")
-	parts := strings.Split(got, "unchained/")
+	parts := strings.Split(got, "unchained"+string(os.PathSeparator))
 	if len(parts) != 2 || parts[1] != want {
 		t.Errorf("FilenameFromRange() = %v, want %v", got, parts[1])
 	}
