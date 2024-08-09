@@ -14,6 +14,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -198,13 +199,13 @@ func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
 	case ExploreNone:
 		// do nothing
 	case ExploreTx:
-		query = "tx/" + u.term
+		query = path.Join("tx", u.term)
 	case ExploreBlock:
-		query = "block/" + u.term
+		query = path.Join("block", u.term)
 	case ExploreAddress:
 		fallthrough
 	default:
-		query = "address/" + u.term
+		query = path.Join("address", u.term)
 	}
 
 	if opts.Local {

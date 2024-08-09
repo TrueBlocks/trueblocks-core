@@ -7,6 +7,7 @@ package monitorsPkg
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -30,7 +31,7 @@ func (scraper *Scraper) ChangeState(onOff bool, tmpPath string) bool {
 	prev := scraper.Running
 	scraper.Running = onOff
 	str := "false"
-	fileName := tmpPath + scraper.Name + ".txt"
+	fileName := filepath.Join(tmpPath, scraper.Name+".txt")
 	err := os.WriteFile(fileName, []byte(str), 0644) // Uses os.O_WRONLY|os.O_CREATE|os.O_TRUNC
 	if err != nil {
 		logger.Fatal(err)
