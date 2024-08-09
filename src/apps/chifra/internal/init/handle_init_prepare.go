@@ -209,7 +209,7 @@ func (opts *InitOptions) reportReason(prefix string, status InitReason, path str
 		col := colors.BrightMagenta
 		if status == FILE_ERROR || status == NOT_IN_MANIFEST {
 			col = colors.BrightRed
-		} else if strings.Contains(path, "/blooms/") {
+		} else if strings.Contains(path, string(os.PathSeparator) + "blooms" + string(os.PathSeparator)) {
 			col = colors.BrightYellow
 		}
 		rng := base.RangeFromFilename(path)

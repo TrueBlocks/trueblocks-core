@@ -38,7 +38,7 @@ func (opts *ChunksOptions) HandleAddresses(rCtx *output.RenderCtx, blockNums []b
 				if !file.FileExists(path) {
 					// This is okay, if the user used chifra init without the --all option. Warn them and continue
 					msg := ""
-					path = strings.Replace(path, config.PathToIndex(chain), "$indexPath", 1)
+					path = strings.Replace(path, config.PathToIndex(chain)+"/", "$indexPath/", 1)
 					if been_here < 3 {
 						msg = fmt.Sprintf("index file %s does not exist. Run 'chifra init --all' to create it.", path)
 					} else if been_here == 3 {

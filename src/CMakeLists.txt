@@ -17,7 +17,6 @@ find_package(Python COMPONENTS Interpreter Development)
 # ----------------------------------------------------------------------------------------
 message(STATUS "======== LOOKING FOR CURL ========================")
 find_package(CURL REQUIRED)
-include_directories(${CURL_INCLUDE_DIRS})
 
 # ----------------------------------------------------------------------------------------
 message(STATUS "======== LOOKING FOR GOLANG ========================")
@@ -68,11 +67,17 @@ add_custom_target(examples ALL COMMAND ${SCRIPTS_DIR}/build-examples.sh WORKING_
 # ----------------------------------------------------------------------------------------
 function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC DEST_DIR)
     get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
+    file(GLOB SRC_FILE_LIST "${MAIN_SRC}/*.go")
+    set(EXE_NAME ${NAME})
+    if (WIN32)
+        set(EXE_NAME ${NAME}.exe)
+    endif()
+
     add_custom_target(${NAME} ALL)
     add_custom_command(TARGET ${NAME}
                     COMMAND go build
-                    -o "${DEST_DIR}/${NAME}"
-                    ${CMAKE_GO_FLAGS} ${MAIN_SRC}
+                    -o "${DEST_DIR}/${EXE_NAME}"
+                    ${CMAKE_GO_FLAGS} ${SRC_FILE_LIST}
                     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
                     DEPENDS ${MAIN_SRC_ABS} ${MAIN_SRC})
 endfunction(ADD_GO_INSTALLABLE_PROGRAM)
@@ -80,16 +85,21 @@ endfunction(ADD_GO_INSTALLABLE_PROGRAM)
 # ----------------------------------------------------------------------------------------
 add_subdirectory(other/install)
 
-ADD_GO_INSTALLABLE_PROGRAM(chifra ${CMAKE_SOURCE_DIR}/apps/chifra/*.go ${BIN_DIR})
-ADD_GO_INSTALLABLE_PROGRAM(goMaker ${CMAKE_SOURCE_DIR}/dev_tools/goMaker/*.go ${BIN_DIR})
-ADD_GO_INSTALLABLE_PROGRAM(testRunner ${CMAKE_SOURCE_DIR}/dev_tools/testRunner/*.go ${BIN_DIR})
-ADD_GO_INSTALLABLE_PROGRAM(sdkFuzzer ${CMAKE_SOURCE_DIR}/dev_tools/sdkFuzzer/*.go ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM(chifra ${CMAKE_SOURCE_DIR}/apps/chifra ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM(goMaker ${CMAKE_SOURCE_DIR}/dev_tools/goMaker ${BIN_DIR})
+if (NOT WIN32)
+    ADD_GO_INSTALLABLE_PROGRAM(testRunner ${CMAKE_SOURCE_DIR}/dev_tools/testRunner ${BIN_DIR})
+    ADD_GO_INSTALLABLE_PROGRAM(sdkFuzzer ${CMAKE_SOURCE_DIR}/dev_tools/sdkFuzzer ${BIN_DIR})
+    add_dependencies(testRunner goMaker)
+    add_dependencies(sdkFuzzer goMaker)
+    add_dependencies(chifra testRunner)
+endif()
 
-add_dependencies(testRunner goMaker)
-add_dependencies(sdkFuzzer goMaker)
-add_dependencies(chifra testRunner)
 add_dependencies(examples chifra)
+
+file(GLOB CHIFRA_FOR_DOCKER_FILES "${CMAKE_SOURCE_DIR}/apps/chifra/*.go")
 add_custom_target(chifra-for-docker ALL
-    COMMAND ${GO_EXECUTABLE} build -o ${BIN_DIR}/chifra ${CMAKE_SOURCE_DIR}/apps/chifra/*.go
+    COMMAND ${GO_EXECUTABLE} build -o ${BIN_DIR}/chifra ${CHIFRA_FOR_DOCKER_FILES}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/apps/chifra
-    DEPENDS ${CMAKE_SOURCE_DIR}/apps/chifra/*.go)
+    DEPENDS ${CHIFRA_FOR_DOCKER_FILES}
+)

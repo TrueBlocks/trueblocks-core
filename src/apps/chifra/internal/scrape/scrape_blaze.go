@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 	"sync"
@@ -161,8 +162,8 @@ var writeMutex sync.Mutex
 
 // WriteAppearances writes the appearance for a chunk to a file
 func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBooleanMap) (err error) {
-	ripePath := config.PathToIndex(bm.chain) + "ripe/"
-	unripePath := config.PathToIndex(bm.chain) + "unripe/"
+	ripePath := filepath.Join(config.PathToIndex(bm.chain), "ripe")
+	unripePath := filepath.Join(config.PathToIndex(bm.chain), "unripe")
 	appendScrapeError := func(err error) {
 		bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 	}
@@ -185,9 +186,9 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		sort.Strings(appearanceArray)
 
 		blockNumStr := utils.PadNum(int(bn), 9)
-		fileName := ripePath + blockNumStr + ".txt"
+		fileName := filepath.Join(ripePath, blockNumStr + ".txt")
 		if bn > bm.ripeBlock {
-			fileName = unripePath + blockNumStr + ".txt"
+			fileName = filepath.Join(unripePath, blockNumStr + ".txt")
 		}
 
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")

@@ -7,6 +7,7 @@ package initPkg
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -57,7 +58,7 @@ func (opts *InitOptions) validateInit() error {
 		// } else if len(opts.Template) > 0 {
 		// 	return validate.Usage("The {0} option requires the {1} flag.", "--template", "--example")
 	} else {
-		historyFile := config.PathToCache(chain) + "tmp/history.txt"
+		historyFile := filepath.Join(config.PathToCache(chain), "tmp/history.txt")
 		if history.FromHistoryBool(historyFile, "init") && !opts.All {
 			return validate.Usage("You previously called chifra init --all. You must continue to do so.")
 		}

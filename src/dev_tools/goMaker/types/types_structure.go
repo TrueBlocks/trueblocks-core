@@ -109,7 +109,7 @@ func (s *Structure) GroupName() string {
 
 func (s *Structure) ModelIntro() string {
 	tmplName := "modelIntro" + s.Class
-	tmpl := strings.Trim(getTemplateContents("model-intros/"+CamelCase(s.Class)), ws)
+	tmpl := strings.Trim(getTemplateContents(filepath.Join("model-intros", CamelCase(s.Class))), ws)
 	return s.executeTemplate(tmplName, tmpl)
 }
 
@@ -143,7 +143,7 @@ func (s *Structure) ModelMembers() string {
 
 func (s *Structure) ModelNotes() string {
 	tmplName := "Notes" + s.Class
-	tmpl := strings.Trim(getTemplateContents("model-intros/"+CamelCase(s.Class)+".notes"), ws)
+	tmpl := strings.Trim(getTemplateContents(filepath.Join("model-intros", CamelCase(s.Class)+".notes")), ws)
 	return strings.Trim(s.executeTemplate(tmplName, tmpl), ws)
 }
 

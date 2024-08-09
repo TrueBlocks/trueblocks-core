@@ -82,14 +82,14 @@ func (t *TestCase) ShouldRun(mode string) bool {
 func (t *TestCase) GetOutputPaths(mode string) (string, string, string, string) {
 	working := t.WorkingPath
 	if mode != "cmd" {
-		working = filepath.Join(t.WorkingPath, mode+"_tests") + "/"
+		working = filepath.Join(t.WorkingPath, mode+"_tests")
 	}
 	gold := strings.ReplaceAll(working, "working", "gold")
 
 	workFn := filepath.Join(working, t.Tool+"_"+t.Filename+".txt")
 	goldFn := filepath.Join(gold, t.Tool+"_"+t.Filename+".txt")
 	testRoot := func(s string) string {
-		return strings.ReplaceAll(strings.ReplaceAll(s, "sdk_tests/", ""), "api_tests/", "")
+		return strings.ReplaceAll(strings.ReplaceAll(s, "sdk_tests", ""), "api_tests", "")
 	}
 	envFn := filepath.Join(testRoot(gold), t.Filename+".env")
 	if !file.FileExists(envFn) {

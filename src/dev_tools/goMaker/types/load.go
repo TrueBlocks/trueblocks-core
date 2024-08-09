@@ -142,7 +142,7 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 	return nil
 }
 
-func (cb *CodeBase) FinishLoad(thePath string, baseTypes []Structure, options []Option, structMap map[string]Structure) error {
+func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []Option, structMap map[string]Structure) error {
 	cb.BaseTypes = baseTypes
 	for i := 0; i < len(cb.BaseTypes); i++ {
 		cb.BaseTypes[i].cbPtr = cb
