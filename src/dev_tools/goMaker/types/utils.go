@@ -102,7 +102,7 @@ func getTemplatesPath() (string, error) {
 	}
 
 	for _, path := range paths {
-		thePath := filepath.Join(path, "templates/")
+		thePath := filepath.Join(path, "templates")
 		if file.FolderExists(thePath) {
 			setRootFolder(path)
 			return thePath, nil
