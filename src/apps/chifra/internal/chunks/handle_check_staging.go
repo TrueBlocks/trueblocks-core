@@ -6,6 +6,7 @@ package chunksPkg
 
 import (
 	"fmt"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -22,7 +23,7 @@ import (
 //  4. Makes sure that the last block inside is == last if allow_missing == false, < otherwise
 func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, report *types.ReportCheck) error {
 	chain := opts.Globals.Chain
-	stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
+	stagePath := index.ToStagingPath(filepath.Join(config.PathToIndex(chain), "staging"))
 	stageFn, _ := file.LatestFileInFolder(stagePath)
 	if !file.FileExists(stageFn) {
 		return nil

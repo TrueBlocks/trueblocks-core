@@ -231,7 +231,7 @@ func (opts *ScrapeOptions) getPidFilePath() string {
 	var pidfileDir string
 	if runtime.GOOS == "darwin" {
 		// MacOS
-		pidfileDir = "/usr/local/var/run"
+		pidfileDir = filepath.Join("/usr/local/var", "run")
 	} else {
 		// Linux
 		// On Linux only root can write to the main directory /run, but every logged-in
@@ -245,7 +245,7 @@ func (opts *ScrapeOptions) getPidFilePath() string {
 	if pidfileDir == "" || !file.FolderExists(pidfileDir) {
 		pidfileDir = os.TempDir()
 	}
-	return filepath.Join(pidfileDir, "chifra/scrape", strings.ToLower(opts.Globals.Chain)+".pid")
+	return filepath.Join(pidfileDir, "chifra", "scrape", strings.ToLower(opts.Globals.Chain)+".pid")
 }
 
 func getConfigCmdsFromArgs() map[string]string {

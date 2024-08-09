@@ -186,9 +186,9 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		sort.Strings(appearanceArray)
 
 		blockNumStr := utils.PadNum(int(bn), 9)
-		fileName := ripePath + blockNumStr + ".txt"
+		fileName := filepath.Join(ripePath, blockNumStr + ".txt")
 		if bn > bm.ripeBlock {
-			fileName = unripePath + blockNumStr + ".txt"
+			fileName = filepath.Join(unripePath, blockNumStr + ".txt")
 		}
 
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")

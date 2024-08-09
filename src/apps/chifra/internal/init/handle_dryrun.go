@@ -3,6 +3,7 @@ package initPkg
 import (
 	"errors"
 	"fmt"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -19,7 +20,7 @@ func (opts *InitOptions) HandleDryRun(rCtx *output.RenderCtx) error {
 	if err != nil {
 		return err
 	}
-	historyFile := config.PathToRootConfig() + "unchained.txt"
+	historyFile := filepath.Join(config.PathToRootConfig(), "unchained.txt")
 	saved := history.FromHistory(historyFile, "headerVersion")
 	defer func() {
 		_ = history.ToHistory(historyFile, "headerVersion", saved)
