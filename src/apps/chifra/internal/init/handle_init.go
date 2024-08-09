@@ -6,6 +6,7 @@ package initPkg
 
 import (
 	"fmt"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -58,7 +59,7 @@ func (opts *InitOptions) HandleInit(rCtx *output.RenderCtx) error {
 	logger.InfoTable("Files deleted:", fmt.Sprintf("%d", nDeleted))
 	logger.InfoTable("Files downloaded:", fmt.Sprintf("%d", nToDownload))
 
-	historyFile := config.PathToCache(chain) + "tmp/history.txt"
+	historyFile := filepath.Join(config.PathToCache(chain), "tmp/history.txt")
 	if opts.All && !history.FromHistoryBool(historyFile, "init") {
 		_ = history.ToHistory(historyFile, "init", "true")
 	}
