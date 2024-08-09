@@ -5,5 +5,6 @@
 package progress
 
 func screenWidth() uint {
+	// TODO: Can we read the screen width?
 	return 120 // default reasonably
 }

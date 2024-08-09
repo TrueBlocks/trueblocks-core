@@ -9,9 +9,11 @@ import (
 )
 
 func Lock(file *os.File) error {
+	// TODO: Don't we need this?
 	return nil
 }
 
 func Unlock(file *os.File) error {
+	// TODO: DOn't we need this?
 	return nil
 }

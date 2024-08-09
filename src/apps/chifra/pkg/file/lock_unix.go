@@ -1,3 +1,6 @@
+//go:build !windows
+// +build !windows
+
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -9,7 +12,6 @@ import (
 	"os"
 	"syscall"
 )
-
 
 // Lock asks the OS to lock a file for the current process
 func Lock(file *os.File) error {
