@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -54,12 +55,12 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 
 		if opts.Unpin {
-			if !file.FileExists("./unpins") {
+			if !file.FileExists(filepath.Join(".", "unpins")) {
 				return validate.Usage("The file {0} was not found in the local folder.", "./unpins")
 			}
 
 			hasOne := false
-			lines := file.AsciiFileToLines("./unpins")
+			lines := file.AsciiFileToLines(filepath.Join(".", "unpins"))
 			for _, line := range lines {
 				if pinning.IsValid(line) {
 					hasOne = true
