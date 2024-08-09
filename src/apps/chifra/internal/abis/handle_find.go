@@ -10,6 +10,7 @@ import (
 	"encoding/hex"
 	"io"
 	"os"
+	"path/filepath"
 	"runtime"
 	"sort"
 	"strings"
@@ -66,7 +67,8 @@ func (opts *AbisOptions) HandleFind(rCtx *output.RenderCtx) error {
 		defer checkOne.Release()
 
 		// TODO: UnchainedIndex --> This could be part of unchained index
-		sigsFile, err := os.OpenFile(config.PathToRootConfig()+"abis/known-000/uniq_sigs.tab", os.O_RDONLY, 0)
+		sigFile := filepath.Join(config.PathToRootConfig(), "abis", "known-000", "uniq_sigs.tab")
+		sigsFile, err := os.OpenFile(sigFile, os.O_RDONLY, 0)
 		if err != nil {
 			errorChan <- err
 			rCtx.Cancel()
@@ -80,7 +82,8 @@ func (opts *AbisOptions) HandleFind(rCtx *output.RenderCtx) error {
 		sigsScanner.Split(bufio.ScanLines)
 
 		// TODO: UnchainedIndex --> This could be part of unchained index
-		funcsFile, _ := os.OpenFile(config.PathToRootConfig()+"abis/known-000/uniq_funcs.tab", os.O_RDONLY, 0)
+		funcFile := filepath.Join(config.PathToRootConfig(), "abis", "known-000", "uniq_funcs.tab")
+		funcsFile, _ := os.OpenFile(funcFile, os.O_RDONLY, 0)
 		defer func() {
 			funcsFile.Close()
 		}()
