@@ -68,7 +68,7 @@ func (opts *AbisOptions) HandleDecache(rCtx *output.RenderCtx) error {
 		}
 	} else {
 		for _, addr := range opts.Addrs {
-			path := config.PathToCache(chain) + "abis/" + addr + ".json"
+			path := filepath.Join(config.PathToCache(chain), "abis", addr + ".json")
 			if file.FileExists(path) {
 				if err := os.Remove(path); err != nil {
 					logger.Warn(colors.Red+"Could not remove abi for address", addr, ":", err, "."+colors.Off)
