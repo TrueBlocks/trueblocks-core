@@ -1,3 +1,4 @@
+:: TODO: This script should be auto-generated. It will ignore new examples, for example
 @echo off
 setlocal
 
