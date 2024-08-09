@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -217,7 +218,7 @@ func (opts *ChunksOptions) getParams(chain, path string) (string, string, base.R
 
 func toDiffPath(chain string, middleMark base.Blknum) string {
 	diffPath := os.Getenv("TB_CHUNKS_DIFFPATH")
-	if filepath.Base(diffPath) != "unchained" {
+	if !strings.Contains(diffPath, "unchained") {
 		diffPath = filepath.Join(diffPath, "unchained", chain, "finalized")
 	}
 	diffPath, _ = filepath.Abs(diffPath)

@@ -347,8 +347,8 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 	}
 
 	display := cacheInfo.Path
-	display = filepath.Clean(strings.Replace(display, config.PathToCache(chain), "./", -1))
-	display = filepath.Clean(strings.Replace(display, config.PathToIndex(chain), "./", -1))
+	display = filepath.Clean(strings.Replace(display, config.PathToCache(chain)+"/", "./", -1))
+	display = filepath.Clean(strings.Replace(display, config.PathToIndex(chain)+"/", "./", -1))
 
 	switch cT {
 	case Index_Maps:
@@ -357,7 +357,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 		fallthrough
 	case Index_Final:
 		if testMode {
-			display = strings.Replace(cacheInfo.Path, config.PathToIndex(chain), "$indexPath/", 1)
+			display = strings.Replace(cacheInfo.Path, config.PathToIndex(chain)+"/", "$indexPath/", 1)
 		}
 		return map[string]any{
 			// "bloomSizeBytes": file.FileSize(index.ToBloomPath(cacheInfo.Path)),
@@ -376,7 +376,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 		fallthrough
 	case Cache_Abis:
 		address := ""
-		parts := strings.Split(cacheInfo.Path, "/")
+		parts := strings.Split(cacheInfo.Path, string(os.PathSeparator))
 		for _, part := range parts {
 			if strings.HasPrefix(part, "0x") {
 				address = part
@@ -384,7 +384,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 			}
 		}
 		if testMode {
-			display = strings.Replace(cacheInfo.Path, config.PathToCache(chain), "$cachePath/", 1)
+			display = strings.Replace(cacheInfo.Path, config.PathToCache(chain)+"/", "$cachePath/", 1)
 			display = strings.Replace(display, address, "--address--", -1)
 			address = "--address--"
 		}

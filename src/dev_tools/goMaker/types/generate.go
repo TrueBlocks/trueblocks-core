@@ -1,6 +1,7 @@
 package types
 
 import (
+	"os"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -18,6 +19,9 @@ type Generator struct {
 
 // Generate generates the code for the codebase using the given templates.
 func (cb *CodeBase) Generate() {
+	// Before we start, we need to verify that the validators are in place
+	cb.verifyValidators()
+
 	generatedPath := GetGeneratedPath()
 	file.EstablishFolder(generatedPath)
 
@@ -72,6 +76,9 @@ func (cb *CodeBase) Generate() {
 			}
 		}
 	}
+
+	cb.verifyValidators()
+
 	logger.Info(colors.Green + "Done..." + strings.Repeat(" ", 120) + colors.Off + "\033[K")
 }
 
@@ -87,8 +94,8 @@ func getGenerators() ([]Generator, error) {
 	vFunc := func(file string, vP any) (bool, error) {
 		if strings.HasSuffix(file, ".tmpl") {
 			file = strings.ReplaceAll(file, generatorsPath, "")
-			if strings.Contains(file, "/") {
-				parts := strings.Split(file, "/")
+			if strings.Contains(file, string(os.PathSeparator)) {
+				parts := strings.Split(file, string(os.PathSeparator))
 				theMap[parts[0]] = append(theMap[parts[0]], file)
 			}
 		}

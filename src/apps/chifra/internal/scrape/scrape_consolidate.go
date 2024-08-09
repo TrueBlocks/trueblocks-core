@@ -25,12 +25,10 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 	var err error
 	chain := bm.chain
 
-	indexPath := config.PathToIndex(chain)
-
 	backup := file.BackupFile{}
 	stageFn, _ := file.LatestFileInFolder(bm.StageFolder()) // it may not exist...
 	if file.FileExists(stageFn) {
-		backup, err = file.MakeBackup(filepath.Join(config.PathToCache(chain)+"tmp"), stageFn)
+		backup, err = file.MakeBackup(filepath.Join(config.PathToCache(chain), "tmp"), stageFn)
 		if err != nil {
 			return errors.New("Could not create backup file: " + err.Error())
 		}
@@ -96,7 +94,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 		isOvertop := nAppearances >= int(bm.PerChunk()) // Does this block overtop a chunk?
 		if isSnap || isOvertop {
 			// Make a chunk - i.e., consolidate
-			chunkPath := filepath.Join(indexPath, "finalized", chunkRange.String() + ".bin")
+			chunkPath := filepath.Join(config.PathToIndex(chain), "finalized", chunkRange.String()+".bin")
 			publisher := base.ZeroAddr
 			var chunk index.Chunk
 			if report, err := chunk.Write(chain, publisher, chunkPath, appMap, nAppearances); err != nil {

@@ -1,6 +1,7 @@
 package config
 
 import (
+	"path/filepath"
 	"strings"
 	"sync"
 
@@ -58,7 +59,7 @@ var m sync.Mutex
 func ExpectedVersion() string {
 	if headerVersion == "" {
 		m.Lock()
-		historyFile := PathToRootConfig() + "unchained.txt"
+		historyFile := filepath.Join(PathToRootConfig(), "unchained.txt")
 		headerVersion = history.FromHistory(historyFile, "headerVersion")
 		if headerVersion == "" {
 			headerVersion = "trueblocks-core@v2.0.0-release"
@@ -70,7 +71,7 @@ func ExpectedVersion() string {
 
 func SetExpectedVersion(version string) {
 	m.Lock()
-	historyFile := PathToRootConfig() + "unchained.txt"
+	historyFile := filepath.Join(PathToRootConfig(), "unchained.txt")
 	_ = history.ToHistory(historyFile, "headerVersion", version)
 	headerVersion = version
 	m.Unlock()

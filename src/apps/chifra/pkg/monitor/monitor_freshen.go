@@ -196,7 +196,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 
 	if !updater.TestMode {
 		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
-		stagePath := index.ToStagingPath(config.PathToIndex(updater.Chain) + "staging")
+		stagePath := index.ToStagingPath(filepath.Join(config.PathToIndex(updater.Chain), "staging"))
 		stageFn, _ := file.LatestFileInFolder(stagePath)
 		rng := base.RangeFromFilename(stageFn)
 		lines := []string{}

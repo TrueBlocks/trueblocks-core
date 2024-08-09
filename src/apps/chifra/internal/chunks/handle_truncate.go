@@ -126,7 +126,7 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 				}
 				return nil
 			}
-			_ = filepath.Walk(config.PathToCache(chain)+"monitors", truncateMonitor)
+			_ = filepath.Walk(filepath.Join(config.PathToCache(chain), "monitors"), truncateMonitor)
 			bar.Prefix = fmt.Sprintf("Truncated monitors to %d                                        ", opts.Truncate)
 			bar.Finish(true /* newLine */)
 

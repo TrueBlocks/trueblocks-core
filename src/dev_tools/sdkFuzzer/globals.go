@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk/v3"
@@ -44,7 +45,7 @@ func getFilename(baseName string, g *sdk.Globals) string {
 		app += "-verbose"
 	}
 
-	return "sdkFuzzer-output/" + baseName + app + ".json"
+	return filepath.Join("sdkFuzzer-output", baseName+app+".json")
 }
 
 var spaces = strings.Repeat(" ", 30)

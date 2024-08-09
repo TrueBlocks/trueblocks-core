@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
@@ -64,11 +65,12 @@ func ReadUnchainedIndex(chain string, publisher base.Address, database string) (
 // Manifest struct. Both JSON and TSV formats are supported, but the server has
 // to set the correct Content-Type header.
 func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
+	_ = chain // linter
 	url, err := url.Parse(gatewayUrl)
 	if err != nil {
 		return nil, err
 	}
-	url.Path += cid
+	url.Path = path.Join(url.Path, cid)
 
 	debug.DebugCurlStr(url.String())
 	resp, err := http.Get(url.String())

@@ -6,6 +6,7 @@ package initPkg
 
 import (
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -18,14 +19,14 @@ import (
 // of the files needed to run an example. This is a convenience function for
 // developers to quickly get started with the example.
 func (opts *InitOptions) HandleExample(rCtx *output.RenderCtx) error {
-	template := "base/"                     // will use opts.Template in the future
-	tmplFolder := "./templates/" + template // will later support opts.Template
-	exampleDir := "./" + opts.Example
+	template := "base/"                                  // will use opts.Template in the future
+	tmplFolder := filepath.Join("./templates", template) // will later support opts.Template
+	exampleDir := filepath.Join("./", opts.Example)
 
 	// We already know that the folder does not exist since it passed validation...
 	_ = os.MkdirAll(exampleDir, 0755)
 
-	logger.Info("Example created in ./" + opts.Example + " from " + tmplFolder)
+	logger.Info("Example created in ", filepath.Join("./", opts.Example)+" from "+tmplFolder)
 
 	for _, fn := range []string{"main.go", "main_test.go", "go.mod", "README.md"} {
 		copyOne(fn, opts.Example, tmplFolder)
@@ -38,17 +39,17 @@ func (opts *InitOptions) HandleExample(rCtx *output.RenderCtx) error {
 	utils.System(cmd)
 
 	// update the go.work file
-	os.Remove("../go.work")
+	os.Remove(filepath.Join("..", "go.work"))
 	utils.System("source ../scripts/go-work-sync.sh")
 
 	return nil
 }
 
 func copyOne(fn, exName, tmplFolder string) {
-	contents := file.AsciiFileToString(tmplFolder + fn + ".tmpl")
+	contents := file.AsciiFileToString(filepath.Join(tmplFolder, fn+".tmpl"))
 	contents = strings.ReplaceAll(contents, "[{NAME}]", utils.MakeFirstUpperCase(exName))
 	contents = strings.ReplaceAll(contents, "[{LOWER}]", exName)
-	fn = "./" + exName + "/" + fn
+	fn = filepath.Join("./", exName, fn)
 	_ = file.StringToAsciiFile(fn, contents)
 	logger.Info("\t==> " + fn)
 }

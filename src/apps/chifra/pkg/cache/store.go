@@ -5,7 +5,7 @@ import (
 	"context"
 	"errors"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 	"sync"
 
@@ -70,10 +70,11 @@ func (s *Store) resolvePath(value Locator) (resolved string, err error) {
 		err = errors.New("empty CacheLocations")
 		return
 	}
+	// TODO: There may be a filepath query to ask if the path is absolute
 	if strings.HasPrefix(directory, string(os.PathSeparator)) {
-		resolved = path.Join(directory, (id + "." + extension))
+		resolved = filepath.Join(directory, (id + "." + extension))
 	} else {
-		resolved = path.Join(s.rootDir, directory, (id + "." + extension))
+		resolved = filepath.Join(s.rootDir, directory, (id + "." + extension))
 	}
 
 	return

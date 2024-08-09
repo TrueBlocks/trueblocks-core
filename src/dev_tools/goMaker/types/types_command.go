@@ -547,7 +547,7 @@ func (c *Command) HelpLinks() string {
 }
 
 func (c *Command) HelpNotes() string {
-	readmePath := filepath.Join(GetTemplatePath(), "readme-intros/"+c.ReadmeName())
+	readmePath := filepath.Join(GetTemplatePath(), "readme-intros", c.ReadmeName())
 	readmePath = strings.Replace(readmePath, ".md", ".notes.md", -1)
 	if file.FileExists(readmePath) {
 		tmplName := "Notes" + c.ReadmeName()

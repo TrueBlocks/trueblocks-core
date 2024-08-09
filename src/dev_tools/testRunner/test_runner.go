@@ -69,6 +69,8 @@ func (tr *Runner) Run(t *TestCase) error {
 				logger.Info("Env: " + line)
 			}
 		}
+	} else {
+		fmt.Println(envFn)
 	}
 
 	msg := t.Route + "?"

@@ -3,6 +3,7 @@ package pinning
 import (
 	"fmt"
 	"net/http"
+	"path/filepath"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -42,7 +43,7 @@ func unpinOne(chain string, i, total int, hash base.IpfsHash) error {
 }
 
 func Unpin(chain string, count bool, sleep float64) error {
-	lines := file.AsciiFileToLines("./unpins")
+	lines := file.AsciiFileToLines(filepath.Join(".", "unpins"))
 	if count {
 		logger.Info("There are", len(lines), "pins to unpin.")
 	} else {
