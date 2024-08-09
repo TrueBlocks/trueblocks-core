@@ -3,6 +3,7 @@ package cache
 import (
 	"io"
 	"log"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -90,7 +91,7 @@ func (s *StoreOptions) rootDir() (dir string) {
 
 	if dir != "" {
 		// TODO: v1 suffix
-		return dir + "/v1"
+		return filepath.Join(dir, "v1")
 	}
 
 	return s.RootDir

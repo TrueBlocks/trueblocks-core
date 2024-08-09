@@ -196,7 +196,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 
 	if !updater.TestMode {
 		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
-		stagePath := index.ToStagingPath(config.PathToIndex(updater.Chain) + "staging")
+		stagePath := index.ToStagingPath(filepath.Join(config.PathToIndex(updater.Chain), "staging"))
 		stageFn, _ := file.LatestFileInFolder(stagePath)
 		rng := base.RangeFromFilename(stageFn)
 		lines := []string{}
@@ -362,7 +362,7 @@ func needsMigration(addr string) error {
 	mon := Monitor{Address: base.HexToAddress(addr)}
 	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
 	if file.FileExists(path) {
-		path = filepath.Clean(strings.Replace(path, config.PathToCache(mon.Chain), "./", -1))
+		path = filepath.Clean(strings.ReplaceAll(path, config.PathToCache(mon.Chain), "./"))
 		return validate.Usage("Old style monitor found at {0}. Please run '{1}'", path, "chifra config --migrate cache")
 	}
 	return nil
