@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path"
+	"path/filepath"
 	"runtime"
 	"sync"
 
@@ -43,7 +43,7 @@ func collectWorker(i interface{}) {
 
 	args := i.(*collectWorkerArgs)
 	var offset uint32 = 0
-	key := path.Join(args.DirName, args.FileName)
+	key := filepath.Join(args.DirName, args.FileName)
 
 	// lock mutex for writing
 	mu.Lock()
@@ -79,7 +79,7 @@ func writeWorker(i interface{}) {
 	defer writeWg.Done()
 
 	args := i.(*writePoolArgs)
-	out, err := os.OpenFile(path.Join(args.outDir, args.key), os.O_RDWR|os.O_CREATE, 0666)
+	out, err := os.OpenFile(filepath.Join(args.outDir, args.key), os.O_RDWR|os.O_CREATE, 0666)
 	if err != nil {
 		panic(err)
 	}
@@ -93,15 +93,18 @@ func writeWorker(i interface{}) {
 // GenerateFromFiles reads input files and creates four bytes database. It then sends it to writeWorkers to save
 // chunk files.
 func GenerateFromFiles(outDir string) (err error) {
-	sigsFile, err := os.OpenFile(path.Join(config.PathToRootConfig(), "abis/known-000/uniq_sigs.tab"), os.O_RDONLY, 0)
+	sigsFn := filepath.Join(config.PathToRootConfig(), "abis/known-000/uniq_sigs.tab")
+	sigsFile, err := os.OpenFile(sigsFn, os.O_RDONLY, 0)
 	if err != nil {
 		return
 	}
-	funcsFile, err := os.OpenFile(path.Join(config.PathToRootConfig(), "abis/known-000/uniq_funcs.tab"), os.O_RDONLY, 0)
+	funcsFn := filepath.Join(config.PathToRootConfig(), "abis/known-000/uniq_funcs.tab")
+	funcsFile, err := os.OpenFile(funcsFn, os.O_RDONLY, 0)
 	if err != nil {
 		return
 	}
-	eventsFile, err := os.OpenFile(path.Join(config.PathToRootConfig(), "abis/known-000/uniq_events.tab"), os.O_RDONLY, 0)
+	eventsFn := filepath.Join(config.PathToRootConfig(), "abis/known-000/uniq_events.tab")
+	eventsFile, err := os.OpenFile(eventsFn, os.O_RDONLY, 0)
 	if err != nil {
 		return
 	}
@@ -157,7 +160,7 @@ func GenerateFromFiles(outDir string) (err error) {
 			fileName := fmt.Sprintf("%x", encoded[:2])
 			dirName := fileName[:2]
 
-			err := file.EstablishFolder(path.Join(outDir, dirName))
+			err := file.EstablishFolder(filepath.Join(outDir, dirName))
 			if err != nil {
 				return err
 			}
