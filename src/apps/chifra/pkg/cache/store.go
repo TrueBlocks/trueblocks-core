@@ -5,7 +5,7 @@ import (
 	"context"
 	"errors"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 	"sync"
 
@@ -70,10 +70,10 @@ func (s *Store) resolvePath(value Locator) (resolved string, err error) {
 		err = errors.New("empty CacheLocations")
 		return
 	}
-	if strings.HasPrefix(directory, "/") {
-		resolved = path.Join(directory, (id + "." + extension))
+	if filepath.IsAbs(directory) {
+		resolved = filepath.Join(directory, (id + "." + extension))
 	} else {
-		resolved = path.Join(s.rootDir, directory, (id + "." + extension))
+		resolved = filepath.Join(s.rootDir, directory, (id + "." + extension))
 	}
 
 	return
