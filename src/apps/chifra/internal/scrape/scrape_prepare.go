@@ -27,7 +27,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	_ = cleanEphemeralIndexFolders(chain)
 
 	// If the file already exists, we're done.
-	bloomPath := config.PathToIndex(chain) + "blooms/000000000-000000000.bloom"
+	bloomPath := filepath.Join(config.PathToIndex(chain), "blooms/000000000-000000000.bloom")
 	if file.FileExists(bloomPath) {
 		return true, nil
 	}
