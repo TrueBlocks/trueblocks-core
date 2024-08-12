@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-// HandleTimestampsShow handles chifra when --timestamps
+// HandleTimestamps handles chifra when --timestamps
 func (opts *WhenOptions) HandleTimestamps(rCtx *output.RenderCtx) error {
 	var err error
 	if opts.Update {

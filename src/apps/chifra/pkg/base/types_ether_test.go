@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-// TestEtherUnmarshal tests the UnmarshalJSON method of Ether. Note this is the whole
+// TestUnmarshalEther tests the UnmarshalJSON method of Ether. Note this is the whole
 // point of the Ether type: to be able to unmarshal JSON strings into big.Floats.
 func TestUnmarshalEther(t *testing.T) {
 	type withEther struct {
