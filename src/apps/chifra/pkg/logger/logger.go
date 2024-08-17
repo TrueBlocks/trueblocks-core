@@ -89,6 +89,14 @@ func init() {
 	loggerWriter = os.Stderr
 }
 
+// SetLoggerWriter sets the writer to which log messages are written. Do not send
+// nil as a writer if you wish to disable logging. Instead, use
+//
+//	w := logger.GetLoggerWriter()
+//	defer logger.SetLoggerWriter(w)
+//	logger.SetLoggerWriter(io.Discard)
+//
+// Setting to `nil` will core dump.
 func SetLoggerWriter(w io.Writer) {
 	loggerWriter = w
 }
