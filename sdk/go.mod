@@ -3,7 +3,7 @@ module github.com/TrueBlocks/trueblocks-core/sdk/v3
 // Go Version
 go 1.22
 
-require github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240808100829-648e5249703a
+require github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240817132510-9417c54ac333
 
 require (
 	github.com/Microsoft/go-winio v0.6.1 // indirect
