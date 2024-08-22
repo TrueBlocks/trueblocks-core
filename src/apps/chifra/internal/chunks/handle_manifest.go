@@ -33,13 +33,15 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
 		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 			for _, chunk := range man.Chunks {
+				rng := base.RangeFromRangeString(chunk.Range)
 				s := types.ChunkRecord{
-					Range:     chunk.Range,
+					Range:     rng.String(),
 					BloomHash: chunk.BloomHash,
 					BloomSize: chunk.BloomSize,
 					IndexHash: chunk.IndexHash,
 					IndexSize: chunk.IndexSize,
 				}
+				// s.Bounds = tslib.RangeToBounds(chain, &rng)
 				modelChan <- &s
 			}
 		}
@@ -54,13 +56,16 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 				Specification: man.Specification,
 			}
 			for _, chunk := range man.Chunks {
-				s.Chunks = append(s.Chunks, types.ChunkRecord{
-					Range:     chunk.Range,
+				rng := base.RangeFromRangeString(chunk.Range)
+				ch := types.ChunkRecord{
+					Range:     rng.String(),
 					BloomHash: chunk.BloomHash,
 					BloomSize: chunk.BloomSize,
 					IndexHash: chunk.IndexHash,
 					IndexSize: chunk.IndexSize,
-				})
+				}
+				// ch.Bounds = tslib.RangeToBounds(chain, &rng)
+				s.Chunks = append(s.Chunks, ch)
 			}
 			modelChan <- &s
 		}

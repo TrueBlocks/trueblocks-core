@@ -52,6 +52,7 @@ func (opts *ChunksOptions) HandleIndex(rCtx *output.RenderCtx, blockNums []base.
 				NAppearances: uint64(indexChunk.Header.AppearanceCount),
 				Size:         uint64(file.FileSize(fileName)),
 			}
+			// s.Bounds = tslib.RangeToBounds(chain, &rng)
 
 			modelChan <- &s
 			return true, nil

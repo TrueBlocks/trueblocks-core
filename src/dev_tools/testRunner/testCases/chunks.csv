@@ -12,13 +12,13 @@ on      ,both ,fast  ,chunks ,apps ,chunkMan ,fail_detail_belong      ,y    ,mod
 
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,list_check              ,y    ,mode = monitors & check
 
-index   ,both ,fast  ,chunks ,apps ,chunkMan ,stats_default           ,y    ,mode = stats
-index   ,both ,fast  ,chunks ,apps ,chunkMan ,manifest_default        ,y    ,mode = manifest
-index   ,both ,fast  ,chunks ,apps ,chunkMan ,index_default           ,y    ,mode = index
-index   ,both ,fast  ,chunks ,apps ,chunkMan ,blooms_default          ,y    ,mode = blooms
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,stats_default           ,y    ,mode = stats
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,manifest_default        ,y    ,mode = manifest
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,index_default           ,y    ,mode = index
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,blooms_default          ,y    ,mode = blooms
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,header_default          ,y    ,mode = header
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,pins_default            ,y    ,mode = pins
-index   ,both ,fast  ,chunks ,apps ,chunkMan ,addresses_default       ,y    ,mode = addresses
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,addresses_default       ,y    ,mode = addresses
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,appearances_default     ,y    ,mode = appearances
 
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,not_pins_list           ,y    ,mode = index & list
@@ -26,12 +26,12 @@ on      ,both ,fast  ,chunks ,apps ,chunkMan ,pins_list               ,y    ,mod
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,not_pins_unpin          ,y    ,mode = index & unpin = 12
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,pins_bad_hash           ,y    ,mode = pins & unpin = 12
 
-index   ,both ,fast  ,chunks ,apps ,chunkMan ,stats_txt               ,n    ,mode = stats & fmt = txt
-index   ,both ,fast  ,chunks ,apps ,chunkMan ,manifest_csv            ,n    ,mode = manifest & fmt = csv
-index   ,both ,fast  ,chunks ,apps ,chunkMan ,index_json              ,y    ,mode = index & fmt = json
-index   ,both ,fast  ,chunks ,apps ,chunkMan ,blooms_txt              ,n    ,mode = blooms & fmt = txt
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,stats_txt               ,n    ,mode = stats & fmt = txt
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,manifest_csv            ,n    ,mode = manifest & fmt = csv
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,index_json              ,y    ,mode = index & fmt = json
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,blooms_txt              ,n    ,mode = blooms & fmt = txt
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,header_csv              ,n    ,mode = header & fmt = csv
-index   ,both ,fast  ,chunks ,apps ,chunkMan ,addresses_json          ,y    ,mode = addresses & fmt = json
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,addresses_json          ,y    ,mode = addresses & fmt = json
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,appearances_txt         ,n    ,mode = appearances & fmt = txt
 
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,manifest_count          ,y    ,mode = manifest & count

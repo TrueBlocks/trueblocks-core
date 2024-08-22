@@ -24,7 +24,6 @@ type ChunkStats struct {
 	NBlocks       uint64  `json:"nBlocks"`
 	NBlooms       uint64  `json:"nBlooms"`
 	Range         string  `json:"range"`
-	RangeEnd      string  `json:"rangeEnd"`
 	Ratio         float64 `json:"ratio"`
 	RecWid        uint64  `json:"recWid"`
 	// EXISTING_CODE
@@ -54,11 +53,9 @@ func (s *ChunkStats) Model(chain, format string, verbose bool, extraOpts map[str
 		"nBlooms":       s.NBlooms,
 		"ratio":         s.Ratio,
 		"recWid":        s.RecWid,
-		"rangeEnd":      s.RangeEnd,
 	}
 	order = []string{
 		"range",
-		"rangeEnd",
 		"nAddrs",
 		"nApps",
 		"nBlocks",

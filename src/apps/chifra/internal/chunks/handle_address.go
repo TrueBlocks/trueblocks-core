@@ -73,12 +73,14 @@ func (opts *ChunksOptions) HandleAddresses(rCtx *output.RenderCtx, blockNums []b
 						return false, err
 					}
 
+					rng := indexChunk.Range
 					s := types.ChunkAddress{
 						Address: obj.Address,
-						Range:   indexChunk.Range.String(),
+						Range:   rng.String(),
 						Offset:  uint64(obj.Offset),
 						Count:   uint64(obj.Count),
 					}
+					// s.Bounds = tslib.RangeToBounds(chain, &rng)
 
 					modelChan <- &s
 					cnt++

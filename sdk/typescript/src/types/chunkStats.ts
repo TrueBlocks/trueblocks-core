@@ -8,20 +8,20 @@
  * This file was auto generated. DO NOT EDIT.
  */
 
-import { blkrange, datetime, float64, uint64 } from '.';
+import { blkrange, rangeDates, float64, uint64 } from '.';
 
 export type ChunkStats = {
   addrsPerBlock: float64
   appsPerAddr: float64
   appsPerBlock: float64
   bloomSz: uint64
+  rangeDates: rangeDates
   chunkSz: uint64
   nAddrs: uint64
   nApps: uint64
   nBlocks: uint64
   nBlooms: uint64
   range: blkrange
-  rangeEnd: datetime
   ratio: float64
   recWid: uint64
 }
