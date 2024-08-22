@@ -16,8 +16,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/crud"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func TestNamesOptions_getCrudDataHttp(t *testing.T) {
@@ -86,7 +84,7 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 			opts := &NamesOptions{
 				Autoname: tt.fields.Autoname,
 			}
-			gotData, err := opts.getCrudDataHttp(tt.args.r)
+			gotData, err := crud.NewNameCrud(len(opts.Autoname) > 0, tt.args.r)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("NamesOptions.getCrudDataHttp() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -122,7 +120,6 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 	var expected *crud.NameCrud
 	var result *crud.NameCrud
 	var err error
-	var opts *NamesOptions
 
 	// valid envs
 	expected = &crud.NameCrud{
@@ -136,10 +133,7 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 		},
 	}
 	setEnvs(expected)
-	opts = &NamesOptions{}
-	chain := utils.GetTestChain()
-	opts.Conn = rpc.TempConnection(chain)
-	result, err = opts.getCrudDataEnv()
+	result, err = crud.NewNameCrud(true /* nameRequired */, nil /* request */)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -160,9 +154,7 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 		},
 	}
 	setEnvs(expected)
-	opts = &NamesOptions{}
-	opts.Conn = rpc.TempConnection(chain)
-	_, err = opts.getCrudDataEnv()
+	_, err = crud.NewNameCrud(true /* nameRequired */, nil /* request */)
 	if err == nil {
 		t.Fatal("error expected")
 	}

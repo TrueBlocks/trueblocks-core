@@ -117,16 +117,17 @@ func (opts *NamesOptions) ModifyName(op crud.NameOperation, cd *crud.NameCrud) (
 
 	cd.SetEnv()
 	switch op {
-	case Create:
-	case Update:
+	case crud.Create:
+	case crud.Update:
 		return opts.NamesUpdate()
-	case Delete:
+	case crud.Delete:
 		return opts.NamesDelete()
-	case Undelete:
+	case crud.Undelete:
 		return opts.NamesUndelete()
-	case Remove:
+	case crud.Remove:
 		return opts.NamesRemove()
 	}
+
 	return nil, nil, errors.New("invalid operation " + string(op))
 }
 
