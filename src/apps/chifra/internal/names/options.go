@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/crud"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -49,7 +50,7 @@ type NamesOptions struct {
 	Conn      *rpc.Connection       `json:"conn,omitempty"`      // The connection to the RPC server
 	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
 	// EXISTING_CODE
-	crudData     *CrudData
+	crudData     *crud.NameCrud
 	AutonameAddr base.Address `json:"-"`
 	OrigTerms    []string     `json:"-"`
 	// EXISTING_CODE

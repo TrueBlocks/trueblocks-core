@@ -3,6 +3,7 @@ package namesPkg
 import (
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/crud"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -52,7 +53,7 @@ func (opts *NamesOptions) HandleCrud(rCtx *output.RenderCtx) (err error) {
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
-func handleCreate(chain string, data *CrudData) (name *types.Name, err error) {
+func handleCreate(chain string, data *crud.NameCrud) (name *types.Name, err error) {
 	var decimals uint64
 	if data.Decimals.Updated {
 		decimals, err = strconv.ParseUint(data.Decimals.Value, 10, 64)
@@ -74,14 +75,14 @@ func handleCreate(chain string, data *CrudData) (name *types.Name, err error) {
 	return name, names.CreateName(names.DatabaseCustom, chain, name)
 }
 
-func handleDelete(chain string, data *CrudData) (*types.Name, error) {
+func handleDelete(chain string, data *crud.NameCrud) (*types.Name, error) {
 	return names.SetDeleted(names.DatabaseCustom, chain, data.Address.Value, true)
 }
 
-func handleUndelete(chain string, data *CrudData) (*types.Name, error) {
+func handleUndelete(chain string, data *crud.NameCrud) (*types.Name, error) {
 	return names.SetDeleted(names.DatabaseCustom, chain, data.Address.Value, false)
 }
 
-func handleRemove(chain string, data *CrudData) (*types.Name, error) {
+func handleRemove(chain string, data *crud.NameCrud) (*types.Name, error) {
 	return names.RemoveName(names.DatabaseCustom, chain, data.Address.Value)
 }

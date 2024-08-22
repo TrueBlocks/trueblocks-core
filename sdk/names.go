@@ -11,8 +11,10 @@ package sdk
 import (
 	// EXISTING_CODE
 	"encoding/json"
+	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/crud"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	// EXISTING_CODE
@@ -108,4 +110,24 @@ func (opts *NamesOptions) NamesRemove() ([]types.Name, *types.MetaData, error) {
 
 // No enums
 // EXISTING_CODE
+func (opts *NamesOptions) ModifyName(op crud.NameOperation, cd *crud.NameCrud) ([]types.Name, *types.MetaData, error) {
+	defer func() {
+		cd.Unsetenv()
+	}()
+
+	cd.SetEnv()
+	switch op {
+	case Create:
+	case Update:
+		return opts.NamesUpdate()
+	case Delete:
+		return opts.NamesDelete()
+	case Undelete:
+		return opts.NamesUndelete()
+	case Remove:
+		return opts.NamesRemove()
+	}
+	return nil, nil, errors.New("invalid operation " + string(op))
+}
+
 // EXISTING_CODE

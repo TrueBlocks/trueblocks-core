@@ -15,6 +15,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/crud"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -30,7 +31,7 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 		name     string
 		fields   fields
 		args     args
-		wantData *CrudData
+		wantData *crud.NameCrud
 		wantErr  bool
 	}{
 		{
@@ -47,12 +48,12 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 					return
 				})(),
 			},
-			wantData: &CrudData{
-				Address: crudDataField[base.Address]{
+			wantData: &crud.NameCrud{
+				Address: crud.Field[base.Address]{
 					Value:   base.HexToAddress("0x199d5ed7f45f4ee35960cf22eade2076e95b253f"),
 					Updated: true,
 				},
-				Name: crudDataField[string]{
+				Name: crud.Field[string]{
 					Value:   "some name 1",
 					Updated: true,
 				},
@@ -98,7 +99,7 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 }
 
 func TestNamesOptions_getCrudDataEnv(t *testing.T) {
-	setEnvs := func(data *CrudData) {
+	setEnvs := func(data *crud.NameCrud) {
 		if data.Address.Value.Hex() != "" {
 			os.Setenv("TB_NAME_ADDRESS", data.Address.Value.Hex())
 		}
@@ -118,18 +119,18 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 			os.Setenv("TB_NAME_DECIMALS", data.Decimals.Value)
 		}
 	}
-	var expected *CrudData
-	var result *CrudData
+	var expected *crud.NameCrud
+	var result *crud.NameCrud
 	var err error
 	var opts *NamesOptions
 
 	// valid envs
-	expected = &CrudData{
-		Address: crudDataField[base.Address]{
+	expected = &crud.NameCrud{
+		Address: crud.Field[base.Address]{
 			Value:   base.HexToAddress("0x199d5ed7f45f4ee35960cf22eade2076e95b253f"),
 			Updated: true,
 		},
-		Name: crudDataField[string]{
+		Name: crud.Field[string]{
 			Value:   "some name",
 			Updated: true,
 		},
@@ -148,12 +149,12 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 	os.Clearenv()
 
 	// invalid envs
-	expected = &CrudData{
-		Address: crudDataField[base.Address]{
+	expected = &crud.NameCrud{
+		Address: crud.Field[base.Address]{
 			Value:   base.ZeroAddr,
 			Updated: true,
 		},
-		Name: crudDataField[string]{
+		Name: crud.Field[string]{
 			Value:   "some name",
 			Updated: true,
 		},
