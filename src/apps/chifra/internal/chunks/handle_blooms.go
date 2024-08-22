@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -40,15 +41,20 @@ func (opts *ChunksOptions) HandleBlooms(rCtx *output.RenderCtx, blockNums []base
 				return false, err
 			}
 
+			rng, err := base.RangeFromFilenameE(path)
+			if err != nil {
+				return false, err
+			}
 			s := types.ChunkBloom{
 				Magic:     fmt.Sprintf("0x%x", bl.Header.Magic),
 				Hash:      bl.Header.Hash,
 				Size:      stats.BloomSz,
-				Range:     base.RangeFromFilename(path).String(),
+				Range:     rng.String(),
 				NBlooms:   stats.NBlooms,
 				ByteWidth: index.BLOOM_WIDTH_IN_BYTES,
 				NInserted: uint64(nInserted),
 			}
+			s.RangeDates = tslib.RangeToBounds(chain, &rng)
 
 			modelChan <- &s
 			return true, nil

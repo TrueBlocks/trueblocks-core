@@ -8,13 +8,11 @@
  * This file was auto generated. DO NOT EDIT.
  */
 
-import { blkrange, int64, ipfshash, RangeDates } from '.';
+import { datetime, timestamp } from '.';
 
-export type ChunkRecord = {
-  bloomHash: ipfshash
-  bloomSize: int64
-  indexHash: ipfshash
-  indexSize: int64
-  range: blkrange
-  rangeDates: RangeDates
+export type RangeDates = {
+  firstDate?: datetime
+  firstTs?: timestamp
+  lastDate?: datetime
+  lastTs?: timestamp
 }

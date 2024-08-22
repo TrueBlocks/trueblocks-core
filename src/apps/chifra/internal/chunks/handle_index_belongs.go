@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -112,6 +113,8 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler, w
 // HandleAddresses and HandleAppearances. It is called once for each chunk in the index and
 // depends on the values of opts.Globals.Verbose and opts.Belongs.
 func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler, walker *walk.CacheWalker, path string) (bool, error) {
+	chain := opts.Globals.Chain
+
 	if path != index.ToBloomPath(path) {
 		return false, fmt.Errorf("should not happen in showAddressesBelongs")
 	}
@@ -166,12 +169,14 @@ func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler, 
 			if len(s.Appearances) == 0 {
 				continue
 			}
+			rng := indexChunk.Range
 			ss := types.ChunkAddress{
 				Address: s.AddressRecord.Address,
 				Count:   uint64(s.AddressRecord.Count),
 				Offset:  uint64(s.AddressRecord.Offset),
-				// Range   string           `json:"range"`
+				Range:   rng.String(),
 			}
+			ss.RangeDates = tslib.RangeToBounds(chain, &rng)
 			modelChan <- &ss
 			cnt++
 		}

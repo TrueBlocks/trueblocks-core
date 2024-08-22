@@ -301,18 +301,18 @@ func GetChunkStats(chain, path string) (s types.ChunkStats, err error) {
 	}
 	defer chunk.Close()
 
-	ts, _ := tslib.FromBnToTs(chain, chunk.Range.Last)
+	rng := chunk.Range
 	s = types.ChunkStats{
-		Range:    chunk.Range.String(),
-		RangeEnd: base.FormattedDate(ts),
-		NBlocks:  uint64(chunk.Range.Last - chunk.Range.First + 1),
-		NAddrs:   uint64(chunk.Index.Header.AddressCount),
-		NApps:    uint64(chunk.Index.Header.AppearanceCount),
-		NBlooms:  uint64(chunk.Bloom.Count),
-		BloomSz:  uint64(file.FileSize(index.ToBloomPath(path))),
-		ChunkSz:  uint64(file.FileSize(index.ToIndexPath(path))),
-		RecWid:   4 + index.BLOOM_WIDTH_IN_BYTES,
+		Range:   rng.String(),
+		NBlocks: uint64(chunk.Range.Last - chunk.Range.First + 1),
+		NAddrs:  uint64(chunk.Index.Header.AddressCount),
+		NApps:   uint64(chunk.Index.Header.AppearanceCount),
+		NBlooms: uint64(chunk.Bloom.Count),
+		BloomSz: uint64(file.FileSize(index.ToBloomPath(path))),
+		ChunkSz: uint64(file.FileSize(index.ToIndexPath(path))),
+		RecWid:  4 + index.BLOOM_WIDTH_IN_BYTES,
 	}
+	s.RangeDates = tslib.RangeToBounds(chain, &rng)
 
 	if s.NBlocks > 0 {
 		s.AddrsPerBlock = float64(s.NAddrs) / float64(s.NBlocks)
