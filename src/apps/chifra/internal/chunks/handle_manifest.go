@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -41,7 +42,7 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 					IndexHash: chunk.IndexHash,
 					IndexSize: chunk.IndexSize,
 				}
-				// s.Bounds = tslib.RangeToBounds(chain, &rng)
+				s.RangeDates = tslib.RangeToBounds(chain, &rng)
 				modelChan <- &s
 			}
 		}
@@ -64,7 +65,7 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 					IndexHash: chunk.IndexHash,
 					IndexSize: chunk.IndexSize,
 				}
-				// ch.Bounds = tslib.RangeToBounds(chain, &rng)
+				ch.RangeDates = tslib.RangeToBounds(chain, &rng)
 				s.Chunks = append(s.Chunks, ch)
 			}
 			modelChan <- &s

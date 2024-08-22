@@ -26,6 +26,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -311,7 +312,7 @@ func GetChunkStats(chain, path string) (s types.ChunkStats, err error) {
 		ChunkSz: uint64(file.FileSize(index.ToIndexPath(path))),
 		RecWid:  4 + index.BLOOM_WIDTH_IN_BYTES,
 	}
-	// s.Bounds = tslib.RangeToBounds(chain, &rng)
+	s.RangeDates = tslib.RangeToBounds(chain, &rng)
 
 	if s.NBlocks > 0 {
 		s.AddrsPerBlock = float64(s.NAddrs) / float64(s.NBlocks)

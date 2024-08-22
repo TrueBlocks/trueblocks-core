@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -80,7 +81,7 @@ func (opts *ChunksOptions) HandleAddresses(rCtx *output.RenderCtx, blockNums []b
 						Offset:  uint64(obj.Offset),
 						Count:   uint64(obj.Count),
 					}
-					// s.Bounds = tslib.RangeToBounds(chain, &rng)
+					s.RangeDates = tslib.RangeToBounds(chain, &rng)
 
 					modelChan <- &s
 					cnt++
