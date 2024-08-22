@@ -18,8 +18,8 @@ import (
 // EXISTING_CODE
 
 type RangeBounds struct {
-	FirstTs base.Timestamp `json:"firstTs"`
-	LastTs  base.Timestamp `json:"lastTs"`
+	FirstTs base.Timestamp `json:"firstTs,omitempty"`
+	LastTs  base.Timestamp `json:"lastTs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

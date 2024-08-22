@@ -12,7 +12,7 @@ import { datetime, timestamp } from '.';
 
 export type RangeBounds = {
   firstDate?: datetime
-  firstTs: timestamp
+  firstTs?: timestamp
   lastDate?: datetime
-  lastTs: timestamp
+  lastTs?: timestamp
 }
