@@ -8,15 +8,15 @@
  * This file was auto generated. DO NOT EDIT.
  */
 
-import { blkrange, rangeDates, hash, uint64 } from '.';
+import { blkrange, hash, RangeDates, uint64 } from '.';
 
 export type ChunkBloom = {
-  rangeDates: rangeDates
   byteWidth: uint64
   hash: hash
   magic: string
   nBlooms: uint64
   nInserted: uint64
   range: blkrange
+  rangeDates: RangeDates
   size: uint64
 }
