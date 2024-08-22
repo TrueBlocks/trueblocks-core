@@ -13,18 +13,19 @@ on      ,both ,fast  ,chunks ,apps ,chunkMan ,fail_detail_belong      ,y    ,mod
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,list_check              ,y    ,mode = monitors & check
 
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,stats_default           ,y    ,mode = stats
-on      ,both ,fast  ,chunks ,apps ,chunkMan ,stats_default_v         ,y    ,mode = stats & verbose
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,manifest_default        ,y    ,mode = manifest
-on      ,both ,fast  ,chunks ,apps ,chunkMan ,manifest_default_v      ,y    ,mode = manifest & verbose
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,index_default           ,y    ,mode = index
-on      ,both ,fast  ,chunks ,apps ,chunkMan ,index_default_v         ,y    ,mode = index & verbose
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,blooms_default          ,y    ,mode = blooms
-on      ,both ,fast  ,chunks ,apps ,chunkMan ,blooms_default_v        ,y    ,mode = blooms & verbose
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,header_default          ,y    ,mode = header
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,pins_default            ,y    ,mode = pins
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,addresses_default       ,y    ,mode = addresses
-on      ,both ,fast  ,chunks ,apps ,chunkMan ,addresses_default_v     ,y    ,mode = addresses & verbose
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,appearances_default     ,y    ,mode = appearances
+
+slow    ,both ,fast  ,chunks ,apps ,chunkMan ,stats_default_v         ,y    ,mode = stats & verbose
+slow    ,both ,fast  ,chunks ,apps ,chunkMan ,manifest_default_v      ,y    ,mode = manifest & verbose
+slow    ,both ,fast  ,chunks ,apps ,chunkMan ,index_default_v         ,y    ,mode = index & verbose
+slow    ,both ,fast  ,chunks ,apps ,chunkMan ,blooms_default_v        ,y    ,mode = blooms & verbose
+slow    ,both ,fast  ,chunks ,apps ,chunkMan ,addresses_default_v     ,y    ,mode = addresses & verbose
 
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,not_pins_list           ,y    ,mode = index & list
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,pins_list               ,y    ,mode = pins & list
