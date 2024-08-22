@@ -4,8 +4,8 @@ module github.com/TrueBlocks/trueblocks-core/sdkFuzzer
 go 1.22
 
 require (
-	github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240817132510-9417c54ac333
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240817132510-9417c54ac333
+	github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240821011737-818d01eef74f
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240821011737-818d01eef74f
 )
 
 require (
