@@ -10,7 +10,7 @@
 
 import { datetime, timestamp } from '.';
 
-export type RangeBounds = {
+export type RangeDates = {
   firstDate?: datetime
   firstTs?: timestamp
   lastDate?: datetime

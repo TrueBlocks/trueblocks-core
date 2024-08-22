@@ -17,19 +17,21 @@ import (
 
 // EXISTING_CODE
 
-type RangeBounds struct {
-	FirstTs base.Timestamp `json:"firstTs,omitempty"`
-	LastTs  base.Timestamp `json:"lastTs,omitempty"`
+type RangeDates struct {
+	FirstDate string         `json:"firstDate,omitempty"`
+	FirstTs   base.Timestamp `json:"firstTs,omitempty"`
+	LastDate  string         `json:"lastDate,omitempty"`
+	LastTs    base.Timestamp `json:"lastTs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s RangeBounds) String() string {
+func (s RangeDates) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *RangeBounds) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+func (s *RangeDates) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -43,7 +45,7 @@ func (s *RangeBounds) Model(chain, format string, verbose bool, extraOpts map[st
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *RangeBounds) FinishUnmarshal() {
+func (s *RangeDates) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

@@ -1,7 +1,7 @@
 [settings]
-    class = "RangeBounds"
+    class = "RangeDates"
     doc_group = "04-Admin"
     doc_descr = "shows first and last timestamps and dates for a given block range"
-    doc_route = "442-rangeBounds"
+    doc_route = "442-rangeDates"
     attributes = ""
     produced_by = "chunks"

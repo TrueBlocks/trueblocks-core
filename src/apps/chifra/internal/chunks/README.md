@@ -62,7 +62,7 @@ Data models produced by this tool:
 - [ipfspin](/data-model/admin/#ipfspin)
 - [manifest](/data-model/admin/#manifest)
 - [message](/data-model/other/#message)
-- [rangebounds](/data-model/admin/#rangebounds)
+- [rangedates](/data-model/admin/#rangedates)
 - [reportcheck](/data-model/admin/#reportcheck)
 
 ### Other Options
