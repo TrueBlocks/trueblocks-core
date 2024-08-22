@@ -36,6 +36,18 @@ func (s *RangeDates) Model(chain, format string, verbose bool, extraOpts map[str
 	var order = []string{}
 
 	// EXISTING_CODE
+	model = map[string]any{
+		"firstDate": s.FirstDate,
+		"firstTs":   s.FirstTs,
+		"lastDate":  s.LastDate,
+		"lastTs":    s.LastTs,
+	}
+	order = []string{
+		"firstDate",
+		"firstTs",
+		"lastDate",
+		"lastTs",
+	}
 	// EXISTING_CODE
 
 	return Model{
