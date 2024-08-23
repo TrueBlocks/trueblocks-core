@@ -15,6 +15,7 @@ abisOpts = {
     "known": {"hotkey": "-k", "type": "switch"},
     "proxyFor": {"hotkey": "-r", "type": "flag"},
     "list": {"hotkey": "-l", "type": "switch"},
+    "count": {"hotkey": "-c", "type": "switch"},
     "find": {"hotkey": "-f", "type": "flag"},
     "hint": {"hotkey": "-n", "type": "flag"},
     "encode": {"hotkey": "-e", "type": "flag"},

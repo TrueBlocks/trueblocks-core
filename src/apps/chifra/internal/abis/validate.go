@@ -42,6 +42,7 @@ func (opts *AbisOptions) validateAbis() error {
 	if len(opts.Globals.File) == 0 &&
 		len(opts.Encode) == 0 &&
 		len(opts.Find) == 0 &&
+		!opts.Count &&
 		!opts.List &&
 		!opts.Known &&
 		!opts.Globals.Decache {
@@ -50,6 +51,11 @@ func (opts *AbisOptions) validateAbis() error {
 		if err != nil {
 			return err
 		}
+	}
+
+	other := len(opts.Encode) != 0 || len(opts.Find) != 0 || opts.Globals.Decache
+	if other && (opts.Count || opts.List) {
+		return validate.Usage("The {0} options must be used alone.", "--count and --list")
 	}
 
 	if len(opts.Find) > 0 && len(opts.Encode) > 0 {

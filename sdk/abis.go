@@ -47,6 +47,13 @@ func (opts *AbisOptions) AbisList() ([]types.Abi, *types.MetaData, error) {
 	return queryAbis[types.Abi](in)
 }
 
+// AbisCount implements the chifra abis --count command.
+func (opts *AbisOptions) AbisCount() ([]types.Count, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Count = true
+	return queryAbis[types.Count](in)
+}
+
 // AbisFind implements the chifra abis --find command.
 func (opts *AbisOptions) AbisFind(val []string) ([]types.Function, *types.MetaData, error) {
 	in := opts.toInternal()

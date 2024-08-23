@@ -101,14 +101,15 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 15200,tools,Accounts,names,ethNames,n2,,,,,note,,,,,,The `--match_case` option enables case sensitive matching.
 #
 16000,tools,Accounts,abis,grabABI,,,,visible|docs,,command,,,Manage Abi files,[flags] <address> [address...],default|caching|names|,Fetches the ABI for a smart contract.
-16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,4,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
+16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,5,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
 16030,tools,Accounts,abis,grabABI,known,k,,visible|docs,,switch,<boolean>,,,,,load common 'known' ABIs from cache
 16040,tools,Accounts,abis,grabABI,proxy_for,r,,visible|docs,,flag,<address>,,,,,redirects the query to this implementation
-16030,tools,Accounts,abis,grabABI,list,l,,visible|docs,2,switch,<boolean>,abi,,,,a list of downloaded abi files
-16050,tools,Accounts,abis,grabABI,find,f,,visible|docs,1,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
-16060,tools,Accounts,abis,grabABI,hint,n,,visible|docs,,flag,list<string>,,,,,for the --find option only&#44; provide hints to speed up the search
-16070,tools,Accounts,abis,grabABI,encode,e,,visible|docs,3,flag,<string>,function,,,,generate the 32-byte encoding for a given cannonical function or event signature
-16090,tools,Accounts,abis,grabABI,n1,,,,,note,,,,,,Search for either four byte signatures or event signatures with the --find option.
+16050,tools,Accounts,abis,grabABI,list,l,,visible|docs,3,switch,<boolean>,abi,,,,a list of downloaded abi files
+16060,tools,Accounts,abis,grabABI,count,c,,visible|docs,2,switch,<boolean>,count,,,,show the number of abis downloaded
+16070,tools,Accounts,abis,grabABI,find,f,,visible|docs,1,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
+16080,tools,Accounts,abis,grabABI,hint,n,,visible|docs,,flag,list<string>,,,,,for the --find option only&#44; provide hints to speed up the search
+16090,tools,Accounts,abis,grabABI,encode,e,,visible|docs,4,flag,<string>,function,,,,generate the 32-byte encoding for a given cannonical function or event signature
+16100,tools,Accounts,abis,grabABI,n1,,,,,note,,,,,,Search for either four byte signatures or event signatures with the --find option.
 #
 21000,,Chain Data,,,,,,,,group,,,,,,Access and cache blockchain-related data
 #
