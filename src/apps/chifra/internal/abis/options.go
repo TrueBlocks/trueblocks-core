@@ -32,6 +32,7 @@ type AbisOptions struct {
 	Known    bool                  `json:"known,omitempty"`    // Load common 'known' ABIs from cache
 	ProxyFor string                `json:"proxyFor,omitempty"` // Redirects the query to this implementation
 	List     bool                  `json:"list,omitempty"`     // A list of downloaded abi files
+	Count    bool                  `json:"count,omitempty"`    // Show the number of abis downloaded
 	Find     []string              `json:"find,omitempty"`     // Search for function or event declarations given a four- or 32-byte code(s)
 	Hint     []string              `json:"hint,omitempty"`     // For the --find option only, provide hints to speed up the search
 	Encode   string                `json:"encode,omitempty"`   // Generate the 32-byte encoding for a given cannonical function or event signature
@@ -50,6 +51,7 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
 	logger.TestLog(opts.List, "List: ", opts.List)
+	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
 	logger.TestLog(len(opts.Encode) > 0, "Encode: ", opts.Encode)
@@ -89,6 +91,8 @@ func AbisFinishParseInternal(w io.Writer, values url.Values) *AbisOptions {
 			opts.ProxyFor = value[0]
 		case "list":
 			opts.List = true
+		case "count":
+			opts.Count = true
 		case "find":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
