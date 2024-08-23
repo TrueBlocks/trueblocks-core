@@ -35,14 +35,14 @@ func (opts *AbisOptions) HandleList(rCtx *output.RenderCtx) error {
 					if strings.HasPrefix(abi.Name, "0x") {
 						abi.Address = base.HexToAddress(strings.Replace(abi.Name, ".json", "", -1))
 					}
-					if testMode {
-						abi.LastModDate = "--date--"
-						abi.Path = strings.ReplaceAll(abi.Path, config.PathToRootConfig(), ".")
-					}
 					if opts.Globals.Verbose {
 						contents := file.AsciiFileToString(filepath.Join(abi.Path, abi.Name))
 						abi.NFunctions = int64(strings.Count(contents, "\"function\""))
 						abi.NEvents = int64(strings.Count(contents, "\"event\""))
+					}
+					if testMode {
+						abi.LastModDate = "--date--"
+						abi.Path = strings.ReplaceAll(abi.Path, config.PathToRootConfig(), ".")
 					}
 					abiArray = append(abiArray, abi)
 				}
