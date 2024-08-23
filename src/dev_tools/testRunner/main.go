@@ -82,6 +82,7 @@ func parseCsv(filePath string) ([]TestCase, error) {
 	const requiredFields = 9
 	lineNumber := 0
 	testCases := make([]TestCase, 0, 200)
+	enableMark := os.Getenv("TB_TEST_ENABLE")
 	for {
 		lineNumber++
 		csvRecord, err := reader.Read()
@@ -116,9 +117,13 @@ func parseCsv(filePath string) ([]TestCase, error) {
 				Options:  strings.Trim(csvRecord[8], " "),
 			}
 
+			isEnabled := rec.Enabled == "on"
+			if enableMark != "" {
+				isEnabled = rec.Enabled == enableMark
+			}
 			testCase := TestCase{
 				record:       rec,
-				IsEnabled:    rec.Enabled == "on",
+				IsEnabled:    isEnabled,
 				HasShorthand: strings.Contains(rec.Options, "@"),
 				WorkingPath:  filepath.Join(getWorkingPath(), rec.Path, rec.Tool),
 				OrigOptions:  rec.Options,
