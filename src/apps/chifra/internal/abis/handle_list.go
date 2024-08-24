@@ -51,13 +51,20 @@ func (opts *AbisOptions) HandleList(rCtx *output.RenderCtx) error {
 		}
 
 		opts.ForEveryAbi(true, vFunc, nil)
+		// sort.Slice(abiArray,
+		// 	types.Cmp(abiArray,
+		// 		types.AbiBy(types.AbiIsKnown, types.Descending),
+		// 		types.AbiBy(types.AbiName, types.Ascending),
+		// 	),
+		// )
 		for _, abi := range abiArray {
 			modelChan <- &abi
 		}
 	}
 
 	extraOpts := map[string]any{
-		"list": true,
+		"list":      true,
+		"loadNames": true,
 	}
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

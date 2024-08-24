@@ -43,20 +43,28 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 	// EXISTING_CODE
 	if extraOpts["list"] == true {
 		model = map[string]any{
+			"address":     s.Address,
 			"name":        s.Name,
 			"lastModDate": s.LastModDate,
 			"fileSize":    s.FileSize,
 			"isKnown":     s.IsKnown,
 		}
 		order = []string{
+			"address",
 			"name",
 			"lastModDate",
 			"fileSize",
 			"isKnown",
 		}
-		if !s.Address.IsZero() {
-			model["address"] = s.Address
-			order = append([]string{"address"}, order...)
+
+		if s.IsKnown {
+			model["address"] = ""
+		} else {
+			if name, loaded, found := nameAddress(extraOpts, s.Address); found {
+				model["name"] = name.Name
+			} else if loaded {
+				model["name"] = ""
+			}
 		}
 
 		if verbose {
