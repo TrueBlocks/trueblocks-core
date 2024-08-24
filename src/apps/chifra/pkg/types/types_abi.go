@@ -21,6 +21,7 @@ type Abi struct {
 	Address     base.Address `json:"address"`
 	FileSize    int64        `json:"fileSize"`
 	Functions   []Function   `json:"functions"`
+	IsEmpty     bool         `json:"isEmpty"`
 	IsKnown     bool         `json:"isKnown"`
 	LastModDate string       `json:"lastModDate"`
 	NEvents     int64        `json:"nEvents"`
@@ -43,23 +44,42 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 	// EXISTING_CODE
 	if extraOpts["list"] == true {
 		model = map[string]any{
+			"address":     s.Address,
 			"name":        s.Name,
 			"lastModDate": s.LastModDate,
 			"fileSize":    s.FileSize,
 			"isKnown":     s.IsKnown,
 		}
 		order = []string{
+			"address",
 			"name",
 			"lastModDate",
 			"fileSize",
 			"isKnown",
 		}
-		if !s.Address.IsZero() {
-			model["address"] = s.Address
-			order = append([]string{"address"}, order...)
+
+		if s.IsKnown {
+			model["address"] = ""
+		} else {
+			if name, loaded, found := nameAddress(extraOpts, s.Address); found {
+				model["name"] = name.Name
+			} else if loaded {
+				model["name"] = ""
+			}
+		}
+		if format == "json" && s.Address.IsZero() {
+			delete(model, "address")
 		}
 
 		if verbose {
+			if format == "json" {
+				if s.IsEmpty {
+					model["isEmpty"] = s.IsEmpty
+				}
+			} else {
+				model["isEmpty"] = s.IsEmpty
+				order = append(order, "isEmpty")
+			}
 			model["nFunctions"] = s.NFunctions
 			order = append(order, "nFunctions")
 			model["nEvents"] = s.NEvents

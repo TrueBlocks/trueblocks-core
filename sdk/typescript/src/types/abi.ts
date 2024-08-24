@@ -14,6 +14,7 @@ export type Abi = {
   address: address
   fileSize: int64
   functions: Function[]
+  isEmpty: boolean
   isKnown: boolean
   lastModDate: string
   nEvents: int64

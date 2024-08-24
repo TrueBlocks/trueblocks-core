@@ -22,6 +22,9 @@ func init() {
 	perfTiming = os.Getenv("TB_TIMER_ON") == "true"
 }
 
+// DO NOT CHANGE THIS VALUE. It is used to cache the error response from Etherscan.
+// It's length is 42 bytes and is used to test for this case
+
 var AbiNotFound = `[{"name":"AbiNotFound","type":"function"}]`
 
 // downloadAbi downloads the ABI for the given address and saves it to the cache.

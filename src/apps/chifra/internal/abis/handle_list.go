@@ -39,6 +39,7 @@ func (opts *AbisOptions) HandleList(rCtx *output.RenderCtx) error {
 						contents := file.AsciiFileToString(filepath.Join(abi.Path, abi.Name))
 						abi.NFunctions = int64(strings.Count(contents, "\"function\""))
 						abi.NEvents = int64(strings.Count(contents, "\"event\""))
+						abi.IsEmpty = abi.FileSize == 42 // See AbiNotFound
 					}
 					if testMode {
 						abi.LastModDate = "--date--"
@@ -57,7 +58,8 @@ func (opts *AbisOptions) HandleList(rCtx *output.RenderCtx) error {
 	}
 
 	extraOpts := map[string]any{
-		"list": true,
+		"list":      true,
+		"loadNames": true,
 	}
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

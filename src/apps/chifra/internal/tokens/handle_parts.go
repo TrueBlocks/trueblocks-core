@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -55,15 +54,8 @@ func (opts *TokensOptions) HandleParts(rCtx *output.RenderCtx) error {
 	}
 
 	extraOpts := map[string]any{
-		"parts": opts.Parts,
-	}
-	if opts.Globals.ShouldLoadNames(true) {
-		parts := types.Custom | types.Prefund | types.Regular
-		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
-			return err
-		} else {
-			extraOpts["namesMap"] = namesMap
-		}
+		"parts":     opts.Parts,
+		"loadNames": true,
 	}
 
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
