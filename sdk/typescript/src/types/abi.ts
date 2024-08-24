@@ -14,6 +14,8 @@ export type Abi = {
   address: address
   fileSize: int64
   functions: Function[]
+  hasConstructor: boolean
+  hasFallback: boolean
   isEmpty: boolean
   isKnown: boolean
   lastModDate: string
