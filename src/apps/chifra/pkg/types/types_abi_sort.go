@@ -8,6 +8,7 @@ const (
 	AbiNFunctions  AbiField = "nFunctions"
 	AbiNEvents     AbiField = "nEvents"
 	AbiIsKnown     AbiField = "isKnown"
+	AbiIsEmpty     AbiField = "isEmpty"
 	AbiLastModDate AbiField = "lastModDate"
 	AbiName        AbiField = "name"
 )
@@ -49,6 +50,13 @@ func AbiBy(field AbiField, order SortOrder) func(p1, p2 Abi) bool {
 				return !p1.IsKnown && p2.IsKnown // False < True
 			}
 			return p1.IsKnown && !p2.IsKnown // True < False
+		}
+	case AbiIsEmpty:
+		return func(p1, p2 Abi) bool {
+			if order == Ascending {
+				return !p1.IsEmpty && p2.IsEmpty // False < True
+			}
+			return p1.IsEmpty && !p2.IsEmpty // True < False
 		}
 	case AbiLastModDate:
 		return func(p1, p2 Abi) bool {

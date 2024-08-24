@@ -18,10 +18,11 @@ import (
 // EXISTING_CODE
 
 type Abi struct {
-	Address     base.Address `json:"address"`
+	Address     base.Address `json:"address,omitempty"`
 	FileSize    int64        `json:"fileSize"`
 	Functions   []Function   `json:"functions"`
 	IsKnown     bool         `json:"isKnown"`
+	IsEmpty     bool         `json:"isEmpty,omitempty"`
 	LastModDate string       `json:"lastModDate"`
 	NEvents     int64        `json:"nEvents"`
 	NFunctions  int64        `json:"nFunctions"`
@@ -66,8 +67,19 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 				model["name"] = ""
 			}
 		}
+		if format == "json" && s.Address.IsZero() {
+			delete(model, "address")
+		}
 
 		if verbose {
+			if format == "json" {
+				if s.IsEmpty {
+					model["isEmpty"] = s.IsEmpty
+				}
+			} else {
+				model["isEmpty"] = s.IsEmpty
+				order = append(order, "isEmpty")
+			}
 			model["nFunctions"] = s.NFunctions
 			order = append(order, "nFunctions")
 			model["nEvents"] = s.NEvents
