@@ -18,11 +18,11 @@ import (
 // EXISTING_CODE
 
 type Abi struct {
-	Address     base.Address `json:"address,omitempty"`
+	Address     base.Address `json:"address"`
 	FileSize    int64        `json:"fileSize"`
 	Functions   []Function   `json:"functions"`
+	IsEmpty     bool         `json:"isEmpty"`
 	IsKnown     bool         `json:"isKnown"`
-	IsEmpty     bool         `json:"isEmpty,omitempty"`
 	LastModDate string       `json:"lastModDate"`
 	NEvents     int64        `json:"nEvents"`
 	NFunctions  int64        `json:"nFunctions"`
