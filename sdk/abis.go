@@ -12,6 +12,8 @@ import (
 	// EXISTING_CODE
 
 	"encoding/json"
+	"fmt"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -70,4 +72,28 @@ func (opts *AbisOptions) AbisEncode(val string) ([]types.Function, *types.MetaDa
 
 // No enums
 // EXISTING_CODE
+type SortOrder = types.SortOrder
+
+const (
+	Asc SortOrder = types.Ascending
+	Dec SortOrder = types.Descending
+)
+
+func SortAbis(abis []types.Abi, fields []string, dir []SortOrder) error {
+	if len(fields) != len(dir) {
+		return fmt.Errorf("fields and dir must have the same length")
+	}
+
+	sorts := make([]func(p1, p2 types.Abi) bool, len(fields))
+	for i, field := range fields {
+		if !types.IsValidAbiField(field) {
+			return fmt.Errorf("%s is not an Abi sort field", field)
+		}
+		sorts[i] = types.AbiBy(types.AbiField(field), types.SortOrder(dir[i]))
+	}
+
+	sort.Slice(abis, types.AbiCmp(abis, sorts...))
+	return nil
+}
+
 // EXISTING_CODE

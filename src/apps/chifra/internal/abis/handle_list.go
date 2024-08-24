@@ -39,7 +39,15 @@ func (opts *AbisOptions) HandleList(rCtx *output.RenderCtx) error {
 						contents := file.AsciiFileToString(filepath.Join(abi.Path, abi.Name))
 						abi.NFunctions = int64(strings.Count(contents, "\"function\""))
 						abi.NEvents = int64(strings.Count(contents, "\"event\""))
+						abi.HasConstructor = strings.Count(contents, "\"constructor\"") > 0
+						abi.HasFallback = strings.Count(contents, "\"fallback\"") > 0
 						abi.IsEmpty = abi.FileSize == 42 // See AbiNotFound
+						if abi.IsEmpty {
+							abi.NFunctions = 0
+							abi.NEvents = 0
+							abi.HasConstructor = false
+							abi.HasFallback = false
+						}
 					}
 					if testMode {
 						abi.LastModDate = "--date--"

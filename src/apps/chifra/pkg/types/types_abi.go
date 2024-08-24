@@ -18,16 +18,18 @@ import (
 // EXISTING_CODE
 
 type Abi struct {
-	Address     base.Address `json:"address"`
-	FileSize    int64        `json:"fileSize"`
-	Functions   []Function   `json:"functions"`
-	IsEmpty     bool         `json:"isEmpty"`
-	IsKnown     bool         `json:"isKnown"`
-	LastModDate string       `json:"lastModDate"`
-	NEvents     int64        `json:"nEvents"`
-	NFunctions  int64        `json:"nFunctions"`
-	Name        string       `json:"name"`
-	Path        string       `json:"path"`
+	Address        base.Address `json:"address"`
+	FileSize       int64        `json:"fileSize"`
+	Functions      []Function   `json:"functions"`
+	HasConstructor bool         `json:"hasConstructor"`
+	HasFallback    bool         `json:"hasFallback"`
+	IsEmpty        bool         `json:"isEmpty"`
+	IsKnown        bool         `json:"isKnown"`
+	LastModDate    string       `json:"lastModDate"`
+	NEvents        int64        `json:"nEvents"`
+	NFunctions     int64        `json:"nFunctions"`
+	Name           string       `json:"name"`
+	Path           string       `json:"path"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -84,6 +86,19 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 			order = append(order, "nFunctions")
 			model["nEvents"] = s.NEvents
 			order = append(order, "nEvents")
+			if format == "json" {
+				if s.HasConstructor {
+					model["hasConstructor"] = s.HasConstructor
+				}
+				if s.HasFallback {
+					model["hasFallback"] = s.HasFallback
+				}
+			} else {
+				model["hasConstructor"] = s.HasConstructor
+				order = append(order, "hasConstructor")
+				model["hasFallback"] = s.HasFallback
+				order = append(order, "hasFallback")
+			}
 			model["path"] = s.Path
 			order = append(order, "path")
 		}
