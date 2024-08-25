@@ -43,6 +43,7 @@ func (opts *MonitorsOptions) HandleClean(rCtx *output.RenderCtx) error {
 			if s.SizeThen > 0 {
 				modelChan <- &s
 			}
+			// delete empty monitors
 		}
 	}
 

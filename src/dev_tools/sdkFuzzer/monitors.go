@@ -135,6 +135,16 @@ func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "count":
+		if count, _, err := opts.MonitorsCount(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Count](fn, count); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	default:
 		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
 		logger.Fatal("Quitting...")

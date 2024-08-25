@@ -34,6 +34,7 @@ type MonitorsOptions struct {
 	Remove    bool                  `json:"remove,omitempty"`    // Remove a previously deleted monitor
 	Clean     bool                  `json:"clean,omitempty"`     // Clean (i.e. remove duplicate appearances) from monitors
 	List      bool                  `json:"list,omitempty"`      // List monitors in the cache (--verbose for more detail)
+	Count     bool                  `json:"count,omitempty"`     // Show the number of active monitors (included deleted but not removed monitors)
 	Watch     bool                  `json:"watch,omitempty"`     // Continually scan for new blocks and extract data as per the command file
 	Watchlist string                `json:"watchlist,omitempty"` // Available with --watch option only, a file containing the addresses to watch
 	Commands  string                `json:"commands,omitempty"`  // Available with --watch option only, the file containing the list of commands to apply to each watched address
@@ -60,6 +61,7 @@ func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(opts.List, "List: ", opts.List)
+	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Watch, "Watch: ", opts.Watch)
 	logger.TestLog(len(opts.Watchlist) > 0, "Watchlist: ", opts.Watchlist)
 	logger.TestLog(len(opts.Commands) > 0, "Commands: ", opts.Commands)
@@ -108,6 +110,8 @@ func MonitorsFinishParseInternal(w io.Writer, values url.Values) *MonitorsOption
 			opts.Clean = true
 		case "list":
 			opts.List = true
+		case "count":
+			opts.Count = true
 		case "watch":
 			opts.Watch = true
 		case "watchlist":
