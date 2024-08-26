@@ -10,7 +10,6 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
 	"sync"
 
@@ -174,28 +173,33 @@ func (mon *Monitor) Remove() (bool, error) {
 	return !file.FileExists(mon.Path()), nil
 }
 
-// ListMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
-// a file called addresses.tsv in the current folder or, if not present, from existing monitors
-func ListMonitors(chain, watchList string, monitorChan chan<- Monitor) {
+// ListWatchedMonitors puts a list of Monitors into the monitorChannel. The list of monitors is
+// built from a file called addresses.tsv in the current folder
+func ListWatchedMonitors(chain, watchList string, monitorChan chan<- Monitor) {
 	defer func() {
 		monitorChan <- Monitor{Address: base.NotAMonitor}
 	}()
 
-	if watchList != "existing" {
-		logger.Info("Reading address list from", watchList)
-		lines := file.AsciiFileToLines(watchList)
-		addrMap := make(map[base.Address]bool)
-		for _, line := range lines {
-			line = utils.StripComments(line)
-			addr := base.HexToAddress(line)
-			if !addrMap[addr] && !addr.IsZero() && base.IsValidAddress(addr.Hex()) {
-				mon, _ := NewMonitor(chain, addr, true /* create */)
-				monitorChan <- mon
-			}
-			addrMap[addr] = true
+	logger.Info("Reading address list from", watchList)
+	lines := file.AsciiFileToLines(watchList)
+	addrMap := make(map[base.Address]bool)
+	for _, line := range lines {
+		line = utils.StripComments(line)
+		addr := base.HexToAddress(line)
+		if !addrMap[addr] && !addr.IsZero() && base.IsValidAddress(addr.Hex()) {
+			mon, _ := NewMonitor(chain, addr, true /* create */)
+			monitorChan <- mon
 		}
-		return
+		addrMap[addr] = true
 	}
+}
+
+// ListExistingMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
+// a file called addresses.tsv in the current folder or, if not present, from existing monitors
+func ListExistingMonitors(chain string, monitorChan chan<- Monitor) {
+	defer func() {
+		monitorChan <- Monitor{Address: base.NotAMonitor}
+	}()
 
 	walkFunc := func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
@@ -205,6 +209,9 @@ func ListMonitors(chain, watchList string, monitorChan chan<- Monitor) {
 			addr, _ := base.AddressFromPath(path, ".mon.bin")
 			if !addr.IsZero() {
 				mon, _ := NewMonitor(chain, addr, true /* create */)
+				if strings.Contains(path, "staging") {
+					mon.Staged = true
+				}
 				monitorChan <- mon
 			}
 		}
@@ -240,28 +247,4 @@ func (mon *Monitor) MoveToProduction() error {
 	monitorMutex.Unlock()
 
 	return err
-}
-
-func GetMonitorMap(chain string) (map[base.Address]*Monitor, []*Monitor) {
-	monitorChan := make(chan Monitor)
-
-	go ListMonitors(chain, "existing", monitorChan)
-
-	monMap := make(map[base.Address]*Monitor)
-	monArray := []*Monitor{}
-	for mon := range monitorChan {
-		switch mon.Address {
-		case base.NotAMonitor:
-			close(monitorChan)
-		default:
-			monMap[mon.Address] = &mon
-			monArray = append(monArray, &mon)
-		}
-	}
-
-	sort.Slice(monArray, func(i, j int) bool {
-		return monArray[i].Address.Hex() < monArray[j].Address.Hex()
-	})
-
-	return monMap, monArray
 }

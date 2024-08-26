@@ -23,13 +23,16 @@ func (opts *MonitorsOptions) HandleCount(rCtx *output.RenderCtx) error {
 		count := uint64(0)
 		if testMode {
 			count = 199
+			if opts.Staged {
+				count = 99
+			}
 		} else {
 			vFunc := func(fn string, vP any) (bool, error) {
 				_, name := filepath.Split(fn)
-				isVerbose := opts.Globals.Verbose
+				incStaged := opts.Staged
 				isStaging := strings.Contains(fn, "staging")
 				isMonitor := strings.HasSuffix(name, ".mon.bin")
-				include := isMonitor && (isVerbose || !isStaging)
+				include := isMonitor && (incStaged || !isStaging)
 				if include {
 					count++
 				}
