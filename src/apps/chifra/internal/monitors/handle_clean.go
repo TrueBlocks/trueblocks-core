@@ -45,8 +45,8 @@ func (opts *MonitorsOptions) HandleClean(rCtx *output.RenderCtx) error {
 				if opts.Staged && mon.Staged {
 					s.Removed = true
 					mon.Close()
-					mon.Delete()
-					mon.Remove()
+					_ = mon.Delete()
+					_, _ = mon.Remove()
 				}
 			}
 
