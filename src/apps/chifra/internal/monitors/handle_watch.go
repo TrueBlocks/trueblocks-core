@@ -323,7 +323,7 @@ func (opts *MonitorsOptions) getMonitorList() []monitor.Monitor {
 	var monitors []monitor.Monitor
 
 	monitorChan := make(chan monitor.Monitor)
-	go monitor.ListMonitors(opts.Globals.Chain, opts.Watchlist, monitorChan)
+	go monitor.ListWatchedMonitors(opts.Globals.Chain, opts.Watchlist, monitorChan)
 
 	for result := range monitorChan {
 		switch result.Address {

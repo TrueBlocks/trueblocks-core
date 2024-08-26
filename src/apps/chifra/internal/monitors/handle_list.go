@@ -30,10 +30,10 @@ func (opts *MonitorsOptions) HandleList(rCtx *output.RenderCtx) error {
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		vFunc := func(fn string, vP any) (bool, error) {
 			_, name := filepath.Split(fn)
-			isVerbose := opts.Globals.Verbose
+			incStaged := opts.Staged
 			isStaging := strings.Contains(fn, "staging")
 			isMonitor := strings.HasSuffix(name, ".mon.bin")
-			include := isMonitor && (isVerbose || !isStaging)
+			include := isMonitor && (incStaged || !isStaging)
 			if include {
 				address, _ := base.AddressFromPath(fn, ".mon.bin")
 				s := types.Monitor{
@@ -43,7 +43,7 @@ func (opts *MonitorsOptions) HandleList(rCtx *output.RenderCtx) error {
 					IsStaged: isStaging,
 				}
 				s.IsEmpty = s.NRecords == 0
-				if isVerbose {
+				if opts.Globals.Verbose {
 					var mon monitor.Monitor
 					mon.Address = address
 					mon.Staged = isStaging

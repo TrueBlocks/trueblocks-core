@@ -56,9 +56,10 @@ Flags:
       --delete             delete a monitor, but do not remove it
       --undelete           undelete a previously deleted monitor
       --remove             remove a previously deleted monitor
-  -C, --clean              clean (i.e. remove duplicate appearances) from monitors
+  -C, --clean              clean (i.e. remove duplicate appearances) from monitors, optionally clear stage
   -l, --list               list monitors in the cache (--verbose for more detail)
   -c, --count              show the number of active monitors (included deleted but not removed monitors)
+  -S, --staged             for --clean, --list, and --count options only, include staged monitors
   -w, --watch              continually scan for new blocks and extract data as per the command file
   -a, --watchlist string   available with --watch option only, a file containing the addresses to watch
   -d, --commands string    available with --watch option only, the file containing the list of commands to apply to each watched address

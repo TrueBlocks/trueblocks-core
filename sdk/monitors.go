@@ -22,6 +22,7 @@ type MonitorsOptions struct {
 	Delete    bool              `json:"delete,omitempty"`
 	Undelete  bool              `json:"undelete,omitempty"`
 	Remove    bool              `json:"remove,omitempty"`
+	Staged    bool              `json:"staged,omitempty"`
 	Watch     bool              `json:"watch,omitempty"`
 	Watchlist string            `json:"watchlist,omitempty"`
 	Commands  string            `json:"commands,omitempty"`

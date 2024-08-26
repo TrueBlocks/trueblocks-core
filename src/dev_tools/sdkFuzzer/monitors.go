@@ -30,6 +30,7 @@ func DoMonitors() {
 	delete := []bool{false, true}
 	undelete := []bool{false, true}
 	remove := []bool{false, true}
+	staged := []bool{false, true}
 	watch := []bool{false, true}
 	// watchlist is not fuzzed
 	// commands is not fuzzed
@@ -43,6 +44,7 @@ func DoMonitors() {
 	_ = remove
 	_ = watch
 	_ = globs
+	_ = staged
 	opts = sdk.MonitorsOptions{
 		Addrs: []string{fuzzAddresses[0]},
 	}

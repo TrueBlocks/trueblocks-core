@@ -34,7 +34,9 @@ on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list2           ,n   
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list2_v         ,n    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = csv & verbose
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list_not_in     ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 & list
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_count           ,y    ,count
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_count_s         ,y    ,count & staged
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_count_list      ,y    ,count & list & no_header
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_count_list_s    ,y    ,count & list & no_header & staged
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_count_other     ,y    ,count & clean
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_count_v         ,y    ,count & verbose
 
