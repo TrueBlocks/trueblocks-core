@@ -61,15 +61,16 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13430,apps,Accounts,export,acctExport,n12,,,,,note,,,,,,The --traces option requires your RPC to provide trace data. See the README for more information.
 #
 14000,apps,Accounts,monitors,acctExport,,,,visible|docs,,command,,,Manage monitors,[flags] <address> [address...],default|caching|names|,Add&#44; remove&#44; clean&#44; and list address monitors.
-14020,apps,Accounts,monitors,acctExport,addrs,,,visible|docs,4,positional,list<addr>,message,,,,one or more addresses (0x...) to process
+14020,apps,Accounts,monitors,acctExport,addrs,,,visible|docs,5,positional,list<addr>,message,,,,one or more addresses (0x...) to process
 14030,apps,Accounts,monitors,acctExport,delete,,,visible|docs|crud,,switch,<boolean>,,,,,delete a monitor&#44; but do not remove it
 14040,apps,Accounts,monitors,acctExport,undelete,,,visible|docs|crud,,switch,<boolean>,,,,,undelete a previously deleted monitor
 14050,apps,Accounts,monitors,acctExport,remove,,,visible|docs|crud,,switch,<boolean>,,,,,remove a previously deleted monitor
-14060,apps,Accounts,monitors,acctExport,clean,C,,visible|docs,1,switch,<boolean>,monitorClean,,,,clean (i.e. remove duplicate appearances) from monitors
-14070,apps,Accounts,monitors,acctExport,list,l,,visible|docs,2,switch,<boolean>,monitor,,,,list monitors in the cache (--verbose for more detail)
-14080,apps,Accounts,monitors,acctExport,watch,w,,visible|docs|notApi,3,switch,<boolean>,,,,,continually scan for new blocks and extract data as per the command file
+14060,apps,Accounts,monitors,acctExport,clean,C,,visible|docs,2,switch,<boolean>,monitorClean,,,,clean (i.e. remove duplicate appearances) from monitors
+14070,apps,Accounts,monitors,acctExport,list,l,,visible|docs,3,switch,<boolean>,monitor,,,,list monitors in the cache (--verbose for more detail)
+14075,apps,Accounts,monitors,acctExport,count,c,,visible|docs,1,switch,<boolean>,count,,,,show the number of active monitors (included deleted but not removed monitors)
+14080,apps,Accounts,monitors,acctExport,watch,w,,visible|docs|notApi,4,switch,<boolean>,,,,,continually scan for new blocks and extract data as per the command file
 14090,apps,Accounts,monitors,acctExport,watchlist,a,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; a file containing the addresses to watch
-14100,apps,Accounts,monitors,acctExport,commands,c,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; the file containing the list of commands to apply to each watched address
+14100,apps,Accounts,monitors,acctExport,commands,d,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; the file containing the list of commands to apply to each watched address
 14110,apps,Accounts,monitors,acctExport,batch_size,b,8,visible|docs|notApi,,flag,<uint64>,,,,,available with --watch option only&#44; the number of monitors to process in each batch
 14120,apps,Accounts,monitors,acctExport,run_count,u,,visible|docs|notApi,,flag,<uint64>,,,,,available with --watch option only&#44; run the monitor this many times&#44; then quit
 14130,apps,Accounts,monitors,acctExport,sleep,s,14,visible|docs|notApi,,flag,<float64>,,,,,available with --watch option only&#44; the number of seconds to sleep between runs

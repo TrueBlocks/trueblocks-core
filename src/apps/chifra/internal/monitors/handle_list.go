@@ -5,54 +5,65 @@
 package monitorsPkg
 
 import (
-	"fmt"
+	"path/filepath"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // HandleList handles the chifra monitors --list command.
 func (opts *MonitorsOptions) HandleList(rCtx *output.RenderCtx) error {
+	testMode := opts.Globals.TestMode
+	if testMode {
+		logger.Info("chifra monitors --list not tested")
+		return nil
+	}
+
 	chain := opts.Globals.Chain
-	monitorMap, monArray := monitor.GetMonitorMap(chain)
-	if opts.Globals.Verbose {
-		for i := 0; i < len(monArray); i++ {
-			_ = monArray[i].ReadMonitorHeader()
-			monArray[i].Close()
-		}
-	}
-
-	errors := make([]error, 0)
-	addrMap := map[base.Address]bool{}
-	for _, addr := range opts.Addrs {
-		a := base.HexToAddress(addr)
-		addrMap[a] = true
-		if monitorMap[a] == nil {
-			errors = append(errors, fmt.Errorf("address %s is not being monitored", addr))
-		}
-	}
-
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		for _, e := range errors {
-			errorChan <- e
-		}
-
-		for _, mon := range monArray {
-			if len(addrMap) == 0 || addrMap[mon.Address] {
+		vFunc := func(fn string, vP any) (bool, error) {
+			_, name := filepath.Split(fn)
+			isVerbose := opts.Globals.Verbose
+			isStaging := strings.Contains(fn, "staging")
+			isMonitor := strings.HasSuffix(name, ".mon.bin")
+			include := isMonitor && (isVerbose || !isStaging)
+			if include {
+				address, _ := base.AddressFromPath(fn, ".mon.bin")
 				s := types.Monitor{
-					Address:     mon.Address,
-					NRecords:    mon.Count(),
-					FileSize:    file.FileSize(mon.Path()),
-					LastScanned: mon.LastScanned,
-					Deleted:     mon.Deleted,
+					Address:  address,
+					NRecords: (file.FileSize(fn) / 8) - 1, // two 32 bit integers and a 32 bit header
+					FileSize: file.FileSize(fn),
+					IsStaged: isStaging,
+				}
+				s.IsEmpty = s.NRecords == 0
+				if isVerbose {
+					var mon monitor.Monitor
+					mon.Address = address
+					mon.Staged = isStaging
+					_ = mon.ReadMonitorHeader()
+					mon.Close()
+					s.LastScanned = mon.LastScanned
+					s.Deleted = mon.Deleted
 				}
 				modelChan <- &s
 			}
+			return true, nil
 		}
+
+		path := filepath.Join(config.PathToCache(chain), "monitors")
+		_ = walk.ForEveryFileInFolder(path, vFunc, errorChan)
 	}
 
-	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
+	extraOpts := map[string]any{
+		"list": true,
+	}
+
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

@@ -76,6 +76,8 @@ func (opts *MonitorsOptions) MonitorsInternal(rCtx *output.RenderCtx) error {
 	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache(rCtx)
+	} else if opts.Count {
+		err = opts.HandleCount(rCtx)
 	} else if opts.Clean {
 		err = opts.HandleClean(rCtx)
 	} else if opts.List {

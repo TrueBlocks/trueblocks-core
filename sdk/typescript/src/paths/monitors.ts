@@ -9,7 +9,7 @@
  */
 
 import * as ApiCallers from '../lib/api_callers';
-import { address, float64, Message, Monitor, MonitorClean, uint64 } from '../types';
+import { address, Count, float64, Message, Monitor, MonitorClean, uint64 } from '../types';
 
 export function getMonitors(
   parameters?: {
@@ -19,6 +19,7 @@ export function getMonitors(
     remove?: boolean,
     clean?: boolean,
     list?: boolean,
+    count?: boolean,
     watch?: boolean,
     watchlist?: string,
     commands?: string,
@@ -33,7 +34,7 @@ export function getMonitors(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Message[] | MonitorClean[] | Monitor[]>(
+  return ApiCallers.fetch<Count[] | Message[] | MonitorClean[] | Monitor[]>(
     { endpoint: '/monitors', method: 'get', parameters, options },
   );
 }

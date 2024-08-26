@@ -15,6 +15,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // EXISTING_CODE
@@ -23,6 +24,8 @@ type Monitor struct {
 	Address     base.Address `json:"address"`
 	Deleted     bool         `json:"deleted"`
 	FileSize    int64        `json:"fileSize"`
+	IsEmpty     bool         `json:"isEmpty"`
+	IsStaged    bool         `json:"isStaged"`
 	LastScanned uint32       `json:"lastScanned"`
 	NRecords    int64        `json:"nRecords"`
 	Name        string       `json:"name"`
@@ -43,15 +46,19 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string
 	model = map[string]any{
 		"address":  s.Address,
 		"nRecords": s.NRecords,
+		"fileSize": s.FileSize,
 	}
 	order = []string{
 		"address",
 		"nRecords",
+		"fileSize",
 	}
 
-	if s.FileSize > 0 {
-		model["fileSize"] = s.FileSize
-		order = append(order, "fileSize")
+	if extraOpts["list"] == true {
+		model["isEmpty"] = s.IsEmpty
+		model["isStaged"] = s.IsStaged
+		order = append(order, "isEmpty")
+		order = append(order, "isStaged")
 	}
 
 	if verbose {
@@ -96,6 +103,16 @@ func (s *Monitor) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// IsEmpty
+	if err = cache.WriteValue(writer, s.IsEmpty); err != nil {
+		return err
+	}
+
+	// IsStaged
+	if err = cache.WriteValue(writer, s.IsStaged); err != nil {
+		return err
+	}
+
 	// LastScanned
 	if err = cache.WriteValue(writer, s.LastScanned); err != nil {
 		return err
@@ -132,6 +149,24 @@ func (s *Monitor) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	// FileSize
 	if err = cache.ReadValue(reader, &s.FileSize, vers); err != nil {
 		return err
+	}
+
+	// IsEmpty
+	vIsEmpty := version.NewVersion("3.1.2")
+	if vers > vIsEmpty.Uint64() {
+		// IsEmpty
+		if err = cache.ReadValue(reader, &s.IsEmpty, vers); err != nil {
+			return err
+		}
+	}
+
+	// IsStaged
+	vIsStaged := version.NewVersion("3.1.2")
+	if vers > vIsStaged.Uint64() {
+		// IsStaged
+		if err = cache.ReadValue(reader, &s.IsStaged, vers); err != nil {
+			return err
+		}
 	}
 
 	// LastScanned

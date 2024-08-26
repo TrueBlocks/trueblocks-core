@@ -58,6 +58,13 @@ func (opts *MonitorsOptions) MonitorsList() ([]types.Monitor, *types.MetaData, e
 	return queryMonitors[types.Monitor](in)
 }
 
+// MonitorsCount implements the chifra monitors --count command.
+func (opts *MonitorsOptions) MonitorsCount() ([]types.Count, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Count = true
+	return queryMonitors[types.Count](in)
+}
+
 // No enums
 // EXISTING_CODE
 // EXISTING_CODE

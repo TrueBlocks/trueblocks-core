@@ -28,6 +28,7 @@ type monitorsOptionsInternal struct {
 	Remove    bool              `json:"remove,omitempty"`
 	Clean     bool              `json:"clean,omitempty"`
 	List      bool              `json:"list,omitempty"`
+	Count     bool              `json:"count,omitempty"`
 	Watch     bool              `json:"watch,omitempty"`
 	Watchlist string            `json:"watchlist,omitempty"`
 	Commands  string            `json:"commands,omitempty"`
@@ -85,7 +86,8 @@ func GetMonitorsOptions(args []string) (*monitorsOptionsInternal, error) {
 type monitorsGeneric interface {
 	types.Message |
 		types.MonitorClean |
-		types.Monitor
+		types.Monitor |
+		types.Count
 }
 
 func queryMonitors[T monitorsGeneric](opts *monitorsOptionsInternal) ([]T, *types.MetaData, error) {
