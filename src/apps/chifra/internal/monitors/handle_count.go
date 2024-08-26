@@ -26,7 +26,11 @@ func (opts *MonitorsOptions) HandleCount(rCtx *output.RenderCtx) error {
 		} else {
 			vFunc := func(fn string, vP any) (bool, error) {
 				_, name := filepath.Split(fn)
-				if !strings.Contains(fn, "staging") && strings.HasSuffix(name, ".bin") {
+				isVerbose := opts.Globals.Verbose
+				isStaging := strings.Contains(fn, "staging")
+				isMonitor := strings.HasSuffix(name, ".mon.bin")
+				include := isMonitor && (isVerbose || !isStaging)
+				if include {
 					count++
 				}
 				return true, nil

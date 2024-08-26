@@ -28,6 +28,10 @@ func (opts *MonitorsOptions) validateMonitors() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
+	if len(opts.Addrs) > 0 && (opts.List || opts.Count) {
+		return validate.Usage("Do not provide addresses with {0} or {1}.", "--list", "--count")
+	}
+
 	if opts.List {
 		// All other options are ignored
 

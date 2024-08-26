@@ -371,6 +371,9 @@ func (m *Member) UnmarshalCode() string {
 	code := m.executeTemplate(tmplName, tmpl)
 
 	if m.HasUpgrade() {
+		wasAdded := strings.Contains(m.Upgrades, ">")
+		m.Upgrades = strings.ReplaceAll(m.Upgrades, ">", "")
+
 		if wasRemoved {
 			tmplName = "upgrageRemoved"
 			tmpl = `	// Used to be {{.GoName}}, since removed
@@ -380,6 +383,15 @@ func (m *Member) UnmarshalCode() string {
 		if err = cache.ReadValue(reader, &val, vers); err != nil {
 			return err
 		}
+	}
+
+`
+		} else if wasAdded {
+			tmplName = "upgrageAdded"
+			tmpl = `	// {{.GoName}}
+	v{{.GoName}} := version.NewVersion("++VERS++")
+	if vers > v{{.GoName}}.Uint64() {
+		++CODE++
 	}
 
 `

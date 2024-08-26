@@ -36,6 +36,7 @@ on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_list_not_in     ,y   
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_count           ,y    ,count
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_count_list      ,y    ,count & list & no_header
 on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_count_other     ,y    ,count & clean
+on      ,both ,fast  ,monitors ,apps ,acctExport ,monitors_count_v         ,y    ,count & verbose
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether

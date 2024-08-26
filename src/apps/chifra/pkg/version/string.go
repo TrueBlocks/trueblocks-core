@@ -7,4 +7,4 @@
 
 package version
 
-const LibraryVersion = "GHC-TrueBlocks//3.1.2-release"
+const LibraryVersion = "GHC-TrueBlocks//3.1.3-release"
