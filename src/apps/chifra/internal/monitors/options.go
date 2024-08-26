@@ -32,9 +32,10 @@ type MonitorsOptions struct {
 	Delete    bool                  `json:"delete,omitempty"`    // Delete a monitor, but do not remove it
 	Undelete  bool                  `json:"undelete,omitempty"`  // Undelete a previously deleted monitor
 	Remove    bool                  `json:"remove,omitempty"`    // Remove a previously deleted monitor
-	Clean     bool                  `json:"clean,omitempty"`     // Clean (i.e. remove duplicate appearances) from monitors
+	Clean     bool                  `json:"clean,omitempty"`     // Clean (i.e. remove duplicate appearances) from monitors, optionally clear stage
 	List      bool                  `json:"list,omitempty"`      // List monitors in the cache (--verbose for more detail)
 	Count     bool                  `json:"count,omitempty"`     // Show the number of active monitors (included deleted but not removed monitors)
+	Staged    bool                  `json:"staged,omitempty"`    // For --clean, --list, and --count options only, include staged monitors
 	Watch     bool                  `json:"watch,omitempty"`     // Continually scan for new blocks and extract data as per the command file
 	Watchlist string                `json:"watchlist,omitempty"` // Available with --watch option only, a file containing the addresses to watch
 	Commands  string                `json:"commands,omitempty"`  // Available with --watch option only, the file containing the list of commands to apply to each watched address
@@ -62,6 +63,7 @@ func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
+	logger.TestLog(opts.Staged, "Staged: ", opts.Staged)
 	logger.TestLog(opts.Watch, "Watch: ", opts.Watch)
 	logger.TestLog(len(opts.Watchlist) > 0, "Watchlist: ", opts.Watchlist)
 	logger.TestLog(len(opts.Commands) > 0, "Commands: ", opts.Commands)
@@ -112,6 +114,8 @@ func MonitorsFinishParseInternal(w io.Writer, values url.Values) *MonitorsOption
 			opts.List = true
 		case "count":
 			opts.Count = true
+		case "staged":
+			opts.Staged = true
 		case "watch":
 			opts.Watch = true
 		case "watchlist":

@@ -20,6 +20,7 @@ export function getMonitors(
     clean?: boolean,
     list?: boolean,
     count?: boolean,
+    staged?: boolean,
     watch?: boolean,
     watchlist?: string,
     commands?: string,

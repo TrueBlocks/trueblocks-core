@@ -65,9 +65,10 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 14030,apps,Accounts,monitors,acctExport,delete,,,visible|docs|crud,,switch,<boolean>,,,,,delete a monitor&#44; but do not remove it
 14040,apps,Accounts,monitors,acctExport,undelete,,,visible|docs|crud,,switch,<boolean>,,,,,undelete a previously deleted monitor
 14050,apps,Accounts,monitors,acctExport,remove,,,visible|docs|crud,,switch,<boolean>,,,,,remove a previously deleted monitor
-14060,apps,Accounts,monitors,acctExport,clean,C,,visible|docs,2,switch,<boolean>,monitorClean,,,,clean (i.e. remove duplicate appearances) from monitors
+14060,apps,Accounts,monitors,acctExport,clean,C,,visible|docs,2,switch,<boolean>,monitorClean,,,,clean (i.e. remove duplicate appearances) from monitors&#44; optionally clear stage
 14070,apps,Accounts,monitors,acctExport,list,l,,visible|docs,3,switch,<boolean>,monitor,,,,list monitors in the cache (--verbose for more detail)
 14075,apps,Accounts,monitors,acctExport,count,c,,visible|docs,1,switch,<boolean>,count,,,,show the number of active monitors (included deleted but not removed monitors)
+14065,apps,Accounts,monitors,acctExport,staged,S,,visible|docs,,switch,<boolean>,,,,,for --clean&#44; --list&#44; and --count options only&#44; include staged monitors
 14080,apps,Accounts,monitors,acctExport,watch,w,,visible|docs|notApi,4,switch,<boolean>,,,,,continually scan for new blocks and extract data as per the command file
 14090,apps,Accounts,monitors,acctExport,watchlist,a,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; a file containing the addresses to watch
 14100,apps,Accounts,monitors,acctExport,commands,d,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; the file containing the list of commands to apply to each watched address

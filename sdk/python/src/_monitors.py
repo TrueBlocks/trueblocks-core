@@ -18,6 +18,7 @@ monitorsOpts = {
     "clean": {"hotkey": "-C", "type": "switch"},
     "list": {"hotkey": "-l", "type": "switch"},
     "count": {"hotkey": "-c", "type": "switch"},
+    "staged": {"hotkey": "-S", "type": "switch"},
     "watch": {"hotkey": "-w", "type": "switch"},
     "watchlist": {"hotkey": "-a", "type": "flag"},
     "commands": {"hotkey": "-d", "type": "flag"},
