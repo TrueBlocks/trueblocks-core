@@ -4,8 +4,8 @@ module github.com/TrueBlocks/trueblocks-core/examples/nameManager
 go 1.22
 
 require (
-	github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240824155716-96b9bae47597
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240824041557-9259099dd92d
+	github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240824155850-f3d04c84a699
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240824155850-f3d04c84a699
 )
 
 require (
