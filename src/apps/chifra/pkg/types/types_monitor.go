@@ -47,15 +47,18 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string
 		"address":  s.Address,
 		"nRecords": s.NRecords,
 		"fileSize": s.FileSize,
-		"isEmpty":  s.IsEmpty,
-		"isStaged": s.IsStaged,
 	}
 	order = []string{
 		"address",
 		"nRecords",
 		"fileSize",
-		"isEmpty",
-		"isStaged",
+	}
+
+	if extraOpts["list"] == true {
+		model["isEmpty"] = s.IsEmpty
+		model["isStaged"] = s.IsStaged
+		order = append(order, "isEmpty")
+		order = append(order, "isStaged")
 	}
 
 	if verbose {

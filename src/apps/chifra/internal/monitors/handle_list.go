@@ -61,5 +61,9 @@ func (opts *MonitorsOptions) HandleList(rCtx *output.RenderCtx) error {
 		_ = walk.ForEveryFileInFolder(path, vFunc, errorChan)
 	}
 
-	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
+	extraOpts := map[string]any{
+		"list": true,
+	}
+
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
