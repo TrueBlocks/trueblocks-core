@@ -33,17 +33,17 @@ func (c *Command) Sorts2() string {
 	for _, sort := range c.Sorts {
 		tmplName := "sortCode"
 		tmpl := `
-func Sort{{toPlural .Type}}({{toLowerPlural .Type}} []types.{{.Type}}, fields []string, dir []SortOrder) error {
-	if len(fields) != len(dir) {
-		return fmt.Errorf("fields and dir must have the same length")
+func Sort{{toPlural .Type}}({{toLowerPlural .Type}} []types.{{.Type}}, sortSpec SortSpec) error {
+	if len(sortSpec.Fields) != len(sortSpec.Order) {
+		return fmt.Errorf("Fields and Order must have the same length")
 	}
 
-	sorts := make([]func(p1, p2 types.{{.Type}}) bool, len(fields))
-	for i, field := range fields {
+	sorts := make([]func(p1, p2 types.{{.Type}}) bool, len(sortSpec.Fields))
+	for i, field := range sortSpec.Fields {
 		if !types.IsValid{{.Type}}Field(field) {
 			return fmt.Errorf("%s is not an {{.Type}} sort field", field)
 		}
-		sorts[i] = types.{{.Type}}By(types.{{.Type}}Field(field), types.SortOrder(dir[i]))
+		sorts[i] = types.{{.Type}}By(types.{{.Type}}Field(field), types.SortOrder(sortSpec.Order[i]))
 	}
 
 	sort.Slice({{toLowerPlural .Type}}, types.{{.Type}}Cmp({{toLowerPlural .Type}}, sorts...))
@@ -127,5 +127,4 @@ func getSortCode(typ string) string {
 		}
 `
 	}
-	panic("getSortCode: unknown type " + typ)
 }

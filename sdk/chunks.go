@@ -193,17 +193,17 @@ func enumFromChunksMode(values []string) (ChunksMode, error) {
 	return result, nil
 }
 
-func SortChunkStats(chunkstats []types.ChunkStats, fields []string, dir []SortOrder) error {
-	if len(fields) != len(dir) {
-		return fmt.Errorf("fields and dir must have the same length")
+func SortChunkStats(chunkstats []types.ChunkStats, sortSpec SortSpec) error {
+	if len(sortSpec.Fields) != len(sortSpec.Order) {
+		return fmt.Errorf("Fields and Order must have the same length")
 	}
 
-	sorts := make([]func(p1, p2 types.ChunkStats) bool, len(fields))
-	for i, field := range fields {
+	sorts := make([]func(p1, p2 types.ChunkStats) bool, len(sortSpec.Fields))
+	for i, field := range sortSpec.Fields {
 		if !types.IsValidChunkStatsField(field) {
 			return fmt.Errorf("%s is not an ChunkStats sort field", field)
 		}
-		sorts[i] = types.ChunkStatsBy(types.ChunkStatsField(field), types.SortOrder(dir[i]))
+		sorts[i] = types.ChunkStatsBy(types.ChunkStatsField(field), types.SortOrder(sortSpec.Order[i]))
 	}
 
 	sort.Slice(chunkstats, types.ChunkStatsCmp(chunkstats, sorts...))
