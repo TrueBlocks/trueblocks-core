@@ -327,6 +327,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 52020,apps,Other,explore,fireStorm,terms,,,visible|docs,1,positional,list<string>,,,,,one or more address&#44; name&#44; block&#44; or transaction identifier
 52030,apps,Other,explore,fireStorm,local,l,,visible|docs,,switch,<boolean>,,,,,open the local TrueBlocks explorer
 52040,apps,Other,explore,fireStorm,google,g,,visible|docs,,switch,<boolean>,,,,,search google excluding popular blockchain explorers
+52050,apps,Other,explore,fireStorm,dalle,d,,,,switch,<boolean>,,,,,open the address to the DalleDress explorer
 #
 53000,tools,Other,slurp,ethslurp,,,,visible|docs,,command,,,Slurp Api services,[flags] <address> [address...] [block...],default|caching|ether|names|,Fetch data from Etherscan and other APIs for any address.
 53020,tools,Other,slurp,ethslurp,addrs,,,required|visible|docs,3,positional,list<addr>,slurp,,,,one or more addresses to slurp from Etherscan

@@ -32,6 +32,7 @@ type ExploreOptions struct {
 	Terms   []string              `json:"terms,omitempty"`   // One or more address, name, block, or transaction identifier
 	Local   bool                  `json:"local,omitempty"`   // Open the local TrueBlocks explorer
 	Google  bool                  `json:"google,omitempty"`  // Search google excluding popular blockchain explorers
+	Dalle   bool                  `json:"dalle,omitempty"`   // Open the address to the DalleDress explorer
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	Conn    *rpc.Connection       `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
@@ -46,6 +47,7 @@ func (opts *ExploreOptions) testLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
 	logger.TestLog(opts.Google, "Google: ", opts.Google)
+	logger.TestLog(opts.Dalle, "Dalle: ", opts.Dalle)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -80,6 +82,8 @@ func ExploreFinishParseInternal(w io.Writer, values url.Values) *ExploreOptions 
 			opts.Local = true
 		case "google":
 			opts.Google = true
+		case "dalle":
+			opts.Dalle = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "explore")
@@ -179,6 +183,11 @@ func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
 			query += ("+-" + ex)
 		}
 		return query
+	}
+
+	if opts.Dalle {
+		var query = "http://192.34.63.136:8080/dalle/simple/[{TERM}]"
+		return strings.Replace(query, "[{TERM}]", u.term, -1)
 	}
 
 	if u.termType == ExploreFourByte {

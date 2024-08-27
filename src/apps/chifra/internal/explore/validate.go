@@ -54,6 +54,14 @@ func (opts *ExploreOptions) validateExplore() error {
 		return validate.Usage("The {0} option is not available{1}.", "--local", " with the --google option")
 	}
 
+	if opts.Dalle && opts.Local {
+		return validate.Usage("The {0} option is not available{1}.", "--local", " with the --dalle option")
+	}
+
+	if len(opts.Terms) == 0 && (opts.Dalle || opts.Google) {
+		return validate.Usage("The {0} options require {1}.", "--dalle and --google", "an address term")
+	}
+
 	for _, arg := range opts.Terms {
 		arg = strings.ToLower(arg)
 
@@ -70,6 +78,10 @@ func (opts *ExploreOptions) validateExplore() error {
 		// The argument is not an address, so we can't use --google
 		if opts.Google {
 			return validate.Usage("The {0} option requires {1}.", "--google", "an address term")
+		}
+
+		if opts.Dalle {
+			return validate.Usage("The {0} option requires {1}.", "--dalle", "an address term")
 		}
 
 		valid, _ := validate.IsValidTransId(chain, []string{arg}, validate.ValidTransId)

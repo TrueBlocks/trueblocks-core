@@ -72,13 +72,6 @@ func (opts *AbisOptions) AbisEncode(val string) ([]types.Function, *types.MetaDa
 
 // No enums
 // EXISTING_CODE
-type SortOrder = types.SortOrder
-
-const (
-	Asc SortOrder = types.Ascending
-	Dec SortOrder = types.Descending
-)
-
 func SortAbis(abis []types.Abi, fields []string, dir []SortOrder) error {
 	if len(fields) != len(dir) {
 		return fmt.Errorf("fields and dir must have the same length")
