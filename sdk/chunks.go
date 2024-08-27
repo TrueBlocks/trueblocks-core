@@ -12,6 +12,7 @@ import (
 	// EXISTING_CODE
 	"encoding/json"
 	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -190,6 +191,23 @@ func enumFromChunksMode(values []string) (ChunksMode, error) {
 	}
 
 	return result, nil
+}
+
+func SortChunkStats(chunkstats []types.ChunkStats, fields []string, dir []SortOrder) error {
+	if len(fields) != len(dir) {
+		return fmt.Errorf("fields and dir must have the same length")
+	}
+
+	sorts := make([]func(p1, p2 types.ChunkStats) bool, len(fields))
+	for i, field := range fields {
+		if !types.IsValidChunkStatsField(field) {
+			return fmt.Errorf("%s is not an ChunkStats sort field", field)
+		}
+		sorts[i] = types.ChunkStatsBy(types.ChunkStatsField(field), types.SortOrder(dir[i]))
+	}
+
+	sort.Slice(chunkstats, types.ChunkStatsCmp(chunkstats, sorts...))
+	return nil
 }
 
 // EXISTING_CODE

@@ -11,15 +11,15 @@ const (
 	AbiIsEmpty        AbiField = "isEmpty"
 	AbiIsKnown        AbiField = "isKnown"
 	AbiLastModDate    AbiField = "lastModDate"
-	AbiName           AbiField = "name"
 	AbiNEvents        AbiField = "nEvents"
 	AbiNFunctions     AbiField = "nFunctions"
+	AbiName           AbiField = "name"
 )
 
 // IsValidAbiField returns true if the given field is a valid sortable Abi field.
 func IsValidAbiField(field string) bool {
 	switch field {
-	case "address", "fileSize", "hasConstructor", "hasFallback", "isEmpty", "isKnown", "lastModDate", "name", "nEvents", "nFunctions":
+	case "address", "fileSize", "hasConstructor", "hasFallback", "isEmpty", "isKnown", "lastModDate", "nEvents", "nFunctions", "name":
 		return true
 	}
 	return false
@@ -29,7 +29,7 @@ func IsValidAbiField(field string) bool {
 // These comparison functions may be strung together by the CmdAbis function.
 func AbiBy(field AbiField, order SortOrder) func(p1, p2 Abi) bool {
 	switch field {
-	case AbiAddress:
+	case AbiAddress: // address
 		return func(p1, p2 Abi) bool {
 			cmp := p1.Address.Cmp(p2.Address.Address)
 			if order == Ascending {
@@ -37,69 +37,70 @@ func AbiBy(field AbiField, order SortOrder) func(p1, p2 Abi) bool {
 			}
 			return cmp == 1
 		}
-	case AbiFileSize:
+	case AbiFileSize: // int64
 		return func(p1, p2 Abi) bool {
 			if order == Ascending {
 				return p1.FileSize < p2.FileSize
 			}
 			return p1.FileSize > p2.FileSize
 		}
-	case AbiHasConstructor:
+	case AbiHasConstructor: // bool
 		return func(p1, p2 Abi) bool {
 			if order == Ascending {
-				return !p1.HasConstructor && p2.HasConstructor // False < True
+				return !p1.HasConstructor && p2.HasConstructor
 			}
-			return p1.HasConstructor && !p2.HasConstructor // True < False
+			return p1.HasConstructor && !p2.HasConstructor
 		}
-	case AbiHasFallback:
+	case AbiHasFallback: // bool
 		return func(p1, p2 Abi) bool {
 			if order == Ascending {
-				return !p1.HasFallback && p2.HasFallback // False < True
+				return !p1.HasFallback && p2.HasFallback
 			}
-			return p1.HasFallback && !p2.HasFallback // True < False
+			return p1.HasFallback && !p2.HasFallback
 		}
-	case AbiIsEmpty:
+	case AbiIsEmpty: // bool
 		return func(p1, p2 Abi) bool {
 			if order == Ascending {
-				return !p1.IsEmpty && p2.IsEmpty // False < True
+				return !p1.IsEmpty && p2.IsEmpty
 			}
-			return p1.IsEmpty && !p2.IsEmpty // True < False
+			return p1.IsEmpty && !p2.IsEmpty
 		}
-	case AbiIsKnown:
+	case AbiIsKnown: // bool
 		return func(p1, p2 Abi) bool {
 			if order == Ascending {
-				return !p1.IsKnown && p2.IsKnown // False < True
+				return !p1.IsKnown && p2.IsKnown
 			}
-			return p1.IsKnown && !p2.IsKnown // True < False
+			return p1.IsKnown && !p2.IsKnown
 		}
-	case AbiLastModDate:
+	case AbiLastModDate: // string
 		return func(p1, p2 Abi) bool {
 			if order == Ascending {
 				return p1.LastModDate < p2.LastModDate
 			}
 			return p1.LastModDate > p2.LastModDate
 		}
-	case AbiName:
-		return func(p1, p2 Abi) bool {
-			if order == Ascending {
-				return p1.Name < p2.Name
-			}
-			return p1.Name > p2.Name
-		}
-	case AbiNEvents:
+	case AbiNEvents: // int64
 		return func(p1, p2 Abi) bool {
 			if order == Ascending {
 				return p1.NEvents < p2.NEvents
 			}
 			return p1.NEvents > p2.NEvents
 		}
-	case AbiNFunctions:
+	case AbiNFunctions: // int64
 		return func(p1, p2 Abi) bool {
 			if order == Ascending {
 				return p1.NFunctions < p2.NFunctions
 			}
 			return p1.NFunctions > p2.NFunctions
 		}
+	case AbiName: // string
+		return func(p1, p2 Abi) bool {
+			if order == Ascending {
+				return p1.Name < p2.Name
+			}
+			return p1.Name > p2.Name
+		}
+
 	}
 	panic("Should not happen in AbiBy")
 }

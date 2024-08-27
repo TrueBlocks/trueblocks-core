@@ -94,6 +94,15 @@ func (s *Structure) HasTimestamp() bool {
 	return false
 }
 
+func (s *Structure) HasSorts() bool {
+	for _, m := range s.Members {
+		if strings.Contains(m.Attributes, "sorts") {
+			return true
+		}
+	}
+	return false
+}
+
 func (s *Structure) NeedsAddress() bool {
 	return strings.Contains(s.CacheBy, "address")
 }

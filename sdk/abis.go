@@ -71,7 +71,6 @@ func (opts *AbisOptions) AbisEncode(val string) ([]types.Function, *types.MetaDa
 }
 
 // No enums
-// EXISTING_CODE
 func SortAbis(abis []types.Abi, fields []string, dir []SortOrder) error {
 	if len(fields) != len(dir) {
 		return fmt.Errorf("fields and dir must have the same length")
@@ -89,4 +88,22 @@ func SortAbis(abis []types.Abi, fields []string, dir []SortOrder) error {
 	return nil
 }
 
+func SortFunctions(functions []types.Function, fields []string, dir []SortOrder) error {
+	if len(fields) != len(dir) {
+		return fmt.Errorf("fields and dir must have the same length")
+	}
+
+	sorts := make([]func(p1, p2 types.Function) bool, len(fields))
+	for i, field := range fields {
+		if !types.IsValidFunctionField(field) {
+			return fmt.Errorf("%s is not an Function sort field", field)
+		}
+		sorts[i] = types.FunctionBy(types.FunctionField(field), types.SortOrder(dir[i]))
+	}
+
+	sort.Slice(functions, types.FunctionCmp(functions, sorts...))
+	return nil
+}
+
+// EXISTING_CODE
 // EXISTING_CODE
