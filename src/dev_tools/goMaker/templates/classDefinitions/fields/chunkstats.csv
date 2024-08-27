@@ -11,4 +11,4 @@ addrsPerBlock ,float64    ,           ,sorts      ,       9 ,the average number 
 appsPerBlock  ,float64    ,           ,sorts      ,      10 ,the average number of appearances per block
 appsPerAddr   ,float64    ,           ,sorts      ,      11 ,the average number of appearances per address
 ratio         ,float64    ,           ,sorts      ,      12 ,the ratio of appearances to addresses
-rangeDates    ,RangeDates ,           ,            ,      13 ,if verbose&#44; the block and timestamp bounds of the chunk
+rangeDates    ,RangeDates ,           ,sorts      ,      13 ,if verbose&#44; the block and timestamp bounds of the chunk

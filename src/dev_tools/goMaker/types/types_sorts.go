@@ -77,7 +77,9 @@ func (s *Structure) SortFields() string {
 			tmplName := "sortField" + s.Class
 			tmpl := s.Class + "{{firstUpper .Name}} {{.Container}}Field = \"{{firstLower .Name}}\""
 			code := member.executeTemplate(tmplName, tmpl)
-			code = strings.ReplaceAll(code, s.Class+s.Class, s.Class)
+			if member.Type == "type" {
+				code = strings.ReplaceAll(code, s.Class+s.Class, s.Class)
+			}
 			fields = append(fields, code)
 		}
 	}
@@ -111,6 +113,16 @@ func getSortCode(typ string) string {
 		return `	case {{.Container}}{{firstUpper .Name}}: // {{.Type}}
 		return func(p1, p2 {{.Container}}) bool {
 			cmp := p1.{{.GoName}}.Cmp(p2.Address.{{.GoName}})
+			if order == Ascending {
+				return cmp == -1
+			}
+			return cmp == 1
+		}
+`
+	case "RangeDates":
+		return `	case {{.Container}}{{firstUpper .Name}}: // {{.Type}}
+		return func(p1, p2 {{.Container}}) bool {
+			cmp := p1.{{.GoName}}.Cmp(p2.{{.GoName}})
 			if order == Ascending {
 				return cmp == -1
 			}

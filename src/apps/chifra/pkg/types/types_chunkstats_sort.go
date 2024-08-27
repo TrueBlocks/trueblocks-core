@@ -14,13 +14,14 @@ const (
 	ChunkStatsNBlocks       ChunkStatsField = "nBlocks"
 	ChunkStatsNBlooms       ChunkStatsField = "nBlooms"
 	ChunkStatsRange         ChunkStatsField = "range"
+	ChunkStatsRangeDates    ChunkStatsField = "rangeDates"
 	ChunkStatsRatio         ChunkStatsField = "ratio"
 )
 
 // IsValidChunkStatsField returns true if the given field is a valid sortable ChunkStats field.
 func IsValidChunkStatsField(field string) bool {
 	switch field {
-	case "addrsPerBlock", "appsPerAddr", "appsPerBlock", "bloomSz", "chunkSz", "nAddrs", "nApps", "nBlocks", "nBlooms", "range", "ratio":
+	case "addrsPerBlock", "appsPerAddr", "appsPerBlock", "bloomSz", "chunkSz", "nAddrs", "nApps", "nBlocks", "nBlooms", "range", "rangeDates", "ratio":
 		return true
 	}
 	return false
@@ -99,6 +100,14 @@ func ChunkStatsBy(field ChunkStatsField, order SortOrder) func(p1, p2 ChunkStats
 				return p1.Range < p2.Range
 			}
 			return p1.Range > p2.Range
+		}
+	case ChunkStatsRangeDates: // RangeDates
+		return func(p1, p2 ChunkStats) bool {
+			cmp := p1.RangeDates.Cmp(p2.RangeDates)
+			if order == Ascending {
+				return cmp == -1
+			}
+			return cmp == 1
 		}
 	case ChunkStatsRatio: // float64
 		return func(p1, p2 ChunkStats) bool {
