@@ -4,7 +4,7 @@ module github.com/TrueBlocks/trueblocks-core/goMaker
 go 1.22
 
 require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240826035102-9b106eea0247
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240826114617-416b1f6dfe17
 	github.com/gocarina/gocsv v0.0.0-20230123225133-763e25b40669
 	golang.org/x/text v0.16.0
 )
