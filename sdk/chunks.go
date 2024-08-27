@@ -12,6 +12,7 @@ import (
 	// EXISTING_CODE
 	"encoding/json"
 	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -190,6 +191,40 @@ func enumFromChunksMode(values []string) (ChunksMode, error) {
 	}
 
 	return result, nil
+}
+
+func SortChunkRecords(chunkrecords []types.ChunkRecord, sortSpec SortSpec) error {
+	if len(sortSpec.Fields) != len(sortSpec.Order) {
+		return fmt.Errorf("Fields and Order must have the same length")
+	}
+
+	sorts := make([]func(p1, p2 types.ChunkRecord) bool, len(sortSpec.Fields))
+	for i, field := range sortSpec.Fields {
+		if !types.IsValidChunkRecordField(field) {
+			return fmt.Errorf("%s is not an ChunkRecord sort field", field)
+		}
+		sorts[i] = types.ChunkRecordBy(types.ChunkRecordField(field), types.SortOrder(sortSpec.Order[i]))
+	}
+
+	sort.Slice(chunkrecords, types.ChunkRecordCmp(chunkrecords, sorts...))
+	return nil
+}
+
+func SortChunkStats(chunkstats []types.ChunkStats, sortSpec SortSpec) error {
+	if len(sortSpec.Fields) != len(sortSpec.Order) {
+		return fmt.Errorf("Fields and Order must have the same length")
+	}
+
+	sorts := make([]func(p1, p2 types.ChunkStats) bool, len(sortSpec.Fields))
+	for i, field := range sortSpec.Fields {
+		if !types.IsValidChunkStatsField(field) {
+			return fmt.Errorf("%s is not an ChunkStats sort field", field)
+		}
+		sorts[i] = types.ChunkStatsBy(types.ChunkStatsField(field), types.SortOrder(sortSpec.Order[i]))
+	}
+
+	sort.Slice(chunkstats, types.ChunkStatsCmp(chunkstats, sorts...))
+	return nil
 }
 
 // EXISTING_CODE

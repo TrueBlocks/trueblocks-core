@@ -40,13 +40,15 @@ func getFuncMap() template.FuncMap {
 	toLower := func(s string) string { return Lower(s) }
 	firstLower := func(s string) string { return FirstLower(s) }
 	firstUpper := func(s string) string { return FirstUpper(s) }
+	toLowerPlural := func(s string) string { return Lower(Plural(s)) }
 	return template.FuncMap{
-		"toSingular": toSingular,
-		"toProper":   toProper,
-		"toCamel":    toCamel,
-		"toPlural":   toPlural,
-		"toLower":    toLower,
-		"firstLower": firstLower,
-		"firstUpper": firstUpper,
+		"toSingular":    toSingular,
+		"toProper":      toProper,
+		"toCamel":       toCamel,
+		"toPlural":      toPlural,
+		"toLowerPlural": toLowerPlural,
+		"toLower":       toLower,
+		"firstLower":    firstLower,
+		"firstUpper":    firstUpper,
 	}
 }

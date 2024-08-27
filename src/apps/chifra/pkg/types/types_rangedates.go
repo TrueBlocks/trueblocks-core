@@ -63,4 +63,8 @@ func (s *RangeDates) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
+func (p1 *RangeDates) Cmp(p2 RangeDates) int64 {
+	return p1.FirstTs.Int64() - p2.FirstTs.Int64()
+}
+
 // EXISTING_CODE

@@ -69,6 +69,7 @@ func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) strin
 	dest = strings.ReplaceAll(dest, "route.md", routeTag+".md")
 	dest = strings.ReplaceAll(dest, "route.py", routeTag+".py")
 	dest = strings.ReplaceAll(dest, "route.ts", routeTag+".ts")
+	dest = strings.ReplaceAll(dest, "type+sort", typeTag+"+sort")
 	dest = strings.ReplaceAll(dest, "type.go", typeTag+".go")
 	dest = strings.ReplaceAll(dest, "type.md", typeTag+".md")
 	dest = strings.ReplaceAll(dest, "type.ts", typeTag+".ts")

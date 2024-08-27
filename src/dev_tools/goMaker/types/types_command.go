@@ -27,6 +27,7 @@ type Command struct {
 	Usage        string       `json:"usage,omitempty"`
 	Summary      string       `json:"summary,omitempty"`
 	Notes        []string     `json:"notes,omitempty"`
+	Sorts        []string     `json:"sorts,omitempty"`
 	Aliases      []string     `json:"aliases,omitempty"`
 	Productions  []*Structure `json:"productions,omitempty"`
 	cbPtr        *CodeBase    `json:"-"`
@@ -81,10 +82,6 @@ func (c *Command) HasPositionals() bool {
 	return false
 }
 
-func (c *Command) HasNotes() bool {
-	return len(c.Notes) > 0
-}
-
 func (c *Command) HasExample() bool {
 	examplePath := filepath.Join(GetTemplatePath(), "api/examples/"+c.Route+".json")
 	return file.FileExists(examplePath)
@@ -108,18 +105,10 @@ func (c *Command) HasAddrs() bool {
 	return false
 }
 
-func (c *Command) HasEnums() bool {
-	for _, op := range c.Options {
-		if op.IsEnum() {
-			return true
-		}
-	}
-	return false
-}
-
 func (c *Command) Clean() {
 	cleaned := []Option{}
 	c.Notes = []string{}
+	c.Sorts = []string{}
 	c.Aliases = []string{}
 	for _, op := range c.Options {
 		op.GoName = op.toGoName()
@@ -144,6 +133,7 @@ func (c *Command) Clean() {
 				op.DataType = "enum"
 			}
 		}
+
 		if op.OptionType == "note" {
 			if !strings.HasSuffix(op.Description, ".") {
 				logger.Warn("Note does not end with a period: " + op.Description)
@@ -153,6 +143,9 @@ func (c *Command) Clean() {
 			c.Aliases = append(c.Aliases, op.Description)
 		} else if op.OptionType == "command" {
 			c.Description = op.Description
+			if c.HasSorts() {
+				c.Sorts = getSorts(op.Attributes)
+			}
 		} else if op.OptionType == "group" {
 			// c.Description = op.Description
 		} else {
@@ -268,40 +261,6 @@ func (c *Command) PyOptions() string {
 }
 
 // Tags found in sdk_go_route.go
-
-// Enums1 for tag {{.Enums1}}
-func (c *Command) Enums1() string {
-	if !c.HasEnums() {
-		return "// No enums"
-	}
-
-	ret := ""
-	for _, op := range c.Options {
-		ret += op.Enum1()
-	}
-	return ret
-}
-
-// Enums2 for tag {{.Enums2}}
-func (c *Command) Enums2() string {
-	if !c.HasEnums() {
-		return "// No enums"
-	}
-
-	ret := ""
-	for _, op := range c.Options {
-		ret += op.Enum2()
-	}
-	return ret
-}
-
-// Enums3 for tag {{.Enums3}}
-func (c *Command) Enums3() string {
-	if !c.HasEnums() {
-		return "_"
-	}
-	return "opts"
-}
 
 // Pkg for tag {{.Pkg}}
 func (c *Command) Pkg() string {
@@ -544,20 +503,6 @@ func (c *Command) HelpLinks() string {
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})`
 	}
 	return c.executeTemplate(tmplName, tmpl)
-}
-
-func (c *Command) HelpNotes() string {
-	readmePath := filepath.Join(GetTemplatePath(), "readme-intros", c.ReadmeName())
-	readmePath = strings.Replace(readmePath, ".md", ".notes.md", -1)
-	if file.FileExists(readmePath) {
-		tmplName := "Notes" + c.ReadmeName()
-		tmpl := file.AsciiFileToString(readmePath)
-		if tmpl == "" {
-			logger.Fatal("Could not read template file: ", readmePath)
-		}
-		return "\n\n" + strings.Trim(c.executeTemplate(tmplName, tmpl), ws)
-	}
-	return ""
 }
 
 func (c *Command) ReadmeFooter() string {
