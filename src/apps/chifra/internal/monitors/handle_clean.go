@@ -52,6 +52,10 @@ func (opts *MonitorsOptions) HandleClean(rCtx *output.RenderCtx) error {
 
 			if s.SizeThen > 0 {
 				modelChan <- &s
+			} else if s.SizeNow == 0 {
+				mon.Close()
+				_ = mon.Delete()
+				_, _ = mon.Remove()
 			}
 		}
 	}
