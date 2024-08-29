@@ -134,7 +134,9 @@ func (opts *NamesOptions) ModifyName(op crud.NameOperation, cd *crud.NameCrud) (
 		cd.Unsetenv()
 	}()
 
+	opts.Terms = []string{cd.Address.Value.Hex()}
 	cd.SetEnv()
+
 	switch op {
 	case crud.Create:
 	case crud.Update:

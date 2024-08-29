@@ -2,10 +2,12 @@ package crud
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type crudValue interface {
@@ -122,6 +124,44 @@ func NewNameCrud(requireName bool, r *http.Request) (*NameCrud, error) {
 	}
 
 	return cd, nil
+}
+
+func CrudFromAddress(addr base.Address) *NameCrud {
+	cd := NameCrud{}
+	cd.Address = Field[base.Address]{
+		Value:   addr,
+		Updated: true,
+	}
+	return &cd
+}
+
+func CrudFromName(name types.Name) *NameCrud {
+	cd := NameCrud{}
+	cd.Address = Field[base.Address]{
+		Value:   name.Address,
+		Updated: true,
+	}
+	cd.Name = Field[string]{
+		Value:   name.Name,
+		Updated: true,
+	}
+	cd.Tags = Field[string]{
+		Value:   name.Tags,
+		Updated: true,
+	}
+	cd.Source = Field[string]{
+		Value:   name.Source,
+		Updated: true,
+	}
+	cd.Symbol = Field[string]{
+		Value:   name.Symbol,
+		Updated: true,
+	}
+	cd.Decimals = Field[string]{
+		Value:   fmt.Sprintf("%d", name.Decimals),
+		Updated: true,
+	}
+	return &cd
 }
 
 func (cd *NameCrud) SetEnv() {
