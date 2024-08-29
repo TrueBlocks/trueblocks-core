@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/sdk/v3"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/crud"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -37,28 +38,9 @@ func main() {
 	_, name.Symbol, _ = getValue(5, "symbol", "")
 	_, _, name.Decimals = getValue(6, "decimals", "")
 
-	fmt.Printf("Address: %s\n", name.Address)
-	os.Setenv("TB_NAME_ADDRESS", name.Address.Hex())
-
-	fmt.Printf("Name: %s\n", name.Name)
-	os.Setenv("TB_NAME_NAME", name.Name)
-
-	fmt.Printf("TAGS: %s\n", name.Tags)
-	os.Setenv("TB_NAME_TAGS", name.Tags)
-
-	fmt.Printf("SOURCE: %s\n", name.Source)
-	os.Setenv("TB_NAME_SOURCE", name.Source)
-
-	fmt.Printf("DECIMALS: %d\n", name.Decimals)
-	os.Setenv("TB_NAME_SYMBOL", name.Symbol)
-
-	fmt.Printf("SYMBOL: %s\n", name.Symbol)
-	os.Setenv("TB_NAME_DECIMALS", fmt.Sprintf("%d", name.Decimals))
-
 	opts := sdk.NamesOptions{}
-	opts.Terms = []string{name.Address.Hex()}
-	opts.Custom = true
-	if names, _, err := opts.NamesCreate(); err != nil {
+	cd := crud.CrudFromName(name)
+	if names, _, err := opts.ModifyName(crud.Update, cd); err != nil {
 		printError(err.Error())
 	} else {
 		for _, name := range names {
