@@ -9,16 +9,16 @@ import (
 func main() {
 	namesMap, _ = names.LoadNamesMap("mainnet", types.Custom|types.Prefund|types.Regular, nil)
 
-	TestStreamAbis()
+	// TestStreamAbis()
 	TestStreamBlocks()
 	// TestStreamChunks()
 	// TestStreamConfig()
-	TestStreamExport()
+	// TestStreamExport()
 	// TestStreamInit()
 	// TestStreamList()
 	// TestStreamLogs()
 	// TestStreamMonitors()
-	TestStreamNames()
+	// TestStreamNames()
 	// TestStreamReceipts()
 	// TestStreamSlurp()
 	// TestStreamState()
@@ -27,7 +27,7 @@ func main() {
 	// TestStreamTraces()
 	// TestStreamTransactions()
 	// TestStreamWhen()
-	TestStreamProgress()
+	// TestStreamProgress()
 }
 
 var namesMap = map[base.Address]types.Name{}

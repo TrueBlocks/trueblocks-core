@@ -55,4 +55,10 @@ func (opts *InitOptions) InitDryRun() ([]types.Message, *types.MetaData, error) 
 
 // No enums
 // EXISTING_CODE
+// Init implements the chifra init --all command.
+func (opts *InitOptions) Init() ([]types.Message, *types.MetaData, error) {
+	in := opts.toInternal()
+	return queryInit[types.Message](in)
+}
+
 // EXISTING_CODE

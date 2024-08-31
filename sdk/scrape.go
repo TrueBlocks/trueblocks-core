@@ -56,4 +56,7 @@ func (opts *ScrapeOptions) ScrapeDryRun() ([]types.Message, *types.MetaData, err
 
 // No enums
 // EXISTING_CODE
+func (opts *ScrapeOptions) ScrapeRunOnce() ([]types.Message, *types.MetaData, error) {
+	return opts.ScrapeRunCount(1)
+}
 // EXISTING_CODE
