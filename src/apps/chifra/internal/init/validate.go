@@ -60,7 +60,19 @@ func (opts *InitOptions) validateInit() error {
 	} else {
 		historyFile := filepath.Join(config.PathToCache(chain), "tmp/history.txt")
 		if history.FromHistoryBool(historyFile, "init") && !opts.All {
-			return validate.Usage("You previously called chifra init --all. You must continue to do so.")
+			msg := `You previously called chifra init with the --all option.
+			
+You must continue to do so or remove both the full index and the history file. Paths
+to these items are listed here:
+			
+	{{.IndexFolder}}
+	{{.HistoryFile}}
+
+This is a dangerous operation, please don't say we didn't warn you.
+`
+			msg = strings.ReplaceAll(msg, "{{.IndexFolder}}", config.PathToIndex(chain))
+			msg = strings.ReplaceAll(msg, "{{.HistoryFile}}", historyFile)
+			return validate.Usage(msg)
 		}
 	}
 
