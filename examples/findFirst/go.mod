@@ -4,8 +4,8 @@ module github.com/TrueBlocks/trueblocks-core/examples/findFirst
 go 1.22
 
 require (
-	github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240901041803-ae10d5f5adb1
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240901041803-ae10d5f5adb1
+	github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240901121822-6283f44d7d3a
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240901121822-6283f44d7d3a
 )
 
 require (
