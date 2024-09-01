@@ -42,7 +42,7 @@ func undeleteName(args []string) {
 		printError(err.Error())
 	} else {
 		for _, name := range names {
-			fmt.Printf("Name deleted: %v\n", name.String())
+			fmt.Printf("Name undeleted: %v\n", name.String())
 		}
 	}
 }
@@ -55,7 +55,7 @@ func removeNode(args []string) {
 		printError(err.Error())
 	} else {
 		for _, name := range names {
-			fmt.Printf("Name deleted: %v\n", name.String())
+			fmt.Printf("Name removed: %v\n", name.String())
 		}
 	}
 }
