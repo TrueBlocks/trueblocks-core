@@ -4,3 +4,12 @@
 [submodule "docs"]
 	path = docs
 	url = https://github.com/TrueBlocks/trueblocks-docs.git
+[submodule "node"]
+	path = node
+	url = https://github.com/TrueBlocks/trueblocks-node.git
+[submodule "examples"]
+	path = examples
+	url = https://github.com/TrueBlocks/trueblocks-examples.git
+[submodule "sdk"]
+	path = sdk
+	url = https://github.com/TrueBlocks/trueblocks-sdk.git

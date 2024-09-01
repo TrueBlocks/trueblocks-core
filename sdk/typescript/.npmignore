@@ -1,6 +1,0 @@
-src
-yarn.lock
-tsconfig.json
-.gitignore
-.github
-makefile
