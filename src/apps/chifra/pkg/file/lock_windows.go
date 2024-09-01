@@ -14,6 +14,6 @@ func Lock(file *os.File) error {
 }
 
 func Unlock(file *os.File) error {
-	// TODO: DOn't we need this?
+	// TODO: Don't we need this?
 	return nil
 }

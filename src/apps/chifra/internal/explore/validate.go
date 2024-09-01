@@ -143,7 +143,7 @@ func (t ExploreType) String() string {
 }
 
 func (opts *ExploreOptions) idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (base.Hash, error) {
-	_ = chain // delint
+	_ = chain // linter
 	if isBlockHash(arg) {
 		return opts.Conn.GetBlockHashByHash(arg)
 	}

@@ -2,6 +2,229 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
+## v4.0.0 - Getting Serious - Indiana (2024/09/01)
+
+**Summary**
+
+- Bumped version to 4.0.0
+- Much better support for SDK
+- First working version of Browse (separate repo)
+- First semi-working version of TrueBlocks-Node (separate repo)
+- Much better support for auto code generation:
+- Various updates and corrections to the examples and tests
+
+## SDK
+
+- Adds `Scrape` endpoint to the SDK - enabling `trueBlocks-node` functionality
+- Adds `ScrapeOnce` endpoint to the SDK - enabling `trueBlocks-node` and Browse functionality
+- Adds `Init` endpoint to the SDK - enabling `trueBlocks-node` functionality
+- Implements sorting interfaces for `Abis`, `Names`, `Chunks` types in the SDK
+
+## Changes to the Unchained Index Specification
+
+- No changes.
+
+## Breaking Changes
+
+- `Names` enum (`Custom`, `Regular`, `Prefund`, etc.) moved to `types` package from `names` package. Breaking change. Change `names.Custom` to `types.Custom` (etc.) to fix.
+- `ChunksStats` data model no longer has `rangeEnd` field. Use `rangeDates` instead.
+
+## System Wide Changes
+
+- No changes.
+
+## Changes to Data Models
+
+### Modified data models
+
+| model        | description                                                                                                                     |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| Message      | This type is now returned by `chifra scrape` for some routes and options                                                        |
+| ChunkAddress | Adds `rangeDates` field                                                                                                         |
+| ChunkBloom   | Adds `rangeDates` field                                                                                                         |
+| ChunkIndex   | Adds `rangeDates` field                                                                                                         |
+| ChunkRecord  | Adds `rangeDates` field                                                                                                         |
+| ChunkStats   | Adds `rangeDates` field, removed `rangeEnd`                                                                                     |
+| Name         | Allows auto-generated sorting code                                                                                              |
+| Function     | Allows auto-generated sorting code                                                                                              |
+| ChunkStats   | Allows auto-generated sorting code                                                                                              |
+| Monitor      | Adds `isStaged`, `isEmpty`, and `name` to Monitor type                                                                          |
+| MonitorClean | Adds `staged` and `removed` fields from MonitorClean type                                                                       |
+| Abi          | Adds `name`, `path`, `fileSize`, `lastModDate`, `isKnown`, `nFunctions`, `nEvents`, `hasConstructor`, `hasFallback` to Abi type |
+
+### New data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### Removed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### Renamed data models
+
+| model          | description                                                           |
+| -------------- | --------------------------------------------------------------------- |
+| TimestampCount | Type renamed to Count and used elsewhere in addition to `chifra when` |
+
+## Tool Specific Changes
+
+**chifra list**
+
+- No changes.
+
+**chifra export**
+
+- No changes.
+
+**chifra monitors**
+
+- Adds `chifra monitors --count` option used by Browse
+- Adds `chifra monitors --staged` to include staged monitors in `chifra monitors --list`
+- Changes hotkey for `chifra monitors --commands` to '`d`' from '`c`'
+
+**chifra names**
+
+- No changes.
+
+**chifra abis**
+
+- Adds `chifra abis --list` and `chifra abis --count` for use mostly with Browse
+
+**chifra blocks**
+
+- No changes.
+
+**chifra transactions**
+
+- No changes.
+
+**chifra receipts**
+
+- No changes.
+
+**chifra logs**
+
+- No changes.
+
+**chifra traces**
+
+- No changes.
+
+**chifra when**
+
+- No changes.
+
+**chifra state**
+
+- No changes.
+
+**chifra tokens**
+
+- No changes.
+
+**chifra config**
+
+- No changes.
+
+**chifra status**
+
+- No changes.
+
+**chifra daemon**
+
+- Deprecated `chifra daemon --api`, no replacement, 
+- Deprecated `chifra daemon --scrape`, use `chifra scrape` instead
+- Deprecated `chifra daemon --monitor`, use `chifra monitors --watch` instead.
+
+**chifra scrape**
+
+- No changes.
+
+**chifra chunks**
+
+- `chifra chunks mode --count` now properly returns a `Count` type (mildly breaking)
+
+**chifra init**
+
+- No changes.
+
+**chifra explore**
+
+- Adds hidden option `chifra explore --dalle &lt;address&gt`;
+
+**chifra slurp**
+
+- No changes.
+
+**makeClass**
+
+- Much better support for auto code generation including:
+  - Sorting for certain generated types for use in Browse
+  - Better (easier to use) caching code for types
+  - Easier to use the tools in other repos
+  - Better validity checking
+
+**testRunner**
+
+- Better testing including automatically finding a port for the API server if default is being used
+- Updates and improvements to many tests
+
+## Pull Requests (23)
+
+<!--
+gh pr list --search "is:pr is:closed closed:>2024-07-18" --limit 300 --state merged | cut -f1,2 | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- #3871 Starts to improve chifra init
+- #3870 Cleans up name editing
+- #3869 Extends goMaker to generate sorting code for various types
+- #3866 Adds --staged to chifra monitors
+- #3865 Adds --count to chifra monitors
+- #3863 Adds hasConstructor and hasFallback to Abi type; fixes tests
+- #3862 Feature/better sorting
+- #3860 Feature/chifra abis count
+- #3858 Feature/better chunk data
+- #3857 Feature/easier name editing in sdk
+- #3856 Fixes a bug related to turning off loggers
+- #3853 Fix/better use of filepath
+- #3851 Assigns part type to names
+- #3850 Feature/chifra chunks counts
+- #3848 Adds name to monitor type and makes marshable
+- #3847 Moves Parts from names package to types package because we need it in…
+- #3846 Feature/improve chifra abis list
+- #3845 Adds chifra abis --list for use in miniDapp
+- #3844 Cleans up some caching code including allowing for filename caches (such as miniDapp files)
+- #3842 Fix/better auto gen 2
+- #3840 Small improvement to auto-code-gen
+- #3839 chore: fix some comments
+- #3838 Updates go-mods and adds some names
+
+## Issues Closed (0)
+
+<!--
+gh issue list --search "closed:>2024-07-18 is:closed is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- None
+
+## Issues Opened (8)
+
+<!--
+gh issue list --search "created:>2024-08-31 is:open is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/'  | tr '\t' ' '
+-->
+
+- #3868 make generate ignores DefaultEnum -- remove it if it's not used, use it if it's useful
+- #3867 React development environment -- or a better linter for react
+- #3861 Document the sortable fields for each type
+- #3859 code gen: use the handler field
+- #3855 Strange behaviour with staged/unripe blocks.
+- #3836 Copying the executable
+- #3835 Coming changes for Pectra
+
 ## v3.1.2-release - Streaming SDK - Huntingdon (2024/07/18)
 
 **Summary**
