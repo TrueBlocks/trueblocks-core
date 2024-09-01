@@ -81,6 +81,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Count {
+		// TODO: Shouldn't this use validate.Enums?
 		if !strings.Contains("manifest|index|blooms|pins|stats", opts.Mode) {
 			return validate.Usage("The {0} option is only available in {1}.", "--count", "these modes: manifest|index|blooms|pins|stats")
 		}

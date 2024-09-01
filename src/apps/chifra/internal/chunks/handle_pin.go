@@ -172,6 +172,7 @@ func matches(local, remote *types.ChunkRecord) (bool, bool) {
 }
 
 func (opts *ChunksOptions) matchReport(matches bool, localHash, remoteHash base.IpfsHash) {
+	_ = remoteHash // linter
 	if !opts.Remote || !config.IpfsRunning() {
 		return // if we're not pinning in two places, don't report on matches
 	}

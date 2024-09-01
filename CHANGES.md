@@ -2,6 +2,41 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
+## v4.0.0 - Kicking Ass (2024/09/01)
+
+- Bumped version to 4.0.0
+- Improved auto code generation to include sorting on appropriate types (x, y, z)
+- Addition of Names capability to any routes that need to load names databases (most)
+- Better ability to generate auto-generated code outside of core or the SDK (for example Browse)
+- Better checking of certain validations such as Enums being found in validate code for a route
+- Data models
+  - Removes TimestampCount type for more general Count type which is now used in other places
+  - Much easier to use caching code. Interface now requires an implementation of `CacheLocation` (no longer needs `CacheId` nor `CacheName`)
+- Add ForEveryFileInFolder to walk package - super useful
+- Adds Scrape endpoint to the SDK - enabling trueBlocks-node functionality
+- Various updates to examples and tests
+- Changes to better support builds on other operating sytems. Mostly path related. Not an endorsement of a Windows (or any other operating systems) versions.
+- TimestampCount field removed from chifra when and replaced with more generic Count type which is now used elsehwere.
+- Moved name type enums (Custom, Regular, etc) to types package removing it from names package. This was done to better support Browse. This is a breaking change.
+- Types
+- chifra scrape now returns Message type
+- Monitor type now supports binary caching
+- Removes simponly attribute from auto code gen field attributes
+- Adds rangeDates field to ChunkAddress, ChunkStats, ChunkBloom, ChunkIndex, ChunkRecord
+- Remove rangeEnd from ChunkStats (in favor of rangeDates) breaking
+- Adds sorts option for auto-gen fields.csv file to create sorting code for a given type to names, functions, abis
+- Adds name, path, fileSize, lastModDate, isKnown, nFunctions, nEvents, hasConstructor, hasFallback to Abi type
+- Adds isStaged, isEmpty, and name to Monitor type
+- Removes staged and removed from MonitorClean type - breaking
+- Adds chifra monitors --count and chifra monitors --staged. Changes hotkey to 'd' from 'c' for chifra monitors --commands option.
+- ADDS fileSize, hasConstructor, hasFallback, isEmpty, isKnown, lastModDate, nEvents, nFunctions, name, path to Abi type mostly for use in apps such as Browse
+- Adds hidden option chifra explore --dalle &lt;address&gt;
+- Adds chifra abis --list and chifra abis --count
+- chifra daemon --api deprecated, no replacement, chifra daemon --scrape deprecated, use chifra scrape instead chifra daemon --monitor deprecated, use chifra monitors --watch instead.
+- chifra chunks mode --count now properly returns a Count type (breaking)
+- Implements sorts in the sdk for Abis, Names, Chunks, etc.
+- monitorClean now has staged and removed fields
+
 ## v3.1.2-release - Streaming SDK - Huntingdon (2024/07/18)
 
 **Summary**

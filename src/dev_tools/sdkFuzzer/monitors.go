@@ -39,12 +39,12 @@ func DoMonitors() {
 	// sleep is not fuzzed
 	// Fuzz Loop
 	// EXISTING_CODE
+	_ = staged
 	_ = delete
 	_ = undelete
 	_ = remove
 	_ = watch
 	_ = globs
-	_ = staged
 	opts = sdk.MonitorsOptions{
 		Addrs: []string{fuzzAddresses[0]},
 	}
