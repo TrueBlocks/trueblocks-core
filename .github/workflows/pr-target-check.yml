@@ -1,4 +1,4 @@
-name: Check PR Target Branch
+name: PR Target Check
 on:
   pull_request:
     types: [opened, edited]
@@ -6,7 +6,10 @@ jobs:
   check-branch:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if PR is targeting the correct branch
-        if: github.event.pull_request.base.ref != 'develop' && github.event.pull_request.base.ref != 'master'
+      - name: Check if PR is targeting the 'develop' branch
         run: |
-          echo "::warning file=${{ github.event.pull_request.url }}::PR is not targeting 'develop' or 'master'. Please consider changing the target branch to 'develop' if this is not a release."
+          if [ "${{ github.event.pull_request.base.ref }}" != "develop" ]; then
+            echo "::warning file=${{ github.event.pull_request.url }}::PR is not targeting 'develop'. Please change the target branch to 'develop'."
+          else
+            echo "PR is targeting the 'develop' branch. Everything is okay."
+          fi
