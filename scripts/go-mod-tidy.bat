@@ -1,3 +1,6 @@
+:: NOTE: THIS FILE IS NOT MAINTAINED AND IS LIKELY BROKEN
+:: NO WE DON'T SUPPORT WINDOWS
+
 @echo off
 setlocal
 
@@ -14,6 +17,7 @@ cd /d %ROOT_DIR%\examples\nameManager     && go mod tidy
 cd /d %ROOT_DIR%\examples\simple          && go mod tidy
 cd /d %ROOT_DIR%\examples\withStreaming   && go mod tidy
 cd /d %ROOT_DIR%\src\apps\chifra          && go mod tidy
+cd /d %ROOT_DIR%\src\node                 && go mod tidy
 cd /d %ROOT_DIR%\src\dev_tools\goMaker    && go mod tidy
 cd /d %ROOT_DIR%\src\dev_tools\sdkFuzzer  && go mod tidy
 cd /d %ROOT_DIR%\src\dev_tools\testRunner && go mod tidy

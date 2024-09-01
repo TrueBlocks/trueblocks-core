@@ -1,3 +1,6 @@
+:: NOTE: THIS FILE IS NOT MAINTAINED AND IS LIKELY BROKEN
+:: NO WE DON'T SUPPORT WINDOWS
+
 @echo off
 setlocal
 
@@ -19,6 +22,7 @@ cd %ROOT_DIR% && go work use .\examples\nameManager
 cd %ROOT_DIR% && go work use .\examples\simple
 cd %ROOT_DIR% && go work use .\examples\withStreaming
 cd %ROOT_DIR% && go work use .\src\apps\chifra
+cd %ROOT_DIR% && go work use .\src\node
 cd %ROOT_DIR% && go work use .\src\dev_tools\goMaker
 cd %ROOT_DIR% && go work use .\src\dev_tools\sdkFuzzer
 cd %ROOT_DIR% && go work use .\src\dev_tools\testRunner
