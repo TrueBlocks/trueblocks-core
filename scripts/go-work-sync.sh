@@ -40,11 +40,12 @@ find . -type f -name 'go.mod' | while read -r modfile; do
     if $isGoMaker; then
         go get github.com/btcsuite/btcd 2> /dev/null
     fi
+
     if ! $isSdk && ! $isChifra && ! $isGoMaker; then
-        go get github.com/TrueBlocks/trueblocks-core/sdk/v3
+        go get github.com/TrueBlocks/trueblocks-core/sdk/v3@latest
     fi
     if ! $isSimple && ! $isChifra; then
-        go get github.com/TrueBlocks/trueblocks-core/src/apps/chifra
+        go get github.com/TrueBlocks/trueblocks-core/src/apps/chifra@latest
     fi
 
     go mod tidy
