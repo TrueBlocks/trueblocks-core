@@ -6,6 +6,6 @@ import (
 )
 
 func TestMainFunction(t *testing.T) {
-	os.Chdir("/Users/jrush/Development/trueblocks-dalledress")
+	os.Chdir("/Users/jrush/Development/trueblocks-core")
 	main()
 }

@@ -26,9 +26,6 @@ func TestBlocks[T BlockType](mode ...string) {
 			select {
 			case model := <-opts.RenderCtx.ModelChan:
 				if item, ok := model.(T); ok {
-					// if cnt != 0 {
-					// 	fmt.Println(",")
-					// }
 					fmt.Printf("%s\n", item) // %d item: %s\r", cnt, item)
 					cnt++
 				} else {

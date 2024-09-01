@@ -59,4 +59,5 @@ func (opts *ScrapeOptions) ScrapeDryRun() ([]types.Message, *types.MetaData, err
 func (opts *ScrapeOptions) ScrapeRunOnce() ([]types.Message, *types.MetaData, error) {
 	return opts.ScrapeRunCount(1)
 }
+
 // EXISTING_CODE

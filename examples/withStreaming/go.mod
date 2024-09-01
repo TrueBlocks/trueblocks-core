@@ -4,8 +4,8 @@ module github.com/TrueBlocks/trueblocks-core/examples/withStreaming
 go 1.22
 
 require (
-	github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240828113739-542145d54102
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240828113739-542145d54102
+	github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240831030327-e4efe9a24ced
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240831030327-e4efe9a24ced
 	github.com/schollz/progressbar/v3 v3.14.4
 )
 
