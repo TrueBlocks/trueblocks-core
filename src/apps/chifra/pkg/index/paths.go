@@ -1,6 +1,7 @@
 package index
 
 import (
+	"path/filepath"
 	"strings"
 )
 
@@ -19,10 +20,10 @@ func ToBloomPath(pathIn string) string {
 	if isCacheType(pathIn, "blooms", "bloom") {
 		return pathIn
 	}
-	ret := strings.Replace(pathIn, ".bin", ".bloom", -1)
+	ret := strings.Replace(filepath.Clean(pathIn), ".bin", ".bloom", -1)
 	ret = strings.Replace(ret, ".txt", ".bloom", -1)
-	ret = strings.Replace(ret, "/finalized/", "/blooms/", -1)
-	ret = strings.Replace(ret, "/staging/", "/blooms/", -1)
+	ret = strings.Replace(ret, "finalized", "blooms", -1)
+	ret = strings.Replace(ret, "staging", "blooms", -1)
 	return ret
 }
 
@@ -32,10 +33,10 @@ func ToIndexPath(pathIn string) string {
 		return pathIn
 	}
 
-	ret := strings.Replace(pathIn, ".bloom", ".bin", -1)
+	ret := strings.Replace(filepath.Clean(pathIn), ".bloom", ".bin", -1)
 	ret = strings.Replace(ret, ".txt", ".bin", -1)
-	ret = strings.Replace(ret, "/blooms/", "/finalized/", -1)
-	ret = strings.Replace(ret, "/staging/", "/finalized/", -1)
+	ret = strings.Replace(ret, "blooms", "finalized", -1)
+	ret = strings.Replace(ret, "staging", "finalized", -1)
 	return ret
 }
 
@@ -45,9 +46,9 @@ func ToStagingPath(pathIn string) string {
 		return pathIn
 	}
 
-	ret := strings.Replace(pathIn, ".bin", ".txt", -1)
+	ret := strings.Replace(filepath.Clean(pathIn), ".bin", ".txt", -1)
 	ret = strings.Replace(ret, ".bloom", ".txt", -1)
-	ret = strings.Replace(ret, "/finalized/", "/staging/", -1)
-	ret = strings.Replace(ret, "/blooms/", "/staging/", -1)
+	ret = strings.Replace(ret, "finalized", "staging", -1)
+	ret = strings.Replace(ret, "blooms", "staging", -1)
 	return ret
 }

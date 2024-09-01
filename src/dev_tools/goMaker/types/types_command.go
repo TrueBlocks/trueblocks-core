@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 
@@ -26,6 +27,7 @@ type Command struct {
 	Usage        string       `json:"usage,omitempty"`
 	Summary      string       `json:"summary,omitempty"`
 	Notes        []string     `json:"notes,omitempty"`
+	Sorts        []string     `json:"sorts,omitempty"`
 	Aliases      []string     `json:"aliases,omitempty"`
 	Productions  []*Structure `json:"productions,omitempty"`
 	cbPtr        *CodeBase    `json:"-"`
@@ -80,12 +82,9 @@ func (c *Command) HasPositionals() bool {
 	return false
 }
 
-func (c *Command) HasNotes() bool {
-	return len(c.Notes) > 0
-}
-
 func (c *Command) HasExample() bool {
-	return file.FileExists("./src/dev_tools/goMaker/templates/api/examples/" + c.Route + ".json")
+	examplePath := filepath.Join(GetTemplatePath(), "api/examples/"+c.Route+".json")
+	return file.FileExists(examplePath)
 }
 
 func (c *Command) HasHidden() bool {
@@ -106,18 +105,10 @@ func (c *Command) HasAddrs() bool {
 	return false
 }
 
-func (c *Command) HasEnums() bool {
-	for _, op := range c.Options {
-		if op.IsEnum() {
-			return true
-		}
-	}
-	return false
-}
-
 func (c *Command) Clean() {
 	cleaned := []Option{}
 	c.Notes = []string{}
+	c.Sorts = []string{}
 	c.Aliases = []string{}
 	for _, op := range c.Options {
 		op.GoName = op.toGoName()
@@ -142,6 +133,7 @@ func (c *Command) Clean() {
 				op.DataType = "enum"
 			}
 		}
+
 		if op.OptionType == "note" {
 			if !strings.HasSuffix(op.Description, ".") {
 				logger.Warn("Note does not end with a period: " + op.Description)
@@ -151,6 +143,9 @@ func (c *Command) Clean() {
 			c.Aliases = append(c.Aliases, op.Description)
 		} else if op.OptionType == "command" {
 			c.Description = op.Description
+			if c.HasSorts() {
+				c.Sorts = getSorts(op.Attributes)
+			}
 		} else if op.OptionType == "group" {
 			// c.Description = op.Description
 		} else {
@@ -162,7 +157,11 @@ func (c *Command) Clean() {
 	for index, op := range cleaned {
 		if op.IsDeprecated() {
 			parts := strings.Split(op.Attributes, "=")
-			msg := "deprecated, use --" + parts[1] + " instead"
+			msg := "deprecated, use "
+			if !strings.Contains(parts[1], "chifra") {
+				msg += "--"
+			}
+			msg += parts[1] + " instead"
 			if len(parts[1]) == 0 {
 				msg = "deprecated, there is no replacement"
 			}
@@ -262,40 +261,6 @@ func (c *Command) PyOptions() string {
 }
 
 // Tags found in sdk_go_route.go
-
-// Enums1 for tag {{.Enums1}}
-func (c *Command) Enums1() string {
-	if !c.HasEnums() {
-		return "// No enums"
-	}
-
-	ret := ""
-	for _, op := range c.Options {
-		ret += op.Enum1()
-	}
-	return ret
-}
-
-// Enums2 for tag {{.Enums2}}
-func (c *Command) Enums2() string {
-	if !c.HasEnums() {
-		return "// No enums"
-	}
-
-	ret := ""
-	for _, op := range c.Options {
-		ret += op.Enum2()
-	}
-	return ret
-}
-
-// Enums3 for tag {{.Enums3}}
-func (c *Command) Enums3() string {
-	if !c.HasEnums() {
-		return "_"
-	}
-	return "opts"
-}
 
 // Pkg for tag {{.Pkg}}
 func (c *Command) Pkg() string {
@@ -458,7 +423,7 @@ func (c *Command) TestLogs() string {
 }
 
 func (c *Command) PackageComments() string {
-	docsPath := "src/dev_tools/goMaker/templates/readme-intros/" + c.Route + ".md"
+	docsPath := filepath.Join(GetTemplatePath(), "readme-intros/"+c.Route+".md")
 	lines := file.AsciiFileToLines(docsPath)
 
 	ret := []string{"// " + c.Route + "Pkg implements the chifra " + c.Route + " command.\n//"}
@@ -481,7 +446,8 @@ func (c *Command) IsRoute() bool {
 }
 
 func (c *Command) Example() string {
-	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/api/examples/"+c.Route+".json"), ws)
+	examplePath := filepath.Join(GetTemplatePath(), "api/examples/"+c.Route+".json")
+	contents := strings.Trim(file.AsciiFileToString(examplePath), ws)
 	contents = strings.Replace(contents, "\n", "\n                  ", -1)
 	return strings.Trim(contents, ws) + "\n"
 }
@@ -491,17 +457,20 @@ func (c *Command) ReadmeName() string {
 }
 
 func (c *Command) HelpIntro() string {
-	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + c.ReadmeName()
+	readmePath := filepath.Join(GetTemplatePath(), "readme-intros/", c.ReadmeName())
 	tmplName := "helpIntro" + c.ReadmeName()
-	tmpl := file.AsciiFileToString(thePath)
+	tmpl := file.AsciiFileToString(readmePath)
+	if tmpl == "" {
+		logger.Fatal("Could not read template file: ", readmePath)
+	}
 	return strings.Trim(c.executeTemplate(tmplName, tmpl), ws)
 }
 
 func (c *Command) HelpText() string {
-	thePath := "src/dev_tools/goMaker/generated/" + c.ReadmeName() + ".tmp"
-	defer os.Remove(thePath)
-	utils.System("chifra " + c.Route + " --help 2>" + thePath)
-	helpText := strings.Trim(file.AsciiFileToString(thePath), wss)
+	readmePath := filepath.Join(GetTemplatePath(), c.ReadmeName()+".tmp")
+	defer os.Remove(readmePath)
+	utils.System("chifra " + c.Route + " --help 2>" + readmePath)
+	helpText := strings.Trim(file.AsciiFileToString(readmePath), wss)
 	if strings.Contains(helpText, "unknown") {
 		logger.Fatal("Error: " + helpText)
 	}
@@ -536,20 +505,9 @@ func (c *Command) HelpLinks() string {
 	return c.executeTemplate(tmplName, tmpl)
 }
 
-func (c *Command) HelpNotes() string {
-	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + c.ReadmeName()
-	thePath = strings.Replace(thePath, ".md", ".notes.md", -1)
-	if file.FileExists(thePath) {
-		tmplName := "Notes" + c.ReadmeName()
-		tmpl := file.AsciiFileToString(thePath)
-		return "\n\n" + strings.Trim(c.executeTemplate(tmplName, tmpl), ws)
-	}
-	return ""
-}
-
 func (c *Command) ReadmeFooter() string {
-	thePath := "src/dev_tools/goMaker/templates/readme-intros/README.footer.md"
-	return strings.Trim(file.AsciiFileToString(thePath), ws)
+	footerFile := filepath.Join(GetTemplatePath(), "readme-intros/README.footer.md")
+	return strings.Trim(file.AsciiFileToString(footerFile), ws)
 }
 
 func (c *Command) executeTemplate(name, tmplCode string) string {
@@ -584,16 +542,8 @@ func (c *Command) GroupAlias(reason string) string {
 `, "[{GN}]", c.GroupName())
 }
 
-func getContents(fnIn string) string {
-	fn := "./src/dev_tools/goMaker/" + fnIn + ".md"
-	if !file.FileExists(fn) {
-		logger.Fatal("Error: file does not exist: " + fn)
-	}
-	return file.AsciiFileToString(fn)
-}
-
 func (c *Command) GroupIntro(reason string) string {
-	return getContents("templates/" + reason + "-groups/" + c.GroupName())
+	return getTemplateContents(reason + "-groups/" + c.GroupName())
 }
 
 func (c *Command) GroupMarkdowns(reason, filter string) string {
@@ -604,7 +554,7 @@ func (c *Command) GroupMarkdowns(reason, filter string) string {
 		})
 		for _, st := range c.cbPtr.Structures {
 			if st.GroupName() == filter && st.Name() != "" {
-				ret = append(ret, getContents("generated/model_"+st.Name()))
+				ret = append(ret, getGeneratedContents("model_"+st.Name()))
 			}
 		}
 	} else if reason == "readme" {
@@ -613,7 +563,7 @@ func (c *Command) GroupMarkdowns(reason, filter string) string {
 		})
 		for _, cmd := range c.cbPtr.Commands {
 			if cmd.GroupName() == filter && cmd.Route != "" {
-				ret = append(ret, getContents("generated/readme_"+cmd.Route))
+				ret = append(ret, getGeneratedContents("readme_"+cmd.Route))
 			}
 		}
 	} else {
@@ -1040,16 +990,32 @@ func (op *Option) FindDeprecator() *Option {
 		}
 	}
 
+	if strings.Contains(parts[1], "chifra") {
+		op := Option{
+			LongName: parts[1],
+		}
+		return &op
+	}
+
 	logger.Fatal(fmt.Sprintf("Deprecator (%s) not found for: %s", parts[1], op.LongName))
 	return nil
 }
 
+func (op *Option) DeprecatorRep() string {
+	dep := op.Deprecator()
+	if strings.Contains(dep, "chifra") {
+		return dep
+	} else {
+		return "--" + dep
+	}
+}
+
 func (op *Option) Deprecator() string {
-	ret := op.FindDeprecator()
-	if ret == nil {
+	dep := op.FindDeprecator()
+	if dep == nil {
 		return ""
 	}
-	return ret.LongName
+	return dep.LongName
 }
 
 func (op *Option) DeprecatorIsDefault() string {
@@ -1067,12 +1033,17 @@ func (op *Option) DeprecatedNotDefault() string {
 	if op.IsArray() {
 		return "len(opts." + op.GoName + ") > 0"
 	}
+	if op.IsBool() {
+		return "opts." + op.GoName
+	}
 	return "opts." + op.GoName + " != \"" + op.DefVal + "\""
 }
 
 func (op *Option) Clear() string {
 	if op.IsArray() {
 		return "[]string{}"
+	} else if op.IsBool() {
+		return "false"
 	}
 	return "\"\""
 }
@@ -1083,13 +1054,22 @@ func (c *Command) DeprecatedTransfer() string {
 		if op.IsDeprecated() {
 			if op.FindDeprecator() != nil {
 				tmplName := "deprecatedTransfer"
-				tmpl := `	// Deprecated, but still supported
+				tmpl := `	// Deprecated...
 	if {{.DeprecatedNotDefault}} && {{.DeprecatorIsDefault}} {
-		logger.Warn("The --{{.LongName}} flag is deprecated. Please use --{{.Deprecator}} instead.")
+		logger.Warn("The --{{.LongName}} flag is deprecated. Please use {{.DeprecatorRep}} instead.")
 		opts.{{firstUpper .Deprecator}} = opts.{{.GoName}}
 		opts.{{.GoName}} = {{.Clear}}
 	}
 `
+				if strings.Contains(op.Deprecator(), "chifra") {
+					tmplName = "deprecatedTransfer2"
+					tmpl = `	// Deprecated...
+	if {{.DeprecatedNotDefault}} {
+		logger.Warn("The --{{.LongName}} flag is deprecated. Please use {{.DeprecatorRep}} instead.")
+		opts.{{.GoName}} = {{.Clear}}
+	}
+`
+				}
 				ret = append(ret, op.executeTemplate(tmplName, tmpl))
 			}
 		}

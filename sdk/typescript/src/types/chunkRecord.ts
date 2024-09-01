@@ -8,7 +8,7 @@
  * This file was auto generated. DO NOT EDIT.
  */
 
-import { blkrange, int64, ipfshash } from '.';
+import { blkrange, int64, ipfshash, RangeDates } from '.';
 
 export type ChunkRecord = {
   bloomHash: ipfshash
@@ -16,4 +16,5 @@ export type ChunkRecord = {
   indexHash: ipfshash
   indexSize: int64
   range: blkrange
+  rangeDates: RangeDates
 }

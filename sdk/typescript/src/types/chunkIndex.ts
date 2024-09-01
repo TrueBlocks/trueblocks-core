@@ -8,7 +8,7 @@
  * This file was auto generated. DO NOT EDIT.
  */
 
-import { blkrange, hash, uint64 } from '.';
+import { blkrange, hash, RangeDates, uint64 } from '.';
 
 export type ChunkIndex = {
   hash: hash
@@ -16,5 +16,6 @@ export type ChunkIndex = {
   nAddresses: uint64
   nAppearances: uint64
   range: blkrange
+  rangeDates: RangeDates
   size: uint64
 }

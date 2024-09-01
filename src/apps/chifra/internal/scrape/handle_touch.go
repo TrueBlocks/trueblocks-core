@@ -5,12 +5,15 @@
 package scrapePkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *ScrapeOptions) HandleTouch(rCtx *output.RenderCtx) error {
-	// TODO: implement
-	logger.Error("chifra scrape --touch is not yet implemented")
-	return nil
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		errorChan <- fmt.Errorf("chifra scrape --touch is not yet implemented")
+	}
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }

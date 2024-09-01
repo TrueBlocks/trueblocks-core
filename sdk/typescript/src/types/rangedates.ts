@@ -8,8 +8,11 @@
  * This file was auto generated. DO NOT EDIT.
  */
 
-import { uint64 } from '.';
+import { datetime, timestamp } from '.';
 
-export type TimestampCount = {
-  count: uint64
+export type RangeDates = {
+  firstDate?: datetime
+  firstTs?: timestamp
+  lastDate?: datetime
+  lastTs?: timestamp
 }

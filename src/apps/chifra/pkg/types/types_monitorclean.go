@@ -20,8 +20,10 @@ import (
 type MonitorClean struct {
 	Address  base.Address `json:"address"`
 	Dups     int64        `json:"dups"`
+	Removed  bool         `json:"removed"`
 	SizeNow  int64        `json:"sizeNow"`
 	SizeThen int64        `json:"sizeThen"`
+	Staged   bool         `json:"staged"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -47,6 +49,12 @@ func (s *MonitorClean) Model(chain, format string, verbose bool, extraOpts map[s
 		"sizeNow",
 		"sizeThen",
 		"dups",
+	}
+
+	if extraOpts["staged"] == true {
+		model["staged"] = s.Staged
+		model["removed"] = s.Removed
+		order = append(order, "staged", "removed")
 	}
 	// EXISTING_CODE
 

@@ -80,7 +80,7 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Rewrite, "rewrite", "e", false, `for the --pin --deep mode only, writes the manifest back to the index folder (see notes)`)
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().List, "list", "l", false, `for the pins mode only, list the remote pins (hidden)`)
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Unpin, "unpin", "u", false, `for the pins mode only, if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs) (hidden)`)
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Count, "count", "U", false, `for the pins mode only, display only the count of records`)
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Count, "count", "U", false, `for certain modes only, display the count of records`)
 	chunksCmd.Flags().StringVarP(&chunksPkg.GetOptions().Tag, "tag", "t", "", `visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str) (hidden)`)
 	chunksCmd.Flags().Float64VarP(&chunksPkg.GetOptions().Sleep, "sleep", "s", 0.0, `for --remote pinning only, seconds to sleep between API calls`)
 	if os.Getenv("TEST_MODE") != "true" {

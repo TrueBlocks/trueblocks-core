@@ -17,7 +17,7 @@ func nameAddress(extraOpts map[string]any, address base.Address) (Name, bool, bo
 	}
 
 	name := extraOpts["namesMap"].(map[base.Address]Name)[address]
-	if name.Address.Hex() == "0x0" {
+	if name.Address.IsZero() {
 		return Name{}, true, false
 	}
 

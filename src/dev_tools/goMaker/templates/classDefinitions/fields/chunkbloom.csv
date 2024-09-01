@@ -1,8 +1,9 @@
-name      ,type     ,strDefault ,attributes ,docOrder ,description
-range     ,blkrange ,           ,           ,       1 ,the block range (inclusive) covered by this chunk
-magic     ,string   ,           ,           ,       2 ,an internal use only magic number to indicate file format
-hash      ,hash     ,           ,           ,       3 ,the hash of the specification under which this chunk was generated
-nBlooms   ,uint64   ,           ,           ,       4 ,the number of individual bloom filters in this bloom file
-nInserted ,uint64   ,           ,           ,       5 ,the number of addresses inserted into the bloom file
-size      ,uint64   ,           ,           ,       6 ,the size on disc in bytes of this bloom file
-byteWidth ,uint64   ,           ,           ,       7 ,the width of the bloom filter
+name       ,type       ,strDefault ,attributes ,docOrder ,description
+range      ,blkrange   ,           ,           ,       1 ,the block range (inclusive) covered by this chunk
+magic      ,string     ,           ,           ,       2 ,an internal use only magic number to indicate file format
+hash       ,hash       ,           ,           ,       3 ,the hash of the specification under which this chunk was generated
+nBlooms    ,uint64     ,           ,           ,       4 ,the number of individual bloom filters in this bloom file
+nInserted  ,uint64     ,           ,           ,       5 ,the number of addresses inserted into the bloom file
+size       ,uint64     ,           ,           ,       6 ,the size on disc in bytes of this bloom file
+byteWidth  ,uint64     ,           ,           ,       7 ,the width of the bloom filter
+rangeDates ,RangeDates ,           ,           ,       8 ,if verbose&#44; the block and timestamp bounds of the chunk

@@ -61,15 +61,17 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13430,apps,Accounts,export,acctExport,n12,,,,,note,,,,,,The --traces option requires your RPC to provide trace data. See the README for more information.
 #
 14000,apps,Accounts,monitors,acctExport,,,,visible|docs,,command,,,Manage monitors,[flags] <address> [address...],default|caching|names|,Add&#44; remove&#44; clean&#44; and list address monitors.
-14020,apps,Accounts,monitors,acctExport,addrs,,,visible|docs,4,positional,list<addr>,message,,,,one or more addresses (0x...) to process
+14020,apps,Accounts,monitors,acctExport,addrs,,,visible|docs,5,positional,list<addr>,message,,,,one or more addresses (0x...) to process
 14030,apps,Accounts,monitors,acctExport,delete,,,visible|docs|crud,,switch,<boolean>,,,,,delete a monitor&#44; but do not remove it
 14040,apps,Accounts,monitors,acctExport,undelete,,,visible|docs|crud,,switch,<boolean>,,,,,undelete a previously deleted monitor
 14050,apps,Accounts,monitors,acctExport,remove,,,visible|docs|crud,,switch,<boolean>,,,,,remove a previously deleted monitor
-14060,apps,Accounts,monitors,acctExport,clean,C,,visible|docs,1,switch,<boolean>,monitorClean,,,,clean (i.e. remove duplicate appearances) from monitors
-14070,apps,Accounts,monitors,acctExport,list,l,,visible|docs,2,switch,<boolean>,monitor,,,,list monitors in the cache (--verbose for more detail)
-14080,apps,Accounts,monitors,acctExport,watch,w,,visible|docs|notApi,3,switch,<boolean>,,,,,continually scan for new blocks and extract data as per the command file
+14060,apps,Accounts,monitors,acctExport,clean,C,,visible|docs,2,switch,<boolean>,monitorClean,,,,clean (i.e. remove duplicate appearances) from monitors&#44; optionally clear stage
+14070,apps,Accounts,monitors,acctExport,list,l,,visible|docs,3,switch,<boolean>,monitor,,,,list monitors in the cache (--verbose for more detail)
+14075,apps,Accounts,monitors,acctExport,count,c,,visible|docs,1,switch,<boolean>,count,,,,show the number of active monitors (included deleted but not removed monitors)
+14065,apps,Accounts,monitors,acctExport,staged,S,,visible|docs,,switch,<boolean>,,,,,for --clean&#44; --list&#44; and --count options only&#44; include staged monitors
+14080,apps,Accounts,monitors,acctExport,watch,w,,visible|docs|notApi,4,switch,<boolean>,,,,,continually scan for new blocks and extract data as per the command file
 14090,apps,Accounts,monitors,acctExport,watchlist,a,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; a file containing the addresses to watch
-14100,apps,Accounts,monitors,acctExport,commands,c,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; the file containing the list of commands to apply to each watched address
+14100,apps,Accounts,monitors,acctExport,commands,d,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; the file containing the list of commands to apply to each watched address
 14110,apps,Accounts,monitors,acctExport,batch_size,b,8,visible|docs|notApi,,flag,<uint64>,,,,,available with --watch option only&#44; the number of monitors to process in each batch
 14120,apps,Accounts,monitors,acctExport,run_count,u,,visible|docs|notApi,,flag,<uint64>,,,,,available with --watch option only&#44; run the monitor this many times&#44; then quit
 14130,apps,Accounts,monitors,acctExport,sleep,s,14,visible|docs|notApi,,flag,<float64>,,,,,available with --watch option only&#44; the number of seconds to sleep between runs
@@ -79,7 +81,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 14170,apps,Accounts,monitors,acctExport,n4,,,,,note,,,,,,Addresses provided on the command line are ignored in `--watch` mode.
 14180,apps,Accounts,monitors,acctExport,n5,,,,,note,,,,,,Providing the value `existing` to the `--watchlist` monitors all existing monitor files (see --list).
 #
-15000,tools,Accounts,names,ethNames,,,,visible|docs,,command,,,Manage names,[flags] <term> [term...],default|,Query addresses or names of well-known accounts.
+15000,tools,Accounts,names,ethNames,,,,visible|docs|sorts=name,,command,,,Manage names,[flags] <term> [term...],default|,Query addresses or names of well-known accounts.
 15020,tools,Accounts,names,ethNames,terms,,,required|visible|docs,4,positional,list<string>,name,,,,a space separated list of one or more search terms
 15030,tools,Accounts,names,ethNames,expand,e,,visible|docs,,switch,<boolean>,,,,,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
 15040,tools,Accounts,names,ethNames,match_case,m,,visible|docs,,switch,<boolean>,,,,,do case-sensitive search
@@ -100,14 +102,16 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 15190,tools,Accounts,names,ethNames,n1,,,,,note,,,,,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 15200,tools,Accounts,names,ethNames,n2,,,,,note,,,,,,The `--match_case` option enables case sensitive matching.
 #
-16000,tools,Accounts,abis,grabABI,,,,visible|docs,,command,,,Manage Abi files,[flags] <address> [address...],default|caching|names|,Fetches the ABI for a smart contract.
-16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,3,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
+16000,tools,Accounts,abis,grabABI,,,,visible|docs|sorts=function:abi,,command,,,Manage Abi files,[flags] <address> [address...],default|caching|names|,Fetches the ABI for a smart contract.
+16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,5,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
 16030,tools,Accounts,abis,grabABI,known,k,,visible|docs,,switch,<boolean>,,,,,load common 'known' ABIs from cache
 16040,tools,Accounts,abis,grabABI,proxy_for,r,,visible|docs,,flag,<address>,,,,,redirects the query to this implementation
-16050,tools,Accounts,abis,grabABI,find,f,,visible|docs,1,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
-16060,tools,Accounts,abis,grabABI,hint,n,,visible|docs,,flag,list<string>,,,,,for the --find option only&#44; provide hints to speed up the search
-16070,tools,Accounts,abis,grabABI,encode,e,,visible|docs,2,flag,<string>,function,,,,generate the 32-byte encoding for a given cannonical function or event signature
-16090,tools,Accounts,abis,grabABI,n1,,,,,note,,,,,,Search for either four byte signatures or event signatures with the --find option.
+16050,tools,Accounts,abis,grabABI,list,l,,visible|docs,3,switch,<boolean>,abi,,,,a list of downloaded abi files
+16060,tools,Accounts,abis,grabABI,count,c,,visible|docs,2,switch,<boolean>,count,,,,show the number of abis downloaded
+16070,tools,Accounts,abis,grabABI,find,f,,visible|docs,1,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
+16080,tools,Accounts,abis,grabABI,hint,n,,visible|docs,,flag,list<string>,,,,,for the --find option only&#44; provide hints to speed up the search
+16090,tools,Accounts,abis,grabABI,encode,e,,visible|docs,4,flag,<string>,function,,,,generate the 32-byte encoding for a given cannonical function or event signature
+16100,tools,Accounts,abis,grabABI,n1,,,,,note,,,,,,Search for either four byte signatures or event signatures with the --find option.
 #
 21000,,Chain Data,,,,,,,,group,,,,,,Access and cache blockchain-related data
 #
@@ -184,7 +188,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 27020,tools,Chain Data,when,whenBlock,blocks,,,visible|docs,3,positional,list<string>,namedBlock,,,,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
 27030,tools,Chain Data,when,whenBlock,list,l,,visible|docs,1,switch,<boolean>,namedBlock,,,,export a list of the 'special' blocks
 27040,tools,Chain Data,when,whenBlock,timestamps,t,,visible|docs,2,switch,<boolean>,timestamp,,,,display or process timestamps
-27050,tools,Chain Data,when,whenBlock,count,U,,visible|docs,,switch,<boolean>,timestampCount,,,,with --timestamps only&#44; returns the number of timestamps in the cache
+27050,tools,Chain Data,when,whenBlock,count,U,,visible|docs,,switch,<boolean>,count,,,,with --timestamps only&#44; returns the number of timestamps in the cache
 27060,tools,Chain Data,when,whenBlock,truncate,n,NOPOSN,,,flag,<blknum>,,,,,with --timestamps only&#44; truncates the timestamp file at this block
 27070,tools,Chain Data,when,whenBlock,repair,r,,visible|docs,,switch,<boolean>,,,,,with --timestamps only&#44; repairs block(s) in the block range by re-querying from the chain
 27080,tools,Chain Data,when,whenBlock,check,c,,visible|docs,,switch,<boolean>,,,,,with --timestamps only&#44; checks the validity of the timestamp data
@@ -246,24 +250,24 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 #
 44000,apps,Admin,daemon,flame,,,,visible|docs|notApi,,command,,,Start the Api server,[flags],verbose|version|noop|noColor|,Initialize and control long-running processes such as the API and the scrapers.
 44020,apps,Admin,daemon,flame,url,u,localhost:8080,visible|docs,,flag,<string>,,,,,specify the API server's url and optionally its port
-44030,apps,Admin,daemon,flame,api,a,on,,,flag,enum[off|on*]>,,,,,instruct the node to start the API server
-44040,apps,Admin,daemon,flame,scrape,s,,,,flag,enum[off|blooms|index]>,,,,,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
-44050,apps,Admin,daemon,flame,monitor,m,,,,switch,<boolean>,,,,,instruct the node to start the monitors tool
 44070,apps,Admin,daemon,flame,silent,,,visible|docs,,switch,<boolean>,,,,,disable logging (for use in SDK for example)
 44070,apps,Admin,daemon,flame,port,p,:8080,deprecated=url,,flag,<string>,,,,,deprecated
 44060,apps,Admin,daemon,flame,grpc,g,,deprecated=,,switch,<boolean>,,,,,run gRPC server to serve names
+44030,apps,Admin,daemon,flame,api,a,on,deprecated=,,flag,enum[off|on*]>,,,,,instruct the node to start the API server
+44040,apps,Admin,daemon,flame,scrape,s,,deprecated=chifra scrape,,flag,enum[off|blooms|index]>,,,,,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
+44050,apps,Admin,daemon,flame,monitor,m,,deprecated=chifra monitors --watch,,switch,<boolean>,,,,,instruct the node to start the monitors tool
 44080,apps,Admin,daemon,flame,n1,,,,,note,,,,,,To start API open terminal window and run chifra daemon.
 44090,apps,Admin,daemon,flame,n2,,,,,note,,,,,,See the API documentation (https://trueblocks.io/api) for more information.
 44100,apps,Admin,daemon,flame,a1,,,,,alias,,,,,,serve
 #
 45000,apps,Admin,scrape,blockScrape,,,,visible|docs|notApi,,command,,,Scrape index,[flags],verbose|version|noop|noColor|chain|,Scan the chain and update the TrueBlocks index of appearances.
-45020,apps,Admin,scrape,blockScrape,block_cnt,n,2000,visible|docs,2,flag,<uint64>,,,,,maximum number of blocks to process per pass
-45030,apps,Admin,scrape,blockScrape,sleep,s,14,visible|docs,,flag,<float64>,,,,,seconds to sleep between scraper passes
-45040,apps,Admin,scrape,blockScrape,touch,l,,visible|docs,1,flag,<blknum>,,,,,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
-45050,apps,Admin,scrape,blockScrape,run_count,u,,visible|docs,,flag,<uint64>,,,,,run the scraper this many times&#44; then quit
-45060,apps,Admin,scrape,blockScrape,publisher,P,,,,flag,<address>,,,,,for some query options&#44; the publisher of the index
-45070,apps,Admin,scrape,blockScrape,dry_run,d,,visible|docs,,switch,<boolean>,,,,,show the configuration that would be applied if run&#44;no changes are made
-45075,apps,Admin,scrape,blockScrape,notify,o,,visible|docs,,switch,<boolean>,,,,,enable the notify feature
+45010,apps,Admin,scrape,blockScrape,block_cnt,n,2000,visible|docs,2,flag,<uint64>,,,,,maximum number of blocks to process per pass
+45020,apps,Admin,scrape,blockScrape,sleep,s,14,visible|docs,,flag,<float64>,,,,,seconds to sleep between scraper passes
+45030,apps,Admin,scrape,blockScrape,publisher,P,,,,flag,<address>,,,,,for some query options&#44; the publisher of the index
+45040,apps,Admin,scrape,blockScrape,touch,l,,visible|docs,1,flag,<blknum>,message,,,,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+45050,apps,Admin,scrape,blockScrape,run_count,u,,visible|docs,,flag,<uint64>,message,,,,run the scraper this many times&#44; then quit
+45060,apps,Admin,scrape,blockScrape,dry_run,d,,visible|docs,,switch,<boolean>,message,,,,show the configuration that would be applied if run&#44;no changes are made
+45070,apps,Admin,scrape,blockScrape,notify,o,,visible|docs,,switch,<boolean>,,,,,enable the notify feature
 45080,apps,Admin,scrape,blockScrape,apps_per_chunk,,2000000,config,,flag,<uint64>,,,,,the number of appearances to build into a chunk before consolidating it
 45090,apps,Admin,scrape,blockScrape,snap_to_grid,,250000,config,,flag,<uint64>,,,,,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
 45100,apps,Admin,scrape,blockScrape,first_snap,,2000000,config,,flag,<uint64>,,,,,the first block at which snap_to_grid is enabled
@@ -274,7 +278,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 45150,apps,Admin,scrape,blockScrape,n2,,,,,note,,,,,,This command requires your RPC to provide trace data. See the README for more information.
 45150,apps,Admin,scrape,blockScrape,n3,,,,,note,,,,,,The --notify option requires proper configuration. Additionally&#44; IPFS must be running locally. See the README.md file.
 #
-46000,apps,Admin,chunks,chunkMan,,,,visible|docs,,command,,,Manage chunks,<mode> [flags] [blocks...] [address...],default|,Manage&#44; investigate&#44; and display the Unchained Index.
+46000,apps,Admin,chunks,chunkMan,,,,visible|docs|sorts=chunkStats:chunkRecord,,command,,,Manage chunks,<mode> [flags] [blocks...] [address...],default|,Manage&#44; investigate&#44; and display the Unchained Index.
 46020,apps,Admin,chunks,chunkMan,mode,,,required|visible|docs,9,positional,enum[manifest|index|blooms|pins|addresses|appearances|stats],mode,,,,the type of data to process
 46030,apps,Admin,chunks,chunkMan,blocks,,,visible|docs,,positional,list<blknum>,,,,,an optional list of blocks to intersect with chunk ranges
 46040,apps,Admin,chunks,chunkMan,check,c,,visible|docs,1,switch,<boolean>,,,,,check the manifest&#44; index&#44; or blooms for internal consistency
@@ -292,7 +296,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 46160,apps,Admin,chunks,chunkMan,rewrite,e,,visible|docs,,switch,<boolean>,,,,,for the --pin --deep mode only&#44; writes the manifest back to the index folder (see notes)
 46170,apps,Admin,chunks,chunkMan,list,l,,,2,switch,<boolean>,,,,,for the pins mode only&#44; list the remote pins
 46180,apps,Admin,chunks,chunkMan,unpin,u,,,3,switch,<boolean>,,,,,for the pins mode only&#44; if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs)
-46190,apps,Admin,chunks,chunkMan,count,U,,visible|docs,,switch,<boolean>,,,,,for the pins mode only&#44; display only the count of records
+46190,apps,Admin,chunks,chunkMan,count,U,,visible|docs,,switch,<boolean>,count,,,,for certain modes only&#44; display the count of records
 46200,apps,Admin,chunks,chunkMan,tag,t,,,4,flag,<string>,message,,,,visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
 46210,apps,Admin,chunks,chunkMan,sleep,s,,visible|docs,,flag,<float64>,,,,,for --remote pinning only&#44; seconds to sleep between API calls
 46220,apps,Admin,chunks,chunkMan,n1,,,,,note,,,,,,Mode determines which type of data to display or process.
@@ -323,6 +327,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 52020,apps,Other,explore,fireStorm,terms,,,visible|docs,1,positional,list<string>,,,,,one or more address&#44; name&#44; block&#44; or transaction identifier
 52030,apps,Other,explore,fireStorm,local,l,,visible|docs,,switch,<boolean>,,,,,open the local TrueBlocks explorer
 52040,apps,Other,explore,fireStorm,google,g,,visible|docs,,switch,<boolean>,,,,,search google excluding popular blockchain explorers
+52050,apps,Other,explore,fireStorm,dalle,d,,,,switch,<boolean>,,,,,open the address to the DalleDress explorer
 #
 53000,tools,Other,slurp,ethslurp,,,,visible|docs,,command,,,Slurp Api services,[flags] <address> [address...] [block...],default|caching|ether|names|,Fetch data from Etherscan and other APIs for any address.
 53020,tools,Other,slurp,ethslurp,addrs,,,required|visible|docs,3,positional,list<addr>,slurp,,,,one or more addresses to slurp from Etherscan

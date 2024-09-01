@@ -43,9 +43,9 @@ type ConfigFile struct {
 // init sets up default values for the given configuration
 func init() {
 	// The location of the per chain caches
-	cachePath = PathToRootConfig() + "cache/"
+	cachePath = filepath.Join(PathToRootConfig(), "cache")
 	// The location of the per chain unchained indexes
-	indexPath = PathToRootConfig() + "unchained/"
+	indexPath = filepath.Join(PathToRootConfig(), "unchained")
 }
 
 var configMutex sync.Mutex
@@ -70,7 +70,8 @@ func GetRootConfig() *ConfigFile {
 	trueBlocksConfig = *defaultConfig
 
 	// Load TOML file
-	if err := loadFromTomlFile(filepath.Join(configPath, "trueBlocks.toml"), &trueBlocksConfig); err != nil {
+	tomlConfigFn := filepath.Join(configPath, "trueBlocks.toml")
+	if err := loadFromTomlFile(tomlConfigFn, &trueBlocksConfig); err != nil {
 		log.Fatal("loading config from .toml file:", err)
 	}
 
@@ -82,23 +83,25 @@ func GetRootConfig() *ConfigFile {
 	user, _ := user.Current()
 
 	cachePath := trueBlocksConfig.Settings.CachePath
+	cachePath = strings.Replace(cachePath, "/", string(os.PathSeparator), -1)
 	if len(cachePath) == 0 || cachePath == "<not_set>" {
-		cachePath = filepath.Join(configPath, "cache") + "/"
+		cachePath = filepath.Join(configPath, "cache")
 	}
 	cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
 	cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
-	if !strings.Contains(cachePath, "/cache") {
+	if filepath.Base(cachePath) != "cache" {
 		cachePath = filepath.Join(cachePath, "cache")
 	}
 	trueBlocksConfig.Settings.CachePath = cachePath
 
 	indexPath := trueBlocksConfig.Settings.IndexPath
+	indexPath = strings.Replace(indexPath, "/", string(os.PathSeparator), -1)
 	if len(indexPath) == 0 || indexPath == "<not_set>" {
-		indexPath = filepath.Join(configPath, "unchained") + "/"
+		indexPath = filepath.Join(configPath, "unchained")
 	}
 	indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
 	indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
-	if !strings.Contains(indexPath, "/unchained") {
+	if filepath.Base(indexPath) != "unchained" {
 		indexPath = filepath.Join(indexPath, "unchained")
 	}
 	trueBlocksConfig.Settings.IndexPath = indexPath
@@ -171,7 +174,7 @@ func PathToRootConfig() string {
 		return configPath
 	}
 
-	// The migration code will have already checked for invalid operating systems (i.e. Windows)
+	// The migration code will have already checked for invalid operating systems
 	userOs := runtime.GOOS
 	if len(os.Getenv("TEST_OS")) > 0 {
 		userOs = os.Getenv("TEST_OS")
@@ -181,9 +184,11 @@ func PathToRootConfig() string {
 	osPath := ".local/share/trueblocks"
 	if userOs == "darwin" {
 		osPath = "Library/Application Support/TrueBlocks"
+	} else if userOs == "windows" {
+		osPath = "AppData/Local/trueblocks"
 	}
 
-	return filepath.Join(user.HomeDir, osPath) + "/"
+	return filepath.Join(user.HomeDir, osPath)
 }
 
 func pathFromXDG(envVar string) (string, error) {
@@ -193,7 +198,7 @@ func pathFromXDG(envVar string) (string, error) {
 		return "", nil // it's okay if it's empty
 	}
 
-	if xdg[0] != '/' {
+	if xdg[0] != string(os.PathSeparator)[0] {
 		return "", usage.Usage("The {0} value ({1}), must be fully qualified.", envVar, xdg)
 	}
 
@@ -201,7 +206,7 @@ func pathFromXDG(envVar string) (string, error) {
 		return "", usage.Usage("The {0} folder ({1}) must exist.", envVar, xdg)
 	}
 
-	return filepath.Join(xdg, "") + "/", nil
+	return filepath.Join(xdg, ""), nil
 }
 
 func validateRpcEndpoint(chain, provider string) error {

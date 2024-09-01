@@ -33,6 +33,7 @@ type Name struct {
 	Tags       string       `json:"tags"`
 	// EXISTING_CODE
 	Prefund base.Wei `json:"prefund,omitempty"`
+	Parts   Parts    `json:"parts,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -163,6 +164,10 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 			model["isErc721"] = true
 			order = append(order, "isErc721")
 		}
+		if verbose && s.Parts != 0 && s.Parts != None {
+			model["parts"] = s.Parts
+			order = append(order, "parts")
+		}
 	} else {
 		if len(s.Symbol) == 0 {
 			model["symbol"] = ""
@@ -202,4 +207,27 @@ func (s *Name) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
+type Parts int
+
+// Parts is a bitfield that defines what parts of a name to return and other options
+const (
+	None Parts = (1 << iota)
+	Regular
+	Custom
+	Prefund
+	Baddress
+	Testing
+	MatchCase
+	Expanded
+	Tags
+)
+
+type SortBy int
+
+// SortBy is a bitfield that defines how to sort the names
+const (
+	SortByAddress SortBy = iota
+	SortByTags
+)
+
 // EXISTING_CODE

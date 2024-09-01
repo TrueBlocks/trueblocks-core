@@ -22,6 +22,7 @@ type MonitorsOptions struct {
 	Delete    bool              `json:"delete,omitempty"`
 	Undelete  bool              `json:"undelete,omitempty"`
 	Remove    bool              `json:"remove,omitempty"`
+	Staged    bool              `json:"staged,omitempty"`
 	Watch     bool              `json:"watch,omitempty"`
 	Watchlist string            `json:"watchlist,omitempty"`
 	Commands  string            `json:"commands,omitempty"`
@@ -56,6 +57,13 @@ func (opts *MonitorsOptions) MonitorsList() ([]types.Monitor, *types.MetaData, e
 	in := opts.toInternal()
 	in.List = true
 	return queryMonitors[types.Monitor](in)
+}
+
+// MonitorsCount implements the chifra monitors --count command.
+func (opts *MonitorsOptions) MonitorsCount() ([]types.Count, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Count = true
+	return queryMonitors[types.Count](in)
 }
 
 // No enums

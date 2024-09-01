@@ -26,14 +26,14 @@ func TestBlocks[T BlockType](mode ...string) {
 			select {
 			case model := <-opts.RenderCtx.ModelChan:
 				if item, ok := model.(T); ok {
-					fmt.Printf("%d item: %s\r", cnt, item)
+					fmt.Printf("%s\n", item) // %d item: %s\r", cnt, item)
+					cnt++
 				} else {
 					logger.Error("not the right type", reflect.TypeOf(model))
 				}
 			case err := <-opts.RenderCtx.ErrorChan:
 				logger.Error(err.Error())
 			}
-			cnt++
 			if opts.RenderCtx.WasCanceled() {
 				fmt.Println()
 				return
@@ -48,10 +48,10 @@ func TestBlocks[T BlockType](mode ...string) {
 			if _, _, err := opts.BlocksUncles(); err != nil {
 				logger.Error(err.Error())
 			}
-			// } else {
-			// 	if _, _, err := opts.Blocks(); err != nil {
-			// 		logger.Error(err.Error())
-			// 	}
+		} else {
+			if _, _, err := opts.Blocks(); err != nil {
+				logger.Error(err.Error())
+			}
 		}
 	case *types.LightBlock:
 		if _, _, err := opts.BlocksHashes(); err != nil {
@@ -79,10 +79,10 @@ func TestBlocks[T BlockType](mode ...string) {
 
 func TestStreamBlocks() {
 	TestBlocks[*types.Block]()
-	TestBlocks[*types.LightBlock]()
-	TestBlocks[*types.Log]()
-	TestBlocks[*types.Trace]()
-	TestBlocks[*types.Block]("uncles")
+	// TestBlocks[*types.LightBlock]()
+	// TestBlocks[*types.Log]()
+	// TestBlocks[*types.Trace]()
+	// TestBlocks[*types.Block]("uncles")
 	// TestBlocks[*types.Appearance]()
-	TestBlocks[*types.Withdrawal]()
+	// TestBlocks[*types.Withdrawal]()
 }

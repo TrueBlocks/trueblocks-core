@@ -12,6 +12,8 @@ import (
 	// EXISTING_CODE
 
 	"encoding/json"
+	"fmt"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -40,6 +42,20 @@ func (opts *AbisOptions) Abis() ([]types.Function, *types.MetaData, error) {
 	return queryAbis[types.Function](in)
 }
 
+// AbisList implements the chifra abis --list command.
+func (opts *AbisOptions) AbisList() ([]types.Abi, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.List = true
+	return queryAbis[types.Abi](in)
+}
+
+// AbisCount implements the chifra abis --count command.
+func (opts *AbisOptions) AbisCount() ([]types.Count, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Count = true
+	return queryAbis[types.Count](in)
+}
+
 // AbisFind implements the chifra abis --find command.
 func (opts *AbisOptions) AbisFind(val []string) ([]types.Function, *types.MetaData, error) {
 	in := opts.toInternal()
@@ -55,5 +71,39 @@ func (opts *AbisOptions) AbisEncode(val string) ([]types.Function, *types.MetaDa
 }
 
 // No enums
+func SortAbis(abis []types.Abi, sortSpec SortSpec) error {
+	if len(sortSpec.Fields) != len(sortSpec.Order) {
+		return fmt.Errorf("Fields and Order must have the same length")
+	}
+
+	sorts := make([]func(p1, p2 types.Abi) bool, len(sortSpec.Fields))
+	for i, field := range sortSpec.Fields {
+		if !types.IsValidAbiField(field) {
+			return fmt.Errorf("%s is not an Abi sort field", field)
+		}
+		sorts[i] = types.AbiBy(types.AbiField(field), types.SortOrder(sortSpec.Order[i]))
+	}
+
+	sort.Slice(abis, types.AbiCmp(abis, sorts...))
+	return nil
+}
+
+func SortFunctions(functions []types.Function, sortSpec SortSpec) error {
+	if len(sortSpec.Fields) != len(sortSpec.Order) {
+		return fmt.Errorf("Fields and Order must have the same length")
+	}
+
+	sorts := make([]func(p1, p2 types.Function) bool, len(sortSpec.Fields))
+	for i, field := range sortSpec.Fields {
+		if !types.IsValidFunctionField(field) {
+			return fmt.Errorf("%s is not an Function sort field", field)
+		}
+		sorts[i] = types.FunctionBy(types.FunctionField(field), types.SortOrder(sortSpec.Order[i]))
+	}
+
+	sort.Slice(functions, types.FunctionCmp(functions, sorts...))
+	return nil
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

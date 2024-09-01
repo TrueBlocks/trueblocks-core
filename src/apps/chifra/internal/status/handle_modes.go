@@ -32,7 +32,7 @@ func (opts *StatusOptions) HandleModes(rCtx *output.RenderCtx) error {
 		nRoutines = len(opts.ModeTypes)
 		for _, mT := range opts.ModeTypes {
 			counterMap[mT] = &types.CacheItem{
-				CacheItemType: walk.CacheName(mT),
+				CacheItemType: walk.WalkCacheName(mT),
 				Items:         make([]any, 0),
 				LastCached:    now.Format("2006-01-02 15:04:05"),
 			}

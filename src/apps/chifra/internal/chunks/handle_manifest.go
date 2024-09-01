@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -19,7 +20,7 @@ var sourceMap = map[bool]manifest.Source{
 func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
-	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, sourceMap[opts.Remote])
+	man, err := manifest.LoadManifest(chain, opts.PublisherAddr, sourceMap[opts.Remote])
 	if err != nil {
 		return err
 	}
@@ -33,13 +34,15 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
 		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 			for _, chunk := range man.Chunks {
+				rng := base.RangeFromRangeString(chunk.Range)
 				s := types.ChunkRecord{
-					Range:     chunk.Range,
+					Range:     rng.String(),
 					BloomHash: chunk.BloomHash,
 					BloomSize: chunk.BloomSize,
 					IndexHash: chunk.IndexHash,
 					IndexSize: chunk.IndexSize,
 				}
+				s.RangeDates = tslib.RangeToBounds(chain, &rng)
 				modelChan <- &s
 			}
 		}
@@ -54,13 +57,16 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 				Specification: man.Specification,
 			}
 			for _, chunk := range man.Chunks {
-				s.Chunks = append(s.Chunks, types.ChunkRecord{
-					Range:     chunk.Range,
+				rng := base.RangeFromRangeString(chunk.Range)
+				ch := types.ChunkRecord{
+					Range:     rng.String(),
 					BloomHash: chunk.BloomHash,
 					BloomSize: chunk.BloomSize,
 					IndexHash: chunk.IndexHash,
 					IndexSize: chunk.IndexSize,
-				})
+				}
+				ch.RangeDates = tslib.RangeToBounds(chain, &rng)
+				s.Chunks = append(s.Chunks, ch)
 			}
 			modelChan <- &s
 		}

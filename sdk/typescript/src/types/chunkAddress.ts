@@ -8,11 +8,12 @@
  * This file was auto generated. DO NOT EDIT.
  */
 
-import { address, blkrange, uint64 } from '.';
+import { address, blkrange, RangeDates, uint64 } from '.';
 
 export type ChunkAddress = {
   address: address
   count: uint64
   offset: uint64
   range: blkrange
+  rangeDates: RangeDates
 }

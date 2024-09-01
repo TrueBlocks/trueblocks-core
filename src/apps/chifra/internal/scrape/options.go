@@ -36,9 +36,9 @@ import (
 type ScrapeOptions struct {
 	BlockCnt  uint64                `json:"blockCnt,omitempty"`  // Maximum number of blocks to process per pass
 	Sleep     float64               `json:"sleep,omitempty"`     // Seconds to sleep between scraper passes
+	Publisher string                `json:"publisher,omitempty"` // For some query options, the publisher of the index
 	Touch     base.Blknum           `json:"touch,omitempty"`     // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
 	RunCount  uint64                `json:"runCount,omitempty"`  // Run the scraper this many times, then quit
-	Publisher string                `json:"publisher,omitempty"` // For some query options, the publisher of the index
 	DryRun    bool                  `json:"dryRun,omitempty"`    // Show the configuration that would be applied if run,no changes are made
 	Notify    bool                  `json:"notify,omitempty"`    // Enable the notify feature
 	Settings  config.ScrapeSettings `json:"settings,omitempty"`  // Configuration items for the scrape
@@ -59,9 +59,9 @@ var defaultScrapeOptions = ScrapeOptions{
 func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
+	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.Touch != 0, "Touch: ", opts.Touch)
 	logger.TestLog(opts.RunCount != 0, "RunCount: ", opts.RunCount)
-	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	logger.TestLog(opts.Notify, "Notify: ", opts.Notify)
 	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
@@ -102,12 +102,12 @@ func ScrapeFinishParseInternal(w io.Writer, values url.Values) *ScrapeOptions {
 			opts.BlockCnt = base.MustParseUint64(value[0])
 		case "sleep":
 			opts.Sleep = base.MustParseFloat64(value[0])
+		case "publisher":
+			opts.Publisher = value[0]
 		case "touch":
 			opts.Touch = base.MustParseBlknum(value[0])
 		case "runCount":
 			opts.RunCount = base.MustParseUint64(value[0])
-		case "publisher":
-			opts.Publisher = value[0]
 		case "dryRun":
 			opts.DryRun = true
 		case "notify":
@@ -231,7 +231,7 @@ func (opts *ScrapeOptions) getPidFilePath() string {
 	var pidfileDir string
 	if runtime.GOOS == "darwin" {
 		// MacOS
-		pidfileDir = "/usr/local/var/run"
+		pidfileDir = filepath.Join("/usr/local/var", "run")
 	} else {
 		// Linux
 		// On Linux only root can write to the main directory /run, but every logged-in
@@ -245,7 +245,7 @@ func (opts *ScrapeOptions) getPidFilePath() string {
 	if pidfileDir == "" || !file.FolderExists(pidfileDir) {
 		pidfileDir = os.TempDir()
 	}
-	return filepath.Join(pidfileDir, "chifra/scrape", strings.ToLower(opts.Globals.Chain)+".pid")
+	return filepath.Join(pidfileDir, "chifra", "scrape", strings.ToLower(opts.Globals.Chain)+".pid")
 }
 
 func getConfigCmdsFromArgs() map[string]string {

@@ -128,7 +128,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 		return canceled, nil
 	}
 
-	bloomPath := filepath.Join(config.PathToIndex(updater.Chain), "blooms/")
+	bloomPath := filepath.Join(config.PathToIndex(updater.Chain), "blooms")
 	files, err := os.ReadDir(bloomPath)
 	if err != nil {
 		return canceled, err
@@ -144,7 +144,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 			continue
 		}
 		if !info.IsDir() {
-			fileName := bloomPath + "/" + info.Name()
+			fileName := filepath.Join(bloomPath, info.Name())
 			if !walk.IsCacheType(fileName, walk.Index_Bloom, true /* checkExt */) {
 				continue // sometimes there are .gz files in this folder, for example
 			}
@@ -196,7 +196,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 
 	if !updater.TestMode {
 		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
-		stagePath := index.ToStagingPath(config.PathToIndex(updater.Chain) + "staging")
+		stagePath := index.ToStagingPath(filepath.Join(config.PathToIndex(updater.Chain), "staging"))
 		stageFn, _ := file.LatestFileInFolder(stagePath)
 		rng := base.RangeFromFilename(stageFn)
 		lines := []string{}
@@ -281,7 +281,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	if !file.FileExists(indexFilename) {
 		chain := updater.Chain
 		var man *manifest.Manifest
-		man, err = manifest.ReadManifest(chain, updater.PublisherAddr, manifest.LocalCache)
+		man, err = manifest.LoadManifest(chain, updater.PublisherAddr, manifest.LocalCache)
 		if err != nil {
 			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return
@@ -362,7 +362,7 @@ func needsMigration(addr string) error {
 	mon := Monitor{Address: base.HexToAddress(addr)}
 	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
 	if file.FileExists(path) {
-		path = strings.Replace(path, config.PathToCache(mon.Chain), "./", -1)
+		path = filepath.Clean(strings.ReplaceAll(path, config.PathToCache(mon.Chain), "./"))
 		return validate.Usage("Old style monitor found at {0}. Please run '{1}'", path, "chifra config --migrate cache")
 	}
 	return nil

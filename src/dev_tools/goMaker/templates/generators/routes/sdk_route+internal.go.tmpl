@@ -14,8 +14,8 @@ import (
 )
 
 type {{toCamel .Route}}OptionsInternal struct {
-{{range .Options}}{{if not .IsDeprecated}}	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
-{{end}}{{end}}	RenderCtx *output.RenderCtx `json:"-"`
+{{range .Options}}{{if not .IsDeprecated}}{{if not .IsConfig}}	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
+{{end}}{{end}}{{end}}	RenderCtx *output.RenderCtx `json:"-"`
 	Globals
 }
 

@@ -32,7 +32,17 @@ func Test_Monitor_Print(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := testClean(fmt.Sprintln(mon.toJson()))
-	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"deleted\":false,\"fileSize\":56,\"lastScanned\":2002003,\"nRecords\":6}"
+	e := `
+{
+	"address": "0x049029dd41661e58f99271a0112dfd34695f7000",
+	"deleted": false,
+	"fileSize": 56,
+	"isEmpty": false,
+	"isStaged": false,
+	"lastScanned": 2002003,
+	"nRecords":6, "name":""
+}`
+	expected := strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(e, "\n", ""), "\t", ""), " ", "")
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -118,7 +128,18 @@ func Test_Monitor_Delete(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := testClean(fmt.Sprintln(mon.toJson()))
-	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"deleted\":false,\"fileSize\":32,\"lastScanned\":2002003,\"nRecords\":3}"
+	e := `
+{
+	"address": "0x049029dd41661e58f99271a0112dfd34695f7000",
+	"deleted": false,
+	"fileSize": 32,
+	"isEmpty": false,
+	"isStaged": false,
+	"lastScanned": 2002003,
+	"nRecords": 3,
+	"name": ""
+}`
+	expected := strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(e, "\n", ""), "\t", ""), " ", "")
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}

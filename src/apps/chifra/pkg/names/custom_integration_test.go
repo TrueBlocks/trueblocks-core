@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path"
+	"path/filepath"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -16,7 +16,7 @@ import (
 
 func TestCrudIntegration(t *testing.T) {
 	chain := utils.GetTestChain()
-	tmpDirPath := path.Join(os.TempDir(), "trueblocks")
+	tmpDirPath := filepath.Join(os.TempDir(), "trueblocks")
 	if err := os.MkdirAll(tmpDirPath, 0777); err != nil {
 		t.Fatal(err)
 	}
@@ -27,7 +27,7 @@ func TestCrudIntegration(t *testing.T) {
 	}()
 	loadTestDatabase := func() *os.File {
 		tempFile, err := os.OpenFile(
-			path.Join(os.TempDir(), "trueblocks", "names_custom.tab"),
+			filepath.Join(os.TempDir(), "trueblocks", "names_custom.tab"),
 			os.O_RDWR|os.O_CREATE|os.O_TRUNC,
 			0777,
 		)
@@ -144,7 +144,7 @@ func TestCrudIntegration(t *testing.T) {
 
 	// Check what was written to the file
 	tempFile = loadTestDatabase()
-	testDb, err := unmarshallCustomNames(tempFile, nil, Parts(Custom), &map[base.Address]types.Name{})
+	testDb, err := unmarshallCustomNames(tempFile, nil, types.Custom, &map[base.Address]types.Name{})
 	if err != nil && !errors.Is(err, io.EOF) {
 		t.Fatal("remove: unmarshallCustomNames:", err)
 	}

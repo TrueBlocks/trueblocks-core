@@ -7,6 +7,7 @@ package monitorsPkg
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 	"sync"
@@ -42,7 +43,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup, s *Scraper) {
 	defer wg.Done()
 
 	chain := opts.Globals.Chain
-	tmpPath := config.PathToCache(chain) + "tmp/"
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
 
 	s.ChangeState(true, tmpPath)
 
@@ -265,47 +266,45 @@ func (opts *MonitorsOptions) getOutputFolder(orig string) (string, error) {
 		logger.Fatal(s)
 	}
 
+	cwd, _ := os.Getwd()
 	cmdLine += " "
 	folder := "unknown"
 	if parts[1] == "export" {
-		folder = "./export"
 		if strings.Contains(cmdLine, "-p ") || strings.Contains(cmdLine, "--appearances ") {
-			folder += "/appearances"
+			folder = filepath.Join(cwd, parts[1], "appearances")
 		} else if strings.Contains(cmdLine, "-r ") || strings.Contains(cmdLine, "--receipts ") {
-			folder += "/receipts"
+			folder = filepath.Join(cwd, parts[1], "receipts")
 		} else if strings.Contains(cmdLine, "-l ") || strings.Contains(cmdLine, "--logs ") {
-			folder += "/logs"
+			folder = filepath.Join(cwd, parts[1], "logs")
 		} else if strings.Contains(cmdLine, "-t ") || strings.Contains(cmdLine, "--traces ") {
-			folder += "/traces"
+			folder = filepath.Join(cwd, parts[1], "traces")
 		} else if strings.Contains(cmdLine, "-n ") || strings.Contains(cmdLine, "--neighbors ") {
-			folder += "/neighbors"
+			folder = filepath.Join(cwd, parts[1], "neighbors")
 		} else if strings.Contains(cmdLine, "-C ") || strings.Contains(cmdLine, "--accounting ") {
-			folder += "/accounting"
+			folder = filepath.Join(cwd, parts[1], "accounting")
 		} else if strings.Contains(cmdLine, "-A ") || strings.Contains(cmdLine, "--statements ") {
-			folder += "/statements"
+			folder = filepath.Join(cwd, parts[1], "statements")
 		} else if strings.Contains(cmdLine, "-b ") || strings.Contains(cmdLine, "--balances ") {
-			folder += "/balances"
+			folder = filepath.Join(cwd, parts[1], "balances")
 		} else {
-			folder += "/transactions"
+			folder = filepath.Join(cwd, parts[1], "transactions")
 		}
 
 	} else if parts[1] == "list" {
-		folder = "./list/appearances"
+		folder = filepath.Join(cwd, parts[1], "appearances")
 
 	} else if parts[1] == "state" {
-		folder = "./state"
 		if strings.Contains(cmdLine, "-l ") || strings.Contains(cmdLine, "--call ") {
-			folder += "/calls"
+			folder = filepath.Join(cwd, parts[1], "calls")
 		} else {
-			folder += "/blocks"
+			folder = filepath.Join(cwd, parts[1], "blocks")
 		}
 
 	} else if parts[1] == "tokens" {
-		folder = "./tokens"
 		if strings.Contains(cmdLine, "-b ") || strings.Contains(cmdLine, "--by_acct ") {
-			folder += "/by_acct"
+			folder = filepath.Join(cwd, parts[1], "by_acct")
 		} else {
-			folder += "/blocks"
+			folder = filepath.Join(cwd, parts[1], "blocks")
 		}
 	}
 
@@ -324,7 +323,7 @@ func (opts *MonitorsOptions) getMonitorList() []monitor.Monitor {
 	var monitors []monitor.Monitor
 
 	monitorChan := make(chan monitor.Monitor)
-	go monitor.ListMonitors(opts.Globals.Chain, opts.Watchlist, monitorChan)
+	go monitor.ListWatchedMonitors(opts.Globals.Chain, opts.Watchlist, monitorChan)
 
 	for result := range monitorChan {
 		switch result.Address {

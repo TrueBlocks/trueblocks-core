@@ -2,11 +2,9 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package monitorsPkg
+package progress
 
-import (
-	"testing"
-)
-
-func Test_HandleClean(t *testing.T) {
+func screenWidth() uint {
+	// TODO: Can we read the screen width?
+	return 120 // default reasonably
 }

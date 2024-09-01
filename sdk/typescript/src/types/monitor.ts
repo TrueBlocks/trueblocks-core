@@ -14,6 +14,9 @@ export type Monitor = {
   address: address
   deleted: boolean
   fileSize: int64
+  isEmpty: boolean
+  isStaged: boolean
   lastScanned: uint64
   nRecords: int64
+  name: string
 }

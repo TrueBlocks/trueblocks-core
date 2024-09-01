@@ -11,31 +11,42 @@ package types
 // EXISTING_CODE
 import (
 	"encoding/json"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 // EXISTING_CODE
 
-type TimestampCount struct {
-	Count uint64 `json:"count"`
+type RangeDates struct {
+	FirstDate string         `json:"firstDate,omitempty"`
+	FirstTs   base.Timestamp `json:"firstTs,omitempty"`
+	LastDate  string         `json:"lastDate,omitempty"`
+	LastTs    base.Timestamp `json:"lastTs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s TimestampCount) String() string {
+func (s RangeDates) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
 }
 
-func (s *TimestampCount) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+func (s *RangeDates) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	var model = map[string]any{}
 	var order = []string{}
 
 	// EXISTING_CODE
 	model = map[string]any{
-		"count": s.Count,
+		"firstDate": s.FirstDate,
+		"firstTs":   s.FirstTs,
+		"lastDate":  s.LastDate,
+		"lastTs":    s.LastTs,
 	}
 	order = []string{
-		"count",
+		"firstDate",
+		"firstTs",
+		"lastDate",
+		"lastTs",
 	}
 	// EXISTING_CODE
 
@@ -46,10 +57,14 @@ func (s *TimestampCount) Model(chain, format string, verbose bool, extraOpts map
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *TimestampCount) FinishUnmarshal() {
+func (s *RangeDates) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 // EXISTING_CODE
+func (p1 *RangeDates) Cmp(p2 RangeDates) int64 {
+	return p1.FirstTs.Int64() - p2.FirstTs.Int64()
+}
+
 // EXISTING_CODE

@@ -7,7 +7,6 @@ package config
 import (
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -28,7 +27,7 @@ func PathToChainConfig(chain string) (string, error) {
 	ret := PathToRootConfig()
 
 	// Our configuration files are always in ./config folder relative to top most folder
-	cfgFolder := filepath.Join(ret, "config/", chain) + "/"
+	cfgFolder := filepath.Join(ret, "config", chain)
 	_, err := os.Stat(cfgFolder)
 	return cfgFolder, err
 }
@@ -54,7 +53,7 @@ func PathToIndex(chain string) string {
 	}
 
 	// Probably already true, but can't hurt to be sure
-	if !strings.Contains(indexPath, "/unchained") {
+	if filepath.Base(indexPath) != "unchained" {
 		indexPath = filepath.Join(indexPath, "unchained")
 	}
 
@@ -64,7 +63,7 @@ func PathToIndex(chain string) string {
 	}
 
 	// We know what we want, create it if it doesn't exist and return it
-	newPath := filepath.Join(indexPath, chain) + "/"
+	newPath := filepath.Join(indexPath, chain)
 	EstablishIndexPaths(newPath)
 	return newPath
 }
@@ -80,7 +79,7 @@ func PathToCache(chain string) string {
 	}
 
 	// Probably already true, but can't hurt to be sure
-	if !strings.Contains(cachePath, "/cache") {
+	if filepath.Base(cachePath) != "cache" {
 		cachePath = filepath.Join(cachePath, "cache")
 	}
 
@@ -90,7 +89,7 @@ func PathToCache(chain string) string {
 	}
 
 	// We know what we want, create it if it doesn't exist and return it
-	newPath := filepath.Join(cachePath, chain) + "/"
+	newPath := filepath.Join(cachePath, chain)
 	EstablishCachePaths(newPath)
 	return newPath
 }
@@ -100,7 +99,7 @@ func EstablishCachePaths(cachePath string) {
 	folders := []string{
 		"abis",
 		"monitors",
-		"monitors/staging",
+		filepath.Join("monitors", "staging"),
 		"names",
 		"tmp",
 		"v1",

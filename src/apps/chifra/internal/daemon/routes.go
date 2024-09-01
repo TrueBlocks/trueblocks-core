@@ -46,48 +46,13 @@ type Route struct {
 }
 
 var routes = []Route{
-	{"RouteAbis", "GET", "/abis", func(w http.ResponseWriter, r *http.Request) {
-		if err := abisPkg.ServeAbis(w, r); err != nil {
-			RespondWithError(w, http.StatusInternalServerError, err)
-		}
-	}},
-	{"RouteBlocks", "GET", "/blocks", func(w http.ResponseWriter, r *http.Request) {
-		if err := blocksPkg.ServeBlocks(w, r); err != nil {
-			RespondWithError(w, http.StatusInternalServerError, err)
-		}
-	}},
-	{"RouteChunks", "GET", "/chunks", func(w http.ResponseWriter, r *http.Request) {
-		if err := chunksPkg.ServeChunks(w, r); err != nil {
-			RespondWithError(w, http.StatusInternalServerError, err)
-		}
-	}},
-	{"RouteConfig", "GET", "/config", func(w http.ResponseWriter, r *http.Request) {
-		if err := configPkg.ServeConfig(w, r); err != nil {
-			RespondWithError(w, http.StatusInternalServerError, err)
-		}
-	}},
-	{"RouteExplore", "GET", "/explore", func(w http.ResponseWriter, r *http.Request) {
-		if err := explorePkg.ServeExplore(w, r); err != nil {
-			RespondWithError(w, http.StatusInternalServerError, err)
-		}
-	}},
-	{"RouteExport", "GET", "/export", func(w http.ResponseWriter, r *http.Request) {
-		if err := exportPkg.ServeExport(w, r); err != nil {
-			RespondWithError(w, http.StatusInternalServerError, err)
-		}
-	}},
-	{"RouteInit", "GET", "/init", func(w http.ResponseWriter, r *http.Request) {
-		if err := initPkg.ServeInit(w, r); err != nil {
-			RespondWithError(w, http.StatusInternalServerError, err)
-		}
-	}},
 	{"RouteList", "GET", "/list", func(w http.ResponseWriter, r *http.Request) {
 		if err := listPkg.ServeList(w, r); err != nil {
 			RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}},
-	{"RouteLogs", "GET", "/logs", func(w http.ResponseWriter, r *http.Request) {
-		if err := logsPkg.ServeLogs(w, r); err != nil {
+	{"RouteExport", "GET", "/export", func(w http.ResponseWriter, r *http.Request) {
+		if err := exportPkg.ServeExport(w, r); err != nil {
 			RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}},
@@ -101,38 +66,13 @@ var routes = []Route{
 			RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}},
-	{"RouteReceipts", "GET", "/receipts", func(w http.ResponseWriter, r *http.Request) {
-		if err := receiptsPkg.ServeReceipts(w, r); err != nil {
+	{"RouteAbis", "GET", "/abis", func(w http.ResponseWriter, r *http.Request) {
+		if err := abisPkg.ServeAbis(w, r); err != nil {
 			RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}},
-	{"RouteScrape", "GET", "/scrape", func(w http.ResponseWriter, r *http.Request) {
-		if err := scrapePkg.ServeScrape(w, r); err != nil {
-			RespondWithError(w, http.StatusInternalServerError, err)
-		}
-	}},
-	{"RouteSlurp", "GET", "/slurp", func(w http.ResponseWriter, r *http.Request) {
-		if err := slurpPkg.ServeSlurp(w, r); err != nil {
-			RespondWithError(w, http.StatusInternalServerError, err)
-		}
-	}},
-	{"RouteState", "GET", "/state", func(w http.ResponseWriter, r *http.Request) {
-		if err := statePkg.ServeState(w, r); err != nil {
-			RespondWithError(w, http.StatusInternalServerError, err)
-		}
-	}},
-	{"RouteStatus", "GET", "/status", func(w http.ResponseWriter, r *http.Request) {
-		if err := statusPkg.ServeStatus(w, r); err != nil {
-			RespondWithError(w, http.StatusInternalServerError, err)
-		}
-	}},
-	{"RouteTokens", "GET", "/tokens", func(w http.ResponseWriter, r *http.Request) {
-		if err := tokensPkg.ServeTokens(w, r); err != nil {
-			RespondWithError(w, http.StatusInternalServerError, err)
-		}
-	}},
-	{"RouteTraces", "GET", "/traces", func(w http.ResponseWriter, r *http.Request) {
-		if err := tracesPkg.ServeTraces(w, r); err != nil {
+	{"RouteBlocks", "GET", "/blocks", func(w http.ResponseWriter, r *http.Request) {
+		if err := blocksPkg.ServeBlocks(w, r); err != nil {
 			RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}},
@@ -141,8 +81,68 @@ var routes = []Route{
 			RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}},
+	{"RouteReceipts", "GET", "/receipts", func(w http.ResponseWriter, r *http.Request) {
+		if err := receiptsPkg.ServeReceipts(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	{"RouteLogs", "GET", "/logs", func(w http.ResponseWriter, r *http.Request) {
+		if err := logsPkg.ServeLogs(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	{"RouteTraces", "GET", "/traces", func(w http.ResponseWriter, r *http.Request) {
+		if err := tracesPkg.ServeTraces(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
 	{"RouteWhen", "GET", "/when", func(w http.ResponseWriter, r *http.Request) {
 		if err := whenPkg.ServeWhen(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	{"RouteState", "GET", "/state", func(w http.ResponseWriter, r *http.Request) {
+		if err := statePkg.ServeState(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	{"RouteTokens", "GET", "/tokens", func(w http.ResponseWriter, r *http.Request) {
+		if err := tokensPkg.ServeTokens(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	{"RouteConfig", "GET", "/config", func(w http.ResponseWriter, r *http.Request) {
+		if err := configPkg.ServeConfig(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	{"RouteStatus", "GET", "/status", func(w http.ResponseWriter, r *http.Request) {
+		if err := statusPkg.ServeStatus(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	{"RouteScrape", "GET", "/scrape", func(w http.ResponseWriter, r *http.Request) {
+		if err := scrapePkg.ServeScrape(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	{"RouteChunks", "GET", "/chunks", func(w http.ResponseWriter, r *http.Request) {
+		if err := chunksPkg.ServeChunks(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	{"RouteInit", "GET", "/init", func(w http.ResponseWriter, r *http.Request) {
+		if err := initPkg.ServeInit(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	{"RouteExplore", "GET", "/explore", func(w http.ResponseWriter, r *http.Request) {
+		if err := explorePkg.ServeExplore(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	{"RouteSlurp", "GET", "/slurp", func(w http.ResponseWriter, r *http.Request) {
+		if err := slurpPkg.ServeSlurp(w, r); err != nil {
 			RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}},

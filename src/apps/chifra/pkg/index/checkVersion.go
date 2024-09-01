@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -18,7 +19,7 @@ var ErrIncorrectHash = errors.New("incorrect header hash")
 
 // IsInitialized returns an error if the version in the header is not as requested
 func IsInitialized(chain, required string) error {
-	fileName := config.PathToIndex(chain) + "blooms/000000000-000000000.bloom"
+	fileName := filepath.Join(config.PathToIndex(chain), "blooms/000000000-000000000.bloom")
 	if !file.FileExists(fileName) {
 		const indexNotInitialized string = `
 

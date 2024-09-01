@@ -7,6 +7,7 @@ package daemonPkg
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"time"
 
@@ -101,7 +102,7 @@ func Logger(silent bool, inner http.Handler, name string) http.Handler {
 		if silent {
 			w := logger.GetLoggerWriter()
 			defer logger.SetLoggerWriter(w)
-			logger.SetLoggerWriter(nil)
+			logger.SetLoggerWriter(io.Discard)
 		}
 		inner.ServeHTTP(w, r)
 		if !silent {

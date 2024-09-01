@@ -16,6 +16,10 @@ import (
 )
 
 func WriteCode(existingFn, newCode string) (bool, error) {
+	if len(strings.Trim(newCode, "\n\t\r")) == 0 {
+		return false, nil
+	}
+
 	if !file.FileExists(existingFn) {
 		if !strings.Contains(existingFn, "/generated/") {
 			if !file.FolderExists(filepath.Dir(existingFn)) {

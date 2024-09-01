@@ -28,11 +28,7 @@ func Initialize() bool {
 // VerifyOs will panic if the operating system isn't cooperating
 func VerifyOs() {
 	userOs := runtime.GOOS
-	if userOs == "windows" {
-		logger.Fatal("Windows is not supported\n")
-	}
-
-	if userOs != "linux" && userOs != "darwin" {
+	if userOs != "linux" && userOs != "darwin" && userOs != "windows" {
 		logger.Fatal("Unsupported operating system: ", userOs, "\n")
 	}
 
@@ -71,7 +67,7 @@ func VerifyMigrations() {
 	}
 
 	// ...and the config file better exist.
-	configFile := filepath.Join(configFolder + "trueBlocks.toml")
+	configFile := filepath.Join(configFolder, "trueBlocks.toml")
 	if _, err := os.Stat(configFile); err != nil {
 		msg := strings.Replace(doesNotExist, "{0}", "{"+configFile+"}", -1)
 		msg = colors.ColoredWith(msg, colors.Yellow)

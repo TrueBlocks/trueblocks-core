@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -52,6 +53,7 @@ func (opts *ChunksOptions) HandleIndex(rCtx *output.RenderCtx, blockNums []base.
 				NAppearances: uint64(indexChunk.Header.AppearanceCount),
 				Size:         uint64(file.FileSize(fileName)),
 			}
+			s.RangeDates = tslib.RangeToBounds(chain, &rng)
 
 			modelChan <- &s
 			return true, nil

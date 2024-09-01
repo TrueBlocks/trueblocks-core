@@ -6,6 +6,7 @@ package initPkg
 
 import (
 	"fmt"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -28,12 +29,12 @@ func (opts *InitOptions) HandleInit(rCtx *output.RenderCtx) error {
 	// scraper starts, it starts on the correct block.
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
-	existing, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
+	existing, err := manifest.LoadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 	if err != nil {
 		return err
 	}
 
-	remote, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromContract)
+	remote, err := manifest.LoadManifest(chain, opts.PublisherAddr, manifest.FromContract)
 	if err != nil {
 		return err
 	}
@@ -58,7 +59,7 @@ func (opts *InitOptions) HandleInit(rCtx *output.RenderCtx) error {
 	logger.InfoTable("Files deleted:", fmt.Sprintf("%d", nDeleted))
 	logger.InfoTable("Files downloaded:", fmt.Sprintf("%d", nToDownload))
 
-	historyFile := config.PathToCache(chain) + "tmp/history.txt"
+	historyFile := filepath.Join(config.PathToCache(chain), "tmp/history.txt")
 	if opts.All && !history.FromHistoryBool(historyFile, "init") {
 		_ = history.ToHistory(historyFile, "init", "true")
 	}

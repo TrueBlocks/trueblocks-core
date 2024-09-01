@@ -11,8 +11,11 @@ package types
 // EXISTING_CODE
 import (
 	"encoding/json"
+	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // EXISTING_CODE
@@ -21,8 +24,11 @@ type Monitor struct {
 	Address     base.Address `json:"address"`
 	Deleted     bool         `json:"deleted"`
 	FileSize    int64        `json:"fileSize"`
+	IsEmpty     bool         `json:"isEmpty"`
+	IsStaged    bool         `json:"isStaged"`
 	LastScanned uint32       `json:"lastScanned"`
 	NRecords    int64        `json:"nRecords"`
+	Name        string       `json:"name"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -40,15 +46,19 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string
 	model = map[string]any{
 		"address":  s.Address,
 		"nRecords": s.NRecords,
+		"fileSize": s.FileSize,
 	}
 	order = []string{
 		"address",
 		"nRecords",
+		"fileSize",
 	}
 
-	if s.FileSize > 0 {
-		model["fileSize"] = s.FileSize
-		order = append(order, "fileSize")
+	if extraOpts["list"] == true {
+		model["isEmpty"] = s.IsEmpty
+		model["isStaged"] = s.IsStaged
+		order = append(order, "isEmpty")
+		order = append(order, "isStaged")
 	}
 
 	if verbose {
@@ -75,6 +85,108 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *Monitor) MarshalCache(writer io.Writer) (err error) {
+	// Address
+	if err = cache.WriteValue(writer, s.Address); err != nil {
+		return err
+	}
+
+	// Deleted
+	if err = cache.WriteValue(writer, s.Deleted); err != nil {
+		return err
+	}
+
+	// FileSize
+	if err = cache.WriteValue(writer, s.FileSize); err != nil {
+		return err
+	}
+
+	// IsEmpty
+	if err = cache.WriteValue(writer, s.IsEmpty); err != nil {
+		return err
+	}
+
+	// IsStaged
+	if err = cache.WriteValue(writer, s.IsStaged); err != nil {
+		return err
+	}
+
+	// LastScanned
+	if err = cache.WriteValue(writer, s.LastScanned); err != nil {
+		return err
+	}
+
+	// NRecords
+	if err = cache.WriteValue(writer, s.NRecords); err != nil {
+		return err
+	}
+
+	// Name
+	if err = cache.WriteValue(writer, s.Name); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *Monitor) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	// Address
+	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
+		return err
+	}
+
+	// Deleted
+	if err = cache.ReadValue(reader, &s.Deleted, vers); err != nil {
+		return err
+	}
+
+	// FileSize
+	if err = cache.ReadValue(reader, &s.FileSize, vers); err != nil {
+		return err
+	}
+
+	// IsEmpty
+	vIsEmpty := version.NewVersion("3.1.2")
+	if vers > vIsEmpty.Uint64() {
+		// IsEmpty
+		if err = cache.ReadValue(reader, &s.IsEmpty, vers); err != nil {
+			return err
+		}
+	}
+
+	// IsStaged
+	vIsStaged := version.NewVersion("3.1.2")
+	if vers > vIsStaged.Uint64() {
+		// IsStaged
+		if err = cache.ReadValue(reader, &s.IsStaged, vers); err != nil {
+			return err
+		}
+	}
+
+	// LastScanned
+	if err = cache.ReadValue(reader, &s.LastScanned, vers); err != nil {
+		return err
+	}
+
+	// NRecords
+	if err = cache.ReadValue(reader, &s.NRecords, vers); err != nil {
+		return err
+	}
+
+	// Name
+	if err = cache.ReadValue(reader, &s.Name, vers); err != nil {
+		return err
+	}
+
+	s.FinishUnmarshal()
+
+	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

@@ -18,11 +18,12 @@ import (
 // EXISTING_CODE
 
 type ChunkRecord struct {
-	BloomHash base.IpfsHash `json:"bloomHash"`
-	BloomSize int64         `json:"bloomSize"`
-	IndexHash base.IpfsHash `json:"indexHash"`
-	IndexSize int64         `json:"indexSize"`
-	Range     string        `json:"range"`
+	BloomHash  base.IpfsHash `json:"bloomHash"`
+	BloomSize  int64         `json:"bloomSize"`
+	IndexHash  base.IpfsHash `json:"indexHash"`
+	IndexSize  int64         `json:"indexSize"`
+	Range      string        `json:"range"`
+	RangeDates RangeDates    `json:"rangeDates"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -50,6 +51,18 @@ func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOpts map[st
 		"bloomSize",
 		"indexHash",
 		"indexSize",
+	}
+
+	if verbose {
+		if format == "json" {
+			model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
+		} else {
+			model["firstTs"] = s.RangeDates.FirstTs
+			model["firstDate"] = s.RangeDates.FirstDate
+			model["lastTs"] = s.RangeDates.LastTs
+			model["lastDate"] = s.RangeDates.LastDate
+			order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
+		}
 	}
 	// EXISTING_CODE
 

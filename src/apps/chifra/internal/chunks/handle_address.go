@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -38,7 +39,7 @@ func (opts *ChunksOptions) HandleAddresses(rCtx *output.RenderCtx, blockNums []b
 				if !file.FileExists(path) {
 					// This is okay, if the user used chifra init without the --all option. Warn them and continue
 					msg := ""
-					path = strings.Replace(path, config.PathToIndex(chain), "$indexPath", 1)
+					path = strings.Replace(path, config.PathToIndex(chain)+"/", "$indexPath/", 1)
 					if been_here < 3 {
 						msg = fmt.Sprintf("index file %s does not exist. Run 'chifra init --all' to create it.", path)
 					} else if been_here == 3 {
@@ -73,12 +74,14 @@ func (opts *ChunksOptions) HandleAddresses(rCtx *output.RenderCtx, blockNums []b
 						return false, err
 					}
 
+					rng := indexChunk.Range
 					s := types.ChunkAddress{
 						Address: obj.Address,
-						Range:   indexChunk.Range.String(),
+						Range:   rng.String(),
 						Offset:  uint64(obj.Offset),
 						Count:   uint64(obj.Count),
 					}
+					s.RangeDates = tslib.RangeToBounds(chain, &rng)
 
 					modelChan <- &s
 					cnt++

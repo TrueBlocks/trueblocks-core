@@ -82,7 +82,7 @@ func (opts *NamesOptions) readContractAndClean(s string) (name *types.Name, err 
 		return
 	}
 
-	if _, err = names.LoadNamesMap(chain, names.Custom, []string{}); err != nil {
+	if _, err = names.LoadNamesMap(chain, types.Custom, []string{}); err != nil {
 		return
 	}
 

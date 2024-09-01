@@ -53,7 +53,7 @@ func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, a
 		l.assetFilter = []base.Address{}
 	}
 
-	parts := names.Custom | names.Prefund | names.Regular
+	parts := types.Custom | types.Prefund | types.Regular
 	l.Names, _ = names.LoadNamesMap(conn.Chain, parts, []string{})
 
 	return l

@@ -203,7 +203,7 @@ func findFileByBlockNumber(chain, path string, bn base.Blknum) (fileName string,
 			return true, nil // continue walking
 		},
 	)
-	return fileName, walker.WalkRegularFolder(path, []base.Blknum{bn})
+	return fileName, walker.WalkRegularFolder(path)
 }
 
 func (opts *ChunksOptions) getParams(chain, path string) (string, string, base.RangeDiff) {
@@ -218,8 +218,8 @@ func (opts *ChunksOptions) getParams(chain, path string) (string, string, base.R
 
 func toDiffPath(chain string, middleMark base.Blknum) string {
 	diffPath := os.Getenv("TB_CHUNKS_DIFFPATH")
-	if !strings.Contains(diffPath, "unchained/") {
-		diffPath = filepath.Join(diffPath, "unchained/", chain, "finalized")
+	if !strings.Contains(diffPath, "unchained") {
+		diffPath = filepath.Join(diffPath, "unchained", chain, "finalized")
 	}
 	diffPath, _ = filepath.Abs(diffPath)
 	diffPath, _ = findFileByBlockNumber(chain, diffPath, middleMark)

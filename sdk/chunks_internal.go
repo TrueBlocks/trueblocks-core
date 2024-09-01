@@ -109,7 +109,8 @@ type chunksGeneric interface {
 		types.ChunkAddress |
 		types.ChunkAppearance |
 		types.ChunkStats |
-		types.Message
+		types.Message |
+		types.Count
 }
 
 func queryChunks[T chunksGeneric](opts *chunksOptionsInternal) ([]T, *types.MetaData, error) {
@@ -151,7 +152,6 @@ func (opts *ChunksOptions) toInternal() *chunksOptionsInternal {
 		Rewrite:    opts.Rewrite,
 		List:       opts.List,
 		Unpin:      opts.Unpin,
-		Count:      opts.Count,
 		Sleep:      opts.Sleep,
 		RenderCtx:  opts.RenderCtx,
 		Globals:    opts.Globals,

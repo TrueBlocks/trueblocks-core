@@ -29,7 +29,7 @@ Flags:
   -m, --max_addrs uint     the max number of addresses to process in a given chunk
   -d, --deep               if true, dig more deeply during checking (manifest only)
   -e, --rewrite            for the --pin --deep mode only, writes the manifest back to the index folder (see notes)
-  -U, --count              for the pins mode only, display only the count of records
+  -U, --count              for certain modes only, display the count of records
   -s, --sleep float        for --remote pinning only, seconds to sleep between API calls
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose output
@@ -58,9 +58,11 @@ Data models produced by this tool:
 - [chunkpin](/data-model/admin/#chunkpin)
 - [chunkrecord](/data-model/admin/#chunkrecord)
 - [chunkstats](/data-model/admin/#chunkstats)
+- [count](/data-model/other/#count)
 - [ipfspin](/data-model/admin/#ipfspin)
 - [manifest](/data-model/admin/#manifest)
 - [message](/data-model/other/#message)
+- [rangedates](/data-model/admin/#rangedates)
 - [reportcheck](/data-model/admin/#reportcheck)
 
 ### Other Options

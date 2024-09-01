@@ -30,6 +30,7 @@ func DoMonitors() {
 	delete := []bool{false, true}
 	undelete := []bool{false, true}
 	remove := []bool{false, true}
+	staged := []bool{false, true}
 	watch := []bool{false, true}
 	// watchlist is not fuzzed
 	// commands is not fuzzed
@@ -38,6 +39,7 @@ func DoMonitors() {
 	// sleep is not fuzzed
 	// Fuzz Loop
 	// EXISTING_CODE
+	_ = staged
 	_ = delete
 	_ = undelete
 	_ = remove
@@ -130,6 +132,16 @@ func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
 			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Monitor](fn, list); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "count":
+		if count, _, err := opts.MonitorsCount(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Count](fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

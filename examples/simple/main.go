@@ -12,7 +12,7 @@ import (
 // error occurs the program exits.
 func main() {
 	opts := sdk.WhenOptions{
-		BlockIds: []string{"0-19000000:monthly"},
+		BlockIds: []string{"12-1000"},
 		Globals: sdk.Globals{
 			Cache: true,
 		},

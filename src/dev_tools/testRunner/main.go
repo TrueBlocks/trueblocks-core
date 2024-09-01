@@ -49,7 +49,7 @@ func main() {
 
 		summary := NewSummary()
 		for _, item := range routeList {
-			source := casesPath + item + ".csv"
+			source := filepath.Join(casesPath, item+".csv")
 			for _, mode := range modeList {
 				tr := NewRunner(testMap, item, mode, source)
 				for _, testCase := range testMap[source] {
@@ -82,6 +82,7 @@ func parseCsv(filePath string) ([]TestCase, error) {
 	const requiredFields = 9
 	lineNumber := 0
 	testCases := make([]TestCase, 0, 200)
+	enableMark := os.Getenv("TB_TEST_ENABLE")
 	for {
 		lineNumber++
 		csvRecord, err := reader.Read()
@@ -116,11 +117,15 @@ func parseCsv(filePath string) ([]TestCase, error) {
 				Options:  strings.Trim(csvRecord[8], " "),
 			}
 
+			isEnabled := rec.Enabled == "on"
+			if enableMark != "" {
+				isEnabled = rec.Enabled == enableMark
+			}
 			testCase := TestCase{
 				record:       rec,
-				IsEnabled:    rec.Enabled == "on",
+				IsEnabled:    isEnabled,
 				HasShorthand: strings.Contains(rec.Options, "@"),
-				WorkingPath:  filepath.Join(getWorkingPath(), rec.Path, rec.Tool) + "/",
+				WorkingPath:  filepath.Join(getWorkingPath(), rec.Path, rec.Tool),
 				OrigOptions:  rec.Options,
 				SourceFile:   filePath,
 			}
@@ -315,15 +320,15 @@ func getRepoRoot() string {
 }
 
 func getCasesPath() string {
-	return filepath.Join(getRepoRoot(), "src/dev_tools/testRunner/testCases") + "/"
+	return filepath.Join(getRepoRoot(), "src/dev_tools/testRunner/testCases")
 }
 
 func getGeneratedPath() string {
-	return filepath.Join(getRepoRoot(), "src/dev_tools/testRunner/generated") + "/"
+	return filepath.Join(getRepoRoot(), "src/dev_tools/testRunner/generated")
 }
 
 func getWorkingPath() string {
-	return filepath.Join(getRepoRoot(), "tests/working") + "/"
+	return filepath.Join(getRepoRoot(), "tests/working")
 }
 
 func getTempFilePath(goldFn string) string {
@@ -331,7 +336,7 @@ func getTempFilePath(goldFn string) string {
 }
 
 func getLogFile(mode string) string {
-	return getGeneratedPath() + "test_" + mode + ".log"
+	return filepath.Join(getGeneratedPath(), "test_"+mode+".log")
 }
 
 func loadTestCases() (map[string][]TestCase, string, error) {
@@ -360,6 +365,6 @@ func loadTestCases() (map[string][]TestCase, string, error) {
 		return testMap, casesPath, fmt.Errorf("error walking the path %q: %v", casesPath, err)
 	}
 
-	file.StringToAsciiFile(getGeneratedPath()+"testCases.json", toJson(testMap))
+	file.StringToAsciiFile(filepath.Join(getGeneratedPath(), "testCases.json"), toJson(testMap))
 	return testMap, casesPath, nil
 }

@@ -58,17 +58,17 @@ func Test_GetPathTo(t *testing.T) {
 			}
 		} else if test.group == "Cache" {
 			os.Setenv("XDG_CACHE_HOME", test.xdg)
-			testPath = PathToCache(test.chain) + test.part
+			testPath = filepath.Join(PathToCache(test.chain), test.part)
 		} else if test.group == "Index" {
 			os.Setenv("XDG_CACHE_HOME", test.xdg)
-			testPath = PathToIndex(test.chain) + test.part
+			testPath = filepath.Join(PathToIndex(test.chain), test.part)
 		}
 
 		testPath = strings.Replace(testPath, user.HomeDir, "$HOME", -1)
 		if test.expected == "" {
 			fmt.Println("")
 		} else {
-			test.expected = strings.Replace(test.expected, "{CHAIN}/", test.chain+"/", -1)
+			test.expected = strings.ReplaceAll(test.expected, "{CHAIN}", test.chain)
 			if testPath != test.expected {
 				test.Report(index, testPath)
 				t.Error(index, "Paths don't match (", test.expected, testPath, ")")

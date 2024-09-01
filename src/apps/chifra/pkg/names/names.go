@@ -15,57 +15,50 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-type Parts int
-
-// Parts is a bitfield that defines what parts of a name to return and other options
-const (
-	None Parts = (1 << iota)
-	Regular
-	Custom
-	Prefund
-	Baddress
-	Testing
-	MatchCase
-	Expanded
-	Tags
-)
-
-type SortBy int
-
-// SortBy is a bitfield that defines how to sort the names
-const (
-	SortByAddress SortBy = iota
-	SortByTags
-)
-
 // LoadNamesMap loads the names from the cache and returns a map of names
-func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]types.Name, error) {
+func LoadNamesMap(chain string, parts types.Parts, terms []string) (map[base.Address]types.Name, error) {
 	namesMap := map[base.Address]types.Name{}
 
 	// Load the prefund names first...
-	if parts&Prefund != 0 {
-		prefundPath := prefunds.GetPrefundPath(chain)
-		if prefundMap, err := prefunds.LoadPrefundMap(chain, prefundPath); err != nil {
-			return namesMap, err
-		} else {
-			for k, v := range *prefundMap {
-				if doSearch(&v, terms, parts) {
-					namesMap[k] = v
-				}
-			}
-		}
+	if parts&types.Prefund != 0 {
+		_ = loadPrefundMap(chain, terms, parts, &namesMap)
 	}
 
-	if parts&Regular != 0 {
+	// Overlay them with regular names if present
+	if parts&types.Regular != 0 {
 		_ = loadRegularMap(chain, terms, parts, &namesMap)
 	}
 
+	// Add in the baddresses
+	if parts&types.Baddress != 0 {
+		_ = loadKnownBadresses(chain, terms, parts, &namesMap)
+	}
+
 	// Load the custom names (note that these may overwrite the prefund and regular names)
-	if parts&Custom != 0 {
+	if parts&types.Custom != 0 {
 		_ = loadCustomMap(chain, terms, parts, &namesMap)
 	}
 
 	return namesMap, nil
+}
+
+// loadPrefundMap loads the prefund names from the cache
+func loadPrefundMap(chain string, terms []string, parts types.Parts, ret *map[base.Address]types.Name) error {
+	prefundPath := prefunds.GetPrefundPath(chain)
+	if prefundMap, err := prefunds.LoadPrefundMap(chain, prefundPath); err != nil {
+		return err
+	} else {
+		for k, v := range *prefundMap {
+			if doSearch(&v, terms, parts) {
+				v.Parts = types.Prefund
+				if existing, ok := (*ret)[k]; ok {
+					v.Parts |= existing.Parts
+				}
+				(*ret)[k] = v
+			}
+		}
+	}
+	return nil
 }
 
 // ClearCache removes names that are cached in-memory

@@ -2,6 +2,7 @@ package types
 
 import (
 	"encoding/json"
+	"path/filepath"
 	"sort"
 	"strings"
 
@@ -60,26 +61,42 @@ func (s *Structure) IsCachable() bool {
 	return s.CacheType != ""
 }
 
+func (s *Structure) IsFilenameCache() bool {
+	return s.CacheBy == "filename"
+}
+
 func (s *Structure) IsMarshalOnly() bool {
 	return s.CacheType == "marshal_only"
+}
+
+func (s *Structure) ClassOrClassGroup() string {
+	if s.IsCacheAsGroup() {
+		return s.Class + "Group"
+	}
+	return s.Class
 }
 
 func (s *Structure) IsCacheAsGroup() bool {
 	return s.CacheAs == "group"
 }
 
-func (s *Structure) IsSimpOnly() bool {
-	return strings.Contains(s.Attributes, "simponly")
-}
-
 func (s *Structure) HasNotes() bool {
-	thePath := "src/dev_tools/goMaker/templates/model-intros/" + CamelCase(s.Class) + ".notes.md"
-	return file.FileExists(thePath)
+	notePath := filepath.Join(GetTemplatePath(), "model-intros/", CamelCase(s.Class)+".notes.md")
+	return file.FileExists(notePath)
 }
 
 func (s *Structure) HasTimestamp() bool {
 	for _, m := range s.Members {
 		if m.Name == "timestamp" {
+			return true
+		}
+	}
+	return false
+}
+
+func (s *Structure) HasSorts() bool {
+	for _, m := range s.Members {
+		if strings.Contains(m.Attributes, "sorts") {
 			return true
 		}
 	}
@@ -101,7 +118,7 @@ func (s *Structure) GroupName() string {
 
 func (s *Structure) ModelIntro() string {
 	tmplName := "modelIntro" + s.Class
-	tmpl := strings.Trim(getContents("templates/model-intros/"+CamelCase(s.Class)), ws)
+	tmpl := strings.Trim(getTemplateContents(filepath.Join("model-intros", CamelCase(s.Class))), ws)
 	return s.executeTemplate(tmplName, tmpl)
 }
 
@@ -135,7 +152,7 @@ func (s *Structure) ModelMembers() string {
 
 func (s *Structure) ModelNotes() string {
 	tmplName := "Notes" + s.Class
-	tmpl := strings.Trim(getContents("templates/model-intros/"+CamelCase(s.Class)+".notes"), ws)
+	tmpl := strings.Trim(getTemplateContents(filepath.Join("model-intros", CamelCase(s.Class)+".notes")), ws)
 	return strings.Trim(s.executeTemplate(tmplName, tmpl), ws)
 }
 
@@ -158,6 +175,8 @@ func (s *Structure) CacheIdStr() string {
 		return "\"%09d\", s.BlockNumber"
 	case "tx":
 		return "\"%09d-%05d\", s.BlockNumber, s.TransactionIndex"
+	case "filename":
+		return "\"%0s\", s.Filename"
 	default:
 		logger.Fatal("Unknown cache by format:", s.CacheBy)
 		return ""

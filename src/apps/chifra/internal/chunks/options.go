@@ -54,7 +54,7 @@ type ChunksOptions struct {
 	Rewrite    bool                     `json:"rewrite,omitempty"`    // For the --pin --deep mode only, writes the manifest back to the index folder (see notes)
 	List       bool                     `json:"list,omitempty"`       // For the pins mode only, list the remote pins
 	Unpin      bool                     `json:"unpin,omitempty"`      // For the pins mode only, if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs)
-	Count      bool                     `json:"count,omitempty"`      // For the pins mode only, display only the count of records
+	Count      bool                     `json:"count,omitempty"`      // For certain modes only, display the count of records
 	Tag        string                   `json:"tag,omitempty"`        // Visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
 	Sleep      float64                  `json:"sleep,omitempty"`      // For --remote pinning only, seconds to sleep between API calls
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
@@ -301,18 +301,18 @@ func GetChunkStats(chain, path string) (s types.ChunkStats, err error) {
 	}
 	defer chunk.Close()
 
-	ts, _ := tslib.FromBnToTs(chain, chunk.Range.Last)
+	rng := chunk.Range
 	s = types.ChunkStats{
-		Range:    chunk.Range.String(),
-		RangeEnd: base.FormattedDate(ts),
-		NBlocks:  uint64(chunk.Range.Last - chunk.Range.First + 1),
-		NAddrs:   uint64(chunk.Index.Header.AddressCount),
-		NApps:    uint64(chunk.Index.Header.AppearanceCount),
-		NBlooms:  uint64(chunk.Bloom.Count),
-		BloomSz:  uint64(file.FileSize(index.ToBloomPath(path))),
-		ChunkSz:  uint64(file.FileSize(index.ToIndexPath(path))),
-		RecWid:   4 + index.BLOOM_WIDTH_IN_BYTES,
+		Range:   rng.String(),
+		NBlocks: uint64(chunk.Range.Last - chunk.Range.First + 1),
+		NAddrs:  uint64(chunk.Index.Header.AddressCount),
+		NApps:   uint64(chunk.Index.Header.AppearanceCount),
+		NBlooms: uint64(chunk.Bloom.Count),
+		BloomSz: uint64(file.FileSize(index.ToBloomPath(path))),
+		ChunkSz: uint64(file.FileSize(index.ToIndexPath(path))),
+		RecWid:  4 + index.BLOOM_WIDTH_IN_BYTES,
 	}
+	s.RangeDates = tslib.RangeToBounds(chain, &rng)
 
 	if s.NBlocks > 0 {
 		s.AddrsPerBlock = float64(s.NAddrs) / float64(s.NBlocks)

@@ -1,6 +1,9 @@
-name        ,type    ,strDefault ,attributes ,docOrder ,description
-address     ,address ,           ,simponly   ,       1 ,the address of this monitor
-deleted     ,bool    ,           ,simponly   ,       5 ,`true` if this monitor has been deleted
-fileSize    ,int64   ,           ,simponly   ,       3 ,the size of this monitor on disc
-lastScanned ,uint32  ,           ,simponly   ,       4 ,the last scanned block number
-nRecords    ,int64   ,           ,simponly   ,       2 ,the number of appearances for this monitor
+name        ,type    ,strDefault ,attributes ,upgrades   ,docOrder ,description
+address     ,address ,           ,           ,           ,       1 ,the address of this monitor
+deleted     ,bool    ,           ,           ,           ,       8 ,`true` if this monitor has been deleted&#44; `false` otherwise
+isEmpty     ,bool    ,           ,           ,>3.1.2:bool ,       6 ,`true` if the monitor has no appearances&#44; `false` otherwise
+isStaged    ,bool    ,           ,           ,>3.1.2:bool ,       7 ,`true` if the monitor file in on the stage&#44; `false` otherwise
+fileSize    ,int64   ,           ,           ,           ,       4 ,the size of this monitor on disc
+lastScanned ,uint32  ,           ,           ,           ,       5 ,the last scanned block number
+nRecords    ,int64   ,           ,           ,           ,       3 ,the number of appearances for this monitor
+name        ,string  ,           ,           ,           ,       2 ,the name of this monitor (if any)

@@ -6,3 +6,4 @@
     attributes = ""
     produced_by = "monitors, list, export, slurp"
     contains = "appearance, appearancetable"
+    cache_type = "marshal_only"

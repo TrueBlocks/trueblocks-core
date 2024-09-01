@@ -154,7 +154,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_Names:
 		fallthrough
 	case Cache_Tmp:
-		return filepath.Join(config.PathToCache(chain), CacheTypeToFolder[cacheType]) + "/"
+		return filepath.Join(config.PathToCache(chain), CacheTypeToFolder[cacheType])
 
 	case Cache_Blocks:
 		fallthrough
@@ -177,7 +177,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_Transactions:
 		fallthrough
 	case Cache_Withdrawals:
-		return filepath.Join(config.PathToCache(chain), "v1", CacheTypeToFolder[cacheType]) + "/"
+		return filepath.Join(config.PathToCache(chain), "v1", CacheTypeToFolder[cacheType])
 
 	case Index_Bloom:
 		fallthrough
@@ -190,7 +190,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Index_Unripe:
 		fallthrough
 	case Index_Maps:
-		return filepath.Join(config.PathToIndex(chain), CacheTypeToFolder[cacheType]) + "/"
+		return filepath.Join(config.PathToIndex(chain), CacheTypeToFolder[cacheType])
 	case Config:
 		return config.PathToRootConfig()
 	case Cache_NotACache:
@@ -347,8 +347,8 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 	}
 
 	display := cacheInfo.Path
-	display = strings.Replace(display, config.PathToCache(chain), "./", -1)
-	display = strings.Replace(display, config.PathToIndex(chain), "./", -1)
+	display = filepath.Clean(strings.ReplaceAll(display, config.PathToCache(chain)+"/", "./"))
+	display = filepath.Clean(strings.ReplaceAll(display, config.PathToIndex(chain)+"/", "./"))
 
 	switch cT {
 	case Index_Maps:
@@ -357,7 +357,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 		fallthrough
 	case Index_Final:
 		if testMode {
-			display = strings.Replace(cacheInfo.Path, config.PathToIndex(chain), "$indexPath/", 1)
+			display = strings.Replace(cacheInfo.Path, config.PathToIndex(chain)+"/", "$indexPath/", 1)
 		}
 		return map[string]any{
 			// "bloomSizeBytes": file.FileSize(index.ToBloomPath(cacheInfo.Path)),
@@ -366,7 +366,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 			"firstApp": cacheInfo.FileRange.First,
 			"firstTs":  cacheInfo.TsRange.First,
 			// "indexSizeBytes": file.FileSize(index.ToIndexPath(cacheInfo.Path)),
-			"itemType":  cacheItemName(cT),
+			"itemType":  WalkCacheName(cT) + "Item",
 			"latestApp": cacheInfo.FileRange.Last,
 			"latestTs":  cacheInfo.TsRange.Last,
 		}, nil
@@ -376,7 +376,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 		fallthrough
 	case Cache_Abis:
 		address := ""
-		parts := strings.Split(cacheInfo.Path, "/")
+		parts := strings.Split(cacheInfo.Path, string(os.PathSeparator))
 		for _, part := range parts {
 			if strings.HasPrefix(part, "0x") {
 				address = part
@@ -384,7 +384,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 			}
 		}
 		if testMode {
-			display = strings.Replace(cacheInfo.Path, config.PathToCache(chain), "$cachePath/", 1)
+			display = strings.Replace(cacheInfo.Path, config.PathToCache(chain)+"/", "$cachePath/", 1)
 			display = strings.Replace(display, address, "--address--", -1)
 			address = "--address--"
 		}
@@ -392,7 +392,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 			"address":     address,
 			"fileDate":    date,
 			"filename":    display,
-			"itemType":    cacheItemName(cT),
+			"itemType":    WalkCacheName(cT) + "Item",
 			"sizeInBytes": size,
 		}
 		if cT == Cache_Monitors {
@@ -406,17 +406,13 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 		return map[string]any{
 			"fileDate":    date,
 			"filename":    display,
-			"itemType":    cacheItemName(cT),
+			"itemType":    WalkCacheName(cT) + "Item",
 			"sizeInBytes": size,
 		}, nil
 	}
 }
 
-func cacheItemName(ct CacheType) string {
-	return CacheName(ct) + "Item"
-}
-
-func CacheName(ct CacheType) string {
+func WalkCacheName(ct CacheType) string {
 	// TODO: Names of caches, names of folders, names of commands are all different. This is a mess.
 	ret := CacheTypeToFolder[ct] + "Cache"
 	ret = strings.Replace(ret, "blooms", "bloom", -1)

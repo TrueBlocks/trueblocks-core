@@ -39,12 +39,23 @@ func (opts *AbisOptions) validateAbis() error {
 		}
 	}
 
-	if len(opts.Globals.File) == 0 && len(opts.Encode) == 0 && len(opts.Find) == 0 && !opts.Known && !opts.Globals.Decache {
+	if len(opts.Globals.File) == 0 &&
+		len(opts.Encode) == 0 &&
+		len(opts.Find) == 0 &&
+		!opts.Count &&
+		!opts.List &&
+		!opts.Known &&
+		!opts.Globals.Decache {
 		// If we're not find and not known we better have at least one address
 		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 		if err != nil {
 			return err
 		}
+	}
+
+	other := len(opts.Encode) != 0 || len(opts.Find) != 0 || opts.Globals.Decache
+	if other && (opts.Count || opts.List) {
+		return validate.Usage("The {0} options must be used alone.", "--count and --list")
 	}
 
 	if len(opts.Find) > 0 && len(opts.Encode) > 0 {

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"net"
 	"os"
 	"strings"
 
@@ -9,12 +11,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
+var apiPort = ""
+
 func getApiUrl() string {
-	port := strings.ReplaceAll(os.Getenv("TB_TEST_API_SERVER"), ":", "")
-	if port == "" {
-		port = "8080"
+	if apiPort != "" {
+		return "localhost:" + apiPort
 	}
-	return "localhost:" + port
+
+	apiPort = strings.ReplaceAll(os.Getenv("TB_TEST_API_SERVER"), ":", "")
+	if apiPort == "" {
+		apiPort = fmt.Sprintf("%d", findAvailablePort())
+	}
+	return "localhost:" + apiPort
 }
 
 func startApiServer() error {
@@ -23,4 +31,14 @@ func startApiServer() error {
 	<-ready
 	logger.Info(colors.Yellow + "Server started..." + colors.Off)
 	return nil
+}
+
+func findAvailablePort() int {
+	listener, err := net.Listen("tcp", ":0")
+	if err != nil {
+		return 8080
+	}
+	defer listener.Close()
+	addr := listener.Addr().(*net.TCPAddr)
+	return addr.Port
 }

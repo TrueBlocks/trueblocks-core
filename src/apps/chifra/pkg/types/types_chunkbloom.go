@@ -20,13 +20,14 @@ import (
 // EXISTING_CODE
 
 type ChunkBloom struct {
-	ByteWidth uint64    `json:"byteWidth"`
-	Hash      base.Hash `json:"hash"`
-	Magic     string    `json:"magic"`
-	NBlooms   uint64    `json:"nBlooms"`
-	NInserted uint64    `json:"nInserted"`
-	Range     string    `json:"range"`
-	Size      uint64    `json:"size"`
+	ByteWidth  uint64     `json:"byteWidth"`
+	Hash       base.Hash  `json:"hash"`
+	Magic      string     `json:"magic"`
+	NBlooms    uint64     `json:"nBlooms"`
+	NInserted  uint64     `json:"nInserted"`
+	Range      string     `json:"range"`
+	RangeDates RangeDates `json:"rangeDates"`
+	Size       uint64     `json:"size"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -62,6 +63,18 @@ func (s *ChunkBloom) Model(chain, format string, verbose bool, extraOpts map[str
 	if format == "json" {
 		model["hash"] = s.Hash.Hex()
 		model["hashValue"] = FormattedTag(verbose, s.Hash)
+	}
+
+	if verbose {
+		if format == "json" {
+			model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
+		} else {
+			model["firstTs"] = s.RangeDates.FirstTs
+			model["firstDate"] = s.RangeDates.FirstDate
+			model["lastTs"] = s.RangeDates.LastTs
+			model["lastDate"] = s.RangeDates.LastDate
+			order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
+		}
 	}
 	// EXISTING_CODE
 

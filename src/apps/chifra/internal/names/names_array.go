@@ -10,14 +10,14 @@ import (
 )
 
 // loadNamesArray loads the names from the cache and returns an array of names
-func loadNamesArray(chain string, parts names.Parts, sortBy names.SortBy, terms []string) ([]types.Name, error) {
+func loadNamesArray(chain string, parts types.Parts, sortBy types.SortBy, terms []string) ([]types.Name, error) {
 	var ret []types.Name
 	if namesMap, err := names.LoadNamesMap(chain, parts, terms); err != nil {
 		return nil, err
 	} else {
 		for _, name := range namesMap {
 			// Custom names with Individual tag or tags under 30 are private during testing
-			isTesting := parts&names.Testing != 0
+			isTesting := parts&types.Testing != 0
 			isPrivate := strings.Contains(name.Tags, "Individual") || (name.IsCustom && name.Tags < "3")
 			if !isTesting || !isPrivate {
 				ret = append(ret, name)
@@ -27,17 +27,17 @@ func loadNamesArray(chain string, parts names.Parts, sortBy names.SortBy, terms 
 
 	sort.Slice(ret, func(i, j int) bool {
 		switch sortBy {
-		case names.SortByTags:
+		case types.SortByTags:
 			return ret[i].Tags < ret[j].Tags
-		case names.SortByAddress:
+		case types.SortByAddress:
 			fallthrough
 		default:
 			return ret[i].Address.Hex() < ret[j].Address.Hex()
 		}
 	})
 
-	isTesting := parts&names.Testing != 0
-	isTags := sortBy == names.SortByTags
+	isTesting := parts&types.Testing != 0
+	isTags := sortBy == types.SortByTags
 	if isTesting && !isTags {
 		ret = ret[:base.Min(200, len(ret))]
 	}

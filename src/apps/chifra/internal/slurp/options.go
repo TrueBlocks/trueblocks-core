@@ -144,7 +144,7 @@ func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
-	// Deprecated, but still supported
+	// Deprecated...
 	if len(opts.Types) > 0 && len(opts.Parts) == 0 {
 		logger.Warn("The --types flag is deprecated. Please use --parts instead.")
 		opts.Parts = opts.Types
@@ -186,7 +186,7 @@ func slurpFinishParse(args []string) *SlurpOptions {
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
-	// Deprecated, but still supported
+	// Deprecated...
 	if len(opts.Types) > 0 && len(opts.Parts) == 0 {
 		logger.Warn("The --types flag is deprecated. Please use --parts instead.")
 		opts.Parts = opts.Types

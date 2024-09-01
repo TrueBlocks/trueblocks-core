@@ -18,10 +18,11 @@ import (
 // EXISTING_CODE
 
 type ChunkAddress struct {
-	Address base.Address `json:"address"`
-	Count   uint64       `json:"count"`
-	Offset  uint64       `json:"offset"`
-	Range   string       `json:"range"`
+	Address    base.Address `json:"address"`
+	Count      uint64       `json:"count"`
+	Offset     uint64       `json:"offset"`
+	Range      string       `json:"range"`
+	RangeDates RangeDates   `json:"rangeDates"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -47,6 +48,18 @@ func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOpts map[s
 		"range",
 		"offset",
 		"count",
+	}
+
+	if verbose {
+		if format == "json" {
+			model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
+		} else {
+			model["firstTs"] = s.RangeDates.FirstTs
+			model["firstDate"] = s.RangeDates.FirstDate
+			model["lastTs"] = s.RangeDates.LastTs
+			model["lastDate"] = s.RangeDates.LastDate
+			order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
+		}
 	}
 	// EXISTING_CODE
 

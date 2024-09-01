@@ -3,6 +3,7 @@ package initPkg
 import (
 	"errors"
 	"fmt"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -15,11 +16,11 @@ import (
 func (opts *InitOptions) HandleDryRun(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 
-	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.TempContract)
+	remoteManifest, err := manifest.LoadManifest(chain, opts.PublisherAddr, manifest.TempContract)
 	if err != nil {
 		return err
 	}
-	historyFile := config.PathToRootConfig() + "unchained.txt"
+	historyFile := filepath.Join(config.PathToRootConfig(), "unchained.txt")
 	saved := history.FromHistory(historyFile, "headerVersion")
 	defer func() {
 		_ = history.ToHistory(historyFile, "headerVersion", saved)

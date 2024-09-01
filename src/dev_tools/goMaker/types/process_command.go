@@ -5,22 +5,26 @@ import (
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 // ProcessFile processes a single file, applying the template to it and
 // writing the result to the destination.
-func (c *Command) ProcessFile(source string) error {
+func (item *Command) ProcessFile(source, group, reason string) error {
 	cwd, _ := os.Getwd()
-	source = filepath.Join(cwd, templateFolder, source)
-	if ok, err := shouldProcess(source, c.Route); err != nil {
+	fullPath := filepath.Join(cwd, GetTemplatePath(), source)
+	subPath := "routes"
+	if ok, err := shouldProcess(fullPath, subPath, item.Route); err != nil {
 		return err
 	} else if !ok {
 		return nil
 	}
 
-	tmpl := file.AsciiFileToString(source)
-	result := c.executeTemplate(source, tmpl)
-	_, err := codeWriter.WriteCode(convertToDestPath(source, c.Route, "", "", ""), result)
+	tmpl := getGeneratorContents(fullPath, subPath, group, reason)
+	dest := convertToDestPath(fullPath, item.Route, "", group, reason)
+
+	tmplName := fullPath + group + reason
+	result := item.executeTemplate(tmplName, tmpl)
+	_, err := codeWriter.WriteCode(dest, result)
+
 	return err
 }

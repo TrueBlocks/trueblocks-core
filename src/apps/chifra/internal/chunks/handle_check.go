@@ -7,6 +7,7 @@ package chunksPkg
 import (
 	"errors"
 	"fmt"
+	"path/filepath"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -74,16 +75,16 @@ func (opts *ChunksOptions) check(rCtx *output.RenderCtx, blockNums []base.Blknum
 		return fileNames[i] < fileNames[j]
 	})
 
-	cacheManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
+	cacheManifest, err := manifest.LoadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 	if err != nil {
 		return err, false
 	}
 
-	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.TempContract)
+	remoteManifest, err := manifest.LoadManifest(chain, opts.PublisherAddr, manifest.TempContract)
 	if err != nil {
 		return err, false
 	}
-	historyFile := config.PathToRootConfig() + "unchained.txt"
+	historyFile := filepath.Join(config.PathToRootConfig(), "unchained.txt")
 	saved := history.FromHistory(historyFile, "headerVersion")
 	defer func() {
 		_ = history.ToHistory(historyFile, "headerVersion", saved)

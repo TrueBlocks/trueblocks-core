@@ -54,7 +54,7 @@ set(INSTALL_DEST "$ENV{XDG_CONFIG_HOME}")
 
 if("${INSTALL_DEST}" STREQUAL "")
 	if(WIN32)
-		PrintLine("Windows build is not supported")
+		set(INSTALL_DEST "$ENV{LOCALAPPDATA}/trueblocks")
 	elseif(APPLE)
 		set(INSTALL_DEST "$ENV{HOME}/Library/Application Support/TrueBlocks")
 	else()

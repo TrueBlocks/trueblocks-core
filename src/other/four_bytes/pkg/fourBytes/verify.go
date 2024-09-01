@@ -3,7 +3,7 @@ package fourbytes
 import (
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 )
 
 func logError(filename string, err string) {
@@ -23,7 +23,7 @@ func Verify(chunks *map[string]mapRecord, outDir string) {
 			logError(filePath, "empty")
 			continue
 		}
-		file, err := os.OpenFile(path.Join(outDir, filePath), os.O_RDONLY, 0)
+		file, err := os.OpenFile(filepath.Join(outDir, filePath), os.O_RDONLY, 0)
 		if err != nil {
 			logError(filePath, err.Error())
 			file.Close()

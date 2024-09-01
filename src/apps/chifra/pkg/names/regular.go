@@ -14,10 +14,14 @@ var regularNames = map[base.Address]types.Name{}
 var regularNamesMutex sync.Mutex
 
 // loadRegularMap loads the regular names from the cache
-func loadRegularMap(chain string, terms []string, parts Parts, ret *map[base.Address]types.Name) error {
+func loadRegularMap(chain string, terms []string, parts types.Parts, ret *map[base.Address]types.Name) error {
 	if regularNamesLoaded {
 		for _, name := range regularNames {
 			if doSearch(&name, terms, parts) {
+				name.Parts = types.Regular
+				if existing, ok := (*ret)[name.Address]; ok {
+					name.Parts |= existing.Parts
+				}
 				(*ret)[name.Address] = name
 			}
 		}
@@ -42,28 +46,29 @@ func loadRegularMap(chain string, terms []string, parts Parts, ret *map[base.Add
 	}
 
 	for {
-		n, err := reader.Read()
+		name, err := reader.Read()
 		if err == io.EOF {
 			break
 		}
 		if err != nil {
 			logger.Fatal(err)
 		}
-		regularNames[n.Address] = n
-		if doSearch(&n, terms, parts) {
-			(*ret)[n.Address] = n
+		regularNames[name.Address] = name
+		if doSearch(&name, terms, parts) {
+			name.Parts = types.Regular
+			if existing, ok := (*ret)[name.Address]; ok {
+				name.Parts |= existing.Parts
+			}
+			(*ret)[name.Address] = name
 		}
-	}
-
-	if parts&Baddress != 0 {
-		loadKnownBadresses(terms, parts, ret)
 	}
 
 	return nil
 }
 
 // loadKnownBadresses loads the known bad addresses from the cache
-func loadKnownBadresses(terms []string, parts Parts, ret *map[base.Address]types.Name) {
+func loadKnownBadresses(unused string, terms []string, parts types.Parts, ret *map[base.Address]types.Name) error {
+	_ = unused // linter
 	knownBadAddresses := []types.Name{
 		{
 			Address: base.PrefundSender,
@@ -86,9 +91,11 @@ func loadKnownBadresses(terms []string, parts Parts, ret *map[base.Address]types
 			Tags:    "75-Baddress",
 		},
 	}
-	for _, n := range knownBadAddresses {
-		if doSearch(&n, terms, parts) {
-			(*ret)[n.Address] = n
+	for _, name := range knownBadAddresses {
+		if doSearch(&name, terms, parts) {
+			name.Parts = types.Baddress
+			(*ret)[name.Address] = name
 		}
 	}
+	return nil
 }

@@ -1,29 +1,29 @@
-name              ,type      ,strDefault ,attributes     ,docOrder ,description
-hash              ,hash      ,           ,               ,       1 ,the hash of the transaction
-blockHash         ,hash      ,           ,               ,       2 ,the hash of the block containing this transaction
-blockNumber       ,blknum    ,           ,               ,       3 ,the number of the block
-transactionIndex  ,txnum     ,           ,               ,       4 ,the zero-indexed position of the transaction in the block
-nonce             ,value     ,           ,               ,       5 ,sequence number of the transactions sent by the sender
-timestamp         ,timestamp ,           ,               ,       6 ,the Unix timestamp of the object
-date              ,datetime  ,           ,calc           ,       7 ,the timestamp as a date
-from              ,address   ,           ,               ,       8 ,address from which the transaction was sent
-to                ,address   ,           ,               ,       9 ,address to which the transaction was sent
-value             ,wei       ,           ,               ,      10 ,the amount of wei sent with this transactions
-ether             ,ether     ,           ,calc           ,      11 ,if --ether is specified&#44; the value in ether
-gas               ,gas       ,           ,               ,      12 ,the maximum number of gas allowed for this transaction
-gasPrice          ,gas       ,           ,               ,      13 ,the number of wei per unit of gas the sender is willing to spend
-input             ,bytes     ,           ,               ,      14 ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
-hasToken          ,bool      ,           ,simponly       ,      15 ,`true` if the transaction is token related&#44; `false` otherwise
-articulatedTx     ,*Function ,           ,simponly       ,      16 ,if present&#44; the function that was called in the transaction
-compressedTx      ,string    ,           ,calc           ,      17 ,truncated&#44; more readable version of the articulation
-isError           ,bool      ,           ,simponly|notag ,      18 ,`true` if the transaction ended in error&#44; `false` otherwise
-functionName      ,string    ,           ,               ,         ,the name of the articulated function if any
-methodId          ,string    ,           ,               ,         ,the fourbyte of the function
-gasUsed           ,gas       ,           ,               ,         ,the amount of gas used by the transaction (from the receipt)
-contractAddress   ,address   ,           ,               ,         ,if created&#44; the address of the newly-created contract
-cumulativeGasUsed ,string    ,           ,               ,         ,a basically unused field showing all gas used
-txReceiptStatus   ,string    ,           ,               ,         ,the status field from the receipt
-withdrawalIndex   ,value     ,           ,               ,         ,for withdrawal transactions only&#44; the index of the withdrawal since inception
-validatorIndex    ,value     ,           ,               ,         ,for withdrawal transactions only&#44; the index of the validator receiving the withdrawal
-address           ,address   ,           ,removed        ,         ,internal use only for withdrawal query&#44; converted to 'to' after query
-amount            ,wei       ,           ,removed        ,         ,internal use only for withdrawal query&#44; converted to 'value' after query
+name              ,type      ,strDefault ,attributes ,docOrder ,description
+hash              ,hash      ,           ,           ,       1 ,the hash of the transaction
+blockHash         ,hash      ,           ,           ,       2 ,the hash of the block containing this transaction
+blockNumber       ,blknum    ,           ,           ,       3 ,the number of the block
+transactionIndex  ,txnum     ,           ,           ,       4 ,the zero-indexed position of the transaction in the block
+nonce             ,value     ,           ,           ,       5 ,sequence number of the transactions sent by the sender
+timestamp         ,timestamp ,           ,           ,       6 ,the Unix timestamp of the object
+date              ,datetime  ,           ,calc       ,       7 ,the timestamp as a date
+from              ,address   ,           ,           ,       8 ,address from which the transaction was sent
+to                ,address   ,           ,           ,       9 ,address to which the transaction was sent
+value             ,wei       ,           ,           ,      10 ,the amount of wei sent with this transactions
+ether             ,ether     ,           ,calc       ,      11 ,if --ether is specified&#44; the value in ether
+gas               ,gas       ,           ,           ,      12 ,the maximum number of gas allowed for this transaction
+gasPrice          ,gas       ,           ,           ,      13 ,the number of wei per unit of gas the sender is willing to spend
+input             ,bytes     ,           ,           ,      14 ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
+hasToken          ,bool      ,           ,           ,      15 ,`true` if the transaction is token related&#44; `false` otherwise
+articulatedTx     ,*Function ,           ,           ,      16 ,if present&#44; the function that was called in the transaction
+compressedTx      ,string    ,           ,calc       ,      17 ,truncated&#44; more readable version of the articulation
+isError           ,bool      ,           ,notag      ,      18 ,`true` if the transaction ended in error&#44; `false` otherwise
+functionName      ,string    ,           ,           ,         ,the name of the articulated function if any
+methodId          ,string    ,           ,           ,         ,the fourbyte of the function
+gasUsed           ,gas       ,           ,           ,         ,the amount of gas used by the transaction (from the receipt)
+contractAddress   ,address   ,           ,           ,         ,if created&#44; the address of the newly-created contract
+cumulativeGasUsed ,string    ,           ,           ,         ,a basically unused field showing all gas used
+txReceiptStatus   ,string    ,           ,           ,         ,the status field from the receipt
+withdrawalIndex   ,value     ,           ,           ,         ,for withdrawal transactions only&#44; the index of the withdrawal since inception
+validatorIndex    ,value     ,           ,           ,         ,for withdrawal transactions only&#44; the index of the validator receiving the withdrawal
+address           ,address   ,           ,removed    ,         ,internal use only for withdrawal query&#44; converted to 'to' after query
+amount            ,wei       ,           ,removed    ,         ,internal use only for withdrawal query&#44; converted to 'value' after query

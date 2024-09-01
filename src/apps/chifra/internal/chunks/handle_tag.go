@@ -35,7 +35,7 @@ func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Bl
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		nChunksTagged := 0
-		man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
+		man, err := manifest.LoadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 		if err != nil {
 			return
 		}

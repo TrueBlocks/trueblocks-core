@@ -92,3 +92,23 @@ func ColoredWith(s string, c string) string {
 	s += Off
 	return s
 }
+
+var ColorMap = map[string]string{
+	"off":           Off,
+	"red":           Red,
+	"green":         Green,
+	"yellow":        Yellow,
+	"blue":          Blue,
+	"magenta":       Magenta,
+	"cyan":          Cyan,
+	"white":         White,
+	"black":         Black,
+	"brightred":     BrightRed,
+	"brightgreen":   BrightGreen,
+	"brightyellow":  BrightYellow,
+	"brightblue":    BrightBlue,
+	"brightmagenta": BrightMagenta,
+	"brightcyan":    BrightCyan,
+	"brightwhite":   BrightWhite,
+	"brightblack":   BrightBlack,
+}

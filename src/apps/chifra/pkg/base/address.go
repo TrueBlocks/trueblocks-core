@@ -15,7 +15,7 @@ import (
 // Address is a wrapper for go-ethereum's Address type that always
 // return lower case hex.
 type Address struct {
-	common.Address
+	common.Address `json:"address"`
 }
 
 // A few well-known address. ZeroAddr, of course, is 0x0. NotAMonitor is a marker to signify the end
@@ -110,11 +110,11 @@ func AddressFromPath(path, fileType string) (Address, error) {
 	_, fileName := filepath.Split(path)
 
 	if !strings.HasSuffix(fileName, fileType) {
-		log.Fatal("should not happen ==> path should contain fileType")
+		log.Fatal("should not happen ==> path should contain fileType: " + path + " " + fileType)
 	}
 
 	if !strings.HasPrefix(fileType, ".") {
-		log.Fatal("should not happen ==> fileType should have a leading dot")
+		log.Fatal("should not happen ==> fileType should have a leading dot: " + path + " " + fileType)
 	}
 
 	if len(fileName) < (42+len(fileType)) || !strings.HasPrefix(fileName, "0x") || !strings.Contains(fileName, ".") {

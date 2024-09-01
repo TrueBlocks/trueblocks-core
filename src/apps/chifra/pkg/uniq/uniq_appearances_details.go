@@ -32,7 +32,7 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 	addrMap := AddressBooleanMap{}
 	traceid := base.NOPOSN
 	if bn == 0 {
-		if namesMap, err := names.LoadNamesMap(chain, names.Prefund, []string{}); err != nil {
+		if namesMap, err := names.LoadNamesMap(chain, types.Prefund, []string{}); err != nil {
 			return err
 		} else {
 			namesArray := make([]*types.Name, 0, len(namesMap))

@@ -12,6 +12,7 @@ import (
 	// EXISTING_CODE
 	"encoding/json"
 	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -35,7 +36,6 @@ type ChunksOptions struct {
 	Rewrite    bool              `json:"rewrite,omitempty"`
 	List       bool              `json:"list,omitempty"`
 	Unpin      bool              `json:"unpin,omitempty"`
-	Count      bool              `json:"count,omitempty"`
 	Sleep      float64           `json:"sleep,omitempty"`
 	RenderCtx  *output.RenderCtx `json:"-"`
 	Globals
@@ -108,6 +108,13 @@ func (opts *ChunksOptions) ChunksDiff() ([]types.Message, *types.MetaData, error
 	in := opts.toInternal()
 	in.Diff = true
 	return queryChunks[types.Message](in)
+}
+
+// ChunksCount implements the chifra chunks --count command.
+func (opts *ChunksOptions) ChunksCount() ([]types.Count, *types.MetaData, error) {
+	in := opts.toInternal()
+	in.Count = true
+	return queryChunks[types.Count](in)
 }
 
 // ChunksTag implements the chifra chunks --tag command.
@@ -184,6 +191,40 @@ func enumFromChunksMode(values []string) (ChunksMode, error) {
 	}
 
 	return result, nil
+}
+
+func SortChunkRecords(chunkrecords []types.ChunkRecord, sortSpec SortSpec) error {
+	if len(sortSpec.Fields) != len(sortSpec.Order) {
+		return fmt.Errorf("Fields and Order must have the same length")
+	}
+
+	sorts := make([]func(p1, p2 types.ChunkRecord) bool, len(sortSpec.Fields))
+	for i, field := range sortSpec.Fields {
+		if !types.IsValidChunkRecordField(field) {
+			return fmt.Errorf("%s is not an ChunkRecord sort field", field)
+		}
+		sorts[i] = types.ChunkRecordBy(types.ChunkRecordField(field), types.SortOrder(sortSpec.Order[i]))
+	}
+
+	sort.Slice(chunkrecords, types.ChunkRecordCmp(chunkrecords, sorts...))
+	return nil
+}
+
+func SortChunkStats(chunkstats []types.ChunkStats, sortSpec SortSpec) error {
+	if len(sortSpec.Fields) != len(sortSpec.Order) {
+		return fmt.Errorf("Fields and Order must have the same length")
+	}
+
+	sorts := make([]func(p1, p2 types.ChunkStats) bool, len(sortSpec.Fields))
+	for i, field := range sortSpec.Fields {
+		if !types.IsValidChunkStatsField(field) {
+			return fmt.Errorf("%s is not an ChunkStats sort field", field)
+		}
+		sorts[i] = types.ChunkStatsBy(types.ChunkStatsField(field), types.SortOrder(sortSpec.Order[i]))
+	}
+
+	sort.Slice(chunkstats, types.ChunkStatsCmp(chunkstats, sorts...))
+	return nil
 }
 
 // EXISTING_CODE
