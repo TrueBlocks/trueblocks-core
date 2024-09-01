@@ -7,7 +7,7 @@ replace github.com/TrueBlocks/trueblocks-core/sdk => ../../../sdk
 
 require (
 	github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240901121822-6283f44d7d3a
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240901121822-6283f44d7d3a
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240901202206-c19a76f941df
 )
 
 require (

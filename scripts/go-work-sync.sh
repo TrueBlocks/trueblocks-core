@@ -35,9 +35,10 @@ find . -type f -name 'go.mod' | while read -r modfile; do
     isSdk="[ "$moddir" == "./sdk" ]"
     isChifra="[ "$moddir" == "./src/apps/chifra" ]"
     isGoMaker="[ "$moddir" == "./src/dev_tools/goMaker" ]"
+    isNode="[ "$moddir" == "./node" ]"
     isSimple="[ "$moddir" == "./example/simple" ]"
 
-    if $isGoMaker; then
+    if $isGoMaker || $isNode; then
         go get github.com/btcsuite/btcd 2> /dev/null
     fi
 
