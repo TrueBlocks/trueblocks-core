@@ -4,3 +4,6 @@
 [submodule "docs"]
 	path = docs
 	url = https://github.com/TrueBlocks/trueblocks-docs.git
+[submodule "node"]
+	path = node
+	url = https://github.com/TrueBlocks/trueblocks-node.git
