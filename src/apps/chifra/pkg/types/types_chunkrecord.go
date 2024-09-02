@@ -55,7 +55,9 @@ func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOpts map[st
 
 	if verbose {
 		if format == "json" {
-			model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
+			if !s.RangeDates.IsDefault() {
+				model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
+			}
 		} else {
 			model["firstTs"] = s.RangeDates.FirstTs
 			model["firstDate"] = s.RangeDates.FirstDate
