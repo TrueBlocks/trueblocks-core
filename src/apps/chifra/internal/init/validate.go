@@ -62,15 +62,12 @@ func (opts *InitOptions) validateInit() error {
 		if history.FromHistoryBool(historyFile, "init") && !opts.All {
 			msg := `You previously called chifra init with the --all option.
 			
-You must continue to do so or remove both the full index and the history file. Paths
-to these items are listed here:
+You must continue to do so or remove the history file here:
 			
-	{{.IndexFolder}}
 	{{.HistoryFile}}
 
 This is a dangerous operation, please don't say we didn't warn you.
 `
-			msg = strings.ReplaceAll(msg, "{{.IndexFolder}}", config.PathToIndex(chain))
 			msg = strings.ReplaceAll(msg, "{{.HistoryFile}}", historyFile)
 			return validate.Usage(msg)
 		}
