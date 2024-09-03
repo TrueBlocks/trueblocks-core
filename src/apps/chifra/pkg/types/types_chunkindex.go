@@ -23,7 +23,7 @@ type ChunkIndex struct {
 	NAddresses   uint64     `json:"nAddresses"`
 	NAppearances uint64     `json:"nAppearances"`
 	Range        string     `json:"range"`
-	RangeDates   RangeDates `json:"rangeDates"`
+	RangeDates   RangeDates `json:"rangeDates,omitempty"`
 	Size         uint64     `json:"size"`
 	// EXISTING_CODE
 	// EXISTING_CODE

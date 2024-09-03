@@ -26,7 +26,7 @@ type ChunkBloom struct {
 	NBlooms    uint64     `json:"nBlooms"`
 	NInserted  uint64     `json:"nInserted"`
 	Range      string     `json:"range"`
-	RangeDates RangeDates `json:"rangeDates"`
+	RangeDates RangeDates `json:"rangeDates,omitempty"`
 	Size       uint64     `json:"size"`
 	// EXISTING_CODE
 	// EXISTING_CODE

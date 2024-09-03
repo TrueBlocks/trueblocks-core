@@ -23,7 +23,7 @@ type ChunkRecord struct {
 	IndexHash  base.IpfsHash `json:"indexHash"`
 	IndexSize  int64         `json:"indexSize"`
 	Range      string        `json:"range"`
-	RangeDates RangeDates    `json:"rangeDates"`
+	RangeDates RangeDates    `json:"rangeDates,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

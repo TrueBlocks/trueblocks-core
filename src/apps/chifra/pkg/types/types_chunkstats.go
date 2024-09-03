@@ -24,7 +24,7 @@ type ChunkStats struct {
 	NBlocks       uint64     `json:"nBlocks"`
 	NBlooms       uint64     `json:"nBlooms"`
 	Range         string     `json:"range"`
-	RangeDates    RangeDates `json:"rangeDates"`
+	RangeDates    RangeDates `json:"rangeDates,omitempty"`
 	Ratio         float64    `json:"ratio"`
 	RecWid        uint64     `json:"recWid"`
 	// EXISTING_CODE

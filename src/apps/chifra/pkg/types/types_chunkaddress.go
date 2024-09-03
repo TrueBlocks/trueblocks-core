@@ -22,7 +22,7 @@ type ChunkAddress struct {
 	Count      uint64       `json:"count"`
 	Offset     uint64       `json:"offset"`
 	Range      string       `json:"range"`
-	RangeDates RangeDates   `json:"rangeDates"`
+	RangeDates RangeDates   `json:"rangeDates,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
