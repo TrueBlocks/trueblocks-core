@@ -53,7 +53,8 @@ func (opts *ChunksOptions) HandleIndex(rCtx *output.RenderCtx, blockNums []base.
 				NAppearances: uint64(indexChunk.Header.AppearanceCount),
 				Size:         uint64(file.FileSize(fileName)),
 			}
-			s.RangeDates = tslib.RangeToBounds(chain, &rng)
+			rd := tslib.RangeToBounds(chain, &rng)
+			s.RangeDates = &rd
 
 			modelChan <- &s
 			return true, nil

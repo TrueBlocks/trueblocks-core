@@ -9,7 +9,8 @@ jobs:
       - name: Check if PR is targeting the 'develop' branch
         run: |
           if [ "${{ github.event.pull_request.base.ref }}" != "develop" ]; then
-            echo "::warning file=${{ github.event.pull_request.url }}::PR is not targeting 'develop'. Please change the target branch to 'develop'."
+            echo "::error file=${{ github.event.pull_request.url }}::PR is not targeting 'develop'. Please change the target branch to 'develop'."
+            exit 1
           else
             echo "PR is targeting the 'develop' branch. Everything is okay."
           fi

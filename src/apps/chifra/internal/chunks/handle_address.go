@@ -81,7 +81,8 @@ func (opts *ChunksOptions) HandleAddresses(rCtx *output.RenderCtx, blockNums []b
 						Offset:  uint64(obj.Offset),
 						Count:   uint64(obj.Count),
 					}
-					s.RangeDates = tslib.RangeToBounds(chain, &rng)
+					rd := tslib.RangeToBounds(chain, &rng)
+					s.RangeDates = &rd
 
 					modelChan <- &s
 					cnt++

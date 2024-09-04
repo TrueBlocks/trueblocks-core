@@ -54,7 +54,8 @@ func (opts *ChunksOptions) HandleBlooms(rCtx *output.RenderCtx, blockNums []base
 				ByteWidth: index.BLOOM_WIDTH_IN_BYTES,
 				NInserted: uint64(nInserted),
 			}
-			s.RangeDates = tslib.RangeToBounds(chain, &rng)
+			rd := tslib.RangeToBounds(chain, &rng)
+			s.RangeDates = &rd
 
 			modelChan <- &s
 			return true, nil

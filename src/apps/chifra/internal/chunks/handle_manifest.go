@@ -42,7 +42,8 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 					IndexHash: chunk.IndexHash,
 					IndexSize: chunk.IndexSize,
 				}
-				s.RangeDates = tslib.RangeToBounds(chain, &rng)
+				rd := tslib.RangeToBounds(chain, &rng)
+				s.RangeDates = &rd
 				modelChan <- &s
 			}
 		}
@@ -65,7 +66,8 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 					IndexHash: chunk.IndexHash,
 					IndexSize: chunk.IndexSize,
 				}
-				ch.RangeDates = tslib.RangeToBounds(chain, &rng)
+				rd := tslib.RangeToBounds(chain, &rng)
+				ch.RangeDates = &rd
 				s.Chunks = append(s.Chunks, ch)
 			}
 			modelChan <- &s

@@ -176,7 +176,8 @@ func (opts *ChunksOptions) handleResolvedRecords1(modelChan chan types.Modeler, 
 				Offset:  uint64(s.AddressRecord.Offset),
 				Range:   rng.String(),
 			}
-			ss.RangeDates = tslib.RangeToBounds(chain, &rng)
+			rd := tslib.RangeToBounds(chain, &rng)
+			ss.RangeDates = &rd
 			modelChan <- &ss
 			cnt++
 		}
