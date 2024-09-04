@@ -23,7 +23,7 @@ type ChunkRecord struct {
 	IndexHash  base.IpfsHash `json:"indexHash"`
 	IndexSize  int64         `json:"indexSize"`
 	Range      string        `json:"range"`
-	RangeDates RangeDates    `json:"rangeDates,omitempty"`
+	RangeDates *RangeDates   `json:"rangeDates,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -53,17 +53,18 @@ func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOpts map[st
 		"indexSize",
 	}
 
-	if verbose {
-		if format == "json" {
-			if !s.RangeDates.IsDefault() {
-				model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
-			}
-		} else {
+	if verbose && format == "json" {
+		if s.RangeDates != nil {
+			model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
+		}
+	} else if verbose {
+		model["firstTs"], model["firstDate"], model["lastTs"], model["lastDate"] = 0, "", 0, ""
+		order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
+		if s.RangeDates != nil {
 			model["firstTs"] = s.RangeDates.FirstTs
 			model["firstDate"] = s.RangeDates.FirstDate
 			model["lastTs"] = s.RangeDates.LastTs
 			model["lastDate"] = s.RangeDates.LastDate
-			order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
 		}
 	}
 	// EXISTING_CODE

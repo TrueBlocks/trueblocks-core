@@ -1,6 +1,6 @@
-name       ,type       ,strDefault ,attributes ,docOrder ,description
-address    ,address    ,           ,           ,       1 ,the address in this record
-range      ,blkrange   ,           ,           ,       2 ,the block range of the chunk from which this address record was taken
-offset     ,uint64     ,           ,           ,       3 ,the offset into the appearance table of the first record for this address
-count      ,uint64     ,           ,           ,       4 ,the number of records in teh appearance table for this address
-rangeDates ,RangeDates ,           ,omitempty  ,       5 ,if verbose&#44; the block and timestamp bounds of the chunk
+name       ,type        ,strDefault ,attributes ,docOrder ,description
+address    ,address     ,           ,           ,       1 ,the address in this record
+range      ,blkrange    ,           ,           ,       2 ,the block range of the chunk from which this address record was taken
+offset     ,uint64      ,           ,           ,       3 ,the offset into the appearance table of the first record for this address
+count      ,uint64      ,           ,           ,       4 ,the number of records in teh appearance table for this address
+rangeDates ,*RangeDates ,           ,omitempty  ,       5 ,if verbose&#44; the block and timestamp bounds of the chunk (may be null)

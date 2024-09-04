@@ -1,8 +1,8 @@
-name         ,type       ,strDefault ,attributes ,docOrder ,description
-range        ,blkrange   ,           ,           ,       1 ,the block range (inclusive) covered by this chunk
-magic        ,string     ,           ,           ,       2 ,an internal use only magic number to indicate file format
-hash         ,hash       ,           ,           ,       3 ,the hash of the specification under which this chunk was generated
-nAddresses   ,uint64     ,           ,           ,       4 ,the number of addresses in this chunk
-nAppearances ,uint64     ,           ,           ,       5 ,the number of appearances in this chunk
-size         ,uint64     ,           ,           ,       6 ,the size of the chunk in bytes
-rangeDates   ,RangeDates ,           ,omitempty  ,       7 ,if verbose&#44; the block and timestamp bounds of the chunk
+name         ,type        ,strDefault ,attributes ,docOrder ,description
+range        ,blkrange    ,           ,           ,       1 ,the block range (inclusive) covered by this chunk
+magic        ,string      ,           ,           ,       2 ,an internal use only magic number to indicate file format
+hash         ,hash        ,           ,           ,       3 ,the hash of the specification under which this chunk was generated
+nAddresses   ,uint64      ,           ,           ,       4 ,the number of addresses in this chunk
+nAppearances ,uint64      ,           ,           ,       5 ,the number of appearances in this chunk
+size         ,uint64      ,           ,           ,       6 ,the size of the chunk in bytes
+rangeDates   ,*RangeDates ,           ,omitempty  ,       7 ,if verbose&#44; the block and timestamp bounds of the chunk (may be null)

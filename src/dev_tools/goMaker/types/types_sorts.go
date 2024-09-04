@@ -122,7 +122,16 @@ func getSortCode(typ string) string {
 	case "RangeDates":
 		return `	case {{.Container}}{{firstUpper .Name}}: // {{.Type}}
 		return func(p1, p2 {{.Container}}) bool {
-			cmp := p1.{{.GoName}}.Cmp(p2.{{.GoName}})
+			if p1.{{.GoName}} == nil && p2.{{.GoName}} == nil {
+				return false
+			}
+			if p1.{{.GoName}} == nil {
+				return order == Ascending
+			}
+			if p2.{{.GoName}} == nil {
+				return order != Ascending
+			}
+			cmp := p1.{{.GoName}}.Cmp(*p2.{{.GoName}})
 			if order == Ascending {
 				return cmp == -1
 			}

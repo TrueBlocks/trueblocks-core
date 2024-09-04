@@ -103,7 +103,16 @@ func ChunkStatsBy(field ChunkStatsField, order SortOrder) func(p1, p2 ChunkStats
 		}
 	case ChunkStatsRangeDates: // RangeDates
 		return func(p1, p2 ChunkStats) bool {
-			cmp := p1.RangeDates.Cmp(p2.RangeDates)
+			if p1.RangeDates == nil && p2.RangeDates == nil {
+				return false
+			}
+			if p1.RangeDates == nil {
+				return order == Ascending
+			}
+			if p2.RangeDates == nil {
+				return order != Ascending
+			}
+			cmp := p1.RangeDates.Cmp(*p2.RangeDates)
 			if order == Ascending {
 				return cmp == -1
 			}

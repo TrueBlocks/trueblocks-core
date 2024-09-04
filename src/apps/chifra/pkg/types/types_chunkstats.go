@@ -14,19 +14,19 @@ import "encoding/json"
 // EXISTING_CODE
 
 type ChunkStats struct {
-	AddrsPerBlock float64    `json:"addrsPerBlock"`
-	AppsPerAddr   float64    `json:"appsPerAddr"`
-	AppsPerBlock  float64    `json:"appsPerBlock"`
-	BloomSz       uint64     `json:"bloomSz"`
-	ChunkSz       uint64     `json:"chunkSz"`
-	NAddrs        uint64     `json:"nAddrs"`
-	NApps         uint64     `json:"nApps"`
-	NBlocks       uint64     `json:"nBlocks"`
-	NBlooms       uint64     `json:"nBlooms"`
-	Range         string     `json:"range"`
-	RangeDates    RangeDates `json:"rangeDates,omitempty"`
-	Ratio         float64    `json:"ratio"`
-	RecWid        uint64     `json:"recWid"`
+	AddrsPerBlock float64     `json:"addrsPerBlock"`
+	AppsPerAddr   float64     `json:"appsPerAddr"`
+	AppsPerBlock  float64     `json:"appsPerBlock"`
+	BloomSz       uint64      `json:"bloomSz"`
+	ChunkSz       uint64      `json:"chunkSz"`
+	NAddrs        uint64      `json:"nAddrs"`
+	NApps         uint64      `json:"nApps"`
+	NBlocks       uint64      `json:"nBlocks"`
+	NBlooms       uint64      `json:"nBlooms"`
+	Range         string      `json:"range"`
+	RangeDates    *RangeDates `json:"rangeDates,omitempty"`
+	Ratio         float64     `json:"ratio"`
+	RecWid        uint64      `json:"recWid"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -70,17 +70,17 @@ func (s *ChunkStats) Model(chain, format string, verbose bool, extraOpts map[str
 		"ratio",
 	}
 
-	if verbose {
-		if format == "json" {
-			if !s.RangeDates.IsDefault() {
-				model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
-			}
-		} else {
+	if verbose && format == "json" {
+		if s.RangeDates != nil {
+			model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
+		}
+	} else if verbose {
+		order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
+		if s.RangeDates != nil {
 			model["firstTs"] = s.RangeDates.FirstTs
 			model["firstDate"] = s.RangeDates.FirstDate
 			model["lastTs"] = s.RangeDates.LastTs
 			model["lastDate"] = s.RangeDates.LastDate
-			order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
 		}
 	}
 	// EXISTING_CODE

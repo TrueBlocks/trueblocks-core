@@ -312,7 +312,8 @@ func GetChunkStats(chain, path string) (s types.ChunkStats, err error) {
 		ChunkSz: uint64(file.FileSize(index.ToIndexPath(path))),
 		RecWid:  4 + index.BLOOM_WIDTH_IN_BYTES,
 	}
-	s.RangeDates = tslib.RangeToBounds(chain, &rng)
+	rd := tslib.RangeToBounds(chain, &rng)
+	s.RangeDates = &rd
 
 	if s.NBlocks > 0 {
 		s.AddrsPerBlock = float64(s.NAddrs) / float64(s.NBlocks)

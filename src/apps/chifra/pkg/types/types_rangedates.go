@@ -67,8 +67,4 @@ func (p1 *RangeDates) Cmp(p2 RangeDates) int64 {
 	return p1.FirstTs.Int64() - p2.FirstTs.Int64()
 }
 
-func (p1 *RangeDates) IsDefault() bool {
-	return p1.Cmp(RangeDates{}) == 0
-}
-
 // EXISTING_CODE
