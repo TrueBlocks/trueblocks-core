@@ -6,9 +6,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/sdk/v3"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	sdk "github.com/TrueBlocks/trueblocks-sdk/v3"
 )
 
 var apiPort = ""
@@ -34,9 +34,18 @@ func startApiServer() error {
 }
 
 func findAvailablePort() int {
+	preferredPorts := []int{8080, 8088, 9090, 9099}
+	for _, port := range preferredPorts {
+		address := fmt.Sprintf(":%d", port)
+		listener, err := net.Listen("tcp", address)
+		if err == nil {
+			defer listener.Close()
+			return port
+		}
+	}
 	listener, err := net.Listen("tcp", ":0")
 	if err != nil {
-		return 8080
+		return 0
 	}
 	defer listener.Close()
 	addr := listener.Addr().(*net.TCPAddr)
