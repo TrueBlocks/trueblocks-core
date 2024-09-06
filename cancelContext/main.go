@@ -5,9 +5,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/sdk/v3"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	sdk "github.com/TrueBlocks/trueblocks-sdk/v3"
 )
 
 func main() {

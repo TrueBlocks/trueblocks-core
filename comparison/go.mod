@@ -3,11 +3,13 @@ module github.com/TrueBlocks/trueblocks-core/examples/comparison
 // Go Version
 go 1.22
 
-require github.com/TrueBlocks/trueblocks-core/sdk/v3 v3.0.0-20240901121822-6283f44d7d3a
+require (
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240901212707-3b0228642466
+	github.com/TrueBlocks/trueblocks-sdk/v3 v3.3.2
+)
 
 require (
 	github.com/Microsoft/go-winio v0.6.1 // indirect
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240901212707-3b0228642466 // indirect
 	github.com/alecthomas/participle/v2 v2.0.0 // indirect
 	github.com/benbjohnson/clock v1.3.0 // indirect
 	github.com/bits-and-blooms/bitset v1.10.0 // indirect
