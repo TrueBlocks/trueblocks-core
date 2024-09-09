@@ -3629,7 +3629,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 91-Early:Addresses	0x2785dc55279632de2691e21d0a92d6019d88b953	VIU Sender		EtherScan.io		false	false	false	false	false	false
 90-Individuals:Twitter	0x27890aecf8162bf51bb06adac80595acf79c57d6	vvvvhc2		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Kickback	0x27903282ff2d6c3033fa57d4f39d641ade882825	jules00		https://kickback.events/		false	false	false	false	false	false
-50-Tokens:ERC20	0x2791bca1f2de4661ed88a30c99a7a9449aa84174	USDCoin(PoS)	USDC	SmolAssets	18	false	false	false	true	true	false
+50-Tokens:ERC20	0x2791bca1f2de4661ed88a30c99a7a9449aa84174	USDC	USDC	SmolAssets	6	false	false	false	true	true	false
 60-Rotki	0x2794dad4077602ed25a88d03781528d1637898b4	Vite	VITE	Rotki	18	false	false	false	false	false	false
 90-Individuals:Twitter	0x27a04327161df963de2d1f854332e50c2013c377	BalaSefer1		banteg on twitter		false	false	false	false	false	false
 31-Giveth:Project	0x27a1be64ed504f6835a64d6f216e2d647c94a6e8	GLOBAL Church		Tokenomics		false	false	false	false	false	false
@@ -8740,7 +8740,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Humanity DAO	0x5c4b2dbb3f9773186a14a5736c5b13705f0c4c4d	shivmalik		https://www.humanitydao.org/humans		false	false	false	false	false	false
 90-Individuals:Humanity DAO	0x5c4b99511ede95112650ebc7d64672e0dd97e252	PhilipMcMaster conscienceland0x5c4b99511EDE95112650EBC7d64672E0dd97e252		https://www.humanitydao.org/humans		false	false	false	false	false	false
 31-Gitcoin:Grants	0x5c4cc4b253f97c0ae8f1b66b21b0fb00804d0e87	Grant 2260 - Enhance your FutureSELF		https://gitcoin.co/grants/2260/enhance-your-futureself		false	false	false	false	false	false
-60-Rotki	0x5c4fdfc5233f935f20d2adba572f770c2e377ab0	Hector	HEC	Rotki	9	false	false	false	false	false	false
+60-Rotki	0x5c4fdfc5233f935f20d2adba572f770c2e377ab0	Hector	HEC	Rotki	9	false	false	false	true	false	false
 50-Tokens:ERC20	0x5c543e7ae0a1104f78406c340e9c64fd9fce5170	vSlice	VSL	EtherScan.io		false	false	false	true	false	false
 50-Tokens:ERC20	0x5c559f3ee9a81da83e069c0093471cb05d84052a	BabyPepe	BABYPEPE	Rotki	18	false	false	false	true	true	false
 30-Contracts	0x5c55b921f590a89c1ebe84df170e655a82b62126	DeFi Saver: Owner Related		EtherScan.io		false	false	false	true	false	false
