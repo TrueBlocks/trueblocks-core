@@ -59,3 +59,14 @@ func removeNode(args []string) {
 		}
 	}
 }
+
+func cleanNames() {
+	opts := sdk.NamesOptions{}
+	if msgs, _, err := opts.NamesClean(); err != nil {
+		printError(err.Error())
+	} else {
+		for i, msg := range msgs {
+			fmt.Println(i, msg.String())
+		}
+	}
+}

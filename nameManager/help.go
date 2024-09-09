@@ -9,28 +9,30 @@ import (
 
 func printHelp() {
 	helpText := `
-Usage: tool [options] address name [tags] [source] [symbol] [decimals]
-       tool --autoname address
-       tool --delete address
-       tool --undelete address
-       tool --remove address
+Usage: nameManager [options] address name [tags [source [symbol [decimals]]]]
+       nameManager --autoname address
+       nameManager --delete address
+       nameManager --undelete address
+       nameManager --remove address
+       nameManager --clean
 
 Required Arguments:
-  address      The address (string)
-  name         The name (string)
+  address      The address for all operations but --clean (string)
+  name         The name for name editing (string)
 
 Optional Arguments:
-  tags         The tags (string, default: "")
-  source       The source (string, default: "")
+  tags         The tags (string, default: "99-User-Defined")
+  source       The source (string, default: "TrueBlocks")
   symbol       The symbol (string, default: "")
   decimals     The decimals (uint64, default: 0)
 
 Options:
   --help       Show this help message and exit
-  --autoname   Read the chain for the ERC20 values and set the name
+  --autoname   Given an address, query the chain for ERC20 values and update
   --delete     Delete the name entry for the given address
   --undelete   Undelete the name entry for the given address
   --remove     Remove the node for the given address
+  --clean      Clean the names database including sorting and removing dups (if any)
 `
 	fmt.Fprintf(os.Stderr, "%s", helpText)
 	os.Exit(0)

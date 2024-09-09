@@ -9,7 +9,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-func parseArgs() (ok bool, action string) {
+type Command string
+
+const (
+	AutoName Command = "autoname"
+	Delete   Command = "delete"
+	Undelete Command = "undelete"
+	Remove   Command = "remove"
+	Clean    Command = "clean"
+)
+
+func parseArgs() (ok bool, action Command) {
 	if len(os.Args) < 2 {
 		printError("not enough arguments")
 		printHelp()
@@ -22,7 +32,7 @@ func parseArgs() (ok bool, action string) {
 		return false, ""
 	case "--autoname", "--delete", "--undelete", "--remove":
 		if len(os.Args) != 3 {
-			printError("'" + os.Args[1] + "' accepts only the address")
+			printError("'" + os.Args[1] + "' accepts only a single argument: address")
 			printHelp()
 			return false, ""
 		}
@@ -32,10 +42,14 @@ func parseArgs() (ok bool, action string) {
 			printHelp()
 			return false, ""
 		}
-		return true, strings.TrimPrefix(os.Args[1], "--")
+		return true, Command(strings.TrimPrefix(os.Args[1], "--"))
+
+	case "--clean":
+		return true, Clean
+
 	default:
 		if len(os.Args) < 3 {
-			printError("not enough arguments")
+			printError("not enough arguments (missing address, name, or both)")
 			printHelp()
 			return false, ""
 		}

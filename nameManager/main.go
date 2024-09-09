@@ -14,17 +14,20 @@ func main() {
 		return
 	} else {
 		switch action {
-		case "autoname":
+		case AutoName:
 			autoName(os.Args)
 			return
-		case "delete":
+		case Delete:
 			deleteName(os.Args)
 			return
-		case "undelete":
+		case Undelete:
 			undeleteName(os.Args)
 			return
-		case "remove":
+		case Remove:
 			removeNode(os.Args)
+			return
+		case Clean:
+			cleanNames()
 			return
 		}
 	}
