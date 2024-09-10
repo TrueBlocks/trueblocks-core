@@ -15,6 +15,7 @@ Usage: nameManager [options] address name [tags [source [symbol [decimals]]]]
        nameManager --undelete address
        nameManager --remove address
        nameManager --clean
+       nameManager --publish
 
 Required Arguments:
   address      The address for all operations but --clean (string)
@@ -32,6 +33,7 @@ Options:
   --delete     Delete the name entry for the given address
   --undelete   Undelete the name entry for the given address
   --remove     Remove the node for the given address
+  --publish    Share any customized names you've created with the community via the Unchained Index
   --clean      Clean the names database including sorting and removing dups (if any)
 `
 	fmt.Fprintf(os.Stderr, "%s", helpText)

@@ -9,17 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-type Command string
-
-const (
-	AutoName Command = "autoname"
-	Delete   Command = "delete"
-	Undelete Command = "undelete"
-	Remove   Command = "remove"
-	Clean    Command = "clean"
-)
-
-func parseArgs() (ok bool, action Command) {
+func parseArgs() (ok bool, action Action) {
 	if len(os.Args) < 2 {
 		printError("not enough arguments")
 		printHelp()
@@ -42,10 +32,10 @@ func parseArgs() (ok bool, action Command) {
 			printHelp()
 			return false, ""
 		}
-		return true, Command(strings.TrimPrefix(os.Args[1], "--"))
+		return true, Action(strings.TrimPrefix(os.Args[1], "--"))
 
-	case "--clean":
-		return true, Clean
+	case "--clean", "--pin", "--publish":
+		return true, Action(strings.TrimPrefix(os.Args[1], "--"))
 
 	default:
 		if len(os.Args) < 3 {
@@ -90,6 +80,6 @@ func readInput(prompt string, defaultValue string) string {
 }
 
 const (
-	defSource = "TrueBlocks"
+	defSource = "TrueBlocks.io"
 	defTags   = "99-User-Defined"
 )

@@ -6,6 +6,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/crud"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v3"
 )
 
@@ -13,6 +14,12 @@ func main() {
 	if ok, action := parseArgs(); !ok {
 		return
 	} else {
+		if os.Getenv("TB_NAMEMANAGER_REGULAR") == "true" {
+			if !usage.QueryUser("Are you sure you want to operate against the Regular names database (Y/n)?", "Quitting...") {
+				os.Exit(0)
+			}
+		}
+
 		switch action {
 		case AutoName:
 			autoName(os.Args)
@@ -28,6 +35,9 @@ func main() {
 			return
 		case Clean:
 			cleanNames()
+			return
+		case Publish:
+			publishNames()
 			return
 		}
 	}

@@ -1,7 +1,7 @@
 
 # NameManager CLI Tool
 
-`nameManager` is an example command-line tool built with the [TrueBlocks SDK](https://pkg.go.dev/github.com/TrueBlocks/trueblocks-sdk/v3) designed to manage name entries associated with addresses. It offers various operations such as adding, editing, deleting, and cleaning name entries in the names database.
+`nameManager` is an example command-line tool built with the [TrueBlocks SDK](https://pkg.go.dev/github.com/TrueBlocks/trueblocks-sdk/v3) designed to manage name entries associated with addresses. It offers various operations such as adding, editing, deleting, cleaning, and pbulishing name entries in the names database.
 
 ## Building
 
@@ -20,13 +20,14 @@ nameManager --delete address
 nameManager --undelete address
 nameManager --remove address
 nameManager --clean
+nameManager --publish
 ```
 
 ## Commands and Options
 
 ### Required Arguments
 
-- **address**: The address for all operations except `--clean` (type: `string`).
+- **address**: The address for all operations except `--clean` `and `publish` (type: `string`).
 - **name**: The name to associate with the address for name editing (type: `string`).
 
 ### Optional Arguments
@@ -44,6 +45,7 @@ nameManager --clean
 - **--undelete**: Restores a previously deleted name entry for the given address.
 - **--remove**: Completely removes the node associated with the given address.
 - **--clean**: Cleans the names database, sorting entries and removing any duplicates.
+- **--publish**: Push naems to IPFS and publush returned IPFS CID to the Unchained Index.
 
 ## Examples
 
@@ -106,6 +108,26 @@ nameManager --clean
 ```
 
 - This will clean up the names database, ensuring it's sorted and free of duplicates.
+
+### Publish modified names to the Unchained Index
+
+This feature is currently under development.
+
+```bash
+nameManager --publish
+```
+
+- [Not yet implemented
+
+## Environment Variables
+
+The following environment variables can be set to configure the behavior of the `nameManager` tool:
+
+`TB_NAMEMANAGER_EXPORT=<path to location of the export file>`
+`TB_NAMEMANAGER_REGULAR=true`
+
+We caution strongly against using the `TB_NAMEMANAGER_REGULAR` variable. It is intended for use by the TrueBlocks team to update the system installed names database. If you use this and later re-install or
+update TrueBlocks, you will lose your changes. It is documented here only for thouroughness.
 
 ## Documentation
 
