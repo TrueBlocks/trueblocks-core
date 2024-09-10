@@ -1533,7 +1533,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x10b47177e92ef9d5c6059055d92ddf6290848991	SushiSwap LP Token	SLP	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC721	0x10b66bd1e3b5a936b7f8dbc5976004311037cdf0	tBTC Deposit Token	TDT	On chain	18	false	false	false	true	true	true
 90-Individuals:Twitter	0x10bb15c252bf71622f5eda133c030642ce2005de	LEVERAGED_LABS		banteg on twitter		false	false	false	false	false	false
-31-Gitcoin:Core	0x10be322de44389ded49c0b2b73d8c3a1e3b6d871	GG18 - ReFi DAO Local Node - community - OP - 30000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x10be322de44389ded49c0b2b73d8c3a1e3b6d871	GG18 - ReFi DAO Local Node - community - OP - 30000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 31-Gitcoin:Grants	0x10c0b0da2a682c12bd36516a95cb8474c02d83de	Grant 2836 - DIGIFIZZY: A native web3 metaverse publication		https://gitcoin.co/grants/2836/digifizzy-a-native-web3-metaverse-publication		false	false	false	true	false	false
 90-Individuals:Twitter	0x10c43f2e13d86131d5b9f6227c2fbf070989c96e	aradtski		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0x10c4613e3667f5692735cf2a199f15a937f09183	SharpieMeow		banteg on twitter		false	false	false	false	false	false
@@ -3629,7 +3629,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 91-Early:Addresses	0x2785dc55279632de2691e21d0a92d6019d88b953	VIU Sender		EtherScan.io		false	false	false	false	false	false
 90-Individuals:Twitter	0x27890aecf8162bf51bb06adac80595acf79c57d6	vvvvhc2		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Kickback	0x27903282ff2d6c3033fa57d4f39d641ade882825	jules00		https://kickback.events/		false	false	false	false	false	false
-50-Tokens:ERC20	0x2791bca1f2de4661ed88a30c99a7a9449aa84174	USDC	USDC	SmolAssets	6	false	false	false	true	true	false
+50-Tokens:ERC20	0x2791bca1f2de4661ed88a30c99a7a9449aa84174	USDCoin(PoS)	USDC	SmolAssets	18	false	false	false	true	true	false
 60-Rotki	0x2794dad4077602ed25a88d03781528d1637898b4	Vite	VITE	Rotki	18	false	false	false	false	false	false
 90-Individuals:Twitter	0x27a04327161df963de2d1f854332e50c2013c377	BalaSefer1		banteg on twitter		false	false	false	false	false	false
 31-Giveth:Project	0x27a1be64ed504f6835a64d6f216e2d647c94a6e8	GLOBAL Church		Tokenomics		false	false	false	false	false	false
@@ -3711,7 +3711,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0x2869c039c20d4e09aafeb448fa873ab2fe2af1d8	alexzhan		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0x286bda1413a2df81731d4930ce2f862a35a609fe	WaBi	WaBi	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x286c1bdb45979901f064f11345715a64f270a747	Uniswap V2	UNI-V2	On chain	18	false	false	false	true	true	false
-31-Gitcoin:Core	0x2871742b184633f8dc8546c6301cbc209945033e	GG18 - Web3 Community & Education - program - ETH - 250000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x2871742b184633f8dc8546c6301cbc209945033e	GG18 - Web3 Community & Education - program - ETH - 250000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 90-Individuals:Twitter	0x2876a234b51cf7a8c2d64537aed02938b0d811b4	jebus911		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0x287728b2c705f162e500cb118f7b715c11c23912	ykzl14		banteg on twitter		false	false	false	false	false	false
 60-Rotki	0x287880ea252b52b63cc5f40a2d3e5a44aa665a76	ALPINE Fan Token	ALPINE	Rotki	8	false	false	false	false	false	false
@@ -4464,7 +4464,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x30b90d985104b803a038465c95b6ac226a355b13	KB24	KB24	On chain	18	false	false	false	true	true	false
 37-SelfDestructed	0x30ba1ff73a862243c08f40029074d13b10298708	TESTTEC	TESTTEC	On chain	18	false	false	false	true	true	false
 90-Individuals:Twitter	0x30bce1478047829a14a1e4e4f2d733646c9c0dc0	0xballsack		banteg on twitter		false	false	false	false	false	false
-31-Gitcoin:Core	0x30c381033aa2830ceb0aa372c2e4d28f004b3db9	GG18 - Global Chinese Community - community - OP - 25000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x30c381033aa2830ceb0aa372c2e4d28f004b3db9	GG18 - Global Chinese Community - community - OP - 25000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 90-Individuals:Kickback	0x30c4ff533fb6abce77a44e3cc2d3245e227de500	ygeezus		https://kickback.events/		false	false	false	false	false	false
 90-Individuals:Twitter	0x30c65d3951aafc58875dfe71944ef05497f8f95f	weelhunter		banteg on twitter		false	false	false	false	false	false
 31-Giveth:Project	0x30cd3e1e1da2ec44d340a3de36502b19175829f1	K9s For Warriors		Tokenomics		false	false	false	false	false	false
@@ -5002,7 +5002,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 30-Contracts	0x36f2f9c330f8d5421c8d7143d397d8a5459f8d14	Test Reward Court	TRC	Etherscan 		false	false	false	true	true	false
 31-Gitcoin:Grants	0x36f322fc85b24ab13263cfe9217b28f8e2b38381	Grant 0639 區塊勢 — 說人話的區塊鏈圖文		https://gitcoin.co/grants/639/-2		false	false	false	false	false	false
 50-Tokens:ERC20	0x36f3fd68e7325a35eb768f1aedaae9ea0689d723	Empty Set Dollar	ESD	Rotki	18	false	false	false	true	true	false
-31-Gitcoin:Core	0x36f548e082b09b0cec5b3f5a7b78953c75de5e74	GG19 - SheFi - independent - OP - 5000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x36f548e082b09b0cec5b3f5a7b78953c75de5e74	GG19 - SheFi - independent - OP - 5000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 50-Tokens:ERC20	0x36f8d0d0573ae92326827c4a82fe4ce4c244cab6	Morpho-Aave Dai Stablecoin Supply Vault	maDAI	Rotki	18	false	false	false	true	true	false
 90-Individuals:Humanity DAO	0x36faa1e49ff125ac72ceae0d5a2e35bc9add6591	RogerWuTW		https://www.humanitydao.org/humans		false	false	false	false	false	false
 30-Contracts:Set Protocol	0x3700414bb6716fcd8b14344fb10ddd91fdea59ec	Kyber Network Wrapper		TrueBlocks.io		false	false	false	true	false	false
@@ -5897,7 +5897,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x404a03728afd06fb934e4b6f0eaf67796912733a	#halfrekt	NME	On chain	18	false	false	false	true	true	false
 90-Individuals:Twitter	0x404c4c3e1e4cb1f9b9be8b706d251436d428f9de	Stonetoday		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Kickback	0x404ccec914732ed4661ae101215fc39fcd34dabe	msgnu		https://kickback.events/		false	false	false	false	false	false
-31-Gitcoin:Core	0x40511f88b87b69496a3471cdbe1d3d25ac68e408	GG19 - Build Guild - independent - OP - 11000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x40511f88b87b69496a3471cdbe1d3d25ac68e408	GG19 - Build Guild - independent - OP - 11000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 80-Malicious:Shanghai	0x40525ac2fe3befe27a4e73757178d4accfef71da	Possibly Malicious 0x405		TrueBlocks.io		false	false	false	false	false	false
 30-Contracts	0x4053981a40836141cb79f05f68e9da385ff1814e	LexDAO	DAO	Etherscan 	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x4057950247e4ec8dc7fe399ec19ea43e80b931c8	DanKoin	DANK	On chain	18	false	false	false	true	true	false
@@ -6580,7 +6580,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x4724c952ed4fc2e1cf83a3825ad9bb100891a5cf	Society	STY	On chain	18	false	false	false	true	true	false
 31-Giveth:Project	0x472507ad78595ec189f4b7a6f2bc5c595148e96b	Junior Achievement of Northern California		Tokenomics		false	false	false	false	false	false
 30-Contracts	0x47252a63c723889814aebcac0683e615624cec64	nil	NIL	Etherscan 	18	false	false	false	true	true	false
-31-Gitcoin:Core	0x4727e3265706c59dbc31e7c518960f4f843bb4da	GG19 - GreenPill Network - independent - OP - 5000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x4727e3265706c59dbc31e7c518960f4f843bb4da	GG19 - GreenPill Network - independent - OP - 5000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 90-Individuals:Other	0x47284536f60ca404106c399176d4f3ee8fa6fd57	INSP Sender Airdrop		TrueBlocks.io		false	false	false	false	false	false
 31-Giveth:Project	0x472ca54d214883f1a4d38bfd17547d52d0dfd52e	Jewish Community Foundation of San Diego		Tokenomics		false	false	false	false	false	false
 90-Individuals:Twitter	0x472e5c322495e031518d81b6b93677b432e109b0	PerryNFTs		banteg on twitter		false	false	false	false	false	false
@@ -6884,6 +6884,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0x4a0db137d0412146603cf8114983ab1abebaedfd	0xBartic		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0x4a0e675b1f319a57f3eb3e1f94a4e634f1e5d5cd	pirofsor1903		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0x4a11eb0cf1e92b40c039f26e1b92eba23e4daca8	JPGShlushi		banteg on twitter		false	false	false	false	false	false
+30-Contracts	0x4a1241c2cf2fd4a39918bcd738f90bd7094ec2dc	MerkleAirdrop Related to ENS DAO				false	false	false	true	false	false
 80-Malicious	0x4a1351523071ed88d20afd1d10cda75d1b34f4e7	HammerBot03		https://blog.blocknative.com/blog/mempool-forensics		false	false	false	false	false	false
 91-Early:Addresses	0x4a1488583c89411fc9efe0e30d240c80b04ce606	POAP Sender		EtherScan.io		false	false	false	false	false	false
 50-Tokens:ERC20	0x4a16baf414b8e637ed12019fad5dd705735db2e0	QCAD	QCAD	Rotki	2	false	false	false	true	true	false
@@ -8557,6 +8558,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 31-Gitcoin:Grants	0x5ab45fb874701d910140e58ea62518566709c408	Grant 0982 Future Modern (panvala League)		https://gitcoin.co/grants/982/future-modern-panvala-league		false	false	false	false	false	false
 50-Tokens:ERC20	0x5ab64c599fcc59f0f2726a300b03166a395578da	Curve 3EUR Pool yVault	yvCurve-3EUR	SmolAssets	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x5ab793e36070f0fac928ea15826b0c1bc5365119	YUKI	YUKI	On chain	8	false	false	false	true	true	false
+95-EF	0x5abfec25f74cd88437631a7731906932776356f9	Ethereum Foundation 0x5ab		https://platform.spotonchain.ai		false	false	true	false	false	false
 31-Giveth:Project	0x5ac583feb2b1f288c0a51d6cdca2e8c814bfe93b	test upload photo 23		Tokenomics		false	false	false	false	false	false
 50-Tokens:ERC20	0x5acd19b9c91e596b1f062f18e3d02da7ed8d1e50	BTC LITE	BTCL	On chain	8	false	false	false	true	true	false
 30-Contracts	0x5ad89bb4f55a33320e076068636ed7314cd2922c	Race Token	Race	Etherscan 		false	false	false	true	false	true
@@ -8656,7 +8658,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0x5b939db939d5cf5219ba1c7bc311671d4e813581	brodie_beau		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x5b93ff82faaf241c15997ea3975419dddd8362c5	coopahtroopanew		OnChain		false	false	false	false	false	false
 31-Gitcoin:Grants	0x5b94bfd07fcd3d6b1a53ac1f7cb9e0fd9c383030	Grant 1558 ??		https://gitcoin.co/grants/1558/-7		false	false	false	false	false	false
-31-Gitcoin:Core	0x5b95acf46c73fd116f0fedadcbedf453530e35d0	GG18 - Zuzalu Continuous Innovation - community - OP - 25000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x5b95acf46c73fd116f0fedadcbedf453530e35d0	GG18 - Zuzalu Continuous Innovation - community - OP - 25000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 30-Contracts	0x5b971730d64d8de2151d24d366c490ba7e02a668	Conflux	CFX	Etherscan 	18	false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0x5b97680e165b4dbf5c45f4ff4241e85f418c66c2	kaiynne		Gitcoin Website		false	false	false	false	false	false
 60-SmolAssets	0x5b977577eb8a480f63e11fc615d6753adb8652ae	WETHyVault	yvWETH	SmolAssets	18	false	false	false	false	false	false
@@ -8740,7 +8742,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Humanity DAO	0x5c4b2dbb3f9773186a14a5736c5b13705f0c4c4d	shivmalik		https://www.humanitydao.org/humans		false	false	false	false	false	false
 90-Individuals:Humanity DAO	0x5c4b99511ede95112650ebc7d64672e0dd97e252	PhilipMcMaster conscienceland0x5c4b99511EDE95112650EBC7d64672E0dd97e252		https://www.humanitydao.org/humans		false	false	false	false	false	false
 31-Gitcoin:Grants	0x5c4cc4b253f97c0ae8f1b66b21b0fb00804d0e87	Grant 2260 - Enhance your FutureSELF		https://gitcoin.co/grants/2260/enhance-your-futureself		false	false	false	false	false	false
-60-Rotki	0x5c4fdfc5233f935f20d2adba572f770c2e377ab0	Hector	HEC	Rotki	9	false	false	false	true	false	false
+60-Rotki	0x5c4fdfc5233f935f20d2adba572f770c2e377ab0	Hector	HEC	Rotki	9	false	false	false	false	false	false
 50-Tokens:ERC20	0x5c543e7ae0a1104f78406c340e9c64fd9fce5170	vSlice	VSL	EtherScan.io		false	false	false	true	false	false
 50-Tokens:ERC20	0x5c559f3ee9a81da83e069c0093471cb05d84052a	BabyPepe	BABYPEPE	Rotki	18	false	false	false	true	true	false
 30-Contracts	0x5c55b921f590a89c1ebe84df170e655a82b62126	DeFi Saver: Owner Related		EtherScan.io		false	false	false	true	false	false
@@ -8764,6 +8766,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0x5c7950657f708067de9dfc48ca94282d2c864fe0	maxnflaxl		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x5c79d3d994b54f98cedb0c5d9be4842f26e2fe10	maurelian		Gitcoin Website		false	false	false	false	false	false
 90-Individuals:Twitter	0x5c7a51a215d3577d8a6cec36f6972eaf10da2121	livingoffstamps		banteg on twitter		false	false	false	false	false	false
+30-Contracts	0x5c7bcd6e7de5423a257d81b442095a1a6ced35c5	Across Protocol: Ethereum Spoke Pool V2				false	false	false	true	false	false
 90-Individuals:Twitter	0x5c7e8eb0714f8ea254952ae7bc4d6ac75d3d4ab9	2sh1002		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0x5c7f412c53e516020dd52d3480a11926a8fe0420	GinBoi_eth		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0x5c832393c31f300ecb8f8eac3fafd1e763d52542	ogpromise_		banteg on twitter		false	false	false	false	false	false
@@ -8992,7 +8995,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Gitcoin Grants	0x5eb5d9a3d6d71312a0acbce6516c731724273c0f	alyssum1008		Gitcoin Website		false	false	false	false	false	false
 90-Individuals:Twitter	0x5eb602f2dc147b54dee73a2d89fa911984d9143f	Yukal72		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0x5eb87caa0105a63aa87a36c7bd2573bd13e84fae	BQT	BQT	On chain	18	false	false	false	true	true	false
-31-Gitcoin:Core	0x5eb890e41c8d2cff75ea942085e406bb90016561	GG19 - Climate Solutions - community - OP - 150000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x5eb890e41c8d2cff75ea942085e406bb90016561	GG19 - Climate Solutions - community - OP - 150000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 31-Gitcoin:Grants	0x5eb9373f40edd37beea5271c4b3e81a022858d6e	Grant 1569 Helloipm		https://gitcoin.co/grants/1569/helloipm		false	false	false	false	false	false
 31-Giveth:Project	0x5ebbfe158dc33fefc22f009c7559bba2327a7dcc	A Child&#39;s Hope Int&#39;l		Tokenomics		false	false	false	false	false	false
 30-Contracts	0x5ebce946c00f46da6ca7123df0bc4b2d3b27b153	MONSTER DAO	MOND	Etherscan 	18	false	false	false	true	true	false
@@ -9003,7 +9006,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 30-Contracts:Set Protocol	0x5ecd8e3b059bc5a69e2d7a73c60bd4e9788972ff	Vault		https://github.com/SetProtocol/set-protocol-contracts		false	false	false	true	false	false
 50-Tokens:ERC20	0x5ecf87ff558f73d097eddfee35abde626c7aeab7	Uniswap V2	UNI-V2	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x5ed2636788a73aa81520ad20cb58af34fff60962	Ambition DOGE	AOGE	On chain	18	false	false	false	true	true	false
-90-Individuals	0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f	Vatalik Sender to 2				false	false	false	false	false	false
+95-EF	0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f	Ethereum Foundation 0x5ed8		https://platform.spotonchain.ai/en/profile?address=0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f		false	false	false	false	false	false
 90-Individuals:Twitter	0x5ede9053209da4ef457465a481275944f3b5cb5d	xNinz_		banteg on twitter		false	false	false	false	false	false
 31-Giveth:Project	0x5edf12bbe15db61aaca7ce44f4f00bd49475ec60	GetSwap		Tokenomics		false	false	false	false	false	false
 90-Individuals:Twitter	0x5ee06a1c5761655af41f598ba8b1be3b24b0b904	HGEABC		banteg on twitter		false	false	false	false	false	false
@@ -9843,7 +9846,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0x672105753ea79e62ca9b9f7232bbaed3deb4e397	kingendvy		banteg on twitter		false	false	false	false	false	false
 31-Gitcoin:Grants	0x67221b267cee49427baa0974ceac988682192977	Grant 3393 - Uniswap and DAOs library development		https://gitcoin.co/grants/3393/uniswap-and-daos-library-development		false	false	false	false	false	false
 30-Contracts	0x67258f507ee5ce6bff8d589749f4380cfa9b0131	Uniswap V2	UNI-V2	Etherscan 	18	false	false	false	true	true	false
-31-Gitcoin:Core	0x6726fe9c89fb04eaef388c11cf55be6aa0a62fb9	GG19 - GCC - community - OP - 30000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x6726fe9c89fb04eaef388c11cf55be6aa0a62fb9	GG19 - GCC - community - OP - 30000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 50-Tokens:ERC20	0x6727d78501b7f1629704168ce74330aea6e5a39b	Monkey Inu	MONKEY	On chain	9	false	false	false	true	true	false
 31-Giveth:Project	0x672965707b164c2588549403ec9d7e7d78832b89	The Mississauga Food Bank		Tokenomics		false	false	false	false	false	false
 50-Tokens:ERC20	0x672a1ad4f667fb18a333af13667aa0af1f5b5bdd	Verify Token	CRED	On chain	18	false	false	false	true	true	false
@@ -11652,7 +11655,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x790a60024bc3aea28385b60480f15a0771f26d09	Curve YFI-ETH Pool yVault	yvCurve-YFIETH	SmolAssets	18	false	false	false	true	true	false
 30-Contracts	0x790b464f053edcafbf57b767b7439889ff275184	cash.tech	CATE	Etherscan 	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x790cfdc6ab2e0ee45a433aac5434f183be1f6a20	Universal Store of Value	anyUSV	Rotki	9	false	false	false	true	true	false
-31-Gitcoin:Core	0x79115c9114055f16bb5b0e9bbfa450844d0fcb3a	GG19 - Meta Pool - community - OP - 30000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x79115c9114055f16bb5b0e9bbfa450844d0fcb3a	GG19 - Meta Pool - community - OP - 30000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 90-Individuals:Twitter	0x7911e7a8d9779060020a284e90cd95c08e64eb3d	CobratatexAI		banteg on twitter		false	false	false	false	false	false
 30-Contracts	0x79126d32a86e6663f3aaac4527732d0701c1ae6c	Dark Matter Token	DMT	Etherscan 	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x791425156956e39f2ab8ab06b79de189c18e95e5	IcoBay	IBT	On chain	18	false	false	false	true	true	false
@@ -12303,7 +12306,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 30-Contracts	0x7f8fe1c63dd4da8eeca9f1dd69f30bc8cedaa83b	Integral.link	ITGR	Etherscan 	18	false	false	false	true	true	false
 60-SmolAssets	0x7f90122bf0700f9e7e1f688fe926940e8839f353	Curve.fiUSDC/USDT	2CRV	SmolAssets	18	false	false	false	true	false	false
 90-Individuals:Twitter	0x7f9219fc5192895988740514a037edae7ddc0213	baozia666		banteg on twitter		false	false	false	false	false	false
-31-Gitcoin:Core	0x7f9415761afbd82e3fe2fd9e878fa643184bc729	GG19 - Cult DAO - independent - OP - 6500		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x7f9415761afbd82e3fe2fd9e878fa643184bc729	GG19 - Cult DAO - independent - OP - 6500		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 50-Tokens:ERC20	0x7f95390927a69803e38e296eb30d619f5a7593da	Nekocoin	NEKO	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC721	0x7f96f68fa766d4e9b037417fe4967511152b9272	SOLOS	SOLOS	On chain	18	false	false	false	true	true	true
 30-Contracts	0x7f9a00e03c2e53a3af6031c17a150dbedaaab3dc	Read This Contract	RTC	Etherscan 	18	false	false	false	true	true	false
@@ -13711,7 +13714,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 31-Gitcoin:Grants	0x8dde317041a0154b53ef3f9d275b65c8c4273b40	Grant 2767 - Orange Wallet		https://gitcoin.co/grants/2767/orange-wallet		false	false	false	false	false	false
 50-Tokens:ERC20	0x8de67d55c58540807601dbf1259537bc2dffc84d	Almeela	KZE	On chain	18	false	false	false	true	true	false
 31-Giveth:Project	0x8de78a2ba93001e60d6b24d4bf8c497b50c6dec7	Church on the Rock		Tokenomics		false	false	false	false	false	false
-31-Gitcoin:Core	0x8de918f0163b2021839a8d84954dd7e8e151326d	GG18 - Web3 Open Source Software - program - OP - 300000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x8de918f0163b2021839a8d84954dd7e8e151326d	GG18 - Web3 Open Source Software - program - OP - 300000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 90-Individuals:Twitter	0x8debd276fa9fdfb72338a7eddac09ced6a005c9f	immadchad		banteg on twitter		false	false	false	false	false	false
 30-Contracts	0x8deef89058090ac5655a99eeb451a4f9183d1678	Synth iXTZ	iXTZ	Etherscan 	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x8df0713b2a047c45a0bef21c3b309bcef91afd34	Curve.fi Factory Plain Pool: handleEUR	fxEUR_CRV-f	Rotki	18	false	false	false	true	true	false
@@ -14207,7 +14210,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 30-Contracts	0x932f3c2ba86a9b354dc1048df13143b1d2ef8618	af	sdfsf	Etherscan 		false	false	false	true	false	true
 55-Defi	0x932fc4fd0eee66f22f1e23fba74d7058391c0b15	Yearn: StrategyMKRVaultDAIDelegate		EtherScan.io		false	false	false	true	false	false
 90-Individuals:Twitter	0x933167ebff32fe77ec2e43abd0422d84c3cbe0ce	matt_hashh		banteg on twitter		false	false	false	false	false	false
-31-Gitcoin:Core	0x9331fde4db7b9d9d1498c09d30149929f24cf9d5	GG18 - Web3 Social - community - OP - 25000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x9331fde4db7b9d9d1498c09d30149929f24cf9d5	GG18 - Web3 Social - community - OP - 25000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x9334a2aa7fb7b9b6c45dc7685d841aa24dc22cc0	bigmonstermining		Gitcoin Website		false	false	false	false	false	false
 90-Individuals:Twitter	0x9334f14817069f22f2eb8840cfc863de060f162c	Lance_rrr		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0x933679024fdb57a31a58a12efff0fd5516547646	AntonLtk		banteg on twitter		false	false	false	false	false	false
@@ -14729,7 +14732,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Gitcoin Grants	0x98434b496c9c8fa5060af1731b875f63fed7de09	quamar28595		Gitcoin Website		false	false	false	false	false	false
 60-Rotki	0x98443b96ea4b0858fdf3219cd13e98c7a4690588	Basic Attention Token	BAT.e	Rotki	18	false	false	false	false	false	false
 50-Tokens:ERC20	0x9848482da3ee3076165ce6497eda906e66bb85c5	Curve.fi Factory Pool: pETH	pETH-ETH-f	SmolAssets	18	false	false	false	true	true	false
-31-Gitcoin:Core	0x984e29dcb4286c2d9cbaa2c238afdd8a191eefbc	Gitcoin Citizens Round #1 - community - OP - 20000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0x984e29dcb4286c2d9cbaa2c238afdd8a191eefbc	Gitcoin Citizens Round #1 - community - OP - 20000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 80-Malicious	0x9851131b33fd9e084c56fb4a341460e8ea23e737	Probably Malicious 0x9851		TrueBlocks.io		false	false	false	false	false	false
 91-Early:Addresses	0x985509582b2c38010bfaa3c8d2be60022d3d00da	NameReg_id17_cnt13_7mo		Ether Camp		false	false	false	true	false	false
 60-Rotki	0x98550e01f6c4f2ebc017f134950d2a24ccf43bc0	Test	TEST3	Rotki	18	false	false	false	false	false	false
@@ -15387,6 +15390,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 30-Contracts	0x9ed3b1520f60d1075c2b9a65ec8a253f9ceb456f	Crowd Token	CRCN	Etherscan 	3	false	false	false	true	true	false
 50-Tokens:ERC20	0x9edd4a1077f6892d115b89151c65f4854334bd43	FLOKISHIBA💎	FLOKISHIBA💎	On chain	9	false	false	false	true	true	false
 90-Individuals:Twitter	0x9edfaa7440c298bc999623d2b0aec02c12e88c57	kv4rl		banteg on twitter		false	false	false	false	false	false
+95-EF	0x9ee457023bb3de16d51a003a247baead7fce313d	Ethereum Foundation 0x9ee		https://platform.spotonchain.ai		false	false	false	false	false	false
 60-Rotki	0x9ee75952e3408ed7005225855aa1835d6d0023ca	Stamen Tellus Token	STT	Rotki	8	false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x9eec0b5bd8a48047f0dcc61e98b4b92951480f98	mlibty		Gitcoin Website		false	false	false	false	false	false
 50-Tokens:ERC20	0x9eec65e5b998db6845321baa915ec3338b1a469b	OnlyChain	Only	On chain	18	false	false	false	true	true	false
@@ -17411,6 +17415,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0xb2d05f740a265eda7e642d5942d938834ecd5b86	Mutt Token	MUTT	On chain	18	false	false	false	true	true	false
 31-Giveth:Project	0xb2d33a0ebdbf552e2539e7bd6f785e55b163963e	asdfg		Tokenomics		false	false	false	false	false	false
 50-Tokens:ERC721	0xb2d6fb1dc231f97f8cc89467b52f7c4f78484044	Neolastics	NLS	On chain	18	false	false	false	true	true	true
+95-EF	0xb2d7e6cd1b25f591e2e630ba65dac638e6cd4c8e	Ethereum Foundation 0xb2d		https://platform.spotonchain.ai		false	false	false	false	false	false
 90-Individuals:Twitter	0xb2d9c2a22c322afdb0c3eed104e288b27fd560c3	looongmo		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Humanity DAO	0xb2df98b4749a73147321ab92149e46a69794247e	itsexactlythis		https://www.humanitydao.org/humans		false	false	false	false	false	false
 50-Tokens:ERC20	0xb2e260f12406c401874ecc960893c0f74cd6afcd	BitUP Token	BUT	On chain	18	false	false	false	true	true	false
@@ -17700,7 +17705,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 60-Rotki	0xb5be8d87fce6ce87a24b90abdb019458a8ec31f9	OBORTECH	OBOT	Rotki	18	false	false	false	false	false	false
 30-Contracts	0xb5bfe528a288fbeac2b0c2624dcb53a3abbac2d4	TURTLE	TRTL	Etherscan 	18	false	false	false	true	true	false
 31-Giveth:Project	0xb5c0671fc118fb0bcdb237538b189ca297c8b72c	Mad Anthonys Children&#39;s Hope House		Tokenomics		false	false	false	false	false	false
-31-Gitcoin:Core	0xb5c0939a9bb0c404b028d402493b86d9998af55e	GG19 - Raid Guild - independent - OP - 2500		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0xb5c0939a9bb0c404b028d402493b86d9998af55e	GG19 - Raid Guild - independent - OP - 2500		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 90-Individuals:Twitter	0xb5c245b9ed6c02d2606e8e2760888b9844d2b2bb	slayedeeyore		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0xb5c578947de0fd71303f71f2c3d41767438bd0de	Decentralized Eternal Virtual Traveller	DEVT	Rotki	18	false	false	false	true	true	false
 30-Contracts	0xb5c64c7d6b374ad738e314eaa7bcc07aec194b7b	BaseToken	BASE	Etherscan 	18	false	false	false	true	true	false
@@ -17813,7 +17818,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0xb6b46d939d187b0fe5df9cc1e91d47bb201f592e	Shiba Inu Treats	TREATS 🦴	On chain	18	false	false	false	true	true	false
 60-Rotki	0xb6b8ccd230bb4235c7b87986274e7ab550b72261	HALO Token	HALO	Rotki	18	false	false	false	false	false	false
 31-Gitcoin:Grants	0xb6bccce9cfe99d4b593aba72f3a36028d1ade4c5	Grant 1150 Educational DeFi Content | Amadeo Brands - on DeFi		https://gitcoin.co/grants/1150/educational-defi-content-amadeo-brands-on-defi		false	false	false	false	false	false
-31-Gitcoin:Core	0xb6be0ecafdb66dd848b0480db40056ff94a9465d	GG18 - Climate Solutions - program - OP - 250000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0xb6be0ecafdb66dd848b0480db40056ff94a9465d	GG18 - Climate Solutions - program - OP - 250000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 90-Individuals:Twitter	0xb6be2e4e9deadee130c5ae758102e29e01c37c4d	mataman412		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0xb6c171185806cfba2c7746f031b714bd2d6d6221	ancha72_		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Kickback	0xb6c2e8fb7f96d2023bfaccd4d4c9963ac1057917	theblockstalk		https://kickback.events/		false	false	false	false	false	false
@@ -18431,6 +18436,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 31-Giveth:Project	0xbc8f6875e335ede479c4cd5a76a95a0e44df2202	Chapman Partnership		Tokenomics		false	false	false	false	false	false
 50-Tokens:ERC20	0xbc9180be3d8014dd05b53876c487e79d79056022	eth-1inch.io	eth-1inch.io	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0xbc93d1aba134cc81f431de04f2d9f46fc5d6d6bc	Musketeer	MUSKETS	On chain	18	false	false	false	true	true	false
+95-EF	0xbc9a9ac7dc36b1706732374bf632ef39fb6efbc3	Ethereum Foundation 0xbc9		https://platform.spotonchain.ai		false	false	false	true	false	false
 90-Individuals:Twitter	0xbc9d37f898cf7ed7517c1a407de51ee9ad82e8db	SamuelAlpha77		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0xbc9edc54dbf3482d9f6ed97424743e91de6de256	Octal_Crypto		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0xbca2674588f0185e672a49695b377d0a03f288f4	alisalikes		banteg on twitter		false	false	false	false	false	false
@@ -18813,7 +18819,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 30-Contracts	0xc06e44a64532e8b04c41459a1756775ff41bd3a3	Uniswap V2	UNI-V2	Etherscan 	18	false	false	false	true	true	false
 50-Tokens:ERC20	0xc07a150ecadf2cc352f5586396e344a6b17625eb	BioPassport Coin	BIOT	Rotki	9	false	false	false	true	true	false
 31-Giveth:Project	0xc07d6ddb4330bb23d7175e069fd2c53fdac15e9e	Vladimir Skate Film Festival		Tokenomics		false	false	false	false	false	false
-31-Gitcoin:Core	0xc08008d47e3deb10b27fc1a75a96d97d11d58cf8	GG19 - Daily Gwei - independent - OP - 5000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0xc08008d47e3deb10b27fc1a75a96d97d11d58cf8	GG19 - Daily Gwei - independent - OP - 5000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 50-Tokens:ERC20	0xc0829421c1d260bd3cb3e0f06cfe2d52db2ce315	Ether Token	ETH	On chain	18	false	false	false	true	true	false
 30-Contracts	0xc0844fdf1bcbde59a3af0859455d964d350a2cb6	ROYAL	ROYAL	Etherscan 	18	false	false	false	true	true	false
 50-Tokens:ERC20	0xc08512927d12348f6620a698105e1baac6ecd911	GMO JPY	GYEN	Rotki	6	false	false	false	true	true	false
@@ -19097,7 +19103,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0xc343f099d3e41aa5c1b59470450e21e92e2d840b	Verime Mobile	VME	On chain	18	false	false	false	true	true	false
 31-Gitcoin:Grants	0xc345b617024ac3dc6e792455cf7f7ad7e6ccda2a	Grant 2974 - Ethereum Lists		https://gitcoin.co/grants/2974/ethereum-lists		false	false	false	false	false	false
 90-Individuals:Twitter	0xc34724ae12c71bc35afd3638d689d31556477350	PNajgaGihn4ALWm		banteg on twitter		false	false	false	false	false	false
-31-Gitcoin:Core	0xc34745b3852df32d5958be88df2bee0a83474001	GG19 - Web3 Social - community - OP - 22500		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0xc34745b3852df32d5958be88df2bee0a83474001	GG19 - Web3 Social - community - OP - 22500		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 50-Tokens:ERC20	0xc34993c9adf6a5ab3b4ca27dc71b9c7894a53974	Curve.fi Factory Crypto Pool: CRV/frxETH	CRVfrxETH-f	Rotki	18	false	false	false	true	true	false
 31-Gitcoin:Grants	0xc34a86a20118644b454e9c7808a53c29df3483ac	Grant 2826 - Dev Launchers - Accessible Tech Training At Scale		https://gitcoin.co/grants/2826/dev-launchers-accessible-tech-training-at-scale		false	false	false	false	false	false
 31-Gitcoin:Grants	0xc34ad4a95adcd9021182fd5607ed822db738e7c4	Grant 1183 Web3bridge		https://gitcoin.co/grants/1183/web3bridge		false	false	false	false	false	false
@@ -19373,7 +19379,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0xc5fa3ccb3915e5a8e32ab8c9714dfd240b19510c	miomiomiow2		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0xc5fb36dd2fb59d3b98deff88425a3f425ee469ed	Dejitaru Tsuka	TSUKA	Rotki	9	false	false	false	true	true	false
 31-Giveth:Project	0xc5fc0e94a7b512912936ba932b04b856d835a2cb	Beverly Bootstraps		Tokenomics		false	false	false	false	false	false
-31-Gitcoin:Core	0xc5fdf5cff79e92fac1d6efa725c319248d279200	GG18 - Token Engineering - community - OP - 25000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0xc5fdf5cff79e92fac1d6efa725c319248d279200	GG18 - Token Engineering - community - OP - 25000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 31-Giveth:Project	0xc6029992e15a93c96b044fcfaf060d2d03c93966	Psychedelic Science Funders Collaborative		Tokenomics		false	false	false	false	false	false
 31-Giveth:Project	0xc6055be8996ad6da60269949b95744131bf1595c	FOXG1 Research Foundation		Tokenomics		false	false	false	false	false	false
 90-Individuals:Twitter	0xc60a372bc3e64cc5682238a7cc03e2325ac1d65e	tung0305tk		banteg on twitter		false	false	false	false	false	false
@@ -19716,7 +19722,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0xc990e227d2ed9af6b3afb42f7522c99a0ef1892d	DOGGY	DOGGY	On chain	18	false	false	false	true	true	false
 31-Giveth:Project	0xc99930e6eb59a373b3aafd1ad14e5aad90b3244f	B2THEWORLD, INC.		Tokenomics		false	false	false	false	false	false
 55-Defi	0xc999fb87aca383a63d804a575396f65a55aa5ac8	Yearn: StrategyCurveYCRVVoter		EtherScan.io		false	false	false	true	false	false
-31-Gitcoin:Core	0xc9a01d3d2505d9d2418dd2da64d06cf53fd403a0	GG19 - Ethereum.org - independent - OP - 5000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0xc9a01d3d2505d9d2418dd2da64d06cf53fd403a0	GG19 - Ethereum.org - independent - OP - 5000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 90-Individuals:Humanity DAO	0xc9a06469a723d0beb457e6fcdd7c41f6c9d61916	gvirtzm		https://www.humanitydao.org/humans		false	false	false	false	false	false
 30-Contracts	0xc9a1757a52f2e87a2144c8b8ec9cb075c8b50b35	Rabbids Proof-of-Plausible-Ownership	POPO	Etherscan 		false	false	false	true	false	true
 90-Individuals:Twitter	0xc9a1c1e99bc1880bee0564660aa5e02846141fc0	DY_the_God		banteg on twitter		false	false	false	false	false	false
@@ -20658,7 +20664,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 31-Giveth:Project	0xd306a9ba016a5e6a83802c150aa4c1a8fbdea676	Edinburgh Dog and Cat Home		Tokenomics		false	false	false	false	false	false
 60-Rotki	0xd306c124282880858a634e7396383ae58d37c79c	WastedLands	WAL	Rotki	18	false	false	false	false	false	false
 90-Individuals:Twitter	0xd309605c4680e94d4d39fa23f503232e5f7f20c2	billychehab		banteg on twitter		false	false	false	false	false	false
-31-Gitcoin:Core	0xd309defd59c0b8792b14197eaa40043d9625b22b	GG19 - Public Goods Africa - independent - OP - 5000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0xd309defd59c0b8792b14197eaa40043d9625b22b	GG19 - Public Goods Africa - independent - OP - 5000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 91-Early:Addresses	0xd30ecf8897af28bccf7e05250ea9e1e275ee41d4	Early_Partners_003		Ether Camp		false	false	false	false	false	false
 90-Individuals:Humanity DAO	0xd3133698479c52a9ffe8fb0c200de0338be46080	breton		https://www.humanitydao.org/humans		false	false	false	false	false	false
 90-Individuals:Twitter	0xd31394f6515cc3ae023db56449e9975b1a92a339	Decentralla		banteg on twitter		false	false	false	false	false	false
@@ -21766,7 +21772,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 30-Contracts	0xddfecd15f89e174e9f01a5ece6c7fe6e811ccd33	TopCatBeachClub	TCBC	Etherscan 		false	false	false	true	false	true
 30-Contracts	0xde067d7be0d8f702fb4faa6a9f919092f235dd4a	lepricon.io	L3P	Etherscan 	18	false	false	false	true	true	false
 50-Tokens:ERC20	0xde075d9adbd0240b4462f124af926452ad0bac91	Bubblefong	BBF	Rotki	18	false	false	false	true	true	false
-30-Contracts	0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae	EthDev Multisig Wallet		Ethereum.org		false	false	false	true	false	false
+95-EF	0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae	Ethereum Foundation (EthDev MultiSig)		https://platform.spotonchain.ai		false	false	false	true	false	false
 30-Contracts	0xde11e2b7235fcb6e5039eadaaace5e4ff99c6b5b	Tintin Token	TTN	Etherscan 		false	false	false	true	true	false
 50-Tokens:ERC20	0xde12c7959e1a72bbe8a5f7a1dc8f8eef9ab011b3	DEI	DEI	Rotki	18	false	false	false	true	true	false
 30-Contracts	0xde157688a36ac94b6e5f52e99c196f79ac71cea3	interest-bearing DFD	ibDFD	Etherscan 	18	false	false	false	true	true	false
@@ -24074,7 +24080,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0xf5909392b46d50463501c90f2812ee9c04db2b0d	realGina2333		banteg on twitter		false	false	false	false	false	false
 31-Gitcoin:Grants	0xf5913759b449fae8900d61f7116d451d200c60f7	Grant 0784 Add Colony DAOs to Deep DAO		https://gitcoin.co/grants/784/add-colony-daos-to-deep-dao		false	false	false	false	false	false
 50-Tokens:ERC721	0xf5918382dd20ecba89747c50f80fb7f9f1e0524c	Rainbow Rolls	ROLLS	On chain	18	false	false	false	true	true	true
-31-Gitcoin:Core	0xf591e42dfdfe8e62c2085ccaadfe05f84d89d0c6	GG18 - Meta Pool LatAm - community - OP - 25000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	true	false	false	false	false
+31-Gitcoin:Core	0xf591e42dfdfe8e62c2085ccaadfe05f84d89d0c6	GG18 - Meta Pool LatAm - community - OP - 25000		https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv		false	false	false	false	false	false
 31-Gitcoin:Grants	0xf592ee0e3a20ddd65882e0fe6bfbb4b465a98ae4	Grant 1862 Peeker Bot		https://gitcoin.co/grants/1862/peeker-bot		false	false	false	false	false	false
 90-Individuals:Twitter	0xf596703d77f7e507d184772fa131af0bca149898	SnailPrincessCh		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0xf59ae934f6fe444afc309586cc60a84a0f89aaea	Polkadex	PDEX	Rotki	18	false	false	false	true	true	false
@@ -24667,7 +24673,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0xfb66321d7c674995dfcc2cb67a30bc978dc862ad	Pepe 2.0	PEPE2.0	Rotki	18	false	false	false	true	true	false
 90-Individuals:Humanity DAO	0xfb66c4c95eeb5fbef5eacf71bb74eae0d7181a24	nedahashemi1		https://www.humanitydao.org/humans		false	false	false	false	false	false
 90-Individuals:Twitter	0xfb6791a51b0a28b9d24ac844f25698b1387d582e	twindoges		banteg on twitter		false	false	false	false	false	false
-50-Tokens:ERC20	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Ethereum Tip Jar	TIP	TrueBlocks.io		false	false	false	true	false	false
+95-EF	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Ethereum Foundation (Tip Jar)		https://platform.spotonchain.ai		false	false	false	true	false	false
 50-Tokens:ERC20	0xfb6c3360e9c069ee48c9e1e4c6b3169427c9b84b	Gaia Coin	Gaia	On chain	18	false	false	false	true	true	false
 31-Gitcoin:Grants	0xfb6f8d5dd687e77aa9275a1cb397da3c23aaf342	Grant 1385 Compost		https://gitcoin.co/grants/1385/compost		false	false	false	false	false	false
 60-Rotki	0xfb7400707df3d76084fbeae0109f41b178f71c02	Shadows	DOWS	Rotki	18	false	false	false	false	false	false
@@ -24942,6 +24948,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0xfe08296a7439e75cf6ff84894af3f86e93458f13	Mao_HASH		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0xfe09e53a81fe2808bc493ea64319109b5baa573e	FARM_WETH	fWETH	Rotki	18	false	false	false	true	true	false
 90-Individuals:Twitter	0xfe0bda2dc6df8fae1863f272ab95ce24ac070091	amosq123		banteg on twitter		false	false	false	false	false	false
+50-Tokens:ERC20	0xfe0c30065b384f05761f15d0cc899d4f9f9cc0eb	ether.fi governance token	ETHFI	On chain	18	false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0xfe0e35969f6a770cc520d8562a4426bb51cb71d0	ivglavas		Gitcoin Website		false	false	false	false	false	false
 31-Giveth:Project	0xfe14ab6d9448d391057016fa0faf987ea4bffb11	Habitat for Humanity of Bucks County		Tokenomics		false	false	false	false	false	false
 50-Tokens:ERC20	0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6	Synth sBTC	sBTC	On chain	18	false	false	false	true	true	false
@@ -24989,6 +24996,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0xfe76be9cec465ed3219a9972c21655d57d21aec6	PalletOneToken	PTN	On chain	18	false	false	false	true	true	false
 90-Individuals:DevCon2	0xfe7ccac1c81498e20281916ca9dcc939f5f2462c	axic		DevCon2 Token Contract		false	false	false	false	false	false
 90-Individuals:Twitter	0xfe891edd0dccd1e9be1df12fa20e6e4c304ec31f	0xYond		banteg on twitter		false	false	false	false	false	false
+30-Contracts	0xfe89cc7abb2c4183683ab71653c4cdc9b02d44b7	ENS DAO Wallet				false	false	false	true	false	false
 50-Tokens:ERC20	0xfe8a3837cff919c800bdc5d1ac6136f84497d679	UNI yVault	yvUNI	Rotki	18	false	false	false	true	true	false
 90-Individuals	0xfe8ad7dd2f564a877cc23feea6c0a9cc2e783715	Jeffrey Wylcke		On chain		false	false	false	true	false	false
 90-Individuals:Twitter	0xfe8b8ca3ef2bcda6175bc798c634c4ca5276d50d	DigitsCapital		banteg on twitter		false	false	false	false	false	false
