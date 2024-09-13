@@ -9,49 +9,52 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-func parseArgs() (ok bool, action Action) {
+func ParseArgs() *App {
 	if len(os.Args) < 2 {
-		printError("not enough arguments")
-		printHelp()
-		return false, ""
+		printHelp(fmt.Errorf("not enough arguments"))
 	}
+
+	app := NewApp()
 
 	switch os.Args[1] {
 	case "--help", "-h":
-		printHelp()
-		return false, ""
+		printHelp(nil)
+
 	case "--autoname", "--delete", "--undelete", "--remove":
 		if len(os.Args) != 3 {
-			printError("'" + os.Args[1] + "' accepts only a single argument: address")
-			printHelp()
-			return false, ""
+			printHelp(fmt.Errorf("'" + os.Args[1] + "' expects an address"))
 		}
+
 		addr := os.Args[2]
 		if !base.IsValidAddress(addr) {
-			printError("Invalid address: " + addr)
-			printHelp()
-			return false, ""
+			printHelp(fmt.Errorf("invalid address: " + addr))
 		}
-		return true, Action(strings.TrimPrefix(os.Args[1], "--"))
 
-	case "--clean", "--pin", "--publish":
-		return true, Action(strings.TrimPrefix(os.Args[1], "--"))
+		app.action = Action(strings.TrimPrefix(os.Args[1], "--"))
+		return app
+
+	case "--clean", "--publish":
+		app.action = Action(strings.TrimPrefix(os.Args[1], "--"))
+		return app
 
 	default:
 		if len(os.Args) < 3 {
-			printError("not enough arguments (missing address, name, or both)")
-			printHelp()
-			return false, ""
+			printHelp(fmt.Errorf("not enough arguments (missing address, name, or both)"))
 		}
+
 		for _, arg := range os.Args {
-			if arg == "--autoname" || arg == "--delete" || arg == "--undelete" || arg == "--remove" {
-				printError("'" + arg + "', if present, must appear first in the argument list")
-				printHelp()
-				return false, ""
+			if arg == "--autoname" ||
+				arg == "--delete" ||
+				arg == "--undelete" ||
+				arg == "--remove" ||
+				arg == "--clean" ||
+				arg == "--publish" {
+				printHelp(fmt.Errorf("'" + arg + "', if present, must appear first in the argument list"))
 			}
 		}
-		return true, ""
 	}
+
+	return app
 }
 
 func getValue(index int, field, def string) (base.Address, string, uint64) {

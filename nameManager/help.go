@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 )
 
-func printHelp() {
+func printHelp(err error) {
 	helpText := `
 Usage: nameManager [options] address name [tags [source [symbol [decimals]]]]
        nameManager --autoname address
@@ -36,10 +36,11 @@ Options:
   --publish    Share any customized names you've created with the community via the Unchained Index
   --clean      Clean the names database including sorting and removing dups (if any)
 `
-	fmt.Fprintf(os.Stderr, "%s", helpText)
-	os.Exit(0)
-}
 
-func printError(msg string) {
-	fmt.Fprintf(os.Stderr, "%sError: %s%s\n", colors.Red, msg, colors.Off)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%sError: %s%s\n", colors.Red, err.Error(), colors.Off)
+	}
+	fmt.Fprintf(os.Stderr, "%s", helpText)
+
+	os.Exit(0)
 }

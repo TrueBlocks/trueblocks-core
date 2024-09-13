@@ -5,41 +5,40 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/crud"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v3"
 )
 
 func main() {
-	if ok, action := parseArgs(); !ok {
-		return
-	} else {
-		if os.Getenv("TB_NAMEMANAGER_REGULAR") == "true" {
-			if !usage.QueryUser("Are you sure you want to operate against the Regular names database (Y/n)?", "Quitting...") {
-				os.Exit(0)
-			}
-		}
+	app := ParseArgs()
 
-		switch action {
-		case AutoName:
-			autoName(os.Args)
-			return
-		case Delete:
-			deleteName(os.Args)
-			return
-		case Undelete:
-			undeleteName(os.Args)
-			return
-		case Remove:
-			removeNode(os.Args)
-			return
-		case Clean:
-			cleanNames()
-			return
-		case Publish:
-			publishNames()
-			return
+	if app.database == names.DatabaseRegular {
+		if !usage.QueryUser("Are you sure you want to operate against the Regular names database (Y/n)?", "Quitting...") {
+			os.Exit(0)
 		}
+	}
+
+	switch app.action {
+	case AutoName:
+		app.AutoName(os.Args)
+		return
+	case Delete:
+		app.DeleteName(os.Args)
+		return
+	case Undelete:
+		app.UndeleteName(os.Args)
+		return
+	case Remove:
+		app.RemoveName(os.Args)
+		return
+	case Clean:
+		app.CleanNames()
+		return
+	case Publish:
+		app.PublishNames()
+		return
 	}
 
 	var name types.Name
@@ -54,7 +53,8 @@ func main() {
 	opts := sdk.NamesOptions{}
 	cd := crud.CrudFromName(name)
 	if names, _, err := opts.ModifyName(crud.Update, cd); err != nil {
-		printError(err.Error())
+		printHelp(err)
+
 	} else {
 		for _, name := range names {
 			fmt.Printf("Names: %v\n", name.String())

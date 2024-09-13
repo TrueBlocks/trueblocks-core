@@ -9,7 +9,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 )
 
-func publishNames() {
+// PublishNames implements the chifra names --publish command.
+func (a *App) PublishNames() {
 	filePath := filepath.Join(config.MustGetPathToChainConfig("mainnet"), string(names.DatabaseCustom))
 	if os.Getenv("TB_NAMEMANAGER_REGULAR") == "true" {
 		filePath = filepath.Join(config.MustGetPathToChainConfig("mainnet"), string(names.DatabaseRegular))

@@ -21,94 +21,79 @@ const (
 	Publish  Action = "publish"
 )
 
-func autoName(args []string) {
+// AutoName implements the chifra names --autoname <address> command.
+func (a *App) AutoName(args []string) {
 	opts := sdk.NamesOptions{
-		Regular: os.Getenv("TB_NAMEMANAGER_REGULAR") == "true",
+		Regular: a.IsRegular(),
 	}
 	address := base.HexToAddress(args[2])
 	if result, _, err := opts.NamesAutoname(address); err != nil {
-		printError(err.Error())
+		printHelp(err)
 	} else {
-		sortNames()
 		for _, name := range result {
 			fmt.Printf("Name auto updated: %v\n", name.String())
 		}
 	}
 }
 
-func deleteName(args []string) {
+// DeleteName implements the chifra names --delete <address> command.
+func (a *App) DeleteName(args []string) {
 	opts := sdk.NamesOptions{
 		Regular: os.Getenv("TB_NAMEMANAGER_REGULAR") == "true",
 	}
 	address := base.HexToAddress(args[2])
 	cd := crud.CrudFromName(types.Name{Address: address})
 	if result, _, err := opts.ModifyName(crud.Delete, cd); err != nil {
-		printError(err.Error())
+		printHelp(err)
 	} else {
-		sortNames()
 		for _, name := range result {
 			fmt.Printf("Name deleted: %v\n", name.String())
 		}
 	}
 }
 
-func undeleteName(args []string) {
+// UndeleteName implements the chifra names --undelete <address> command.
+func (a *App) UndeleteName(args []string) {
 	opts := sdk.NamesOptions{
 		Regular: os.Getenv("TB_NAMEMANAGER_REGULAR") == "true",
 	}
 	address := base.HexToAddress(args[2])
 	cd := crud.CrudFromName(types.Name{Address: address})
 	if result, _, err := opts.ModifyName(crud.Undelete, cd); err != nil {
-		printError(err.Error())
+		printHelp(err)
 	} else {
-		sortNames()
 		for _, name := range result {
 			fmt.Printf("Name undeleted: %v\n", name.String())
 		}
 	}
 }
 
-func removeNode(args []string) {
+// RemoveName implements the chifra names --remove <address> command.
+func (a *App) RemoveName(args []string) {
 	opts := sdk.NamesOptions{
 		Regular: os.Getenv("TB_NAMEMANAGER_REGULAR") == "true",
 	}
 	address := base.HexToAddress(args[2])
 	cd := crud.CrudFromName(types.Name{Address: address})
 	if result, _, err := opts.ModifyName(crud.Remove, cd); err != nil {
-		printError(err.Error())
+		printHelp(err)
 	} else {
-		sortNames()
 		for _, name := range result {
 			fmt.Printf("Name removed: %v\n", name.String())
 		}
 	}
 }
 
-func cleanNames() {
+// CleanNames implements the chifra names --clean command.
+func (a *App) CleanNames() {
 	opts := sdk.NamesOptions{
 		Regular: os.Getenv("TB_NAMEMANAGER_REGULAR") == "true",
 	}
 	if msgs, _, err := opts.NamesClean(); err != nil {
-		printError(err.Error())
+		printHelp(err)
 	} else {
 		for i, msg := range msgs {
 			fmt.Println(i, msg.String())
 		}
 	}
-}
-
-func sortNames() {
-	// fn :=
-	// opts := sdk.NamesOptions{
-	// 	Regular: os.Getenv("TB_NAMEMANAGER_REGULAR") == "true",
-	// 	Custom:  os.Getenv("TB_NAMEMANAGER_REGULAR") != "true",
-	// 	DryRun:  true,
-	// }
-	// if names, _, err := opts.Names(); err != nil {
-	// 	printError(err.Error())
-	// } else {
-	// 	for _, name := range names {
-	// 		fmt.Println(name)
-	// 	}
-	// }
 }

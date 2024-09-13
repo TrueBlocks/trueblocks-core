@@ -42,6 +42,10 @@ github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAE
 github.com/StackExchange/wmi v0.0.0-20180116203802-5d049714c4a6/go.mod h1:3eOhrUMpNV+6aFIbp5/iudMxNCF27Vw2OZgy4xEx0Fg=
 github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240901212707-3b0228642466 h1:DNH7mYWEEehKLRiFjBoiMoZJMdpuVNiLnFvsstQW2To=
 github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240901212707-3b0228642466/go.mod h1:YKuaek8RSyh681TFMK6Ua8MsHtuY+c1VJWi78Y35+J8=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240906195947-7a9af20ce595 h1:NCGoHSqcQonbS+uGiuIhvdMI80bw1OFqVsz0gXAGLIg=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240906195947-7a9af20ce595/go.mod h1:YKuaek8RSyh681TFMK6Ua8MsHtuY+c1VJWi78Y35+J8=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240910133800-32057ca62fe7 h1:M1KM1VwdlwgXLXi2ETH4spbwssfkdK2ux/qvC5wv2AM=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240910133800-32057ca62fe7/go.mod h1:YKuaek8RSyh681TFMK6Ua8MsHtuY+c1VJWi78Y35+J8=
 github.com/TrueBlocks/trueblocks-sdk/v3 v3.3.2 h1:SVemhtXxeYuOV/dQlQ/ECr66RiIPBS38rZ+WCqrXDSQ=
 github.com/TrueBlocks/trueblocks-sdk/v3 v3.3.2/go.mod h1:GFP6A7O1tNgun1f/CrrhJkro9cbqu5t1prt5aboKqJU=
 github.com/VictoriaMetrics/fastcache v1.6.0/go.mod h1:0qHz5QP0GMX4pfmMA/zt5RgfNuXJrTP0zS7DqpHGGTw=

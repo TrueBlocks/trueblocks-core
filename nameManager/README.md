@@ -7,7 +7,7 @@
 
 ```bash
 cd ./nameManager
-go build -o nameManager main.go actions.go help.go parseArgs.go
+go build -o nameManager ./...
 ./nameManager --help
 ```
 
