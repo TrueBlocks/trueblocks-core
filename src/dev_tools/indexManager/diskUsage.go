@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+	"sync"
 )
 
+// DiskUsage represents the disk usage information for a single partition
 type DiskUsage struct {
 	Alias     string
 	Machine12 string
@@ -18,64 +20,84 @@ type DiskUsage struct {
 	UsedValue int64
 }
 
-func getDiskUsage() []DiskUsage {
-	machines := []string{"wildmolasses.local", "linux.local", "laptop.local", "desktop.local", "unchainedindex.io", "192.34.63.136"}
-	aliases := map[string]string{
-		"laptop.local":       "1.0-Laptop",
-		"desktop.local":      "2.0-Desktop",
-		"wildmolasses.local": "4.0-WildMolasses",
-		"linux.local":        "3.0-Linux",
-		"unchainedindex.io":  "5.0-UnchainedIndex",
-		"192.34.63.136":      "6.0-Testing",
+// getDiscUsage gathers disk usage information from multiple machines concurrently
+// It returns a slice of DiskUsage structs and an error if any occurred during the process
+func getDiscUsage(configPath string) ([]DiskUsage, error) {
+	config, err := loadConfig(configPath)
+	if err != nil {
+		return nil, fmt.Errorf("error loading configuration: %w", err)
 	}
 
-	// Create a map to store unique records
+	var mu sync.Mutex
+	var errors []error
+	var wg sync.WaitGroup
+	resultChan := make(chan []DiskUsage, len(config.Machines))
+	for _, machine := range config.Machines {
+		wg.Add(1)
+		go func(mach string) {
+			defer wg.Done()
+			data, err := gatherDiskUsage(mach)
+			if err != nil {
+				mu.Lock()
+				errors = append(errors, fmt.Errorf("error gathering data from %s: %w", mach, err))
+				mu.Unlock()
+				return
+			}
+			resultChan <- processMachineData(mach, data, config.Aliases[mach])
+		}(machine)
+	}
+
+	go func() {
+		wg.Wait()
+		close(resultChan)
+	}()
+
+	var allUsages []DiskUsage
+	for result := range resultChan {
+		allUsages = append(allUsages, result...)
+	}
+
+	sort.SliceStable(allUsages, func(i, j int) bool {
+		if allUsages[i].Alias == allUsages[j].Alias {
+			return allUsages[i].SizeValue < allUsages[j].SizeValue
+		}
+		return allUsages[i].Alias < allUsages[j].Alias
+	})
+
+	if len(errors) > 0 {
+		return allUsages, fmt.Errorf("encountered %d errors while gathering disk usage: %v", len(errors), errors)
+	}
+
+	return allUsages, nil
+}
+
+// processMachineData parses the raw disk usage data for a single machine
+// It returns a slice of DiskUsage structs for the given machine
+func processMachineData(machine, data, alias string) []DiskUsage {
+	var usages []DiskUsage
 	uniqueRecords := make(map[string]DiskUsage)
 
-	// Loop through each machine and gather disk usage data
-	for _, machine := range machines {
-		data, err := gatherDiskUsage(machine)
-		if err != nil {
-			fmt.Printf("Error gathering data from %s: %v\n", machine, err)
+	lines := strings.Split(strings.TrimSpace(data), "\n")
+	for _, line := range lines[1:] {
+		fields := strings.Fields(line)
+		if len(fields) < 5 {
+			continue
+		}
+		usageValue := parsePercentage(fields[4])
+
+		// Skip rows with invalid or zero usage
+		if usageValue == 0 {
 			continue
 		}
 
-		// Parse and store the gathered data
-		lines := strings.Split(strings.TrimSpace(data), "\n")
-		for _, line := range lines[1:] {
-			fields := strings.Fields(line)
-			if len(fields) < 5 {
-				continue
-			}
-			usageValue := parsePercentage(fields[4])
-
-			// Skip rows with invalid or zero usage
-			if usageValue == 0 {
-				continue
-			}
-
-			// Only process rows with more than 5% usage
-			if usageValue > 5 {
-				if len(fields) >= 6 && strings.Contains(fields[0], "/dev/") {
-					key := fmt.Sprintf("%s|%s", machine, fields[1])
-					usedValue := parseSize(fields[2]) // Used value in kilobytes
-					alias := aliases[machine]
-					if existing, found := uniqueRecords[key]; found {
-						// Keep the record with the highest used value
-						if usedValue > existing.UsedValue {
-							uniqueRecords[key] = DiskUsage{
-								Alias:     alias,
-								Machine12: machine,
-								Partition: fields[0],
-								Size:      fields[1],
-								Used:      fields[2],
-								Available: fields[3],
-								Usage:     fields[4],
-								SizeValue: parseSize(fields[1]),
-								UsedValue: usedValue,
-							}
-						}
-					} else {
+		// Only process rows with more than 5% usage
+		if usageValue > 5 {
+			if len(fields) >= 6 && strings.Contains(fields[0], "/dev/") {
+				key := fmt.Sprintf("%s|%s", machine, fields[1])
+				usedValue := parseSize(fields[2]) // Used value in kilobytes
+				if existing, found := uniqueRecords[key]; found {
+					// Keep the record with the highest used value
+					if usedValue > existing.UsedValue {
 						uniqueRecords[key] = DiskUsage{
 							Alias:     alias,
 							Machine12: machine,
@@ -88,22 +110,53 @@ func getDiskUsage() []DiskUsage {
 							UsedValue: usedValue,
 						}
 					}
+				} else {
+					uniqueRecords[key] = DiskUsage{
+						Alias:     alias,
+						Machine12: machine,
+						Partition: fields[0],
+						Size:      fields[1],
+						Used:      fields[2],
+						Available: fields[3],
+						Usage:     fields[4],
+						SizeValue: parseSize(fields[1]),
+						UsedValue: usedValue,
+					}
 				}
 			}
 		}
 	}
 
-	var allUsages []DiskUsage
 	for _, usage := range uniqueRecords {
-		allUsages = append(allUsages, usage)
+		usages = append(usages, usage)
 	}
 
-	sort.SliceStable(allUsages, func(i, j int) bool {
-		if allUsages[i].Alias == allUsages[j].Alias {
-			return allUsages[i].SizeValue < allUsages[j].SizeValue
-		}
-		return allUsages[i].Alias < allUsages[j].Alias
-	})
+	return usages
+}
 
-	return allUsages
+type Config struct {
+	Machines []string
+	Aliases  map[string]string
+}
+
+// loadConfig returns a map of machine names to their aliases
+func loadConfig(path string) (Config, error) {
+	var config Config
+	config.Machines = []string{
+		"wildmolasses.local",
+		"linux.local",
+		"laptop.local",
+		"desktop.local",
+		"unchainedindex.io",
+		"192.34.63.136",
+	}
+	config.Aliases = map[string]string{
+		"laptop.local":       "1.0-Laptop",
+		"desktop.local":      "2.0-Desktop",
+		"wildmolasses.local": "4.0-WildMolasses",
+		"linux.local":        "3.0-Linux",
+		"unchainedindex.io":  "5.0-UnchainedIndex",
+		"192.34.63.136":      "6.0-Testing",
+	}
+	return config, nil
 }

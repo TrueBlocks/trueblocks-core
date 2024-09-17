@@ -7,7 +7,7 @@ import (
 )
 
 func getTitle() string {
-	fmtStr := `<html><head></head><body><center><table width="50%"><tr><td><h1>Disk Usage Report</h1>
+	fmtStr := `<html><head></head><body><center><table width="50%%"><tr><td><h1>Disk Usage Report</h1>
 
 Report generated on %s
 <p><p>
@@ -17,15 +17,15 @@ Report generated on %s
 }
 
 func headerRow() string {
-	return `  <table width="100%">
+	return `  <table style="border: 1px solid black" width="100%">
   <tr>
-    <th style="border-bottom: 1px solid black" valign="bottom" nowrap>Machine</th>
-    <th style="border-bottom: 1px solid black" valign="bottom" nowrap>System</th>
-    <th style="border-bottom: 1px solid black" valign="bottom" nowrap>Partition</th>
-    <th style="border-bottom: 1px solid black" valign="bottom" nowrap>Size</th>
-    <th style="border-bottom: 1px solid black" valign="bottom" nowrap>Used</th>
-    <th style="border-bottom: 1px solid black" valign="bottom" nowrap>Available</th>
-    <th style="border-bottom: 1px solid black" valign="bottom" nowrap>Pct</th>
+    <th width="23%" style="border-bottom: 1px solid black" valign="bottom" nowrap>Machine</th>
+    <th width="23%" style="border-bottom: 1px solid black" valign="bottom" nowrap>System</th>
+    <th width="14%" style="border-bottom: 1px solid black" valign="bottom" nowrap>Partition</th>
+    <th width="10%" style="border-bottom: 1px solid black" valign="bottom" nowrap>Size</th>
+    <th width="10%" style="border-bottom: 1px solid black" valign="bottom" nowrap>Used</th>
+    <th width="10%" style="border-bottom: 1px solid black" valign="bottom" nowrap>Available</th>
+    <th width="10%" style="border-bottom: 1px solid black" valign="bottom" nowrap>Pct</th>
   </tr>
 `
 }
@@ -57,15 +57,16 @@ func dataRow(usage *DiskUsage, lastMachine string) (string, string) {
 		usageColor = "background-color: #ffffcc;" // Pale yellow
 	}
 
-	fmtStr := `  <tr>
-    <td nowrap valign='top'>%s</td>
-    <td nowrap valign='top'>%s</td>
-    <td nowrap valign='top'>%s</td>
-    <td nowrap valign='top'>%s</td>
-    <td nowrap valign='top'>%s</td>
-    <td nowrap valign='top'>%s</td>
-    <td nowrap valign='top' style='%s'>%s</td>
-  </tr>
+	fmtStr := `
+<tr style="border-right: 1px solid black; border-left: 1px solid black; ">
+  <td nowrap valign="top">%s</td>
+  <td nowrap valign="top">%s</td>
+  <td nowrap valign="top">%s</td>
+  <td nowrap valign="top" style="text-align: right; padding-right: 10px;">%s</td>
+  <td nowrap valign="top" style="text-align: right; padding-right: 10px;">%s</td>
+  <td nowrap valign="top" style="text-align: right; padding-right: 10px;">%s</td>
+  <td nowrap valign="top" style="text-align: right; padding-right: 10px; %s">%s</td>
+</tr>
 `
 
 	ret += fmt.Sprintf(fmtStr,

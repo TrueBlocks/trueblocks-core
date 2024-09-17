@@ -69,7 +69,6 @@ func parseSize(sizeStr string) int64 {
 func parsePercentage(pctStr string) int64 {
 	// Check if the string ends with '%'
 	if !strings.HasSuffix(pctStr, "%") {
-		log.Printf("Invalid percentage value: %v", pctStr)
 		return 0
 	}
 
@@ -77,7 +76,6 @@ func parsePercentage(pctStr string) int64 {
 	pctStr = strings.TrimSuffix(pctStr, "%")
 	value, err := strconv.ParseInt(pctStr, 10, 64)
 	if err != nil {
-		log.Printf("Error parsing percentage: %v", err)
 		return 0
 	}
 	return value
