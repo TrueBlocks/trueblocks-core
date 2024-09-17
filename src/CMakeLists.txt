@@ -87,11 +87,13 @@ add_subdirectory(other/install)
 
 ADD_GO_INSTALLABLE_PROGRAM(chifra ${CMAKE_SOURCE_DIR}/apps/chifra ${BIN_DIR})
 ADD_GO_INSTALLABLE_PROGRAM(goMaker ${CMAKE_SOURCE_DIR}/dev_tools/goMaker ${BIN_DIR})
+ADD_GO_INSTALLABLE_PROGRAM(indexManager ${CMAKE_SOURCE_DIR}/dev_tools/indexManager ${BIN_DIR})
 if (NOT WIN32)
     ADD_GO_INSTALLABLE_PROGRAM(testRunner ${CMAKE_SOURCE_DIR}/dev_tools/testRunner ${BIN_DIR})
     ADD_GO_INSTALLABLE_PROGRAM(sdkFuzzer ${CMAKE_SOURCE_DIR}/dev_tools/sdkFuzzer ${BIN_DIR})
     add_dependencies(testRunner goMaker)
     add_dependencies(sdkFuzzer goMaker)
+    add_dependencies(indexManager goMaker)
     add_dependencies(chifra testRunner)
 endif()
 
