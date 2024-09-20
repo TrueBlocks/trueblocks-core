@@ -8,7 +8,10 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 type CompareState struct {
@@ -22,9 +25,9 @@ type CompareState struct {
 	// failB    int
 }
 
-// CheckManifest takes two arrays (either onDisc vs. LocalManifest, onDisc vs. RemoteManifest, or LocalManifest
-// vs. RemoteManifest) and compares them for equality. If everything is up to date, all three arrays should
-// be identical. Only the block ranges are in the arrays.
+// CheckManifest takes two arrays (either onDisc vs. LocalManifest, onDisc vs. RemoteManifest,
+// or LocalManifest vs. RemoteManifest) and compares them for equality. If everything is up
+// to date, all three arrays should be identical. Only the block ranges are in the arrays.
 func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.ReportCheck) error {
 	comp := CompareState{
 		testMode: opts.Globals.TestMode,
@@ -46,7 +49,6 @@ func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.
 	return comp.checkArrays(report)
 }
 
-// TODO: Can this be made concurrent?
 func (comp *CompareState) checkArrays(report *types.ReportCheck) error {
 	marker := ""
 	if comp.testMode {
@@ -92,6 +94,73 @@ func (comp *CompareState) checkArrays(report *types.ReportCheck) error {
 		} else {
 			report.PassedCnt++
 		}
+	}
+
+	return nil
+}
+
+// CheckManContents spins through the manifest and makes sure all the
+// bloom and index CIDs are present. It does not check that the CIDs are available.
+func (opts *ChunksOptions) CheckManContents(man *manifest.Manifest, report *types.ReportCheck) error {
+	errs := []string{}
+
+	report.VisitedCnt += 3
+	report.CheckedCnt += 3
+
+	if !version.IsValidVersion(man.Version) {
+		errs = append(errs, "invalid version string "+opts.Tag)
+	} else {
+		report.PassedCnt++
+	}
+
+	if opts.Globals.Chain != man.Chain {
+		errs = append(errs, "different chains: globals("+opts.Globals.Chain+") manifest ("+man.Chain+")")
+	} else {
+		report.PassedCnt++
+	}
+
+	expectedSpec := config.SpecTags["trueblocks-core@v2.0.0-release"]
+	if expectedSpec != man.Specification.String() {
+		errs = append(errs, "invalid spec "+man.Specification.String())
+	} else {
+		report.PassedCnt++
+	}
+
+	for _, chunk := range man.Chunks {
+		report.VisitedCnt++
+		report.CheckedCnt++
+		if len(chunk.Range) == 0 {
+			errs = append(errs, "empty range")
+		} else {
+			report.PassedCnt++
+		}
+
+		report.VisitedCnt++
+		report.CheckedCnt++
+		hasBloom := len(chunk.BloomHash) > 0
+		hasIndex := len(chunk.IndexHash) > 0
+		bloomSize := chunk.BloomSize > 0
+		indexSize := chunk.IndexSize > 0
+		if hasBloom && hasIndex && bloomSize && indexSize {
+			report.PassedCnt++
+		} else {
+			if !hasBloom {
+				errs = append(errs, chunk.Range+" - missing bloom hash")
+			}
+			if !hasIndex {
+				errs = append(errs, chunk.Range+" - missing index hash")
+			}
+			if !bloomSize {
+				errs = append(errs, chunk.Range+" - missing bloom size")
+			}
+			if !indexSize {
+				errs = append(errs, chunk.Range+" - missing index size")
+			}
+		}
+	}
+
+	if len(errs) > 0 {
+		report.MsgStrings = append(report.MsgStrings, errs...)
 	}
 
 	return nil
