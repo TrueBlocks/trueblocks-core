@@ -24,6 +24,7 @@ cd %ROOT_DIR% && go work use .\examples\withStreaming
 cd %ROOT_DIR% && go work use .\src\apps\chifra
 cd %ROOT_DIR% && go work use .\src\node
 cd %ROOT_DIR% && go work use .\src\dev_tools\goMaker
+cd %ROOT_DIR% && go work use .\src\dev_tools\indexManager
 cd %ROOT_DIR% && go work use .\src\dev_tools\sdkFuzzer
 cd %ROOT_DIR% && go work use .\src\dev_tools\testRunner
 

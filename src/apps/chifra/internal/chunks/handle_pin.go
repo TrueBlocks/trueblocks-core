@@ -96,40 +96,49 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 			return rng1.First < rng2.First
 		})
 
-		for _, path := range fileList {
+		failCnt := 1.0
+		for i := 0; i < len(fileList); i++ {
+			sleep := opts.Sleep
+
+			path := fileList[i]
 			if opts.Globals.Verbose {
 				logger.Info("pinning path:", path)
 			}
+
 			local, remote, err := pinning.PinOneChunk(chain, path, opts.Remote)
 			if err != nil {
 				errorChan <- err
 				logger.Error("Pin failed:", path, err)
-			}
+				failCnt *= 2.
+				sleep = failCnt
+				i-- // try again after sleeping for a bit
+				logger.Info(colors.Yellow, "Sleeping for", sleep, "seconds then trying again.", colors.Off)
 
-			blMatches, idxMatches := matches(&local, &remote)
-			opts.matchReport(blMatches, local.BloomHash, remote.BloomHash)
-			opts.matchReport(idxMatches, local.IndexHash, remote.IndexHash)
-
-			if opts.Remote {
-				man.Chunks = append(man.Chunks, remote)
 			} else {
-				man.Chunks = append(man.Chunks, local)
-			}
-			_ = man.SaveManifest(chain, outPath)
+				blMatches, idxMatches := matches(&local, &remote)
+				opts.matchReport(blMatches, local.BloomHash, remote.BloomHash)
+				opts.matchReport(idxMatches, local.IndexHash, remote.IndexHash)
 
-			if opts.Globals.Verbose {
 				if opts.Remote {
-					fmt.Println("result.Remote:", remote.String())
+					man.Chunks = append(man.Chunks, remote)
 				} else {
-					fmt.Println("result.Local:", local.String())
+					man.Chunks = append(man.Chunks, local)
+				}
+				_ = man.SaveManifest(chain, outPath)
+
+				if opts.Globals.Verbose {
+					if opts.Remote {
+						fmt.Println("result.Remote:", remote.String())
+					} else {
+						fmt.Println("result.Local:", local.String())
+					}
 				}
 			}
 
-			sleep := opts.Sleep
 			if sleep > 0 {
 				ms := time.Duration(sleep*1000) * time.Millisecond
 				if !opts.Globals.TestMode {
-					logger.Info(fmt.Sprintf("Sleeping for %g seconds", sleep))
+					logger.Info("Sleeping for", sleep, "seconds")
 				}
 				time.Sleep(ms)
 			}
