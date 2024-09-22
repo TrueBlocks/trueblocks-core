@@ -6,6 +6,7 @@ package initPkg
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -27,7 +28,12 @@ func (opts *InitOptions) HandleInit(rCtx *output.RenderCtx) error {
 	// TODO: BOGUS - IF THE SCRAPER IS RUNNING, THIS WILL CAUSE PROBLEMS
 	// Make sure that the temporary scraper folders are empty, so that, when the
 	// scraper starts, it starts on the correct block.
-	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
+	cleanList := []string{"ripe", "unripe", "maps", "staging"}
+	isHeadless := os.Getenv("TB_NODE_HEADLESS") == "true"
+	if isHeadless {
+		cleanList = []string{"ripe", "unripe"}
+	}
+	_ = file.CleanFolder(chain, config.PathToIndex(chain), cleanList)
 
 	existing, err := manifest.LoadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 	if err != nil {

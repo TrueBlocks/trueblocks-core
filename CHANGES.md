@@ -2,11 +2,219 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
-## v4.0.0 - Getting Serious - Indiana (2024/09/01)
+## v3.5.0 - MultiChain Scraper - Jefferson (2024/09/22)
 
 **Summary**
 
-- Bumped version to 4.0.0
+- Bumps version to 3.5.0 for all repos (that is all submodules are tagged with v3.5.0)
+- Adds indexManager dev_tool (currently only checks disc usage).
+- Improves "headless" modes for both chifra scrape and chifra init to produce much better log messages.
+- Improves greatly `trueblocks-node` to allow for scraping mulitple chains at the same time in headless mode.
+- Improves chifra chunks index --pin to better recover from errors during pinning (in fact, it didn't work previously).
+- Small updates to documentation for SDK, node, and examples.
+- Added dev_tool called indexManager which currently only reports on disc usage, but will eventually report on index status.
+
+## SDK
+
+- Minor changes to improve DX.
+
+## Changes to the Unchained Index Specification
+
+- No changes.
+
+## Breaking Changes
+
+- Added trueblocks-node which runs the scraper as a separate process. This hints at a future where `chifra scrape` is deprecated. It is not yet deprecated, but it will be one day. The same applies to chifra monitors --watch which will also eventually be part of trueblocks-node. (Not a breaking change, just hinting at a future breaking change.)
+
+## System Wide Changes
+
+- Better headless mode for chifra init and chifra scrape
+
+## Changes to Data Models
+
+### Modified data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### New data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### Removed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### Renamed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+## Tool Specific Changes
+
+**chifra list**
+
+- No changes.
+
+**chifra export**
+
+- No changes.
+
+**chifra monitors**
+
+- No changes.
+
+**chifra names**
+
+- No changes.
+
+**chifra abis**
+
+- No changes.
+
+**chifra blocks**
+
+- No changes.
+
+**chifra transactions**
+
+- No changes.
+
+**chifra receipts**
+
+- No changes.
+
+**chifra logs**
+
+- No changes.
+
+**chifra traces**
+
+- No changes.
+
+**chifra when**
+
+- No changes.
+
+**chifra state**
+
+- No changes.
+
+**chifra tokens**
+
+- No changes.
+
+**chifra config**
+
+- No changes.
+
+**chifra status**
+
+- No changes.
+
+**chifra daemon**
+
+- No changes.
+
+**chifra scrape**
+
+- Adds TB_NODE_HEADLESS environment variable to chifra scrape to allow for headless operation of the init command.
+- Greatly improves logging in chifra scrape to make it easier to run under headless mode.
+
+**chifra chunks**
+
+- Improves chifra chunks manifest --pin to correctly recover from errors generated during pinning. Previously, an error would cause the manifest to contain empty CIDs for the missed pin. Now, the process will not continue until the error is resolved.
+- Improves chifra chunks index --check to check for empty CIDs in the manifest. Previously, the check would not catch empty CIDs.
+
+**chifra init**
+
+- Adds TB_NODE_HEADLESS environment variable to chifra init to allow for headless operation of the init command.
+
+**chifra explore**
+
+- No changes.
+
+**chifra slurp**
+
+- No changes.
+
+**makeClass**
+
+- No changes.
+
+**testRunner**
+
+- No changes.
+
+## Pull Requests (33)
+
+<!--
+gh pr list --search "is:pr is:closed closed:>2024-09-22" --limit 300 --state merged | cut -f1,2 | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- #3888 Various changes to run scraper and init in headlessMode
+- #3886 Adds a devtool to check disc usage on various computers
+- #3885 Updates go.mods to latest release
+- #3884 Develop
+- #3882 Updates node
+- #3880 Updates a few names
+- #3878 Feature/better manifests
+- #3876 Submodualarizatooor - moves a lot of code into submodules for MUCH easier mangement
+- #3875 Version 3.3.0
+- #3874 Tries to start using SemiVers for our go.mod files
+- #3871 Starts to improve chifra init
+- #3870 Cleans up name editing
+- #3869 Extends goMaker to generate sorting code for various types
+- #3866 Adds --staged to chifra monitors
+- #3865 Adds --count to chifra monitors
+- #3863 Adds hasConstructor and hasFallback to Abi type; fixes tests
+- #3862 Feature/better sorting
+- #3860 Feature/chifra abis count
+- #3858 Feature/better chunk data
+- #3857 Feature/easier name editing in sdk
+- #3856 Fixes a bug related to turning off loggers
+- #3853 Fix/better use of filepath
+- #3851 Assigns part type to names
+- #3850 Feature/chifra chunks counts
+- #3848 Adds name to monitor type and makes marshable
+- #3847 Moves Parts from names package to types package because we need it in…
+- #3846 Feature/improve chifra abis list
+- #3845 Adds chifra abis --list for use in miniDapp
+- #3844 Cleans up some caching code including allowing for filename caches (such as miniDapp files)
+- #3842 Fix/better auto gen 2
+- #3840 Small improvement to auto-code-gen
+- #3839 chore: fix some comments
+- #3838 Updates go-mods and adds some names
+
+## Issues Closed (0)
+
+<!--
+gh issue list --search "closed:>2024-09-22 is:closed is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- None
+
+## Issues Opened (3)
+
+<!--
+gh issue list --search "created:>2024-09-22 is:open is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/'  | tr '\t' ' '
+-->
+
+- #3883 Add this to every .gitignore at the top of all repos
+- #3881 Minimum cmake version required is 3.20 - should be better documented (or better yet - automatically fail the build)
+- #3879 chifra init
+
+## v3.4.0 - Getting Serious - Indiana (2024/09/01)
+
+**Summary**
+
+- Bumped version to 3.4.0
 - Much better support for SDK
 - First working version of Browse (separate repo)
 - First semi-working version of TrueBlocks-Node (separate repo)

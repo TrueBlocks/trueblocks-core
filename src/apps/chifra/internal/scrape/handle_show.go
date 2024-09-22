@@ -54,6 +54,8 @@ func (opts *ScrapeOptions) HandleScrape(rCtx *output.RenderCtx) error {
 		provider = "--rpc-provider--"
 	}
 
+	isHeadless := os.Getenv("TB_NODE_HEADLESS") == "true"
+
 	msg1 := fmt.Sprintf("Scraping %s", chain)
 	msg2 := fmt.Sprintf("  Rpc %s", provider)
 	msg3 := fmt.Sprintf("  Path %s", path)
@@ -67,10 +69,12 @@ func (opts *ScrapeOptions) HandleScrape(rCtx *output.RenderCtx) error {
 		}
 		return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 	} else {
-		logger.Info(msg1)
-		logger.Info(msg2)
-		logger.Info(msg3)
-		logger.Info(msg4)
+		if !isHeadless {
+			logger.Info(msg1)
+			logger.Info(msg2)
+			logger.Info(msg3)
+			logger.Info(msg4)
+		}
 	}
 
 	// Handle Ctr-C, docker stop and docker compose down (provided they
@@ -143,6 +147,7 @@ func (opts *ScrapeOptions) HandleScrape(rCtx *output.RenderCtx) error {
 			processedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 			meta:         bm.meta,
 			nChannels:    int(opts.Settings.ChannelCount),
+			isHeadless:   isHeadless,
 		}
 
 		// Order dependant, be careful!
@@ -194,7 +199,9 @@ func (opts *ScrapeOptions) HandleScrape(rCtx *output.RenderCtx) error {
 		}
 
 		if bm.nRipe == 0 {
-			logger.Info(colors.Green+"no ripe files to consolidate", spaces, colors.Off)
+			if !bm.isHeadless {
+				logger.Info(colors.Green+"no ripe files to consolidate on chain", chain, strings.Repeat(" ", 40), colors.Off)
+			}
 			goto PAUSE
 
 		} else {
@@ -215,7 +222,9 @@ func (opts *ScrapeOptions) HandleScrape(rCtx *output.RenderCtx) error {
 		runCount++
 		if opts.RunCount != 0 && runCount >= opts.RunCount {
 			// No reason to clean up here. Next round will do so and user can use these files in the meantime.
-			logger.Info("run count reached")
+			if !isHeadless {
+				logger.Info("run count reached")
+			}
 			break
 		}
 

@@ -155,6 +155,20 @@ func (opts *ChunksOptions) check(rCtx *output.RenderCtx, blockNums []base.Blknum
 	}
 	reports = append(reports, sizes)
 
+	// are all the hashes present?
+	contentCheck := types.ReportCheck{}
+	contentCheck.Reason = "Remote manifest contents"
+	if err := opts.CheckManContents(remoteManifest, &contentCheck); err != nil {
+		return err, false
+	}
+	reports = append(reports, contentCheck)
+
+	contentCheck.Reason = "Local manifest contents"
+	if err := opts.CheckManContents(remoteManifest, &contentCheck); err != nil {
+		return err, false
+	}
+	reports = append(reports, contentCheck)
+
 	// compare with çached manifest with files on disc
 	d2c := types.ReportCheck{Reason: "Disc files to cached manifest"}
 	if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {

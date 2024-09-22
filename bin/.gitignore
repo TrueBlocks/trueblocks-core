@@ -4,6 +4,7 @@ SymbolCache.noindex
 
 chifra*
 goMaker
+indexManager
 sdkFuzzer
 makeClass
 testRunner

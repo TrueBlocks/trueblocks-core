@@ -26,6 +26,7 @@ type BlazeManager struct {
 	nTimestamps  int
 	nChannels    int
 	errors       []scrapeError
+	isHeadless   bool
 }
 
 type scrapeError struct {

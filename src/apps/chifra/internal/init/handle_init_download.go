@@ -105,7 +105,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.ChunkRecord, c
 			if sleep > .25 {
 				sleepStr = fmt.Sprintf(" [sleep: %0.2fms]", sleep*1000)
 			}
-			msg := fmt.Sprintf("Finished download of %s%s%s %s%s%s (% 4d of %4d %0.1f%%%s)", col, event.Message, colors.Off, col, rng, colors.Off, nProcessed, nTotal, pct, sleepStr)
+			msg := fmt.Sprintf("Finished download of %s%s%s %s%s%s (% 4d of %4d %0.1f%%%s) chain: %s", col, event.Message, colors.Off, col, rng, colors.Off, nProcessed, nTotal, pct, sleepStr, opts.Globals.Chain)
 			logger.Info(msg, spaces)
 			if successCount%10 == 0 {
 				sleep = base.Max(.0125, sleep/1.2)
