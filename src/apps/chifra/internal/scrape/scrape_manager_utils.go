@@ -17,18 +17,28 @@ func (bm *BlazeManager) report(nBlocks, perChunk, nChunks, nAppsNow, nAppsFound,
 	nNeeded := perChunk - base.Min(perChunk, nAppsNow)
 	appsPerAddr := float64(nAppsFound) / float64(nAddrsFound)
 	pctFull := float64(nAppsNow) / float64(perChunk)
+	pctStr := fmt.Sprintf("%0.1f%%", pctFull*100)
+	if len(pctStr) < 5 {
+		pctStr = " " + pctStr
+	}
+	chunksStr := ""
+	if nChunks > 0 {
+		chunksStr = fmt.Sprintf(" created {%d} chunk(s)", nChunks)
+	} else {
+		chunksStr = fmt.Sprintf(" %s", bm.chain)
+	}
 
-	report := `%s #{%d}, found {%6d} apps and {%5d} addrs ({%0.1f apps/addr}). created {%d} chunks, staged {%5d} apps (@%0.1f%%}), need {%5d}.`
+	report := `%7.7s @#% 9d}: {% 8d}/{% 8d} ({%0.1f apps/addr}) stage {% 8d} need {% 8d} (@%5.5s})%s`
 	msg := fmt.Sprintf(report,
 		bm.chain,
 		bm.EndBlock()-1,
 		nAppsFound,
 		nAddrsFound,
 		appsPerAddr,
-		nChunks,
 		nAppsNow,
-		pctFull*100,
 		nNeeded,
+		pctStr,
+		chunksStr,
 	)
 	logger.Info(colors.Colored(msg))
 }
