@@ -81,16 +81,20 @@ func (bm *BlazeManager) WriteTimestamps(ctx context.Context, blocks []base.Blknu
 		}
 
 		ts := bm.timestamps[block]
-		logProgressTs("Updating timestamps ", block, blocks[len(blocks)-1])
+		if !bm.isHeadless {
+			logProgressTs("Updating timestamps ", block, blocks[len(blocks)-1])
+		}
 		if err := binary.Write(fp, binary.LittleEndian, &ts); err != nil {
 			return err
 		}
 
 	}
 
-	logger.Progress(true, fmt.Sprintf("Finished writing timestamps to block %-04d"+spaces,
-		blocks[len(blocks)-1],
-	))
+	if !bm.isHeadless {
+		logger.Progress(true, fmt.Sprintf("Finished writing timestamps to block %-04d"+spaces,
+			blocks[len(blocks)-1],
+		))
+	}
 
 	return nil
 }

@@ -186,9 +186,9 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		sort.Strings(appearanceArray)
 
 		blockNumStr := utils.PadNum(int(bn), 9)
-		fileName := filepath.Join(ripePath, blockNumStr + ".txt")
+		fileName := filepath.Join(ripePath, blockNumStr+".txt")
 		if bn > bm.ripeBlock {
-			fileName = filepath.Join(unripePath, blockNumStr + ".txt")
+			fileName = filepath.Join(unripePath, blockNumStr+".txt")
 		}
 
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
@@ -243,12 +243,17 @@ func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 		if bm.ripeBlock > bn {
 			dist = (bm.ripeBlock - bn)
 		}
-		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)",
+		if bm.isHeadless && dist < 100 {
+			return
+		}
+		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from %s head)",
 			bm.nProcessed(),
 			bm.BlockCount(),
 			bn,
 			bm.ripeBlock,
-			dist)
+			dist,
+			bm.chain,
+		)
 		logger.Progress(true, msg)
 	}
 }
