@@ -4,8 +4,8 @@ module github.com/TrueBlocks/trueblocks-core/examples/balanceChart
 go 1.22
 
 require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240914021502-857c9b6f37de
-	github.com/TrueBlocks/trueblocks-sdk/v3 v3.4.0
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240923010605-e373a04d7cd4
+	github.com/TrueBlocks/trueblocks-sdk/v3 v3.5.0
 	github.com/bykof/gostradamus v1.0.4
 	gonum.org/v1/plot v0.0.0-20190515093506-e2840ee46a6b
 )
