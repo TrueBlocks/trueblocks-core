@@ -1,3 +1,0 @@
-How to tell if someone is front running
-
-chifra export --trace <address> | grep delegatecall
