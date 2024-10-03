@@ -30,8 +30,12 @@ func (a *App) AutoName(args []string) {
 	if result, _, err := opts.NamesAutoname(address); err != nil {
 		printHelp(err)
 	} else {
-		for _, name := range result {
-			fmt.Printf("Name auto updated: %v\n", name.String())
+		if len(result) == 0 {
+			printHelp(fmt.Errorf("%s is not an ERC20 token", address.Hex()))
+		} else {
+			for _, name := range result {
+				fmt.Printf("Name auto updated: %v\n", name.String())
+			}
 		}
 	}
 }
