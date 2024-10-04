@@ -83,7 +83,7 @@ func (opts *NamesOptions) validateNames() error {
 		}
 		if err := opts.Conn.IsContractAtLatest(opts.AutonameAddr); err != nil {
 			if err == rpc.ErrNotAContract {
-				return validate.Usage("The address provided to the {0} option is not a token contract.", "--autoname")
+				return validate.Usage("The address provided to the {0} option is not a contract.", "--autoname")
 			}
 			// ignore this error... we'll catch it later
 		}
