@@ -7,13 +7,13 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 func Test_write_one(t *testing.T) {
 	buf := &bytes.Buffer{}
 	w := bufio.NewWriter(buf)
-	testSignature := common.HexToHash("04c786e6d139b5bcd86f44bbd1ca9466ac277f3e25f8bc62ba39d8b4e5c13d19")
+	testSignature := base.HexToHash("04c786e6d139b5bcd86f44bbd1ca9466ac277f3e25f8bc62ba39d8b4e5c13d19")
 	strSignature := "absolute()"
 	strLen := len(strSignature)
 	sigRecords := []SignatureRecord{
@@ -41,7 +41,7 @@ func Test_write_one(t *testing.T) {
 	if h.Magic != 0xdeadbeef {
 		t.Fatalf("wrong magic '%x'", h.Magic)
 	}
-	if h.Hash != common.HexToHash("0x"+strings.Repeat("5", 32)) {
+	if h.Hash != base.HexToHash("0x"+strings.Repeat("5", 32)) {
 		t.Fatalf("wrong hash '%x'", h.Hash)
 	}
 	if h.SignatureCount != 1 {
@@ -71,9 +71,9 @@ func Test_write_one(t *testing.T) {
 func Test_write_many(t *testing.T) {
 	buf := &bytes.Buffer{}
 	w := bufio.NewWriter(buf)
-	testSignatures := []common.Hash{
-		common.HexToHash("04c786e6d139b5bcd86f44bbd1ca9466ac277f3e25f8bc62ba39d8b4e5c13d19"),
-		common.HexToHash("3884d63599bd4ea4f3deb3e2108ff8ea7043b963874fb6f80e98f2a61d8b9139"),
+	testSignatures := []base.Hash{
+		base.HexToHash("04c786e6d139b5bcd86f44bbd1ca9466ac277f3e25f8bc62ba39d8b4e5c13d19"),
+		base.HexToHash("3884d63599bd4ea4f3deb3e2108ff8ea7043b963874fb6f80e98f2a61d8b9139"),
 	}
 	strSignatures := []string{
 		"absolute()",
@@ -117,7 +117,7 @@ func Test_write_many(t *testing.T) {
 	if h.Magic != 0xdeadbeef {
 		t.Fatalf("wrong magic '%x'", h.Magic)
 	}
-	if h.Hash != common.HexToHash("0x"+strings.Repeat("5", 32)) {
+	if h.Hash != base.HexToHash("0x"+strings.Repeat("5", 32)) {
 		t.Fatalf("wrong hash '%x'", h.Hash)
 	}
 	if h.SignatureCount != 2 {
@@ -151,9 +151,9 @@ func Test_write_many(t *testing.T) {
 func Test_readAll(t *testing.T) {
 	buf := &bytes.Buffer{}
 	w := bufio.NewWriter(buf)
-	testSignatures := []common.Hash{
-		common.HexToHash("04c786e6d139b5bcd86f44bbd1ca9466ac277f3e25f8bc62ba39d8b4e5c13d19"),
-		common.HexToHash("3884d63599bd4ea4f3deb3e2108ff8ea7043b963874fb6f80e98f2a61d8b9139"),
+	testSignatures := []base.Hash{
+		base.HexToHash("04c786e6d139b5bcd86f44bbd1ca9466ac277f3e25f8bc62ba39d8b4e5c13d19"),
+		base.HexToHash("3884d63599bd4ea4f3deb3e2108ff8ea7043b963874fb6f80e98f2a61d8b9139"),
 	}
 	strSignatures := []string{
 		"absolute()",

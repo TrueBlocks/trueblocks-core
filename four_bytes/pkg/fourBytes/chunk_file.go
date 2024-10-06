@@ -7,12 +7,11 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type Header struct {
 	Magic          uint32
-	Hash           common.Hash
+	Hash           base.Hash
 	SignatureCount uint32
 }
 
@@ -33,7 +32,7 @@ type StringRecord struct {
 func write(out io.Writer, sigRecords []SignatureRecord, strRecords []StringRecord) (err error) {
 	h := Header{
 		Magic:          file.MagicNumber,
-		Hash:           common.HexToHash("0x" + strings.Repeat("5", 32)),
+		Hash:           base.HexToHash("0x" + strings.Repeat("5", 32)),
 		SignatureCount: uint32(len(sigRecords)),
 	}
 
