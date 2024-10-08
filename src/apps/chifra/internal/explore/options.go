@@ -30,6 +30,7 @@ import (
 // ExploreOptions provides all command options for the chifra explore command.
 type ExploreOptions struct {
 	Terms   []string              `json:"terms,omitempty"`   // One or more address, name, block, or transaction identifier
+	NoOpen  bool                  `json:"noOpen,omitempty"`  // Return the URL without opening it
 	Local   bool                  `json:"local,omitempty"`   // Open the local TrueBlocks explorer
 	Google  bool                  `json:"google,omitempty"`  // Search google excluding popular blockchain explorers
 	Dalle   bool                  `json:"dalle,omitempty"`   // Open the address to the DalleDress explorer
@@ -45,6 +46,7 @@ var defaultExploreOptions = ExploreOptions{}
 // testLog is used only during testing to export the options for this test case.
 func (opts *ExploreOptions) testLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
+	logger.TestLog(opts.NoOpen, "NoOpen: ", opts.NoOpen)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
 	logger.TestLog(opts.Google, "Google: ", opts.Google)
 	logger.TestLog(opts.Dalle, "Dalle: ", opts.Dalle)
@@ -78,6 +80,8 @@ func ExploreFinishParseInternal(w io.Writer, values url.Values) *ExploreOptions 
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Terms = append(opts.Terms, s...)
 			}
+		case "noOpen":
+			opts.NoOpen = true
 		case "local":
 			opts.Local = true
 		case "google":
@@ -140,12 +144,7 @@ func GetOptions() *ExploreOptions {
 
 func getCaps() caps.Capability {
 	var capabilities caps.Capability // capabilities for chifra explore
-	capabilities = capabilities.Add(caps.Verbose)
-	capabilities = capabilities.Add(caps.Version)
-	capabilities = capabilities.Add(caps.Noop)
-	capabilities = capabilities.Add(caps.NoColor)
-	capabilities = capabilities.Add(caps.Chain)
-	capabilities = capabilities.Add(caps.File)
+	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return capabilities

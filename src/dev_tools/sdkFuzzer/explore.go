@@ -27,12 +27,14 @@ func DoExplore() {
 	ShowHeader("DoExplore", opts)
 
 	globs := noCache(noEther(globals))
+	noOpen := []bool{false, true}
 	local := []bool{false, true}
 	google := []bool{false, true}
 	dalle := []bool{false, true}
 	// Fuzz Loop
 	// EXISTING_CODE
 	_ = globs
+	_ = noOpen
 	_ = local
 	_ = google
 	_ = dalle
