@@ -14,14 +14,13 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	// EXISTING_CODE
@@ -30,6 +29,7 @@ import (
 // ExploreOptions provides all command options for the chifra explore command.
 type ExploreOptions struct {
 	Terms   []string              `json:"terms,omitempty"`   // One or more address, name, block, or transaction identifier
+	NoOpen  bool                  `json:"noOpen,omitempty"`  // Return the URL without opening it
 	Local   bool                  `json:"local,omitempty"`   // Open the local TrueBlocks explorer
 	Google  bool                  `json:"google,omitempty"`  // Search google excluding popular blockchain explorers
 	Dalle   bool                  `json:"dalle,omitempty"`   // Open the address to the DalleDress explorer
@@ -37,6 +37,7 @@ type ExploreOptions struct {
 	Conn    *rpc.Connection       `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
+	Destinations []types.Destination
 	// EXISTING_CODE
 }
 
@@ -45,6 +46,7 @@ var defaultExploreOptions = ExploreOptions{}
 // testLog is used only during testing to export the options for this test case.
 func (opts *ExploreOptions) testLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
+	logger.TestLog(opts.NoOpen, "NoOpen: ", opts.NoOpen)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
 	logger.TestLog(opts.Google, "Google: ", opts.Google)
 	logger.TestLog(opts.Dalle, "Dalle: ", opts.Dalle)
@@ -78,6 +80,8 @@ func ExploreFinishParseInternal(w io.Writer, values url.Values) *ExploreOptions 
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Terms = append(opts.Terms, s...)
 			}
+		case "noOpen":
+			opts.NoOpen = true
 		case "local":
 			opts.Local = true
 		case "google":
@@ -140,12 +144,7 @@ func GetOptions() *ExploreOptions {
 
 func getCaps() caps.Capability {
 	var capabilities caps.Capability // capabilities for chifra explore
-	capabilities = capabilities.Add(caps.Verbose)
-	capabilities = capabilities.Add(caps.Version)
-	capabilities = capabilities.Add(caps.Noop)
-	capabilities = capabilities.Add(caps.NoColor)
-	capabilities = capabilities.Add(caps.Chain)
-	capabilities = capabilities.Add(caps.File)
+	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return capabilities
@@ -169,61 +168,4 @@ func (opts *ExploreOptions) getCaches() (caches map[walk.CacheType]bool) {
 }
 
 // EXISTING_CODE
-func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
-
-	var chain = opts.Globals.Chain
-
-	if opts.Google {
-		var query = "https://www.google.com/search?q=[{TERM}]"
-		query = strings.Replace(query, "[{TERM}]", u.term, -1)
-		var exclusions = []string{
-			"etherscan", "etherchain", "bloxy", "bitquery", "ethplorer", "tokenview", "anyblocks", "explorer",
-		}
-		for _, ex := range exclusions {
-			query += ("+-" + ex)
-		}
-		return query
-	}
-
-	if opts.Dalle {
-		var query = "http://192.34.63.136:8080/dalle/simple/[{TERM}]"
-		return strings.Replace(query, "[{TERM}]", u.term, -1)
-	}
-
-	if u.termType == ExploreFourByte {
-		var query = "https://www.4byte.directory/signatures/?bytes4_signature=[{TERM}]"
-		query = strings.Replace(query, "[{TERM}]", u.term, -1)
-		return query
-	}
-
-	if u.termType == ExploreEnsName {
-		var query = "https://app.ens.domains/name/[{TERM}]/details"
-		query = strings.Replace(query, "[{TERM}]", u.term, -1)
-		return query
-	}
-
-	url := config.GetChain(chain).RemoteExplorer
-	query := ""
-	switch u.termType {
-	case ExploreNone:
-		// do nothing
-	case ExploreTx:
-		query = path.Join("tx", u.term)
-	case ExploreBlock:
-		query = path.Join("block", u.term)
-	case ExploreAddress:
-		fallthrough
-	default:
-		query = path.Join("address", u.term)
-	}
-
-	if opts.Local {
-		url = config.GetChain(chain).LocalExplorer
-		query = strings.Replace(query, "tx/", "explorer/transactions/", -1)
-		query = strings.Replace(query, "block/", "explorer/blocks/", -1)
-	}
-
-	return url + query
-}
-
 // EXISTING_CODE

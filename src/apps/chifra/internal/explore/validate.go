@@ -10,28 +10,10 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum"
 )
-
-type ExploreType uint8
-
-const (
-	ExploreNone ExploreType = iota
-	ExploreAddress
-	ExploreName
-	ExploreEnsName
-	ExploreTx
-	ExploreBlock
-	ExploreFourByte
-)
-
-type ExploreUrl struct {
-	term     string
-	termType ExploreType
-}
-
-var urls []ExploreUrl
 
 func (opts *ExploreOptions) validateExplore() error {
 	chain := opts.Globals.Chain
@@ -67,28 +49,24 @@ func (opts *ExploreOptions) validateExplore() error {
 
 		if base.IsValidAddress(arg) {
 			if strings.Contains(arg, ".eth") {
-				urls = append(urls, ExploreUrl{arg, ExploreEnsName})
+				opts.Destinations = append(opts.Destinations, types.NewDestination(arg, types.DestinationEnsName))
 			} else {
-				urls = append(urls, ExploreUrl{arg, ExploreAddress})
+				opts.Destinations = append(opts.Destinations, types.NewDestination(arg, types.DestinationAddress))
 			}
 			// We got a valid address, we're done checking
 			continue
 		}
 
 		// The argument is not an address, so we can't use --google
-		if opts.Google {
-			return validate.Usage("The {0} option requires {1}.", "--google", "an address term")
-		}
-
-		if opts.Dalle {
-			return validate.Usage("The {0} option requires {1}.", "--dalle", "an address term")
+		if opts.Google || opts.Dalle {
+			continue
 		}
 
 		valid, _ := validate.IsValidTransId(chain, []string{arg}, validate.ValidTransId)
 		if valid {
 			txHash, err := opts.idToTxHash(arg, validate.IsBlockHash)
 			if err == nil {
-				urls = append(urls, ExploreUrl{txHash, ExploreTx})
+				opts.Destinations = append(opts.Destinations, types.NewDestination(txHash, types.DestinationTx))
 				continue
 			}
 			// an error here is okay since we can't distinquish between tx hashes and block hashes...
@@ -98,7 +76,7 @@ func (opts *ExploreOptions) validateExplore() error {
 		if valid {
 			blockHash, err := opts.idToBlockHash(chain, arg, validate.IsBlockHash)
 			if err == nil {
-				urls = append(urls, ExploreUrl{blockHash.Hex(), ExploreBlock})
+				opts.Destinations = append(opts.Destinations, types.NewDestination(blockHash.Hex(), types.DestinationBlock))
 				continue
 			}
 			// An error here is not okay because we have a valid hash but it's not a valid on-chain
@@ -107,39 +85,21 @@ func (opts *ExploreOptions) validateExplore() error {
 		}
 
 		if validate.IsValidFourByte(arg) {
-			urls = append(urls, ExploreUrl{arg, ExploreFourByte})
+			opts.Destinations = append(opts.Destinations, types.NewDestination(arg, types.DestinationFourByte))
 			continue
 		}
 
 		return validate.Usage("The {0} option ({1}) {2}.", "term", arg, "is not valid")
 	}
 
-	if len(urls) == 0 {
-		urls = append(urls, ExploreUrl{"", ExploreNone})
+	if len(opts.Destinations) == 0 {
+		if opts.Google || opts.Dalle {
+			return validate.Usage("The {0} options require {1}.", "--dalle and --google", "an address term")
+		}
+		opts.Destinations = append(opts.Destinations, types.NewDestination("", types.DestinationNone))
 	}
 
 	return opts.Globals.Validate()
-}
-
-func (t ExploreType) String() string {
-	switch t {
-	case ExploreNone:
-		return "ExploreNone"
-	case ExploreAddress:
-		return "ExploreAddress"
-	case ExploreName:
-		return "ExploreName"
-	case ExploreEnsName:
-		return "ExploreEnsName"
-	case ExploreTx:
-		return "ExploreTx"
-	case ExploreBlock:
-		return "ExploreBlock"
-	case ExploreFourByte:
-		return "ExploreFourByte"
-	default:
-		return fmt.Sprintf("%d", t)
-	}
 }
 
 func (opts *ExploreOptions) idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (base.Hash, error) {

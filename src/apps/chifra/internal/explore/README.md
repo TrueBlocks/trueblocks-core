@@ -15,14 +15,15 @@ Arguments:
   terms - one or more address, name, block, or transaction identifier
 
 Flags:
-  -l, --local    open the local TrueBlocks explorer
-  -g, --google   search google excluding popular blockchain explorers
-  -h, --help     display this help screen
+  -n, --no_open   return the URL without opening it
+  -l, --local     open the local TrueBlocks explorer
+  -g, --google    search google excluding popular blockchain explorers
+  -h, --help      display this help screen
 ```
 
 Data models produced by this tool:
 
-- none
+- [destination](/data-model/other/#destination)
 
 ### Other Options
 

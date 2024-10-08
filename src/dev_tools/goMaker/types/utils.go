@@ -23,19 +23,22 @@ func shouldProcess(source, subPath, tag string) (bool, error) {
 		return false, nil
 	}
 
-	skip := tag == "explore" || tag == "scrape" || tag == "daemon"
 	isSdk := strings.Contains(source, "sdk_")
+	isPython := strings.Contains(source, "python")
+	isTypeScript := strings.Contains(source, "typescript")
 	isFuzzer := strings.Contains(source, "sdkFuzzer")
-	if skip && (isSdk || isFuzzer) {
-		if tag == "scrape" {
-			isPython := strings.Contains(source, "python")
-			isTypeScript := strings.Contains(source, "typescript")
-			if isPython || isTypeScript || isFuzzer {
-				// do not generate code for scrape for Python or TypeScript SDKs
-				return false, nil
-			}
-		} else {
-			// do not generate code for daemon or explore for SDK
+	switch tag {
+	case "daemon":
+		if isSdk || isFuzzer {
+			return false, nil
+		}
+	case "scrape":
+		if isFuzzer {
+			return false, nil
+		}
+		fallthrough
+	case "explore":
+		if isSdk && (isPython || isTypeScript || isFuzzer) {
 			return false, nil
 		}
 	}
