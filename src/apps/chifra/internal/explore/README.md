@@ -22,7 +22,7 @@ Flags:
 
 Data models produced by this tool:
 
-- none
+- [destination](/data-model/other/#destination)
 
 ### Other Options
 
