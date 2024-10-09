@@ -127,7 +127,7 @@ func (s *Destination) Resolve(chain string, google, dalle, local bool) []Destina
 	}
 
 	if dalle {
-		var query = "http://192.34.63.136:8080/dalle/simple/[{TERM}]"
+		var query = "http://dalledress.io/dalle/simple/[{TERM}]"
 		ret = append(ret, NewDestinationEx(*s, strings.Replace(query, "[{TERM}]", s.Term, -1), "dalle"))
 	}
 

@@ -148,7 +148,7 @@ func loadConfig(path string) (Config, error) {
 		"laptop.local",
 		"desktop.local",
 		"unchainedindex.io",
-		"192.34.63.136",
+		"dalledress.io",
 	}
 	config.Aliases = map[string]string{
 		"laptop.local":       "1.0-Laptop",
@@ -156,7 +156,7 @@ func loadConfig(path string) (Config, error) {
 		"wildmolasses.local": "4.0-WildMolasses",
 		"linux.local":        "3.0-Linux",
 		"unchainedindex.io":  "5.0-UnchainedIndex",
-		"192.34.63.136":      "6.0-Testing",
+		"dalledress.io":      "6.0-Testing/DalleDress",
 	}
 	return config, nil
 }
