@@ -1,5 +1,5 @@
 # Go Version
-FROM golang:1.22.0-bullseye
+FROM golang:1.23.0-bullseye
 
 ARG repo
 ARG commit_sha
