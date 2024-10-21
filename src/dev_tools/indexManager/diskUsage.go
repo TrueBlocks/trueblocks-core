@@ -22,8 +22,8 @@ type DiskUsage struct {
 
 // getDiscUsage gathers disk usage information from multiple machines concurrently
 // It returns a slice of DiskUsage structs and an error if any occurred during the process
-func getDiscUsage(configPath string) ([]DiskUsage, error) {
-	config, err := loadConfig(configPath)
+func getDiscUsage() ([]DiskUsage, error) {
+	config, err := loadConfig()
 	if err != nil {
 		return nil, fmt.Errorf("error loading configuration: %w", err)
 	}
@@ -140,7 +140,7 @@ type Config struct {
 }
 
 // loadConfig returns a map of machine names to their aliases
-func loadConfig(path string) (Config, error) {
+func loadConfig() (Config, error) {
 	var config Config
 	config.Machines = []string{
 		"wildmolasses.local",
@@ -148,7 +148,7 @@ func loadConfig(path string) (Config, error) {
 		"laptop.local",
 		"desktop.local",
 		"unchainedindex.io",
-		"192.34.63.136",
+		"dalledress.io",
 	}
 	config.Aliases = map[string]string{
 		"laptop.local":       "1.0-Laptop",
@@ -156,7 +156,7 @@ func loadConfig(path string) (Config, error) {
 		"wildmolasses.local": "4.0-WildMolasses",
 		"linux.local":        "3.0-Linux",
 		"unchainedindex.io":  "5.0-UnchainedIndex",
-		"192.34.63.136":      "6.0-Testing",
+		"dalledress.io":      "6.0-Testing/DalleDress",
 	}
 	return config, nil
 }
