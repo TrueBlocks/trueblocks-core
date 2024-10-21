@@ -28,15 +28,15 @@ type NameCrud struct {
 	Decimals Field[string]
 }
 
-type NameOperation string
+type Operation string
 
 const (
-	Create   NameOperation = "create"
-	Update   NameOperation = "update"
-	Delete   NameOperation = "delete"
-	Undelete NameOperation = "undelete"
-	Remove   NameOperation = "remove"
-	Autoname NameOperation = "autoname"
+	Create   Operation = "create"
+	Update   Operation = "update"
+	Delete   Operation = "delete"
+	Undelete Operation = "undelete"
+	Remove   Operation = "remove"
+	Autoname Operation = "autoname"
 )
 
 func (cd *NameCrud) Validate(requireName bool) error {

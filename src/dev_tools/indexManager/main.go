@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	allUsages, err := getDiscUsage("./config.json")
+	allUsages, err := getDiscUsage()
 	if err != nil {
 		fmt.Printf("Error returned from getDiscUsage: %v\n", err)
 		return

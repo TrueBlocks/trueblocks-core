@@ -18,7 +18,7 @@ func copyToRemote(localFile, remoteUser, remoteHost, remotePath string) (string,
 	err := cmd.Run()
 	msg := ""
 	if err == nil {
-		msg = fmt.Sprintf("File copied to %s@%s:%s\n", remoteUser, remoteHost, remotePath)
+		msg = fmt.Sprintf("File (%s) copied to %s@%s:%s\n", localFile, remoteUser, remoteHost, remotePath)
 	}
 	return msg, err
 }

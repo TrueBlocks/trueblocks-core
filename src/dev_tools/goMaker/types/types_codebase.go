@@ -143,6 +143,7 @@ var knownTypes = map[string]bool{
 	"StorageSlot": true,
 	"TokenType":   true,
 	"StatePart":   true,
+	"DestType":    true,
 }
 
 func (cb *CodeBase) Validate() error {

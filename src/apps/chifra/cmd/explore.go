@@ -48,15 +48,11 @@ const notesExplore = ``
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra explore
-	capabilities = capabilities.Add(caps.Verbose)
-	capabilities = capabilities.Add(caps.Version)
-	capabilities = capabilities.Add(caps.Noop)
-	capabilities = capabilities.Add(caps.NoColor)
-	capabilities = capabilities.Add(caps.Chain)
-	capabilities = capabilities.Add(caps.File)
+	capabilities = capabilities.Add(caps.Default)
 
 	exploreCmd.Flags().SortFlags = false
 
+	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().NoOpen, "no_open", "n", false, `return the URL without opening it`)
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Local, "local", "l", false, `open the local TrueBlocks explorer`)
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Google, "google", "g", false, `search google excluding popular blockchain explorers`)
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Dalle, "dalle", "d", false, `open the address to the DalleDress explorer (hidden)`)

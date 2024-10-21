@@ -94,6 +94,9 @@ func (w *Wei) Cmp(y *Wei) int {
 }
 
 func (w *Wei) MarshalText() (text []byte, err error) {
+	if w == nil || len(text) == 0 {
+		return []byte("0"), nil
+	}
 	return (*big.Int)(w).MarshalText()
 }
 
