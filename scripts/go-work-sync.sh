@@ -36,13 +36,15 @@ find . -type f -name 'go.mod' | while read -r modfile; do
     isChifra="[ "$moddir" == "./src/apps/chifra" ]"
     isGoMaker="[ "$moddir" == "./src/dev_tools/goMaker" ]"
     isNode="[ "$moddir" == "./node" ]"
-    isSimple="[ "$moddir" == "./example/simple" ]"
+    isFourbyte="[ "$moddir" == "./examples/four_bytes" ]"
+    isIndexMan="[ "$moddir" == "./src/dev_tools/indexManager" ]"
+    isSimple="[ "$moddir" == "./examples/simple" ]"
 
-    if $isGoMaker || $isNode; then
+    if $isGoMaker || $isNode || $isFourbyte; then
         go get github.com/btcsuite/btcd 2> /dev/null
     fi
 
-    if ! $isSdk && ! $isChifra && ! $isGoMaker; then
+    if ! $isSdk && ! $isChifra && ! $isGoMaker && ! $isFourbyte && ! $isIndexMan; then
         go get github.com/TrueBlocks/trueblocks-sdk/v3@latest
     fi
     if ! $isSimple && ! $isChifra; then
