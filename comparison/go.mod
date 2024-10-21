@@ -4,7 +4,7 @@ module github.com/TrueBlocks/trueblocks-core/examples/comparison
 go 1.22
 
 require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240923010605-e373a04d7cd4
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20240923025630-c4c09cafc138
 	github.com/TrueBlocks/trueblocks-sdk/v3 v3.5.0
 )
 
@@ -51,7 +51,7 @@ require (
 	github.com/multiformats/go-multihash v0.2.3 // indirect
 	github.com/multiformats/go-multistream v0.4.1 // indirect
 	github.com/multiformats/go-varint v0.0.7 // indirect
-	github.com/panjf2000/ants/v2 v2.4.8 // indirect
+	github.com/panjf2000/ants/v2 v2.10.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
