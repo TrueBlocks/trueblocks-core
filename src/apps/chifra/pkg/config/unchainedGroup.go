@@ -5,16 +5,12 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-type unchainedGroup struct {
-	PreferredPublisher string `toml:"preferredPublisher,omitempty" comment:"The default publisher of the index if none other is provided"`
-	SmartContract      string `toml:"smartContract,omitempty" comment:"The address of the current version of the Unchained Index"`
-}
-
-func GetUnchained() unchainedGroup {
+func GetUnchained() configtypes.UnchainedGroup {
 	return GetRootConfig().Unchained
 }
 

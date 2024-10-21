@@ -4,13 +4,8 @@
 
 package config
 
-type keyGroup struct {
-	License string `toml:"license,omitempty"`
-	ApiKey  string `toml:"apiKey"`
-	Secret  string `toml:"secret,omitempty"`
-	Jwt     string `toml:"jwt,omitempty"`
-}
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
 
-func GetKey(set string) keyGroup {
+func GetKey(set string) configtypes.KeyGroup {
 	return GetRootConfig().Keys[set]
 }

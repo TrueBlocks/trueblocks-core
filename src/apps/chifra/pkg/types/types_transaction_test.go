@@ -63,7 +63,7 @@ func TestTransactionCache(t *testing.T) {
 
 	if !reflect.DeepEqual(expected, readBack) {
 		msg := fmt.Sprintf("value mismatch:\n\tgot %+v\n\twant %+v\n", readBack, expected)
-		t.Fatalf(msg)
+		t.Fatal(msg)
 	}
 }
 

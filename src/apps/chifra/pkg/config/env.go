@@ -6,10 +6,12 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
 )
 
 // loadFromEnv loads configuration from environment variables
-func loadFromEnv(prefix string, destination *ConfigFile) (err error) {
+func loadFromEnv(prefix string, destination *configtypes.Config) (err error) {
 	// First we get all env variables then filter by prefix and finally parse the values
 	envs := os.Environ()
 	for i := 0; i < len(envs); i++ {
@@ -96,7 +98,7 @@ func deepSetByPath(structure *reflect.Value, path []string, value string) error 
 				}
 			}
 
-			// Since all maps in ConfigFile have structs as values, we use recursion to set the value
+			// Since all maps in Config have structs as values, we use recursion to set the value
 			// of a correct field of the struct
 			if err := deepSetByPath(&mapValue, path[2:], value); err != nil {
 				return err
