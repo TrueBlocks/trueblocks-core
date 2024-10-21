@@ -11,7 +11,7 @@ The application then prints the block numbers and their corresponding dates and 
 
 Ensure you have the following installed and running:
 
-- Go 1.22 or higher
+- Go 1.23 or higher
 - TrueBlocks Core 3.0.0 or higher
 
 ## Installation
@@ -58,7 +58,7 @@ The above will render data similar to the following. Note that each record repre
 
 If you encounter issues, check the following:
 
-- Ensure the goLang version is at least 1.22.
+- Ensure the goLang version is at least 1.23.
 - Make sure you have a valid Ethereum mainnet RPC configured.
 - Ensure TrueBlocks Core is properly installed and configured.
 - Verify the command-line arguments are correct and within valid ranges.
