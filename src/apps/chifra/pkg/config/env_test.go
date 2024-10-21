@@ -2,6 +2,8 @@ package config
 
 import (
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
 )
 
 func Test_setByPath(t *testing.T) {
@@ -10,7 +12,7 @@ func Test_setByPath(t *testing.T) {
 		Uint   uint
 		Bool   bool
 		String string
-		ConfigFile
+		configtypes.Config
 	}
 
 	if err := setByPath(&result, []string{"INT"}, "42"); err != nil {
@@ -41,21 +43,21 @@ func Test_setByPath(t *testing.T) {
 		t.Fatal("wrong value", v)
 	}
 
-	if err := setByPath(&result, []string{"CONFIGFILE", "VERSION", "CURRENT"}, "v3.0.0-release"); err != nil {
+	if err := setByPath(&result, []string{"CONFIG", "VERSION", "CURRENT"}, "v3.0.0-release"); err != nil {
 		t.Fatal(err)
 	}
 	if v := result.Version.Current; v != "v3.0.0-release" {
 		t.Fatal("wrong value", v)
 	}
 
-	if err := setByPath(&result, []string{"CONFIGFILE", "KEYS", "PROVIDER", "APIKEY"}, "test-key"); err != nil {
+	if err := setByPath(&result, []string{"CONFIG", "KEYS", "PROVIDER", "APIKEY"}, "test-key"); err != nil {
 		t.Fatal(err)
 	}
 	if v := result.Keys["provider"].ApiKey; v != "test-key" {
 		t.Fatal("wrong value", v)
 	}
 	// Make sure we don't override the whole map when setting another key in already initialized map.
-	if err := setByPath(&result, []string{"CONFIGFILE", "KEYS", "PROVIDER", "SECRET"}, "secret"); err != nil {
+	if err := setByPath(&result, []string{"CONFIG", "KEYS", "PROVIDER", "SECRET"}, "secret"); err != nil {
 		t.Fatal(err)
 	}
 	if v := result.Keys["provider"].ApiKey; v != "test-key" {
@@ -66,7 +68,7 @@ func Test_setByPath(t *testing.T) {
 	}
 
 	// Make sure we don't override the whole map when setting another key in already initialized map.
-	if err := setByPath(&result, []string{"CONFIGFILE", "CHAINS", "MAINNET", "SCRAPE", "APPSPERCHUNK"}, "2000000"); err != nil {
+	if err := setByPath(&result, []string{"CONFIG", "CHAINS", "MAINNET", "SCRAPE", "APPSPERCHUNK"}, "2000000"); err != nil {
 		t.Fatal(err)
 	}
 	if v := result.Chains["mainnet"].Scrape.AppsPerChunk; v != 2000000 {

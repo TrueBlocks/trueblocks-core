@@ -1,4 +1,4 @@
-package config
+package configtypes
 
 import (
 	"bytes"
@@ -25,7 +25,7 @@ func Test_write(t *testing.T) {
 
 [pinning]
   # The pinning gateway to query when downloading the unchained index
-  gatewayUrl = 'https://ipfs.unchainedindex.io/ipfs/'
+  gatewayUrl = ''
   # The local endpoint for the IPFS daemon
   localPinUrl = 'http://localhost:5001'
   # The remote endpoint for pinning on Pinata
@@ -40,12 +40,12 @@ func Test_write(t *testing.T) {
 `
 
 	var buf bytes.Buffer
-	if err := write(&buf, defaultConfig); err != nil {
+	if err := write(&buf, &defaultConfig); err != nil {
 		t.Fatal("writing:", err)
 	}
 
 	// Some nice error reporting just in case this test fails
-	str := string(buf.Bytes())
+	str := buf.String()
 	line := 0
 	col := 1
 	var correctPart string
