@@ -10,12 +10,12 @@ import (
 )
 
 type Config struct {
-	Version   VersionGroup          `toml:"version"`
-	Settings  SettingsGroup         `toml:"settings"`
-	Keys      map[string]KeyGroup   `toml:"keys"`
-	Pinning   PinningGroup          `toml:"pinning"`
-	Unchained UnchainedGroup        `toml:"unchained,omitempty" comment:"Do not edit these values unless instructed to do so."`
-	Chains    map[string]ChainGroup `toml:"chains"`
+	Version   VersionGroup          `json:"version" toml:"version"`
+	Settings  SettingsGroup         `json:"settings" toml:"settings"`
+	Keys      map[string]KeyGroup   `json:"keys" toml:"keys"`
+	Pinning   PinningGroup          `json:"pinning" toml:"pinning"`
+	Unchained UnchainedGroup        `json:"unchained" toml:"unchained,omitempty" comment:"Do not edit these values unless instructed to do so."`
+	Chains    map[string]ChainGroup `json:"chains" toml:"chains"`
 }
 
 // WriteFile writes the toml config file from the given struct

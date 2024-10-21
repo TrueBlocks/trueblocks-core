@@ -3,12 +3,12 @@ package configtypes
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 
 type ScrapeSettings struct {
-	AppsPerChunk uint64 `toml:"appsPerChunk" json:"appsPerChunk"`
-	SnapToGrid   uint64 `toml:"snapToGrid" json:"snapToGrid"`
-	FirstSnap    uint64 `toml:"firstSnap" json:"firstSnap"`
-	UnripeDist   uint64 `toml:"unripeDist" json:"unripeDist"`
-	AllowMissing bool   `toml:"allowMissing" json:"allowMissing,omitempty"`
-	ChannelCount uint64 `toml:"channelCount" json:"channelCount,omitempty"`
+	AppsPerChunk uint64 `json:"appsPerChunk" toml:"appsPerChunk"`
+	SnapToGrid   uint64 `json:"snapToGrid" toml:"snapToGrid"`
+	FirstSnap    uint64 `json:"firstSnap" toml:"firstSnap"`
+	UnripeDist   uint64 `json:"unripeDist" toml:"unripeDist"`
+	AllowMissing bool   `json:"allowMissing,omitempty" toml:"allowMissing"`
+	ChannelCount uint64 `json:"channelCount,omitempty" toml:"channelCount"`
 }
 
 func (s *ScrapeSettings) TestLog(chain string, test bool) {

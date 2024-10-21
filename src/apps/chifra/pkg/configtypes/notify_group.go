@@ -1,6 +1,6 @@
 package configtypes
 
 type NotifyGroup struct {
-	Url    string `toml:"url" json:"url,omitempty"`
-	Author string `toml:"author" json:"author,omitempty"`
+	Url    string `json:"url,omitempty" toml:"url"`
+	Author string `json:"author,omitempty" toml:"author"`
 }

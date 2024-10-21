@@ -1,8 +1,8 @@
 package configtypes
 
 type KeyGroup struct {
-	License string `toml:"license,omitempty"`
-	ApiKey  string `toml:"apiKey"`
-	Secret  string `toml:"secret,omitempty"`
-	Jwt     string `toml:"jwt,omitempty"`
+	License string `json:"license" toml:"license,omitempty"`
+	ApiKey  string `json:"apiKey" toml:"apiKey"`
+	Secret  string `json:"secret" toml:"secret,omitempty"`
+	Jwt     string `json:"jwt" toml:"jwt,omitempty"`
 }

@@ -1,5 +1,5 @@
 package configtypes
 
 type VersionGroup struct {
-	Current string `toml:"current" comment:"Do not edit"`
+	Current string `json:"current" toml:"current" comment:"Do not edit"`
 }
