@@ -60,7 +60,7 @@ set(CMAKE_INSTALL_PREFIX "/usr/local/" CACHE PATH "Default install directory")
 set(REPO_DIR ${CMAKE_SOURCE_DIR}/..)
 set(SCRIPTS_DIR ${REPO_DIR}/scripts)
 
-add_custom_target(lint COMMAND "golangci-lint" "run" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra")
+add_custom_target(lint COMMAND "golangci-lint" "run" "--out-format=colored-line-number" "--path-prefix=src/apps/chifra" "--timeout=5m" "./..." WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra")
 add_custom_target(generate COMMAND ${BIN_DIR}/goMaker WORKING_DIRECTORY ${REPO_DIR})
 add_custom_target(test-all COMMAND ${SCRIPTS_DIR}/test-all.sh WORKING_DIRECTORY ${REPO_DIR}/build)
 add_custom_target(examples ALL COMMAND ${SCRIPTS_DIR}/build-examples.sh WORKING_DIRECTORY ${REPO_DIR})

@@ -48,7 +48,7 @@ func (a Address) String() string {
 
 // Format is used by Stringer don't remove
 func (a Address) Format(s fmt.State, c rune) {
-	s.Write([]byte(a.Hex()))
+	_, _ = s.Write([]byte(a.Hex()))
 }
 
 // MarshalText is used by Stringer don't remove

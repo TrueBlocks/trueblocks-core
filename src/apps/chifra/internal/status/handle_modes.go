@@ -2,6 +2,7 @@ package statusPkg
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -130,9 +131,9 @@ func (opts *StatusOptions) HandleModes(rCtx *output.RenderCtx) error {
 		if totalRecords == 0 {
 			str := ""
 			for _, m := range opts.Modes {
-				str += fmt.Sprintf("%s ", m)
+				str += m + " "
 			}
-			errorChan <- fmt.Errorf("no files were found in the [" + strings.Trim(str, " ") + "] caches")
+			errorChan <- errors.New("no files were found in the [" + strings.Trim(str, " ") + "] caches")
 			return
 		}
 

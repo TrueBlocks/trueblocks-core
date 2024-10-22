@@ -1,6 +1,7 @@
 package pricing
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
@@ -64,7 +65,7 @@ func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price ba
 	pairAddress := base.HexToAddress(result.Values["val_0"])
 	if pairAddress.IsZero() {
 		msg := fmt.Sprintf("no pair found for %s and %s", first.Hex(), second.Hex())
-		return 0.0, "not-priced", fmt.Errorf(msg)
+		return 0.0, "not-priced", errors.New(msg)
 	}
 	theCall2 := "getReserves()"
 	contractCall, _, err = call.NewContractCall(conn, pairAddress, theCall2)

@@ -6,6 +6,7 @@ package chunksPkg
 
 import (
 	"encoding/binary"
+	"errors"
 	"fmt"
 	"io"
 	"strings"
@@ -46,7 +47,7 @@ func (opts *ChunksOptions) HandleAddresses(rCtx *output.RenderCtx, blockNums []b
 						msg = fmt.Sprintf("index file %s does not exist. Warnings turned off...", path)
 					}
 					if msg != "" {
-						errorChan <- fmt.Errorf(msg)
+						errorChan <- errors.New(msg)
 					}
 					been_here++
 					return true, nil

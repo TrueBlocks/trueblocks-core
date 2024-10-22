@@ -5,6 +5,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -42,7 +43,7 @@ func ErrFunc(cmd *cobra.Command, errMsg error) error {
 	} else {
 		msg = "\n  \033[31m" + msg + "\033[0m\n"
 	}
-	return fmt.Errorf(msg)
+	return errors.New(msg)
 }
 
 func UsageWithNotes(notes string) string {
