@@ -39,6 +39,7 @@ if (NOT GO_VERSION_MATCH)
 endif()
 set(GO_MAJOR_VERSION ${CMAKE_MATCH_1})
 set(GO_MINOR_VERSION ${CMAKE_MATCH_2})
+# Go Version
 if (GO_MAJOR_VERSION LESS 1 OR (GO_MAJOR_VERSION EQUAL 1 AND GO_MINOR_VERSION LESS 22))
     message(STATUS "${CColor}The build failed.${COff}")
     message(STATUS "${CColor}Found ${GO_VERSION_OUTPUT}. Version 1.22 or higher is required.${COff}")
