@@ -150,7 +150,7 @@ chifra scrape:
 ## v2.5.8 (2024/02/09)
 
 - Bumped version number to v2.5.8.
-- Bumped required GoLang version to ^1.22.
+- Bumped required GoLang version to 1.22.
 
 **bug fixes**
 
