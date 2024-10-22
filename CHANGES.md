@@ -344,7 +344,7 @@ gh issue list --search "created:>2024-09-22 is:open is:issue sort:created-desc" 
 
 **chifra daemon**
 
-- Deprecated `chifra daemon --api`, no replacement, 
+- Deprecated `chifra daemon --api`, no replacement,
 - Deprecated `chifra daemon --scrape`, use `chifra scrape` instead
 - Deprecated `chifra daemon --monitor`, use `chifra monitors --watch` instead.
 
