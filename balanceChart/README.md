@@ -10,8 +10,8 @@ quarter, year), and plots the results as a grouped bar chart.
 
 Ensure you have the following installed and running:
 
-- Go 1.22 or higher
-- TrueBlocks Core 3.0.0 or higher
+- Go Version 1.22 or higher
+- The latest version of TrueBlocks Core
 
 ## Installation
 
@@ -70,7 +70,7 @@ The above will save the chart in the local folder as **ether_balances.png**. It 
 
 If you encounter issues, check the following:
 
-- Ensure the goLang version is at least 1.22.
+- Ensure at least Go Version 1.22.
 - Make sure you have a valid Ethereum mainnet RPC configured.
 - Ensure TrueBlocks Core is properly installed and configured.
 - Verify the command-line arguments are correct and within valid ranges.
