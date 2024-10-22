@@ -1,7 +1,7 @@
 package file
 
 import (
-	"fmt"
+	"errors"
 	"os"
 	"path/filepath"
 )
@@ -13,7 +13,7 @@ func LatestFileInFolder(path string) (string, error) {
 		return "", err
 	}
 	if len(files) == 0 {
-		return "", fmt.Errorf("No files found in folder " + path)
+		return "", errors.New("No files found in folder " + path)
 	}
 	return filepath.Join(path, files[len(files)-1].Name()), nil
 }
@@ -25,7 +25,7 @@ func EarliestFileInFolder(path string) (string, error) {
 		return "", err
 	}
 	if len(files) == 0 {
-		return "", fmt.Errorf("No files found in folder " + path)
+		return "", errors.New("No files found in folder " + path)
 	}
 	return filepath.Join(path, files[0].Name()), nil
 }

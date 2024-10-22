@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -25,7 +26,7 @@ func migrate(currentVer version.Version) error {
 	}
 	// note that this routine does not return if it gets this far.
 
-	var cfg ConfigFile
+	var cfg configtypes.Config
 	configFile := PathToConfigFile()
 	if err := ReadToml(configFile, &cfg); err != nil {
 		return err
@@ -36,7 +37,7 @@ func migrate(currentVer version.Version) error {
 		for chain := range cfg.Chains {
 			ch := cfg.Chains[chain]
 			ch.Chain = chain
-			scrape := ScrapeSettings{
+			scrape := configtypes.ScrapeSettings{
 				AppsPerChunk: 2000000,
 				SnapToGrid:   250000,
 				FirstSnap:    2000000,
@@ -68,7 +69,7 @@ func migrate(currentVer version.Version) error {
 
 	vers = version.NewVersion("v2.0.0-release")
 	if currentVer.Uint64() < vers.Uint64() {
-		pinning := pinningGroup{
+		pinning := configtypes.PinningGroup{
 			LocalPinUrl:  "http://localhost:5001",
 			RemotePinUrl: "https://api.pinata.cloud/pinning/pinFileToIPFS",
 		}
@@ -83,7 +84,7 @@ func migrate(currentVer version.Version) error {
 
 	// Re-write the file (after making a backup) with the new version
 	_, _ = file.Copy(configFile+".bak", configFile)
-	_ = cfg.writeFile(configFile, minVersion) // updates the version
+	_ = cfg.WriteFile(configFile, minVersion) // updates the version
 
 	msg := "Your configuration files were upgraded to {%s}. Rerun your command."
 	logger.Fatal(colors.Colored(fmt.Sprintf(msg, minVersion.String())))
@@ -104,7 +105,7 @@ type OldScrape struct {
 	Settings oldScrapeGroup `toml:"settings"`
 }
 
-func MergeScrapeConfig(fn string, scrape *ScrapeSettings) error {
+func MergeScrapeConfig(fn string, scrape *configtypes.ScrapeSettings) error {
 	var sCfg OldScrape
 	if err := ReadToml(fn, &sCfg); err != nil {
 		return err

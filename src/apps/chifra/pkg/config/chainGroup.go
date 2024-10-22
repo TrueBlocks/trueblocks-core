@@ -4,27 +4,17 @@
 
 package config
 
-type chainGroup struct {
-	Chain          string         `toml:"chain,omitempty"`
-	ChainId        string         `toml:"chainId"`
-	IpfsGateway    string         `toml:"ipfsGateway,omitempty"`
-	KeyEndpoint    string         `toml:"keyEndpoint,omitempty"`
-	LocalExplorer  string         `toml:"localExplorer,omitempty"`
-	RemoteExplorer string         `toml:"remoteExplorer,omitempty"`
-	RpcProvider    string         `toml:"rpcProvider"`
-	Symbol         string         `toml:"symbol"`
-	Scrape         ScrapeSettings `toml:"scrape"`
-}
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
 
 // GetChain returns the chain for a given chain
-func GetChain(chain string) chainGroup {
+func GetChain(chain string) configtypes.ChainGroup {
 	return GetRootConfig().Chains[chain]
 }
 
 // GetChains returns a list of all chains configured in the config file. Note, there is no "official"
 // list. Users may add their own chains.
-func GetChains() []chainGroup {
-	chainArray := make([]chainGroup, 0, len(GetRootConfig().Chains))
+func GetChains() []configtypes.ChainGroup {
+	chainArray := make([]configtypes.ChainGroup, 0, len(GetRootConfig().Chains))
 	for _, v := range GetRootConfig().Chains {
 		chainArray = append(chainArray, v)
 	}
@@ -33,5 +23,5 @@ func GetChains() []chainGroup {
 
 // IsChainConfigured returns true if the chain is configured in the config file.
 func IsChainConfigured(needle string) bool {
-	return GetRootConfig().Chains != nil && GetRootConfig().Chains[needle] != chainGroup{}
+	return GetRootConfig().Chains != nil && GetRootConfig().Chains[needle] != configtypes.ChainGroup{}
 }

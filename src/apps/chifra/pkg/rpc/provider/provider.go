@@ -2,6 +2,7 @@ package provider
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"sync"
 
@@ -105,7 +106,7 @@ func fetchAndFilterData(ctx context.Context, provider Provider, query *Query, er
 			}
 			if totalFiltered == 0 {
 				msg := fmt.Sprintf("zero transactions reported, %d fetched", totalFetched)
-				errorChan <- fmt.Errorf(msg)
+				errorChan <- errors.New(msg)
 			}
 		}
 	}()

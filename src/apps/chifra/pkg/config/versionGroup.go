@@ -4,10 +4,8 @@
 
 package config
 
-type versionGroup struct {
-	Current string `toml:"current" comment:"Do not edit"`
-}
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
 
-func GetVersion() versionGroup {
+func GetVersion() configtypes.VersionGroup {
 	return GetRootConfig().Version
 }

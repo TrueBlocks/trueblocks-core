@@ -11,6 +11,7 @@ package types
 // EXISTING_CODE
 import (
 	"encoding/json"
+	"os"
 	"path"
 	"strings"
 
@@ -127,8 +128,14 @@ func (s *Destination) Resolve(chain string, google, dalle, local bool) []Destina
 	}
 
 	if dalle {
-		var query = "http://192.34.63.136:8080/dalle/simple/[{TERM}]"
-		ret = append(ret, NewDestinationEx(*s, strings.Replace(query, "[{TERM}]", s.Term, -1), "dalle"))
+		var query = "https://dalledress.io/dalle/[{SERIES}]/[{TERM}]"
+		query = strings.ReplaceAll(query, "[{TERM}]", s.Term)
+		if series, ok := os.LookupEnv("TB_DALLE_SERIES"); ok {
+			query = strings.ReplaceAll(query, "[{SERIES}]", series)
+		} else {
+			query = strings.ReplaceAll(query, "[{SERIES}]", "simple")
+		}
+		ret = append(ret, NewDestinationEx(*s, query, "dalle"))
 	}
 
 	if len(ret) > 0 {

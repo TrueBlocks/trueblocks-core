@@ -1,4 +1,4 @@
-# v0.14.0 Go Version of Chifra
+# v0.14.0 goLang version of Chifra
 
 ---
 

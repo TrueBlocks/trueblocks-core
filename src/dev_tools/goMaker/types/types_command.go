@@ -382,7 +382,7 @@ func (c *Command) OptFields() string {
 		}
 	}
 	if c.Route == "scrape" {
-		ret = append(ret, "Settings  config.ScrapeSettings `json:\"settings,omitempty\"`  // Configuration items for the scrape")
+		ret = append(ret, "Settings  configtypes.ScrapeSettings `json:\"settings,omitempty\"`  // Configuration items for the scrape")
 	}
 	ret = append(ret, "Globals globals.GlobalOptions `json:\"globals,omitempty\"`  // The global options")
 	ret = append(ret, "Conn *rpc.Connection `json:\"conn,omitempty\"` // The connection to the RPC server")

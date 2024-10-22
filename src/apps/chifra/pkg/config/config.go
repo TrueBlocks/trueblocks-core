@@ -1,7 +1,3 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
-// Use of this source code is governed by a license that can
-// be found in the LICENSE file.
-
 package config
 
 import (
@@ -19,6 +15,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -27,18 +24,9 @@ import (
 
 const envPrefix = "TB_"
 
-var trueBlocksConfig ConfigFile
+var trueBlocksConfig configtypes.Config
 var cachePath string
 var indexPath string
-
-type ConfigFile struct {
-	Version   versionGroup          `toml:"version"`
-	Settings  settingsGroup         `toml:"settings"`
-	Keys      map[string]keyGroup   `toml:"keys"`
-	Pinning   pinningGroup          `toml:"pinning"`
-	Unchained unchainedGroup        `toml:"unchained,omitempty" comment:"Do not edit these values unless instructed to do so."`
-	Chains    map[string]chainGroup `toml:"chains"`
-}
 
 // init sets up default values for the given configuration
 func init() {
@@ -51,13 +39,13 @@ func init() {
 var configMutex sync.Mutex
 var configLoaded = false
 
-func loadFromTomlFile(filePath string, dest *ConfigFile) error {
+func loadFromTomlFile(filePath string, dest *configtypes.Config) error {
 	return ReadToml(filePath, dest)
 }
 
 // GetRootConfig reads and the configuration located in trueBlocks.toml file. Note
 // that this routine is local to the package
-func GetRootConfig() *ConfigFile {
+func GetRootConfig() *configtypes.Config {
 	if configLoaded {
 		return &trueBlocksConfig
 	}
@@ -67,7 +55,7 @@ func GetRootConfig() *ConfigFile {
 	configPath := PathToRootConfig()
 
 	// First load the default config
-	trueBlocksConfig = *defaultConfig
+	trueBlocksConfig = configtypes.NewConfig(cachePath, indexPath, defaultIpfsGateway)
 
 	// Load TOML file
 	tomlConfigFn := filepath.Join(configPath, "trueBlocks.toml")
@@ -139,7 +127,7 @@ func GetRootConfig() *ConfigFile {
 		}
 		ch.IpfsGateway = clean(ch.IpfsGateway)
 		if ch.Scrape.AppsPerChunk == 0 {
-			settings := ScrapeSettings{
+			settings := configtypes.ScrapeSettings{
 				AppsPerChunk: 2000000,
 				SnapToGrid:   250000,
 				FirstSnap:    2000000,
