@@ -3,8 +3,12 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/crud"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
@@ -18,6 +22,11 @@ func main() {
 		if !usage.QueryUser("Are you sure you want to operate against the Regular names database (Y/n)?", "Quitting...") {
 			os.Exit(0)
 		}
+	}
+
+	if app.dryrun {
+		backupAllFiles()
+		defer restoreAllFiles()
 	}
 
 	switch app.action {
@@ -50,7 +59,9 @@ func main() {
 	_, name.Symbol, _ = getValue(5, "symbol", "")
 	_, _, name.Decimals = getValue(6, "decimals", "")
 
-	opts := sdk.NamesOptions{}
+	opts := sdk.NamesOptions{
+		Regular: app.IsRegular(),
+	}
 	cd := crud.CrudFromName(name)
 	if names, _, err := opts.ModifyName(crud.Update, cd); err != nil {
 		printHelp(err)
@@ -59,5 +70,35 @@ func main() {
 		for _, name := range names {
 			fmt.Printf("Names: %v\n", name.String())
 		}
+	}
+}
+
+func getFilenames() []string {
+	return []string{
+		filepath.Join(config.MustGetPathToChainConfig("mainnet"), string(names.DatabaseRegular)),
+		filepath.Join(config.MustGetPathToChainConfig("mainnet"), string(names.DatabaseCustom)),
+	}
+}
+
+func backupAllFiles() {
+	backupFile := func(fileName string) {
+		backupName := fileName + ".bak"
+		_, _ = file.Copy(backupName, fileName)
+	}
+	for _, file := range getFilenames() {
+		logger.Info("Dryrun - backing up file:", file)
+		backupFile(file)
+	}
+}
+
+func restoreAllFiles() {
+	restoreFile := func(fileName string) {
+		backupName := fileName + ".bak"
+		_, _ = file.Copy(fileName, backupName)
+		_ = os.Remove(backupName)
+	}
+	for _, file := range getFilenames() {
+		logger.Info("Dryrun - restoring file:", file)
+		restoreFile(file)
 	}
 }

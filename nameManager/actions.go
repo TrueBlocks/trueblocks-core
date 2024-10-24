@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/crud"
@@ -43,7 +42,7 @@ func (a *App) AutoName(args []string) {
 // DeleteName implements the chifra names --delete <address> command.
 func (a *App) DeleteName(args []string) {
 	opts := sdk.NamesOptions{
-		Regular: os.Getenv("TB_NAMEMANAGER_REGULAR") == "true",
+		Regular: a.IsRegular(),
 	}
 	address := base.HexToAddress(args[2])
 	cd := crud.CrudFromName(types.Name{Address: address})
@@ -59,7 +58,7 @@ func (a *App) DeleteName(args []string) {
 // UndeleteName implements the chifra names --undelete <address> command.
 func (a *App) UndeleteName(args []string) {
 	opts := sdk.NamesOptions{
-		Regular: os.Getenv("TB_NAMEMANAGER_REGULAR") == "true",
+		Regular: a.IsRegular(),
 	}
 	address := base.HexToAddress(args[2])
 	cd := crud.CrudFromName(types.Name{Address: address})
@@ -75,7 +74,7 @@ func (a *App) UndeleteName(args []string) {
 // RemoveName implements the chifra names --remove <address> command.
 func (a *App) RemoveName(args []string) {
 	opts := sdk.NamesOptions{
-		Regular: os.Getenv("TB_NAMEMANAGER_REGULAR") == "true",
+		Regular: a.IsRegular(),
 	}
 	address := base.HexToAddress(args[2])
 	cd := crud.CrudFromName(types.Name{Address: address})
@@ -91,7 +90,7 @@ func (a *App) RemoveName(args []string) {
 // CleanNames implements the chifra names --clean command.
 func (a *App) CleanNames() {
 	opts := sdk.NamesOptions{
-		Regular: os.Getenv("TB_NAMEMANAGER_REGULAR") == "true",
+		Regular: a.IsRegular(),
 	}
 	if msgs, _, err := opts.NamesClean(); err != nil {
 		printHelp(err)

@@ -29,13 +29,19 @@ Optional Arguments:
 
 Options:
   --help       Show this help message and exit
+  --dryrun     Simulate the command, but do not change the database
   --autoname   Given an address, query the chain for ERC20 values and update
   --delete     Delete the name entry for the given address
   --undelete   Undelete the name entry for the given address
   --remove     Remove the node for the given address
   --publish    Share any customized names you've created with the community via the Unchained Index
   --clean      Clean the names database including sorting and removing dups (if any)
-`
+
+Evironment Variables:
+  TB_NAMEMANAGER_REGULAR  If 'true', process the regular database, otherwise custom database (default: false)
+  TB_NAMEMANAGER_DRYRUN   If 'true', run the command, but do not make changes to the database (default: false)
+  TB_LOGLEVEL             One of [ debug | info | warn | error ] (default: info)
+  `
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%sError: %s%s\n", colors.Red, err.Error(), colors.Off)

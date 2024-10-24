@@ -16,10 +16,21 @@ func ParseArgs() *App {
 
 	app := NewApp()
 
-	switch os.Args[1] {
-	case "--help", "-h":
-		printHelp(nil)
+	// pick off some flags
+	args := []string{}
+	for _, arg := range os.Args {
+		if arg == "--help" && arg != "-h" {
+			printHelp(nil)
+		} else if arg == "--dryrun" {
+			app.dryrun = true
+		} else {
+			args = append(args, arg)
+		}
+	}
+	os.Args = args
 
+	// the remainder store the command in the first command line option
+	switch os.Args[1] {
 	case "--autoname", "--delete", "--undelete", "--remove":
 		if len(os.Args) != 3 {
 			printHelp(fmt.Errorf("'" + os.Args[1] + "' expects an address"))
@@ -72,6 +83,10 @@ func getValue(index int, field, def string) (base.Address, string, uint64) {
 }
 
 func readInput(prompt string, defaultValue string) string {
+	if os.Getenv("TB_NO_USERQUERY") == "true" {
+		return defaultValue
+	}
+
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print(prompt)
 	input, _ := reader.ReadString('\n')

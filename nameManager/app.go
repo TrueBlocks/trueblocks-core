@@ -15,6 +15,7 @@ type App struct {
 	logger   *slog.Logger
 	database names.DatabaseType
 	action   Action
+	dryrun   bool
 }
 
 // NewApp returns a new application ready to be used.
@@ -50,6 +51,9 @@ func NewApp() *App {
 
 	if os.Getenv("TB_NAMEMANAGER_REGULAR") == "true" {
 		app.database = names.DatabaseRegular
+	}
+	if os.Getenv("TB_NAMEMANAGER_DRYRUN") == "true" {
+		app.dryrun = true
 	}
 
 	return &app
