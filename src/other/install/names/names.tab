@@ -381,6 +381,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x038a68ff68c393373ec894015816e33ad41bd564	Glitch	GLCH	Rotki	18	false	false	false	true	true	false
 90-Individuals:Twitter	0x038b4625c27a568bb32cfb14b841c677b1bf5893	karl_0x		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0x038d6559ad7eaaa2056da4c6a5abb079e046269f	caitlinxyz		banteg on twitter		false	false	false	false	false	false
+99-Individual	0x038fe37c30a1b122382ca8de2f0ec9a4295984b1	BuidlGuidl Related 14		TrueBlocks.io		false	true	false	false	false	false
 50-Tokens:ERC20	0x0391d2021f89dc339f60fff84546ea23e337750f	BarnBridge Governance Token	BOND	Giveth website	18	false	false	false	true	true	false
 31-Gitcoin:Grants	0x039ae2898d257f4c9d7e381d478ee1ed042fe2f4	Grant 0284 My DAO Dashboard		https://gitcoin.co/grants/284/my-dao-dashboard		false	false	false	false	false	false
 50-Tokens:ERC20	0x039b5649a59967e3e936d7471f9c3700100ee1ab	Kucoin Shares	KCS	Giveth website	6	false	false	false	true	true	false
@@ -1464,6 +1465,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 31-Giveth:Project	0x0ff735d77661a282ea6a0d299e760d646e9aa372	Diocese of Marquette		Tokenomics		false	false	false	false	false	false
 90-Individuals:Twitter	0x0ff9255a22afcf11351773cbcb6bb7978d81990a	kelly345614441		banteg on twitter		false	false	false	false	false	false
 31-Gitcoin:Grants	0x0ffb10e7e21a09517b582bbd72168020bebd4b9d	Grant 1888 Out of Control Btc		https://gitcoin.co/grants/1888/out-of-control-btc		false	false	false	false	false	false
+99-Individual	0x0ffeb87106910eefc69c1902f411b431ffc424ff	BuidlGuidl Related 1		TrueBlocks.io		false	true	false	false	false	false
 31-Giveth:Project	0x1000114f61e475281e70ee112592f23b5ea2294c	Community Foundation for San Benito County		Tokenomics		false	false	false	false	false	false
 50-Tokens:ERC20	0x10010078a54396f62c96df8532dc2b4847d47ed3	Hundred Finance	HND	SmolAssets	18	false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0x10017ca37b1257ac0771e24652aa28c758e378eb	vkcrypto-sys		Gitcoin Website		false	false	false	false	false	false
@@ -1944,6 +1946,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 37-SelfDestructed	0x151445852b0cfdf6a4cc81440f2af99176e8ad08	Chainlink GBP-USD Aggregator		EtherScan.io		false	false	false	true	false	false
 90-Individuals:Twitter	0x1517edcea697cd4d64644089c68c41db97be2859	NOXExchange		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Humanity DAO	0x1518372dcad9a9ddf0057c2e5ddf196cfcb5bdaf	SovereignBleak		https://www.humanitydao.org/humans		false	false	false	false	false	false
+99-Individual	0x151a64570e4997739458455ba4ab5a535fd2e306	BuidlGuidl Related 7		TrueBlocks.io		false	true	false	false	false	false
 50-Tokens:ERC20	0x151bc71a40c56c7cb3317d86996fd0b4ff9bd907	GSG coin	GSGC	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x1521074a4423265c7c9ddd88296997eaea210dc5	AIRSHIB	AIRSHIB	On chain	18	false	false	false	true	true	false
 30-Contracts	0x152ad66bd57da8d539abaaf98d7c378621c36227	Unifund: Deployer Related		EtherScan.io		false	false	false	true	false	false
@@ -2088,6 +2091,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x1694058dd8e7fbbb052ad9ff1cd8d36eeeb84de8	Giveth Expenses Donation Token	GED	On chain	16	false	false	false	true	true	false
 50-Tokens:ERC20	0x1695936d6a953df699c38ca21c2140d497c08bd9	SynLev	SYN	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x16980b3b4a3f9d89e33311b5aa8f80303e5ca4f8	KIRA Network	KEX	Rotki	6	false	false	false	true	true	false
+99-Individual	0x169841aa3024cfa570024eb7dd6bf5f774092088	BuidlGuidl Related 11		TrueBlocks.io		false	true	false	false	false	false
 37-SelfDestructed	0x1698cd22278ef6e7c0df45a8dea72edbea9e42aa	Levin	LEVIN	On chain	18	false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0x16990619b3ee302d82a0f6f8b9c6bd204b058be5	followthechain		Gitcoin Website		false	false	false	false	false	false
 90-Individuals:Twitter	0x169a596e220ed5895be0b55b4d205bc3673a14d5	iwillsur5		banteg on twitter		false	false	false	false	false	false
@@ -2345,6 +2349,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 30-Contracts	0x19c0976f590d67707e62397c87829d896dc0f1f1	Maker: MCD Jug		EtherScan.io		false	false	false	true	false	false
 90-Individuals	0x19c49117a8167296caf5d23ab48e355ec1c8be8b	MolochDAO Proposer		Moloch DAO		false	false	false	false	false	false
 50-Tokens:ERC20	0x19cd772a13556bc00f62ffcf0696b1a19cdfd1d3	facebook	META	On chain	18	false	false	false	true	true	false
+99-Individual	0x19ce57b670121e73e43be6c2fea5c254bb4c8760	BuidlGuidl Related 4		TrueBlocks.io		false	true	false	false	false	false
 90-Individuals:Twitter	0x19d0689b6b77058ee04d4b5ae8ec24fb4ed7e33d	binji_x		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0x19d3364a399d251e894ac732651be8b0e4e85001	DAI yVault	yvDAI	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x19d4beb2bc410b80084fcbd0ac024326f4d3a370	ViCA Token	ViCA	On chain	18	false	true	false	true	true	false
@@ -2385,6 +2390,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0x1a47e4cc27f99997289f141dc1c874cdc50b68f7	k_d_a_j		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0x1a4b46696b2bb4794eb3d4c26f1c55f9170fa4c5	BitDAO	BIT	Rotki	18	false	false	false	true	true	false
 31-Giveth:Project	0x1a4bc0e2e9af1aa88b13fef4745f18952943502b	Club Esteem		Tokenomics		false	false	false	false	false	false
+99-Individual	0x1a4c2b35c9b4cc9f9a833a43dbe3a78fdb80bb54	BuidlGuidl Related 8		TrueBlocks.io		false	true	false	false	false	false
 50-Tokens:ERC20	0x1a52409168a09c6f386bfe6786748bd2ef9db799	Buterin Inu	BUTERIN	On chain	18	false	false	false	true	true	false
 31-Gitcoin:Grants	0x1a56d61142ac107dbc46f1c15a559906d84eed59	Grant 2755 - acharvested		https://gitcoin.co/grants/2755/acharvested		false	false	false	false	false	false
 90-Individuals:Kickback	0x1a5b3eb121846c9505e271067f6fef7fa7ebb5f1	sky		https://kickback.events/		false	false	false	false	false	false
@@ -2568,6 +2574,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC721	0x1c027ff8998698c8722d725de2303f8ed75bc753	OtherContract1		WhaleWatch.io	1	false	false	false	true	true	true
 31-Giveth:Project	0x1c0a0c7ecb341aa350155a55377743056e9919f4	Feed the Poor		Tokenomics		false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x1c0aa8ccd568d90d61659f060d1bfb1e6f855a20	ro5s		Gitcoin Website		false	false	false	false	false	false
+99-Individual	0x1c0accc24e1549125b5b3c14d999d3a496afbdb1	BuidlGuidl Related 12		TrueBlocks.io		false	true	false	false	false	false
 90-Individuals:Twitter	0x1c157086a129a4136ad9c8205c8b1b7f9c0655b6	AhunisaUre84500		banteg on twitter		false	false	false	false	false	false
 31-Giveth:Project	0x1c1601d1c749405c1fe338f16eb7d8067252b677	Ocean Defenders Alliance		Tokenomics		false	false	false	false	false	false
 90-Individuals:Twitter	0x1c1686bf7f0aff0d3eae4cc59b3b67b64206dbc4	Web3_Emily		banteg on twitter		false	false	false	false	false	false
@@ -2800,6 +2807,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x1e83916ea2ef2d7a6064775662e163b2d4c330a7	EthereumGasLimit	EGL	On chain	18	false	false	false	true	true	false
 90-Individuals:Twitter	0x1e847b73aab363de9fad4bbe272e7044406a9ee0	0xBasedBoy		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0x1e89803d22b1025c51a1cadf84d4a82d793d2635	OhArtistZhen		banteg on twitter		false	false	false	false	false	false
+99-Individual	0x1e8c64fd8f94da1d0e23853118b7f73a7b467209	BuidlGuidl Related 10		TrueBlocks.io		false	true	false	false	false	false
 31-Gitcoin:Grants	0x1e90ddceb84027d60fe364b4f18496ffc6ff432f	Grant 0647 Aids for Pop *covid-19*		https://gitcoin.co/grants/647/aids-for-pop-covid-19		false	false	false	false	false	false
 90-Individuals:Twitter	0x1e9155417ebeee3c5a24a79f9ef31bb92dacf584	vforv24		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0x1e917e764bc34d3bc313fe8159a6bd9d9ffd450d	WEWE	WEWE	Rotki	18	false	false	false	true	true	false
@@ -3074,6 +3082,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 60-SmolAssets	0x218f511431194b2c756d67a137de536bea74e498	VolatileAMM-ERN/stERN	vAMM-ERN/stERN	SmolAssets	18	false	false	false	false	false	false
 90-Individuals:Kickback	0x21904cabcc34b0541784e75f6a18f002fd6b0aa3	pekes29		https://kickback.events/		false	false	false	false	false	false
 50-Tokens:ERC20	0x219218f117dc9348b358b8471c55a073e5e0da0b	Gold Reward Token	GRX	On chain	18	false	false	false	true	true	false
+99-Individual	0x2194c0e9a0d75677b2fe3d1e11a0fc98147eb19a	BuidlGuidl Related 3		TrueBlocks.io		false	true	false	false	false	false
 90-Individuals:Twitter	0x2199e2e31e309ea1ae92611f032a1bd112970398	QianMo85229356		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0x219b9040eb7d8d8c2e8e84b87ce9ac1c83071980	Huobi Airdrop HuobiAirdrop.com	HuobiAirdrop.com	On chain	18	false	false	false	true	true	false
 90-Individuals:Twitter	0x219d403dc7969ecfa28cf51a13e0d507d4decac6	Ox21SamS		banteg on twitter		false	false	false	false	false	false
@@ -3626,6 +3635,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Humanity DAO	0x275c69284ce670e88b5539355d94bd0601981d1d	collinlafleche		https://www.humanitydao.org/humans		false	false	false	false	false	false
 30-Contracts	0x275da8e61ea8e02d51edd8d0dc5c0e62b4cdb0be	Idle.finance: Controller		EtherScan.io		false	false	false	true	false	false
 30-Contracts:Pool Together	0x275ff8a50bc5841b09ec9a34c955898cd9eb43c6	Pool Together Pool 1		EtherScan.io		false	false	false	true	false	false
+99-Individual	0x27629b5d175e899a19ed6b3a96016377d5ee4768	BuidlGuidl Related 6		TrueBlocks.io		false	true	false	false	false	false
 50-Tokens:ERC20	0x27695e09149adc738a978e9a678f99e4c39e9eb9	KickCoin	KICK	On chain	8	false	false	false	true	true	false
 90-Individuals:Humanity DAO	0x276b1f1d478e3b8f1c7dd879a6c0f69af4ee0026	neerajt4		https://www.humanitydao.org/humans		false	false	false	false	false	false
 91-Early:Addresses	0x276c5c6ca8507ed7bac085fc9b9521f4f54b58d3	Elcoindb		EtherScan.io		false	false	false	true	false	false
@@ -4146,6 +4156,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0x2d08ff9697a50608c0dfba7dc354a977b2b0fa97	0xbrNFT		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0x2d0e95bd4795d7ace0da3c0ff7b706a5970eb9d3	All Sports Coin	SOC	On chain	18	false	false	false	true	true	false
 90-Individuals:DAO Whales	0x2d0efca5e73e90c7707931678dfaef38c068ac10	Dao Whale 45		EtherScan.io		false	false	false	false	false	false
+99-Individual	0x2d143b3ae28fa31e7c821d138c58c32a30aa36ae	BuidlGuidl Related 5		TrueBlocks.io		false	true	false	false	false	false
 60-Whales	0x2d1566722288be5525b548a642c98b546f116aa0	Whale 71		https://www.coincarp.com/currencies/ethereum/richlist/		false	false	false	false	false	false
 50-Tokens:ERC20	0x2d1758d5d59c3403bb6f3924f3eef0a60c5caff5	Punk Inu	PINU	On chain	9	false	false	false	true	true	false
 50-Tokens:ERC20	0x2d184014b5658c453443aa87c8e9c4d57285620b	JSE Token	JSE	On chain	18	false	false	false	true	true	false
@@ -5179,6 +5190,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 30-Contract:Optimism Mainnet	0x38a6ed6fd76035684cadef38cf49a2fffa782b67	OVM_StateTransitionerFactory		Optimism Website		false	false	false	true	false	false
 50-Tokens:ERC20	0x38a94e92a19e970c144ded0b2dd47278ca11cc1f	Falcon 9	F9	On chain	9	false	false	false	true	true	false
 50-Tokens:ERC20	0x38ae374ecf4db50b0ff37125b591a04997106a32	MKRWrapper	MKRW	On chain	18	false	false	false	true	true	false
+99-Individual	0x38b2bac6431604dffec17a1e6adc649a9ea0efba	BuidlGuidl Related 9		TrueBlocks.io		false	true	false	false	false	false
 90-Individuals:Twitter	0x38b8c59e1f84d622dfcb3c69e5261786d64022a7	WhaleCoinTalk		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Humanity DAO	0x38b90d941fa41cd936ab7a0d7ffbef9a3d973012	wasmatic		https://www.humanitydao.org/humans		false	false	false	false	false	false
 90-Individuals:Twitter	0x38bdfcc9cc5d7f06f4fddf15456c3c73aea32aed	Rama0x1		banteg on twitter		false	false	false	false	false	false
@@ -5698,7 +5710,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0x3de1e7b6ec66694cf381f9dbeb753398968a9528	mia0x69lol		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0x3de254a0f838a844f727fee81040e0fa7884b935	Curve.fi Factory Plain Pool: mkUSD/crvUSD	mkcrvUSD-f	SmolAssets	18	false	false	false	true	true	false
 90-Individuals:Twitter	0x3de8233c28fc1c6ebb37f0e36d75f580b9c2984f	qyxxt		banteg on twitter		false	false	false	false	false	false
-90-Individuals:Humanity DAO	0x3df10334531a3c86590245e12be0104dd3459159	xuejiangli		https://www.humanitydao.org/humans		false	false	false	false	false	false
+99-Individual	0x3df10334531a3c86590245e12be0104dd3459159	BuidlGuidl Related 2		TrueBlocks.io		false	true	false	false	false	false
 90-Individuals:Gitcoin Grants	0x3df3766e64c2c85ce1baa858d2a14f96916d5087	ravensightq8		Gitcoin Website		false	false	false	false	false	false
 90-Individuals:Twitter	0x3df58ea3cd6b8c34970827f7d4b3a2622d23bb40	pupuaa303		banteg on twitter		false	false	false	false	false	false
 30-Contracts	0x3dfd23a6c5e8bbcfc9581d2e864a68feb6a076d3	Aave: Lending Pool Core V1		EtherScan.io		false	false	false	true	false	false
@@ -5812,6 +5824,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x3f1b0278a9ee595635b61817630cc19de792f506	Curve.fi Factory Plain Pool: ibAUD/sAUD	ibAUD+sAUD-f	SmolAssets	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x3f1e6b03b8d455618548986045d55926143e70d6	SOY.Finance	SOY	On chain	18	false	false	false	true	true	false
 90-Individuals:Humanity DAO	0x3f2219978dd19f7d9e83559bac1f07a6abbd45e3	AlienoverLee		https://www.humanitydao.org/humans		false	false	false	false	false	false
+99-Individual	0x3f22f740d41518f5017b76eed3a63eb14d2e1b07	BuidlGuidl Related 13		TrueBlocks.io		false	true	false	false	false	false
 30-Contracts	0x3f2816e10e3276c005a184059ab7b63a3fc8ae06	sdfdgf	sdfg	Etherscan 		false	false	false	true	false	true
 90-Individuals:Twitter	0x3f29f219d85ee6e2170c8cf9ae658456ca7313fa	UnusualEss		banteg on twitter		false	false	false	false	false	false
 31-Giveth:Project	0x3f2b21cc22b4e9b2e7ddc6a3afb6b83f9688dcb4	Mustard Seed Communities		Tokenomics		false	false	false	false	false	false

@@ -1,5 +1,7 @@
 package configtypes
 
+import "encoding/json"
+
 type ChainGroup struct {
 	Chain          string         `json:"chain" toml:"chain,omitempty"`
 	ChainId        string         `json:"chainId" toml:"chainId"`
@@ -10,4 +12,9 @@ type ChainGroup struct {
 	RpcProvider    string         `json:"rpcProvider" toml:"rpcProvider"`
 	Symbol         string         `json:"symbol" toml:"symbol"`
 	Scrape         ScrapeSettings `json:"scrape" toml:"scrape"`
+}
+
+func (s *ChainGroup) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }

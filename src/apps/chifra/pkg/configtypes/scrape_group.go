@@ -1,6 +1,10 @@
 package configtypes
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+import (
+	"encoding/json"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
 
 type ScrapeSettings struct {
 	AppsPerChunk uint64 `json:"appsPerChunk" toml:"appsPerChunk"`
@@ -9,6 +13,11 @@ type ScrapeSettings struct {
 	UnripeDist   uint64 `json:"unripeDist" toml:"unripeDist"`
 	AllowMissing bool   `json:"allowMissing,omitempty" toml:"allowMissing"`
 	ChannelCount uint64 `json:"channelCount,omitempty" toml:"channelCount"`
+}
+
+func (s *ScrapeSettings) String() string {
+	bytes, _ := json.Marshal(s)
+	return string(bytes)
 }
 
 func (s *ScrapeSettings) TestLog(chain string, test bool) {
