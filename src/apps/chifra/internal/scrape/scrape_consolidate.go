@@ -106,7 +106,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 			} else {
 				report.Snapped = isSnap
 				report.FileSize = file.FileSize(chunkPath)
-				report.Report()
+				logger.Info(report.Report())
 			}
 			if err = bm.opts.NotifyChunkWritten(chunk, chunkPath); err != nil {
 				return err

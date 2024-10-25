@@ -31,7 +31,7 @@ func TestNamesOptions_autoname(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error making backup = %+v", err)
 	}
-	defer backup.Restore() // put the file back
+	defer backup.Restore() // put the file back if it still exists (i.e., an error occurred)
 
 	type fields struct {
 		Autoname string
