@@ -15,6 +15,16 @@ import (
 
 // GetTracesByBlockNumber returns a slice of traces in the given block
 func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, error) {
+	// TODO: HUGE HACK. Erigon has a bug at block 21030627. We wrote an issue to Erigon
+	// TODO: and should re-run the scraper here once it's fixed.
+	// TODO: https://github.com/erigontech/erigon/issues/12473
+	if bn == 21030627 {
+		return []types.Trace{{
+			Action: &types.TraceAction{},
+			Result: &types.TraceResult{},
+		}}, nil
+	}
+
 	if conn.StoreReadable() {
 		// walk.Cache_Traces
 		traceGroup := &types.TraceGroup{
