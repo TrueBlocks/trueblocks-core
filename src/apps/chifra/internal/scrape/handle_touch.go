@@ -34,7 +34,7 @@ func (opts *ScrapeOptions) HandleTouch(rCtx *output.RenderCtx) error {
 		stagePath := index.ToStagingPath(rng.RangeToFilename(chain))
 		var chunk index.Chunk
 		var bm = BlazeManager{}
-		file.StringToAsciiFile(stagePath, base.SkippedSender.Hex()+"\t0\t0\n")
+		_ = file.StringToAsciiFile(stagePath, base.SkippedSender.Hex()+"\t0\t0\n")
 		appMap, _, nAppearances := bm.AsciiFileToAppearanceMap(stagePath)
 		if report, err := chunk.Write(chain, base.ZeroAddr, indexPath, appMap, nAppearances); err != nil {
 			errorChan <- err
