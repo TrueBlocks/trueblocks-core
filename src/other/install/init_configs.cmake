@@ -89,23 +89,24 @@ PrintLine("Copying files and folder to config...")
 
 # ---------------------------------------------------------------
 # Function        InFolder                                 InFile                     OutFolder
-CopyNotPresent    (${INSTALL_SOURCE}                   "trueBlocks.toml"          ${INSTALL_DEST})
+CopyNotPresent    (${INSTALL_SOURCE}                    "trueBlocks.toml"         ${INSTALL_DEST})
 
-CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet "allocs.csv"               ${INSTALL_DEST}/config/mainnet/)
-CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis  "allocs.csv"               ${INSTALL_DEST}/config/gnosis/)
-CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/sepolia "allocs.csv"               ${INSTALL_DEST}/config/sepolia/)
-CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/goerli  "allocs.csv"               ${INSTALL_DEST}/config/goerli/)
-CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/polygon "allocs.csv"               ${INSTALL_DEST}/config/polygon/)
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet  "allocs.csv"              ${INSTALL_DEST}/config/mainnet/)
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis   "allocs.csv"              ${INSTALL_DEST}/config/gnosis/)
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/sepolia  "allocs.csv"              ${INSTALL_DEST}/config/sepolia/)
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/goerli   "allocs.csv"              ${INSTALL_DEST}/config/goerli/)
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/polygon  "allocs.csv"              ${INSTALL_DEST}/config/polygon/)
 
-CopyAndTouchIgnorePresent (${INSTALL_SOURCE}/names/    "names.tab"                ${INSTALL_DEST}/config/mainnet/)
-CopyAndTouchIgnorePresent (${INSTALL_SOURCE}/names/    "names.tab"                ${INSTALL_DEST}/config/gnosis/)
-CopyAndTouchIgnorePresent (${INSTALL_SOURCE}/names/    "names.tab"                ${INSTALL_DEST}/config/sepolia/)
+CopyAndTouchIgnorePresent (${INSTALL_SOURCE}/names/     "names.tab"               ${INSTALL_DEST}/config/mainnet/)
+CopyAndTouchIgnorePresent (${INSTALL_SOURCE}/names/     "names.tab"               ${INSTALL_DEST}/config/gnosis/)
+CopyAndTouchIgnorePresent (${INSTALL_SOURCE}/names/     "names.tab"               ${INSTALL_DEST}/config/sepolia/)
 
-CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet "specials.csv"             ${INSTALL_DEST}/config/mainnet/)
-CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis  "specials.csv"             ${INSTALL_DEST}/config/gnosis/)
-CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/sepolia "specials.csv"             ${INSTALL_DEST}/config/sepolia/)
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet  "specials.csv"            ${INSTALL_DEST}/config/mainnet/)
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis   "specials.csv"            ${INSTALL_DEST}/config/gnosis/)
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/sepolia  "specials.csv"            ${INSTALL_DEST}/config/sepolia/)
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/optimism "specials.csv"            ${INSTALL_DEST}/config/optimism/)
 
-CopyNotPresent    (${INSTALL_SOURCE}/names/            "names_custom.tab"         ${INSTALL_DEST}/config/mainnet/)
+CopyNotPresent    (${INSTALL_SOURCE}/names/             "names_custom.tab"        ${INSTALL_DEST}/config/mainnet/)
 
 CopyFolder        (${INSTALL_SOURCE}/abis/known-000/                              ${INSTALL_DEST}/abis/known-000/)
 CopyFolder        (${INSTALL_SOURCE}/abis/known-005/                              ${INSTALL_DEST}/abis/known-005/)

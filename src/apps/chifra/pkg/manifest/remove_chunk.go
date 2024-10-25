@@ -38,14 +38,19 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 		}
 	}()
 
-	var man *Manifest
-	man, err = LoadManifest(chain, publisher, LocalCache)
-	if err != nil {
-		return err
-	}
+	exists := file.FileExists(manifestFn)
 
-	if _, err = file.Copy(manifestBackup, manifestFn); err != nil {
-		return err
+	var man *Manifest
+	if exists {
+		man, err = LoadManifest(chain, publisher, LocalCache)
+		if err != nil {
+			return err
+		}
+		if _, err = file.Copy(manifestBackup, manifestFn); err != nil {
+			return err
+		}
+	} else {
+		man = &Manifest{}
 	}
 
 	if _, err = file.Copy(indexBackup, indexFn); err != nil {
@@ -64,28 +69,31 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 		return err
 	}
 
-	removedRange, err1 := base.RangeFromFilenameE(bloomFn)
-	if err1 != nil {
-		err = err1
-		return err
-	}
-
-	newChunks := []types.ChunkRecord{}
-	for _, chunk := range man.Chunks {
-		chunkRange := base.RangeFromRangeString(chunk.Range)
-		if chunkRange.EarlierThan(removedRange) {
-			newChunks = append(newChunks, chunk)
-			// 	fmt.Println(colors.Green, "Keeping", chunk.Range, colors.Off)
-			// } else {
-			// 	fmt.Println(colors.Red, "Removing", chunk.Range, colors.Off)
+	if exists {
+		removedRange, err1 := base.RangeFromFilenameE(bloomFn)
+		if err1 != nil {
+			err = err1
+			return err
 		}
-	}
-	man.Chunks = newChunks
-	if err = man.SaveManifest(chain, config.PathToManifest(chain)); err != nil {
-		return err
+
+		newChunks := []types.ChunkRecord{}
+		for _, chunk := range man.Chunks {
+			chunkRange := base.RangeFromRangeString(chunk.Range)
+			if chunkRange.EarlierThan(removedRange) {
+				newChunks = append(newChunks, chunk)
+				// 	fmt.Println(colors.Green, "Keeping", chunk.Range, colors.Off)
+				// } else {
+				// 	fmt.Println(colors.Red, "Removing", chunk.Range, colors.Off)
+			}
+		}
+		man.Chunks = newChunks
+		if err = man.SaveManifest(chain, config.PathToManifest(chain)); err != nil {
+			return err
+		}
+
+		os.Remove(manifestBackup)
 	}
 
-	os.Remove(manifestBackup)
 	os.Remove(indexBackup)
 	os.Remove(bloomBackup)
 

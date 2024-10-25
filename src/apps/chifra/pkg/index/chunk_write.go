@@ -12,7 +12,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -24,13 +23,13 @@ type writeReport struct {
 	Snapped      bool
 }
 
-func (c *writeReport) Report() {
+func (c *writeReport) Report() string {
 	report := `Wrote {%d} address and {%d} appearance records to {$INDEX/%s.bin}`
 	if c.Snapped {
 		report += ` @(snapped to grid)}`
 	}
 	report += " (size: {%d} , span: {%d})"
-	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
+	return colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue)
 }
 
 func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string, addrAppearanceMap map[string][]types.AppRecord, nApps int) (*writeReport, error) {
