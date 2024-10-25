@@ -81,6 +81,10 @@ func (opts *ScrapeOptions) validateScrape() error {
 		fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", meta.Latest)))
 	}
 
+	if opts.Touch > 0 && opts.Touch < meta.Finalized {
+		return validate.Usage("The index is already finalized ({0}) past the touch block ({1}).", fmt.Sprintf("%d", meta.Finalized), fmt.Sprintf("%d", opts.Touch))
+	}
+
 	if len(opts.Publisher) > 0 {
 		err := validate.ValidateExactlyOneAddr([]string{opts.Publisher})
 		if err != nil {

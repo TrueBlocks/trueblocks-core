@@ -7,6 +7,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 )
 
@@ -21,6 +23,10 @@ import (
 // false, when in fact the node may be an archive node.
 func (conn *Connection) IsNodeArchive() bool {
 	thePath := filepath.Join(config.MustGetPathToChainConfig(conn.Chain), "allocs.csv")
+	if !file.FileExists(thePath) {
+		logger.Warn("No pre-allocation file found at", thePath, "assuming an archive node")
+		return true
+	}
 	largest, err := prefunds.GetLargestPrefund(conn.Chain, thePath)
 	if err != nil {
 		return false

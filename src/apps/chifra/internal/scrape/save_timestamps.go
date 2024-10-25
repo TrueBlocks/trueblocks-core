@@ -42,7 +42,7 @@ func (bm *BlazeManager) WriteTimestamps(ctx context.Context, blocks []base.Blknu
 		// we need to catch up (for example, the user truncated the timestamps file while debugging)
 		// don't get more than maxBlocks at a time
 		cnt := 0
-		maxBlocks := 1000
+		maxBlocks := 2000
 		for block := nTimestamps; block < blocks[0] && cnt < maxBlocks; block++ {
 			if ctx.Err() != nil {
 				// This means the context got cancelled, i.e. we got a SIGINT.
