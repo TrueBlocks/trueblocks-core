@@ -1,0 +1,3 @@
+component,block/epoch,name,timestamp,date,description
+execution,0,first,1636665386,2021-11-11T21:16:26,The chain's first block
+execution,105235063,Bedrock,1686068903,2023-06-06T16:28:23,The Bedrock hard fork block
