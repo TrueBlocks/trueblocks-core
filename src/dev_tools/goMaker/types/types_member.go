@@ -441,6 +441,14 @@ func (m *Member) UnmarshalCode() string {
 	return code
 }
 
+func (m *Member) IsBool() bool {
+	return m.Type == "bool"
+}
+
+func (m *Member) IsString() bool {
+	return m.Type == "string"
+}
+
 func (m *Member) YamlType() string {
 	o := fmt.Sprintf("\n          items:\n            $ref: \"#/components/schemas/" + CamelCase(m.Type) + "\"")
 	f := fmt.Sprintf("\n          format: %s", m.Type)

@@ -186,6 +186,9 @@ func Plural(s string) string {
 	if strings.HasSuffix(s, "s") {
 		return s
 	}
+	if strings.HasSuffix(s, "x") {
+		return s + "es"
+	}
 	return s + "s"
 }
 
