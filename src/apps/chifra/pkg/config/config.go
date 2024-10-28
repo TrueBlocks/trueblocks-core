@@ -186,15 +186,16 @@ func pathFromXDG(envVar string) (string, error) {
 		return "", nil // it's okay if it's empty
 	}
 
-	if xdg[0] != string(os.PathSeparator)[0] {
-		return "", usage.Usage("The {0} value ({1}), must be fully qualified.", envVar, xdg)
+	absXDGPath, err := filepath.Abs(xdg);
+	if err != nil {
+		return "", usage.Usage("The {0} value ({1}), could not be interpreted as an absolute path.", envVar, xdg)
+        }
+
+	if _, err := os.Stat(absXDGPath); err != nil {
+		return "", usage.Usage("The {0} folder ({1}) must exist.", envVar, absXDGPath)
 	}
 
-	if _, err := os.Stat(xdg); err != nil {
-		return "", usage.Usage("The {0} folder ({1}) must exist.", envVar, xdg)
-	}
-
-	return filepath.Join(xdg, ""), nil
+	return filepath.Join(absXDGPath, ""), nil
 }
 
 func validateRpcEndpoint(chain, provider string) error {
