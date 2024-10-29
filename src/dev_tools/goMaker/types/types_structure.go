@@ -100,7 +100,7 @@ func (s *Structure) HasSorts() bool {
 			return true
 		}
 	}
-	return false
+	return strings.Contains(s.Attributes, "sorts=")
 }
 
 func (s *Structure) NeedsAddress() bool {
@@ -213,4 +213,110 @@ func (s *Structure) TsTypeMembers() string {
 		ret = append(ret, m.TsType())
 	}
 	return strings.Join(ret, "\n")
+}
+
+func (s *Structure) parseType(which string) (string, string) {
+	which += "="
+	attrs := s.Attributes
+	if !strings.Contains(attrs, which) {
+		return "", ""
+	}
+	attrs = strings.ReplaceAll(attrs, which, "`")
+	parts := strings.Split(attrs, "`")
+	parts = strings.Split(parts[1], "|")
+	parts = strings.Split(parts[0], ".")
+
+	first, second := parts[0], ""
+	if len(parts) > 1 {
+		second = parts[1]
+	}
+
+	return first, second
+}
+
+func (s *Structure) ItemName() string {
+	_, typ := s.parseType("itemType")
+	return Lower(typ)
+}
+
+func (s *Structure) ItemType() string {
+	pkg, typ := s.parseType("itemType")
+	return FirstLower(pkg) + "." + FirstUpper(typ)
+}
+
+func (s *Structure) InputType() string {
+	if s.Class == "Manifest" {
+		return "coreTypes.Manifest"
+	}
+	return s.ItemType()
+}
+
+func (s *Structure) EmbedName() string {
+	_, typ := s.parseType("embedType")
+	return Lower(typ)
+}
+
+func (s *Structure) EmbedType() string {
+	pkg, typ := s.parseType("embedType")
+	if pkg == "types" {
+		return FirstUpper(typ)
+	}
+	return FirstLower(pkg) + "." + FirstUpper(typ)
+}
+
+func (s *Structure) OtherName() string {
+	_, typ := s.parseType("otherType")
+	return Lower(typ)
+}
+
+func (s *Structure) OtherType() string {
+	pkg, typ := s.parseType("otherType")
+	return FirstLower(pkg) + "." + FirstUpper(typ)
+}
+
+func (s *Structure) NeedsItems() bool {
+	return strings.Contains(s.Attributes, "itemType=")
+}
+
+func (s *Structure) NeedsEmbed() bool {
+	return strings.Contains(s.Attributes, "embedType=")
+}
+
+func (s *Structure) NeedsOther() bool {
+	return strings.Contains(s.Attributes, "otherType=")
+}
+
+func (s *Structure) NeedsChain() bool {
+	return !strings.Contains(s.Attributes, "noChain")
+}
+
+func (s *Structure) IsEditable() bool {
+	return strings.Contains(s.Attributes, "editable")
+}
+
+func (s *Structure) SortsInstance() string {
+	if !s.HasSorts() {
+		return ""
+	}
+
+	ret := "sdk.SortSpec {\n"
+	spec, _ := s.parseType("sorts")
+	fields := strings.Split(spec, ",")
+	// logger.Info(fields)
+	// logger.Info()
+	flds := []string{}
+	orders := []string{}
+	for _, field := range fields {
+		// logger.Info(field)
+		// logger.Info()
+		parts := strings.Split(field, "+")
+		if len(parts) > 1 {
+			flds = append(flds, "\""+parts[0]+"\"")
+			orders = append(orders, "sdk."+parts[1])
+		}
+	}
+	ret += "\tFields: []string{" + strings.Join(flds, ",") + "},\n"
+	ret += "\tOrder: []sdk.SortOrder{" + strings.Join(orders, ",") + "},\n"
+	ret += "},"
+	return ret
 }
