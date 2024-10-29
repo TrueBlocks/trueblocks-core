@@ -15,7 +15,7 @@ require (
 	github.com/panjf2000/ants/v2 v2.10.0
 	github.com/pelletier/go-toml/v2 v2.2.2
 	github.com/spf13/cobra v1.7.0
-	github.com/wailsapp/wails/v2 v2.9.2
+	github.com/wailsapp/wails/v2 v2.8.2
 	github.com/wealdtech/go-ens/v3 v3.5.2
 	golang.org/x/crypto v0.25.0
 	golang.org/x/term v0.22.0
