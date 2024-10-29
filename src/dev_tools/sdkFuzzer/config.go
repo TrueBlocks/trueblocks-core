@@ -54,6 +54,16 @@ func TestConfig(which, value, fn string, opts *sdk.ConfigOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "session":
+		if session, _, err := opts.ConfigSession(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Session](fn, session); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	default:
 		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
 		logger.Fatal("Quitting...")

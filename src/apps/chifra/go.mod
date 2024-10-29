@@ -15,6 +15,7 @@ require (
 	github.com/panjf2000/ants/v2 v2.10.0
 	github.com/pelletier/go-toml/v2 v2.2.2
 	github.com/spf13/cobra v1.7.0
+	github.com/wailsapp/wails/v2 v2.8.2
 	github.com/wealdtech/go-ens/v3 v3.5.2
 	golang.org/x/crypto v0.25.0
 	golang.org/x/term v0.22.0
@@ -46,6 +47,8 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/ipfs/boxo v0.8.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
+	github.com/leaanthony/slicer v1.6.0 // indirect
+	github.com/leaanthony/u v1.1.0 // indirect
 	github.com/libp2p/go-buffer-pool v0.1.0 // indirect
 	github.com/libp2p/go-flow-metrics v0.1.0 // indirect
 	github.com/libp2p/go-libp2p v0.27.8 // indirect
