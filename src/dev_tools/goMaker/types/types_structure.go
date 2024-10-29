@@ -17,6 +17,7 @@ type Structure struct {
 	DocRoute    string    `json:"doc_route,omitempty" toml:"doc_route"`
 	DocDescr    string    `json:"doc_descr,omitempty" toml:"doc_descr" csv:"doc_descr"`
 	DocNotes    string    `json:"doc_notes,omitempty" toml:"doc_notes" csv:"doc_notes"`
+	UiRoute     string    `json:"ui_route,omitempty" toml:"ui_route"`
 	ProducedBy  string    `json:"produced_by,omitempty" toml:"produced_by"`
 	ContainedBy string    `json:"contained_by,omitempty" toml:"contained_by"`
 	CacheAs     string    `json:"cache_as,omitempty" toml:"cache_as"`
@@ -319,4 +320,18 @@ func (s *Structure) SortsInstance() string {
 	ret += "\tOrder: []sdk.SortOrder{" + strings.Join(orders, ",") + "},\n"
 	ret += "},"
 	return ret
+}
+
+func (s *Structure) UiRouteNum() uint64 {
+	parts := strings.Split(s.UiRoute, "-")
+	return base.MustParseUint64(parts[0])
+}
+
+func (s *Structure) UiRouteName() string {
+	parts := strings.Split(s.UiRoute, "-")
+	return parts[1]
+}
+
+func (s *Structure) IsRoute() bool {
+	return s.UiRouteNum() < 2000
 }
