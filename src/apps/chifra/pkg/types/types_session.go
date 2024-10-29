@@ -153,7 +153,7 @@ func (s *Session) Save() error {
 		return err
 	} else {
 		if contents, _ := json.MarshalIndent(s, "", "  "); len(contents) > 0 {
-			file.StringToAsciiFile(fn, string(contents))
+			_ = file.StringToAsciiFile(fn, string(contents))
 		}
 		return nil
 	}
