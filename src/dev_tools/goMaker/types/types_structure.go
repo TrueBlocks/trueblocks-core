@@ -335,3 +335,11 @@ func (s *Structure) UiRouteName() string {
 func (s *Structure) IsRoute() bool {
 	return s.UiRouteNum() < 2000
 }
+
+func (s *Structure) UiRouteStr() string {
+	ret := s.UiRouteName()
+	if ret == "project" {
+		return ""
+	}
+	return ret
+}

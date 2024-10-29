@@ -143,7 +143,7 @@ func applyTemplate(tempFn string, existingCode map[int]string) (bool, error) {
 
 func updateFile(tempFn, newCode string) (bool, error) {
 	formatted := newCode
-	fileExt := strings.TrimPrefix(filepath.Ext(tempFn), ".")
+	fileExt := strings.TrimPrefix(filepath.Ext(strings.TrimSuffix(tempFn, ".new")), ".")
 
 	if fileExt == "go" {
 		formattedBytes, err := format.Source([]byte(newCode))
@@ -158,16 +158,19 @@ func updateFile(tempFn, newCode string) (bool, error) {
 			parser = "markdown"
 		case "yaml", "yml":
 			parser = "yaml"
-		case "js", "jsx", "ts", "tsx":
+		case "js", "jsx":
 			parser = "babel"
+		case "ts", "tsx":
+			parser = "typescript"
 		default:
-			return false, nil
+			// do nothing
 		}
-		utils.System("prettier -w --parser " + parser + " " + tempFn + " >/dev/null")
-		formatted = file.AsciiFileToString(tempFn)
+		if parser != "" {
+			utils.System("prettier -w --parser " + parser + " " + tempFn + " >/dev/null")
+			formatted = file.AsciiFileToString(tempFn)
+		}
 	} else {
 		logger.Warn("Prettier not found, skipping formatting for", tempFn, ". Install Prettier with `npm install -g prettier`.")
-		return false, nil
 	}
 
 	origFn := strings.Replace(tempFn, ".new", "", 1)
