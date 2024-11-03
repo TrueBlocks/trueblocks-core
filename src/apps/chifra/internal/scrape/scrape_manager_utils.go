@@ -28,7 +28,7 @@ func (bm *BlazeManager) report(nBlocks, perChunk, nChunks, nAppsNow, nAppsFound,
 		chunksStr = fmt.Sprintf(" %s", bm.chain)
 	}
 
-	report := `%7.7s @#% 9d}: {% 8d}/{% 8d} ({%0.1f apps/addr}) stage {% 8d} need {% 8d} (@%5.5s})%s`
+	report := `%7.7s @#% 11d}: {% 8d}/{% 8d} ({%0.1f apps/addr}) stage {% 8d} need {% 8d} (@%5.5s})%s`
 	msg := fmt.Sprintf(report,
 		bm.chain,
 		bm.EndBlock()-1,
