@@ -237,7 +237,7 @@ func (s *Structure) parseType(which string) (string, string) {
 
 func (s *Structure) ItemName() string {
 	_, typ := s.parseType("itemType")
-	return Lower(typ)
+	return typ
 }
 
 func (s *Structure) ItemType() string {
@@ -275,20 +275,24 @@ func (s *Structure) OtherType() string {
 	return FirstLower(pkg) + "." + FirstUpper(typ)
 }
 
-func (s *Structure) NeedsItems() bool {
+func (s *Structure) HasItems() bool {
 	return strings.Contains(s.Attributes, "itemType=")
 }
 
-func (s *Structure) NeedsEmbed() bool {
+func (s *Structure) HasEmbed() bool {
 	return strings.Contains(s.Attributes, "embedType=")
 }
 
-func (s *Structure) NeedsOther() bool {
+func (s *Structure) HasOther() bool {
 	return strings.Contains(s.Attributes, "otherType=")
 }
 
 func (s *Structure) NeedsChain() bool {
 	return !strings.Contains(s.Attributes, "noChain")
+}
+
+func (s *Structure) NeedsFetch() bool {
+	return !strings.Contains(s.Attributes, "noFetch")
 }
 
 func (s *Structure) IsEditable() bool {
@@ -332,14 +336,22 @@ func (s *Structure) UiRouteName() string {
 	return parts[1]
 }
 
-func (s *Structure) IsRoute() bool {
-	return s.UiRouteNum() < 2000
-}
-
 func (s *Structure) UiRouteStr() string {
 	ret := s.UiRouteName()
 	if ret == "project" {
 		return ""
 	}
 	return ret
+}
+
+func (s *Structure) IsHistory() bool {
+	return s.UiRouteName() == "history"
+}
+
+func (s *Structure) IsProject() bool {
+	return s.UiRouteName() == "project"
+}
+
+func (s *Structure) IsWizard() bool {
+	return s.UiRouteName() == "wizard"
 }

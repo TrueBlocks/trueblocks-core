@@ -64,9 +64,6 @@ func (cb *CodeBase) Generate() {
 		case "types":
 			for _, source := range generator.Templates {
 				for _, s := range cb.Structures {
-					if !s.IsRoute() {
-						continue
-					}
 					sort.Slice(s.Members, func(i, j int) bool {
 						return s.Members[i].SortName() < s.Members[j].SortName()
 					})
