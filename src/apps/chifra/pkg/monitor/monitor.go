@@ -248,3 +248,7 @@ func (mon *Monitor) MoveToProduction() error {
 
 	return err
 }
+
+func PathToMonitorFile(chain string, address base.Address) string {
+	return filepath.Join(config.PathToCache(chain), "monitors", address.Hex()+".mon.bin")
+}

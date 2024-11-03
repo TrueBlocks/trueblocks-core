@@ -24,6 +24,10 @@ func (s *Config) String() string {
 	return string(bytes)
 }
 
+func (s *Config) ShallowCopy() Config {
+	return *s
+}
+
 func NewConfig(cachePath, indexPath, defaultIpfs string) Config {
 	ret := defaultConfig
 	ret.Settings.CachePath = cachePath

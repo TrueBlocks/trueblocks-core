@@ -74,11 +74,10 @@ func IsLaterThan(fn1, fn2 string) (bool, error) {
 	return info1.ModTime().After(info2.ModTime()), nil
 }
 
-// func getLastModTs(fileName string) (int64, error) {
-// 	info, err := os.Stat(fileName)
-// 	if err != nil {
-// 		return 0, err
-// 	}
-// 	modTime := info.ModTime()
-// 	return modTime.Unix(), nil
-// }
+func GetModTime(fn string) (time.Time, error) {
+	if info, err := os.Stat(fn); err != nil {
+		return time.Time{}, err
+	} else {
+		return info.ModTime(), nil
+	}
+}

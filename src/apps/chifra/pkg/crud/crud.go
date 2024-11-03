@@ -39,6 +39,18 @@ const (
 	Autoname Operation = "autoname"
 )
 
+func OpFromString(op string) Operation {
+	m := map[string]Operation{
+		"create":   Create,
+		"update":   Update,
+		"delete":   Delete,
+		"undelete": Undelete,
+		"remove":   Remove,
+		"autoname": Autoname,
+	}
+	return m[op]
+}
+
 func (cd *NameCrud) Validate(requireName bool) error {
 	if cd.Address.Value.IsZero() {
 		return errors.New("address is required in crud.Validate")
