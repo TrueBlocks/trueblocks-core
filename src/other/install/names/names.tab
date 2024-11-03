@@ -981,6 +981,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0x0a8917f0bd50a526c5f9b51a1e3fe7961402db1e	davcurvello		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0x0a89715ac15db4bb86c72f4319d0171650c2a3de	davidoss_eth		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0x0a913bead80f321e7ac35285ee10d9d922659cb7	DOS Network Token	DOS	On chain	18	false	false	false	true	true	false
+30-Contracts	0x0a992d191deec32afe36203ad87d7d289a738f81	Circle: Message Transmitter		TrueBlocks Browse		false	true	false	false	false	false
 90-Individuals:Twitter	0x0a9b9b412dbbf2252b61ac0843aff1e76185a8c2	psalm		banteg on twitter		false	false	false	false	false	false
 90-Individuals:DAO Whales	0x0a9de66f5fda96a5b40d1ca9cd18bfb298c67d1c	LargeDAOInteractor_230		WhaleWatch.io		false	false	false	false	false	false
 50-Tokens:ERC20	0x0a9f693fce6f00a51a8e0db4351b5a8078b4242e	Resfinex	RES	On chain	5	false	false	false	true	true	false
@@ -1574,6 +1575,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x111111111117dc0aa78b770fa6a738034120c302	1INCH Token	1INCH	Giveth website	18	false	false	false	true	true	false
 30-Contracts	0x111111125421ca6dc452d289314280a0f8842a65	Aggregation Router v6		TrueBlocks.io		false	true	false	true	false	false
 50-Tokens:ERC20	0x111111125434b319222cdbf8c261674adb56f3ae	1inch.exchange v2		EtherScan.io		false	false	false	true	false	false
+30-Contracts	0x1111111254eeb25477b68fb85ed929f73a960582	Aggregation Router 5		TrueBlocks Browse		false	true	false	false	false	false
 30-Contracts	0x111111254b08ceeee8ad6ca827de9952d2a46781	1inch Exchange		0xTracker		false	false	false	true	false	false
 50-Tokens:ERC20	0x11111254369792b2ca5d084ab5eea397ca8fa48b	1inch.exchange		EtherScan.io		false	false	false	true	false	false
 30-Contracts	0x111112549cfedf7822eb11fbd8fd485d8a10f93f	1inch Exchange		0xTracker		false	false	false	true	false	false
@@ -4626,6 +4628,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 60-SmolAssets	0x323665443cef804a3b5206103304bd4872ea4253	USDV	USDV	SmolAssets	6	false	false	false	false	false	false
 50-Tokens:ERC20	0x3236a63c21fc524a51001ea2627697fdca86e897	TRICEPAY	TPAY	Rotki	18	false	false	false	true	true	false
 90-Individuals:Twitter	0x32389e009690f9571907e3b0f5399fcf5a981b9e	OrdnAry_ETH		banteg on twitter		false	false	false	false	false	false
+30-Contracts	0x323a76393544d5ecca80cd6ef2a560c6a395b7e3	ENS: Governance		TrueBlocks Browse		false	true	false	false	false	false
 50-Tokens:ERC20	0x323b3a6e7a71c1b8c257606ef0364d61df8aa525	Curve.fi Factory Plain Pool: sdCRV	sdCRVCRV-f	Rotki	18	false	false	false	true	true	false
 31-Gitcoin:Grants	0x323e5692152cdf04d84ea8aed57ec8a8caf43e92	Grant 0214 Axiom Finance ahoffaxiom				false	false	false	false	false	false
 90-Individuals:Twitter	0x323fd9cde725f7269ef71947f9e35d89cad1a459	pinkcupcake_eth		banteg on twitter		false	false	false	false	false	false
@@ -5149,6 +5152,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x3832d2f059e55934220881f831be501d180671a7	renDOGE	renDOGE	On chain	8	false	false	false	true	true	false
 50-Tokens:ERC20	0x3833dda0aeb6947b98ce454d89366cba8cc55528	SPHTX	SPHTX	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x383518188c0c6d7730d91b2c03a03c837814a899	Olympus	OHM	On chain	9	false	false	false	true	true	false
+30-Contracts	0x3836b0e02b4a613ba1d15834e6d77f409099d8f8	Sample Address				false	true	false	false	false	false
 30-Contracts	0x3839416bd0095d97be9b354cbfb0f6807d4d609e	Bancor: Converter #1				false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0x3839acf1ee7699d1f46b1be840d8ad8317fdf757	0xlucas		Gitcoin Website		false	false	false	false	false	false
 50-Tokens:ERC20	0x3839d8ba312751aa0248fed6a8bacb84308e20ed	Bezop	Bez	On chain	18	false	false	false	true	true	false
@@ -5946,6 +5950,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 91-Early:Addresses	0x408b8fbc19bb5ffff7d5e5c430f765524fae77c5	Withdrawdao		EtherScan.io		false	false	false	true	false	false
 50-Tokens:ERC20	0x408e41876cccdc0f92210600ef50372656052a38	Republic Token	REN	Giveth website	18	false	false	false	true	true	false
 30-Contracts	0x408e75c26e6182476940ece5b0ba6491b4f13359	Cream Pool Token	CRPT	Etherscan 	18	false	false	false	true	true	false
+30-Contracts	0x408ed6354d4973f66138c91495f2f2fcbd8724c3	Uniswap: Governance Bravo		TrueBlocks Browse		false	true	false	false	false	false
 90-Individuals:Twitter	0x408f2d6afa3534f53005bc30d5cd017bda4d5959	SdcpTian		banteg on twitter		false	false	false	false	false	false
 31-Gitcoin:Grants	0x40902dfde550a22e7431be348b27a44a3c743000	Grant 2864 - Badger Content -Spanish Translation & Comms		https://gitcoin.co/grants/2864/badger-content-spanish-translation-comms		false	false	false	false	false	false
 50-Tokens:ERC20	0x4090ad3e51088f305c889dd30f524d91811501de	RISEFOREVER ⚡	RISEFOREVER ⚡	On chain	9	false	false	false	true	true	false
@@ -8746,6 +8751,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0x5c02615be52a99f6e28bfa7ddd3dae7eb1f66f78	TraderFrankk		banteg on twitter		false	false	false	false	false	false
 30-Contracts	0x5c034e3bedb7d06bd102fc483cf017bf9f90da60	Feisty Doge: Deployer Related		EtherScan.io		false	false	false	true	false	false
 90-Individuals:Twitter	0x5c03e36db8c2dc7a1d4eda88496dc6d88154030a	spacepixel		banteg on twitter		false	false	false	false	false	false
+30-Contracts	0x5c04e7808455ee0e22c2773328c151d0dd79dc62	Scopelift		TrueBlocks Browse		false	true	false	false	false	false
 99-Individuals	0x5c06c5aa188abbc06d9865f9c665bd3283b3414d	Fake_Phishing323147		TrueBlocks.io		false	false	false	true	false	false
 30-Contracts	0x5c0a3f55aac52aa320ff5f280e77517cbaf85524	FARM_SLP	fSLP	Etherscan 	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x5c0a86a32c129538d62c106eb8115a8b02358d57	Curve rETH-wstETH Pool yVault	yvCurve-rETHwstETH	SmolAssets	18	false	false	false	true	true	false
@@ -15279,6 +15285,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 31-Gitcoin:Grants	0x9d4a1509da007ecb8b80d5eee9714cbe5b5b3167	Grant 0234 Decentralized Infrastructure Solutions (dis)		https://gitcoin.co/grants/234/decentralized-infrastructure-solutions-dis		false	false	false	false	false	false
 30-Contracts	0x9d4aa5600e0c8c2085bb82d946ca6642742a8250	HOPE	HOPE	Etherscan 	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x9d4b552c992ee3b863f3b51e95e46ecf38c21429	Uniswap V2	UNI-V2	On chain	18	false	false	false	true	true	false
+30-Contracts	0x9d4c63565d5618310271bf3f3c01b2954c1d1639	Gitcoin: Tally Governance		TrueBlocks Browse		false	true	false	false	false	false
 31-Gitcoin:Grants	0x9d4e94db689bc471e45b0a18b7bda36fccec9c3b	Grant 0258 Beaconcha.in - Open Source Eth2 Blockchain Explorer		https://gitcoin.co/grants/258/beaconchain-open-source-eth2-blockchain-explorer		false	false	false	false	false	false
 90-Individuals:Twitter	0x9d53d34d03852666236a0a6125424daf4199f981	cody227195		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0x9d54b756e7dcc75bb382326691baa76cb20cefc2	JiteshPatel92		banteg on twitter		false	false	false	false	false	false
@@ -18901,6 +18908,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0xc0d43eed3e5e718482e878c08651b66b838aa9f2	Kumquat_Squash		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0xc0d4ceb216b3ba9c3701b291766fdcba977cec3a	BTRFLY	BTRFLY	Rotki	9	false	false	false	true	true	false
 50-Tokens:ERC20	0xc0da01a04c3f3e0be433606045bb7017a7323e38	Compound Governor Alpha		On chain	18	false	false	false	true	true	false
+30-Contracts	0xc0da02939e1441f497fd74f78ce7decb17b66529	Compound Governance		TrueBlocks Browse		false	true	false	false	false	false
 50-Tokens:ERC20	0xc0da6c0fdb534e649bcfd7368f333021283510cf	Cocoa Inu	COCOAI	On chain	18	false	false	false	true	true	false
 31-Giveth:Core	0xc0dbdca66a0636236fabe1b3c16b1bd4c84bb1e1	GIV Mainnet Balancer v2 80GIV/ETH Pool (Staking)		Giveth Website		false	false	false	true	false	false
 31-Gitcoin:Grants	0xc0dd8e21a31f62861e668833f47770592d379a4c	Grant 2694 - Matrix2 - An aggregated Layer 2 network		https://gitcoin.co/grants/2694/matrix2-an-aggregated-layer-2-network		false	false	false	false	false	false
