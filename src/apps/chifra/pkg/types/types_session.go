@@ -22,6 +22,7 @@ type Session struct {
 	Window     Window            `json:"window"`
 	Wizard     Wizard            `json:"wizard"`
 	Toggles    Toggles           `json:"toggles"`
+	Chain      string            `json:"-"`
 }
 
 func (s Session) String() string {
@@ -121,36 +122,46 @@ func (s *Session) Save() error {
 	}
 }
 
+var ErrLoadingSession = errors.New("error loading session")
+
 // Load loads the session from the configuration folder. If the file contains
 // data, we return true. False otherwise.
 func (s *Session) Load() error {
-	checkWizard := func() (WizState, string) {
-		if s.Wizard.State == Okay && s.LastRoute == "/wizard" {
-			s.LastRoute = "/"
-			_ = s.Save()
-		}
-		return s.Wizard.State, s.LastRoute
-	}
-
-	if fn, err := utils.GetConfigFn("browse", "session.json"); err == nil {
-		if contents := file.AsciiFileToString(fn); len(contents) > 0 {
-			if err := json.Unmarshal([]byte(contents), s); err == nil {
-				s.Wizard.State, s.LastRoute = checkWizard()
-				if s.LastChain == "" {
-					s.LastChain = "mainnet"
-				}
-				if s.LastFile == "" {
-					s.LastFile = "Untitled.tbx"
-				}
-				return nil
+	loaded := false
+	defer func() {
+		if !loaded {
+			*s = defaultSession
+		} else {
+			// Ensure a valid file (if for example the user edited it)
+			if s.Wizard.State == Okay && s.LastRoute == "/wizard" {
+				s.LastRoute = "/"
+			}
+			if s.LastChain == "" {
+				s.LastChain = "mainnet"
+			}
+			if s.LastFile == "" {
+				s.LastFile = "Untitled.tbx"
 			}
 		}
+		_ = s.Save() // creates the session file if it doesn't already exist
+	}()
+
+	fn, err := utils.GetConfigFn("browse", "session.json")
+	if err != nil {
+		return fmt.Errorf("%w: %v", ErrLoadingSession, err)
 	}
 
-	// falls through above but returns the default session...
-	*s = defaultSession
-	s.Wizard.State, s.LastRoute = checkWizard()
-	_ = s.Save()
+	contents := file.AsciiFileToString(fn)
+	if len(contents) == 0 {
+		// This is not an error (the default session will be used)
+		return nil
+	}
+
+	if err = json.Unmarshal([]byte(contents), s); err != nil {
+		return fmt.Errorf("%w: %v", ErrLoadingSession, err)
+	}
+
+	loaded = true
 	return nil
 }
 
@@ -162,43 +173,45 @@ func (s *Session) SetRoute(route, subRoute string) {
 	_ = s.Save()
 }
 
-func (s *Session) CleanWindowSize(ctx context.Context) {
+var ErrScreenNotFound = errors.New("screen not found")
+
+// CleanWindowSize ensures a valid window size. (If the app has never run before
+// or the session fails to load its width or height will be zero.) This function
+// always returns a valid window size, but it may also return an error.
+func (s *Session) CleanWindowSize(ctx context.Context) (Window, error) {
+	// Any window size other than 0,0 is already okay.
 	if s.Window.Width != 0 && s.Window.Height != 0 {
-		// already set
-		return
+		return s.Window, nil
 	}
 
-	def := Window{Width: 1024, Height: 768}
+	ret := Window{X: 30, Y: 30, Width: 1024, Height: 768}
 	defer func() {
-		if s.Window.Width == 0 || s.Window.Height == 0 {
-			logger.Info("Fixing", s.Window.String())
-			s.Window = def
-		}
 		_ = s.Save()
 	}()
 
 	if screens, err := runtime.ScreenGetAll(ctx); err != nil {
-		logger.Error("Error getting screens", err)
-		return
+		return ret, fmt.Errorf("error getting screens %w", err)
+
 	} else {
-		fullScreen := def
+		var fullScreen *Window = nil
 		for _, screen := range screens {
 			if screen.IsCurrent || screen.IsPrimary {
-				fullScreen.Width = screen.Size.Width
-				fullScreen.Height = screen.Size.Height
+				fullScreen = &Window{
+					Width:  screen.Size.Width,
+					Height: screen.Size.Height,
+				}
 				break
 			}
 		}
-
-		portions := 12
-		wScale := 10
-		wPortion := fullScreen.Width / portions
-		hPortion := fullScreen.Height / portions
-		s.Window.X = wPortion
-		s.Window.Y = hPortion
-		s.Window.Width = wScale * wPortion
-		s.Window.Height = wScale * hPortion
+		if fullScreen != nil {
+			// We found the screen, so we can set a reasonable window size.
+			s.Window.X = fullScreen.Width / 6
+			s.Window.Y = fullScreen.Width / 6
+			s.Window.Width = (5 * fullScreen.Width) / 6
+			s.Window.Height = (5 * fullScreen.Width) / 6
+		}
 	}
+	return s.Window, nil
 }
 
 type Layout struct {

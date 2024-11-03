@@ -220,6 +220,7 @@ const (
 	MatchCase
 	Expanded
 	Tags
+	All = Regular | Custom | Prefund | Baddress
 )
 
 type SortBy int
