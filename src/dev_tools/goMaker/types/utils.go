@@ -186,9 +186,10 @@ func FirstLower(s string) string {
 func Plural(s string) string {
 	if strings.HasSuffix(s, "s") {
 		return s
-	}
-	if strings.HasSuffix(s, "x") {
+	} else if strings.HasSuffix(s, "x") {
 		return s + "es"
+	} else if strings.HasSuffix(s, "y") {
+		return s + "ies"
 	}
 	return s + "s"
 }

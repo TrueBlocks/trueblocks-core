@@ -41,6 +41,7 @@ func getFuncMap() template.FuncMap {
 	firstLower := func(s string) string { return FirstLower(s) }
 	firstUpper := func(s string) string { return FirstUpper(s) }
 	toLowerPlural := func(s string) string { return Lower(Plural(s)) }
+	or := func(a, b bool) bool { return a || b }
 	return template.FuncMap{
 		"toSingular":    toSingular,
 		"toProper":      toProper,
@@ -50,5 +51,6 @@ func getFuncMap() template.FuncMap {
 		"toLower":       toLower,
 		"firstLower":    firstLower,
 		"firstUpper":    firstUpper,
+		"or":            or,
 	}
 }

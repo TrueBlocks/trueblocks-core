@@ -291,6 +291,10 @@ func (s *Structure) NeedsChain() bool {
 	return !strings.Contains(s.Attributes, "noChain")
 }
 
+func (s *Structure) InitChain() bool {
+	return !s.NeedsChain() && strings.Contains(s.Attributes, "initChain")
+}
+
 func (s *Structure) NeedsFetch() bool {
 	return !strings.Contains(s.Attributes, "noFetch")
 }
