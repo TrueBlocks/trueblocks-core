@@ -4,8 +4,8 @@ module github.com/TrueBlocks/trueblocks-core/examples/withStreaming
 go 1.22
 
 require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241022031540-b362680128f7
-	github.com/TrueBlocks/trueblocks-sdk/v3 v3.5.5
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241029040126-dfdcbfaef4e9
+	github.com/TrueBlocks/trueblocks-sdk/v3 v3.7.0
 	github.com/schollz/progressbar/v3 v3.14.4
 )
 
@@ -37,6 +37,8 @@ require (
 	github.com/ipfs/go-cid v0.4.1 // indirect
 	github.com/ipfs/go-ipfs-api v0.6.1 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
+	github.com/leaanthony/slicer v1.6.0 // indirect
+	github.com/leaanthony/u v1.1.0 // indirect
 	github.com/libp2p/go-buffer-pool v0.1.0 // indirect
 	github.com/libp2p/go-flow-metrics v0.1.0 // indirect
 	github.com/libp2p/go-libp2p v0.27.8 // indirect
@@ -64,6 +66,7 @@ require (
 	github.com/supranational/blst v0.3.11 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect
+	github.com/wailsapp/wails/v2 v2.8.2 // indirect
 	github.com/wealdtech/go-ens/v3 v3.5.2 // indirect
 	github.com/wealdtech/go-multicodec v1.4.0 // indirect
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
