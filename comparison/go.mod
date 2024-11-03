@@ -4,7 +4,7 @@ module github.com/TrueBlocks/trueblocks-core/examples/comparison
 go 1.22
 
 require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241029040126-dfdcbfaef4e9
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241103184135-b8b1e11d4e7a
 	github.com/TrueBlocks/trueblocks-sdk/v3 v3.7.0
 )
 

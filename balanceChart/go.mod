@@ -4,7 +4,7 @@ module github.com/TrueBlocks/trueblocks-core/examples/balanceChart
 go 1.22
 
 require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241029040126-dfdcbfaef4e9
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241103184135-b8b1e11d4e7a
 	github.com/TrueBlocks/trueblocks-sdk/v3 v3.7.0
 	github.com/bykof/gostradamus v1.0.4
 	gonum.org/v1/plot v0.0.0-20190515093506-e2840ee46a6b
