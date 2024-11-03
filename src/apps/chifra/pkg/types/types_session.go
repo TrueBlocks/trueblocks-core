@@ -3,9 +3,10 @@ package types
 import (
 	"context"
 	"encoding/json"
+	"errors"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -108,45 +109,6 @@ var defaultSession = Session{
 	},
 }
 
-func (s *Session) CleanWindowSize(ctx context.Context) {
-	if s.Window.Width != 0 && s.Window.Height != 0 {
-		// already set
-		return
-	}
-
-	def := Window{Width: 1024, Height: 768}
-	defer func() {
-		if s.Window.Width == 0 || s.Window.Height == 0 {
-			logger.Info("Fixing", s.Window.String())
-			s.Window = def
-		}
-		_ = s.Save()
-	}()
-
-	if screens, err := runtime.ScreenGetAll(ctx); err != nil {
-		logger.Error("Error getting screens", err)
-		return
-	} else {
-		fullScreen := def
-		for _, screen := range screens {
-			if screen.IsCurrent || screen.IsPrimary {
-				fullScreen.Width = screen.Size.Width
-				fullScreen.Height = screen.Size.Height
-				break
-			}
-		}
-
-		portions := 12
-		wScale := 10
-		wPortion := fullScreen.Width / portions
-		hPortion := fullScreen.Height / portions
-		s.Window.X = wPortion
-		s.Window.Y = hPortion
-		s.Window.Width = wScale * wPortion
-		s.Window.Height = wScale * hPortion
-	}
-}
-
 // Save saves the session to the configuration folder.
 func (s *Session) Save() error {
 	if fn, err := utils.GetConfigFn("browse", "session.json"); err != nil {
@@ -198,6 +160,45 @@ func (s *Session) SetRoute(route, subRoute string) {
 		s.LastSub[route] = subRoute
 	}
 	_ = s.Save()
+}
+
+func (s *Session) CleanWindowSize(ctx context.Context) {
+	if s.Window.Width != 0 && s.Window.Height != 0 {
+		// already set
+		return
+	}
+
+	def := Window{Width: 1024, Height: 768}
+	defer func() {
+		if s.Window.Width == 0 || s.Window.Height == 0 {
+			logger.Info("Fixing", s.Window.String())
+			s.Window = def
+		}
+		_ = s.Save()
+	}()
+
+	if screens, err := runtime.ScreenGetAll(ctx); err != nil {
+		logger.Error("Error getting screens", err)
+		return
+	} else {
+		fullScreen := def
+		for _, screen := range screens {
+			if screen.IsCurrent || screen.IsPrimary {
+				fullScreen.Width = screen.Size.Width
+				fullScreen.Height = screen.Size.Height
+				break
+			}
+		}
+
+		portions := 12
+		wScale := 10
+		wPortion := fullScreen.Width / portions
+		hPortion := fullScreen.Height / portions
+		s.Window.X = wPortion
+		s.Window.Y = hPortion
+		s.Window.Width = wScale * wPortion
+		s.Window.Height = wScale * hPortion
+	}
 }
 
 type Layout struct {
@@ -332,6 +333,7 @@ type Wizard struct {
 
 var stateOrder = []WizState{
 	Welcome,
+	Error,
 	TomlOkay,
 	RpcOkay,
 	BloomsOkay,
@@ -342,19 +344,27 @@ var stateOrder = []WizState{
 func (w *Wizard) Step(step WizStep) {
 	switch step {
 	case Reset:
-		w.State = Welcome
+		w.State = Error
 	case Previous:
-		for i := range stateOrder {
-			if stateOrder[i] == w.State && i > 0 {
-				w.State = stateOrder[i-1]
-				break
+		if w.State == TomlOkay {
+			w.State = Welcome
+		} else {
+			for i := range stateOrder {
+				if stateOrder[i] == w.State && i > 0 {
+					w.State = stateOrder[i-1]
+					break
+				}
 			}
 		}
 	case Next:
-		for i := range stateOrder {
-			if stateOrder[i] == w.State && i < len(stateOrder)-1 {
-				w.State = stateOrder[i+1]
-				break
+		if w.State == Welcome {
+			w.State = TomlOkay
+		} else {
+			for i := range stateOrder {
+				if stateOrder[i] == w.State && i < len(stateOrder)-1 {
+					w.State = stateOrder[i+1]
+					break
+				}
 			}
 		}
 	case Finish:
@@ -370,6 +380,7 @@ const (
 	RpcOkay    WizState = "rpcOkay"
 	BloomsOkay WizState = "bloomsOkay"
 	IndexOkay  WizState = "indexOkay"
+	Error      WizState = "error"
 	Okay       WizState = "okay"
 )
 
@@ -388,6 +399,7 @@ var AllStates = []struct {
 	{RpcOkay, "RPCOKAY"},
 	{BloomsOkay, "BLOOMSOKAY"},
 	{IndexOkay, "INDEXOKAY"},
+	{Error, "ERROR"},
 	{Okay, "OKAY"},
 }
 
