@@ -155,12 +155,16 @@ func updateFile(tempFn, newCode string) (bool, error) {
 		var parser string
 		switch fileExt {
 		case "md":
-			parser = "markdown"
+			// parser = "markdown"
 		case "yaml", "yml":
 			parser = "yaml"
-		case "js", "jsx":
+		case "js":
+			// parser = "babel"
+		case "jsx":
 			parser = "babel"
-		case "ts", "tsx":
+		case "ts":
+			// parser = "typescript"
+		case "tsx":
 			parser = "typescript"
 		default:
 			// do nothing
