@@ -242,14 +242,20 @@ func (s *Structure) ItemName() string {
 
 func (s *Structure) ItemType() string {
 	pkg, typ := s.parseType("itemType")
+	if strings.HasPrefix(pkg, "types") {
+		return FirstUpper(typ)
+	}
 	return FirstLower(pkg) + "." + FirstUpper(typ)
 }
 
 func (s *Structure) InputType() string {
-	if s.Class == "Manifest" {
-		return "coreTypes.Manifest"
+	pkg, typ := s.parseType("inputType")
+	if typ == "" {
+		return s.ItemType()
+	} else if strings.HasPrefix(pkg, "types") {
+		return FirstUpper(typ)
 	}
-	return s.ItemType()
+	return FirstLower(pkg) + "." + FirstUpper(typ)
 }
 
 func (s *Structure) EmbedName() string {
@@ -299,6 +305,14 @@ func (s *Structure) NeedsFetch() bool {
 	return !strings.Contains(s.Attributes, "noFetch")
 }
 
+func (s *Structure) NeedsType() bool {
+	return !strings.Contains(s.Attributes, "noType")
+}
+
+func (s *Structure) NeedsPaging() bool {
+	return !strings.Contains(s.Attributes, "noPaging")
+}
+
 func (s *Structure) IsEditable() bool {
 	return strings.Contains(s.Attributes, "editable")
 }
@@ -330,22 +344,23 @@ func (s *Structure) SortsInstance() string {
 	return ret
 }
 
-func (s *Structure) UiRouteNum() uint64 {
-	parts := strings.Split(s.UiRoute, "-")
-	return base.MustParseUint64(parts[0])
-}
-
-func (s *Structure) UiRouteName() string {
-	parts := strings.Split(s.UiRoute, "-")
-	return parts[1]
-}
-
-func (s *Structure) UiRouteStr() string {
-	ret := s.UiRouteName()
-	if ret == "project" {
-		return ""
+func (s *Structure) UiHotKey() string {
+	keys := map[string]string{
+		"project":   "1",
+		"history":   "2",
+		"monitors":  "3",
+		"names":     "4",
+		"abis":      "5",
+		"indexes":   "6",
+		"manifests": "7",
+		"status":    "8",
+		"settings":  "9",
+		"daemons":   "0",
+		"session":   "u",
+		"config":    "v",
+		"wizard":    "w",
 	}
-	return ret
+	return keys[s.UiRouteName()]
 }
 
 func (s *Structure) IsHistory() bool {
@@ -358,4 +373,30 @@ func (s *Structure) IsProject() bool {
 
 func (s *Structure) IsWizard() bool {
 	return s.UiRouteName() == "wizard"
+}
+
+func (s *Structure) UiRouteNum() uint64 {
+	parts := strings.Split(s.UiRoute, "-")
+	return base.MustParseUint64(parts[0])
+}
+
+func (s *Structure) UiRouteName() string {
+	parts := strings.Split(s.UiRoute, "-")
+	return parts[1]
+}
+
+func (s *Structure) UiRouteRoute() string {
+	ret := Lower(s.UiRouteName())
+	if ret == "project" {
+		return ""
+	}
+	return ret
+}
+
+func (s *Structure) UiRouteLabel() string {
+	return FirstUpper(s.UiRouteName())
+}
+
+func (s *Structure) UiRouteLower() string {
+	return Lower(s.UiRouteName())
 }
