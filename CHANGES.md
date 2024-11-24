@@ -9,7 +9,7 @@ This file details changes made to TrueBlocks over time. All version prior to ver
 - Bumps version to 3.5.0 for all repos (that is all submodules are tagged with v3.5.0)
 - Adds indexManager dev_tool (currently only checks disc usage).
 - Improves "headless" modes for both chifra scrape and chifra init to produce much better log messages.
-- Improves greatly `trueblocks-node` to allow for scraping mulitple chains at the same time in headless mode.
+- Improves greatly `trueblocks-node` to allow for scraping multiple chains at the same time in headless mode.
 - Improves chifra chunks index --pin to better recover from errors during pinning (in fact, it didn't work previously).
 - Small updates to documentation for SDK, node, and examples.
 - Added dev_tool called indexManager which currently only reports on disc usage, but will eventually report on index status.
@@ -165,7 +165,7 @@ gh pr list --search "is:pr is:closed closed:>2024-09-22" --limit 300 --state mer
 - #3882 Updates node
 - #3880 Updates a few names
 - #3878 Feature/better manifests
-- #3876 Submodualarizatooor - moves a lot of code into submodules for MUCH easier mangement
+- #3876 Submodualarizatooor - moves a lot of code into submodules for MUCH easier management
 - #3875 Version 3.3.0
 - #3874 Tries to start using SemiVers for our go.mod files
 - #3871 Starts to improve chifra init
@@ -713,7 +713,7 @@ gh issue list --search "created:>2024-07-18 is:open is:issue sort:created-desc" 
 - Updates Python and Typescript SDK to latest auto-generated code.
 - Extended caching to various commands including `chifra state`, `chifra receipts`, and `chifra export --accounting`.
 - General improvements to caching including the ability to upgrade the cache without requiring a migration.
-- Moves `MetaData` type to the `types` package out of the `rpc` pacakge.
+- Moves `MetaData` type to the `types` package out of the `rpc` package.
 - Removes `go.work` from the repo which now requires running `./scripts/go-work-sync.sh` as part of the build.
 - Moved the test cases into its own submodule. Build now requires `git pull --recurse-submodules` to get the tests.
 - Complete rewrite of `goMaker` and `testRunner` in GoLang. Totally removes old `cpp` code.
