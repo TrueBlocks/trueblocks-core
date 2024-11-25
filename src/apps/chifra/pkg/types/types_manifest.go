@@ -65,4 +65,12 @@ func (s *Manifest) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
+func (s *Manifest) ShallowCopy() Manifest {
+	return Manifest{
+		Chain:         s.Chain,
+		Specification: s.Specification,
+		Version:       s.Version,
+	}
+}
+
 // EXISTING_CODE

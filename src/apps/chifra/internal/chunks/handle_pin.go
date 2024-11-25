@@ -42,7 +42,7 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 
 	outPath := filepath.Join(config.PathToCache(chain), "tmp", "manifest.json")
 	if opts.Rewrite {
-		outPath = config.PathToManifest(chain)
+		outPath = config.PathToManifestFile(chain)
 	}
 
 	man, err := manifest.LoadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
@@ -154,7 +154,7 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 				report.TimestampHash = localHash
 			}
 
-			manPath := config.PathToManifest(chain)
+			manPath := config.PathToManifestFile(chain)
 			if opts.Deep {
 				manPath = outPath
 			}

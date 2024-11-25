@@ -70,6 +70,18 @@ func (m *Member) IsRemoved() bool {
 	return strings.Contains(m.Attributes, "removed")
 }
 
+func (m *Member) IsEmbed() bool {
+	return strings.Contains(m.Attributes, "embed")
+}
+
+func (m *Member) IsItems() bool {
+	return m.Name == "items"
+}
+
+func (m *Member) IsInit() bool {
+	return strings.Contains(m.Attributes, "init")
+}
+
 func (m *Member) IsNoTag() bool {
 	return strings.Contains(m.Attributes, "notag")
 }

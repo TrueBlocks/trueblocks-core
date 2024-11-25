@@ -142,42 +142,68 @@ func applyTemplate(tempFn string, existingCode map[int]string) (bool, error) {
 }
 
 func updateFile(tempFn, newCode string) (bool, error) {
-	formatted := newCode
+	lines := []string{}
+	for _, line := range strings.Split(newCode, "\n") {
+		if !strings.Contains(line, "//-- remove line --") {
+			lines = append(lines, line)
+		}
+	}
+	codeToWrite := strings.Join(lines, "\n")
 	fileExt := strings.TrimPrefix(filepath.Ext(strings.TrimSuffix(tempFn, ".new")), ".")
 
+	origFn := strings.Replace(tempFn, ".new", "", 1)
+	outFn := tempFn + ".output"
+	errFn := tempFn + ".error"
+	tmpSrcFn := tempFn + ".src"
+	defer func() {
+		os.Remove(outFn)
+		os.Remove(errFn)
+		os.Remove(tmpSrcFn)
+	}()
+
 	if fileExt == "go" {
-		formattedBytes, err := format.Source([]byte(newCode))
+		formattedBytes, err := format.Source([]byte(codeToWrite))
 		if err != nil {
-			return showErroredCode(newCode, err)
+			return showErroredCode(codeToWrite, err)
 		}
-		formatted = string(formattedBytes)
+		codeToWrite = string(formattedBytes)
 	} else if hasPrettier() {
 		var parser string
 		switch fileExt {
 		case "md":
-			parser = "markdown"
+			// parser = "markdown"
 		case "yaml", "yml":
 			parser = "yaml"
-		case "js", "jsx":
+		case "js":
+			// parser = "babel"
+		case "jsx":
 			parser = "babel"
-		case "ts", "tsx":
+		case "ts":
+			// parser = "typescript"
+		case "tsx":
 			parser = "typescript"
 		default:
 			// do nothing
 		}
 		if parser != "" {
-			utils.System("prettier -w --parser " + parser + " " + tempFn + " >/dev/null")
-			formatted = file.AsciiFileToString(tempFn)
+			file.StringToAsciiFile(tmpSrcFn, codeToWrite)
+			cmd := fmt.Sprintf("prettier --parser %s %s > %s 2> %s", parser, tmpSrcFn, outFn, errFn)
+			utils.System(cmd)
+			errors := file.AsciiFileToString(errFn)
+			if len(errors) > 0 {
+				return showErroredCode(codeToWrite, fmt.Errorf("prettier errors: %s", errors))
+			}
+			codeToWrite = file.AsciiFileToString(outFn)
 		}
 	} else {
 		logger.Warn("Prettier not found, skipping formatting for", tempFn, ". Install Prettier with `npm install -g prettier`.")
 	}
 
-	origFn := strings.Replace(tempFn, ".new", "", 1)
-	if string(formatted) == file.AsciiFileToString(origFn) {
+	// Compare the new formatted code to the existing file and only write if different
+	if string(codeToWrite) == file.AsciiFileToString(origFn) {
 		return false, nil
 	} else {
-		file.StringToAsciiFile(origFn, string(formatted)) // modified code is in the original file
+		file.StringToAsciiFile(origFn, string(codeToWrite)) // modified code is in the original file
 		return true, nil
 	}
 }

@@ -8,6 +8,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
+// MustGetConfigFn ignore errors on GetConfigFn
+func MustGetConfigFn(appDir, fn string) string {
+	ret, _ := GetConfigFn(appDir, fn)
+	return ret
+}
+
 // GetConfigFn returns the user's (OS-specific) configuration folder. If the folder
 // is not found, an error is returned. If appDir is not empty, it is appended to
 // the configDir and if the resulting folder does not exist, it is created.
