@@ -10,7 +10,12 @@ import (
 )
 
 type Config struct {
-	configtypes.Config
+	Version   configtypes.VersionGroup          `json:"version" toml:"version"`
+	Settings  configtypes.SettingsGroup         `json:"settings" toml:"settings"`
+	Keys      map[string]configtypes.KeyGroup   `json:"keys" toml:"keys"`
+	Pinning   configtypes.PinningGroup          `json:"pinning" toml:"pinning"`
+	Unchained configtypes.UnchainedGroup        `json:"unchained" toml:"unchained,omitempty" comment:"Do not edit these values unless instructed to do so."`
+	Chains    map[string]configtypes.ChainGroup `json:"chains" toml:"chains"`
 }
 
 func (s Config) String() string {
@@ -41,4 +46,8 @@ func (s *Config) Model(chain, format string, verbose bool, extraOpts map[string]
 }
 
 func (s *Config) FinishUnmarshal() {
+}
+
+func (s *Config) ShallowCopy() Config {
+	return *s
 }

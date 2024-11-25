@@ -9,8 +9,15 @@ import (
 // HandleDump dumps a config to the screen
 func (opts *ConfigOptions) HandleDump(rCtx *output.RenderCtx) error {
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		var s types.Config
-		s.Config = *config.GetRootConfig()
+		config := *config.GetRootConfig()
+		s := types.Config{
+			Version:   config.Version,
+			Settings:  config.Settings,
+			Keys:      config.Keys,
+			Pinning:   config.Pinning,
+			Unchained: config.Unchained,
+			Chains:    config.Chains,
+		}
 		modelChan <- &s
 	}
 
