@@ -7,12 +7,12 @@ This file details changes made to TrueBlocks over time. All version prior to ver
 **Summary**
 
 - Bumps version to 3.5.0 for all repos (that is all submodules are tagged with v3.5.0)
-- Adds indexManager dev_tool (currently only checks disc usage).
+- Adds indexManager dev_tool (currently only checks disk usage).
 - Improves "headless" modes for both chifra scrape and chifra init to produce much better log messages.
-- Improves greatly `trueblocks-node` to allow for scraping mulitple chains at the same time in headless mode.
+- Improves greatly `trueblocks-node` to allow for scraping multiple chains at the same time in headless mode.
 - Improves chifra chunks index --pin to better recover from errors during pinning (in fact, it didn't work previously).
 - Small updates to documentation for SDK, node, and examples.
-- Added dev_tool called indexManager which currently only reports on disc usage, but will eventually report on index status.
+- Added dev_tool called indexManager which currently only reports on disk usage, but will eventually report on index status.
 
 ## SDK
 
