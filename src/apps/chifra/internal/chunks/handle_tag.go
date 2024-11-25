@@ -82,7 +82,7 @@ func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Bl
 
 			man.Version = opts.Tag
 			man.Specification = base.IpfsHash(config.SpecTags[opts.Tag])
-			_ = man.SaveManifest(chain, config.PathToManifest(chain))
+			_ = man.SaveManifest(chain, config.PathToManifestFile(chain))
 
 			// All that's left to do is report on what happened.
 			msg := fmt.Sprintf("%d chunks were retagged with %s.", nChunksTagged, opts.Tag)

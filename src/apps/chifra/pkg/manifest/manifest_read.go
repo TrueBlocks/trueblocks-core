@@ -21,7 +21,7 @@ import (
 // one. If it does (or if the file didn't exist), it saves the new manifest to the file. Finally, it
 // creates a map of chunks for easy lookup and sets the specification if it is not already set.
 func LoadManifest(chain string, publisher base.Address, source Source) (man *Manifest, err error) {
-	manifestFn := config.PathToManifest(chain)
+	manifestFn := config.PathToManifestFile(chain)
 	exists := file.FileExists(manifestFn)
 	man = &Manifest{}
 

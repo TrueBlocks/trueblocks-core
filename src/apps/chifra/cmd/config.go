@@ -54,10 +54,7 @@ func init() {
 	configCmd.Flags().SortFlags = false
 
 	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, `show the configuration paths for the system`)
-	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Session, "session", "s", false, `standin for ui code - no purpose (hidden)`)
-	if os.Getenv("TEST_MODE") != "true" {
-		_ = configCmd.Flags().MarkHidden("session")
-	}
+	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Dump, "dump", "d", false, `dump the configuration to stdout`)
 	globals.InitGlobals("config", configCmd, &configPkg.GetOptions().Globals, capabilities)
 
 	configCmd.SetUsageTemplate(UsageWithNotes(notesConfig))
