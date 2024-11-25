@@ -23,6 +23,7 @@ jobs:
           version: v1.61.0
           working-directory: ${{ env.CHIFRA_PATH }}
           args: --timeout=5m --verbose --out-format=colored-line-number
+          skip-pkg-cache: true
   Build:
     needs: Lint
     runs-on: ubuntu-20.04
