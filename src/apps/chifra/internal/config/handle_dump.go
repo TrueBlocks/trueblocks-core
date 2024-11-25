@@ -8,6 +8,7 @@ import (
 
 // HandleDump dumps a config to the screen
 func (opts *ConfigOptions) HandleDump(rCtx *output.RenderCtx) error {
+	config.ReloadConfig()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		config := *config.GetRootConfig()
 		s := types.Config{
