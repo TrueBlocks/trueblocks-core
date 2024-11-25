@@ -8,9 +8,6 @@ jobs:
   Lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Clean Go module cache
-        run: |
-          rm -rf $HOME/go/pkg/mod
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
@@ -40,22 +37,22 @@ jobs:
         run: |
           sudo apt-mark hold grub-efi-amd64-signed
           sudo apt-get update --fix-missing
-          sudo apt-get upgrade -y
-          sudo apt-get install -y build-essential git cmake
-          sudo apt-get install -y python3 tree jq
-          sudo apt-get install -y libcurl4-openssl-dev
+          sudo apt-get upgrade
+          sudo apt-get install build-essential git cmake
+          sudo apt-get install python3 tree jq
+          sudo apt-get install libcurl3-dev
       - name: Run basic golang unit tests
         run: |
           mkdir -p build
           cd build
           ../scripts/go-work-sync.sh
-          cmake ../src -Wno-dev -DCMAKE_FIND_PACKAGE_PREFER_CONFIG=ON
+          cmake ../src
           cd other/install
           make
           cd ../../../
           cd ${{ env.CHIFRA_PATH }}
           export TB_NO_PROVIDER_CHECK=true
-          go test -v ./... 2>&1 | tee test_output.log
+          go test ./...
   RemoteTests:
     needs: Build
     runs-on: ubuntu-latest
