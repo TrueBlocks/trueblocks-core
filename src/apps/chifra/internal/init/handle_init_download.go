@@ -181,7 +181,7 @@ func (opts *InitOptions) updateLocalManifest(existing, remote *manifest.Manifest
 		}
 	}
 
-	return copy.SaveManifest(chain, config.PathToManifest(chain))
+	return copy.SaveManifest(chain, config.PathToManifestFile(chain))
 }
 
 var spaces = strings.Repeat(" ", 55)
