@@ -3,7 +3,7 @@ module github.com/TrueBlocks/trueblocks-core/examples/simple
 // Go Version
 go 1.22
 
-require github.com/TrueBlocks/trueblocks-sdk/v3 v3.8.0
+require github.com/TrueBlocks/trueblocks-sdk/v3 v3.9.0
 
 require (
 	github.com/Microsoft/go-winio v0.6.1 // indirect
