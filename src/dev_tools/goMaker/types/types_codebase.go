@@ -153,7 +153,7 @@ func (cb *CodeBase) Validate() error {
 			if m.DocOrder > 0 {
 				order[m.DocOrder] = true
 			}
-			if knownTypes[m.Type] {
+			if knownTypes[m.Type] || strings.Contains(m.Type, ".") {
 				continue
 			}
 

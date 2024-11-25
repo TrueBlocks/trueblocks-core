@@ -54,11 +54,11 @@ func TestConfig(which, value, fn string, opts *sdk.ConfigOptions) {
 				ReportOkay(fn)
 			}
 		}
-	case "session":
-		if session, _, err := opts.ConfigSession(); err != nil {
+	case "dump":
+		if dump, _, err := opts.ConfigDump(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Session](fn, session); err != nil {
+			if err := SaveToFile[types.Config](fn, dump); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
