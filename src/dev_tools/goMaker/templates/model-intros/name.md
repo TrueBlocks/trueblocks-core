@@ -3,7 +3,7 @@ way towards making the blockchain data one extracts with a [Monitor](/data-model
 much more readable.
 
 Unlike the blockchain data itself, which is globally available and impossible to censor, the
-association of names with address is not on chain (excepting ENS, which, while fine, is incomplete).
+association of names with addresses is not on chain (excepting ENS, which, while fine, is incomplete).
 TrueBlocks allows you to name addresses of interest to you and either share those names (through
 an on-chain mechanism) or keep them private if you so desire.
 
