@@ -6,6 +6,11 @@ import (
 )
 
 func (c *Command) HasSorts() bool {
+	for _, prod := range c.Productions {
+		if prod.HasSorts() {
+			return true
+		}
+	}
 	return strings.Contains(c.Attributes, "sorts=")
 }
 

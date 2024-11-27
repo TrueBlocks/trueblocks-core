@@ -293,10 +293,6 @@ func (s *Structure) Wants(which string) bool {
 }
 
 func (s *Structure) SortsInstance() string {
-	if !s.HasSorts() {
-		return ""
-	}
-
 	flds := []string{}
 	orders := []string{}
 	spec := s.Sorts
@@ -311,7 +307,7 @@ func (s *Structure) SortsInstance() string {
 	ret := "sdk.SortSpec {\n"
 	ret += "\tFields: []string{" + strings.Join(flds, ",") + "},\n"
 	ret += "\tOrder: []sdk.SortOrder{" + strings.Join(orders, ",") + "},\n"
-	ret += "},"
+	ret += "}"
 	return ret
 }
 
