@@ -1,64 +1,31 @@
 package types
 
 import (
-	"sort"
 	"strings"
 )
 
-func (c *Command) HasSorts() bool {
-	for _, prod := range c.Productions {
-		if prod.HasSorts() {
-			return true
-		}
-	}
-	return strings.Contains(c.Attributes, "sorts=")
-}
-
-func getSorts(attributes string) []string {
-	parts := strings.Split(attributes, "=")
-	if len(parts) < 2 {
-		return []string{}
-	}
-	parts = strings.Split(parts[1], ":")
-	ret := []string{}
-	for _, part := range parts {
-		ret = append(ret, FirstUpper(part))
-	}
-	sort.Strings(ret)
-	return ret
-}
-
-type Sort struct {
-	Type string
-}
-
 // Sorts2 for tag {{.Sorts2}}
-func (c *Command) Sorts2() string {
-	ret := ""
-	for _, sort := range c.Sorts {
-		tmplName := "sortCode"
-		tmpl := `
-func Sort{{toPlural .Type}}({{toLowerPlural .Type}} []types.{{.Type}}, sortSpec SortSpec) error {
-	if len(sortSpec.Fields) != len(sortSpec.Order) {
-		return fmt.Errorf("fields and order must have the same length")
-	}
+func (s *Structure) Sorts2() string {
+	tmplName := "sortCode"
+	tmpl := `
+func Sort{{toPlural .Class}}({{toLowerPlural .Class}} []types.{{.Class}}, sortSpec SortSpec) error {
+if len(sortSpec.Fields) != len(sortSpec.Order) {
+	return fmt.Errorf("fields and order must have the same length")
+}
 
-	sorts := make([]func(p1, p2 types.{{.Type}}) bool, len(sortSpec.Fields))
-	for i, field := range sortSpec.Fields {
-		if !types.IsValid{{.Type}}Field(field) {
-			return fmt.Errorf("%s is not an {{.Type}} sort field", field)
-		}
-		sorts[i] = types.{{.Type}}By(types.{{.Type}}Field(field), types.SortOrder(sortSpec.Order[i]))
+sorts := make([]func(p1, p2 types.{{.Class}}) bool, len(sortSpec.Fields))
+for i, field := range sortSpec.Fields {
+	if !types.IsValid{{.Class}}Field(field) {
+		return fmt.Errorf("%s is not an {{.Class}} sort field", field)
 	}
+	sorts[i] = types.{{.Class}}By(types.{{.Class}}Field(field), types.SortOrder(sortSpec.Order[i]))
+}
 
-	sort.Slice({{toLowerPlural .Type}}, types.{{.Type}}Cmp({{toLowerPlural .Type}}, sorts...))
-	return nil
+sort.Slice({{toLowerPlural .Class}}, types.{{.Class}}Cmp({{toLowerPlural .Class}}, sorts...))
+return nil
 }
 `
-		ss := Sort{Type: sort}
-		ret += executeTemplate(ss, "sort", tmplName, tmpl)
-	}
-	return ret
+	return executeTemplate(*s, "sort", tmplName, tmpl)
 }
 
 func (m *Member) IsSortable() bool {
