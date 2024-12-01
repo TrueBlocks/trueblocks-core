@@ -20,6 +20,7 @@ Arguments:
 
 Flags:
   -a, --paths        show the configuration paths for the system
+  -d, --dump         dump the configuration to stdout
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose output
   -h, --help         display this help screen

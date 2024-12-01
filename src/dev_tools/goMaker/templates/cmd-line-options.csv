@@ -81,7 +81,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 14170,apps,Accounts,monitors,acctExport,n4,,,,,note,,,,,,Addresses provided on the command line are ignored in `--watch` mode.
 14180,apps,Accounts,monitors,acctExport,n5,,,,,note,,,,,,Providing the value `existing` to the `--watchlist` monitors all existing monitor files (see --list).
 #
-15000,tools,Accounts,names,ethNames,,,,visible|docs|sorts=name,,command,,,Manage names,[flags] <term> [term...],default|,Query addresses or names of well-known accounts.
+15000,tools,Accounts,names,ethNames,,,,visible|docs,,command,,,Manage names,[flags] <term> [term...],default|,Query addresses or names of well-known accounts.
 15020,tools,Accounts,names,ethNames,terms,,,required|visible|docs,4,positional,list<string>,name,,,,a space separated list of one or more search terms
 15030,tools,Accounts,names,ethNames,expand,e,,visible|docs,,switch,<boolean>,,,,,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
 15040,tools,Accounts,names,ethNames,match_case,m,,visible|docs,,switch,<boolean>,,,,,do case-sensitive search
@@ -102,7 +102,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 15190,tools,Accounts,names,ethNames,n1,,,,,note,,,,,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 15200,tools,Accounts,names,ethNames,n2,,,,,note,,,,,,The `--match_case` option enables case sensitive matching.
 #
-16000,tools,Accounts,abis,grabABI,,,,visible|docs|sorts=function:abi,,command,,,Manage Abi files,[flags] <address> [address...],default|caching|names|,Fetches the ABI for a smart contract.
+16000,tools,Accounts,abis,grabABI,,,,visible|docs,,command,,,Manage Abi files,[flags] <address> [address...],default|caching|names|,Fetches the ABI for a smart contract.
 16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,5,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
 16030,tools,Accounts,abis,grabABI,known,k,,visible|docs,,switch,<boolean>,,,,,load common 'known' ABIs from cache
 16040,tools,Accounts,abis,grabABI,proxy_for,r,,visible|docs,,flag,<address>,,,,,redirects the query to this implementation
@@ -279,7 +279,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 45150,apps,Admin,scrape,blockScrape,n2,,,,,note,,,,,,This command requires your RPC to provide trace data. See the README for more information.
 45150,apps,Admin,scrape,blockScrape,n3,,,,,note,,,,,,The --notify option requires proper configuration. Additionally&#44; IPFS must be running locally. See the README.md file.
 #
-46000,apps,Admin,chunks,chunkMan,,,,visible|docs|sorts=chunkStats:chunkRecord,,command,,,Manage chunks,<mode> [flags] [blocks...] [address...],default|,Manage&#44; investigate&#44; and display the Unchained Index.
+46000,apps,Admin,chunks,chunkMan,,,,visible|docs,,command,,,Manage chunks,<mode> [flags] [blocks...] [address...],default|,Manage&#44; investigate&#44; and display the Unchained Index.
 46020,apps,Admin,chunks,chunkMan,mode,,,required|visible|docs,9,positional,enum[manifest|index|blooms|pins|addresses|appearances|stats],mode,,,,the type of data to process
 46030,apps,Admin,chunks,chunkMan,blocks,,,visible|docs,,positional,list<blknum>,,,,,an optional list of blocks to intersect with chunk ranges
 46040,apps,Admin,chunks,chunkMan,check,c,,visible|docs,1,switch,<boolean>,,,,,check the manifest&#44; index&#44; or blooms for internal consistency

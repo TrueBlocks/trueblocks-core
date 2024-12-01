@@ -3,8 +3,6 @@ package types
 import (
 	"os"
 	"path/filepath"
-
-	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
 )
 
 // ProcessFile processes a single file, applying the template to it and
@@ -24,7 +22,7 @@ func (item *Command) ProcessFile(source, group, reason string) error {
 
 	tmplName := fullPath + group + reason
 	result := item.executeTemplate(tmplName, tmpl)
-	_, err := codeWriter.WriteCode(dest, result)
+	_, err := WriteCode(dest, result)
 
 	return err
 }
