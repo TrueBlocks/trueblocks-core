@@ -199,7 +199,7 @@ func FirstLower(s string) string {
 }
 
 func Plural(s string) string {
-	if strings.HasSuffix(s, "s") {
+	if strings.HasSuffix(s, "s") || strings.HasSuffix(s, "ed") || strings.HasSuffix(s, "ing") {
 		return s
 	} else if strings.HasSuffix(s, "x") {
 		return s + "es"
