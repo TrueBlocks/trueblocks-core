@@ -143,9 +143,6 @@ func (c *Command) Clean() {
 			c.Aliases = append(c.Aliases, op.Description)
 		} else if op.OptionType == "command" {
 			c.Description = op.Description
-			if c.HasSorts() {
-				c.Sorts = getSorts(op.Attributes)
-			}
 		} else if op.OptionType == "group" {
 			// c.Description = op.Description
 		} else {

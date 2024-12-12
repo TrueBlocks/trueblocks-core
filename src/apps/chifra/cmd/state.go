@@ -54,7 +54,9 @@ Notes:
   - Balance is the default mode. To select a single mode use none first, followed by that mode.
   - Valid parameters for --call include Solidity-like syntax: balanceOf(0x316b...183d), a four-byte followed by parameters: 0x70a08231(0x316b...183d), or encoded input data.
   - You may specify multiple parts on a single line.
-  - In the --call string, you may separate multiple calls with a colon.`
+  - In the --call string, you may separate multiple calls with a colon.
+  - Your use of the unaudited --send option legally absolves, in any jurisdiction, TrueBlocks, LLC or any associated parties from liability or loss related to such use.
+  - The --send option does not validate its input before sending your transaction to the network. If you provide invalid data, you may lose your funds. Be warned.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra state
@@ -69,7 +71,8 @@ func init() {
 One or more of [ balance | nonce | code | proxy | deployed | accttype | some | all ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, `only report a balance when it changes from one block to the next`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "z", false, `suppress the display of zero balance accounts`)
-	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "l", "", `call a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings`)
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "l", "", `write-only call to a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings`)
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Send, "send", "s", "", `send a transaction to a smart contract using a solidity function, a four-byte plus parameters, or an encoded call data string`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Articulate, "articulate", "a", false, `for the --call option only, articulate the retrieved data if ABIs can be found`)
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", `for the --call option only, redirects calls to this implementation`)
 	globals.InitGlobals("state", stateCmd, &statePkg.GetOptions().Globals, capabilities)

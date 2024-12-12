@@ -18,8 +18,11 @@ type Structure struct {
 	DocDescr    string    `json:"doc_descr,omitempty" toml:"doc_descr" csv:"doc_descr"`
 	DocNotes    string    `json:"doc_notes,omitempty" toml:"doc_notes" csv:"doc_notes"`
 	UiRoute     string    `json:"ui_route,omitempty" toml:"ui_route"`
+	UiIcon      string    `json:"ui_icon,omitempty" toml:"ui_icon"`
 	ProducedBy  string    `json:"produced_by,omitempty" toml:"produced_by"`
 	ContainedBy string    `json:"contained_by,omitempty" toml:"contained_by"`
+	Parent      string    `json:"parent,omitempty" toml:"parent"`
+	Children    string    `json:"children,omitempty" toml:"children"`
 	CacheAs     string    `json:"cache_as,omitempty" toml:"cache_as"`
 	CacheBy     string    `json:"cache_by,omitempty" toml:"cache_by"`
 	CacheType   string    `json:"cache_type,omitempty" toml:"cache_type"`
@@ -30,6 +33,7 @@ type Structure struct {
 	Members     []Member  `json:"members,omitempty" toml:"members"`
 	Route       string    `json:"-" toml:"-"`
 	Producers   []string  `json:"-" toml:"-"`
+	ChildTabs   []string  `json:"-" toml:"-"`
 	cbPtr       *CodeBase `json:"-" toml:"-"`
 }
 
@@ -293,10 +297,6 @@ func (s *Structure) Wants(which string) bool {
 }
 
 func (s *Structure) SortsInstance() string {
-	if !s.HasSorts() {
-		return ""
-	}
-
 	flds := []string{}
 	orders := []string{}
 	spec := s.Sorts
@@ -311,14 +311,15 @@ func (s *Structure) SortsInstance() string {
 	ret := "sdk.SortSpec {\n"
 	ret += "\tFields: []string{" + strings.Join(flds, ",") + "},\n"
 	ret += "\tOrder: []sdk.SortOrder{" + strings.Join(orders, ",") + "},\n"
-	ret += "},"
+	ret += "}"
 	return ret
 }
 
 func (s *Structure) getUiRoutePart(p int) string {
 	parts := strings.Split(s.UiRoute, "-")
 	if len(parts) != 3 {
-		logger.Fatal("should be three parts to ", s.UiRoute)
+		s.UiRoute += "-none"
+		parts = append(parts, "none")
 	}
 	return parts[p]
 }

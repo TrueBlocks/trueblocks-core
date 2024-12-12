@@ -1,4 +1,4 @@
-package codeWriter
+package types
 
 import (
 	"bufio"
@@ -16,7 +16,7 @@ import (
 )
 
 func WriteCode(existingFn, newCode string) (bool, error) {
-	if len(strings.Trim(newCode, "\n\t\r")) == 0 {
+	if len(strings.Trim(newCode, wss)) == 0 {
 		return false, nil
 	}
 

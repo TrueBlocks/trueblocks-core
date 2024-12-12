@@ -81,7 +81,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 14170,apps,Accounts,monitors,acctExport,n4,,,,,note,,,,,,Addresses provided on the command line are ignored in `--watch` mode.
 14180,apps,Accounts,monitors,acctExport,n5,,,,,note,,,,,,Providing the value `existing` to the `--watchlist` monitors all existing monitor files (see --list).
 #
-15000,tools,Accounts,names,ethNames,,,,visible|docs|sorts=name,,command,,,Manage names,[flags] <term> [term...],default|,Query addresses or names of well-known accounts.
+15000,tools,Accounts,names,ethNames,,,,visible|docs,,command,,,Manage names,[flags] <term> [term...],default|,Query addresses or names of well-known accounts.
 15020,tools,Accounts,names,ethNames,terms,,,required|visible|docs,4,positional,list<string>,name,,,,a space separated list of one or more search terms
 15030,tools,Accounts,names,ethNames,expand,e,,visible|docs,,switch,<boolean>,,,,,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
 15040,tools,Accounts,names,ethNames,match_case,m,,visible|docs,,switch,<boolean>,,,,,do case-sensitive search
@@ -102,7 +102,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 15190,tools,Accounts,names,ethNames,n1,,,,,note,,,,,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 15200,tools,Accounts,names,ethNames,n2,,,,,note,,,,,,The `--match_case` option enables case sensitive matching.
 #
-16000,tools,Accounts,abis,grabABI,,,,visible|docs|sorts=function:abi,,command,,,Manage Abi files,[flags] <address> [address...],default|caching|names|,Fetches the ABI for a smart contract.
+16000,tools,Accounts,abis,grabABI,,,,visible|docs,,command,,,Manage Abi files,[flags] <address> [address...],default|caching|names|,Fetches the ABI for a smart contract.
 16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,5,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
 16030,tools,Accounts,abis,grabABI,known,k,,visible|docs,,switch,<boolean>,,,,,load common 'known' ABIs from cache
 16040,tools,Accounts,abis,grabABI,proxy_for,r,,visible|docs,,flag,<address>,,,,,redirects the query to this implementation
@@ -201,12 +201,13 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 31000,,Chain State,,,,,,,,group,,,,,,Access to account and token state
 #
 32000,tools,Chain State,state,getState,,,,visible|docs,,command,,,Get balance(s),[flags] <address> [address...] [block...],default|caching|ether|names|,Retrieve account balance(s) for one or more addresses at given block(s).
-32020,tools,Chain State,state,getState,addrs,,,required|visible|docs,2,positional,list<addr>,state,,,,one or more addresses (0x...) from which to retrieve balances
+32020,tools,Chain State,state,getState,addrs,,,required|visible|docs,3,positional,list<addr>,state,,,,one or more addresses (0x...) from which to retrieve balances
 32030,tools,Chain State,state,getState,blocks,,,visible|docs,,positional,list<blknum>,,,,,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
 32040,tools,Chain State,state,getState,parts,p,,visible|docs,,flag,list<enum[balance|nonce|code|proxy|deployed|accttype|some*|all]>,,,,,control which state to export
 32050,tools,Chain State,state,getState,changes,c,,visible|docs,,switch,<boolean>,,,,,only report a balance when it changes from one block to the next
 32060,tools,Chain State,state,getState,no_zero,z,,visible|docs,,switch,<boolean>,,,,,suppress the display of zero balance accounts
-32070,tools,Chain State,state,getState,call,l,,visible|docs,1,flag,<string>,result,,,,call a smart contract with one or more solidity calls&#44; four-byte plus parameters&#44; or encoded call data strings
+32070,tools,Chain State,state,getState,call,l,,visible|docs,1,flag,<string>,result,,,,write-only call to a smart contract with one or more solidity calls&#44; four-byte plus parameters&#44; or encoded call data strings
+32075,tools,Chain State,state,getState,send,s,,visible|docs,2,flag,<string>,result,,,,send a transaction to a smart contract using a solidity function&#44; a four-byte plus parameters&#44; or an encoded call data string
 32080,tools,Chain State,state,getState,articulate,a,,visible|docs,,switch,<boolean>,,,,,for the --call option only&#44; articulate the retrieved data if ABIs can be found
 32090,tools,Chain State,state,getState,proxy_for,r,,visible|docs,,flag,<address>,,,,,for the --call option only&#44; redirects calls to this implementation
 32100,tools,Chain State,state,getState,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
@@ -217,6 +218,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 32150,tools,Chain State,state,getState,n6,,,,,note,,,,,,Valid parameters for --call include Solidity-like syntax: balanceOf(0x316b...183d)&#44; a four-byte followed by parameters: 0x70a08231(0x316b...183d)&#44; or encoded input data.
 32160,tools,Chain State,state,getState,n7,,,,,note,,,,,,You may specify multiple `parts` on a single line.
 32170,tools,Chain State,state,getState,n8,,,,,note,,,,,,In the --call string&#44; you may separate multiple calls with a colon.
+32180,tools,Chain State,state,getState,n9,,,,,note,,,,,,Your use of the unaudited --send option legally absolves&#44; in any jurisdiction&#44; TrueBlocks&#44; LLC or any associated parties from liability or loss related to such use.
+32185,tools,Chain State,state,getState,n10,,,,,note,,,,,,The --send option does not validate its input before sending your transaction to the network. If you provide invalid data&#44; you may lose your funds. Be warned.
 #
 33000,tools,Chain State,tokens,getTokens,,,,visible|docs,,command,,,Get token balance(s),[flags] <address> <address> [address...] [block...],default|caching|names|,Retrieve token balance(s) for one or more addresses at given block(s).
 33020,tools,Chain State,tokens,getTokens,addrs,,,required|visible|docs,2,positional,list<addr>,token,,,,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
@@ -279,7 +282,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 45150,apps,Admin,scrape,blockScrape,n2,,,,,note,,,,,,This command requires your RPC to provide trace data. See the README for more information.
 45150,apps,Admin,scrape,blockScrape,n3,,,,,note,,,,,,The --notify option requires proper configuration. Additionally&#44; IPFS must be running locally. See the README.md file.
 #
-46000,apps,Admin,chunks,chunkMan,,,,visible|docs|sorts=chunkStats:chunkRecord,,command,,,Manage chunks,<mode> [flags] [blocks...] [address...],default|,Manage&#44; investigate&#44; and display the Unchained Index.
+46000,apps,Admin,chunks,chunkMan,,,,visible|docs,,command,,,Manage chunks,<mode> [flags] [blocks...] [address...],default|,Manage&#44; investigate&#44; and display the Unchained Index.
 46020,apps,Admin,chunks,chunkMan,mode,,,required|visible|docs,9,positional,enum[manifest|index|blooms|pins|addresses|appearances|stats],mode,,,,the type of data to process
 46030,apps,Admin,chunks,chunkMan,blocks,,,visible|docs,,positional,list<blknum>,,,,,an optional list of blocks to intersect with chunk ranges
 46040,apps,Admin,chunks,chunkMan,check,c,,visible|docs,1,switch,<boolean>,,,,,check the manifest&#44; index&#44; or blooms for internal consistency

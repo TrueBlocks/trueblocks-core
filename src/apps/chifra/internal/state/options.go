@@ -35,7 +35,8 @@ type StateOptions struct {
 	Parts      []string                 `json:"parts,omitempty"`      // Control which state to export
 	Changes    bool                     `json:"changes,omitempty"`    // Only report a balance when it changes from one block to the next
 	NoZero     bool                     `json:"noZero,omitempty"`     // Suppress the display of zero balance accounts
-	Call       string                   `json:"call,omitempty"`       // Call a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
+	Call       string                   `json:"call,omitempty"`       // Write-only call to a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
+	Send       string                   `json:"send,omitempty"`       // Send a transaction to a smart contract using a solidity function, a four-byte plus parameters, or an encoded call data string
 	Articulate bool                     `json:"articulate,omitempty"` // For the --call option only, articulate the retrieved data if ABIs can be found
 	ProxyFor   string                   `json:"proxyFor,omitempty"`   // For the --call option only, redirects calls to this implementation
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
@@ -56,6 +57,7 @@ func (opts *StateOptions) testLog() {
 	logger.TestLog(opts.Changes, "Changes: ", opts.Changes)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(len(opts.Call) > 0, "Call: ", opts.Call)
+	logger.TestLog(len(opts.Send) > 0, "Send: ", opts.Send)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
 	opts.Conn.TestLog(opts.getCaches())
@@ -104,6 +106,8 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 			opts.NoZero = true
 		case "call":
 			opts.Call = value[0]
+		case "send":
+			opts.Send = value[0]
 		case "articulate":
 			opts.Articulate = true
 		case "proxyFor":

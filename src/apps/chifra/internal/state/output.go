@@ -58,6 +58,8 @@ func (opts *StateOptions) StateInternal(rCtx *output.RenderCtx) error {
 		err = opts.HandleDecache(rCtx)
 	} else if len(opts.Call) > 0 {
 		err = opts.HandleCall(rCtx)
+	} else if len(opts.Send) > 0 {
+		err = opts.HandleSend(rCtx)
 	} else {
 		err = opts.HandleShow(rCtx)
 	}

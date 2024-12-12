@@ -147,6 +147,12 @@ func GetRootConfig() *configtypes.Config {
 	return &trueBlocksConfig
 }
 
+// ReloadConfig clears the config cache so that the next time ReadToml is
+// called the config will reload
+func ReloadConfig() {
+	configLoaded = false
+}
+
 // PathToConfigFile returns the path where to find the configuration file
 func PathToConfigFile() string {
 	configFolder := PathToRootConfig()
@@ -186,10 +192,10 @@ func pathFromXDG(envVar string) (string, error) {
 		return "", nil // it's okay if it's empty
 	}
 
-	absXDGPath, err := filepath.Abs(xdg);
+	absXDGPath, err := filepath.Abs(xdg)
 	if err != nil {
 		return "", usage.Usage("The {0} value ({1}), could not be interpreted as an absolute path.", envVar, xdg)
-        }
+	}
 
 	if _, err := os.Stat(absXDGPath); err != nil {
 		return "", usage.Usage("The {0} folder ({1}) must exist.", envVar, absXDGPath)

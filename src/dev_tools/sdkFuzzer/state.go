@@ -145,6 +145,16 @@ func TestState(which, value, fn string, opts *sdk.StateOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "send":
+		if send, _, err := opts.StateSend(value); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Result](fn, send); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	default:
 		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
 		logger.Fatal("Quitting...")
