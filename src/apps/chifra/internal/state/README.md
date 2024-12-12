@@ -23,7 +23,8 @@ Flags:
                            One or more of [ balance | nonce | code | proxy | deployed | accttype | some | all ]
   -c, --changes            only report a balance when it changes from one block to the next
   -z, --no_zero            suppress the display of zero balance accounts
-  -l, --call string        call a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
+  -l, --call string        write-only call to a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
+  -s, --send string        send a transaction to a smart contract using a solidity function, a four-byte plus parameters, or an encoded call data string
   -a, --articulate         for the --call option only, articulate the retrieved data if ABIs can be found
   -r, --proxy_for string   for the --call option only, redirects calls to this implementation
   -H, --ether              specify value in ether
@@ -42,6 +43,8 @@ Notes:
   - Valid parameters for --call include Solidity-like syntax: balanceOf(0x316b...183d), a four-byte followed by parameters: 0x70a08231(0x316b...183d), or encoded input data.
   - You may specify multiple parts on a single line.
   - In the --call string, you may separate multiple calls with a colon.
+  - Your use of the unaudited --send option legally absolves, in any jurisdiction, TrueBlocks, LLC or any associated parties from liability or loss related to such use.
+  - The --send option does not validate its input before sending your transaction to the network. If you provide invalid data, you may lose your funds. Be warned.
 ```
 
 Data models produced by this tool:
