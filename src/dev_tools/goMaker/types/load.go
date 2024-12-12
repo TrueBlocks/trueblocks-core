@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // LoadCodebase loads the two csv files and returns the codebase which
@@ -283,6 +284,10 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 		return err
 	}
 
+	for _, st := range cb.Structures {
+		st.checkHierarchy()
+	}
+
 	codeBase := filepath.Join(GetGeneratedPath(), "codebase.json")
 	current := file.AsciiFileToString(codeBase)
 	file.StringToAsciiFile(codeBase, cb.String())
@@ -307,4 +312,36 @@ func checkForDups(options []Option) error {
 		dupMap[key] = true
 	}
 	return nil
+}
+
+func (s *Structure) checkHierarchy() {
+	if len(s.Parent) > 0 {
+		found := false
+		for _, st := range s.cbPtr.Structures {
+			if Lower(st.Name()) == s.Parent {
+				found = true
+				break
+			}
+		}
+		if !found {
+			logger.Error("parent", s.Parent, "of", s.Class, "not found")
+		}
+	}
+
+	for _, ch := range s.ChildTabs {
+		if ch != "" {
+			found := false
+			for _, st := range s.cbPtr.Structures {
+				if Plural(Lower(st.Name())) == ch {
+					found = true
+					break
+				}
+			}
+			if !found {
+				logger.Error("child", ch, "of", s.Class, "not found")
+			}
+		}
+	}
+
+	return
 }

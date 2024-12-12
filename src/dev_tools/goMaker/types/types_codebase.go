@@ -3,6 +3,7 @@ package types
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -171,6 +172,20 @@ func (cb *CodeBase) Validate() error {
 			if i+1 != v {
 				msg := fmt.Sprintf("doc_order is not sequential in model: %s", st.Class)
 				logger.Fatal(msg, sorted)
+			}
+		}
+
+		pwd, _ := os.Getwd()
+		helpFolder := filepath.Join(pwd, "frontend/src/assets/help")
+		if file.FolderExists(helpFolder) {
+			first := Lower(st.Parent)
+			if first != "" {
+				first += "-"
+			}
+			second := Lower(st.UiRouteName())
+			helpFile := filepath.Join(helpFolder, first+second+".md")
+			if strings.Contains(strings.ReplaceAll(helpFile, "trueblocks-", ""), "-") && !file.FileExists(helpFile) {
+				logger.InfoBR("Help file missing:", helpFile)
 			}
 		}
 	}

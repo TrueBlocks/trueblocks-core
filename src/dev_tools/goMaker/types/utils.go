@@ -205,6 +205,8 @@ func Plural(s string) string {
 		return s + "es"
 	} else if strings.HasSuffix(s, "y") {
 		return s + "ies"
+	} else if s == "config" || s == "session" || s == "publish" {
+		return s
 	}
 	return s + "s"
 }

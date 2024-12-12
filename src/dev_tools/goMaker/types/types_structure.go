@@ -319,6 +319,7 @@ func (s *Structure) getUiRoutePart(p int) string {
 	parts := strings.Split(s.UiRoute, "-")
 	if len(parts) != 3 {
 		s.UiRoute += "-none"
+		parts = append(parts, "none")
 	}
 	return parts[p]
 }
