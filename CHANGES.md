@@ -159,7 +159,7 @@ gh pr list --search "is:pr is:closed closed:>2024-09-22" --limit 300 --state mer
 -->
 
 - #3888 Various changes to run scraper and init in headlessMode
-- #3886 Adds a devtool to check disc usage on various computers
+- #3886 Adds a devtool to check disk usage on various computers
 - #3885 Updates go.mods to latest release
 - #3884 Develop
 - #3882 Updates node
@@ -732,7 +732,7 @@ The following data models were either modified, added, removed, or renamed by ha
 |             | Marks `baseFeePerGas` as base type `gas` to be more accurate.                                           |
 |             | Marks `difficulty` as a `value` type to be more accurate.                                               |
 | Bounds      | Changes `firstApp` and `latestApp` from string to `Appearance` to make parsing as JSON easier.          |
-| Log         | Makks `compressedLog` as calculated field.                                                              |
+| Log         | Marks `compressedLog` as calculated field.                                                              |
 |             | Marks `logIndex` as `lognum` type as opposed to `uint64` as a more accurate representation.             |
 |             | Marks `transactionIndex` as `txnum` type as opposed to `uint64` as a more accurate representation.      |
 | Receipt     | Marks `status` field as type `value` as opposed to `uint32` to be more accurate. (Modifies cache data.) |
@@ -1157,7 +1157,7 @@ gh issue list --search "closed:>2024-06-04 is:closed is:issue sort:created-desc"
 - #3531 chifra init all not working
 - #3529 We should use this for all enums. It's simple, clean and fun
 - #3527 Progress: Could not load RPC provider: invalid character '<' looking for beginning of value
-- #3526 write to disc error recovery?
+- #3526 write to disk error recovery?
 - #3525 makeClass - auto-code generator for Go sdk should produce enums
 - #3516 Warn that API is not meant to be used on server
 - #3515 chifra slurp --count for Etherscan seems weird
