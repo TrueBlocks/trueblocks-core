@@ -27,9 +27,11 @@ func IsInitialized(chain, required string) error {
 	  (and allow it to complete) or 'chifra scrape' before using this command.
 
 	  Error: %w
+	  Chain: %s
+	  Path: %s
 
 	`
-		return fmt.Errorf(indexNotInitialized, ErrNotInitialized)
+		return fmt.Errorf(indexNotInitialized, ErrNotInitialized, chain, fileName)
 	}
 
 	var err error
