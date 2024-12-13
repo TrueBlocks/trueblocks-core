@@ -8,7 +8,7 @@
 
 Ensure you have the following installed and running:
 
-- Go Version 1.22 or higher
+- Go Version 1.23 or higher
 - The latest version of TrueBlocks Core
 
 ## Installation
@@ -53,7 +53,7 @@ DATA
 
 If you encounter issues, check the following:
 
-- Ensure at least Go Version 1.22.
+- Ensure at least Go Version 1.23.
 - Make sure you have a valid Ethereum mainnet RPC configured.
 - Ensure TrueBlocks Core is properly installed and configured.
 - Verify the command-line arguments are correct and within valid ranges.

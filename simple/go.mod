@@ -1,7 +1,7 @@
 module github.com/TrueBlocks/trueblocks-core/examples/simple
 
 // Go Version
-go 1.22
+go 1.23
 
 require github.com/TrueBlocks/trueblocks-sdk/v3 v3.9.0
 

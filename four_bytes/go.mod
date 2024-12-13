@@ -1,7 +1,7 @@
 module github.com/TrueBlocks/trueblocks-core/src/other/four_bytes
 
 // Go Version
-go 1.22
+go 1.23
 
 require (
 	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241103193928-2a3d9f89af63
