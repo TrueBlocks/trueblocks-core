@@ -10,7 +10,7 @@ all:
 	@make app
 
 every:
-	@cd ../../../build ; make ; cd -
+	@cd ../../build ; make ; cd -
 	@make app
 
 app:

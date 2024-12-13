@@ -11,3 +11,11 @@ By using this software for any reason, you are accepting all risks and liabiliti
 ## Further Warning
 
 Do not say we didn't warn you.
+
+## License
+
+The use of this software falls under the license agreement found in the root directory of this repository.
+
+## Contributing
+
+No contributions will be accepted for the code in this folder. It is only present for historical reasons.
