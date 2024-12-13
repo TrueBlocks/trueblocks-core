@@ -3,7 +3,7 @@ on: [pull_request, workflow_dispatch]
 env:
   CHIFRA_PATH: src/apps/chifra
   # Go Version
-  GO_VERSION: 1.22
+  GO_VERSION: 1.23
 jobs:
   Lint:
     runs-on: ubuntu-latest

@@ -1,7 +1,7 @@
 module github.com/TrueBlocks/trueblocks-core/testRunner
 
 // Go Version
-go 1.22
+go 1.23
 
 replace github.com/TrueBlocks/trueblocks-core/sdk => ../../../sdk
 
