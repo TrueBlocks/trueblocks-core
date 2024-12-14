@@ -87,8 +87,6 @@ func (opts *StateOptions) validateState() error {
 					}
 					return err
 				}
-			} else {
-				// will never happen
 			}
 
 		} else {
