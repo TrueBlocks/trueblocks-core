@@ -333,6 +333,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Twitter	0x02ebb6bf434753ab815f6bed49ee73781a302352	0xLMC		banteg on twitter		false	false	false	false	false	false
 31-Gitcoin:Grants	0x02ee97a13e434717e3ffa12758a235d1a1680775	Grant 1551 Niftycrates		https://gitcoin.co/grants/1551/niftycrates		false	false	false	false	false	false
 50-Tokens:ERC20	0x02f02e0ca8a521ef73daa9c45353b9fbefc5ee10	RenrenBit Token	RRB	Rotki	8	false	false	false	true	true	false
+90-Individuals	0x02f2b09b33fdbd406ead954a31f98bd29a2a3492	Unchained Index Publisher				false	true	false	false	false	false
 50-Tokens:ERC20	0x02f2d4a04e6e01ace88bd2cd632875543b2ef577	PKG Token	PKG	On chain	18	false	false	false	true	true	false
 90-Individuals:Twitter	0x02f536d259f750fc4276389f36474668f5a941d4	p7eth_		banteg on twitter		false	false	false	false	false	false
 50-Tokens:ERC20	0x02f61fd266da6e8b102d4121f5ce7b992640cf98	LikeCoin	LIKE	On chain	18	false	false	false	true	true	false
