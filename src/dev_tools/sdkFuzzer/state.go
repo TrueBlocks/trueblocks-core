@@ -135,21 +135,21 @@ func TestState(which, value, fn string, opts *sdk.StateOptions) {
 				ReportOkay(fn)
 			}
 		}
-	case "calldata":
-		if calldata, _, err := opts.StateCalldata(value); err != nil {
+	case "send":
+		if send, _, err := opts.StateSend(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Result](fn, calldata); err != nil {
+			if err := SaveToFile[types.Result](fn, send); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
-	case "send":
-		if send, _, err := opts.StateSend(value); err != nil {
+	case "calldata":
+		if calldata, _, err := opts.StateCalldata(value); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Result](fn, send); err != nil {
+			if err := SaveToFile[types.Result](fn, calldata); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

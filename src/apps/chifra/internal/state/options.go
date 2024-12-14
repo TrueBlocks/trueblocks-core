@@ -35,10 +35,10 @@ type StateOptions struct {
 	Parts      []string                 `json:"parts,omitempty"`      // Control which state to export
 	Changes    bool                     `json:"changes,omitempty"`    // Only report a balance when it changes from one block to the next
 	NoZero     bool                     `json:"noZero,omitempty"`     // Suppress the display of zero balance accounts
-	Calldata   string                   `json:"calldata,omitempty"`   // Write-only call to a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
-	Send       string                   `json:"send,omitempty"`       // Send a transaction to a smart contract using a solidity function, a four-byte plus parameters, or an encoded call data string
-	Articulate bool                     `json:"articulate,omitempty"` // For the --call option only, articulate the retrieved data if ABIs can be found
-	ProxyFor   string                   `json:"proxyFor,omitempty"`   // For the --call option only, redirects calls to this implementation
+	Send       bool                     `json:"send,omitempty"`       // Writes a transaction to an address (see docs for more information)
+	Calldata   string                   `json:"calldata,omitempty"`   // For commands (--call or --send), provides the call data (in various forms) for the command (may be empty for --send)
+	Articulate bool                     `json:"articulate,omitempty"` // For commands only, articulate the retrieved data if ABIs can be found
+	ProxyFor   string                   `json:"proxyFor,omitempty"`   // For commands only, redirects calls to this implementation
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
@@ -56,8 +56,8 @@ func (opts *StateOptions) testLog() {
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
 	logger.TestLog(opts.Changes, "Changes: ", opts.Changes)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
+	logger.TestLog(opts.Send, "Send: ", opts.Send)
 	logger.TestLog(len(opts.Calldata) > 0, "Calldata: ", opts.Calldata)
-	logger.TestLog(len(opts.Send) > 0, "Send: ", opts.Send)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
 	opts.Conn.TestLog(opts.getCaches())
@@ -104,10 +104,10 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 			opts.Changes = true
 		case "noZero":
 			opts.NoZero = true
+		case "send":
+			opts.Send = true
 		case "calldata":
 			opts.Calldata = value[0]
-		case "send":
-			opts.Send = value[0]
 		case "articulate":
 			opts.Articulate = true
 		case "proxyFor":
