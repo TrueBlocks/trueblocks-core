@@ -73,6 +73,7 @@ func init() {
 One or more of [ balance | nonce | code | proxy | deployed | accttype | some | all ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, `only report a balance when it changes from one block to the next`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "z", false, `suppress the display of zero balance accounts`)
+	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Call, "call", "l", false, `write-only call (a query) to a smart contract`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Send, "send", "s", false, `writes a transaction to an address (see docs for more information) (hidden)`)
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Calldata, "calldata", "d", "", `for commands (--call or --send), provides the call data (in various forms) for the command (may be empty for --send)`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Articulate, "articulate", "a", false, `for commands only, articulate the retrieved data if ABIs can be found`)

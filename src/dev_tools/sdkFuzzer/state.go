@@ -33,6 +33,7 @@ func DoState() {
 	noZero := []bool{false, true}
 	articulate := []bool{false, true}
 	proxyFor := fuzzProxyFors
+	// calldata is a <string> --other
 	// blocks is not fuzzed
 	// Fuzz Loop
 	// EXISTING_CODE
@@ -135,21 +136,21 @@ func TestState(which, value, fn string, opts *sdk.StateOptions) {
 				ReportOkay(fn)
 			}
 		}
-	case "send":
-		if send, _, err := opts.StateSend(); err != nil {
+	case "call":
+		if call, _, err := opts.StateCall(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Result](fn, send); err != nil {
+			if err := SaveToFile[types.Result](fn, call); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
 			}
 		}
-	case "calldata":
-		if calldata, _, err := opts.StateCalldata(value); err != nil {
+	case "send":
+		if send, _, err := opts.StateSend(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Result](fn, calldata); err != nil {
+			if err := SaveToFile[types.Result](fn, send); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

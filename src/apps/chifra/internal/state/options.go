@@ -35,6 +35,7 @@ type StateOptions struct {
 	Parts      []string                 `json:"parts,omitempty"`      // Control which state to export
 	Changes    bool                     `json:"changes,omitempty"`    // Only report a balance when it changes from one block to the next
 	NoZero     bool                     `json:"noZero,omitempty"`     // Suppress the display of zero balance accounts
+	Call       bool                     `json:"call,omitempty"`       // Write-only call (a query) to a smart contract
 	Send       bool                     `json:"send,omitempty"`       // Writes a transaction to an address (see docs for more information)
 	Calldata   string                   `json:"calldata,omitempty"`   // For commands (--call or --send), provides the call data (in various forms) for the command (may be empty for --send)
 	Articulate bool                     `json:"articulate,omitempty"` // For commands only, articulate the retrieved data if ABIs can be found
@@ -56,6 +57,7 @@ func (opts *StateOptions) testLog() {
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
 	logger.TestLog(opts.Changes, "Changes: ", opts.Changes)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
+	logger.TestLog(opts.Call, "Call: ", opts.Call)
 	logger.TestLog(opts.Send, "Send: ", opts.Send)
 	logger.TestLog(len(opts.Calldata) > 0, "Calldata: ", opts.Calldata)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
@@ -104,6 +106,8 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 			opts.Changes = true
 		case "noZero":
 			opts.NoZero = true
+		case "call":
+			opts.Call = true
 		case "send":
 			opts.Send = true
 		case "calldata":

@@ -206,8 +206,9 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 32040,tools,Chain State,state,getState,parts,p,,visible|docs,,flag,list<enum[balance|nonce|code|proxy|deployed|accttype|some*|all]>,,,,,control which state to export
 32050,tools,Chain State,state,getState,changes,c,,visible|docs,,switch,<boolean>,,,,,only report a balance when it changes from one block to the next
 32060,tools,Chain State,state,getState,no_zero,z,,visible|docs,,switch,<boolean>,,,,,suppress the display of zero balance accounts
+32070,tools,Chain State,state,getState,call,l,,visible|docs,1,switch,<boolean>,result,,,,write-only call (a query) to a smart contract
 32073,tools,Chain State,state,getState,send,s,,,2,switch,<boolean>,result,,,,writes a transaction to an address (see docs for more information)
-32087,tools,Chain State,state,getState,calldata,d,,visible|docs,1,flag,<string>,result,,,,for commands (--call or --send)&#44; provides the call data (in various forms) for the command (may be empty for --send)
+32087,tools,Chain State,state,getState,calldata,d,,visible|docs,,flag,<string>,,,,,for commands (--call or --send)&#44; provides the call data (in various forms) for the command (may be empty for --send)
 32080,tools,Chain State,state,getState,articulate,a,,visible|docs,,switch,<boolean>,,,,,for commands only&#44; articulate the retrieved data if ABIs can be found
 32090,tools,Chain State,state,getState,proxy_for,r,,visible|docs,,flag,<address>,,,,,for commands only&#44; redirects calls to this implementation
 32100,tools,Chain State,state,getState,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
