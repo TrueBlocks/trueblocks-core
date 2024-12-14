@@ -71,7 +71,7 @@ func init() {
 One or more of [ balance | nonce | code | proxy | deployed | accttype | some | all ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, `only report a balance when it changes from one block to the next`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "z", false, `suppress the display of zero balance accounts`)
-	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "l", "", `write-only call to a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings`)
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Calldata, "calldata", "l", "", `write-only call to a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings`)
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Send, "send", "s", "", `send a transaction to a smart contract using a solidity function, a four-byte plus parameters, or an encoded call data string`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Articulate, "articulate", "a", false, `for the --call option only, articulate the retrieved data if ABIs can be found`)
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", `for the --call option only, redirects calls to this implementation`)

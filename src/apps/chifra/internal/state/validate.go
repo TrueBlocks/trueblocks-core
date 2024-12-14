@@ -37,7 +37,7 @@ func (opts *StateOptions) validateState() error {
 		// do nothing for now
 
 	} else {
-		if len(opts.Call) > 0 {
+		if len(opts.Calldata) > 0 {
 			if len(opts.Parts) > 0 {
 				return validate.Usage("The {0} option is not available{1}.", "--parts", " with the --call option")
 			}

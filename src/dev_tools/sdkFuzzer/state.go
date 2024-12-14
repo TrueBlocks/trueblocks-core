@@ -135,11 +135,11 @@ func TestState(which, value, fn string, opts *sdk.StateOptions) {
 				ReportOkay(fn)
 			}
 		}
-	case "call":
-		if call, _, err := opts.StateCall(value); err != nil {
+	case "calldata":
+		if calldata, _, err := opts.StateCalldata(value); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Result](fn, call); err != nil {
+			if err := SaveToFile[types.Result](fn, calldata); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

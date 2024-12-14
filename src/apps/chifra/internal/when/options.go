@@ -132,7 +132,7 @@ func whenFinishParse(args []string) *WhenOptions {
 	if len(args) > 0 {
 		tmp := []string{}
 		for _, arg := range args {
-			if value := dedup[arg]; value == 0 {
+			if cnt := dedup[arg]; cnt == 0 {
 				tmp = append(tmp, arg)
 			}
 			dedup[arg]++

@@ -35,7 +35,7 @@ type StateOptions struct {
 	Parts      []string                 `json:"parts,omitempty"`      // Control which state to export
 	Changes    bool                     `json:"changes,omitempty"`    // Only report a balance when it changes from one block to the next
 	NoZero     bool                     `json:"noZero,omitempty"`     // Suppress the display of zero balance accounts
-	Call       string                   `json:"call,omitempty"`       // Write-only call to a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
+	Calldata   string                   `json:"calldata,omitempty"`   // Write-only call to a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
 	Send       string                   `json:"send,omitempty"`       // Send a transaction to a smart contract using a solidity function, a four-byte plus parameters, or an encoded call data string
 	Articulate bool                     `json:"articulate,omitempty"` // For the --call option only, articulate the retrieved data if ABIs can be found
 	ProxyFor   string                   `json:"proxyFor,omitempty"`   // For the --call option only, redirects calls to this implementation
@@ -56,7 +56,7 @@ func (opts *StateOptions) testLog() {
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
 	logger.TestLog(opts.Changes, "Changes: ", opts.Changes)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
-	logger.TestLog(len(opts.Call) > 0, "Call: ", opts.Call)
+	logger.TestLog(len(opts.Calldata) > 0, "Calldata: ", opts.Calldata)
 	logger.TestLog(len(opts.Send) > 0, "Send: ", opts.Send)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
@@ -104,8 +104,8 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 			opts.Changes = true
 		case "noZero":
 			opts.NoZero = true
-		case "call":
-			opts.Call = value[0]
+		case "calldata":
+			opts.Calldata = value[0]
 		case "send":
 			opts.Send = value[0]
 		case "articulate":
@@ -124,8 +124,8 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
-	opts.Calls = strings.Split(opts.Call, ":")
+	opts.Calldata = strings.Replace(strings.Trim(opts.Calldata, "'"), "'", "\"", -1)
+	opts.Calls = strings.Split(opts.Calldata, ":")
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -147,7 +147,7 @@ func stateFinishParse(args []string) *StateOptions {
 	if len(args) > 0 {
 		tmp := []string{}
 		for _, arg := range args {
-			if value := dedup[arg]; value == 0 {
+			if cnt := dedup[arg]; cnt == 0 {
 				tmp = append(tmp, arg)
 			}
 			dedup[arg]++
@@ -167,8 +167,8 @@ func stateFinishParse(args []string) *StateOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
-	opts.Calls = strings.Split(opts.Call, ":")
+	opts.Calldata = strings.Replace(strings.Trim(opts.Calldata, "'"), "'", "\"", -1)
+	opts.Calls = strings.Split(opts.Calldata, ":")
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -218,7 +218,7 @@ func (opts *StateOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	caches = map[walk.CacheType]bool{
 		walk.Cache_State:   true,
-		walk.Cache_Results: len(opts.Call) > 0,
+		walk.Cache_Results: len(opts.Calldata) > 0,
 	}
 	// EXISTING_CODE
 	return
