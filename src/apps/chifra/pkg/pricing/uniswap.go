@@ -50,7 +50,7 @@ func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price ba
 	theCall1 := fmt.Sprintf("getPair(%s, %s)", first.Hex(), second.Hex())
 	contractCall, _, err := call.NewContractCall(conn, uniswapFactoryV2, theCall1)
 	if err != nil {
-		wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", theCall1, err)
+		wrapped := fmt.Errorf("the --calldata value provided (%s) was not found: %s", theCall1, err)
 		return 0.0, "not-priced", wrapped
 	}
 	contractCall.BlockNumber = statement.BlockNumber
@@ -70,7 +70,7 @@ func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price ba
 	theCall2 := "getReserves()"
 	contractCall, _, err = call.NewContractCall(conn, pairAddress, theCall2)
 	if err != nil {
-		wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", theCall2, err)
+		wrapped := fmt.Errorf("the --calldata value provided (%s) was not found: %s", theCall2, err)
 		return 0.0, "not-priced", wrapped
 	}
 	contractCall.BlockNumber = statement.BlockNumber

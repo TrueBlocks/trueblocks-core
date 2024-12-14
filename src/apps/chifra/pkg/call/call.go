@@ -28,7 +28,7 @@ type ContractCall struct {
 func NewContractCallWithAbi(conn *rpc.Connection, callAddress base.Address, theCall string, abiMap *abi.SelectorSyncMap) (*ContractCall, []string, error) {
 	parsed, err := parser.ParseCall(theCall)
 	if err != nil {
-		err = fmt.Errorf("the value provided --call (%s) is invalid", theCall)
+		err = fmt.Errorf("the value provided (%s) is invalid", theCall)
 		return nil, []string{}, err
 	}
 
@@ -100,7 +100,7 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 
 	parsed, err := parser.ParseCall(theCall)
 	if err != nil {
-		err = fmt.Errorf("the value provided --call (%s) is invalid", theCall)
+		err = fmt.Errorf("the value provided (%s) is invalid", theCall)
 		return nil, []string{}, err
 	}
 

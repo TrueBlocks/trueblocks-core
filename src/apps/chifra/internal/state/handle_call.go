@@ -28,7 +28,7 @@ func (opts *StateOptions) HandleCall(rCtx *output.RenderCtx) error {
 		return articulate.ArticulateFunction(function, "", str[2:])
 	}
 
-	callAddress := opts.GetCallAddress()
+	callAddress := opts.GetAddressOrProxy()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
 		if err != nil {
@@ -65,7 +65,7 @@ func (opts *StateOptions) HandleCall(rCtx *output.RenderCtx) error {
 					for _, c := range opts.Calls {
 						if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
 							delete(thisMap, app)
-							return fmt.Errorf("the --call value provided (%s) was not found: %s", c, err)
+							return fmt.Errorf("the --calldata value provided (%s) was not found: %s", c, err)
 
 						} else {
 							contractCall.BlockNumber = bn
@@ -117,9 +117,8 @@ func (opts *StateOptions) HandleCall(rCtx *output.RenderCtx) error {
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
-func (opts *StateOptions) GetCallAddress() base.Address {
-	// Note that the validator precludes the possibility of having more than one address
-	// if the call option is present.
+func (opts *StateOptions) GetAddressOrProxy() base.Address {
+	// Note that validtor makes sure there's exactly one address for --call or --send.
 	callAddress := base.HexToAddress(opts.Addrs[0])
 	proxy := base.HexToAddress(opts.ProxyFor)
 	if !proxy.IsZero() {

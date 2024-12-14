@@ -222,7 +222,7 @@ func (opts *StateOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	caches = map[walk.CacheType]bool{
 		walk.Cache_State:   true,
-		walk.Cache_Results: len(opts.Calldata) > 0,
+		walk.Cache_Results: opts.Call || opts.Send,
 	}
 	// EXISTING_CODE
 	return

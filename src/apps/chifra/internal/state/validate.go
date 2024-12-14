@@ -37,59 +37,72 @@ func (opts *StateOptions) validateState() error {
 		// do nothing for now
 
 	} else {
-		if len(opts.Calldata) > 0 {
+		if opts.Call && opts.Send {
+			return validate.Usage("The {0} and {1} options are mutually exclusive.", "--call", "--send")
+		}
+
+		if opts.Call || opts.Send {
+			if len(opts.Calldata) == 0 {
+				return validate.Usage("The {0} option requires at least one {1} command.", "--call", "--calldata")
+			}
+
 			if len(opts.Parts) > 0 {
-				return validate.Usage("The {0} option is not available{1}.", "--parts", " with the --call option")
+				return validate.Usage("The {0} option is not available{1}.", "--parts", " with the --call or --send option")
 			}
 
 			if opts.Changes {
-				return validate.Usage("The {0} option is not available{1}.", "--changes", " with the --call option")
+				return validate.Usage("The {0} option is not available{1}.", "--changes", " with the --call or --send option")
 			}
 
 			if opts.NoZero {
-				return validate.Usage("The {0} option is not available{1}.", "--no_zero", " with the --call option")
+				return validate.Usage("The {0} option is not available{1}.", "--no_zero", " with the --call or --send option")
 			}
 
 			if len(opts.Addrs) != 1 {
-				return validate.Usage("Exactly one address is required for the {0} option.", "--call")
+				return validate.Usage("Exactly one address is required for the {0} option.", "--call or --send")
 			}
 
-			callAddress := opts.GetCallAddress()
-			err := opts.Conn.IsContractAtLatest(base.HexToAddress(callAddress.Hex()))
-			if err != nil {
-				if errors.Is(err, rpc.ErrNotAContract) {
-					return validate.Usage("The address for the --call option must be a smart contract.")
-				}
-				return err
+			callAddress := opts.GetAddressOrProxy()
+			isContract := false
+			if err = opts.Conn.IsContractAtLatest(base.HexToAddress(callAddress.Hex())); err == nil {
+				isContract = true
 			}
 
-			// Before we do anythinng, let's just make sure we have a valid four-byte
-			for _, c := range opts.Calls {
-				if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
-					message := fmt.Sprintf("the --call value provided (%s) was not found: %s", c, err)
-					if len(suggestions) > 0 {
-						if len(suggestions) > 0 {
-							message += " Suggestions: "
-							for index, suggestion := range suggestions {
-								if index > 0 {
-									message += " "
-								}
-								message += fmt.Sprintf("%d: %s.", index+1, suggestion)
-							}
-						}
+			if opts.Send {
+				// Sends with no call data are okay to either smart contracts or regular accounts.
+				if isContract {
+					if err := opts.checkCommands(callAddress, opts.Send); err != nil {
+						return err
 					}
-					return errors.New(message)
 				}
+
+			} else if opts.Call {
+				if isContract {
+					if err := opts.checkCommands(callAddress, opts.Send); err != nil {
+						return err
+					}
+				} else {
+					if errors.Is(err, rpc.ErrNotAContract) {
+						return validate.Usage("The address for the --call option must be a smart contract.")
+					}
+					return err
+				}
+			} else {
+				// will never happen
 			}
 
 		} else {
+			if len(opts.Calldata) > 0 {
+				return validate.Usage("The {0} option is only available with the {1} option.", "--calldata", "--call or --send")
+			}
+
 			if opts.Articulate {
-				return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--call")
+				return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--call or --send")
 			}
 
 			proxy := base.HexToAddress(opts.ProxyFor)
 			if !proxy.IsZero() {
-				return validate.Usage("The {0} option is only available with the {1} option.", "--proxy_for", "--call")
+				return validate.Usage("The {0} option is only available with the {1} option.", "--proxy_for", "--call or --send")
 			}
 
 			err := validate.ValidateAtLeastOneAddr(opts.Addrs)
@@ -133,4 +146,28 @@ func (opts *StateOptions) validateState() error {
 	}
 
 	return opts.Globals.Validate()
+}
+
+func (opts *StateOptions) checkCommands(callAddress base.Address, isSend bool) error {
+	if len(opts.Calldata) == 0 && !isSend {
+		return validate.Usage("The {0} option requires at least one command.", "--call")
+	}
+
+	// an empty list of commands is okay...
+	for _, cmd := range opts.Calls {
+		if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, cmd); err != nil {
+			message := fmt.Sprintf("the --calldata value provided (%s) was not found: %s", cmd, err)
+			if len(suggestions) > 0 {
+				message += " Suggestions: "
+				for index, suggestion := range suggestions {
+					if index > 0 {
+						message += " "
+					}
+					message += fmt.Sprintf("%d: %s.", index+1, suggestion)
+				}
+			}
+			return errors.New(message)
+		}
+	}
+	return nil
 }
