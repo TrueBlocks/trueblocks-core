@@ -30,7 +30,7 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 
 	contractCall, _, err := call.NewContractCall(conn, makerMedianizer, theCall)
 	if err != nil {
-		wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", theCall, err)
+		wrapped := fmt.Errorf("the --calldata value provided (%s) was not found: %s", theCall, err)
 		return 0.0, "not-priced", wrapped
 	}
 

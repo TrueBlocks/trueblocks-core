@@ -5,11 +5,16 @@
 package statePkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *StateOptions) HandleSend(rCtx *output.RenderCtx) error {
-	logger.Info("HandleSend was called.")
-	return nil
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		modelChan <- &types.Result{
+			Name: "I am not right",
+		}
+	}
+
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
