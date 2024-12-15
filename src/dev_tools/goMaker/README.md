@@ -38,7 +38,7 @@ with the following fields:
 | return_type  | the type of structure returned      | if present, the type of the structure returned by the associated SDK routine (see below)                           |
 | summary      | the summary for the subcommand      | displayed by `chifra --help`                                                                                       |
 | usage        | the format of the arguments         | in true Linux fashion                                                                                              |
-| capabilities | the command's global capabilities   | see [this explaination](https://github.com/TrueBlocks/trueblocks-core/blob/develop/docs/content/chifra/globals.md) |
+| capabilities | the command's global capabilities   | see [this explaination](https://github.com/TrueBlocks/trueblocks-docs/blob/main/content/chifra/globals.md) |
 | description  | the subcommand's full description   | shown with `chifra cmd --help`                                                                                     |
 
 - `attributes` is a pipe (`|`) separated list of the following:
