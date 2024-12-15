@@ -1,0 +1,27 @@
+chifra abis  0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt junk
+TEST[DATE|TIME] Addrs:  [0xe94327d07fc17907b4db788e5adf2ed424addff6]
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  junk
+Error: The --fmt option (junk) must be one of [ json | txt | csv ]
+Usage:
+  chifra abis [flags] <address> [address...]
+
+Arguments:
+  addrs - a list of one or more smart contracts whose ABIs to display (required)
+
+Flags:
+  -k, --known              load common 'known' ABIs from cache
+  -r, --proxy_for string   redirects the query to this implementation
+  -l, --list               a list of downloaded abi files
+  -c, --count              show the number of abis downloaded
+  -f, --find strings       search for function or event declarations given a four- or 32-byte code(s)
+  -n, --hint strings       for the --find option only, provide hints to speed up the search
+  -e, --encode string      generate the 32-byte encoding for a given cannonical function or event signature
+  -o, --cache              force the results of the query into the cache
+  -D, --decache            removes related items from the cache
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
+  -v, --verbose            enable verbose output
+  -h, --help               display this help screen
+
+Notes:
+  - Search for either four byte signatures or event signatures with the --find option.

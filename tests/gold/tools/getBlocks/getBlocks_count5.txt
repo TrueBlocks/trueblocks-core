@@ -1,0 +1,8 @@
+chifra blocks  3 --fmt json --count --traces --fmt txt
+TEST[DATE|TIME] Blocks:  [3]
+TEST[DATE|TIME] Traces:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+blockNumber	transactionsCnt	tracesCnt	withdrawalsCnt
+3	0	2	0

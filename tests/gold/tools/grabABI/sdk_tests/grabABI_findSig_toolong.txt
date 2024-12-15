@@ -1,0 +1,11 @@
+abis?find=0x1aa3a00800
+Args: [find=0x1aa3a00800]
+Opts: {"proxyFor":"0x0","find":["0x1aa3a00800"]}
+Find:  [0x1aa3a00800]
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "The fourbyte option (0x1aa3a00800) must be 4 bytes long."
+  ]
+}

@@ -1,0 +1,5 @@
+chifra names  wolfofethereum.eth
+TEST[DATE|TIME] Terms:  [0x0559a413a3ab19508a144aeebc474eb14c5e76ce]
+TEST[DATE|TIME] Format:  txt
+tags	address	name	symbol	decimals
+31-Gitcoin:Grants	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	Grant 0386 Wolfofethereum.eth		

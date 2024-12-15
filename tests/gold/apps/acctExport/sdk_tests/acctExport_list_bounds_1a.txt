@@ -1,0 +1,40 @@
+list?addrs=trueblocks.eth&lastBlock=9000000&bounds
+Args: [addrs=trueblocks.eth lastBlock=9000000 bounds]
+Opts: {"addrs":["trueblocks.eth"],"bounds":true,"publisher":"0x0","lastBlock":9000000}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Bounds:  true
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+LastBlock:  9000000
+Format:  json
+{
+  "data": [
+    {
+      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "blockFreq": 1536,
+      "blockSpan": 21509,
+      "count": 14,
+      "firstApp": {
+        "blockNumber": 8854723,
+        "transactionIndex": 61
+      },
+      "firstDate": "2019-11-01 20:18:58 UTC",
+      "firstTs": 1572639538,
+      "latestApp": {
+        "blockNumber": 8876232,
+        "transactionIndex": 84
+      },
+      "latestDate": "2019-11-05 07:18:48 UTC",
+      "latestTs": 1572938328
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

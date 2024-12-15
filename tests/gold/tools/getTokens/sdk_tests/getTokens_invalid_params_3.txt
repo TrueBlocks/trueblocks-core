@@ -1,0 +1,11 @@
+tokens?blocks=21321321312321%200xd26114cd6ee289accf82350c8d8487fedb8a0c07
+Args: [blocks=21321321312321 0xd26114cd6ee289accf82350c8d8487fedb8a0c07]
+Opts: {"blocks":["21321321312321 0xd26114cd6ee289accf82350c8d8487fedb8a0c07"]}
+Blocks:  [21321321312321 0xd26114cd6ee289accf82350c8d8487fedb8a0c07]
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "You must specify at least two address"
+  ]
+}

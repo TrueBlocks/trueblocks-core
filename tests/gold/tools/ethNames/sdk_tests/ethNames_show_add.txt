@@ -1,0 +1,27 @@
+names?terms=0x0000000000000000000000000000000010101010
+Args: [terms=0x0000000000000000000000000000000010101010]
+Opts: {"terms":["0x0000000000000000000000000000000010101010"]}
+Terms:  [0x0000000000000000000000000000000010101010]
+Format:  json
+{
+  "data": [
+    {
+      "address": "0x0000000000000000000000000000000010101010",
+      "decimals": 11,
+      "name": "NAME",
+      "source": "SOURCE",
+      "symbol": "SYMBOL",
+      "tags": "TAGS"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

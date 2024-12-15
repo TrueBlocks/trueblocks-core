@@ -1,0 +1,26 @@
+chifra abis  --find 0xea8a1af0 --find 0x9a82a09a --find 0x52efea6e --find 0xd0e30db0 --find 0x83197ef0 --find 0x12fa6feb --find 0x3d6a71e4 --find 0x31ae450b --find 0x06fdde03 --find 0x8da5cb5b --find 0x1aa3a008 --find 0x2de40ce3 --find 0x9d76ea58 --find 0xad7a672f --find 0x3ccfd60b --find 0xf5074f41 --find 0x24d7806c --find 0xc3c5a547 --find 0x09e69ede --find 0xf2fde38b --find 0xc2a2ce06 --find 0xfdacd576 --fmt csv
+TEST[DATE|TIME] Find:  [0xea8a1af0 0x9a82a09a 0x52efea6e 0xd0e30db0 0x83197ef0 0x12fa6feb 0x3d6a71e4 0x31ae450b 0x06fdde03 0x8da5cb5b 0x1aa3a008 0x2de40ce3 0x9d76ea58 0xad7a672f 0x3ccfd60b 0xf5074f41 0x24d7806c 0xc3c5a547 0x09e69ede 0xf2fde38b 0xc2a2ce06 0xfdacd576]
+TEST[DATE|TIME] Format:  csv
+encoding,signature
+0x9a82a09a,cancelled()
+0x9a82a09a,cancelled()
+0xc2a2ce06,changeDeposit(uint256)
+0x52efea6e,clear()
+0xd0e30db0,deposit()
+0xf5074f41,destroyAndSend(address)
+0xf5074f41,destroyAndSend(address)
+0x12fa6feb,ended()
+0x3d6a71e4,endedAt()
+0x31ae450b,getAdmins()
+0x24d7806c,isAdmin(address)
+0xc3c5a547,isRegistered(address)
+0x06fdde03,name()
+0x8da5cb5b,owner()
+0x09e69ede,participants(address)
+0x1aa3a008,register()
+0x2de40ce3,registered()
+0xfdacd576,setCompleted(uint256)
+0xad7a672f,totalBalance()
+0xad7a672f,totalBalance()
+0xf2fde38b,transferOwnership(address)
+0x3ccfd60b,withdraw()

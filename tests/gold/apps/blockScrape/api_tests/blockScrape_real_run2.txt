@@ -1,0 +1,6 @@
+scrape?sleep=.5
+{
+  "errors": [
+    "chifra scrape is not available in API mode"
+  ]
+}

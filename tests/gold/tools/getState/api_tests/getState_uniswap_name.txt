@@ -1,0 +1,29 @@
+state?call&calldata='0x06fdde03()'&addrs=0xbb2b8038a1640196fbe3e38816f3e67cba72d940&blocks=10092000
+{
+  "data": [
+    {
+      "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
+      "blockNumber": 10092000,
+      "bytes": "",
+      "callResult": {
+        "encoding": "0x06fdde03",
+        "name": "name",
+        "outputs": {
+          "val_0": "Uniswap V2"
+        },
+        "signature": "name()"
+      },
+      "encoding": "0x06fdde03"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

@@ -1,0 +1,6 @@
+when?repair
+{
+  "errors": [
+    "The --repair option is only available with the --timestamps option."
+  ]
+}

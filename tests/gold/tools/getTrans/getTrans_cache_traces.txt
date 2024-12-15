@@ -1,0 +1,9 @@
+chifra transactions  46147.0 --cache --cache_traces
+TEST[DATE|TIME] Transactions:  [46147.0]
+TEST[DATE|TIME] CacheTraces:  true
+TEST[DATE|TIME] Enabled:  traces, transactions
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+blockNumber	transactionIndex	timestamp	date	from	to	value	gasPrice	gasUsed	gasCost	hash	isError	encoding	type	ether
+46147	0	1438918233	2015-08-07 03:30:33 UTC	0xa1e4380a3b1f749673e270229993ee55f35663b4	0x5df9b87991262f6ba471f09758cde1c0fc1de734	31337	50000000000000	21000	1050000000000000000	0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060	false	0x		0.000000000000031337

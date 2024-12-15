@@ -1,0 +1,38 @@
+{{ if eq .Kind "404" -}}
+  <meta name="robots" content="noindex, follow">
+{{ else -}}
+  {{ with .Params.robots -}}
+  <meta name="robots" content="{{ . }}">
+  {{ else -}}
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  {{ end -}}
+{{ end -}}
+
+{{ if .IsHome -}}
+  <title>{{ .Site.Params.title }} {{ .Site.Params.titleSeparator }} {{ .Site.Params.titleAddition }}</title>
+{{ else -}}
+  <title>{{ .Title }} {{ .Site.Params.titleSeparator }} {{ .Site.Params.title }}</title>
+{{ end -}}
+
+{{ with .Description -}}
+  <meta name="description" content="{{ . }}">
+{{ else -}}
+  <meta name="description" content="{{ .Site.Params.description }}">
+{{ end -}}
+
+<link rel="canonical" href="{{ .Site.BaseURL }}">
+
+{{ partial "head/twitter_cards.html" . }}
+<meta name="twitter:site" content="@{{ .Site.Params.twitterSite }}">
+<meta name="twitter:creator" content="@{{ .Site.Params.twitterCreator }}">
+
+{{ partial "head/opengraph.html" . }}
+<meta property="og:locale" content="{{ .Site.Params.ogLocale }}">
+
+{{ range .AlternativeOutputFormats -}}
+  <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .RelPermalink | safeURL }}">
+{{ end -}}
+
+{{ partial "head/structured-data.html" . }}

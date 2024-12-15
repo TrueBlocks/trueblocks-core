@@ -1,0 +1,62 @@
+status?modes=abis&verbose&maxRecords=2
+Args: [modes=abis verbose maxRecords=2]
+Opts: {"modes":8192,"maxRecords":2,"verbose":true}
+Modes:  [abis]
+MaxRecords:  2
+Verbose:  true
+Format:  json
+{
+  "data": [
+    {
+      "cachePath": "--paths--",
+      "caches": [
+        {
+          "items": [
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "abisCache"
+        }
+      ],
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isApi": false,
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

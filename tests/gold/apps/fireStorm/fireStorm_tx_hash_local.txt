@@ -1,0 +1,6 @@
+chifra explore  0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f --local
+TEST[DATE|TIME] Terms:  [0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f]
+TEST[DATE|TIME] Local:  true
+TEST[DATE|TIME] Format:  txt
+term	termType	url	source
+0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f	DestinationTx	http://localhost:1234/explorer/transactions/0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f	url

@@ -1,0 +1,6 @@
+state?addrs=$doa&0x12
+{
+  "errors": [
+    "Invalid key (0x12) in state route."
+  ]
+}

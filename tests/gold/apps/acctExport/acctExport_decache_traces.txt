@@ -1,0 +1,8 @@
+chifra export  0x04fe1f0c597fbc65700f4fba6f87501edc20e665 --first_block 10277780 --last_block 10278000 --decache
+TEST[DATE|TIME] Addrs:  [0x04fe1f0c597fbc65700f4fba6f87501edc20e665]
+TEST[DATE|TIME] FirstBlock:  10277780
+TEST[DATE|TIME] LastBlock:  10278000
+TEST[DATE|TIME] Decache:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+Monitor for 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 was permanently removed.                              

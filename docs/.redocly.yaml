@@ -1,0 +1,14 @@
+apiDefinitions:
+  openapi: ./content/api/openapi.yaml
+
+theme:
+  openapi: true
+# Optional: Customize other theme settings
+# theme:
+#   openapi:
+#     colors:
+#       primary: "#32329f"
+#       text: "#333333"
+#     typography:
+#       fontFamily: "Arial, sans-serif"
+#       fontSize: "14px"

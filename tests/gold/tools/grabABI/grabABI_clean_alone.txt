@@ -1,0 +1,5 @@
+chifra abis  --decache
+TEST[DATE|TIME] Decache:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+INFO[DATE|TIME] Cleaning empty abis is not tested in test mode.

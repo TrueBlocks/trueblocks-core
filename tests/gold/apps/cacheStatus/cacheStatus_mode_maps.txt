@@ -1,0 +1,11 @@
+chifra status  maps --verbose --max_records 2
+TEST[DATE|TIME] Modes:  [maps]
+TEST[DATE|TIME] MaxRecords:  2
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
+{
+  "data": [],
+  "errors": [
+    "no files were found in the [maps] caches"
+  ]
+}

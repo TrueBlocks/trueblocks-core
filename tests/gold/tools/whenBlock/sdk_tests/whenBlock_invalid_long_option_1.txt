@@ -1,0 +1,8 @@
+when?blocks=0&invalid
+Args: [blocks=0 invalid]
+Opts: null
+{
+  "errors": [
+    "Invalid key (invalid) in route."
+  ]
+}

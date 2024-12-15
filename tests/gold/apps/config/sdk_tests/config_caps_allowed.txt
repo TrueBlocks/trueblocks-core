@@ -1,0 +1,8 @@
+config?chain&verbose&output&append&failOnPurpose
+Args: [chain verbose output append failOnPurpose]
+Opts: null
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in route."
+  ]
+}

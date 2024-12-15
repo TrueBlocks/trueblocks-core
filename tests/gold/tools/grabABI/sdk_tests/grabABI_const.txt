@@ -1,0 +1,356 @@
+abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+Args: [addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
+Opts: {"addrs":["0xbb9bc244d798123fde783fcc1c72d3bb8c189413"],"proxyFor":"0x0"}
+Addrs:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "encoding": "0x013cf08b",
+      "name": "proposals",
+      "signature": "proposals(uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x095ea7b3",
+      "name": "approve",
+      "signature": "approve(address,uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x0c3b7b96",
+      "name": "minTokensToCreate",
+      "signature": "minTokensToCreate()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x0e708203",
+      "name": "rewardAccount",
+      "signature": "rewardAccount()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x149acf9a",
+      "name": "daoCreator",
+      "signature": "daoCreator()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x18160ddd",
+      "name": "totalSupply",
+      "signature": "totalSupply()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x1f2dc5ef",
+      "name": "divisor",
+      "signature": "divisor()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x21b5b8dd",
+      "name": "extraBalance",
+      "signature": "extraBalance()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x237e9492",
+      "name": "executeProposal",
+      "signature": "executeProposal(uint256,bytes)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x23b872dd",
+      "name": "transferFrom",
+      "signature": "transferFrom(address,address,uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x2632bf20",
+      "name": "unblockMe",
+      "signature": "unblockMe()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x34145808",
+      "name": "totalRewardToken",
+      "signature": "totalRewardToken()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x39d1f908",
+      "name": "actualBalance",
+      "signature": "actualBalance()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x4b6753bc",
+      "name": "closingTime",
+      "signature": "closingTime()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x4df6d6cc",
+      "name": "allowedRecipients",
+      "signature": "allowedRecipients(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x4e10c3ee",
+      "name": "transferWithoutReward",
+      "signature": "transferWithoutReward(address,uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x5790de2c279e58269b93b12828f56fd5f2bc8ad15e61ce08572585c81a38756f",
+      "name": "ProposalAdded",
+      "signature": "ProposalAdded(uint256,address,uint256,bool,string)",
+      "type": "event"
+    },
+    {
+      "encoding": "0x590e1ae3",
+      "name": "refund",
+      "signature": "refund()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x612e45a3",
+      "name": "newProposal",
+      "signature": "newProposal(address,uint256,string,bytes,uint256,bool)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x643f7cdd",
+      "name": "DAOpaidOut",
+      "signature": "DAOpaidOut(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x674ed066",
+      "name": "minQuorumDivisor",
+      "signature": "minQuorumDivisor()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x6837ff1e",
+      "name": "newContract",
+      "signature": "newContract(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x70a08231",
+      "name": "balanceOf",
+      "signature": "balanceOf(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f",
+      "name": "AllowedRecipientChanged",
+      "signature": "AllowedRecipientChanged(address,bool)",
+      "type": "event"
+    },
+    {
+      "encoding": "0x749f9889",
+      "name": "changeAllowedRecipients",
+      "signature": "changeAllowedRecipients(address,bool)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x78524b2e",
+      "name": "halveMinQuorum",
+      "signature": "halveMinQuorum()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x81f03fcb",
+      "name": "paidOut",
+      "signature": "paidOut(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x82661dc4",
+      "name": "splitDAO",
+      "signature": "splitDAO(uint256,address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x82bf6464",
+      "name": "DAOrewardAccount",
+      "signature": "DAOrewardAccount()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x86abfce99b7dd908bec0169288797f85049ec73cbe046ed9de818fab3a497ae0",
+      "name": "Voted",
+      "signature": "Voted(uint256,bool,address)",
+      "type": "event"
+    },
+    {
+      "encoding": "0x8b15a605",
+      "name": "proposalDeposit",
+      "signature": "proposalDeposit()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "name": "Approval",
+      "signature": "Approval(address,address,uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0x8d7af473",
+      "name": "numberOfProposals",
+      "signature": "numberOfProposals()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x9046fefd66f538ab35263248a44217dcb70e2eb2cd136629e141b8b8f9f03b60",
+      "name": "NewCurator",
+      "signature": "NewCurator(address)",
+      "type": "event"
+    },
+    {
+      "encoding": "0x96d7f3f5",
+      "name": "lastTimeMinQuorumMet",
+      "signature": "lastTimeMinQuorumMet()",
+      "type": "function"
+    },
+    {
+      "encoding": "0xa1da2fb9",
+      "name": "retrieveDAOReward",
+      "signature": "retrieveDAOReward(bool)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xa3912ec8",
+      "name": "receiveEther",
+      "signature": "receiveEther()",
+      "type": "function"
+    },
+    {
+      "encoding": "0xa9059cbb",
+      "name": "transfer",
+      "signature": "transfer(address,uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xb7bc2c84",
+      "name": "isFueled",
+      "signature": "isFueled()",
+      "type": "function"
+    },
+    {
+      "encoding": "0xbaac5300",
+      "name": "createTokenProxy",
+      "signature": "createTokenProxy(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d",
+      "name": "Refund",
+      "signature": "Refund(address,uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0xbe7c29c1",
+      "name": "getNewDAOAddress",
+      "signature": "getNewDAOAddress(uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xc9d27afe",
+      "name": "vote",
+      "signature": "vote(uint256,bool)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xcc9ae3f6",
+      "name": "getMyReward",
+      "signature": "getMyReward()",
+      "type": "function"
+    },
+    {
+      "encoding": "0xcdef91d0",
+      "name": "rewardToken",
+      "signature": "rewardToken(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xdbccb92686efceafb9bb7e0394df7f58f71b954061b81afb57109bf247d3d75a",
+      "name": "CreatedToken",
+      "signature": "CreatedToken(address,uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0xdbde1988",
+      "name": "transferFromWithoutReward",
+      "signature": "transferFromWithoutReward(address,address,uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xdd62ed3e",
+      "name": "allowance",
+      "signature": "allowance(address,address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+      "name": "Transfer",
+      "signature": "Transfer(address,address,uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0xdfc78bdca8e3e0b18c16c5c99323c6cb9eb5e00afde190b4e7273f5158702b07",
+      "name": "ProposalTallied",
+      "signature": "ProposalTallied(uint256,bool,uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0xe33734fd",
+      "name": "changeProposalDeposit",
+      "signature": "changeProposalDeposit(uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xe5962195",
+      "name": "blocked",
+      "signature": "blocked(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xe66f53b7",
+      "name": "curator",
+      "signature": "curator()",
+      "type": "function"
+    },
+    {
+      "encoding": "0xeceb2945",
+      "name": "checkProposalCode",
+      "signature": "checkProposalCode(uint256,address,uint256,bytes)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e",
+      "name": "FuelingToDate",
+      "signature": "FuelingToDate(uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0xf8c80d26",
+      "name": "privateCreation",
+      "signature": "privateCreation()",
+      "type": "function"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

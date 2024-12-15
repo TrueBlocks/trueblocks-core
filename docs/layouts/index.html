@@ -1,0 +1,161 @@
+{{ define "main" }}
+<main class="main-site container-fluid mt-n3 pb-3">
+  <header class="section row justify-content-center">
+    <div class="col-lg-9 col-xl-8 text-center">
+      <h1 class="mt-0">Indexing for EVM-based blockchains</h1>
+      <div class="d-flex gap-4 justify-content-center">
+        <a class="btn btn-outline-primary btn-lg px-4 mb-2" href='{{ "docs/" | relURL }}' role="button">About</a>
+        <a class="btn btn-primary btn-lg px-4 mb-2" href='{{ "docs/install/install-core//" | relURL }}'
+        role="button">Install</a>
+      </div>
+    </div>
+  </header>
+
+  {{ partial "main/section-tabs" . }}
+
+  <section class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-lg-5">
+        <h2 class="h4">Local First</h2>
+        <p>The index may be created and cached on your local machine</p>
+      </div>
+      <div class="col-lg-5">
+        <h2 class="h4">Multi Chain</h2>
+        <p>Supports any EVM-based chain</p>
+      </div>
+      <div class="col-lg-5">
+        <h2 class="h4">Lightweight</h2>
+        <p>Bloom filters massively reduce the size of data on disk</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container citizen">
+    <h1>
+      TrueBlocks is for crypto citizens ❤️
+    </h1>
+
+    <div class="citizen-wrapper">
+      {{ partial "main/section-citizens" . }}
+    </div>
+  </section>
+
+  <section class="container features">
+    <h1>
+      Thoughtfully <span class="gradient-text">crafted</span>
+    </h1>
+
+    {{ partial "main/section-features" . }}
+  </section>
+
+  <section class="container">
+    <h1>
+      What users say
+    </h1>
+
+    {{ partial "main/testimonials" . }}
+  </section>
+
+  <section class="container bottom-install">
+    <div class="text-center">
+      <ul class="list-no-style">
+        <li>
+          No paid plans
+        </li>
+        <li>
+          No rate limits
+        </li>
+        <li>
+          Open source public good
+        </li>
+      </ul>
+      <div class="buttons">
+        <a class="btn btn-outline-primary btn-lg px-4 mb-2" href="https://discord.com/invite/kAFcZH2x7K" role="button">Join the community</a>
+        <a class="btn btn-primary btn-lg px-4 mb-2" href='{{ "docs/install/install-core//" | relURL }}'
+          role="button">Install</a>
+        </div>
+      </div>
+  </section>
+
+  <section class="container newsletter text-center">
+    Subscribe to updates about TrueBlocks. We will never send you spam.
+    <div class="ml-embedded" data-form="UHPgOS"></div>
+  </section>
+
+  <section class="container grants text-center">
+    <h1>
+      Supported through grants from
+    </h1>
+
+    <ul class="text-center list-no-style">
+      <li>
+        <img
+          src="grant_logos/op.svg"
+          alt="Optimism"
+          title="Optimism"
+          defer
+        >
+      </li>
+      <li>
+        <img
+          src="grant_logos/ef.svg"
+          alt="Ethereum Foundation"
+          title="Ethereum Foundation"
+          defer
+        >
+      </li>
+      <li>
+        <img
+          src="grant_logos/moloch.png"
+          alt="Moloch DAO"
+          title="Moloch DAO"
+          class="sprite moloch-dao"
+          defer
+        >
+      </li>
+      <li>
+        <img
+          src="grant_logos/giveth.svg"
+          alt="Giveth"
+          title="Giveth"
+          defer
+        >
+      </li>
+      <li>
+        <img
+          src="grant_logos/gitcoin.svg"
+          alt="Gitcoin"
+          title="Gitcoin"
+          defer
+        >
+      </li>
+      <li>
+        <img
+          src="grant_logos/consensys.svg"
+          alt="Consensys"
+          title="Consensys"
+          defer
+        >
+      </li>
+      <li>
+        <img
+          src="grant_logos/ipfs.svg"
+          alt="IPFS"
+          title="IPFS"
+          defer
+        >
+      </li>
+      <li>
+        <img
+          src="grant_logos/clrfund.png"
+          alt="CLRFund"
+          title="CLRFund"
+          class="sprite clr-fund"
+          defer
+        >
+      </li>
+    </ul>
+  </section>
+
+</main>
+{{ end }}

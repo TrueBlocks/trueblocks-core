@@ -1,0 +1,6 @@
+chifra monitors  0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 --decache
+TEST[DATE|TIME] Addrs:  [0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533]
+TEST[DATE|TIME] Decache:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+Monitor for 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 was permanently removed.                              

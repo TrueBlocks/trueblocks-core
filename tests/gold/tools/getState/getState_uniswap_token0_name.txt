@@ -1,0 +1,9 @@
+chifra state  --call --calldata '0x06fdde03()' 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599 10092000 --fmt txt
+TEST[DATE|TIME] Addrs:  [0x2260fac5e5542a773aa44fbcfedf7c193bc2c599]
+TEST[DATE|TIME] Blocks:  [10092000]
+TEST[DATE|TIME] Call:  true
+TEST[DATE|TIME] Calldata:  0x06fdde03()
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+blockNumber	address	signature	encoding	bytes	compressedResult
+10092000	0x2260fac5e5542a773aa44fbcfedf7c193bc2c599	name()	0x06fdde03		{val_0:Wrapped BTC}

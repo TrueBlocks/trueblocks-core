@@ -1,0 +1,10 @@
+blocks?
+Args: []
+Opts: {}
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "Please supply at least one block identifier."
+  ]
+}

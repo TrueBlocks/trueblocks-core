@@ -1,0 +1,9 @@
+chifra list  0x05a56e2d52c817161883f50c441c3228cfe54d9f --fmt txt --first_block 56 --last_block 236
+TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
+TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+TEST[DATE|TIME] FirstBlock:  56
+TEST[DATE|TIME] LastBlock:  236
+TEST[DATE|TIME] Format:  txt
+address	blockNumber	transactionIndex
+0x05a56e2d52c817161883f50c441c3228cfe54d9f	56	99998
+0x05a56e2d52c817161883f50c441c3228cfe54d9f	235	99999

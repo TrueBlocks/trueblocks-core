@@ -1,0 +1,12 @@
+tokens?addrs=a%20b%20c
+Args: [addrs=a b c]
+Opts: {"addrs":["a b c"]}
+Addrs:  [a b c]
+Blocks:  [17000000]
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "The value a is not a token contract."
+  ]
+}

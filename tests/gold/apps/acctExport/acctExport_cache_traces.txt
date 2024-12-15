@@ -1,0 +1,11 @@
+chifra export  0x04fe1f0c597fbc65700f4fba6f87501edc20e665 --first_block 10277780 --last_block 10278000 --cache --cache_traces
+TEST[DATE|TIME] Addrs:  [0x04fe1f0c597fbc65700f4fba6f87501edc20e665]
+TEST[DATE|TIME] CacheTraces:  true
+TEST[DATE|TIME] FirstBlock:  10277780
+TEST[DATE|TIME] LastBlock:  10278000
+TEST[DATE|TIME] Enabled:  traces, transactions
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+blockNumber	transactionIndex	timestamp	date	from	to	value	gasPrice	gasUsed	gasCost	hash	isError	encoding	type	ether
+10277780	88	1592323744	2020-06-16 16:09:04 UTC	0x04fe1f0c597fbc65700f4fba6f87501edc20e665	0xdac17f958d2ee523a2206206994597c13d831ec7	0	40000000000	26209	1048360000000000	0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a	false	0xa9059cbb		0

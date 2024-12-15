@@ -1,0 +1,6 @@
+chifra abis  --encode --"function accept_these_ask_requests_and_b_u_y(uint[] _keys, uint[] _token_amounts, uint[] _dollar_prices) external not_paused payable " --fmt csv
+TEST[DATE|TIME] Encode:  --function accept_these_ask_requests_and_b_u_y(uint[] _keys, uint[] _token_amounts, uint[] _dollar_prices) external not_paused payable 
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  csv
+encoding,type,name,signature
+0xd73af0e1,function,accept_these_ask_requests_and_b_u_y,"accept_these_ask_requests_and_b_u_y(uint[],uint[],uint[])"

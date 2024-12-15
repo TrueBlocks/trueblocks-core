@@ -1,0 +1,6 @@
+init?ether
+{
+  "errors": [
+    "Invalid key (ether) in init route."
+  ]
+}

@@ -1,0 +1,23 @@
+slurp?addrs=0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
+Args: [addrs=0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5]
+Opts: {"addrs":["0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5"]}
+Addrs:  [0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5]
+Parts:  [ext]
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  },
+  "errors": [
+    "zero transactions reported, 0 fetched"
+  ]
+}

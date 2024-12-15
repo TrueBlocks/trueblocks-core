@@ -1,0 +1,6 @@
+init?output
+{
+  "errors": [
+    "Invalid key (output) in init route."
+  ]
+}

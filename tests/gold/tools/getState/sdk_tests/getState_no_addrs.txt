@@ -1,0 +1,12 @@
+state?proxyFor=0xbb2b8038a1640196fbe3e38816f3e67cba72d940
+Args: [proxyFor=0xbb2b8038a1640196fbe3e38816f3e67cba72d940]
+Opts: {"proxyFor":"0xbb2b8038a1640196fbe3e38816f3e67cba72d940"}
+Blocks:  [17000000]
+ProxyFor:  0xbb2b8038a1640196fbe3e38816f3e67cba72d940
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The --proxy_for option is only available with the --call or --send option."
+  ]
+}

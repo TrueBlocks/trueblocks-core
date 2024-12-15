@@ -1,0 +1,8 @@
+chunks?mode=junk
+Args: [mode=junk]
+Opts: null
+{
+  "errors": [
+    "unknown mode: junk"
+  ]
+}

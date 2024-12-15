@@ -1,0 +1,34 @@
+chifra names  network --match_case
+TEST[DATE|TIME] Terms:  [network]
+TEST[DATE|TIME] MatchCase:  true
+TEST[DATE|TIME] Format:  txt
+tags	address	name	symbol	decimals
+31-Giveth:Project	0x035495b687850f79cb1652f416ea7ec19907557c	Bees network		
+50-Tokens:ERC20	0x069d653038db2f9d84e9620be140b3d404a40258	Jarvis network Smart Relay Token	JRTBNT	18
+60-Rotki	0x2456493e757fdeedf569781f053998a72adfad03	Definder network token	DNT	6
+30-Contracts	0x389715f05658c4644b2089ec0557fbadd5805053	alco.network	ALCONET	18
+50-Tokens:ERC20	0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604	WABnetwork	WAB	18
+30-Contracts	0x4df4636bb681912795aef87d6b00d6ae860e451f	cere.network	CERE	18
+30-Contracts	0x4e1cef77a02821096b682a81bbfc7b6c8c47fdcb	deeper.network	DPR	18
+30-Contracts	0x58e33f09744ba2fe6459b6d5562081109870f406	easify.network	EASY	10
+30-Contracts	0x653f7f8e576f25608600e862559a7e7b1bbb2512	gelato.network	GELO	18
+30-Contracts	0x765baefcb5418fa9f7dddacb1ccc07bd0e890e4e	Meteorite.network	Meteor	9
+30-Contracts	0x7b320489785ffecf4588b11a2a6b22cc46979da1	casper.network	CSPR	18
+50-Tokens:ERC20	0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098	SANtiment network token	SAN	18
+31-Gitcoin:Grants	0x8767aacd8ae48e6a23077548c24121e46dca0696	Grant 2728 - Using social networks for fun, affordable, and lucrative delivery.		
+31-Gitcoin:Grants	0x887a26839d9e33b1536857a24f91f192ce9d4732	Grant 2776 - pulp-network		
+50-Tokens:ERC20	0x95cda24d2515491095d21d94f1b94f319e016d35	Vegetanetwork	Vegeta	18
+30-Contracts	0x970fd79a441a4db620dcdc5107ca89a0500bc1c7	shyft.network	SHFT	18
+30-Contracts	0xbc5e593cd15e45243cdae9c229d1cde03d04b355	limestone.network	LIMEX	18
+30-Contracts	0xbd8adc576200e131de7320e7e1a0f2ac386c0ff3	hathor.network	HTR	18
+31-Gitcoin:Grants	0xc0dd8e21a31f62861e668833f47770592d379a4c	Grant 2694 - Matrix2 - An aggregated Layer 2 network		
+31-Gitcoin:Grants	0xc22e8d32d3146efc54088f39ec9c29eaf3905b1d	Grant 3090 - Atelio : creating open , blockchain based digital supply network.		
+31-Gitcoin:Grants	0xc41bc99044fd4836dba4104bcf53b6f2b62716b1	Grant 2190 - Layer 2 faucet in ethereum network		
+30-Contracts	0xc89b4a8a121dd3e726fe7515e703936cf83e3350	Kper.network	KPER	18
+30-Contracts	0xd9fe915452f5d65a09e3004958a2c5564968a7d2	deeper.network	DPR	18
+30-Contracts	0xdf6c1edfe4a1b41b319cfb3f5fedba11b249ae94	deeper.network	DPR	18
+31-Gitcoin:Grants	0xea6cdbe70e5c18c605427d93dc6374b648843fac	Grant 1487 Memorial.network		
+50-Tokens:ERC20	0xf0df09387693690b1e00d71eabf5e98e7955cff4	ENDO.network Promo Token	ETP	18
+30-Contracts	0xf4bcc9537e4a6ff9d13a92b6273cc2349b659242	yfstake.network	YFK	18
+50-Tokens:ERC20	0xff19138b039d938db46bdda0067dc4ba132ec71c	Snetwork	SNET	8
+30-Contracts	0xff5425f2b1f789972fd050df47dccfc2e33fb207	Testing network	net	

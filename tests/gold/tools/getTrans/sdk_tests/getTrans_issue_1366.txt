@@ -1,0 +1,103 @@
+transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe&traces&articulate
+Args: [transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe traces articulate]
+Opts: {"transactions":["0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe"],"articulate":true,"traces":true}
+Transactions:  [0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe]
+Articulate:  true
+Traces:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "articulatedTx": {
+        "name": "deposit",
+        "outputs": {
+          "ret_0": "1"
+        }
+      },
+      "blockHash": "0x12804134060126a2b62a3db6d37facc47622624dd055e98f309fd624f1a12ae8",
+      "blockNumber": 1545347,
+      "date": "2016-05-19 10:19:53 UTC",
+      "ether": "1",
+      "from": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "gas": 150000,
+      "gasCost": 864200000000000,
+      "gasPrice": 20000000000,
+      "gasUsed": 43210,
+      "hash": "0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe",
+      "input": "0xd0e30db0",
+      "nonce": 142,
+      "receipt": {
+        "contractAddress": "0x0",
+        "effectiveGasPrice": 20000000000,
+        "gasUsed": 43210,
+        "logs": [
+          {
+            "address": "0xd654bdd32fc99471455e86c2e7f7d7b6437e9179",
+            "articulatedLog": {
+              "inputs": {
+                "from": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+                "value": "1000000000000000000"
+              },
+              "name": "Deposit"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+            "date": "2016-05-19 10:19:53 UTC",
+            "logIndex": 0,
+            "timestamp": 1463653193,
+            "topics": [
+              "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c",
+              "0x000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045"
+            ]
+          }
+        ],
+        "status": null
+      },
+      "timestamp": 1463653193,
+      "to": "0xd654bdd32fc99471455e86c2e7f7d7b6437e9179",
+      "traces": [
+        {
+          "action": {
+            "callType": "call",
+            "from": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+            "gas": 128728,
+            "input": "0xd0e30db0",
+            "to": "0xd654bdd32fc99471455e86c2e7f7d7b6437e9179",
+            "value": "1000000000000000000"
+          },
+          "articulatedTrace": {
+            "name": "deposit",
+            "outputs": {
+              "ret_0": "1"
+            }
+          },
+          "blockHash": "0x12804134060126a2b62a3db6d37facc47622624dd055e98f309fd624f1a12ae8",
+          "blockNumber": 1545347,
+          "date": "2016-05-19 10:19:53 UTC",
+          "result": {
+            "gasUsed": 21938,
+            "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+          },
+          "subtraces": 0,
+          "timestamp": 1463653193,
+          "traceAddress": [],
+          "transactionHash": "0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe",
+          "transactionIndex": 3,
+          "type": "call"
+        }
+      ],
+      "transactionIndex": 3,
+      "value": "1000000000000000000"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

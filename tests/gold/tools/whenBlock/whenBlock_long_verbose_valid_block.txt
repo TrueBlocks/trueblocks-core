@@ -1,0 +1,7 @@
+chifra when  --verbose 1000
+TEST[DATE|TIME] Blocks:  [1000]
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+blockNumber	timestamp	date	name	component	description
+1000	1438272138	2015-07-30 16:02:18 UTC			

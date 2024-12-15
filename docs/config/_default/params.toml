@@ -1,0 +1,50 @@
+# Meta Data for SEO
+
+## Homepage
+description = "Ethereum as it was meant to be: local-first, P2P, and accurate queries to all the data you’ll ever need."
+title = "TrueBlocks"
+titleAddition = "Light, local index of the Ethereum blockchain"
+titleSeparator = "-"
+
+## Open Graph + Twitter Cards
+images = ["https://trueblocks.io/trueblocks.png"]
+ogLocale = "en_US"
+twitterCreator = "TrueBlocks"
+twitterSite = "TrueBlocks"
+
+## JSON-LD
+schemaGitHub = "https://github.com/TrueBlocks/trueblocks-core"
+schemaLogo = "logo-doks.png"
+schemaSection = "blog"
+schemaTwitter = "https://twitter.com/trueblocks"
+schemaType = "Organization"
+
+## Sitelinks Search Box
+siteLinksSearchBox = false
+
+## Chrome Browser
+themeColor = "#fff"
+
+# Images
+bgColor = "#fff"
+landscapePhotoWidths = [900, 800, 700, 600, 500]
+lqipWidth = "20x"
+portraitPhotoWidths = [800, 700, 600, 500]
+quality = 85
+
+# Footer
+footer = "Powered by <a href=\"https://gohugo.io/\">Hugo</a>"
+
+# Edit Page
+docsRepo = "https://github.com/TrueBlocks/trueblocks-docs"
+editPage = true
+
+[options]
+bootStrapJs = false
+clipBoard = true
+darkMode = true
+flexSearch = true
+highLight = true
+instantPage = true
+kaTex = false
+lazySizes = true

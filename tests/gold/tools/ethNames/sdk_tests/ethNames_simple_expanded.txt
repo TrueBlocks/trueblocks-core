@@ -1,0 +1,1717 @@
+names?terms=etwork&expand
+Args: [terms=etwork expand]
+Opts: {"terms":["etwork"],"expand":true,"autoname":"0x0"}
+Terms:  [etwork]
+Expand:  true
+Format:  json
+{
+  "data": [
+    {
+      "address": "0x011c2c1433b36a524b548444ae2f20c015427d04",
+      "name": "Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma",
+      "source": "https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x035495b687850f79cb1652f416ea7ec19907557c",
+      "name": "Bees network",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x04c62019ab478bff5874e7b7d9bc84fcf7e30025",
+      "isContract": true,
+      "name": "POA Network: MultiSig",
+      "source": "EtherScan.io",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x067f2bef6a1f929544253b9fb95f99bae77b2518",
+      "name": "Grant 1753 Resetdao ― Web 3.0 Programmable Social Network",
+      "source": "https://gitcoin.co/grants/1753/resetdao-web-30-programmable-social-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x069d653038db2f9d84e9620be140b3d404a40258",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Jarvis network Smart Relay Token",
+      "source": "On chain",
+      "symbol": "JRTBNT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x07147220fa6c06295464d695e4ec012f6aebc275",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Super Module Network One",
+      "source": "On chain",
+      "symbol": "SMN1",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8",
+      "decimals": 8,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Tierion Network Token",
+      "source": "On chain",
+      "symbol": "TNT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x090b41c23f5890feb4182a201d95476bb35e4a09",
+      "name": "Grant 1706 - ZVM from Tokamak Network",
+      "source": "https://gitcoin.co/grants/1706/zvm-from-tokamak-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x0a913bead80f321e7ac35285ee10d9d922659cb7",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "DOS Network Token",
+      "source": "On chain",
+      "symbol": "DOS",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0abdace70d3790235af448c88547603b945604ea",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "district0x Network Token",
+      "source": "On chain",
+      "symbol": "DNT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0d35a2b85c5a63188d566d104bebf7c694334ee4",
+      "decimals": 18,
+      "isContract": true,
+      "name": "Pawtocol Network UPI Token",
+      "source": "Rotki",
+      "symbol": "BUPI",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x0f7f961648ae6db43c75663ac7e5414eb79b5704",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "XIO Network",
+      "source": "On chain",
+      "symbol": "XIO",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48",
+      "name": "Grant 0083 Poa Network Community Management Grant for Adj",
+      "source": "https://gitcoin.co/grants/83/poa-network-community-management-grant-for-adj",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x12a9cc33a980daa74e00cc2d1a0e74c57a93d12c",
+      "decimals": 8,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Iron Bank Synthetix Network Token",
+      "source": "SmolAssets",
+      "symbol": "iSNX",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x13b7f51bd865410c3acc4d56083c5b56ab38d203",
+      "decimals": 18,
+      "isContract": true,
+      "name": "Synthetix Network Token Hop Token",
+      "source": "Rotki",
+      "symbol": "hSNX",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x14409b0fc5c7f87b5dad20754fe22d29a3de8217",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "PYRO Network",
+      "source": "On chain",
+      "symbol": "PYRO",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x15b7c0c907e4c6b9adaaaabc300c08991d6cea05",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Gelato Network Token",
+      "source": "Rotki",
+      "symbol": "GEL",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x16980b3b4a3f9d89e33311b5aa8f80303e5ca4f8",
+      "decimals": 6,
+      "isContract": true,
+      "isErc20": true,
+      "name": "KIRA Network",
+      "source": "Rotki",
+      "symbol": "KEX",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x17b26400621695c2d8c2d8869f6259e82d7544c4",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "CustomContractNetwork",
+      "source": "Rotki",
+      "symbol": "CCN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x18c11fd286c5ec11c3b683caa813b77f5163a122",
+      "decimals": 18,
+      "name": "Gains Network",
+      "source": "Rotki",
+      "symbol": "GNS",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x1b415ec11276f385db867e631c5c9692f3088112",
+      "name": "Austin Disaster Relief Network",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x1b815d120b3ef02039ee11dc2d33de7aa4a8c603",
+      "decimals": 18,
+      "name": "Wootrade Network",
+      "source": "Rotki",
+      "symbol": "WOO",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x1bb76a939d6b7f5be6b95c4f9f822b02b4d62ced",
+      "decimals": 18,
+      "name": "POP Network Token",
+      "source": "Rotki",
+      "symbol": "POP",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Bancor Network Token",
+      "source": "Giveth website",
+      "symbol": "BNT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x1fb3e449448faf1330dba45d945554c1bedcab5a",
+      "name": "Grant 2250 - Cura Network - the decentralized healthcare system that super-charges healthcare delivery",
+      "source": "https://gitcoin.co/grants/2250/cura-network-the-decentralized-healthcare-system-",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a",
+      "decimals": 6,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Sapien Network",
+      "source": "On chain",
+      "symbol": "SPN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x21c9ea32bded0a07ca9c6ae6e0e43fd9001f5627",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "BITVoxy NetworkTokens",
+      "source": "On chain",
+      "symbol": "BVN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x2233799ee2683d75dfefacbcd2a26c78d34b470d",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Network Token",
+      "source": "On chain",
+      "symbol": "NTWK",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x2456493e757fdeedf569781f053998a72adfad03",
+      "decimals": 6,
+      "name": "Definder network token",
+      "source": "Rotki",
+      "symbol": "DNT",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x26f3901ac8a79c50fb0d8289c74f0d09adc42e29",
+      "decimals": 18,
+      "name": "ThresholdNetworkToken",
+      "source": "SmolAssets",
+      "symbol": "T",
+      "tags": "60-SmolAssets"
+    },
+    {
+      "address": "0x28d7f432d24ba6020d1cbd4f28bedc5a82f24320",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Tercet Network",
+      "source": "Rotki",
+      "symbol": "TCNX",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x2af47a65da8cd66729b4209c22017d6a5c2d2400",
+      "isContract": true,
+      "name": "Bounties Network",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x2b9e7ccdf0f4e5b24757c1e1a80e311e34cb10c7",
+      "decimals": 18,
+      "name": "Mask Network",
+      "source": "Rotki",
+      "symbol": "MASK",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x2be5e8c109e2197d077d13a82daead6a9b3433c5",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Tokamak Network Token",
+      "source": "Rotki",
+      "symbol": "TON",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x2da719db753dfa10a62e140f436e1d67f2ddb0d6",
+      "decimals": 10,
+      "isContract": true,
+      "isErc20": true,
+      "name": "CERE Network",
+      "source": "Rotki",
+      "symbol": "CERE",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x2e68dfb3f50ea302c88f8db74096d57565d9970a",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Amino Intelligent Network",
+      "source": "Rotki",
+      "symbol": "AMIO",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x2ed9a5c8c13b93955103b9a7c167b67ef4d568a3",
+      "decimals": 18,
+      "name": "Mask Network",
+      "source": "Rotki",
+      "symbol": "MASK",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x2fefe22dbb33670a13039039982cd3d12b1a4b6f",
+      "name": "Grant 1875 Garuda Network (dmrd)",
+      "source": "https://gitcoin.co/grants/1875/garuda-network-dmrd",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x301605c95acbed7a1fd9c2c0deee964e2afbd0c3",
+      "name": "Grant 1353 - Synapsis. Network 🌌🌱",
+      "source": "https://gitcoin.co/grants/1353/synapsis-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x30755d3e65c0cf46c35b72d11e52d941c5fc3a3e",
+      "name": "Grant 0026 Peepeth: Social Network for a Better World",
+      "source": "https://gitcoin.co/grants/26/peepeth-social-network-for-a-better-world",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x32a3256a4b15badd4a6e072a03d23404d925a5cf",
+      "isContract": true,
+      "name": "Celsius Network: Contract",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x33d08d8c7a168333a85285a68c0042b39fc3741d",
+      "decimals": 18,
+      "name": "AIOZ Network",
+      "source": "Rotki",
+      "symbol": "AIOZ",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x3543638ed4a9006e4840b105944271bcea15605d",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "UNetworkToken",
+      "source": "On chain",
+      "symbol": "UUU",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x3700414bb6716fcd8b14344fb10ddd91fdea59ec",
+      "isContract": true,
+      "name": "Kyber Network Wrapper",
+      "source": "TrueBlocks.io",
+      "tags": "30-Contracts:Set Protocol"
+    },
+    {
+      "address": "0x373483a546e5212b0d009db1dbf0d14daff80f9a",
+      "name": "Luminus Network for New Americans",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x389715f05658c4644b2089ec0557fbadd5805053",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "alco.network",
+      "source": "Etherscan ",
+      "symbol": "ALCONET",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x3c6ff50c9ec362efa359317009428d52115fe643",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "PeerEx Network",
+      "source": "Rotki",
+      "symbol": "PERX",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x3c72fca8523686fd9e5740b0826fa4bb376e0241",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "300FIT Network",
+      "source": "Rotki",
+      "symbol": "FIT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x3cc83c2400e00a54fa1e588d62bc28bf15d5def5",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "OPTICAL NETWORK",
+      "source": "On chain",
+      "symbol": "OPTC",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x3db6ba6ab6f95efed1a6e794cad492faaabf294d",
+      "decimals": 8,
+      "isContract": true,
+      "isErc20": true,
+      "name": "LTO Network Token",
+      "source": "Rotki",
+      "symbol": "LTO",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x3ef61d25b2bf303de52efdd5e50698bed8f9eb8d",
+      "isContract": true,
+      "isErc721": true,
+      "name": "Network State Genesis",
+      "source": "Etherscan ",
+      "symbol": "NSG",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x4162178b78d6985480a308b2190ee5517460406d",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Colu Local Network",
+      "source": "On chain",
+      "symbol": "CLN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x447f59850dc5f72609a5e5edc71fbf45fb3af17a",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "DOG Network",
+      "source": "On chain",
+      "symbol": "DOG",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x4691937a7508860f876c9c0a2a617e7d9e945d4b",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Wootrade Network",
+      "source": "Rotki",
+      "symbol": "WOO",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x4727e3265706c59dbc31e7c518960f4f843bb4da",
+      "name": "GG19 - GreenPill Network - independent - OP - 5000",
+      "source": "https://raw.githubusercontent.com/ufkhan97/gitcoin-grants-heroku/main/all_rounds.csv",
+      "tags": "31-Gitcoin:Core"
+    },
+    {
+      "address": "0x476f2d18d28fa1a4fc62ce680fa7852524eb820f",
+      "isContract": true,
+      "name": "Grant 1949 Network State Genesis",
+      "source": "https://gitcoin.co/grants/1949/network-state-genesis",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x4aa42145aa6ebf72e164c9bbc74fbd3788045016",
+      "isContract": true,
+      "name": "POA Network: DAI-XDAI Bridge",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "WABnetwork",
+      "source": "On chain",
+      "symbol": "WAB",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x4c63f570590b7e145d5af265497aa23fa2bc0b8c",
+      "name": "Grant 0653 Gas Stations Network",
+      "source": "https://gitcoin.co/grants/653/gas-stations-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x4c994efd3cf90092dc35ee2e3d660d782652727b",
+      "isContract": true,
+      "name": "Grant 2103 - Open Source Climate Offsets Network",
+      "source": "https://gitcoin.co/grants/2103/open-source-climate-offsets-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x4df4636bb681912795aef87d6b00d6ae860e451f",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "cere.network",
+      "source": "Etherscan ",
+      "symbol": "CERE",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x4e1cef77a02821096b682a81bbfc7b6c8c47fdcb",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "deeper.network",
+      "source": "Etherscan ",
+      "symbol": "DPR",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x4e4856e74c51f45ebf5c730c045f678f4598488c",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Caribbean Network Token",
+      "source": "Etherscan ",
+      "symbol": "CBN",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x50b728d8d964fd00c2d0aad81718b71311fef68a",
+      "decimals": 18,
+      "name": "Synthetix Network Token (PoS)",
+      "source": "Rotki",
+      "symbol": "SNX",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x52166528fcc12681af996e409ee3a421a4e128a3",
+      "isContract": true,
+      "name": "Kyber Fee Burner",
+      "source": "TrueBlocks.io",
+      "tags": "30-Contracts:Kyber Network"
+    },
+    {
+      "address": "0x5219ffb88175588510e9752a1ecaa3cd217ca783",
+      "name": "Bloom Network",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973",
+      "isContract": true,
+      "name": "Clovers Network Related",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x53066cddbc0099eb6c96785d9b3df2aaeede5da3",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Penta Network Token",
+      "source": "On chain",
+      "symbol": "PNT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x5346d0f80e2816fad329f2c140c870ffc3c3e2ef",
+      "isContract": true,
+      "name": "EtherRouter: Colony Network",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x538f022f50038994f7a04a58f5004c1b98ed41a4",
+      "name": "Alexander Youth Network",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x54431918cec22932fcf97e54769f4e00f646690f",
+      "isContract": true,
+      "name": "1inch Network: Deployer Related",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x55b23ed53fe13060183b92979c737a8ef9a73b73",
+      "name": "Grant 4201 - Spect Network",
+      "source": "https://gitcoin.co/grants/4201/spect-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x56ee926bd8c72b2d5fa1af4d9e4cbb515a1e3adc",
+      "decimals": 18,
+      "isContract": true,
+      "name": "SynthetixNetwork",
+      "source": "SmolAssets",
+      "symbol": "SNX",
+      "tags": "60-SmolAssets"
+    },
+    {
+      "address": "0x57f8160e1c59d16c01bbe181fd94db4e56b60495",
+      "isContract": true,
+      "name": "Kyber Weth Reserve",
+      "source": "TrueBlocks.io",
+      "tags": "30-Contracts:Kyber Network"
+    },
+    {
+      "address": "0x58e33f09744ba2fe6459b6d5562081109870f406",
+      "decimals": 10,
+      "isContract": true,
+      "isErc20": true,
+      "name": "easify.network",
+      "source": "Etherscan ",
+      "symbol": "EASY",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x5bb21dbb7b2876b0524530c8666969ac9eaf9ede",
+      "name": "Cryptolink Network",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x5d2cd3a7190d38d271d9a4cceb193040ef259840",
+      "decimals": 18,
+      "name": "MURAT NETWORK",
+      "source": "Rotki",
+      "symbol": "MRT",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x5d858bcd53e085920620549214a8b27ce2f04670",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "POP Network Token",
+      "source": "Rotki",
+      "symbol": "POP",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x5f3789907b35dce5605b00c0be0a7ecdbfa8a841",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Content and Ad Network",
+      "source": "On chain",
+      "symbol": "CAN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x607f4c5bb672230e8672085532f7e901544a7375",
+      "decimals": 9,
+      "isContract": true,
+      "isErc20": true,
+      "name": "iEx.ec Network Token",
+      "source": "Giveth website",
+      "symbol": "RLC",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x626e8036deb333b408be468f951bdb42433cbf18",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "AIOZ Network",
+      "source": "Rotki",
+      "symbol": "AIOZ",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x629224fc7ce36163040454cd51b37acc550b77cb",
+      "name": "Rainforest Action Network",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x62a8aa7a0b58b6f2e275796f84ba5ad48c65d36d",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "CovidFree Network",
+      "source": "On chain",
+      "symbol": "COVIDFREE",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
+      "isContract": true,
+      "name": "Kyber Reserve",
+      "source": "0xTracker",
+      "tags": "30-Contracts:Kyber Network"
+    },
+    {
+      "address": "0x63a1b5bf2fbc4162a28d76cfcc40b0867bcf0e12",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Shyft Network",
+      "source": "Etherscan ",
+      "symbol": "SHFT",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x641845407bc5b9920ee786270ab25b73bcc88a19",
+      "name": "Grant 2108 - SkyFeed • Decentralized Social Network",
+      "source": "https://gitcoin.co/grants/2108/skyfeed-decentralized-social-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x64a9edd3f5fce0252cd708e26c8dd11205742826",
+      "isContract": true,
+      "name": "Uniswap: ANJ Aragon Network Juror",
+      "source": "EtherScan.io",
+      "symbol": "ANJ",
+      "tags": "40-Exchanges"
+    },
+    {
+      "address": "0x653f7f8e576f25608600e862559a7e7b1bbb2512",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "gelato.network",
+      "source": "Etherscan ",
+      "symbol": "GELO",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x661ab0ed68000491d98c796146bcf28c20d7c559",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Shadows Network",
+      "source": "Rotki",
+      "symbol": "DOWS",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x6626593c237f530d15ae9980a95ef938ac15c35c",
+      "name": "Gauntlet Network",
+      "source": "EtherScan.io",
+      "tags": "55-Defi"
+    },
+    {
+      "address": "0x6626c47c00f1d87902fc13eecfac3ed06d5e8d8a",
+      "decimals": 18,
+      "name": "WOO Network",
+      "source": "Rotki",
+      "symbol": "WOO",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x66aa8bee5366b6b48811ae0dac9fe5e1eefe1621",
+      "name": "Grant 0049 Blockchain Education Network (ben)",
+      "source": "https://gitcoin.co/grants/49/blockchain-education-network-ben",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x679131f591b4f369acb8cd8c51e68596806c3916",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Trustlines Network Token",
+      "source": "On chain",
+      "symbol": "TLN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x67b6d479c7bb412c54e03dca8e1bc6740ce6b99c",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Kylin Network",
+      "source": "On chain",
+      "symbol": "KYL",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x69af81e73a73b40adf4f3d4223cd9b1ece623074",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Mask Network",
+      "source": "Giveth website",
+      "symbol": "MASK",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x6a4c76874e686a7d080d173987a35a9c48905583",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Luxurious Pro Network Token",
+      "source": "Rotki",
+      "symbol": "LPNT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x6a7ef4998eb9d0f706238756949f311a59e05745",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Kenysians Network",
+      "source": "Etherscan ",
+      "symbol": "KEN",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x6bff4fb161347ad7de4a625ae5aa3a1ca7077819",
+      "decimals": 18,
+      "name": "AdEx Network",
+      "source": "Rotki",
+      "symbol": "ADX",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x6fb3e0a217407efff7ca062d46c26e5d60a14d69",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "IoTeX Network",
+      "source": "On chain",
+      "symbol": "IOTX",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x6fff3806bbac52a20e0d79bc538d527f6a22c96b",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Network",
+      "source": "On chain",
+      "symbol": "CDX",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x70861e862e1ac0c96f853c8231826e469ead37b1",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "DOS Network Token",
+      "source": "On chain",
+      "symbol": "DOS",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70",
+      "name": "Allergy &amp; Asthma Network",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x70d2b7c19352bb76e4409858ff5746e500f2b67c",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Pawtocol Network UPI Token",
+      "source": "Rotki",
+      "symbol": "UPI",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Status Network Token",
+      "source": "Giveth website",
+      "symbol": "SNT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x747e42eb0591547a0ab429b3627816208c734ea7",
+      "decimals": 18,
+      "name": "ThresholdNetworkToken",
+      "source": "SmolAssets",
+      "symbol": "T",
+      "tags": "60-SmolAssets"
+    },
+    {
+      "address": "0x75db8b92937f8f86213e523788ab9f066efde3fe",
+      "isContract": true,
+      "name": "Celsius Network: Wallet 2",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x765baefcb5418fa9f7dddacb1ccc07bd0e890e4e",
+      "decimals": 9,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Meteorite.network",
+      "source": "Etherscan ",
+      "symbol": "Meteor",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x798abda6cc246d0edba912092a2a3dbd3d11191b",
+      "isContract": true,
+      "name": "Kyber Conversion Rates",
+      "source": "TrueBlocks.io",
+      "tags": "30-Contracts:Kyber Network"
+    },
+    {
+      "address": "0x79c5a1ae586322a07bfb60be36e1b31ce8c84a1e",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Freight Trust Network",
+      "source": "Etherscan ",
+      "symbol": "EDI",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x7b0c06043468469967dba22d1af33d77d44056c8",
+      "decimals": 4,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Morpheus.Network",
+      "source": "On chain",
+      "symbol": "MRPH",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x7b2df125567815ac9b57da04b620f50bc93b320c",
+      "decimals": 8,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Archetypal Network",
+      "source": "On chain",
+      "symbol": "ACTP",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x7b320489785ffecf4588b11a2a6b22cc46979da1",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "casper.network",
+      "source": "Etherscan ",
+      "symbol": "CSPR",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x7bc1f30ffeaeee36baf17ea421830281b148b397",
+      "name": "Trustlines Network",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "SANtiment network token",
+      "source": "On chain",
+      "symbol": "SAN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x7c5d5100b339fe7d995a893af6cb496b9474373c",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Loon Network",
+      "source": "On chain",
+      "symbol": "LOON",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x7c6c3b4e91923f080d6cc847a68d7330400a95d7",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Union Network Dollar Token",
+      "source": "On chain",
+      "symbol": "UNDT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x7dd9c5cba05e151c895fde1cf355c9a1d5da6429",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Golem Network Token",
+      "source": "Rotki",
+      "symbol": "GLM",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
+      "isContract": true,
+      "name": "Kyber Network Proxy",
+      "source": "https://github.com/SetProtocol/set-protocol-contracts",
+      "tags": "30-Contracts:Set Protocol"
+    },
+    {
+      "address": "0x8290333cef9e6d528dd5618fb97a76f268f3edd4",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Ankr Network",
+      "source": "Giveth website",
+      "symbol": "ANKR",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x857b222fc79e1cbbf8ca5f78cb133d1b7cf34bbd",
+      "decimals": 18,
+      "name": "LTO Network",
+      "source": "Rotki",
+      "symbol": "LTO",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+      "decimals": 18,
+      "name": "SynthetixNetworkToken",
+      "source": "SmolAssets",
+      "symbol": "SNX",
+      "tags": "60-SmolAssets"
+    },
+    {
+      "address": "0x8767aacd8ae48e6a23077548c24121e46dca0696",
+      "name": "Grant 2728 - Using social networks for fun, affordable, and lucrative delivery.",
+      "source": "https://gitcoin.co/grants/2728/using-social-networks-for-fun-affordable-and-lucr",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x881ef48211982d01e2cb7092c915e647cd40d85c",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Open Trading Network",
+      "source": "On chain",
+      "symbol": "OTN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x887a26839d9e33b1536857a24f91f192ce9d4732",
+      "name": "Grant 2776 - pulp-network",
+      "source": "https://gitcoin.co/grants/2776/pulp-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x896a07e3788983ec52eaf0f9c6f6e031464ee2cc",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Meridian Network",
+      "source": "Etherscan ",
+      "symbol": "MRDN",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x89ab32156e46f46d02ade3fecbe5fc4243b9aaed",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "pNetwork Token",
+      "source": "Rotki",
+      "symbol": "PNT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x89cbeac5e8a13f0ebb4c74fadfc69be81a501106",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Depository Network Token",
+      "source": "Rotki",
+      "symbol": "DEPO",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x8a970573f88dbc7b69dfed2ba193c98c2d5d8314",
+      "name": "Grant 0101 Geon App: Augmented Reality App Leveraging Poa Core Network",
+      "source": "https://gitcoin.co/grants/101/geon-app-augmented-reality-app-leveraging-poa-cor",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x8da25b8ed753a5910013167945a676921e864436",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Bellevue Network",
+      "source": "Etherscan ",
+      "symbol": "BLV",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x8ea197328f3d72e148af942d9ea93f9cfb40626b",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Not Aragon Network DAO launch council",
+      "source": "On chain",
+      "symbol": "NOTANLC",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x904065ba663879deb7e5f902220e7db97cbf04af",
+      "name": "Grant 0681 Flowstake - Activity Staking Blockchain Network",
+      "source": "https://gitcoin.co/grants/681/flowstake-activity-staking-blockchain-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x934b510d4c9103e6a87aef13b816fb080286d649",
+      "name": "Grant 0159 - Mask Network - The Portal to the New, Open Internet.",
+      "source": "https://gitcoin.co/grants/159/mask-network-the-portal-to-the-new-open-internet",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x940a2db1b7008b6c776d4faaca729d6d4a4aa551",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Dusk Network",
+      "source": "Rotki",
+      "symbol": "DUSK",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x9469d013805bffb7d3debe5e7839237e535ec483",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Darwinia Network Native Token",
+      "source": "defipulse.com",
+      "symbol": "RING",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x95172ccbe8344fecd73d0a30f54123652981bd6f",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Meridian Network",
+      "source": "Etherscan ",
+      "symbol": "LOCK",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x95bc825c196f42c13b0fd5d636251005f3756809",
+      "name": "Blockchain Education Network",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x95cda24d2515491095d21d94f1b94f319e016d35",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Vegetanetwork",
+      "source": "On chain",
+      "symbol": "Vegeta",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x960b236a07cf122663c4303350609a66a7b288c0",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Aragon Network Token",
+      "source": "On chain",
+      "symbol": "ANT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x9678e42cebeb63f23197d726b29b1cb20d0064e5",
+      "decimals": 18,
+      "name": "Binance-Peg IoTeX Network",
+      "source": "Rotki",
+      "symbol": "IOTX",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x970fd79a441a4db620dcdc5107ca89a0500bc1c7",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "shyft.network",
+      "source": "Etherscan ",
+      "symbol": "SHFT",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950",
+      "isContract": true,
+      "name": "Kyber Network",
+      "source": "0xTracker",
+      "tags": "30-Contracts:Kyber Network"
+    },
+    {
+      "address": "0x9b62ec1453cea5dde760aaf662048ca6eeb66e7f",
+      "decimals": 2,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Ethereum Cell Network",
+      "source": "Rotki",
+      "symbol": "eCell",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x9bde098be22658d057c3f1f185e3fd4653e2fbd1",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "KP2R.Network",
+      "source": "On chain",
+      "symbol": "KP2R",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x9c159121ceebf937e9bad98fd0c895d7f6038bd4",
+      "name": "Grant 0565 Our Network - Community Driven Analytics",
+      "source": "https://gitcoin.co/grants/565/our-network-community-driven-analytics",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x9dd91d61a7aa58537fcdbf16fd21be25731341b3",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": true,
+      "name": "Opium Network Position Token",
+      "source": "On chain",
+      "symbol": "ONP",
+      "tags": "50-Tokens:ERC721"
+    },
+    {
+      "address": "0xa00e3a3511aac35ca78530c85007afcd31753819",
+      "decimals": 18,
+      "name": "KyberNetworkCrystalv2",
+      "source": "SmolAssets",
+      "symbol": "KNC",
+      "tags": "60-SmolAssets"
+    },
+    {
+      "address": "0xa0a2ee912caf7921eaabc866c6ef6fec8f7e90a4",
+      "decimals": 18,
+      "name": "Deeper Network",
+      "source": "Rotki",
+      "symbol": "DPR",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0xa117000000f279d81a1d3cc75430faa017fa5a2e",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Aragon Network Token",
+      "source": "Giveth website",
+      "symbol": "ANT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xa1381b40e0a6b91814f77de19a7ad2cb21753184",
+      "name": "Grant 0334 Interstate Network EVM optimistic rollup",
+      "source": "https://gitcoin.co/grants/334/interstate-network-evm-generic-optimistic-rollups",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "IvyKoin Public Network Tokens",
+      "source": "On chain",
+      "symbol": "IVY",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xa5fb245acdf6a08ad8fa47b542a30068316fb2a1",
+      "name": "Grant 4174 - DAO Stewards Network",
+      "source": "https://gitcoin.co/grants/4174/dao-stewards-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Jibrel Network Token",
+      "source": "On chain",
+      "symbol": "JNT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xa70b419a6028cd48f050d7251cf4fbbc682cc8ab",
+      "name": "Grant 1995 - Ralie Network - Connecting Through Blockchain",
+      "source": "https://gitcoin.co/grants/1995/ralie-network-connecting-through-blockchain",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xa719b8ab7ea7af0ddb4358719a34631bb79d15dc",
+      "decimals": 18,
+      "name": "Ferrum Network Token",
+      "source": "Rotki",
+      "symbol": "FRM",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0xa74476443119a942de498590fe1f2454d7d4ac0d",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Golem Network Token",
+      "source": "Giveth website",
+      "symbol": "GNT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xa9877b1e05d035899131dbd1e403825166d09f92",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Media Network Token",
+      "source": "Rotki",
+      "symbol": "MNT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xabc9547b534519ff73921b1fba6e672b5f58d083",
+      "decimals": 18,
+      "name": "Wootrade Network",
+      "source": "Rotki",
+      "symbol": "WOO.e",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0xade00c28244d5ce17d72e40330b1c318cd12b7c3",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "AdEx Network",
+      "source": "On chain",
+      "symbol": "ADX",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xae697f994fc5ebc000f8e22ebffee04612f98a0d",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "LGCY Network",
+      "source": "Rotki",
+      "symbol": "LGCY",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xb0d27b025d5f79f955fa37cd3170b998661abff3",
+      "isContract": true,
+      "name": "Kyber Orderbook Reserve",
+      "source": "TrueBlocks.io",
+      "tags": "30-Contracts:Kyber Network"
+    },
+    {
+      "address": "0xb101f7893738e34e5333ba1e385ebe6cd65bf1ef",
+      "name": "Grant 1096 Pareto Network - Financial Content Marketplace",
+      "source": "https://gitcoin.co/grants/1096/pareto-network-financial-content-marketplace",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xb1f6ddaafce638c21a56b0b2216e796ec9ca428e",
+      "name": "Grant 0073 Poa Network Community Management Grant for Aly",
+      "source": "https://gitcoin.co/grants/73/poa-network-community-management-grant-for-aly",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xb2135ab9695a7678dd590b1a996cb0f37bcb0718",
+      "decimals": 9,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Signals Network Token",
+      "source": "On chain",
+      "symbol": "SGN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xb3a6af40e62e16f763fa2f4b2cf40b27f3d594f6",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Cere.Network",
+      "source": "Etherscan ",
+      "symbol": "CERE",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xb417fa71a03a9badbf962589f2478353fd5693e2",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Coin Display Network",
+      "source": "On chain",
+      "symbol": "CDN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xb422e46540153ddaaccd8f5e899893fc53ab77b8",
+      "name": "Grant 0338 2key Network Labs",
+      "source": "https://gitcoin.co/grants/338/2key-network-labs",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xb5261ca6b24103cf5d3784612b179b51913d4186",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Aragon Network governor council",
+      "source": "On chain",
+      "symbol": "ANGC",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xb5e48595afb989ddbc97763cd516ae3a983a3e36",
+      "name": "Grant 0072 Poa Network Community Management Grant for Khizer",
+      "source": "https://gitcoin.co/grants/72/poa-network-community-management-grant-for-khizer",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xb64850fe701fb64667b6cc762aa2c12f2e02193c",
+      "name": "Grant 0742 Crypto Community Ventures Network",
+      "source": "https://gitcoin.co/grants/742/crypto-community-ventures-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xb940fef038d42648b756808e0b65707e4668f57c",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Shyft Network",
+      "source": "Etherscan ",
+      "symbol": "SHFT",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xb9c5ed064288dc62adb6e6a0d8106fd6e71ac2a2",
+      "name": "Grant 4294 - Frontpage Ping: Decentralized Real-Time Collaboration Network Protocol for Web3",
+      "source": "https://gitcoin.co/grants/4294/frontpage-ping-decentralized-real-time-collaborat",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xbc5e593cd15e45243cdae9c229d1cde03d04b355",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "limestone.network",
+      "source": "Etherscan ",
+      "symbol": "LIMEX",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xbd8adc576200e131de7320e7e1a0f2ac386c0ff3",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "hathor.network",
+      "source": "Etherscan ",
+      "symbol": "HTR",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xbec243c995409e6520d7c41e404da5deba4b209b",
+      "decimals": 18,
+      "name": "Synthetix Network Token",
+      "source": "Rotki",
+      "symbol": "SNX.e",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0xc011a72400e58ecd99ee497cf89e3775d4bd732f",
+      "isContract": true,
+      "name": "Synthetix Network Token",
+      "source": "EtherScan.io",
+      "symbol": "SNX",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Synthetix Network Token",
+      "source": "Giveth website",
+      "symbol": "SNX",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xc0d3e654676b117663143eac33b45b620171244b",
+      "isContract": true,
+      "name": "Kyber Order List",
+      "source": "TrueBlocks.io",
+      "tags": "30-Contracts:Kyber Network"
+    },
+    {
+      "address": "0xc0dd8e21a31f62861e668833f47770592d379a4c",
+      "name": "Grant 2694 - Matrix2 - An aggregated Layer 2 network",
+      "source": "https://gitcoin.co/grants/2694/matrix2-an-aggregated-layer-2-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xc1f976b91217e240885536af8b63bc8b5269a9be",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Public Index Network",
+      "source": "Rotki",
+      "symbol": "PIN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xc22e8d32d3146efc54088f39ec9c29eaf3905b1d",
+      "name": "Grant 3090 - Atelio : creating open , blockchain based digital supply network.",
+      "source": "https://gitcoin.co/grants/3090/atelio-creating-open-blockchain-based-digital-sup",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xc37e165fcfa2cb5cca7329dd9daa8cd72907b983",
+      "name": "Grant 0037 Connext Network",
+      "source": "https://gitcoin.co/grants/37/connext-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xc41bc99044fd4836dba4104bcf53b6f2b62716b1",
+      "name": "Grant 2190 - Layer 2 faucet in ethereum network",
+      "source": "https://gitcoin.co/grants/2190/layer-2-faucet-in-ethereum-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xc4a8b7e29e3c8ec560cd4945c1cf3461a85a148d",
+      "isContract": true,
+      "name": "1inch Network: Deployer Related",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xc5d351c25eb263f58f74b9b8ea5b11be9e3871a8",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "KEX",
+      "source": "Etherscan ",
+      "symbol": "KIRA Network",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xc69eba65e87889f0805db717af06797055a0ba07",
+      "decimals": 18,
+      "name": "NitroNetwork",
+      "source": "Rotki",
+      "symbol": "ncash",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Insights Network",
+      "source": "On chain",
+      "symbol": "INSTAR",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xc80e9ffcc3774f1fe5a925bda8f846fa4301eae8",
+      "isContract": true,
+      "name": "Grant 4017 - Swell Network | Maintaining a decentralised, open, and liquid Ethereum ecosystem",
+      "source": "https://gitcoin.co/grants/4017/swell-network-maintaining-a-decentralised-open-an",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xc89b4a8a121dd3e726fe7515e703936cf83e3350",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Kper.network",
+      "source": "Etherscan ",
+      "symbol": "KPER",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xc8e36f0a44fbeca89fdd5970439cbe62eb4b5d03",
+      "decimals": 18,
+      "name": "AdEx Network",
+      "source": "Rotki",
+      "symbol": "ADX",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0xcafcd85d8ca7ad1e1c6f82f651fa15e33aefd07b",
+      "decimals": 18,
+      "name": "Wootrade Network",
+      "source": "Rotki",
+      "symbol": "WOO",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0xcb6409696c58aa777317dbdfaa8bab4ac8e39eea",
+      "decimals": 18,
+      "isContract": true,
+      "name": "PeerEx_Network",
+      "source": "Rotki",
+      "symbol": "PERX",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0xcb8f9c706f9f5683d1bd6261f52f5f2b2182d780",
+      "name": "Grant 1796 Crypton Network",
+      "source": "https://gitcoin.co/grants/1796/crypton-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xcc1230436557f1250812fabbee5b8524b43250f3",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "NarutoNetwork",
+      "source": "On chain",
+      "symbol": "NARUTO",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xcd62b1c403fa761baadfc74c525ce2b51780b184",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Aragon Network Juror",
+      "source": "On chain",
+      "symbol": "ANJ",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xcdf7028ceab81fa0c6971208e83fa7872994bee5",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Threshold Network Token",
+      "source": "Rotki",
+      "symbol": "T",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xcfb3c2dc81718ff0087d46e4d7b1c4692ded1586",
+      "name": "Grant 1323 Resource Network",
+      "source": "https://gitcoin.co/grants/1323/resource-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Nimiq Network Interim Token",
+      "source": "On chain",
+      "symbol": "NET",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xd29f0b5b3f50b07fe9a9511f7d86f4f4bac3f8c4",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Liquidity.Network Token",
+      "source": "On chain",
+      "symbol": "LQD",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xd2fa8f92ea72abb35dbd6deca57173d22db2ba49",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Origami Network",
+      "source": "On chain",
+      "symbol": "ORI",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xd3a8518a8e75a6c9317027abd29847ea1965f2b1",
+      "name": "Strengthening the Citizen Water Observatories Network",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

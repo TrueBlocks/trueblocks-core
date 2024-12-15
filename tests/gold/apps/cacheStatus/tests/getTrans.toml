@@ -1,0 +1,3 @@
+[display]
+# format = "[{EVENTS}]"
+# txerse = "\"[{DATE}]\",\"[{BLOCKNUMBER}]\",\"[{TRANSACTIONINDEX}]\",\"[{FROM}]\",\"[{HASH}]\"\n"

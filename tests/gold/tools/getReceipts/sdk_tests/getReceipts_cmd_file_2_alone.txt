@@ -1,0 +1,30 @@
+receipts?transactions=5644782.0
+Args: [transactions=5644782.0]
+Opts: {"transactions":["5644782.0"]}
+Transactions:  [5644782.0]
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 5644782,
+      "from": "0xae40d78fe82fa8f006cd052b1c2533c361f58613",
+      "gasUsed": 21000,
+      "logs": [],
+      "status": 1,
+      "to": "0xf5bec430576ff1b82e44ddb5a1c93f6f9d0884f3",
+      "transactionHash": "0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96",
+      "transactionIndex": 0
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

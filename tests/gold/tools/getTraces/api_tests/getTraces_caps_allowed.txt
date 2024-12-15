@@ -1,0 +1,6 @@
+traces?transactions=12.0&chain&fmt&nocolor&noop&version&verbose&noHeader&file&output&append&cache&decache&ether&failOnPurpose
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in traces route."
+  ]
+}

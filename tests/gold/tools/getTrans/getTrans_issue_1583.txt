@@ -1,0 +1,138 @@
+chifra transactions  0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303 --articulate --fmt json
+TEST[DATE|TIME] Transactions:  [0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303]
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "articulatedTx": {
+        "inputs": {
+          "_donations": [
+            {
+              "amount": "4750000000000000000",
+              "dest": "0xa735cf11ed1228feb7c7bb18673a868455ffb16f",
+              "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+            },
+            {
+              "amount": "250000000000000000",
+              "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+              "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+            }
+          ]
+        },
+        "name": "donate",
+        "stateMutability": "payable"
+      },
+      "blockHash": "0x9e3bfcd31fe2aba667980cee5f9a9a834ab7309c04c1387fac457a30b777a0b3",
+      "blockNumber": 10279310,
+      "date": "2020-06-16 21:50:17 UTC",
+      "ether": "0",
+      "from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "gas": 200000,
+      "gasCost": 1922570000000000,
+      "gasPrice": 23000000000,
+      "gasUsed": 83590,
+      "hash": "0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303",
+      "input": "0x9120491c000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000041eb63d55b1b0000000000000000000000000000a735cf11ed1228feb7c7bb18673a868455ffb16f0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000003782dace9d9000000000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+      "nonce": 73,
+      "receipt": {
+        "contractAddress": "0x0",
+        "effectiveGasPrice": 23000000000,
+        "gasUsed": 83590,
+        "logs": [
+          {
+            "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+            "articulatedLog": {
+              "inputs": {
+                "amount": "4750000000000000000",
+                "dest": "0xa735cf11ed1228feb7c7bb18673a868455ffb16f",
+                "donor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+              },
+              "name": "DonationSent"
+            },
+            "data": "0x000000000000000000000000a735cf11ed1228feb7c7bb18673a868455ffb16f",
+            "date": "2020-06-16 21:50:17 UTC",
+            "logIndex": 100,
+            "timestamp": 1592344217,
+            "topics": [
+              "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+              "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+              "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
+              "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+            ]
+          },
+          {
+            "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+            "articulatedLog": {
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_to": "0xa735cf11ed1228feb7c7bb18673a868455ffb16f"
+              },
+              "name": "Transfer"
+            },
+            "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
+            "date": "2020-06-16 21:50:17 UTC",
+            "logIndex": 101,
+            "timestamp": 1592344217,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+              "0x000000000000000000000000a735cf11ed1228feb7c7bb18673a868455ffb16f"
+            ]
+          },
+          {
+            "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+            "articulatedLog": {
+              "inputs": {
+                "amount": "250000000000000000",
+                "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+                "donor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+              },
+              "name": "DonationSent"
+            },
+            "data": "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+            "date": "2020-06-16 21:50:17 UTC",
+            "logIndex": 102,
+            "timestamp": 1592344217,
+            "topics": [
+              "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+              "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+              "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+              "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+            ]
+          },
+          {
+            "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+            "articulatedLog": {
+              "inputs": {
+                "_amount": "250000000000000000",
+                "_from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              },
+              "name": "Transfer"
+            },
+            "data": "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+            "date": "2020-06-16 21:50:17 UTC",
+            "logIndex": 103,
+            "timestamp": 1592344217,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+              "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
+            ]
+          }
+        ],
+        "status": 1
+      },
+      "timestamp": 1592344217,
+      "to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "traces": [],
+      "transactionIndex": 59,
+      "value": "0"
+    }
+  ]
+}

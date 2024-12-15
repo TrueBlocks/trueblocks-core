@@ -1,0 +1,6 @@
+chunks?mode=pins&unpin=12
+{
+  "errors": [
+    "The pins mode is not available in api mode."
+  ]
+}

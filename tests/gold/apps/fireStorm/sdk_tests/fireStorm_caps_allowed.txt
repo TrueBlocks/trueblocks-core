@@ -1,0 +1,3 @@
+explore?terms=12.0&chain&verbose&failOnPurpose
+Args: [terms=12.0 chain verbose failOnPurpose]
+Unknown sdk endpoint: explore

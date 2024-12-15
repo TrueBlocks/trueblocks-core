@@ -1,0 +1,7 @@
+chifra when  1301000 --count
+TEST[DATE|TIME] Blocks:  [1301000]
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+count
+5000000

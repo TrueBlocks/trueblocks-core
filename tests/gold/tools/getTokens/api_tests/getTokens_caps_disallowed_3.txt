@@ -1,0 +1,6 @@
+tokens?addrs=trueblocks.eth&wei
+{
+  "errors": [
+    "Invalid key (wei) in tokens route."
+  ]
+}

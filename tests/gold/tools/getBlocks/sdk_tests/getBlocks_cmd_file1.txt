@@ -1,0 +1,12 @@
+blocks?cache
+Args: [cache]
+Opts: {"cache":true}
+Enabled:  blocks, receipts
+Cache:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "Please supply at least one block identifier."
+  ]
+}

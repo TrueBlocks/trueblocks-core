@@ -1,0 +1,6 @@
+state?send&calldata='0x12065fe01()'&changes
+{
+  "errors": [
+    "The --changes option is not available with the --call or --send option."
+  ]
+}

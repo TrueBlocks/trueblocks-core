@@ -1,0 +1,6 @@
+chunks?mode=manifest&publish
+{
+  "errors": [
+    "The --publish option is currenlty unavailable."
+  ]
+}

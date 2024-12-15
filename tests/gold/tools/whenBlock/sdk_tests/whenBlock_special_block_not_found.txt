@@ -1,0 +1,11 @@
+when?blocks=idonotexist
+Args: [blocks=idonotexist]
+Opts: {"blocks":["idonotexist"]}
+Blocks:  [idonotexist]
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "The given value 'idonotexist' is not a valid identifier."
+  ]
+}

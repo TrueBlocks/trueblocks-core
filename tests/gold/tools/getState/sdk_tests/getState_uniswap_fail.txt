@@ -1,0 +1,14 @@
+state?call&calldata='0x0902f1ad()'&addrs=0xbb2b8038a1640196fbe3e38816f3e67cba72d940&blocks=10092000
+Args: [call calldata='0x0902f1ad()' addrs=0xbb2b8038a1640196fbe3e38816f3e67cba72d940 blocks=10092000]
+Opts: {"addrs":["0xbb2b8038a1640196fbe3e38816f3e67cba72d940"],"blocks":["10092000"],"call":true,"calldata":"'0x0902f1ad()'","proxyFor":"0x0"}
+Addrs:  [0xbb2b8038a1640196fbe3e38816f3e67cba72d940]
+Blocks:  [10092000]
+Call:  true
+Calldata:  0x0902f1ad()
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "the --calldata value provided (0x0902f1ad()) was not found: abi not found for 0x0902f1ad(): abi not found "
+  ]
+}

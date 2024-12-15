@@ -1,0 +1,6 @@
+logs?transactions=1718400-1718420
+{
+  "errors": [
+    "The given value '1718400-1718420' is not a valid identifier."
+  ]
+}

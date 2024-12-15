@@ -1,0 +1,86 @@
+chifra receipts  --file cmd_file.6 --no_header --fmt json 1.0
+TEST[DATE|TIME] Transactions:  [1.0]
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  cmd_file.6
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+TEST[DATE|TIME] Transactions:  [1.0]
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  cmd_file.6
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+TEST[DATE|TIME] Transactions:  [1.0 5644882.0]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  cmd_file.6
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 5644882,
+      "from": "0x2bd36c4eb60f9a412b9dd1d12c1ea23e6ee09e30",
+      "gasUsed": 52053,
+      "logs": [
+        {
+          "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
+          "blockHash": "0xccff406c95943cebea30307dd06824423f91240bd6aab7029d8003655ae7f23e",
+          "blockNumber": 5644882,
+          "data": "0x0000000000000000000000000000000000000000000c1d9f7605641474600000",
+          "date": "2018-05-20 07:08:08 UTC",
+          "logIndex": 0,
+          "timestamp": 1526800088,
+          "topics": [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+            "0x0000000000000000000000002bd36c4eb60f9a412b9dd1d12c1ea23e6ee09e30",
+            "0x0000000000000000000000000293d6534e1f83d0daff2711a6053db2d55168ba"
+          ],
+          "transactionHash": "0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be",
+          "transactionIndex": 0
+        }
+      ],
+      "status": 1,
+      "to": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
+      "transactionHash": "0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be",
+      "transactionIndex": 0
+    }TEST[DATE|TIME] Transactions:  [1.0 5644883.0]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  cmd_file.6
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+,
+    {
+      "blockNumber": 5644883,
+      "from": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
+      "gasUsed": 21000,
+      "logs": [],
+      "status": 1,
+      "to": "0x44a7bf8ca5ec60ece07583eb7c8e6234031c4ac1",
+      "transactionHash": "0xf3497316e89d3d1346a171213b94e179a49d43f0338621ece2e6a78045a76eea",
+      "transactionIndex": 0
+    }TEST[DATE|TIME] Transactions:  [1.0 5644886.0]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  cmd_file.6
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+,
+    {
+      "blockNumber": 5644886,
+      "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
+      "gasUsed": 21051,
+      "logs": [],
+      "status": 1,
+      "to": "0x00ec379ce084bd7af8481c6e89ee30674222e948",
+      "transactionHash": "0xf32719d38cafbfb821d2847bc64ff1250b4abee0926c10258c0c0ab925732093",
+      "transactionIndex": 0
+    }
+  ],
+  "errors": [
+    "transaction at 1.0 returned an error: not found",
+    "transaction at 1.0 returned an error: not found",
+    "transaction at 1.0 returned an error: not found",
+    "transaction at 1.0 returned an error: not found",
+    "transaction at 1.0 returned an error: not found"
+  ]
+}

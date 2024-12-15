@@ -1,0 +1,8 @@
+status?modes=blooms&chain&verbose&output&append&failOnPurpose
+Args: [modes=blooms chain verbose output append failOnPurpose]
+Opts: null
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in route."
+  ]
+}

@@ -1,0 +1,6 @@
+abis?count&find=0x1aa3a008
+{
+  "errors": [
+    "The --count and --list options must be used alone."
+  ]
+}

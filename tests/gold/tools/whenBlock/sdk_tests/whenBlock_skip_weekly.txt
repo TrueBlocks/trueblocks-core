@@ -1,0 +1,120 @@
+when?blocks=1065497-1856235:weekly
+Args: [blocks=1065497-1856235:weekly]
+Opts: {"blocks":["1065497-1856235:weekly"]}
+Blocks:  [1065497-1856235:weekly]
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 1035159,
+      "date": "2016-02-21 00:00:00 UTC",
+      "timestamp": 1456012800
+    },
+    {
+      "blockNumber": 1070489,
+      "date": "2016-02-27 23:59:53 UTC",
+      "timestamp": 1456617593
+    },
+    {
+      "blockNumber": 1105622,
+      "date": "2016-03-05 23:59:55 UTC",
+      "timestamp": 1457222395
+    },
+    {
+      "blockNumber": 1140845,
+      "date": "2016-03-12 23:59:47 UTC",
+      "timestamp": 1457827187
+    },
+    {
+      "blockNumber": 1181270,
+      "date": "2016-03-20 00:00:00 UTC",
+      "timestamp": 1458432000
+    },
+    {
+      "blockNumber": 1223597,
+      "date": "2016-03-26 23:59:26 UTC",
+      "timestamp": 1459036766
+    },
+    {
+      "blockNumber": 1265737,
+      "date": "2016-04-02 23:59:15 UTC",
+      "timestamp": 1459641555
+    },
+    {
+      "blockNumber": 1307883,
+      "date": "2016-04-09 23:59:53 UTC",
+      "timestamp": 1460246393
+    },
+    {
+      "blockNumber": 1350014,
+      "date": "2016-04-16 23:59:57 UTC",
+      "timestamp": 1460851197
+    },
+    {
+      "blockNumber": 1392175,
+      "date": "2016-04-23 23:59:55 UTC",
+      "timestamp": 1461455995
+    },
+    {
+      "blockNumber": 1434392,
+      "date": "2016-04-30 23:59:59 UTC",
+      "timestamp": 1462060799
+    },
+    {
+      "blockNumber": 1476495,
+      "date": "2016-05-07 23:59:49 UTC",
+      "timestamp": 1462665589
+    },
+    {
+      "blockNumber": 1518637,
+      "date": "2016-05-14 23:59:46 UTC",
+      "timestamp": 1463270386
+    },
+    {
+      "blockNumber": 1560776,
+      "date": "2016-05-21 23:59:40 UTC",
+      "timestamp": 1463875180
+    },
+    {
+      "blockNumber": 1602995,
+      "date": "2016-05-28 23:59:55 UTC",
+      "timestamp": 1464479995
+    },
+    {
+      "blockNumber": 1645095,
+      "date": "2016-06-04 23:59:39 UTC",
+      "timestamp": 1465084779
+    },
+    {
+      "blockNumber": 1687355,
+      "date": "2016-06-11 23:59:12 UTC",
+      "timestamp": 1465689552
+    },
+    {
+      "blockNumber": 1729299,
+      "date": "2016-06-18 23:59:59 UTC",
+      "timestamp": 1466294399
+    },
+    {
+      "blockNumber": 1771651,
+      "date": "2016-06-25 23:59:26 UTC",
+      "timestamp": 1466899166
+    },
+    {
+      "blockNumber": 1813928,
+      "date": "2016-07-02 23:59:46 UTC",
+      "timestamp": 1467503986
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

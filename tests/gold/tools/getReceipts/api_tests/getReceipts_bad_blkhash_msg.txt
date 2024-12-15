@@ -1,0 +1,28 @@
+receipts?transactions=0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1%200x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5
+{
+  "data": [
+    {
+      "blockNumber": 1001001,
+      "from": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
+      "gasUsed": 21000,
+      "logs": [],
+      "status": 1,
+      "to": "0xd77ba7ef37f87d5246f35de898133e09c92ecaca",
+      "transactionHash": "0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a",
+      "transactionIndex": 1
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  },
+  "errors": [
+    "transaction at 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 returned an error: not found"
+  ]
+}

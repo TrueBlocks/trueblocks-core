@@ -1,0 +1,6 @@
+--encode free(uint256)
+--encode transferFrom(address,address,uint256)
+--encode decimals()
+--encode freeFromUpTo(address,uint256)
+--encode Approval(address,address,uint256)
+--encode Transfer(address,address,uint256)

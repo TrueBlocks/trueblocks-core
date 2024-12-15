@@ -1,0 +1,8 @@
+logs?oink
+Args: [oink]
+Opts: null
+{
+  "errors": [
+    "Invalid key (oink) in route."
+  ]
+}

@@ -1,0 +1,62 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Deploy to new server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.NEW_SERVER_HOST }}
+        username: ${{ secrets.DOCS_USER }}
+        key: ${{ secrets.DOCS_PRIVATE_KEY }}
+        script: |
+          set -e
+          export PATH=$PATH:/usr/local/go/bin
+          cd /home/${{ secrets.DOCS_USER }}/trueblocks.io
+          echo "------------------- git pull -------------------  "
+          echo ""
+          git pull
+          echo "------------------- npm install postcss-cli -------------------  "
+          echo ""
+          npm install postcss-cli
+          echo "------------------- redocly -------------------  "
+          echo ""
+          cat .redocly.yaml
+          npx @redocly/cli build-docs --disableGoogleFont=true content/api/openapi.yaml -o content/api/index.html
+          echo "------------------- npm run build -------------------  "
+          echo ""
+          npm run build
+          echo "------------------- chown -------------------  "
+          echo ""
+          chown -R ${{ secrets.DOCS_USER }}:${{ secrets.DOCS_USER }} .
+          cp -pR public/* /var/www/trueblocks.io/html/
+          cd /var/www/trueblocks.io/html/
+          echo "------------------- linkinator -------------------  "
+          echo ""
+          linkinator -r index.html docs/ papers/ data-model/ api/ --skip localhost:23456 --skip tokenomics.io --skip etherscan.io --skip https://twitter.com/trueblocks --skip intro
+          echo "------------------- done -------------------  "
+          echo ""
+
+    - name: Check for failure and report to Discord
+      uses: rjstone/discord-webhook-notify@v1
+      if: failure()
+      with:
+        severity: error
+        details: Test Failed!
+        webhookUrl: ${{ secrets.DOC_WEBHOOK }}
+
+    - name: Report job status
+      run: |
+        echo "This job's status is ${{ job.status }}"
+

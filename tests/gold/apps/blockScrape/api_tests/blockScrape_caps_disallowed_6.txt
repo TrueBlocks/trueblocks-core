@@ -1,0 +1,6 @@
+scrape?cache
+{
+  "errors": [
+    "Invalid key (cache) in scrape route."
+  ]
+}

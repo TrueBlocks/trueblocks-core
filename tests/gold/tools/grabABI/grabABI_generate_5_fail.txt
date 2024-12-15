@@ -1,0 +1,10 @@
+chifra abis  --encode --"functions throw an error or other message." --fmt json
+TEST[DATE|TIME] Encode:  --functions throw an error or other message.
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+{
+  "data": [],
+  "errors": [
+    "not a valid function signature in HandleEncode: --functions throw an error or other message."
+  ]
+}

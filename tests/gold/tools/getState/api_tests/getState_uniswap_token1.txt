@@ -1,0 +1,29 @@
+state?call&calldata='0xd21220a7()'&addrs=0xbb2b8038a1640196fbe3e38816f3e67cba72d940&blocks=10092000
+{
+  "data": [
+    {
+      "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
+      "blockNumber": 10092000,
+      "bytes": "",
+      "callResult": {
+        "encoding": "0xd21220a7",
+        "name": "token1",
+        "outputs": {
+          "val_0": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+        },
+        "signature": "token1()"
+      },
+      "encoding": "0xd21220a7"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

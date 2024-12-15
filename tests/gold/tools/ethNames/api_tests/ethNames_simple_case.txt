@@ -1,0 +1,274 @@
+names?terms=network&matchCase
+{
+  "data": [
+    {
+      "address": "0x035495b687850f79cb1652f416ea7ec19907557c",
+      "name": "Bees network",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x069d653038db2f9d84e9620be140b3d404a40258",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Jarvis network Smart Relay Token",
+      "source": "On chain",
+      "symbol": "JRTBNT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x2456493e757fdeedf569781f053998a72adfad03",
+      "decimals": 6,
+      "name": "Definder network token",
+      "source": "Rotki",
+      "symbol": "DNT",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x389715f05658c4644b2089ec0557fbadd5805053",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "alco.network",
+      "source": "Etherscan ",
+      "symbol": "ALCONET",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "WABnetwork",
+      "source": "On chain",
+      "symbol": "WAB",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x4df4636bb681912795aef87d6b00d6ae860e451f",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "cere.network",
+      "source": "Etherscan ",
+      "symbol": "CERE",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x4e1cef77a02821096b682a81bbfc7b6c8c47fdcb",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "deeper.network",
+      "source": "Etherscan ",
+      "symbol": "DPR",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x58e33f09744ba2fe6459b6d5562081109870f406",
+      "decimals": 10,
+      "isContract": true,
+      "isErc20": true,
+      "name": "easify.network",
+      "source": "Etherscan ",
+      "symbol": "EASY",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x653f7f8e576f25608600e862559a7e7b1bbb2512",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "gelato.network",
+      "source": "Etherscan ",
+      "symbol": "GELO",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x765baefcb5418fa9f7dddacb1ccc07bd0e890e4e",
+      "decimals": 9,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Meteorite.network",
+      "source": "Etherscan ",
+      "symbol": "Meteor",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x7b320489785ffecf4588b11a2a6b22cc46979da1",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "casper.network",
+      "source": "Etherscan ",
+      "symbol": "CSPR",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "SANtiment network token",
+      "source": "On chain",
+      "symbol": "SAN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x8767aacd8ae48e6a23077548c24121e46dca0696",
+      "name": "Grant 2728 - Using social networks for fun, affordable, and lucrative delivery.",
+      "source": "https://gitcoin.co/grants/2728/using-social-networks-for-fun-affordable-and-lucr",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x887a26839d9e33b1536857a24f91f192ce9d4732",
+      "name": "Grant 2776 - pulp-network",
+      "source": "https://gitcoin.co/grants/2776/pulp-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x95cda24d2515491095d21d94f1b94f319e016d35",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Vegetanetwork",
+      "source": "On chain",
+      "symbol": "Vegeta",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x970fd79a441a4db620dcdc5107ca89a0500bc1c7",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "shyft.network",
+      "source": "Etherscan ",
+      "symbol": "SHFT",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xbc5e593cd15e45243cdae9c229d1cde03d04b355",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "limestone.network",
+      "source": "Etherscan ",
+      "symbol": "LIMEX",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xbd8adc576200e131de7320e7e1a0f2ac386c0ff3",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "hathor.network",
+      "source": "Etherscan ",
+      "symbol": "HTR",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xc0dd8e21a31f62861e668833f47770592d379a4c",
+      "name": "Grant 2694 - Matrix2 - An aggregated Layer 2 network",
+      "source": "https://gitcoin.co/grants/2694/matrix2-an-aggregated-layer-2-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xc22e8d32d3146efc54088f39ec9c29eaf3905b1d",
+      "name": "Grant 3090 - Atelio : creating open , blockchain based digital supply network.",
+      "source": "https://gitcoin.co/grants/3090/atelio-creating-open-blockchain-based-digital-sup",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xc41bc99044fd4836dba4104bcf53b6f2b62716b1",
+      "name": "Grant 2190 - Layer 2 faucet in ethereum network",
+      "source": "https://gitcoin.co/grants/2190/layer-2-faucet-in-ethereum-network",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xc89b4a8a121dd3e726fe7515e703936cf83e3350",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Kper.network",
+      "source": "Etherscan ",
+      "symbol": "KPER",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xd9fe915452f5d65a09e3004958a2c5564968a7d2",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "deeper.network",
+      "source": "Etherscan ",
+      "symbol": "DPR",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xdf6c1edfe4a1b41b319cfb3f5fedba11b249ae94",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "deeper.network",
+      "source": "Etherscan ",
+      "symbol": "DPR",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xea6cdbe70e5c18c605427d93dc6374b648843fac",
+      "name": "Grant 1487 Memorial.network",
+      "source": "https://gitcoin.co/grants/1487/memorialnetwork",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0xf0df09387693690b1e00d71eabf5e98e7955cff4",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "ENDO.network Promo Token",
+      "source": "Rotki",
+      "symbol": "ETP",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xf4bcc9537e4a6ff9d13a92b6273cc2349b659242",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "yfstake.network",
+      "source": "Etherscan ",
+      "symbol": "YFK",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0xff19138b039d938db46bdda0067dc4ba132ec71c",
+      "decimals": 8,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Snetwork",
+      "source": "On chain",
+      "symbol": "SNET",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xff5425f2b1f789972fd050df47dccfc2e33fb207",
+      "isContract": true,
+      "isErc721": true,
+      "name": "Testing network",
+      "source": "Etherscan ",
+      "symbol": "net",
+      "tags": "30-Contracts"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

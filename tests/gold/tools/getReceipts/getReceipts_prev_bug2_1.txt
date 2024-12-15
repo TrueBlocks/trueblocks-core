@@ -1,0 +1,6 @@
+chifra receipts  4279119.46
+TEST[DATE|TIME] Transactions:  [4279119.46]
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+blockNumber	transactionIndex	transactionHash	status	gasUsed	logsCnt	isError
+4279119	46	0xe611769659eac98190fadf0a2205bcdac9fa515245fb3a53702c03e9c96c8b48	1	48267	2	false

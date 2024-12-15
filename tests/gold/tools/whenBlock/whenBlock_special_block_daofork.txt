@@ -1,0 +1,7 @@
+chifra when  daofork --verbose
+TEST[DATE|TIME] Blocks:  [daofork]
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+blockNumber	timestamp	date	name	component	description
+1920000	1469020840	2016-07-20 13:20:40 UTC	daofork	execution	The DAO fork was in response to the 2016 DAO attack where an insecure DAO contract was drained of over 3.6 million ETH in a hack. The fork moved the funds from the faulty contract to a new contract with a single function: withdraw. Anyone who lost funds could withdraw 1 ETH for every 100 DAO tokens in their wallets. This course of action was voted on by the Ethereum community. Any ETH holder was able to vote via a transaction on a voting platform. The decision to fork reached over 85% of the votes. Some miners refused to fork because the DAO incident wasn't a defect in the protocol. They went on to form Ethereum Classic.

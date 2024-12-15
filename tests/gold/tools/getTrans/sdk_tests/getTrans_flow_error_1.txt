@@ -1,0 +1,12 @@
+transactions?transactions=4102000.0&flow=to
+Args: [transactions=4102000.0 flow=to]
+Opts: {"transactions":["4102000.0"],"flow":4}
+Transactions:  [4102000.0]
+Flow:  to
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The --flow option is only available with the --uniq option"
+  ]
+}

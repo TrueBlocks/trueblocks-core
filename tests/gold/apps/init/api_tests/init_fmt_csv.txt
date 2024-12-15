@@ -1,0 +1,6 @@
+init?fmt=csv
+{
+  "errors": [
+    "integration testing was skipped for chifra init"
+  ]
+}

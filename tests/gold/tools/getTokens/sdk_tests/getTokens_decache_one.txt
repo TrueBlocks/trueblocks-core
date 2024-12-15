@@ -1,0 +1,23 @@
+tokens?addrs=0xa9fe4601811213c340e850ea305481aff02f5b28&blocks=12000000&decache
+Args: [addrs=0xa9fe4601811213c340e850ea305481aff02f5b28 blocks=12000000 decache]
+Opts: {"addrs":["0xa9fe4601811213c340e850ea305481aff02f5b28"],"blocks":["12000000"],"decache":true}
+Addrs:  [0xa9fe4601811213c340e850ea305481aff02f5b28]
+Blocks:  [12000000]
+Parts:  [all]
+Decache:  true
+Caps:  cache,decache
+Format:  json
+chifra tokens --decache is not yet implemented
+{
+  "data": [],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

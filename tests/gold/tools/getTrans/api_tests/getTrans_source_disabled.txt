@@ -1,0 +1,6 @@
+transactions?transactions=0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a&seed&fmt=json
+{
+  "errors": [
+    "Invalid key (seed) in transactions route."
+  ]
+}

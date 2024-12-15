@@ -1,0 +1,11 @@
+traces?transactions=.whatever
+Args: [transactions=.whatever]
+Opts: {"transactions":[".whatever"]}
+Transactions:  [.whatever]
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The given value '.whatever' is not a valid identifier."
+  ]
+}

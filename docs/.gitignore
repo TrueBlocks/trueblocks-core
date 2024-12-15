@@ -1,0 +1,14 @@
+flowcharts
+app.scss*
+index.min.*
+resources/_gen/*
+file
+shit
+makefile
+.hugo_build.lock
+.DS_Store
+node_modules
+public
+.vscode/
+!.vscode/settings.json
+content/api/index.html

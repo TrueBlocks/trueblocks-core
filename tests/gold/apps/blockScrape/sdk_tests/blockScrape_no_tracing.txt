@@ -1,0 +1,3 @@
+scrape?chain=non-tracing
+Args: [chain=non-tracing]
+Unknown sdk endpoint: scrape

@@ -1,0 +1,6 @@
+init?
+{
+  "errors": [
+    "integration testing was skipped for chifra init"
+  ]
+}

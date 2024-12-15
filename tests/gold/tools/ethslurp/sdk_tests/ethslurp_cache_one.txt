@@ -1,0 +1,40 @@
+slurp?addrs=0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0&blocks=4186279&cache
+Args: [addrs=0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 blocks=4186279 cache]
+Opts: {"addrs":["0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0"],"blocks":["4186279"],"cache":true}
+Addrs:  [0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0]
+Blocks:  [4186279]
+Parts:  [ext]
+Enabled:  transactions
+Cache:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "blockHash": "0x4d372256ad75e54ee85de19d9a058c07c220631b3e74355662a9b77927489642",
+      "blockNumber": 4186279,
+      "date": "2017-08-21 14:59:34 UTC",
+      "ether": "1",
+      "from": "0xae041ae80fac16891184be898c4359ccda01fa76",
+      "gas": 21000,
+      "gasCost": 1260000000000000,
+      "gasPrice": 60000000000,
+      "gasUsed": 21000,
+      "hash": "0x2aaf4eadd831cb1a0fef654f98b183679ef17c73b8633d14fc2417ef79da120b",
+      "timestamp": 1503327574,
+      "to": "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0",
+      "transactionIndex": 2,
+      "value": "1000000000000000000"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

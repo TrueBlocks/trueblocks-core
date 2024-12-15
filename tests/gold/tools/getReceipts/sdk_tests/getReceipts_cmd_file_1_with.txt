@@ -1,0 +1,33 @@
+receipts?verbose&transactions=5644782.0
+Args: [verbose transactions=5644782.0]
+Opts: {"transactions":["5644782.0"],"verbose":true}
+Transactions:  [5644782.0]
+Verbose:  true
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "blockHash": "0x37e9e5ad5ff7aaf10d4ba0ab9eaa5ebe76e6d5bf29602ca67aec6675e2b51135",
+      "blockNumber": 5644782,
+      "cumulativeGasUsed": 21000,
+      "from": "0xae40d78fe82fa8f006cd052b1c2533c361f58613",
+      "gasUsed": 21000,
+      "logs": [],
+      "status": 1,
+      "to": "0xf5bec430576ff1b82e44ddb5a1c93f6f9d0884f3",
+      "transactionHash": "0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96",
+      "transactionIndex": 0
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

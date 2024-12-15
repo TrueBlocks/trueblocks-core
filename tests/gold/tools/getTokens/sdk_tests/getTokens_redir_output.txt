@@ -1,0 +1,33 @@
+tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200xb9e7f8568e08d5659f5d29c4997173d84cdf2607&blocks=2000000&output=output_test_file
+Args: [addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 blocks=2000000 output=output_test_file]
+Opts: {"addrs":["0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607"],"blocks":["2000000"],"output":"output_test_file"}
+Addrs:  [0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]
+Blocks:  [2000000]
+OutputFn:  output_test_file
+Caps:  cache,decache
+Format:  json
+{ "outputFilename": "--output_filename--" }
+{
+  "data": [
+    {
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "balance": "0",
+      "balanceDec": "0",
+      "blockNumber": 2000000,
+      "decimals": 18,
+      "holder": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
+      "name": "OMGToken",
+      "symbol": "OMG"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

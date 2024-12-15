@@ -1,0 +1,105 @@
+baseurl = "/"
+canonifyURLs = false
+disableAliases = false
+disableHugoGeneratorInject = true
+enableEmoji = true
+enableGitInfo = true
+enableRobotsTXT = true
+languageCode = "en-US"
+paginate = 10
+rssLimit = 10
+googleAnalytics="G-4M60J4ZGSQ"
+
+# add redirects/headers
+[outputs]
+home = ["HTML", "RSS"]
+section = ["HTML", "RSS", "SITEMAP"]
+
+# add output format for section sitemap.xml
+[outputFormats.SITEMAP]
+mediaType = "application/xml"
+baseName = "sitemap"
+isHTML = false
+isPlainText = true
+noUgly = true
+rel  = "sitemap"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      linkify = false
+    [markup.goldmark.parser]
+      autoHeadingID = true
+      autoHeadingIDType = "github"
+      [markup.goldmark.parser.attribute]
+        block = true
+        title = true
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    codeFences = false
+    guessSyntax = false
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = false
+    style = "dracula"
+    tabWidth = 4
+
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5
+
+[taxonomies]
+  contributor = "contributors"
+  category = "categories"
+  tag = "tags"
+
+[permalinks]
+  blog = "/blog/:title/"
+
+[module]
+  [[module.mounts]]
+    source = "node_modules/@hyas/doks/archetypes"
+    target = "archetypes"
+#  [[module.mounts]]
+#    source = "node_modules/@hyas/doks/assets"
+#    target = "assets"
+#  [[module.mounts]]
+#    source = "node_modules/@hyas/doks/content"
+#    target = "content"
+  [[module.mounts]]
+    source = "node_modules/@hyas/doks/data"
+    target = "data"
+#  [[module.mounts]]
+#    source = "node_modules/@hyas/doks/layouts"
+#    target = "layouts"
+  [[module.mounts]]
+    source = "node_modules/@hyas/doks/static"
+    target = "static"
+  [[module.mounts]]
+    source = "node_modules/flexsearch"
+    target = "assets/js/vendor/flexsearch"
+  [[module.mounts]]
+    source = "node_modules/katex"
+    target = "assets/js/vendor/katex"
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "content"
+    target = "content"
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+  [[module.mounts]]
+    source = "archetypes"
+    target = "archetypes"
+  [[module.mounts]]
+    source = "data"
+    target = "data"

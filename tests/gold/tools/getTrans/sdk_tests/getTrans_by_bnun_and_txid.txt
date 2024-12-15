@@ -1,0 +1,66 @@
+transactions?transactions=4000002.5&traces
+Args: [transactions=4000002.5 traces]
+Opts: {"transactions":["4000002.5"],"traces":true}
+Transactions:  [4000002.5]
+Traces:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "blockHash": "0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372",
+      "blockNumber": 4000002,
+      "date": "2017-07-09 20:52:54 UTC",
+      "ether": "15",
+      "from": "0xd5f1eaa0be5f7b15b062b82a54eadaaa5a16e90f",
+      "gas": 31500,
+      "gasCost": 441000000000000,
+      "gasPrice": 21000000000,
+      "gasUsed": 21000,
+      "hash": "0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887",
+      "nonce": 9,
+      "receipt": {
+        "contractAddress": "0x0",
+        "effectiveGasPrice": 21000000000,
+        "gasUsed": 21000,
+        "logs": [],
+        "status": null
+      },
+      "timestamp": 1499633574,
+      "to": "0x904b7190718aa2d025b2aded0f20a0a0fe6e6bd5",
+      "traces": [
+        {
+          "action": {
+            "callType": "call",
+            "from": "0xd5f1eaa0be5f7b15b062b82a54eadaaa5a16e90f",
+            "gas": 10500,
+            "to": "0x904b7190718aa2d025b2aded0f20a0a0fe6e6bd5",
+            "value": "15000000000000000000"
+          },
+          "blockHash": "0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372",
+          "blockNumber": 4000002,
+          "date": "2017-07-09 20:52:54 UTC",
+          "result": {},
+          "subtraces": 0,
+          "timestamp": 1499633574,
+          "traceAddress": [],
+          "transactionHash": "0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887",
+          "transactionIndex": 5,
+          "type": "call"
+        }
+      ],
+      "transactionIndex": 5,
+      "value": "15000000000000000000"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

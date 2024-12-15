@@ -1,0 +1,13 @@
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fourbytes=0xa9059c&maxRecords=10
+Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b fourbytes=0xa9059c maxRecords=10]
+Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"fourbytes":["0xa9059c"],"maxRecords":10}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Fourbytes:  [0xa9059c]
+MaxRecords:  10
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "Invalid four byte: 0xa9059c"
+  ]
+}

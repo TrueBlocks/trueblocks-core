@@ -1,0 +1,6 @@
+chunks?mode=remote
+{
+  "errors": [
+    "The mode option (remote) must be one of [ manifest | index | blooms | pins | addresses | appearances | stats ]"
+  ]
+}

@@ -1,0 +1,30 @@
+CURL: -X DELETE
+names?undelete&terms=0x0000000000000000000000000000000010101010
+Args: [undelete terms=0x0000000000000000000000000000000010101010]
+Opts: {"terms":["0x0000000000000000000000000000000010101010"],"autoname":"0x0","undelete":true}
+Terms:  [0x0000000000000000000000000000000010101010]
+Undelete:  true
+Format:  json
+{
+  "data": [
+    {
+      "address": "0x0000000000000000000000000000000010101010",
+      "decimals": 13,
+      "isCustom": true,
+      "name": "NAME_CHANGED",
+      "source": "SOURCE_CHANGED",
+      "symbol": "SYMBOL_CHANGED",
+      "tags": "TAGS_CHANGED"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

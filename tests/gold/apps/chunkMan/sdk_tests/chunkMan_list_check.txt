@@ -1,0 +1,8 @@
+chunks?mode=monitors&check
+Args: [mode=monitors check]
+Opts: null
+{
+  "errors": [
+    "unknown mode: monitors"
+  ]
+}

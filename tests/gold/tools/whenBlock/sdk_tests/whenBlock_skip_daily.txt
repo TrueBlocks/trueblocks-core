@@ -1,0 +1,80 @@
+when?blocks=1065497-1125561:daily
+Args: [blocks=1065497-1125561:daily]
+Opts: {"blocks":["1065497-1125561:daily"]}
+Blocks:  [1065497-1125561:daily]
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 1065497,
+      "date": "2016-02-26 23:59:30 UTC",
+      "timestamp": 1456531170
+    },
+    {
+      "blockNumber": 1070489,
+      "date": "2016-02-27 23:59:53 UTC",
+      "timestamp": 1456617593
+    },
+    {
+      "blockNumber": 1075518,
+      "date": "2016-02-28 23:59:51 UTC",
+      "timestamp": 1456703991
+    },
+    {
+      "blockNumber": 1080338,
+      "date": "2016-02-29 23:59:57 UTC",
+      "timestamp": 1456790397
+    },
+    {
+      "blockNumber": 1085390,
+      "date": "2016-03-01 23:59:14 UTC",
+      "timestamp": 1456876754
+    },
+    {
+      "blockNumber": 1090476,
+      "date": "2016-03-02 23:59:55 UTC",
+      "timestamp": 1456963195
+    },
+    {
+      "blockNumber": 1095490,
+      "date": "2016-03-03 23:59:51 UTC",
+      "timestamp": 1457049591
+    },
+    {
+      "blockNumber": 1100484,
+      "date": "2016-03-04 23:59:47 UTC",
+      "timestamp": 1457135987
+    },
+    {
+      "blockNumber": 1105622,
+      "date": "2016-03-05 23:59:55 UTC",
+      "timestamp": 1457222395
+    },
+    {
+      "blockNumber": 1110529,
+      "date": "2016-03-06 23:59:50 UTC",
+      "timestamp": 1457308790
+    },
+    {
+      "blockNumber": 1115555,
+      "date": "2016-03-07 23:59:51 UTC",
+      "timestamp": 1457395191
+    },
+    {
+      "blockNumber": 1120572,
+      "date": "2016-03-08 23:59:52 UTC",
+      "timestamp": 1457481592
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

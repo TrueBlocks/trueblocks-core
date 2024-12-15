@@ -1,0 +1,6 @@
+abis?addrs=truebit%20aragon&fmt=json
+{
+  "errors": [
+    "Please specify at least one valid Ethereum address."
+  ]
+}

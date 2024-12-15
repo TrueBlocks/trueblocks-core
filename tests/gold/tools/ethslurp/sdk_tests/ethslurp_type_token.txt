@@ -1,0 +1,8 @@
+slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&types=token&blocks=0-1500000&ether
+Args: [addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e types=token blocks=0-1500000 ether]
+Opts: null
+{
+  "errors": [
+    "Invalid key (types) in route."
+  ]
+}

@@ -1,0 +1,10 @@
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --reverted 0xab832b43 --max_records 2 --fmt txt
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Fourbytes:  [0xab832b43]
+TEST[DATE|TIME] MaxRecords:  2
+TEST[DATE|TIME] Reverted:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+blockNumber	transactionIndex	timestamp	date	from	to	value	gasPrice	gasUsed	gasCost	hash	isError	encoding	type	ether
+9255807	51	1578695427	2020-01-10 22:30:27 UTC	0x4cb2ccbf80ddf2c12f8199b75c849cfa658ba9b5	0xdf869fad6db91f437b59f1edefab319493d4c4ce	0	1000000000	53419	53419000000000	0x83da29dadf790996747e7e01c4a07dbc1b4886409a85e832f38780935a917925	true	0xab832b43		0
+9260250	123	1578754183	2020-01-11 14:49:43 UTC	0x5d28fe1e9f895464aab52287d85ebff32b351674	0xdf869fad6db91f437b59f1edefab319493d4c4ce	0	1000000000	53407	53407000000000	0xdc9b42e6ef0c90c46ef5b31e3bcfb16e8f1f4b1d1247b000168bbde34379f201	true	0xab832b43		0
