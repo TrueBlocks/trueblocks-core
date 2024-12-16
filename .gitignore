@@ -1,3 +1,5 @@
+.env
+.key
 go.work
 go.work.sum
 
