@@ -1,7 +1,7 @@
 version: 2 # Required for GoReleaser
 before:
   hooks:
-    - go mod tidy
+    # - go mod tidy
 
 builds:
   - dir: cmd
