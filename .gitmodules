@@ -13,3 +13,6 @@
 [submodule "sdk"]
 	path = sdk
 	url = https://github.com/TrueBlocks/trueblocks-sdk.git
+[submodule "ethgo"]
+	path = ethgo
+	url = https://github.com/umbracle/ethgo.git
