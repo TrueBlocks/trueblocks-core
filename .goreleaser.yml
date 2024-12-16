@@ -14,23 +14,12 @@ builds:
 archives:
   - format: tar.gz
     name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
-    files:
-      - LICENSE
-      - README.md
 
 checksum:
-  name_template: 'checksums.txt'
+  name_template: "checksums.txt"
 
 snapshot:
   name_template: "{{ .Tag }}-SNAPSHOT"
 
 release:
-  draft: true # Create releases as drafts to avoid cluttering public release history
-  prerelease: true # Mark the releases as pre-releases (useful for distinguishing test releases)
-
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - '^docs:'
-      - '^test:'
+  prerelease: "true" # Correctly marked as a pre-release

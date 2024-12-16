@@ -15,11 +15,11 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: '1.18.1'
-      - name: Run GoReleaser (Skip Publishing)
+      - name: Run GoReleaser (Snapshot Mode)
         uses: goreleaser/goreleaser-action@v2
         with:
           distribution: goreleaser
           version: latest
-          args: release --skip-publish # Test the build without creating a release
+          args: release --snapshot # Enable snapshot mode for testing
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
