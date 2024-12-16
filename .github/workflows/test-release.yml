@@ -20,6 +20,6 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: release --rm-dist --skip-publish # Test the build without creating a release
+          args: release --skip-publish # Test the build without creating a release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
