@@ -11,7 +11,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Fetch All Tags
-        run: git fetch --force --tags
+        run: git fetch --tags --force --prune
       - name: Setup Go
         uses: actions/setup-go@v1
         with:
