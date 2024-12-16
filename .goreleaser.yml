@@ -1,7 +1,4 @@
-version: 2 # Required for GoReleaser
-before:
-  hooks:
-    # - go mod tidy
+version: 2
 
 builds:
   - dir: src/apps/chifra
@@ -23,4 +20,4 @@ checksum:
   name_template: "checksums.txt"
 
 release:
-  prerelease: "true"
+  prerelease: "false"

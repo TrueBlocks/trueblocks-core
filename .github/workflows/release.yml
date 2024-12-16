@@ -1,9 +1,8 @@
-name: Test Release
+name: Production Release
 on:
   push:
     tags:
-      - 'test-release*'
-      - 'v*.*.*-*'
+      - 'v*.*.*'
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
@@ -16,15 +15,11 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: '1.23'
-      - name: Run GoReleaser (Snapshot Mode)
+      - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
           distribution: goreleaser
           version: latest
-          args: release --snapshot
+          args: release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: List dist Folder Contents
-        run: |
-          echo "Listing dist/ folder contents:"
-          find dist -exec ls -l {} \;
