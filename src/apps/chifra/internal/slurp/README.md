@@ -12,7 +12,6 @@ any transaction initiated by an EOA for example or to explore mining rewards. Vi
 referenced website for more information.
 
 Currently supported API providers:
-
 - [TrueBlocks Key](https://key.trueblocks.io)
 - Etherscan
 - Covalent
@@ -66,13 +65,11 @@ Data models produced by this tool:
 - [slurp](/data-model/other/#slurp)
 
 ### Adding provider API key
-
 Call `chifra config edit` to edit the configuration file.
 
 For TrueBlocks Key, add `keyEndpoint = "your-key-endpoint-url"` to `chains.mainnet` section.
 
 For all other providers add an entry to `keys` section like this:
-
 ```toml
 [keys]
   [keys.etherscan]
@@ -102,4 +99,4 @@ of any line makes it a comment.
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 
-_Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker._
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

@@ -70,6 +70,18 @@ func (m *Member) IsRemoved() bool {
 	return strings.Contains(m.Attributes, "removed")
 }
 
+func (m *Member) IsEmbed() bool {
+	return strings.Contains(m.Attributes, "embed")
+}
+
+func (m *Member) IsItems() bool {
+	return m.Name == "items"
+}
+
+func (m *Member) IsInit() bool {
+	return strings.Contains(m.Attributes, "init")
+}
+
 func (m *Member) IsNoTag() bool {
 	return strings.Contains(m.Attributes, "notag")
 }
@@ -509,7 +521,7 @@ func (m *Member) BaseType() string {
 	return t
 }
 
-func (m *Member) TsType() string {
+func (m *Member) MemTsType() string {
 	val := "  " + m.Name
 	if !m.IsRequired() {
 		val += "?"
@@ -518,5 +530,5 @@ func (m *Member) TsType() string {
 	if m.IsArray {
 		val += "[]"
 	}
-	return val
+	return val + ";"
 }

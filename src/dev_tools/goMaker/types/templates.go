@@ -3,6 +3,7 @@ package types
 import (
 	"bytes"
 	"log"
+	"strings"
 	"text/template"
 )
 
@@ -41,6 +42,27 @@ func getFuncMap() template.FuncMap {
 	firstLower := func(s string) string { return FirstLower(s) }
 	firstUpper := func(s string) string { return FirstUpper(s) }
 	toLowerPlural := func(s string) string { return Lower(Plural(s)) }
+	or := func(a, b bool) bool { return a || b }
+	sub := func(a, b int) int { return a - b }
+	replace := func(str, find, rep string) string { return strings.ReplaceAll(str, find, rep) }
+	cond := func(t bool, a, b any) any {
+		if t {
+			return a
+		} else {
+			return b
+		}
+	}
+	apply := func(array []string, tmplStr, sep string) string {
+		var ret string
+		for i, item := range array {
+			ret += executeTemplate(item, "apply", tmplStr, tmplStr)
+			if i < len(array)-1 {
+				ret += sep
+			}
+		}
+		return ret
+	}
+
 	return template.FuncMap{
 		"toSingular":    toSingular,
 		"toProper":      toProper,
@@ -50,5 +72,10 @@ func getFuncMap() template.FuncMap {
 		"toLower":       toLower,
 		"firstLower":    firstLower,
 		"firstUpper":    firstUpper,
+		"or":            or,
+		"sub":           sub,
+		"replace":       replace,
+		"cond":          cond,
+		"apply":         apply,
 	}
 }
