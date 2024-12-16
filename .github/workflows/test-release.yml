@@ -2,8 +2,8 @@ name: Test Release
 on:
   push:
     tags:
-      - 'test-release*' # Triggers on tags starting with 'test-release'
-      - 'v*.*.*-*' # Triggers on semver tags with a suffix (e.g., v0.0.1-test)
+      - 'test-release*'
+      - 'v*.*.*-*'
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
@@ -21,6 +21,10 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: release --snapshot # Enable snapshot mode for testing
+          args: release --snapshot
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: List dist Folder Contents
+        run: |
+          echo "Listing dist/ folder contents:"
+          find dist -exec ls -l {} \;
