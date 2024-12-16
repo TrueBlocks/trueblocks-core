@@ -2,7 +2,8 @@ name: Test Release
 on:
   push:
     tags:
-      - 'test-release*' # Only triggers on tags starting with 'test-release'
+      - 'test-release*' # Triggers on tags starting with 'test-release'
+      - 'v*.*.*-*' # Triggers on semver tags with a suffix (e.g., v0.0.1-test)
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
