@@ -28,7 +28,7 @@ import (
 type ConfigOptions struct {
 	Mode    string                `json:"mode,omitempty"`    // Either show or edit the configuration
 	Paths   bool                  `json:"paths,omitempty"`   // Show the configuration paths for the system
-	Session bool                  `json:"session,omitempty"` // Standin for ui code - no purpose
+	Dump    bool                  `json:"dump,omitempty"`    // Dump the configuration to stdout
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	Conn    *rpc.Connection       `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
@@ -42,7 +42,7 @@ var defaultConfigOptions = ConfigOptions{}
 func (opts *ConfigOptions) testLog() {
 	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(opts.Paths, "Paths: ", opts.Paths)
-	logger.TestLog(opts.Session, "Session: ", opts.Session)
+	logger.TestLog(opts.Dump, "Dump: ", opts.Dump)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -72,8 +72,8 @@ func ConfigFinishParseInternal(w io.Writer, values url.Values) *ConfigOptions {
 			opts.Mode = value[0]
 		case "paths":
 			opts.Paths = true
-		case "session":
-			opts.Session = true
+		case "dump":
+			opts.Dump = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "config")
@@ -117,6 +117,9 @@ func configFinishParse(args []string) *ConfigOptions {
 	}
 	if len(opts.Mode) == 0 {
 		opts.Mode = "<empty>"
+	}
+	if opts.Dump {
+		opts.Globals.Format = "json"
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

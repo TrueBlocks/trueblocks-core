@@ -56,8 +56,8 @@ func (opts *ConfigOptions) ConfigInternal(rCtx *output.RenderCtx) error {
 	// EXISTING_CODE
 	if opts.Paths {
 		err = opts.HandlePaths(rCtx)
-	} else if opts.Session {
-		err = opts.HandleSession(rCtx)
+	} else if opts.Dump {
+		err = opts.HandleDump(rCtx)
 	} else {
 		err = opts.HandleShow(rCtx)
 	}

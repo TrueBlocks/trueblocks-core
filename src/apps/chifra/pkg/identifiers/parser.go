@@ -102,7 +102,7 @@ type Range struct {
 }
 
 // Build parser
-var parser = participle.MustBuild[Range](
+var theParser = participle.MustBuild[Range](
 	participle.Lexer(rangeLexer),
 )
 
@@ -110,7 +110,7 @@ var parser = participle.MustBuild[Range](
 // at least one Point (but no more than two: start and end) and may have
 // Modifier.
 func Parse(source string) (*Range, error) {
-	blockRange, err := parser.ParseString("", source)
+	blockRange, err := theParser.ParseString("", source)
 
 	return blockRange, err
 }

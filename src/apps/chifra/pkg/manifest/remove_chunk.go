@@ -14,7 +14,7 @@ import (
 // function aborts due to error and the backup files still exist, the function will attempt
 // to restore the backup files before returning.
 func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) (err error) {
-	manifestFn := config.PathToManifest(chain)
+	manifestFn := config.PathToManifestFile(chain)
 
 	manifestBackup := manifestFn + ".backup"
 	indexBackup := indexFn + ".backup"
@@ -87,7 +87,7 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 			}
 		}
 		man.Chunks = newChunks
-		if err = man.SaveManifest(chain, config.PathToManifest(chain)); err != nil {
+		if err = man.SaveManifest(chain, config.PathToManifestFile(chain)); err != nil {
 			return err
 		}
 

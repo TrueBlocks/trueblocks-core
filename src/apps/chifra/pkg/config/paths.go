@@ -32,8 +32,8 @@ func PathToChainConfig(chain string) (string, error) {
 	return cfgFolder, err
 }
 
-// PathToManifest returns the path to the manifest database per chain
-func PathToManifest(chain string) string {
+// PathToManifestFile returns the path to the manifest database per chain
+func PathToManifestFile(chain string) string {
 	return filepath.Join(PathToIndex(chain), "manifest.json")
 }
 
