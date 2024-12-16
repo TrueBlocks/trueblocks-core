@@ -15,7 +15,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v1
         with:
-          go-version: '1.18.1'
+          go-version: '1.23'
       - name: Run GoReleaser (Snapshot Mode)
         uses: goreleaser/goreleaser-action@v2
         with:
