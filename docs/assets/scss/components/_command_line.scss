@@ -1,0 +1,24 @@
+.command-line-window {
+    width: calc(min(70vw, 1000px));
+    padding: 15px;
+    border-radius: $border-radius;
+
+
+    &, & code {
+        background: black;
+        color: whitesmoke;
+    }
+
+    code {
+        padding: 0;
+    }
+
+    .fake-window-title {
+        display: flex;
+        justify-content: space-between;
+        svg {
+            width: 54px;
+            height: 14px;
+        }
+    }
+}

@@ -1,0 +1,86 @@
+.component-tabs {
+    display: flex;
+    flex-direction: column;
+
+    padding: $space-s $space-s $space-m $space-s;
+    background-color: $gray-300;
+
+    body.dark & {
+        background-color: $gray-800;
+    }
+
+    border-radius: $border-radius;
+
+    input[type=radio] {
+        display: none;
+    }
+
+    input[type=radio]:nth-of-type(1):checked~.tabs li:nth-of-type(1),
+    input[type=radio]:nth-of-type(2):checked~.tabs li:nth-of-type(2),
+    input[type=radio]:nth-of-type(3):checked~.tabs li:nth-of-type(3) {
+        border-bottom: 4px solid $primary;
+
+        body.dark & {
+            border-bottom: 4px solid $blue-300;
+
+            @media screen and (max-width: 700px) {
+                border-bottom: none;
+                color: $blue-300;
+            }
+        }
+
+        @media screen and (max-width: 700px) {
+            border-bottom: none;
+            color: $primary;
+        }
+    }
+
+    input[type=radio]:nth-of-type(1):checked ~ .panel:nth-of-type(1),
+    input[type=radio]:nth-of-type(2):checked ~ .panel:nth-of-type(2),
+    input[type=radio]:nth-of-type(3):checked ~ .panel:nth-of-type(3) {
+        display: block;
+    }
+
+    .tabs {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        margin: 0 0 $spacer 0;
+        padding: 0;
+        font-weight: 500;
+
+        li {
+            padding: $space-s $space;
+
+            label {
+                cursor: pointer;
+            }
+        }
+
+        @media screen and (max-width: 700px) {
+            display: block;
+            text-align: center;
+        }
+    }
+
+    .panel {
+        display: none;
+
+        .content {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    code {
+        white-space: nowrap;
+    }
+    .fake-window-content {
+        padding-top: 10px;
+        overflow-x: auto;
+
+        pre {
+            margin: 0;
+        }
+    }
+}

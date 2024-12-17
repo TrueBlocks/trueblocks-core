@@ -1,0 +1,140 @@
+<div class="component-tabs">
+    <input type="radio" id="tab1" name="css-tabs" checked>
+    <input type="radio" id="tab2" name="css-tabs">
+    <input type="radio" id="tab3" name="css-tabs">
+
+
+    <ul class="tabs">
+        <li><label for="tab1">List transactions</label></li>
+        <li><label for="tab2">Query event</label></li>
+        <li><label for="tab3">Call contract</label></li>
+    </ul>
+
+
+    <div class="panel">
+        <div class="content">
+            {{ partial "cmd_line_example1" . }}
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="content">
+            {{ partial "cmd_line_example2" . }}
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="content">
+            {{ partial "cmd_line_example3" . }}
+        </div>
+    </div>
+
+</div>
+
+{{ define "partials/cmd_line_example1" }}
+{{ partial "command_line/start" . }}
+<code>
+<span class="prompt">$</span>chifra export <abbr title="Output results as JSON">--fmt json</abbr> 0xf503017D7baF7FBC0fff7492b751025c6A78179b
+</code>
+<output>
+    <pre>
+{
+    data: [
+        {
+            "hash": "0xb7d80298ad62d68f47a9e3faeaa78ca7888e33dc714707a83eb4dfbbcdc01b09",
+            "blockHash": "0x61dfb0ff34d48012414f63f57273395259d5a1112132bc37f46b551d6d06dfbc",
+            "blockNumber": 8856290,
+            "transactionIndex": 62,
+            "timestamp": 1572660966,
+            "from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+            "to": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
+            "value": 10000000000000000,
+            "gas": 21000,
+            "gasPrice": 10000000000,
+            "maxFeePerGas": 0,
+            "maxPriorityFeePerGas": 0,
+            "isError": 0,
+            "hasToken": 0,
+            "receipt": {
+                "contractAddress": "0x0",
+                "gasUsed": 21000,
+                "effectiveGasPrice": 10000000000,
+                "status": 1
+            },
+            "compressedTx": "0x()",
+            "gasCost": 210000000000000,
+            "gasUsed": 21000,
+            "date": "2019-11-02 02:16:06 UTC",
+            "ether": 0.010000000000000000
+        }
+    ]
+}
+      </pre>
+</output>
+{{ partial "command_line/end" . }}
+{{ end }}
+
+{{ define "partials/cmd_line_example2" }}
+{{ partial "command_line/start" . }}
+<code>
+    <span class="prompt">$</span>chifra export
+    <abbr title="Output logs only">--logs</abbr>
+    <abbr title="Make the values human-readable">--articulate</abbr>
+    <abbr title="Only include transactions relevant to this address">--relevant</abbr>
+    <abbr title="Output results as JSON">--fmt json</abbr>
+    0xf503017D7baF7FBC0fff7492b751025c6A78179b
+</code>
+<output>
+    <pre>
+{
+    data: [
+        {
+            "address": "0x2878883dd4345c7b35c13fefc5096dd400814d91",
+            "blockNumber": 15676474,
+            "logIndex": 311,
+            "topics": [
+                "0xa4eb50103b0591feb0bc913f479d92af5eb7ea33e8c397b49bab52ce6af26cb5",
+                "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+                "0x0000000000000000000000000000000000000000000000f5ab54bb29c246ef40"
+            ],
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000381",
+            "articulatedLog": {
+                "name": "FundsClaimed",
+                "inputs": {
+                    "amount": "4531797996325397000000",
+                    "claimee": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                    "index": "897"
+                }
+            },
+            "transactionHash": "0xdd5371fb168b1baeb4d49de15b6a02fc8f8f49dd2e20db73cee8395719d9a279",
+            "transactionIndex": 129,
+            "timestamp": 1664907095,
+            "date": "2022-10-04 18:11:35 UTC"
+        }
+    ]
+}
+      </pre>
+</output>
+{{ partial "command_line/end" . }}
+{{ end }}
+
+{{ define "partials/cmd_line_example3" }}
+{{ partial "command_line/start" . }}
+<code>
+<span class="prompt">$</span>chifra state --call 'liquidity()' 0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8
+</code>
+<output>
+    <pre>
+{
+    data: [
+        {
+            "outputs": {
+            "val_1": 876845932
+            }
+        }
+    ]
+}
+      </pre>
+</output>
+{{ partial "command_line/end" . }}
+{{ end }}

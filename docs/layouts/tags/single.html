@@ -1,0 +1,49 @@
+{{ define "main" }}
+	<div class="row flex-xl-nowrap">
+		<div class="col-lg-5 col-xl-4 docs-sidebar">
+			<nav class="docs-links" aria-label="Main navigation">
+				{{ partial "sidebar/blog-menu.html" . }}
+			</nav>
+		</div>
+		{{ if ne .Params.toc false -}}
+			<nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
+				{{ partial "sidebar/docs-toc.html" . }}
+			</nav>
+		{{ end -}}
+
+		{{ if .Params.toc -}}
+			<main class="docs-content col-lg-11 col-xl-9">
+		{{ else -}}
+			<main class="docs-content col-lg-11 col-xl-9 mx-xl-auto">
+		{{ end -}}
+
+		<h1>{{ .Title }}</h1>
+		<div class="date">
+			{{ $dateFormat := $.Site.Params.dateFormat | default "Jan 2, 2006" }}
+			{{ $publishDate := .PublishDate }}
+			<small>
+				<em>Published on: {{ T "publish_date" }} </em>{{ $publishDate.Format $dateFormat }}
+				{{ with .Lastmod }}
+				{{ if gt . $publishDate }}
+					<em>Last edited:{{ T "last_updated" }} </em>{{ .Format $dateFormat }}
+				{{ end }}
+				{{ end }}
+			</small>
+			<br>
+			</p>
+		</div>
+		<p class="lead">{{ .Params.lead | safeHTML }}</p>
+		{{ partial "main/headline-hash.html" .Content }}
+		{{ if .Site.Params.editPage -}}
+			{{ partial "main/edit-page.html" . }}
+		{{ end -}}
+
+		{{ if not .Site.Params.options.collapsibleSidebar -}}
+			{{ partial "main/docs-navigation.html" . }}
+		{{ else -}}
+			<div class="my-n3"></div>
+		{{ end -}}
+
+		</main>
+	</div>
+{{ end }}

@@ -1,0 +1,132 @@
+<div class="d-flex flex-column gap-5">
+    <div class="articulation">
+        <h2 id="feature-articulation">
+            Articulation
+        </h2>
+        <p>
+            Blockchain data is all hashes, no matter if it is a log topic, method call, returned value, token balance or NFT name.
+            Luckily, most <code>chifra</code> commands accept <code>articulate</code> option. When turned on, it will make <code>chifra</code>
+            look for the smart contract ABI and turn those confusing strings of hex into human readable values.
+        </p>
+
+        <div class="figure-wrapper">
+        <figure class="raw">
+            <figcaption>Raw chain data</figcaption>
+            <code class="raw">
+                0x4567ade456780000000000000000000459400009865678900000009876545678987654345678900000
+            </code>
+        </figure>
+
+        <figure class="articulated">
+            <figcaption>Articulation on</figcaption>
+            <code>
+                <pre>
+{
+    "name": "FundsClaimed",
+    "inputs": {
+        "amount": "4531797996325397000000",
+        "claimee": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+        "index": "897"
+    }
+}</pre>
+            </code>
+        </figure>
+        </div>
+
+    </div>
+
+    <div class="block-expressions">
+        <h2 id="feature-blockexpressions">
+            Block expressions
+        </h2>
+        <p>
+            Blockchain data is organized in blocks. But sometimes we forget the block number or need information from a couple of blocks.
+            This is why we introduced block expressions, which allow to use a date or range of blocks with an interval rather than block number.
+        </p>
+
+        <div class="figure-wrapper">
+            <figure>
+                <div>
+                    <code>0-100000:10</code>
+                </div>
+                <figcaption>
+                    Every 10th block between the first and the 100,000th.
+                </figcaption>
+            </figure>
+
+            <figure>
+                <div>
+                    <code>2023-04-08</code>
+                </div>
+                <figcaption>
+                    Every block that has happened on April 8, 2023.
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+
+    <div>
+        <h2 id="feature-ens">
+            ENS support out of the box
+        </h2>
+        <p>
+            When a command requires an address, you can use ENS domain instead.
+        </p>
+    </div>
+
+    <div id="feature-names">
+        <h2>
+            Names database
+        </h2>
+        <p>
+            Blockchain addresses are not the easiest to remember. ENS domains make it better, but not every address has
+            a domain associated with it. This is why we maintain a database of about 13700 well-known names (for Ethereum mainnet), organized by tags.
+            Users can also add custom names that will not be shared with others.
+        </p>
+    </div>
+
+    <div class="solidity">
+        <h2 id="feature-solidity">
+            Solidity-like syntax for calling smart contracts
+        </h2>
+        <p>
+            Use familiar Solidity syntax to call smart contract methods.
+        </p>
+
+        <div class="figure-wrapper">
+            <figure>
+                <code>
+                    <div>
+                        chifra state --call '<span>totalSupply()</span>'
+                    </div>
+                    <div>
+                        chifra state --call '<span>balanceOf(0xf503017d7baf7fbc0fff7492b751025c6a78179b)</span>'
+                    </div>
+                    <div>
+                        chifra state --call '<span>tokenURI(10)</span>'
+                    </div>
+                </code>
+            </figure>
+        </div>
+    </div>
+
+    <div>
+        <h2 id="feature-local">
+            Locally running API server and SDKs
+        </h2>
+        <p>
+            It is easy to build your own tools around <code>chifra</code> by using
+            <a href="/sdks/typescript-sdk/">Typescript</a> or <a href="/sdks/python-sdk/">Python</a> SDKs or sending requests
+            to API server that is running locally on your machine.
+        </p>
+    </div>
+
+    <div>
+        <h2 id="feature-formats">
+            Different output formats
+        </h2>
+        <p>
+            <code>chifra</code> can output data as a text, JSON or CSV making it easy to integrate with your current workflow.
+        </p>
+    </div>
+</div>
