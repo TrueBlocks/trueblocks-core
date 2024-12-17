@@ -1,0 +1,97 @@
+chifra transactions  -avt 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 --fmt json
+TEST[DATE|TIME] Transactions:  [0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10]
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Traces:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "articulatedTx": {
+        "inputs": {
+          "data": "QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S",
+          "recipient": "0xd31f381ad54386895852f311fc3be2008c88cb27",
+          "topic": "This is the string that represents the type of data being posted"
+        },
+        "name": "postData"
+      },
+      "blockHash": "0xf41643281a0a58e45254b6a7e3a53db51deeef05a80ebcbb1c1314a754aefbf9",
+      "blockNumber": 3691662,
+      "date": "2017-05-12 01:17:33 UTC",
+      "ether": "0",
+      "from": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
+      "gas": 40252,
+      "gasCost": 73459170000000,
+      "gasPrice": 2190000000,
+      "gasUsed": 33543,
+      "hash": "0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10",
+      "input": "0x2a7781cc000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb270000000000000000000000000000000000000000000000000000000000000080516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d33533641436955616645364b6b32506f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040546869732069732074686520737472696e67207468617420726570726573656e7473207468652074797065206f662064617461206265696e6720706f73746564",
+      "nonce": 24,
+      "receipt": {
+        "contractAddress": "0x0",
+        "effectiveGasPrice": 2190000000,
+        "gasUsed": 33543,
+        "logs": [
+          {
+            "address": "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
+            "articulatedLog": {
+              "inputs": {
+                "_dataHash": "QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S",
+                "_recipient": "0xd31f381ad54386895852f311fc3be2008c88cb27",
+                "_topic": "0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866"
+              },
+              "name": "DataDumped"
+            },
+            "data": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
+            "date": "2017-05-12 01:17:33 UTC",
+            "logIndex": 36,
+            "timestamp": 1494551853,
+            "topics": [
+              "0xc48d99ca63a72003d5e809e08e7b6638ac06349daeddd2c9466b9c276a7ce67b",
+              "0x000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb27",
+              "0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866"
+            ]
+          }
+        ],
+        "status": null
+      },
+      "timestamp": 1494551853,
+      "to": "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
+      "traces": [
+        {
+          "action": {
+            "callType": "call",
+            "from": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
+            "gas": 9700,
+            "input": "0x2a7781cc000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb270000000000000000000000000000000000000000000000000000000000000080516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d33533641436955616645364b6b32506f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040546869732069732074686520737472696e67207468617420726570726573656e7473207468652074797065206f662064617461206265696e6720706f73746564",
+            "to": "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
+            "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "data": "QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S",
+              "recipient": "0xd31f381ad54386895852f311fc3be2008c88cb27",
+              "topic": "This is the string that represents the type of data being posted"
+            },
+            "name": "postData"
+          },
+          "blockHash": "0xf41643281a0a58e45254b6a7e3a53db51deeef05a80ebcbb1c1314a754aefbf9",
+          "blockNumber": 3691662,
+          "date": "2017-05-12 01:17:33 UTC",
+          "result": {
+            "gasUsed": 2991
+          },
+          "subtraces": 0,
+          "timestamp": 1494551853,
+          "traceAddress": [],
+          "transactionHash": "0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10",
+          "transactionIndex": 41,
+          "type": "call"
+        }
+      ],
+      "transactionIndex": 41,
+      "value": "0"
+    }
+  ]
+}

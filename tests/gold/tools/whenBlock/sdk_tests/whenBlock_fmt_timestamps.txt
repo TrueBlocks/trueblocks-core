@@ -1,0 +1,11 @@
+when?timestamps
+Args: [timestamps]
+Opts: {"timestamps":true}
+Timestamps:  true
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "--timestamp option not tested in testMode"
+  ]
+}

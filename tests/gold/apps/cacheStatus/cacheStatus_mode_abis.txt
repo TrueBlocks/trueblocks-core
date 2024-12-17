@@ -1,0 +1,50 @@
+chifra status  abis --verbose --max_records 2
+TEST[DATE|TIME] Modes:  [abis]
+TEST[DATE|TIME] MaxRecords:  2
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "cachePath": "--paths--",
+      "caches": [
+        {
+          "items": [
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "abisCache"
+        }
+      ],
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isApi": false,
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
+    }
+  ]
+}

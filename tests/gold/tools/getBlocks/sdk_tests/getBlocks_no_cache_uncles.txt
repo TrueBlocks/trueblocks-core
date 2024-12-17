@@ -1,0 +1,13 @@
+blocks?blocks=4012000-4012001&cache&uncles
+Args: [blocks=4012000-4012001 cache uncles]
+Opts: {"blocks":["4012000-4012001"],"uncles":true,"cache":true}
+Blocks:  [4012000-4012001]
+Uncles:  true
+Cache:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The --cache option is currently not available with the --uncles option."
+  ]
+}

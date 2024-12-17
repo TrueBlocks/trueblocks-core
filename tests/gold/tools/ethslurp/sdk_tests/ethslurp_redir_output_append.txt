@@ -1,0 +1,42 @@
+slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&parts=ext&blocks=3730590-3730700&output=output_test_file&append
+Args: [addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346 parts=ext blocks=3730590-3730700 output=output_test_file append]
+Opts: {"addrs":["0x1324e7b922b30B49Ab8EA81086341cc41C249346"],"blocks":["3730590-3730700"],"parts":2,"output":"output_test_file","append":true}
+Addrs:  [0x1324e7b922b30b49ab8ea81086341cc41c249346]
+Blocks:  [3730590-3730700]
+Parts:  [ext]
+OutputFn:  output_test_file
+Append:  true
+Caps:  cache,decache,ether
+Format:  json
+{ "outputFilename": "--output_filename--" }
+{
+  "data": [
+    {
+      "blockHash": "0xe89f481688f749769778b42a9a6ce36c38119ac195236067b14bd9f4ee4cdc22",
+      "blockNumber": 3730615,
+      "date": "2017-05-19 03:57:49 UTC",
+      "ether": "184811",
+      "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
+      "gas": 500000,
+      "gasCost": 8787156000000000,
+      "gasPrice": 21000000000,
+      "gasUsed": 418436,
+      "hash": "0x139ba9bafcf7bded7c9e39c843b0f545400f9400612206c7227b543261959abc",
+      "input": "0xce92dced348c814793453116b587f98c53a30e581be4d6bf82c8dc3519ab898334260729",
+      "timestamp": 1495166269,
+      "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+      "transactionIndex": 2,
+      "value": "184811000000000000000000"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

@@ -1,0 +1,13 @@
+chifra chunks  index 3000000 --output output_test_file --no_header --append
+TEST[DATE|TIME] Mode:  index
+TEST[DATE|TIME] Blocks:  [3000000]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] OutputFn:  output_test_file
+TEST[DATE|TIME] Append:  true
+TEST[DATE|TIME] Format:  txt
+----
+Results in ./output_test_file
+range	magic	hash	nAddresses	nAppearances	fileSize
+001963091-002067748	0xdeadbeef	0x81ae...1da1	104763	2000021	18933576
+002900001-003000000	0xdeadbeef	0x81ae...1da1	95628	1876216	17687356
+

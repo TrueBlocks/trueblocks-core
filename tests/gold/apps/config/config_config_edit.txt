@@ -1,0 +1,4 @@
+chifra config  edit
+TEST[DATE|TIME] Mode:  edit
+TEST[DATE|TIME] Format:  txt
+INFO[DATE|TIME] Can not process this command in test mode.

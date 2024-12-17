@@ -1,0 +1,12 @@
+chunks?mode=manifest&publish
+Args: [mode=manifest publish]
+Opts: {"mode":2,"publish":true,"publisher":"0x0"}
+Mode:  manifest
+Publish:  true
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+Format:  json
+{
+  "errors": [
+    "The --publish option is currenlty unavailable."
+  ]
+}

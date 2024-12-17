@@ -1,0 +1,12 @@
+chifra export  0x04fe1f0c597fbc65700f4fba6f87501edc20e665 --first_block 10277780 --last_block 10278000 --neighbors --cache --cache_traces
+TEST[DATE|TIME] Addrs:  [0x04fe1f0c597fbc65700f4fba6f87501edc20e665]
+TEST[DATE|TIME] Neighbors:  true
+TEST[DATE|TIME] CacheTraces:  true
+TEST[DATE|TIME] FirstBlock:  10277780
+TEST[DATE|TIME] LastBlock:  10278000
+TEST[DATE|TIME] Enabled:  traces, transactions
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+address	blockNumber	transactionIndex	traceIndex	reason
+0x04fe1f0c597fbc65700f4fba6f87501edc20e665	10277780	88		self

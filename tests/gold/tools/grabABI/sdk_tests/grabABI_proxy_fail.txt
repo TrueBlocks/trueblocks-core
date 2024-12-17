@@ -1,0 +1,11 @@
+abis?proxyFor=0xd9db270c1b5e3bd161e8c8503c55ceabee709552
+Args: [proxyFor=0xd9db270c1b5e3bd161e8c8503c55ceabee709552]
+Opts: {"proxyFor":"0xd9db270c1b5e3bd161e8c8503c55ceabee709552"}
+ProxyFor:  0xd9db270c1b5e3bd161e8c8503c55ceabee709552
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "Please specify at least one valid Ethereum address."
+  ]
+}

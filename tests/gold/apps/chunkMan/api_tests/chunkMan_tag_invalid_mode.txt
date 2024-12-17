@@ -1,0 +1,6 @@
+chunks?mode=manifest&tag=v1.0.0-release
+{
+  "errors": [
+    "The --tag option is not available in api mode."
+  ]
+}

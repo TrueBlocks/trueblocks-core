@@ -1,0 +1,6 @@
+status?modes=junk
+{
+  "errors": [
+    "The mode option (junk) must be one of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]"
+  ]
+}

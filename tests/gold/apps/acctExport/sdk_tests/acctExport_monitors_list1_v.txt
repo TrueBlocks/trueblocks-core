@@ -1,0 +1,31 @@
+monitors?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533&list&fmt=json&verbose
+{
+  "data": [
+    {
+      "address": "0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533",
+      "deleted": false,
+      "fileSize": 48,
+      "lastScanned": "--lastScanned--",
+      "nRecords": 5,
+      "name": {
+        "address": "0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533",
+        "decimals": 0,
+        "isCustom": true,
+        "name": "Temp Hackathon Wallet",
+        "source": "",
+        "symbol": "",
+        "tags": "12-Empty"
+      }
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

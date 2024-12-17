@@ -1,0 +1,33 @@
+list?addrs=trueblocks.eth&fmt=json&firstBlock=8854725&lastBlock=9000000&bounds
+{
+  "data": [
+    {
+      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "blockFreq": 1586,
+      "blockSpan": 20629,
+      "count": 13,
+      "firstApp": {
+        "blockNumber": 8855603,
+        "transactionIndex": 121
+      },
+      "firstDate": "2019-11-01 23:31:45 UTC",
+      "firstTs": 1572651105,
+      "latestApp": {
+        "blockNumber": 8876232,
+        "transactionIndex": 84
+      },
+      "latestDate": "2019-11-05 07:18:48 UTC",
+      "latestTs": 1572938328
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

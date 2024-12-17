@@ -1,0 +1,11 @@
+traces?transactions=.clink
+Args: [transactions=.clink]
+Opts: {"transactions":[".clink"]}
+Transactions:  [.clink]
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The given value '.clink' is not a valid identifier."
+  ]
+}

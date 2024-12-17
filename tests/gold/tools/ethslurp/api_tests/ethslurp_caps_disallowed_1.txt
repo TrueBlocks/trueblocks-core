@@ -1,0 +1,6 @@
+slurp?addrs=trueblocks.eth&wei
+{
+  "errors": [
+    "Invalid key (wei) in slurp route."
+  ]
+}

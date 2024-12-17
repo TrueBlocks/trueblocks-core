@@ -1,0 +1,25 @@
+tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200xd26114cd6ee289accf82350c8d8487fedb8a0c07&blocks=4150000
+{
+  "data": [
+    {
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "balance": "8908558230000000000",
+      "balanceDec": "8.90855823",
+      "blockNumber": 4150000,
+      "decimals": 18,
+      "holder": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "name": "OMGToken",
+      "symbol": "OMG"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

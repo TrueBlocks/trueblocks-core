@@ -1,0 +1,136 @@
+blocks?blocks=daofork
+Args: [blocks=daofork]
+Opts: {"blocks":["daofork"]}
+Blocks:  [daofork]
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "baseFeePerGas": 0,
+      "blockNumber": 1920000,
+      "date": "2016-07-20 13:20:40 UTC",
+      "difficulty": 62413376722602,
+      "gasLimit": 4712384,
+      "gasUsed": 84000,
+      "hash": "0x4985f5ca3d2afbec36529aa96f74de3cc10a2a4a6c44f2157a57d2c6059a11bb",
+      "miner": "0xbcdfc35b86bedf72f0cda046a3c16829a2ef41d1",
+      "parentHash": "0xa218e2c611f21232d857e3c8cecdcdf1f65f25a4477f98f6f47e4063807f2308",
+      "timestamp": 1469020840,
+      "transactions": [
+        {
+          "blockHash": "0x4985f5ca3d2afbec36529aa96f74de3cc10a2a4a6c44f2157a57d2c6059a11bb",
+          "blockNumber": 1920000,
+          "date": "2016-07-20 13:20:40 UTC",
+          "ether": "1.5025619625838797",
+          "from": "0x57ec8ef62a9af59b9fbbc6d7dba05516558f5018",
+          "gas": 21000,
+          "gasCost": 420000000000000,
+          "gasPrice": 20000000000,
+          "gasUsed": 21000,
+          "hash": "0x4677a93807b73a0875d3a292eacb450d0af0d6f0eec6f283f8ad927ec539a17b",
+          "nonce": 1,
+          "receipt": {
+            "contractAddress": "0x0",
+            "effectiveGasPrice": 20000000000,
+            "gasUsed": 21000,
+            "logs": [],
+            "status": null
+          },
+          "timestamp": 1469020840,
+          "to": "0x53d284357ec70ce289d6d64134dfac8e511c8a3d",
+          "traces": [],
+          "transactionIndex": 0,
+          "value": "1502561962583879700"
+        },
+        {
+          "blockHash": "0x4985f5ca3d2afbec36529aa96f74de3cc10a2a4a6c44f2157a57d2c6059a11bb",
+          "blockNumber": 1920000,
+          "date": "2016-07-20 13:20:40 UTC",
+          "ether": "10.04668",
+          "from": "0x6ebeb2af2e734fbba2b58c5b922628af442527ce",
+          "gas": 21000,
+          "gasCost": 420000000000000,
+          "gasPrice": 20000000000,
+          "gasUsed": 21000,
+          "hash": "0x6f75b64d9364b71b43cde81a889f95df72e6be004b28477f9083ed0ee471a7f9",
+          "nonce": 1,
+          "receipt": {
+            "contractAddress": "0x0",
+            "effectiveGasPrice": 20000000000,
+            "gasUsed": 21000,
+            "logs": [],
+            "status": null
+          },
+          "timestamp": 1469020840,
+          "to": "0x53d284357ec70ce289d6d64134dfac8e511c8a3d",
+          "traces": [],
+          "transactionIndex": 1,
+          "value": "10046680000000000000"
+        },
+        {
+          "blockHash": "0x4985f5ca3d2afbec36529aa96f74de3cc10a2a4a6c44f2157a57d2c6059a11bb",
+          "blockNumber": 1920000,
+          "date": "2016-07-20 13:20:40 UTC",
+          "ether": "20.09378",
+          "from": "0xee62a6740b3069781fc0ed138e94dcaa89f8eb05",
+          "gas": 21000,
+          "gasCost": 420000000000000,
+          "gasPrice": 20000000000,
+          "gasUsed": 21000,
+          "hash": "0x50d8156ee48d01b56cb17b6cb2ac8f29e1bf565be0e604b2d8ffb2fb50a0f611",
+          "nonce": 1,
+          "receipt": {
+            "contractAddress": "0x0",
+            "effectiveGasPrice": 20000000000,
+            "gasUsed": 21000,
+            "logs": [],
+            "status": null
+          },
+          "timestamp": 1469020840,
+          "to": "0x53d284357ec70ce289d6d64134dfac8e511c8a3d",
+          "traces": [],
+          "transactionIndex": 2,
+          "value": "20093780000000000000"
+        },
+        {
+          "blockHash": "0x4985f5ca3d2afbec36529aa96f74de3cc10a2a4a6c44f2157a57d2c6059a11bb",
+          "blockNumber": 1920000,
+          "date": "2016-07-20 13:20:40 UTC",
+          "ether": "1.02233844",
+          "from": "0x80a103beced8a6854a7a82ac2d48cdab0eb21cc0",
+          "gas": 21000,
+          "gasCost": 420000000000000,
+          "gasPrice": 20000000000,
+          "gasUsed": 21000,
+          "hash": "0x2a5177e6d6cea40594c7d4b0115dcd087443be3ec2fa81db3c21946a5e51cea9",
+          "nonce": 1,
+          "receipt": {
+            "contractAddress": "0x0",
+            "effectiveGasPrice": 20000000000,
+            "gasUsed": 21000,
+            "logs": [],
+            "status": null
+          },
+          "timestamp": 1469020840,
+          "to": "0x53d284357ec70ce289d6d64134dfac8e511c8a3d",
+          "traces": [],
+          "transactionIndex": 3,
+          "value": "1022338440000000000"
+        }
+      ],
+      "uncles": [],
+      "withdrawals": []
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

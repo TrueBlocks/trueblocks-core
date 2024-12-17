@@ -1,0 +1,16 @@
+chifra explore  --help
+Purpose:
+  Open a local or remote explorer for one or more addresses, blocks, or transactions.
+
+Usage:
+  chifra explore [flags] [terms...]
+
+Arguments:
+  terms - one or more address, name, block, or transaction identifier
+
+Flags:
+  -n, --no_open   return the URL without opening it
+  -l, --local     open the local TrueBlocks explorer
+  -g, --google    search google excluding popular blockchain explorers
+  -d, --dalle     open the address to the DalleDress explorer (hidden)
+  -h, --help      display this help screen

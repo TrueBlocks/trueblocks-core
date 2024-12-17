@@ -1,0 +1,6 @@
+blocks?blocks=2222222&reconcile
+{
+  "errors": [
+    "Invalid key (reconcile) in blocks route."
+  ]
+}

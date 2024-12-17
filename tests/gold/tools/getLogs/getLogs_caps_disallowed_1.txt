@@ -1,0 +1,25 @@
+chifra logs  12.0 --wei
+Error: 
+  unknown flag: --wei
+
+Usage:
+  chifra logs [flags] <tx_id> [tx_id...]
+
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)
+
+Flags:
+  -m, --emitter strings   filter logs to show only those logs emitted by the given address(es)
+  -B, --topic strings     filter logs to show only those with this topic(s)
+  -a, --articulate        articulate the retrieved data if ABIs can be found
+  -o, --cache             force the results of the query into the cache
+  -D, --decache           removes related items from the cache
+  -x, --fmt string        export format, one of [none|json*|txt|csv]
+  -v, --verbose           enable verbose output
+  -h, --help              display this help screen
+
+Notes:
+  - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
+  - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
+  - If the queried node does not store historical state, the results for most older transactions are undefined.
+  - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if it is not, the hash will be used as a topic.

@@ -1,0 +1,49 @@
+chifra chunks  pins --unpin 12
+TEST[DATE|TIME] Mode:  pins
+TEST[DATE|TIME] Blocks:  [12]
+TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+TEST[DATE|TIME] Unpin:  true
+TEST[DATE|TIME] Format:  txt
+Error: The file ./unpins was not found in the local folder.
+Usage:
+  chifra chunks <mode> [flags] [blocks...] [address...]
+
+Arguments:
+  mode - the type of data to process (required)
+    One of [ manifest | index | blooms | pins | addresses | appearances | stats ]
+  blocks - an optional list of blocks to intersect with chunk ranges
+
+Flags:
+  -c, --check              check the manifest, index, or blooms for internal consistency
+  -i, --pin                pin the manifest or each index chunk and bloom
+  -p, --publish            publish the manifest to the Unchained Index smart contract
+  -P, --publisher string   for some query options, the publisher of the index (hidden)
+  -n, --truncate uint      truncate the entire index at this block (requires a block identifier) (hidden)
+  -r, --remote             prior to processing, retrieve the manifest from the Unchained Index smart contract
+  -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
+  -f, --diff               compare two index portions (see notes) (hidden)
+  -F, --first_block uint   first block to process (inclusive)
+  -L, --last_block uint    last block to process (inclusive)
+  -m, --max_addrs uint     the max number of addresses to process in a given chunk
+  -d, --deep               if true, dig more deeply during checking (manifest only)
+  -e, --rewrite            for the --pin --deep mode only, writes the manifest back to the index folder (see notes)
+  -l, --list               for the pins mode only, list the remote pins (hidden)
+  -u, --unpin              for the pins mode only, if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs) (hidden)
+  -U, --count              for certain modes only, display the count of records
+  -t, --tag string         visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str) (hidden)
+  -s, --sleep float        for --remote pinning only, seconds to sleep between API calls
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
+  -v, --verbose            enable verbose output
+  -h, --help               display this help screen
+
+Notes:
+  - Mode determines which type of data to display or process.
+  - Certain options are only available in certain modes.
+  - If blocks are provided, only chunks intersecting with those blocks are displayed.
+  - The --truncate option updates the manifest and removes local data, but does not alter remote pins.
+  - The --belongs option is only available in the index mode.
+  - The --first_block and --last_block options apply only to addresses, appearances, and index --belongs mode.
+  - The --pin option requires a locally running IPFS node or a pinning service API key.
+  - The --publish option requires a private key.
+  - The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
+  - Without --rewrite, the manifest is written to the temporary cache. With it, the manifest is rewritten to the index folder.

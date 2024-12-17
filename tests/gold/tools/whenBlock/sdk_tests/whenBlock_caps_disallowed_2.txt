@@ -1,0 +1,12 @@
+when?blocks=3000000&ether
+Args: [blocks=3000000 ether]
+Opts: {"blocks":["3000000"],"ether":true}
+Blocks:  [3000000]
+Ether:  true
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "Invalid key (ether) in when route."
+  ]
+}

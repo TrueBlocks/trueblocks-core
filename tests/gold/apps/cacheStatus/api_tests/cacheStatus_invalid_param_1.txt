@@ -1,0 +1,6 @@
+status?junk
+{
+  "errors": [
+    "Invalid key (junk) in status route."
+  ]
+}

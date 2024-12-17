@@ -1,0 +1,1697 @@
+transactions?transactions=0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f&articulate&fmt=json
+{
+  "data": [
+    {
+      "articulatedTx": {
+        "inputs": {
+          "_financePeriod": "0",
+          "_id": "commonsstackorg",
+          "_members": [
+            "0x7944fc7bd79b25e6ffe24921d88a1f36f22be843"
+          ],
+          "_tokenName": "Commons Stack Org Membership",
+          "_tokenSymbol": "CSOM",
+          "_useAgentAsVault": false,
+          "_votingSettings": [
+            "500000000000000000",
+            "150000000000000000",
+            "86400"
+          ]
+        },
+        "name": "newTokenAndInstance"
+      },
+      "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
+      "blockNumber": 8658677,
+      "date": "2019-10-01 20:38:02 UTC",
+      "ether": "0",
+      "from": "0x7944fc7bd79b25e6ffe24921d88a1f36f22be843",
+      "gas": 7285034,
+      "gasCost": 6456415000000000,
+      "gasPrice": 1000000000,
+      "gasUsed": 6456415,
+      "hash": "0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f",
+      "input": "0x8a29ac040000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000001e000000000000000000000000000000000000000000000000006f05b59d3b200000000000000000000000000000000000000000000000000000214e8348c4f0000000000000000000000000000000000000000000000000000000000000001518000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001c436f6d6d6f6e7320537461636b204f7267204d656d6265727368697000000000000000000000000000000000000000000000000000000000000000000000000443534f4d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f636f6d6d6f6e73737461636b6f7267000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000007944fc7bd79b25e6ffe24921d88a1f36f22be843",
+      "nonce": 1,
+      "receipt": {
+        "contractAddress": "0x0",
+        "effectiveGasPrice": 1000000000,
+        "gasUsed": 6456415,
+        "logs": [
+          {
+            "address": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+            "articulatedLog": {
+              "inputs": {
+                "token": "0x04d702ebd0a77503b154865fe3e8da97255b931b"
+              },
+              "name": "DeployToken"
+            },
+            "data": "0x00000000000000000000000004d702ebd0a77503b154865fe3e8da97255b931b",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 28,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xd18525bc6595a90cc21e9fbd517ada6fc07a7e87b7d2cdb6ee9284c450ebffa4"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
+                "appId": "0x3b4bf6bf3ad5000ecf0f989d5befde585c6860fea3e574a4fab4c49d1c177d9c",
+                "namespace": "0xc681a85306374a5ab27f0bbc385296a54bcd314a1948b6cf61c4ea1bc44bb9f8"
+              },
+              "name": "SetApp"
+            },
+            "data": "0x0000000000000000000000002b33cf282f867a7ff693a66e11b0fcc5552e4425",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 29,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2ec1ae0a449b7ae354b9dacfb3ade6b6332ba26b7fcbb935835fa39dd7263b23",
+              "0xc681a85306374a5ab27f0bbc385296a54bcd314a1948b6cf61c4ea1bc44bb9f8",
+              "0x3b4bf6bf3ad5000ecf0f989d5befde585c6860fea3e574a4fab4c49d1c177d9c"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x81f7564e413586f1f99fde55740ac52b43ca99c9",
+                "appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+                "namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+              },
+              "name": "SetApp"
+            },
+            "data": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 30,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2ec1ae0a449b7ae354b9dacfb3ade6b6332ba26b7fcbb935835fa39dd7263b23",
+              "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f",
+              "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "data": "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b0000000000000000000000000000000000000000000000000000000000000001e3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 31,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xd880e726dced8808d727f02dd0e6fdd3a945b24bfee77e13367bcbe61ddbaf47"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+                "entity": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+                "role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 32,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000b9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+              "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b",
+              "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+                "manager": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+                "role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 33,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b",
+              "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a",
+              "0x000000000000000000000000b9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+                "appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+                "namespace": "0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fb"
+              },
+              "name": "SetApp"
+            },
+            "data": "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 34,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2ec1ae0a449b7ae354b9dacfb3ade6b6332ba26b7fcbb935835fa39dd7263b23",
+              "0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fb",
+              "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+                "entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+                "role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 35,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000cafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b",
+              "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+                "entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+                "role": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 36,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000cafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+                "manager": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+                "role": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 37,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0",
+              "0x000000000000000000000000b9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb",
+                "appId": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+                "namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+              },
+              "name": "SetApp"
+            },
+            "data": "0x000000000000000000000000bf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 38,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2ec1ae0a449b7ae354b9dacfb3ade6b6332ba26b7fcbb935835fa39dd7263b23",
+              "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f",
+              "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "data": "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b510000000000000000000000000000000000000000000000000000000000000000ddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 39,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xd880e726dced8808d727f02dd0e6fdd3a945b24bfee77e13367bcbe61ddbaf47"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+                "appId": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+                "namespace": "0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fb"
+              },
+              "name": "SetApp"
+            },
+            "data": "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 40,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2ec1ae0a449b7ae354b9dacfb3ade6b6332ba26b7fcbb935835fa39dd7263b23",
+              "0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fb",
+              "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+                "entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+                "role": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 41,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000cafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+              "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+                "manager": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+                "role": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 42,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+              "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2",
+              "0x000000000000000000000000cafa04538aa18ec7ce451bd0e55874c75b80657f"
+            ]
+          },
+          {
+            "address": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+            "articulatedLog": {
+              "inputs": {
+                "executorAddress": "0x5ceb19e1890f677c3676d5ecdf7c501eba01a054",
+                "executorId": "1"
+              },
+              "name": "EnableExecutor"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 43,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x7697fa3288629310075a63816e294207c84f3cfc18ccf8e18eb917ec0bb56699",
+              "0x0000000000000000000000000000000000000000000000000000000000000001",
+              "0x0000000000000000000000005ceb19e1890f677c3676d5ecdf7c501eba01a054"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": false,
+                "app": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+                "entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+                "role": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 44,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000cafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+              "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+                "role": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 45,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+              "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2",
+              "0x0000000000000000000000000000000000000000000000000000000000000000"
+            ]
+          },
+          {
+            "address": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+            "articulatedLog": {
+              "inputs": {
+                "reg": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
+              },
+              "name": "DeployEVMScriptRegistry"
+            },
+            "data": "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 46,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x1a40224412580c1ae5a2fbe8029a565f49a3a029608a8fd9320b32477f314579"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": false,
+                "app": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+                "entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+                "role": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 47,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000cafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+                "role": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 48,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0",
+              "0x0000000000000000000000000000000000000000000000000000000000000000"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": false,
+                "app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+                "entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+                "role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 49,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000cafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b",
+              "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": false,
+                "app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+                "entity": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+                "role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 50,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000b9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+              "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b",
+              "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+                "entity": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+                "role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 51,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x00000000000000000000000067430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+              "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b",
+              "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+                "manager": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+                "role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 52,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b",
+              "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a",
+              "0x00000000000000000000000067430642c0c3b5e6538049b9e9ee719f2a4bee7c"
+            ]
+          },
+          {
+            "address": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+            "articulatedLog": {
+              "inputs": {
+                "dao": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
+              },
+              "name": "DeployDAO"
+            },
+            "data": "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 53,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x3a7eb042a769adf51e9be78b68ed7af0ad7b379246536efc376ed2ca01238282"
+            ]
+          },
+          {
+            "address": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+            "articulatedLog": {
+              "inputs": {
+                "dao": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
+              },
+              "name": "DeployDao"
+            },
+            "data": "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 54,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x0b13a9ab90735191cd544fd95ba68d1385144561cbdeb8acb8035de9a86432f5"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+                "entity": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+                "role": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 55,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x00000000000000000000000067430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+              "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+                "manager": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+                "role": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 56,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0",
+              "0x00000000000000000000000067430642c0c3b5e6538049b9e9ee719f2a4bee7c"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x03ad07802bba1b6fa293e593a42845e6569a7470",
+                "appId": "0x7e852e0fcfce6551c13800f1e7476f982525c2b5277ba14b24339c68416336d1",
+                "namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+              },
+              "name": "SetApp"
+            },
+            "data": "0x00000000000000000000000003ad07802bba1b6fa293e593a42845e6569a7470",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 57,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2ec1ae0a449b7ae354b9dacfb3ade6b6332ba26b7fcbb935835fa39dd7263b23",
+              "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f",
+              "0x7e852e0fcfce6551c13800f1e7476f982525c2b5277ba14b24339c68416336d1"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "data": "0x00000000000000000000000025bb2115aeef1c27a01cbc3ddbb838bc12a3da0f00000000000000000000000000000000000000000000000000000000000000017e852e0fcfce6551c13800f1e7476f982525c2b5277ba14b24339c68416336d1",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 58,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xd880e726dced8808d727f02dd0e6fdd3a945b24bfee77e13367bcbe61ddbaf47"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x25bb2115aeef1c27a01cbc3ddbb838bc12a3da0f",
+                "appId": "0x7e852e0fcfce6551c13800f1e7476f982525c2b5277ba14b24339c68416336d1",
+                "namespace": "0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fb"
+              },
+              "name": "SetApp"
+            },
+            "data": "0x00000000000000000000000025bb2115aeef1c27a01cbc3ddbb838bc12a3da0f",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 59,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2ec1ae0a449b7ae354b9dacfb3ade6b6332ba26b7fcbb935835fa39dd7263b23",
+              "0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fb",
+              "0x7e852e0fcfce6551c13800f1e7476f982525c2b5277ba14b24339c68416336d1"
+            ]
+          },
+          {
+            "address": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+            "articulatedLog": {
+              "inputs": {
+                "appId": "0x7e852e0fcfce6551c13800f1e7476f982525c2b5277ba14b24339c68416336d1",
+                "appProxy": "0x25bb2115aeef1c27a01cbc3ddbb838bc12a3da0f"
+              },
+              "name": "InstalledApp"
+            },
+            "data": "0x00000000000000000000000025bb2115aeef1c27a01cbc3ddbb838bc12a3da0f7e852e0fcfce6551c13800f1e7476f982525c2b5277ba14b24339c68416336d1",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 60,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2b183a501d4b1bbd30e6611ebac40ab18a00390e6c6bed324bf92a265c9ce6e3"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x836835289a2e81b66ae5d95b7c8dbc0480dcf9da",
+                "appId": "0xbf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae",
+                "namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+              },
+              "name": "SetApp"
+            },
+            "data": "0x000000000000000000000000836835289a2e81b66ae5d95b7c8dbc0480dcf9da",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 61,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2ec1ae0a449b7ae354b9dacfb3ade6b6332ba26b7fcbb935835fa39dd7263b23",
+              "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f",
+              "0xbf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae"
+            ]
+          },
+          {
+            "address": "0x2d02aa3b424f305dddf26458b60cf9664428dc48",
+            "articulatedLog": {
+              "inputs": {
+                "periodEnds": "1572554281",
+                "periodId": "0",
+                "periodStarts": "1569962282"
+              },
+              "name": "NewPeriod"
+            },
+            "data": "0x000000000000000000000000000000000000000000000000000000005d93b92a000000000000000000000000000000000000000000000000000000005dbb4629",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 62,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xe183df4530c4b573af76d47f020d4b86e418cef40ed4c9ce924b563e791b832c",
+              "0x0000000000000000000000000000000000000000000000000000000000000000"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "data": "0x0000000000000000000000002d02aa3b424f305dddf26458b60cf9664428dc480000000000000000000000000000000000000000000000000000000000000001bf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 63,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xd880e726dced8808d727f02dd0e6fdd3a945b24bfee77e13367bcbe61ddbaf47"
+            ]
+          },
+          {
+            "address": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+            "articulatedLog": {
+              "inputs": {
+                "appId": "0xbf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae",
+                "appProxy": "0x2d02aa3b424f305dddf26458b60cf9664428dc48"
+              },
+              "name": "InstalledApp"
+            },
+            "data": "0x0000000000000000000000002d02aa3b424f305dddf26458b60cf9664428dc48bf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 64,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2b183a501d4b1bbd30e6611ebac40ab18a00390e6c6bed324bf92a265c9ce6e3"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xde3a93028f2283cc28756b3674bd657eafb992f4",
+                "appId": "0x6b20a3010614eeebf2138ccec99f028a61c811b3b1a3343b6ff635985c75c91f",
+                "namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+              },
+              "name": "SetApp"
+            },
+            "data": "0x000000000000000000000000de3a93028f2283cc28756b3674bd657eafb992f4",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 65,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2ec1ae0a449b7ae354b9dacfb3ade6b6332ba26b7fcbb935835fa39dd7263b23",
+              "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f",
+              "0x6b20a3010614eeebf2138ccec99f028a61c811b3b1a3343b6ff635985c75c91f"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "data": "0x0000000000000000000000006bc08156f405519fd5254b450c83995fc7bc620b00000000000000000000000000000000000000000000000000000000000000016b20a3010614eeebf2138ccec99f028a61c811b3b1a3343b6ff635985c75c91f",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 66,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xd880e726dced8808d727f02dd0e6fdd3a945b24bfee77e13367bcbe61ddbaf47"
+            ]
+          },
+          {
+            "address": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+            "articulatedLog": {
+              "inputs": {
+                "appId": "0x6b20a3010614eeebf2138ccec99f028a61c811b3b1a3343b6ff635985c75c91f",
+                "appProxy": "0x6bc08156f405519fd5254b450c83995fc7bc620b"
+              },
+              "name": "InstalledApp"
+            },
+            "data": "0x0000000000000000000000006bc08156f405519fd5254b450c83995fc7bc620b6b20a3010614eeebf2138ccec99f028a61c811b3b1a3343b6ff635985c75c91f",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 67,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2b183a501d4b1bbd30e6611ebac40ab18a00390e6c6bed324bf92a265c9ce6e3"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xb935c3d80229d5d92f3761b17cd81dc2610e3a45",
+                "appId": "0x9fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4",
+                "namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+              },
+              "name": "SetApp"
+            },
+            "data": "0x000000000000000000000000b935c3d80229d5d92f3761b17cd81dc2610e3a45",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 68,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2ec1ae0a449b7ae354b9dacfb3ade6b6332ba26b7fcbb935835fa39dd7263b23",
+              "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f",
+              "0x9fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4"
+            ]
+          },
+          {
+            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "data": "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f9350700000000000000000000000000000000000000000000000000000000000000019fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 69,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xd880e726dced8808d727f02dd0e6fdd3a945b24bfee77e13367bcbe61ddbaf47"
+            ]
+          },
+          {
+            "address": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+            "articulatedLog": {
+              "inputs": {
+                "appId": "0x9fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4",
+                "appProxy": "0xac104c988ff9c90dafc7754b2fb9072e25f93507"
+              },
+              "name": "InstalledApp"
+            },
+            "data": "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f935079fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 70,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x2b183a501d4b1bbd30e6611ebac40ab18a00390e6c6bed324bf92a265c9ce6e3"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0x6bc08156f405519fd5254b450c83995fc7bc620b",
+                "entity": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+                "role": "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 71,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x00000000000000000000000067430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+              "0x0000000000000000000000006bc08156f405519fd5254b450c83995fc7bc620b",
+              "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x6bc08156f405519fd5254b450c83995fc7bc620b",
+                "manager": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+                "role": "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 72,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x0000000000000000000000006bc08156f405519fd5254b450c83995fc7bc620b",
+              "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686",
+              "0x00000000000000000000000067430642c0c3b5e6538049b9e9ee719f2a4bee7c"
+            ]
+          },
+          {
+            "address": "0x04d702ebd0a77503b154865fe3e8da97255b931b",
+            "articulatedLog": {
+              "inputs": {
+                "_amount": "1",
+                "_to": "0x7944fc7bd79b25e6ffe24921d88a1f36f22be843"
+              },
+              "name": "Transfer"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 73,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "0x0000000000000000000000007944fc7bd79b25e6ffe24921d88a1f36f22be843"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": false,
+                "app": "0x6bc08156f405519fd5254b450c83995fc7bc620b",
+                "entity": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+                "role": "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 74,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x00000000000000000000000067430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+              "0x0000000000000000000000006bc08156f405519fd5254b450c83995fc7bc620b",
+              "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x6bc08156f405519fd5254b450c83995fc7bc620b",
+                "role": "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 75,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x0000000000000000000000006bc08156f405519fd5254b450c83995fc7bc620b",
+              "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686",
+              "0x0000000000000000000000000000000000000000000000000000000000000000"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0x25bb2115aeef1c27a01cbc3ddbb838bc12a3da0f",
+                "entity": "0x2d02aa3b424f305dddf26458b60cf9664428dc48",
+                "role": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 76,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x0000000000000000000000002d02aa3b424f305dddf26458b60cf9664428dc48",
+              "0x00000000000000000000000025bb2115aeef1c27a01cbc3ddbb838bc12a3da0f",
+              "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x25bb2115aeef1c27a01cbc3ddbb838bc12a3da0f",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 77,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x00000000000000000000000025bb2115aeef1c27a01cbc3ddbb838bc12a3da0f",
+              "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0x2d02aa3b424f305dddf26458b60cf9664428dc48",
+                "entity": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0x563165d3eae48bcb0a092543ca070d989169c98357e9a1b324ec5da44bab75fd"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 78,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0x0000000000000000000000002d02aa3b424f305dddf26458b60cf9664428dc48",
+              "0x563165d3eae48bcb0a092543ca070d989169c98357e9a1b324ec5da44bab75fd"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x2d02aa3b424f305dddf26458b60cf9664428dc48",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0x563165d3eae48bcb0a092543ca070d989169c98357e9a1b324ec5da44bab75fd"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 79,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x0000000000000000000000002d02aa3b424f305dddf26458b60cf9664428dc48",
+              "0x563165d3eae48bcb0a092543ca070d989169c98357e9a1b324ec5da44bab75fd",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0x2d02aa3b424f305dddf26458b60cf9664428dc48",
+                "entity": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0x30597dd103acfaef0649675953d9cb22faadab7e9d9ed57acc1c429d04b80777"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 80,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0x0000000000000000000000002d02aa3b424f305dddf26458b60cf9664428dc48",
+              "0x30597dd103acfaef0649675953d9cb22faadab7e9d9ed57acc1c429d04b80777"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x2d02aa3b424f305dddf26458b60cf9664428dc48",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0x30597dd103acfaef0649675953d9cb22faadab7e9d9ed57acc1c429d04b80777"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 81,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x0000000000000000000000002d02aa3b424f305dddf26458b60cf9664428dc48",
+              "0x30597dd103acfaef0649675953d9cb22faadab7e9d9ed57acc1c429d04b80777",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0x2d02aa3b424f305dddf26458b60cf9664428dc48",
+                "entity": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0x5de467a460382d13defdc02aacddc9c7d6605d6d4e0b8bd2f70732cae8ea17bc"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 82,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0x0000000000000000000000002d02aa3b424f305dddf26458b60cf9664428dc48",
+              "0x5de467a460382d13defdc02aacddc9c7d6605d6d4e0b8bd2f70732cae8ea17bc"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x2d02aa3b424f305dddf26458b60cf9664428dc48",
+                "manager": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+                "role": "0x5de467a460382d13defdc02aacddc9c7d6605d6d4e0b8bd2f70732cae8ea17bc"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 83,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x0000000000000000000000002d02aa3b424f305dddf26458b60cf9664428dc48",
+              "0x5de467a460382d13defdc02aacddc9c7d6605d6d4e0b8bd2f70732cae8ea17bc",
+              "0x00000000000000000000000067430642c0c3b5e6538049b9e9ee719f2a4bee7c"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+                "entity": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xf7a450ef335e1892cb42c8ca72e7242359d7711924b75db5717410da3f614aa3"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 84,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+              "0xf7a450ef335e1892cb42c8ca72e7242359d7711924b75db5717410da3f614aa3"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xf7a450ef335e1892cb42c8ca72e7242359d7711924b75db5717410da3f614aa3"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 85,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+              "0xf7a450ef335e1892cb42c8ca72e7242359d7711924b75db5717410da3f614aa3",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+                "entity": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 86,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+              "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 87,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+              "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "entity": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xad15e7261800b4bb73f1b69d3864565ffb1fd00cb93cf14fe48da8f1f2149f39"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 88,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0xad15e7261800b4bb73f1b69d3864565ffb1fd00cb93cf14fe48da8f1f2149f39"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xad15e7261800b4bb73f1b69d3864565ffb1fd00cb93cf14fe48da8f1f2149f39"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 89,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0xad15e7261800b4bb73f1b69d3864565ffb1fd00cb93cf14fe48da8f1f2149f39",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "entity": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xda3972983e62bdf826c4b807c4c9c2b8a941e1f83dfa76d53d6aeac11e1be650"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 90,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0xda3972983e62bdf826c4b807c4c9c2b8a941e1f83dfa76d53d6aeac11e1be650"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xda3972983e62bdf826c4b807c4c9c2b8a941e1f83dfa76d53d6aeac11e1be650"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 91,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0xda3972983e62bdf826c4b807c4c9c2b8a941e1f83dfa76d53d6aeac11e1be650",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "entity": "0x6bc08156f405519fd5254b450c83995fc7bc620b",
+                "role": "0xe7dcd7275292e064d090fbc5f3bd7995be23b502c1fed5cd94cfddbbdcd32bbc"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 92,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x0000000000000000000000006bc08156f405519fd5254b450c83995fc7bc620b",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0xe7dcd7275292e064d090fbc5f3bd7995be23b502c1fed5cd94cfddbbdcd32bbc"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xe7dcd7275292e064d090fbc5f3bd7995be23b502c1fed5cd94cfddbbdcd32bbc"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 93,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0xe7dcd7275292e064d090fbc5f3bd7995be23b502c1fed5cd94cfddbbdcd32bbc",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0x6bc08156f405519fd5254b450c83995fc7bc620b",
+                "entity": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 94,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0x0000000000000000000000006bc08156f405519fd5254b450c83995fc7bc620b",
+              "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x6bc08156f405519fd5254b450c83995fc7bc620b",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 95,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x0000000000000000000000006bc08156f405519fd5254b450c83995fc7bc620b",
+              "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0x6bc08156f405519fd5254b450c83995fc7bc620b",
+                "entity": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xe97b137254058bd94f28d2f3eb79e2d34074ffb488d042e3bc958e0a57d2fa22"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 96,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0x0000000000000000000000006bc08156f405519fd5254b450c83995fc7bc620b",
+              "0xe97b137254058bd94f28d2f3eb79e2d34074ffb488d042e3bc958e0a57d2fa22"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x6bc08156f405519fd5254b450c83995fc7bc620b",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xe97b137254058bd94f28d2f3eb79e2d34074ffb488d042e3bc958e0a57d2fa22"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 97,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x0000000000000000000000006bc08156f405519fd5254b450c83995fc7bc620b",
+              "0xe97b137254058bd94f28d2f3eb79e2d34074ffb488d042e3bc958e0a57d2fa22",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x2d02aa3b424f305dddf26458b60cf9664428dc48",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0x5de467a460382d13defdc02aacddc9c7d6605d6d4e0b8bd2f70732cae8ea17bc"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 98,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x0000000000000000000000002d02aa3b424f305dddf26458b60cf9664428dc48",
+              "0x5de467a460382d13defdc02aacddc9c7d6605d6d4e0b8bd2f70732cae8ea17bc",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+                "entity": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 99,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": false,
+                "app": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+                "entity": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+                "role": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 100,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x00000000000000000000000067430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+              "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 101,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": true,
+                "app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+                "entity": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 102,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507",
+              "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b",
+              "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "allowed": false,
+                "app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+                "entity": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+                "role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+              },
+              "name": "SetPermission"
+            },
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 103,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x759b9a74d5354b5801710a0c1b283cc9f0d32b607ac8ced10c83ac8e75c77d52",
+              "0x00000000000000000000000067430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+              "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b",
+              "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+            ]
+          },
+          {
+            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "articulatedLog": {
+              "inputs": {
+                "app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+                "manager": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
+                "role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+              },
+              "name": "ChangePermissionManager"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 104,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xf3addc8b8e25ee11528a61b0e65092cae0666ef0ec0c64cb303993c88d689b4d",
+              "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b",
+              "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a",
+              "0x000000000000000000000000ac104c988ff9c90dafc7754b2fb9072e25f93507"
+            ]
+          },
+          {
+            "address": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+            "articulatedLog": {
+              "inputs": {
+                "dao": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
+              },
+              "name": "SetupDao"
+            },
+            "data": "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 105,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x17592627a66846ce06d92a1708275bc653b2a3f34aec855584b819872a8ba413"
+            ]
+          },
+          {
+            "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
+            "articulatedLog": {
+              "inputs": {
+                "label": "0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47",
+                "node": "0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86",
+                "owner": "0x546aa2eae2514494eeadb7bbb35243348983c59d"
+              },
+              "name": "NewOwner"
+            },
+            "data": "0x000000000000000000000000546aa2eae2514494eeadb7bbb35243348983c59d",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 106,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xce0457fe73731f824cc272376169235128c118b49d344817417c6d108d155e82",
+              "0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86",
+              "0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47"
+            ]
+          },
+          {
+            "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
+            "articulatedLog": {
+              "inputs": {
+                "node": "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4",
+                "resolver": "0x1da022710df5002339274aadee8d58218e9d6ab5"
+              },
+              "name": "NewResolver"
+            },
+            "data": "0x0000000000000000000000001da022710df5002339274aadee8d58218e9d6ab5",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 107,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x335721b01866dc23fbee8b6b2c7b1e14d6f05c28cd35a2c934239f94095602a0",
+              "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
+            ]
+          },
+          {
+            "address": "0x1da022710df5002339274aadee8d58218e9d6ab5",
+            "articulatedLog": {
+              "inputs": {
+                "a": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+                "node": "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
+              },
+              "name": "AddrChanged"
+            },
+            "data": "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 108,
+            "timestamp": 1569962282,
+            "topics": [
+              "0x52d7d861f09ab3d26239d492e8968629f95e9e318cf0b73bfddc441522a15fd2",
+              "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
+            ]
+          },
+          {
+            "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
+            "articulatedLog": {
+              "inputs": {
+                "_node": "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4",
+                "_owner": "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286"
+              },
+              "name": "Transfer"
+            },
+            "data": "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 109,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266",
+              "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
+            ]
+          },
+          {
+            "address": "0x546aa2eae2514494eeadb7bbb35243348983c59d",
+            "articulatedLog": {
+              "inputs": {
+                "owner": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+                "resolver": "0x1da022710df5002339274aadee8d58218e9d6ab5",
+                "subnode": "0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47"
+              },
+              "name": "ClaimSubdomain"
+            },
+            "data": "0x",
+            "date": "2019-10-01 20:38:02 UTC",
+            "logIndex": 110,
+            "timestamp": 1569962282,
+            "topics": [
+              "0xe27a5a369e0d2c5056ccfcbd5f83f145f43350142d42aaf46ff9a9e461d543df",
+              "0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47",
+              "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "0x0000000000000000000000001da022710df5002339274aadee8d58218e9d6ab5"
+            ]
+          }
+        ],
+        "status": 1
+      },
+      "timestamp": 1569962282,
+      "to": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
+      "traces": [],
+      "transactionIndex": 32,
+      "value": "0"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  },
+  "errors": [
+    "abi: cannot marshal in to go type: length insufficient 32 require 64"
+  ]
+}

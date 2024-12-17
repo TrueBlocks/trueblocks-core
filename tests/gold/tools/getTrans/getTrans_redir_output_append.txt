@@ -1,0 +1,13 @@
+chifra transactions  3657480.9 --verbose --fmt csv --output output_test_file --no_header --append
+TEST[DATE|TIME] Transactions:  [3657480.9]
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] OutputFn:  output_test_file
+TEST[DATE|TIME] Append:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  csv
+----
+Results in ./output_test_file
+blockNumber,transactionIndex,timestamp,date,from,fromName,to,toName,value,gasPrice,gasUsed,gasCost,hash,isError,encoding,type,ether
+3657480,12,1494031419,2017-05-06 00:43:39 UTC,0xd9bd20efca7b0e6606b969548b1516c08d37374b,,0xaf30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7,FirstBlood Token,0,20000000000,37712,754240000000000,0x4b4fe9946bfe9ef6f07fcfc1b985f1ca0db093b3b2d378b363504a92d07637bd,false,0xa9059cbb,,0
+3657480,9,1494031419,2017-05-06 00:43:39 UTC,0xb73fa05c12ffc1926a4e8c2b585f168cf4028671,,0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef,,1007817120000000000,20000000000,30416,608320000000000,0x2da65fbbaf61d00ec0792e5bbef42a951dda686cdd73b1958bfaff55219de1a4,false,0x,,1.00781712

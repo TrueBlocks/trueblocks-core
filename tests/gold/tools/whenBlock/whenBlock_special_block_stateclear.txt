@@ -1,0 +1,7 @@
+chifra when  stateclear --verbose
+TEST[DATE|TIME] Blocks:  [stateclear]
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+blockNumber	timestamp	date	name	component	description
+2717576	1480448309	2016-11-29 19:38:29 UTC	stateclear	execution	The block of the state clearing soft fork.

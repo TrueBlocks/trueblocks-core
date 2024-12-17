@@ -1,0 +1,148 @@
+chifra slurp  0x1324e7b922b30B49Ab8EA81086341cc41C249346 --types all 0-3793420 --fmt json --articulate --ether
+TEST[DATE|TIME] Addrs:  [0x1324e7b922b30b49ab8ea81086341cc41c249346]
+TEST[DATE|TIME] Blocks:  [0-3793420]
+TEST[DATE|TIME] Parts:  [ext int token nfts 1155 miner uncles withdrawals]
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockHash": "0xecf4a4750d4b07ee2d3a69894b095c02b6f193704582c3791555186fa4334d33",
+      "blockNumber": 3730547,
+      "date": "2017-05-19 03:38:57 UTC",
+      "from": "0x731ad2bfae439955054e576692d456a4affe1328",
+      "gas": 21001,
+      "gasCost": 420000000000000,
+      "gasPrice": 20000000000,
+      "gasUsed": 21000,
+      "hash": "0x5678743a31c0096e3e10459ee695de4f4b09f3a5bcc8fd357ed214ea14283a9b",
+      "timestamp": 1495165137,
+      "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
+      "transactionIndex": 16,
+      "value": "26911.71373498"
+    },
+    {
+      "blockHash": "0xb16325508885d09880efb6111b5e450f934e77155db250e47e4bc0bfb937b8cf",
+      "blockNumber": 3730549,
+      "date": "2017-05-19 03:39:36 UTC",
+      "from": "0x9c6df936c884811b9a6b49f0dd0a62919a6581d4",
+      "gas": 21001,
+      "gasCost": 420000000000000,
+      "gasPrice": 20000000000,
+      "gasUsed": 21000,
+      "hash": "0x290b0b5f0a0504df3069f5c65b34386c095af19234f24e9aa222a3f7a7d1823b",
+      "timestamp": 1495165176,
+      "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
+      "transactionIndex": 17,
+      "value": "157900.169159979996854272"
+    },
+    {
+      "articulatedTx": {
+        "inputs": {
+          "sealedBid": "0x348c814793453116b587f98c53a30e581be4d6bf82c8dc3519ab898334260729"
+        },
+        "name": "newBid",
+        "stateMutability": "payable"
+      },
+      "blockHash": "0xe89f481688f749769778b42a9a6ce36c38119ac195236067b14bd9f4ee4cdc22",
+      "blockNumber": 3730615,
+      "date": "2017-05-19 03:57:49 UTC",
+      "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
+      "gas": 500000,
+      "gasCost": 8787156000000000,
+      "gasPrice": 21000000000,
+      "gasUsed": 418436,
+      "hash": "0x139ba9bafcf7bded7c9e39c843b0f545400f9400612206c7227b543261959abc",
+      "input": "0xce92dced348c814793453116b587f98c53a30e581be4d6bf82c8dc3519ab898334260729",
+      "timestamp": 1495166269,
+      "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+      "transactionIndex": 2,
+      "value": "184811"
+    },
+    {
+      "articulatedTx": {
+        "inputs": {
+          "_hash": "0x358c4c78a09fb497f6189740618baa4bba273193d57007a5ace38857d8ea785a",
+          "_salt": "0x1763b10ad2d3c0f8de908e73bbac5612b94f030298ef04ef9b49ca126d50f265",
+          "_value": "184811000000000000000000"
+        },
+        "name": "unsealBid"
+      },
+      "blockHash": "0x4df7282b34c517f77b2ca33dda9e19b008fdfa3a83513abc6cab7be3a2c2e91f",
+      "blockNumber": 3730707,
+      "date": "2017-05-19 04:23:36 UTC",
+      "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
+      "gas": 200000,
+      "gasCost": 1013313000000000,
+      "gasPrice": 21000000000,
+      "gasUsed": 48253,
+      "hash": "0x4664982aff5f1f5a9b3f69dc4f41f455d85a17622b4605219c3bddba98db25a7",
+      "input": "0x47872b42358c4c78a09fb497f6189740618baa4bba273193d57007a5ace38857d8ea785a0000000000000000000000000000000000000000000027229fd7b15b4ccc00001763b10ad2d3c0f8de908e73bbac5612b94f030298ef04ef9b49ca126d50f265",
+      "timestamp": 1495167816,
+      "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+      "transactionIndex": 70,
+      "value": "0"
+    },
+    {
+      "articulatedTx": {
+        "inputs": {
+          "_hash": "0x358c4c78a09fb497f6189740618baa4bba273193d57007a5ace38857d8ea785a"
+        },
+        "name": "finalizeAuction"
+      },
+      "blockHash": "0x4e1df8783842411230b99f99f532fb5bf7722ed3982a155278d8cd9ecf4508b8",
+      "blockNumber": 3790483,
+      "date": "2017-05-30 03:00:06 UTC",
+      "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
+      "gas": 200000,
+      "gasCost": 1783278000000000,
+      "gasPrice": 21000000000,
+      "gasUsed": 84918,
+      "hash": "0xaa5fb607bbb979c6eaebd2b4c5901ef015d12060e14b31ea66978dfd92bbcf08",
+      "input": "0x983b94fb358c4c78a09fb497f6189740618baa4bba273193d57007a5ace38857d8ea785a",
+      "timestamp": 1496113206,
+      "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+      "transactionIndex": 9,
+      "value": "0"
+    },
+    {
+      "articulatedTx": {
+        "inputs": {
+          "sealedBid": "0x8b0136823ea9d3b977e28499b6bd89b3163241edd881b887fc4c3015fb394939"
+        },
+        "name": "newBid",
+        "stateMutability": "payable"
+      },
+      "blockHash": "0xe718f525aa103166908d96282f665eb8db760118864fcc3532a1a9de4f834bb7",
+      "blockNumber": 3793420,
+      "date": "2017-05-30 15:49:05 UTC",
+      "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
+      "gas": 500000,
+      "gasCost": 8787156000000000,
+      "gasPrice": 21000000000,
+      "gasUsed": 418436,
+      "hash": "0x8bf0c6fd141609e4a40d58b47e2f29547279c086ce16cd65d5f50c745a1efa4b",
+      "input": "0xce92dced8b0136823ea9d3b977e28499b6bd89b3163241edd881b887fc4c3015fb394939",
+      "timestamp": 1496159345,
+      "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+      "transactionIndex": 57,
+      "value": "184761"
+    },
+    {
+      "blockNumber": 3790483,
+      "date": "2017-05-30 03:00:06 UTC",
+      "from": "0xccfddfe5f7a205e792dda6d235d5897222a46d4c",
+      "gas": 2300,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0xaa5fb607bbb979c6eaebd2b4c5901ef015d12060e14b31ea66978dfd92bbcf08",
+      "timestamp": 1496113206,
+      "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
+      "transactionIndex": 9,
+      "value": "184761"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+chifra status  names --output output_test_file --max_records 2
+TEST[DATE|TIME] Modes:  [names]
+TEST[DATE|TIME] MaxRecords:  2
+TEST[DATE|TIME] OutputFn:  output_test_file
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+----
+Results in ./output_test_file
+{
+  "data": [],
+  "errors": [
+    "no files were found in the [names] caches"
+  ]
+}

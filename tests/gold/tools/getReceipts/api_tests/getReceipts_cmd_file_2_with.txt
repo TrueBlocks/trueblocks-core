@@ -1,0 +1,6 @@
+receipts?file=cmd_file.2&fmt=json
+{
+  "errors": [
+    "The --file option is not available in api mode."
+  ]
+}

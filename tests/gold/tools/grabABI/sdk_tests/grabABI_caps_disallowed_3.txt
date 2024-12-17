@@ -1,0 +1,22 @@
+abis?addrs=trueblocks.eth
+Args: [addrs=trueblocks.eth]
+Opts: {"addrs":["trueblocks.eth"],"proxyFor":"0x0"}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Caps:  cache,decache
+Format:  json
+{
+  "data": [],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  },
+  "errors": [
+    "address 0xf503017d7baf7fbc0fff7492b751025c6a78179b is not a smart contract"
+  ]
+}

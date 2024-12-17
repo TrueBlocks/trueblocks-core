@@ -1,0 +1,15 @@
+Env: TB_CHAINS_MAINNET_SCRAPE_APPSPERCHUNK=99991
+Env: TB_CHAINS_MAINNET_SCRAPE_SNAPTOGRID=99992
+Env: TB_CHAINS_MAINNET_SCRAPE_FIRSTSNAP=99993
+Env: TB_CHAINS_MAINNET_SCRAPE_UNRIPEDIST=99994
+Env: TB_CHAINS_MAINNET_SCRAPE_CHANNELCOUNT=99995
+Env: TB_CHAINS_MAINNET_SCRAPE_ALLOWMISSING=true
+chifra scrape  --dry_run --apps_per_chunk 10000 --snap_to_grid 10000 --first_snap 10000 --unripe_dist 10000 --channel_count 10000
+TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+TEST[DATE|TIME] DryRun:  true
+TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append
+TEST[DATE|TIME] Format:  txt
+"Scraping mainnet
+  Rpc --rpc-provider--
+  Path --unchained-path--
+  Settings {10000 10000 10000 10000 true 10000}"

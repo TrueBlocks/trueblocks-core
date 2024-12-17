@@ -1,0 +1,12 @@
+when?blocks=stateclear%20iceage%204001001%20junk&verbose
+Args: [blocks=stateclear iceage 4001001 junk verbose]
+Opts: {"blocks":["stateclear iceage 4001001 junk"],"verbose":true}
+Blocks:  [stateclear iceage 4001001 junk]
+Verbose:  true
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "The given value 'junk' is not a valid identifier."
+  ]
+}

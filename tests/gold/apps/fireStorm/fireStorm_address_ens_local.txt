@@ -1,0 +1,6 @@
+chifra explore  trueblocks.eth --local
+TEST[DATE|TIME] Terms:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Local:  true
+TEST[DATE|TIME] Format:  txt
+term	termType	url	source
+0xf503017d7baf7fbc0fff7492b751025c6a78179b	DestinationAddress	http://localhost:1234/address/0xf503017d7baf7fbc0fff7492b751025c6a78179b	url

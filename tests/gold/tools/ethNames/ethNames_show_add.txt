@@ -1,0 +1,15 @@
+chifra names  0x0000000000000000000000000000000010101010 --fmt json
+TEST[DATE|TIME] Terms:  [0x0000000000000000000000000000000010101010]
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "address": "0x0000000000000000000000000000000010101010",
+      "decimals": 11,
+      "name": "NAME",
+      "source": "SOURCE",
+      "symbol": "SYMBOL",
+      "tags": "TAGS"
+    }
+  ]
+}

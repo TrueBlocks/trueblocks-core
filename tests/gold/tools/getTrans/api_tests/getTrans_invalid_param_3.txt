@@ -1,0 +1,6 @@
+transactions?transactions=1233123
+{
+  "errors": [
+    "The given value '1233123' is not a valid identifier."
+  ]
+}

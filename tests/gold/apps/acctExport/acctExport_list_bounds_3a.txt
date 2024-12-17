@@ -1,0 +1,29 @@
+chifra list  trueblocks.eth --fmt json --first_block 8854725 --last_block 9000000 --bounds
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Bounds:  true
+TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+TEST[DATE|TIME] FirstBlock:  8854725
+TEST[DATE|TIME] LastBlock:  9000000
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "blockFreq": 1586,
+      "blockSpan": 20629,
+      "count": 13,
+      "firstApp": {
+        "blockNumber": 8855603,
+        "transactionIndex": 121
+      },
+      "firstDate": "2019-11-01 23:31:45 UTC",
+      "firstTs": 1572651105,
+      "latestApp": {
+        "blockNumber": 8876232,
+        "transactionIndex": 84
+      },
+      "latestDate": "2019-11-05 07:18:48 UTC",
+      "latestTs": 1572938328
+    }
+  ]
+}

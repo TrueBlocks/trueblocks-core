@@ -1,0 +1,11 @@
+status?maxRecords=100&chains
+Args: [maxRecords=100 chains]
+Opts: {"maxRecords":100,"chains":true}
+MaxRecords:  100
+Chains:  true
+Format:  json
+{
+  "errors": [
+    "The --chains option is only available with a mode."
+  ]
+}

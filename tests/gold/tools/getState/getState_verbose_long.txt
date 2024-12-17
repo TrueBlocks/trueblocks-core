@@ -1,0 +1,8 @@
+chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 4000000 --verbose
+TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359]
+TEST[DATE|TIME] Blocks:  [4000000]
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+blockNumber	address	addressName	timestamp	date	balance
+4000000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Ethereum Foundation (Tip Jar)	1499633567	2017-07-09 20:52:47 UTC	4098334073083150747787

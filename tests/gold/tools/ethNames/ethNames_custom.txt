@@ -1,0 +1,11 @@
+chifra names  --custom --fmt txt
+TEST[DATE|TIME] Custom:  true
+TEST[DATE|TIME] Format:  txt
+tags	address	name	symbol	decimals
+81-Custom	0x0000000000000000000000000000000000000001	Account_1	SYM_1	1
+81-Custom	0x0000000000000000000000000000000000000002	Account_2	SYM_2	2
+81-Custom	0x0000000000000000000000000000000000000003	Account_3	SYM_3	3
+81-Custom	0x0000000000000000000000000000000000000004	Account_4	SYM_4	4
+91-Friends	0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f	Vitalik		
+91-Friends	0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12	Consensys Grant Sender		
+91-Friends	0xde58d6a070c7490f10a9aac1b7bc6e3583383958	Vlad		

@@ -1,0 +1,26 @@
+when?verbose&blocks=1000
+Args: [verbose blocks=1000]
+Opts: {"blocks":["1000"],"verbose":true}
+Blocks:  [1000]
+Verbose:  true
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 1000,
+      "date": "2015-07-30 16:02:18 UTC",
+      "timestamp": 1438272138
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

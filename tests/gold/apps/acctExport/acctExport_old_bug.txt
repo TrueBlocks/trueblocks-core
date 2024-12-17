@@ -1,0 +1,87 @@
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 1 --first_record 212 --fmt json
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] FirstRecord:  212
+TEST[DATE|TIME] MaxRecords:  1
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockHash": "0xb0eeae84197ce9710061d248b0d94b26e9e539ae0d5498be83d43bcfc8f81bfc",
+      "blockNumber": 10277780,
+      "date": "2020-06-16 16:09:04 UTC",
+      "ether": "0",
+      "from": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "gas": 200000,
+      "gasCost": 2743600000000000,
+      "gasPrice": 40000000000,
+      "gasUsed": 68590,
+      "hash": "0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00",
+      "input": "0x9120491c000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000000000000000000000000000869d529b714a0000000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000003782dace9d9000000000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+      "nonce": 2,
+      "receipt": {
+        "contractAddress": "0x0",
+        "effectiveGasPrice": 40000000000,
+        "gasUsed": 68590,
+        "logs": [
+          {
+            "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+            "data": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+            "date": "2020-06-16 16:09:04 UTC",
+            "logIndex": 118,
+            "timestamp": 1592323744,
+            "topics": [
+              "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+              "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+              "0x000000000000000000000000000000000000000000000000869d529b714a0000",
+              "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+            ]
+          },
+          {
+            "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+            "data": "0x000000000000000000000000000000000000000000000000869d529b714a0000",
+            "date": "2020-06-16 16:09:04 UTC",
+            "logIndex": 119,
+            "timestamp": 1592323744,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+              "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+            ]
+          },
+          {
+            "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+            "data": "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+            "date": "2020-06-16 16:09:04 UTC",
+            "logIndex": 120,
+            "timestamp": 1592323744,
+            "topics": [
+              "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+              "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+              "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+              "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+            ]
+          },
+          {
+            "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+            "data": "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+            "date": "2020-06-16 16:09:04 UTC",
+            "logIndex": 121,
+            "timestamp": 1592323744,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+              "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
+            ]
+          }
+        ],
+        "status": 1
+      },
+      "timestamp": 1592323744,
+      "to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "traces": [],
+      "transactionIndex": 102,
+      "value": "0"
+    }
+  ]
+}

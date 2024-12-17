@@ -1,0 +1,28 @@
+state?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&blocks=1500000&ether
+Args: [addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413 blocks=1500000 ether]
+Opts: {"addrs":["0xbb9bc244d798123fde783fcc1c72d3bb8c189413"],"blocks":["1500000"],"proxyFor":"0x0","ether":true}
+Addrs:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
+Blocks:  [1500000]
+Ether:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "balance": "4420466920675732108465682",
+      "blockNumber": 1500000,
+      "ether": "4420466.920675732108465682"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

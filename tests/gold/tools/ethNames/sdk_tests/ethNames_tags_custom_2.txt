@@ -1,0 +1,24 @@
+names?terms=81&tags&custom
+Args: [terms=81 tags custom]
+Opts: {"terms":["81"],"custom":true,"tags":true,"autoname":"0x0"}
+Terms:  [81]
+Custom:  true
+Tags:  true
+Format:  json
+{
+  "data": [
+    {
+      "tags": "81-Custom"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

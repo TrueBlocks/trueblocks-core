@@ -1,0 +1,8 @@
+chifra names  trueblocks.eth meriam.eth 0xff9e5c77edf2a26bfd6f60dc4937e5baa1727378 vitalik.eth
+TEST[DATE|TIME] Terms:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 0xff9e5c77edf2a26bfd6f60dc4937e5baa1727378 0xd8da6bf26964af9d7eed9e03e53415d37aa96045]
+TEST[DATE|TIME] Format:  txt
+tags	address	name	symbol	decimals
+66-ENS	0xf503017d7baf7fbc0fff7492b751025c6a78179b	trueblocks.eth		
+66-ENS	0x054993ab0f2b1acc0fdc65405ee203b4271bebe6	meriam.eth		
+Not found	0xff9e5c77edf2a26bfd6f60dc4937e5baa1727378			
+66-ENS	0xd8da6bf26964af9d7eed9e03e53415d37aa96045	vitalik.eth		

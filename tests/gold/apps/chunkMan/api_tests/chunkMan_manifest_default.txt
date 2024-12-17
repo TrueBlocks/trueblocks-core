@@ -1,0 +1,152 @@
+chunks?mode=manifest
+{
+  "data": [
+    {
+      "chain": "mainnet",
+      "chunks": [
+        {
+          "bloomHash": "QmdREgbfg2kWNYLps12G8sR1tLxDBM67nNoNevcbLVWyK5",
+          "bloomSize": 131114,
+          "indexHash": "QmevozuTsKZ2pAWw89DGQFbPhzKdDcf141Y1Qhizt5kikr",
+          "indexSize": 320192,
+          "range": "000000000-000000000",
+          "rangeDates": {
+            "firstDate": "2015-07-30 15:26:15 UTC",
+            "firstTs": 1438269975,
+            "lastDate": "2015-07-30 15:26:15 UTC",
+            "lastTs": 1438269975
+          }
+        },
+        {
+          "bloomHash": "Qmd1aVEJZVKAVLjbdfKxEmRhC6Ja1djS69q2jqzJGzrVP3",
+          "bloomSize": 131114,
+          "indexHash": "QmetD8FTcPfaXsfoX12q62TNVAFZayVbP8sTojWhkVHxUc",
+          "indexSize": 16821332,
+          "range": "000000001-000590510",
+          "rangeDates": {
+            "firstDate": "2015-07-30 15:26:28 UTC",
+            "firstTs": 1438269988,
+            "lastDate": "2015-11-24 16:49:49 UTC",
+            "lastTs": 1448383789
+          }
+        },
+        {
+          "bloomHash": "QmRv3Fayhfvm7byduqcK8jXouYoSHb67Ekz5J9FpEsDrhV",
+          "bloomSize": 524342,
+          "indexHash": "Qmbp6ZRRhjrCUxxtzHAj3ykZ2wJ3Tii9T7i3DTcuLMbdTd",
+          "indexSize": 20604676,
+          "range": "000590511-000864345",
+          "rangeDates": {
+            "firstDate": "2015-11-24 16:50:14 UTC",
+            "firstTs": 1448383814,
+            "lastDate": "2016-01-17 23:04:01 UTC",
+            "lastTs": 1453071841
+          }
+        },
+        {
+          "bloomHash": "QmWYdcmtQT8f6u8CdWK4ALThTvmckZcpJnjqv4zfvJjZKn",
+          "bloomSize": 262190,
+          "indexHash": "QmVk7VXTWeHfokBn7wjk88LKCFWkAWVDbZCy4KcQ7dntbh",
+          "indexSize": 18268324,
+          "range": "000864346-001076302",
+          "rangeDates": {
+            "firstDate": "2016-01-17 23:04:18 UTC",
+            "firstTs": 1453071858,
+            "lastDate": "2016-02-29 03:58:16 UTC",
+            "lastTs": 1456718296
+          }
+        },
+        {
+          "bloomHash": "QmUhb1FMiHNMXLS9RzhpZ6pSjqhbunsCxdY3CpH5PgFdo1",
+          "bloomSize": 262190,
+          "indexHash": "QmNPRcphhgj8Qf5eZ2Sswdp2xGZE76zTZNiohgtQ4Lzqpm",
+          "indexSize": 18376376,
+          "range": "001076303-001229773",
+          "rangeDates": {
+            "firstDate": "2016-02-29 03:58:22 UTC",
+            "firstTs": 1456718302,
+            "lastDate": "2016-03-28 00:31:38 UTC",
+            "lastTs": 1459125098
+          }
+        },
+        {
+          "bloomHash": "QmUR1qGBhWmAYqj71cYgDeGaZSUXUnZ4oRVveEJ1v1XKBh",
+          "bloomSize": 262190,
+          "indexHash": "QmXrysJp73nUnBwGeR8TGH91qwkx3PRmmDMa3tf6MtKdop",
+          "indexSize": 17737464,
+          "range": "001229774-001371360",
+          "rangeDates": {
+            "firstDate": "2016-03-28 00:31:44 UTC",
+            "firstTs": 1459125104,
+            "lastDate": "2016-04-20 13:09:16 UTC",
+            "lastTs": 1461157756
+          }
+        },
+        {
+          "bloomHash": "Qmexusa5uDCgG65VkYUYBrNGcPPPw7x2i3BfFhF2tB5eQm",
+          "bloomSize": 262190,
+          "indexHash": "QmcEZK4csNh3nEEA613Wnu3dkB8QFw9uqg97WJv1FHtuhT",
+          "indexSize": 18186324,
+          "range": "001371361-001504334",
+          "rangeDates": {
+            "firstDate": "2016-04-20 13:09:36 UTC",
+            "firstTs": 1461157776,
+            "lastDate": "2016-05-12 14:56:54 UTC",
+            "lastTs": 1463065014
+          }
+        },
+        {
+          "bloomHash": "Qmf8xwGB3EcM5ZmeRKWEVNEtRXpHCxnx8xwyhZgDUdDKKT",
+          "bloomSize": 393266,
+          "indexHash": "QmPu6kEdjvFPemJRxiK5LcpUFD7kxfY35YEWJdfHY75KH2",
+          "indexSize": 19273720,
+          "range": "001504335-001613037",
+          "rangeDates": {
+            "firstDate": "2016-05-12 14:56:59 UTC",
+            "firstTs": 1463065019,
+            "lastDate": "2016-05-30 16:08:57 UTC",
+            "lastTs": 1464624537
+          }
+        },
+        {
+          "bloomHash": "QmZJALNEQ5hYYw3n6B9jPDCgbNVr6kqhVBSKJTZMbMhE5t",
+          "bloomSize": 393266,
+          "indexHash": "QmW85Kq2KWqiixw4UvCBpjkLgeZp4sDgBWzPyAuwf5EecV",
+          "indexSize": 19736132,
+          "range": "001613038-001729014",
+          "rangeDates": {
+            "firstDate": "2016-05-30 16:09:32 UTC",
+            "firstTs": 1464624572,
+            "lastDate": "2016-06-18 22:44:54 UTC",
+            "lastTs": 1466289894
+          }
+        },
+        {
+          "bloomHash": "QmbYRox2nexKQfmykSXZxthbq8YcDsamDcqFigWooyDEAc",
+          "bloomSize": 393266,
+          "indexHash": "QmZfDnYEmVBsj9MCKUAdNMCTh3UYqibWd6NZR5AvzDCwjU",
+          "indexSize": 19450532,
+          "range": "001729015-001848056",
+          "rangeDates": {
+            "firstDate": "2016-06-18 22:45:10 UTC",
+            "firstTs": 1466289910,
+            "lastDate": "2016-07-08 15:35:05 UTC",
+            "lastTs": 1467992105
+          }
+        }
+      ],
+      "specification": "--testing-hash--",
+      "version": "trueblocks-core@v2.0.0-release"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

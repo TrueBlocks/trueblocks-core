@@ -1,0 +1,8 @@
+status?modes=recons&maxRecords=100
+Args: [modes=recons maxRecords=100]
+Opts: null
+{
+  "errors": [
+    "unknown modes: recons"
+  ]
+}

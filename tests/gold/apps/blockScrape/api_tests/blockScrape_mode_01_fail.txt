@@ -1,0 +1,6 @@
+scrape?action=badmode
+{
+  "errors": [
+    "Invalid key (action) in scrape route."
+  ]
+}

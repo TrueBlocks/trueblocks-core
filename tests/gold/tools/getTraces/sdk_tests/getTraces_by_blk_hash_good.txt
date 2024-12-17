@@ -1,0 +1,44 @@
+traces?transactions=0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55&verbose
+Args: [transactions=0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 verbose]
+Opts: {"transactions":["0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55"],"verbose":true}
+Transactions:  [0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55]
+Verbose:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "action": {
+        "callType": "call",
+        "from": "0x4ad64328076e1220333a82a4e602b1aaddd215e3",
+        "gas": 228728,
+        "input": "0xd0e30db0",
+        "to": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
+        "toName": "EtherDelta 2",
+        "value": "80000000000000000"
+      },
+      "blockHash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
+      "blockNumber": 4001001,
+      "date": "2017-07-10 01:53:12 UTC",
+      "result": {
+        "gasUsed": 23221
+      },
+      "subtraces": 0,
+      "timestamp": 1499651592,
+      "traceAddress": [],
+      "transactionHash": "0xe49b9d48866035a82b622e4900791210cbf36905194a7ae3dc38feedf8ca3762",
+      "transactionIndex": 55,
+      "type": "call"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

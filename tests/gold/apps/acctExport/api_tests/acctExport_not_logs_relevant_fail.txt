@@ -1,0 +1,6 @@
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&relevant&maxRecords=100
+{
+  "errors": [
+    "The --relevant option is only available with the --logs option."
+  ]
+}

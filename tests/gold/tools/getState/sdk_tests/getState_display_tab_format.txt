@@ -1,0 +1,8 @@
+state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&blocks=4000000&data
+Args: [addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 blocks=4000000 data]
+Opts: null
+{
+  "errors": [
+    "Invalid key (data) in route."
+  ]
+}

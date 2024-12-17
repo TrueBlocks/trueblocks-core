@@ -1,0 +1,14 @@
+chifra abis  --encode --"function why_change_caps(uint[] _keys, uint[] _token_amounts, uint[] _dollar_prices) external not_paused payable " --fmt json
+TEST[DATE|TIME] Encode:  --function why_change_caps(uint[] _keys, uint[] _token_amounts, uint[] _dollar_prices) external not_paused payable 
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "encoding": "0x57c9e989",
+      "name": "why_change_caps",
+      "signature": "why_change_caps(uint[],uint[],uint[])",
+      "type": "function"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+logs?
+Args: []
+Opts: {}
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "Please supply one or more transaction identifiers."
+  ]
+}

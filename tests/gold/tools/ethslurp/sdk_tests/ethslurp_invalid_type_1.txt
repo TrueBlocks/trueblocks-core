@@ -1,0 +1,8 @@
+slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&parts=junk
+Args: [addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346 parts=junk]
+Opts: null
+{
+  "errors": [
+    "unknown parts: junk"
+  ]
+}

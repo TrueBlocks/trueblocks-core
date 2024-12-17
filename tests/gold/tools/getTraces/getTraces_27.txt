@@ -1,0 +1,50 @@
+chifra traces  0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b --fmt json
+TEST[DATE|TIME] Transactions:  [0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b]
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "action": {
+        "callType": "call",
+        "from": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
+        "gas": 12716,
+        "input": "0xd8963b9100000000000000000000000000a3819199113fc6a6e6ba1298afde7377e2009b",
+        "to": "0x204882bcba3e6d804e5f7d6e483bb18dd2b3d678",
+        "value": "0"
+      },
+      "blockHash": "0x9ffade8b2d130070ce1d45ffe06bdab963993d597b8a7851320c1789c579b857",
+      "blockNumber": 3191290,
+      "date": "2017-02-16 01:56:50 UTC",
+      "result": {
+        "gasUsed": 6838
+      },
+      "subtraces": 1,
+      "timestamp": 1487210210,
+      "traceAddress": [],
+      "transactionHash": "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b",
+      "transactionIndex": 11,
+      "type": "call"
+    },
+    {
+      "action": {
+        "address": "0x204882bcba3e6d804e5f7d6e483bb18dd2b3d678",
+        "balance": "200000000000000000",
+        "refundAddress": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
+        "value": "0"
+      },
+      "blockHash": "0x9ffade8b2d130070ce1d45ffe06bdab963993d597b8a7851320c1789c579b857",
+      "blockNumber": 3191290,
+      "date": "2017-02-16 01:56:50 UTC",
+      "result": {},
+      "subtraces": 0,
+      "timestamp": 1487210210,
+      "traceAddress": [
+        0
+      ],
+      "transactionHash": "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b",
+      "transactionIndex": 11,
+      "type": "suicide"
+    }
+  ]
+}

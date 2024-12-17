@@ -1,0 +1,6 @@
+state?call&calldata='12065fe0()'&addrs=0xa4f29fc548856180f6b1e319ee4d86715875cce4&blocks=6523977-6540000:2000
+{
+  "errors": [
+    "the --calldata value provided (12065fe0()) was not found: the value provided (12065fe0()) is invalid"
+  ]
+}

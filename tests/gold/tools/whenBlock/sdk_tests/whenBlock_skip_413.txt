@@ -1,0 +1,40 @@
+when?blocks=1301000-1301250:73
+Args: [blocks=1301000-1301250:73]
+Opts: {"blocks":["1301000-1301250:73"]}
+Blocks:  [1301000-1301250:73]
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 1301000,
+      "date": "2016-04-08 20:11:14 UTC",
+      "timestamp": 1460146274
+    },
+    {
+      "blockNumber": 1301073,
+      "date": "2016-04-08 20:31:40 UTC",
+      "timestamp": 1460147500
+    },
+    {
+      "blockNumber": 1301146,
+      "date": "2016-04-08 20:46:37 UTC",
+      "timestamp": 1460148397
+    },
+    {
+      "blockNumber": 1301219,
+      "date": "2016-04-08 21:05:29 UTC",
+      "timestamp": 1460149529
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

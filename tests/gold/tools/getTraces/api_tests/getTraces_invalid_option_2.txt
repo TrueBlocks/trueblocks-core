@@ -1,0 +1,6 @@
+traces?other
+{
+  "errors": [
+    "Invalid key (other) in traces route."
+  ]
+}

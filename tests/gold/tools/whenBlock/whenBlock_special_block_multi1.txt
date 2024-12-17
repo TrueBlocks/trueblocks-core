@@ -1,0 +1,9 @@
+chifra when  stateclear iceage 4001001 --verbose
+TEST[DATE|TIME] Blocks:  [stateclear iceage 4001001]
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+blockNumber	timestamp	date	name	component	description
+2717576	1480448309	2016-11-29 19:38:29 UTC	stateclear	execution	The block of the state clearing soft fork.
+200000	1441661589	2015-09-07 21:33:09 UTC	iceage	execution	The frontier thawing fork lifted the 5&#44;000 gas limit per block and set the default gas price to 51 gwei. This allowed for transactions – transactions require 21&#44;000 gas. The difficulty bomb was introduced to ensure a future hard-fork to proof-of-stake.
+4001001	1499651592	2017-07-10 01:53:12 UTC			

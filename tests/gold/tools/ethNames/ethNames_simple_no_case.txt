@@ -1,0 +1,204 @@
+chifra names  network
+TEST[DATE|TIME] Terms:  [network]
+TEST[DATE|TIME] Format:  txt
+tags	address	name	symbol	decimals
+31-Gitcoin:Grants	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma		
+31-Giveth:Project	0x035495b687850f79cb1652f416ea7ec19907557c	Bees network		
+50-Tokens:ERC20	0x04c62019ab478bff5874e7b7d9bc84fcf7e30025	POA Network: MultiSig		
+31-Gitcoin:Grants	0x067f2bef6a1f929544253b9fb95f99bae77b2518	Grant 1753 Resetdao ― Web 3.0 Programmable Social Network		
+50-Tokens:ERC20	0x069d653038db2f9d84e9620be140b3d404a40258	Jarvis network Smart Relay Token	JRTBNT	18
+50-Tokens:ERC20	0x07147220fa6c06295464d695e4ec012f6aebc275	Super Module Network One	SMN1	18
+50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT	8
+31-Gitcoin:Grants	0x090b41c23f5890feb4182a201d95476bb35e4a09	Grant 1706 - ZVM from Tokamak Network		
+50-Tokens:ERC20	0x0a913bead80f321e7ac35285ee10d9d922659cb7	DOS Network Token	DOS	18
+50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT	18
+60-Rotki	0x0d35a2b85c5a63188d566d104bebf7c694334ee4	Pawtocol Network UPI Token	BUPI	18
+50-Tokens:ERC20	0x0f7f961648ae6db43c75663ac7e5414eb79b5704	XIO Network	XIO	18
+31-Gitcoin:Grants	0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48	Grant 0083 Poa Network Community Management Grant for Adj		
+50-Tokens:ERC20	0x12a9cc33a980daa74e00cc2d1a0e74c57a93d12c	Iron Bank Synthetix Network Token	iSNX	8
+60-Rotki	0x13b7f51bd865410c3acc4d56083c5b56ab38d203	Synthetix Network Token Hop Token	hSNX	18
+50-Tokens:ERC20	0x14409b0fc5c7f87b5dad20754fe22d29a3de8217	PYRO Network	PYRO	18
+50-Tokens:ERC20	0x15b7c0c907e4c6b9adaaaabc300c08991d6cea05	Gelato Network Token	GEL	18
+50-Tokens:ERC20	0x16980b3b4a3f9d89e33311b5aa8f80303e5ca4f8	KIRA Network	KEX	6
+50-Tokens:ERC20	0x17b26400621695c2d8c2d8869f6259e82d7544c4	CustomContractNetwork	CCN	18
+60-Rotki	0x18c11fd286c5ec11c3b683caa813b77f5163a122	Gains Network	GNS	18
+31-Giveth:Project	0x1b415ec11276f385db867e631c5c9692f3088112	Austin Disaster Relief Network		
+60-Rotki	0x1b815d120b3ef02039ee11dc2d33de7aa4a8c603	Wootrade Network	WOO	18
+60-Rotki	0x1bb76a939d6b7f5be6b95c4f9f822b02b4d62ced	POP Network Token	POP	18
+50-Tokens:ERC20	0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	Bancor Network Token	BNT	18
+31-Gitcoin:Grants	0x1fb3e449448faf1330dba45d945554c1bedcab5a	Grant 2250 - Cura Network - the decentralized healthcare system that super-charges healthcare delivery		
+50-Tokens:ERC20	0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a	Sapien Network	SPN	6
+50-Tokens:ERC20	0x21c9ea32bded0a07ca9c6ae6e0e43fd9001f5627	BITVoxy NetworkTokens	BVN	18
+50-Tokens:ERC20	0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network Token	NTWK	18
+60-Rotki	0x2456493e757fdeedf569781f053998a72adfad03	Definder network token	DNT	6
+60-SmolAssets	0x26f3901ac8a79c50fb0d8289c74f0d09adc42e29	ThresholdNetworkToken	T	18
+50-Tokens:ERC20	0x28d7f432d24ba6020d1cbd4f28bedc5a82f24320	Tercet Network	TCNX	18
+30-Contracts	0x2af47a65da8cd66729b4209c22017d6a5c2d2400	Bounties Network		
+60-Rotki	0x2b9e7ccdf0f4e5b24757c1e1a80e311e34cb10c7	Mask Network	MASK	18
+50-Tokens:ERC20	0x2be5e8c109e2197d077d13a82daead6a9b3433c5	Tokamak Network Token	TON	18
+50-Tokens:ERC20	0x2da719db753dfa10a62e140f436e1d67f2ddb0d6	CERE Network	CERE	10
+50-Tokens:ERC20	0x2e68dfb3f50ea302c88f8db74096d57565d9970a	Amino Intelligent Network	AMIO	18
+60-Rotki	0x2ed9a5c8c13b93955103b9a7c167b67ef4d568a3	Mask Network	MASK	18
+31-Gitcoin:Grants	0x2fefe22dbb33670a13039039982cd3d12b1a4b6f	Grant 1875 Garuda Network (dmrd)		
+31-Gitcoin:Grants	0x301605c95acbed7a1fd9c2c0deee964e2afbd0c3	Grant 1353 - Synapsis. Network 🌌🌱		
+31-Gitcoin:Grants	0x30755d3e65c0cf46c35b72d11e52d941c5fc3a3e	Grant 0026 Peepeth: Social Network for a Better World		
+30-Contracts	0x32a3256a4b15badd4a6e072a03d23404d925a5cf	Celsius Network: Contract		
+60-Rotki	0x33d08d8c7a168333a85285a68c0042b39fc3741d	AIOZ Network	AIOZ	18
+50-Tokens:ERC20	0x3543638ed4a9006e4840b105944271bcea15605d	UNetworkToken	UUU	18
+30-Contracts:Set Protocol	0x3700414bb6716fcd8b14344fb10ddd91fdea59ec	Kyber Network Wrapper		
+31-Giveth:Project	0x373483a546e5212b0d009db1dbf0d14daff80f9a	Luminus Network for New Americans		
+30-Contracts	0x389715f05658c4644b2089ec0557fbadd5805053	alco.network	ALCONET	18
+50-Tokens:ERC20	0x3c6ff50c9ec362efa359317009428d52115fe643	PeerEx Network	PERX	18
+50-Tokens:ERC20	0x3c72fca8523686fd9e5740b0826fa4bb376e0241	300FIT Network	FIT	18
+50-Tokens:ERC20	0x3cc83c2400e00a54fa1e588d62bc28bf15d5def5	OPTICAL NETWORK	OPTC	18
+50-Tokens:ERC20	0x3db6ba6ab6f95efed1a6e794cad492faaabf294d	LTO Network Token	LTO	8
+30-Contracts	0x3ef61d25b2bf303de52efdd5e50698bed8f9eb8d	Network State Genesis	NSG	
+50-Tokens:ERC20	0x4162178b78d6985480a308b2190ee5517460406d	Colu Local Network	CLN	18
+50-Tokens:ERC20	0x447f59850dc5f72609a5e5edc71fbf45fb3af17a	DOG Network	DOG	18
+50-Tokens:ERC20	0x4691937a7508860f876c9c0a2a617e7d9e945d4b	Wootrade Network	WOO	18
+31-Gitcoin:Core	0x4727e3265706c59dbc31e7c518960f4f843bb4da	GG19 - GreenPill Network - independent - OP - 5000		
+31-Gitcoin:Grants	0x476f2d18d28fa1a4fc62ce680fa7852524eb820f	Grant 1949 Network State Genesis		
+30-Contracts	0x4aa42145aa6ebf72e164c9bbc74fbd3788045016	POA Network: DAI-XDAI Bridge		
+50-Tokens:ERC20	0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604	WABnetwork	WAB	18
+31-Gitcoin:Grants	0x4c63f570590b7e145d5af265497aa23fa2bc0b8c	Grant 0653 Gas Stations Network		
+31-Gitcoin:Grants	0x4c994efd3cf90092dc35ee2e3d660d782652727b	Grant 2103 - Open Source Climate Offsets Network		
+30-Contracts	0x4df4636bb681912795aef87d6b00d6ae860e451f	cere.network	CERE	18
+30-Contracts	0x4e1cef77a02821096b682a81bbfc7b6c8c47fdcb	deeper.network	DPR	18
+30-Contracts	0x4e4856e74c51f45ebf5c730c045f678f4598488c	Caribbean Network Token	CBN	18
+60-Rotki	0x50b728d8d964fd00c2d0aad81718b71311fef68a	Synthetix Network Token (PoS)	SNX	18
+30-Contracts:Kyber Network	0x52166528fcc12681af996e409ee3a421a4e128a3	Kyber Fee Burner		
+31-Giveth:Project	0x5219ffb88175588510e9752a1ecaa3cd217ca783	Bloom Network		
+30-Contracts	0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973	Clovers Network Related		
+50-Tokens:ERC20	0x53066cddbc0099eb6c96785d9b3df2aaeede5da3	Penta Network Token	PNT	18
+30-Contracts	0x5346d0f80e2816fad329f2c140c870ffc3c3e2ef	EtherRouter: Colony Network		
+31-Giveth:Project	0x538f022f50038994f7a04a58f5004c1b98ed41a4	Alexander Youth Network		
+30-Contracts	0x54431918cec22932fcf97e54769f4e00f646690f	1inch Network: Deployer Related		
+31-Gitcoin:Grants	0x55b23ed53fe13060183b92979c737a8ef9a73b73	Grant 4201 - Spect Network		
+60-SmolAssets	0x56ee926bd8c72b2d5fa1af4d9e4cbb515a1e3adc	SynthetixNetwork	SNX	18
+30-Contracts:Kyber Network	0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve		
+30-Contracts	0x58e33f09744ba2fe6459b6d5562081109870f406	easify.network	EASY	10
+31-Giveth:Project	0x5bb21dbb7b2876b0524530c8666969ac9eaf9ede	Cryptolink Network		
+60-Rotki	0x5d2cd3a7190d38d271d9a4cceb193040ef259840	MURAT NETWORK	MRT	18
+50-Tokens:ERC20	0x5d858bcd53e085920620549214a8b27ce2f04670	POP Network Token	POP	18
+50-Tokens:ERC20	0x5f3789907b35dce5605b00c0be0a7ecdbfa8a841	Content and Ad Network	CAN	18
+50-Tokens:ERC20	0x607f4c5bb672230e8672085532f7e901544a7375	iEx.ec Network Token	RLC	9
+50-Tokens:ERC20	0x626e8036deb333b408be468f951bdb42433cbf18	AIOZ Network	AIOZ	18
+31-Giveth:Project	0x629224fc7ce36163040454cd51b37acc550b77cb	Rainforest Action Network		
+50-Tokens:ERC20	0x62a8aa7a0b58b6f2e275796f84ba5ad48c65d36d	CovidFree Network	COVIDFREE	18
+30-Contracts:Kyber Network	0x63825c174ab367968ec60f061753d3bbd36a0d8f	Kyber Reserve		
+30-Contracts	0x63a1b5bf2fbc4162a28d76cfcc40b0867bcf0e12	Shyft Network	SHFT	18
+31-Gitcoin:Grants	0x641845407bc5b9920ee786270ab25b73bcc88a19	Grant 2108 - SkyFeed • Decentralized Social Network		
+40-Exchanges	0x64a9edd3f5fce0252cd708e26c8dd11205742826	Uniswap: ANJ Aragon Network Juror	ANJ	
+30-Contracts	0x653f7f8e576f25608600e862559a7e7b1bbb2512	gelato.network	GELO	18
+50-Tokens:ERC20	0x661ab0ed68000491d98c796146bcf28c20d7c559	Shadows Network	DOWS	18
+55-Defi	0x6626593c237f530d15ae9980a95ef938ac15c35c	Gauntlet Network		
+60-Rotki	0x6626c47c00f1d87902fc13eecfac3ed06d5e8d8a	WOO Network	WOO	18
+31-Gitcoin:Grants	0x66aa8bee5366b6b48811ae0dac9fe5e1eefe1621	Grant 0049 Blockchain Education Network (ben)		
+50-Tokens:ERC20	0x679131f591b4f369acb8cd8c51e68596806c3916	Trustlines Network Token	TLN	18
+50-Tokens:ERC20	0x67b6d479c7bb412c54e03dca8e1bc6740ce6b99c	Kylin Network	KYL	18
+50-Tokens:ERC20	0x69af81e73a73b40adf4f3d4223cd9b1ece623074	Mask Network	MASK	18
+50-Tokens:ERC20	0x6a4c76874e686a7d080d173987a35a9c48905583	Luxurious Pro Network Token	LPNT	18
+30-Contracts	0x6a7ef4998eb9d0f706238756949f311a59e05745	Kenysians Network	KEN	18
+60-Rotki	0x6bff4fb161347ad7de4a625ae5aa3a1ca7077819	AdEx Network	ADX	18
+50-Tokens:ERC20	0x6fb3e0a217407efff7ca062d46c26e5d60a14d69	IoTeX Network	IOTX	18
+50-Tokens:ERC20	0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network	CDX	18
+50-Tokens:ERC20	0x70861e862e1ac0c96f853c8231826e469ead37b1	DOS Network Token	DOS	18
+31-Giveth:Project	0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70	Allergy &amp; Asthma Network		
+50-Tokens:ERC20	0x70d2b7c19352bb76e4409858ff5746e500f2b67c	Pawtocol Network UPI Token	UPI	18
+50-Tokens:ERC20	0x744d70fdbe2ba4cf95131626614a1763df805b9e	Status Network Token	SNT	18
+60-SmolAssets	0x747e42eb0591547a0ab429b3627816208c734ea7	ThresholdNetworkToken	T	18
+30-Contracts	0x75db8b92937f8f86213e523788ab9f066efde3fe	Celsius Network: Wallet 2		
+30-Contracts	0x765baefcb5418fa9f7dddacb1ccc07bd0e890e4e	Meteorite.network	Meteor	9
+30-Contracts:Kyber Network	0x798abda6cc246d0edba912092a2a3dbd3d11191b	Kyber Conversion Rates		
+30-Contracts	0x79c5a1ae586322a07bfb60be36e1b31ce8c84a1e	Freight Trust Network	EDI	18
+50-Tokens:ERC20	0x7b0c06043468469967dba22d1af33d77d44056c8	Morpheus.Network	MRPH	4
+50-Tokens:ERC20	0x7b2df125567815ac9b57da04b620f50bc93b320c	Archetypal Network	ACTP	8
+30-Contracts	0x7b320489785ffecf4588b11a2a6b22cc46979da1	casper.network	CSPR	18
+31-Giveth:Project	0x7bc1f30ffeaeee36baf17ea421830281b148b397	Trustlines Network		
+50-Tokens:ERC20	0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098	SANtiment network token	SAN	18
+50-Tokens:ERC20	0x7c5d5100b339fe7d995a893af6cb496b9474373c	Loon Network	LOON	18
+50-Tokens:ERC20	0x7c6c3b4e91923f080d6cc847a68d7330400a95d7	Union Network Dollar Token	UNDT	18
+50-Tokens:ERC20	0x7dd9c5cba05e151c895fde1cf355c9a1d5da6429	Golem Network Token	GLM	18
+30-Contracts:Set Protocol	0x818e6fecd516ecc3849daf6845e3ec868087b755	Kyber Network Proxy		
+50-Tokens:ERC20	0x8290333cef9e6d528dd5618fb97a76f268f3edd4	Ankr Network	ANKR	18
+60-Rotki	0x857b222fc79e1cbbf8ca5f78cb133d1b7cf34bbd	LTO Network	LTO	18
+60-SmolAssets	0x8700daec35af8ff88c16bdf0418774cb3d7599b4	SynthetixNetworkToken	SNX	18
+31-Gitcoin:Grants	0x8767aacd8ae48e6a23077548c24121e46dca0696	Grant 2728 - Using social networks for fun, affordable, and lucrative delivery.		
+50-Tokens:ERC20	0x881ef48211982d01e2cb7092c915e647cd40d85c	Open Trading Network	OTN	18
+31-Gitcoin:Grants	0x887a26839d9e33b1536857a24f91f192ce9d4732	Grant 2776 - pulp-network		
+30-Contracts	0x896a07e3788983ec52eaf0f9c6f6e031464ee2cc	Meridian Network	MRDN	18
+50-Tokens:ERC20	0x89ab32156e46f46d02ade3fecbe5fc4243b9aaed	pNetwork Token	PNT	18
+50-Tokens:ERC20	0x89cbeac5e8a13f0ebb4c74fadfc69be81a501106	Depository Network Token	DEPO	18
+31-Gitcoin:Grants	0x8a970573f88dbc7b69dfed2ba193c98c2d5d8314	Grant 0101 Geon App: Augmented Reality App Leveraging Poa Core Network		
+30-Contracts	0x8da25b8ed753a5910013167945a676921e864436	Bellevue Network	BLV	18
+50-Tokens:ERC20	0x8ea197328f3d72e148af942d9ea93f9cfb40626b	Not Aragon Network DAO launch council	NOTANLC	18
+31-Gitcoin:Grants	0x904065ba663879deb7e5f902220e7db97cbf04af	Grant 0681 Flowstake - Activity Staking Blockchain Network		
+31-Gitcoin:Grants	0x934b510d4c9103e6a87aef13b816fb080286d649	Grant 0159 - Mask Network - The Portal to the New, Open Internet.		
+50-Tokens:ERC20	0x940a2db1b7008b6c776d4faaca729d6d4a4aa551	Dusk Network	DUSK	18
+50-Tokens:ERC20	0x9469d013805bffb7d3debe5e7839237e535ec483	Darwinia Network Native Token	RING	18
+30-Contracts	0x95172ccbe8344fecd73d0a30f54123652981bd6f	Meridian Network	LOCK	18
+31-Giveth:Project	0x95bc825c196f42c13b0fd5d636251005f3756809	Blockchain Education Network		
+50-Tokens:ERC20	0x95cda24d2515491095d21d94f1b94f319e016d35	Vegetanetwork	Vegeta	18
+50-Tokens:ERC20	0x960b236a07cf122663c4303350609a66a7b288c0	Aragon Network Token	ANT	18
+60-Rotki	0x9678e42cebeb63f23197d726b29b1cb20d0064e5	Binance-Peg IoTeX Network	IOTX	18
+30-Contracts	0x970fd79a441a4db620dcdc5107ca89a0500bc1c7	shyft.network	SHFT	18
+30-Contracts:Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network		
+50-Tokens:ERC20	0x9b62ec1453cea5dde760aaf662048ca6eeb66e7f	Ethereum Cell Network	eCell	2
+50-Tokens:ERC20	0x9bde098be22658d057c3f1f185e3fd4653e2fbd1	KP2R.Network	KP2R	18
+31-Gitcoin:Grants	0x9c159121ceebf937e9bad98fd0c895d7f6038bd4	Grant 0565 Our Network - Community Driven Analytics		
+50-Tokens:ERC721	0x9dd91d61a7aa58537fcdbf16fd21be25731341b3	Opium Network Position Token	ONP	18
+60-SmolAssets	0xa00e3a3511aac35ca78530c85007afcd31753819	KyberNetworkCrystalv2	KNC	18
+60-Rotki	0xa0a2ee912caf7921eaabc866c6ef6fec8f7e90a4	Deeper Network	DPR	18
+50-Tokens:ERC20	0xa117000000f279d81a1d3cc75430faa017fa5a2e	Aragon Network Token	ANT	18
+31-Gitcoin:Grants	0xa1381b40e0a6b91814f77de19a7ad2cb21753184	Grant 0334 Interstate Network EVM optimistic rollup		
+50-Tokens:ERC20	0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49	IvyKoin Public Network Tokens	IVY	18
+31-Gitcoin:Grants	0xa5fb245acdf6a08ad8fa47b542a30068316fb2a1	Grant 4174 - DAO Stewards Network		
+50-Tokens:ERC20	0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token	JNT	18
+31-Gitcoin:Grants	0xa70b419a6028cd48f050d7251cf4fbbc682cc8ab	Grant 1995 - Ralie Network - Connecting Through Blockchain		
+60-Rotki	0xa719b8ab7ea7af0ddb4358719a34631bb79d15dc	Ferrum Network Token	FRM	18
+50-Tokens:ERC20	0xa74476443119a942de498590fe1f2454d7d4ac0d	Golem Network Token	GNT	18
+50-Tokens:ERC20	0xa9877b1e05d035899131dbd1e403825166d09f92	Media Network Token	MNT	18
+60-Rotki	0xabc9547b534519ff73921b1fba6e672b5f58d083	Wootrade Network	WOO.e	18
+50-Tokens:ERC20	0xade00c28244d5ce17d72e40330b1c318cd12b7c3	AdEx Network	ADX	18
+50-Tokens:ERC20	0xae697f994fc5ebc000f8e22ebffee04612f98a0d	LGCY Network	LGCY	18
+30-Contracts:Kyber Network	0xb0d27b025d5f79f955fa37cd3170b998661abff3	Kyber Orderbook Reserve		
+31-Gitcoin:Grants	0xb101f7893738e34e5333ba1e385ebe6cd65bf1ef	Grant 1096 Pareto Network - Financial Content Marketplace		
+31-Gitcoin:Grants	0xb1f6ddaafce638c21a56b0b2216e796ec9ca428e	Grant 0073 Poa Network Community Management Grant for Aly		
+50-Tokens:ERC20	0xb2135ab9695a7678dd590b1a996cb0f37bcb0718	Signals Network Token	SGN	9
+30-Contracts	0xb3a6af40e62e16f763fa2f4b2cf40b27f3d594f6	Cere.Network	CERE	18
+50-Tokens:ERC20	0xb417fa71a03a9badbf962589f2478353fd5693e2	Coin Display Network	CDN	18
+31-Gitcoin:Grants	0xb422e46540153ddaaccd8f5e899893fc53ab77b8	Grant 0338 2key Network Labs		
+50-Tokens:ERC20	0xb5261ca6b24103cf5d3784612b179b51913d4186	Aragon Network governor council	ANGC	18
+31-Gitcoin:Grants	0xb5e48595afb989ddbc97763cd516ae3a983a3e36	Grant 0072 Poa Network Community Management Grant for Khizer		
+31-Gitcoin:Grants	0xb64850fe701fb64667b6cc762aa2c12f2e02193c	Grant 0742 Crypto Community Ventures Network		
+30-Contracts	0xb940fef038d42648b756808e0b65707e4668f57c	Shyft Network	SHFT	18
+31-Gitcoin:Grants	0xb9c5ed064288dc62adb6e6a0d8106fd6e71ac2a2	Grant 4294 - Frontpage Ping: Decentralized Real-Time Collaboration Network Protocol for Web3		
+30-Contracts	0xbc5e593cd15e45243cdae9c229d1cde03d04b355	limestone.network	LIMEX	18
+30-Contracts	0xbd8adc576200e131de7320e7e1a0f2ac386c0ff3	hathor.network	HTR	18
+60-Rotki	0xbec243c995409e6520d7c41e404da5deba4b209b	Synthetix Network Token	SNX.e	18
+50-Tokens:ERC20	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX	
+50-Tokens:ERC20	0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f	Synthetix Network Token	SNX	18
+30-Contracts:Kyber Network	0xc0d3e654676b117663143eac33b45b620171244b	Kyber Order List		
+31-Gitcoin:Grants	0xc0dd8e21a31f62861e668833f47770592d379a4c	Grant 2694 - Matrix2 - An aggregated Layer 2 network		
+50-Tokens:ERC20	0xc1f976b91217e240885536af8b63bc8b5269a9be	Public Index Network	PIN	18
+31-Gitcoin:Grants	0xc22e8d32d3146efc54088f39ec9c29eaf3905b1d	Grant 3090 - Atelio : creating open , blockchain based digital supply network.		
+31-Gitcoin:Grants	0xc37e165fcfa2cb5cca7329dd9daa8cd72907b983	Grant 0037 Connext Network		
+31-Gitcoin:Grants	0xc41bc99044fd4836dba4104bcf53b6f2b62716b1	Grant 2190 - Layer 2 faucet in ethereum network		
+30-Contracts	0xc4a8b7e29e3c8ec560cd4945c1cf3461a85a148d	1inch Network: Deployer Related		
+30-Contracts	0xc5d351c25eb263f58f74b9b8ea5b11be9e3871a8	KEX	KIRA Network	18
+60-Rotki	0xc69eba65e87889f0805db717af06797055a0ba07	NitroNetwork	ncash	18
+50-Tokens:ERC20	0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network	INSTAR	18
+31-Gitcoin:Grants	0xc80e9ffcc3774f1fe5a925bda8f846fa4301eae8	Grant 4017 - Swell Network | Maintaining a decentralised, open, and liquid Ethereum ecosystem		
+30-Contracts	0xc89b4a8a121dd3e726fe7515e703936cf83e3350	Kper.network	KPER	18
+60-Rotki	0xc8e36f0a44fbeca89fdd5970439cbe62eb4b5d03	AdEx Network	ADX	18
+60-Rotki	0xcafcd85d8ca7ad1e1c6f82f651fa15e33aefd07b	Wootrade Network	WOO	18
+60-Rotki	0xcb6409696c58aa777317dbdfaa8bab4ac8e39eea	PeerEx_Network	PERX	18
+31-Gitcoin:Grants	0xcb8f9c706f9f5683d1bd6261f52f5f2b2182d780	Grant 1796 Crypton Network		
+50-Tokens:ERC20	0xcc1230436557f1250812fabbee5b8524b43250f3	NarutoNetwork	NARUTO	18
+50-Tokens:ERC20	0xcd62b1c403fa761baadfc74c525ce2b51780b184	Aragon Network Juror	ANJ	18
+50-Tokens:ERC20	0xcdf7028ceab81fa0c6971208e83fa7872994bee5	Threshold Network Token	T	18
+31-Gitcoin:Grants	0xcfb3c2dc81718ff0087d46e4d7b1c4692ded1586	Grant 1323 Resource Network		
+50-Tokens:ERC20	0xcfb98637bcae43c13323eaa1731ced2b716962fd	Nimiq Network Interim Token	NET	18
+50-Tokens:ERC20	0xd29f0b5b3f50b07fe9a9511f7d86f4f4bac3f8c4	Liquidity.Network Token	LQD	18
+50-Tokens:ERC20	0xd2fa8f92ea72abb35dbd6deca57173d22db2ba49	Origami Network	ORI	18
+31-Giveth:Project	0xd3a8518a8e75a6c9317027abd29847ea1965f2b1	Strengthening the Citizen Water Observatories Network		

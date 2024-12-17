@@ -1,0 +1,310 @@
+transactions?transactions=3648669.24&articulate&verbose&traces
+Args: [transactions=3648669.24 articulate verbose traces]
+Opts: {"transactions":["3648669.24"],"articulate":true,"traces":true,"verbose":true}
+Transactions:  [3648669.24]
+Articulate:  true
+Traces:  true
+Verbose:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "articulatedTx": {
+        "inputs": {
+          "hashes": [
+            "0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c",
+            "0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc",
+            "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573"
+          ],
+          "sealedBid": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
+        },
+        "name": "startAuctionsAndBid",
+        "stateMutability": "payable"
+      },
+      "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
+      "blockNumber": 3648669,
+      "date": "2017-05-04 11:27:22 UTC",
+      "ether": "0.01",
+      "from": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
+      "gas": 900000,
+      "gasCost": 10849501969331551,
+      "gasPrice": 20343286631,
+      "gasUsed": 533321,
+      "hash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
+      "input": "0xfebefd610000000000000000000000000000000000000000000000000000000000000040cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb898110000000000000000000000000000000000000000000000000000000000000003000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573",
+      "nonce": 411,
+      "receipt": {
+        "contractAddress": "0x0",
+        "effectiveGasPrice": 20343286631,
+        "gasUsed": 533321,
+        "logs": [
+          {
+            "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+            "addressName": "ENS: Old Registrar",
+            "articulatedLog": {
+              "inputs": {
+                "hash": "0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c",
+                "registrationDate": "1494329242"
+              },
+              "name": "AuctionStarted"
+            },
+            "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
+            "date": "2017-05-04 11:27:22 UTC",
+            "logIndex": 4,
+            "timestamp": 1493897242,
+            "topics": [
+              "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
+              "0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c"
+            ]
+          },
+          {
+            "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+            "addressName": "ENS: Old Registrar",
+            "articulatedLog": {
+              "inputs": {
+                "hash": "0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc",
+                "registrationDate": "1494329242"
+              },
+              "name": "AuctionStarted"
+            },
+            "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
+            "date": "2017-05-04 11:27:22 UTC",
+            "logIndex": 5,
+            "timestamp": 1493897242,
+            "topics": [
+              "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
+              "0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc"
+            ]
+          },
+          {
+            "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+            "addressName": "ENS: Old Registrar",
+            "articulatedLog": {
+              "inputs": {
+                "hash": "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573",
+                "registrationDate": "1494329242"
+              },
+              "name": "AuctionStarted"
+            },
+            "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
+            "date": "2017-05-04 11:27:22 UTC",
+            "logIndex": 6,
+            "timestamp": 1493897242,
+            "topics": [
+              "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
+              "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573"
+            ]
+          },
+          {
+            "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+            "addressName": "ENS: Old Registrar",
+            "articulatedLog": {
+              "inputs": {
+                "bidder": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
+                "deposit": "10000000000000000",
+                "hash": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
+              },
+              "name": "NewBid"
+            },
+            "data": "0x000000000000000000000000000000000000000000000000002386f26fc10000",
+            "date": "2017-05-04 11:27:22 UTC",
+            "logIndex": 7,
+            "timestamp": 1493897242,
+            "topics": [
+              "0xb556ff269c1b6714f432c36431e2041d28436a73b6c3f19c021827bbdc6bfc29",
+              "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811",
+              "0x000000000000000000000000d1220a0cf47c7b9be7a2e6ba89f429762e7b9adb"
+            ]
+          }
+        ],
+        "status": null
+      },
+      "timestamp": 1493897242,
+      "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+      "toName": "ENS: Old Registrar",
+      "traces": [
+        {
+          "action": {
+            "callType": "call",
+            "from": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
+            "gas": 869832,
+            "input": "0xfebefd610000000000000000000000000000000000000000000000000000000000000040cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb898110000000000000000000000000000000000000000000000000000000000000003000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573",
+            "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+            "toName": "ENS: Old Registrar",
+            "value": "10000000000000000"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "hashes": [
+                "0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c",
+                "0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc",
+                "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573"
+              ],
+              "sealedBid": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
+            },
+            "name": "startAuctionsAndBid",
+            "stateMutability": "payable"
+          },
+          "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
+          "blockNumber": 3648669,
+          "date": "2017-05-04 11:27:22 UTC",
+          "result": {
+            "gasUsed": 503153
+          },
+          "subtraces": 4,
+          "timestamp": 1493897242,
+          "traceAddress": [],
+          "transactionHash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
+          "transactionIndex": 24,
+          "type": "call"
+        },
+        {
+          "action": {
+            "callType": "call",
+            "from": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+            "fromName": "ENS: Old Registrar",
+            "gas": 852729,
+            "input": "0x02571be393cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae",
+            "to": "0x314159265dd8dbb310642f98f50c066173c1259b",
+            "toName": "ENS: Eth Name Service",
+            "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "node": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
+            },
+            "name": "owner",
+            "outputs": {
+              "val_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
+            }
+          },
+          "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
+          "blockNumber": 3648669,
+          "date": "2017-05-04 11:27:22 UTC",
+          "result": {
+            "gasUsed": 432,
+            "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
+          },
+          "subtraces": 0,
+          "timestamp": 1493897242,
+          "traceAddress": [
+            0
+          ],
+          "transactionHash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
+          "transactionIndex": 24,
+          "type": "call"
+        },
+        {
+          "action": {
+            "callType": "call",
+            "from": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+            "fromName": "ENS: Old Registrar",
+            "gas": 817375,
+            "input": "0x02571be393cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae",
+            "to": "0x314159265dd8dbb310642f98f50c066173c1259b",
+            "toName": "ENS: Eth Name Service",
+            "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "node": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
+            },
+            "name": "owner",
+            "outputs": {
+              "val_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
+            }
+          },
+          "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
+          "blockNumber": 3648669,
+          "date": "2017-05-04 11:27:22 UTC",
+          "result": {
+            "gasUsed": 432,
+            "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
+          },
+          "subtraces": 0,
+          "timestamp": 1493897242,
+          "traceAddress": [
+            1
+          ],
+          "transactionHash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
+          "transactionIndex": 24,
+          "type": "call"
+        },
+        {
+          "action": {
+            "callType": "call",
+            "from": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+            "fromName": "ENS: Old Registrar",
+            "gas": 782021,
+            "input": "0x02571be393cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae",
+            "to": "0x314159265dd8dbb310642f98f50c066173c1259b",
+            "toName": "ENS: Eth Name Service",
+            "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "node": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
+            },
+            "name": "owner",
+            "outputs": {
+              "val_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
+            }
+          },
+          "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
+          "blockNumber": 3648669,
+          "date": "2017-05-04 11:27:22 UTC",
+          "result": {
+            "gasUsed": 432,
+            "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
+          },
+          "subtraces": 0,
+          "timestamp": 1493897242,
+          "traceAddress": [
+            2
+          ],
+          "transactionHash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
+          "transactionIndex": 24,
+          "type": "call"
+        },
+        {
+          "action": {
+            "from": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+            "fromName": "ENS: Old Registrar",
+            "gas": 716881,
+            "init": "0x606060405260405160208061051683398101604052515b60028054600160a060020a03808416600160a060020a0319928316179092556000805433909316929091169190911790554260019081556005805460ff19169091179055346004555b505b6104a6806100706000396000f300606060405236156100885763ffffffff60e060020a60003504166305b34410811461008a5780630b5ab3d5146100ac57806313af4035146100be5780632b20e397146100dc5780633fa4f24514610108578063674f220f1461012a5780638da5cb5b14610156578063b0c8097214610182578063bbe427711461019c578063faab9d39146101b1575bfe5b341561009257fe5b61009a6101cf565b60408051918252519081900360200190f35b34156100b457fe5b6100bc6101d5565b005b34156100c657fe5b6100bc600160a060020a036004351661021d565b005b34156100e457fe5b6100ec6102c3565b60408051600160a060020a039092168252519081900360200190f35b341561011057fe5b61009a6102d2565b60408051918252519081900360200190f35b341561013257fe5b6100ec6102d8565b60408051600160a060020a039092168252519081900360200190f35b341561015e57fe5b6100ec6102e7565b60408051600160a060020a039092168252519081900360200190f35b341561018a57fe5b6100bc60043560243515156102f6565b005b34156101a457fe5b6100bc600435610382565b005b34156101b957fe5b6100bc600160a060020a0360043516610431565b005b60015481565b60055460ff16156101e65760006000fd5b600254604051600160a060020a039182169130163180156108fc02916000818181858888f193505050501561021a5761deadff5b5b565b60005433600160a060020a039081169116146102395760006000fd5b600160a060020a038116151561024f5760006000fd5b600280546003805473ffffffffffffffffffffffffffffffffffffffff19908116600160a060020a03808516919091179092559084169116811790915560408051918252517fa2ea9883a321a3e97b8266c2b078bfeec6d50c711ed71f874a90d500ae2eaf369181900360200190a15b5b50565b600054600160a060020a031681565b60045481565b600354600160a060020a031681565b600254600160a060020a031681565b60005433600160a060020a039081169116146103125760006000fd5b60055460ff1615156103245760006000fd5b8160045410156103345760006000fd5b6004829055600254604051600160a060020a039182169130163184900380156108fc02916000818181858888f193505050501580156103705750805b1561037b5760006000fd5b5b5b5b5050565b60005433600160a060020a0390811691161461039e5760006000fd5b60055460ff1615156103b05760006000fd5b6005805460ff1916905561dead6108fc6103e883810330600160a060020a031631025b604051919004801590920291906000818181858888f1935050505015156103fa5760006000fd5b6040517fbb2ce2f51803bba16bc85282b47deeea9a5c6223eabea1077be696b3f265cf1390600090a16102bf6101d5565b5b5b5b50565b60005433600160a060020a0390811691161461044d5760006000fd5b6000805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555b5b505600a165627a7a72305820fbfa6f8a2024760ef0e0eb29a332c9a820526e92f8b4fbcce6f00c7643234b140029000000000000000000000000d1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
+            "to": "0x0",
+            "value": "10000000000000000"
+          },
+          "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
+          "blockNumber": 3648669,
+          "date": "2017-05-04 11:27:22 UTC",
+          "result": {
+            "address": "0x9b810944879c013244192f0f94df08d324f7c994",
+            "gasUsed": 339168
+          },
+          "subtraces": 0,
+          "timestamp": 1493897242,
+          "traceAddress": [
+            3
+          ],
+          "transactionHash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
+          "transactionIndex": 24,
+          "type": "create"
+        }
+      ],
+      "transactionIndex": 24,
+      "value": "10000000000000000"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

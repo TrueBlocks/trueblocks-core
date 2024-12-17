@@ -1,0 +1,18 @@
+traces?transactions=46147.0&decache
+{
+  "data": [
+    {
+      "msg": "2 items totaling 784 bytes were removed from the traces cache."
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

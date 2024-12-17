@@ -1,0 +1,20 @@
+monitors?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533&list&fmt=json
+{
+  "data": [
+    {
+      "address": "0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533",
+      "fileSize": 48,
+      "nRecords": 5
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

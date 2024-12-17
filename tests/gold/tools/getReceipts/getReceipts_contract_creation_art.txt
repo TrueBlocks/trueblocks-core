@@ -1,0 +1,62 @@
+chifra receipts  1428968.4 --fmt json --articulate
+TEST[DATE|TIME] Transactions:  [1428968.4]
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 1428968,
+      "from": "0xb26842086a407eb4fef0465f502285f3d25d168b",
+      "gasUsed": 66946,
+      "logs": [
+        {
+          "address": "0x33990122638b9132ca29c723bdf037f1a891a70c",
+          "articulatedLog": {
+            "inputs": {
+              "addr": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+              "name": "0x54686544414f0000000000000000000000000000000000000000000000000000"
+            },
+            "name": "PrimaryChanged"
+          },
+          "blockHash": "0xa79635d63957a98d59cfb2c9e472e73c4c38d1107dffa28c02ce02e3b260189f",
+          "blockNumber": 1428968,
+          "date": "2016-04-30 02:34:08 UTC",
+          "logIndex": 0,
+          "timestamp": 1461983648,
+          "topics": [
+            "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+            "0x54686544414f0000000000000000000000000000000000000000000000000000",
+            "0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413"
+          ],
+          "transactionHash": "0x62bb4735a3f6d7ddabe3ba498996aa2fa2d0f6c6a4eae6a92e50fecd82e77714",
+          "transactionIndex": 4
+        },
+        {
+          "address": "0x33990122638b9132ca29c723bdf037f1a891a70c",
+          "articulatedLog": {
+            "inputs": {
+              "name": "0x54686544414f0000000000000000000000000000000000000000000000000000"
+            },
+            "name": "Changed"
+          },
+          "blockHash": "0xa79635d63957a98d59cfb2c9e472e73c4c38d1107dffa28c02ce02e3b260189f",
+          "blockNumber": 1428968,
+          "date": "2016-04-30 02:34:08 UTC",
+          "logIndex": 1,
+          "timestamp": 1461983648,
+          "topics": [
+            "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
+            "0x54686544414f0000000000000000000000000000000000000000000000000000"
+          ],
+          "transactionHash": "0x62bb4735a3f6d7ddabe3ba498996aa2fa2d0f6c6a4eae6a92e50fecd82e77714",
+          "transactionIndex": 4
+        }
+      ],
+      "status": 1,
+      "to": "0x33990122638b9132ca29c723bdf037f1a891a70c",
+      "transactionHash": "0x62bb4735a3f6d7ddabe3ba498996aa2fa2d0f6c6a4eae6a92e50fecd82e77714",
+      "transactionIndex": 4
+    }
+  ]
+}

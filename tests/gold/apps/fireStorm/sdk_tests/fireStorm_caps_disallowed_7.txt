@@ -1,0 +1,3 @@
+explore?terms=12.0&ether
+Args: [terms=12.0 ether]
+Unknown sdk endpoint: explore

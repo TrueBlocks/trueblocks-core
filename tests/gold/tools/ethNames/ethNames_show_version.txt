@@ -1,0 +1,2 @@
+chifra names  --version
+names version GHC-TrueBlocks//3.5.0-release

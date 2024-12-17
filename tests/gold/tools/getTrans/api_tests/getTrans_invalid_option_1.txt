@@ -1,0 +1,6 @@
+transactions?prot
+{
+  "errors": [
+    "Invalid key (prot) in transactions route."
+  ]
+}

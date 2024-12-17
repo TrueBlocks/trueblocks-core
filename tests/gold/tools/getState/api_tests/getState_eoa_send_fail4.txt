@@ -1,0 +1,6 @@
+state?send&calldata='0x12065fe01()'&parts=all
+{
+  "errors": [
+    "The --parts option is not available with the --call or --send option."
+  ]
+}

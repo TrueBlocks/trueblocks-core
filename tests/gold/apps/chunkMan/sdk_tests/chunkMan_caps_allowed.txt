@@ -1,0 +1,8 @@
+chunks?mode=blooms&chain&verbose&output&append&failOnPurpose
+Args: [mode=blooms chain verbose output append failOnPurpose]
+Opts: null
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in route."
+  ]
+}

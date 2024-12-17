@@ -1,0 +1,9 @@
+chifra monitors  --watch --commands ./command.fil --watchlist ./watches.txt --run_count --fmt json
+TEST[DATE|TIME] Watch:  true
+TEST[DATE|TIME] Watchlist:  ./watches.txt
+TEST[DATE|TIME] Commands:  ./command.fil
+TEST[DATE|TIME] RunCount:  1
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] Reading address list from ./watches.txt
+0-6 of 6: chifra export --freshen 0x0274d600fa9e2d9b18911a97f75bf7b3e61167d5 0x03836b0e02b4a613ba1d15834e6d77f409099d8f 0x0f6a7da303525288343a00a53e0557cc93920a6f 0x0c28a260c6b2969349eeaa3ba5253b616c1d9ac0 0x0ed97e3f247d915d8a2efb6a44f5acc4c6b71aae 0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+Processing item 5 in batch 0: 8 8

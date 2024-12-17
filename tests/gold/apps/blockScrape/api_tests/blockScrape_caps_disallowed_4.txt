@@ -1,0 +1,6 @@
+scrape?output
+{
+  "errors": [
+    "Invalid key (output) in scrape route."
+  ]
+}

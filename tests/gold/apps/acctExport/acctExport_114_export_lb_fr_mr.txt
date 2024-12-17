@@ -1,0 +1,11 @@
+chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --appearances --fmt txt --last_block 100 --first_record 1 --max_records 10
+TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
+TEST[DATE|TIME] Appearances:  true
+TEST[DATE|TIME] FirstRecord:  1
+TEST[DATE|TIME] MaxRecords:  10
+TEST[DATE|TIME] LastBlock:  100
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+address	blockNumber	transactionIndex
+0x05a56e2d52c817161883f50c441c3228cfe54d9f	5	99999
+0x05a56e2d52c817161883f50c441c3228cfe54d9f	56	99998

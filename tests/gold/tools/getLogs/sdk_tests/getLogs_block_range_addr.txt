@@ -1,0 +1,11 @@
+logs?transactions=1718400-1718420%20transactions=0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+Args: [transactions=1718400-1718420 transactions=0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
+Opts: {"transactions":["1718400-1718420 transactions=0xbb9bc244d798123fde783fcc1c72d3bb8c189413"]}
+Transactions:  [1718400-1718420 transactions=0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "The given value '1718400-1718420' is not a valid identifier."
+  ]
+}

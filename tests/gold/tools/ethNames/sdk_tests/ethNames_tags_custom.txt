@@ -1,0 +1,26 @@
+names?tags&custom
+Args: [tags custom]
+Opts: {"custom":true,"tags":true,"autoname":"0x0"}
+Custom:  true
+Tags:  true
+Format:  json
+{
+  "data": [
+    {
+      "tags": "81-Custom"
+    },
+    {
+      "tags": "91-Friends"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

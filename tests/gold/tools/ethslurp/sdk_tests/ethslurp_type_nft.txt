@@ -1,0 +1,76 @@
+slurp?addrs=0x00a3819199113fc6a6e6ba1298afde7377e2009b&parts=nfts&blocks=0-8500000
+Args: [addrs=0x00a3819199113fc6a6e6ba1298afde7377e2009b parts=nfts blocks=0-8500000]
+Opts: {"addrs":["0x00a3819199113fc6a6e6ba1298afde7377e2009b"],"blocks":["0-8500000"],"parts":16}
+Addrs:  [0x00a3819199113fc6a6e6ba1298afde7377e2009b]
+Blocks:  [0-8500000]
+Parts:  [nfts]
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "blockHash": "0x8bf4c00ee96191ad067f09f01a0d95a4c67b114dee00d8b7990a706cc76935b8",
+      "blockNumber": 8302300,
+      "contractAddress": "0xfac7bea255a6990f749363002136af6556b31e04",
+      "date": "2019-08-07 08:01:01 UTC",
+      "ether": "0",
+      "from": "0x0",
+      "gas": 171980,
+      "gasCost": 429950000000000,
+      "gasPrice": 5000000000,
+      "gasUsed": 85990,
+      "hasToken": true,
+      "hash": "0x6a5b97eaab251f4ced6858004f701b70a6a8244cca0eb5b7899f9d3ad3539b70",
+      "timestamp": 1565164861,
+      "to": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
+      "transactionIndex": 211,
+      "value": "0"
+    },
+    {
+      "blockHash": "0x3bd86efc7f75db1f1b9d47e1bae51eec1d7e64bc03c0f56db5830bf7e760d88e",
+      "blockNumber": 8302306,
+      "contractAddress": "0xfac7bea255a6990f749363002136af6556b31e04",
+      "date": "2019-08-07 08:02:05 UTC",
+      "ether": "0",
+      "from": "0x0",
+      "gas": 156980,
+      "gasCost": 392450000000000,
+      "gasPrice": 5000000000,
+      "gasUsed": 78490,
+      "hasToken": true,
+      "hash": "0x295e3b62a3503c1096e97201970fcce3ff961adf6f15e01a7942d1d41746772b",
+      "timestamp": 1565164925,
+      "to": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
+      "transactionIndex": 184,
+      "value": "0"
+    },
+    {
+      "blockHash": "0x90b2baf5b144010b896dfd84f917e693e40b206c395b45efbb486a057afb3240",
+      "blockNumber": 8302324,
+      "contractAddress": "0xfac7bea255a6990f749363002136af6556b31e04",
+      "date": "2019-08-07 08:06:49 UTC",
+      "ether": "0",
+      "from": "0x0",
+      "gas": 156916,
+      "gasCost": 392290000000000,
+      "gasPrice": 5000000000,
+      "gasUsed": 78458,
+      "hasToken": true,
+      "hash": "0xb93b6bcca8ffc5ada9523fc0290664e109e3176990fd6cddafd6a501d940399e",
+      "timestamp": 1565165209,
+      "to": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
+      "transactionIndex": 30,
+      "value": "0"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

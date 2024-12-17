@@ -1,0 +1,9 @@
+chifra chunks  index --belongs 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
+TEST[DATE|TIME] Mode:  index
+TEST[DATE|TIME] Blocks:  [0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2]
+TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+TEST[DATE|TIME] Belongs:  [0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9]
+TEST[DATE|TIME] Format:  json
+{
+  "data": []
+}

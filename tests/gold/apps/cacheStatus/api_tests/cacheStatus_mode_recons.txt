@@ -1,0 +1,6 @@
+status?modes=recons&verbose&maxRecords=2
+{
+  "errors": [
+    "The mode option (recons) must be one of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]"
+  ]
+}

@@ -1,0 +1,13 @@
+blocks?blocks=4012000-4012001&uniq&uncles
+Args: [blocks=4012000-4012001 uniq uncles]
+Opts: {"blocks":["4012000-4012001"],"uncles":true,"uniq":true}
+Blocks:  [4012000-4012001]
+Uncles:  true
+Uniq:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "Please choose only a single mode (--uncles, --logs, --withdrawal, etc.)"
+  ]
+}

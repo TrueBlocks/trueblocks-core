@@ -1,0 +1,28 @@
+chifra export  0x6193f68d97921f4765d72a3e6964fc990c59e0e5 --first_block 17013606 --last_block 17083530 --fmt json
+TEST[DATE|TIME] Addrs:  [0x6193f68d97921f4765d72a3e6964fc990c59e0e5]
+TEST[DATE|TIME] FirstBlock:  17013606
+TEST[DATE|TIME] LastBlock:  17083530
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockHash": "0xcecf698db77636cebbbf6ee9c68de9ae117269cccedd8a20f8e951a9982abc90",
+      "blockNumber": 17013606,
+      "date": "2023-04-09 22:15:47 UTC",
+      "ether": "0.395974547020990926",
+      "from": "0x0000000000000000000000000000004d696e6572",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "timestamp": 1681078547,
+      "to": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "traces": [],
+      "transactionIndex": 99999,
+      "value": "395974547020990926"
+    }
+  ]
+}

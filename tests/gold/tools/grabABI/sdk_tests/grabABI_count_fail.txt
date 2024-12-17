@@ -1,0 +1,12 @@
+abis?count&find=0x1aa3a008
+Args: [count find=0x1aa3a008]
+Opts: {"proxyFor":"0x0","count":true,"find":["0x1aa3a008"]}
+Count:  true
+Find:  [0x1aa3a008]
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "The --count and --list options must be used alone."
+  ]
+}

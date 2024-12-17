@@ -1,0 +1,7 @@
+chifra abis  --count --list
+TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+count
+199

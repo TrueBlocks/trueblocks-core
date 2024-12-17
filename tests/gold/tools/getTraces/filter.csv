@@ -1,0 +1,6 @@
+--filter:3068100,3068200,,0x8bbB73BCB5d553B5A556358d27625323Fd781D37,1000,100 --output test1.txt
+--filter:3068100,3068200,,0x8bbB73BCB5d553B5A556358d27625323Fd781D37,, --output test2.txt
+--filter:10700000,10700001,0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc,0xbfd3b2330b55a149de2440701948e6194fb8df2c,, --output test3.txt
+--filter:1000000,1000002 --output test4.txt
+--filter:10700000,10700001,,,,3 --output test5.txt
+--filter:10700000,10700001,,,1,2 --output test6.txt

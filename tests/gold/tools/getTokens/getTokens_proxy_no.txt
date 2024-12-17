@@ -1,0 +1,12 @@
+chifra tokens  0x00000000441378008ea67f4284a57932b1c000a5 --fmt json 7442048 --parts all
+TEST[DATE|TIME] Addrs:  [0x00000000441378008ea67f4284a57932b1c000a5]
+TEST[DATE|TIME] Blocks:  [7442048]
+TEST[DATE|TIME] Parts:  [all]
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+{
+  "data": [],
+  "errors": [
+    "0x00000000441378008ea67f4284a57932b1c000a5 address is not token"
+  ]
+}

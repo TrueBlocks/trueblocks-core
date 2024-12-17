@@ -1,0 +1,6 @@
+when?blocks=12&cache&decache
+{
+  "errors": [
+    "The --cache and --decache options are mutually exclusive."
+  ]
+}

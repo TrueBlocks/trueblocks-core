@@ -1,0 +1,17 @@
+chifra names  0x0000000000000000000000000000000010101010 --fmt json --expand
+TEST[DATE|TIME] Terms:  [0x0000000000000000000000000000000010101010]
+TEST[DATE|TIME] Expand:  true
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "address": "0x0000000000000000000000000000000010101010",
+      "decimals": 13,
+      "deleted": true,
+      "name": "NAME_CHANGED",
+      "source": "SOURCE_CHANGED",
+      "symbol": "SYMBOL_CHANGED",
+      "tags": "TAGS_CHANGED"
+    }
+  ]
+}

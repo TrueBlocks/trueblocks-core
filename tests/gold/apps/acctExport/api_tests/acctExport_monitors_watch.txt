@@ -1,0 +1,6 @@
+monitors?watch&commands=./command.fil&watchlist=./watches.txt&runCount=1&fmt=json
+{
+  "errors": [
+    "The --watch options is not available from the API"
+  ]
+}

@@ -1,0 +1,14 @@
+state?send&calldata='0x12065fe01()'&noZero
+Args: [send calldata='0x12065fe01()' noZero]
+Opts: {"noZero":true,"send":true,"calldata":"'0x12065fe01()'","proxyFor":"0x0"}
+Blocks:  [17000000]
+NoZero:  true
+Send:  true
+Calldata:  0x12065fe01()
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The --no_zero option is not available with the --call or --send option."
+  ]
+}

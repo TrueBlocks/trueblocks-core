@@ -1,0 +1,6 @@
+names?terms=0xf503017d7baf7fbc0fff7492b751025c6a78179b&output=output_test_file&noHeader&append
+{
+  "errors": [
+    "The --output option is not available in api mode."
+  ]
+}

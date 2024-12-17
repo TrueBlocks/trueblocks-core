@@ -1,0 +1,12 @@
+chifra list  0x007f7f58d3eb5b7510a301ecc749fc1fcddbe14d 0x4444DEADdeadDEADdeadDEADdeadDEADdeadDEAD 0x2910543af39aba0cd09dbb2d50200b3e800a63d2 --first_block 100000 --last_block 100100 --fmt txt --no_zero --count
+TEST[DATE|TIME] Addrs:  [0x007f7f58d3eb5b7510a301ecc749fc1fcddbe14d 0x4444deaddeaddeaddeaddeaddeaddeaddeaddead 0x2910543af39aba0cd09dbb2d50200b3e800a63d2]
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] NoZero:  true
+TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+TEST[DATE|TIME] FirstBlock:  100000
+TEST[DATE|TIME] LastBlock:  100100
+TEST[DATE|TIME] Format:  txt
+address	nRecords	fileSize
+0x007f7f58d3eb5b7510a301ecc749fc1fcddbe14d	6	57005
+0x2910543af39aba0cd09dbb2d50200b3e800a63d2	5	57005
+EROR[DATE|TIME] no appearances found for 0x4444deaddeaddeaddeaddeaddeaddeaddeaddead

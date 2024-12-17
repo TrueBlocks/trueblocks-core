@@ -1,0 +1,28 @@
+chifra traces  --fmt json --filter 4370000!4370002!!!!1
+TEST[DATE|TIME] Filter:  4370000!4370002!!!!1
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] map[after:0 count:1 fromAddress:0x0 fromBlock:4370000 toAddress:0x0 toBlock:4370002] {4370000 4370002}
+{
+  "data": [
+    {
+      "action": {
+        "callType": "call",
+        "from": "0xa0bb4ba19f578a63fa3f67adaf7bbca15ccadc45",
+        "gas": 69000,
+        "to": "0x2462af233d074e331cea1d19b1b2733dfd7a2cf7",
+        "value": "99000000000000000"
+      },
+      "blockHash": "0xb1fcff633029ee18ab6482b58ff8b6e95dd7c82a954c852157152a7a6d32785e",
+      "blockNumber": 4370000,
+      "date": "2017-10-16 05:22:11 UTC",
+      "result": {},
+      "subtraces": 0,
+      "timestamp": 1508131331,
+      "traceAddress": [],
+      "transactionHash": "0x1421a887a02301ae127bf2cd4c006116053c9dc4a255e69ea403a2d77c346cf5",
+      "transactionIndex": 0,
+      "type": "call"
+    }
+  ]
+}

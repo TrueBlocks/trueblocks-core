@@ -1,0 +1,6 @@
+chunks?mode=manifest&rewrite
+{
+  "errors": [
+    "The --rewrite option requires --pin."
+  ]
+}

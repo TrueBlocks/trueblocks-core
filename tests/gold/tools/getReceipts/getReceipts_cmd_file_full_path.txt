@@ -1,0 +1,8 @@
+chifra receipts  --file cmd_file.9 --no_header 5644782.0
+TEST[DATE|TIME] Transactions:  [5644782.0]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  cmd_file.9
+TEST[DATE|TIME] OutputFn:  /tmp/output_test_with_path.json
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }

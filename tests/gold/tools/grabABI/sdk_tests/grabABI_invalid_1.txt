@@ -1,0 +1,11 @@
+abis?addrs=0x00001
+Args: [addrs=0x00001]
+Opts: {"addrs":["0x00001"],"proxyFor":"0x0"}
+Addrs:  [0x00001]
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "Please specify at least one valid Ethereum address."
+  ]
+}

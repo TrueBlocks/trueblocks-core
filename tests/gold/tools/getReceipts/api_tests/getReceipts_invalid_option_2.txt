@@ -1,0 +1,6 @@
+receipts?other
+{
+  "errors": [
+    "Invalid key (other) in receipts route."
+  ]
+}

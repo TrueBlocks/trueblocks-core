@@ -1,0 +1,1536 @@
+chunks?mode=index&verbose
+Args: [mode=index verbose]
+Opts: {"mode":4,"publisher":"0x0","verbose":true}
+Mode:  index
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+Verbose:  true
+Format:  json
+{
+  "data": [
+    {
+      "fileSize": 320192,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 8893,
+      "nAppearances": 8893,
+      "range": "000000000-000000000",
+      "rangeDates": {
+        "firstDate": "2015-07-30 15:26:15 UTC",
+        "firstTs": 1438269975,
+        "lastDate": "2015-07-30 15:26:15 UTC",
+        "lastTs": 1438269975
+      }
+    },
+    {
+      "fileSize": 16821332,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 29330,
+      "nAppearances": 2000006,
+      "range": "000000001-000590510",
+      "rangeDates": {
+        "firstDate": "2015-07-30 15:26:28 UTC",
+        "firstTs": 1438269988,
+        "lastDate": "2015-11-24 16:49:49 UTC",
+        "lastTs": 1448383789
+      }
+    },
+    {
+      "fileSize": 20604676,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 164448,
+      "nAppearances": 2000011,
+      "range": "000590511-000864345",
+      "rangeDates": {
+        "firstDate": "2015-11-24 16:50:14 UTC",
+        "firstTs": 1448383814,
+        "lastDate": "2016-01-17 23:04:01 UTC",
+        "lastTs": 1453071841
+      }
+    },
+    {
+      "fileSize": 18268324,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 81010,
+      "nAppearances": 2000000,
+      "range": "000864346-001076302",
+      "rangeDates": {
+        "firstDate": "2016-01-17 23:04:18 UTC",
+        "firstTs": 1453071858,
+        "lastDate": "2016-02-29 03:58:16 UTC",
+        "lastTs": 1456718296
+      }
+    },
+    {
+      "fileSize": 18376376,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 84861,
+      "nAppearances": 2000028,
+      "range": "001076303-001229773",
+      "rangeDates": {
+        "firstDate": "2016-02-29 03:58:22 UTC",
+        "firstTs": 1456718302,
+        "lastDate": "2016-03-28 00:31:38 UTC",
+        "lastTs": 1459125098
+      }
+    },
+    {
+      "fileSize": 17737464,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 62049,
+      "nAppearances": 2000006,
+      "range": "001229774-001371360",
+      "rangeDates": {
+        "firstDate": "2016-03-28 00:31:44 UTC",
+        "firstTs": 1459125104,
+        "lastDate": "2016-04-20 13:09:16 UTC",
+        "lastTs": 1461157756
+      }
+    },
+    {
+      "fileSize": 18186324,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 78078,
+      "nAppearances": 2000012,
+      "range": "001371361-001504334",
+      "rangeDates": {
+        "firstDate": "2016-04-20 13:09:36 UTC",
+        "firstTs": 1461157776,
+        "lastDate": "2016-05-12 14:56:54 UTC",
+        "lastTs": 1463065014
+      }
+    },
+    {
+      "fileSize": 19273720,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 116915,
+      "nAppearances": 2000007,
+      "range": "001504335-001613037",
+      "rangeDates": {
+        "firstDate": "2016-05-12 14:56:59 UTC",
+        "firstTs": 1463065019,
+        "lastDate": "2016-05-30 16:08:57 UTC",
+        "lastTs": 1464624537
+      }
+    },
+    {
+      "fileSize": 19736132,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 133328,
+      "nAppearances": 2000363,
+      "range": "001613038-001729014",
+      "rangeDates": {
+        "firstDate": "2016-05-30 16:09:32 UTC",
+        "firstTs": 1464624572,
+        "lastDate": "2016-06-18 22:44:54 UTC",
+        "lastTs": 1466289894
+      }
+    },
+    {
+      "fileSize": 19450532,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 123158,
+      "nAppearances": 2000258,
+      "range": "001729015-001848056",
+      "rangeDates": {
+        "firstDate": "2016-06-18 22:45:10 UTC",
+        "firstTs": 1466289910,
+        "lastDate": "2016-07-08 15:35:05 UTC",
+        "lastTs": 1467992105
+      }
+    },
+    {
+      "fileSize": 19881428,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 138604,
+      "nAppearances": 2000059,
+      "range": "001848057-001963111",
+      "rangeDates": {
+        "firstDate": "2016-07-08 15:35:32 UTC",
+        "firstTs": 1467992132,
+        "lastDate": "2016-07-27 18:03:21 UTC",
+        "lastTs": 1469642601
+      }
+    },
+    {
+      "fileSize": 18933904,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 104735,
+      "nAppearances": 2000160,
+      "range": "001963112-002067763",
+      "rangeDates": {
+        "firstDate": "2016-07-27 18:03:32 UTC",
+        "firstTs": 1469642612,
+        "lastDate": "2016-08-14 02:01:38 UTC",
+        "lastTs": 1471140098
+      }
+    },
+    {
+      "fileSize": 18302684,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 82220,
+      "nAppearances": 2000060,
+      "range": "002067764-002172382",
+      "rangeDates": {
+        "firstDate": "2016-08-14 02:01:55 UTC",
+        "firstTs": 1471140115,
+        "lastDate": "2016-08-31 09:03:35 UTC",
+        "lastTs": 1472634215
+      }
+    },
+    {
+      "fileSize": 18534080,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 90455,
+      "nAppearances": 2000162,
+      "range": "002172383-002269848",
+      "rangeDates": {
+        "firstDate": "2016-08-31 09:03:40 UTC",
+        "firstTs": 1472634220,
+        "lastDate": "2016-09-16 12:06:49 UTC",
+        "lastTs": 1474027609
+      }
+    },
+    {
+      "fileSize": 18278608,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 73581,
+      "nAppearances": 2027287,
+      "range": "002269849-002288338",
+      "rangeDates": {
+        "firstDate": "2016-09-16 12:07:00 UTC",
+        "firstTs": 1474027620,
+        "lastDate": "2016-09-19 14:39:17 UTC",
+        "lastTs": 1474295957
+      }
+    },
+    {
+      "fileSize": 4928068,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 67944,
+      "nAppearances": 378199,
+      "range": "002288339-002300000",
+      "rangeDates": {
+        "firstDate": "2016-09-19 14:39:33 UTC",
+        "firstTs": 1474295973,
+        "lastDate": "2016-09-21 11:41:01 UTC",
+        "lastTs": 1474458061
+      }
+    },
+    {
+      "fileSize": 18488932,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 87620,
+      "nAppearances": 2004441,
+      "range": "002300001-002328274",
+      "rangeDates": {
+        "firstDate": "2016-09-21 11:41:03 UTC",
+        "firstTs": 1474458063,
+        "lastDate": "2016-09-26 04:28:09 UTC",
+        "lastTs": 1474864089
+      }
+    },
+    {
+      "fileSize": 16254832,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 6439,
+      "nAppearances": 2009312,
+      "range": "002328275-002328946",
+      "rangeDates": {
+        "firstDate": "2016-09-26 04:28:22 UTC",
+        "firstTs": 1474864102,
+        "lastDate": "2016-09-26 07:24:45 UTC",
+        "lastTs": 1474874685
+      }
+    },
+    {
+      "fileSize": 16268472,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 6711,
+      "nAppearances": 2010065,
+      "range": "002328947-002329552",
+      "rangeDates": {
+        "firstDate": "2016-09-26 07:24:56 UTC",
+        "firstTs": 1474874696,
+        "lastDate": "2016-09-26 10:00:20 UTC",
+        "lastTs": 1474884020
+      }
+    },
+    {
+      "fileSize": 16714252,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 25506,
+      "nAppearances": 2000005,
+      "range": "002329553-002335351",
+      "rangeDates": {
+        "firstDate": "2016-09-26 10:00:33 UTC",
+        "firstTs": 1474884033,
+        "lastDate": "2016-09-27 09:25:20 UTC",
+        "lastTs": 1474968320
+      }
+    },
+    {
+      "fileSize": 18179224,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 77827,
+      "nAppearances": 2000003,
+      "range": "002335352-002376486",
+      "rangeDates": {
+        "firstDate": "2016-09-27 09:25:39 UTC",
+        "firstTs": 1474968339,
+        "lastDate": "2016-10-04 04:02:34 UTC",
+        "lastTs": 1475553754
+      }
+    },
+    {
+      "fileSize": 17620200,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 55899,
+      "nAppearances": 2006873,
+      "range": "002376487-002381410",
+      "rangeDates": {
+        "firstDate": "2016-10-04 04:03:01 UTC",
+        "firstTs": 1475553781,
+        "lastDate": "2016-10-04 23:40:11 UTC",
+        "lastTs": 1475624411
+      }
+    },
+    {
+      "fileSize": 17799104,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 61451,
+      "nAppearances": 2009804,
+      "range": "002381411-002382747",
+      "rangeDates": {
+        "firstDate": "2016-10-04 23:40:39 UTC",
+        "firstTs": 1475624439,
+        "lastDate": "2016-10-05 05:17:37 UTC",
+        "lastTs": 1475644657
+      }
+    },
+    {
+      "fileSize": 17325892,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 44940,
+      "nAppearances": 2008441,
+      "range": "002382748-002383272",
+      "rangeDates": {
+        "firstDate": "2016-10-05 05:17:54 UTC",
+        "firstTs": 1475644674,
+        "lastDate": "2016-10-05 07:29:46 UTC",
+        "lastTs": 1475652586
+      }
+    },
+    {
+      "fileSize": 17287356,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 45338,
+      "nAppearances": 2002231,
+      "range": "002383273-002383699",
+      "rangeDates": {
+        "firstDate": "2016-10-05 07:29:58 UTC",
+        "firstTs": 1475652598,
+        "lastDate": "2016-10-05 09:16:52 UTC",
+        "lastTs": 1475659012
+      }
+    },
+    {
+      "fileSize": 17329600,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 44939,
+      "nAppearances": 2008908,
+      "range": "002383700-002384095",
+      "rangeDates": {
+        "firstDate": "2016-10-05 09:17:16 UTC",
+        "firstTs": 1475659036,
+        "lastDate": "2016-10-05 11:03:42 UTC",
+        "lastTs": 1475665422
+      }
+    },
+    {
+      "fileSize": 17278840,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 45081,
+      "nAppearances": 2002066,
+      "range": "002384096-002384451",
+      "rangeDates": {
+        "firstDate": "2016-10-05 11:03:51 UTC",
+        "firstTs": 1475665431,
+        "lastDate": "2016-10-05 12:35:52 UTC",
+        "lastTs": 1475670952
+      }
+    },
+    {
+      "fileSize": 17304396,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 45760,
+      "nAppearances": 2002884,
+      "range": "002384452-002384824",
+      "rangeDates": {
+        "firstDate": "2016-10-05 12:36:11 UTC",
+        "firstTs": 1475670971,
+        "lastDate": "2016-10-05 14:04:32 UTC",
+        "lastTs": 1475676272
+      }
+    },
+    {
+      "fileSize": 17719488,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 57543,
+      "nAppearances": 2013530,
+      "range": "002384825-002385320",
+      "rangeDates": {
+        "firstDate": "2016-10-05 14:04:44 UTC",
+        "firstTs": 1475676284,
+        "lastDate": "2016-10-05 16:01:21 UTC",
+        "lastTs": 1475683281
+      }
+    },
+    {
+      "fileSize": 17370896,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 47847,
+      "nAppearances": 2003892,
+      "range": "002385321-002385675",
+      "rangeDates": {
+        "firstDate": "2016-10-05 16:01:38 UTC",
+        "firstTs": 1475683298,
+        "lastDate": "2016-10-05 17:33:51 UTC",
+        "lastTs": 1475688831
+      }
+    },
+    {
+      "fileSize": 17358408,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 47479,
+      "nAppearances": 2003619,
+      "range": "002385676-002385987",
+      "rangeDates": {
+        "firstDate": "2016-10-05 17:34:12 UTC",
+        "firstTs": 1475688852,
+        "lastDate": "2016-10-05 18:48:46 UTC",
+        "lastTs": 1475693326
+      }
+    },
+    {
+      "fileSize": 17437028,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 47220,
+      "nAppearances": 2014353,
+      "range": "002385988-002386281",
+      "rangeDates": {
+        "firstDate": "2016-10-05 18:48:59 UTC",
+        "firstTs": 1475693339,
+        "lastDate": "2016-10-05 19:57:37 UTC",
+        "lastTs": 1475697457
+      }
+    },
+    {
+      "fileSize": 17401020,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 48258,
+      "nAppearances": 2006219,
+      "range": "002386282-002386615",
+      "rangeDates": {
+        "firstDate": "2016-10-05 19:57:54 UTC",
+        "firstTs": 1475697474,
+        "lastDate": "2016-10-05 21:16:37 UTC",
+        "lastTs": 1475702197
+      }
+    },
+    {
+      "fileSize": 17359116,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 47542,
+      "nAppearances": 2003487,
+      "range": "002386616-002386931",
+      "rangeDates": {
+        "firstDate": "2016-10-05 21:17:08 UTC",
+        "firstTs": 1475702228,
+        "lastDate": "2016-10-05 22:35:43 UTC",
+        "lastTs": 1475706943
+      }
+    },
+    {
+      "fileSize": 18118048,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 75583,
+      "nAppearances": 2000210,
+      "range": "002386932-002393673",
+      "rangeDates": {
+        "firstDate": "2016-10-05 22:36:23 UTC",
+        "firstTs": 1475706983,
+        "lastDate": "2016-10-07 01:49:06 UTC",
+        "lastTs": 1475804946
+      }
+    },
+    {
+      "fileSize": 13087964,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 62172,
+      "nAppearances": 1418388,
+      "range": "002393674-002400000",
+      "rangeDates": {
+        "firstDate": "2016-10-07 01:49:20 UTC",
+        "firstTs": 1475804960,
+        "lastDate": "2016-10-08 03:17:46 UTC",
+        "lastTs": 1475896666
+      }
+    },
+    {
+      "fileSize": 17013496,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 34753,
+      "nAppearances": 2005046,
+      "range": "002400001-002402271",
+      "rangeDates": {
+        "firstDate": "2016-10-08 03:18:09 UTC",
+        "firstTs": 1475896689,
+        "lastDate": "2016-10-08 12:06:55 UTC",
+        "lastTs": 1475928415
+      }
+    },
+    {
+      "fileSize": 16790220,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 26434,
+      "nAppearances": 2006253,
+      "range": "002402272-002404080",
+      "rangeDates": {
+        "firstDate": "2016-10-08 12:07:02 UTC",
+        "firstTs": 1475928422,
+        "lastDate": "2016-10-08 19:02:02 UTC",
+        "lastTs": 1475953322
+      }
+    },
+    {
+      "fileSize": 16803776,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 27965,
+      "nAppearances": 2002589,
+      "range": "002404081-002404557",
+      "rangeDates": {
+        "firstDate": "2016-10-08 19:02:10 UTC",
+        "firstTs": 1475953330,
+        "lastDate": "2016-10-08 20:55:54 UTC",
+        "lastTs": 1475960154
+      }
+    },
+    {
+      "fileSize": 16801868,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 27464,
+      "nAppearances": 2004104,
+      "range": "002404558-002404985",
+      "rangeDates": {
+        "firstDate": "2016-10-08 20:56:10 UTC",
+        "firstTs": 1475960170,
+        "lastDate": "2016-10-08 22:34:54 UTC",
+        "lastTs": 1475966094
+      }
+    },
+    {
+      "fileSize": 16696960,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 20211,
+      "nAppearances": 2016376,
+      "range": "002404986-002405404",
+      "rangeDates": {
+        "firstDate": "2016-10-08 22:35:01 UTC",
+        "firstTs": 1475966101,
+        "lastDate": "2016-10-09 00:11:36 UTC",
+        "lastTs": 1475971896
+      }
+    },
+    {
+      "fileSize": 16709168,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 20351,
+      "nAppearances": 2017412,
+      "range": "002405405-002405844",
+      "rangeDates": {
+        "firstDate": "2016-10-09 00:11:45 UTC",
+        "firstTs": 1475971905,
+        "lastDate": "2016-10-09 01:56:48 UTC",
+        "lastTs": 1475978208
+      }
+    },
+    {
+      "fileSize": 16610412,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 21148,
+      "nAppearances": 2002278,
+      "range": "002405845-002406312",
+      "rangeDates": {
+        "firstDate": "2016-10-09 01:56:57 UTC",
+        "firstTs": 1475978217,
+        "lastDate": "2016-10-09 03:45:05 UTC",
+        "lastTs": 1475984705
+      }
+    },
+    {
+      "fileSize": 16616548,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 21478,
+      "nAppearances": 2001890,
+      "range": "002406313-002406808",
+      "rangeDates": {
+        "firstDate": "2016-10-09 03:45:33 UTC",
+        "firstTs": 1475984733,
+        "lastDate": "2016-10-09 05:44:54 UTC",
+        "lastTs": 1475991894
+      }
+    },
+    {
+      "fileSize": 16903000,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 28227,
+      "nAppearances": 2014075,
+      "range": "002406809-002407234",
+      "rangeDates": {
+        "firstDate": "2016-10-09 05:45:07 UTC",
+        "firstTs": 1475991907,
+        "lastDate": "2016-10-09 07:27:53 UTC",
+        "lastTs": 1475998073
+      }
+    },
+    {
+      "fileSize": 16908912,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 29363,
+      "nAppearances": 2010838,
+      "range": "002407235-002407824",
+      "rangeDates": {
+        "firstDate": "2016-10-09 07:28:09 UTC",
+        "firstTs": 1475998089,
+        "lastDate": "2016-10-09 09:48:43 UTC",
+        "lastTs": 1476006523
+      }
+    },
+    {
+      "fileSize": 16631512,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 21623,
+      "nAppearances": 2003253,
+      "range": "002407825-002408296",
+      "rangeDates": {
+        "firstDate": "2016-10-09 09:48:51 UTC",
+        "firstTs": 1476006531,
+        "lastDate": "2016-10-09 11:46:21 UTC",
+        "lastTs": 1476013581
+      }
+    },
+    {
+      "fileSize": 16857624,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 28209,
+      "nAppearances": 2008466,
+      "range": "002408297-002408882",
+      "rangeDates": {
+        "firstDate": "2016-10-09 11:46:36 UTC",
+        "firstTs": 1476013596,
+        "lastDate": "2016-10-09 13:59:46 UTC",
+        "lastTs": 1476021586
+      }
+    },
+    {
+      "fileSize": 16843104,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 28329,
+      "nAppearances": 2006231,
+      "range": "002408883-002409392",
+      "rangeDates": {
+        "firstDate": "2016-10-09 13:59:57 UTC",
+        "firstTs": 1476021597,
+        "lastDate": "2016-10-09 15:58:32 UTC",
+        "lastTs": 1476028712
+      }
+    },
+    {
+      "fileSize": 16929832,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 28415,
+      "nAppearances": 2016771,
+      "range": "002409393-002409941",
+      "rangeDates": {
+        "firstDate": "2016-10-09 15:58:44 UTC",
+        "firstTs": 1476028724,
+        "lastDate": "2016-10-09 18:08:53 UTC",
+        "lastTs": 1476036533
+      }
+    },
+    {
+      "fileSize": 16605856,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 20831,
+      "nAppearances": 2002818,
+      "range": "002409942-002410553",
+      "rangeDates": {
+        "firstDate": "2016-10-09 18:09:10 UTC",
+        "firstTs": 1476036550,
+        "lastDate": "2016-10-09 20:31:55 UTC",
+        "lastTs": 1476045115
+      }
+    },
+    {
+      "fileSize": 16612068,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 20778,
+      "nAppearances": 2003780,
+      "range": "002410554-002411144",
+      "rangeDates": {
+        "firstDate": "2016-10-09 20:31:59 UTC",
+        "firstTs": 1476045119,
+        "lastDate": "2016-10-09 22:53:22 UTC",
+        "lastTs": 1476053602
+      }
+    },
+    {
+      "fileSize": 16585444,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 20036,
+      "nAppearances": 2003049,
+      "range": "002411145-002411647",
+      "rangeDates": {
+        "firstDate": "2016-10-09 22:53:39 UTC",
+        "firstTs": 1476053619,
+        "lastDate": "2016-10-10 00:58:33 UTC",
+        "lastTs": 1476061113
+      }
+    },
+    {
+      "fileSize": 16693324,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 22142,
+      "nAppearances": 2009163,
+      "range": "002411648-002412236",
+      "rangeDates": {
+        "firstDate": "2016-10-10 00:58:39 UTC",
+        "firstTs": 1476061119,
+        "lastDate": "2016-10-10 03:21:10 UTC",
+        "lastTs": 1476069670
+      }
+    },
+    {
+      "fileSize": 16746536,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 23161,
+      "nAppearances": 2012248,
+      "range": "002412237-002412991",
+      "rangeDates": {
+        "firstDate": "2016-10-10 03:21:17 UTC",
+        "firstTs": 1476069677,
+        "lastDate": "2016-10-10 06:28:42 UTC",
+        "lastTs": 1476080922
+      }
+    },
+    {
+      "fileSize": 16782084,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 23384,
+      "nAppearances": 2015911,
+      "range": "002412992-002414067",
+      "rangeDates": {
+        "firstDate": "2016-10-10 06:28:48 UTC",
+        "firstTs": 1476080928,
+        "lastDate": "2016-10-10 10:48:31 UTC",
+        "lastTs": 1476096511
+      }
+    },
+    {
+      "fileSize": 16681268,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 21736,
+      "nAppearances": 2009077,
+      "range": "002414068-002414732",
+      "rangeDates": {
+        "firstDate": "2016-10-10 10:48:35 UTC",
+        "firstTs": 1476096515,
+        "lastDate": "2016-10-10 13:20:24 UTC",
+        "lastTs": 1476105624
+      }
+    },
+    {
+      "fileSize": 16896376,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 27455,
+      "nAppearances": 2015949,
+      "range": "002414733-002416416",
+      "rangeDates": {
+        "firstDate": "2016-10-10 13:20:32 UTC",
+        "firstTs": 1476105632,
+        "lastDate": "2016-10-10 20:06:08 UTC",
+        "lastTs": 1476129968
+      }
+    },
+    {
+      "fileSize": 60224500,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1578916,
+      "nAppearances": 2001851,
+      "range": "002416417-002423055",
+      "rangeDates": {
+        "firstDate": "2016-10-10 20:06:51 UTC",
+        "firstTs": 1476130011,
+        "lastDate": "2016-10-11 22:14:28 UTC",
+        "lastTs": 1476224068
+      }
+    },
+    {
+      "fileSize": 69479636,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1909506,
+      "nAppearances": 2001678,
+      "range": "002423056-002424442",
+      "rangeDates": {
+        "firstDate": "2016-10-11 22:14:35 UTC",
+        "firstTs": 1476224075,
+        "lastDate": "2016-10-12 03:53:05 UTC",
+        "lastTs": 1476244385
+      }
+    },
+    {
+      "fileSize": 71582220,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1984516,
+      "nAppearances": 2001966,
+      "range": "002424443-002426047",
+      "rangeDates": {
+        "firstDate": "2016-10-12 03:53:19 UTC",
+        "firstTs": 1476244399,
+        "lastDate": "2016-10-12 10:38:29 UTC",
+        "lastTs": 1476268709
+      }
+    },
+    {
+      "fileSize": 64289176,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1723289,
+      "nAppearances": 2004630,
+      "range": "002426048-002427601",
+      "rangeDates": {
+        "firstDate": "2016-10-12 10:38:32 UTC",
+        "firstTs": 1476268712,
+        "lastDate": "2016-10-12 16:44:08 UTC",
+        "lastTs": 1476290648
+      }
+    },
+    {
+      "fileSize": 71728776,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1989077,
+      "nAppearances": 2004322,
+      "range": "002427602-002429099",
+      "rangeDates": {
+        "firstDate": "2016-10-12 16:44:34 UTC",
+        "firstTs": 1476290674,
+        "lastDate": "2016-10-12 22:50:08 UTC",
+        "lastTs": 1476312608
+      }
+    },
+    {
+      "fileSize": 71482240,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1981505,
+      "nAppearances": 2000007,
+      "range": "002429100-002430891",
+      "rangeDates": {
+        "firstDate": "2016-10-12 22:50:25 UTC",
+        "firstTs": 1476312625,
+        "lastDate": "2016-10-13 06:19:59 UTC",
+        "lastTs": 1476339599
+      }
+    },
+    {
+      "fileSize": 71436288,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1978913,
+      "nAppearances": 2003335,
+      "range": "002430892-002433232",
+      "rangeDates": {
+        "firstDate": "2016-10-13 06:20:25 UTC",
+        "firstTs": 1476339625,
+        "lastDate": "2016-10-13 15:16:43 UTC",
+        "lastTs": 1476371803
+      }
+    },
+    {
+      "fileSize": 51847076,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1278818,
+      "nAppearances": 2005016,
+      "range": "002433233-002436985",
+      "rangeDates": {
+        "firstDate": "2016-10-13 15:17:14 UTC",
+        "firstTs": 1476371834,
+        "lastDate": "2016-10-14 05:38:12 UTC",
+        "lastTs": 1476423492
+      }
+    },
+    {
+      "fileSize": 37564872,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 769753,
+      "nAppearances": 2001468,
+      "range": "002436986-002440527",
+      "rangeDates": {
+        "firstDate": "2016-10-14 05:38:32 UTC",
+        "firstTs": 1476423512,
+        "lastDate": "2016-10-14 19:49:16 UTC",
+        "lastTs": 1476474556
+      }
+    },
+    {
+      "fileSize": 67452740,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1837434,
+      "nAppearances": 2000568,
+      "range": "002440528-002452024",
+      "rangeDates": {
+        "firstDate": "2016-10-14 19:49:21 UTC",
+        "firstTs": 1476474561,
+        "lastDate": "2016-10-16 17:21:30 UTC",
+        "lastTs": 1476638490
+      }
+    },
+    {
+      "fileSize": 68314124,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1867962,
+      "nAppearances": 2001393,
+      "range": "002452025-002461545",
+      "rangeDates": {
+        "firstDate": "2016-10-16 17:21:37 UTC",
+        "firstTs": 1476638497,
+        "lastDate": "2016-10-18 07:41:13 UTC",
+        "lastTs": 1476776473
+      }
+    },
+    {
+      "fileSize": 21042468,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 427048,
+      "nAppearances": 1135635,
+      "range": "002461546-002500000",
+      "rangeDates": {
+        "firstDate": "2016-10-18 07:41:29 UTC",
+        "firstTs": 1476776489,
+        "lastDate": "2016-10-24 15:59:50 UTC",
+        "lastTs": 1477324790
+      }
+    },
+    {
+      "fileSize": 17000564,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 98216,
+      "nAppearances": 1781309,
+      "range": "002500001-002600000",
+      "rangeDates": {
+        "firstDate": "2016-10-24 15:59:54 UTC",
+        "firstTs": 1477324794,
+        "lastDate": "2016-11-10 08:09:06 UTC",
+        "lastTs": 1478765346
+      }
+    },
+    {
+      "fileSize": 33477640,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 624129,
+      "nAppearances": 2000248,
+      "range": "002600001-002679108",
+      "rangeDates": {
+        "firstDate": "2016-11-10 08:09:13 UTC",
+        "firstTs": 1478765353,
+        "lastDate": "2016-11-23 08:54:29 UTC",
+        "lastTs": 1479891269
+      }
+    },
+    {
+      "fileSize": 70352380,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1940732,
+      "nAppearances": 2001480,
+      "range": "002679109-002683120",
+      "rangeDates": {
+        "firstDate": "2016-11-23 08:54:47 UTC",
+        "firstTs": 1479891287,
+        "lastDate": "2016-11-24 01:43:49 UTC",
+        "lastTs": 1479951829
+      }
+    },
+    {
+      "fileSize": 68939480,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1890511,
+      "nAppearances": 2000641,
+      "range": "002683121-002690830",
+      "rangeDates": {
+        "firstDate": "2016-11-24 01:43:56 UTC",
+        "firstTs": 1479951836,
+        "lastDate": "2016-11-25 08:38:16 UTC",
+        "lastTs": 1480063096
+      }
+    },
+    {
+      "fileSize": 68748016,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1883143,
+      "nAppearances": 2002496,
+      "range": "002690831-002697664",
+      "rangeDates": {
+        "firstDate": "2016-11-25 08:38:30 UTC",
+        "firstTs": 1480063110,
+        "lastDate": "2016-11-26 11:34:34 UTC",
+        "lastTs": 1480160074
+      }
+    },
+    {
+      "fileSize": 43491940,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1200206,
+      "nAppearances": 1235766,
+      "range": "002697665-002700000",
+      "rangeDates": {
+        "firstDate": "2016-11-26 11:34:58 UTC",
+        "firstTs": 1480160098,
+        "lastDate": "2016-11-26 21:21:45 UTC",
+        "lastTs": 1480195305
+      }
+    },
+    {
+      "fileSize": 70650908,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1951752,
+      "nAppearances": 2000226,
+      "range": "002700001-002703157",
+      "rangeDates": {
+        "firstDate": "2016-11-26 21:22:14 UTC",
+        "firstTs": 1480195334,
+        "lastDate": "2016-11-27 10:10:05 UTC",
+        "lastTs": 1480241405
+      }
+    },
+    {
+      "fileSize": 70386880,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1942249,
+      "nAppearances": 2000483,
+      "range": "002703158-002705941",
+      "rangeDates": {
+        "firstDate": "2016-11-27 10:10:08 UTC",
+        "firstTs": 1480241408,
+        "lastDate": "2016-11-27 21:17:23 UTC",
+        "lastTs": 1480281443
+      }
+    },
+    {
+      "fileSize": 70401788,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1942904,
+      "nAppearances": 2000054,
+      "range": "002705942-002708765",
+      "rangeDates": {
+        "firstDate": "2016-11-27 21:17:25 UTC",
+        "firstTs": 1480281445,
+        "lastDate": "2016-11-28 08:35:16 UTC",
+        "lastTs": 1480322116
+      }
+    },
+    {
+      "fileSize": 70512196,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1946378,
+      "nAppearances": 2001696,
+      "range": "002708766-002711377",
+      "rangeDates": {
+        "firstDate": "2016-11-28 08:35:23 UTC",
+        "firstTs": 1480322123,
+        "lastDate": "2016-11-28 18:53:18 UTC",
+        "lastTs": 1480359198
+      }
+    },
+    {
+      "fileSize": 70461908,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1944426,
+      "nAppearances": 2002242,
+      "range": "002711378-002713930",
+      "rangeDates": {
+        "firstDate": "2016-11-28 18:54:11 UTC",
+        "firstTs": 1480359251,
+        "lastDate": "2016-11-29 05:18:40 UTC",
+        "lastTs": 1480396720
+      }
+    },
+    {
+      "fileSize": 70112356,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 1932008,
+      "nAppearances": 2002011,
+      "range": "002713931-002717324",
+      "rangeDates": {
+        "firstDate": "2016-11-29 05:18:56 UTC",
+        "firstTs": 1480396736,
+        "lastDate": "2016-11-29 18:41:34 UTC",
+        "lastTs": 1480444894
+      }
+    },
+    {
+      "fileSize": 27868060,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 461204,
+      "nAppearances": 1869288,
+      "range": "002717325-002800000",
+      "rangeDates": {
+        "firstDate": "2016-11-29 18:41:45 UTC",
+        "firstTs": 1480444905,
+        "lastDate": "2016-12-13 09:45:28 UTC",
+        "lastTs": 1481622328
+      }
+    },
+    {
+      "fileSize": 17155096,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 91467,
+      "nAppearances": 1824247,
+      "range": "002800001-002900000",
+      "rangeDates": {
+        "firstDate": "2016-12-13 09:45:40 UTC",
+        "firstTs": 1481622340,
+        "lastDate": "2016-12-29 22:38:10 UTC",
+        "lastTs": 1483051090
+      }
+    },
+    {
+      "fileSize": 17687356,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 95628,
+      "nAppearances": 1876216,
+      "range": "002900001-003000000",
+      "rangeDates": {
+        "firstDate": "2016-12-29 22:38:14 UTC",
+        "firstTs": 1483051094,
+        "lastDate": "2017-01-15 10:10:35 UTC",
+        "lastTs": 1484475035
+      }
+    },
+    {
+      "fileSize": 17844020,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 89322,
+      "nAppearances": 1917870,
+      "range": "003000001-003100000",
+      "rangeDates": {
+        "firstDate": "2017-01-15 10:10:55 UTC",
+        "firstTs": 1484475055,
+        "lastDate": "2017-01-31 23:19:16 UTC",
+        "lastTs": 1485904756
+      }
+    },
+    {
+      "fileSize": 18493300,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 89032,
+      "nAppearances": 2000045,
+      "range": "003100001-003197417",
+      "rangeDates": {
+        "firstDate": "2017-01-31 23:19:17 UTC",
+        "firstTs": 1485904757,
+        "lastDate": "2017-02-17 02:16:09 UTC",
+        "lastTs": 1487297769
+      }
+    },
+    {
+      "fileSize": 715116,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 10368,
+      "nAppearances": 53096,
+      "range": "003197418-003200000",
+      "rangeDates": {
+        "firstDate": "2017-02-17 02:16:14 UTC",
+        "firstTs": 1487297774,
+        "lastDate": "2017-02-17 12:30:51 UTC",
+        "lastTs": 1487334651
+      }
+    },
+    {
+      "fileSize": 19342168,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 119331,
+      "nAppearances": 2000107,
+      "range": "003200001-003288034",
+      "rangeDates": {
+        "firstDate": "2017-02-17 12:31:25 UTC",
+        "firstTs": 1487334685,
+        "lastDate": "2017-03-04 03:21:46 UTC",
+        "lastTs": 1488597706
+      }
+    },
+    {
+      "fileSize": 3153052,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 36436,
+      "nAppearances": 266600,
+      "range": "003288035-003300000",
+      "rangeDates": {
+        "firstDate": "2017-03-04 03:21:52 UTC",
+        "firstTs": 1488597712,
+        "lastDate": "2017-03-06 03:00:00 UTC",
+        "lastTs": 1488769200
+      }
+    },
+    {
+      "fileSize": 20638196,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 165636,
+      "nAppearances": 2000043,
+      "range": "003300001-003368131",
+      "rangeDates": {
+        "firstDate": "2017-03-06 03:00:30 UTC",
+        "firstTs": 1488769230,
+        "lastDate": "2017-03-17 12:19:25 UTC",
+        "lastTs": 1489753165
+      }
+    },
+    {
+      "fileSize": 11705384,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 111789,
+      "nAppearances": 1071906,
+      "range": "003368132-003400000",
+      "rangeDates": {
+        "firstDate": "2017-03-17 12:19:34 UTC",
+        "firstTs": 1489753174,
+        "lastDate": "2017-03-22 19:51:41 UTC",
+        "lastTs": 1490212301
+      }
+    },
+    {
+      "fileSize": 21186264,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 185217,
+      "nAppearances": 2000018,
+      "range": "003400001-003454581",
+      "rangeDates": {
+        "firstDate": "2017-03-22 19:52:43 UTC",
+        "firstTs": 1490212363,
+        "lastDate": "2017-04-01 00:13:11 UTC",
+        "lastTs": 1491005591
+      }
+    },
+    {
+      "fileSize": 17627816,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 160071,
+      "nAppearances": 1643223,
+      "range": "003454582-003500000",
+      "rangeDates": {
+        "firstDate": "2017-04-01 00:13:13 UTC",
+        "firstTs": 1491005593,
+        "lastDate": "2017-04-08 16:00:08 UTC",
+        "lastTs": 1491667208
+      }
+    },
+    {
+      "fileSize": 20530560,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 161767,
+      "nAppearances": 2000130,
+      "range": "003500001-003561468",
+      "rangeDates": {
+        "firstDate": "2017-04-08 16:00:32 UTC",
+        "firstTs": 1491667232,
+        "lastDate": "2017-04-19 05:37:17 UTC",
+        "lastTs": 1492580237
+      }
+    },
+    {
+      "fileSize": 15111272,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 144569,
+      "nAppearances": 1382912,
+      "range": "003561469-003600000",
+      "rangeDates": {
+        "firstDate": "2017-04-19 05:37:22 UTC",
+        "firstTs": 1492580242,
+        "lastDate": "2017-04-25 20:36:59 UTC",
+        "lastTs": 1493152619
+      }
+    },
+    {
+      "fileSize": 21977516,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 213444,
+      "nAppearances": 2000130,
+      "range": "003600001-003644512",
+      "rangeDates": {
+        "firstDate": "2017-04-25 20:37:13 UTC",
+        "firstTs": 1493152633,
+        "lastDate": "2017-05-03 17:51:36 UTC",
+        "lastTs": 1493833896
+      }
+    },
+    {
+      "fileSize": 22903768,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 246555,
+      "nAppearances": 2000023,
+      "range": "003644513-003686952",
+      "rangeDates": {
+        "firstDate": "2017-05-03 17:51:53 UTC",
+        "firstTs": 1493833913,
+        "lastDate": "2017-05-11 05:35:22 UTC",
+        "lastTs": 1494480922
+      }
+    },
+    {
+      "fileSize": 8030176,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 103759,
+      "nAppearances": 640610,
+      "range": "003686953-003700000",
+      "rangeDates": {
+        "firstDate": "2017-05-11 05:35:30 UTC",
+        "firstTs": 1494480930,
+        "lastDate": "2017-05-13 12:46:32 UTC",
+        "lastTs": 1494679592
+      }
+    },
+    {
+      "fileSize": 23123048,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 254383,
+      "nAppearances": 2000035,
+      "range": "003700001-003734159",
+      "rangeDates": {
+        "firstDate": "2017-05-13 12:46:33 UTC",
+        "firstTs": 1494679593,
+        "lastDate": "2017-05-19 19:38:21 UTC",
+        "lastTs": 1495222701
+      }
+    },
+    {
+      "fileSize": 24207296,
+      "hash": "0x6fc0c6dd027719f456c1e50a329f6157767325aa937411fa6e7be9359d9e0046",
+      "hashValue": "trueblocks-core@v2.0.0-release",
+      "magic": "0xdeadbeef",
+      "nAddresses": 293107,
+      "nAppearances": 2000032,
+      "range": "003734160-003760701",
+      "rangeDates": {
+        "firstDate": "2017-05-19 19:38:29 UTC",
+        "firstTs": 1495222709,
+        "lastDate": "2017-05-24 16:37:30 UTC",
+        "lastTs": 1495643850
+      }
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}
