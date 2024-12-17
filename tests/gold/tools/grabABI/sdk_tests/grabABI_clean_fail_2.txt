@@ -1,0 +1,12 @@
+abis?decache&find=0x1aa3a008
+Args: [decache find=0x1aa3a008]
+Opts: {"proxyFor":"0x0","find":["0x1aa3a008"],"decache":true}
+Find:  [0x1aa3a008]
+Decache:  true
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "Please choose only one of --decache or --find."
+  ]
+}

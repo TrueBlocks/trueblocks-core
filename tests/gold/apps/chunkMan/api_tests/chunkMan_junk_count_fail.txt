@@ -1,0 +1,6 @@
+chunks?mode=junk&count
+{
+  "errors": [
+    "The --count option is only available in these modes: manifest|index|blooms|pins|stats."
+  ]
+}

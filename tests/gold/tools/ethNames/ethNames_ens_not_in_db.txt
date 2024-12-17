@@ -1,0 +1,5 @@
+chifra names  nick.eth
+TEST[DATE|TIME] Terms:  [0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5]
+TEST[DATE|TIME] Format:  txt
+tags	address	name	symbol	decimals
+66-ENS	0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5	nick.eth		

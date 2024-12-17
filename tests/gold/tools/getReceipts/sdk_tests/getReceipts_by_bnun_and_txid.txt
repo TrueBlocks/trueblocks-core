@@ -1,0 +1,8 @@
+receipts?transactions=4000000.5&logs
+Args: [transactions=4000000.5 logs]
+Opts: null
+{
+  "errors": [
+    "Invalid key (logs) in route."
+  ]
+}

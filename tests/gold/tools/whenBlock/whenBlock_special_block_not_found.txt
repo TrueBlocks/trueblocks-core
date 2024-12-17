@@ -1,0 +1,30 @@
+chifra when  idonotexist
+TEST[DATE|TIME] Blocks:  [idonotexist]
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+Error: The given value 'idonotexist' is not a valid identifier.
+Usage:
+  chifra when [flags] < block | date > [ block... | date... ]
+
+Arguments:
+  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)
+
+Flags:
+  -l, --list            export a list of the 'special' blocks
+  -t, --timestamps      display or process timestamps
+  -U, --count           with --timestamps only, returns the number of timestamps in the cache
+  -n, --truncate uint   with --timestamps only, truncates the timestamp file at this block (hidden)
+  -r, --repair          with --timestamps only, repairs block(s) in the block range by re-querying from the chain
+  -c, --check           with --timestamps only, checks the validity of the timestamp data
+  -u, --update          with --timestamps only, bring the timestamp database forward to the latest block
+  -d, --deep            with --timestamps --check only, verifies timestamps from on chain (slow)
+  -o, --cache           force the results of the query into the cache
+  -D, --decache         removes related items from the cache
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose output
+  -h, --help            display this help screen
+
+Notes:
+  - The block list may contain any combination of number, hash, date, special named blocks.
+  - Block numbers, timestamps, or dates in the future are estimated with 13 second blocks.
+  - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].

@@ -1,0 +1,6 @@
+explore?terms=12.0&output
+{
+  "errors": [
+    "The explore option is not available in api mode."
+  ]
+}

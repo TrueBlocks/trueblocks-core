@@ -1,0 +1,69 @@
+{
+  "name": "doks-child-theme",
+  "version": "0.2.3",
+  "description": "Doks child theme",
+  "hugo-bin": {
+    "buildTags": "extended"
+  },
+  "browserslist": [
+    "defaults"
+  ],
+  "repository": "https://github.com/h-enk/doks",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "init": "rimraf .git && git init -b main",
+    "create": "hugo new",
+    "prestart": "npm run clean",
+    "start": "hugo server --bind=0.0.0.0 --disableFastRender",
+    "prebuild": "npm run clean",
+    "build": "hugo --gc --minify",
+    "build:preview": "npm run build -D -F",
+    "clean": "rimraf public resources",
+    "lint": "npm run -s lint:scripts && npm run -s lint:styles && npm run -s lint:markdown",
+    "lint:scripts": "eslint assets/js assets/lambda config",
+    "lint:styles": "stylelint \"assets/scss/**/*.{css,sass,scss,sss,less}\"",
+    "lint:markdown": "markdownlint *.md content/**/*.md",
+    "release": "standard-version",
+    "release:dry-run": "standard-version --dry-run",
+    "server": "hugo server",
+    "test": "npm run -s lint",
+    "env": "env",
+    "precheck": "npm version",
+    "check": "hugo version",
+    "copy:katex-fonts": "shx cp ./node_modules/katex/dist/fonts/* ./static/fonts/"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13",
+    "@babel/core": "^7.14",
+    "@babel/preset-env": "^7.14",
+    "@fullhuman/postcss-purgecss": "^4.0",
+    "@hyas/doks": "^0.2",
+    "autoprefixer": "^10.2",
+    "bootstrap": "^5.0.2",
+    "clipboard": "^2.0",
+    "eslint": "^7.29",
+    "flexsearch": "^0.7",
+    "highlight.js": "^10.7",
+    "hugo-bin": "^0.112",
+    "instant.page": "^5.1",
+    "katex": "^0.16.10",
+    "lazysizes": "^5.3",
+    "markdownlint-cli": "^0.27",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^8.3",
+    "purgecss-whitelister": "^2.4",
+    "rimraf": "^3.0",
+    "shx": "^0.3.3",
+    "standard-version": "^9.1"
+  },
+  "dependencies": {
+    "glob-parent": "^6.0.2",
+    "markdown-it": "^12.3.2",
+    "semver-regex": "^4.0.5",
+    "shelljs": ">=0.8.5",
+    "stylelint": "^16.2.0"
+  }
+}

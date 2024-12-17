@@ -1,0 +1,6 @@
+chifra abis  0x713b73c3994442b533e6a083ec968e40606810ec --decache
+TEST[DATE|TIME] Addrs:  [0x713b73c3994442b533e6a083ec968e40606810ec]
+TEST[DATE|TIME] Decache:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+INFO[DATE|TIME] Abi file for address 0x713b73c3994442b533e6a083ec968e40606810ec removed.

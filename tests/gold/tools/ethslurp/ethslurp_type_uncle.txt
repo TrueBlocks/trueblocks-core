@@ -1,0 +1,61 @@
+chifra slurp  0x05a56e2d52c817161883f50c441c3228cfe54d9f --parts uncles 1-1000 --fmt json --ether
+TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
+TEST[DATE|TIME] Blocks:  [1-1000]
+TEST[DATE|TIME] Parts:  [uncles]
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 983,
+      "date": "2015-07-30 16:01:43 UTC",
+      "ether": "3.75",
+      "from": "0x000000000000000000000000000000556e636c65",
+      "timestamp": 1438272103,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockNumber": 561,
+      "date": "2015-07-30 15:48:53 UTC",
+      "ether": "3.75",
+      "from": "0x000000000000000000000000000000556e636c65",
+      "timestamp": 1438271333,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockNumber": 498,
+      "date": "2015-07-30 15:46:48 UTC",
+      "ether": "3.75",
+      "from": "0x000000000000000000000000000000556e636c65",
+      "timestamp": 1438271208,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockNumber": 244,
+      "date": "2015-07-30 15:38:54 UTC",
+      "ether": "3.75",
+      "from": "0x000000000000000000000000000000556e636c65",
+      "timestamp": 1438270734,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockNumber": 54,
+      "date": "2015-07-30 15:31:56 UTC",
+      "ether": "3.75",
+      "from": "0x000000000000000000000000000000556e636c65",
+      "timestamp": 1438270316,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    }
+  ]
+}

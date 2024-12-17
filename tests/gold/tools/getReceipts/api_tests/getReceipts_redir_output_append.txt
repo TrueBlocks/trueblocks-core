@@ -1,0 +1,6 @@
+receipts?transactions=5123123.0&noHeader&output=output_test_file&append
+{
+  "errors": [
+    "The --output option is not available in api mode."
+  ]
+}

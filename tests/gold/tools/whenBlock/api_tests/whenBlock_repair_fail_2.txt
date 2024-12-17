@@ -1,0 +1,6 @@
+when?timestamps&repair
+{
+  "errors": [
+    "The --repair option requires at least one block identifier."
+  ]
+}

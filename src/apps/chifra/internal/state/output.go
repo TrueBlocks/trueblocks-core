@@ -56,8 +56,10 @@ func (opts *StateOptions) StateInternal(rCtx *output.RenderCtx) error {
 	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache(rCtx)
-	} else if len(opts.Call) > 0 {
+	} else if opts.Call {
 		err = opts.HandleCall(rCtx)
+	} else if opts.Send {
+		err = opts.HandleSend(rCtx)
 	} else {
 		err = opts.HandleShow(rCtx)
 	}

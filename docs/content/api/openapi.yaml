@@ -1,0 +1,4899 @@
+openapi: 3.1.0
+info:
+  title: TrueBlocks API
+  contact:
+    email: info@trueblocks.io
+    url: https://www.trueblocks.io
+  license:
+    name: GPL 3.0
+    url: http://www.gnu.org/licenses/
+  version: 4.0.0-release
+  description: >
+    A REST layer over the TrueBlocks chifra command line. With `chifra daemon`, you can
+    run this on your own machine, and make calls to `localhost`.
+
+    ## How to use this API effectively
+
+    The endpoints in this API are exact translations of the commands used by the chifra
+    CLI application, and the query parameters mirror the commands' options and
+    flags. If you want details, [the commands have their own documentation page](/chifra/introduction/).
+
+    For detailed descriptions of data returned by each command, see [the data model reference](/data-model/intro/).
+
+      ### Before you begin
+
+    1. [Install the trueblocks-core application](/docs/install/install-core/)
+      on your machine, change your configs as needed.
+    2. Run `chifra daemon`
+
+      ### Example queries
+
+     By default, all calls are to `localhost:8080`.
+     All options and flags are passed through query parameters.
+
+     For example, to get block `100`, make a call to `/blocks` and specify
+     the block you want in the query parameter:
+
+     ```shell
+     curl "http://localhost:8080/blocks?blocks=100"
+     ```
+
+     Some parameters support ranges:
+
+     ```shell
+     curl "http://localhost:8080/blocks?blocks=100-120"
+     ```
+
+     Other parameters let you filter your responses. For example, to get only
+     the unique addresses from that block range:
+
+     ```shell
+     curl "http://localhost:8080/blocks?blocks=100-110&uniq=true"
+     ```
+
+     You might want to cache queries on your local machine.
+
+     ```shell
+     "http://localhost:8080/blocks?blocks=100-110&cache=true"
+     ```
+
+     Caching speeds up repeat queries significantly. The cache options are
+     particularly useful for calls to data-rich endpoints, like most endpoints
+     in the  "Accounts" collection.
+
+     Of course, caches occupy local storage. So cache wisely.
+servers:
+  - url: http://localhost:8080
+    description: Local endpoints
+tags:
+  - name: Accounts
+    description: Access and cache transactional data
+  - name: Chain Data
+    description: Access and cache blockchain-related data
+  - name: Chain State
+    description: Access to account and token state
+  - name: Admin
+    description: Control the scraper and build the index
+  - name: Other
+    description: Access to other and external data
+paths:
+  /list:
+    get:
+      tags:
+        - Accounts
+      summary: List transactions
+      description: List every appearance of an address anywhere on the chain. Corresponds to the <a href="/chifra/accounts/#chifra-list">chifra list</a> command line.
+      operationId: accounts-list
+      parameters:
+        - name: addrs
+          description: one or more addresses (0x...) to list
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: count
+          description: display only the count of records for each monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: noZero
+          description: for the --count option only, suppress the display of zero appearance accounts
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: bounds
+          description: report first and last block this address appears
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: unripe
+          description: list transactions labeled unripe (i.e. less than 28 blocks old)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: silent
+          description: freshen the monitor only (no reporting)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: firstRecord
+          description: the first record to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: maxRecords
+          description: the maximum number of records to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: reversed
+          description: produce results in reverse chronological order
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: firstBlock
+          description: first block to export (inclusive, ignored when freshening)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: blknum
+        - name: lastBlock
+          description: last block to export (inclusive, ignored when freshening)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: blknum
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#bounds">Bounds</a> or <a href="/data-model/accounts/#monitor">Monitor</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-list">chifra list</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/bounds"
+                        - $ref: "#/components/schemas/monitor"
+                examples:
+                  [
+                    {
+                      "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                      "blockNumber": 4037786,
+                      "transactionIndex": 47
+                    },
+                    {
+                      "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                      "blockNumber": 4037800,
+                      "transactionIndex": 77
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /export:
+    get:
+      tags:
+        - Accounts
+      summary: Export details
+      description: Export full details of transactions for one or more addresses. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+      operationId: accounts-export
+      parameters:
+        - name: addrs
+          description: one or more addresses (0x...) to export
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: topics
+          description: filter by one or more log topics (only for --logs option)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic
+        - name: fourbytes
+          description: filter by one or more fourbytes (only for transactions and trace options)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: fourbyte
+        - name: appearances
+          description: export a list of appearances
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: receipts
+          description: export receipts instead of transactional data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: logs
+          description: export logs instead of transactional data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: traces
+          description: export traces instead of transactional data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: neighbors
+          description: export the neighbors of the given address
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: accounting
+          description: attach accounting records to the exported data (applies to transactions export only)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: statements
+          description: for the accounting options only, export only statements
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: balances
+          description: traverse the transaction history and show each change in ETH balances
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: withdrawals
+          description: export withdrawals for the given address
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: articulate
+          description: articulate transactions, traces, logs, and outputs
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cacheTraces
+          description: force the transaction's traces into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: count
+          description: for --appearances mode only, display only the count of records
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: firstRecord
+          description: the first record to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: maxRecords
+          description: the maximum number of records to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: relevant
+          description: for log and accounting export only, export only logs relevant to one of the given export addresses
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: emitter
+          description: for the --logs option only, filter logs to show only those logs emitted by the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: topic
+          description: for the --logs option only, filter logs to show only those with this topic(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic
+        - name: reverted
+          description: export only transactions that were reverted
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: asset
+          description: for the accounting options only, export statements only for this asset
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: flow
+          description: for the accounting options only, export statements with incoming, outgoing, or zero value
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - in
+              - out
+              - zero
+        - name: factory
+          description: for --traces only, report addresses created by (or self-destructed by) the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: unripe
+          description: export transactions labeled unripe (i.e. less than 28 blocks old)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: reversed
+          description: produce results in reverse chronological order
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: noZero
+          description: for the --count option only, suppress the display of zero appearance accounts
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: firstBlock
+          description: first block to process (inclusive)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: blknum
+        - name: lastBlock
+          description: last block to process (inclusive)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: blknum
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: ether
+          description: export values in ether
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a>, <a href="/data-model/chaindata/#transaction">Transaction</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/log"
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/monitor"
+                        - $ref: "#/components/schemas/parameter"
+                        - $ref: "#/components/schemas/receipt"
+                        - $ref: "#/components/schemas/statement"
+                        - $ref: "#/components/schemas/token"
+                        - $ref: "#/components/schemas/trace"
+                        - $ref: "#/components/schemas/traceAction"
+                        - $ref: "#/components/schemas/traceResult"
+                        - $ref: "#/components/schemas/transaction"
+                        - $ref: "#/components/schemas/withdrawal"
+                examples:
+                  [
+                    {
+                      "hash": "0x78a17b79e638190d72a3030a79645c32cf3420a133ea2835206778e5ab63fdc7",
+                      "blockHash": "0xdf551eb24dd5275c22d497b9076f1111f483b71ca37002bee51d5db55d20d2fa",
+                      "blockNumber": 4037786,
+                      "transactionIndex": 47,
+                      "timestamp": 1500352888,
+                      "from": "0x29205869522cc9d1f84b0ad5279a8e74a7c66c15",
+                      "to": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                      "value": 84353870000000000,
+                      "gas": 90000,
+                      "gasPrice": 20000000000,
+                      "maxFeePerGas": 0,
+                      "maxPriorityFeePerGas": 0,
+                      "isError": 0,
+                      "hasToken": 0,
+                      "receipt":
+                        {
+                          "contractAddress": "0x0",
+                          "gasUsed": 21000,
+                          "effectiveGasPrice": 20000000000,
+                          "status": null
+                        },
+                      "compressedTx": "0x()",
+                      "gasCost": 420000000000000,
+                      "gasUsed": 21000,
+                      "date": "2017-07-18 04:41:28 UTC",
+                      "ether": 0.08435387
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /monitors:
+    get:
+      tags:
+        - Accounts
+      summary: Manage monitors
+      description: Add, remove, clean, and list address monitors. Corresponds to the <a href="/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
+      operationId: accounts-monitors
+      parameters:
+        - name: addrs
+          description: one or more addresses (0x...) to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: delete
+          description: delete a monitor, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: undelete
+          description: undelete a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: clean
+          description: clean (i.e. remove duplicate appearances) from monitors, optionally clear stage
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: list
+          description: list monitors in the cache (--verbose for more detail)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: count
+          description: show the number of active monitors (included deleted but not removed monitors)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: staged
+          description: for --clean, --list, and --count options only, include staged monitors
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/other/#message">Message</a>, <a href="/data-model/accounts/#monitor">Monitor</a> or <a href="/data-model/admin/#monitorclean">MonitorClean</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/monitor"
+                        - $ref: "#/components/schemas/monitorClean"
+        "400":
+          description: bad input parameter
+  /names:
+    get:
+      tags:
+        - Accounts
+      summary: Manage names
+      description: Query addresses or names of well-known accounts. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
+      operationId: accounts-names
+      parameters:
+        - name: terms
+          description: a space separated list of one or more search terms
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: string
+        - name: expand
+          description: expand search to include all fields (search name, address, and symbol otherwise)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: matchCase
+          description: do case-sensitive search
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: all
+          description: include all (including custom) names in the search
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: custom
+          description: include only custom named accounts in the search
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: prefund
+          description: include prefund accounts in the search
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: addr
+          description: display only addresses in the results (useful for scripting, assumes --no_header)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: tags
+          description: export the list of tags and subtags only
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: clean
+          description: clean the data (addrs to lower case, sort by addr)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: regular
+          description: only available with --clean, cleans regular names database
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: dryRun
+          description: only available with --clean or --autoname, outputs changes to stdout instead of updating databases
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: autoname
+          description: an address assumed to be a token, added automatically to names database if true
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            format: address
+        - name: create
+          description: create a new item
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: update
+          description: update an existing item
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: delete
+          description: delete the item, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: undelete
+          description: undelete a previously deleted item
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: remove
+          description: remove a previously deleted item
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/other/#message">Message</a> or <a href="/data-model/accounts/#name">Name</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/name"
+                examples:
+                  [
+                    {
+                      "tags": "50-Tokens:ERC20",
+                      "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
+                      "name": "LibraToken",
+                      "symbol": "LBA",
+                      "source": "On chain",
+                      "decimals": 18
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /abis:
+    get:
+      tags:
+        - Accounts
+      summary: Manage Abi files
+      description: Fetches the ABI for a smart contract. Corresponds to the <a href="/chifra/accounts/#chifra-abis">chifra abis</a> command line.
+      operationId: accounts-abis
+      parameters:
+        - name: addrs
+          description: a list of one or more smart contracts whose ABIs to display
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: known
+          description: load common 'known' ABIs from cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: proxyFor
+          description: redirects the query to this implementation
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            format: address
+        - name: list
+          description: a list of downloaded abi files
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: count
+          description: show the number of abis downloaded
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: find
+          description: search for function or event declarations given a four- or 32-byte code(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: string
+        - name: hint
+          description: for the --find option only, provide hints to speed up the search
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: string
+        - name: encode
+          description: generate the 32-byte encoding for a given cannonical function or event signature
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/other/#abi">Abi</a>, <a href="/data-model/other/#function">Function</a> or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-abis">chifra abis</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/abi"
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/parameter"
+                examples:
+                  [
+                    {
+                      "name": "PairCreated",
+                      "type": "event",
+                      "stateMutability": "nonpayable",
+                      "signature": "PairCreated(address,address,address,uint256)",
+                      "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+                      "inputs":
+                        [
+                          {
+                            "type": "address",
+                            "name": "token0",
+                            "indexed": true,
+                            "internalType": "address"
+                          },
+                          {
+                            "type": "address",
+                            "name": "token1",
+                            "indexed": true,
+                            "internalType": "address"
+                          },
+                          {
+                            "type": "address",
+                            "name": "pair",
+                            "internalType": "address"
+                          },
+                          {
+                            "type": "uint256",
+                            "name": "val_0",
+                            "internalType": "uint256"
+                          }
+                        ]
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /blocks:
+    get:
+      tags:
+        - Chain Data
+      summary: Get blocks
+      description: Retrieve one or more blocks from the chain or local cache. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
+      operationId: chaindata-blocks
+      parameters:
+        - name: blocks
+          description: a space-separated list of one or more block identifiers
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum
+        - name: hashes
+          description: display only transaction hashes, default is to display full transaction detail
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: uncles
+          description: display uncle blocks (if any) instead of the requested block
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: traces
+          description: export the traces from the block as opposed to the block data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: uniq
+          description: display a list of uniq address appearances per transaction
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: flow
+          description: for the --uniq option only, export only from or to (including trace from or to)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - from
+              - to
+              - reward
+        - name: logs
+          description: display only the logs found in the block(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: emitter
+          description: for the --logs option only, filter logs to show only those logs emitted by the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: topic
+          description: for the --logs option only, filter logs to show only those with this topic(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic
+        - name: withdrawals
+          description: export the withdrawals from the block as opposed to the block data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: articulate
+          description: for the --logs option only, articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: count
+          description: display only the count of appearances for --addrs or --uniq
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cacheTxs
+          description: force a write of the block's transactions to the cache (slow)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cacheTraces
+          description: force a write of the block's traces to the cache (slower)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: ether
+          description: export values in ether
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#blockcount">BlockCount</a>, <a href="/data-model/chaindata/#lightblock">LightBlock</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/block"
+                        - $ref: "#/components/schemas/blockCount"
+                        - $ref: "#/components/schemas/lightBlock"
+                        - $ref: "#/components/schemas/log"
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/trace"
+                        - $ref: "#/components/schemas/traceAction"
+                        - $ref: "#/components/schemas/traceResult"
+                        - $ref: "#/components/schemas/withdrawal"
+                examples:
+                  [
+                    {
+                      "blockNumber": 3141592,
+                      "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
+                      "...": "...",
+                      "transactions": []
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /transactions:
+    get:
+      tags:
+        - Chain Data
+      summary: Get transactions
+      description: Retrieve one or more transactions from the chain or local cache. Corresponds to the <a href="/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
+      operationId: chaindata-transactions
+      parameters:
+        - name: transactions
+          description: a space-separated list of one or more transaction identifiers
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: tx_id
+        - name: articulate
+          description: articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: traces
+          description: include the transaction's traces in the results
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: uniq
+          description: display a list of uniq addresses found in the transaction
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: flow
+          description: for the uniq option only, export only from or to (including trace from or to)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - from
+              - to
+        - name: logs
+          description: display only the logs found in the transaction(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: emitter
+          description: for the --logs option only, filter logs to show only those logs emitted by the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: topic
+          description: for the --logs option only, filter logs to show only those with this topic(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic
+        - name: cacheTraces
+          description: force the transaction's traces into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: ether
+          description: export values in ether
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/other/#parameter">Parameter</a> or <a href="/data-model/chaindata/#transaction">Transaction</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/log"
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/parameter"
+                        - $ref: "#/components/schemas/transaction"
+                examples:
+                  [
+                    {
+                      "blockHash": "0x3a1fba5abd9d41457944e91ed097e039b7b12d3d7ba324a3f422db2277a48e28",
+                      "blockNumber": 52029,
+                      "date": "2015-08-08 06:22:55 UTC",
+                      "ether": "0",
+                      "from": "0x3d0768da09ce77d25e2d998e6a7b6ed4b9116c2d",
+                      "gas": 90000,
+                      "gasCost": 2516291173295740,
+                      "gasPrice": 57380137580,
+                      "gasUsed": 43853,
+                      "hash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
+                      "input": "0x432ced044d794669727374436f696e000000000000000000000000000000000000000000",
+                      "nonce": 31,
+                      "receipt":
+                        {
+                          "contractAddress": "0x0",
+                          "effectiveGasPrice": 57380137580,
+                          "gasUsed": 43853,
+                          "logs":
+                            [
+                              {
+                                "address": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                                "data": "0x",
+                                "date": "2015-08-08 06:22:55 UTC",
+                                "logIndex": 0,
+                                "timestamp": 1439014975,
+                                "topics":
+                                  [
+                                    "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
+                                    "0x4d794669727374436f696e000000000000000000000000000000000000000000"
+                                  ]
+                              }
+                            ],
+                          "status": null
+                        },
+                      "timestamp": 1439014975,
+                      "to": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                      "traces": [],
+                      "transactionIndex": 0,
+                      "value": "0"
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /receipts:
+    get:
+      tags:
+        - Chain Data
+      summary: Get receipts
+      description: Retrieve receipts for the given transaction(s). Corresponds to the <a href="/chifra/chaindata/#chifra-receipts">chifra receipts</a> command line.
+      operationId: chaindata-receipts
+      parameters:
+        - name: transactions
+          description: a space-separated list of one or more transaction identifiers
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: tx_id
+        - name: articulate
+          description: articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/other/#function">Function</a>, <a href="/data-model/other/#parameter">Parameter</a> or <a href="/data-model/chaindata/#receipt">Receipt</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-receipts">chifra receipts</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/parameter"
+                        - $ref: "#/components/schemas/receipt"
+                examples:
+                  [
+                    {
+                      "blockNumber": 52029,
+                      "from": "0x3d0768da09ce77d25e2d998e6a7b6ed4b9116c2d",
+                      "gasUsed": 43853,
+                      "logs":
+                        [
+                          {
+                            "address": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                            "blockHash": "0x3a1fba5abd9d41457944e91ed097e039b7b12d3d7ba324a3f422db2277a48e28",
+                            "blockNumber": 52029,
+                            "date": "2015-08-08 06:22:55 UTC",
+                            "logIndex": 0,
+                            "timestamp": 1439014975,
+                            "topics":
+                              [
+                                "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
+                                "0x4d794669727374436f696e000000000000000000000000000000000000000000"
+                              ],
+                            "transactionHash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
+                            "transactionIndex": 0
+                          }
+                        ],
+                      "status": 1,
+                      "to": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                      "transactionHash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
+                      "transactionIndex": 0
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /logs:
+    get:
+      tags:
+        - Chain Data
+      summary: Get logs
+      description: Retrieve logs for the given transaction(s). Corresponds to the <a href="/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
+      operationId: chaindata-logs
+      parameters:
+        - name: transactions
+          description: a space-separated list of one or more transaction identifiers
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: tx_id
+        - name: emitter
+          description: filter logs to show only those logs emitted by the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: topic
+          description: filter logs to show only those with this topic(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic
+        - name: articulate
+          description: articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a> or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/log"
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/parameter"
+                examples:
+                  [
+                    {
+                      "address": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                      "blockHash": "0x3a1fba5abd9d41457944e91ed097e039b7b12d3d7ba324a3f422db2277a48e28",
+                      "blockNumber": 52029,
+                      "date": "2015-08-08 06:22:55 UTC",
+                      "logIndex": 0,
+                      "timestamp": 1439014975,
+                      "topics":
+                        [
+                          "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
+                          "0x4d794669727374436f696e000000000000000000000000000000000000000000"
+                        ],
+                      "transactionHash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
+                      "transactionIndex": 0
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /traces:
+    get:
+      tags:
+        - Chain Data
+      summary: Get traces
+      description: Retrieve traces for the given transaction(s). Corresponds to the <a href="/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
+      operationId: chaindata-traces
+      parameters:
+        - name: transactions
+          description: a space-separated list of one or more transaction identifiers
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: tx_id
+        - name: articulate
+          description: articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: filter
+          description: call the node's trace_filter routine with bang-separated filter
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: count
+          description: display only the number of traces for the transaction (fast)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: ether
+          description: export values in ether
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/other/#function">Function</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#tracecount">TraceCount</a>, <a href="/data-model/chaindata/#tracefilter">TraceFilter</a> or <a href="/data-model/chaindata/#traceresult">TraceResult</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/parameter"
+                        - $ref: "#/components/schemas/trace"
+                        - $ref: "#/components/schemas/traceAction"
+                        - $ref: "#/components/schemas/traceCount"
+                        - $ref: "#/components/schemas/traceFilter"
+                        - $ref: "#/components/schemas/traceResult"
+                examples:
+                  [
+                    {
+                      "action":
+                        {
+                          "callType": "call",
+                          "from": "0x3d0768da09ce77d25e2d998e6a7b6ed4b9116c2d",
+                          "gas": 67896,
+                          "input": "0x432ced044d794669727374436f696e000000000000000000000000000000000000000000",
+                          "to": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                          "value": "0"
+                        },
+                      "blockHash": "0x3a1fba5abd9d41457944e91ed097e039b7b12d3d7ba324a3f422db2277a48e28",
+                      "blockNumber": 52029,
+                      "date": "2015-08-08 06:22:55 UTC",
+                      "result": { "gasUsed": 21749 },
+                      "subtraces": 0,
+                      "timestamp": 1439014975,
+                      "traceAddress": [],
+                      "transactionHash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
+                      "transactionIndex": 0,
+                      "type": "call"
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /when:
+    get:
+      tags:
+        - Chain Data
+      summary: Get block dates
+      description: Find block(s) based on date, blockNum, timestamp, or 'special'. Corresponds to the <a href="/chifra/chaindata/#chifra-when">chifra when</a> command line.
+      operationId: chaindata-when
+      parameters:
+        - name: blocks
+          description: one or more dates, block numbers, hashes, or special named blocks (see notes)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: string
+        - name: list
+          description: export a list of the 'special' blocks
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: timestamps
+          description: display or process timestamps
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: count
+          description: with --timestamps only, returns the number of timestamps in the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: repair
+          description: with --timestamps only, repairs block(s) in the block range by re-querying from the chain
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: check
+          description: with --timestamps only, checks the validity of the timestamp data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: update
+          description: with --timestamps only, bring the timestamp database forward to the latest block
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: deep
+          description: with --timestamps --check only, verifies timestamps from on chain (slow)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/other/#count">Count</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/chaindata/#namedblock">NamedBlock</a> or <a href="/data-model/chaindata/#timestamp">Timestamp</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-when">chifra when</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/count"
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/namedBlock"
+                        - $ref: "#/components/schemas/timestamp"
+                examples:
+                  [
+                    {
+                      "blockNumber": 52029,
+                      "date": "2015-08-08 06:22:55 UTC",
+                      "name": "firstLog",
+                      "timestamp": 1439014975
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /state:
+    get:
+      tags:
+        - Chain State
+      summary: Get balance(s)
+      description: Retrieve account balance(s) for one or more addresses at given block(s). Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
+      operationId: chainstate-state
+      parameters:
+        - name: addrs
+          description: one or more addresses (0x...) from which to retrieve balances
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: blocks
+          description: an optional list of one or more blocks at which to report balances, defaults to 'latest'
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum
+        - name: parts
+          description: control which state to export
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - balance
+                - nonce
+                - code
+                - proxy
+                - deployed
+                - accttype
+                - some
+                - all
+        - name: changes
+          description: only report a balance when it changes from one block to the next
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: noZero
+          description: suppress the display of zero balance accounts
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: call
+          description: write-only call (a query) to a smart contract
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: calldata
+          description: for commands (--call or --send), provides the call data (in various forms) for the command (may be empty for --send)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: articulate
+          description: for commands only, articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: proxyFor
+          description: for commands only, redirects calls to this implementation
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            format: address
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: ether
+          description: export values in ether
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/other/#function">Function</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chainstate/#result">Result</a> or <a href="/data-model/chainstate/#state">State</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/parameter"
+                        - $ref: "#/components/schemas/result"
+                        - $ref: "#/components/schemas/state"
+                examples:
+                  [
+                    {
+                      "blockNumber": 13176226,
+                      "balance": 258843698360318500,
+                      "nonce": 115,
+                      "code": "0x",
+                      "proxy": "0xd9db270c1b5e3bd161e8c8503c55ceabee709552",
+                      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+                      "deployed": 0,
+                      "accttype": "EOA",
+                      "ether": 0.2588436983603185
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /tokens:
+    get:
+      tags:
+        - Chain State
+      summary: Get token balance(s)
+      description: Retrieve token balance(s) for one or more addresses at given block(s). Corresponds to the <a href="/chifra/chainstate/#chifra-tokens">chifra tokens</a> command line.
+      operationId: chainstate-tokens
+      parameters:
+        - name: addrs
+          description: two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: blocks
+          description: an optional list of one or more blocks at which to report balances, defaults to 'latest'
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum
+        - name: parts
+          description: which parts of the token information to retrieve
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - name
+                - symbol
+                - decimals
+                - totalSupply
+                - version
+                - some
+                - all
+        - name: byAcct
+          description: consider each address an ERC20 token except the last, whose balance is reported for each token
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: changes
+          description: only report a balance when it changes from one block to the next
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: noZero
+          description: suppress the display of zero balance accounts
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/chainstate/#token">Token</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-tokens">chifra tokens</a> command line.
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/token"
+                examples:
+                  [
+                    {
+                      "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+                      "balance": "624980000000000000",
+                      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+                      "name": "The DAO Original",
+                      "decimals": 1,
+                      "isContract": true,
+                      "isErc20": true,
+                      "isErc721": true
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /config:
+    get:
+      tags:
+        - Admin
+      summary: Manage config
+      description: Report on and edit the configuration of the TrueBlocks system. Corresponds to the <a href="/chifra/admin/#chifra-config">chifra config</a> command line.
+      operationId: admin-config
+      parameters:
+        - name: mode
+          description: either show or edit the configuration
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - show
+              - edit
+        - name: paths
+          description: show the configuration paths for the system
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: dump
+          description: dump the configuration to stdout
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/admin/#chain">Chain</a> data. Corresponds to the <a href="/chifra/admin/#chifra-config">chifra config</a> command line.
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/chain"
+                examples:
+                  [
+                    {
+                      "clientVersion": "erigon/2021.09.2/linux-amd64/go1.16.3",
+                      "trueblocksVersion": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
+                      "rpcProvider": "http://localhost:23456",
+                      "configPath": "~/Library/Application Support/TrueBlocks/",
+                      "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
+                      "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
+                      "isTesting": false,
+                      "isArchive": true,
+                      "isTracing": true,
+                      "hasEskey": true,
+                      "hasPinkey": true,
+                      "date": "2021-09-03 19:38:19 UTC"
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /status:
+    get:
+      tags:
+        - Admin
+      summary: Get status on caches
+      description: Report on the state of the internal binary caches. Corresponds to the <a href="/chifra/admin/#chifra-status">chifra status</a> command line.
+      operationId: admin-status
+      parameters:
+        - name: modes
+          description: the (optional) name of the binary cache to report on, terse otherwise
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - index
+                - blooms
+                - blocks
+                - transactions
+                - traces
+                - logs
+                - statements
+                - results
+                - state
+                - tokens
+                - monitors
+                - names
+                - abis
+                - slurps
+                - staging
+                - unripe
+                - maps
+                - some
+                - all
+        - name: diagnose
+          description: same as the default but with additional diagnostics
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: firstRecord
+          description: the first record to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: maxRecords
+          description: the maximum number of records to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: chains
+          description: include a list of chain configurations in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: healthcheck
+          description: an alias for the diagnose endpoint
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/admin/#cacheitem">CacheItem</a>, <a href="/data-model/admin/#chain">Chain</a> or <a href="/data-model/admin/#status">Status</a> data. Corresponds to the <a href="/chifra/admin/#chifra-status">chifra status</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/cacheItem"
+                        - $ref: "#/components/schemas/chain"
+                        - $ref: "#/components/schemas/status"
+        "400":
+          description: bad input parameter
+  /chunks:
+    get:
+      tags:
+        - Admin
+      summary: Manage chunks
+      description: Manage, investigate, and display the Unchained Index. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+      operationId: admin-chunks
+      parameters:
+        - name: mode
+          description: the type of data to process
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - manifest
+              - index
+              - blooms
+              - pins
+              - addresses
+              - appearances
+              - stats
+        - name: blocks
+          description: an optional list of blocks to intersect with chunk ranges
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum
+        - name: check
+          description: check the manifest, index, or blooms for internal consistency
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: belongs
+          description: in index mode only, checks the address(es) for inclusion in the given index chunk
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: firstBlock
+          description: first block to process (inclusive)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: blknum
+        - name: lastBlock
+          description: last block to process (inclusive)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: blknum
+        - name: maxAddrs
+          description: the max number of addresses to process in a given chunk
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: deep
+          description: if true, dig more deeply during checking (manifest only)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: rewrite
+          description: for the --pin --deep mode only, writes the manifest back to the index folder (see notes)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: count
+          description: for certain modes only, display the count of records
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: sleep
+          description: for --remote pinning only, seconds to sleep between API calls
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: float64
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#appearancetable">AppearanceTable</a>, <a href="/data-model/admin/#chunkaddress">ChunkAddress</a>, <a href="/data-model/admin/#chunkbloom">ChunkBloom</a>, <a href="/data-model/admin/#chunkindex">ChunkIndex</a>, <a href="/data-model/admin/#chunkpin">ChunkPin</a>, <a href="/data-model/admin/#chunkrecord">ChunkRecord</a>, <a href="/data-model/admin/#chunkstats">ChunkStats</a>, <a href="/data-model/other/#count">Count</a>, <a href="/data-model/admin/#ipfspin">IpfsPin</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/admin/#rangedates">RangeDates</a> or <a href="/data-model/admin/#reportcheck">ReportCheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/appearanceTable"
+                        - $ref: "#/components/schemas/chunkAddress"
+                        - $ref: "#/components/schemas/chunkBloom"
+                        - $ref: "#/components/schemas/chunkIndex"
+                        - $ref: "#/components/schemas/chunkPin"
+                        - $ref: "#/components/schemas/chunkRecord"
+                        - $ref: "#/components/schemas/chunkStats"
+                        - $ref: "#/components/schemas/count"
+                        - $ref: "#/components/schemas/ipfsPin"
+                        - $ref: "#/components/schemas/manifest"
+                        - $ref: "#/components/schemas/message"
+                        - $ref: "#/components/schemas/rangeDates"
+                        - $ref: "#/components/schemas/reportCheck"
+                examples:
+                  [
+                    {
+                      "fileName": "000000000-000000000",
+                      "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
+                      "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4"
+                    },
+                    {
+                      "fileName": "000000001-000590501",
+                      "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
+                      "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+  /init:
+    get:
+      tags:
+        - Admin
+      summary: Initialize index
+      description: Initialize the TrueBlocks system by downloading the Unchained Index from IPFS. Corresponds to the <a href="/chifra/admin/#chifra-init">chifra init</a> command line.
+      operationId: admin-init
+      parameters:
+        - name: all
+          description: in addition to Bloom filters, download full index chunks (recommended)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: example
+          description: create an example for the SDK with the given name
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: dryRun
+          description: display the results of the download without actually downloading
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: firstBlock
+          description: do not download any chunks earlier than this block
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: blknum
+        - name: sleep
+          description: seconds to sleep between downloads
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: float64
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/admin/#chunkrecord">ChunkRecord</a> or <a href="/data-model/admin/#manifest">Manifest</a> data. Corresponds to the <a href="/chifra/admin/#chifra-init">chifra init</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/chunkRecord"
+                        - $ref: "#/components/schemas/manifest"
+        "400":
+          description: bad input parameter
+  /slurp:
+    get:
+      tags:
+        - Other
+      summary: Slurp Api services
+      description: Fetch data from Etherscan and other APIs for any address. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
+      operationId: other-slurp
+      parameters:
+        - name: addrs
+          description: one or more addresses to slurp from Etherscan
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: blocks
+          description: an optional range of blocks to slurp
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum
+        - name: parts
+          description: which types of transactions to request
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - ext
+                - int
+                - token
+                - nfts
+                - "1155"
+                - miner
+                - uncles
+                - withdrawals
+                - some
+                - all
+        - name: appearances
+          description: show only the blocknumber.tx_id appearances of the exported transactions
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: articulate
+          description: articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: source
+          description: the source of the slurped data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - etherscan
+              - key
+              - covalent
+              - alchemy
+        - name: count
+          description: for --appearances mode only, display only the count of records
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: page
+          description: the page to retrieve (page number)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: pageId
+          description: the page to retrieve (page ID)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: perPage
+          description: the number of records to request on each page
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: sleep
+          description: seconds to sleep between requests
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: float64
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noHeader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: ether
+          description: export values in ether
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [ txt | csv | json ]
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a> or <a href="/data-model/other/#slurp">Slurp</a> data. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/monitor"
+                        - $ref: "#/components/schemas/parameter"
+                        - $ref: "#/components/schemas/slurp"
+                examples:
+                  [
+                    {
+                      "hash": "0x2ec382949ba0b22443aa4cb38267b1fb5e68e188109ac11f7a82f67571a0adf3",
+                      "blockHash": "0xeab8fe9da0b41b2c003db620bb9adbedd5fcc7222cc50d53431aa1df47a20dda",
+                      "blockNumber": "46217",
+                      "transactionIndex": "0",
+                      "timestamp": "1438919451",
+                      "from": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
+                      "to": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
+                      "value": "0",
+                      "gas": "21000",
+                      "gasPrice": "65334370444",
+                      "maxFeePerGas": "0",
+                      "maxPriorityFeePerGas": "0",
+                      "input": "0x",
+                      "isError": "0",
+                      "hasToken": "0",
+                      "gasUsed": "21000",
+                      "date": "2015-08-07 03:50:51 UTC",
+                      "ether": "0.000000000000000000"
+                    },
+                    { "...": "..." }
+                  ]
+        "400":
+          description: bad input parameter
+components:
+  schemas:
+    appearance:
+      description: "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain (note that in some cases, not all fields will appear depending on the command)"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address of the appearance"
+        blockNumber:
+          type: number
+          format: uint32
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: uint32
+          description: "the index of the transaction in the block"
+        traceIndex:
+          type: number
+          format: uint32
+          description: "the zero-based index of the trace in the transaction"
+        reason:
+          type: string
+          format: string
+          description: "the location in the data where the appearance was found"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp for this appearance"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+    monitor:
+      description: "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address of this monitor"
+        name:
+          type: string
+          format: string
+          description: "the name of this monitor (if any)"
+        nRecords:
+          type: number
+          format: int64
+          description: "the number of appearances for this monitor"
+        fileSize:
+          type: number
+          format: int64
+          description: "the size of this monitor on disc"
+        lastScanned:
+          type: number
+          format: uint32
+          description: "the last scanned block number"
+        isEmpty:
+          type: boolean
+          format: boolean
+          description: "`true` if the monitor has no appearances, `false` otherwise"
+        isStaged:
+          type: boolean
+          format: boolean
+          description: "`true` if the monitor file in on the stage, `false` otherwise"
+        deleted:
+          type: boolean
+          format: boolean
+          description: "`true` if this monitor has been deleted, `false` otherwise"
+    name:
+      description: "an association between a human-readable name and an address used throughout TrueBlocks"
+      type: object
+      properties:
+        tags:
+          type: string
+          format: string
+          description: "colon separated list of tags"
+        address:
+          type: string
+          format: address
+          description: "the address associated with this name"
+        name:
+          type: string
+          format: string
+          description: "the name associated with this address (retrieved from on-chain data if available)"
+        symbol:
+          type: string
+          format: string
+          description: "the symbol for this address (retrieved from on-chain data if available)"
+        source:
+          type: string
+          format: string
+          description: "user supplied source of where this name was found (or on-chain if name is on-chain)"
+        decimals:
+          type: number
+          format: uint64
+          description: "number of decimals retrieved from an ERC20 smart contract, defaults to 18"
+        deleted:
+          type: boolean
+          format: boolean
+          description: "`true` if deleted, `false` otherwise"
+        isCustom:
+          type: boolean
+          format: boolean
+          description: "`true` if the address is a custom address, `false` otherwise"
+        isPrefund:
+          type: boolean
+          format: boolean
+          description: "`true` if the address was one of the prefund addresses, `false` otherwise"
+        isContract:
+          type: boolean
+          format: boolean
+          description: "`true` if the address is a smart contract, `false` otherwise"
+        isErc20:
+          type: boolean
+          format: boolean
+          description: "`true` if the address is an ERC20, `false` otherwise"
+        isErc721:
+          type: boolean
+          format: boolean
+          description: "`true` if the address is an ERC720, `false` otherwise"
+    bounds:
+      description: "show first block and last block an address appears in along with timestamps and dates"
+      type: object
+      properties:
+        count:
+          type: number
+          format: uint64
+          description: "the number of appearances for this address"
+        firstApp:
+          type: object
+          items:
+            $ref: "#/components/schemas/appearance"
+          description: "the block number and transaction id of the first appearance of this address"
+        firstTs:
+          type: number
+          format: timestamp
+          description: "the timestamp of the first appearance of this address"
+        firstDate:
+          type: string
+          format: datetime
+          description: "the first appearance timestamp as a date (calculated)"
+        latestApp:
+          type: object
+          items:
+            $ref: "#/components/schemas/appearance"
+          description: "the block number and transaction id of the latest appearance of this address"
+        latestTs:
+          type: number
+          format: timestamp
+          description: "the timestamp of the latest appearance of this address"
+        latestDate:
+          type: string
+          format: datetime
+          description: "the latest appearance timestamp as a date (calculated)"
+    statement:
+      description: "a statement, including all inflows and outflows, for a single transfer of an asset (including ETH) to or from a given address"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: txnum
+          description: "the zero-indexed position of the transaction in the block"
+        logIndex:
+          type: number
+          format: lognum
+          description: "the zero-indexed position the log in the block, if applicable"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the hash of the transaction that triggered this reconciliation"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        assetAddr:
+          type: string
+          format: address
+          description: "0xeeee...eeee for ETH reconciliations, the token address otherwise"
+        assetSymbol:
+          type: string
+          format: string
+          description: "either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain"
+        decimals:
+          type: number
+          format: value
+          description: "the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18"
+        spotPrice:
+          type: number
+          format: float
+          description: "the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
+        priceSource:
+          type: string
+          format: string
+          description: "the on-chain source from which the spot price was taken"
+        accountedFor:
+          type: string
+          format: address
+          description: "the address being accounted for in this reconciliation"
+        sender:
+          type: string
+          format: address
+          description: "the initiator of the transfer (the sender)"
+        recipient:
+          type: string
+          format: address
+          description: "the receiver of the transfer (the recipient)"
+        begBal:
+          type: string
+          format: int256
+          description: "the beginning balance of the asset prior to the transaction"
+        amountNet:
+          type: string
+          format: int256
+          description: "totalIn - totalOut (calculated)"
+        endBal:
+          type: string
+          format: int256
+          description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
+        reconciliationType:
+          type: string
+          format: string
+          description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token` (calculated)"
+        reconciled:
+          type: boolean
+          format: boolean
+          description: "true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise. (calculated)"
+        totalIn:
+          type: string
+          format: int256
+          description: "the sum of the following `In` fields (calculated)"
+        amountIn:
+          type: string
+          format: int256
+          description: "the top-level value of the incoming transfer for the accountedFor address"
+        internalIn:
+          type: string
+          format: int256
+          description: "the internal value of the incoming transfer for the accountedFor address"
+        selfDestructIn:
+          type: string
+          format: int256
+          description: "the incoming value of a self-destruct if recipient is the accountedFor address"
+        minerBaseRewardIn:
+          type: string
+          format: int256
+          description: "the base fee reward if the miner is the accountedFor address"
+        minerNephewRewardIn:
+          type: string
+          format: int256
+          description: "the nephew reward if the miner is the accountedFor address"
+        minerTxFeeIn:
+          type: string
+          format: int256
+          description: "the transaction fee reward if the miner is the accountedFor address"
+        minerUncleRewardIn:
+          type: string
+          format: int256
+          description: "the uncle reward if the miner who won the uncle block is the accountedFor address"
+        correctingIn:
+          type: string
+          format: int256
+          description: "for unreconciled token transfers only, the incoming amount needed to correct the transfer so it balances"
+        prefundIn:
+          type: string
+          format: int256
+          description: "at block zero (0) only, the amount of genesis income for the accountedFor address"
+        totalOut:
+          type: string
+          format: int256
+          description: "the sum of the following `Out` fields (calculated)"
+        amountOut:
+          type: string
+          format: int256
+          description: "the amount (in units of the asset) of regular outflow during this transaction"
+        internalOut:
+          type: string
+          format: int256
+          description: "the value of any internal value transfers out of the accountedFor account"
+        correctingOut:
+          type: string
+          format: int256
+          description: "for unreconciled token transfers only, the outgoing amount needed to correct the transfer so it balances"
+        selfDestructOut:
+          type: string
+          format: int256
+          description: "the value of the self-destructed value out if the accountedFor address was self-destructed"
+        gasOut:
+          type: string
+          format: int256
+          description: "if the transaction's original sender is the accountedFor address, the amount of gas expended"
+        totalOutLessGas:
+          type: string
+          format: int256
+          description: "totalOut - gasOut (calculated)"
+        prevBal:
+          type: string
+          format: int256
+          description: "the account balance for the given asset for the previous reconciliation"
+        begBalDiff:
+          type: string
+          format: int256
+          description: "difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed (calculated)"
+        endBalDiff:
+          type: string
+          format: int256
+          description: "endBal - endBalCalc, if non-zero, the reconciliation failed (calculated)"
+        endBalCalc:
+          type: string
+          format: int256
+          description: "begBal + amountNet (calculated)"
+        correctingReason:
+          type: string
+          format: string
+          description: "the reason for the correcting entries, if any"
+    appearanceTable:
+      description: "an appearance table for an address"
+      type: object
+      properties:
+        AddressRecord:
+          type: object
+          items:
+            $ref: "#/components/schemas/addrRecord"
+          description: "the address record for these appearances"
+        Appearances:
+          type: array
+          items:
+            $ref: "#/components/schemas/appRecord"
+          description: "all the appearances for this address"
+    block:
+      description: "block data as returned from the RPC (with slight enhancements)"
+      type: object
+      properties:
+        gasLimit:
+          type: number
+          format: gas
+          description: "the system-wide maximum amount of gas permitted in this block"
+        hash:
+          type: string
+          format: hash
+          description: "the hash of the current block"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        parentHash:
+          type: string
+          format: hash
+          description: "hash of previous block"
+        miner:
+          type: string
+          format: address
+          description: "address of block's winning miner"
+        difficulty:
+          type: number
+          format: value
+          description: "the computational difficulty at this block"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        transactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/transaction"
+          description: "a possibly empty array of transactions"
+        baseFeePerGas:
+          type: number
+          format: gas
+          description: "the base fee for this block"
+        uncles:
+          type: array
+          items:
+            $ref: "#/components/schemas/hash"
+          description: "a possibly empty array of uncle hashes"
+        withdrawals:
+          type: array
+          items:
+            $ref: "#/components/schemas/withdrawal"
+          description: "a possibly empty array of withdrawals (post Shanghai)"
+    transaction:
+      description: "transaction data as returned from the RPC (with slight enhancements)"
+      type: object
+      properties:
+        hash:
+          type: string
+          format: hash
+          description: "the hash of the transaction"
+        blockHash:
+          type: string
+          format: hash
+          description: "the hash of the block containing this transaction"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: txnum
+          description: "the zero-indexed position of the transaction in the block"
+        nonce:
+          type: number
+          format: value
+          description: "sequence number of the transactions sent by the sender"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        from:
+          type: string
+          format: address
+          description: "address from which the transaction was sent"
+        to:
+          type: string
+          format: address
+          description: "address to which the transaction was sent"
+        value:
+          type: string
+          format: wei
+          description: "the amount of wei sent with this transactions"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the value in ether (calculated)"
+        gasPrice:
+          type: number
+          format: gas
+          description: "the number of wei per unit of gas the sender is willing to spend"
+        gas:
+          type: number
+          format: gas
+          description: "the maximum number of gas allowed for this transaction"
+        input:
+          type: string
+          format: bytes
+          description: "byte data either containing a message or funcational data for a smart contracts. See the --articulate"
+        receipt:
+          type: object
+          items:
+            $ref: "#/components/schemas/receipt"
+        statements:
+          type: array
+          items:
+            $ref: "#/components/schemas/statement"
+          description: "array of reconciliations (calculated)"
+        articulatedTx:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+        hasToken:
+          type: boolean
+          format: boolean
+          description: "`true` if the transaction is token related, `false` otherwise"
+        isError:
+          type: boolean
+          format: boolean
+          description: "`true` if the transaction ended in error, `false` otherwise"
+        compressedTx:
+          type: string
+          format: string
+          description: "truncated, more readable version of the articulation (calculated)"
+    withdrawal:
+      description: "withdrawal record for post-Shanghai withdrawals from the consensus layer"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the recipient for the withdrawn ether"
+        amount:
+          type: string
+          format: wei
+          description: "a nonzero amount of ether given in gwei (1e9 wei)"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the amount in ether (calculated)"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of this block"
+        index:
+          type: number
+          format: value
+          description: "a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp for this block"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        validatorIndex:
+          type: number
+          format: value
+          description: "the validator_index of the validator on the consensus layer the withdrawal corresponds to"
+    receipt:
+      description: "receipt data as returned from the RPC (with slight enhancements)"
+      type: object
+      properties:
+        blockHash:
+          type: string
+          format: hash
+        blockNumber:
+          type: number
+          format: blknum
+        contractAddress:
+          type: string
+          format: address
+          description: "the address of the newly created contract, if any"
+        gasUsed:
+          type: number
+          format: gas
+          description: "the amount of gas actually used by the transaction"
+        isError:
+          type: boolean
+          format: boolean
+        logs:
+          type: array
+          items:
+            $ref: "#/components/schemas/log"
+          description: "a possibly empty array of logs"
+        status:
+          type: number
+          format: value
+          description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
+        transactionHash:
+          type: string
+          format: hash
+        transactionIndex:
+          type: number
+          format: txnum
+    log:
+      description: "log data as returned from the RPC (with slight enhancements)"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: txnum
+          description: "the zero-indexed position of the transaction in the block"
+        logIndex:
+          type: number
+          format: lognum
+          description: "the zero-indexed position of this log relative to the block"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block this log appears in"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        address:
+          type: string
+          format: address
+          description: "the smart contract that emitted this log"
+        topics:
+          type: array
+          items:
+            $ref: "#/components/schemas/topic"
+          description: "the first topic hashes event signature of the log, up to 3 additional index parameters may appear"
+        data:
+          type: string
+          format: bytes
+          description: "any remaining un-indexed parameters to the event"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the hash of the transction"
+        blockHash:
+          type: string
+          format: hash
+          description: "the hash of the block"
+        articulatedLog:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "a human-readable version of the topic and data fields"
+        compressedLog:
+          type: string
+          format: string
+          description: "a truncated, more readable version of the articulation (calculated)"
+    trace:
+      description: "trace data as returned from the RPC (with slight enhancements)"
+      type: object
+      properties:
+        blockHash:
+          type: string
+          format: hash
+          description: "the hash of the block containing this trace"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the transaction's hash containing this trace"
+        transactionIndex:
+          type: number
+          format: txnum
+          description: "the zero-indexed position of the transaction in the block"
+        traceAddress:
+          type: array
+          items:
+            $ref: "#/components/schemas/uint64"
+          description: "a particular trace's address in the trace tree"
+        subtraces:
+          type: number
+          format: uint64
+          description: "the number of children traces that the trace hash"
+        type:
+          type: string
+          format: string
+          description: "the type of the trace"
+        action:
+          type: object
+          items:
+            $ref: "#/components/schemas/traceAction"
+          description: "the trace action for this trace"
+        result:
+          type: object
+          items:
+            $ref: "#/components/schemas/traceResult"
+          description: "the trace result of this trace"
+        articulatedTrace:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "human readable version of the trace action input data"
+        compressedTrace:
+          type: string
+          format: string
+          description: "a compressed string version of the articulated trace (calculated)"
+    traceAction:
+      description: "trace action data as returned from the RPC (with slight enhancements)"
+      type: object
+      properties:
+        from:
+          type: string
+          format: address
+          description: "address from which the trace was sent"
+        to:
+          type: string
+          format: address
+          description: "address to which the trace was sent"
+        gas:
+          type: number
+          format: gas
+          description: "the maximum number of gas allowed for this trace"
+        input:
+          type: string
+          format: bytes
+          description: "an encoded version of the function call"
+        callType:
+          type: string
+          format: string
+          description: "the type of call"
+        refundAddress:
+          type: string
+          format: address
+          description: "if the call type is self-destruct, the address to which the refund is sent"
+        rewardType:
+          type: string
+          format: string
+          description: "the type of reward"
+        value:
+          type: string
+          format: wei
+          description: "the value (in wei) of this trace action"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the value in ether (calculated)"
+        selfDestructed:
+          type: string
+          format: address
+          description: "`true` if the contract self-destructed, `false` otherwise"
+        balance:
+          type: string
+          format: wei
+          description: "if self-destructed, the balance of the contract at that time"
+        balanceEth:
+          type: string
+          format: ether
+          description: "if --ether is specified, the balance in ether (calculated)"
+    traceResult:
+      description: "trace result data as returned from the RPC (with slight enhancements)"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "address of new contract, if any"
+        code:
+          type: string
+          format: bytes
+          description: "if this trace is creating a new smart contract, the byte code of that contract"
+        gasUsed:
+          type: number
+          format: gas
+          description: "the amount of gas used by this trace"
+        output:
+          type: string
+          format: bytes
+          description: "the result of the call of this trace"
+    traceCount:
+      description: "counts the number of traces in a transaction"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the block number"
+        transactionIndex:
+          type: number
+          format: txnum
+          description: "the transaction index"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the transaction's hash"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        tracesCnt:
+          type: number
+          format: uint64
+          description: "the number of traces in the transaction"
+    traceFilter:
+      description: "used by chifra traces --filter option to query for traces"
+      type: object
+      properties:
+        fromBlock:
+          type: number
+          format: blknum
+          description: "the first block to include in the queried list of traces."
+        toBlock:
+          type: number
+          format: blknum
+          description: "the last block to include in the queried list of traces."
+        fromAddress:
+          type: string
+          format: address
+          description: "if included, only traces `from` this address will be included."
+        toAddress:
+          type: string
+          format: address
+          description: "if included, only traces `to` this address will be included."
+        after:
+          type: number
+          format: uint64
+          description: "only traces after this many traces are included."
+        count:
+          type: number
+          format: uint64
+          description: "only this many traces are included."
+    blockCount:
+      description: "counts of various parts of the block data such as tx_count, trace_count, etc."
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the block's block number"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        transactionsCnt:
+          type: number
+          format: uint64
+          description: "the number transactions in the block"
+        unclesCnt:
+          type: number
+          format: uint64
+          description: "the number of uncles in the block"
+        logsCnt:
+          type: number
+          format: uint64
+          description: "the number of logs in the block"
+        tracesCnt:
+          type: number
+          format: uint64
+          description: "the number of traces in the block"
+        withdrawalsCnt:
+          type: number
+          format: uint64
+          description: "the number of withdrawals in the block"
+        addressCnt:
+          type: number
+          format: uint64
+          description: "the number of address appearances in the block"
+    namedBlock:
+      description: "a block that has been given a particular name such as `first` or `latest`"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the Unix timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        name:
+          type: string
+          format: string
+          description: "an optional name for the block"
+        description:
+          type: string
+          format: string
+          description: "an optional description of the block"
+    timestamp:
+      description: "the timestamp, date and difference in timestamp of previous block produced by chifra when"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the Unix timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        diff:
+          type: number
+          format: int64
+          description: "the number of seconds since the last block"
+    lightBlock:
+      description: "a block containing only the hashes of the transactions"
+      type: object
+      properties:
+        gasLimit:
+          type: number
+          format: gas
+          description: "the system-wide maximum amount of gas permitted in this block"
+        hash:
+          type: string
+          format: hash
+          description: "the hash of the current block"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        parentHash:
+          type: string
+          format: hash
+          description: "hash of previous block"
+        miner:
+          type: string
+          format: address
+          description: "address of block's winning miner"
+        difficulty:
+          type: number
+          format: value
+          description: "the computational difficulty at this block"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        transactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/string"
+          description: "a possibly empty array of transaction hashes"
+        baseFeePerGas:
+          type: number
+          format: gas
+          description: "the base fee for this block"
+        uncles:
+          type: array
+          items:
+            $ref: "#/components/schemas/hash"
+          description: "a possibly empty array of uncle hashes"
+        withdrawals:
+          type: array
+          items:
+            $ref: "#/components/schemas/withdrawal"
+          description: "a possibly empty array of withdrawals (post Shanghai)"
+    state:
+      description: "the state of an Ethereum account (EOA or smart contract) on-chain"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the block number at which this call was made"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block for this call"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        address:
+          type: string
+          format: address
+          description: "the address of contract being called"
+        accountType:
+          type: string
+          format: string
+          description: "the type of account at the given block"
+        balance:
+          type: string
+          format: wei
+          description: "the balance of the account at the given block"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the balance in ether (calculated)"
+        code:
+          type: string
+          format: string
+          description: "the code of the account"
+        deployed:
+          type: number
+          format: blknum
+          description: "for smart contracts only, the block number at which the contract was deployed"
+        nonce:
+          type: number
+          format: value
+          description: "the nonce of the account at the given block"
+        proxy:
+          type: string
+          format: address
+          description: "the proxy address of the account at the given block"
+    token:
+      description: "on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the block at which the report is made"
+        transactionIndex:
+          type: number
+          format: txnum
+          description: "the transaction index (if applicable) at which the report is made"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        totalSupply:
+          type: string
+          format: int256
+          description: "the total supply of the token contract"
+        address:
+          type: string
+          format: address
+          description: "the address of the token contract"
+        holder:
+          type: string
+          format: address
+          description: "the holder address for which we are reporting"
+        priorBalance:
+          type: string
+          format: int256
+          description: "the holder's asset balance at its prior appearance"
+        balance:
+          type: string
+          format: int256
+          description: "the holder's asset balance at the given block height"
+        balanceDec:
+          type: number
+          format: float64
+          description: "the holder's asset balance (in Ether) at the given block height (calculated)"
+        diff:
+          type: string
+          format: int256
+          description: "the difference, if any, between the prior and current balance (calculated)"
+        name:
+          type: string
+          format: string
+          description: "the name of the token contract, if available"
+        symbol:
+          type: string
+          format: string
+          description: "the symbol of the token contract"
+        decimals:
+          type: number
+          format: uint64
+          description: "the number of decimals for the token contract"
+        type:
+          type: object
+          items:
+            $ref: "#/components/schemas/tokenType"
+          description: "the type of token (ERC20 or ERC721) or none"
+    result:
+      description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the block number at which this call was made"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block for this call"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        address:
+          type: string
+          format: address
+          description: "the address of contract being called"
+        name:
+          type: string
+          format: string
+          description: "the name of the function call"
+        encoding:
+          type: string
+          format: string
+          description: "the encoding for the function call"
+        signature:
+          type: string
+          format: string
+          description: "the canonical signature of the interface"
+        encodedArguments:
+          type: string
+          format: string
+          description: "the bytes data following the encoding of the call"
+        articulatedOut:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the result of the call articulated as other models"
+    status:
+      description: "status-related data about the TrueBlocks system including the server and local binary caches"
+      type: object
+      properties:
+        cachePath:
+          type: string
+          format: string
+          description: "the path to the local binary caches"
+        caches:
+          type: array
+          items:
+            $ref: "#/components/schemas/cacheItem"
+          description: "a collection of information concerning the binary caches"
+        chain:
+          type: string
+          format: string
+          description: "the current chain"
+        chainConfig:
+          type: string
+          format: string
+          description: "the path to the chain configuration folder"
+        clientVersion:
+          type: string
+          format: string
+          description: "the version string as reported by the rpcProvider"
+        chainId:
+          type: string
+          format: string
+          description: "the path to config files"
+        hasEsKey:
+          type: boolean
+          format: boolean
+          description: "`true` if an Etherscan key is present"
+        hasPinKey:
+          type: boolean
+          format: boolean
+          description: "`true` if a Pinata API key is present"
+        indexPath:
+          type: string
+          format: string
+          description: "the path to the local binary indexes"
+        isApi:
+          type: boolean
+          format: boolean
+          description: "`true` if the server is running in API mode"
+        isArchive:
+          type: boolean
+          format: boolean
+          description: "`true` if the rpcProvider is an archive node"
+        isTesting:
+          type: boolean
+          format: boolean
+          description: "`true` if the server is running in test mode"
+        isTracing:
+          type: boolean
+          format: boolean
+          description: "`true` if the rpcProvider provides Parity traces"
+        isScraping:
+          type: boolean
+          format: boolean
+          description: "`true` if the scraper is running"
+        networkId:
+          type: string
+          format: string
+          description: "the network id as reported by the rpcProvider"
+        progress:
+          type: string
+          format: string
+          description: "the progress string of the system"
+        rootConfig:
+          type: string
+          format: string
+          description: "the path to the root configuration folder"
+        rpcProvider:
+          type: string
+          format: string
+          description: "the current rpcProvider"
+        version:
+          type: string
+          format: string
+          description: "the TrueBlocks version string"
+        chains:
+          type: array
+          items:
+            $ref: "#/components/schemas/chain"
+          description: "a list of available chains in the config file"
+    manifest:
+      description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
+      type: object
+      properties:
+        version:
+          type: string
+          format: string
+          description: "the version string hashed into the chunk data"
+        chain:
+          type: string
+          format: string
+          description: "the chain to which this manifest belongs"
+        specification:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of the specification"
+        chunks:
+          type: array
+          items:
+            $ref: "#/components/schemas/chunkRecord"
+          description: "a list of the IPFS hashes of all of the chunks in the unchained index"
+    chunkRecord:
+      description: "a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk"
+      type: object
+      properties:
+        range:
+          type: string
+          format: blkrange
+          description: "the block range (inclusive) covered by this chunk"
+        bloomHash:
+          type: string
+          format: ipfshash
+          description: "the IPFS hash of the bloom filter at that range"
+        indexHash:
+          type: string
+          format: ipfshash
+          description: "the IPFS hash of the index chunk at that range"
+        bloomSize:
+          type: number
+          format: int64
+          description: "the size of the bloom filter in bytes"
+        indexSize:
+          type: number
+          format: int64
+          description: "the size of the index portion in bytes"
+        rangeDates:
+          type: object
+          items:
+            $ref: "#/components/schemas/rangeDates"
+          description: "if verbose, the block and timestamp bounds of the chunk (may be null)"
+    chunkIndex:
+      description: "internal-use only data model detailing a single index chunk file"
+      type: object
+      properties:
+        range:
+          type: string
+          format: blkrange
+          description: "the block range (inclusive) covered by this chunk"
+        magic:
+          type: string
+          format: string
+          description: "an internal use only magic number to indicate file format"
+        hash:
+          type: string
+          format: hash
+          description: "the hash of the specification under which this chunk was generated"
+        nAddresses:
+          type: number
+          format: uint64
+          description: "the number of addresses in this chunk"
+        nAppearances:
+          type: number
+          format: uint64
+          description: "the number of appearances in this chunk"
+        size:
+          type: number
+          format: uint64
+          description: "the size of the chunk in bytes"
+        rangeDates:
+          type: object
+          items:
+            $ref: "#/components/schemas/rangeDates"
+          description: "if verbose, the block and timestamp bounds of the chunk (may be null)"
+    chunkBloom:
+      description: "internal-use only data model detailing a single bloom filter file"
+      type: object
+      properties:
+        range:
+          type: string
+          format: blkrange
+          description: "the block range (inclusive) covered by this chunk"
+        magic:
+          type: string
+          format: string
+          description: "an internal use only magic number to indicate file format"
+        hash:
+          type: string
+          format: hash
+          description: "the hash of the specification under which this chunk was generated"
+        nBlooms:
+          type: number
+          format: uint64
+          description: "the number of individual bloom filters in this bloom file"
+        nInserted:
+          type: number
+          format: uint64
+          description: "the number of addresses inserted into the bloom file"
+        size:
+          type: number
+          format: uint64
+          description: "the size on disc in bytes of this bloom file"
+        byteWidth:
+          type: number
+          format: uint64
+          description: "the width of the bloom filter"
+        rangeDates:
+          type: object
+          items:
+            $ref: "#/components/schemas/rangeDates"
+          description: "if verbose, the block and timestamp bounds of the chunk (may be null)"
+    chunkAddress:
+      description: "internal-use only data model detailing a single address record in the address table of an index chunk"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address in this record"
+        range:
+          type: string
+          format: blkrange
+          description: "the block range of the chunk from which this address record was taken"
+        offset:
+          type: number
+          format: uint64
+          description: "the offset into the appearance table of the first record for this address"
+        count:
+          type: number
+          format: uint64
+          description: "the number of records in teh appearance table for this address"
+        rangeDates:
+          type: object
+          items:
+            $ref: "#/components/schemas/rangeDates"
+          description: "if verbose, the block and timestamp bounds of the chunk (may be null)"
+    ipfsPin:
+      description: "internal-use only data model detailing a single remote or local ipfs pinned file"
+      type: object
+      properties:
+        cid:
+          type: string
+          format: ipfshash
+          description: "the CID of the file"
+        datePinned:
+          type: string
+          format: string
+          description: "the date the CID was first created"
+        status:
+          type: string
+          format: string
+          description: "the status of the file (one of [all|pinned|unpinned|pending])"
+        size:
+          type: number
+          format: int64
+          description: "the size of the file in bytes"
+        fileName:
+          type: string
+          format: string
+          description: "the metadata name of the pinned file"
+    chunkStats:
+      description: "summary statistics about an Unchained Index bloom filter and index chunk"
+      type: object
+      properties:
+        range:
+          type: string
+          format: blkrange
+          description: "the block range (inclusive) covered by this chunk"
+        nAddrs:
+          type: number
+          format: uint64
+          description: "the number of addresses in the chunk"
+        nApps:
+          type: number
+          format: uint64
+          description: "the number of appearances in the chunk"
+        nBlocks:
+          type: number
+          format: uint64
+          description: "the number of blocks in the chunk"
+        nBlooms:
+          type: number
+          format: uint64
+          description: "the number of bloom filters in the chunk's bloom"
+        recWid:
+          type: number
+          format: uint64
+          description: "the record width of a single bloom filter"
+        bloomSz:
+          type: number
+          format: uint64
+          description: "the size of the bloom filters on disc in bytes"
+        chunkSz:
+          type: number
+          format: uint64
+          description: "the size of the chunks on disc in bytes"
+        addrsPerBlock:
+          type: number
+          format: float64
+          description: "the average number of addresses per block"
+        appsPerBlock:
+          type: number
+          format: float64
+          description: "the average number of appearances per block"
+        appsPerAddr:
+          type: number
+          format: float64
+          description: "the average number of appearances per address"
+        ratio:
+          type: number
+          format: float64
+          description: "the ratio of appearances to addresses"
+        rangeDates:
+          type: object
+          items:
+            $ref: "#/components/schemas/rangeDates"
+          description: "if verbose, the block and timestamp bounds of the chunk (may be null)"
+    monitorClean:
+      description: "report on cleaning dups out of monitors"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address being cleaned"
+        sizeThen:
+          type: number
+          format: int64
+          description: "the number of appearances in the monitor prior to cleaning"
+        sizeNow:
+          type: number
+          format: int64
+          description: "the number of appearances in the monitor after cleaning"
+        dups:
+          type: number
+          format: int64
+          description: "the number of duplicates removed"
+        staged:
+          type: boolean
+          format: boolean
+          description: "`true` if the address is in the stage, `false` otherwise"
+        removed:
+          type: boolean
+          format: boolean
+          description: "`true` if the address was removed from the stage, `false` otherwise"
+    cacheItem:
+      description: "a single entry in the results of a status query when `--verbose` is enabled"
+      type: object
+      properties:
+        type:
+          type: string
+          format: string
+          description: "the type of the cache"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/any"
+          description: "the individual items in the cache (if --verbose)"
+        lastCached:
+          type: string
+          format: string
+          description: "the date of the most recent item added to the cache"
+        nFiles:
+          type: number
+          format: uint64
+          description: "the number of items in the cache"
+        nFolders:
+          type: number
+          format: uint64
+          description: "the number of folders holding that many items"
+        path:
+          type: string
+          format: string
+          description: "the path to the top of the given cache"
+        sizeInBytes:
+          type: number
+          format: int64
+          description: "the size of the cache in bytes"
+    reportCheck:
+      description: "report on checking contents of chunks"
+      type: object
+      properties:
+        result:
+          type: string
+          format: string
+          description: "the result of the check"
+        visitedCnt:
+          type: number
+          format: uint64
+          description: "the number of visited items in the cache"
+        checkedCnt:
+          type: number
+          format: uint64
+          description: "the number of checks"
+        skippedCnt:
+          type: number
+          format: uint64
+          description: "the number of skipped checks"
+        passedCnt:
+          type: number
+          format: uint64
+          description: "the number of passed checks"
+        failedCnt:
+          type: number
+          format: uint64
+          description: "the number of failed checks"
+        msgStrings:
+          type: array
+          items:
+            $ref: "#/components/schemas/string"
+          description: "an array of messages explaining failed checks"
+        reason:
+          type: string
+          format: string
+          description: "the reason for the test"
+    chunkPin:
+      description: "a JSON object containing the results of pinning the Unchained Index"
+      type: object
+      properties:
+        version:
+          type: string
+          format: string
+          description: "the version string hashed into the chunk data"
+        chain:
+          type: string
+          format: string
+          description: "the chain to which this manifest belongs"
+        timestampHash:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file containing timestamps"
+        specHash:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of the specification"
+        manifestHash:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file containing CIDs for the various chunks"
+    chain:
+      description: "a configuration item carrying information about a single chain"
+      type: object
+      properties:
+        chain:
+          type: string
+          format: string
+          description: "the common name of the chain"
+        chainId:
+          type: number
+          format: uint64
+          description: "the chain id as reported by the RPC"
+        symbol:
+          type: string
+          format: string
+          description: "the symbol of the base currency on the chain"
+        rpcProvider:
+          type: string
+          format: string
+          description: "a valid RPC provider for the chain"
+        remoteExplorer:
+          type: string
+          format: string
+          description: "a remote explorer for the chain such as Etherscan"
+        localExplorer:
+          type: string
+          format: string
+          description: "the local explorer for the chain (typically TrueBlocks Explorer)"
+        ipfsGateway:
+          type: string
+          format: string
+          description: "an IPFS gateway for pinning the index if enabled"
+    rangeDates:
+      description: "shows first and last timestamps and dates for a given block range"
+      type: object
+      properties:
+        firstTs:
+          type: number
+          format: timestamp
+          description: "the timestamp of the first block in this range"
+        firstDate:
+          type: string
+          format: datetime
+          description: "the first timestamp as a date"
+        lastTs:
+          type: number
+          format: timestamp
+          description: "the timestamp of the most recent block in this range"
+        lastDate:
+          type: string
+          format: datetime
+          description: "the last timestamp as a date"
+    abi:
+      description: "a human-readable representation of a Solidity smart contract"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address for the ABI"
+        name:
+          type: string
+          format: string
+          description: "the filename of the ABI (likely the smart contract address)"
+        path:
+          type: string
+          format: string
+          description: "the folder holding the abi file"
+        fileSize:
+          type: number
+          format: int64
+          description: "the size of this file on disc"
+        lastModDate:
+          type: string
+          format: string
+          description: "the last update date of the file"
+        isKnown:
+          type: boolean
+          format: boolean
+          description: "true if this is the ABI for a known smart contract or protocol"
+        isEmpty:
+          type: boolean
+          format: boolean
+          description: "true if the ABI could not be found (and won't be looked for again)"
+        nFunctions:
+          type: number
+          format: int64
+          description: "if verbose, the number of functions in the ABI"
+        nEvents:
+          type: number
+          format: int64
+          description: "if verbose, the number of events in the ABI"
+        hasConstructor:
+          type: boolean
+          format: boolean
+          description: "if verbose and the abi has a constructor, then `true`, else `false`"
+        hasFallback:
+          type: boolean
+          format: boolean
+          description: "if verbose and the abi has a fallback, then `true`, else `false`"
+        functions:
+          type: array
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the functions for this address"
+    function:
+      description: "a human-readable representation of a Solidity function call or event"
+      type: object
+      properties:
+        name:
+          type: string
+          format: string
+          description: "the name of the interface"
+        type:
+          type: string
+          format: string
+          description: "the type of the interface, either 'event' or 'function'"
+        signature:
+          type: string
+          format: string
+          description: "the canonical signature of the interface"
+        encoding:
+          type: string
+          format: string
+          description: "the signature encoded with keccak"
+        inputs:
+          type: array
+          items:
+            $ref: "#/components/schemas/parameter"
+          description: "the input parameters to the function, if any"
+        outputs:
+          type: array
+          items:
+            $ref: "#/components/schemas/parameter"
+          description: "the output parameters to the function, if any"
+    parameter:
+      description: "an input or output parameter to a Solidity function or event"
+      type: object
+      properties:
+        type:
+          type: string
+          format: string
+          description: "the type of this parameter"
+        name:
+          type: string
+          format: string
+          description: "the name of this parameter"
+        strDefault:
+          type: string
+          format: string
+          description: "the default value of this parameter, if any"
+        indexed:
+          type: boolean
+          format: boolean
+          description: "`true` if this parameter is indexed"
+        internalType:
+          type: string
+          format: string
+          description: "for composite types, the internal type of the parameter"
+        components:
+          type: array
+          items:
+            $ref: "#/components/schemas/parameter"
+          description: "for composite types, the parameters making up the composite"
+    slurp:
+      description: "transaction data as returned from by remote APIs"
+      type: object
+      properties:
+        hash:
+          type: string
+          format: hash
+          description: "the hash of the transaction"
+        blockHash:
+          type: string
+          format: hash
+          description: "the hash of the block containing this transaction"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: txnum
+          description: "the zero-indexed position of the transaction in the block"
+        nonce:
+          type: number
+          format: value
+          description: "sequence number of the transactions sent by the sender"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        from:
+          type: string
+          format: address
+          description: "address from which the transaction was sent"
+        to:
+          type: string
+          format: address
+          description: "address to which the transaction was sent"
+        value:
+          type: string
+          format: wei
+          description: "the amount of wei sent with this transactions"
+        ether:
+          type: string
+          format: ether
+          description: "if --ether is specified, the value in ether (calculated)"
+        gas:
+          type: number
+          format: gas
+          description: "the maximum number of gas allowed for this transaction"
+        gasPrice:
+          type: number
+          format: gas
+          description: "the number of wei per unit of gas the sender is willing to spend"
+        input:
+          type: string
+          format: bytes
+          description: "byte data either containing a message or funcational data for a smart contracts. See the --articulate"
+        hasToken:
+          type: boolean
+          format: boolean
+          description: "`true` if the transaction is token related, `false` otherwise"
+        articulatedTx:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "if present, the function that was called in the transaction"
+        compressedTx:
+          type: string
+          format: string
+          description: "truncated, more readable version of the articulation (calculated)"
+        isError:
+          type: boolean
+          format: boolean
+          description: "`true` if the transaction ended in error, `false` otherwise"
+    message:
+      description: "used for various responses when no real data is generated"
+      type: object
+      properties:
+        msg:
+          type: string
+          format: string
+          description: "the message"
+        num:
+          type: number
+          format: int64
+          description: "a number if needed"
+    count:
+      description: "the number of items in the given database"
+      type: object
+      properties:
+        count:
+          type: number
+          format: uint64
+          description: "the number of items in the given database"
+    destination:
+      description: "an enhanced url used by chifra explore"
+      type: object
+      properties:
+        term:
+          type: string
+          format: string
+          description: "the term used to produce the url"
+        termType:
+          type: object
+          items:
+            $ref: "#/components/schemas/destType"
+          description: "the type of the term"
+        url:
+          type: string
+          format: string
+          description: "the url produced"
+        source:
+          type: string
+          format: string
+          description: "the option that produced the url"
+    response:
+      required:
+        - result
+      type: object
+      properties:
+        data:
+          type: object
+        error:
+          type: array
+          items:
+            type: string
+    hash:
+      type: string
+      format: hash
+      description: "The 32-byte hash"
+    address:
+      type: string
+    string:
+      type: string
+    uint64:
+      type: number
+      format: uint64
+    topic:
+      type: string
+      format: bytes
+      description: "One of four 32-byte topics of a log"
+    addrRecord:
+      type: string
+      description: "an address record in the Unchained Index chunk"
+    appRecord:
+      type: string
+      description: "an appearance record in the Unchained Index chunk"
+    any:
+      type: string
+      description: "any cache item found in the binary cache"
+    tokenType:
+      type: string
+      description: "a string representing the token type"

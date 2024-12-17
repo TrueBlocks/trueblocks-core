@@ -3,7 +3,7 @@ on: [pull_request, workflow_dispatch]
 env:
   CHIFRA_PATH: src/apps/chifra
   # Go Version
-  GO_VERSION: 1.22
+  GO_VERSION: 1.23
 jobs:
   Lint:
     runs-on: ubuntu-latest
@@ -18,11 +18,12 @@ jobs:
         run: |
           ./scripts/go-work-sync.sh
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v3
+        uses: golangci/golangci-lint-action@v4
         with:
           version: v1.61.0
           working-directory: ${{ env.CHIFRA_PATH }}
           args: --timeout=5m --verbose --out-format=colored-line-number
+          skip-pkg-cache: true
   Build:
     needs: Lint
     runs-on: ubuntu-20.04
@@ -64,7 +65,6 @@ jobs:
           username: ${{ secrets.TESTING_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           command_timeout: 40m
-          script_stop: true
           script: |
             rm -rf testing/${{ github.sha }}
             mkdir -p testing/${{ github.sha }}

@@ -1,0 +1,6 @@
+blocks?blocks=1001005-1001010&fmt=csv&output=output_test_file&noHeader&append
+{
+  "errors": [
+    "The --output option is not available in api mode."
+  ]
+}

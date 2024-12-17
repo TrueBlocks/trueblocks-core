@@ -56,9 +56,9 @@ func (opts *StateOptions) getItemsToRemove() ([]cache.Locator, error) {
 
 		for _, c := range opts.Calls {
 			if len(c) > 0 {
-				callAddress := opts.GetCallAddress()
+				callAddress := opts.GetAddressOrProxy()
 				if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, c); err != nil {
-					wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", c, err)
+					wrapped := fmt.Errorf("the --calldata value provided (%s) was not found: %s", c, err)
 					return []cache.Locator{}, wrapped
 
 				} else {

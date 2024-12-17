@@ -1,0 +1,16 @@
+export?addrs=0x04fe1f0c597fbc65700f4fba6f87501edc20e665&firstBlock=10277780&lastBlock=10278000&cache&decache
+Args: [addrs=0x04fe1f0c597fbc65700f4fba6f87501edc20e665 firstBlock=10277780 lastBlock=10278000 cache decache]
+Opts: {"addrs":["0x04fe1f0c597fbc65700f4fba6f87501edc20e665"],"firstBlock":10277780,"lastBlock":10278000,"cache":true,"decache":true}
+Addrs:  [0x04fe1f0c597fbc65700f4fba6f87501edc20e665]
+FirstBlock:  10277780
+LastBlock:  10278000
+Enabled:  transactions
+Cache:  true
+Decache:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The --cache and --decache options are mutually exclusive."
+  ]
+}

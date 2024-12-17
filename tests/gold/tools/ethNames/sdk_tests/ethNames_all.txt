@@ -1,0 +1,1584 @@
+names?all
+Args: [all]
+Opts: {"all":true,"autoname":"0x0"}
+All:  true
+Format:  json
+{
+  "data": [
+    {
+      "address": "0x0000000000000000000000000000000000000001",
+      "decimals": 1,
+      "isCustom": true,
+      "name": "Account_1",
+      "source": "Testing",
+      "symbol": "SYM_1",
+      "tags": "81-Custom"
+    },
+    {
+      "address": "0x0000000000000000000000000000000000000002",
+      "decimals": 2,
+      "isCustom": true,
+      "name": "Account_2",
+      "source": "Testing",
+      "symbol": "SYM_2",
+      "tags": "81-Custom"
+    },
+    {
+      "address": "0x0000000000000000000000000000000000000003",
+      "decimals": 3,
+      "isCustom": true,
+      "name": "Account_3",
+      "source": "Testing",
+      "symbol": "SYM_3",
+      "tags": "81-Custom"
+    },
+    {
+      "address": "0x0000000000000000000000000000000000000004",
+      "decimals": 4,
+      "isCustom": true,
+      "name": "Account_4",
+      "source": "Testing",
+      "symbol": "SYM_4",
+      "tags": "81-Custom"
+    },
+    {
+      "address": "0x000000000000000000000000000000000000dead",
+      "name": "ENS: Burn Address",
+      "source": "EtherScan.io",
+      "tags": "55-Defi"
+    },
+    {
+      "address": "0x0000000000001b84b1cb32787b0d64758d019317",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": true,
+      "name": "HomeWork 🏠🛠️",
+      "source": "On chain",
+      "symbol": "HWK",
+      "tags": "50-Tokens:ERC721"
+    },
+    {
+      "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Chi Gastoken by 1inch",
+      "source": "On chain",
+      "symbol": "CHI",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x000000000000541e251335090ac5b47176af4f7e",
+      "isContract": true,
+      "name": "dex.blue",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x0000000000085d4780b73119b644ae5ecd22b376",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "TrueUSD",
+      "source": "On chain",
+      "symbol": "TUSD",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0000000000095413afc295d19edeb1ad7b71c952",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Tokenlon",
+      "source": "Rotki",
+      "symbol": "LON",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
+      "isContract": true,
+      "name": "ENS: Registry with Fallback",
+      "source": "EtherScan.io",
+      "tags": "34-ENS"
+    },
+    {
+      "address": "0x00000000008fd4f395ec6f12920bae9cb6c722e4",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Frax Ethereum",
+      "source": "Rotki",
+      "symbol": "frxETH",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0000000000a84fe7f5d858c8a22121c975ff0b42",
+      "isContract": true,
+      "name": "Poster",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x0000000000b3f879cb30fe243b4dfee438691c04",
+      "decimals": 2,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Gastoken.io",
+      "source": "On chain",
+      "symbol": "GST2",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0000000000c90bc353314b6911180ed7e06019a9",
+      "isContract": true,
+      "name": "Arbitrage Bot",
+      "source": "0xTracker",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x0000000000da9e0e8c2a40510f991cef596ab682",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Frax Ether",
+      "source": "Rotki",
+      "symbol": "frxETH",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0000000006adbd7c01bc0738cdbfc3932600ad63",
+      "isContract": true,
+      "name": "1inch Exchange",
+      "source": "0xTracker",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x00000000219ab540356cbb839cbe05303d7705fa",
+      "isContract": true,
+      "name": "Eth2 Deposit Contract",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x00000000357646e36fe575885bb3e1a0772e64cc",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Dai Backstop Syndicate v3-100",
+      "source": "On chain",
+      "symbol": "DBSv3-100",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00000000441378008ea67f4284a57932b1c000a5",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "TrueGBP",
+      "source": "On chain",
+      "symbol": "TGBP",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0000000053d411becdb4a82d8603edc6d8b8b3bc",
+      "isContract": true,
+      "name": "1inch Exchange",
+      "source": "0xTracker",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x00000000af5a61acaf76190794e3fdf1289288a1",
+      "isContract": true,
+      "name": "Arbitrage Bot",
+      "source": "0xTracker",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x00000000b1786c9698c160d78232c78d6f6474fe",
+      "isContract": true,
+      "name": "Arbitrage Bot",
+      "source": "0xTracker",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x0000000f8ef4be2b7aed6724e893c1b674b9682d",
+      "isContract": true,
+      "name": "1inch Exchange",
+      "source": "0xTracker",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x0000000fcdf5ba49794f4151d6daff4505bc47d1",
+      "name": "Grant 3596 - The Uniswap v3 Options Education Fund",
+      "source": "https://gitcoin.co/grants/3596/the-uniswap-v3-options-education-fund",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x00000100f2a2bd000715001920eb70d229700085",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "TrueCAD",
+      "source": "On chain",
+      "symbol": "TCAD",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x000005edbbc1f258302add96b5e20d3442e5dd89",
+      "isContract": true,
+      "name": "1inch Exchange",
+      "source": "0xTracker",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x00006100f7090010005f1bd7ae6122c3c2cf0090",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "TrueAUD",
+      "source": "On chain",
+      "symbol": "TAUD",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x000061a8f22a1e60ba0b3caadfa958e954fc2b6a",
+      "name": "Grant 2195 - Best Practicers",
+      "source": "https://gitcoin.co/grants/2195/best-practicers",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x000067464bdcbec51051ddcce8551e702f130000",
+      "isContract": true,
+      "name": "Ledger Connect Drainer Contract",
+      "source": "https://twitter.com/_RogueTrader/status/1735287420378357804",
+      "tags": "80-Malicious"
+    },
+    {
+      "address": "0x0000852600ceb001e08e00bc008be620d60031f2",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "TrueHKD",
+      "source": "On chain",
+      "symbol": "THKD",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0000a1c00009a619684135b824ba02f7fbf3a572",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Alchemy",
+      "source": "On chain",
+      "symbol": "ALCH",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x000100bb517e0c003200502a822083000a3b005d",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Archer DAO: Voting Power Prism Proxy",
+      "source": "On chain",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0001fb050fe7312791bf6475b96569d83f695c9f",
+      "isContract": true,
+      "name": "Ygov.finance: yearn",
+      "tags": "55-Defi"
+    },
+    {
+      "address": "0x000983ba1a675327f0940b56c2d49cd9c042dfbf",
+      "isContract": true,
+      "name": "GU: Shiny Legendary Pack",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x000d836201318ec6899a67540690382780743280",
+      "isPrefund": true,
+      "name": "Prefund_0000",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x0012940cf77a3cb5bade409b96a60e22506cf7d0",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Curve.fi Factory Crypto Pool: STATE / WBTC",
+      "source": "Rotki",
+      "symbol": "STATEWBTC-f",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x001762430ea9c3a26e5749afdb70da5f78ddbb8c",
+      "isPrefund": true,
+      "name": "Prefund_0001",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x001a589dda0d6be37632925eaf1256986b2c6ad0",
+      "isContract": true,
+      "name": "Oraclize_id304",
+      "source": "EtherScan.io",
+      "tags": "91-Early:Addresses"
+    },
+    {
+      "address": "0x001a8ffcb0f03e99141652ebcdecdb0384e3bd6c",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "POLKER",
+      "source": "Rotki",
+      "symbol": "PKR",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x001bae3291db1f401771a1eaa8f0078534177bcc",
+      "name": "Sansum Diabetes Research Institute",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "isPrefund": true,
+      "name": "Prefund_0002",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x001f0aa5da15585e5b2305dbab2bac425ea71007",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "IPSX",
+      "source": "On chain",
+      "symbol": "IPSX",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x001f751cdfee02e2f0714831be2f8384db0f71a2",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "GenericLevCompFarm",
+      "source": "On chain",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00216505799d9e3117b40b94a24dc0fa286a57a4",
+      "name": "Grant 1168 Flowerpatch Emojis & Artwork Fund",
+      "source": "https://gitcoin.co/grants/1168/flowerpatch-emojis-artwork-fund",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x00281dfce4cfd72c0b6fda2aaaf077258743f9e8",
+      "isContract": true,
+      "isErc20": true,
+      "name": "NuriFootball",
+      "source": "Rotki",
+      "symbol": "NRFB",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00282fd551d03dc033256c4bf119532e8c735d8a",
+      "decimals": 2,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Biaocoin",
+      "source": "Rotki",
+      "symbol": "BIAO",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00319f722bd546182cb2c701ca254146d3f084fc",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Democracy Earth",
+      "source": "On chain",
+      "symbol": "HOUR",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0032403587947b9f15622a68d104d54d33dbd1cd",
+      "isPrefund": true,
+      "name": "Prefund_0003",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x0034ea9808e620a0ef79261c51af20614b742b24",
+      "isContract": true,
+      "name": "Pool Usdc MCDAwarePool v0.2.12",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts:Pool Together"
+    },
+    {
+      "address": "0x0035cc37599241d007d0aba1fb931c5fa757f7a1",
+      "name": "Grant 2388 - The Commons Swarm: An Augmented Bonding Curve model for DAOs",
+      "source": "https://gitcoin.co/grants/2388/the-commons-swarm-an-augmented-bonding-curve-mode",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x0037ce3d4b7f8729c8607d8d0248252be68202c0",
+      "name": "Miner_0027_260",
+      "source": "OnChain",
+      "tags": "91-Early:Miners"
+    },
+    {
+      "address": "0x0038eb9084ea8aa63dcb8fbdd63d8862f5bbb3a0",
+      "name": "The Turing Trust",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x0040a2cebc65894bc2cfb57565f9acfa33fab137",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "SushiSwap LP Token",
+      "source": "On chain",
+      "symbol": "SLP",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x004375dff511095cc5a197a54140a24efef3a416",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Uniswap V2",
+      "source": "On chain",
+      "symbol": "UNI-V2",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00497e92cdc0e0b963d752b2296acb87da828b24",
+      "isPrefund": true,
+      "name": "Prefund_0004",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x004bfbe1546bc6c65b5c7eaa55304b38bbfec6d3",
+      "isPrefund": true,
+      "name": "Prefund_0005",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x004f5683e183908d0f6b688239e3e2d5bbb066ca",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": true,
+      "name": "Hall Of Fame Goat Lodge",
+      "source": "On chain",
+      "symbol": "HOFG",
+      "tags": "50-Tokens:ERC721"
+    },
+    {
+      "address": "0x005241438caf3eacb05bb6543151f7af894c5b58",
+      "name": "Grant 2763 - rugpullindex.com - Improving stake safety",
+      "source": "https://gitcoin.co/grants/2763/rugpullindexcom-improving-stake-safety",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x0054c61a19e307ddd3ff81746487d7526f8c4a76",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Uniswap V2",
+      "source": "On chain",
+      "symbol": "UNI-V2",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0057ac2d777797d31cd3f8f13bf5e927571d6ad0",
+      "decimals": 18,
+      "name": "Moons",
+      "source": "Rotki",
+      "symbol": "MOON",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x005a9c03f69d17d66cbb8ad721008a9ebbb836fb",
+      "isPrefund": true,
+      "name": "Prefund_0006",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x005ca4f1493f451c1588186c570a434ec38e718d",
+      "isContract": true,
+      "name": "BrightID Agent",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x005d0ee8155ec0a6ff6808552ca5f16bb5be323a",
+      "isPrefund": true,
+      "name": "Prefund_0007",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x005f5cee7a43331d5a3d3eec71305925a62f34b6",
+      "isContract": true,
+      "name": "DAO Drain 086",
+      "source": "GethSource",
+      "tags": "80-Malicious:DaoDrain"
+    },
+    {
+      "address": "0x006087d6ac20840c23ba298512db454a05c19b10",
+      "isContract": true,
+      "name": "Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)",
+      "source": "https://gitcoin.co/grants/743/fittogetherdao-like-pooltogether-for-fitness-and-",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x006bea43baa3f7a6f765f14f10a1a1b08334ef45",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Stox",
+      "source": "On chain",
+      "symbol": "STX",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x006cfc89e7f521ce3290b200df9530dce911b896",
+      "name": "St. Ignatius Martyr Catholic Church",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x006e61aa7e7ce25b8dad331d5181f2fbe5c23a54",
+      "isContract": true,
+      "name": "Shanghai Cleaner Contract",
+      "source": "TrueBlocks.io",
+      "tags": "80-Malicious:Shanghai"
+    },
+    {
+      "address": "0x0072d5887bc9979168835d8ac37ca1c2f6a4dac9",
+      "name": "Ultimate Unicorns",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x007622d84a234bb8b078230fcf84b67ae9a8acae",
+      "isPrefund": true,
+      "name": "Prefund_0008",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x0077cd5eca22e86177cc465633227652ff02f32d",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "BrightID_Main_DAO",
+      "source": "On chain",
+      "symbol": "BMAIN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
+      "name": "Grant 0845 Remote Developer Bootcamp",
+      "source": "https://gitcoin.co/grants/845/remote-developer-bootcamp",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x007b9fc31905b4994b04c9e2cfdc5e2770503f42",
+      "isPrefund": true,
+      "name": "Prefund_0009",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x007d42b9192b8c087b0d3e6ef73aae48e74b41c1",
+      "isContract": true,
+      "name": "Ethventures4",
+      "source": "EtherScan.io",
+      "tags": "91-Early:Addresses"
+    },
+    {
+      "address": "0x007d63afd542886570046da400c403f0dc63bd08",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Zō Baby 象の赤ちゃん",
+      "source": "On chain",
+      "symbol": "ZOBABY",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x007dfb0c30f55ccac0191387fe5ffc9cfde519c0",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "AINU TOKEN",
+      "source": "On chain",
+      "symbol": "AINU",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x007ea5c0ea75a8df45d288a4debdd5bb633f9e56",
+      "decimals": 18,
+      "name": "CanYaCoin",
+      "source": "Rotki",
+      "symbol": "CAN",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x007f4a23ca00cd043d25c2888c1aa5688f81a344",
+      "isPrefund": true,
+      "name": "Prefund_0010",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x008410c50aa8422d0c2a357a2f10b9a78fa7c496",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Curve.fi Factory Crypto Pool: STG/USDC",
+      "source": "Rotki",
+      "symbol": "STGUSDC-f",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x008639dabbe3aeac887b5dc0e43e13bcd287d76c",
+      "isPrefund": true,
+      "name": "Prefund_0011",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x0087a081a9b430fd8f688c6ac5dd24421bfb060d",
+      "name": "Grant 0779 DeFi Latam",
+      "source": "https://gitcoin.co/grants/779/defi-latam",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x0089508679abf8c71bf6781687120e3e6a84584d",
+      "isPrefund": true,
+      "name": "Prefund_0012",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x008fc7cbadffbd0d7fe44f8dfd60a79d721a1c9c",
+      "isPrefund": true,
+      "name": "Prefund_0013",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x0093e5f2a850268c0ca3093c7ea53731296487eb",
+      "name": "Polygon Exploiter First Sender",
+      "tags": "80-Malicious"
+    },
+    {
+      "address": "0x009560a3de627868f91fa8bfe1c1b7afaf08186b",
+      "isPrefund": true,
+      "name": "Prefund_0014",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x0096800019bf4eca0bed5a714a553ecf844884c5",
+      "isContract": true,
+      "name": "Etheropt_id107_cnt215_5mo",
+      "source": "Ether Camp",
+      "tags": "91-Early:Addresses"
+    },
+    {
+      "address": "0x00969747f7a5b30645fe00e44901435ace24cc37",
+      "isPrefund": true,
+      "name": "Prefund_0015",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00989e88f674157992b74f11eb78ee10a76e6258",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Curve.fi Factory Crypto Pool: RAI/LUSD",
+      "source": "Rotki",
+      "symbol": "RAILUSD-f",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x009a6d7db326679b77c90391a7476d238f3ba33e",
+      "isPrefund": true,
+      "name": "Prefund_0016",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x009a82e5762189384bf2880a2d21f75e209eee12",
+      "name": "UNRWA USA",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x009c216b7e86e5c38af14fcd8c07aab3a2e7888e",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Writing Hedge Contracts DAI",
+      "source": "On chain",
+      "symbol": "writeDAI",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x009e06646ac4dece817f3e859850acd9b239bc48",
+      "name": "@firepower",
+      "source": "Steem",
+      "tags": "91-Early:Addresses"
+    },
+    {
+      "address": "0x009e864923b49263c7f10d19b7f8ab7a9a5aad33",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Knoxstertoken",
+      "source": "On chain",
+      "symbol": "FKX",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x009eef0a0886056e3f69211853b9b7457f3782e4",
+      "isPrefund": true,
+      "name": "Prefund_0017",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x009fdbf44e1f4a6362b769c39a475f95a96c2bc7",
+      "isPrefund": true,
+      "name": "Prefund_0018",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00a2faf97cc2b985b29a0a0eaa6e0d8033dc0ea1",
+      "decimals": 18,
+      "name": "Velodromev2tBTC-WETHFactoryyVault",
+      "source": "SmolAssets",
+      "symbol": "yvVelo-tBTC-WETH-f",
+      "tags": "60-SmolAssets"
+    },
+    {
+      "address": "0x00a33c8379b03085ad0c0b4f6fb38c63deba8475",
+      "name": "Grant 4103 - Supplements Death Match",
+      "source": "https://gitcoin.co/grants/4103/supplements-death-match",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x00a35fd824c717879bf370e70ac6868b95870dfb",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "IronBank",
+      "source": "SmolAssets",
+      "symbol": "IB",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00a5797f52c9d58f189f36b1d45d1bf6041f2f6b",
+      "isPrefund": true,
+      "name": "Prefund_0019",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00a7ec2f2b451cb0233e8adbf4c9a951027c2b02",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "hiENS4",
+      "source": "Rotki",
+      "symbol": "hiENS4",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00a8b738e453ffd858a7edf03bccfe20412f0eb0",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "AllianceBlock Token",
+      "source": "Rotki",
+      "symbol": "ALBT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00aa5381b2138ebeffc191d5d8c391753b7098d2",
+      "isPrefund": true,
+      "name": "Prefund_0020",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00aada25ea2286709abb422d41923fd380cd04c7",
+      "isPrefund": true,
+      "name": "Prefund_0021",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00aba6fe5557de1a1d565658cbddddf7c710a1eb",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "EASY V2",
+      "source": "Rotki",
+      "symbol": "EZ",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00acbfb2f25a5485c739ef70a44eeeeb7c65a66f",
+      "isPrefund": true,
+      "name": "Prefund_0022",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00acc6f082a442828764d11f58d6894ae408f073",
+      "isPrefund": true,
+      "name": "Prefund_0023",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00b277b099a8e866ca0ec65bcb87284fd142a582",
+      "isPrefund": true,
+      "name": "Prefund_0024",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00b491d250b9bcce482b6e70321b0a5339d183a6",
+      "name": "Grant 0976 Magical Machine Money",
+      "source": "https://gitcoin.co/grants/976/magical-machine-money",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x00bdd4013aa31c04616c2bc9785f2788f915679b",
+      "isPrefund": true,
+      "name": "Prefund_0025",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00c27d63fde24b92ee8a1e7ed5d26d8dc5c83b03",
+      "isPrefund": true,
+      "name": "Prefund_0026",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00c2999c8b2adf4abc835cc63209533973718eb1",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "New World Order",
+      "source": "Rotki",
+      "symbol": "STATE",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00c396383400a1ef2eb401052dbf5d989b2da481",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": true,
+      "name": "Cypher City",
+      "source": "On chain",
+      "symbol": "CYPHER",
+      "tags": "50-Tokens:ERC721"
+    },
+    {
+      "address": "0x00c40fe2095423509b9fd9b754323158af2310f3",
+      "isPrefund": true,
+      "name": "Prefund_0027",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00c4b398500645eb5da00a1a379a88b11683ba01",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Eximchain Token",
+      "source": "On chain",
+      "symbol": "EXC",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "SKALE",
+      "source": "Giveth website",
+      "symbol": "SKL",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00ca33970150dff4fdd16f4992810117296768dd",
+      "name": "Creative Development Collective",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x00cb8e36a9c40491a39e8bf2864ed30c1b579860",
+      "decimals": 18,
+      "name": "Velodromev2tBTC-WBTCFactoryyVault",
+      "source": "SmolAssets",
+      "symbol": "yvVelo-tBTC-WBTC-f",
+      "tags": "60-SmolAssets"
+    },
+    {
+      "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
+      "isContract": true,
+      "name": "Grant 0143 Dappnode - Panvala League",
+      "source": "https://gitcoin.co/grants/143/dappnode-panvala-league",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x00d0f137b51692d0ac708bde7b367a373865cffe",
+      "isContract": true,
+      "name": "Zapper.Fi : Balancer Remove",
+      "source": "EtherScan.io",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00d75ed60c774f8b3a5a5173fb1833ad7105a2d9",
+      "isPrefund": true,
+      "name": "Prefund_0028",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00d78d89b35f472716eceafebf600527d3a1f969",
+      "isPrefund": true,
+      "name": "Prefund_0029",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00d7e52cb140df6ab91291e289318ad62a18f80c",
+      "name": "ReFi In The Classroom",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x00dae27b350bae20c5652124af5d8b5cba001ec1",
+      "isPrefund": true,
+      "name": "Prefund_0030",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00dc01cbf44978a42e8de8e436edf94205cfb6ec",
+      "isPrefund": true,
+      "name": "Prefund_0031",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+      "name": "Gitcoin Maintainer",
+      "tags": "31-Gitcoin:Admin"
+    },
+    {
+      "address": "0x00e1724885473b63bce08a9f0a52f35b0979e35a",
+      "decimals": 18,
+      "name": "OathToken",
+      "source": "SmolAssets",
+      "symbol": "OATH",
+      "tags": "60-SmolAssets"
+    },
+    {
+      "address": "0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21",
+      "name": "Grant 1839 the Etherchest Ecosystem",
+      "source": "https://gitcoin.co/grants/1839/the-etherchest-ecosystem",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x00e5646f60ac6fb446f621d146b6e1886f002905",
+      "decimals": 18,
+      "name": "Rai Reflex Index (PoS)",
+      "source": "Rotki",
+      "symbol": "RAI",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x00e681bc2d10db62de85848324492250348e90bf",
+      "isPrefund": true,
+      "name": "Prefund_0032",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00e8eb340f8af587eea6200d2081e31dc87285ac",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Curve XAI-FRAXBP Factory yVault",
+      "source": "SmolAssets",
+      "symbol": "yvCurve-XAI-FRAXBP-f",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00f463e137dcf625fbf3bca39eca98d2b968cf7f",
+      "isPrefund": true,
+      "name": "Prefund_0033",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00f93fbf00f97170b6cf295dc58888073cb5c2b8",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Curve.fi Factory USD Metapool: CRV/ETH",
+      "source": "Rotki",
+      "symbol": "CRV-ETH3CRV-f",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be",
+      "name": "Grant 0624 Nescience Software Portfolio Rebalancing Direct Indexing",
+      "source": "https://gitcoin.co/grants/624/nescience-software-portfolio-rebalancing-direct-in",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x010007394b8b7565a1658af88ce463499135d6b7",
+      "isPrefund": true,
+      "name": "Prefund_0034",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x0100546f2cd4c9d97f798ffc9755e47865ff7ee6",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Alchemix ETH",
+      "source": "SmolAssets",
+      "symbol": "alETH",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
+      "decimals": 1,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": true,
+      "name": "DAO Drain 075",
+      "source": "GethSource Ether Camp",
+      "tags": "50-Tokens:ERC721"
+    },
+    {
+      "address": "0x010496d8f3269ee9b05060bdf40c2d66e83e61dd",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Digg",
+      "source": "On chain",
+      "symbol": "DIGG",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x010589b7c33034b802f7dba2c88cc9cec0f46673",
+      "decimals": 8,
+      "isContract": true,
+      "isErc20": true,
+      "name": "SoundMoneyCoin",
+      "source": "On chain",
+      "symbol": "SOV",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0109295ece0afa326f651d455c7aed0cb31c9685",
+      "name": "Bring a stop to global poverty and alleviate hunger",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x0109c0faae3f358bce232dff482e2d6eca1f4dab",
+      "name": "FARE - Food Allergy Research &amp; Education",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x010d14d36c3ea6570d240ae3ac9d660398f7c48e",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Cenfura Token",
+      "source": "Rotki",
+      "symbol": "XCF",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x010df1df4bed23760d2d1c03781586ddf7918e54",
+      "isPrefund": true,
+      "name": "Prefund_0035",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x010f0c8b31ba0cefe2764c373fa23e8635becb60",
+      "name": "Lutheran World Relief",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x010f4a98dfa1d9799bf5c796fb550efbe7ecd877",
+      "isPrefund": true,
+      "name": "Prefund_0036",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x01112a60f427205dca6e229425306923c3cc2073",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "FARM_UNI-V2",
+      "source": "On chain",
+      "symbol": "fUNI-V2",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x01155057002f6b0d18acb9388d3bc8129f8f7a20",
+      "isPrefund": true,
+      "name": "Prefund_0037",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70",
+      "name": "Grant 0790 Loft Radio",
+      "source": "https://gitcoin.co/grants/790/loft-radio",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x011c2c1433b36a524b548444ae2f20c015427d04",
+      "name": "Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma",
+      "source": "https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x012233b3c8177f0778d910ed88170b82de3bfe57",
+      "isContract": true,
+      "name": "Old ENS Registrar",
+      "source": "TrueBlocks.io",
+      "tags": "34-ENS"
+    },
+    {
+      "address": "0x0122676358aee287246b2a84377c8ab664d013cb",
+      "isContract": true,
+      "name": "dYdX 0x Wrapper",
+      "source": "0xTracker",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x01226e0ad8d62277b162621c62c928e96e0b9a8c",
+      "isPrefund": true,
+      "name": "Prefund_0038",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x012546d756867d4a88cd3322bbb72d787e49ebf3",
+      "name": "MetaGame",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x0126e12ebc17035f35c0e9d11dd148393c405d7a",
+      "isPrefund": true,
+      "name": "Prefund_0039",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x012f396a2b5eb83559bac515e5210df2c8c362ba",
+      "isPrefund": true,
+      "name": "Prefund_0040",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x013062189dc3dcc99e9cee714c513033b8d99e3c",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Bware",
+      "source": "Rotki",
+      "symbol": "INFRA",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c",
+      "isContract": true,
+      "name": "Chainlink BTC-ETH Aggregator",
+      "source": "EtherScan.io",
+      "tags": "37-SelfDestructed"
+    },
+    {
+      "address": "0x0134ff38155fabae94fd35c4ffe1d79de7ef9c59",
+      "isPrefund": true,
+      "name": "Prefund_0041",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x0136a5af6c3299c6b5f005fdaddb148c070b299b",
+      "isPrefund": true,
+      "name": "Prefund_0042",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x013e247651a601535eda98528b2961813406d96e",
+      "name": "Free Arts NYC",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x013f9c3fac3e2759d7e90aca4f9540f75194a0d7",
+      "decimals": 18,
+      "name": "Neutrino USD",
+      "source": "Rotki",
+      "symbol": "USDN",
+      "tags": "60-Rotki"
+    },
+    {
+      "address": "0x0142c3b2fc51819b5af5dfc4aa52df9722790851",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Paycentos Token",
+      "source": "On chain",
+      "symbol": "PYN",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x01454cdc3fab2a026cc7d1cb2aea9b909d5ba0ee",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "deApy.org",
+      "source": "Rotki",
+      "symbol": "deApy.org",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x014797cc3d15f6ea6bb220a32a465ac8f7a5e3b8",
+      "name": "FUTURO NATIVO",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x01488ad3da603c4cdd6cb0b7a1e30d2a30c8fc38",
+      "isPrefund": true,
+      "name": "Prefund_0043",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x014974a1f46bf204944a853111e52f1602617def",
+      "isPrefund": true,
+      "name": "Prefund_0044",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x014b50466590340d41307cc54dcee990c8d58aa8",
+      "decimals": 6,
+      "isContract": true,
+      "isErc20": true,
+      "name": "ICOS",
+      "source": "On chain",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x014b7f67b14f5d983d87014f570c8b993b9872b5",
+      "isPrefund": true,
+      "name": "Prefund_0045",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x014ffcf34d8515535b99d6aef654258c237168b6",
+      "name": "Grant 1850 Fireth",
+      "source": "https://gitcoin.co/grants/1850/fireth",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x0151fa5d17a2dce2d7f1eb39ef7fe2ad213d5d89",
+      "isPrefund": true,
+      "name": "Prefund_0046",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x015531a044bae03bf4dab1ceabfc232a969b7175",
+      "isContract": true,
+      "name": "GU: Rare Pack",
+      "source": "EtherScan.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x01577afd4e50890247c9b10d44af73229aec884f",
+      "isPrefund": true,
+      "name": "Prefund_0047",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x01597e397605bf280674bf292623460b4204c375",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Bent Token",
+      "source": "Rotki",
+      "symbol": "BENT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x015b94ab2b0a14a96030573fbcd0f3d3d763541f",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "UZD Zunami Stable",
+      "source": "Rotki",
+      "symbol": "UZD",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x015bf68ef11bd55e43a119b5752c4b3becae7f24",
+      "name": "Grant 0627 Veridex",
+      "source": "https://gitcoin.co/grants/627/veridex",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x015c7c7a7d65bbdb117c573007219107bd7486f9",
+      "isContract": true,
+      "name": "Infura Transactions Contract",
+      "source": "Infura.io",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x015d78c7ad1289f5aa1dec25bd6b67ba31fac1cf",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "crvTETH yVault",
+      "source": "SmolAssets",
+      "symbol": "yvcrvTETH",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x015f097d9acddcddafaf2a107eb93a40fc94b04c",
+      "isPrefund": true,
+      "name": "Prefund_0048",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x015f2ec49adc333cd4e0f348c39c506eb3b1837f",
+      "name": "NFT Artist Funding",
+      "source": "Tokenomics",
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "address": "0x016396044709eb3edc69c44f4d5fa6996917e4e8",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "KingXChain",
+      "source": "On chain",
+      "symbol": "KXC",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x01676c571f57fcf4d99071e8e5451eece071c3e4",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Curve.fi Factory Crypto Pool: liq_CRV_MATIC",
+      "source": "Rotki",
+      "symbol": "CRV MATIC-f",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0168703872fa06741ecaa9dff7803168e83f7ae0",
+      "decimals": 8,
+      "isContract": true,
+      "isErc20": true,
+      "name": "MIRO Token",
+      "source": "On chain",
+      "symbol": "MIRO",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0169c1c210eae845e56840412e1f65993ea90fb4",
+      "isPrefund": true,
+      "name": "Prefund_0049",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x016b60bb6d67928c29fd0313c666da8f1698d9c5",
+      "isPrefund": true,
+      "name": "Prefund_0050",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x016bf078abcacb987f0589a6d3beadd4316922b0",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Rari Stable Pool Token",
+      "source": "On chain",
+      "symbol": "RSPT",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x016c85e1613b900fa357b8283b120e65aefcdd08",
+      "isPrefund": true,
+      "name": "Prefund_0051",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x016ee7373248a80bde1fd6baa001311d233b3cfa",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "3X Short Bitcoin Token",
+      "source": "Rotki",
+      "symbol": "BEAR",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x017946fc126d57e7823e68c647c24f28e5dc9988",
+      "name": "Grant 0190 Groundhog",
+      "source": "https://gitcoin.co/grants/190/groundhog",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x018047343e8105fed2c5000912d03815d99f3e48",
+      "name": "Grant 1920 Kevin",
+      "source": "https://gitcoin.co/grants/1920/kevin",
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x0180cb7971b47d2faf3d2b52e3b5174e0cb835cc",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "AIRSHIB",
+      "source": "On chain",
+      "symbol": "AIRSHIB",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x018492488ba1a292342247b31855a55905fef269",
+      "isPrefund": true,
+      "name": "Prefund_0052",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x018f20a27b27ec441af723fd9099f2cbb79d6263",
+      "isPrefund": true,
+      "name": "Prefund_0053",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x01914e9c0594a087f508aceabfca45f57e471388",
+      "isContract": true,
+      "name": "Wallet_id66_cnt1_5mo",
+      "source": "Ether Camp",
+      "tags": "91-Early:Addresses"
+    },
+    {
+      "address": "0x0191eb547e7bf6976b9b1b577546761de65622e2",
+      "isPrefund": true,
+      "name": "Prefund_0054",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x0193d941b50d91be6567c7ee1c0fe7af498b4137",
+      "name": "Miner_0015_427",
+      "source": "OnChain",
+      "tags": "91-Early:Miners"
+    },
+    {
+      "address": "0x0198f46f520f33cd4329bd4be380a25a90536cd5",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "PlayChip",
+      "source": "On chain",
+      "symbol": "PLA",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0199fd07389c5277c922af2736542e95e24ee689",
+      "decimals": 9,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Saturday Elon",
+      "source": "On chain",
+      "symbol": "SatElon",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x019d709579ff4bc09fdcdde431dc1447d2c260bc",
+      "isPrefund": true,
+      "name": "Prefund_0055",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x01a25a5f5af0169b30864c3be4d7563ccd44f09e",
+      "isPrefund": true,
+      "name": "Prefund_0056",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x01a7d9fa7d0eb1185c67e54da83c2e75db69e39f",
+      "isPrefund": true,
+      "name": "Prefund_0057",
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

@@ -1,0 +1,58 @@
+chifra status  blooms --verbose --max_records 2
+TEST[DATE|TIME] Modes:  [blooms]
+TEST[DATE|TIME] MaxRecords:  2
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "cachePath": "--paths--",
+      "caches": [
+        {
+          "items": [
+            {
+              "bloomSizeBytes": 131114,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/blooms/000000000-000000000.bloom",
+              "firstApp": 0,
+              "firstTs": 1438269975,
+              "indexSizeBytes": 320192,
+              "itemType": "bloomCacheItem",
+              "latestApp": 0,
+              "latestTs": 1438269975
+            },
+            {
+              "bloomSizeBytes": 131114,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/blooms/000000001-000590510.bloom",
+              "firstApp": 1,
+              "firstTs": 1438269988,
+              "indexSizeBytes": 16821332,
+              "itemType": "bloomCacheItem",
+              "latestApp": 590510,
+              "latestTs": 1448383789
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "bloomCache"
+        }
+      ],
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isApi": false,
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
+    }
+  ]
+}

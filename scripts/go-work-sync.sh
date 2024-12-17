@@ -18,7 +18,7 @@ GO_WORK_FILE="go.work"
 rm -f "$GO_WORK_FILE"
 if [ ! -f "$GO_WORK_FILE" ]; then
     echo "// Go Version" > "$GO_WORK_FILE"
-    echo "go 1.22" >> "$GO_WORK_FILE"
+    echo "go 1.23" >> "$GO_WORK_FILE"
 fi
 
 #------------------------------------------------
@@ -37,6 +37,7 @@ find . -type f -name 'go.mod' | while read -r modfile; do
     isGoMaker="[ "$moddir" == "./src/dev_tools/goMaker" ]"
     isNode="[ "$moddir" == "./node" ]"
     isFourbyte="[ "$moddir" == "./examples/four_bytes" ]"
+    isKeystore="[ "$moddir" == "./examples/keystore" ]"
     isIndexMan="[ "$moddir" == "./src/dev_tools/indexManager" ]"
     isSimple="[ "$moddir" == "./examples/simple" ]"
 
@@ -44,9 +45,10 @@ find . -type f -name 'go.mod' | while read -r modfile; do
         go get github.com/btcsuite/btcd 2> /dev/null
     fi
 
-    if ! $isSdk && ! $isChifra && ! $isGoMaker && ! $isFourbyte && ! $isIndexMan; then
+    if ! $isSdk && ! $isChifra && ! $isGoMaker && ! $isFourbyte && ! $isIndexMan && ! $isKeystore; then
         go get github.com/TrueBlocks/trueblocks-sdk/v3@latest
     fi
+
     if ! $isChifra; then
         go get github.com/TrueBlocks/trueblocks-core/src/apps/chifra@latest
     fi

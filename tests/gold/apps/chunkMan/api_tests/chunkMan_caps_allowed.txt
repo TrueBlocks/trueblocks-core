@@ -1,0 +1,6 @@
+chunks?mode=blooms&chain&fmt&nocolor&noop&version&verbose&noHeader&file&output&append&failOnPurpose
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in chunks route."
+  ]
+}

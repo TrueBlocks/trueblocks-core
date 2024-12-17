@@ -1,0 +1,6 @@
+transactions?transactions=12.0&failOnPurpose
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in transactions route."
+  ]
+}

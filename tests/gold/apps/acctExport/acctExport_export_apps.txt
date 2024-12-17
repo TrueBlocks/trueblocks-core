@@ -1,0 +1,19 @@
+chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --appearances --fmt json --max_records 1 --verbose
+TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+TEST[DATE|TIME] Appearances:  true
+TEST[DATE|TIME] MaxRecords:  1
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "addressName": "Prefund_0002",
+      "blockNumber": 0,
+      "date": "2015-07-30 15:26:15 UTC",
+      "timestamp": 1438269975,
+      "transactionIndex": 2
+    }
+  ]
+}

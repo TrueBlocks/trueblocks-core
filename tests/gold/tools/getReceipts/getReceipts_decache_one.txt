@@ -1,0 +1,6 @@
+chifra receipts  46147.0 --decache
+TEST[DATE|TIME] Transactions:  [46147.0]
+TEST[DATE|TIME] Decache:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+1 items totaling 405 bytes were removed from the receipts cache.

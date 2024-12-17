@@ -1,0 +1,30 @@
+names?custom&terms=Account_1&matchCase
+Args: [custom terms=Account_1 matchCase]
+Opts: {"terms":["Account_1"],"matchCase":true,"custom":true,"autoname":"0x0"}
+Terms:  [Account_1]
+MatchCase:  true
+Custom:  true
+Format:  json
+{
+  "data": [
+    {
+      "address": "0x0000000000000000000000000000000000000001",
+      "decimals": 1,
+      "isCustom": true,
+      "name": "Account_1",
+      "source": "Testing",
+      "symbol": "SYM_1",
+      "tags": "81-Custom"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

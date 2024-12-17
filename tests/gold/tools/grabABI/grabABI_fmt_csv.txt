@@ -1,0 +1,29 @@
+chifra abis  0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt csv --no_header
+TEST[DATE|TIME] Addrs:  [0xe94327d07fc17907b4db788e5adf2ed424addff6]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  csv
+0x06fdde03,function,name,name()
+0x095ea7b3,function,approve,"approve(address,uint256)"
+0x158ef93e,function,initialized,initialized()
+0x18160ddd,function,totalSupply,totalSupply()
+0x23b872dd,function,transferFrom,"transferFrom(address,address,uint256)"
+0x2988e36b,function,migrateBalance,migrateBalance(address)
+0x2a1eafd9,function,targetSupply,targetSupply()
+0x313ce567,function,decimals,decimals()
+0x3f4ba83a,function,unpause,unpause()
+0x4b92738e,function,migrateBalances,migrateBalances(address[])
+0x5c975abb,function,paused,paused()
+0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625,event,Pause,Pause()
+0x70a08231,function,balanceOf,balanceOf(address)
+0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33,event,Unpause,Unpause()
+0x8456cb59,function,pause,pause()
+0x8b80bd19aea7b735bc6d75db8d6adbe18b28c30d62b3555245eb67b2340caedc,event,Migrated,"Migrated(address,uint256)"
+0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925,event,Approval,"Approval(address,address,uint256)"
+0x8da5cb5b,function,owner,owner()
+0x95d89b41,function,symbol,symbol()
+0xa9059cbb,function,transfer,"transfer(address,uint256)"
+0xb85e0aca,function,legacyRepContract,legacyRepContract()
+0xdd62ed3e,function,allowance,"allowance(address,address)"
+0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,event,Transfer,"Transfer(address,address,uint256)"
+0xf2fde38b,function,transferOwnership,transferOwnership(address)

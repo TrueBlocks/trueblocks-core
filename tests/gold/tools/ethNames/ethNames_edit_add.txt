@@ -1,0 +1,22 @@
+Env: TB_NAME_ADDRESS  = 0x0000000000000000000000000000000010101010
+Env: TB_NAME_NAME     = NAME
+Env: TB_NAME_TAGS     = TAGS
+Env: TB_NAME_SOURCE   = SOURCE
+Env: TB_NAME_SYMBOL   = SYMBOL
+Env: TB_NAME_DECIMALS = 11
+chifra names  --create --fmt json
+TEST[DATE|TIME] Create:  true
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "address": "0x0000000000000000000000000000000010101010",
+      "decimals": 11,
+      "isCustom": true,
+      "name": "NAME",
+      "source": "SOURCE",
+      "symbol": "SYMBOL",
+      "tags": "TAGS"
+    }
+  ]
+}

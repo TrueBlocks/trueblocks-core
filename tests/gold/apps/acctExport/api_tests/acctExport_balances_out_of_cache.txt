@@ -1,0 +1,55 @@
+export?addrs=meriam.eth&balances&firstBlock=10000000&maxRecords=5&cache
+{
+  "data": [
+    {
+      "balance": "1233063180000000000",
+      "balanceDec": "1.23306318",
+      "blockNumber": 10277683,
+      "date": "2020-06-16 15:46:35 UTC",
+      "diff": "0",
+      "holder": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+    },
+    {
+      "balance": "1004988080000000000",
+      "balanceDec": "1.00498808",
+      "blockNumber": 10277711,
+      "date": "2020-06-16 15:52:46 UTC",
+      "diff": "-0.2280751",
+      "holder": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+    },
+    {
+      "balance": "1002830414000000000",
+      "balanceDec": "1.002830414",
+      "blockNumber": 10277776,
+      "date": "2020-06-16 16:07:34 UTC",
+      "diff": "-0.002157666",
+      "holder": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+    },
+    {
+      "balance": "1000086814000000000",
+      "balanceDec": "1.000086814",
+      "blockNumber": 10277780,
+      "date": "2020-06-16 16:09:04 UTC",
+      "diff": "-0.0027436",
+      "holder": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+    },
+    {
+      "balance": "997134928000000000",
+      "balanceDec": "0.997134928",
+      "blockNumber": 10367593,
+      "date": "2020-06-30 14:15:58 UTC",
+      "diff": "-0.002951886",
+      "holder": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

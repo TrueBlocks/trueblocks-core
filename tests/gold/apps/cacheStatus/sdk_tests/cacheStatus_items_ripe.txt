@@ -1,0 +1,8 @@
+status?modes=ripe&maxRecords=100
+Args: [modes=ripe maxRecords=100]
+Opts: null
+{
+  "errors": [
+    "unknown modes: ripe"
+  ]
+}

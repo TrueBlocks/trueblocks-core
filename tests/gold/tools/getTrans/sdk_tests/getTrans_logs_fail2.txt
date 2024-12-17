@@ -1,0 +1,13 @@
+transactions?transactions=9004225.10&logs&topic=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ez
+Args: [transactions=9004225.10 logs topic=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ez]
+Opts: {"transactions":["9004225.10"],"logs":true,"topic":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ez"]}
+Transactions:  [9004225.10]
+Logs:  true
+Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ez]
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The topic option (0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ez) must be hex."
+  ]
+}

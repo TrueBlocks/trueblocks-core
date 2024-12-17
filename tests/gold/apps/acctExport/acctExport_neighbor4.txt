@@ -1,0 +1,9 @@
+chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --neighbors --first_block 0 --last_block 10
+TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
+TEST[DATE|TIME] Neighbors:  true
+TEST[DATE|TIME] LastBlock:  10
+TEST[DATE|TIME] Caps:  cache,decache,wei,ether
+TEST[DATE|TIME] Format:  txt
+blockNumber	transactionIndex	address	reason
+1	99999	0x05a56e2d52c817161883f50c441c3228cfe54d9f	miner
+5	99999	0x05a56e2d52c817161883f50c441c3228cfe54d9f	miner

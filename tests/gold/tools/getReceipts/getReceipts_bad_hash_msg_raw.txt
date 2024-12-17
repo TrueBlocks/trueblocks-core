@@ -1,0 +1,21 @@
+chifra receipts  0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 --fmt json
+TEST[DATE|TIME] Transactions:  [0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11]
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 1001001,
+      "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
+      "gasUsed": 21000,
+      "logs": [],
+      "status": 1,
+      "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",
+      "transactionHash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
+      "transactionIndex": 3
+    }
+  ],
+  "errors": [
+    "transaction at 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 returned an error: not found"
+  ]
+}

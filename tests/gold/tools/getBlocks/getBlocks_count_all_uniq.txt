@@ -1,0 +1,27 @@
+chifra blocks  3 6001002 --count --uncles --logs --traces --uniq --fmt json
+TEST[DATE|TIME] Blocks:  [3 6001002]
+TEST[DATE|TIME] Uncles:  true
+TEST[DATE|TIME] Traces:  true
+TEST[DATE|TIME] Uniq:  true
+TEST[DATE|TIME] Logs:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "addressCnt": 3,
+      "blockNumber": 3,
+      "tracesCnt": 2,
+      "transactionsCnt": 0,
+      "unclesCnt": 1
+    },
+    {
+      "addressCnt": 389,
+      "blockNumber": 6001002,
+      "logsCnt": 89,
+      "tracesCnt": 516,
+      "transactionsCnt": 87
+    }
+  ]
+}

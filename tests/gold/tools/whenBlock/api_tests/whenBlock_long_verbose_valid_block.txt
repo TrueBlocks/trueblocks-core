@@ -1,0 +1,20 @@
+when?verbose&blocks=1000
+{
+  "data": [
+    {
+      "blockNumber": 1000,
+      "date": "2015-07-30 16:02:18 UTC",
+      "timestamp": 1438272138
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

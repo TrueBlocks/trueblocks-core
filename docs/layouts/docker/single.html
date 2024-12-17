@@ -1,0 +1,35 @@
+{{ define "main" }}
+	<div class="row flex-xl-nowrap">
+		<div class="col-lg-4 docs-sidebar">
+			<nav class="docs-links" aria-label="Main navigation">
+				{{ partial "sidebar/docker-menu.html" . }}
+			</nav>
+		</div>
+
+		{{ if .Params.toc -}}
+			<nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
+				{{ partial "sidebar/docs-toc.html" . }}
+			</nav>
+		{{ end -}}
+
+		{{ if .Params.toc -}}
+			<main class="docs-content col-lg-12 col-xl-9">
+		{{ else -}}
+			<main class="docs-content col-lg-12 col-xl-9 mx-xl-auto">
+		{{ end -}}
+		
+		<h1>{{ .Title }}</h1>
+		<p class="lead">{{ .Params.lead | safeHTML }}</p>
+		{{ partial "main/headline-hash.html" .Content }}
+		{{ if .Site.Params.editPage -}}
+			{{ partial "main/edit-page.html" . }}
+		{{ end -}}
+		
+		{{ if not .Site.Params.options.collapsibleSidebar -}}
+			{{ partial "main/docs-navigation.html" . }}
+		{{ else -}}
+			<div class="my-n3"></div>
+		{{ end -}}
+		</main>
+	</div>
+{{ end }}

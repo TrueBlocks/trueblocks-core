@@ -1,0 +1,6 @@
+chifra when  spurious_dragon
+TEST[DATE|TIME] Blocks:  [spurious_dragon]
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+blockNumber	timestamp	date	name
+2675000	1479831344	2016-11-22 16:15:44 UTC	spurious_dragon

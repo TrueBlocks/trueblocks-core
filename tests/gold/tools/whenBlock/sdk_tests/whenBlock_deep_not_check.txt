@@ -1,0 +1,13 @@
+when?blocks=1301000&timestamps&deep
+Args: [blocks=1301000 timestamps deep]
+Opts: {"blocks":["1301000"],"timestamps":true,"deep":true}
+Blocks:  [1301000]
+Timestamps:  true
+Deep:  true
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "The --deep option is only available with the --timestamps --check option."
+  ]
+}

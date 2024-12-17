@@ -1,0 +1,6 @@
+logs?other
+{
+  "errors": [
+    "Invalid key (other) in logs route."
+  ]
+}

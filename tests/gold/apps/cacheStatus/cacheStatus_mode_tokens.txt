@@ -1,0 +1,11 @@
+chifra status  tokens --verbose --max_records 2
+TEST[DATE|TIME] Modes:  [tokens]
+TEST[DATE|TIME] MaxRecords:  2
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
+{
+  "data": [],
+  "errors": [
+    "no files were found in the [tokens] caches"
+  ]
+}

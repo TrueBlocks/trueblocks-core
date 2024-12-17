@@ -1,0 +1,235 @@
+chifra export  --file cmd_file --fmt csv
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Logs:  true
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] MaxRecords:  0
+TEST[DATE|TIME] Emitter:  [0x7d655c57f71464b6f83811c55d84009cd9f5221c]
+TEST[DATE|TIME] FirstBlock:  10277780
+TEST[DATE|TIME] LastBlock:  10279650
+TEST[DATE|TIME] File:  cmd_file
+TEST[DATE|TIME] Caps:  cache,wei,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017032810-017035876
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 2 apps at 017010383-017013583
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017017054-017020086
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017047735-017051155
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017038903-017041877
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017041878-017044801
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 2 apps at 017051156-017054449
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017061829-017065218
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 2 apps at 017054450-017058178
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 2 apps at 017086357-017089353
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 12 apps at 017124206-017127374
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 6 apps at 017120876-017124205
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 9 apps at 017127375-017130797
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 3 apps at 017137586-017140720
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 4 apps at 017130798-017133877
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 3 apps at 017158171-017161252
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 4 apps at 017133878-017137585
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 8 apps at 017140721-017144310
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 4 apps at 017144311-017147413
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 4 apps at 017147414-017151242
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 7 apps at 017151243-017154631
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 6 apps at 017154632-017158170
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017161253-017164310
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017164311-017167153
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017167154-017170037
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017170038-017172905
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017175723-017178684
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017187457-017190313
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 5 apps at 017190314-017193246
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017193247-017195944
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017202861-017205743
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017195945-017198684
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017200001-017202860
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 23 apps at 017205744-017208773
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 17 apps at 017211642-017214503
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 10 apps at 017214504-017217311
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 115 apps at 017220142-017223017
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 42 apps at 017217312-017220141
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 24 apps at 017223018-017225886
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 30 apps at 017225887-017228905
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017243636-017246522
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 2 apps at 017256265-017259431
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 6 apps at 017262573-017265615
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017280703-017283732
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017289792-017292855
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017295853-017299250
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017336766-017339786
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017355992-017359222
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 2 apps at 017352426-017355991
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 4 apps at 017349143-017352425
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 2 apps at 017368248-017371126
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 2 apps at 017365306-017368247
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017389157-017392212
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 2 apps at 017431139-017434536
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017465762-017469241
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 2 apps at 017523594-017526851
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017513942-017517007
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 5 apps at 017517008-017520543
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017539172-017542372
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 2 apps at 017575445-017578451
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017593745-017596825
+INFO[DATE|TIME] 0xf503017d7baf7fbc0fff7492b751025c6a78179b appended 1 apps at 017664673-017667763
+
+PROG[DATE|TIME] [..................................................]  0%     0/ 4058 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+{
+  "data": [
+    {
+      "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "articulatedLog": {
+        "inputs": {
+          "amount": "9700000000000000000",
+          "dest": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+          "donor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+          "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+        },
+        "name": "DonationSent"
+      },
+      "blockNumber": 10277780,
+      "compressedLog": "{name:DonationSent|inputs:{amount:9700000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b|donor:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|token:0x6b175474e89094c44da98b954eedeac495271d0f}}",
+      "data": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+      "date": "2020-06-16 16:09:04 UTC",
+      "logIndex": 118,
+      "timestamp": 1592323744,
+      "topics": [
+        "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+        "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+        "0x000000000000000000000000000000000000000000000000869d529b714a0000",
+        "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+      ],
+      "transactionHash": "0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00",
+      "transactionIndex": 102
+    },
+    {
+      "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "articulatedLog": {
+        "inputs": {
+          "amount": "250000000000000000",
+          "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+          "donor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+          "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+        },
+        "name": "DonationSent"
+      },
+      "blockNumber": 10277780,
+      "compressedLog": "{name:DonationSent|inputs:{amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3|donor:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|token:0x6b175474e89094c44da98b954eedeac495271d0f}}",
+      "data": "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+      "date": "2020-06-16 16:09:04 UTC",
+      "logIndex": 120,
+      "timestamp": 1592323744,
+      "topics": [
+        "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+        "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+        "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+        "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+      ],
+      "transactionHash": "0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00",
+      "transactionIndex": 102
+    },
+    {
+      "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "articulatedLog": {
+        "inputs": {
+          "amount": "4750000000000000000",
+          "dest": "0xa735cf11ed1228feb7c7bb18673a868455ffb16f",
+          "donor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+          "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+        },
+        "name": "DonationSent"
+      },
+      "blockNumber": 10279310,
+      "compressedLog": "{name:DonationSent|inputs:{amount:4750000000000000000|dest:0xa735cf11ed1228feb7c7bb18673a868455ffb16f|donor:0xf503017d7baf7fbc0fff7492b751025c6a78179b|token:0x6b175474e89094c44da98b954eedeac495271d0f}}",
+      "data": "0x000000000000000000000000a735cf11ed1228feb7c7bb18673a868455ffb16f",
+      "date": "2020-06-16 21:50:17 UTC",
+      "logIndex": 100,
+      "timestamp": 1592344217,
+      "topics": [
+        "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+        "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+        "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
+        "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+      ],
+      "transactionHash": "0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303",
+      "transactionIndex": 59
+    },
+    {
+      "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "articulatedLog": {
+        "inputs": {
+          "amount": "250000000000000000",
+          "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+          "donor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+          "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+        },
+        "name": "DonationSent"
+      },
+      "blockNumber": 10279310,
+      "compressedLog": "{name:DonationSent|inputs:{amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3|donor:0xf503017d7baf7fbc0fff7492b751025c6a78179b|token:0x6b175474e89094c44da98b954eedeac495271d0f}}",
+      "data": "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+      "date": "2020-06-16 21:50:17 UTC",
+      "logIndex": 102,
+      "timestamp": 1592344217,
+      "topics": [
+        "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+        "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+        "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+        "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+      ],
+      "transactionHash": "0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303",
+      "transactionIndex": 59
+    },
+    {
+      "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "articulatedLog": {
+        "inputs": {
+          "amount": "4750000000000000000",
+          "dest": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+          "donor": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+          "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+        },
+        "name": "DonationSent"
+      },
+      "blockNumber": 10279650,
+      "compressedLog": "{name:DonationSent|inputs:{amount:4750000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b|donor:0x00de4b13153673bcae2616b67bf822500d325fc3|token:0x6b175474e89094c44da98b954eedeac495271d0f}}",
+      "data": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+      "date": "2020-06-16 23:04:31 UTC",
+      "logIndex": 227,
+      "timestamp": 1592348671,
+      "topics": [
+        "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+        "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+        "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
+        "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
+      ],
+      "transactionHash": "0xc670a40b06e179b459f8bb7ae8e3d9cf985abb325b355ea2ea8b4822e66c1f55",
+      "transactionIndex": 35
+    },
+    {
+      "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "articulatedLog": {
+        "inputs": {
+          "amount": "250000000000000000",
+          "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+          "donor": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+          "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+        },
+        "name": "DonationSent"
+      },
+      "blockNumber": 10279650,
+      "compressedLog": "{name:DonationSent|inputs:{amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3|donor:0x00de4b13153673bcae2616b67bf822500d325fc3|token:0x6b175474e89094c44da98b954eedeac495271d0f}}",
+      "data": "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+      "date": "2020-06-16 23:04:31 UTC",
+      "logIndex": 229,
+      "timestamp": 1592348671,
+      "topics": [
+        "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+        "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+        "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+        "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
+      ],
+      "transactionHash": "0xc670a40b06e179b459f8bb7ae8e3d9cf985abb325b355ea2ea8b4822e66c1f55",
+      "transactionIndex": 35
+    }
+  ]
+}

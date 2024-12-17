@@ -1,0 +1,6 @@
+chifra slurp  0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
+TEST[DATE|TIME] Addrs:  [0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5]
+TEST[DATE|TIME] Parts:  [ext]
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+EROR[DATE|TIME] zero transactions reported, 0 fetched

@@ -1,0 +1,44 @@
+chifra receipts  --file cmd_file.5 --no_header --fmt csv 5644782.0
+TEST[DATE|TIME] Transactions:  [5644782.0 5644882.0]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  cmd_file.5
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  csv
+5644782,0,0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96,1,21000,0,false
+5644882,0,0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be,1,52053,1,false
+TEST[DATE|TIME] Transactions:  [5644782.0 5644885.0]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  cmd_file.5
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  csv
+5644782,0,0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96,1,21000,0,false
+5644885,0,0x49acddb240b4e7b79b69c6c4635bae32c7fe61b32351f793b227ad3124db5986,1,21000,0,false
+TEST[DATE|TIME] Transactions:  [5644782.0 5644887.0]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  cmd_file.5
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 5644782,
+      "from": "0xae40d78fe82fa8f006cd052b1c2533c361f58613",
+      "gasUsed": 21000,
+      "logs": [],
+      "status": 1,
+      "to": "0xf5bec430576ff1b82e44ddb5a1c93f6f9d0884f3",
+      "transactionHash": "0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96",
+      "transactionIndex": 0
+    },
+    {
+      "blockNumber": 5644887,
+      "from": "0xd6cb6744b7f2da784c5afd6b023d957188522198",
+      "gasUsed": 21000,
+      "logs": [],
+      "status": 1,
+      "to": "0x4812cb964d05a791512268314071f16dcf8fa24f",
+      "transactionHash": "0x086275a511060580a946263f48fb9b37ba858047df7b0765f82e4d00c0ee2873",
+      "transactionIndex": 0
+    }
+  ]
+}

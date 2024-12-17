@@ -1,0 +1,7 @@
+chifra transactions  0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 --articulate
+TEST[DATE|TIME] Transactions:  [0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344]
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+blockNumber	transactionIndex	timestamp	date	from	to	value	gasPrice	gasUsed	gasCost	hash	isError	encoding	type	ether
+1867564	4	1468270685	2016-07-11 20:58:05 UTC	0x9519afbc60719a83c470ceec41e32d3e4b8b262e	0xcb1547417575261c4d84cab3e989acfd9f9ee35c	1000000000000000	20000000000	53300	1066000000000000	0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344	false			0.001

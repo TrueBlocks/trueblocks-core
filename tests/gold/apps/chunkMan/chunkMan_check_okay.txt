@@ -1,0 +1,19 @@
+chifra chunks  manifest --check
+TEST[DATE|TIME] Mode:  manifest
+TEST[DATE|TIME] Check:  true
+TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+TEST[DATE|TIME] Format:  txt
+INFO[DATE|TIME] Chain: mainnet
+INFO[DATE|TIME] Database: mainnet
+INFO[DATE|TIME] Publisher: 0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+INFO[DATE|TIME] Gateway: https://ipfs.unchainedindex.io/ipfs/
+INFO[DATE|TIME] CID: QmVTXqqNm6LRuYUcJqvGTjYS2525yZaFn4JYAt4uRwALd8
+result	checkedCnt	visitedCnt	passedCnt	skippedCnt	failedCnt	reason
+passed	8152	8152	8152	0	0	Filenames sequential
+passed	22	22	22	0	0	Internally consistent
+passed	11	11	11	0	0	Correct version
+passed	16288	16288	16288	0	0	Consistent hashes
+passed	11	11	11	0	0	Check file sizes
+failed	22	22	20	0	2	Disc files to cached manifest
+failed	22	22	20	0	2	Disc files to remote manifest
+failed	8144	8144	8142	0	2	Remote manifest to cached manifest

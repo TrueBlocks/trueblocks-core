@@ -1,0 +1,33 @@
+state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359%200x6f46cf5569aefa1acc1009290c8e043747172d89&blocks=4000000
+Args: [addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 blocks=4000000]
+Opts: {"addrs":["0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89"],"blocks":["4000000"],"proxyFor":"0x0"}
+Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89]
+Blocks:  [4000000]
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "balance": "4098334073083150747787",
+      "blockNumber": 4000000,
+      "ether": "4098.334073083150747787"
+    },
+    {
+      "address": "0x6f46cf5569aefa1acc1009290c8e043747172d89",
+      "balance": "1510065465636533766762795",
+      "blockNumber": 4000000,
+      "ether": "1510065.465636533766762795"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

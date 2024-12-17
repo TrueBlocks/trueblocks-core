@@ -1,0 +1,7 @@
+chifra monitors  --count --list --no_header
+TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+199

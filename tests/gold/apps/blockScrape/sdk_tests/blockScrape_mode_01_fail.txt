@@ -1,0 +1,3 @@
+scrape?action=badmode
+Args: [action=badmode]
+Unknown sdk endpoint: scrape

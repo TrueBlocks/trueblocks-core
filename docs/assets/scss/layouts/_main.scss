@@ -1,0 +1,229 @@
+main.main-site {
+    pre {
+        margin: 0;
+        button {
+            display: none;
+        }
+    }
+}
+
+section.container {
+    margin: $space-section auto;
+
+    h1 {
+        margin-top: 0;
+    }
+
+    table {
+        margin: 0;
+    }
+}
+
+.component-tabs {
+    code,
+    output {
+        display: block;
+
+        body.light &, body.dark & {
+        background: none;
+        }
+    }
+
+    .prompt {
+        margin-right: 1ch;
+        color: $blue-300;
+    }
+
+    output pre {
+        color: $gray-500;
+    }
+}
+
+.citizen {
+    .citizen-wrapper {
+        background: $gray-100;
+        border-radius: $border-radius;
+        padding: $space;
+        overflow-x: auto;
+
+        body.dark & {
+            background-color: $gray-800;
+        }
+    }
+}
+
+.features {
+    .figure-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        figure {
+            margin: $space-s;
+        }
+
+    .articulation {
+        figure {
+            figcaption {
+                text-align: center;
+                font-weight: bold;
+            }
+
+            code {
+                display: block;
+            }
+        }
+
+        .raw {
+            code {
+                background: none;
+                color: $gray-600;
+
+                display: block;
+                word-wrap: anywhere
+            }
+        }
+
+        @media screen and (max-width: 780px) {
+            .articulated {
+                width: 100%;
+            }
+        }
+    }
+
+    .block-expressions {
+        .figure-wrapper {
+            justify-content: space-around;
+        }
+
+        figure {
+            text-align: center;
+
+            figcaption {
+                font-style: italic;
+            }
+        }
+    }
+
+    .solidity {
+        code {
+            display: block;
+            color: $gray-500;
+            word-wrap: anywhere;
+
+            span {
+                color: $primary;
+                body.dark & {
+                    color: $blue-300;
+                }
+            }
+        }
+    }
+}
+
+.testimonials {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: $space;
+
+    figure {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        margin: 0;
+        padding: 1.5rem;
+
+        border: 6px solid $gray-300;
+        border-radius: 1rem;
+
+        blockquote {
+            border: none;
+            padding: 0;
+        }
+
+        figcaption {
+            text-align: right;
+            margin: 0;
+        }
+    }
+
+    @media screen and (max-width: 700px) {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.bottom-install {
+    ul {
+        li {
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: $space;
+        }
+    }
+
+    .buttons {
+        display: flex;
+        gap: $font-size-md;
+        justify-content: center;
+
+        @media screen and (max-width: 700px) {
+            flex-direction: column;
+        }
+    }
+}
+
+.newsletter {
+    padding: $space;
+
+    background-color: $gray-100;
+    border-radius: $border-radius;
+
+    body.dark & {
+        background-color: $gray-800;
+    }
+}
+
+.grants {
+    ul {
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        gap: $space-m;
+
+        img {
+            height: 50px;
+        }
+
+        body.dark & {
+            img {
+                filter: grayscale(1) invert(.7);
+            }
+        }
+
+        @media screen and (max-width: 700px) {
+            img {
+                height: 2.5rem;
+            }
+        }
+
+        @media screen and (min-width: 2500px) {
+            img {
+                height: 70px;
+            }
+        }
+    }
+}
+
+.youtube {
+    fill: currentColor;
+
+    &::after {
+        content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-youtube' viewBox='0 0 16 16'%3E%3Cpath d='M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z'/%3E%3C/svg%3E");
+        display: inline-block;
+        margin-left: .2rem;
+    }
+}

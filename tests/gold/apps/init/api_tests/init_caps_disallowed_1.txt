@@ -1,0 +1,6 @@
+init?noHeader
+{
+  "errors": [
+    "Invalid key (noHeader) in init route."
+  ]
+}

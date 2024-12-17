@@ -1,0 +1,6 @@
+names?terms=find_nothing&ether
+{
+  "errors": [
+    "Invalid key (ether) in names route."
+  ]
+}

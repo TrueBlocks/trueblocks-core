@@ -1,0 +1,25 @@
+when?blocks=2017-03-02&blocks=123123
+{
+  "data": [
+    {
+      "blockNumber": 3275145,
+      "date": "2017-03-01 23:59:53 UTC",
+      "timestamp": 1488412793
+    },
+    {
+      "blockNumber": 123123,
+      "date": "2015-08-22 01:20:12 UTC",
+      "timestamp": 1440206412
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

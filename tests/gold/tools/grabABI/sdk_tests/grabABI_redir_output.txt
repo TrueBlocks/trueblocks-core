@@ -1,0 +1,280 @@
+abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7&output=output_test_file
+Args: [addrs=0xdac17f958d2ee523a2206206994597c13d831ec7 output=output_test_file]
+Opts: {"addrs":["0xdac17f958d2ee523a2206206994597c13d831ec7"],"proxyFor":"0x0","output":"output_test_file"}
+Addrs:  [0xdac17f958d2ee523a2206206994597c13d831ec7]
+OutputFn:  output_test_file
+Caps:  cache,decache
+Format:  json
+{ "outputFilename": "--output_filename--" }
+{
+  "data": [
+    {
+      "encoding": "0x06fdde03",
+      "name": "name",
+      "signature": "name()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x0753c30c",
+      "name": "deprecate",
+      "signature": "deprecate(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x095ea7b3",
+      "name": "approve",
+      "signature": "approve(address,uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x0e136b19",
+      "name": "deprecated",
+      "signature": "deprecated()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x0ecb93c0",
+      "name": "addBlackList",
+      "signature": "addBlackList(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x18160ddd",
+      "name": "totalSupply",
+      "signature": "totalSupply()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x23b872dd",
+      "name": "transferFrom",
+      "signature": "transferFrom(address,address,uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x26976e3f",
+      "name": "upgradedAddress",
+      "signature": "upgradedAddress()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x27e235e3",
+      "name": "balances",
+      "signature": "balances(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x313ce567",
+      "name": "decimals",
+      "signature": "decimals()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x35390714",
+      "name": "maximumFee",
+      "signature": "maximumFee()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x3eaaf86b",
+      "name": "_totalSupply",
+      "signature": "_totalSupply()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x3f4ba83a",
+      "name": "unpause",
+      "signature": "unpause()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x42e160154868087d6bfdc0ca23d96a1c1cfa32f1b72ba9ba27b69b98a0d819dc",
+      "name": "AddedBlackList",
+      "signature": "AddedBlackList(address)",
+      "type": "event"
+    },
+    {
+      "encoding": "0x59bf1abe",
+      "name": "getBlackListStatus",
+      "signature": "getBlackListStatus(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x5c658165",
+      "name": "allowed",
+      "signature": "allowed(address,address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x5c975abb",
+      "name": "paused",
+      "signature": "paused()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x61e6e66b0d6339b2980aecc6ccc0039736791f0ccde9ed512e789a7fbdd698c6",
+      "name": "DestroyedBlackFunds",
+      "signature": "DestroyedBlackFunds(address,uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625",
+      "name": "Pause",
+      "signature": "Pause()",
+      "type": "event"
+    },
+    {
+      "encoding": "0x702d5967f45f6513a38ffc42d6ba9bf230bd40e8f53b16363c7eb4fd2deb9a44",
+      "name": "Redeem",
+      "signature": "Redeem(uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0x70a08231",
+      "name": "balanceOf",
+      "signature": "balanceOf(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33",
+      "name": "Unpause",
+      "signature": "Unpause()",
+      "type": "event"
+    },
+    {
+      "encoding": "0x8456cb59",
+      "name": "pause",
+      "signature": "pause()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x893d20e8",
+      "name": "getOwner",
+      "signature": "getOwner()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "name": "Approval",
+      "signature": "Approval(address,address,uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0x8da5cb5b",
+      "name": "owner",
+      "signature": "owner()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x95d89b41",
+      "name": "symbol",
+      "signature": "symbol()",
+      "type": "function"
+    },
+    {
+      "encoding": "0xa9059cbb",
+      "name": "transfer",
+      "signature": "transfer(address,uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xb044a1e409eac5c48e5af22d4af52670dd1a99059537a78b31b48c6500a6354e",
+      "name": "Params",
+      "signature": "Params(uint256,uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0xc0324c77",
+      "name": "setParams",
+      "signature": "setParams(uint256,uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xcb8241adb0c3fdb35b70c24ce35c5eb0c17af7431c99f827d44a445ca624176a",
+      "name": "Issue",
+      "signature": "Issue(uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0xcc358699805e9a8b7f77b522628c7cb9abd07d9efb86b6fb616af1609036a99e",
+      "name": "Deprecate",
+      "signature": "Deprecate(address)",
+      "type": "event"
+    },
+    {
+      "encoding": "0xcc872b66",
+      "name": "issue",
+      "signature": "issue(uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xd7e9ec6e6ecd65492dce6bf513cd6867560d49544421d0783ddf06e76c24470c",
+      "name": "RemovedBlackList",
+      "signature": "RemovedBlackList(address)",
+      "type": "event"
+    },
+    {
+      "encoding": "0xdb006a75",
+      "name": "redeem",
+      "signature": "redeem(uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xdd62ed3e",
+      "name": "allowance",
+      "signature": "allowance(address,address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xdd644f72",
+      "name": "basisPointsRate",
+      "signature": "basisPointsRate()",
+      "type": "function"
+    },
+    {
+      "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+      "name": "Transfer",
+      "signature": "Transfer(address,address,uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0xe47d6060",
+      "name": "isBlackListed",
+      "signature": "isBlackListed(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xe4997dc5",
+      "name": "removeBlackList",
+      "signature": "removeBlackList(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xe5b5019a",
+      "name": "MAX_UINT",
+      "signature": "MAX_UINT()",
+      "type": "function"
+    },
+    {
+      "encoding": "0xf2fde38b",
+      "name": "transferOwnership",
+      "signature": "transferOwnership(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xf3bdc228",
+      "name": "destroyBlackFunds",
+      "signature": "destroyBlackFunds(address)",
+      "type": "function"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

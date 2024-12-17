@@ -1,0 +1,6 @@
+traces?transactions=.clink
+{
+  "errors": [
+    "The given value '.clink' is not a valid identifier."
+  ]
+}

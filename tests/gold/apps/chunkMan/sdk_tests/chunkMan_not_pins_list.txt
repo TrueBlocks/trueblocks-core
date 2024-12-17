@@ -1,0 +1,12 @@
+chunks?mode=index&list
+Args: [mode=index list]
+Opts: {"mode":4,"publisher":"0x0","list":true}
+Mode:  index
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+List:  true
+Format:  json
+{
+  "errors": [
+    "The --list option is only available in pins mode."
+  ]
+}

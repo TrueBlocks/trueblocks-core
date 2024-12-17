@@ -64,6 +64,20 @@ func getGeneratorContents(fullPath, subPath, group, reason string) string {
 }
 
 func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) string {
+	var singularWords = map[string]bool{
+		"project": true,
+		"history": true,
+		"session": true,
+		"config":  true,
+		"wizard":  true,
+	}
+	viewName := func(s string) string {
+		if singularWords[typeTag] {
+			return Proper(s)
+		}
+		return Proper(Plural(typeTag))
+	}
+
 	dest := strings.ReplaceAll(source, GetTemplatePath(), "")
 	dest = strings.ReplaceAll(dest, ".tmpl", "")
 	dest = strings.ReplaceAll(dest, "_route_", "/"+routeTag+"/")
@@ -73,6 +87,7 @@ func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) strin
 	dest = strings.ReplaceAll(dest, "route.py", routeTag+".py")
 	dest = strings.ReplaceAll(dest, "route.ts", routeTag+".ts")
 	dest = strings.ReplaceAll(dest, "+type+", "+"+typeTag+"+")
+	dest = strings.ReplaceAll(dest, "_capType", "_"+viewName(typeTag))
 	dest = strings.ReplaceAll(dest, "type+sort", typeTag+"+sort")
 	dest = strings.ReplaceAll(dest, "type.go", typeTag+".go")
 	dest = strings.ReplaceAll(dest, "type.md", typeTag+".md")
@@ -184,11 +199,14 @@ func FirstLower(s string) string {
 }
 
 func Plural(s string) string {
-	if strings.HasSuffix(s, "s") {
+	if strings.HasSuffix(s, "s") || strings.HasSuffix(s, "ed") || strings.HasSuffix(s, "ing") {
 		return s
-	}
-	if strings.HasSuffix(s, "x") {
+	} else if strings.HasSuffix(s, "x") {
 		return s + "es"
+	} else if strings.HasSuffix(s, "y") {
+		return s + "ies"
+	} else if s == "config" || s == "session" || s == "publish" {
+		return s
 	}
 	return s + "s"
 }

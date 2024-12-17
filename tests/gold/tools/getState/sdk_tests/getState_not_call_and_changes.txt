@@ -1,0 +1,15 @@
+state?call&calldata='0x0902f1ac()'&addrs=0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B&changes
+Args: [call calldata='0x0902f1ac()' addrs=0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B changes]
+Opts: {"addrs":["0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B"],"changes":true,"call":true,"calldata":"'0x0902f1ac()'","proxyFor":"0x0"}
+Addrs:  [0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b]
+Blocks:  [17000000]
+Changes:  true
+Call:  true
+Calldata:  0x0902f1ac()
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The --changes option is not available with the --call or --send option."
+  ]
+}

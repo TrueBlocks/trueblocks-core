@@ -1,0 +1,6 @@
+state?send&calldata='0x12065fe01()'&noZero
+{
+  "errors": [
+    "The --no_zero option is not available with the --call or --send option."
+  ]
+}

@@ -1,0 +1,35 @@
+chifra names  --file names.txt
+TEST[DATE|TIME] Terms:  [LockTrip]
+TEST[DATE|TIME] File:  names.txt
+TEST[DATE|TIME] Format:  txt
+WARN[DATE|TIME] No known names found for [LockTrip]
+TEST[DATE|TIME] Terms:  [UCASH]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  names.txt
+TEST[DATE|TIME] Format:  txt
+50-Tokens:ERC20	0x92e52a1a235d9a103d970901066ce910aacefd37	UCASH	UCASH	8
+30-Contracts	0xd18d42b48a6ed1a91a09fa526e6a2ad778191f3e	CpuCash Finance	CPUCASH	18
+TEST[DATE|TIME] Terms:  [XES]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  names.txt
+TEST[DATE|TIME] Format:  txt
+30-Contracts	0x6d4530149e5b4483d2f7e60449c02570531a0751	NFTBoxes	[NFT]	
+30-Contracts	0x9e956286a7b19d99a8d88d8f6dee823133b368ff	CryptoFoxesSteak	$STEAK	18
+50-Tokens:ERC20	0xa017ac5fac5941f95010b12570b812c974469c2c	Proxeus	XES	18
+30-Contracts	0xa9e26e17b48bbaa125b62730f0904db741533fdc	WTFoxes	WTF	
+30-Contracts	0xa9fdb3f96fae7c12d70393659867c6115683ada0	CryptoFoxes	CFXS	
+TEST[DATE|TIME] Terms:  [b052f8a33d8bb0]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  names.txt
+TEST[DATE|TIME] Format:  txt
+50-Tokens:ERC20	0xb052f8a33d8bb068414eade06af6955199f9f010	EcoRealEstate	ECOREAL	18
+TEST[DATE|TIME] Terms:  [68414eade06af6955199f9f010]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  names.txt
+TEST[DATE|TIME] Format:  txt
+50-Tokens:ERC20	0xb052f8a33d8bb068414eade06af6955199f9f010	EcoRealEstate	ECOREAL	18
+TEST[DATE|TIME] Terms:  [0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74 WTC Walton]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  names.txt
+TEST[DATE|TIME] Format:  txt
+50-Tokens:ERC20	0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74	Walton Token	WTC	18

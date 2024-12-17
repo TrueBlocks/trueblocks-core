@@ -1,0 +1,8 @@
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&ether&load=testModule&maxRecords=10
+Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b ether load=testModule maxRecords=10]
+Opts: null
+{
+  "errors": [
+    "Invalid key (load) in route."
+  ]
+}

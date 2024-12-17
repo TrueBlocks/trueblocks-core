@@ -1,0 +1,11 @@
+when?blocks=2015-03-02
+Args: [blocks=2015-03-02]
+Opts: {"blocks":["2015-03-02"]}
+Blocks:  [2015-03-02]
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "The given value '2015-03-02' is before the first block."
+  ]
+}

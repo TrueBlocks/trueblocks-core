@@ -1,0 +1,29 @@
+[
+
+
+    {
+    "name": "donate",
+    "type": "function",
+    "signature": "donate(Donation[])",
+    "encoding": "0xe1acd927",
+    "inputs": [
+      {
+        "type": "Donation[]",
+        "name": "donations",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "donate",
+    "type": "function",
+    "signature": "donate()",
+    "encoding": "0xed88c68e",
+    "inputs": [],
+    "outputs": []
+  }
+
+]

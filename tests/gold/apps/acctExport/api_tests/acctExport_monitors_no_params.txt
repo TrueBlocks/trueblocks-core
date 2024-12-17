@@ -1,0 +1,6 @@
+monitors?
+{
+  "errors": [
+    "You must provide at least one Ethereum address for this command."
+  ]
+}

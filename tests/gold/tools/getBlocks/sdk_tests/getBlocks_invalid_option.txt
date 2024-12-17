@@ -1,0 +1,8 @@
+blocks?blocks=1001001&junk
+Args: [blocks=1001001 junk]
+Opts: null
+{
+  "errors": [
+    "Invalid key (junk) in route."
+  ]
+}

@@ -1,0 +1,12 @@
+chunks?mode=appearances&count
+Args: [mode=appearances count]
+Opts: {"mode":64,"publisher":"0x0","count":true}
+Mode:  appearances
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+Count:  true
+Format:  json
+{
+  "errors": [
+    "The --count option is only available in these modes: manifest|index|blooms|pins|stats."
+  ]
+}

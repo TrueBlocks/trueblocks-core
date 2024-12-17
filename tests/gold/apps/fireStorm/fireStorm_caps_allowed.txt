@@ -1,0 +1,14 @@
+chifra explore  12.0 --chain --nocolor --noop --verbose --file --fail_on_purpose
+Error: open --fail_on_purpose: no such file or directory
+Usage:
+  chifra explore [flags] [terms...]
+
+Arguments:
+  terms - one or more address, name, block, or transaction identifier
+
+Flags:
+  -n, --no_open   return the URL without opening it
+  -l, --local     open the local TrueBlocks explorer
+  -g, --google    search google excluding popular blockchain explorers
+  -d, --dalle     open the address to the DalleDress explorer (hidden)
+  -h, --help      display this help screen

@@ -1,0 +1,35 @@
+names?terms=trueblocks.eth&terms=meriam.eth&terms=0xff9e5c77edf2a26bfd6f60dc4937e5baa1727378&terms=vitalik.eth
+{
+  "data": [
+    {
+      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "name": "trueblocks.eth",
+      "tags": "66-ENS"
+    },
+    {
+      "address": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "name": "meriam.eth",
+      "tags": "66-ENS"
+    },
+    {
+      "address": "0xff9e5c77edf2a26bfd6f60dc4937e5baa1727378",
+      "name": "",
+      "tags": "Not found"
+    },
+    {
+      "address": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "name": "vitalik.eth",
+      "tags": "66-ENS"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

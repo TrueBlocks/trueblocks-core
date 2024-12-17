@@ -1,0 +1,6 @@
+when?blocks=2015-03-02&list
+{
+  "errors": [
+    "Please supply either block identifiers or the --list option."
+  ]
+}

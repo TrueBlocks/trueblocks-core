@@ -1,0 +1,13 @@
+state?call='0x06fdde03()'&addrs=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&blocks=10092000
+Args: [call='0x06fdde03()' addrs=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 blocks=10092000]
+Opts: {"addrs":["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"],"blocks":["10092000"],"call":"'0x06fdde03()'","proxyFor":"0x0"}
+Addrs:  [0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2]
+Blocks:  [10092000]
+Call:  0x06fdde03()
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "the --call value provided (0x06fdde03()) was not found: abi not found for 0x06fdde03(): abi not found "
+  ]
+}

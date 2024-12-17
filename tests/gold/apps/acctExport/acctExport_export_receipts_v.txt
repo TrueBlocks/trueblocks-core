@@ -1,0 +1,67 @@
+chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --max_records 3 --receipts --fmt json --verbose
+TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+TEST[DATE|TIME] Receipts:  true
+TEST[DATE|TIME] MaxRecords:  3
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockHash": "0x1816ff22f84af23df70df8e6ae5c40a8780c16a0860ca1a25a4c911eba76c65a",
+      "blockNumber": 202249,
+      "cumulativeGasUsed": 21612,
+      "from": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "fromName": "Prefund_0002",
+      "gasUsed": 21612,
+      "logs": [],
+      "status": 1,
+      "to": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+      "toName": "Kraken Exchange",
+      "transactionHash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
+      "transactionIndex": 0
+    },
+    {
+      "blockHash": "0x66b5597c4a991decb68f56b94245a93485e4a30a3d77f95e6c32a3d4f91e2051",
+      "blockNumber": 1501459,
+      "cumulativeGasUsed": 116091,
+      "from": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "fromName": "Prefund_0002",
+      "gasUsed": 21000,
+      "logs": [],
+      "status": 1,
+      "to": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
+      "transactionHash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
+      "transactionIndex": 2
+    },
+    {
+      "blockHash": "0x1059df813610004dbfdc516ddb23db491b444ce62c641ba12e18c4f5e240972d",
+      "blockNumber": 15507094,
+      "cumulativeGasUsed": 23803043,
+      "from": "0xed963059f74f17124943cf9c12bae8f7776c4e4c",
+      "gasUsed": 5042207,
+      "logs": [
+        {
+          "address": "0x98c7fa114b2fe921ba97f628e9dcb72890491721",
+          "blockHash": "0x1059df813610004dbfdc516ddb23db491b444ce62c641ba12e18c4f5e240972d",
+          "blockNumber": 15507094,
+          "date": "2022-09-10 05:35:04 UTC",
+          "logIndex": 509,
+          "timestamp": 1662788104,
+          "topics": [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "0x000000000000000000000000001d14804b399c6ef80e64576f657660804fec0b",
+            "0x0000000000000000000000000000000000000000000000000000000000001fa1"
+          ],
+          "transactionHash": "0x8165e4c45cfe737052a8ecf998d70910b42c0c3e3c226499f6574be83c6a3a69",
+          "transactionIndex": 88
+        }
+      ],
+      "status": 1,
+      "to": "0x98c7fa114b2fe921ba97f628e9dcb72890491721",
+      "transactionHash": "0x8165e4c45cfe737052a8ecf998d70910b42c0c3e3c226499f6574be83c6a3a69",
+      "transactionIndex": 88
+    }
+  ]
+}

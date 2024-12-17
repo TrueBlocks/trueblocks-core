@@ -1,0 +1,6 @@
+status?modes=blooms&wei
+{
+  "errors": [
+    "Invalid key (wei) in status route."
+  ]
+}

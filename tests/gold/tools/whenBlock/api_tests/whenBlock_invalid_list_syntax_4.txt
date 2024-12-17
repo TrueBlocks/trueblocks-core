@@ -1,0 +1,6 @@
+when?blocks=23123&list&fmt=txt
+{
+  "errors": [
+    "Please supply either block identifiers or the --list option."
+  ]
+}

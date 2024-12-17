@@ -1,0 +1,20 @@
+list?addrs=0x9531c059098e3d194ff87febb587ab07b30b1306&count&fmt=json&lastBlock=12000000
+{
+  "data": [
+    {
+      "address": "0x9531c059098e3d194ff87febb587ab07b30b1306",
+      "fileSize": 57005,
+      "nRecords": 250
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

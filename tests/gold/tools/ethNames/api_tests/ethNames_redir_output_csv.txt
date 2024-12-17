@@ -1,0 +1,6 @@
+names?terms=0x1234&output=output_file.csv
+{
+  "errors": [
+    "The --output option is not available in api mode."
+  ]
+}

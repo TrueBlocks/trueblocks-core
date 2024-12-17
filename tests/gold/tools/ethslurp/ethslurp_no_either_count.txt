@@ -1,0 +1,18 @@
+chifra slurp  0x9519afbc60719a83c470ceec41e32d3e4b8b262e 0-1500000 --appearances --source key --count --page_id invalid --per_page 12 --fmt json
+TEST[DATE|TIME] Addrs:  [0x9519afbc60719a83c470ceec41e32d3e4b8b262e]
+TEST[DATE|TIME] Blocks:  [0-1500000]
+TEST[DATE|TIME] Parts:  [ext]
+TEST[DATE|TIME] Appearances:  true
+TEST[DATE|TIME] Source:  key
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] PageId:  invalid
+TEST[DATE|TIME] PerPage:  12
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [],
+  "errors": [
+    "502 Bad Gateway: 502",
+    "zero transactions reported, 0 fetched"
+  ]
+}

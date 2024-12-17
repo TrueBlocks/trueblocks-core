@@ -1,0 +1,29 @@
+traces?transactions=0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1%200x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4&fmt=json&count
+{
+  "data": [
+    {
+      "blockNumber": 1001001,
+      "timestamp": 1455421883,
+      "tracesCnt": 1,
+      "transactionHash": "0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a",
+      "transactionIndex": 1
+    },
+    {
+      "blockNumber": 2597783,
+      "timestamp": 1478732242,
+      "tracesCnt": 1,
+      "transactionHash": "0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4",
+      "transactionIndex": 24
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

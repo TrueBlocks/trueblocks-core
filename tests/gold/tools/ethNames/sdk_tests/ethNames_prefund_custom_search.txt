@@ -1,0 +1,72 @@
+names?prefund&custom&terms=0001&verbose
+Args: [prefund custom terms=0001 verbose]
+Opts: {"terms":["0001"],"custom":true,"prefund":true,"autoname":"0x0","verbose":true}
+Terms:  [0001]
+Custom:  true
+Prefund:  true
+Verbose:  true
+Format:  json
+{
+  "data": [
+    {
+      "address": "0x0000000000000000000000000000000000000001",
+      "decimals": 1,
+      "isCustom": true,
+      "name": "Account_1",
+      "parts": 4,
+      "source": "Testing",
+      "symbol": "SYM_1",
+      "tags": "81-Custom"
+    },
+    {
+      "address": "0x001762430ea9c3a26e5749afdb70da5f78ddbb8c",
+      "isPrefund": true,
+      "name": "Prefund_0001",
+      "parts": 8,
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x28818e18b610001321b31df6fe7d2815cdadc9f5",
+      "isPrefund": true,
+      "name": "Prefund_1377",
+      "parts": 8,
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x6ca5de00817de0cedce5fd000128dede12648b3c",
+      "isPrefund": true,
+      "name": "Prefund_3718",
+      "parts": 8,
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0x936dcf000194e3bff50ac5b4243a3ba014d661d8",
+      "isPrefund": true,
+      "name": "Prefund_5047",
+      "parts": 8,
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    },
+    {
+      "address": "0xc1b500011cfba95d7cd636e95e6cbf6167464b25",
+      "isPrefund": true,
+      "name": "Prefund_6662",
+      "parts": 8,
+      "source": "Genesis",
+      "tags": "80-Prefund"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

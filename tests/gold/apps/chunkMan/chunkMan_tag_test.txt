@@ -1,0 +1,6 @@
+chifra chunks  index --tag v2.0.0-release
+TEST[DATE|TIME] Mode:  index
+TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+TEST[DATE|TIME] Tag:  v2.0.0-release
+TEST[DATE|TIME] Format:  txt
+WARN[DATE|TIME] Tag option not tested.

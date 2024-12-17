@@ -1,0 +1,6 @@
+init?fmt=junk
+{
+  "errors": [
+    "integration testing was skipped for chifra init"
+  ]
+}

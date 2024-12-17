@@ -1,0 +1,22 @@
+state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&parts=accttype&blocks=2500000
+{
+  "data": [
+    {
+      "accttype": "Contract",
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "balance": "3905662906205094119236",
+      "blockNumber": 2500000,
+      "ether": "3905.662906205094119236"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

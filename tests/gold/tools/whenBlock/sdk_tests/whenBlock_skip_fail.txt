@@ -1,0 +1,11 @@
+when?blocks=1301000-1301250:junk
+Args: [blocks=1301000-1301250:junk]
+Opts: {"blocks":["1301000-1301250:junk"]}
+Blocks:  [1301000-1301250:junk]
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "Input argument appears to be invalid. No such skip marker: junk"
+  ]
+}

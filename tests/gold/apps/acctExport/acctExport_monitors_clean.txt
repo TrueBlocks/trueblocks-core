@@ -1,0 +1,7 @@
+chifra monitors  0x001d14804b399c6ef80e64576f657660804fec0b --clean
+TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+TEST[DATE|TIME] Clean:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+address	sizeNow	sizeThen	dups
+0x001d14804b399c6ef80e64576f657660804fec0b	8	10	2

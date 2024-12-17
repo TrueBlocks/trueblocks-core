@@ -69,8 +69,7 @@ func (t *Timer) Report(msg string) {
 		return y
 	}
 
-	// nItems := 0
-	fmt.Printf("PERF,%s%s,%d,%d\n", strings.Repeat("_", t.level), msg, max(1, since.Milliseconds()), max(1, diff.Milliseconds()))
+	Info(fmt.Sprintf("PERF,%s%s,%d,%d\n", strings.Repeat("_", t.level), msg, max(1, since.Milliseconds()), max(1, diff.Milliseconds())))
 
 	t.lastReport = time.Now()
 }

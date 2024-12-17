@@ -1,0 +1,34 @@
+chifra names  tip --fmt api
+TEST[DATE|TIME] Terms:  [tip]
+TEST[DATE|TIME] Format:  api
+Error: The --fmt option (api) must be one of [ json | txt | csv ]
+Usage:
+  chifra names [flags] <term> [term...]
+
+Arguments:
+  terms - a space separated list of one or more search terms (required)
+
+Flags:
+  -e, --expand            expand search to include all fields (search name, address, and symbol otherwise)
+  -m, --match_case        do case-sensitive search
+  -a, --all               include all (including custom) names in the search
+  -c, --custom            include only custom named accounts in the search
+  -p, --prefund           include prefund accounts in the search
+  -s, --addr              display only addresses in the results (useful for scripting, assumes --no_header)
+  -g, --tags              export the list of tags and subtags only
+  -C, --clean             clean the data (addrs to lower case, sort by addr)
+  -r, --regular           only available with --clean, cleans regular names database
+  -d, --dry_run           only available with --clean or --autoname, outputs changes to stdout instead of updating databases
+  -A, --autoname string   an address assumed to be a token, added automatically to names database if true
+      --create            create a new name record (hidden)
+      --update            edit an existing name (hidden)
+      --delete            delete a name, but do not remove it (hidden)
+      --undelete          undelete a previously deleted name (hidden)
+      --remove            remove a previously deleted name (hidden)
+  -x, --fmt string        export format, one of [none|json*|txt|csv]
+  -v, --verbose           enable verbose output
+  -h, --help              display this help screen
+
+Notes:
+  - The tool will accept up to three terms, each of which must match against any field in the database.
+  - The --match_case option enables case sensitive matching.

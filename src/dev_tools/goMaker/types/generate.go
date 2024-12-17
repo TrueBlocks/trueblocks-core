@@ -89,7 +89,12 @@ func getGenerators() ([]Generator, error) {
 
 	theMap := make(map[string][]string)
 	vFunc := func(file string, vP any) (bool, error) {
-		if strings.HasSuffix(file, ".tmpl") {
+		isTemplate := strings.HasSuffix(file, ".tmpl")
+		filter := os.Getenv("TB_GENERATOR_FILTER")
+		if len(filter) > 0 && !strings.Contains(file, filter) {
+			return true, nil
+		}
+		if isTemplate {
 			file = strings.ReplaceAll(file, generatorsPath, "")
 			if strings.Contains(file, string(os.PathSeparator)) {
 				parts := strings.Split(file, string(os.PathSeparator))

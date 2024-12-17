@@ -157,6 +157,7 @@ func (s *Status) ShallowCopy() Status {
 	s.Caches = nil
 	ret := *s
 	s.Caches = caches
+	ret.Chain = s.Chain
 	return ret
 }
 

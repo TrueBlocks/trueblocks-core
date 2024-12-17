@@ -1,0 +1,8 @@
+chifra transactions  4102000.0 --fmt txt --uniq --flow to
+TEST[DATE|TIME] Transactions:  [4102000.0]
+TEST[DATE|TIME] Uniq:  true
+TEST[DATE|TIME] Flow:  to
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+address	blockNumber	transactionIndex	traceIndex	reason
+0x8d12a197cb00d4747a1fe03395095ce2a5cc6819	4102000	0		to

@@ -1,0 +1,6 @@
+list?addrs=trueblocks.eth&wei&maxRecords=10
+{
+  "errors": [
+    "Invalid key (wei) in list route."
+  ]
+}

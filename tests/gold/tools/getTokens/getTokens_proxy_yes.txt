@@ -1,0 +1,21 @@
+chifra tokens  0x00000000441378008ea67f4284a57932b1c000a5 --fmt json 8000000 --parts all --verbose
+TEST[DATE|TIME] Addrs:  [0x00000000441378008ea67f4284a57932b1c000a5]
+TEST[DATE|TIME] Blocks:  [8000000]
+TEST[DATE|TIME] Parts:  [all]
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "address": "0x00000000441378008ea67f4284a57932b1c000a5",
+      "blockNumber": 8000000,
+      "date": "2019-06-21 06:55:49 UTC",
+      "decimals": 18,
+      "name": "TrueGBP",
+      "symbol": "TGBP",
+      "timestamp": 1561100149,
+      "totalSupply": "1080020.89"
+    }
+  ]
+}

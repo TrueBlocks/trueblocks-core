@@ -1,0 +1,7 @@
+chifra monitors  --count --verbose
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+count
+199

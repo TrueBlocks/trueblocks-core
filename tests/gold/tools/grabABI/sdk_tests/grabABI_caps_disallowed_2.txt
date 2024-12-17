@@ -1,0 +1,12 @@
+abis?addrs=trueblocks.eth&ether
+Args: [addrs=trueblocks.eth ether]
+Opts: {"addrs":["trueblocks.eth"],"proxyFor":"0x0","ether":true}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Ether:  true
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "Invalid key (ether) in abis route."
+  ]
+}

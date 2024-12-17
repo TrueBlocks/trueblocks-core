@@ -1,0 +1,7 @@
+chifra when  daofund --verbose
+TEST[DATE|TIME] Blocks:  [daofund]
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+blockNumber	timestamp	date	name	component	description
+1428756	1461980573	2016-04-30 01:42:53 UTC	daofund	execution	The first block people were able to fund the infamous DAO.

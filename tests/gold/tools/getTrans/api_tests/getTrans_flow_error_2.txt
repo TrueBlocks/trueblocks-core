@@ -1,0 +1,6 @@
+transactions?transactions=4102000.0&fmt=txt&uniq&flow=not-a-choice
+{
+  "errors": [
+    "The flow option (not-a-choice) must be one of [ from | to ]"
+  ]
+}

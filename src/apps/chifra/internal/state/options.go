@@ -35,9 +35,11 @@ type StateOptions struct {
 	Parts      []string                 `json:"parts,omitempty"`      // Control which state to export
 	Changes    bool                     `json:"changes,omitempty"`    // Only report a balance when it changes from one block to the next
 	NoZero     bool                     `json:"noZero,omitempty"`     // Suppress the display of zero balance accounts
-	Call       string                   `json:"call,omitempty"`       // Call a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings
-	Articulate bool                     `json:"articulate,omitempty"` // For the --call option only, articulate the retrieved data if ABIs can be found
-	ProxyFor   string                   `json:"proxyFor,omitempty"`   // For the --call option only, redirects calls to this implementation
+	Call       bool                     `json:"call,omitempty"`       // Write-only call (a query) to a smart contract
+	Send       bool                     `json:"send,omitempty"`       // Writes a transaction to an address (see docs for more information)
+	Calldata   string                   `json:"calldata,omitempty"`   // For commands (--call or --send), provides the call data (in various forms) for the command (may be empty for --send)
+	Articulate bool                     `json:"articulate,omitempty"` // For commands only, articulate the retrieved data if ABIs can be found
+	ProxyFor   string                   `json:"proxyFor,omitempty"`   // For commands only, redirects calls to this implementation
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
@@ -55,7 +57,9 @@ func (opts *StateOptions) testLog() {
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
 	logger.TestLog(opts.Changes, "Changes: ", opts.Changes)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
-	logger.TestLog(len(opts.Call) > 0, "Call: ", opts.Call)
+	logger.TestLog(opts.Call, "Call: ", opts.Call)
+	logger.TestLog(opts.Send, "Send: ", opts.Send)
+	logger.TestLog(len(opts.Calldata) > 0, "Calldata: ", opts.Calldata)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
 	opts.Conn.TestLog(opts.getCaches())
@@ -103,7 +107,11 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 		case "noZero":
 			opts.NoZero = true
 		case "call":
-			opts.Call = value[0]
+			opts.Call = true
+		case "send":
+			opts.Send = true
+		case "calldata":
+			opts.Calldata = value[0]
 		case "articulate":
 			opts.Articulate = true
 		case "proxyFor":
@@ -120,8 +128,8 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
-	opts.Calls = strings.Split(opts.Call, ":")
+	opts.Calldata = strings.Replace(strings.Trim(opts.Calldata, "'"), "'", "\"", -1)
+	opts.Calls = strings.Split(opts.Calldata, ":")
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -143,7 +151,7 @@ func stateFinishParse(args []string) *StateOptions {
 	if len(args) > 0 {
 		tmp := []string{}
 		for _, arg := range args {
-			if value := dedup[arg]; value == 0 {
+			if cnt := dedup[arg]; cnt == 0 {
 				tmp = append(tmp, arg)
 			}
 			dedup[arg]++
@@ -163,8 +171,8 @@ func stateFinishParse(args []string) *StateOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
-	opts.Calls = strings.Split(opts.Call, ":")
+	opts.Calldata = strings.Replace(strings.Trim(opts.Calldata, "'"), "'", "\"", -1)
+	opts.Calls = strings.Split(opts.Calldata, ":")
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -214,7 +222,7 @@ func (opts *StateOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	caches = map[walk.CacheType]bool{
 		walk.Cache_State:   true,
-		walk.Cache_Results: len(opts.Call) > 0,
+		walk.Cache_Results: opts.Call || opts.Send,
 	}
 	// EXISTING_CODE
 	return

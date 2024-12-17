@@ -1,0 +1,13 @@
+blocks?blocks=4012000-4012001&traces&articulate
+Args: [blocks=4012000-4012001 traces articulate]
+Opts: {"blocks":["4012000-4012001"],"traces":true,"articulate":true}
+Blocks:  [4012000-4012001]
+Traces:  true
+Articulate:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The --articulate option is only available with the --logs option."
+  ]
+}

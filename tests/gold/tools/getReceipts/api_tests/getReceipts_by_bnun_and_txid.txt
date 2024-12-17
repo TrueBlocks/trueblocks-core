@@ -1,0 +1,6 @@
+receipts?transactions=4000000.5&logs&fmt=txt&noHeader
+{
+  "errors": [
+    "Invalid key (logs) in receipts route."
+  ]
+}

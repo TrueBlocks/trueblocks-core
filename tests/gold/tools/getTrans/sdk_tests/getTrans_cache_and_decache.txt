@@ -1,0 +1,14 @@
+transactions?transactions=46147.0&cache&decache
+Args: [transactions=46147.0 cache decache]
+Opts: {"transactions":["46147.0"],"cache":true,"decache":true}
+Transactions:  [46147.0]
+Enabled:  transactions
+Cache:  true
+Decache:  true
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The --cache and --decache options are mutually exclusive."
+  ]
+}

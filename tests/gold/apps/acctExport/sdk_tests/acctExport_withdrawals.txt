@@ -1,0 +1,150 @@
+export?addrs=0x6193f68d97921f4765d72a3e6964fc990c59e0e5&withdrawals&firstBlock=17013606&lastBlock=17083530&fmt=json
+{
+  "data": [
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "4451500756",
+      "blockNumber": 17034871,
+      "date": "2023-04-12 22:28:23 UTC",
+      "index": 0,
+      "timestamp": 1681338503,
+      "validatorIndex": 24862
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "4501548927",
+      "blockNumber": 17053367,
+      "date": "2023-04-15 15:44:47 UTC",
+      "index": 295867,
+      "timestamp": 1681573487,
+      "validatorIndex": 24866
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "4501548927",
+      "blockNumber": 17053367,
+      "date": "2023-04-15 15:44:47 UTC",
+      "index": 295867,
+      "timestamp": 1681573487,
+      "validatorIndex": 24866
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "4501548927",
+      "blockNumber": 17053367,
+      "date": "2023-04-15 15:44:47 UTC",
+      "index": 295867,
+      "timestamp": 1681573487,
+      "validatorIndex": 24866
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "4501548927",
+      "blockNumber": 17053367,
+      "date": "2023-04-15 15:44:47 UTC",
+      "index": 295867,
+      "timestamp": 1681573487,
+      "validatorIndex": 24866
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "4501548927",
+      "blockNumber": 17053367,
+      "date": "2023-04-15 15:44:47 UTC",
+      "index": 295867,
+      "timestamp": 1681573487,
+      "validatorIndex": 24866
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "4501548927",
+      "blockNumber": 17053367,
+      "date": "2023-04-15 15:44:47 UTC",
+      "index": 295867,
+      "timestamp": 1681573487,
+      "validatorIndex": 24866
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "4253292339",
+      "blockNumber": 17053992,
+      "date": "2023-04-15 17:52:35 UTC",
+      "index": 305864,
+      "timestamp": 1681581155,
+      "validatorIndex": 44028
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "4253292339",
+      "blockNumber": 17053992,
+      "date": "2023-04-15 17:52:35 UTC",
+      "index": 305864,
+      "timestamp": 1681581155,
+      "validatorIndex": 44028
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "11666164",
+      "blockNumber": 17083529,
+      "date": "2023-04-19 22:14:35 UTC",
+      "index": 778460,
+      "timestamp": 1681942475,
+      "validatorIndex": 24865
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "11666164",
+      "blockNumber": 17083529,
+      "date": "2023-04-19 22:14:35 UTC",
+      "index": 778460,
+      "timestamp": 1681942475,
+      "validatorIndex": 24865
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "11666164",
+      "blockNumber": 17083529,
+      "date": "2023-04-19 22:14:35 UTC",
+      "index": 778460,
+      "timestamp": 1681942475,
+      "validatorIndex": 24865
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "11666164",
+      "blockNumber": 17083529,
+      "date": "2023-04-19 22:14:35 UTC",
+      "index": 778460,
+      "timestamp": 1681942475,
+      "validatorIndex": 24865
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "11666164",
+      "blockNumber": 17083529,
+      "date": "2023-04-19 22:14:35 UTC",
+      "index": 778460,
+      "timestamp": 1681942475,
+      "validatorIndex": 24865
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "11720875",
+      "blockNumber": 17083530,
+      "date": "2023-04-19 22:14:47 UTC",
+      "index": 778461,
+      "timestamp": 1681942487,
+      "validatorIndex": 24866
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

@@ -1,0 +1,9 @@
+chifra list  trueblocks.eth --fmt txt --first_block 8854723 --last_block 9000000 --bounds
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Bounds:  true
+TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+TEST[DATE|TIME] FirstBlock:  8854723
+TEST[DATE|TIME] LastBlock:  9000000
+TEST[DATE|TIME] Format:  txt
+address	count	firstApp	firstTs	firstDate	latestApp	latestTs	latestDate	blockSpan	blockFreq
+0xf503017d7baf7fbc0fff7492b751025c6a78179b	14	8854723.61	1572639538	2019-11-01 20:18:58 UTC	8876232.84	1572938328	2019-11-05 07:18:48 UTC	21509	1536

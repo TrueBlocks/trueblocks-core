@@ -1,0 +1,6 @@
+chunks?mode=addresses&publish
+{
+  "errors": [
+    "The --publish option is not available in addresses mode."
+  ]
+}

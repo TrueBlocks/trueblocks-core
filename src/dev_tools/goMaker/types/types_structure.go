@@ -18,17 +18,22 @@ type Structure struct {
 	DocDescr    string    `json:"doc_descr,omitempty" toml:"doc_descr" csv:"doc_descr"`
 	DocNotes    string    `json:"doc_notes,omitempty" toml:"doc_notes" csv:"doc_notes"`
 	UiRoute     string    `json:"ui_route,omitempty" toml:"ui_route"`
+	UiIcon      string    `json:"ui_icon,omitempty" toml:"ui_icon"`
 	ProducedBy  string    `json:"produced_by,omitempty" toml:"produced_by"`
 	ContainedBy string    `json:"contained_by,omitempty" toml:"contained_by"`
+	Parent      string    `json:"parent,omitempty" toml:"parent"`
+	Children    string    `json:"children,omitempty" toml:"children"`
 	CacheAs     string    `json:"cache_as,omitempty" toml:"cache_as"`
 	CacheBy     string    `json:"cache_by,omitempty" toml:"cache_by"`
 	CacheType   string    `json:"cache_type,omitempty" toml:"cache_type"`
 	DisableGo   bool      `json:"disable_go,omitempty" toml:"disable_go"`
 	DisableDocs bool      `json:"disable_docs,omitempty" toml:"disable_docs"`
 	Attributes  string    `json:"attributes,omitempty" toml:"attributes"`
+	Sorts       string    `json:"sorts,omitempty" toml:"sorts"`
 	Members     []Member  `json:"members,omitempty" toml:"members"`
 	Route       string    `json:"-" toml:"-"`
 	Producers   []string  `json:"-" toml:"-"`
+	ChildTabs   []string  `json:"-" toml:"-"`
 	cbPtr       *CodeBase `json:"-" toml:"-"`
 }
 
@@ -101,7 +106,7 @@ func (s *Structure) HasSorts() bool {
 			return true
 		}
 	}
-	return strings.Contains(s.Attributes, "sorts=")
+	return len(s.Sorts) > 0
 }
 
 func (s *Structure) NeedsAddress() bool {
@@ -211,147 +216,122 @@ func (s *Structure) TsTypesTypes() string {
 func (s *Structure) TsTypeMembers() string {
 	ret := []string{}
 	for _, m := range s.Members {
-		ret = append(ret, m.TsType())
+		ret = append(ret, m.MemTsType())
 	}
 	return strings.Join(ret, "\n")
 }
 
-func (s *Structure) parseType(which string) (string, string) {
-	which += "="
-	attrs := s.Attributes
-	if !strings.Contains(attrs, which) {
-		return "", ""
+// ====== for browse code gen ======================================
+func (s *Structure) findItems() Member {
+	for _, m := range s.Members {
+		if m.IsItems() {
+			return m
+		}
 	}
-	attrs = strings.ReplaceAll(attrs, which, "`")
-	parts := strings.Split(attrs, "`")
-	parts = strings.Split(parts[1], "|")
-	parts = strings.Split(parts[0], ".")
+	logger.Fatal("no item in structure: ", s.Class)
+	return Member{}
+}
 
-	first, second := parts[0], ""
-	if len(parts) > 1 {
-		second = parts[1]
-	}
-
-	return first, second
+func (s *Structure) ItemFullType() string {
+	return s.findItems().Type
 }
 
 func (s *Structure) ItemName() string {
-	_, typ := s.parseType("itemType")
-	return typ
+	m := s.findItems()
+	parts := strings.Split(m.Type, ".")
+	if len(parts) < 2 {
+		logger.Fatal("bad embed type (needs two parts): ", m.Type)
+	}
+	return parts[1]
 }
 
 func (s *Structure) ItemType() string {
-	pkg, typ := s.parseType("itemType")
-	return FirstLower(pkg) + "." + FirstUpper(typ)
-}
-
-func (s *Structure) InputType() string {
-	if s.Class == "Manifest" {
-		return "coreTypes.Manifest"
+	m := s.findItems()
+	parts := strings.Split(m.Type, ".")
+	if len(parts) < 2 {
+		logger.Fatal("bad embed type (needs two parts): ", m.Type)
 	}
-	return s.ItemType()
+	if strings.HasPrefix(parts[0], "types") {
+		return FirstUpper(parts[1])
+	}
+	return FirstLower(parts[0]) + "." + FirstUpper(parts[1])
 }
 
 func (s *Structure) EmbedName() string {
-	_, typ := s.parseType("embedType")
-	return Lower(typ)
+	for _, m := range s.Members {
+		if m.IsEmbed() {
+			parts := strings.Split(m.Type, ".")
+			if len(parts) < 2 {
+				logger.Fatal("bad embed type (needs two parts): ", m.Type)
+			}
+			return Lower(parts[1])
+		}
+	}
+	return ""
 }
 
 func (s *Structure) EmbedType() string {
-	pkg, typ := s.parseType("embedType")
-	if pkg == "types" {
-		return FirstUpper(typ)
+	for _, m := range s.Members {
+		if m.IsEmbed() {
+			parts := strings.Split(m.Type, ".")
+			if len(parts) < 2 {
+				logger.Fatal("bad embed type (needs two parts): ", m.Type)
+			}
+			if parts[0] == "types" {
+				return FirstUpper(parts[1])
+			}
+			return FirstLower(parts[0]) + "." + FirstUpper(parts[1])
+		}
 	}
-	return FirstLower(pkg) + "." + FirstUpper(typ)
+	return ""
 }
 
-func (s *Structure) OtherName() string {
-	_, typ := s.parseType("otherType")
-	return Lower(typ)
+func (s *Structure) Needs(which string) bool {
+	no := "no" + FirstUpper(which)
+	return !strings.Contains(s.Attributes, no)
 }
 
-func (s *Structure) OtherType() string {
-	pkg, typ := s.parseType("otherType")
-	return FirstLower(pkg) + "." + FirstUpper(typ)
-}
-
-func (s *Structure) HasItems() bool {
-	return strings.Contains(s.Attributes, "itemType=")
-}
-
-func (s *Structure) HasEmbed() bool {
-	return strings.Contains(s.Attributes, "embedType=")
-}
-
-func (s *Structure) HasOther() bool {
-	return strings.Contains(s.Attributes, "otherType=")
-}
-
-func (s *Structure) NeedsChain() bool {
-	return !strings.Contains(s.Attributes, "noChain")
-}
-
-func (s *Structure) NeedsFetch() bool {
-	return !strings.Contains(s.Attributes, "noFetch")
-}
-
-func (s *Structure) IsEditable() bool {
-	return strings.Contains(s.Attributes, "editable")
+func (s *Structure) Wants(which string) bool {
+	wants := "wants" + FirstUpper(which)
+	return strings.Contains(s.Attributes, wants)
 }
 
 func (s *Structure) SortsInstance() string {
-	if !s.HasSorts() {
-		return ""
-	}
-
-	ret := "sdk.SortSpec {\n"
-	spec, _ := s.parseType("sorts")
-	fields := strings.Split(spec, ",")
-	// logger.Info(fields)
-	// logger.Info()
 	flds := []string{}
 	orders := []string{}
+	spec := s.Sorts
+	fields := strings.Split(spec, ",")
 	for _, field := range fields {
-		// logger.Info(field)
-		// logger.Info()
 		parts := strings.Split(field, "+")
 		if len(parts) > 1 {
 			flds = append(flds, "\""+parts[0]+"\"")
 			orders = append(orders, "sdk."+parts[1])
 		}
 	}
+	ret := "sdk.SortSpec {\n"
 	ret += "\tFields: []string{" + strings.Join(flds, ",") + "},\n"
 	ret += "\tOrder: []sdk.SortOrder{" + strings.Join(orders, ",") + "},\n"
-	ret += "},"
+	ret += "}"
 	return ret
+}
+
+func (s *Structure) getUiRoutePart(p int) string {
+	parts := strings.Split(s.UiRoute, "-")
+	if len(parts) != 3 {
+		s.UiRoute += "-none"
+		parts = append(parts, "none")
+	}
+	return parts[p]
 }
 
 func (s *Structure) UiRouteNum() uint64 {
-	parts := strings.Split(s.UiRoute, "-")
-	return base.MustParseUint64(parts[0])
+	return base.MustParseUint64(s.getUiRoutePart(0))
 }
 
 func (s *Structure) UiRouteName() string {
-	parts := strings.Split(s.UiRoute, "-")
-	return parts[1]
+	return FirstUpper(s.getUiRoutePart(1))
 }
 
-func (s *Structure) UiRouteStr() string {
-	ret := s.UiRouteName()
-	if ret == "project" {
-		return ""
-	}
-	return ret
-}
-
-func (s *Structure) IsHistory() bool {
-	return s.UiRouteName() == "history"
-}
-
-func (s *Structure) IsProject() bool {
-	return s.UiRouteName() == "project"
-}
-
-func (s *Structure) IsWizard() bool {
-	return s.UiRouteName() == "wizard"
+func (s *Structure) UiHotKey() string {
+	return s.getUiRoutePart(2)
 }

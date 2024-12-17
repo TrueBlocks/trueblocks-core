@@ -1,0 +1,6 @@
+scrape?wei
+{
+  "errors": [
+    "Invalid key (wei) in scrape route."
+  ]
+}

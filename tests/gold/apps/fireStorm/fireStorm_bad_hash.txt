@@ -1,0 +1,16 @@
+chifra explore  0xf503017D7baF7FBC0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0
+TEST[DATE|TIME] Terms:  [0xf503017d7baf7fbc0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0]
+TEST[DATE|TIME] Format:  txt
+Error: The term option (0xf503017d7baf7fbc0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0) is not valid.
+Usage:
+  chifra explore [flags] [terms...]
+
+Arguments:
+  terms - one or more address, name, block, or transaction identifier
+
+Flags:
+  -n, --no_open   return the URL without opening it
+  -l, --local     open the local TrueBlocks explorer
+  -g, --google    search google excluding popular blockchain explorers
+  -d, --dalle     open the address to the DalleDress explorer (hidden)
+  -h, --help      display this help screen

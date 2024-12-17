@@ -1,0 +1,4 @@
+list?addrs=trueblocks.eth&count&fmt=txt&firstBlock=8854723&lastBlock=9000000&bounds
+address	nRecords	fileSize
+0xf503017d7baf7fbc0fff7492b751025c6a78179b	14	57005
+

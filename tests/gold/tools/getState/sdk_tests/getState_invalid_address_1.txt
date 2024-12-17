@@ -1,0 +1,12 @@
+state?addrs=0x12
+Args: [addrs=0x12]
+Opts: {"addrs":["0x12"],"proxyFor":"0x0"}
+Addrs:  [0x12]
+Blocks:  [17000000]
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "Please specify at least one valid Ethereum address."
+  ]
+}

@@ -1,0 +1,12 @@
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10278000 --articulate --output output_test_file
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] FirstBlock:  10277780
+TEST[DATE|TIME] LastBlock:  10278000
+TEST[DATE|TIME] OutputFn:  output_test_file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  txt
+----
+Results in ./output_test_file
+blockNumber	transactionIndex	timestamp	date	from	to	value	gasPrice	gasUsed	gasCost	hash	isError	encoding	compressedTx	type	ether
+10277780	102	1592323744	2020-06-16 16:09:04 UTC	0x054993ab0f2b1acc0fdc65405ee203b4271bebe6	0x7d655c57f71464b6f83811c55d84009cd9f5221c	0	40000000000	68590	2743600000000000	0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00	false	0x9120491c	{name:donate|inputs:{_donations:[{amount:9700000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b|token:0x6b175474e89094c44da98b954eedeac495271d0f}|{amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3|token:0x6b175474e89094c44da98b954eedeac495271d0f}]}|stateMutability:payable}		0

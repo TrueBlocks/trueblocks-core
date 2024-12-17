@@ -1,0 +1,42 @@
+{{ define "main" }}
+	<div class="row flex-xl-nowrap">
+		<div class="col-lg-5 col-xl-4 docs-sidebar">
+			<nav class="docs-links" aria-label="Main navigation">
+				{{ partial "sidebar/blog-menu.html" . }}
+			</nav>
+		</div>
+
+		{{ if ne .Params.toc false -}}
+			<nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
+				<div class="page-links">
+					<h3> </h3>
+					<p class="lead">Long-form articles</p>
+				</div>
+			</nav>
+		{{ end -}}
+
+		{{ if .Params.toc -}}
+			<main class="docs-content col-lg-11 col-xl-9">
+		{{ else -}}
+			<main class="docs-content col-lg-11 col-xl-9 mx-xl-auto">
+		{{ end -}}
+
+		<h1>Articles about '{{ .Title }}'</h1>
+		{{ $paginator := .Paginate (.Data.Pages) -}}
+		{{ $.Scratch.Set "paginator" true }}
+		{{ template "_internal/pagination.html" . }}
+		{{ range $paginator.Pages.ByWeight -}}
+			<div class="post">
+				<h3 class="post__title">
+					<a href="{{ .Permalink }}">{{ .Title }}</a>
+				</h3>
+				<h6>{{ .Params.lead | safeHTML }}</h6>
+				<div class="post__summary">
+					{{ .Summary }}
+				</div>
+				{{ partial "main/blog-meta.html" . -}}
+			</div>
+		{{ end -}}
+		</main>
+	</div>
+{{ end }}

@@ -1,0 +1,12 @@
+chunks?mode=index&tag=not.a.tag
+Args: [mode=index tag=not.a.tag]
+Opts: {"mode":4,"publisher":"0x0","tag":"not.a.tag"}
+Mode:  index
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+Tag:  not.a.tag
+Format:  json
+{
+  "errors": [
+    "The --tag (not.a.tag) must be a valid version string."
+  ]
+}

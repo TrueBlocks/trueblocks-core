@@ -1,0 +1,151 @@
+names?tags
+Args: [tags]
+Opts: {"tags":true,"autoname":"0x0"}
+Tags:  true
+Format:  json
+{
+  "data": [
+    {
+      "tags": "30-Contract:Optimism Goerli"
+    },
+    {
+      "tags": "30-Contract:Optimism Kovan"
+    },
+    {
+      "tags": "30-Contract:Optimism Mainnet"
+    },
+    {
+      "tags": "30-Contracts"
+    },
+    {
+      "tags": "30-Contracts:Balancer"
+    },
+    {
+      "tags": "30-Contracts:Compound"
+    },
+    {
+      "tags": "30-Contracts:Consensys"
+    },
+    {
+      "tags": "30-Contracts:DAO Related"
+    },
+    {
+      "tags": "30-Contracts:Humanity DAO"
+    },
+    {
+      "tags": "30-Contracts:Kickback"
+    },
+    {
+      "tags": "30-Contracts:Kyber Network"
+    },
+    {
+      "tags": "30-Contracts:Moloch"
+    },
+    {
+      "tags": "30-Contracts:Pasta"
+    },
+    {
+      "tags": "30-Contracts:Pool Together"
+    },
+    {
+      "tags": "30-Contracts:Set Protocol"
+    },
+    {
+      "tags": "30-Contracts:Uniswap"
+    },
+    {
+      "tags": "30-Contracts:dAppNode"
+    },
+    {
+      "tags": "30-Contracts:theGraph"
+    },
+    {
+      "tags": "31-Gitcoin:Admin"
+    },
+    {
+      "tags": "31-Gitcoin:Contracts"
+    },
+    {
+      "tags": "31-Gitcoin:Core"
+    },
+    {
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "tags": "31-Gitcoin:Team"
+    },
+    {
+      "tags": "31-Gitcoin:Workstreams"
+    },
+    {
+      "tags": "31-Giveth:Core"
+    },
+    {
+      "tags": "31-Giveth:Project"
+    },
+    {
+      "tags": "31-PublicNouns:Core"
+    },
+    {
+      "tags": "34-ENS"
+    },
+    {
+      "tags": "37-SelfDestructed"
+    },
+    {
+      "tags": "40-Exchanges"
+    },
+    {
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "tags": "50-Tokens:ERC721"
+    },
+    {
+      "tags": "55-Defi"
+    },
+    {
+      "tags": "60-Rotki"
+    },
+    {
+      "tags": "60-SmolAssets"
+    },
+    {
+      "tags": "60-Whales"
+    },
+    {
+      "tags": "66-Ofac:Sanctioned"
+    },
+    {
+      "tags": "70-Vendors"
+    },
+    {
+      "tags": "80-Malicious"
+    },
+    {
+      "tags": "80-Malicious:DaoDrain"
+    },
+    {
+      "tags": "80-Malicious:Shanghai"
+    },
+    {
+      "tags": "91-Early:Addresses"
+    },
+    {
+      "tags": "91-Early:Miners"
+    },
+    {
+      "tags": "95-EF"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

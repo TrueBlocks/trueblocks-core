@@ -2,17 +2,237 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
+## v4.0.0 - Sent - Juniata (2024/12/16)
+
+**Summary**
+
+- Breaking change: `chifra state --call` replaces string with boolean and adds `--calldata` option along with `--send` (unimplemented).
+- Breaking change: Changes `config.PathToManfest` to `config.PathToManifestFile`.
+- Breaking change: `chifra config --session` (previously hidden) option removed.
+- `chifra config --dump` option added
+- Much better auto code generation code (useful for building `trueblocks-browse`)
+- A lot of "syntactic sugar" removed from the SDK. Some may be breaking.
+
+## SDK
+
+- Removed a lot of "syntactic sugar" from the SDK. Some may be breaking.
+- Added `Scrape` and `ScrapeOnce` endpoints to the SDK.
+- Now reflects new `chifra state --call/--send/--calldata syntax.
+- Now reflects new `chifra config --dump` option.
+
+## Changes to the Unchained Index Specification
+
+- No changes.
+- While there were no changes to the Unchained Index Spec, we did start indexing mutliple chains including Ethereum, Sepolia, Optimism, and Gnosis. These will be published to the smart contract whenever we publish mainnet.
+- We also wrote a very nice command line app called `trueblocks-node` which encsapsulates the scraper and the monitors. This will eventually replace `chifra scrape` and `chifra monitors --watch`. [Find this repo here](https://github.com/TrueBlocks/trueblocks-node).
+
+## Breaking Changes
+
+- `chifra state --call` changed to `chifra state --call --calldata <calldata>`
+- `chifra config --session` removed.
+
+## System Wide Changes
+
+- Further improvements in the SDK streaming capabilities.
+- Added `trueblocks-node` which will eventually replace `chifra scrape` and `chifra monitors --watch`.
+- Much improved auto code generation for use with `trueblocks-browse`.
+
+## Changes to Data Models
+
+`chain` was added to a few of the data models. No fields were removed from any data models.
+
+### Modified data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### New data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### Removed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### Renamed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+## Tool Specific Changes
+
+**chifra list**
+
+- No changes.
+
+**chifra export**
+
+- No changes.
+
+**chifra monitors**
+
+- No changes.
+
+**chifra names**
+
+- No changes.
+
+**chifra abis**
+
+- No changes.
+
+**chifra blocks**
+
+- No changes.
+
+**chifra transactions**
+
+- No changes.
+
+**chifra receipts**
+
+- No changes.
+
+**chifra logs**
+
+- No changes.
+
+**chifra traces**
+
+- No changes.
+
+**chifra when**
+
+- No changes.
+
+**chifra state**
+
+- Changed `chifra state --call` from a string to a boolean. The string is now called `--calldata`. So, a previous command thus: `chifra --call <calldata>` is now `chifra state --call --calldata <calldata>`.
+- Added `--send [calldata]` (call data is optional) which will allow for sending txs in the future.
+
+**chifra tokens**
+
+- No changes.
+
+**chifra config**
+
+- Removed `chifra config --session`. No replacement.
+- Added `chifra config --dump` option.
+
+**chifra status**
+
+- No changes.
+
+**chifra daemon**
+
+- No changes.
+
+**chifra scrape**
+
+- No changes.
+
+**chifra chunks**
+
+- No changes.
+
+**chifra init**
+
+- No changes.
+
+**chifra explore**
+
+- No changes.
+
+**chifra slurp**
+
+- No changes.
+
+**goMaker**
+
+- No changes.
+
+**testRunner**
+
+- No changes.
+
+## Pull Requests (33)
+
+<!--
+gh pr list --search "is:pr is:closed closed:>2024-12.16" --limit 300 --state merged | cut -f1,2 | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+## Issues Closed (0)
+
+- #3925 Fixing tests
+- #3924 Updating
+- #3921 First working version of tx send highly suspect
+- #3920 Fixes issue #3883
+- #3918 Crap
+- #3916 Fix typos
+- #3913 Grammar and Spelling Corrections in Documentation
+- #3911 goMaker-5
+- #3910 Fix Typos in Documentation for Improved Clarity and Professionalism
+- #3909 fix: typos in documentation files
+- #3907 Many changes to improve usability for browse
+- #3906 Moves utils from Browse repo into core
+- #3904 chifra config --session
+- #3903 Cleaning
+- #3902 Allow relative XDG_CONFIG/CACHE_HOME paths
+- #3900 Feature/chifra scrape touch
+- #3895 Improves a lot of things
+- #3894 Adds destination type for chifra explore
+- #3893 Updates go.mods
+- #3891 Develop
+- #3890 Updates go.mod files to v3.5.0
+
+<!--
+gh issue list --search "closed:>2024-12-16 is:closed is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+## Issues Opened (3)
+
+- #3905 Erigon has a bug that I created a branch for
+- #3883 Add this to every .gitignore at the top of all repos
+- #3881 Minimum cmake version required is 3.20 - should be better documented (or better yet - automatically fail the build)
+- #3873 generator: if an item iin cmd-line-optoisn.csv has a type, check to makre sure it's a valid type before generasting code
+- #3868 make generate ignores DefaultEnum -- remove it if it's not used, use it if it's useful
+- #3867 React development environment -- or a better linter for react
+- #3859 code gen: use the handler field
+- #3835 Coming changes for Pectra
+- #3826 Unneeded load of names
+- #3825 FAQ: current directory is contained in a module that is not one of the workspace modules listed in go.work. You can add the module to the workspace using: go work use .
+- #3783 Replace viper for reading configuration
+- #3761 Feat: Offer easier install methods
+
+<!--
+gh issue list --search "created:>2024-12-16 is:open is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/'  | tr '\t' ' '
+-->
+
+- #3922 block range with `latest` and non-empty period causes error
+- #3915 chifra tokens does not do decimals right
+- #3914 chifra when --timestamps --truncate should have user input protection
+- #3912 chifra locked up
+- #3908 Multiple connections being created
+- #3899 Dryrun
+- #3892 loadFromEnv panics
+
 ## v3.5.0 - MultiChain Scraper - Jefferson (2024/09/22)
 
 **Summary**
 
 - Bumps version to 3.5.0 for all repos (that is all submodules are tagged with v3.5.0)
-- Adds indexManager dev_tool (currently only checks disc usage).
+- Adds indexManager dev_tool (currently only checks disk usage).
 - Improves "headless" modes for both chifra scrape and chifra init to produce much better log messages.
-- Improves greatly `trueblocks-node` to allow for scraping mulitple chains at the same time in headless mode.
+- Improves greatly `trueblocks-node` to allow for scraping multiple chains at the same time in headless mode.
 - Improves chifra chunks index --pin to better recover from errors during pinning (in fact, it didn't work previously).
 - Small updates to documentation for SDK, node, and examples.
-- Added dev_tool called indexManager which currently only reports on disc usage, but will eventually report on index status.
+- Added dev_tool called indexManager which currently only reports on disk usage, but will eventually report on index status.
 
 ## SDK
 
@@ -159,13 +379,13 @@ gh pr list --search "is:pr is:closed closed:>2024-09-22" --limit 300 --state mer
 -->
 
 - #3888 Various changes to run scraper and init in headlessMode
-- #3886 Adds a devtool to check disc usage on various computers
+- #3886 Adds a devtool to check disk usage on various computers
 - #3885 Updates go.mods to latest release
 - #3884 Develop
 - #3882 Updates node
 - #3880 Updates a few names
 - #3878 Feature/better manifests
-- #3876 Submodualarizatooor - moves a lot of code into submodules for MUCH easier mangement
+- #3876 Submodualarizatooor - moves a lot of code into submodules for MUCH easier management
 - #3875 Version 3.3.0
 - #3874 Tries to start using SemiVers for our go.mod files
 - #3871 Starts to improve chifra init
@@ -713,7 +933,7 @@ gh issue list --search "created:>2024-07-18 is:open is:issue sort:created-desc" 
 - Updates Python and Typescript SDK to latest auto-generated code.
 - Extended caching to various commands including `chifra state`, `chifra receipts`, and `chifra export --accounting`.
 - General improvements to caching including the ability to upgrade the cache without requiring a migration.
-- Moves `MetaData` type to the `types` package out of the `rpc` pacakge.
+- Moves `MetaData` type to the `types` package out of the `rpc` package.
 - Removes `go.work` from the repo which now requires running `./scripts/go-work-sync.sh` as part of the build.
 - Moved the test cases into its own submodule. Build now requires `git pull --recurse-submodules` to get the tests.
 - Complete rewrite of `goMaker` and `testRunner` in GoLang. Totally removes old `cpp` code.
@@ -732,7 +952,7 @@ The following data models were either modified, added, removed, or renamed by ha
 |             | Marks `baseFeePerGas` as base type `gas` to be more accurate.                                           |
 |             | Marks `difficulty` as a `value` type to be more accurate.                                               |
 | Bounds      | Changes `firstApp` and `latestApp` from string to `Appearance` to make parsing as JSON easier.          |
-| Log         | Makks `compressedLog` as calculated field.                                                              |
+| Log         | Marks `compressedLog` as calculated field.                                                              |
 |             | Marks `logIndex` as `lognum` type as opposed to `uint64` as a more accurate representation.             |
 |             | Marks `transactionIndex` as `txnum` type as opposed to `uint64` as a more accurate representation.      |
 | Receipt     | Marks `status` field as type `value` as opposed to `uint32` to be more accurate. (Modifies cache data.) |
@@ -1157,7 +1377,7 @@ gh issue list --search "closed:>2024-06-04 is:closed is:issue sort:created-desc"
 - #3531 chifra init all not working
 - #3529 We should use this for all enums. It's simple, clean and fun
 - #3527 Progress: Could not load RPC provider: invalid character '<' looking for beginning of value
-- #3526 write to disc error recovery?
+- #3526 write to disk error recovery?
 - #3525 makeClass - auto-code generator for Go sdk should produce enums
 - #3516 Warn that API is not meant to be used on server
 - #3515 chifra slurp --count for Etherscan seems weird

@@ -1,0 +1,65 @@
+chifra abis  --file signatures.txt --fmt json
+TEST[DATE|TIME] Encode:  free(uint256)
+TEST[DATE|TIME] File:  signatures.txt
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "encoding": "0xd8ccd0f3",
+      "name": "free",
+      "signature": "free(uint256)",
+      "type": "function"
+    }TEST[DATE|TIME] Encode:  transferFrom(address,address,uint256)
+TEST[DATE|TIME] File:  signatures.txt
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+,
+    {
+      "encoding": "0x23b872dd",
+      "name": "transferFrom",
+      "signature": "transferFrom(address,address,uint256)",
+      "type": "function"
+    }TEST[DATE|TIME] Encode:  decimals()
+TEST[DATE|TIME] File:  signatures.txt
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+,
+    {
+      "encoding": "0x313ce567",
+      "name": "decimals",
+      "signature": "decimals()",
+      "type": "function"
+    }TEST[DATE|TIME] Encode:  freeFromUpTo(address,uint256)
+TEST[DATE|TIME] File:  signatures.txt
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+,
+    {
+      "encoding": "0x079d229f",
+      "name": "freeFromUpTo",
+      "signature": "freeFromUpTo(address,uint256)",
+      "type": "function"
+    }TEST[DATE|TIME] Encode:  Approval(address,address,uint256)
+TEST[DATE|TIME] File:  signatures.txt
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+,
+    {
+      "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "name": "Approval",
+      "signature": "Approval(address,address,uint256)",
+      "type": "event"
+    }TEST[DATE|TIME] Encode:  Transfer(address,address,uint256)
+TEST[DATE|TIME] File:  signatures.txt
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+,
+    {
+      "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+      "name": "Transfer",
+      "signature": "Transfer(address,address,uint256)",
+      "type": "event"
+    }
+  ]
+}
