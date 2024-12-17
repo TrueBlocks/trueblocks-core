@@ -65,7 +65,6 @@ jobs:
           username: ${{ secrets.TESTING_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           command_timeout: 40m
-          script_stop: true
           script: |
             rm -rf testing/${{ github.sha }}
             mkdir -p testing/${{ github.sha }}
