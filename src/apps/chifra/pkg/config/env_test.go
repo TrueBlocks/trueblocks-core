@@ -43,10 +43,10 @@ func Test_setByPath(t *testing.T) {
 		t.Fatal("wrong value", v)
 	}
 
-	if err := setByPath(&result, []string{"CONFIG", "VERSION", "CURRENT"}, "v3.0.0-release"); err != nil {
+	if err := setByPath(&result, []string{"CONFIG", "VERSION", "CURRENT"}, "v4.0.0"); err != nil {
 		t.Fatal(err)
 	}
-	if v := result.Version.Current; v != "v3.0.0-release" {
+	if v := result.Version.Current; v != "v4.0.0" {
 		t.Fatal("wrong value", v)
 	}
 
