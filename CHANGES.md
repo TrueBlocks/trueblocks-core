@@ -2,7 +2,7 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
-## v4.0.0 - Can We Send? - Juniata (2024/12/16)
+## v4.0.0 - Sent - Juniata (2024/12/16)
 
 **Summary**
 
