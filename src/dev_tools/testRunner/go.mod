@@ -6,7 +6,7 @@ go 1.23
 replace github.com/TrueBlocks/trueblocks-core/sdk => ../../../sdk
 
 require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241103193928-2a3d9f89af63
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241217054115-e1dd1523c8dd
 	github.com/TrueBlocks/trueblocks-sdk/v3 v3.9.0
 )
 
@@ -29,7 +29,6 @@ require (
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/gocarina/gocsv v0.0.0-20230123225133-763e25b40669 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
@@ -39,8 +38,6 @@ require (
 	github.com/ipfs/go-cid v0.4.1 // indirect
 	github.com/ipfs/go-ipfs-api v0.6.1 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
-	github.com/leaanthony/slicer v1.6.0 // indirect
-	github.com/leaanthony/u v1.1.0 // indirect
 	github.com/libp2p/go-buffer-pool v0.1.0 // indirect
 	github.com/libp2p/go-flow-metrics v0.1.0 // indirect
 	github.com/libp2p/go-libp2p v0.27.8 // indirect
@@ -59,7 +56,6 @@ require (
 	github.com/panjf2000/ants/v2 v2.10.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/cobra v1.7.0 // indirect
@@ -67,7 +63,6 @@ require (
 	github.com/supranational/blst v0.3.13 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect
-	github.com/wailsapp/wails/v2 v2.9.2 // indirect
 	github.com/wealdtech/go-ens/v3 v3.5.2 // indirect
 	github.com/wealdtech/go-multicodec v1.4.0 // indirect
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
