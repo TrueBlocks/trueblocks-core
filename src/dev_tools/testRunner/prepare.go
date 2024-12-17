@@ -5,7 +5,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	sdk "github.com/TrueBlocks/trueblocks-sdk/v3"
+	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
 func downloadAbis() error {
