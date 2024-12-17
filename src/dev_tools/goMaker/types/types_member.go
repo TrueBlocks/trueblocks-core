@@ -521,7 +521,7 @@ func (m *Member) BaseType() string {
 	return t
 }
 
-func (m *Member) TsType() string {
+func (m *Member) MemTsType() string {
 	val := "  " + m.Name
 	if !m.IsRequired() {
 		val += "?"
@@ -530,5 +530,5 @@ func (m *Member) TsType() string {
 	if m.IsArray {
 		val += "[]"
 	}
-	return val
+	return val + ";"
 }

@@ -18,7 +18,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	// We need this below...
 	l.theTx = trans
 
-	if conn.StoreReadable() {
+	if false && conn.StoreReadable() {
 		// walk.Cache_Statements
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
@@ -131,7 +131,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	}
 
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, trans.Timestamp)
-	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Statements] {
+	if false && isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Statements] {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,

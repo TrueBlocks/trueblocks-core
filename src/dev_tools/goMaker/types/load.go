@@ -342,6 +342,4 @@ func (s *Structure) checkHierarchy() {
 			}
 		}
 	}
-
-	return
 }

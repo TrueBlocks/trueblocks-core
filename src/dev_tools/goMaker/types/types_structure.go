@@ -216,7 +216,7 @@ func (s *Structure) TsTypesTypes() string {
 func (s *Structure) TsTypeMembers() string {
 	ret := []string{}
 	for _, m := range s.Members {
-		ret = append(ret, m.TsType())
+		ret = append(ret, m.MemTsType())
 	}
 	return strings.Join(ret, "\n")
 }

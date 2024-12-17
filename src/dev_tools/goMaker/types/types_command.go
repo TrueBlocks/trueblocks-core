@@ -777,7 +777,7 @@ func (c *Command) FuzzerInits() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (op *Option) TsType() string {
+func (op *Option) CmdTsType() string {
 	if op.IsEnum() && op.IsArray() {
 		return "string"
 	} else if op.IsEnum() {
@@ -797,8 +797,13 @@ func (op *Option) TsOption() string {
 	}
 	opp := *op
 	tmplName := "tsOption"
-	tmpl := `    {{toCamel .LongName}}{{if not .IsRequired}}?{{end}}: {{.TsType}}{{if .IsArray}}[]{{end}},`
+	tmpl := `    {{toCamel .LongName}}{{if not .IsRequired}}?{{end}}: {{.CmdTsType}}{{if .IsArray}}[]{{end}},`
 	return opp.executeTemplate(tmplName, tmpl)
+}
+
+func (c *Command) TsOptions2() string {
+	ret := c.TsOptions()
+	return strings.ReplaceAll(ret, ",", ";")
 }
 
 func (c *Command) TsOptions() string {

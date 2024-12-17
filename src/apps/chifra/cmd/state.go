@@ -55,10 +55,10 @@ Notes:
   - Valid parameters for --calldata include Solidity-like syntax: balanceOf(0x316b...), a four-byte followed by parameters: 0x70a08231(0x316b...), or encoded input data.
   - You may specify multiple parts on a single line.
   - In the --call string, you may separate multiple calls with a colon.
-  - Your use of the unaudited --send option legally absolves, in any jurisdiction, TrueBlocks, LLC or any associated parties from liability or loss related to such use.
+  - Your use of the unaudited --send option legally absolves TrueBlocks, LLC or any associated parties from liability or loss related to such use.
   - The --send option does not validate its input before sending your transaction to the network. If you provide invalid data, you may lose your funds. Be warned.
   - As of version 4.0.0, use --call --calldata <cmd> to provide your command.
-  - --calldata may be one or more solidity calls, four-byte plus parameters, or encoded call data strings.`
+  - --calldata may be one or more colon-seperated solidity calls, four-byte plus parameters, or encoded call data strings.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra state

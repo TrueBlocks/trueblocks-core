@@ -46,6 +46,8 @@ if(NOT GO_VERSION_MATCH)
     return()
 endif()
 
+set(GO_MAJOR_VERSION ${CMAKE_MATCH_1})
+set(GO_MINOR_VERSION ${CMAKE_MATCH_2})
 if(GO_MAJOR_VERSION LESS 1 OR
     (GO_MAJOR_VERSION EQUAL 1 AND GO_MINOR_VERSION LESS 23))
     message(STATUS "${CColor}The build failed.${COff}")
