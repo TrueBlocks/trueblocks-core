@@ -6,7 +6,7 @@ go 1.23
 replace github.com/TrueBlocks/trueblocks-core/sdk => ../../../sdk
 
 require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241217054115-e1dd1523c8dd
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241217061115-4a93860d585f
 	github.com/TrueBlocks/trueblocks-sdk/v3 v3.9.0
 )
 
