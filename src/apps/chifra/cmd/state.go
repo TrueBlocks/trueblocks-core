@@ -52,9 +52,13 @@ Notes:
   - If the queried node does not store historical state, the results are undefined.
   - Special blocks are detailed under chifra when --list.
   - Balance is the default mode. To select a single mode use none first, followed by that mode.
-  - Valid parameters for --call include Solidity-like syntax: balanceOf(0x316b...183d), a four-byte followed by parameters: 0x70a08231(0x316b...183d), or encoded input data.
+  - Valid parameters for --calldata include Solidity-like syntax: balanceOf(0x316b...), a four-byte followed by parameters: 0x70a08231(0x316b...), or encoded input data.
   - You may specify multiple parts on a single line.
-  - In the --call string, you may separate multiple calls with a colon.`
+  - In the --call string, you may separate multiple calls with a colon.
+  - Your use of the unaudited --send option legally absolves TrueBlocks, LLC or any associated parties from liability or loss related to such use.
+  - The --send option does not validate its input before sending your transaction to the network. If you provide invalid data, you may lose your funds. Be warned.
+  - As of version 4.0.0, use --call --calldata <cmd> to provide your command.
+  - --calldata may be one or more colon-seperated solidity calls, four-byte plus parameters, or encoded call data strings.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra state
@@ -69,9 +73,14 @@ func init() {
 One or more of [ balance | nonce | code | proxy | deployed | accttype | some | all ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, `only report a balance when it changes from one block to the next`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "z", false, `suppress the display of zero balance accounts`)
-	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "l", "", `call a smart contract with one or more solidity calls, four-byte plus parameters, or encoded call data strings`)
-	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Articulate, "articulate", "a", false, `for the --call option only, articulate the retrieved data if ABIs can be found`)
-	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", `for the --call option only, redirects calls to this implementation`)
+	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Call, "call", "l", false, `write-only call (a query) to a smart contract`)
+	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Send, "send", "s", false, `writes a transaction to an address (see docs for more information) (hidden)`)
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Calldata, "calldata", "d", "", `for commands (--call or --send), provides the call data (in various forms) for the command (may be empty for --send)`)
+	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Articulate, "articulate", "a", false, `for commands only, articulate the retrieved data if ABIs can be found`)
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", `for commands only, redirects calls to this implementation`)
+	if os.Getenv("TEST_MODE") != "true" {
+		_ = stateCmd.Flags().MarkHidden("send")
+	}
 	globals.InitGlobals("state", stateCmd, &statePkg.GetOptions().Globals, capabilities)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))

@@ -98,4 +98,8 @@ func (s *ChunkStats) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
+func (s *ChunkStats) ShallowCopy() ChunkStats {
+	return *s
+}
+
 // EXISTING_CODE

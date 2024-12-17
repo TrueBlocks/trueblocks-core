@@ -130,4 +130,8 @@ func (s *Abi) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
+func (s *Abi) ShallowCopy() Abi {
+	return *s
+}
+
 // EXISTING_CODE

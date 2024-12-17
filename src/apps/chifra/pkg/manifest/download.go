@@ -46,7 +46,7 @@ func ReadUnchainedIndex(chain string, publisher base.Address, database string) (
 
 	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
 	if contractCall, _, err := call.NewContractCallWithAbi(conn, callAddress, theCall, abiMap); err != nil {
-		wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", theCall, err)
+		wrapped := fmt.Errorf("the --calldata value provided (%s) was not found: %s", theCall, err)
 		return "", wrapped
 	} else {
 		contractCall.BlockNumber = conn.GetLatestBlockNumber()

@@ -21,7 +21,7 @@ on      ,both ,fast  ,status ,apps ,cacheStatus ,items_blocks_dup    ,y    ,mode
 on      ,both ,fast  ,status ,apps ,cacheStatus ,items_logs          ,y    ,modes = logs & max_records = 100
 on      ,both ,fast  ,status ,apps ,cacheStatus ,items_slurps        ,y    ,modes = slurps & max_records = 100
 on      ,both ,fast  ,status ,apps ,cacheStatus ,items_state         ,y    ,modes = state & max_records = 100
-off     ,both ,fast  ,status ,apps ,cacheStatus ,items_statements    ,y    ,modes = statements & max_records = 100
+on      ,both ,fast  ,status ,apps ,cacheStatus ,items_statements    ,y    ,modes = statements & max_records = 100
 on      ,both ,fast  ,status ,apps ,cacheStatus ,items_tokens        ,y    ,modes = tokens & max_records = 100
 on      ,both ,fast  ,status ,apps ,cacheStatus ,items_traces        ,y    ,modes = traces & max_records = 100
 on      ,both ,fast  ,status ,apps ,cacheStatus ,items_txs           ,y    ,modes = transactions & max_records = 100
@@ -56,7 +56,7 @@ on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_blocks_dup     ,y    ,mode
 on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_logs           ,y    ,modes = logs & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_slurps         ,y    ,modes = slurps & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_state          ,y    ,modes = state & verbose & max_records = 2
-off     ,both ,fast  ,status ,apps ,cacheStatus ,mode_statements     ,y    ,modes = statements & verbose & max_records = 2
+on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_statements     ,y    ,modes = statements & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_tokens         ,y    ,modes = tokens & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_traces         ,y    ,modes = traces & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_txs            ,y    ,modes = transactions & verbose & max_records = 2
@@ -70,7 +70,7 @@ on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_unripe         ,y    ,mode
 on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_maps           ,y    ,modes = maps & verbose & max_records = 2
 
 on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_some           ,y    ,modes = some & verbose & max_records = 2
-off     ,both ,fast  ,status ,apps ,cacheStatus ,mode_all            ,y    ,modes = all & verbose & max_records = 2
+on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_all            ,y    ,modes = all & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps ,cacheStatus ,mode_three          ,y    ,modes = abis & modes = monitors & modes = transactions & verbose & max_records = 2
 
 on      ,both ,fast  ,status ,apps ,cacheStatus ,explorer_1          ,y    ,fmt = json & verbose & max_records = 2

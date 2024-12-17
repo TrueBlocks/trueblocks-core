@@ -8,7 +8,7 @@ type ChainGroup struct {
 	IpfsGateway    string         `json:"ipfsGateway" toml:"ipfsGateway,omitempty"`
 	KeyEndpoint    string         `json:"keyEndpoint" toml:"keyEndpoint,omitempty"`
 	LocalExplorer  string         `json:"localExplorer" toml:"localExplorer,omitempty"`
-	RemoteExplorer string         `json:"removeExplorer" toml:"remoteExplorer,omitempty"`
+	RemoteExplorer string         `json:"remoteExplorer" toml:"remoteExplorer,omitempty"`
 	RpcProvider    string         `json:"rpcProvider" toml:"rpcProvider"`
 	Symbol         string         `json:"symbol" toml:"symbol"`
 	Scrape         ScrapeSettings `json:"scrape" toml:"scrape"`

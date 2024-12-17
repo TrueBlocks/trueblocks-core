@@ -5,9 +5,13 @@ import (
 )
 
 func toColored(s severity, color string, v ...any) {
-	args := append([]interface{}{color}, v...)
-	args = append(args, colors.Off)
-	toLog(s, args...)
+	if firstElement, ok := v[0].(string); ok {
+		v[0] = color + firstElement
+	} else {
+		v = append([]interface{}{color}, v...)
+	}
+	v = append(v, colors.Off)
+	toLog(s, v...)
 }
 
 func InfoR(v ...any) {
