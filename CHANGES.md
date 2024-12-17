@@ -19,6 +19,7 @@ This file details changes made to TrueBlocks over time. All version prior to ver
 - Added `Scrape` and `ScrapeOnce` endpoints to the SDK.
 - Now reflects new `chifra state --call/--send/--calldata syntax.
 - Now reflects new `chifra config --dump` option.
+- You should change all references in your code to use "github.com/TrueBlocks/trueblocks-sdk/v4"
 
 ## Changes to the Unchained Index Specification
 
