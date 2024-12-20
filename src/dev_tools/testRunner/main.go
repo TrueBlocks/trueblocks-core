@@ -30,8 +30,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err := startApiServer(); err != nil {
+	if apiUrl, err := startApiServer(); err != nil {
 		logger.Fatal(err)
+	} else {
+		logger.Info(colors.Yellow + "Server started at" + apiUrl + colors.Off)
 	}
 
 	if testMap, casesPath, err := loadTestCases(); err != nil {
