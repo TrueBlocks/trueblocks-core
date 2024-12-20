@@ -16,7 +16,7 @@
 
 - Open a pull request with the patch.
 - Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
-- Before submitting, read [Contributing](http://github.com/TrueBlocks/trueblocks-core/CONTRIBUTING.md). Please use our coding and testing guidelines.
+- Before submitting, read [Contributing](https://github.com/TrueBlocks/trueblocks-core/blob/master/CONTRIBUTING.md). Please use our coding and testing guidelines.
 
 ## Did you make a formatting or cosmetic change?
 
