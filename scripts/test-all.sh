@@ -28,6 +28,11 @@ CHIFRA="${REPO_ROOT}/src/apps/chifra"
 (cd "$CHIFRA" && TB_NO_PROVIDER_CHECK=true go test --tags integration ./...)
 
 #------------------------------------------------
+echo "Running Go integration tests..."
+NODE="${REPO_ROOT}/node"
+(cd "$NODE" && TB_NO_PROVIDER_CHECK=true go test ./...)
+
+#------------------------------------------------
 echo "Reporting on the status of the tests submodule. No update..."
 git -C "$REPO_ROOT" submodule status tests
 

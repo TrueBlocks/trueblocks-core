@@ -74,9 +74,15 @@ set(SCRIPTS_DIR ${REPO_DIR}/scripts)
 add_custom_target(lint
     COMMAND "golangci-lint" "run"
             "--out-format=colored-line-number"
-            "--path-prefix=src/apps/chifra"
+            "--path-prefix=../src/apps/chifra"
             "--timeout=5m" "./..."
-    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra")
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra"
+    COMMAND "golangci-lint" "run"
+            "--out-format=colored-line-number"
+            "--path-prefix=../node"
+            "--timeout=5m" "./..."
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../node"
+)
 
 add_custom_target(generate
     COMMAND ${BIN_DIR}/goMaker
@@ -90,7 +96,11 @@ add_custom_target(examples ALL
     COMMAND ${SCRIPTS_DIR}/build-examples.sh
     WORKING_DIRECTORY ${REPO_DIR})
 
-# ----------------------------------------------------------------------------
+add_custom_target(trueblocks-node ALL
+    COMMAND ${SCRIPTS_DIR}/build-node.sh
+    WORKING_DIRECTORY ${REPO_DIR})
+
+    # ----------------------------------------------------------------------------
 function(add_go_installable_program NAME MAIN_SRC DEST_DIR)
     get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
     file(GLOB SRC_FILE_LIST "${MAIN_SRC}/*.go")
@@ -130,6 +140,8 @@ if(NOT WIN32)
 endif()
 
 add_dependencies(examples chifra)
+
+add_dependencies(trueblocks-node chifra)
 
 file(GLOB CHIFRA_FOR_DOCKER_FILES
     "${CMAKE_SOURCE_DIR}/apps/chifra/*.go")
