@@ -27,7 +27,7 @@ func getApiUrl() string {
 		return "localhost:" + apiPort
 	}
 
-	apiPort = strings.ReplaceAll(os.Getenv("TB_TEST_API_SERVER"), ":", "")
+	apiPort = strings.ReplaceAll(os.Getenv("TB_API_PORT"), ":", "")
 	if apiPort == "" {
 		apiPort = fmt.Sprintf("%d", rpc.FindAvailablePort())
 	}
