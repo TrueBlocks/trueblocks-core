@@ -4,13 +4,13 @@
 			"path": "."
 		},
 		{
-			"path": "node"
-		},
-		{
 			"path": "sdk"
 		},
 		{
 			"path": "examples"
+		},
+		{
+			"path": "node"
 		}
 	]
 }
