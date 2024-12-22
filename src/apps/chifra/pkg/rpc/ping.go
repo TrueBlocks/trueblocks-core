@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"net"
 	"net/http"
 	"time"
 )
@@ -36,24 +35,4 @@ func PingRpc(providerUrl string) error {
 	}
 
 	return nil
-}
-
-// FindAvailablePort returns a port number that is available for listening.
-func FindAvailablePort() int {
-	preferredPorts := []int{8080, 8088, 9090, 9099}
-	for _, port := range preferredPorts {
-		address := fmt.Sprintf(":%d", port)
-		listener, err := net.Listen("tcp", address)
-		if err == nil {
-			defer listener.Close()
-			return port
-		}
-	}
-	listener, err := net.Listen("tcp", ":0")
-	if err != nil {
-		return 0
-	}
-	defer listener.Close()
-	addr := listener.Addr().(*net.TCPAddr)
-	return addr.Port
 }

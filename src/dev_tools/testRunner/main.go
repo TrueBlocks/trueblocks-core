@@ -18,11 +18,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
 func init() {
 	os.Setenv("TB_NO_USERQUERY", "true")
 }
+
+var apiUrl string
 
 func main() {
 	if err := isValidEnvironment(); err != nil {
@@ -30,11 +33,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	if apiUrl, err := startApiServer(); err != nil {
-		logger.Fatal(err)
-	} else {
-		logger.Info(colors.Yellow + "Server started at" + apiUrl + colors.Off)
-	}
+	go sdk.StartApiServer(&apiUrl)
 
 	if testMap, casesPath, err := loadTestCases(); err != nil {
 		logger.Fatal(err)
