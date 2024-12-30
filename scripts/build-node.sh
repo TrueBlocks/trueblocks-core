@@ -14,7 +14,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR/../node" || exit 1  # Exit if changing directory fails
 
 echo "Built target node/trueblocks-node"
-if ! go build -o "../../bin/trueblocks-node"; then
+if ! go build -o "../bin/trueblocks-node"; then
     echo "Build failed!" >&2
     exit 1
 fi
