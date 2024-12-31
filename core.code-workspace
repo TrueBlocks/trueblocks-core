@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "sdk"
+		},
+		{
+			"path": "examples"
+		},
+		{
+			"path": "node"
+		},
+		{
+			"path": "khedra"
+		}
+	]
+}

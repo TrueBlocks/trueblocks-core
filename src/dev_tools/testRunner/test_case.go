@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"errors"
 	"path/filepath"
 	"strings"
 
@@ -53,7 +53,7 @@ func (t *TestCase) InnerTest(mode string) (string, error) {
 	} else if mode == "sdk" {
 		return t.SdkTest()
 	}
-	return "", fmt.Errorf("Invalid mode:" + mode)
+	return "", errors.New("Invalid mode:" + mode)
 }
 
 func (t *TestCase) ShouldRun(mode string) bool {

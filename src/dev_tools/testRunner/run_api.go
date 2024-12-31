@@ -9,7 +9,7 @@ import (
 )
 
 func (t *TestCase) ApiTest() (string, error) {
-	url := "http://" + getApiUrl() + "/" + t.Route + "?" + t.ApiOptions
+	url := "http://" + apiSvc.ApiUrl() + "/" + t.Route + "?" + t.ApiOptions
 	request, err := http.NewRequest("GET", url, nil) // Default to GET request
 	if err != nil {
 		fmt.Println("Error creating request:", err)
