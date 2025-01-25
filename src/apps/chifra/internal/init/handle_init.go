@@ -29,7 +29,7 @@ func (opts *InitOptions) HandleInit(rCtx *output.RenderCtx) error {
 	// Make sure that the temporary scraper folders are empty, so that, when the
 	// scraper starts, it starts on the correct block.
 	cleanList := []string{"ripe", "unripe", "maps", "staging"}
-	isHeadless := os.Getenv("TB_NODE_HEADLESS") == "true"
+	isHeadless := os.Getenv("TB_SCRAPE_HEADLESS") == "true"
 	if isHeadless {
 		cleanList = []string{"ripe", "unripe"}
 	}

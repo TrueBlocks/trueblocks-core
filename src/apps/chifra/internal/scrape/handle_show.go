@@ -54,7 +54,7 @@ func (opts *ScrapeOptions) HandleScrape(rCtx *output.RenderCtx) error {
 		provider = "--rpc-provider--"
 	}
 
-	isHeadless := os.Getenv("TB_NODE_HEADLESS") == "true"
+	isHeadless := os.Getenv("TB_SCRAPE_HEADLESS") == "true"
 
 	msg1 := fmt.Sprintf("Scraping %s", chain)
 	msg2 := fmt.Sprintf("  Rpc %s", provider)
