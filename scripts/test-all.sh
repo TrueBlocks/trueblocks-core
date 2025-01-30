@@ -29,7 +29,7 @@ CHIFRA="${REPO_ROOT}/src/apps/chifra"
 
 #------------------------------------------------
 echo "Running Go integration tests..."
-NODE="${REPO_ROOT}/node"
+NODE="${REPO_ROOT}/khedra"
 (cd "$NODE" && TB_NO_PROVIDER_CHECK=true go test ./...)
 
 #------------------------------------------------

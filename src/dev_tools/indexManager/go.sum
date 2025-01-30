@@ -1,5 +1,5 @@
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241220161941-2de43c56d0ad h1:mNtvLP0E/eTrgjhi4cb640eVg0O3mjzc07l9Ca+qYFE=
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241220161941-2de43c56d0ad/go.mod h1:ETpBauf/NX6mlhJYeMu+Md9HTBHZ/mny1qu4rh4km1s=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250130023515-f86b9f89cfae h1:ooRHiAxPwGbWth1OAkBzweJO5KRt1rygPO/IolnCzHE=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250130023515-f86b9f89cfae/go.mod h1:ETpBauf/NX6mlhJYeMu+Md9HTBHZ/mny1qu4rh4km1s=
 github.com/cpuguy83/go-md2man/v2 v2.0.2/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/ethereum/go-ethereum v1.14.12 h1:8hl57x77HSUo+cXExrURjU/w1VhL+ShCTJrTwcCQSe4=
 github.com/ethereum/go-ethereum v1.14.12/go.mod h1:RAC2gVMWJ6FkxSPESfbshrcKpIokgQKsVKmAuqdekDY=

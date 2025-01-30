@@ -4,7 +4,7 @@ module github.com/TrueBlocks/trueblocks-core/goMaker
 go 1.23
 
 require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241220161941-2de43c56d0ad
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250130023515-f86b9f89cfae
 	github.com/gocarina/gocsv v0.0.0-20230123225133-763e25b40669
 	golang.org/x/text v0.21.0
 )
@@ -40,6 +40,7 @@ require (
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/cobra v1.7.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/stretchr/testify v1.10.0 // indirect
 	golang.org/x/crypto v0.31.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
