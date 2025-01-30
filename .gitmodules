@@ -10,6 +10,3 @@
 [submodule "khedra"]
 	path = khedra
 	url = https://github.com/TrueBlocks/trueblocks-khedra
-[submodule "chifra"]
-	path = chifra
-	url = https://github.com/TrueBlocks/trueblocks-chifra
