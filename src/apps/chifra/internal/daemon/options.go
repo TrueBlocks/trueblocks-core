@@ -28,11 +28,6 @@ import (
 type DaemonOptions struct {
 	Url     string                `json:"url,omitempty"`     // Specify the API server's url and optionally its port
 	Silent  bool                  `json:"silent,omitempty"`  // Disable logging (for use in SDK for example)
-	Port    string                `json:"port,omitempty"`    // Deprecated, use --url instead
-	Grpc    bool                  `json:"grpc,omitempty"`    // Deprecated, there is no replacement
-	Api     string                `json:"api,omitempty"`     // Deprecated, there is no replacement
-	Scrape  string                `json:"scrape,omitempty"`  // Deprecated, use chifra scrape instead
-	Monitor bool                  `json:"monitor,omitempty"` // Deprecated, use chifra monitors --watch instead
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	Conn    *rpc.Connection       `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
@@ -41,9 +36,7 @@ type DaemonOptions struct {
 }
 
 var defaultDaemonOptions = DaemonOptions{
-	Url:  "localhost:8080",
-	Port: ":8080",
-	Api:  "on",
+	Url: "localhost:8080",
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -74,24 +67,12 @@ func DaemonFinishParseInternal(w io.Writer, values url.Values) *DaemonOptions {
 	copy.Globals.Caps = getCaps()
 	opts := &copy
 	opts.Url = "localhost:8080"
-	opts.Port = ":8080"
-	opts.Api = "on"
 	for key, value := range values {
 		switch key {
 		case "url":
 			opts.Url = value[0]
 		case "silent":
 			opts.Silent = true
-		case "port":
-			opts.Port = value[0]
-		case "grpc":
-			opts.Grpc = true
-		case "api":
-			opts.Api = value[0]
-		case "scrape":
-			opts.Scrape = value[0]
-		case "monitor":
-			opts.Monitor = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")
@@ -102,25 +83,6 @@ func DaemonFinishParseInternal(w io.Writer, values url.Values) *DaemonOptions {
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
-
-	// Deprecated...
-	if opts.Port != ":8080" && opts.Url == "localhost:8080" {
-		logger.Warn("The --port flag is deprecated. Please use --url instead.")
-		opts.Url = opts.Port
-		opts.Port = ""
-	}
-
-	// Deprecated...
-	if opts.Scrape != "" {
-		logger.Warn("The --scrape flag is deprecated. Please use chifra scrape instead.")
-		opts.Scrape = ""
-	}
-
-	// Deprecated...
-	if opts.Monitor {
-		logger.Warn("The --monitor flag is deprecated. Please use chifra monitors --watch instead.")
-		opts.Monitor = false
-	}
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -146,25 +108,6 @@ func daemonFinishParse(args []string) *DaemonOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-
-	// Deprecated...
-	if opts.Port != ":8080" && opts.Url == "localhost:8080" {
-		logger.Warn("The --port flag is deprecated. Please use --url instead.")
-		opts.Url = opts.Port
-		opts.Port = ""
-	}
-
-	// Deprecated...
-	if opts.Scrape != "" {
-		logger.Warn("The --scrape flag is deprecated. Please use chifra scrape instead.")
-		opts.Scrape = ""
-	}
-
-	// Deprecated...
-	if opts.Monitor {
-		logger.Warn("The --monitor flag is deprecated. Please use chifra monitors --watch instead.")
-		opts.Monitor = false
-	}
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -201,8 +144,6 @@ func ResetOptions(testMode bool) {
 	opts.Globals.Writer = w
 	opts.Globals.Caps = getCaps()
 	opts.Url = "localhost:8080"
-	opts.Port = ":8080"
-	opts.Api = "on"
 	defaultDaemonOptions = opts
 }
 

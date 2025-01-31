@@ -94,8 +94,6 @@ chunks/handle_index_belongs,true,HandleIndexBelongs,ChunkItem,-
 chunks/handle_manifest,true,HandleManifest,ChunkItem,-
 chunks/handle_stats,true,HandleStats,ChunkItem,-
 config/handle_edit,true,HandleEdit,-,-
-daemon/handle_scraper,true,HandleScraper,-,-
-daemon/handle_monitor,true,HandleMonitor,-,-
 daemon/handle_grpc,true,HandleGrpc,-,-
 daemon/handle_sockets,true,HandleWebsockets,-,-
 init/handle_dryrun,,HandleDryRun,Message,1
