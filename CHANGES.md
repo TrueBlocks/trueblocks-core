@@ -2,12 +2,13 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
-## v4.2.0 - Internim - Juniata (2025/01/30)
+## v4.2.0 - Khedra - XXX (2025/01/30)
 
 **Summary**
 
-- Renames `trueblocks-node` to `khedra` and all involved therein.
-- Other very small changes...
+- Removes chifra book as unused
+- Removes trueblocks-node, replaces entirely with khedra
+- Bumps version to v4.2.0
 
 ## v4.0.0 - Sent - Juniata (2024/12/16)
 

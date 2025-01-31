@@ -10,7 +10,6 @@ sdkFuzzer
 makeClass
 testRunner
 migrate
-trueblocks-node
 
 # some visual studio stuff
 ModuleCache*
