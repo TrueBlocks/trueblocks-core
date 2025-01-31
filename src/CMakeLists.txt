@@ -74,9 +74,15 @@ set(SCRIPTS_DIR ${REPO_DIR}/scripts)
 add_custom_target(lint
     COMMAND "golangci-lint" "run"
             "--out-format=colored-line-number"
-            "--path-prefix=src/apps/chifra"
+            "--path-prefix=../src/apps/chifra"
             "--timeout=5m" "./..."
-    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra")
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra"
+    COMMAND "golangci-lint" "run"
+            "--out-format=colored-line-number"
+            "--path-prefix=../khedra"
+            "--timeout=5m" "./..."
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../khedra"
+)
 
 add_custom_target(generate
     COMMAND ${BIN_DIR}/goMaker
@@ -88,6 +94,10 @@ add_custom_target(test-all
 
 add_custom_target(examples ALL
     COMMAND ${SCRIPTS_DIR}/build-examples.sh
+    WORKING_DIRECTORY ${REPO_DIR})
+
+add_custom_target(khedra ALL
+    COMMAND ${SCRIPTS_DIR}/build-khedra.sh
     WORKING_DIRECTORY ${REPO_DIR})
 
 # ----------------------------------------------------------------------------
@@ -130,6 +140,8 @@ if(NOT WIN32)
 endif()
 
 add_dependencies(examples chifra)
+
+add_dependencies(khedra chifra)
 
 file(GLOB CHIFRA_FOR_DOCKER_FILES
     "${CMAKE_SOURCE_DIR}/apps/chifra/*.go")

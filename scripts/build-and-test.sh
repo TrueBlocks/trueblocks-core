@@ -15,14 +15,14 @@ export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
 
 #------------------------------------------------
 # Get an unused port for the API server
-export TB_TEST_API_SERVER=$(shuf -n 1 -i 8091-10000)
+export TB_API_PORT=$(shuf -n 1 -i 8091-10000)
 export TB_REMOTE_TESTING=true
 
 #------------------------------------------------
 # Display environment to the console
 echo "Home folder: $HOME"
 echo "Whoami:      $(whoami)"
-echo "Server port: $TB_TEST_API_SERVER"
+echo "Server port: $TB_API_PORT"
 echo "cwd:         $(pwd)"
 
 #------------------------------------------------

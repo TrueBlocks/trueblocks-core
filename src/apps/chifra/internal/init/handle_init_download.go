@@ -61,7 +61,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.ChunkRecord, c
 		}
 
 		if event.Event == progress.AllDone {
-			msg := fmt.Sprintf("%sCompleted initializing %s files.%s", colors.BrightWhite, chunkType, colors.Off)
+			msg := fmt.Sprintf("%sCompleted initializing %s files for %s chain.%s", colors.BrightWhite, chunkType, chain, colors.Off)
 			logger.Info(msg, strings.Repeat(" ", 60))
 			break
 		}

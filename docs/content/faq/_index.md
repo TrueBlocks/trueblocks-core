@@ -120,7 +120,7 @@ Run this command: `chifra config`. You will see output similar to this:
 2022/10/24 07:21:20 Progress:     15817943, 15817229, 15817806, 15817941, ts: 15817942
 ```
 
-Notice the last line labeled "progess". What do these numbers mean? They are, in order, `latest`, `finalized`, `staged`, `ripe`, and `timestamp`. (`unripe` is not included.)
+Notice the last line labeled "progress". What do these numbers mean? They are, in order, `latest`, `finalized`, `staged`, `ripe`, and `timestamp`. (`unripe` is not included.)
 
 Here's what these numbers mean:
 
