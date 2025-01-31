@@ -29,8 +29,8 @@ CHIFRA="${REPO_ROOT}/src/apps/chifra"
 
 #------------------------------------------------
 echo "Running Go integration tests..."
-NODE="${REPO_ROOT}/khedra"
-(cd "$NODE" && TB_NO_PROVIDER_CHECK=true go test ./...)
+KHEDRA="${REPO_ROOT}/khedra"
+(cd "$KHEDRA" && TB_NO_PROVIDER_CHECK=true go test ./...)
 
 #------------------------------------------------
 echo "Reporting on the status of the tests submodule. No update..."

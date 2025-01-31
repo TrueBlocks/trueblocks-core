@@ -1,33 +1,6 @@
 slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&types=token&blocks=0-1500000&fmt=json&ether
 {
-  "data": [
-    {
-      "blockHash": "0xb4894c6e25d16410b21ff2c733d2a7bc07b4c9f34b00c87ec3909c2f11c919b2",
-      "blockNumber": 1434022,
-      "contractAddress": "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7",
-      "date": "2016-04-30 22:33:28 UTC",
-      "ether": "0.000000000000000001",
-      "from": "0xfd23407a31f54413e32043adb7b1ee61a6e04027",
-      "gas": 136032,
-      "gasCost": 720640000000000,
-      "gasPrice": 20000000000,
-      "gasUsed": 36032,
-      "hasToken": true,
-      "hash": "0x13646e04bdc9bbb743963e8e660c58ec1b0f3b457428bcceed786317842d32d4",
-      "timestamp": 1462055608,
-      "to": "0x9519afbc60719a83c470ceec41e32d3e4b8b262e",
-      "transactionIndex": 2,
-      "value": "1"
-    }
-  ],
-  "meta": {
-    "client": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef",
-    "chainId": 1,
-    "networkId": 1,
-    "chain": "mainnet"
-  }
+  "errors": [
+    "Invalid key (types) in slurp route."
+  ]
 }

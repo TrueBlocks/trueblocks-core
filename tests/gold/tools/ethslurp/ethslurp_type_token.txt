@@ -1,31 +1,35 @@
 chifra slurp  0x9519afbc60719a83c470ceec41e32d3e4b8b262e --types token 0-1500000 --fmt json --ether
-Flag --types has been deprecated, The --types option has been deprecated.
-WARN[DATE|TIME] The --types flag is deprecated. Please use --parts instead.
-TEST[DATE|TIME] Addrs:  [0x9519afbc60719a83c470ceec41e32d3e4b8b262e]
-TEST[DATE|TIME] Blocks:  [0-1500000]
-TEST[DATE|TIME] Parts:  [token]
-TEST[DATE|TIME] Ether:  true
-TEST[DATE|TIME] Caps:  cache,decache,ether
-TEST[DATE|TIME] Format:  json
-{
-  "data": [
-    {
-      "blockHash": "0xb4894c6e25d16410b21ff2c733d2a7bc07b4c9f34b00c87ec3909c2f11c919b2",
-      "blockNumber": 1434022,
-      "contractAddress": "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7",
-      "date": "2016-04-30 22:33:28 UTC",
-      "ether": "0.000000000000000001",
-      "from": "0xfd23407a31f54413e32043adb7b1ee61a6e04027",
-      "gas": 136032,
-      "gasCost": 720640000000000,
-      "gasPrice": 20000000000,
-      "gasUsed": 36032,
-      "hasToken": true,
-      "hash": "0x13646e04bdc9bbb743963e8e660c58ec1b0f3b457428bcceed786317842d32d4",
-      "timestamp": 1462055608,
-      "to": "0x9519afbc60719a83c470ceec41e32d3e4b8b262e",
-      "transactionIndex": 2,
-      "value": "1"
-    }
-  ]
-}
+Error: 
+  unknown flag: --types
+
+Usage:
+  chifra slurp [flags] <address> [address...] [block...]
+
+Arguments:
+  addrs - one or more addresses to slurp from Etherscan (required)
+  blocks - an optional range of blocks to slurp
+
+Flags:
+  -r, --parts strings    which types of transactions to request
+                         One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | some | all ]
+  -p, --appearances      show only the blocknumber.tx_id appearances of the exported transactions
+  -a, --articulate       articulate the retrieved data if ABIs can be found
+  -S, --source string    the source of the slurped data
+                         One of [ etherscan | covalent | alchemy ] (default "etherscan")
+  -U, --count            for --appearances mode only, display only the count of records
+  -g, --page uint        the page to retrieve (page number)
+      --page_id string   the page to retrieve (page ID)
+  -P, --per_page uint    the number of records to request on each page (default 1000)
+  -s, --sleep float      seconds to sleep between requests (default 0.25)
+  -H, --ether            specify value in ether
+  -o, --cache            force the results of the query into the cache
+  -D, --decache          removes related items from the cache
+  -x, --fmt string       export format, one of [none|json*|txt|csv]
+  -v, --verbose          enable verbose output
+  -h, --help             display this help screen
+
+Notes:
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
+  - Portions of this software are Powered by Etherscan.io, Covalent, Alchemy, TrueBlocks Key APIs.
+  - See slurp/README on how to configure keys for API providers.
+  - The withdrawals option is only available on certain chains. It is ignored otherwise.

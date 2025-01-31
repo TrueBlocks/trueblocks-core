@@ -35,20 +35,9 @@ func (opts *SlurpOptions) validateSlurp() error {
 		return err
 	}
 
-	err = validate.ValidateEnum("--source", opts.Source, "[etherscan|key|covalent|alchemy]")
+	err = validate.ValidateEnum("--source", opts.Source, "[etherscan|covalent|alchemy]")
 	if err != nil {
 		return err
-	}
-
-	if opts.Source == "key" {
-		key := config.GetChain(chain).KeyEndpoint
-		if len(key) == 0 {
-			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "a valid TrueBlocks Key endpoint")
-		}
-		opts.Parts = []string{"not-used"} // key returns everything
-		if !opts.Appearances && !opts.Count {
-			return validate.Usage("The {0} option is only available with {1} or {2}.", "--source=key", "--appearances", "--count")
-		}
 	}
 
 	if chain != "mainnet" {

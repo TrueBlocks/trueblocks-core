@@ -3,6 +3,7 @@ slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&blocks=0-1500000&appearan
   "data": [
     {
       "address": "0x9519afbc60719a83c470ceec41e32d3e4b8b262e",
+      "fileSize": 0,
       "nRecords": 7
     }
   ],

@@ -338,15 +338,13 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 53040,tools,Other,slurp,ethslurp,parts,r,,visible|docs,,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|some|all]>,,,,,which types of transactions to request
 53050,tools,Other,slurp,ethslurp,appearances,p,,visible|docs,2,switch,<boolean>,appearance,,,,show only the blocknumber.tx_id appearances of the exported transactions
 53060,tools,Other,slurp,ethslurp,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
-53070,tools,Other,slurp,ethslurp,source,S,etherscan,visible|docs,,flag,enum[etherscan*|key|covalent|alchemy],,,,,the source of the slurped data
+53070,tools,Other,slurp,ethslurp,source,S,etherscan,visible|docs,,flag,enum[etherscan*|covalent|alchemy],,,,,the source of the slurped data
 53080,tools,Other,slurp,ethslurp,count,U,,visible|docs,1,switch,<boolean>,monitor,,,,for --appearances mode only&#44; display only the count of records
 53090,tools,Other,slurp,ethslurp,page,g,,visible|docs,,flag,<uint64>,,,,,the page to retrieve (page number)
 53090,tools,Other,slurp,ethslurp,page_id,,,visible|docs,,flag,<string>,,,,,the page to retrieve (page ID)
 53100,tools,Other,slurp,ethslurp,per_page,P,1000,visible|docs,,flag,<uint64>,,,,,the number of records to request on each page
 53110,tools,Other,slurp,ethslurp,sleep,s,.25,visible|docs,,flag,<float64>,,,,,seconds to sleep between requests
-53015,tools,Other,slurp,ethslurp,types,t,,deprecated=parts,,flag,list<string>,,,,,deprecated
 53120,tools,Other,slurp,ethslurp,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 53130,tools,Other,slurp,ethslurp,n2,,,,,note,,,,,,Portions of this software are Powered by Etherscan.io&#44; Covalent&#44; Alchemy&#44; TrueBlocks Key APIs.
 53131,tools,Other,slurp,ethslurp,n3,,,,,note,,,,,,See slurp/README on how to configure keys for API providers.
 53140,tools,Other,slurp,ethslurp,n4,,,,,note,,,,,,The withdrawals option is only available on certain chains. It is ignored otherwise.
-53150,tools,Other,slurp,ethslurp,n5,,,,,note,,,,,,If the value of --source is key&#44; --parts is ignored.
