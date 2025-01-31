@@ -6,4 +6,4 @@
 	url = https://github.com/TrueBlocks/trueblocks-sdk.git
 [submodule "khedra"]
 	path = khedra
-	url = https://github.com/TrueBlocks/trueblocks-khedra
+	url = https://github.com/TrueBlocks/trueblocks-khedra.git

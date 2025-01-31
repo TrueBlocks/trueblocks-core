@@ -1,7 +1,7 @@
 module github.com/TrueBlocks/trueblocks-core/goMaker
 
 // Go Version
-go 1.23
+go 1.23.1
 
 require (
 	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250130023515-f86b9f89cfae

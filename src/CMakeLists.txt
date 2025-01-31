@@ -51,7 +51,7 @@ set(GO_MINOR_VERSION ${CMAKE_MATCH_2})
 if(GO_MAJOR_VERSION LESS 1 OR
     (GO_MAJOR_VERSION EQUAL 1 AND GO_MINOR_VERSION LESS 23))
     message(STATUS "${CColor}The build failed.${COff}")
-    message(STATUS "${CColor}Found ${GO_VERSION_OUTPUT}. Go Version 1.23 or "
+    message(STATUS "${CColor}Found ${GO_VERSION_OUTPUT}. Go Version 1.23.1 or "
                     "higher is required.${COff}")
     message(STATUS "${CColor}Please install or update Go from "
                     "https://golang.org/doc/install.${COff}")
