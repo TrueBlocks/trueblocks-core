@@ -16,20 +16,19 @@ import (
 )
 
 type writeReport struct {
-	Range        base.FileRange
+	chain        string
+	fileRange    base.FileRange
 	nAddresses   int
 	nAppearances int
-	FileSize     int64
-	Snapped      bool
 }
 
-func (c *writeReport) Report() string {
-	report := `Wrote {%d} address and {%d} appearance records to {$INDEX/%s.bin}`
-	if c.Snapped {
+func (c *writeReport) Report(isSnapped bool, fileSize int64) string {
+	report := `%s wrote {%d} address and {%d} appearance records to {$INDEX/%s.bin}`
+	if isSnapped {
 		report += ` @(snapped to grid)}`
 	}
 	report += " (size: {%d} , span: {%d})"
-	return colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue)
+	return colors.ColoredWith(fmt.Sprintf(report, c.chain, c.nAddresses, c.nAppearances, c.fileRange, fileSize, c.fileRange.Span()), colors.BrightBlue)
 }
 
 func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string, addrAppearanceMap map[string][]types.AppRecord, nApps int) (*writeReport, error) {
@@ -124,7 +123,8 @@ func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string,
 			// fails we don't want to have to re-do this chunk, so remove this here.
 			backup.Clear()
 			return &writeReport{
-				Range:        base.RangeFromFilename(indexFn),
+				chain:        chain,
+				fileRange:    base.RangeFromFilename(indexFn),
 				nAddresses:   len(addressTable),
 				nAppearances: len(appearanceTable),
 			}, nil

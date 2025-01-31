@@ -18,7 +18,7 @@ GO_WORK_FILE="go.work"
 rm -f "$GO_WORK_FILE"
 if [ ! -f "$GO_WORK_FILE" ]; then
     echo "// Go Version" > "$GO_WORK_FILE"
-    echo "go 1.23" >> "$GO_WORK_FILE"
+    echo "go 1.23.1" >> "$GO_WORK_FILE"
 fi
 
 #------------------------------------------------

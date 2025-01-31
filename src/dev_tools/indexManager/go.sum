@@ -1,8 +1,8 @@
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241217071120-d3055faab165 h1:spNMT7A/TyzRf47LkFJ1a87A6anSqo3eNaELi6spqNk=
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20241217071120-d3055faab165/go.mod h1:ETpBauf/NX6mlhJYeMu+Md9HTBHZ/mny1qu4rh4km1s=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250130023515-f86b9f89cfae h1:ooRHiAxPwGbWth1OAkBzweJO5KRt1rygPO/IolnCzHE=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250130023515-f86b9f89cfae/go.mod h1:ETpBauf/NX6mlhJYeMu+Md9HTBHZ/mny1qu4rh4km1s=
 github.com/cpuguy83/go-md2man/v2 v2.0.2/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
-github.com/ethereum/go-ethereum v1.14.12 h1:8hl57x77HSUo+cXExrURjU/w1VhL+ShCTJrTwcCQSe4=
-github.com/ethereum/go-ethereum v1.14.12/go.mod h1:RAC2gVMWJ6FkxSPESfbshrcKpIokgQKsVKmAuqdekDY=
+github.com/ethereum/go-ethereum v1.14.13 h1:L81Wmv0OUP6cf4CW6wtXsr23RUrDhKs2+Y9Qto+OgHU=
+github.com/ethereum/go-ethereum v1.14.13/go.mod h1:RAC2gVMWJ6FkxSPESfbshrcKpIokgQKsVKmAuqdekDY=
 github.com/holiman/uint256 v1.3.1 h1:JfTzmih28bittyHM8z360dCjIA9dbPIBlcTI6lmctQs=
 github.com/holiman/uint256 v1.3.1/go.mod h1:EOMSn4q6Nyt9P6efbI3bueV4e1b3dGlUCXeiRV4ng7E=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=

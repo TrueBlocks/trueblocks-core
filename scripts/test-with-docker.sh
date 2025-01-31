@@ -13,6 +13,10 @@ REPO=$1
 COMMIT_SHA=$2
 BRANCH=$3
 
+echo "REPO=$REPO"
+echo "COMMIT_SHA=$COMMIT_SHA"
+echo "BRANCH=$BRANCH"
+
 #------------------------------------------------
 if [ -z "$CONFIG_FILE" ]
 then
@@ -29,10 +33,16 @@ if [ ! -f "Dockerfile" ]; then
     exit 1
 fi
 IMAGE_ID=$(docker build -q \
-    --build-arg repo="$REPO" \
-    --build-arg commit_sha="$COMMIT_SHA" \
-    --build-arg branch="$BRANCH" .)
-if [ $? -ne 0 ] || [ -z "$IMAGE_ID" ]; then
+  --build-arg repo="$REPO" \
+  --build-arg commit_sha="$COMMIT_SHA" \
+  --build-arg branch="$BRANCH" \
+  .)
+
+RESULT=$?
+echo "IMAGE_ID=$IMAGE_ID"
+echo "RESULT=$RESULT"
+
+if [ $RESULT -ne 0 ]; then
     echo "Failed to build Docker image."
     exit 1
 fi

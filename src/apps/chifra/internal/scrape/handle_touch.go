@@ -39,7 +39,7 @@ func (opts *ScrapeOptions) HandleTouch(rCtx *output.RenderCtx) error {
 		if report, err := chunk.Write(chain, base.ZeroAddr, indexPath, appMap, nAppearances); err != nil {
 			errorChan <- err
 		} else {
-			modelChan <- &types.Message{Msg: report.Report()}
+			modelChan <- &types.Message{Msg: report.Report(false /* isSnapped */, file.FileSize(stagePath))}
 		}
 		if reportStr, err := opts.backfillTimestamps(); err != nil {
 			errorChan <- err

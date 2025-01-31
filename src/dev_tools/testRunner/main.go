@@ -9,20 +9,25 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"regexp"
 	"strings"
+	"syscall"
 	"text/template"
 	"unicode"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-sdk/v4/services"
 )
 
 func init() {
 	os.Setenv("TB_NO_USERQUERY", "true")
 }
+
+var apiSvc *services.ApiService
 
 func main() {
 	if err := isValidEnvironment(); err != nil {
@@ -30,9 +35,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err := startApiServer(); err != nil {
-		logger.Fatal(err)
-	}
+	stopChan := make(chan os.Signal, 1)
+	signal.Notify(stopChan, os.Interrupt, syscall.SIGTERM)
+	apiSvc = services.NewApiService(nil)
+	go services.StartService(apiSvc, stopChan)
 
 	if testMap, casesPath, err := loadTestCases(); err != nil {
 		logger.Fatal(err)

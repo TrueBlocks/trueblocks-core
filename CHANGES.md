@@ -2,6 +2,14 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
+## v4.2.0 - Khedra - Lackawanna (2025/01/30)
+
+**Summary**
+
+- Removes chifra book as unused
+- Removes trueblocks-node, replaces entirely with khedra including Khedra book
+- Bumps version to v4.2.0
+
 ## v4.0.0 - Sent - Juniata (2024/12/16)
 
 **Summary**
@@ -24,7 +32,7 @@ This file details changes made to TrueBlocks over time. All version prior to ver
 ## Changes to the Unchained Index Specification
 
 - No changes.
-- While there were no changes to the Unchained Index Spec, we did start indexing mutliple chains including Ethereum, Sepolia, Optimism, and Gnosis. These will be published to the smart contract whenever we publish mainnet.
+- While there were no changes to the Unchained Index Spec, we did start indexing multiple chains including Ethereum, Sepolia, Optimism, and Gnosis. These will be published to the smart contract whenever we publish mainnet.
 - We also wrote a very nice command line app called `trueblocks-node` which encsapsulates the scraper and the monitors. This will eventually replace `chifra scrape` and `chifra monitors --watch`. [Find this repo here](https://github.com/TrueBlocks/trueblocks-node).
 
 ## Breaking Changes
