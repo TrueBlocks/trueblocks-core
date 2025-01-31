@@ -2,12 +2,12 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
-## v4.2.0 - Khedra - XXX (2025/01/30)
+## v4.2.0 - Khedra - Lackawanna (2025/01/30)
 
 **Summary**
 
 - Removes chifra book as unused
-- Removes trueblocks-node, replaces entirely with khedra
+- Removes trueblocks-node, replaces entirely with khedra including Khedra book
 - Bumps version to v4.2.0
 
 ## v4.0.0 - Sent - Juniata (2024/12/16)
