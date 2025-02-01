@@ -26,11 +26,21 @@ make -C "$INSTALL"
 echo "Running Go integration tests..."
 CHIFRA="${REPO_ROOT}/src/apps/chifra"
 (cd "$CHIFRA" && TB_NO_PROVIDER_CHECK=true go test --tags integration ./...)
+status=$?
+if [ $status -ne 0 ]; then
+  echo "Chifra tests failed."
+  exit $status
+fi
 
 #------------------------------------------------
 echo "Running Go integration tests..."
 KHEDRA="${REPO_ROOT}/khedra"
 (cd "$KHEDRA" && TB_NO_PROVIDER_CHECK=true go test ./...)
+status=$?
+if [ $status -ne 0 ]; then
+  echo "Khedra tests failed."
+  exit $status
+fi
 
 #------------------------------------------------
 echo "Reporting on the status of the tests submodule. No update..."

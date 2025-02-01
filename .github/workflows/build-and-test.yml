@@ -2,6 +2,7 @@ name: BuildAndTest
 on: [pull_request, workflow_dispatch]
 env:
   CHIFRA_PATH: src/apps/chifra
+  KHEDRA_PATH: khedra
   # Go Version
   GO_VERSION: 1.23.1
 jobs:
@@ -13,15 +14,21 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
-          cache-dependency-path: ${{ env.CHIFRA_PATH }}/go.sum
       - name: Generate go.work file
         run: |
           ./scripts/go-work-sync.sh
-      - name: golangci-lint
+      - name: Lint chifra
         uses: golangci/golangci-lint-action@v4
         with:
           version: v1.61.0
           working-directory: ${{ env.CHIFRA_PATH }}
+          args: --timeout=5m --verbose --out-format=colored-line-number
+          skip-pkg-cache: true
+      - name: Lint khedra
+        uses: golangci/golangci-lint-action@v4
+        with:
+          version: v1.61.0
+          working-directory: ${{ env.KHEDRA_PATH }}
           args: --timeout=5m --verbose --out-format=colored-line-number
           skip-pkg-cache: true
   Build:
