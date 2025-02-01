@@ -12,54 +12,56 @@ set -e
 cd ..
 REPO_ROOT=$(pwd)
 BUILD_FOLDER="${REPO_ROOT}/build"
-DEST_FOLDER="$HOME/Library/Application Support/TrueBlocks/config/mainnet"
-if [[ ! -d "$DEST_FOLDER" ]]; then
-    DEST_FOLDER="$HOME/.local/share/trueblocks/config/mainnet"
+DEST_FOLDER="${HOME}/Library/Application Support/TrueBlocks/config/mainnet"
+if [[ ! -d "${DEST_FOLDER}" ]]; then
+    DEST_FOLDER="${HOME}/.local/share/trueblocks/config/mainnet"
 fi
 
 #------------------------------------------------
 echo "Installing config files..."
 INSTALL="${REPO_ROOT}/build/other/install"
-make -C "$INSTALL"
+make -C "${INSTALL}"
 
 #------------------------------------------------
 echo "Running Go integration tests..."
 CHIFRA="${REPO_ROOT}/src/apps/chifra"
-(cd "$CHIFRA" && TB_NO_PROVIDER_CHECK=true go test --tags integration ./...)
-status=$?
-if [ $status -ne 0 ]; then
+cd "${CHIFRA}" || exit 1  # Ensure we actually enter the directory
+TB_NO_PROVIDER_CHECK=true go test --tags integration ./...
+STATUS=$?
+cd - > /dev/null  # Return to the previous directory (optional)
+if [ ${STATUS} -ne 0 ]; then
   echo "Chifra tests failed."
-  exit $status
+  exit ${STATUS}
 fi
 
 #------------------------------------------------
 echo "Running Go integration tests..."
 KHEDRA="${REPO_ROOT}/khedra"
-(cd "$KHEDRA" && TB_NO_PROVIDER_CHECK=true go test ./...)
-status=$?
-if [ $status -ne 0 ]; then
+cd "${KHEDRA}" || exit 1  # Ensure we actually enter the directory
+TB_NO_PROVIDER_CHECK=true go test ./...
+STATUS=$?
+cd - > /dev/null  # Return to the previous directory (optional)
+if [ ${STATUS} -ne 0 ]; then
   echo "Khedra tests failed."
-  exit $status
+  exit ${STATUS}
 fi
 
 #------------------------------------------------
 echo "Reporting on the status of the tests submodule. No update..."
-git -C "$REPO_ROOT" submodule status tests
+git -C "${REPO_ROOT}" submodule status tests
 
 #------------------------------------------------
 echo "Running CMake build process..."
-cmake -S "$REPO_ROOT/src" -B "$BUILD_FOLDER"
-# npm install -g prettier
-# make generate
-make -C "$BUILD_FOLDER" -j 8
+cmake -S "${REPO_ROOT}/src" -B "${BUILD_FOLDER}"
+make -C "${BUILD_FOLDER}" -j 8
 
 #------------------------------------------------
 echo "Copying necessary files for testing..."
-cp -f "$REPO_ROOT/src/other/install/names/names.tab" "$DEST_FOLDER"
-touch "$DEST_FOLDER/names.tab"
+cp -f "${REPO_ROOT}/src/other/install/names/names.tab" "${DEST_FOLDER}"
+touch "${DEST_FOLDER}/names.tab"
 
 #------------------------------------------------
 echo "Running the tests with testRunner..."
-(cd "$BUILD_FOLDER" && TEST_MODE=true testRunner)
+(cd "${BUILD_FOLDER}" && TEST_MODE=true testRunner)
 
 echo "Done..."
