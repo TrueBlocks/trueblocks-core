@@ -1,6 +1,6 @@
 slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&blocks=0-1500000&source=bad&fmt=json
 {
   "errors": [
-    "The --source option (bad) must be one of [ etherscan | key | covalent | alchemy ]"
+    "The --source option (bad) must be one of [ etherscan | covalent | alchemy ]"
   ]
 }

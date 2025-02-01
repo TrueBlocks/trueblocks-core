@@ -26,21 +26,5 @@ func (opts *DaemonOptions) validateDaemon() error {
 		return validate.Usage("The {0} option is not available{1}.", "daemon", " in api mode")
 	}
 
-	if opts.Grpc {
-		return validate.Usage("The {0} option is deprecated. There is no replacement.", "--grpc")
-	}
-
-	// validate.ValidateEnum("scrape", opts.Scrape, "[off|blooms|index]")
-	// validate.ValidateEnum("api", opts.Api, "[off|on]")
-	opts.Api = "on"
-
-	if len(opts.Scrape) > 0 {
-		return validate.Usage("The {0} option is currenlty not available. Use {1} instead.", "--scrape", "chifra scrape")
-	}
-
-	if opts.Monitor {
-		return validate.Usage("The {0} option is currenlty not available. Use {1} instead.", "--monitor", "chifra monitors --watch")
-	}
-
 	return opts.Globals.Validate()
 }

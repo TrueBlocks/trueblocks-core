@@ -12,6 +12,7 @@ Format:  json
   "data": [
     {
       "address": "0x9519afbc60719a83c470ceec41e32d3e4b8b262e",
+      "fileSize": 0,
       "nRecords": 19
     }
   ],

@@ -2,6 +2,7 @@ name: BuildAndTest
 on: [pull_request, workflow_dispatch]
 env:
   CHIFRA_PATH: src/apps/chifra
+  KHEDRA_PATH: khedra
   # Go Version
   GO_VERSION: 1.23.1
 jobs:
@@ -9,19 +10,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
-          cache-dependency-path: ${{ env.CHIFRA_PATH }}/go.sum
       - name: Generate go.work file
         run: |
           ./scripts/go-work-sync.sh
-      - name: golangci-lint
+      - name: Lint chifra
         uses: golangci/golangci-lint-action@v4
         with:
           version: v1.61.0
           working-directory: ${{ env.CHIFRA_PATH }}
+          args: --timeout=5m --verbose --out-format=colored-line-number
+          skip-pkg-cache: true
+      - name: Lint khedra
+        uses: golangci/golangci-lint-action@v4
+        with:
+          version: v1.61.0
+          working-directory: ${{ env.KHEDRA_PATH }}
           args: --timeout=5m --verbose --out-format=colored-line-number
           skip-pkg-cache: true
   Build:
@@ -30,7 +40,10 @@ jobs:
     steps:
       - name: Checkout TrueBlocks repo
         uses: actions/checkout@v4
-      - name: Use a certain version of go
+        with:
+          submodules: true
+          fetch-depth: 0
+      - name: Use latest version of Go
         uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
@@ -42,16 +55,20 @@ jobs:
           sudo apt-get install build-essential git cmake
           sudo apt-get install python3 tree jq
           sudo apt-get install libcurl3-dev
-      - name: Run basic golang unit tests
+      - name: Run chifra unit tests
         run: |
           mkdir -p build
           cd build
           ../scripts/go-work-sync.sh
           cmake ../src
-          cd other/install
+          cd other/install     # we need to copy install files into place
           make
-          cd ../../../
+          cd ../../../         # back to the root
           cd ${{ env.CHIFRA_PATH }}
+          export TB_NO_PROVIDER_CHECK=true
+          go test ./...
+          cd ../../../
+          cd ${{ env.KHEDRA_PATH }}
           export TB_NO_PROVIDER_CHECK=true
           go test ./...
   RemoteTests:

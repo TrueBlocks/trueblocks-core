@@ -35,11 +35,6 @@ Flags:
 Notes:
   - To start API open terminal window and run chifra daemon.
   - See the API documentation (https://trueblocks.io/api) for more information.
-  - The --port option is deprecated, use --url instead.
-  - The --grpc option is deprecated, there is no replacement.
-  - The --api option is deprecated, there is no replacement.
-  - The --scrape option is deprecated, use chifra scrape instead.
-  - The --monitor option is deprecated, use chifra monitors --watch instead.
 ```
 
 Data models produced by this tool:

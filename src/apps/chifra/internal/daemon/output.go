@@ -84,13 +84,6 @@ func (opts *DaemonOptions) DaemonInternal(rCtx *output.RenderCtx) error {
 		logger.InfoTable("Progress:          ", msg)
 	}
 
-	go func() {
-		_ = opts.HandleScraper(rCtx)
-	}()
-	go func() {
-		_ = opts.HandleMonitor(rCtx)
-	}()
-
 	// do not remove, this fixes a lint warning that happens in the boilerplate because of the Fatal just below
 	timer.Report(msg)
 

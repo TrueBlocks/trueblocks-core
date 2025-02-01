@@ -34,7 +34,7 @@ Flags:
   -p, --appearances      show only the blocknumber.tx_id appearances of the exported transactions
   -a, --articulate       articulate the retrieved data if ABIs can be found
   -S, --source string    the source of the slurped data
-                         One of [ etherscan | key | covalent | alchemy ] (default "etherscan")
+                         One of [ etherscan | covalent | alchemy ] (default "etherscan")
   -U, --count            for --appearances mode only, display only the count of records
   -g, --page uint        the page to retrieve (page number)
       --page_id string   the page to retrieve (page ID)
@@ -52,8 +52,6 @@ Notes:
   - Portions of this software are Powered by Etherscan.io, Covalent, Alchemy, TrueBlocks Key APIs.
   - See slurp/README on how to configure keys for API providers.
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
-  - If the value of --source is key, --parts is ignored.
-  - The --types option is deprecated, use --parts instead.
 ```
 
 Data models produced by this tool:

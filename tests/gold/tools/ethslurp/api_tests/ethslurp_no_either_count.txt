@@ -1,18 +1,6 @@
 slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&blocks=0-1500000&appearances&source=key&count&pageId=invalid&perPage=12&fmt=json
 {
-  "data": [],
-  "meta": {
-    "client": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef",
-    "chainId": 1,
-    "networkId": 1,
-    "chain": "mainnet"
-  },
   "errors": [
-    "502 Bad Gateway: 502",
-    "zero transactions reported, 0 fetched"
+    "The --source option (key) must be one of [ etherscan | covalent | alchemy ]"
   ]
 }

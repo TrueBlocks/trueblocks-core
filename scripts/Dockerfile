@@ -1,4 +1,4 @@
-# Use whatever base image you need:
+# Go Version
 FROM golang:1.23.1-bullseye
 
 # Declare build arguments so they're visible inside the Dockerfile

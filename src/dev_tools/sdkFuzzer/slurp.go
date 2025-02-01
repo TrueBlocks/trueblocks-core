@@ -30,7 +30,6 @@ func DoSlurp() {
 	// Option 'parts.list<enum>' is an emum
 	articulate := []bool{false, true}
 	// Option 'source.enum' is an emum
-	// types is a list<string> --other
 	// blocks is not fuzzed
 	// page is not fuzzed
 	// pageId is not fuzzed
@@ -55,7 +54,6 @@ func DoSlurp() {
 	}
 	sources := []sdk.SlurpSource{
 		sdk.SSEtherscan,
-		sdk.SSKey,
 		sdk.SSCovalent,
 		sdk.SSAlchemy,
 	}
