@@ -40,7 +40,10 @@ jobs:
     steps:
       - name: Checkout TrueBlocks repo
         uses: actions/checkout@v4
-      - name: Use a certain version of go
+        with:
+          submodules: true
+          fetch-depth: 0
+      - name: Use latest version of Go
         uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
@@ -52,18 +55,23 @@ jobs:
           sudo apt-get install build-essential git cmake
           sudo apt-get install python3 tree jq
           sudo apt-get install libcurl3-dev
-      - name: Run basic golang unit tests
+      - name: Run chifra unit tests
         run: |
           mkdir -p build
           cd build
           ../scripts/go-work-sync.sh
           cmake ../src
-          cd other/install
+          cd other/install     # we need to copy install files into place
           make
-          cd ../../../
+          cd ../../../         # back to the root
           cd ${{ env.CHIFRA_PATH }}
           export TB_NO_PROVIDER_CHECK=true
           go test ./...
+          cd ../../../
+          cd ${{ env.KHEDRA_PATH }}
+          export TB_NO_PROVIDER_CHECK=true
+          go test ./...
+          cd ../../../
   RemoteTests:
     needs: Build
     runs-on: ubuntu-latest
