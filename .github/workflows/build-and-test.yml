@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
