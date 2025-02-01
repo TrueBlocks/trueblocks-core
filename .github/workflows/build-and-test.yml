@@ -71,7 +71,6 @@ jobs:
           cd ${{ env.KHEDRA_PATH }}
           export TB_NO_PROVIDER_CHECK=true
           go test ./...
-          cd ../../../
   RemoteTests:
     needs: Build
     runs-on: ubuntu-latest
