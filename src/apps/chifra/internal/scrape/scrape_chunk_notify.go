@@ -7,6 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
 )
 
+// NOTIFY CODE
 func (opts *ScrapeOptions) NotifyChunkWritten(chunk index.Chunk, chunkPath string) (err error) {
 	if !opts.Notify {
 		return nil
@@ -22,6 +23,7 @@ func (opts *ScrapeOptions) NotifyChunkWritten(chunk index.Chunk, chunkPath strin
 
 	// Generate range from path, as chunks sometimes don't have Range set
 	chunkRange := base.RangeFromFilename(index.ToIndexPath(chunkPath))
+	// NOTIFY CODE
 	return Notify(notify.Notification[[]notify.NotificationPayloadChunkWritten]{
 		Msg:  notify.MessageChunkWritten,
 		Meta: nil,
