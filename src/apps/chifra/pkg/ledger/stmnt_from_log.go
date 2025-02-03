@@ -83,7 +83,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 
 		// TODO: BOGUS PERF - WE HIT GETBALANCE THREE TIMES FOR EACH APPEARANCE. SPIN THROUGH ONCE
 		// TODO: AND CACHE RESULTS IN MEMORY, BUT BE CAREFUL OF MULTIPLE LOGS PER BLOCK (OR TRANSACTION)
-		key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
+		key := l.ctxKey(log.BlockNumber, log.TransactionIndex, s.AccountedFor)
 		ctx := l.Contexts[key]
 
 		if ofInterest {

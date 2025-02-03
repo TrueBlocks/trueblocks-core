@@ -1,7 +1,12 @@
 package ledger
 
 import (
+	"fmt"
+	"sort"
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -10,6 +15,8 @@ import (
 // TODO: Two things to note. (1) if balances were part of this structure, we could fill those
 // TODO: balances in a concurrent way before spinning through the appearances. And (2) if we did that
 // TODO: prior to doing the accounting, we could easily travers in reverse order.
+
+type ledgerContextKey string
 
 // Ledger is a structure that carries enough information to complate a reconciliation
 type Ledger struct {
@@ -137,3 +144,83 @@ func (l *Ledger) assetOfInterest(needle base.Address) bool {
 //     }
 //     return true;
 // }
+
+// func (l *Ledger) getOrCreateContext(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *ledgerContext {
+// 	key := l.ctxKey(bn, txid, assetAddr)
+// 
+// 	if ctx, exists := l.Contexts[key]; exists {
+// 		return ctx
+// 	}
+// 
+// 	// Create and store the context on-demand
+// 	ctx := newLedgerContext(bn, bn, bn, false, false, l.Reversed)
+// 	l.Contexts[key] = ctx
+// 
+// 	return ctx
+// }
+
+func (l *Ledger) ctxKey(bn base.Blknum, txid base.Txnum, assetAddr base.Address) ledgerContextKey {
+	return ledgerContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
+}
+
+// SetContexts visits the list of appearances and notes the block numbers of the next and previous
+// appearance's and if they are the same or different. Because balances are only available per block,
+// we must know this information to be able to calculate the correct post-tx balance.
+func (l *Ledger) SetContexts(apps []types.Appearance) error {
+	for index := 0; index < len(apps); index++ {
+		curApp := apps[index]
+
+		cur := base.Blknum(curApp.BlockNumber)
+		prev := base.Blknum(apps[base.Max(1, index)-1].BlockNumber)
+		next := base.Blknum(apps[base.Min(index+1, len(apps)-1)].BlockNumber)
+		key := l.ctxKey(base.Blknum(curApp.BlockNumber), base.Txnum(curApp.TransactionIndex), base.ZeroAddr)
+
+		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.Reversed)
+	}
+
+	l.debugContext()
+	return nil
+}
+
+const maxTestingBlock = 17000000
+
+func (l *Ledger) debugContext() {
+	if !l.TestMode {
+		return
+	}
+
+	keys := make([]ledgerContextKey, 0, len(l.Contexts))
+	for key := range l.Contexts {
+		keys = append(keys, key)
+	}
+
+	sort.Slice(keys, func(i, j int) bool {
+		return string(keys[i]) < string(keys[j])
+	})
+
+	logger.Info(strings.Repeat("-", 60))
+	logger.Info(fmt.Sprintf("Contexts (%d)", len(keys)))
+	for _, key := range keys {
+		c := l.Contexts[key]
+		if c.CurBlock > maxTestingBlock {
+			continue
+		}
+		msg := ""
+		rr := c.ReconType &^ (types.First | types.Last)
+		switch rr {
+		case types.Genesis:
+			msg = fmt.Sprintf(" %s", c.ReconType.String()+"-diff")
+		case types.DiffDiff:
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
+		case types.SameSame:
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
+		case types.DiffSame:
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
+		case types.SameDiff:
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
+		default:
+			msg = fmt.Sprintf(" %s should not happen!", c.ReconType.String())
+		}
+		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
+	}
+}
