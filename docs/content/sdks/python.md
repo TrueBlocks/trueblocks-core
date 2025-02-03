@@ -6,7 +6,7 @@ draft: false
 url: "/sdks/python-sdk"
 menu: 
   sdks:
-    parent: langauges
+    parent: languages
 weight: 4000
 toc: true
 ---
