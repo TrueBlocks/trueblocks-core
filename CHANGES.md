@@ -1033,8 +1033,8 @@ The following data models were either modified, added, removed, or renamed by ha
 **chifra blocks**
 
 - Breaking: When `chifra blocks --ether` option is provided, a new field (`ether`) is provided. Previously the `amount` field was replaced with the `ether` field. Both are now provided.
-- Added `chifra blocks --cache_txs` to explictly cache transactions. Previously, only transaction hashes were cached (as they still are).
-- Added `chifra blocks --cache_traces` to explictly cache transactions at user's discretion.
+- Added `chifra blocks --cache_txs` to explicitly cache transactions. Previously, only transaction hashes were cached (as they still are).
+- Added `chifra blocks --cache_traces` to explicitly cache transactions at user's discretion.
 - Removed `chifra blocks --big_range`, `chifra blocks --list`, and `chifra blocks --list_count` as unused.
 - Removed the global `--raw` option as unused.
 
@@ -1367,7 +1367,7 @@ gh issue list --search "closed:>2024-06-04 is:closed is:issue sort:created-desc"
 - #3596 testRunner - list the top 10 slowest test cases. Remove them or speed them up
 - #3595 It's easy to create a small app that writes examples for each sdk endpoint into templates
 - #3592 defaultChain works for initial setup only
-- #3590 Docuemnt setup for chifra slurp --source
+- #3590 Document setup for chifra slurp --source
 - #3587 Handler code should not use Fatal
 - #3583 Renew domain name
 - #3582 Less confusing tracing detection
