@@ -20,7 +20,7 @@
 
 ## Did you make a formatting or cosmetic change?
 
-- We use an automated formatters, therefore formatting-only changes will generally be closed without merging.
+- We use an automated formatters, thereforee formatting-only changes will generally be closed without merging.
 
 ## Would do have a feature request?
 
