@@ -6,7 +6,7 @@ draft: false
 url: "/sdks/typescript-go"
 menu: 
   sdks:
-    parent: langauges
+    parent: languages
 weight: 2000
 toc: true
 ---
