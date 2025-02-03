@@ -886,7 +886,7 @@ gh issue list --search "closed:>2024-07-18 is:closed is:issue sort:created-desc"
 - #3764 chifra names - remove unused gRPC server code
 - #3763 chifra names - epic
 - #3749 chifra names autonamer doesn't work
-- #3748 Timestamp file for unchained index for sepolia is currupted in smart contract
+- #3748 Timestamp file for unchained index for sepolia is corrupted in smart contract
 - #3742 Some commands and options are not available in the API
 - #3705 use the names database when articulating
 - #3321 chifra scrape - improved bloom filters
@@ -1183,7 +1183,7 @@ gh pr list --search "is:pr is:closed closed:>2024-06-04" --limit 300 --state mer
 - #3632 Fixes issue 3631
 - #3627 Makes types.Message a full auto-gen type
 - #3625 Feature/better sdk 2
-- #3623 3622 chifra when remove list and make it the default remove dependance of timestamps for count option
+- #3623 3622 chifra when remove list and make it the default remove dependence of timestamps for count option
 - #3620 feature/improve-examples-7
 - #3616 Fixes lints
 - #3615 feature/more-examples-6
@@ -1354,7 +1354,7 @@ gh issue list --search "closed:>2024-06-04 is:closed is:issue sort:created-desc"
 - #3629 chifra slurp - show all available sources in chifra slurp --help
 - #3628 chifra docs - undocumented types
 - #3624 chifra blocks 1000000-2000000:10000 --output file should show progress bar - doesn't
-- #3622 chifra when - remove `--list` and make it the default. Remove dependance of --timestamps for --count option
+- #3622 chifra when - remove `--list` and make it the default. Remove dependence of --timestamps for --count option
 - #3619 chifra sdk - serious issues before release
 - #3618 chifra sdk - callResult is not part of the type, so it doesn't marshal during StateCall
 - #3614 Presale Purchase Issue: Negative Balance Due to Transferless Acquisition of BAT Tokens
