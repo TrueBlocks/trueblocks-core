@@ -8,19 +8,16 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-)
-
-var transferTopic = base.HexToHash(
-	"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
 )
 
 var ErrNonIndexedTransfer = fmt.Errorf("non-indexed transfer")
 
 // getStatementsFromLog returns a statement from a given log
 func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (types.Statement, error) {
-	if logIn.Topics[0] != transferTopic {
+	if logIn.Topics[0] != topics.TransferTopic {
 		// Not a transfer
 		return types.Statement{}, nil
 	}
@@ -31,7 +28,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 	} else {
 		sym := log.Address.Prefix(6)
 		decimals := base.Value(18)
-		name := l.Names[log.Address]
+		name := l.names[log.Address]
 		if name.Address == log.Address {
 			if name.Symbol != "" {
 				sym = name.Symbol
@@ -52,19 +49,19 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 		ofInterest := false
 
 		// Do not collapse, may be both
-		if l.AccountFor == sender {
+		if l.accountFor == sender {
 			amountOut = *amt
 			ofInterest = true
 		}
 
 		// Do not collapse, may be both
-		if l.AccountFor == recipient {
+		if l.accountFor == recipient {
 			amountIn = *amt
 			ofInterest = true
 		}
 
 		s := types.Statement{
-			AccountedFor:     l.AccountFor,
+			AccountedFor:     l.accountFor,
 			Sender:           sender,
 			Recipient:        recipient,
 			BlockNumber:      log.BlockNumber,
@@ -93,13 +90,13 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 
 			// Previous balance:
 			var pBal *base.Wei
-			if (ctx.ReconType & (types.SameSame | types.SameDiff | types.DiffSame)) != 0 {
-				pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock))
+			if (ctx.Recon() & (types.SameSame | types.SameDiff | types.DiffSame)) != 0 {
+				pBal, err = conn.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Prev()))
 				if err != nil || pBal == nil {
 					return s, err
 				}
 			} else {
-				pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock))
+				pBal, err = conn.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Prev()))
 				if err != nil || pBal == nil {
 					return s, err
 				}
@@ -107,10 +104,10 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 			s.PrevBal = *pBal
 
 			var bBal *base.Wei
-			if (ctx.ReconType & (types.SameSame | types.SameDiff | types.DiffSame)) != 0 {
+			if (ctx.Recon() & (types.SameSame | types.SameDiff | types.DiffSame)) != 0 {
 				bBal = pBal
 			} else {
-				bBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1))
+				bBal, err = conn.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Cur()-1))
 				if err != nil || bBal == nil {
 					return s, err
 				}
@@ -118,7 +115,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 			s.BegBal = *bBal
 
 			eBal := new(base.Wei)
-			eBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock))
+			eBal, err = conn.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Cur()))
 			if err != nil || eBal == nil {
 				return s, err
 			}

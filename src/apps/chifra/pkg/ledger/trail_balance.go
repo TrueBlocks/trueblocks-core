@@ -15,10 +15,10 @@ func (l *Ledger) trialBalance(reason string, s *types.Statement) bool {
 		return s.Reconciled()
 	}
 
-	s.ReconType = ctx.ReconType
+	s.ReconType = ctx.Recon()
 	s.AssetType = reason
 
-	logger.TestLog(l.TestMode, "Start of trial balance report")
+	logger.TestLog(l.testMode, "Start of trial balance report")
 
 	// TODO: BOGUS PERF
 	var okay bool
@@ -34,10 +34,10 @@ func (l *Ledger) trialBalance(reason string, s *types.Statement) bool {
 
 	// TODO: BOGUS PERF
 	if s.IsMaterial() {
-		s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(l.Conn, s)
+		s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(l.connection, s)
 	}
 
-	if l.TestMode {
+	if l.testMode {
 		s.DebugStatement(ctx)
 	}
 

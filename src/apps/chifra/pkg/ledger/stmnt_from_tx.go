@@ -24,14 +24,14 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
-			Address:          l.AccountFor,
+			Address:          l.accountFor,
 		}
 		if err := conn.Store.Read(statementGroup, nil); err == nil {
 			return statementGroup.Statements, nil
 		}
 	}
 
-	_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, l.AccountFor)
+	_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, l.accountFor)
 	_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, base.FAKE_ETH_ADDRESS)
 	if trans.Receipt != nil {
 		for _, log := range trans.Receipt.Logs {
@@ -42,26 +42,26 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	// make room for our results
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
-	key := l.getAssetContextKey(trans.BlockNumber, trans.TransactionIndex, l.AccountFor)
+	key := l.getAssetContextKey(trans.BlockNumber, trans.TransactionIndex, l.accountFor)
 	var ctx *assetContext
 	var exists bool
 	if ctx, exists = l.assetContexts[key]; !exists {
-		debugLedgerContexts(l.TestMode, l.assetContexts)
+		debugLedgerContexts(l.testMode, l.assetContexts)
 		return statements, fmt.Errorf("no context for %s", key)
 	}
 
 	if l.assetOfInterest(base.FAKE_ETH_ADDRESS) {
 		// TODO: We ignore errors in the next few lines, but we should not
 		// TODO: BOGUS PERF - This greatly increases the number of times we call into eth_getBalance which is quite slow
-		prevBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.PrevBlock)
+		prevBal, _ := conn.GetBalanceAt(l.accountFor, ctx.Prev())
 		if trans.BlockNumber == 0 {
 			prevBal = new(base.Wei)
 		}
-		begBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock-1)
-		endBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock)
+		begBal, _ := conn.GetBalanceAt(l.accountFor, ctx.Cur()-1)
+		endBal, _ := conn.GetBalanceAt(l.accountFor, ctx.Cur())
 
 		ret := types.Statement{
-			AccountedFor:     l.AccountFor,
+			AccountedFor:     l.accountFor,
 			Sender:           trans.From,
 			Recipient:        trans.To,
 			BlockNumber:      trans.BlockNumber,
@@ -77,7 +77,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 			PrevBal:          *prevBal,
 			BegBal:           *begBal,
 			EndBal:           *endBal,
-			ReconType:        ctx.ReconType,
+			ReconType:        ctx.Recon(),
 		}
 
 		if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
@@ -85,7 +85,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		}
 
 		// Do not collapse. A single transaction may have many movements of money
-		if l.AccountFor == ret.Sender {
+		if l.accountFor == ret.Sender {
 			gasUsed := new(base.Wei)
 			if trans.Receipt != nil {
 				gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
@@ -98,7 +98,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		}
 
 		// Do not collapse. A single transaction may have many movements of money
-		if l.AccountFor == ret.Recipient {
+		if l.accountFor == ret.Recipient {
 			if ret.BlockNumber == 0 {
 				ret.PrefundIn = trans.Value
 			} else {
@@ -114,19 +114,19 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 			}
 		}
 
-		if l.AsEther {
+		if l.asEther {
 			ret.AssetSymbol = "ETH"
 		}
 
-		if !l.UseTraces && l.trialBalance("eth", &ret) {
+		if !l.useTraces && l.trialBalance("eth", &ret) {
 			if ret.IsMaterial() {
 				statements = append(statements, ret)
 			} else {
 				logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
 			}
 		} else {
-			if !l.UseTraces {
-				logger.TestLog(!l.UseTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), "need to decend into traces")
+			if !l.useTraces {
+				logger.TestLog(!l.useTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), "need to decend into traces")
 			}
 			if traceStatements, err := l.getStatementsFromTraces(conn, trans, &ret); err != nil {
 				if !utils.IsFuzzing() {
@@ -139,7 +139,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	}
 
 	if receiptStatements, err := l.getStatementsFromReceipt(conn, filter, trans.Receipt); err != nil {
-		logger.Warn(l.TestMode, "Error getting statement from receipt")
+		logger.Warn(l.testMode, "Error getting statement from receipt")
 	} else {
 		statements = append(statements, receiptStatements...)
 	}
@@ -150,19 +150,19 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	if isFinal && isWritable && isEnabled {
 		for _, statement := range statements {
 			if statement.IsMaterial() && !statement.Reconciled() {
-				debugLedgerContexts(l.TestMode, l.assetContexts)
+				debugLedgerContexts(l.testMode, l.assetContexts)
 				return statements, nil
 			}
 		}
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
-			Address:          l.AccountFor,
+			Address:          l.accountFor,
 			Statements:       statements,
 		}
 		_ = conn.Store.Write(statementGroup, nil)
 	}
 
-	debugLedgerContexts(l.TestMode, l.assetContexts)
+	debugLedgerContexts(l.testMode, l.assetContexts)
 	return statements, nil
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func TestNewLedgerContext(t *testing.T) {
+func TestNewAppContext(t *testing.T) {
 	cases := []struct {
 		name        string
 		prev        base.Blknum
@@ -77,11 +77,11 @@ func TestNewLedgerContext(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
 			ctx := newAppContext(tc.prev, tc.cur, tc.next, tc.isFirst, tc.isLast, tc.reversed)
-			if ctx.ReconType != tc.expectRecon {
-				t.Errorf("expected %v, got %v", tc.expectRecon, ctx.ReconType)
+			if ctx.Recon() != tc.expectRecon {
+				t.Errorf("expected %v, got %v", tc.expectRecon, ctx.Recon())
 			}
-			if ctx.Reversed != tc.reversed {
-				t.Errorf("expected reversed %v, got %v", tc.reversed, ctx.Reversed)
+			if ctx.reversed != tc.reversed {
+				t.Errorf("expected reversed %v, got %v", tc.reversed, ctx.reversed)
 			}
 		})
 	}
