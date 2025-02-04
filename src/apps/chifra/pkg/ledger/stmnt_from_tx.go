@@ -118,7 +118,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 			ret.AssetSymbol = "ETH"
 		}
 
-		if !l.useTraces && l.trialBalance("eth", &ret) {
+		if !l.useTraces && l.trialBalance(trialBalEth, &ret) {
 			if ret.IsMaterial() {
 				statements = append(statements, ret)
 			} else {

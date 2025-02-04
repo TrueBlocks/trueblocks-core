@@ -16,9 +16,10 @@ import (
 // TODO: balances in a concurrent way before spinning through the appearances. And (2) if we did that
 // TODO: prior to doing the accounting, we could easily travers in reverse order.
 
-type appContextKey string
-type assetContextKey string
-
+// Ledger represents the ledger state and provides methods to process and reconcile
+// transactions and their associated logs. It holds configuration details such as the
+// account being tracked, block ranges for processing, connection to an RPC endpoint,
+// asset filters, and maps for both application-level and asset-level contexts.
 type Ledger struct {
 	accountFor    base.Address
 	firstBlock    base.Blknum

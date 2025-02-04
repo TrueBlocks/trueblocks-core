@@ -122,7 +122,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 			s.EndBal = *eBal
 
 			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
-			if !l.trialBalance("token", &s) {
+			if !l.trialBalance(trialBalToken, &s) {
 				if !utils.IsFuzzing() {
 					logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
 				}

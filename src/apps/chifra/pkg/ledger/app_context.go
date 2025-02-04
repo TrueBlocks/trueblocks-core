@@ -6,6 +6,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
+// appContextKey is a string type used as a key in the Ledger's map of appearance contexts.
+// It is formed by formatting the block number and transaction index.
+type appContextKey string
+
+// appContext provides context for a transaction appearance. It tracks the previous,
+// current, and next block numbers to help with determining how the balances should be
+// reconciled. Additionally, it holds a reconciliation type that describes the differences
+// between these block values, and a flag indicating if the ordering is reversed.
 type appContext struct {
 	address   base.Address
 	prvBlk    base.Blknum

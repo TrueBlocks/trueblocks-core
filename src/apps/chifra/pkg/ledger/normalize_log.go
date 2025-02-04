@@ -7,24 +7,17 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// standardSignature is the known ERC-20 Transfer event signature hash.
-// (Typically, it's the Keccak256 hash of "Transfer(address,address,uint256)")
-const standardSignature = "0x0000000ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a21f"
-
-// normalizeLog inspects an input log and returns a new log that is normalized.
-// The normalized log always has three topics (signature, from, to) and a data field that only contains the value.
 func (l *Ledger) normalizeLog(log *types.Log) (types.Log, error) {
 	var from, to *string
 	var value *big.Int
 	var err error
-	var lenTopics = len(log.Topics)
-	var topic = log.Topics[0].Hex()
 
 	// Case 1: Standard event with 3 topics and matching signature.
-	if lenTopics == 3 && strings.EqualFold(topic, standardSignature) {
+	if len(log.Topics) == 3 && log.Topics[0] == topics.TransferTopic {
 		from, err = normalizeTopicAddress(log.Topics[1].Hex())
 		if err != nil {
 			return types.Log{}, err
@@ -37,7 +30,7 @@ func (l *Ledger) normalizeLog(log *types.Log) (types.Log, error) {
 		if err != nil {
 			return types.Log{}, err
 		}
-	} else if lenTopics == 2 {
+	} else if len(log.Topics) == 2 {
 		// Case 2: Two-topic variant:
 		// Assume topics[1] is the indexed 'from'.
 		from, err = normalizeTopicAddress(log.Topics[1].Hex())
@@ -56,7 +49,7 @@ func (l *Ledger) normalizeLog(log *types.Log) (types.Log, error) {
 			return types.Log{}, err
 		}
 		value = valueDecoded
-	} else if lenTopics == 1 || lenTopics == 0 {
+	} else if len(log.Topics) == 1 || len(log.Topics) == 0 {
 		// Case 3: Non-standard variant:
 		// No indexed addresses; all parameters are in data.
 		fromDecoded, toDecoded, valueDecoded, err := decodeThreeValues(log.Data)
@@ -79,9 +72,9 @@ func (l *Ledger) normalizeLog(log *types.Log) (types.Log, error) {
 	// Build a new normalized log: three topics and a data field containing only the value.
 	newLog := types.Log{
 		Topics: []base.Hash{
-			base.HexToHash(standardSignature), // normalized event signature
-			base.HexToHash(*from),             // normalized "from" address
-			base.HexToHash(*to),               // normalized "to" address
+			topics.TransferTopic,  // normalized event signature
+			base.HexToHash(*from), // normalized "from" address
+			base.HexToHash(*to),   // normalized "to" address
 		},
 		Data: encodeUint256(value),
 	}

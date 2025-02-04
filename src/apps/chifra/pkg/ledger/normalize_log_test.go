@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -13,7 +14,7 @@ func TestNormalizedLog_Standard(t *testing.T) {
 	// Standard event with 3 topics.
 	logStandard := types.Log{
 		Topics: []base.Hash{
-			base.HexToHash(standardSignature), // event signature
+			topics.TransferTopic, // event signature
 			base.HexToHash("0x0000000000000000000000001111111111111111111111111111111111111111"),
 			base.HexToHash("0x0000000000000000000000002222222222222222222222222222222222222222"),
 		},
@@ -68,7 +69,7 @@ func TestNormalizedLog_TwoTopics(t *testing.T) {
 
 	logTwoTopics := types.Log{
 		Topics: []base.Hash{
-			base.HexToHash(standardSignature), // event signature
+			topics.TransferTopic, // event signature
 			base.HexToHash(fromTopic),
 		},
 		Data: data,
@@ -114,7 +115,7 @@ func TestNormalizedLog_NonStandard(t *testing.T) {
 
 	logNonStandard := types.Log{
 		Topics: []base.Hash{
-			base.HexToHash(standardSignature),
+			topics.TransferTopic,
 		},
 		Data: data,
 	}
@@ -146,7 +147,7 @@ func TestNormalizedLog_UnrecognizedFormat(t *testing.T) {
 	// Unrecognized format: extra topics.
 	logInvalid := types.Log{
 		Topics: []base.Hash{
-			base.HexToHash(standardSignature),
+			topics.TransferTopic,
 			base.HexToHash("0x000000000000000000000000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
 			base.HexToHash("0x000000000000000000000000bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"),
 			base.HexToHash("0x000000000000000000000000cccccccccccccccccccccccccccccccccccccccc"), // extra topic
