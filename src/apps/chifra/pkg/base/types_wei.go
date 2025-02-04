@@ -17,6 +17,12 @@ func NewWei(x int64) *Wei {
 	return (*Wei)(big.NewInt(x))
 }
 
+func NewWeiStr(x string) *Wei {
+	val := big.NewInt(0)
+	val.SetString(x, 10)
+	return (*Wei)(val)
+}
+
 func (b *Wei) ToInt() *big.Int {
 	return (*big.Int)(b)
 }
@@ -70,7 +76,8 @@ func (x *Wei) Text(base int) string {
 }
 
 func (w *Wei) Add(x, y *Wei) *Wei {
-	return (*Wei)((*big.Int)(w).Add((*big.Int)(x), (*big.Int)(y)))
+	result := new(big.Int).Add((*big.Int)(x), (*big.Int)(y))
+	return (*Wei)(result)
 }
 
 func (w *Wei) Sub(x, y *Wei) *Wei {

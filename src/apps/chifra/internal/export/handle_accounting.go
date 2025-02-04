@@ -67,6 +67,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 			} else if !opts.NoZero || cnt > 0 {
 				ledgers = ledger.NewLedger(
 					opts.Conn,
+					apps,
 					mon.Address,
 					opts.FirstBlock,
 					opts.LastBlock,
@@ -77,7 +78,6 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 					opts.Reversed,
 					&opts.Asset,
 				)
-				_ = ledgers.SetContexts(apps)
 
 				for _, app := range apps {
 					if err := visitAppearance(&app); err != nil {

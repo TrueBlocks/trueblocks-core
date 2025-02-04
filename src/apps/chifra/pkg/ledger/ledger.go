@@ -20,24 +20,25 @@ type ledgerContextKey string
 
 // Ledger is a structure that carries enough information to complate a reconciliation
 type Ledger struct {
-	Chain       string
-	AccountFor  base.Address
-	FirstBlock  base.Blknum
-	LastBlock   base.Blknum
-	Names       map[base.Address]types.Name
-	TestMode    bool
-	Contexts    map[ledgerContextKey]*ledgerContext
-	AsEther     bool
-	NoZero      bool
-	Reversed    bool
-	UseTraces   bool
-	Conn        *rpc.Connection
-	assetFilter []base.Address
-	theTx       *types.Transaction
+	Chain              string
+	AccountFor         base.Address
+	FirstBlock         base.Blknum
+	LastBlock          base.Blknum
+	Names              map[base.Address]types.Name
+	TestMode           bool
+	Contexts           map[ledgerContextKey]*ledgerContext
+	AsEther            bool
+	NoZero             bool
+	Reversed           bool
+	UseTraces          bool
+	Conn               *rpc.Connection
+	assetFilter        []base.Address
+	theTx              *types.Transaction
+	localTokenBalances map[string]*base.Wei
 }
 
 // NewLedger returns a new empty Ledger struct
-func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
+func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
 		Conn:       conn,
 		AccountFor: acctFor,
@@ -63,7 +64,14 @@ func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, a
 	parts := types.Custom | types.Prefund | types.Regular
 	l.Names, _ = names.LoadNamesMap(conn.Chain, parts, []string{})
 
+	l.localTokenBalances = make(map[string]*base.Wei)
+	l.setContexts(apps)
+
 	return l
+}
+
+func (l *Ledger) localTokenKey(block base.Blknum, token base.Address) string {
+	return fmt.Sprintf("%d-%s", block, token.Hex())
 }
 
 // assetOfInterest returns true if the asset filter is empty or the asset matches
@@ -147,26 +155,27 @@ func (l *Ledger) assetOfInterest(needle base.Address) bool {
 
 // func (l *Ledger) getOrCreateContext(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *ledgerContext {
 // 	key := l.ctxKey(bn, txid, assetAddr)
-// 
+//
 // 	if ctx, exists := l.Contexts[key]; exists {
 // 		return ctx
 // 	}
-// 
+//
 // 	// Create and store the context on-demand
 // 	ctx := newLedgerContext(bn, bn, bn, false, false, l.Reversed)
 // 	l.Contexts[key] = ctx
-// 
+//
 // 	return ctx
 // }
 
 func (l *Ledger) ctxKey(bn base.Blknum, txid base.Txnum, assetAddr base.Address) ledgerContextKey {
+	_ = assetAddr
 	return ledgerContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }
 
-// SetContexts visits the list of appearances and notes the block numbers of the next and previous
+// setContexts visits the list of appearances and notes the block numbers of the next and previous
 // appearance's and if they are the same or different. Because balances are only available per block,
 // we must know this information to be able to calculate the correct post-tx balance.
-func (l *Ledger) SetContexts(apps []types.Appearance) error {
+func (l *Ledger) setContexts(apps []types.Appearance) error {
 	for index := 0; index < len(apps); index++ {
 		curApp := apps[index]
 

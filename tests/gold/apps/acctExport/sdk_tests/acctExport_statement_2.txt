@@ -14,7 +14,6 @@ Contexts (3)
 000046709-00000:      46685      46709       46709 diff-last
 Start of trial balance report
 Needs correction for eth
-Needs correction for eth
 Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -50,7 +49,6 @@ Trial balance:
 End of trial balance report
 Trial balance failed for  0x0000000000000000000000000000000000000000000000000000000000000000 need to decend into traces
 Start of trial balance report
-Needs correction for eth
 Needs correction for eth
 ===================================================
 ====> trace-eth

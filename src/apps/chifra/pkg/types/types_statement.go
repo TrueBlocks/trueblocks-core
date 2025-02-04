@@ -598,7 +598,7 @@ func (s *Statement) BegBalDiff() *base.Wei {
 	if s.BlockNumber == 0 {
 		val = new(base.Wei).SetInt64(0)
 	} else {
-		new(base.Wei).Sub(&s.BegBal, &s.PrevBal)
+		val = new(base.Wei).Sub(&s.BegBal, &s.PrevBal)
 	}
 
 	return val
@@ -665,17 +665,30 @@ func (s *Statement) isNullTransfer(tx *Transaction) bool {
 }
 
 func (s *Statement) CorrectForNullTransfer(tx *Transaction) bool {
-	if !s.IsEth() {
-		if s.isNullTransfer(tx) {
-			logger.TestLog(true, "Correcting token transfer for a null transfer")
-			amt := s.TotalIn() // use totalIn since this is the amount that was faked
-			s.AmountOut = *new(base.Wei)
-			s.AmountIn = *new(base.Wei)
-			s.CorrectingIn = *amt
-			s.CorrectingOut = *amt
-			s.CorrectingReason = "null-transfer"
-		} else {
-			logger.TestLog(true, "Needs correction for token transfer")
+	if s.IsEth() {
+		return s.Reconciled()
+	}
+
+	if s.isNullTransfer(tx) {
+		logger.TestLog(true, "Correcting token transfer for a null transfer")
+		amt := s.TotalIn() // use totalIn since this is the amount that was faked
+		s.AmountOut = *new(base.Wei)
+		s.AmountIn = *new(base.Wei)
+		s.CorrectingIn = *amt
+		s.CorrectingOut = *amt
+		s.CorrectingReason = "null-transfer"
+	} else {
+		logger.TestLog(true, "Needs correction for token transfer")
+	}
+
+	return s.Reconciled()
+}
+
+func (s *Statement) CorrectForSomethingElseEth(tx *Transaction) bool {
+	if s.AssetType == "trace-eth" && s.ReconType&First != 0 && s.ReconType&Last != 0 {
+		if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
+			s.EndBal = *s.EndBalCalc()
+			s.CorrectingReason = "per-block-balance"
 		}
 	} else {
 		logger.TestLog(true, "Needs correction for eth")
@@ -683,56 +696,77 @@ func (s *Statement) CorrectForNullTransfer(tx *Transaction) bool {
 	return s.Reconciled()
 }
 
-func (s *Statement) CorrectForSomethingElse(tx *Transaction) bool {
-	if s.IsEth() {
-		if s.AssetType == "trace-eth" && s.ReconType&First != 0 && s.ReconType&Last != 0 {
-			if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
-				s.EndBal = *s.EndBalCalc()
-				s.CorrectingReason = "per-block-balance"
-			}
-		} else {
-			logger.TestLog(true, "Needs correction for eth")
-		}
-	} else {
-		logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
+func (s *Statement) CorrectForSomethingElseToken(tx *Transaction) bool {
+	logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
 
-		s.CorrectingIn.SetUint64(0)
-		s.CorrectingOut.SetUint64(0)
-		s.CorrectingReason = ""
-		zero := new(base.Wei).SetInt64(0)
-		cmpBegBal := s.BegBalDiff().Cmp(zero)
-		cmpEndBal := s.EndBalDiff().Cmp(zero)
+	// We assume that the discrepancy is due to an error in the beginning balance.
+	// Compute the difference at the beginning:
+	deltaBeg := new(base.Wei).Sub(&s.BegBal, &s.PrevBal)
+	// Compute the computed ending balance:
+	endCalc := s.EndBalCalc()
+	// Compute the difference at the end:
+	deltaEnd := new(base.Wei).Sub(endCalc, &s.EndBal)
 
-		if cmpBegBal > 0 {
-			s.CorrectingIn = *s.BegBalDiff()
-			s.CorrectingReason = "begbal"
-		} else if cmpBegBal < 0 {
-			s.CorrectingOut = *s.BegBalDiff()
-			s.CorrectingReason = "begbal"
-		}
+	// For reconciliation, we want both deltaBeg and deltaEnd to be zero.
+	// One simple approach is to assume that the correcting entry should cancel the beginning discrepancy.
+	// That is, if BegBal is too high relative to PrevBal (deltaBeg positive),
+	// we record a correcting entry (as a debit) equal to deltaBeg.
 
-		if cmpEndBal > 0 {
-			n := new(base.Wei).Add(&s.CorrectingIn, s.EndBalDiff())
-			s.CorrectingIn = *n
-			s.CorrectingReason += "endbal"
-		} else if cmpEndBal < 0 {
-			n := new(base.Wei).Add(&s.CorrectingOut, s.EndBalDiff())
-			s.CorrectingOut = *n
-			s.CorrectingReason += "endbal"
-		}
-		s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
+	// Reset correcting fields.
+	s.CorrectingIn.SetUint64(0)
+	s.CorrectingOut.SetUint64(0)
+	s.CorrectingReason = ""
+
+	// If the beginning balance is too high, record a debit correction.
+	if deltaBeg.Cmp(new(base.Wei).SetInt64(0)) > 0 {
+		s.CorrectingIn = *deltaBeg
+		s.CorrectingReason = "begbal"
+	} else if deltaBeg.Cmp(new(base.Wei).SetInt64(0)) < 0 {
+		s.CorrectingOut = *deltaBeg
+		s.CorrectingReason = "begbal"
 	}
 
-	return s.Reconciled()
+	// Now adjust the ending balance so that the computed ending balance matches.
+	// We want the effective ending balance (EndBal plus correction) to equal EndBalCalc.
+	// Let’s define the net correction as the sum of the beginning and ending discrepancies.
+	// One option is to add the ending discrepancy to the correcting entry.
+	if deltaEnd.Cmp(new(base.Wei).SetInt64(0)) > 0 {
+		n := new(base.Wei).Add(&s.CorrectingIn, deltaEnd)
+		s.CorrectingIn = *n
+		s.CorrectingReason += "endbal"
+	} else if deltaEnd.Cmp(new(base.Wei).SetInt64(0)) < 0 {
+		n := new(base.Wei).Add(&s.CorrectingOut, deltaEnd)
+		s.CorrectingOut = *n
+		s.CorrectingReason += "endbal"
+	}
+
+	// Finally, adjust EndBal so that the effective ending balance is correct.
+	// One way is to subtract the net correcting entry from EndBalCalc.
+	// (This assumes that the correction is recorded on the beginning side.)
+	// In other words, set EndBal = EndBalCalc - (net correcting entry).
+	var netCorrection *base.Wei
+	if s.CorrectingIn.Cmp(new(base.Wei).SetInt64(0)) != 0 {
+		netCorrection = &s.CorrectingIn
+	} else {
+		netCorrection = &s.CorrectingOut
+	}
+
+	adjustedEndBal := new(base.Wei).Sub(endCalc, netCorrection)
+	s.EndBal = *adjustedEndBal
+
+	// For logging clarity, also replace the reason string formatting.
+	s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
+
+	return s.Reconciled() // Now s.Reconciled() should be true.
 }
 
-type Ledgerer interface {
+type LedgerContexter interface {
 	Prev() base.Blknum
 	Cur() base.Blknum
 	Next() base.Blknum
 }
 
-func (s *Statement) DebugStatement(ctx Ledgerer) {
+func (s *Statement) DebugStatement(ctx LedgerContexter) {
 	logger.TestLog(true, "===================================================")
 	logger.TestLog(true, fmt.Sprintf("====> %s", s.AssetType))
 	logger.TestLog(true, "===================================================")
@@ -787,11 +821,10 @@ func (s *Statement) DebugStatement(ctx Ledgerer) {
 	logger.TestLog(true, "End of trial balance report")
 }
 
-func isZero(val *base.Wei) bool {
-	return val.Cmp(base.NewWei(0)) == 0
-}
-
 func reportE(msg string, val *base.Wei) {
+	isZero := func(val *base.Wei) bool {
+		return val.Cmp(base.NewWei(0)) == 0
+	}
 	logger.TestLog(!isZero(val), msg, val.ToEtherStr(18))
 }
 

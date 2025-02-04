@@ -20,7 +20,11 @@ func (l *Ledger) trialBalance(reason string, s *types.Statement) bool {
 	var okay bool
 	if okay = s.Reconciled(); !okay {
 		if okay = s.CorrectForNullTransfer(l.theTx); !okay {
-			_ = s.CorrectForSomethingElse(l.theTx)
+			if s.IsEth() {
+				_ = s.CorrectForSomethingElseEth(l.theTx)
+			} else {
+				_ = s.CorrectForSomethingElseToken(l.theTx)
+			}
 		}
 	}
 
