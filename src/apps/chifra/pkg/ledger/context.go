@@ -6,8 +6,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// ledgerContext represents the reconciliation state for a block.
-type ledgerContext struct {
+// appContext represents the reconciliation state for a block.
+type appContext struct {
 	PrevBlock base.Blknum
 	CurBlock  base.Blknum
 	NextBlock base.Blknum
@@ -15,10 +15,10 @@ type ledgerContext struct {
 	Reversed  bool
 }
 
-// newLedgerContext creates a ledgerContext instance while preserving the actual block relationships.
-func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *ledgerContext {
+// newAppContext creates a appContext instance while preserving the actual block relationships.
+func newAppContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *appContext {
 	if prev > cur || cur > next {
-		return &ledgerContext{ReconType: types.Invalid, Reversed: reversed}
+		return &appContext{ReconType: types.Invalid, Reversed: reversed}
 	}
 
 	reconType := types.Invalid
@@ -50,7 +50,7 @@ func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed boo
 		reconType |= types.Last
 	}
 
-	return &ledgerContext{
+	return &appContext{
 		PrevBlock: prev,
 		CurBlock:  cur,
 		NextBlock: next,
@@ -60,16 +60,16 @@ func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed boo
 }
 
 // Prev returns the block number of the previous block in the reconciliation sequence.
-func (c *ledgerContext) Prev() base.Blknum {
+func (c *appContext) Prev() base.Blknum {
 	return c.PrevBlock
 }
 
 // Cur returns the block number of the current block being processed.
-func (c *ledgerContext) Cur() base.Blknum {
+func (c *appContext) Cur() base.Blknum {
 	return c.CurBlock
 }
 
 // Next returns the block number of the next block in the reconciliation sequence.
-func (c *ledgerContext) Next() base.Blknum {
+func (c *appContext) Next() base.Blknum {
 	return c.NextBlock
 }

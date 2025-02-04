@@ -16,7 +16,7 @@ import (
 // TODO: balances in a concurrent way before spinning through the appearances. And (2) if we did that
 // TODO: prior to doing the accounting, we could easily travers in reverse order.
 
-type ledgerContextKey string
+type appContextKey string
 
 // Ledger is a structure that carries enough information to complate a reconciliation
 type Ledger struct {
@@ -33,7 +33,7 @@ type Ledger struct {
 	Conn        *rpc.Connection
 	assetFilter []base.Address
 	theTx       *types.Transaction
-	appContexts map[ledgerContextKey]*ledgerContext
+	appContexts map[appContextKey]*appContext
 }
 
 // NewLedger returns a new empty Ledger struct
@@ -43,12 +43,12 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 		AccountFor:  acctFor,
 		FirstBlock:  fb,
 		LastBlock:   lb,
-		appContexts: make(map[ledgerContextKey]*ledgerContext),
 		AsEther:     asEther,
 		TestMode:    testMode,
 		NoZero:      noZero,
 		Reversed:    reversed,
 		UseTraces:   useTraces,
+		appContexts: make(map[appContextKey]*appContext),
 	}
 
 	if assetFilters != nil {
@@ -63,7 +63,7 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 	parts := types.Custom | types.Prefund | types.Regular
 	l.Names, _ = names.LoadNamesMap(conn.Chain, parts, []string{})
 
-	l.setContexts(apps)
+	_ = l.setContexts(apps)
 
 	return l
 }
@@ -147,9 +147,13 @@ func (l *Ledger) assetOfInterest(needle base.Address) bool {
 //     return true;
 // }
 
-func (l *Ledger) ctxKey(bn base.Blknum, txid base.Txnum, assetAddr base.Address) ledgerContextKey {
+func (l *Ledger) appCtxKey(bn base.Blknum, txid base.Txnum) appContextKey {
+	return appContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
+}
+
+func (l *Ledger) assetCtxKey(bn base.Blknum, txid base.Txnum, assetAddr base.Address) appContextKey {
 	_ = assetAddr
-	return ledgerContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
+	return appContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }
 
 // setContexts visits the list of appearances and notes the block numbers of the next and previous
@@ -162,8 +166,9 @@ func (l *Ledger) setContexts(apps []types.Appearance) error {
 		cur := base.Blknum(curApp.BlockNumber)
 		prev := base.Blknum(apps[base.Max(1, index)-1].BlockNumber)
 		next := base.Blknum(apps[base.Min(index+1, len(apps)-1)].BlockNumber)
-		key := l.ctxKey(base.Blknum(curApp.BlockNumber), base.Txnum(curApp.TransactionIndex), base.ZeroAddr)
-		l.appContexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.Reversed)
+
+		appKey := l.appCtxKey(base.Blknum(curApp.BlockNumber), base.Txnum(curApp.TransactionIndex))
+		l.appContexts[appKey] = newAppContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.Reversed)
 	}
 
 	l.debugContext()
@@ -177,7 +182,7 @@ func (l *Ledger) debugContext() {
 		return
 	}
 
-	keys := make([]ledgerContextKey, 0, len(l.appContexts))
+	keys := make([]appContextKey, 0, len(l.appContexts))
 	for key := range l.appContexts {
 		keys = append(keys, key)
 	}

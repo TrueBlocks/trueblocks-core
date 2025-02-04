@@ -76,7 +76,7 @@ func TestNewLedgerContext(t *testing.T) {
 
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
-			ctx := newLedgerContext(tc.prev, tc.cur, tc.next, tc.isFirst, tc.isLast, tc.reversed)
+			ctx := newAppContext(tc.prev, tc.cur, tc.next, tc.isFirst, tc.isLast, tc.reversed)
 			if ctx.ReconType != tc.expectRecon {
 				t.Errorf("expected %v, got %v", tc.expectRecon, ctx.ReconType)
 			}

@@ -81,7 +81,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 			AmountOut:        amountOut,
 		}
 
-		key := l.ctxKey(log.BlockNumber, log.TransactionIndex, s.AccountedFor)
+		key := l.assetCtxKey(log.BlockNumber, log.TransactionIndex, s.AccountedFor)
 		ctx := l.appContexts[key]
 
 		if ofInterest {

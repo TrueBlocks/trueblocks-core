@@ -34,7 +34,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	// make room for our results
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
-	key := l.ctxKey(trans.BlockNumber, trans.TransactionIndex, l.AccountFor)
+	key := l.assetCtxKey(trans.BlockNumber, trans.TransactionIndex, l.AccountFor)
 	ctx := l.appContexts[key]
 
 	if l.assetOfInterest(base.FAKE_ETH_ADDRESS) {
