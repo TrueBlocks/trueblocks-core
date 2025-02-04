@@ -20,21 +20,20 @@ type ledgerContextKey string
 
 // Ledger is a structure that carries enough information to complate a reconciliation
 type Ledger struct {
-	Chain              string
-	AccountFor         base.Address
-	FirstBlock         base.Blknum
-	LastBlock          base.Blknum
-	Names              map[base.Address]types.Name
-	TestMode           bool
-	Contexts           map[ledgerContextKey]*ledgerContext
-	AsEther            bool
-	NoZero             bool
-	Reversed           bool
-	UseTraces          bool
-	Conn               *rpc.Connection
-	assetFilter        []base.Address
-	theTx              *types.Transaction
-	localTokenBalances map[string]*base.Wei
+	Chain       string
+	AccountFor  base.Address
+	FirstBlock  base.Blknum
+	LastBlock   base.Blknum
+	Names       map[base.Address]types.Name
+	TestMode    bool
+	Contexts    map[ledgerContextKey]*ledgerContext
+	AsEther     bool
+	NoZero      bool
+	Reversed    bool
+	UseTraces   bool
+	Conn        *rpc.Connection
+	assetFilter []base.Address
+	theTx       *types.Transaction
 }
 
 // NewLedger returns a new empty Ledger struct
@@ -64,7 +63,6 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 	parts := types.Custom | types.Prefund | types.Regular
 	l.Names, _ = names.LoadNamesMap(conn.Chain, parts, []string{})
 
-	l.localTokenBalances = make(map[string]*base.Wei)
 	l.setContexts(apps)
 
 	return l

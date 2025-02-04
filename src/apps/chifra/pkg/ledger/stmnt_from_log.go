@@ -86,19 +86,13 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 
 		if ofInterest {
 			var err error
-			localKey := l.localTokenKey(log.BlockNumber, log.Address)
 
 			// Previous balance:
 			var pBal *base.Wei
 			if (ctx.ReconType & (types.SameSame | types.SameDiff | types.DiffSame)) != 0 {
-				if storedBal, ok := l.localTokenBalances[localKey]; ok {
-					pBal = storedBal
-				} else {
-					pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock))
-					if err != nil || pBal == nil {
-						return s, err
-					}
-					l.localTokenBalances[localKey] = pBal
+				pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock))
+				if err != nil || pBal == nil {
+					return s, err
 				}
 			} else {
 				pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock))
@@ -126,12 +120,6 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 			}
 			s.EndBal = *eBal
 
-			// Update the rolling balance for subsequent transactions in the same block:
-			l.localTokenBalances[localKey] = eBal
-			if (ctx.ReconType & (types.SameDiff | types.DiffDiff)) != 0 {
-				l.clearOldRollingBalances(ctx.CurBlock + 1)
-			}
-
 			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 			if !l.trialBalance("token", &s) {
 				if !utils.IsFuzzing() {
@@ -145,15 +133,5 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 		}
 
 		return s, nil
-	}
-}
-
-func (l *Ledger) clearOldRollingBalances(currentBlock base.Blknum) {
-	for key := range l.localTokenBalances {
-		var blkNum base.Blknum
-		_, err := fmt.Sscanf(key, "%d-", &blkNum)
-		if err == nil && blkNum < currentBlock {
-			delete(l.localTokenBalances, key)
-		}
 	}
 }
