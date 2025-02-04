@@ -764,6 +764,8 @@ type LedgerContexter interface {
 	Prev() base.Blknum
 	Cur() base.Blknum
 	Next() base.Blknum
+	Recon() ReconType
+	Address() base.Address
 }
 
 func (s *Statement) DebugStatement(ctx LedgerContexter) {

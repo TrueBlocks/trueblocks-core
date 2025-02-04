@@ -81,6 +81,10 @@ Trial balance:
  ^^ we need to fix this ^^
 ---------------------------------------------------
 End of trial balance report
+------------------------------------------------------------
+Contexts (2)
+0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685 genesis-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
 Start of trial balance report
 Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -115,6 +119,12 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
+------------------------------------------------------------
+Contexts (4)
+0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685 genesis-diff
+0x08166f02313feae18bb044e7877c808b55b5bf58-000046685-00000:          0      46685       46709 diff-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046685-00000:          0      46685       46709 diff-diff
 Start of trial balance report
 Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -123,7 +133,7 @@ Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               46685
 Current:                46709
 Next:                   46709
-reconciliationType:     diff-last
+reconciliationType:     diff-same
 assetType:              eth
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
@@ -149,6 +159,14 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
+------------------------------------------------------------
+Contexts (6)
+0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685 genesis-diff
+0x08166f02313feae18bb044e7877c808b55b5bf58-000046685-00000:          0      46685       46709 diff-diff
+0x08166f02313feae18bb044e7877c808b55b5bf58-000046709-00000:      46685      46709       46709 diff-same
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046685-00000:          0      46685       46709 diff-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046709-00000:      46685      46709       46709 diff-same
 {
   "data": [
     {
@@ -179,6 +197,7 @@ End of trial balance report
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
+      "prevBal": "0",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "reconciled": false,
@@ -270,7 +289,7 @@ End of trial balance report
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
       "reconciled": true,
-      "reconciliationType": "diff-last",
+      "reconciliationType": "diff-same",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",

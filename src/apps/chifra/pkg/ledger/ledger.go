@@ -1,3 +1,23 @@
+/*
+appContext
+appContextKey
+appContexts
+appCtx
+appKey
+newAppContext
+getAppContextKey
+
+assetContext
+assetContextKey
+assetContexts
+assetCtx
+assetKey
+newAssetContext
+getAssetContextKey
+
+getOrCreateAssetContext
+setContexts
+*/
 package ledger
 
 import (
@@ -17,38 +37,41 @@ import (
 // TODO: prior to doing the accounting, we could easily travers in reverse order.
 
 type appContextKey string
+type assetContextKey appContextKey
 
 // Ledger is a structure that carries enough information to complate a reconciliation
 type Ledger struct {
-	Chain       string
-	AccountFor  base.Address
-	FirstBlock  base.Blknum
-	LastBlock   base.Blknum
-	Names       map[base.Address]types.Name
-	TestMode    bool
-	AsEther     bool
-	NoZero      bool
-	Reversed    bool
-	UseTraces   bool
-	Conn        *rpc.Connection
-	assetFilter []base.Address
-	theTx       *types.Transaction
-	appContexts map[appContextKey]*appContext
+	Chain         string
+	AccountFor    base.Address
+	FirstBlock    base.Blknum
+	LastBlock     base.Blknum
+	Names         map[base.Address]types.Name
+	TestMode      bool
+	AsEther       bool
+	NoZero        bool
+	Reversed      bool
+	UseTraces     bool
+	Conn          *rpc.Connection
+	assetFilter   []base.Address
+	theTx         *types.Transaction
+	appContexts   map[appContextKey]*appContext
+	assetContexts map[assetContextKey]*assetContext
 }
 
 // NewLedger returns a new empty Ledger struct
 func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
-		Conn:        conn,
-		AccountFor:  acctFor,
-		FirstBlock:  fb,
-		LastBlock:   lb,
-		AsEther:     asEther,
-		TestMode:    testMode,
-		NoZero:      noZero,
-		Reversed:    reversed,
-		UseTraces:   useTraces,
-		appContexts: make(map[appContextKey]*appContext),
+		Conn:          conn,
+		AccountFor:    acctFor,
+		FirstBlock:    fb,
+		LastBlock:     lb,
+		AsEther:       asEther,
+		TestMode:      testMode,
+		NoZero:        noZero,
+		Reversed:      reversed,
+		UseTraces:     useTraces,
+		appContexts:   make(map[appContextKey]*appContext),
+		assetContexts: make(map[assetContextKey]*assetContext),
 	}
 
 	if assetFilters != nil {
@@ -63,7 +86,15 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 	parts := types.Custom | types.Prefund | types.Regular
 	l.Names, _ = names.LoadNamesMap(conn.Chain, parts, []string{})
 
-	_ = l.setContexts(apps)
+	for index := 0; index < len(apps); index++ {
+		curApp := apps[index]
+		cur := base.Blknum(curApp.BlockNumber)
+		prev := base.Blknum(apps[base.Max(1, index)-1].BlockNumber)
+		next := base.Blknum(apps[base.Min(index+1, len(apps)-1)].BlockNumber)
+		appKey := l.getAppContextKey(base.Blknum(curApp.BlockNumber), base.Txnum(curApp.TransactionIndex))
+		l.appContexts[appKey] = newAppContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.Reversed)
+	}
+	debugLedgerContexts(l.TestMode, l.appContexts)
 
 	return l
 }
@@ -147,43 +178,44 @@ func (l *Ledger) assetOfInterest(needle base.Address) bool {
 //     return true;
 // }
 
-func (l *Ledger) appCtxKey(bn base.Blknum, txid base.Txnum) appContextKey {
+func (l *Ledger) getAppContextKey(bn base.Blknum, txid base.Txnum) appContextKey {
 	return appContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }
 
-func (l *Ledger) assetCtxKey(bn base.Blknum, txid base.Txnum, assetAddr base.Address) appContextKey {
-	_ = assetAddr
-	return appContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
+func (l *Ledger) getAssetContextKey(bn base.Blknum, txid base.Txnum, assetAddr base.Address) assetContextKey {
+	return assetContextKey(fmt.Sprintf("%s-%09d-%05d", assetAddr.Hex(), bn, txid))
 }
 
-// setContexts visits the list of appearances and notes the block numbers of the next and previous
-// appearance's and if they are the same or different. Because balances are only available per block,
-// we must know this information to be able to calculate the correct post-tx balance.
-func (l *Ledger) setContexts(apps []types.Appearance) error {
-	for index := 0; index < len(apps); index++ {
-		curApp := apps[index]
-
-		cur := base.Blknum(curApp.BlockNumber)
-		prev := base.Blknum(apps[base.Max(1, index)-1].BlockNumber)
-		next := base.Blknum(apps[base.Min(index+1, len(apps)-1)].BlockNumber)
-
-		appKey := l.appCtxKey(base.Blknum(curApp.BlockNumber), base.Txnum(curApp.TransactionIndex))
-		l.appContexts[appKey] = newAppContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.Reversed)
+// getOrCreateAssetContext returns the asset-specific ledger context for the given block number, transaction index, and asset address.
+// If it does not exist in the assetContexts map, it creates a new record based on the legacy context.
+func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *assetContext {
+	assetKey := l.getAssetContextKey(bn, txid, assetAddr)
+	if ctx, exists := l.assetContexts[assetKey]; exists {
+		return ctx
 	}
 
-	l.debugContext()
-	return nil
+	appKey := l.getAppContextKey(bn, txid)
+	appCtx, exists := l.appContexts[appKey]
+	if !exists {
+		logger.Warn("This should never happen in getOrCreateAssetContext")
+		appCtx = newAppContext(bn, bn, bn, false, false, l.Reversed)
+		l.appContexts[appKey] = appCtx
+	}
+
+	assetCtx := newAssetContext(appCtx.PrevBlock, appCtx.CurBlock, appCtx.NextBlock, false, false, l.Reversed, assetAddr)
+	l.assetContexts[assetKey] = assetCtx
+	return assetCtx
 }
 
 const maxTestingBlock = 17000000
 
-func (l *Ledger) debugContext() {
-	if !l.TestMode {
+func debugLedgerContexts[K ~string, T types.LedgerContexter](testMode bool, ctxs map[K]T) {
+	if !testMode {
 		return
 	}
 
-	keys := make([]appContextKey, 0, len(l.appContexts))
-	for key := range l.appContexts {
+	keys := make([]K, 0, len(ctxs))
+	for key := range ctxs {
 		keys = append(keys, key)
 	}
 
@@ -194,26 +226,26 @@ func (l *Ledger) debugContext() {
 	logger.Info(strings.Repeat("-", 60))
 	logger.Info(fmt.Sprintf("Contexts (%d)", len(keys)))
 	for _, key := range keys {
-		c := l.appContexts[key]
-		if c.CurBlock > maxTestingBlock {
+		c := ctxs[key]
+		if c.Cur() > maxTestingBlock {
 			continue
 		}
 		msg := ""
-		rr := c.ReconType &^ (types.First | types.Last)
+		rr := c.Recon() &^ (types.First | types.Last)
 		switch rr {
 		case types.Genesis:
-			msg = fmt.Sprintf(" %s", c.ReconType.String()+"-diff")
+			msg = fmt.Sprintf(" %s", c.Recon().String()+"-diff")
 		case types.DiffDiff:
-			msg = fmt.Sprintf(" %s", c.ReconType.String())
+			msg = fmt.Sprintf(" %s", c.Recon().String())
 		case types.SameSame:
-			msg = fmt.Sprintf(" %s", c.ReconType.String())
+			msg = fmt.Sprintf(" %s", c.Recon().String())
 		case types.DiffSame:
-			msg = fmt.Sprintf(" %s", c.ReconType.String())
+			msg = fmt.Sprintf(" %s", c.Recon().String())
 		case types.SameDiff:
-			msg = fmt.Sprintf(" %s", c.ReconType.String())
+			msg = fmt.Sprintf(" %s", c.Recon().String())
 		default:
-			msg = fmt.Sprintf(" %s should not happen!", c.ReconType.String())
+			msg = fmt.Sprintf(" %s should not happen!", c.Recon().String())
 		}
-		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
+		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.Prev(), c.Cur(), c.Next(), msg))
 	}
 }

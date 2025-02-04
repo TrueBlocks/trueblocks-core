@@ -8,8 +8,12 @@ import (
 
 // trialBalance returns true of the reconciliation balances, false otherwise. It also prints the trial balance to the console.
 func (l *Ledger) trialBalance(reason string, s *types.Statement) bool {
-	key := l.assetCtxKey(s.BlockNumber, s.TransactionIndex, s.AssetAddr)
-	ctx := l.appContexts[key]
+	key := l.getAssetContextKey(s.BlockNumber, s.TransactionIndex, s.AssetAddr)
+	var ctx *assetContext
+	var exists bool
+	if ctx, exists = l.assetContexts[key]; !exists {
+		return s.Reconciled()
+	}
 
 	s.ReconType = ctx.ReconType
 	s.AssetType = reason

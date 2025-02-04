@@ -678,9 +678,11 @@ func TestEndBalDiff(t *testing.T) {
 
 type dummyLedgerer struct{}
 
-func (d dummyLedgerer) Prev() base.Blknum { return 99 }
-func (d dummyLedgerer) Cur() base.Blknum  { return 100 }
-func (d dummyLedgerer) Next() base.Blknum { return 101 }
+func (d dummyLedgerer) Prev() base.Blknum     { return 99 }
+func (d dummyLedgerer) Cur() base.Blknum      { return 100 }
+func (d dummyLedgerer) Next() base.Blknum     { return 101 }
+func (d dummyLedgerer) Recon() ReconType      { return 0 }
+func (d dummyLedgerer) Address() base.Address { return base.ZeroAddr }
 
 func TestDebugStatement(t *testing.T) {
 	restore := resetLogger()

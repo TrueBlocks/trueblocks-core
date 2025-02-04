@@ -8,6 +8,7 @@ import (
 
 // appContext represents the reconciliation state for a block.
 type appContext struct {
+	Asset     base.Address
 	PrevBlock base.Blknum
 	CurBlock  base.Blknum
 	NextBlock base.Blknum
@@ -72,4 +73,54 @@ func (c *appContext) Cur() base.Blknum {
 // Next returns the block number of the next block in the reconciliation sequence.
 func (c *appContext) Next() base.Blknum {
 	return c.NextBlock
+}
+
+// Recon returns the block number of the next block in the reconciliation sequence.
+func (c *appContext) Recon() types.ReconType {
+	return c.ReconType
+}
+
+// Asset returns the block number of the next block in the reconciliation sequence.
+func (c *appContext) Address() base.Address {
+	return c.Asset
+}
+
+type assetContext appContext
+
+// newAssetContext creates a assetContext instance while preserving the actual block relationships.
+func newAssetContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool, asset base.Address) *assetContext {
+	appCtx := newAppContext(prev, cur, next, isFirst, isLast, reversed)
+	return &assetContext{
+		Asset:     asset,
+		PrevBlock: appCtx.PrevBlock,
+		CurBlock:  appCtx.CurBlock,
+		NextBlock: appCtx.NextBlock,
+		ReconType: appCtx.ReconType,
+		Reversed:  appCtx.Reversed,
+	}
+}
+
+// Prev returns the block number of the previous block in the reconciliation sequence.
+func (c *assetContext) Prev() base.Blknum {
+	return c.PrevBlock
+}
+
+// Cur returns the block number of the current block being processed.
+func (c *assetContext) Cur() base.Blknum {
+	return c.CurBlock
+}
+
+// Next returns the block number of the next block in the reconciliation sequence.
+func (c *assetContext) Next() base.Blknum {
+	return c.NextBlock
+}
+
+// Recon returns the block number of the next block in the reconciliation sequence.
+func (c *assetContext) Recon() types.ReconType {
+	return c.ReconType
+}
+
+// Asset returns the block number of the next block in the reconciliation sequence.
+func (c *assetContext) Address() base.Address {
+	return c.Asset
 }

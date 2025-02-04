@@ -81,8 +81,12 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 			AmountOut:        amountOut,
 		}
 
-		key := l.assetCtxKey(log.BlockNumber, log.TransactionIndex, s.AccountedFor)
-		ctx := l.appContexts[key]
+		key := l.getAssetContextKey(log.BlockNumber, log.TransactionIndex, s.AccountedFor)
+		var ctx *assetContext
+		var exists bool
+		if ctx, exists = l.assetContexts[key]; !exists {
+			return s, fmt.Errorf("no context for %s", key)
+		}
 
 		if ofInterest {
 			var err error

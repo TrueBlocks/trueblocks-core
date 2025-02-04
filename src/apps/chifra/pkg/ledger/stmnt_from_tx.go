@@ -31,11 +31,24 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		}
 	}
 
+	_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, l.AccountFor)
+	_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, base.FAKE_ETH_ADDRESS)
+	if trans.Receipt != nil {
+		for _, log := range trans.Receipt.Logs {
+			_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, log.Address)
+		}
+	}
+
 	// make room for our results
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
-	key := l.assetCtxKey(trans.BlockNumber, trans.TransactionIndex, l.AccountFor)
-	ctx := l.appContexts[key]
+	key := l.getAssetContextKey(trans.BlockNumber, trans.TransactionIndex, l.AccountFor)
+	var ctx *assetContext
+	var exists bool
+	if ctx, exists = l.assetContexts[key]; !exists {
+		debugLedgerContexts(l.TestMode, l.assetContexts)
+		return statements, fmt.Errorf("no context for %s", key)
+	}
 
 	if l.assetOfInterest(base.FAKE_ETH_ADDRESS) {
 		// TODO: We ignore errors in the next few lines, but we should not
@@ -137,6 +150,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	if isFinal && isWritable && isEnabled {
 		for _, statement := range statements {
 			if statement.IsMaterial() && !statement.Reconciled() {
+				debugLedgerContexts(l.TestMode, l.assetContexts)
 				return statements, nil
 			}
 		}
@@ -149,5 +163,6 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		_ = conn.Store.Write(statementGroup, nil)
 	}
 
+	debugLedgerContexts(l.TestMode, l.assetContexts)
 	return statements, nil
 }
