@@ -82,7 +82,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 		}
 
 		key := l.ctxKey(log.BlockNumber, log.TransactionIndex, s.AccountedFor)
-		ctx := l.Contexts[key]
+		ctx := l.appContexts[key]
 
 		if ofInterest {
 			var err error

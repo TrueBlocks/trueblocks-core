@@ -26,7 +26,6 @@ type Ledger struct {
 	LastBlock   base.Blknum
 	Names       map[base.Address]types.Name
 	TestMode    bool
-	Contexts    map[ledgerContextKey]*ledgerContext
 	AsEther     bool
 	NoZero      bool
 	Reversed    bool
@@ -34,21 +33,22 @@ type Ledger struct {
 	Conn        *rpc.Connection
 	assetFilter []base.Address
 	theTx       *types.Transaction
+	appContexts map[ledgerContextKey]*ledgerContext
 }
 
 // NewLedger returns a new empty Ledger struct
 func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
-		Conn:       conn,
-		AccountFor: acctFor,
-		FirstBlock: fb,
-		LastBlock:  lb,
-		Contexts:   make(map[ledgerContextKey]*ledgerContext),
-		AsEther:    asEther,
-		TestMode:   testMode,
-		NoZero:     noZero,
-		Reversed:   reversed,
-		UseTraces:  useTraces,
+		Conn:        conn,
+		AccountFor:  acctFor,
+		FirstBlock:  fb,
+		LastBlock:   lb,
+		appContexts: make(map[ledgerContextKey]*ledgerContext),
+		AsEther:     asEther,
+		TestMode:    testMode,
+		NoZero:      noZero,
+		Reversed:    reversed,
+		UseTraces:   useTraces,
 	}
 
 	if assetFilters != nil {
@@ -66,10 +66,6 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 	l.setContexts(apps)
 
 	return l
-}
-
-func (l *Ledger) localTokenKey(block base.Blknum, token base.Address) string {
-	return fmt.Sprintf("%d-%s", block, token.Hex())
 }
 
 // assetOfInterest returns true if the asset filter is empty or the asset matches
@@ -151,20 +147,6 @@ func (l *Ledger) assetOfInterest(needle base.Address) bool {
 //     return true;
 // }
 
-// func (l *Ledger) getOrCreateContext(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *ledgerContext {
-// 	key := l.ctxKey(bn, txid, assetAddr)
-//
-// 	if ctx, exists := l.Contexts[key]; exists {
-// 		return ctx
-// 	}
-//
-// 	// Create and store the context on-demand
-// 	ctx := newLedgerContext(bn, bn, bn, false, false, l.Reversed)
-// 	l.Contexts[key] = ctx
-//
-// 	return ctx
-// }
-
 func (l *Ledger) ctxKey(bn base.Blknum, txid base.Txnum, assetAddr base.Address) ledgerContextKey {
 	_ = assetAddr
 	return ledgerContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
@@ -181,8 +163,7 @@ func (l *Ledger) setContexts(apps []types.Appearance) error {
 		prev := base.Blknum(apps[base.Max(1, index)-1].BlockNumber)
 		next := base.Blknum(apps[base.Min(index+1, len(apps)-1)].BlockNumber)
 		key := l.ctxKey(base.Blknum(curApp.BlockNumber), base.Txnum(curApp.TransactionIndex), base.ZeroAddr)
-
-		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.Reversed)
+		l.appContexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.Reversed)
 	}
 
 	l.debugContext()
@@ -196,8 +177,8 @@ func (l *Ledger) debugContext() {
 		return
 	}
 
-	keys := make([]ledgerContextKey, 0, len(l.Contexts))
-	for key := range l.Contexts {
+	keys := make([]ledgerContextKey, 0, len(l.appContexts))
+	for key := range l.appContexts {
 		keys = append(keys, key)
 	}
 
@@ -208,7 +189,7 @@ func (l *Ledger) debugContext() {
 	logger.Info(strings.Repeat("-", 60))
 	logger.Info(fmt.Sprintf("Contexts (%d)", len(keys)))
 	for _, key := range keys {
-		c := l.Contexts[key]
+		c := l.appContexts[key]
 		if c.CurBlock > maxTestingBlock {
 			continue
 		}
