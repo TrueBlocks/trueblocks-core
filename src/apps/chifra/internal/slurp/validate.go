@@ -35,7 +35,7 @@ func (opts *SlurpOptions) validateSlurp() error {
 		return err
 	}
 
-	err = validate.ValidateEnum("--source", opts.Source, "[etherscan|key|covalent|alchemy]")
+	err = validate.ValidateEnum("--source", opts.Source, "[etherscan|covalent|alchemy]")
 	if err != nil {
 		return err
 	}

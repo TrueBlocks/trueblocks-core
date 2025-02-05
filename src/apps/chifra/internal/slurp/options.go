@@ -42,7 +42,6 @@ type SlurpOptions struct {
 	PageId      string                   `json:"pageId,omitempty"`      // The page to retrieve (page ID)
 	PerPage     uint64                   `json:"perPage,omitempty"`     // The number of records to request on each page
 	Sleep       float64                  `json:"sleep,omitempty"`       // Seconds to sleep between requests
-	Types       []string                 `json:"types,omitempty"`       // Deprecated, use --parts instead
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection          `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
@@ -128,11 +127,6 @@ func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 			opts.PerPage = base.MustParseUint64(value[0])
 		case "sleep":
 			opts.Sleep = base.MustParseFloat64(value[0])
-		case "types":
-			for _, val := range value {
-				s := strings.Split(val, " ") // may contain space separated items
-				opts.Types = append(opts.Types, s...)
-			}
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "slurp")
@@ -143,13 +137,6 @@ func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
-
-	// Deprecated...
-	if len(opts.Types) > 0 && len(opts.Parts) == 0 {
-		logger.Warn("The --types flag is deprecated. Please use --parts instead.")
-		opts.Parts = opts.Types
-		opts.Types = []string{}
-	}
 
 	// EXISTING_CODE
 	for _, t := range opts.Parts {
@@ -185,13 +172,6 @@ func slurpFinishParse(args []string) *SlurpOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-
-	// Deprecated...
-	if len(opts.Types) > 0 && len(opts.Parts) == 0 {
-		logger.Warn("The --types flag is deprecated. Please use --parts instead.")
-		opts.Parts = opts.Types
-		opts.Types = []string{}
-	}
 
 	// EXISTING_CODE
 	for _, arg := range args {
