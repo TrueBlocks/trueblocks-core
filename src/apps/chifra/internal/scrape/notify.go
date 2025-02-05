@@ -14,6 +14,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
 )
 
+// NOTIFY CODE
+
 var ErrConfiguredButNotRunning = fmt.Errorf("listener is configured but not running")
 
 // GetNotifyEndpoint returns the notification endpoint
