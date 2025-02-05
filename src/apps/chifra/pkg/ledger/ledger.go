@@ -14,7 +14,7 @@ import (
 // Ledger is a structure that carries enough information to complate a reconciliation
 type Ledger struct {
 	Chain       string
-	AccountFor  base.Address
+	accountFor  base.Address
 	FirstBlock  base.Blknum
 	LastBlock   base.Blknum
 	Names       map[base.Address]types.Name
@@ -32,7 +32,7 @@ type Ledger struct {
 func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
 		Conn:       conn,
-		AccountFor: acctFor,
+		accountFor: acctFor,
 		FirstBlock: fb,
 		LastBlock:  lb,
 		Contexts:   make(map[ledgerContextKey]*ledgerContext),

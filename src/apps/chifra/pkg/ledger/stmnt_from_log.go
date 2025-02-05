@@ -52,19 +52,19 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 		ofInterest := false
 
 		// Do not collapse, may be both
-		if l.AccountFor == sender {
+		if l.accountFor == sender {
 			amountOut = *amt
 			ofInterest = true
 		}
 
 		// Do not collapse, may be both
-		if l.AccountFor == recipient {
+		if l.accountFor == recipient {
 			amountIn = *amt
 			ofInterest = true
 		}
 
 		s := types.Statement{
-			AccountedFor:     l.AccountFor,
+			AccountedFor:     l.accountFor,
 			Sender:           sender,
 			Recipient:        recipient,
 			BlockNumber:      log.BlockNumber,
@@ -89,19 +89,19 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 		if ofInterest {
 			var err error
 			pBal := new(base.Wei)
-			if pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
+			if pBal, err = conn.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
 				return s, err
 			}
 			s.PrevBal = *pBal
 
 			bBal := new(base.Wei)
-			if bBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
+			if bBal, err = conn.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
 				return s, err
 			}
 			s.BegBal = *bBal
 
 			eBal := new(base.Wei)
-			if eBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
+			if eBal, err = conn.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
 				return s, err
 			}
 			s.EndBal = *eBal

@@ -787,11 +787,10 @@ func (s *Statement) DebugStatement(ctx Ledgerer) {
 	logger.TestLog(true, "End of trial balance report")
 }
 
-func isZero(val *base.Wei) bool {
-	return val.Cmp(base.NewWei(0)) == 0
-}
-
 func reportE(msg string, val *base.Wei) {
+	isZero := func(val *base.Wei) bool {
+		return val.Cmp(base.NewWei(0)) == 0
+	}
 	logger.TestLog(!isZero(val), msg, val.ToEtherStr(18))
 }
 

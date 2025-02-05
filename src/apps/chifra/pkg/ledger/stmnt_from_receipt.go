@@ -15,12 +15,12 @@ func (l *Ledger) getStatementsFromReceipt(conn *rpc.Connection, filter *filter.A
 
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 	for _, log := range receipt.Logs {
-		addrArray := []base.Address{l.AccountFor}
+		addrArray := []base.Address{l.accountFor}
 		if filter.ApplyLogFilter(&log, addrArray) && l.assetOfInterest(log.Address) {
 			if statement, err := l.getStatementsFromLog(conn, &log); err != nil {
 				return statements, err
 			} else {
-				if statement.Sender == l.AccountFor || statement.Recipient == l.AccountFor {
+				if statement.Sender == l.accountFor || statement.Recipient == l.accountFor {
 					add := !l.NoZero || statement.IsMaterial()
 					if add {
 						statements = append(statements, statement)
