@@ -106,6 +106,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 			} else {
 				logger.Info(report.Report(isSnap, file.FileSize(chunkPath)))
 			}
+			// NOTIFY CODE
 			if err = bm.opts.NotifyChunkWritten(chunk, chunkPath); err != nil {
 				return err
 			}
@@ -152,6 +153,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
 	bm.report(len(blocks), int(bm.PerChunk()), nChunks, nAppsNow, nAppsFound, nAddrsFound)
 
+	// NOTIFY CODE
 	if bm.opts.Notify {
 		if err := Notify(notify.Notification[string]{
 			Msg:     notify.MessageStageUpdated,

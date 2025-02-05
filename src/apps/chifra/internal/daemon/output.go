@@ -89,6 +89,7 @@ func (opts *DaemonOptions) DaemonInternal(rCtx *output.RenderCtx) error {
 
 	// Start listening to the web sockets
 	RunWebsocketPool()
+
 	// Start listening for requests
 	logger.Fatal(http.ListenAndServe(opts.Url, NewRouter(opts.Silent)))
 

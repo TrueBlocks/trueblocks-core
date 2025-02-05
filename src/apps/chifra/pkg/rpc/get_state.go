@@ -157,14 +157,34 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 
 // GetBalanceAt returns a balance for an address at a block
 func (conn *Connection) GetBalanceAt(addr base.Address, bn base.Blknum) (*base.Wei, error) {
+	// var ok bool
+	var balance *base.Wei
+
+	// key := fmt.Sprintf("%s|%d", addr.Hex(), bn)
+	// conn.cacheMutex.Lock()
+	// if balance, ok = conn.balanceCache[key]; ok {
+	//	conn.cacheMutex.Unlock()
+	//	return balance, nil
+	// }
+	// conn.cacheMutex.Unlock()
+
 	if ec, err := conn.getClient(); err != nil {
 		var zero base.Wei
 		return &zero, err
 	} else {
 		defer ec.Close()
-		ret, err := ec.BalanceAt(context.Background(), addr.Common(), base.BiFromBn(bn))
-		return (*base.Wei)(ret), err
+		if ret, err := ec.BalanceAt(context.Background(), addr.Common(), base.BiFromBn(bn)); err != nil {
+			return (*base.Wei)(ret), err
+		} else {
+			balance = (*base.Wei)(ret)
+		}
 	}
+
+	// conn.cacheMutex.Lock()
+	// conn.balanceCache[key] = balance
+	// conn.cacheMutex.Unlock()
+
+	return balance, nil
 }
 
 func (conn *Connection) getTypeNonProxy(address base.Address, bn base.Blknum) string {

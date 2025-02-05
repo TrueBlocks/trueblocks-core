@@ -47,7 +47,7 @@ func SetTestMode(onOff bool) {
 }
 
 // TestLog is used to print log lines during testing only
-func TestLog(notDefault bool, a ...interface{}) {
+var TestLog = func(notDefault bool, a ...interface{}) {
 	if !testModeSet {
 		testModeSet = true
 		testMode = os.Getenv("TEST_MODE") == "true"

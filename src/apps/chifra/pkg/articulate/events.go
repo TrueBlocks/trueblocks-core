@@ -1,25 +1,12 @@
 package articulate
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// transferTopic is here because these three topics make up almost all of the logs in the entire history
-// of the chain, we get significant speed-ups if we handle these items without
-// regular processing.
-var transferTopic = base.HexToHash(
-	"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-)
-var ensTransferTopic = base.HexToHash(
-	"0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266",
-)
-var approvalTopic = base.HexToHash(
-	"0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-)
-
 func parseTransferEvent(log *types.Log) (function *types.Function) {
-	if len(log.Topics) < 3 || log.Topics[0] != transferTopic {
+	if len(log.Topics) < 3 || log.Topics[0] != topics.TransferTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
 		// TODO: attempt both with and without indexed parameters. See issues/1366.
@@ -29,7 +16,7 @@ func parseTransferEvent(log *types.Log) (function *types.Function) {
 	function = &types.Function{}
 	function.Name = "Transfer"
 	function.FunctionType = "event"
-	function.Encoding = transferTopic.Hex()
+	function.Encoding = topics.TransferTopic.Hex()
 	function.Inputs = []types.Parameter{
 		{
 			Name:          "_from",
@@ -51,7 +38,7 @@ func parseTransferEvent(log *types.Log) (function *types.Function) {
 }
 
 func parseEnsTransferEvent(log *types.Log) (function *types.Function) {
-	if len(log.Topics) < 2 || log.Topics[0] != ensTransferTopic {
+	if len(log.Topics) < 2 || log.Topics[0] != topics.EnsTransferTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
 		// TODO: attempt both with and without indexed parameters. See issues/1366.
@@ -61,7 +48,7 @@ func parseEnsTransferEvent(log *types.Log) (function *types.Function) {
 	function = &types.Function{}
 	function.Name = "Transfer"
 	function.FunctionType = "event"
-	function.Encoding = ensTransferTopic.Hex()
+	function.Encoding = topics.EnsTransferTopic.Hex()
 	function.Inputs = []types.Parameter{
 		{
 			Name:          "_node",
@@ -78,7 +65,7 @@ func parseEnsTransferEvent(log *types.Log) (function *types.Function) {
 }
 
 func parseApprovalEvent(log *types.Log) (function *types.Function) {
-	if len(log.Topics) < 3 || log.Topics[0] != approvalTopic {
+	if len(log.Topics) < 3 || log.Topics[0] != topics.ApprovalTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
 		// TODO: attempt both with and without indexed parameters. See issues/1366.
@@ -88,7 +75,7 @@ func parseApprovalEvent(log *types.Log) (function *types.Function) {
 	function = &types.Function{}
 	function.Name = "Approval"
 	function.FunctionType = "event"
-	function.Encoding = approvalTopic.Hex()
+	function.Encoding = topics.ApprovalTopic.Hex()
 	function.Inputs = []types.Parameter{
 		{
 			Name:          "_owner",

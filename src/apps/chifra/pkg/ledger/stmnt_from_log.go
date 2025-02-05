@@ -8,30 +8,27 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-)
-
-var transferTopic = base.HexToHash(
-	"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
 )
 
 var ErrNonIndexedTransfer = fmt.Errorf("non-indexed transfer")
 
 // getStatementsFromLog returns a statement from a given log
 func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (types.Statement, error) {
-	if logIn.Topics[0] != transferTopic {
+	if logIn.Topics[0] != topics.TransferTopic {
 		// Not a transfer
 		return types.Statement{}, nil
 	}
 
-	if log, err := l.normalizeTransfer(logIn); err != nil {
+	if log, err := l.normalizeLog(logIn); err != nil {
 		return types.Statement{}, err
 
 	} else {
 		sym := log.Address.Prefix(6)
 		decimals := base.Value(18)
-		name := l.Names[log.Address]
+		name := l.names[log.Address]
 		if name.Address == log.Address {
 			if name.Symbol != "" {
 				sym = name.Symbol
@@ -52,19 +49,19 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 		ofInterest := false
 
 		// Do not collapse, may be both
-		if l.AccountFor == sender {
+		if l.accountFor == sender {
 			amountOut = *amt
 			ofInterest = true
 		}
 
 		// Do not collapse, may be both
-		if l.AccountFor == recipient {
+		if l.accountFor == recipient {
 			amountIn = *amt
 			ofInterest = true
 		}
 
 		s := types.Statement{
-			AccountedFor:     l.AccountFor,
+			AccountedFor:     l.accountFor,
 			Sender:           sender,
 			Recipient:        recipient,
 			BlockNumber:      log.BlockNumber,
@@ -81,33 +78,51 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 			AmountOut:        amountOut,
 		}
 
-		// TODO: BOGUS PERF - WE HIT GETBALANCE THREE TIMES FOR EACH APPEARANCE. SPIN THROUGH ONCE
-		// TODO: AND CACHE RESULTS IN MEMORY, BUT BE CAREFUL OF MULTIPLE LOGS PER BLOCK (OR TRANSACTION)
-		key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
-		ctx := l.Contexts[key]
+		key := l.getAssetContextKey(log.BlockNumber, log.TransactionIndex, s.AccountedFor)
+		var ctx *assetContext
+		var exists bool
+		if ctx, exists = l.assetContexts[key]; !exists {
+			return s, fmt.Errorf("no context for %s", key)
+		}
 
 		if ofInterest {
 			var err error
-			pBal := new(base.Wei)
-			if pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
-				return s, err
+
+			// Previous balance:
+			var pBal *base.Wei
+			if (ctx.Recon() & (types.SameSame | types.SameDiff | types.DiffSame)) != 0 {
+				pBal, err = conn.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Prev()))
+				if err != nil || pBal == nil {
+					return s, err
+				}
+			} else {
+				pBal, err = conn.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Prev()))
+				if err != nil || pBal == nil {
+					return s, err
+				}
 			}
 			s.PrevBal = *pBal
 
-			bBal := new(base.Wei)
-			if bBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
-				return s, err
+			var bBal *base.Wei
+			if (ctx.Recon() & (types.SameSame | types.SameDiff | types.DiffSame)) != 0 {
+				bBal = pBal
+			} else {
+				bBal, err = conn.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Cur()-1))
+				if err != nil || bBal == nil {
+					return s, err
+				}
 			}
 			s.BegBal = *bBal
 
 			eBal := new(base.Wei)
-			if eBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
+			eBal, err = conn.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Cur()))
+			if err != nil || eBal == nil {
 				return s, err
 			}
 			s.EndBal = *eBal
 
 			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
-			if !l.trialBalance("token", &s) {
+			if !l.trialBalance(trialBalToken, &s) {
 				if !utils.IsFuzzing() {
 					logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
 				}
@@ -120,21 +135,4 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 
 		return s, nil
 	}
-}
-
-func (l *Ledger) normalizeTransfer(log *types.Log) (*types.Log, error) {
-	if len(log.Topics) < 3 {
-		// Transfer(address _from, address _to, uint256 _tokenId) - no indexed topics
-		// Transfer(address indexed _from, address indexed _to, uint256 _value) - two indexed topics
-		// Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId) - three indexed topics
-		// TODO: This may be a transfer. Returning here is wrong. What this means is that
-		// TODO:the some of the transfer's data is not indexed. Too short topics happens
-		// TODO: (sometimes) because the ABI says that the data is not index, but it is
-		// TODO: or visa versa. In either case, we get the same topic0. We need to
-		// TODO: attempt both with and without indexed parameters. See issues/1366.
-		// TODO: We could fix this and call back in recursively...
-		return nil, ErrNonIndexedTransfer
-	}
-
-	return log, nil
 }
