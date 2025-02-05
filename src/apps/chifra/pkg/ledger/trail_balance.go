@@ -9,12 +9,12 @@ import (
 // trialBalance returns true of the reconciliation balances, false otherwise. It also prints the trial balance to the console.
 func (l *Ledger) trialBalance(reason string, s *types.Statement) bool {
 	key := l.ctxKey(s.BlockNumber, s.TransactionIndex)
-	ctx := l.Contexts[key]
+	ctx := l.contexts[key]
 
 	s.ReconType = ctx.ReconType
 	s.AssetType = reason
 
-	logger.TestLog(l.TestMode, "Start of trial balance report")
+	logger.TestLog(l.testMode, "Start of trial balance report")
 
 	// TODO: BOGUS PERF
 	var okay bool
@@ -26,10 +26,10 @@ func (l *Ledger) trialBalance(reason string, s *types.Statement) bool {
 
 	// TODO: BOGUS PERF
 	if s.IsMaterial() {
-		s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(l.Conn, s)
+		s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(l.connection, s)
 	}
 
-	if l.TestMode {
+	if l.testMode {
 		s.DebugStatement(ctx)
 	}
 

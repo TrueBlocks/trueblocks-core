@@ -31,7 +31,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 	} else {
 		sym := log.Address.Prefix(6)
 		decimals := base.Value(18)
-		name := l.Names[log.Address]
+		name := l.names[log.Address]
 		if name.Address == log.Address {
 			if name.Symbol != "" {
 				sym = name.Symbol
@@ -84,7 +84,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 		// TODO: BOGUS PERF - WE HIT GETBALANCE THREE TIMES FOR EACH APPEARANCE. SPIN THROUGH ONCE
 		// TODO: AND CACHE RESULTS IN MEMORY, BUT BE CAREFUL OF MULTIPLE LOGS PER BLOCK (OR TRANSACTION)
 		key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
-		ctx := l.Contexts[key]
+		ctx := l.contexts[key]
 
 		if ofInterest {
 			var err error

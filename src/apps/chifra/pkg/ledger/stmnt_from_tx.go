@@ -34,7 +34,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
 	key := l.ctxKey(trans.BlockNumber, trans.TransactionIndex)
-	ctx := l.Contexts[key]
+	ctx := l.contexts[key]
 
 	if l.assetOfInterest(base.FAKE_ETH_ADDRESS) {
 		// TODO: We ignore errors in the next few lines, but we should not
@@ -100,19 +100,19 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 			}
 		}
 
-		if l.AsEther {
+		if l.asEther {
 			ret.AssetSymbol = "ETH"
 		}
 
-		if !l.UseTraces && l.trialBalance("eth", &ret) {
+		if !l.useTraces && l.trialBalance("eth", &ret) {
 			if ret.IsMaterial() {
 				statements = append(statements, ret)
 			} else {
 				logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
 			}
 		} else {
-			if !l.UseTraces {
-				logger.TestLog(!l.UseTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), "need to decend into traces")
+			if !l.useTraces {
+				logger.TestLog(!l.useTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), "need to decend into traces")
 			}
 			if traceStatements, err := l.getStatementsFromTraces(conn, trans, &ret); err != nil {
 				if !utils.IsFuzzing() {
@@ -125,7 +125,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	}
 
 	if receiptStatements, err := l.getStatementsFromReceipt(conn, filter, trans.Receipt); err != nil {
-		logger.Warn(l.TestMode, "Error getting statement from receipt")
+		logger.Warn(l.testMode, "Error getting statement from receipt")
 	} else {
 		statements = append(statements, receiptStatements...)
 	}
