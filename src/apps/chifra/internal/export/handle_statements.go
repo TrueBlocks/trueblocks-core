@@ -20,7 +20,6 @@ import (
 )
 
 func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
-	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
 		opts.Reversed,
@@ -115,6 +114,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 
 						ledgers := ledger.NewLedger(
 							opts.Conn,
+							apps,
 							mon.Address,
 							opts.FirstBlock,
 							opts.LastBlock,
@@ -125,7 +125,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							opts.Reversed,
 							&opts.Asset,
 						)
-						_ = ledgers.SetContexts(chain, apps)
+						_ = ledgers.SetContexts(apps)
 
 						items := make([]types.Statement, 0, len(thisMap))
 						for _, tx := range txArray {

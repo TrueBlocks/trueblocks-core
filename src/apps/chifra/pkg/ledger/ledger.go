@@ -29,8 +29,7 @@ type Ledger struct {
 	theTx       *types.Transaction
 }
 
-// NewLedger returns a new empty Ledger struct
-func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
+func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
 		Conn:       conn,
 		AccountFor: acctFor,

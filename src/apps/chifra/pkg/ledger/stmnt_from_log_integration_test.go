@@ -31,6 +31,7 @@ func TestGetStatementFromLog(t *testing.T) {
 	conn := rpc.TempConnection(utils.GetTestChain())
 	l := NewLedger(
 		conn,
+		nil,
 		base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 		0,
 		base.NOPOSN,
@@ -52,7 +53,7 @@ func TestGetStatementFromLog(t *testing.T) {
 		BlockNumber:      uint32(bn),
 		TransactionIndex: uint32(txid),
 	})
-	l.SetContexts("mainnet", apps)
+	l.SetContexts(apps)
 	s, _ := l.getStatementsFromLog(conn, &log)
 	b, _ := json.MarshalIndent(s, "", "  ")
 	fmt.Println(string(b))
