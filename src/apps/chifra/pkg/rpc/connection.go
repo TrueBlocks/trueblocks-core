@@ -3,6 +3,7 @@ package rpc
 import (
 	"sort"
 	"strings"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -16,6 +17,9 @@ type Connection struct {
 	Store                *cache.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
 	LatestBlockTimestamp base.Timestamp
 	EnabledMap           map[walk.CacheType]bool
+	balanceCache         map[string]*base.Wei
+	tokenBalanceCache    map[string]*base.Wei
+	cacheMutex           sync.Mutex
 }
 
 // settings allows every command has its own options type, we have to
@@ -33,7 +37,10 @@ func NewConnection(chain string, cacheEnabled bool, caches map[walk.CacheType]bo
 		CacheEnabled: cacheEnabled,
 		EnabledMap:   caches,
 	}
-	return settings.GetRpcConnection()
+	conn := settings.GetRpcConnection()
+	conn.balanceCache = make(map[string]*base.Wei)
+	conn.tokenBalanceCache = make(map[string]*base.Wei)
+	return conn
 }
 
 func TempConnection(chain string) *Connection {
