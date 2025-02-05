@@ -150,6 +150,13 @@ func (conn *Connection) GetBalanceAtToken(token, holder base.Address, hexBlockNo
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
 		hexBlockNo = fmt.Sprintf("0x%x", base.MustParseUint64(hexBlockNo))
 	}
+	// key := fmt.Sprintf("%s|%s|%s", token.Hex(), holder.Hex(), hexBlockNo)
+	// conn.cacheMutex.Lock()
+	// if balance, ok := conn.tokenBalanceCache[key]; ok {
+	// 	conn.cacheMutex.Unlock()
+	// 	return balance, nil
+	// }
+	// conn.cacheMutex.Unlock()
 
 	payloads := []query.BatchPayload{{
 		Key: "balance",
@@ -170,9 +177,16 @@ func (conn *Connection) GetBalanceAtToken(token, holder base.Address, hexBlockNo
 		return nil, err
 	}
 
+	var balance *base.Wei
 	if output["balance"] == nil {
-		return base.NewWei(0), nil
+		balance = base.NewWei(0)
+	} else {
+		balance = base.HexToWei(*output["balance"])
 	}
 
-	return base.HexToWei(*output["balance"]), nil
+	// conn.cacheMutex.Lock()
+	// conn.tokenBalanceCache[key] = balance
+	// conn.cacheMutex.Unlock()
+
+	return balance, nil
 }

@@ -139,7 +139,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	}
 
 	if receiptStatements, err := l.getStatementsFromReceipt(conn, filter, trans.Receipt); err != nil {
-		logger.Warn(l.testMode, "Error getting statement from receipt")
+		// logger.Warn("Error getting statement from receipt", err)
 	} else {
 		statements = append(statements, receiptStatements...)
 	}
