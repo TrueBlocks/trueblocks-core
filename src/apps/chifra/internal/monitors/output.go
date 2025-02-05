@@ -82,8 +82,6 @@ func (opts *MonitorsOptions) MonitorsInternal(rCtx *output.RenderCtx) error {
 		err = opts.HandleClean(rCtx)
 	} else if opts.List {
 		err = opts.HandleList(rCtx)
-	} else if opts.Watch {
-		err = opts.HandleWatch(rCtx)
 	} else if opts.anyCrud() {
 		err = opts.HandleCrud(rCtx)
 	} else {
