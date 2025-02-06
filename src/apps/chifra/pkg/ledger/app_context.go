@@ -87,10 +87,10 @@ func (l *Ledger) ctxKey(bn base.Blknum, txid base.Txnum) ledgerContextKey {
 
 const maxTestingBlock = 17000000
 
-// SetContexts visits the list of appearances and notes the block numbers of the next and previous
+// setContexts visits the list of appearances and notes the block numbers of the next and previous
 // appearance's and if they are the same or different. Because balances are only available per block,
 // we must know this information to be able to calculate the correct post-tx balance.
-func (l *Ledger) SetContexts(apps []types.Appearance) error {
+func (l *Ledger) setContexts(apps []types.Appearance) error {
 	for i := 0; i < len(apps); i++ {
 		cur := base.Blknum(apps[i].BlockNumber)
 		prev := base.Blknum(apps[base.Max(1, i)-1].BlockNumber)

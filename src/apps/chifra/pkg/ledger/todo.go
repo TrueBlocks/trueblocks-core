@@ -1,83 +1,6 @@
 package ledger
 
-import (
-	"fmt"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-)
-
-// TODO: Two things to note. (1) if balances were part of this structure, we could fill those
-// TODO: balances in a concurrent way before spinning through the appearances. And (2) if we did that
-// TODO: prior to doing the accounting, we could easily travers in reverse order.
-
-// Ledger is a structure that carries enough information to complate a reconciliation
-type Ledger struct {
-	Chain       string
-	AccountFor  base.Address
-	FirstBlock  base.Blknum
-	LastBlock   base.Blknum
-	Names       map[base.Address]types.Name
-	TestMode    bool
-	Contexts    map[ledgerContextKey]*ledgerContext
-	AsEther     bool
-	NoZero      bool
-	Reversed    bool
-	UseTraces   bool
-	Conn        *rpc.Connection
-	assetFilter []base.Address
-	theTx       *types.Transaction
-}
-
-// NewLedger returns a new empty Ledger struct
-func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
-	l := &Ledger{
-		Conn:       conn,
-		AccountFor: acctFor,
-		FirstBlock: fb,
-		LastBlock:  lb,
-		Contexts:   make(map[ledgerContextKey]*ledgerContext),
-		AsEther:    asEther,
-		TestMode:   testMode,
-		NoZero:     noZero,
-		Reversed:   reversed,
-		UseTraces:  useTraces,
-	}
-
-	if assetFilters != nil {
-		l.assetFilter = make([]base.Address, len(*assetFilters))
-		for i, addr := range *assetFilters {
-			l.assetFilter[i] = base.HexToAddress(addr)
-		}
-	} else {
-		l.assetFilter = []base.Address{}
-	}
-
-	parts := types.Custom | types.Prefund | types.Regular
-	l.Names, _ = names.LoadNamesMap(conn.Chain, parts, []string{})
-	if err := l.setContexts(apps); err != nil {
-		fmt.Println("Error setting contexts:", err)
-	}
-
-	return l
-}
-
-// assetOfInterest returns true if the asset filter is empty or the asset matches
-func (l *Ledger) assetOfInterest(needle base.Address) bool {
-	if len(l.assetFilter) == 0 {
-		return true
-	}
-
-	for _, asset := range l.assetFilter {
-		if asset.Hex() == needle.Hex() {
-			return true
-		}
-	}
-
-	return false
-}
+// TODO: Is this comment relavant any longer?
 
 // See issue #2791 - This is the code that used to generate extra traces to make reconcilation work
 // (or, at least, similar code in `chifra export` generated these traces.
@@ -142,3 +65,4 @@ func (l *Ledger) assetOfInterest(needle base.Address) bool {
 //     }
 //     return true;
 // }
+
