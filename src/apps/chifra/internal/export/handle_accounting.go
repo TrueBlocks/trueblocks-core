@@ -21,7 +21,6 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 	opts.Articulate = true
 
 	ledgers := &ledger.Ledger{}
-	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
@@ -47,7 +46,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 						}
 					}
 
-					if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
+					if statements, err := ledgers.GetStatements(filter, tx); err != nil {
 						errorChan <- err
 
 					} else {
@@ -78,7 +77,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 					opts.Reversed,
 					&opts.Asset,
 				)
-				_ = ledgers.SetContexts(chain, apps)
+				_ = ledgers.SetContexts(apps)
 
 				for _, app := range apps {
 					if err := visitAppearance(&app); err != nil {

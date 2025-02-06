@@ -7,7 +7,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -19,7 +18,7 @@ var transferTopic = base.HexToHash(
 var ErrNonIndexedTransfer = fmt.Errorf("non-indexed transfer")
 
 // getStatementsFromLog returns a statement from a given log
-func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (types.Statement, error) {
+func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error) {
 	if logIn.Topics[0] != transferTopic {
 		// Not a transfer
 		return types.Statement{}, nil
@@ -89,19 +88,19 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 		if ofInterest {
 			var err error
 			pBal := new(base.Wei)
-			if pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
+			if pBal, err = l.Conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
 				return s, err
 			}
 			s.PrevBal = *pBal
 
 			bBal := new(base.Wei)
-			if bBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
+			if bBal, err = l.Conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
 				return s, err
 			}
 			s.BegBal = *bBal
 
 			eBal := new(base.Wei)
-			if eBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
+			if eBal, err = l.Conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
 				return s, err
 			}
 			s.EndBal = *eBal

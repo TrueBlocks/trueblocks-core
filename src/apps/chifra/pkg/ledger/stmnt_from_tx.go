@@ -7,25 +7,24 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetStatements returns a statement from a given transaction
-func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	// We need this below...
 	l.theTx = trans
 
-	if false && conn.StoreReadable() {
+	if false && l.Conn.StoreReadable() {
 		// walk.Cache_Statements
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
 			Address:          l.AccountFor,
 		}
-		if err := conn.Store.Read(statementGroup, nil); err == nil {
+		if err := l.Conn.Store.Read(statementGroup, nil); err == nil {
 			return statementGroup.Statements, nil
 		}
 	}
@@ -39,12 +38,12 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	if l.assetOfInterest(base.FAKE_ETH_ADDRESS) {
 		// TODO: We ignore errors in the next few lines, but we should not
 		// TODO: BOGUS PERF - This greatly increases the number of times we call into eth_getBalance which is quite slow
-		prevBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.PrevBlock)
+		prevBal, _ := l.Conn.GetBalanceAt(l.AccountFor, ctx.PrevBlock)
 		if trans.BlockNumber == 0 {
 			prevBal = new(base.Wei)
 		}
-		begBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock-1)
-		endBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock)
+		begBal, _ := l.Conn.GetBalanceAt(l.AccountFor, ctx.CurBlock-1)
+		endBal, _ := l.Conn.GetBalanceAt(l.AccountFor, ctx.CurBlock)
 
 		ret := types.Statement{
 			AccountedFor:     l.AccountFor,
@@ -114,7 +113,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 			if !l.UseTraces {
 				logger.TestLog(!l.UseTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), "need to decend into traces")
 			}
-			if traceStatements, err := l.getStatementsFromTraces(conn, trans, &ret); err != nil {
+			if traceStatements, err := l.getStatementsFromTraces(trans, &ret); err != nil {
 				if !utils.IsFuzzing() {
 					logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 				}
@@ -124,21 +123,21 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		}
 	}
 
-	if receiptStatements, err := l.getStatementsFromReceipt(conn, filter, trans.Receipt); err != nil {
+	if receiptStatements, err := l.getStatementsFromReceipt(filter, trans.Receipt); err != nil {
 		logger.Warn(l.TestMode, "Error getting statement from receipt")
 	} else {
 		statements = append(statements, receiptStatements...)
 	}
 
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, trans.Timestamp)
-	if false && isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Statements] {
+	isFinal := base.IsFinal(l.Conn.LatestBlockTimestamp, trans.Timestamp)
+	if false && isFinal && l.Conn.StoreWritable() && l.Conn.EnabledMap[walk.Cache_Statements] {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
 			Address:          l.AccountFor,
 			Statements:       statements,
 		}
-		_ = conn.Store.Write(statementGroup, nil)
+		_ = l.Conn.Store.Write(statementGroup, nil)
 	}
 
 	return statements, nil
