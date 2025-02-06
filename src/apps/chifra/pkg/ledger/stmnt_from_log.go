@@ -19,6 +19,11 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		return types.Statement{}, nil
 	}
 
+	if len(logIn.Topics) == 4 {
+		// an ERC721 token transfer - same topic[0], different semantics
+		return types.Statement{}, nil
+	}
+
 	if log, err := normalize.NormalizeTransferOrApproval(logIn); err != nil {
 		return types.Statement{}, err
 
