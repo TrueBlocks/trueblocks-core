@@ -23,7 +23,7 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		return types.Statement{}, nil
 	}
 
-	if log, err := normalize.NormalizeTransfer(logIn); err != nil {
+	if log, err := normalize.NormalizeTransferOrApproval(logIn); err != nil {
 		return types.Statement{}, err
 
 	} else {

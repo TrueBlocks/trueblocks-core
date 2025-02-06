@@ -10,7 +10,7 @@ import (
 var ErrNormalization = errors.New("normalization error")
 var ErrNonIndexedTransfer = fmt.Errorf("non-indexed transfer")
 
-func NormalizeTransfer(log *types.Log) (*types.Log, error) {
+func NormalizeTransferOrApproval(log *types.Log) (*types.Log, error) {
 	if len(log.Topics) < 3 {
 		// Transfer(address _from, address _to, uint256 _tokenId) - no indexed topics
 		// Transfer(address indexed _from, address indexed _to, uint256 _value) - two indexed topics
