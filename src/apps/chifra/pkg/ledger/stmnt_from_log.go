@@ -18,11 +18,10 @@ var ErrNonIndexedTransfer = fmt.Errorf("non-indexed transfer")
 // getStatementsFromLog returns a statement from a given log
 func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error) {
 	if logIn.Topics[0] != topics.TransferTopic && logIn.Topics[0] != topics.EnsTransferTopic {
-		// Not a transfer
 		return types.Statement{}, nil
 	}
 
-	if log, err := normalize.NormalizeLog(logIn); err != nil {
+	if log, err := normalize.NormalizeTransferOrApproval(logIn); err != nil {
 		return types.Statement{}, err
 
 	} else {
@@ -84,17 +83,17 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		if ofInterest {
 			var err error
 			pBal := new(base.Wei)
-				pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Prev()))
-				if err != nil || pBal == nil {
-					return s, err
-				}
+			pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Prev()))
+			if err != nil || pBal == nil {
+				return s, err
+			}
 			s.PrevBal = *pBal
 
 			bBal := new(base.Wei)
-				bBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Cur()-1))
-				if err != nil || bBal == nil {
-					return s, err
-				}
+			bBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Cur()-1))
+			if err != nil || bBal == nil {
+				return s, err
+			}
 			s.BegBal = *bBal
 
 			eBal := new(base.Wei)

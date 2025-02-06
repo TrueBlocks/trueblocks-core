@@ -19,7 +19,39 @@ func TestNormalizedLog_Standard(t *testing.T) {
 		Data: "0x00000000000000000000000000000000000000000000000000000000000003e8",
 	}
 
-	normLog, err := NormalizeLog(&log)
+	normLog, err := NormalizeTransferOrApproval(&log)
+	if err != nil {
+		t.Fatalf("unexpected error in standard case: %v", err)
+	}
+
+	fromTopic := "0x0000000000000000000000001111111111111111111111111111111111111111"
+	if !strings.EqualFold(normLog.Topics[1].Hex(), fromTopic) {
+		t.Errorf("expected normalized from topic %s, got %s", fromTopic, normLog.Topics[1])
+	}
+
+	toTopic := "0x0000000000000000000000002222222222222222222222222222222222222222"
+	if !strings.EqualFold(normLog.Topics[2].Hex(), toTopic) {
+		t.Errorf("expected normalized to topic %s, got %s", toTopic, normLog.Topics[2])
+	}
+
+	expectedVal := base.NewWei(1000)
+	gotVal := base.HexToWei(normLog.Data)
+	if gotVal.Cmp(expectedVal) != 0 {
+		t.Errorf("expected value %s, got %s", expectedVal.Text(10), gotVal.Text(10))
+	}
+}
+
+func TestNormalizedLog_Approval(t *testing.T) {
+	log := types.Log{
+		Topics: []base.Hash{
+			topics.ApprovalTopic,
+			base.HexToHash("0x0000000000000000000000001111111111111111111111111111111111111111"),
+			base.HexToHash("0x0000000000000000000000002222222222222222222222222222222222222222"),
+		},
+		Data: "0x00000000000000000000000000000000000000000000000000000000000003e8",
+	}
+
+	normLog, err := NormalizeTransferOrApproval(&log)
 	if err != nil {
 		t.Fatalf("unexpected error in standard case: %v", err)
 	}
@@ -57,7 +89,7 @@ func TestNormalizedLog_TwoTopics(t *testing.T) {
 		Data: data,
 	}
 
-	normLog, err := NormalizeLog(&log)
+	normLog, err := NormalizeTransferOrApproval(&log)
 	if err != nil {
 		t.Fatalf("unexpected error in two-topic case: %v", err)
 	}
@@ -90,7 +122,7 @@ func TestNormalizedLog_NonStandard(t *testing.T) {
 		Data: data,
 	}
 
-	normLog, err := NormalizeLog(&log)
+	normLog, err := NormalizeTransferOrApproval(&log)
 	if err != nil {
 		t.Fatalf("unexpected error in non-standard case: %v", err)
 	}
@@ -125,7 +157,7 @@ func TestNormalizedLog_UnrecognizedFormat(t *testing.T) {
 		Data: "0x00000000000000000000000000000000000000000000000000000000000003e8",
 	}
 
-	_, err := NormalizeLog(&log)
+	_, err := NormalizeTransferOrApproval(&log)
 	if err == nil {
 		t.Fatal("expected error for unrecognized event format, got nil")
 	}
