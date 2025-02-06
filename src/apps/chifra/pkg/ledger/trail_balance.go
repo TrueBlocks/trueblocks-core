@@ -9,13 +9,25 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// trialBalance returns true of the reconciliation balances, false otherwise. It also prints the trial balance to the console.
-func (l *Ledger) trialBalance(reason string, s *types.Statement) bool {
+type trialBalType string
+
+const (
+	trialBalEth      trialBalType = "eth"
+	trialBalTraceEth trialBalType = "trace-eth"
+	trialBalToken    trialBalType = "token"
+)
+
+// trialBalance returns true of the reconciliation balances, false otherwise. If the statement
+// does not reconcile, it tries to repair it in two ways (a) for null transfers and (b) for
+// any other reason. If that works and the statement is material (money moved in some way), the
+// function tries to price the asset. it then prints optional debugging information. Note that
+// the statement may be modified in this function.
+func (l *Ledger) trialBalance(reason trialBalType, s *types.Statement) bool {
 	key := l.ctxKey(s.BlockNumber, s.TransactionIndex)
 	ctx := l.contexts[key]
 
 	s.ReconType = ctx.ReconType
-	s.AssetType = reason
+	s.AssetType = string(reason)
 
 	logger.TestLog(l.testMode, "Start of trial balance report")
 
