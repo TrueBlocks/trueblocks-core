@@ -80,7 +80,7 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
 		ctx := l.contexts[key]
 
-		if ofInterest {
+		if ctx != nil && ofInterest {
 			var err error
 			pBal := new(base.Wei)
 			pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Prev()))

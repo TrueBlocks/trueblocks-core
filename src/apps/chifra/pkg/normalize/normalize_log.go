@@ -13,10 +13,7 @@ import (
 var ErrNormalization = errors.New("normalization error")
 
 func NormalizeTransferOrApproval(log *types.Log) (*types.Log, error) {
-	if len(log.Topics) == 0 {
-		return log, fmt.Errorf("log has no topics: %w", ErrNormalization)
-	}
-	if log.Topics[0] != topics.TransferTopic && log.Topics[0] != topics.EnsTransferTopic && log.Topics[0] != topics.ApprovalTopic {
+	if len(log.Topics) == 0 || !topics.KnownTopics[log.Topics[0]] {
 		return log, fmt.Errorf("unrecognized transfer type: %w", ErrNormalization)
 	}
 
@@ -38,7 +35,7 @@ func NormalizeTransferOrApproval(log *types.Log) (*types.Log, error) {
 		}
 		addr1 = base.HexToAddress(log.Topics[1].Hex())
 		addr2 = base.HexToAddress("0x" + data[:64])
-		value = base.HexToWei(data[64:128])
+		value = base.HexToWei("0x" + string(data[64:128]))
 
 	} else if len(log.Topics) == 1 {
 		// Handle a third format if it exists (again, likely only for transfers)
@@ -53,8 +50,6 @@ func NormalizeTransferOrApproval(log *types.Log) (*types.Log, error) {
 		return log, fmt.Errorf("unrecognized event log format: %w", ErrNormalization)
 	}
 
-	// Build the normalized log. We can reuse the same topics for either event,
-	// but note that the first topic will differ depending on whether it's a Transfer or Approval.
 	newLog := types.Log{
 		Topics: []base.Hash{
 			log.Topics[0], // This will be either TransferTopic or ApprovalTopic.

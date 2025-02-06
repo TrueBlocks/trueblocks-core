@@ -1,6 +1,8 @@
 package ledger
 
 import (
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -56,7 +58,9 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 
 	parts := types.Custom | types.Prefund | types.Regular
 	l.names, _ = names.LoadNamesMap(conn.Chain, parts, []string{})
-	_ = l.setContexts(apps)
+	if err := l.setContexts(apps); err != nil {
+		fmt.Println("Error setting contexts:", err)
+	}
 
 	return l
 }
