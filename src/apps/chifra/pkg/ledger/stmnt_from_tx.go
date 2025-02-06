@@ -17,7 +17,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	// We need this below...
 	l.theTx = trans
 
-	if false && l.connection.StoreReadable() {
+	if l.connection.StoreReadable() {
 		// walk.Cache_Statements
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
@@ -124,7 +124,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	}
 
 	if receiptStatements, err := l.getStatementsFromReceipt(filter, trans.Receipt); err != nil {
-		logger.Warn(l.testMode, "Error getting statement from receipt")
+		logger.Warn("Error getting statement from receipt", err)
 	} else {
 		statements = append(statements, receiptStatements...)
 	}
