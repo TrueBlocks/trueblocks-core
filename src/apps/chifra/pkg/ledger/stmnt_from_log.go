@@ -7,6 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -21,7 +22,7 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		return types.Statement{}, nil
 	}
 
-	if log, err := l.normalizeTransfer(logIn); err != nil {
+	if log, err := normalize.NormalizeLog(logIn); err != nil {
 		return types.Statement{}, err
 
 	} else {
@@ -116,21 +117,4 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 
 		return s, nil
 	}
-}
-
-func (l *Ledger) normalizeTransfer(log *types.Log) (*types.Log, error) {
-	if len(log.Topics) < 3 {
-		// Transfer(address _from, address _to, uint256 _tokenId) - no indexed topics
-		// Transfer(address indexed _from, address indexed _to, uint256 _value) - two indexed topics
-		// Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId) - three indexed topics
-		// TODO: This may be a transfer. Returning here is wrong. What this means is that
-		// TODO:the some of the transfer's data is not indexed. Too short topics happens
-		// TODO: (sometimes) because the ABI says that the data is not index, but it is
-		// TODO: or visa versa. In either case, we get the same topic0. We need to
-		// TODO: attempt both with and without indexed parameters. See issues/1366.
-		// TODO: We could fix this and call back in recursively...
-		return nil, ErrNonIndexedTransfer
-	}
-
-	return log, nil
 }

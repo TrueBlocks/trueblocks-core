@@ -19,7 +19,7 @@ func NewWei(x int64) *Wei {
 
 func NewWeiStr(x string) *Wei {
 	val := big.NewInt(0)
-	val.SetString(x, 10)
+	val.SetString(strings.TrimPrefix(x, "0x"), 10)
 	return (*Wei)(val)
 }
 
@@ -167,4 +167,12 @@ func HexToWei(hex string) *Wei {
 		result.SetString(hex[2:], 16)
 	}
 	return result
+}
+
+func WeiToHash(wei *Wei) string {
+	b := wei.Bytes()
+	padded := make([]byte, 32)
+	copy(padded[32-len(b):], b)
+	hash := BytesToHash(padded)
+	return hash.Hex()
 }
