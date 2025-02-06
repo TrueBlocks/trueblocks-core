@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -20,7 +21,7 @@ func TestGetStatementFromLog(t *testing.T) {
 	log := types.Log{
 		Address: base.HexToAddress("0x6b175474e89094c44da98b954eedeac495271d0f"),
 		Topics: []base.Hash{
-			transferTopic,
+			topics.TransferTopic,
 			base.HexToHash("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 			base.HexToHash("0x1212121212121212121212121212121212121212"),
 		},
