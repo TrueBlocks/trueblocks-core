@@ -10,24 +10,22 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-type ledgerContextKey string
+type appContextKey string
 
-// ledgerContext is a struct to hold the context of a reconciliation (i.e., its
+// appContext is a struct to hold the context of a reconciliation (i.e., its
 // previous and next blocks and whether they are different)
-type ledgerContext struct {
+type appContext struct {
 	PrevBlock base.Blknum
 	CurBlock  base.Blknum
 	NextBlock base.Blknum
 	ReconType types.ReconType
 }
 
-func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *ledgerContext {
+func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *appContext {
 	_ = reversed // Silences unused parameter warning
 
 	if prev > cur || cur > next {
-		return &ledgerContext{
-			ReconType: types.Invalid,
-		}
+		return &appContext{ReconType: types.Invalid}
 	}
 
 	reconType := types.Invalid
@@ -58,7 +56,7 @@ func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed boo
 		reconType |= types.Last
 	}
 
-	return &ledgerContext{
+	return &appContext{
 		PrevBlock: prev,
 		CurBlock:  cur,
 		NextBlock: next,
@@ -67,22 +65,30 @@ func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed boo
 	}
 }
 
-func (c *ledgerContext) Prev() base.Blknum {
+func (c *appContext) Prev() base.Blknum {
 	return c.PrevBlock
 }
 
-func (c *ledgerContext) Cur() base.Blknum {
+func (c *appContext) Cur() base.Blknum {
 	return c.CurBlock
 }
 
-func (c *ledgerContext) Next() base.Blknum {
+func (c *appContext) Next() base.Blknum {
 	return c.NextBlock
 }
 
-func (l *Ledger) ctxKey(bn base.Blknum, txid base.Txnum) ledgerContextKey {
+func (c *appContext) Recon() types.ReconType {
+	return c.ReconType
+}
+
+func (c *appContext) Address() base.Address {
+	return base.ZeroAddr
+}
+
+func (l *Ledger) ctxKey(bn base.Blknum, txid base.Txnum) appContextKey {
 	// TODO: Is having the context per asset necessary? Can we use Locator?
-	// return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
-	return ledgerContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
+	// return fmt.Sprintf("%s-%09d-%05d", l.accountFor.Hex(), bn, txid)
+	return appContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }
 
 const maxTestingBlock = 17000000
@@ -96,19 +102,19 @@ func (l *Ledger) setContexts(apps []types.Appearance) error {
 		prev := base.Blknum(apps[base.Max(1, i)-1].BlockNumber)
 		next := base.Blknum(apps[base.Min(i+1, len(apps)-1)].BlockNumber)
 		key := l.ctxKey(base.Blknum(apps[i].BlockNumber), base.Txnum(apps[i].TransactionIndex))
-		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.Reversed)
+		l.contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.reversed)
 	}
 	l.debugContext()
 	return nil
 }
 
 func (l *Ledger) debugContext() {
-	if !l.TestMode {
+	if !l.testMode {
 		return
 	}
 
-	keys := make([]ledgerContextKey, 0, len(l.Contexts))
-	for key := range l.Contexts {
+	keys := make([]appContextKey, 0, len(l.contexts))
+	for key := range l.contexts {
 		keys = append(keys, key)
 	}
 
@@ -119,7 +125,7 @@ func (l *Ledger) debugContext() {
 	logger.Info(strings.Repeat("-", 60))
 	logger.Info(fmt.Sprintf("Contexts (%d)", len(keys)))
 	for _, key := range keys {
-		c := l.Contexts[key]
+		c := l.contexts[key]
 		if c.CurBlock > maxTestingBlock {
 			continue
 		}

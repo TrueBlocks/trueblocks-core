@@ -29,7 +29,7 @@ func (l *Ledger) getStatementsFromTraces(trans *types.Transaction, s *types.Stat
 	ret.CorrectingOut.SetUint64(0)
 	ret.SelfDestructOut.SetUint64(0)
 
-	if traces, err := l.Conn.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
+	if traces, err := l.connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 		return statements, err
 
 	} else {
@@ -102,7 +102,7 @@ func (l *Ledger) getStatementsFromTraces(trans *types.Transaction, s *types.Stat
 		}
 	}
 
-	if l.trialBalance("trace-eth", &ret) {
+	if l.trialBalance(trialBalTraceEth, &ret) {
 		if ret.IsMaterial() {
 			statements = append(statements, ret)
 		} else {

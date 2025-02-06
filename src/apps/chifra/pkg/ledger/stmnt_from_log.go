@@ -8,18 +8,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var transferTopic = base.HexToHash(
-	"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-)
-
 // getStatementsFromLog returns a statement from a given log
 func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error) {
-	if logIn.Topics[0] != transferTopic {
-		// Not a transfer
+	if logIn.Topics[0] != topics.TransferTopic {
 		return types.Statement{}, nil
 	}
 
@@ -29,7 +25,7 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 	} else {
 		sym := log.Address.Prefix(6)
 		decimals := base.Value(18)
-		name := l.Names[log.Address]
+		name := l.names[log.Address]
 		if name.Address == log.Address {
 			if name.Symbol != "" {
 				sym = name.Symbol
@@ -50,19 +46,19 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		ofInterest := false
 
 		// Do not collapse, may be both
-		if l.AccountFor == sender {
+		if l.accountFor == sender {
 			amountOut = *amt
 			ofInterest = true
 		}
 
 		// Do not collapse, may be both
-		if l.AccountFor == recipient {
+		if l.accountFor == recipient {
 			amountIn = *amt
 			ofInterest = true
 		}
 
 		s := types.Statement{
-			AccountedFor:     l.AccountFor,
+			AccountedFor:     l.accountFor,
 			Sender:           sender,
 			Recipient:        recipient,
 			BlockNumber:      log.BlockNumber,
@@ -79,33 +75,31 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 			AmountOut:        amountOut,
 		}
 
-		// TODO: BOGUS PERF - WE HIT GETBALANCE THREE TIMES FOR EACH APPEARANCE. SPIN THROUGH ONCE
-		// TODO: AND CACHE RESULTS IN MEMORY, BUT BE CAREFUL OF MULTIPLE LOGS PER BLOCK (OR TRANSACTION)
 		key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
-		ctx := l.Contexts[key]
+		ctx := l.contexts[key]
 
 		if ofInterest {
 			var err error
 			pBal := new(base.Wei)
-			if pBal, err = l.Conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
+			if pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
 				return s, err
 			}
 			s.PrevBal = *pBal
 
 			bBal := new(base.Wei)
-			if bBal, err = l.Conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
+			if bBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
 				return s, err
 			}
 			s.BegBal = *bBal
 
 			eBal := new(base.Wei)
-			if eBal, err = l.Conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
+			if eBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
 				return s, err
 			}
 			s.EndBal = *eBal
 
 			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
-			if !l.trialBalance("token", &s) {
+			if !l.trialBalance(trialBalToken, &s) {
 				if !utils.IsFuzzing() {
 					logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
 				}

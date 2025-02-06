@@ -2,7 +2,7 @@ package topics
 
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 
-// transferTopic is here because these three topics make up almost all of the logs in the entire history
+// TransferTopic is here because these three topics make up almost all of the logs in the entire history
 // of the chain, we get significant speed-ups if we handle these items without regular processing.
 var TransferTopic = base.HexToHash(
 	"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
