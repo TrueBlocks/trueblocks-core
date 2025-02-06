@@ -78,27 +78,28 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 			AmountOut:        amountOut,
 		}
 
-		// TODO: BOGUS PERF - WE HIT GETBALANCE THREE TIMES FOR EACH APPEARANCE. SPIN THROUGH ONCE
-		// TODO: AND CACHE RESULTS IN MEMORY, BUT BE CAREFUL OF MULTIPLE LOGS PER BLOCK (OR TRANSACTION)
 		key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
 		ctx := l.contexts[key]
 
 		if ofInterest {
 			var err error
 			pBal := new(base.Wei)
-			if pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
-				return s, err
-			}
+				pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Prev()))
+				if err != nil || pBal == nil {
+					return s, err
+				}
 			s.PrevBal = *pBal
 
 			bBal := new(base.Wei)
-			if bBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
-				return s, err
-			}
+				bBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Cur()-1))
+				if err != nil || bBal == nil {
+					return s, err
+				}
 			s.BegBal = *bBal
 
 			eBal := new(base.Wei)
-			if eBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
+			eBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Cur()))
+			if err != nil || eBal == nil {
 				return s, err
 			}
 			s.EndBal = *eBal

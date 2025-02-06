@@ -28,7 +28,7 @@ type Ledger struct {
 	connection  *rpc.Connection
 	assetFilter []base.Address
 	theTx       *types.Transaction
-	contexts    map[ledgerContextKey]*ledgerContext
+	contexts    map[appContextKey]*appContext
 }
 
 func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
@@ -42,7 +42,7 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 		noZero:     noZero,
 		reversed:   reversed,
 		useTraces:  useTraces,
-		contexts:   make(map[ledgerContextKey]*ledgerContext),
+		contexts:   make(map[appContextKey]*appContext),
 	}
 
 	if assetFilters != nil {
