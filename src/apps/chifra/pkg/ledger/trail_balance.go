@@ -1,6 +1,9 @@
 package ledger
 
 import (
+	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pricing"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -19,8 +22,8 @@ func (l *Ledger) trialBalance(reason string, s *types.Statement) bool {
 	// TODO: BOGUS PERF
 	var okay bool
 	if okay = s.Reconciled(); !okay {
-		if okay = s.CorrectForNullTransfer(l.theTx); !okay {
-			_ = s.CorrectForSomethingElse(l.theTx)
+		if okay = l.CorrectForNullTransfer(s, l.theTx); !okay {
+			_ = l.CorrectForSomethingElse(s, l.theTx)
 		}
 	}
 
@@ -31,6 +34,94 @@ func (l *Ledger) trialBalance(reason string, s *types.Statement) bool {
 
 	if l.testMode {
 		s.DebugStatement(ctx)
+	}
+
+	return s.Reconciled()
+}
+
+func isNullTransfer(s *types.Statement, tx *types.Transaction) bool {
+	lotsOfLogs := len(tx.Receipt.Logs) > 10
+	mayBeAirdrop := s.Sender.IsZero() || s.Sender == tx.To
+	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.IsMaterial()
+	ret := (lotsOfLogs || mayBeAirdrop) && noBalanceChange
+
+	// TODO: BOGUS PERF
+	// logger.Warn("Statement is not reconciled", s.AssetSymbol, "at", s.BlockNumber, s.TransactionIndex, s.LogIndex)
+	logger.TestLog(true, "A possible nullTransfer")
+	logger.TestLog(true, "  nLogs:            ", len(tx.Receipt.Logs))
+	logger.TestLog(true, "    lotsOfLogs:      -->", lotsOfLogs)
+
+	logger.TestLog(true, "  Sender.IsZero:    ", s.Sender, s.Sender.IsZero())
+	logger.TestLog(true, "  or Sender == To:  ", s.Sender == tx.To)
+	logger.TestLog(true, "    mayBeAirdrop:    -->", mayBeAirdrop)
+
+	logger.TestLog(true, "  EndBal-BegBal:    ", s.EndBal.Cmp(&s.BegBal))
+	logger.TestLog(true, "  material:         ", s.IsMaterial())
+	logger.TestLog(true, "    noBalanceChange: -->", noBalanceChange)
+
+	if !ret {
+		logger.TestLog(true, "  ---> Not a nullTransfer")
+	}
+	return ret
+}
+
+func (l *Ledger) CorrectForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
+	if !s.IsEth() {
+		if isNullTransfer(s, tx) {
+			logger.TestLog(true, "Correcting token transfer for a null transfer")
+			amt := s.TotalIn() // use totalIn since this is the amount that was faked
+			s.AmountOut = *new(base.Wei)
+			s.AmountIn = *new(base.Wei)
+			s.CorrectingIn = *amt
+			s.CorrectingOut = *amt
+			s.CorrectingReason = "null-transfer"
+		} else {
+			logger.TestLog(true, "Needs correction for token transfer")
+		}
+	} else {
+		logger.TestLog(true, "Needs correction for eth")
+	}
+	return s.Reconciled()
+}
+
+func (l *Ledger) CorrectForSomethingElse(s *types.Statement, tx *types.Transaction) bool {
+	if s.IsEth() {
+		if s.AssetType == "trace-eth" && s.ReconType&types.First != 0 && s.ReconType&types.Last != 0 {
+			if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
+				s.EndBal = *s.EndBalCalc()
+				s.CorrectingReason = "per-block-balance"
+			}
+		} else {
+			logger.TestLog(true, "Needs correction for eth")
+		}
+	} else {
+		logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
+
+		s.CorrectingIn.SetUint64(0)
+		s.CorrectingOut.SetUint64(0)
+		s.CorrectingReason = ""
+		zero := new(base.Wei).SetInt64(0)
+		cmpBegBal := s.BegBalDiff().Cmp(zero)
+		cmpEndBal := s.EndBalDiff().Cmp(zero)
+
+		if cmpBegBal > 0 {
+			s.CorrectingIn = *s.BegBalDiff()
+			s.CorrectingReason = "begbal"
+		} else if cmpBegBal < 0 {
+			s.CorrectingOut = *s.BegBalDiff()
+			s.CorrectingReason = "begbal"
+		}
+
+		if cmpEndBal > 0 {
+			n := new(base.Wei).Add(&s.CorrectingIn, s.EndBalDiff())
+			s.CorrectingIn = *n
+			s.CorrectingReason += "endbal"
+		} else if cmpEndBal < 0 {
+			n := new(base.Wei).Add(&s.CorrectingOut, s.EndBalDiff())
+			s.CorrectingOut = *n
+			s.CorrectingReason += "endbal"
+		}
+		s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
 	}
 
 	return s.Reconciled()

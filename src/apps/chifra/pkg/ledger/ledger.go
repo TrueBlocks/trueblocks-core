@@ -56,6 +56,7 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 
 	parts := types.Custom | types.Prefund | types.Regular
 	l.names, _ = names.LoadNamesMap(conn.Chain, parts, []string{})
+	_ = l.setContexts(apps)
 
 	return l
 }
@@ -74,4 +75,3 @@ func (l *Ledger) assetOfInterest(needle base.Address) bool {
 
 	return false
 }
-

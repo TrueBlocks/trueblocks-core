@@ -37,10 +37,7 @@ func NewConnection(chain string, cacheEnabled bool, caches map[walk.CacheType]bo
 		CacheEnabled: cacheEnabled,
 		EnabledMap:   caches,
 	}
-	conn := settings.GetRpcConnection()
-	conn.balanceCache = make(map[string]*base.Wei)
-	conn.tokenBalanceCache = make(map[string]*base.Wei)
-	return conn
+	return settings.GetRpcConnection()
 }
 
 func TempConnection(chain string) *Connection {
@@ -74,9 +71,11 @@ func (settings settings) GetRpcConnection() *Connection {
 	}
 
 	ret := &Connection{
-		Chain:      settings.Chain,
-		Store:      store,
-		EnabledMap: settings.EnabledMap,
+		Chain:             settings.Chain,
+		Store:             store,
+		EnabledMap:        settings.EnabledMap,
+		balanceCache:      make(map[string]*base.Wei),
+		tokenBalanceCache: make(map[string]*base.Wei),
 	}
 
 	if store != nil && !store.ReadOnly() {

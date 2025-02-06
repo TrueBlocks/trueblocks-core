@@ -3,11 +3,10 @@ package ledger
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
+func (l *Ledger) getStatementsFromTraces(trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
 	ret := *s
@@ -30,7 +29,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Tran
 	ret.CorrectingOut.SetUint64(0)
 	ret.SelfDestructOut.SetUint64(0)
 
-	if traces, err := conn.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
+	if traces, err := l.connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 		return statements, err
 
 	} else {
