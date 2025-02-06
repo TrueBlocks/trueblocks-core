@@ -81,19 +81,22 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		if ofInterest {
 			var err error
 			pBal := new(base.Wei)
-			if pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
+			pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Prev()))
+			if pBal == nil {
 				return s, err
 			}
 			s.PrevBal = *pBal
 
 			bBal := new(base.Wei)
-			if bBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
+			bBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Cur()-1))
+			if bBal == nil {
 				return s, err
 			}
 			s.BegBal = *bBal
 
 			eBal := new(base.Wei)
-			if eBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
+			eBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Cur()))
+			if eBal == nil {
 				return s, err
 			}
 			s.EndBal = *eBal

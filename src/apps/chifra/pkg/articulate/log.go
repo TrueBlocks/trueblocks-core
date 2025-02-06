@@ -87,7 +87,7 @@ func findCommonEvent(log *types.Log) (*types.Function, error) {
 		return nil, nil
 	}
 
-	if normalize, err := normalize.NormalizeTransferOrApproval(log); err != nil {
+	if normalize, err := normalize.NormalizeTransferOrApproval_Old(log); err != nil {
 		return nil, err
 
 	} else {
