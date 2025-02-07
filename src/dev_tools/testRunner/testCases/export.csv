@@ -156,6 +156,7 @@ acctgood ,both ,fast  ,export   ,apps ,acctExport ,accounting_ofx          ,y   
 acctgood ,both ,fast  ,export   ,apps ,acctExport ,accounting_tokens_1     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & articulate & accounting & last_block = 8860511 & ether & fmt = json
 acctgood ,both ,fast  ,export   ,apps ,acctExport ,accounting_tokens_2     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & articulate & accounting & last_block = 9231343 & ether & fmt = json
 acctgood ,both ,fast  ,export   ,apps ,acctExport ,statement_3_accounting  ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & last_block = 4000000 & fmt = json
+on       ,both ,fast  ,export   ,apps ,acctExport ,statement_nft           ,y    ,addrs = trueblocks.eth & accounting & statements & first_block = 8876231 & last_block = 9024186 & fmt = json
 
 # still broken
 acctgood ,both ,fast  ,export   ,apps ,acctExport ,accounting_wei_1        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & accounting & fmt = json

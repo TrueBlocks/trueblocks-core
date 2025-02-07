@@ -1,4 +1,11 @@
 export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&count&accounting
+Args: [addrs=0x001d14804b399c6ef80e64576f657660804fec0b count accounting]
+Opts: {"addrs":["0x001d14804b399c6ef80e64576f657660804fec0b"],"accounting":true,"count":true}
+Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+Accounting:  true
+Count:  true
+Caps:  cache,decache,ether
+Format:  json
 {
   "data": [
     {

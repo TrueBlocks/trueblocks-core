@@ -1,4 +1,155 @@
-export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&lastBlock=4000000&fmt=json
+export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&lastBlock=4000000
+Args: [addrs=0x08166f02313feae18bb044e7877c808b55b5bf58 accounting lastBlock=4000000]
+Opts: {"addrs":["0x08166f02313feae18bb044e7877c808b55b5bf58"],"accounting":true,"lastBlock":4000000}
+Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
+Accounting:  true
+LastBlock:  4000000
+Caps:  cache,decache,ether
+Format:  json
+------------------------------------------------------------
+Contexts (3)
+000000000-00270:          0          0       46685 genesis-diff
+000046685-00000:          0      46685       46709 diff-diff
+000046709-00000:      46685      46709       46709 diff-last
+Start of trial balance report
+Needs correction for eth
+Needs correction for eth
+Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+====> eth
+===================================================
+Previous:               0
+Current:                0
+Next:                   46685
+reconciliationType:     genesis
+assetType:              eth
+accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
+assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438269975
+blockNumber:            0.270
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0.0895 (0.0895)
+   totalIn:             1970
+   totalOut:            0
+   amountNet:           1970
+                       ======================= 
+   endBal:              1970 (0)
+   endBalCalc:          1970.0895
+--------------------------------------------------- 
+   prefundIn:           1970
+   material:            true
+   reconciled:          false
+ ^^ we need to fix this ^^
+---------------------------------------------------
+End of trial balance report
+Trial balance failed for  0x0000000000000000000000000000000000000000000000000000000000000000 need to decend into traces
+Start of trial balance report
+Needs correction for eth
+Needs correction for eth
+===================================================
+====> trace-eth
+===================================================
+Previous:               0
+Current:                0
+Next:                   46685
+reconciliationType:     genesis
+assetType:              trace-eth
+accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
+assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438269975
+blockNumber:            0.270.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0.0895 (-1969.9105)
+   totalIn:             0
+   totalOut:            0
+   amountNet:           0
+                       ======================= 
+   endBal:              1970 (0)
+   endBalCalc:          0.0895
+--------------------------------------------------- 
+   material:            false
+   reconciled:          false
+ ^^ we need to fix this ^^
+---------------------------------------------------
+End of trial balance report
+Start of trial balance report
+Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+====> eth
+===================================================
+Previous:               0
+Current:                46685
+Next:                   46709
+reconciliationType:     diff-diff
+assetType:              eth
+accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
+assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
+timestamp:              1438927408
+blockNumber:            46685.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             1970
+   begBal:              1970 (0)
+   totalIn:             0
+   totalOut:            5.0105
+   amountNet:           -5.0105
+                       ======================= 
+   endBal:              1964.9895 (0)
+   endBalCalc:          1964.9895
+--------------------------------------------------- 
+   amountOut:           5
+   gasOut:              0.0105
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+End of trial balance report
+Start of trial balance report
+Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+====> eth
+===================================================
+Previous:               46685
+Current:                46709
+Next:                   46709
+reconciliationType:     diff-last
+assetType:              eth
+accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
+assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
+timestamp:              1438927854
+blockNumber:            46709.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             1964.9895
+   begBal:              1964.9895 (0)
+   totalIn:             0
+   totalOut:            1964.9
+   amountNet:           -1964.9
+                       ======================= 
+   endBal:              0.0895 (0)
+   endBalCalc:          0.0895
+--------------------------------------------------- 
+   amountOut:           1964.8895
+   gasOut:              0.0105
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+End of trial balance report
 {
   "data": [
     {
@@ -17,12 +168,12 @@ export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&lastBlock=400
         {
           "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
           "amountIn": "0",
-          "amountNet": "1970000000000000000000",
+          "amountNet": "0",
           "amountOut": "0",
           "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "WEI",
-          "assetType": "eth",
-          "begBal": "0",
+          "assetType": "trace-eth",
+          "begBal": "89500000000000000",
           "begBalDiff": "0",
           "blockNumber": 0,
           "correctingIn": "0",
@@ -31,8 +182,8 @@ export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&lastBlock=400
           "date": "2015-07-30 15:26:15 UTC",
           "decimals": 18,
           "endBal": "1970000000000000000000",
-          "endBalCalc": "1970000000000000000000",
-          "endBalDiff": "0",
+          "endBalCalc": "89500000000000000",
+          "endBalDiff": "-1969910500000000000000",
           "gasOut": "0",
           "internalIn": "0",
           "internalOut": "0",
@@ -41,17 +192,17 @@ export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&lastBlock=400
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
-          "prefundIn": "1970000000000000000000",
+          "prefundIn": "0",
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
-          "reconciled": true,
+          "reconciled": false,
           "reconciliationType": "genesis",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x0000000000000000000000000050726566756e64",
           "spotPrice": 0,
           "timestamp": 1438269975,
-          "totalIn": "1970000000000000000000",
+          "totalIn": "0",
           "totalOut": "0",
           "totalOutLessGas": "0",
           "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",

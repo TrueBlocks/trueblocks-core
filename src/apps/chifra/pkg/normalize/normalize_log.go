@@ -11,6 +11,7 @@ import (
 )
 
 var ErrNormalization = errors.New("normalization error")
+var ErrNonIndexedTransfer = fmt.Errorf("non-indexed transfer")
 
 func NormalizeTransferOrApproval(log *types.Log) (*types.Log, error) {
 	if len(log.Topics) == 0 || !topics.KnownTopics[log.Topics[0]] {
@@ -22,7 +23,10 @@ func NormalizeTransferOrApproval(log *types.Log) (*types.Log, error) {
 	var data = strings.TrimPrefix(log.Data, "0x")
 
 	// Common case: standard log with three topics (indexed addresses) and value in data
-	if len(log.Topics) == 3 {
+	if len(log.Topics) == 4 {
+		return log, nil
+
+	} else if len(log.Topics) == 3 {
 		// We assume the two indexed parameters are the addresses.
 		addr1 = base.HexToAddress(log.Topics[1].Hex())
 		addr2 = base.HexToAddress(log.Topics[2].Hex())
@@ -50,14 +54,12 @@ func NormalizeTransferOrApproval(log *types.Log) (*types.Log, error) {
 		return log, fmt.Errorf("unrecognized event log format: %w", ErrNormalization)
 	}
 
-	newLog := types.Log{
-		Topics: []base.Hash{
-			log.Topics[0], // This will be either TransferTopic or ApprovalTopic.
-			base.HexToHash(addr1.Hex()),
-			base.HexToHash(addr2.Hex()),
-		},
-		Data: base.WeiToHash(value),
+	newLog := *log
+	newLog.Topics = []base.Hash{
+		log.Topics[0],
+		base.HexToHash(addr1.Hex()),
+		base.HexToHash(addr2.Hex()),
 	}
-
+	newLog.Data = base.WeiToHash(value)
 	return &newLog, nil
 }

@@ -157,11 +157,11 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 
 // GetBalanceAt returns a balance for an address at a block
 func (conn *Connection) GetBalanceAt(addr base.Address, bn base.Blknum) (*base.Wei, error) {
-	var ok bool
 	var balance *base.Wei
 
 	key := fmt.Sprintf("%s|%d", addr.Hex(), bn)
 	conn.cacheMutex.Lock()
+	var ok bool
 	if balance, ok = conn.balanceCache[key]; ok {
 		conn.cacheMutex.Unlock()
 		return balance, nil

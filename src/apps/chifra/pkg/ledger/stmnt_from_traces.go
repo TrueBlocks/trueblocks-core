@@ -102,7 +102,7 @@ func (l *Ledger) getStatementsFromTraces(trans *types.Transaction, s *types.Stat
 		}
 	}
 
-	if l.trialBalance(trialBalTraceEth, &ret) {
+	if l.trialBalance(types.TrialBalTraceEth, &ret) {
 		if ret.IsMaterial() {
 			statements = append(statements, ret)
 		} else {

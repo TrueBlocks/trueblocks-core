@@ -3381,6 +3381,16 @@ components:
           type: string
           format: string
           description: "the reason for the correcting entries, if any"
+        reconType:
+          type: object
+          items:
+            $ref: "#/components/schemas/reconType"
+          description: "description of the context for this statement related to previous, next, and current blocks"
+        assetType:
+          type: object
+          items:
+            $ref: "#/components/schemas/trialBalType"
+          description: "one of eth, eth-trace, token, or token-721"
     appearanceTable:
       description: "an appearance table for an address"
       type: object

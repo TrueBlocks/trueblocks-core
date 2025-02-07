@@ -103,7 +103,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 			ret.AssetSymbol = "ETH"
 		}
 
-		if !l.useTraces && l.trialBalance(trialBalEth, &ret) {
+		if !l.useTraces && l.trialBalance(types.TrialBalEth, &ret) {
 			if ret.IsMaterial() {
 				statements = append(statements, ret)
 			} else {
@@ -132,6 +132,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	isFinal := base.IsFinal(l.connection.LatestBlockTimestamp, trans.Timestamp)
 	isWritable := l.connection.StoreWritable()
 	isEnabled := l.connection.EnabledMap[walk.Cache_Statements]
+	// TODO: BOGUS NOT DONE
 	if false && isFinal && isWritable && isEnabled {
 		for _, statement := range statements {
 			if statement.IsMaterial() && !statement.Reconciled() {

@@ -1,4 +1,103 @@
 export?addrs=0x04fe1f0c597fbc65700f4fba6f87501edc20e665&firstBlock=10277780&lastBlock=10278000&accounting&cache&cacheTraces
+Args: [addrs=0x04fe1f0c597fbc65700f4fba6f87501edc20e665 firstBlock=10277780 lastBlock=10278000 accounting cache cacheTraces]
+Opts: {"addrs":["0x04fe1f0c597fbc65700f4fba6f87501edc20e665"],"accounting":true,"cacheTraces":true,"firstBlock":10277780,"lastBlock":10278000,"cache":true}
+Addrs:  [0x04fe1f0c597fbc65700f4fba6f87501edc20e665]
+Accounting:  true
+CacheTraces:  true
+FirstBlock:  10277780
+LastBlock:  10278000
+Enabled:  statements, traces, transactions
+Cache:  true
+Caps:  cache,decache,ether
+Format:  json
+------------------------------------------------------------
+Contexts (1)
+010277780-00088:   10277780   10277780    10277780 first-last
+Start of trial balance report
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         10277780
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              3858607329697142770200000
+float1:              16688697640320095115000
+float2:              1
+bigPrice:            231.21081182360814338
+price:               231.21081182360814
+source:              uniswap
+===================================================
+====> eth
+===================================================
+Previous:               10277780
+Current:                10277780
+Next:                   10277780
+reconciliationType:     first-last
+assetType:              eth
+accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
+sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0xdac17f958d2ee523a2206206994597c13d831ec7
+assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
+timestamp:              1592323744
+blockNumber:            10277780.88
+priceSource:            231.21081182360814 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.005463122167631885
+   begBal:              0.006511482167631885 (0)
+   totalIn:             0
+   totalOut:            0.00104836
+   amountNet:           -0.00104836
+                       ======================= 
+   endBal:              0.005463122167631885 (0)
+   endBalCalc:          0.005463122167631885
+--------------------------------------------------- 
+   gasOut:              0.00104836
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+End of trial balance report
+Start of trial balance report
+=========================================================
+===> PRICING FOR 0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) 
+=========================================================
+stable-coin
+===================================================
+====> token
+===================================================
+Previous:               10277780
+Current:                10277780
+Next:                   10277780
+reconciliationType:     first-last
+assetType:              token
+accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
+sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9
+assetAddr:              0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) decimals: 6
+hash:                   0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
+timestamp:              1592323744
+blockNumber:            10277780.88.103
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0.000000000381 (0)
+   totalIn:             0
+   totalOut:            0.000000000381
+   amountNet:           -0.000000000381
+                       ======================= 
+   endBal:              0 (0)
+   endBalCalc:          0
+--------------------------------------------------- 
+   amountOut:           0.000000000381
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+End of trial balance report
 {
   "data": [
     {

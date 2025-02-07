@@ -13,13 +13,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var ErrNonIndexedTransfer = fmt.Errorf("non-indexed transfer")
-
 // getStatementsFromLog returns a statement from a given log
 func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error) {
-	if logIn.Topics[0] != topics.TransferTopic && logIn.Topics[0] != topics.EnsTransferTopic {
+	if logIn.Topics[0] != topics.TransferTopic {
 		return types.Statement{}, nil
 	}
+
+	// TODO: BOGUS NOT DONE
+	// This is an NFT, probably should not try to balance it
+	// if len(logIn.Topics) == 4 {
+	// 	// an ERC721 token transfer - same topic[0], different semantics
+	// 	return types.Statement{}, nil
+	// }
 
 	if log, err := normalize.NormalizeTransferOrApproval(logIn); err != nil {
 		return types.Statement{}, err
@@ -80,7 +85,7 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
 		ctx := l.contexts[key]
 
-		if ctx != nil && ofInterest {
+		if ofInterest {
 			var err error
 			pBal := new(base.Wei)
 			pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Prev()))
@@ -104,7 +109,11 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 			s.EndBal = *eBal
 
 			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
-			if !l.trialBalance(trialBalToken, &s) {
+			t := types.TrialBalToken
+			if len(log.Topics) == 4 {
+				t = types.TrialBalNft
+			}
+			if !l.trialBalance(t, &s) {
 				if !utils.IsFuzzing() {
 					logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
 				}
