@@ -33,56 +33,21 @@ TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              0.0895 (0.0895)
+TEST[DATE|TIME]    begBal:              0 (0)
 TEST[DATE|TIME]    totalIn:             1970
 TEST[DATE|TIME]    totalOut:            0
 TEST[DATE|TIME]    amountNet:           1970
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              1970 (0)
-TEST[DATE|TIME]    endBalCalc:          1970.0895
+TEST[DATE|TIME]    endBalCalc:          1970
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    prefundIn:           1970
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Trial balance failed for  0x0000000000000000000000000000000000000000000000000000000000000000 need to decend into traces
-TEST[DATE|TIME] Start of trial balance report
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> trace-eth
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               0
-TEST[DATE|TIME] Current:                0
-TEST[DATE|TIME] Next:                   46685
-TEST[DATE|TIME] reconciliationType:     genesis
-TEST[DATE|TIME] assetType:              trace-eth
-TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME] sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
-TEST[DATE|TIME] timestamp:              1438269975
-TEST[DATE|TIME] blockNumber:            0.270.0
-TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              0.0895 (-1969.9105)
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           0
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              1970 (0)
-TEST[DATE|TIME]    endBalCalc:          0.0895
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    material:            false
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (2)
-INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685 genesis-diff
+INFO[DATE|TIME] Asset Contexts (1)
 INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
@@ -119,9 +84,7 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (4)
-INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685 genesis-diff
-INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000046685-00000:          0      46685       46709 diff-diff
+INFO[DATE|TIME] Asset Contexts (2)
 INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
 INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046685-00000:          0      46685       46709 diff-diff
 TEST[DATE|TIME] Start of trial balance report
@@ -159,10 +122,7 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (6)
-INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685 genesis-diff
-INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000046685-00000:          0      46685       46709 diff-diff
-INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000046709-00000:      46685      46709       46709 diff-same
+INFO[DATE|TIME] Asset Contexts (3)
 INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
 INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046685-00000:          0      46685       46709 diff-diff
 INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046709-00000:      46685      46709       46709 diff-same
@@ -174,17 +134,17 @@ Results in ./statement_2_ether_out.file
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "amountIn": "0",
       "amountInEth": "0",
-      "amountNet": "0",
-      "amountNetEth": "0",
+      "amountNet": "1970000000000000000000",
+      "amountNetEth": "1970",
       "amountOut": "0",
       "amountOutEth": "0",
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
-      "assetType": "trace-eth",
-      "begBal": "89500000000000000",
+      "assetType": "eth",
+      "begBal": "0",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
-      "begBalEth": "0.0895",
+      "begBalEth": "0",
       "blockNumber": 0,
       "correctingIn": "0",
       "correctingInEth": "0",
@@ -194,10 +154,10 @@ Results in ./statement_2_ether_out.file
       "date": "2015-07-30 15:26:15 UTC",
       "decimals": 18,
       "endBal": "1970000000000000000000",
-      "endBalCalc": "89500000000000000",
-      "endBalCalcEth": "0.0895",
-      "endBalDiff": "-1969910500000000000000",
-      "endBalDiffEth": "-1969.9105",
+      "endBalCalc": "1970000000000000000000",
+      "endBalCalcEth": "1970",
+      "endBalDiff": "0",
+      "endBalDiffEth": "0",
       "endBalEth": "1970",
       "gasOut": "0",
       "gasOutEth": "0",
@@ -214,11 +174,11 @@ Results in ./statement_2_ether_out.file
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
-      "prefundIn": "0",
-      "prefundInEth": "0",
+      "prefundIn": "1970000000000000000000",
+      "prefundInEth": "1970",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
-      "reconciled": false,
+      "reconciled": true,
       "reconciliationType": "genesis",
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
@@ -227,8 +187,8 @@ Results in ./statement_2_ether_out.file
       "sender": "0x0000000000000000000000000050726566756e64",
       "spotPrice": 0,
       "timestamp": 1438269975,
-      "totalIn": "0",
-      "totalInEth": "0",
+      "totalIn": "1970000000000000000000",
+      "totalInEth": "1970",
       "totalOut": "0",
       "totalOutEth": "0",
       "totalOutLessGas": "0",

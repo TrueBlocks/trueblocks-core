@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -308,4 +309,26 @@ func (s *Log) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
+func (l *Log) IsRelevant(addr base.Address, checkAddress bool) bool {
+	target := addr.Bytes()
+
+	if checkAddress {
+		if bytes.Equal(l.Address.Bytes(), target) {
+			return true
+		}
+	}
+
+	if bytes.Contains([]byte(l.Data), target) {
+		return true
+	}
+
+	for _, topic := range l.Topics {
+		if bytes.Contains(topic.Bytes(), target) {
+			return true
+		}
+	}
+
+	return false
+}
+
 // EXISTING_CODE

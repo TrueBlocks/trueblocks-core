@@ -64,7 +64,7 @@ func isNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 	logger.TestLog(true, "    mayBeAirdrop:    -->", mayBeAirdrop)
 
 	logger.TestLog(true, "  EndBal-BegBal:    ", s.EndBal.Cmp(&s.BegBal))
-	logger.TestLog(true, "  material:         ", s.IsMaterial())
+	logger.TestLog(true, "  Material:         ", s.IsMaterial())
 	logger.TestLog(true, "    noBalanceChange: -->", noBalanceChange)
 
 	if !ret {

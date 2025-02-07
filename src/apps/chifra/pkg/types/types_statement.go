@@ -682,7 +682,7 @@ func (s *Statement) DebugStatement(ctx LedgerContexter) {
 	logger.TestLog(true, "assetAddr:             ", s.AssetAddr, "("+s.AssetSymbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
 	logger.TestLog(true, "hash:                  ", s.TransactionHash)
 	logger.TestLog(true, "timestamp:             ", s.Timestamp)
-	if s.AssetType == TrialBalEth {
+	if s.AssetType != TrialBalToken && s.AssetType != TrialBalNft {
 		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d", s.BlockNumber, s.TransactionIndex))
 	} else {
 		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex))

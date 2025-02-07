@@ -7,6 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -29,11 +30,15 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 		}
 	}
 
-	_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, l.accountFor)
 	_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, base.FAKE_ETH_ADDRESS)
 	if trans.Receipt != nil {
 		for _, log := range trans.Receipt.Logs {
-			_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, log.Address)
+			if normalized, err := normalize.NormalizeTransferOrApproval(&log); err == nil {
+				checkAddress := l.accountFor == normalized.Address
+				if normalized.IsRelevant(l.accountFor, checkAddress) {
+					_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, normalized.Address)
+				}
+			}
 		}
 	}
 
@@ -44,7 +49,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	var ctx *appContext
 	var exists bool
 	if ctx, exists = l.appContexts[key]; !exists {
-		// debugLedgerContexts(l.testMode, l.appContexts)
+		debugContexts("Appearance", l.testMode, l.appContexts)
 		return statements, fmt.Errorf("no context for %s", key)
 	}
 
@@ -56,6 +61,9 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 			prevBal = new(base.Wei)
 		}
 		begBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.Cur()-1)
+		if trans.BlockNumber == 0 {
+			begBal = new(base.Wei)
+		}
 		endBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.Cur())
 
 		ret := types.Statement{
@@ -149,7 +157,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	if false && isFinal && isWritable && isEnabled {
 		for _, statement := range statements {
 			if statement.IsMaterial() && !statement.Reconciled() {
-				debugLedgerContexts(l.testMode, l.assetContexts)
+				debugContexts("Asset", l.testMode, l.assetContexts)
 				return statements, nil
 			}
 		}
@@ -162,6 +170,6 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 		_ = l.connection.Store.Write(statementGroup, nil)
 	}
 
-	debugLedgerContexts(l.testMode, l.assetContexts)
+	debugContexts("Asset", l.testMode, l.assetContexts)
 	return statements, nil
 }

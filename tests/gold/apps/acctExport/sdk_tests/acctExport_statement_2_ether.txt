@@ -9,7 +9,7 @@ Ether:  true
 Caps:  cache,decache,ether
 Format:  json
 ------------------------------------------------------------
-Contexts (3)
+Appearance Contexts (3)
 000000000-00270:          0          0       46685 genesis-diff
 000046685-00000:          0      46685       46709 diff-diff
 000046709-00000:      46685      46709       46709 diff-last
@@ -33,56 +33,21 @@ priceSource:            0 (eth-not-priced-pre-maker)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0
-   begBal:              0.0895 (0.0895)
+   begBal:              0 (0)
    totalIn:             1970
    totalOut:            0
    amountNet:           1970
                        ======================= 
    endBal:              1970 (0)
-   endBalCalc:          1970.0895
+   endBalCalc:          1970
 --------------------------------------------------- 
    prefundIn:           1970
    material:            true
-   reconciled:          false
- ^^ we need to fix this ^^
----------------------------------------------------
-End of trial balance report
-Trial balance failed for  0x0000000000000000000000000000000000000000000000000000000000000000 need to decend into traces
-Start of trial balance report
-===================================================
-====> trace-eth
-===================================================
-Previous:               0
-Current:                0
-Next:                   46685
-reconciliationType:     genesis
-assetType:              trace-eth
-accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
-sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
-timestamp:              1438269975
-blockNumber:            0.270.0
-priceSource:            0 (eth-not-priced-pre-maker)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             0
-   begBal:              0.0895 (-1969.9105)
-   totalIn:             0
-   totalOut:            0
-   amountNet:           0
-                       ======================= 
-   endBal:              1970 (0)
-   endBalCalc:          0.0895
---------------------------------------------------- 
-   material:            false
-   reconciled:          false
- ^^ we need to fix this ^^
+   reconciled:          true
 ---------------------------------------------------
 End of trial balance report
 ------------------------------------------------------------
-Asset Contexts (2)
-0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685 genesis-diff
+Asset Contexts (1)
 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
 Start of trial balance report
 Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
@@ -119,9 +84,7 @@ Trial balance:
 ---------------------------------------------------
 End of trial balance report
 ------------------------------------------------------------
-Asset Contexts (4)
-0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685 genesis-diff
-0x08166f02313feae18bb044e7877c808b55b5bf58-000046685-00000:          0      46685       46709 diff-diff
+Asset Contexts (2)
 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046685-00000:          0      46685       46709 diff-diff
 Start of trial balance report
@@ -159,10 +122,7 @@ Trial balance:
 ---------------------------------------------------
 End of trial balance report
 ------------------------------------------------------------
-Asset Contexts (6)
-0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685 genesis-diff
-0x08166f02313feae18bb044e7877c808b55b5bf58-000046685-00000:          0      46685       46709 diff-diff
-0x08166f02313feae18bb044e7877c808b55b5bf58-000046709-00000:      46685      46709       46709 diff-same
+Asset Contexts (3)
 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046685-00000:          0      46685       46709 diff-diff
 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046709-00000:      46685      46709       46709 diff-same
@@ -172,17 +132,17 @@ Asset Contexts (6)
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "amountIn": "0",
       "amountInEth": "0",
-      "amountNet": "0",
-      "amountNetEth": "0",
+      "amountNet": "1970000000000000000000",
+      "amountNetEth": "1970",
       "amountOut": "0",
       "amountOutEth": "0",
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
-      "assetType": "trace-eth",
-      "begBal": "89500000000000000",
+      "assetType": "eth",
+      "begBal": "0",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
-      "begBalEth": "0.0895",
+      "begBalEth": "0",
       "blockNumber": 0,
       "correctingIn": "0",
       "correctingInEth": "0",
@@ -192,10 +152,10 @@ Asset Contexts (6)
       "date": "2015-07-30 15:26:15 UTC",
       "decimals": 18,
       "endBal": "1970000000000000000000",
-      "endBalCalc": "89500000000000000",
-      "endBalCalcEth": "0.0895",
-      "endBalDiff": "-1969910500000000000000",
-      "endBalDiffEth": "-1969.9105",
+      "endBalCalc": "1970000000000000000000",
+      "endBalCalcEth": "1970",
+      "endBalDiff": "0",
+      "endBalDiffEth": "0",
       "endBalEth": "1970",
       "gasOut": "0",
       "gasOutEth": "0",
@@ -212,11 +172,11 @@ Asset Contexts (6)
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
-      "prefundIn": "0",
-      "prefundInEth": "0",
+      "prefundIn": "1970000000000000000000",
+      "prefundInEth": "1970",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
-      "reconciled": false,
+      "reconciled": true,
       "reconciliationType": "genesis",
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
@@ -225,8 +185,8 @@ Asset Contexts (6)
       "sender": "0x0000000000000000000000000050726566756e64",
       "spotPrice": 0,
       "timestamp": 1438269975,
-      "totalIn": "0",
-      "totalInEth": "0",
+      "totalIn": "1970000000000000000000",
+      "totalInEth": "1970",
       "totalOut": "0",
       "totalOutEth": "0",
       "totalOutLessGas": "0",

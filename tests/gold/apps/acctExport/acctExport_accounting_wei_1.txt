@@ -1,13 +1,13 @@
-chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --max_records 3 --accounting --fmt json
+chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --max_records 3 --accounting --fmt json --output accounting_wei_1_out.file
 TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] MaxRecords:  3
 TEST[DATE|TIME] OutputFn:  accounting_wei_1_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
-{ "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Contexts (3)
+INFO[DATE|TIME] Appearance Contexts (3)
 INFO[DATE|TIME] 000000000-00002:          0          0      202249 genesis-diff
 INFO[DATE|TIME] 000202249-00000:          0     202249     1501459 diff-diff
 INFO[DATE|TIME] 001501459-00002:     202249    1501459     1501459 diff-last
@@ -26,7 +26,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000050726566756e
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438269975
-TEST[DATE|TIME] blockNumber:            0.2.0
+TEST[DATE|TIME] blockNumber:            0.2
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -44,6 +44,9 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00002:          0          0      202249 genesis-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -59,7 +62,7 @@ TEST[DATE|TIME] sender:                 0x001d14804b399c6ef80e64576f657660804fec
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
 TEST[DATE|TIME] timestamp:              1441703356
-TEST[DATE|TIME] blockNumber:            202249.0.0
+TEST[DATE|TIME] blockNumber:            202249.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -78,6 +81,10 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (2)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00002:          0          0      202249 genesis-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000202249-00000:          0     202249     1501459 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 1501459 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -93,7 +100,7 @@ TEST[DATE|TIME] sender:                 0x001d14804b399c6ef80e64576f657660804fec
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
 TEST[DATE|TIME] timestamp:              1463025233
-TEST[DATE|TIME] blockNumber:            1501459.2.0
+TEST[DATE|TIME] blockNumber:            1501459.2
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -112,6 +119,11 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (3)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00002:          0          0      202249 genesis-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000202249-00000:          0     202249     1501459 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-001501459-00002:     202249    1501459     1501459 diff-same
 ----
 Results in ./accounting_wei_1_out.file
 {
@@ -324,4 +336,3 @@ Results in ./accounting_wei_1_out.file
     }
   ]
 }
-

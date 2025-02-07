@@ -1,4 +1,11 @@
-export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&statements&lastBlock=4000000&fmt=json
+export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&statements&lastBlock=4000000
+Args: [addrs=0x08166f02313feae18bb044e7877c808b55b5bf58 statements lastBlock=4000000]
+Opts: {"addrs":["0x08166f02313feae18bb044e7877c808b55b5bf58"],"statements":true,"lastBlock":4000000}
+Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
+Statements:  true
+LastBlock:  4000000
+Caps:  cache,decache,ether
+Format:  json
 {
   "errors": [
     "The --statements option is only available with the --accounting option."

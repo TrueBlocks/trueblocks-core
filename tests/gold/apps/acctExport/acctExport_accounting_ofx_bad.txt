@@ -24,7 +24,7 @@ Flags:
   -i, --withdrawals         export withdrawals for the given address
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -R, --cache_traces        force the transaction's traces into the cache
-  -U, --count               only available for --appearances mode, if present, return only the number of records
+  -U, --count               for --appearances mode only, display only the count of records
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 250)
   -N, --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
@@ -36,7 +36,6 @@ Flags:
                             One of [ in | out | zero ]
   -y, --factory             for --traces only, report addresses created by (or self-destructed by) the given address(es)
   -u, --unripe              export transactions labeled unripe (i.e. less than 28 blocks old)
-  -O, --load string         a comma separated list of dynamic traversers to load (hidden)
   -E, --reversed            produce results in reverse chronological order
   -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
   -F, --first_block uint    first block to process (inclusive)
@@ -60,3 +59,4 @@ Notes:
   - If the --reversed option is present, the appearance list is reversed prior to all processing (including filtering).
   - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).
   - The --withdrawals option is only available on certain chains. It is ignored otherwise.
+  - The --traces option requires your RPC to provide trace data. See the README for more information.

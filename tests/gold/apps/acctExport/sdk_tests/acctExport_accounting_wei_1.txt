@@ -1,4 +1,129 @@
-export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&accounting&fmt=json
+export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&accounting
+Args: [addrs=0x001d14804b399c6ef80e64576f657660804fec0b maxRecords=3 accounting]
+Opts: {"addrs":["0x001d14804b399c6ef80e64576f657660804fec0b"],"accounting":true,"maxRecords":3}
+Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+Accounting:  true
+MaxRecords:  3
+Caps:  cache,decache,ether
+Format:  json
+------------------------------------------------------------
+Appearance Contexts (3)
+000000000-00002:          0          0      202249 genesis-diff
+000202249-00000:          0     202249     1501459 diff-diff
+001501459-00002:     202249    1501459     1501459 diff-last
+Start of trial balance report
+Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+====> eth
+===================================================
+Previous:               0
+Current:                0
+Next:                   202249
+reconciliationType:     genesis
+assetType:              eth
+accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
+sender:                 0x0000000000000000000000000050726566756e64  ==>  0x001d14804b399c6ef80e64576f657660804fec0b
+assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438269975
+blockNumber:            0.2
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0 (0)
+   totalIn:             4200
+   totalOut:            0
+   amountNet:           4200
+                       ======================= 
+   endBal:              4200 (0)
+   endBalCalc:          4200
+--------------------------------------------------- 
+   prefundIn:           4200
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+End of trial balance report
+------------------------------------------------------------
+Asset Contexts (1)
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00002:          0          0      202249 genesis-diff
+Start of trial balance report
+Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+====> eth
+===================================================
+Previous:               0
+Current:                202249
+Next:                   1501459
+reconciliationType:     diff-diff
+assetType:              eth
+accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
+sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0x2910543af39aba0cd09dbb2d50200b3e800a63d2
+assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
+timestamp:              1441703356
+blockNumber:            202249.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4200
+   begBal:              4200 (0)
+   totalIn:             0
+   totalOut:            4199.925320679510922664
+   amountNet:           -4199.925320679510922664
+                       ======================= 
+   endBal:              0.074679320489077336 (0)
+   endBalCalc:          0.074679320489077336
+--------------------------------------------------- 
+   amountOut:           4199.9
+   gasOut:              0.025320679510922664
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+End of trial balance report
+------------------------------------------------------------
+Asset Contexts (2)
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00002:          0          0      202249 genesis-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000202249-00000:          0     202249     1501459 diff-diff
+Start of trial balance report
+Block 1501459 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+====> eth
+===================================================
+Previous:               202249
+Current:                1501459
+Next:                   1501459
+reconciliationType:     diff-last
+assetType:              eth
+accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
+sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
+assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
+timestamp:              1463025233
+blockNumber:            1501459.2
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.074679320489077336
+   begBal:              0.074679320489077336 (0)
+   totalIn:             0
+   totalOut:            0.074679320489077336
+   amountNet:           -0.074679320489077336
+                       ======================= 
+   endBal:              0 (0)
+   endBalCalc:          0
+--------------------------------------------------- 
+   amountOut:           0.074259320489077336
+   gasOut:              0.00042
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+End of trial balance report
+------------------------------------------------------------
+Asset Contexts (3)
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00002:          0          0      202249 genesis-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000202249-00000:          0     202249     1501459 diff-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-001501459-00002:     202249    1501459     1501459 diff-same
 {
   "data": [
     {

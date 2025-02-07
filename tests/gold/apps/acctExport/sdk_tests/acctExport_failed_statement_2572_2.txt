@@ -1,46 +1,152 @@
-export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&ether&asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88&fmt=json&firstBlock=11670418&lastBlock=11670420&maxRecords=40
+export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&ether&asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88&firstBlock=11670418&lastBlock=11670420&maxRecords=40
+Args: [addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 accounting statements ether asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88 firstBlock=11670418 lastBlock=11670420 maxRecords=40]
+Opts: {"addrs":["0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7"],"accounting":true,"statements":true,"maxRecords":40,"asset":["0xc713e5e149d5d0715dcd1c156a020976e7e56b88"],"firstBlock":11670418,"lastBlock":11670420,"ether":true}
+Addrs:  [0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7]
+Accounting:  true
+Statements:  true
+MaxRecords:  40
+Asset:  [0xc713e5e149d5d0715dcd1c156a020976e7e56b88]
+FirstBlock:  11670418
+LastBlock:  11670420
+Ether:  true
+Caps:  cache,decache,ether
+Format:  json
+------------------------------------------------------------
+Appearance Contexts (1)
+011670419-00091:   11670419   11670419    11670419 first-last
+Start of trial balance report
+A possible nullTransfer
+  nLogs:             8
+    lotsOfLogs:      --> false
+  Sender.IsZero:     0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 false
+  or Sender == To:   false
+    mayBeAirdrop:    --> false
+  EndBal-BegBal:     -1
+  Material:          true
+    noBalanceChange: --> false
+  ---> Not a nullTransfer
+Needs correction for token transfer
+Correcting token transfer for unknown income or outflow
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         11670419
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              108885858975948005520000000
+float1:              87966329077991068615000
+float2:              1
+bigPrice:            1237.8129236177362007
+price:               1237.8129236177363
+source:              uniswap
+===================================================
+====> token
+===================================================
+Previous:               11670419
+Current:                11670419
+Next:                   11670419
+reconciliationType:     first-last
+assetType:              token
+accountedFor:           0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
+sender:                 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7  ==>  0x0
+assetAddr:              0xc713e5e149d5d0715dcd1c156a020976e7e56b88 (aMKR) decimals: 18
+hash:                   0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888
+timestamp:              1610856118
+blockNumber:            11670419.91.195
+priceSource:            0 (not-priced)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              14.922878205530494041 (0)
+   totalIn:             0
+   totalOut:            14.922878205530494041
+   amountNet:           -14.922878205530494041
+                       ======================= 
+   endBal:              0 (0)
+   endBalCalc:          0
+--------------------------------------------------- 
+   amountOut:           14.922878243871414864
+   correctingOut:       -0.000000038340920823
+   correctingReason:    endbal
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+End of trial balance report
+------------------------------------------------------------
+Asset Contexts (3)
+0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2-011670419-00091:   11670419   11670419    11670419 same-same
+0xc713e5e149d5d0715dcd1c156a020976e7e56b88-011670419-00091:   11670419   11670419    11670419 same-same
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-011670419-00091:   11670419   11670419    11670419 same-same
 {
   "data": [
     {
       "accountedFor": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
       "amountIn": "0",
-      "amountNet": "-14.922878205530494041",
-      "amountOut": "14.922878243871414864",
+      "amountInEth": "0",
+      "amountNet": "-14922878205530494041",
+      "amountNetEth": "-14.922878205530494041",
+      "amountOut": "14922878243871414864",
+      "amountOutEth": "14.922878243871414864",
       "assetAddr": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
       "assetSymbol": "aMKR",
       "assetType": "token",
-      "begBal": "14.922878205530494041",
+      "begBal": "14922878205530494041",
       "begBalDiff": "0",
+      "begBalDiffEth": "0",
+      "begBalEth": "14.922878205530494041",
       "blockNumber": 11670419,
       "correctingIn": "0",
-      "correctingOut": "-0.000000038340920823",
+      "correctingInEth": "0",
+      "correctingOut": "-38340920823",
+      "correctingOutEth": "-0.000000038340920823",
       "correctingReason": "endbal",
       "date": "2021-01-17 04:01:58 UTC",
       "decimals": 18,
       "endBal": "0",
       "endBalCalc": "0",
+      "endBalCalcEth": "0",
       "endBalDiff": "0",
+      "endBalDiffEth": "0",
+      "endBalEth": "0",
       "gasOut": "0",
+      "gasOutEth": "0",
       "internalIn": "0",
+      "internalInEth": "0",
       "internalOut": "0",
+      "internalOutEth": "0",
       "logIndex": 195,
       "minerBaseRewardIn": "0",
+      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
+      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
+      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
+      "minerUncleRewardInEth": "0",
       "prefundIn": "0",
+      "prefundInEth": "0",
       "priceSource": "not-priced",
       "recipient": "0x0",
       "reconciled": true,
       "reconciliationType": "first-last",
       "selfDestructIn": "0",
+      "selfDestructInEth": "0",
       "selfDestructOut": "0",
+      "selfDestructOutEth": "0",
       "sender": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
       "spotPrice": 0,
       "timestamp": 1610856118,
       "totalIn": "0",
-      "totalOut": "14.922878205530494041",
-      "totalOutLessGas": "14.922878205530494041",
+      "totalInEth": "0",
+      "totalOut": "14922878205530494041",
+      "totalOutEth": "14.922878205530494041",
+      "totalOutLessGas": "14922878205530494041",
+      "totalOutLessGasEth": "14.922878205530494041",
       "transactionHash": "0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888",
       "transactionIndex": 91
     }

@@ -72,7 +72,7 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 		appKey := l.getAppContextKey(base.Blknum(curApp.BlockNumber), base.Txnum(curApp.TransactionIndex))
 		l.appContexts[appKey] = newAppContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.reversed)
 	}
-	debugLedgerContexts(l.testMode, l.appContexts)
+	debugContexts("Appearance", l.testMode, l.appContexts)
 
 	return l
 }
@@ -109,7 +109,7 @@ func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetA
 	appKey := l.getAppContextKey(bn, txid)
 	appCtx, exists := l.appContexts[appKey]
 	if !exists {
-		logger.Warn("This should never happen in getOrCreateAssetContext")
+		logger.Warn("This should never happen in get OrCreateAssetContext")
 		appCtx = newAppContext(bn, bn, bn, false, false, l.reversed)
 		l.appContexts[appKey] = appCtx
 	}
@@ -121,7 +121,7 @@ func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetA
 
 const maxTestingBlock = 17000000
 
-func debugLedgerContexts[K ~string, T types.LedgerContexter](testMode bool, ctxs map[K]T) {
+func debugContexts[K ~string, T types.LedgerContexter](which string, testMode bool, ctxs map[K]T) {
 	if !testMode {
 		return
 	}
@@ -136,7 +136,7 @@ func debugLedgerContexts[K ~string, T types.LedgerContexter](testMode bool, ctxs
 	})
 
 	logger.Info(strings.Repeat("-", 60))
-	logger.Info(fmt.Sprintf("Contexts (%d)", len(keys)))
+	logger.Info(fmt.Sprintf(which+" Contexts (%d)", len(keys)))
 	for _, key := range keys {
 		c := ctxs[key]
 		if c.Cur() > maxTestingBlock {
