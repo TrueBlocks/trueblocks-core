@@ -30,22 +30,22 @@ type Ledger struct {
 	connection  *rpc.Connection
 	assetFilter []base.Address
 	theTx       *types.Transaction
-	contexts    map[appContextKey]*appContext
+	appContexts map[appContextKey]*appContext
 }
 
 // NewLedger returns a new empty Ledger struct
 func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
-		connection: conn,
-		accountFor: acctFor,
-		firstBlock: fb,
-		lastBlock:  lb,
-		asEther:    asEther,
-		testMode:   testMode,
-		noZero:     noZero,
-		reversed:   reversed,
-		useTraces:  useTraces,
-		contexts:   make(map[appContextKey]*appContext),
+		connection:  conn,
+		accountFor:  acctFor,
+		firstBlock:  fb,
+		lastBlock:   lb,
+		asEther:     asEther,
+		testMode:    testMode,
+		noZero:      noZero,
+		reversed:    reversed,
+		useTraces:   useTraces,
+		appContexts: make(map[appContextKey]*appContext),
 	}
 
 	if assetFilters != nil {

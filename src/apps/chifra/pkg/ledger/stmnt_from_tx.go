@@ -33,17 +33,22 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
 	key := l.ctxKey(trans.BlockNumber, trans.TransactionIndex)
-	ctx := l.contexts[key]
+	var ctx *appContext
+	var exists bool
+	if ctx, exists = l.appContexts[key]; !exists {
+		// debugLedgerContexts(l.testMode, l.appContexts)
+		return statements, fmt.Errorf("no context for %s", key)
+	}
 
 	if l.assetOfInterest(base.FAKE_ETH_ADDRESS) {
 		// TODO: We ignore errors in the next few lines, but we should not
 		// TODO: BOGUS PERF - This greatly increases the number of times we call into eth_getBalance which is quite slow
-		prevBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.PrevBlock)
+		prevBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.Prev())
 		if trans.BlockNumber == 0 {
 			prevBal = new(base.Wei)
 		}
-		begBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.CurBlock-1)
-		endBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.CurBlock)
+		begBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.Cur()-1)
+		endBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.Cur())
 
 		ret := types.Statement{
 			AccountedFor:     l.accountFor,
@@ -62,7 +67,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 			PrevBal:          *prevBal,
 			BegBal:           *begBal,
 			EndBal:           *endBal,
-			ReconType:        ctx.ReconType,
+			ReconType:        ctx.Recon(),
 		}
 
 		if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
@@ -136,6 +141,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	if false && isFinal && isWritable && isEnabled {
 		for _, statement := range statements {
 			if statement.IsMaterial() && !statement.Reconciled() {
+				// debugLedgerContexts(l.testMode, l.appContexts)
 				return statements, nil
 			}
 		}
@@ -148,5 +154,6 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 		_ = l.connection.Store.Write(statementGroup, nil)
 	}
 
+	// debugLedgerContexts(l.testMode, l.appContexts)
 	return statements, nil
 }

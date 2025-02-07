@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func TestLedgerContext(t *testing.T) {
+func TestLedgerContext1(t *testing.T) {
 	tests := []struct {
 		prev     base.Blknum
 		cur      base.Blknum
@@ -28,10 +28,10 @@ func TestLedgerContext(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		// got := newLedgerContext(test.prev, test.cur, test.next, i == 0, false, test.reversed)
-		got := newLedgerContext(test.prev, test.cur, test.next, false, false, test.reversed)
-		if got.ReconType != test.expected {
-			t.Error("expected:", test.expected, "got:", got.ReconType)
+		// got := newAppContext(test.prev, test.cur, test.next, i == 0, false, test.reversed)
+		got := newAppContext(test.prev, test.cur, test.next, false, false, test.reversed)
+		if got.reconType != test.expected {
+			t.Error("expected:", test.expected, "got:", got.reconType)
 		}
 	}
 }

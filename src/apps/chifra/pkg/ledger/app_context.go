@@ -12,20 +12,22 @@ import (
 
 type appContextKey string
 
-// appContext is a struct to hold the context of a reconciliation (i.e., its
-// previous and next blocks and whether they are different)
+// appContext provides context for a transaction appearance. It tracks the previous,
+// current, and next block numbers to help with determining how the balances should be
+// reconciled. Additionally, it holds a reconciliation type that describes the differences
+// between these block values, and a flag indicating if the ordering is reversed.
 type appContext struct {
-	PrevBlock base.Blknum
-	CurBlock  base.Blknum
-	NextBlock base.Blknum
-	ReconType types.ReconType
+	address   base.Address
+	prvBlk    base.Blknum
+	curBlk    base.Blknum
+	nxtBlk    base.Blknum
+	reconType types.ReconType
+	reversed  bool
 }
 
-func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *appContext {
-	_ = reversed // Silences unused parameter warning
-
+func newAppContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *appContext {
 	if prev > cur || cur > next {
-		return &appContext{ReconType: types.Invalid}
+		return &appContext{reconType: types.Invalid, reversed: reversed}
 	}
 
 	reconType := types.Invalid
@@ -57,32 +59,32 @@ func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed boo
 	}
 
 	return &appContext{
-		PrevBlock: prev,
-		CurBlock:  cur,
-		NextBlock: next,
-		ReconType: reconType,
-		// Reversed:  reversed,
+		prvBlk:    prev,
+		curBlk:    cur,
+		nxtBlk:    next,
+		reconType: reconType,
+		reversed:  reversed,
 	}
 }
 
 func (c *appContext) Prev() base.Blknum {
-	return c.PrevBlock
+	return c.prvBlk
 }
 
 func (c *appContext) Cur() base.Blknum {
-	return c.CurBlock
+	return c.curBlk
 }
 
 func (c *appContext) Next() base.Blknum {
-	return c.NextBlock
+	return c.nxtBlk
 }
 
 func (c *appContext) Recon() types.ReconType {
-	return c.ReconType
+	return c.reconType
 }
 
 func (c *appContext) Address() base.Address {
-	return base.ZeroAddr
+	return c.address
 }
 
 func (l *Ledger) ctxKey(bn base.Blknum, txid base.Txnum) appContextKey {
@@ -102,7 +104,7 @@ func (l *Ledger) setContexts(apps []types.Appearance) error {
 		prev := base.Blknum(apps[base.Max(1, i)-1].BlockNumber)
 		next := base.Blknum(apps[base.Min(i+1, len(apps)-1)].BlockNumber)
 		key := l.ctxKey(base.Blknum(apps[i].BlockNumber), base.Txnum(apps[i].TransactionIndex))
-		l.contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.reversed)
+		l.appContexts[key] = newAppContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.reversed)
 	}
 	l.debugContext()
 	return nil
@@ -113,8 +115,8 @@ func (l *Ledger) debugContext() {
 		return
 	}
 
-	keys := make([]appContextKey, 0, len(l.contexts))
-	for key := range l.contexts {
+	keys := make([]appContextKey, 0, len(l.appContexts))
+	for key := range l.appContexts {
 		keys = append(keys, key)
 	}
 
@@ -125,26 +127,26 @@ func (l *Ledger) debugContext() {
 	logger.Info(strings.Repeat("-", 60))
 	logger.Info(fmt.Sprintf("Contexts (%d)", len(keys)))
 	for _, key := range keys {
-		c := l.contexts[key]
-		if c.CurBlock > maxTestingBlock {
+		c := l.appContexts[key]
+		if c.curBlk > maxTestingBlock {
 			continue
 		}
 		msg := ""
-		rr := c.ReconType &^ (types.First | types.Last)
+		rr := c.reconType &^ (types.First | types.Last)
 		switch rr {
 		case types.Genesis:
-			msg = fmt.Sprintf(" %s", c.ReconType.String()+"-diff")
+			msg = fmt.Sprintf(" %s", c.reconType.String()+"-diff")
 		case types.DiffDiff:
-			msg = fmt.Sprintf(" %s", c.ReconType.String())
+			msg = fmt.Sprintf(" %s", c.reconType.String())
 		case types.SameSame:
-			msg = fmt.Sprintf(" %s", c.ReconType.String())
+			msg = fmt.Sprintf(" %s", c.reconType.String())
 		case types.DiffSame:
-			msg = fmt.Sprintf(" %s", c.ReconType.String())
+			msg = fmt.Sprintf(" %s", c.reconType.String())
 		case types.SameDiff:
-			msg = fmt.Sprintf(" %s", c.ReconType.String())
+			msg = fmt.Sprintf(" %s", c.reconType.String())
 		default:
-			msg = fmt.Sprintf(" %s should not happen!", c.ReconType.String())
+			msg = fmt.Sprintf(" %s should not happen!", c.reconType.String())
 		}
-		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
+		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.prvBlk, c.curBlk, c.nxtBlk, msg))
 	}
 }

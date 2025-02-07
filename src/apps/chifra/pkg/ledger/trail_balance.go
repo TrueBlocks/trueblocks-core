@@ -1,6 +1,7 @@
 package ledger
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -16,28 +17,33 @@ import (
 // the statement may be modified in this function.
 func (l *Ledger) trialBalance(reason types.TrialBalType, s *types.Statement) bool {
 	key := l.ctxKey(s.BlockNumber, s.TransactionIndex)
-	ctx := l.contexts[key]
+	if ctx, exists := l.appContexts[key]; !exists {
+		logger.Fatal(fmt.Sprintf("should never happen - no context for %s", key))
 
-	s.ReconType = ctx.ReconType
-	s.AssetType = reason
+	} else {
+		logger.TestLog(l.testMode, "Start of trial balance report")
 
-	logger.TestLog(l.testMode, "Start of trial balance report")
+		s.ReconType = ctx.Recon()
+		s.AssetType = reason
 
-	// TODO: BOGUS PERF
-	var okay bool
-	if okay = s.Reconciled(); !okay {
-		if okay = l.correctForNullTransfer(s, l.theTx); !okay {
-			_ = l.correctForSomethingElseInner(s)
+		var okay bool
+		if okay = s.Reconciled(); !okay {
+			if okay = l.correctForNullTransfer(s, l.theTx); !okay {
+				if s.IsEth() {
+					_ = l.correctForSomethingElseEth(s)
+				} else {
+					_ = l.correctForSomethingElseToken(s)
+				}
+			}
 		}
-	}
 
-	// TODO: BOGUS PERF
-	if s.IsMaterial() {
-		s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(l.connection, s)
-	}
+		if s.IsMaterial() {
+			s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(l.connection, s)
+		}
 
-	if l.testMode {
-		s.DebugStatement(ctx)
+		if l.testMode {
+			s.DebugStatement(ctx)
+		}
 	}
 
 	return s.Reconciled()
@@ -68,72 +74,63 @@ func isNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 }
 
 func (l *Ledger) correctForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
-	if !s.IsEth() {
-		if isNullTransfer(s, tx) {
-			logger.TestLog(true, "Correcting token transfer for a null transfer")
-			amt := s.TotalIn() // use totalIn since this is the amount that was faked
-			s.AmountOut = *new(base.Wei)
-			s.AmountIn = *new(base.Wei)
-			s.CorrectingIn = *amt
-			s.CorrectingOut = *amt
-			s.CorrectingReason = "null-transfer"
-		} else {
-			logger.TestLog(true, "Needs correction for token transfer")
-		}
+	if s.IsEth() {
+		return s.Reconciled()
+	}
+
+	if isNullTransfer(s, tx) {
+		logger.TestLog(true, "Correcting token transfer for a null transfer")
+		amt := s.TotalIn() // use totalIn since this is the amount that was faked
+		s.AmountOut = *new(base.Wei)
+		s.AmountIn = *new(base.Wei)
+		s.CorrectingIn = *amt
+		s.CorrectingOut = *amt
+		s.CorrectingReason = "null-transfer"
 	} else {
-		logger.TestLog(true, "Needs correction for eth")
+		logger.TestLog(true, "Needs correction for token transfer")
+	}
+
+	return s.Reconciled()
+}
+
+func (l *Ledger) correctForSomethingElseEth(s *types.Statement) bool {
+	if s.AssetType == types.TrialBalTraceEth && s.ReconType&types.First != 0 && s.ReconType&types.Last != 0 {
+		if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
+			s.EndBal = *s.EndBalCalc()
+			s.CorrectingReason = "per-block-balance"
+		}
 	}
 	return s.Reconciled()
 }
 
-// TODO: BOGUS NOT DONE
-// func (l *Ledger) correctForSomethingElseEth(s *types.Statement) bool {
-// 	return l.correctForSomethingElseInner(s)
-// }
+func (l *Ledger) correctForSomethingElseToken(s *types.Statement) bool {
+	logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
 
-// func (l *Ledger) correctForSomethingElseToken(s *types.Statement) bool {
-// 	return l.correctForSomethingElseInner(s)
-// }
+	s.CorrectingIn.SetUint64(0)
+	s.CorrectingOut.SetUint64(0)
+	s.CorrectingReason = ""
+	zero := new(base.Wei).SetInt64(0)
+	cmpBegBal := s.BegBalDiff().Cmp(zero)
+	cmpEndBal := s.EndBalDiff().Cmp(zero)
 
-func (l *Ledger) correctForSomethingElseInner(s *types.Statement) bool {
-	if s.IsEth() {
-		if s.AssetType == types.TrialBalTraceEth && s.ReconType&types.First != 0 && s.ReconType&types.Last != 0 {
-			if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
-				s.EndBal = *s.EndBalCalc()
-				s.CorrectingReason = "per-block-balance"
-			}
-		} else {
-			logger.TestLog(true, "Needs correction for eth")
-		}
-	} else {
-		logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
-
-		s.CorrectingIn.SetUint64(0)
-		s.CorrectingOut.SetUint64(0)
-		s.CorrectingReason = ""
-		zero := new(base.Wei).SetInt64(0)
-		cmpBegBal := s.BegBalDiff().Cmp(zero)
-		cmpEndBal := s.EndBalDiff().Cmp(zero)
-
-		if cmpBegBal > 0 {
-			s.CorrectingIn = *s.BegBalDiff()
-			s.CorrectingReason = "begbal"
-		} else if cmpBegBal < 0 {
-			s.CorrectingOut = *s.BegBalDiff()
-			s.CorrectingReason = "begbal"
-		}
-
-		if cmpEndBal > 0 {
-			n := new(base.Wei).Add(&s.CorrectingIn, s.EndBalDiff())
-			s.CorrectingIn = *n
-			s.CorrectingReason += "endbal"
-		} else if cmpEndBal < 0 {
-			n := new(base.Wei).Add(&s.CorrectingOut, s.EndBalDiff())
-			s.CorrectingOut = *n
-			s.CorrectingReason += "endbal"
-		}
-		s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
+	if cmpBegBal > 0 {
+		s.CorrectingIn = *s.BegBalDiff()
+		s.CorrectingReason = "begbal"
+	} else if cmpBegBal < 0 {
+		s.CorrectingOut = *s.BegBalDiff()
+		s.CorrectingReason = "begbal"
 	}
+
+	if cmpEndBal > 0 {
+		n := new(base.Wei).Add(&s.CorrectingIn, s.EndBalDiff())
+		s.CorrectingIn = *n
+		s.CorrectingReason += "endbal"
+	} else if cmpEndBal < 0 {
+		n := new(base.Wei).Add(&s.CorrectingOut, s.EndBalDiff())
+		s.CorrectingOut = *n
+		s.CorrectingReason += "endbal"
+	}
+	s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
 
 	return s.Reconciled()
 }

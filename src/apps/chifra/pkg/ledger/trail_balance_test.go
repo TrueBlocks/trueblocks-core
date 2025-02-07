@@ -285,7 +285,7 @@ func TestCorrectForSomethingElseEth(t *testing.T) {
 			EndBal:           *base.NewWei(1050),
 		}
 		var l Ledger
-		reconciled := l.correctForSomethingElseInner(stmt)
+		reconciled := l.correctForSomethingElseEth(stmt)
 		expectedEndBal := base.NewWei(1100)
 		if stmt.EndBal.Cmp(expectedEndBal) != 0 {
 			t.Errorf("ETH branch: Expected EndBal to be corrected to %s; got %s", expectedEndBal.Text(10), stmt.EndBal.Text(10))
