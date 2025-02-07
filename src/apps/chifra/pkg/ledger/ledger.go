@@ -21,34 +21,36 @@ import (
 // account being tracked, block ranges for processing, connection to an RPC endpoint,
 // asset filters, and maps for both application-level and asset-level contexts.
 type Ledger struct {
-	accountFor  base.Address
-	firstBlock  base.Blknum
-	lastBlock   base.Blknum
-	names       map[base.Address]types.Name
-	testMode    bool
-	asEther     bool
-	noZero      bool
-	reversed    bool
-	useTraces   bool
-	connection  *rpc.Connection
-	assetFilter []base.Address
-	theTx       *types.Transaction
-	appContexts map[appContextKey]*appContext
+	accountFor    base.Address
+	firstBlock    base.Blknum
+	lastBlock     base.Blknum
+	names         map[base.Address]types.Name
+	testMode      bool
+	asEther       bool
+	noZero        bool
+	reversed      bool
+	useTraces     bool
+	connection    *rpc.Connection
+	assetFilter   []base.Address
+	theTx         *types.Transaction
+	appContexts   map[appContextKey]*appContext
+	assetContexts map[assetContextKey]*assetContext
 }
 
 // NewLedger returns a new empty Ledger struct
 func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
-		connection:  conn,
-		accountFor:  acctFor,
-		firstBlock:  fb,
-		lastBlock:   lb,
-		asEther:     asEther,
-		testMode:    testMode,
-		noZero:      noZero,
-		reversed:    reversed,
-		useTraces:   useTraces,
-		appContexts: make(map[appContextKey]*appContext),
+		connection:    conn,
+		accountFor:    acctFor,
+		firstBlock:    fb,
+		lastBlock:     lb,
+		asEther:       asEther,
+		testMode:      testMode,
+		noZero:        noZero,
+		reversed:      reversed,
+		useTraces:     useTraces,
+		appContexts:   make(map[appContextKey]*appContext),
+		assetContexts: make(map[assetContextKey]*assetContext),
 	}
 
 	if assetFilters != nil {
@@ -62,8 +64,13 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 
 	parts := types.Custom | types.Prefund | types.Regular
 	l.names, _ = names.LoadNamesMap(conn.Chain, parts, []string{})
-	if err := l.setContexts(apps); err != nil {
-		fmt.Println("Error setting contexts:", err)
+	for index := 0; index < len(apps); index++ {
+		curApp := apps[index]
+		cur := base.Blknum(curApp.BlockNumber)
+		prev := base.Blknum(apps[base.Max(1, index)-1].BlockNumber)
+		next := base.Blknum(apps[base.Min(index+1, len(apps)-1)].BlockNumber)
+		appKey := l.getAppContextKey(base.Blknum(curApp.BlockNumber), base.Txnum(curApp.TransactionIndex))
+		l.appContexts[appKey] = newAppContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.reversed)
 	}
 	debugLedgerContexts(l.testMode, l.appContexts)
 
@@ -89,15 +96,27 @@ func (l *Ledger) getAppContextKey(bn base.Blknum, txid base.Txnum) appContextKey
 	return appContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }
 
-func (l *Ledger) setContexts(apps []types.Appearance) error {
-	for i := 0; i < len(apps); i++ {
-		cur := base.Blknum(apps[i].BlockNumber)
-		prev := base.Blknum(apps[base.Max(1, i)-1].BlockNumber)
-		next := base.Blknum(apps[base.Min(i+1, len(apps)-1)].BlockNumber)
-		key := l.getAppContextKey(base.Blknum(apps[i].BlockNumber), base.Txnum(apps[i].TransactionIndex))
-		l.appContexts[key] = newAppContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.reversed)
+func (l *Ledger) getAssetContextKey(bn base.Blknum, txid base.Txnum, assetAddr base.Address) assetContextKey {
+	return assetContextKey(fmt.Sprintf("%s-%09d-%05d", assetAddr.Hex(), bn, txid))
+}
+
+func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *assetContext {
+	assetKey := l.getAssetContextKey(bn, txid, assetAddr)
+	if ctx, exists := l.assetContexts[assetKey]; exists {
+		return ctx
 	}
-	return nil
+
+	appKey := l.getAppContextKey(bn, txid)
+	appCtx, exists := l.appContexts[appKey]
+	if !exists {
+		logger.Warn("This should never happen in getOrCreateAssetContext")
+		appCtx = newAppContext(bn, bn, bn, false, false, l.reversed)
+		l.appContexts[appKey] = appCtx
+	}
+
+	assetCtx := newAssetContext(appCtx.Prev(), appCtx.Cur(), appCtx.Next(), false, false, l.reversed, assetAddr)
+	l.assetContexts[assetKey] = assetCtx
+	return assetCtx
 }
 
 const maxTestingBlock = 17000000
