@@ -60,6 +60,7 @@ const (
 	TrialBalEth      TrialBalType = 1
 	TrialBalTraceEth TrialBalType = 2
 	TrialBalToken    TrialBalType = 3
+	TrialBalNft      TrialBalType = 4
 )
 
 func (r TrialBalType) String() string {
@@ -67,6 +68,7 @@ func (r TrialBalType) String() string {
 		TrialBalEth:      "eth",
 		TrialBalTraceEth: "trace-eth",
 		TrialBalToken:    "token",
+		TrialBalNft:      "token-nft",
 	}[r]
 }
 
