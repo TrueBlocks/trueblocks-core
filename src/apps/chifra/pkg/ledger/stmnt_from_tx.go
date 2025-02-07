@@ -32,7 +32,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	// make room for our results
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
-	key := l.ctxKey(trans.BlockNumber, trans.TransactionIndex)
+	key := l.getAppContextKey(trans.BlockNumber, trans.TransactionIndex)
 	var ctx *appContext
 	var exists bool
 	if ctx, exists = l.appContexts[key]; !exists {

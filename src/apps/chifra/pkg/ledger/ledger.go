@@ -2,8 +2,11 @@ package ledger
 
 import (
 	"fmt"
+	"sort"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -62,6 +65,7 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 	if err := l.setContexts(apps); err != nil {
 		fmt.Println("Error setting contexts:", err)
 	}
+	debugLedgerContexts(l.testMode, l.appContexts)
 
 	return l
 }
@@ -79,4 +83,62 @@ func (l *Ledger) assetOfInterest(needle base.Address) bool {
 	}
 
 	return false
+}
+
+func (l *Ledger) getAppContextKey(bn base.Blknum, txid base.Txnum) appContextKey {
+	return appContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
+}
+
+func (l *Ledger) setContexts(apps []types.Appearance) error {
+	for i := 0; i < len(apps); i++ {
+		cur := base.Blknum(apps[i].BlockNumber)
+		prev := base.Blknum(apps[base.Max(1, i)-1].BlockNumber)
+		next := base.Blknum(apps[base.Min(i+1, len(apps)-1)].BlockNumber)
+		key := l.getAppContextKey(base.Blknum(apps[i].BlockNumber), base.Txnum(apps[i].TransactionIndex))
+		l.appContexts[key] = newAppContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.reversed)
+	}
+	return nil
+}
+
+const maxTestingBlock = 17000000
+
+func debugLedgerContexts[K ~string, T types.LedgerContexter](testMode bool, ctxs map[K]T) {
+	if !testMode {
+		return
+	}
+
+	keys := make([]K, 0, len(ctxs))
+	for key := range ctxs {
+		keys = append(keys, key)
+	}
+
+	sort.Slice(keys, func(i, j int) bool {
+		return string(keys[i]) < string(keys[j])
+	})
+
+	logger.Info(strings.Repeat("-", 60))
+	logger.Info(fmt.Sprintf("Contexts (%d)", len(keys)))
+	for _, key := range keys {
+		c := ctxs[key]
+		if c.Cur() > maxTestingBlock {
+			continue
+		}
+		msg := ""
+		rr := c.Recon() &^ (types.First | types.Last)
+		switch rr {
+		case types.Genesis:
+			msg = fmt.Sprintf(" %s", c.Recon().String()+"-diff")
+		case types.DiffDiff:
+			msg = fmt.Sprintf(" %s", c.Recon().String())
+		case types.SameSame:
+			msg = fmt.Sprintf(" %s", c.Recon().String())
+		case types.DiffSame:
+			msg = fmt.Sprintf(" %s", c.Recon().String())
+		case types.SameDiff:
+			msg = fmt.Sprintf(" %s", c.Recon().String())
+		default:
+			msg = fmt.Sprintf(" %s should not happen!", c.Recon().String())
+		}
+		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.Prev(), c.Cur(), c.Next(), msg))
+	}
 }

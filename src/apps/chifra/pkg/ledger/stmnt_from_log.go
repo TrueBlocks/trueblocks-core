@@ -82,7 +82,7 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 			AmountOut:        amountOut,
 		}
 
-		key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
+		key := l.getAppContextKey(log.BlockNumber, log.TransactionIndex)
 		var ctx *appContext
 		var exists bool
 		if ctx, exists = l.appContexts[key]; !exists {
