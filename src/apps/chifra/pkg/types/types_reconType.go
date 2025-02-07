@@ -1,8 +1,13 @@
 package types
 
-import "strings"
+import (
+	"io"
+	"strings"
 
-type ReconType int
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+)
+
+type ReconType uint64
 
 const (
 	Invalid ReconType = 1 << iota
@@ -44,4 +49,27 @@ func (r ReconType) String() string {
 	default:
 		return "invalid"
 	}
+}
+func (r *ReconType) MarshalCache(writer io.Writer) error {
+	return cache.WriteValue(writer, int(*r))
+}
+
+type TrialBalType uint64
+
+const (
+	TrialBalEth      TrialBalType = 1
+	TrialBalTraceEth TrialBalType = 2
+	TrialBalToken    TrialBalType = 3
+)
+
+func (r TrialBalType) String() string {
+	return map[TrialBalType]string{
+		TrialBalEth:      "eth",
+		TrialBalTraceEth: "trace-eth",
+		TrialBalToken:    "token",
+	}[r]
+}
+
+func (r *TrialBalType) MarshalCache(writer io.Writer) error {
+	return cache.WriteValue(writer, int(*r))
 }

@@ -158,7 +158,7 @@ func TestNormalizedLog_UnrecognizedFormat(t *testing.T) {
 	}
 
 	_, err := NormalizeTransferOrApproval(&log)
-	if err == nil {
-		t.Fatal("expected error for unrecognized event format, got nil")
+	if err != nil {
+		t.Fatal("expected no error for unrecognized event format, got err", err)
 	}
 }

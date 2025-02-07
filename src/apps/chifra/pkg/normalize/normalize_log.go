@@ -23,7 +23,10 @@ func NormalizeTransferOrApproval(log *types.Log) (*types.Log, error) {
 	var data = strings.TrimPrefix(log.Data, "0x")
 
 	// Common case: standard log with three topics (indexed addresses) and value in data
-	if len(log.Topics) == 3 {
+	if len(log.Topics) == 4 {
+		return log, nil
+
+	} else if len(log.Topics) == 3 {
 		// We assume the two indexed parameters are the addresses.
 		addr1 = base.HexToAddress(log.Topics[1].Hex())
 		addr2 = base.HexToAddress(log.Topics[2].Hex())

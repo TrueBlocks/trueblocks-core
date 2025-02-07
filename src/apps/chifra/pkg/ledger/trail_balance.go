@@ -9,33 +9,25 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-type trialBalType string
-
-const (
-	trialBalEth      trialBalType = "eth"
-	trialBalTraceEth trialBalType = "trace-eth"
-	trialBalToken    trialBalType = "token"
-)
-
 // trialBalance returns true of the reconciliation balances, false otherwise. If the statement
 // does not reconcile, it tries to repair it in two ways (a) for null transfers and (b) for
 // any other reason. If that works and the statement is material (money moved in some way), the
 // function tries to price the asset. it then prints optional debugging information. Note that
 // the statement may be modified in this function.
-func (l *Ledger) trialBalance(reason trialBalType, s *types.Statement) bool {
+func (l *Ledger) trialBalance(reason types.TrialBalType, s *types.Statement) bool {
 	key := l.ctxKey(s.BlockNumber, s.TransactionIndex)
 	ctx := l.contexts[key]
 
 	s.ReconType = ctx.ReconType
-	s.AssetType = string(reason)
+	s.AssetType = reason
 
 	logger.TestLog(l.testMode, "Start of trial balance report")
 
 	// TODO: BOGUS PERF
 	var okay bool
 	if okay = s.Reconciled(); !okay {
-		if okay = l.CorrectForNullTransfer(s, l.theTx); !okay {
-			_ = l.CorrectForSomethingElse(s, l.theTx)
+		if okay = l.correctForNullTransfer(s, l.theTx); !okay {
+			_ = l.correctForSomethingElseInner(s)
 		}
 	}
 
@@ -75,7 +67,7 @@ func isNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 	return ret
 }
 
-func (l *Ledger) CorrectForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
+func (l *Ledger) correctForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 	if !s.IsEth() {
 		if isNullTransfer(s, tx) {
 			logger.TestLog(true, "Correcting token transfer for a null transfer")
@@ -94,9 +86,17 @@ func (l *Ledger) CorrectForNullTransfer(s *types.Statement, tx *types.Transactio
 	return s.Reconciled()
 }
 
-func (l *Ledger) CorrectForSomethingElse(s *types.Statement, tx *types.Transaction) bool {
+// func (l *Ledger) correctForSomethingElseEth(s *types.Statement) bool {
+// 	return l.correctForSomethingElseInner(s)
+// }
+
+func (l *Ledger) correctForSomethingElseToken(s *types.Statement) bool {
+	return l.correctForSomethingElseInner(s)
+}
+
+func (l *Ledger) correctForSomethingElseInner(s *types.Statement) bool {
 	if s.IsEth() {
-		if s.AssetType == "trace-eth" && s.ReconType&types.First != 0 && s.ReconType&types.Last != 0 {
+		if s.AssetType == types.TrialBalTraceEth && s.ReconType&types.First != 0 && s.ReconType&types.Last != 0 {
 			if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
 				s.EndBal = *s.EndBalCalc()
 				s.CorrectingReason = "per-block-balance"

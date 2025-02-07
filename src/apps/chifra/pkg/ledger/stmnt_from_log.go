@@ -19,10 +19,12 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		return types.Statement{}, nil
 	}
 
-	if len(logIn.Topics) == 4 {
-		// an ERC721 token transfer - same topic[0], different semantics
-		return types.Statement{}, nil
-	}
+	// BOGUS - NOT DONE
+	// This is an NFT, probably should not try to balance it
+	// if len(logIn.Topics) == 4 {
+	// 	// an ERC721 token transfer - same topic[0], different semantics
+	// 	return types.Statement{}, nil
+	// }
 
 	if log, err := normalize.NormalizeTransferOrApproval(logIn); err != nil {
 		return types.Statement{}, err
@@ -87,27 +89,27 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 			var err error
 			pBal := new(base.Wei)
 			pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Prev()))
-			if pBal == nil {
+			if err != nil || pBal == nil {
 				return s, err
 			}
 			s.PrevBal = *pBal
 
 			bBal := new(base.Wei)
 			bBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Cur()-1))
-			if bBal == nil {
+			if err != nil || bBal == nil {
 				return s, err
 			}
 			s.BegBal = *bBal
 
 			eBal := new(base.Wei)
 			eBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Cur()))
-			if eBal == nil {
+			if err != nil || eBal == nil {
 				return s, err
 			}
 			s.EndBal = *eBal
 
 			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
-			if !l.trialBalance(trialBalToken, &s) {
+			if !l.trialBalance(types.TrialBalToken, &s) {
 				if !utils.IsFuzzing() {
 					logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
 				}

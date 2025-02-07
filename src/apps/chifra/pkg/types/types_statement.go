@@ -29,6 +29,7 @@ type Statement struct {
 	AmountOut           base.Wei       `json:"amountOut,omitempty"`
 	AssetAddr           base.Address   `json:"assetAddr"`
 	AssetSymbol         string         `json:"assetSymbol"`
+	AssetType           TrialBalType   `json:"assetType,omitempty"`
 	BegBal              base.Wei       `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
 	CorrectingIn        base.Wei       `json:"correctingIn,omitempty"`
@@ -48,6 +49,7 @@ type Statement struct {
 	PrevBal             base.Wei       `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`
 	Recipient           base.Address   `json:"recipient"`
+	ReconType           ReconType      `json:"reconType,omitempty"`
 	SelfDestructIn      base.Wei       `json:"selfDestructIn,omitempty"`
 	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
@@ -56,8 +58,6 @@ type Statement struct {
 	TransactionHash     base.Hash      `json:"transactionHash"`
 	TransactionIndex    base.Txnum     `json:"transactionIndex"`
 	// EXISTING_CODE
-	ReconType ReconType `json:"-"`
-	AssetType string    `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -79,7 +79,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		"timestamp":          s.Timestamp,
 		"date":               s.Date(),
 		"assetAddr":          s.AssetAddr,
-		"assetType":          s.AssetType,
+		"assetType":          s.AssetType.String(),
 		"assetSymbol":        s.AssetSymbol,
 		"decimals":           s.Decimals,
 		"spotPrice":          s.SpotPrice,
@@ -234,6 +234,11 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// // AssetType
+	if err = cache.WriteValue(writer, s.AssetType); err != nil {
+		return err
+	}
+
 	// BegBal
 	if err = cache.WriteValue(writer, &s.BegBal); err != nil {
 		return err
@@ -329,6 +334,11 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// ReconType
+	if err = cache.WriteValue(writer, s.ReconType); err != nil {
+		return err
+	}
+
 	// SelfDestructIn
 	if err = cache.WriteValue(writer, &s.SelfDestructIn); err != nil {
 		return err
@@ -394,6 +404,11 @@ func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 
 	// AssetSymbol
 	if err = cache.ReadValue(reader, &s.AssetSymbol, vers); err != nil {
+		return err
+	}
+
+	// // AssetType
+	if err = cache.ReadValue(reader, &s.AssetType, vers); err != nil {
 		return err
 	}
 
@@ -489,6 +504,11 @@ func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 
 	// Recipient
 	if err = cache.ReadValue(reader, &s.Recipient, vers); err != nil {
+		return err
+	}
+
+	// ReconType
+	if err = cache.ReadValue(reader, &s.ReconType, vers); err != nil {
 		return err
 	}
 
@@ -660,7 +680,7 @@ func (s *Statement) DebugStatement(ctx LedgerContexter) {
 	logger.TestLog(true, "assetAddr:             ", s.AssetAddr, "("+s.AssetSymbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
 	logger.TestLog(true, "hash:                  ", s.TransactionHash)
 	logger.TestLog(true, "timestamp:             ", s.Timestamp)
-	if s.AssetType == "eth" {
+	if s.AssetType == TrialBalEth {
 		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d", s.BlockNumber, s.TransactionIndex))
 	} else {
 		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex))

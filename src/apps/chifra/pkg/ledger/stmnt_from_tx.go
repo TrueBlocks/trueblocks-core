@@ -103,7 +103,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 			ret.AssetSymbol = "ETH"
 		}
 
-		if !l.useTraces && l.trialBalance(trialBalEth, &ret) {
+		if !l.useTraces && l.trialBalance(types.TrialBalEth, &ret) {
 			if ret.IsMaterial() {
 				statements = append(statements, ret)
 			} else {
