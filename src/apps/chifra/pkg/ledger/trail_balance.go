@@ -90,9 +90,9 @@ func (l *Ledger) correctForNullTransfer(s *types.Statement, tx *types.Transactio
 // 	return l.correctForSomethingElseInner(s)
 // }
 
-func (l *Ledger) correctForSomethingElseToken(s *types.Statement) bool {
-	return l.correctForSomethingElseInner(s)
-}
+// func (l *Ledger) correctForSomethingElseToken(s *types.Statement) bool {
+// 	return l.correctForSomethingElseInner(s)
+// }
 
 func (l *Ledger) correctForSomethingElseInner(s *types.Statement) bool {
 	if s.IsEth() {
