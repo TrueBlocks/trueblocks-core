@@ -9,7 +9,7 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Contexts (3)
+INFO[DATE|TIME] Appearance Contexts (3)
 INFO[DATE|TIME] 000000000-00270:          0          0       46685 genesis-diff
 INFO[DATE|TIME] 000046685-00000:          0      46685       46709 diff-diff
 INFO[DATE|TIME] 000046709-00000:      46685      46709       46709 diff-last
@@ -80,6 +80,10 @@ TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (2)
+INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685 genesis-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -114,6 +118,12 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (4)
+INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685 genesis-diff
+INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000046685-00000:          0      46685       46709 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046685-00000:          0      46685       46709 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -148,6 +158,14 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (6)
+INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685 genesis-diff
+INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000046685-00000:          0      46685       46709 diff-diff
+INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000046709-00000:      46685      46709       46709 diff-same
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046685-00000:          0      46685       46709 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046709-00000:      46685      46709       46709 diff-same
 ----
 Results in ./statement_2_ether_out.file
 {

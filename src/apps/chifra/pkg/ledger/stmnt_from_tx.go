@@ -29,6 +29,14 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 		}
 	}
 
+	_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, l.accountFor)
+	_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, base.FAKE_ETH_ADDRESS)
+	if trans.Receipt != nil {
+		for _, log := range trans.Receipt.Logs {
+			_ = l.getOrCreateAssetContext(trans.BlockNumber, trans.TransactionIndex, log.Address)
+		}
+	}
+
 	// make room for our results
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
@@ -141,7 +149,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	if false && isFinal && isWritable && isEnabled {
 		for _, statement := range statements {
 			if statement.IsMaterial() && !statement.Reconciled() {
-				// debugLedgerContexts(l.testMode, l.appContexts)
+				debugLedgerContexts(l.testMode, l.assetContexts)
 				return statements, nil
 			}
 		}
@@ -154,6 +162,6 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 		_ = l.connection.Store.Write(statementGroup, nil)
 	}
 
-	// debugLedgerContexts(l.testMode, l.appContexts)
+	debugLedgerContexts(l.testMode, l.assetContexts)
 	return statements, nil
 }
