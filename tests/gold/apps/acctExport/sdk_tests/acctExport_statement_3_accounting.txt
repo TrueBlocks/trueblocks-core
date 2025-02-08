@@ -10,7 +10,7 @@ Format:  json
 Appearance Contexts (3)
 000000000-00270:          0          0       46685 genesis-diff
 000046685-00000:          0      46685       46709 diff-diff
-000046709-00000:      46685      46709       46709 diff-last
+000046709-00000:      46685      46709       46710 diff-last
 Start of trial balance report
 Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -92,7 +92,7 @@ Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing metho
 ===================================================
 Previous:               46685
 Current:                46709
-Next:                   46709
+Next:                   46710
 reconciliationType:     diff-last
 assetType:              eth
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
@@ -123,7 +123,7 @@ End of trial balance report
 Asset Contexts (3)
 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046685-00000:          0      46685       46709 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046709-00000:      46685      46709       46709 diff-same
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046709-00000:      46685      46709       46710 diff-diff
 {
   "data": [
     {

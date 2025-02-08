@@ -13,7 +13,7 @@ TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Appearance Contexts (1)
-INFO[DATE|TIME] 011670419-00091:   11670419   11670419    11670419 first-last
+INFO[DATE|TIME] 011670419-00091:   11670418   11670419    11670420 first-last
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] A possible nullTransfer
 TEST[DATE|TIME]   nLogs:             8
@@ -47,9 +47,9 @@ TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> token
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               11670419
+TEST[DATE|TIME] Previous:               11670418
 TEST[DATE|TIME] Current:                11670419
-TEST[DATE|TIME] Next:                   11670419
+TEST[DATE|TIME] Next:                   11670420
 TEST[DATE|TIME] reconciliationType:     first-last
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
@@ -61,7 +61,7 @@ TEST[DATE|TIME] blockNumber:            11670419.91.195
 TEST[DATE|TIME] priceSource:            0 (not-priced)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    prevBal:             14.922878205530494041
 TEST[DATE|TIME]    begBal:              14.922878205530494041 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            14.922878205530494041
@@ -79,9 +79,9 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Asset Contexts (3)
-INFO[DATE|TIME] 0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2-011670419-00091:   11670419   11670419    11670419 same-same
-INFO[DATE|TIME] 0xc713e5e149d5d0715dcd1c156a020976e7e56b88-011670419-00091:   11670419   11670419    11670419 same-same
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-011670419-00091:   11670419   11670419    11670419 same-same
+INFO[DATE|TIME] 0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2-011670419-00091:   11670418   11670419    11670420 diff-diff
+INFO[DATE|TIME] 0xc713e5e149d5d0715dcd1c156a020976e7e56b88-011670419-00091:   11670418   11670419    11670420 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-011670419-00091:   11670418   11670419    11670420 diff-diff
 ----
 Results in ./failed_statement_2572_2_out.file
 {

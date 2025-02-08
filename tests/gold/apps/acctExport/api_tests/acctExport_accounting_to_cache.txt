@@ -1,4 +1,4 @@
-export?addrs=0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c&lastBlock=100&accounting&statements
+export?addrs=0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c&accounting&statements&lastBlock=100
 {
   "data": [
     {

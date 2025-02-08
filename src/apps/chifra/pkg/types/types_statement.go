@@ -618,9 +618,7 @@ func (s *Statement) BegBalDiff() *base.Wei {
 	if s.BlockNumber == 0 {
 		val = new(base.Wei).SetInt64(0)
 	} else {
-		// TODO: BOGUS NOT DONE
-		// val = new(base.Wei).Sub(&s.BegBal, &s.PrevBal)
-		new(base.Wei).Sub(&s.BegBal, &s.PrevBal)
+		val = new(base.Wei).Sub(&s.BegBal, &s.PrevBal)
 	}
 
 	return val

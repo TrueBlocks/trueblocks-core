@@ -12,7 +12,7 @@ INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Appearance Contexts (3)
 INFO[DATE|TIME] 000000000-00002:          0          0      202249 genesis-diff
 INFO[DATE|TIME] 000202249-00000:          0     202249     1501459 diff-diff
-INFO[DATE|TIME] 001501459-00002:     202249    1501459     1501459 diff-last
+INFO[DATE|TIME] 001501459-00002:     202249    1501459     1501460 diff-last
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -94,7 +94,7 @@ TEST[DATE|TIME] ====> eth
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               202249
 TEST[DATE|TIME] Current:                1501459
-TEST[DATE|TIME] Next:                   1501459
+TEST[DATE|TIME] Next:                   1501460
 TEST[DATE|TIME] reconciliationType:     diff-last
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
@@ -125,7 +125,7 @@ INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Asset Contexts (3)
 INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00002:          0          0      202249 genesis-diff
 INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000202249-00000:          0     202249     1501459 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-001501459-00002:     202249    1501459     1501459 diff-same
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-001501459-00002:     202249    1501459     1501460 diff-diff
 ----
 Results in ./accounting_tokens_1_out.file
 {

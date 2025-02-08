@@ -28,6 +28,12 @@ func newAssetContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool
 }
 
 func (c *assetContext) Prev() base.Blknum {
+	if c.reconType&types.First != 0 {
+		if c.prvBlk == 0 {
+			return 0
+		}
+		return c.prvBlk - 1
+	}
 	return c.prvBlk
 }
 
@@ -36,6 +42,9 @@ func (c *assetContext) Cur() base.Blknum {
 }
 
 func (c *assetContext) Next() base.Blknum {
+	if c.reconType&types.Last != 0 {
+		return c.nxtBlk + 1
+	}
 	return c.nxtBlk
 }
 

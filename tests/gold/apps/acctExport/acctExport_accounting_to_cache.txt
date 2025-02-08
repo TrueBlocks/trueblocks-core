@@ -1,4 +1,4 @@
-chifra export  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c --last_block 100 --accounting --statements
+chifra export  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c --accounting --statements --last_block 100 --output accounting_to_cache_out.file
 TEST[DATE|TIME] Addrs:  [0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
@@ -7,8 +7,8 @@ TEST[DATE|TIME] OutputFn:  accounting_to_cache_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Contexts (13)
-INFO[DATE|TIME] 000000013-99999:         13         13          22 first-diff
+INFO[DATE|TIME] Appearance Contexts (13)
+INFO[DATE|TIME] 000000013-99999:         12         13          22 first-diff
 INFO[DATE|TIME] 000000022-99999:         13         22          37 diff-diff
 INFO[DATE|TIME] 000000037-99998:         22         37          39 diff-diff
 INFO[DATE|TIME] 000000039-99999:         37         39          43 diff-diff
@@ -20,13 +20,13 @@ INFO[DATE|TIME] 000000067-99999:         64         67          78 diff-diff
 INFO[DATE|TIME] 000000078-99999:         67         78          84 diff-diff
 INFO[DATE|TIME] 000000084-99999:         78         84          90 diff-diff
 INFO[DATE|TIME] 000000090-99999:         84         90          94 diff-diff
-INFO[DATE|TIME] 000000094-99999:         90         94          94 diff-last
+INFO[DATE|TIME] 000000094-99999:         90         94          95 diff-last
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 13 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               13
+TEST[DATE|TIME] Previous:               12
 TEST[DATE|TIME] Current:                13
 TEST[DATE|TIME] Next:                   22
 TEST[DATE|TIME] reconciliationType:     first-diff
@@ -36,12 +36,12 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270158
-TEST[DATE|TIME] blockNumber:            13.99999.0
+TEST[DATE|TIME] blockNumber:            13.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             -
-TEST[DATE|TIME]    begBal:              0 (-)
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0 (0)
 TEST[DATE|TIME]    totalIn:             5
 TEST[DATE|TIME]    totalOut:            0
 TEST[DATE|TIME]    amountNet:           5
@@ -54,6 +54,9 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 22 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -69,7 +72,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270204
-TEST[DATE|TIME] blockNumber:            22.99999.0
+TEST[DATE|TIME] blockNumber:            22.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -87,6 +90,10 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (2)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 37 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -102,7 +109,7 @@ TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270267
-TEST[DATE|TIME] blockNumber:            37.99998.0
+TEST[DATE|TIME] blockNumber:            37.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -120,6 +127,11 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (3)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 39 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -135,7 +147,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270272
-TEST[DATE|TIME] blockNumber:            39.99999.0
+TEST[DATE|TIME] blockNumber:            39.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -153,6 +165,12 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (4)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 43 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -168,7 +186,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270279
-TEST[DATE|TIME] blockNumber:            43.99999.0
+TEST[DATE|TIME] blockNumber:            43.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -186,6 +204,13 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (5)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 53 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -201,7 +226,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270312
-TEST[DATE|TIME] blockNumber:            53.99999.0
+TEST[DATE|TIME] blockNumber:            53.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -219,6 +244,14 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (6)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 55 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -234,7 +267,7 @@ TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270320
-TEST[DATE|TIME] blockNumber:            55.99998.0
+TEST[DATE|TIME] blockNumber:            55.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -252,6 +285,15 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (7)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 64 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -267,7 +309,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270345
-TEST[DATE|TIME] blockNumber:            64.99999.0
+TEST[DATE|TIME] blockNumber:            64.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -285,6 +327,16 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (8)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000064-99999:         55         64          67 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 67 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -300,7 +352,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270366
-TEST[DATE|TIME] blockNumber:            67.99999.0
+TEST[DATE|TIME] blockNumber:            67.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -318,6 +370,17 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (9)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000064-99999:         55         64          67 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000067-99999:         64         67          78 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 78 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -333,7 +396,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270389
-TEST[DATE|TIME] blockNumber:            78.99999.0
+TEST[DATE|TIME] blockNumber:            78.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -352,6 +415,18 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (10)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000064-99999:         55         64          67 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000067-99999:         64         67          78 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000078-99999:         67         78          84 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 84 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -367,7 +442,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270408
-TEST[DATE|TIME] blockNumber:            84.99999.0
+TEST[DATE|TIME] blockNumber:            84.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -385,6 +460,19 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (11)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000064-99999:         55         64          67 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000067-99999:         64         67          78 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000078-99999:         67         78          84 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000084-99999:         78         84          90 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 90 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -400,7 +488,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270422
-TEST[DATE|TIME] blockNumber:            90.99999.0
+TEST[DATE|TIME] blockNumber:            90.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -418,6 +506,20 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (12)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000064-99999:         55         64          67 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000067-99999:         64         67          78 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000078-99999:         67         78          84 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000084-99999:         78         84          90 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000090-99999:         84         90          94 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 94 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -425,7 +527,7 @@ TEST[DATE|TIME] ====> eth
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               90
 TEST[DATE|TIME] Current:                94
-TEST[DATE|TIME] Next:                   94
+TEST[DATE|TIME] Next:                   95
 TEST[DATE|TIME] reconciliationType:     diff-last
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -433,7 +535,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270431
-TEST[DATE|TIME] blockNumber:            94.99999.0
+TEST[DATE|TIME] blockNumber:            94.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -452,6 +554,21 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (13)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000064-99999:         55         64          67 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000067-99999:         64         67          78 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000078-99999:         67         78          84 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000084-99999:         78         84          90 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000090-99999:         84         90          94 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000094-99999:         90         94          95 diff-diff
 ----
 Results in ./accounting_to_cache_out.file
 blockNumber	transactionIndex	logIndex	transactionHash	timestamp	date	assetAddr	assetType	assetSymbol	decimals	spotPrice	priceSource	accountedFor	sender	recipient	begBal	amountNet	endBal	reconciliationType	reconciled	totalIn	amountIn	internalIn	selfDestructIn	minerBaseRewardIn	minerNephewRewardIn	minerTxFeeIn	minerUncleRewardIn	prefundIn	totalOut	amountOut	internalOut	selfDestructOut	gasOut	totalOutLessGas	prevBal	begBalDiff	endBalDiff	endBalCalc	correctingReason
@@ -468,4 +585,3 @@ blockNumber	transactionIndex	logIndex	transactionHash	timestamp	date	assetAddr	a
 84	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270408	2015-07-30 15:33:28 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	eth	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	47656250000000000000	5000000000000000000	52656250000000000000	diff-diff	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	47656250000000000000	0	0	52656250000000000000	
 90	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270422	2015-07-30 15:33:42 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	eth	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	52656250000000000000	5000000000000000000	57656250000000000000	diff-diff	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	52656250000000000000	0	0	57656250000000000000	
 94	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270431	2015-07-30 15:33:51 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	eth	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	57656250000000000000	5156250000000000000	62812500000000000000	diff-last	true	5156250000000000000	0	0	0	5000000000000000000	156250000000000000	0	0	0	0	0	0	0	0	0	57656250000000000000	0	0	62812500000000000000	
-

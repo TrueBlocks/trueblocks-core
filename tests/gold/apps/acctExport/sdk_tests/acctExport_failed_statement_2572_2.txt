@@ -13,7 +13,7 @@ Caps:  cache,decache,ether
 Format:  json
 ------------------------------------------------------------
 Appearance Contexts (1)
-011670419-00091:   11670419   11670419    11670419 first-last
+011670419-00091:   11670418   11670419    11670420 first-last
 Start of trial balance report
 A possible nullTransfer
   nLogs:             8
@@ -47,9 +47,9 @@ source:              uniswap
 ===================================================
 ====> token
 ===================================================
-Previous:               11670419
+Previous:               11670418
 Current:                11670419
-Next:                   11670419
+Next:                   11670420
 reconciliationType:     first-last
 assetType:              token
 accountedFor:           0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
@@ -61,7 +61,7 @@ blockNumber:            11670419.91.195
 priceSource:            0 (not-priced)
 --------------------------------------------------- 
 Trial balance:
-   prevBal:             0
+   prevBal:             14.922878205530494041
    begBal:              14.922878205530494041 (0)
    totalIn:             0
    totalOut:            14.922878205530494041
@@ -79,9 +79,9 @@ Trial balance:
 End of trial balance report
 ------------------------------------------------------------
 Asset Contexts (3)
-0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2-011670419-00091:   11670419   11670419    11670419 same-same
-0xc713e5e149d5d0715dcd1c156a020976e7e56b88-011670419-00091:   11670419   11670419    11670419 same-same
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-011670419-00091:   11670419   11670419    11670419 same-same
+0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2-011670419-00091:   11670418   11670419    11670420 diff-diff
+0xc713e5e149d5d0715dcd1c156a020976e7e56b88-011670419-00091:   11670418   11670419    11670420 diff-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-011670419-00091:   11670418   11670419    11670420 diff-diff
 {
   "data": [
     {

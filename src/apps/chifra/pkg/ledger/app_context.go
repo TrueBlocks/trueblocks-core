@@ -64,6 +64,12 @@ func newAppContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) 
 }
 
 func (c *appContext) Prev() base.Blknum {
+	if c.reconType&types.First != 0 {
+		if c.prvBlk == 0 {
+			return 0
+		}
+		return c.prvBlk - 1
+	}
 	return c.prvBlk
 }
 
@@ -72,6 +78,9 @@ func (c *appContext) Cur() base.Blknum {
 }
 
 func (c *appContext) Next() base.Blknum {
+	if c.reconType&types.Last != 0 {
+		return c.nxtBlk + 1
+	}
 	return c.nxtBlk
 }
 

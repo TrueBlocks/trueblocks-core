@@ -11,7 +11,7 @@ INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Appearance Contexts (3)
 INFO[DATE|TIME] 000000000-00270:          0          0       46685 genesis-diff
 INFO[DATE|TIME] 000046685-00000:          0      46685       46709 diff-diff
-INFO[DATE|TIME] 000046709-00000:      46685      46709       46709 diff-last
+INFO[DATE|TIME] 000046709-00000:      46685      46709       46710 diff-last
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -93,7 +93,7 @@ TEST[DATE|TIME] ====> eth
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               46685
 TEST[DATE|TIME] Current:                46709
-TEST[DATE|TIME] Next:                   46709
+TEST[DATE|TIME] Next:                   46710
 TEST[DATE|TIME] reconciliationType:     diff-last
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
@@ -124,7 +124,7 @@ INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Asset Contexts (3)
 INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
 INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046685-00000:          0      46685       46709 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046709-00000:      46685      46709       46709 diff-same
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046709-00000:      46685      46709       46710 diff-diff
 ----
 Results in ./statement_2_out.file
 {

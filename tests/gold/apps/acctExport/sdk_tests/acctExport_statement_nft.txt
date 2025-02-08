@@ -1,23 +1,23 @@
-export?addrs=trueblocks.eth&accounting&statements&firstBlock=8876231&lastBlock=9024186
-Args: [addrs=trueblocks.eth accounting statements firstBlock=8876231 lastBlock=9024186]
-Opts: {"addrs":["trueblocks.eth"],"accounting":true,"statements":true,"firstBlock":8876231,"lastBlock":9024186}
+export?addrs=trueblocks.eth&accounting&statements&firstBlock=8876230&lastBlock=9024186
+Args: [addrs=trueblocks.eth accounting statements firstBlock=8876230 lastBlock=9024186]
+Opts: {"addrs":["trueblocks.eth"],"accounting":true,"statements":true,"firstBlock":8876230,"lastBlock":9024186}
 Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 Accounting:  true
 Statements:  true
-FirstBlock:  8876231
+FirstBlock:  8876230
 LastBlock:  9024186
 Caps:  cache,decache,ether
 Format:  json
 ------------------------------------------------------------
 Appearance Contexts (3)
-008876232-00084:    8876232    8876232     9000998 first-diff
+008876232-00084:    8876231    8876232     9000998 first-diff
 009000998-00070:    8876232    9000998     9024185 diff-diff
-009024185-00029:    9000998    9024185     9024185 diff-last
+009024185-00029:    9000998    9024185     9024186 diff-last
 Start of trial balance report
 ===================================================
 ====> eth
 ===================================================
-Previous:               8876232
+Previous:               8876231
 Current:                8876232
 Next:                   9000998
 reconciliationType:     first-diff
@@ -50,7 +50,7 @@ Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source f
 ===================================================
 ====> token
 ===================================================
-Previous:               8876232
+Previous:               8876231
 Current:                8876232
 Next:                   9000998
 reconciliationType:     first-diff
@@ -64,7 +64,7 @@ blockNumber:            8876232.84.169
 priceSource:            0 (token-not-priced-pre-uni)
 --------------------------------------------------- 
 Trial balance:
-   prevBal:             22500
+   prevBal:             0
    begBal:              0 (0)
    totalIn:             22500
    totalOut:            0
@@ -80,8 +80,8 @@ Trial balance:
 End of trial balance report
 ------------------------------------------------------------
 Asset Contexts (2)
-0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3-008876232-00084:    8876232    8876232     9000998 same-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008876232-00084:    8876232    8876232     9000998 same-diff
+0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3-008876232-00084:    8876231    8876232     9000998 diff-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008876232-00084:    8876231    8876232     9000998 diff-diff
 Start of trial balance report
 ===================================================
 ====> eth
@@ -163,8 +163,8 @@ End of trial balance report
 ------------------------------------------------------------
 Asset Contexts (4)
 0x22c1f6050e56d2876009903609a2cc3fef83b415-009000998-00070:    8876232    9000998     9024185 diff-diff
-0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3-008876232-00084:    8876232    8876232     9000998 same-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008876232-00084:    8876232    8876232     9000998 same-diff
+0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3-008876232-00084:    8876231    8876232     9000998 diff-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008876232-00084:    8876231    8876232     9000998 diff-diff
 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-009000998-00070:    8876232    9000998     9024185 diff-diff
 Start of trial balance report
 ===================================================
@@ -172,7 +172,7 @@ Start of trial balance report
 ===================================================
 Previous:               9000998
 Current:                9024185
-Next:                   9024185
+Next:                   9024186
 reconciliationType:     diff-last
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -201,10 +201,10 @@ Tx reconciled with a zero value net amount. It's okay.
 ------------------------------------------------------------
 Asset Contexts (5)
 0x22c1f6050e56d2876009903609a2cc3fef83b415-009000998-00070:    8876232    9000998     9024185 diff-diff
-0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3-008876232-00084:    8876232    8876232     9000998 same-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008876232-00084:    8876232    8876232     9000998 same-diff
+0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3-008876232-00084:    8876231    8876232     9000998 diff-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008876232-00084:    8876231    8876232     9000998 diff-diff
 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-009000998-00070:    8876232    9000998     9024185 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-009024185-00029:    9000998    9024185     9024185 diff-same
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-009024185-00029:    9000998    9024185     9024186 diff-diff
 {
   "data": [
     {

@@ -1,4 +1,4 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --first_block 8860513 --last_block 8860531 --ether --asset 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 --fmt json
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --first_block 8860513 --last_block 8860531 --ether --asset 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 --fmt json --output statement_filtered_out.file
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
@@ -9,12 +9,12 @@ TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  statement_filtered_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
-{ "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Contexts (3)
-INFO[DATE|TIME] 008860513-00085:    8860513    8860513     8860529 first-diff
+INFO[DATE|TIME] Appearance Contexts (3)
+INFO[DATE|TIME] 008860513-00085:    8860512    8860513     8860529 first-diff
 INFO[DATE|TIME] 008860529-00145:    8860513    8860529     8860531 diff-diff
-INFO[DATE|TIME] 008860531-00152:    8860529    8860531     8860531 diff-last
+INFO[DATE|TIME] 008860531-00152:    8860529    8860531     8860532 diff-last
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
@@ -23,7 +23,7 @@ TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> token
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8860513
+TEST[DATE|TIME] Previous:               8860512
 TEST[DATE|TIME] Current:                8860513
 TEST[DATE|TIME] Next:                   8860529
 TEST[DATE|TIME] reconciliationType:     first-diff
@@ -37,8 +37,8 @@ TEST[DATE|TIME] blockNumber:            8860513.85.84
 TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             -
-TEST[DATE|TIME]    begBal:              7500 (-)
+TEST[DATE|TIME]    prevBal:             7500
+TEST[DATE|TIME]    begBal:              7500 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            500
 TEST[DATE|TIME]    amountNet:           -500
@@ -51,6 +51,16 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (2)
+INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860513-00085:    8860512    8860513     8860529 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860513-00085:    8860512    8860513     8860529 diff-diff
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (4)
+INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860513-00085:    8860512    8860513     8860529 diff-diff
+INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860529-00145:    8860513    8860529     8860531 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860513-00085:    8860512    8860513     8860529 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860529-00145:    8860513    8860529     8860531 diff-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
@@ -61,7 +71,7 @@ TEST[DATE|TIME] ====> token
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8860529
 TEST[DATE|TIME] Current:                8860531
-TEST[DATE|TIME] Next:                   8860531
+TEST[DATE|TIME] Next:                   8860532
 TEST[DATE|TIME] reconciliationType:     diff-last
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -87,6 +97,14 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Asset Contexts (6)
+INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860513-00085:    8860512    8860513     8860529 diff-diff
+INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860529-00145:    8860513    8860529     8860531 diff-diff
+INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860531-00152:    8860529    8860531     8860532 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860513-00085:    8860512    8860513     8860529 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860529-00145:    8860513    8860529     8860531 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860531-00152:    8860529    8860531     8860532 diff-diff
 ----
 Results in ./statement_filtered_out.file
 {
@@ -94,90 +112,136 @@ Results in ./statement_filtered_out.file
     {
       "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "amountIn": "0",
-      "amountNet": "-500",
-      "amountOut": "500",
+      "amountInEth": "0",
+      "amountNet": "-500000000000000000000",
+      "amountNetEth": "-500",
+      "amountOut": "500000000000000000000",
+      "amountOutEth": "500",
       "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "assetSymbol": "DAI",
       "assetType": "token",
-      "begBal": "7500",
+      "begBal": "7500000000000000000000",
       "begBalDiff": "0",
+      "begBalDiffEth": "0",
+      "begBalEth": "7500",
       "blockNumber": 8860513,
       "correctingIn": "0",
+      "correctingInEth": "0",
       "correctingOut": "0",
+      "correctingOutEth": "0",
       "correctingReason": "",
       "date": "2019-11-02 18:42:30 UTC",
       "decimals": 18,
-      "endBal": "7000",
-      "endBalCalc": "7000",
+      "endBal": "7000000000000000000000",
+      "endBalCalc": "7000000000000000000000",
+      "endBalCalcEth": "7000",
       "endBalDiff": "0",
+      "endBalDiffEth": "0",
+      "endBalEth": "7000",
       "gasOut": "0",
+      "gasOutEth": "0",
       "internalIn": "0",
+      "internalInEth": "0",
       "internalOut": "0",
+      "internalOutEth": "0",
       "logIndex": 84,
       "minerBaseRewardIn": "0",
+      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
+      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
+      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
+      "minerUncleRewardInEth": "0",
       "prefundIn": "0",
+      "prefundInEth": "0",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,
       "reconciliationType": "first-diff",
       "selfDestructIn": "0",
+      "selfDestructInEth": "0",
       "selfDestructOut": "0",
+      "selfDestructOutEth": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "spotPrice": 1,
       "timestamp": 1572720150,
       "totalIn": "0",
-      "totalOut": "500",
-      "totalOutLessGas": "500",
+      "totalInEth": "0",
+      "totalOut": "500000000000000000000",
+      "totalOutEth": "500",
+      "totalOutLessGas": "500000000000000000000",
+      "totalOutLessGasEth": "500",
       "transactionHash": "0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a",
       "transactionIndex": 85
     },
     {
       "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "amountIn": "0",
-      "amountNet": "-7000",
-      "amountOut": "7000",
+      "amountInEth": "0",
+      "amountNet": "-7000000000000000000000",
+      "amountNetEth": "-7000",
+      "amountOut": "7000000000000000000000",
+      "amountOutEth": "7000",
       "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "assetSymbol": "DAI",
       "assetType": "token",
-      "begBal": "7000",
+      "begBal": "7000000000000000000000",
       "begBalDiff": "0",
+      "begBalDiffEth": "0",
+      "begBalEth": "7000",
       "blockNumber": 8860531,
       "correctingIn": "0",
+      "correctingInEth": "0",
       "correctingOut": "0",
+      "correctingOutEth": "0",
       "correctingReason": "",
       "date": "2019-11-02 18:46:01 UTC",
       "decimals": 18,
       "endBal": "0",
       "endBalCalc": "0",
+      "endBalCalcEth": "0",
       "endBalDiff": "0",
+      "endBalDiffEth": "0",
+      "endBalEth": "0",
       "gasOut": "0",
+      "gasOutEth": "0",
       "internalIn": "0",
+      "internalInEth": "0",
       "internalOut": "0",
+      "internalOutEth": "0",
       "logIndex": 95,
       "minerBaseRewardIn": "0",
+      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
+      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
+      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
+      "minerUncleRewardInEth": "0",
       "prefundIn": "0",
-      "prevBal": "7000",
+      "prefundInEth": "0",
+      "prevBal": "7000000000000000000000",
+      "prevBalEth": "7000",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,
       "reconciliationType": "diff-last",
       "selfDestructIn": "0",
+      "selfDestructInEth": "0",
       "selfDestructOut": "0",
+      "selfDestructOutEth": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "spotPrice": 1,
       "timestamp": 1572720361,
       "totalIn": "0",
-      "totalOut": "7000",
-      "totalOutLessGas": "7000",
+      "totalInEth": "0",
+      "totalOut": "7000000000000000000000",
+      "totalOutEth": "7000",
+      "totalOutLessGas": "7000000000000000000000",
+      "totalOutLessGasEth": "7000",
       "transactionHash": "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124",
       "transactionIndex": 152
     }
   ]
 }
-

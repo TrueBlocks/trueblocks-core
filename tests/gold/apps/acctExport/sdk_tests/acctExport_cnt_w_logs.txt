@@ -1,9 +1,10 @@
-export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&count&logs
-Args: [addrs=0x001d14804b399c6ef80e64576f657660804fec0b count logs]
-Opts: {"addrs":["0x001d14804b399c6ef80e64576f657660804fec0b"],"logs":true,"count":true}
+export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&count&logs&lastBlock=15508000
+Args: [addrs=0x001d14804b399c6ef80e64576f657660804fec0b count logs lastBlock=15508000]
+Opts: {"addrs":["0x001d14804b399c6ef80e64576f657660804fec0b"],"logs":true,"count":true,"lastBlock":15508000}
 Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 Logs:  true
 Count:  true
+LastBlock:  15508000
 Caps:  cache,decache,ether
 Format:  json
 {
