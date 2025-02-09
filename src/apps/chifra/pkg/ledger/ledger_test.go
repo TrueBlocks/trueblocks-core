@@ -13,7 +13,7 @@ func TestGetOrCreateAssetContext_New(t *testing.T) {
 	l := &Ledger{
 		reversed:      false,
 		appContexts:   make(map[appContextKey]*appContext),
-		assetContexts: make(map[assetContextKey]*assetContext),
+		assetContexts: make(map[base.Address]*assetContext),
 	}
 
 	bn := base.Blknum(100)
@@ -35,8 +35,7 @@ func TestGetOrCreateAssetContext_New(t *testing.T) {
 		t.Error("Expected app context to be created and stored in ledger.appContexts")
 	}
 
-	assetKey := l.getAssetContextKey(bn, txid, assetAddr)
-	storedAssetCtx, exists := l.assetContexts[assetKey]
+	storedAssetCtx, exists := l.assetContexts[assetAddr]
 	if !exists {
 		t.Error("Expected asset context to be stored in ledger.assetContexts")
 	}
@@ -49,7 +48,7 @@ func TestGetOrCreateAssetContext_Existing(t *testing.T) {
 	l := &Ledger{
 		reversed:      false,
 		appContexts:   make(map[appContextKey]*appContext),
-		assetContexts: make(map[assetContextKey]*assetContext),
+		assetContexts: make(map[base.Address]*assetContext),
 	}
 
 	bn := base.Blknum(200)

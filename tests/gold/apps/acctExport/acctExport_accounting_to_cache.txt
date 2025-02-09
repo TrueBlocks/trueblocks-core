@@ -57,7 +57,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Asset Contexts (1)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 22 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -93,9 +93,8 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (2)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 37 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -131,10 +130,8 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (3)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 39 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -170,11 +167,8 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (4)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 43 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -210,12 +204,8 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (5)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 53 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -251,13 +241,8 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (6)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 55 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -293,14 +278,8 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (7)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 64 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -336,15 +315,8 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (8)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000064-99999:         55         64          67 diff-diff
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 67 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -380,16 +352,8 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (9)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000064-99999:         55         64          67 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000067-99999:         64         67          78 diff-diff
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 78 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -426,17 +390,8 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (10)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000064-99999:         55         64          67 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000067-99999:         64         67          78 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000078-99999:         67         78          84 diff-diff
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 84 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -472,18 +427,8 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (11)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000064-99999:         55         64          67 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000067-99999:         64         67          78 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000078-99999:         67         78          84 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000084-99999:         78         84          90 diff-diff
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 90 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -519,19 +464,8 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (12)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000064-99999:         55         64          67 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000067-99999:         64         67          78 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000078-99999:         67         78          84 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000084-99999:         78         84          90 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000090-99999:         84         90          94 diff-diff
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 94 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -568,20 +502,8 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (13)
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000013-99999:         12         13          22 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000022-99999:         13         22          37 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000037-99998:         22         37          39 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000039-99999:         37         39          43 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000043-99999:         39         43          53 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000053-99999:         43         53          55 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000055-99998:         53         55          64 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000064-99999:         55         64          67 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000067-99999:         64         67          78 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000078-99999:         67         78          84 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000084-99999:         78         84          90 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000090-99999:         84         90          94 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000094-99999:         90         94          95 diff-diff
+INFO[DATE|TIME] Asset Contexts (1)
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 ----
 Results in ./accounting_to_cache_out.file
 blockNumber	transactionIndex	logIndex	transactionHash	timestamp	date	assetAddr	assetType	assetSymbol	decimals	spotPrice	priceSource	accountedFor	sender	recipient	begBal	amountNet	endBal	reconciliationType	reconciled	totalIn	amountIn	internalIn	selfDestructIn	minerBaseRewardIn	minerNephewRewardIn	minerTxFeeIn	minerUncleRewardIn	prefundIn	totalOut	amountOut	internalOut	selfDestructOut	gasOut	totalOutLessGas	prevBal	begBalDiff	endBalDiff	endBalCalc	correctingReason

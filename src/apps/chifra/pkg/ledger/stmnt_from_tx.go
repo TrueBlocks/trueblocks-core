@@ -49,7 +49,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	var ctx *appContext
 	var exists bool
 	if ctx, exists = l.appContexts[key]; !exists {
-		debugContexts("Appearance", l.testMode, l.appContexts)
+		debugContexts(l.testMode, l.appContexts)
 		return statements, fmt.Errorf("no context for %s", key)
 	}
 
@@ -132,7 +132,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 			}
 		} else {
 			if !l.useTraces {
-				logger.TestLog(!l.useTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), "need to decend into traces")
+				logger.TestLog(!l.useTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), " need to decend into traces")
 			}
 			if traceStatements, err := l.getStatementsFromTraces(trans, &ret); err != nil {
 				if !utils.IsFuzzing() {
@@ -153,11 +153,11 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	isFinal := base.IsFinal(l.connection.LatestBlockTimestamp, trans.Timestamp)
 	isWritable := l.connection.StoreWritable()
 	isEnabled := l.connection.EnabledMap[walk.Cache_Statements]
-	// TODO: BOGUS NOT DONE
+	// TODO: BOGUS Turn on caching for statements once we get 100% coverage
 	if false && isFinal && isWritable && isEnabled {
 		for _, statement := range statements {
 			if statement.IsMaterial() && !statement.Reconciled() {
-				debugContexts("Asset", l.testMode, l.assetContexts)
+				debugContexts(l.testMode, l.assetContexts)
 				return statements, nil
 			}
 		}
@@ -170,6 +170,6 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 		_ = l.connection.Store.Write(statementGroup, nil)
 	}
 
-	debugContexts("Asset", l.testMode, l.assetContexts)
+	debugContexts(l.testMode, l.assetContexts)
 	return statements, nil
 }

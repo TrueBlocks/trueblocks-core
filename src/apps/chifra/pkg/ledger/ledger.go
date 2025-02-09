@@ -34,7 +34,7 @@ type Ledger struct {
 	assetFilter   []base.Address
 	theTx         *types.Transaction
 	appContexts   map[appContextKey]*appContext
-	assetContexts map[assetContextKey]*assetContext
+	assetContexts map[base.Address]*assetContext
 }
 
 // NewLedger returns a new empty Ledger struct
@@ -50,7 +50,7 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 		reversed:      reversed,
 		useTraces:     useTraces,
 		appContexts:   make(map[appContextKey]*appContext),
-		assetContexts: make(map[assetContextKey]*assetContext),
+		assetContexts: make(map[base.Address]*assetContext),
 	}
 
 	if assetFilters != nil {
@@ -72,7 +72,7 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 		appKey := l.getAppContextKey(base.Blknum(curApp.BlockNumber), base.Txnum(curApp.TransactionIndex))
 		l.appContexts[appKey] = newAppContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.reversed)
 	}
-	debugContexts("Appearance", l.testMode, l.appContexts)
+	debugContexts(l.testMode, l.appContexts)
 
 	return l
 }
@@ -96,13 +96,8 @@ func (l *Ledger) getAppContextKey(bn base.Blknum, txid base.Txnum) appContextKey
 	return appContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }
 
-func (l *Ledger) getAssetContextKey(bn base.Blknum, txid base.Txnum, assetAddr base.Address) assetContextKey {
-	return assetContextKey(fmt.Sprintf("%s-%09d-%05d", assetAddr.Hex(), bn, txid))
-}
-
 func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *assetContext {
-	assetKey := l.getAssetContextKey(bn, txid, assetAddr)
-	if ctx, exists := l.assetContexts[assetKey]; exists {
+	if ctx, exists := l.assetContexts[assetAddr]; exists {
 		return ctx
 	}
 
@@ -115,13 +110,25 @@ func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetA
 	}
 
 	assetCtx := newAssetContext(appCtx.Prev(), appCtx.Cur(), appCtx.Next(), false, false, l.reversed, assetAddr)
-	l.assetContexts[assetKey] = assetCtx
+	l.assetContexts[assetAddr] = assetCtx
 	return assetCtx
 }
 
 const maxTestingBlock = 17000000
 
-func debugContexts[K ~string, T types.LedgerContexter](which string, testMode bool, ctxs map[K]T) {
+func keyToString[K ~string | base.Address](k K) string {
+	switch v := any(k).(type) {
+	case appContextKey:
+		return string(v)
+	case base.Address:
+		return v.Hex()
+	default:
+		logger.Fatal("keyToString: unknown type", v)
+		return ""
+	}
+}
+
+func debugContexts[K ~string | base.Address, T types.LedgerContexter](testMode bool, ctxs map[K]T) {
 	if !testMode {
 		return
 	}
@@ -132,11 +139,29 @@ func debugContexts[K ~string, T types.LedgerContexter](which string, testMode bo
 	}
 
 	sort.Slice(keys, func(i, j int) bool {
-		return string(keys[i]) < string(keys[j])
+		return keyToString(keys[i]) < keyToString(keys[j])
 	})
 
+	var whichLabel string
+	var isAppearance bool
+	if len(keys) > 0 {
+		switch any(keys[0]).(type) {
+		case appContextKey:
+			whichLabel = "Appearance"
+			isAppearance = true
+		case base.Address:
+			whichLabel = "Asset"
+			isAppearance = false
+		default:
+			whichLabel = "Unknown"
+			isAppearance = false
+		}
+	} else {
+		whichLabel = "Contexts"
+	}
+
 	logger.Info(strings.Repeat("-", 60))
-	logger.Info(fmt.Sprintf(which+" Contexts (%d)", len(keys)))
+	logger.Info(fmt.Sprintf("%s Contexts (%d)", whichLabel, len(keys)))
 	for _, key := range keys {
 		c := ctxs[key]
 		if c.Cur() > maxTestingBlock {
@@ -158,6 +183,10 @@ func debugContexts[K ~string, T types.LedgerContexter](which string, testMode bo
 		default:
 			msg = fmt.Sprintf(" %s should not happen!", c.Recon().String())
 		}
-		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.Prev(), c.Cur(), c.Next(), msg))
+		if isAppearance {
+			logger.Info(fmt.Sprintf("%s: %10d %10d %11d%s", keyToString(key), c.Prev(), c.Cur(), c.Next(), msg))
+		} else {
+			logger.Info(fmt.Sprintf("%s: %10d", keyToString(key), c.Cur()))
+		}
 	}
 }

@@ -82,8 +82,8 @@ Trial balance:
 End of trial balance report
 ------------------------------------------------------------
 Asset Contexts (2)
-0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3-008876232-00084:    8876231    8876232     9000998 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008876232-00084:    8876231    8876232     9000998 diff-diff
+0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3:    8876232
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8876232
 Start of trial balance report
 ===================================================
 ====> eth
@@ -165,11 +165,10 @@ Trial balance:
 ---------------------------------------------------
 End of trial balance report
 ------------------------------------------------------------
-Asset Contexts (4)
-0x22c1f6050e56d2876009903609a2cc3fef83b415-009000998-00070:    8876232    9000998     9024185 diff-diff
-0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3-008876232-00084:    8876231    8876232     9000998 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008876232-00084:    8876231    8876232     9000998 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-009000998-00070:    8876232    9000998     9024185 diff-diff
+Asset Contexts (3)
+0x22c1f6050e56d2876009903609a2cc3fef83b415:    9000998
+0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3:    8876232
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8876232
 Start of trial balance report
 ===================================================
 ====> eth
@@ -204,12 +203,10 @@ Trial balance:
 End of trial balance report
 Tx reconciled with a zero value net amount. It's okay.
 ------------------------------------------------------------
-Asset Contexts (5)
-0x22c1f6050e56d2876009903609a2cc3fef83b415-009000998-00070:    8876232    9000998     9024185 diff-diff
-0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3-008876232-00084:    8876231    8876232     9000998 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008876232-00084:    8876231    8876232     9000998 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-009000998-00070:    8876232    9000998     9024185 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-009024185-00029:    9000998    9024185     9024186 diff-diff
+Asset Contexts (3)
+0x22c1f6050e56d2876009903609a2cc3fef83b415:    9000998
+0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3:    8876232
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8876232
 {
   "data": [
     {

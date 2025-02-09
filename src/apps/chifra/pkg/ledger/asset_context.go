@@ -5,11 +5,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// assetContextKey is a string type used as a key in the Ledger's map of asset contexts.
-// It includes the asset address along with block and transaction identifiers to uniquely
-// identify an asset's context within a transaction.
-type assetContextKey string
-
 // assetContext represents the context for a specific asset within a transaction. It is defined
 // as an alias to appContext and carries the same block boundary and reconciliation information,
 // but it is used to track balance changes and other details at the asset level.
