@@ -83,7 +83,7 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 				author := trace.Action.Author.Hex()
 				fakeId := types.BlockReward
 				if base.IsPrecompile(author) {
-					author = base.SentinalAddr.Hex()
+					author = base.SentinelAddr.Hex()
 					fakeId = types.MisconfigReward
 				}
 				addAddressToMaps(author, bn, fakeId, addrMap)
@@ -92,7 +92,7 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 				author := trace.Action.Author.Hex()
 				fakeId := types.UncleReward
 				if base.IsPrecompile(author) {
-					author = base.SentinalAddr.Hex()
+					author = base.SentinelAddr.Hex()
 					fakeId = types.MisconfigReward
 				}
 				addAddressToMaps(author, bn, fakeId, addrMap)

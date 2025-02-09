@@ -190,7 +190,7 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 			bn := base.MustParseBlknum(strings.TrimLeft(parts[1], "0"))
 			txid := base.MustParseTxnum(strings.TrimLeft(parts[2], "0"))
 			// See #3252
-			if addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
+			if addr == base.SentinelAddr.Hex() && txid == types.MisconfigReward {
 				continue
 			}
 			fileRange.First = base.Min(fileRange.First, bn)
