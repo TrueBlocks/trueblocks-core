@@ -39,6 +39,7 @@ func UniqFromReceipts(chain string, receipts []types.Receipt, addrMap AddressBoo
 
 // uniqFromLogs extracts addresses from the logs
 func uniqFromLogs(chain string, logs []types.Log, addrMap AddressBooleanMap) (err error) {
+	_ = chain // linter
 	for _, log := range logs {
 		for _, topic := range log.Topics {
 			str := string(topic.Hex()[2:])

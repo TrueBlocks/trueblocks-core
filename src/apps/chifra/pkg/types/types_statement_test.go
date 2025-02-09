@@ -466,3 +466,216 @@ func TestReport1(t *testing.T) {
 		t.Errorf("Expected log %q; got %q", expected, capturedLogs[0])
 	}
 }
+
+// ---------------------------------------------------------------------------
+// Helper types for simulating errors during cache marshalling/unmarshalling
+
+type failingWriter struct{}
+
+func (fw *failingWriter) Write(p []byte) (n int, err error) {
+	return 0, fmt.Errorf("write error")
+}
+
+type failingReader struct{}
+
+func (fr *failingReader) Read(p []byte) (n int, err error) {
+	return 0, fmt.Errorf("read error")
+}
+
+// ---------------------------------------------------------------------------
+// 1. Test error handling in MarshalCache by simulating a writer error
+
+func TestMarshalCacheError(t *testing.T) {
+	stmt := &Statement{
+		// (We don’t need to populate all fields because the failing writer
+		//  will return an error on the very first write.)
+	}
+	fw := &failingWriter{}
+	err := stmt.MarshalCache(fw)
+	if err == nil {
+		t.Error("Expected MarshalCache to return an error, but got nil")
+	} else if err.Error() != "write error" {
+		t.Errorf("Expected error 'write error', got %v", err)
+	}
+}
+
+// ---------------------------------------------------------------------------
+// 2. Test error handling in UnmarshalCache by simulating a reader error
+
+func TestUnmarshalCacheError(t *testing.T) {
+	stmt := &Statement{}
+	fr := &failingReader{}
+	err := stmt.UnmarshalCache(1, fr)
+	if err == nil {
+		t.Error("Expected UnmarshalCache to return an error, but got nil")
+	} else if err.Error() != "read error" {
+		t.Errorf("Expected error 'read error', got %v", err)
+	}
+}
+
+// ---------------------------------------------------------------------------
+// 3. Test a single Statement’s cache roundtrip (marshal then unmarshal)
+
+func TestStatementCacheRoundtrip(t *testing.T) {
+	// Populate a statement with representative (nonzero) values.
+	stmt := &Statement{
+		AccountedFor:        base.HexToAddress("0xAAAABBBBCCCCDDDDEEEEFFFF0000111122223333"),
+		AmountIn:            *base.NewWei(10),
+		AmountOut:           *base.NewWei(20),
+		AssetAddr:           base.HexToAddress("0x1111222233334444555566667777888899990000"),
+		AssetSymbol:         "TKN",
+		AssetType:           TrialBalEth, // using an example type; it could be any valid value
+		BegBal:              *base.NewWei(100),
+		BlockNumber:         123,
+		CorrectingIn:        *base.NewWei(5),
+		CorrectingOut:       *base.NewWei(3),
+		CorrectingReason:    "Test Correction",
+		Decimals:            18,
+		EndBal:              *base.NewWei(122),
+		GasOut:              *base.NewWei(2),
+		InternalIn:          *base.NewWei(7),
+		InternalOut:         *base.NewWei(4),
+		LogIndex:            1,
+		MinerBaseRewardIn:   *base.NewWei(8),
+		MinerNephewRewardIn: *base.NewWei(9),
+		MinerTxFeeIn:        *base.NewWei(10),
+		MinerUncleRewardIn:  *base.NewWei(11),
+		PrefundIn:           *base.NewWei(12),
+		PrevBal:             *base.NewWei(90),
+		PriceSource:         "TestSource",
+		Recipient:           base.HexToAddress("0x222233334444555566667777888899990000AAAA"),
+		ReconType:           1, // arbitrary test value
+		RollingBalance:      *base.NewWei(150),
+		SelfDestructIn:      *base.NewWei(13),
+		SelfDestructOut:     *base.NewWei(14),
+		Sender:              base.HexToAddress("0x3333444455556666777788889999AAAABBBBCCCC"),
+		SpotPrice:           100,
+		Timestamp:           1610000000,
+		TransactionHash:     base.HexToHash("0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"),
+		TransactionIndex:    2,
+	}
+
+	var buf bytes.Buffer
+	if err := stmt.MarshalCache(&buf); err != nil {
+		t.Fatalf("MarshalCache failed: %v", err)
+	}
+
+	newStmt := &Statement{}
+	if err := newStmt.UnmarshalCache(1, &buf); err != nil {
+		t.Fatalf("UnmarshalCache failed: %v", err)
+	}
+
+	// Compare the two statements.
+	if !reflect.DeepEqual(stmt, newStmt) {
+		t.Errorf("Roundtrip statement does not match original.\nOriginal: %+v\nNew: %+v", stmt, newStmt)
+	}
+}
+
+// ---------------------------------------------------------------------------
+// 4. Test that DebugStatement prints block number in the expected format
+//    when the asset type is for a token (or NFT).
+
+func TestDebugStatementTokenFormatting(t *testing.T) {
+	// Reset the logger to capture logs.
+	restore := resetLogger()
+	defer restore()
+
+	// Create a statement with asset type set to a token type.
+	stmt := &Statement{
+		AssetType:        TrialBalToken, // should trigger printing with 3-part block number
+		BlockNumber:      123,
+		TransactionIndex: 456,
+		LogIndex:         789,
+		ReconType:        0,
+		AccountedFor:     base.HexToAddress("0xAAAABBBBCCCCDDDDEEEEFFFF0000111122223333"),
+		Sender:           base.HexToAddress("0x1111222233334444555566667777888899990000"),
+		Recipient:        base.HexToAddress("0x0000999988887777666655554444333322221111"),
+		AssetAddr:        base.HexToAddress("0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"),
+		AssetSymbol:      "TKN",
+		Decimals:         18,
+		TransactionHash:  base.HexToHash("0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"),
+		Timestamp:        1610000000,
+		SpotPrice:        2000,
+		PriceSource:      "TestSource",
+	}
+
+	// Use the existing dummy ledger to supply context.
+	ledger := dummyLedgerer{}
+	stmt.DebugStatement(ledger)
+
+	// Look for a log line that shows the three-part block number (e.g., "123.456.789")
+	found := false
+	for _, logLine := range capturedLogs {
+		if strings.Contains(logLine, "blockNumber:") && strings.Contains(logLine, "123.456.789") {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Error("DebugStatement did not format blockNumber as expected for token asset type")
+	}
+}
+
+// ---------------------------------------------------------------------------
+// 5. Test arithmetic edge cases by using very large Wei values
+
+func TestArithmeticEdgeCasesLargeNumbers(t *testing.T) {
+	// Use a "huge" Wei value, e.g. 1e18.
+	huge := base.NewWei(1000000000000000000) // 1e18
+	stmt := &Statement{
+		// For TotalIn, there are 9 fields:
+		AmountIn:            *huge,
+		InternalIn:          *huge,
+		SelfDestructIn:      *huge,
+		MinerBaseRewardIn:   *huge,
+		MinerNephewRewardIn: *huge,
+		MinerTxFeeIn:        *huge,
+		MinerUncleRewardIn:  *huge,
+		CorrectingIn:        *huge,
+		PrefundIn:           *huge,
+		// For TotalOut, there are 5 fields:
+		AmountOut:       *huge,
+		InternalOut:     *huge,
+		CorrectingOut:   *huge,
+		SelfDestructOut: *huge,
+		GasOut:          *huge,
+	}
+
+	// Expected TotalIn: 9 * 1e18
+	totalIn := stmt.TotalIn()
+	expectedTotalIn := base.NewWei(9 * 1000000000000000000)
+	if totalIn.Cmp(expectedTotalIn) != 0 {
+		t.Errorf("TotalIn with huge values: expected %s, got %s", expectedTotalIn.Text(10), totalIn.Text(10))
+	}
+
+	// Expected TotalOut: 5 * 1e18
+	totalOut := stmt.TotalOut()
+	expectedTotalOut := base.NewWei(5 * 1000000000000000000)
+	if totalOut.Cmp(expectedTotalOut) != 0 {
+		t.Errorf("TotalOut with huge values: expected %s, got %s", expectedTotalOut.Text(10), totalOut.Text(10))
+	}
+
+	// AmountNet should be TotalIn - TotalOut = 4e18.
+	amountNet := stmt.AmountNet()
+	expectedAmountNet := base.NewWei(4 * 1000000000000000000)
+	if amountNet.Cmp(expectedAmountNet) != 0 {
+		t.Errorf("AmountNet with huge values: expected %s, got %s", expectedAmountNet.Text(10), amountNet.Text(10))
+	}
+
+	// TotalOutLessGas should be TotalOut - GasOut = 4e18.
+	totalOutLessGas := stmt.TotalOutLessGas()
+	expectedTotalOutLessGas := base.NewWei(4 * 1000000000000000000)
+	if totalOutLessGas.Cmp(expectedTotalOutLessGas) != 0 {
+		t.Errorf("TotalOutLessGas with huge values: expected %s, got %s", expectedTotalOutLessGas.Text(10), totalOutLessGas.Text(10))
+	}
+
+	// Test BegBalDiff: when BlockNumber != 0, it should be BegBal - PrevBal.
+	stmt.BlockNumber = 1
+	stmt.BegBal = *base.NewWei(2 * 1000000000000000000) // 2e18
+	stmt.PrevBal = *huge                                // 1e18
+	begBalDiff := stmt.BegBalDiff()
+	expectedBegBalDiff := huge // 1e18
+	if begBalDiff.Cmp(expectedBegBalDiff) != 0 {
+		t.Errorf("BegBalDiff with huge values: expected %s, got %s", expectedBegBalDiff.Text(10), begBalDiff.Text(10))
+	}
+}

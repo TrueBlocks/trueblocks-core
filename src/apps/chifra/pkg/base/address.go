@@ -34,12 +34,8 @@ func (a *Address) Hex() string {
 	return bytesToAddressString(a.Address.Bytes())
 }
 
-func (a *Address) Prefix(n int) string {
+func (a *Address) DefaultSymbol() string {
 	return a.Hex()[:Min(len(a.Hex()), 6)]
-}
-
-func (a *Address) Encoded32() string {
-	return "000000000000000000000000" + a.Hex()[2:]
 }
 
 func (a Address) String() string {
@@ -102,6 +98,16 @@ func (a *Address) Pad32() string {
 	return "000000000000000000000000" + a.Hex()[2:]
 }
 
+// As per EIP 1352, all addresses less or equal to the following value are reserved for pre-compiles.
+// We don't index precompiles. https://eips.ethereum.org/EIPS/eip-1352
+var maxPrecompile = "0x000000000000000000000000000000000000ffff"
+
+// IsPrecompile Returns true if the address is not a precompile and not the zero address
+func IsPrecompile(addr string) bool {
+	test := HexToAddress(addr) // normalizes the input as an address
+	return test.Hex() <= maxPrecompile
+}
+
 // AddressFromPath returns an address from a path -- is assumes the filename is
 // a valid address starting with 0x and ends with the fileType. if the path does
 // not contain an address, an error is returned. If the path does not end with the
@@ -123,16 +129,6 @@ func AddressFromPath(path, fileType string) (Address, error) {
 
 	parts := strings.Split(fileName, ".")
 	return HexToAddress(parts[0]), nil
-}
-
-// As per EIP 1352, all addresses less or equal to the following value are reserved for pre-compiles.
-// We don't index precompiles. https://eips.ethereum.org/EIPS/eip-1352
-var maxPrecompile = "0x000000000000000000000000000000000000ffff"
-
-// IsPrecompile Returns true if the address is not a precompile and not the zero address
-func IsPrecompile(addr string) bool {
-	test := HexToAddress(addr) // normalizes the input as an address
-	return test.Hex() <= maxPrecompile
 }
 
 func IsHex(str string) bool {
