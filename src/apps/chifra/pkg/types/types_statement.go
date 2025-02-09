@@ -50,6 +50,7 @@ type Statement struct {
 	PriceSource         string         `json:"priceSource"`
 	Recipient           base.Address   `json:"recipient"`
 	ReconType           ReconType      `json:"reconType,omitempty"`
+	RollingBalance      base.Wei       `json:"rollingBalance,omitempty"`
 	SelfDestructIn      base.Wei       `json:"selfDestructIn,omitempty"`
 	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
@@ -234,7 +235,7 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// // AssetType
+	// AssetType
 	if err = cache.WriteValue(writer, s.AssetType); err != nil {
 		return err
 	}
@@ -339,6 +340,11 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// RollingBalance
+	if err = cache.WriteValue(writer, &s.RollingBalance); err != nil {
+		return err
+	}
+
 	// SelfDestructIn
 	if err = cache.WriteValue(writer, &s.SelfDestructIn); err != nil {
 		return err
@@ -407,7 +413,7 @@ func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
-	// // AssetType
+	// AssetType
 	if err = cache.ReadValue(reader, &s.AssetType, vers); err != nil {
 		return err
 	}
@@ -509,6 +515,11 @@ func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 
 	// ReconType
 	if err = cache.ReadValue(reader, &s.ReconType, vers); err != nil {
+		return err
+	}
+
+	// RollingBalance
+	if err = cache.ReadValue(reader, &s.RollingBalance, vers); err != nil {
 		return err
 	}
 
@@ -696,6 +707,7 @@ func (s *Statement) DebugStatement(ctx LedgerContexter) {
 	reportL("                       =======================")
 	report2("   endBal:             ", &s.EndBal, s.BegBalDiff())
 	report1("   endBalCalc:         ", s.EndBalCalc())
+	report1("   rollingBalance:     ", &s.RollingBalance)
 	reportL("---------------------------------------------------")
 	reportE("   amountIn:           ", &s.AmountIn)
 	reportE("   internalIn:         ", &s.InternalIn)

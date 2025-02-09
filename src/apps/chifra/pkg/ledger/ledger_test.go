@@ -150,10 +150,10 @@ func TestNewLedger_WithAssetFiltersNil(t *testing.T) {
 			t.Errorf("Expected appContext with key %s to exist", expectedKey)
 			continue
 		}
-		// For the first appearance, prev and cur should equal its block number,
+		// For the first appearance, prev should be one less than cur,
 		// and next should equal the block number of the second appearance.
 		if index == 0 {
-			if ctx.Prev() != base.Blknum(app.BlockNumber) {
+			if ctx.Prev() != base.Blknum(app.BlockNumber)-1 {
 				t.Errorf("For first app, expected Prev() to be %d, got %d", app.BlockNumber, ctx.Prev())
 			}
 			if ctx.Cur() != base.Blknum(app.BlockNumber) {
@@ -177,7 +177,7 @@ func TestNewLedger_WithAssetFiltersNil(t *testing.T) {
 			}
 		}
 		// For the last appearance, prev should be the second app's block number,
-		// cur equal to its block, and next equal to its block.
+		// cur equal to its block, and next one more than that.
 		if index == 2 {
 			if ctx.Prev() != base.Blknum(apps[1].BlockNumber) {
 				t.Errorf("For last app, expected Prev() to be %d, got %d", apps[1].BlockNumber, ctx.Prev())
@@ -185,7 +185,7 @@ func TestNewLedger_WithAssetFiltersNil(t *testing.T) {
 			if ctx.Cur() != base.Blknum(app.BlockNumber) {
 				t.Errorf("For last app, expected Cur() to be %d, got %d", app.BlockNumber, ctx.Cur())
 			}
-			if ctx.Next() != base.Blknum(app.BlockNumber) {
+			if ctx.Next() != base.Blknum(app.BlockNumber)+1 {
 				t.Errorf("For last app, expected Next() to be %d, got %d", app.BlockNumber, ctx.Next())
 			}
 		}

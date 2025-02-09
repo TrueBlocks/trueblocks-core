@@ -246,6 +246,14 @@ func (m *Member) MarshalCode() string {
 	}
 
 `
+	} else if m.GoName() == "ReconType" || m.GoName() == "AssetType" {
+		tmplName += "12"
+		tmpl = `// {{.GoName}}
+	if err = cache.WriteValue(writer, s.{{.GoName}}); err != nil {
+		return err
+	}
+
+`
 	} else if m.IsArray &&
 		m.GoName() != "Topics" &&
 		m.GoName() != "Transactions" &&
@@ -336,6 +344,14 @@ func (m *Member) UnmarshalCode() string {
 	}
 	if err = json.Unmarshal([]byte({{.Lower}}), &s.{{.GoName}}); err != nil {
 		return fmt.Errorf("cannot unmarshal {{.GoName}}: %w", err)
+	}
+
+`
+	} else if m.GoName() == "ReconType" || m.GoName() == "AssetType" {
+		tmplName += "112"
+		tmpl = `// {{.GoName}}
+	if err = cache.ReadValue(reader, &s.{{.GoName}}, vers); err != nil {
+		return err
 	}
 
 `

@@ -49,6 +49,7 @@ Trial balance:
                        ======================= 
    endBal:              5 (0)
    endBalCalc:          5
+   rollingBalance:      0
 --------------------------------------------------- 
    minerBaseRewardIn:   5
    material:            true
@@ -85,6 +86,7 @@ Trial balance:
                        ======================= 
    endBal:              10 (0)
    endBalCalc:          10
+   rollingBalance:      0
 --------------------------------------------------- 
    minerBaseRewardIn:   5
    material:            true
@@ -122,6 +124,7 @@ Trial balance:
                        ======================= 
    endBal:              13.75 (0)
    endBalCalc:          13.75
+   rollingBalance:      0
 --------------------------------------------------- 
    minerUncleRewardIn:  3.75
    material:            true
@@ -160,6 +163,7 @@ Trial balance:
                        ======================= 
    endBal:              18.75 (0)
    endBalCalc:          18.75
+   rollingBalance:      0
 --------------------------------------------------- 
    minerBaseRewardIn:   5
    material:            true
@@ -199,6 +203,7 @@ Trial balance:
                        ======================= 
    endBal:              23.75 (0)
    endBalCalc:          23.75
+   rollingBalance:      0
 --------------------------------------------------- 
    minerBaseRewardIn:   5
    material:            true
@@ -239,6 +244,7 @@ Trial balance:
                        ======================= 
    endBal:              28.75 (0)
    endBalCalc:          28.75
+   rollingBalance:      0
 --------------------------------------------------- 
    minerBaseRewardIn:   5
    material:            true
@@ -280,6 +286,7 @@ Trial balance:
                        ======================= 
    endBal:              32.5 (0)
    endBalCalc:          32.5
+   rollingBalance:      0
 --------------------------------------------------- 
    minerUncleRewardIn:  3.75
    material:            true
@@ -322,6 +329,7 @@ Trial balance:
                        ======================= 
    endBal:              37.5 (0)
    endBalCalc:          37.5
+   rollingBalance:      0
 --------------------------------------------------- 
    minerBaseRewardIn:   5
    material:            true
@@ -365,6 +373,7 @@ Trial balance:
                        ======================= 
    endBal:              42.5 (0)
    endBalCalc:          42.5
+   rollingBalance:      0
 --------------------------------------------------- 
    minerBaseRewardIn:   5
    material:            true
@@ -409,6 +418,7 @@ Trial balance:
                        ======================= 
    endBal:              47.65625 (0)
    endBalCalc:          47.65625
+   rollingBalance:      0
 --------------------------------------------------- 
    minerBaseRewardIn:   5
    minerNephewRewardIn: 0.15625
@@ -455,6 +465,7 @@ Trial balance:
                        ======================= 
    endBal:              52.65625 (0)
    endBalCalc:          52.65625
+   rollingBalance:      0
 --------------------------------------------------- 
    minerBaseRewardIn:   5
    material:            true
@@ -501,6 +512,7 @@ Trial balance:
                        ======================= 
    endBal:              57.65625 (0)
    endBalCalc:          57.65625
+   rollingBalance:      0
 --------------------------------------------------- 
    minerBaseRewardIn:   5
    material:            true
@@ -548,6 +560,7 @@ Trial balance:
                        ======================= 
    endBal:              62.8125 (0)
    endBalCalc:          62.8125
+   rollingBalance:      0
 --------------------------------------------------- 
    minerBaseRewardIn:   5
    minerNephewRewardIn: 0.15625
