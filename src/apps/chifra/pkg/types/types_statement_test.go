@@ -172,15 +172,14 @@ func TestBegBalDiff(t *testing.T) {
 
 	// Case 2: BlockNumber != 0.
 	// Let PrevBal = 90 and BegBal = 100, then BegBalDiff should be 10.
-	// TODO: BOGUS NOT DONE
-	// stmt.BlockNumber = 1
-	// stmt.PrevBal = *base.NewWei(90)
-	// stmt.BegBal = *base.NewWei(100)
-	// diff = stmt.BegBalDiff()
-	// expected = base.NewWei(10)
-	// if diff.Cmp(expected) != 0 {
-	// 	t.Errorf("BegBalDiff() with BlockNumber!=0: expected %s, got %s", expected.Text(10), diff.Text(10))
-	// }
+	stmt.BlockNumber = 1
+	stmt.PrevBal = *base.NewWei(90)
+	stmt.BegBal = *base.NewWei(100)
+	diff = stmt.BegBalDiff()
+	expected = base.NewWei(10)
+	if diff.Cmp(expected) != 0 {
+		t.Errorf("BegBalDiff() with BlockNumber!=0: expected %s, got %s", expected.Text(10), diff.Text(10))
+	}
 }
 
 func TestEndBalCalc(t *testing.T) {

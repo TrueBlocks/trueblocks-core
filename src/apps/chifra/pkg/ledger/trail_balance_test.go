@@ -356,8 +356,7 @@ func TestCorrectForSomethingElseEth(t *testing.T) {
 // 	assetAddr := base.HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 // 	appCtx := newAppContext(bn-1, bn, bn+1, false, false, l.reversed)
 // 	ac := newAssetContext(appCtx.Prev(), appCtx.Cur(), appCtx.Next(), false, false, l.reversed, assetAddr)
-// 	key := l.getAssetContextKey(bn, txid, assetAddr)
-// 	l.assetContexts[key] = ac
+// 	l.assetContexts[assetAddr] = ac
 
 // 	s := new(types.Statement)
 // 	s.BlockNumber = bn

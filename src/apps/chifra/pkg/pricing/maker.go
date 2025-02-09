@@ -47,7 +47,7 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 	divisor.SetString("1000000000000000000", 10)
 
 	// TODO: Since Dawid fixed the articulate code, we should use the value at results["val_1"] instead of this
-	//       hacky string manipulation
+	// TODO: hacky string manipulation
 	trimmed := strings.TrimPrefix(string(result.ReturnedBytes), "0x")
 	trimmed = trimmed[:64]
 	int0 := new(base.Wei)
@@ -55,7 +55,7 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 	int0 = int0.Mul(int0, new(base.Wei).SetInt64(100000))
 	int1 := new(base.Wei).Quo(int0, divisor)
 
-	bigPrice := new(base.Ether).SetWei(int1)
+	bigPrice := new(base.Ether).SetRawWei(int1)
 	bigPrice = bigPrice.Quo(bigPrice, new(base.Ether).SetInt64(100000))
 	price = base.Float(bigPrice.Float64())
 	source = "maker"

@@ -27,8 +27,17 @@ func (x *Ether) Text(format byte, prec int) string {
 	return (*big.Float)(x).Text(format, prec)
 }
 
-func (e *Ether) SetWei(i *Wei) *Ether {
+// SetRawWei sets the Ether’s value directly from the Wei’s big.Int.
+// No scaling is done – it simply copies the Wei value into a big.Float.
+func (e *Ether) SetRawWei(i *Wei) *Ether {
 	return (*Ether)((*big.Float)(e).SetInt((*big.Int)(i)))
+}
+
+func (e *Ether) SetWei(i *Wei) *Ether {
+	weiFloat := new(big.Float).SetInt((*big.Int)(i))
+	divisor := new(big.Float).SetFloat64(1e18)
+	converted := new(big.Float).Quo(weiFloat, divisor)
+	return (*Ether)(converted)
 }
 
 func (e *Ether) SetInt64(i int64) *Ether {
