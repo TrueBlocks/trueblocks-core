@@ -1,6 +1,7 @@
 package base
 
 import (
+	"bytes"
 	"encoding/hex"
 	"errors"
 	"fmt"
@@ -96,6 +97,32 @@ func bytesToAddressString(addressBytes []byte) string {
 
 func (a *Address) Pad32() string {
 	return "000000000000000000000000" + a.Hex()[2:]
+}
+
+// IsLessThan compares two addresses numerically.
+func (a Address) IsLessThan(b Address) bool {
+	return bytes.Compare(a.Bytes(), b.Bytes()) < 0
+}
+
+// IsLessThanOrEqual compares two addresses numerically.
+func (a *Address) IsLessThanOrEqual(b Address) bool {
+	return a.IsLessThan(b) || a.Equal(b)
+}
+
+// IsGreaterThan returns true if address a is numerically greater than address b.
+func (a Address) IsGreaterThan(b Address) bool {
+	// note the reversal here
+	return b.IsLessThan(a)
+}
+
+// IsGreaterThanOrEqual returns true if address a is numerically greater than or equal to address b.
+func (a Address) IsGreaterThanOrEqual(b Address) bool {
+	return !a.IsLessThan(b)
+}
+
+// Equal returns true if addresses a and b are identical.
+func (a Address) Equal(b Address) bool {
+	return bytes.Equal(a.Bytes(), b.Bytes())
 }
 
 // As per EIP 1352, all addresses less or equal to the following value are reserved for pre-compiles.
