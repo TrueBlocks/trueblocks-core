@@ -43,7 +43,7 @@ func uniqFromLogs(chain string, logs []types.Log, addrMap AddressBooleanMap) (er
 	for _, log := range logs {
 		for _, topic := range log.Topics {
 			str := string(topic.Hex()[2:])
-			if IsImplicitAddress(str) {
+			if _, ok := IsImplicitAddress(str); ok {
 				addAddressToMaps(str, log.BlockNumber, log.TransactionIndex, addrMap)
 			}
 		}
@@ -52,7 +52,7 @@ func uniqFromLogs(chain string, logs []types.Log, addrMap AddressBooleanMap) (er
 			inputData := log.Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
-				if IsImplicitAddress(str) {
+				if _, ok := IsImplicitAddress(str); ok {
 					addAddressToMaps(str, log.BlockNumber, log.TransactionIndex, addrMap)
 				}
 			}
@@ -130,7 +130,7 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 					initData := trace.Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						str := string(initData[i*64 : (i+1)*64])
-						if IsImplicitAddress(str) {
+						if _, ok := IsImplicitAddress(str); ok {
 							addAddressToMaps(str, bn, txid, addrMap)
 						}
 					}
@@ -161,7 +161,7 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 			inputData := trace.Action.Input[10:]
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
-				if IsImplicitAddress(str) {
+				if _, ok := IsImplicitAddress(str); ok {
 					addAddressToMaps(str, bn, txid, addrMap)
 				}
 			}
@@ -172,7 +172,7 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 			outputData := trace.Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
 				str := string(outputData[i*64 : (i+1)*64])
-				if IsImplicitAddress(str) {
+				if _, ok := IsImplicitAddress(str); ok {
 					addAddressToMaps(str, bn, txid, addrMap)
 				}
 			}
