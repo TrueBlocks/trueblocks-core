@@ -269,18 +269,18 @@ func TestUtilityMethods(t *testing.T) {
 		t.Fatalf("Pad32 expected %s, got %s", expectedPad32, pad)
 	}
 
-	// // --- Test IsPrecompile ---
-	// // A known precompile address should return true.
-	// precompileAddr := HexToAddress("0x0000000000000000000000000000000000000001")
-	// if !precompileAddr.IsPrecompile() {
-	// 	t.Fatalf("IsPrecompile expected true for %s", precompileAddr)
-	// }
+	// --- Test IsPrecompile ---
+	// A known precompile address should return true.
+	precompileAddr := HexToAddress("0x0000000000000000000000000000000000000001")
+	if !precompileAddr.IsPrecompile() {
+		t.Fatalf("IsPrecompile expected true for %s", precompileAddr)
+	}
 
-	// // A non-precompile address (e.g. starting with 0x1...) should return false.
-	// nonPrecompileAddr := HexToAddress("0x1000000000000000000000000000000000000000")
-	// if nonPrecompileAddr.IsPrecompile() {
-	// 	t.Fatalf("IsPrecompile expected false for %s", nonPrecompileAddr)
-	// }
+	// A non-precompile address (e.g. starting with 0x1...) should return false.
+	nonPrecompileAddr := HexToAddress("0x1000000000000000000000000000000000000000")
+	if nonPrecompileAddr.IsPrecompile() {
+		t.Fatalf("IsPrecompile expected false for %s", nonPrecompileAddr)
+	}
 }
 
 func TestAddress_Prefix_CustomParameter(t *testing.T) {

@@ -127,12 +127,11 @@ func (a Address) Equal(b Address) bool {
 
 // As per EIP 1352, all addresses less or equal to the following value are reserved for pre-compiles.
 // We don't index precompiles. https://eips.ethereum.org/EIPS/eip-1352
-var maxPrecompile = "0x000000000000000000000000000000000000ffff"
+var maxPrecompileAddr = HexToAddress("0x000000000000000000000000000000000000ffff")
 
-// IsPrecompile Returns true if the address is not a precompile and not the zero address
-func IsPrecompile(addr string) bool {
-	test := HexToAddress(addr) // normalizes the input as an address
-	return test.Hex() <= maxPrecompile
+// IsPrecompile Returns true if the address is not a precompile (and not the zero address by extension)
+func (a *Address) IsPrecompile() bool {
+	return a.IsLessThanOrEqual(maxPrecompileAddr)
 }
 
 // AddressFromPath returns an address from a path -- is assumes the filename is

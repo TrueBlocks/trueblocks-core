@@ -78,7 +78,7 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 			if trace.Action.RewardType == "block" {
 				author := trace.Action.Author
 				fakeId := types.BlockReward
-				if base.IsPrecompile(author.Hex()) {
+				if author.IsPrecompile() {
 					author = base.SentinelAddr
 					fakeId = types.MisconfigReward
 				}
@@ -87,7 +87,7 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 			} else if trace.Action.RewardType == "uncle" {
 				author := trace.Action.Author
 				fakeId := types.UncleReward
-				if base.IsPrecompile(author.Hex()) {
+				if author.IsPrecompile() {
 					author = base.SentinelAddr
 					fakeId = types.MisconfigReward
 				}
@@ -178,7 +178,7 @@ var mapSync sync.Mutex
 // chunk. `addrMap` helps eliminate duplicates and is used to build the address table when writing the chunk.
 // Precompiles are ignored. If the given address string does not start with a lead `0x`, it is normalized.
 func addAddressToMaps(address base.Address, bn base.Blknum, txid base.Txnum, addrMap AddressBooleanMap) {
-	if base.IsPrecompile(address.Hex()) {
+	if address.IsPrecompile() {
 		return
 	}
 	mapSync.Lock()

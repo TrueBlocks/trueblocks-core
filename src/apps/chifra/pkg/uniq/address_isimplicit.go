@@ -40,5 +40,5 @@ func IsImplicitAddress(addr string) (base.Address, bool) {
 
 	// Extract the implicit address and return it.
 	address := base.HexToAddress("0x" + string(addr[24:]))
-	return address, !base.IsPrecompile(address.Hex())
+	return address, !address.IsPrecompile()
 }

@@ -44,7 +44,7 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 			})
 			for i, name := range namesArray {
 				tx_id := base.Txnum(i)
-				streamAppearance(procFunc, flow, "genesis", name.Address.Hex(), bn, tx_id, traceid, ts, addrMap)
+				streamAppearance(procFunc, flow, "genesis", name.Address, bn, tx_id, traceid, ts, addrMap)
 			}
 		}
 
@@ -53,11 +53,11 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 			return err
 		} else {
 			fakeId := types.BlockReward
-			miner := block.Miner.Hex()
-			if base.IsPrecompile(miner) {
+			miner := block.Miner
+			if miner.IsPrecompile() {
 				// Some blocks have a misconfigured miner setting. We process this block, so that
 				// every block gets a record, but it will be excluded from the index. See #3252.
-				miner = base.SentinelAddr.Hex()
+				miner = base.SentinelAddr
 				fakeId = types.MisconfigReward
 			}
 			streamAppearance(procFunc, flow, "miner", miner, bn, fakeId, traceid, ts, addrMap)
@@ -67,11 +67,11 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 			} else {
 				for _, uncle := range uncles {
 					fakeId := types.UncleReward
-					uncle := uncle.Miner.Hex()
-					if base.IsPrecompile(uncle) {
+					uncle := uncle.Miner
+					if uncle.IsPrecompile() {
 						// Some blocks have a misconfigured miner setting. We process this block, so that
 						// every block gets a record, but it will be excluded from the index. See #3252.
-						uncle = base.SentinelAddr.Hex()
+						uncle = base.SentinelAddr
 						fakeId = types.MisconfigReward
 					}
 					streamAppearance(procFunc, flow, "uncle", uncle, bn, fakeId, traceid, ts, addrMap)
@@ -88,7 +88,7 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 			}
 
 			for _, withdrawal := range block.Withdrawals {
-				streamAppearance(procFunc, flow, "withdrawal", withdrawal.Address.Hex(), bn, withdrawal.Index, traceid, ts, addrMap)
+				streamAppearance(procFunc, flow, "withdrawal", withdrawal.Address, bn, withdrawal.Index, traceid, ts, addrMap)
 			}
 		}
 	}
@@ -100,11 +100,11 @@ func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow str
 	bn := trans.BlockNumber
 	txid := trans.TransactionIndex
 	traceid := base.NOPOSN
-	streamAppearance(procFunc, flow, "from", trans.From.Hex(), bn, txid, traceid, ts, addrMap)
-	streamAppearance(procFunc, flow, "to", trans.To.Hex(), bn, txid, traceid, ts, addrMap)
+	streamAppearance(procFunc, flow, "from", trans.From, bn, txid, traceid, ts, addrMap)
+	streamAppearance(procFunc, flow, "to", trans.To, bn, txid, traceid, ts, addrMap)
 
 	if trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
-		streamAppearance(procFunc, flow, "creation", trans.Receipt.ContractAddress.Hex(), bn, txid, traceid, ts, addrMap)
+		streamAppearance(procFunc, flow, "creation", trans.Receipt.ContractAddress, bn, txid, traceid, ts, addrMap)
 	}
 
 	if len(trans.Input) > 10 {
@@ -112,7 +112,7 @@ func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow str
 		for i := 0; i < len(inputData)/64; i++ {
 			str := string(inputData[i*64 : (i+1)*64])
 			if addr, ok := IsImplicitAddress(str); ok {
-				streamAppearance(procFunc, flow, "input", addr.Hex(), bn, txid, traceid, ts, addrMap)
+				streamAppearance(procFunc, flow, "input", addr, bn, txid, traceid, ts, addrMap)
 			}
 		}
 	}
@@ -137,13 +137,13 @@ func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs 
 	traceid := base.NOPOSN
 	for l, log := range logs {
 		reason := fmt.Sprintf("log_%d_generator", l)
-		streamAppearance(procFunc, flow, reason, log.Address.Hex(), log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
+		streamAppearance(procFunc, flow, reason, log.Address, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
 
 		for t, topic := range log.Topics {
 			str := string(topic.Hex()[2:])
 			if addr, ok := IsImplicitAddress(str); ok {
 				reason := fmt.Sprintf("log_%d_topic_%d", l, t)
-				streamAppearance(procFunc, flow, reason, addr.Hex(), log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
+				streamAppearance(procFunc, flow, reason, addr, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
 			}
 		}
 
@@ -153,7 +153,7 @@ func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs 
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
 				if addr, ok := IsImplicitAddress(str); ok {
-					streamAppearance(procFunc, flow, reason, addr.Hex(), log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
+					streamAppearance(procFunc, flow, reason, addr, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
 				}
 			}
 		}
@@ -206,42 +206,42 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 		bn := base.Blknum(trace.BlockNumber)
 		txid := trace.TransactionIndex
 
-		streamAppearance(procFunc, flow, traceReason(traceid, &trace, "from"), trace.Action.From.Hex(), bn, txid, traceid, ts, addrMap)
-		streamAppearance(procFunc, flow, traceReason(traceid, &trace, "to"), trace.Action.To.Hex(), bn, txid, traceid, ts, addrMap)
+		streamAppearance(procFunc, flow, traceReason(traceid, &trace, "from"), trace.Action.From, bn, txid, traceid, ts, addrMap)
+		streamAppearance(procFunc, flow, traceReason(traceid, &trace, "to"), trace.Action.To, bn, txid, traceid, ts, addrMap)
 
 		if trace.TraceType == "call" {
 			// If it's a call, get the to and from, we're done
 
 		} else if trace.TraceType == "reward" {
 			if trace.Action.RewardType == "block" {
-				author := trace.Action.Author.Hex()
+				author := trace.Action.Author
 				fakeId := types.BlockReward
-				if base.IsPrecompile(author) {
+				if author.IsPrecompile() {
 					// Some blocks have a misconfigured miner setting. We process this block, so that
 					// every block gets a record, but it will be excluded from the index. See #3252.
-					author = base.SentinelAddr.Hex()
+					author = base.SentinelAddr
 					fakeId = types.MisconfigReward
 				}
 				streamAppearance(procFunc, flow, "miner", author, bn, fakeId, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "uncle" {
-				author := trace.Action.Author.Hex()
+				author := trace.Action.Author
 				fakeId := types.UncleReward
-				if base.IsPrecompile(author) {
+				if author.IsPrecompile() {
 					// Some blocks have a misconfigured miner setting. We process this block, so that
 					// every block gets a record, but it will be excluded from the index. See #3252.
-					author = base.SentinelAddr.Hex()
+					author = base.SentinelAddr
 					fakeId = types.MisconfigReward
 				}
 				streamAppearance(procFunc, flow, "uncle", author, bn, fakeId, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "external" {
-				author := trace.Action.Author.Hex()
+				author := trace.Action.Author
 				fakeId := types.ExternalReward
-				if base.IsPrecompile(author) {
+				if author.IsPrecompile() {
 					// Some blocks have a misconfigured miner setting. We process this block, so that
 					// every block gets a record, but it will be excluded from the index. See #3252.
-					author = base.SentinelAddr.Hex()
+					author = base.SentinelAddr
 					fakeId = types.MisconfigReward
 				}
 				streamAppearance(procFunc, flow, "external", author, bn, fakeId, traceid, ts, addrMap)
@@ -252,13 +252,13 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 
 		} else if trace.TraceType == "suicide" {
 			// add the contract that died, and where it sent it's money
-			streamAppearance(procFunc, flow, traceReason(traceid, &trace, "refund"), trace.Action.RefundAddress.Hex(), bn, txid, traceid, ts, addrMap)
-			streamAppearance(procFunc, flow, traceReason(traceid, &trace, "self-destruct"), trace.Action.Address.Hex(), bn, txid, traceid, ts, addrMap)
+			streamAppearance(procFunc, flow, traceReason(traceid, &trace, "refund"), trace.Action.RefundAddress, bn, txid, traceid, ts, addrMap)
+			streamAppearance(procFunc, flow, traceReason(traceid, &trace, "self-destruct"), trace.Action.Address, bn, txid, traceid, ts, addrMap)
 
 		} else if trace.TraceType == "create" {
 			if trace.Result != nil {
 				// may be both...record the self-destruct instead of the creation since we can only report on one
-				streamAppearance(procFunc, flow, traceReason(traceid, &trace, "self-destruct"), trace.Result.Address.Hex(), bn, txid, traceid, ts, addrMap)
+				streamAppearance(procFunc, flow, traceReason(traceid, &trace, "self-destruct"), trace.Result.Address, bn, txid, traceid, ts, addrMap)
 			}
 
 			// If it's a top level trace, then the call data is the init,
@@ -269,7 +269,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 					for i := 0; i < len(initData)/64; i++ {
 						str := string(initData[i*64 : (i+1)*64])
 						if addr, ok := IsImplicitAddress(str); ok {
-							streamAppearance(procFunc, flow, traceReason(traceid, &trace, "code"), addr.Hex(), bn, txid, traceid, ts, addrMap)
+							streamAppearance(procFunc, flow, traceReason(traceid, &trace, "code"), addr, bn, txid, traceid, ts, addrMap)
 						}
 					}
 				}
@@ -280,7 +280,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				if trace.Result != nil && trace.Result.Address.IsZero() {
 					if trace.Error != "" {
 						if receipt, err := conn.GetReceiptNoTimestamp(bn, txid); err == nil {
-							streamAppearance(procFunc, flow, traceReason(traceid, &trace, "self-destruct"), receipt.ContractAddress.Hex(), bn, txid, traceid, ts, addrMap)
+							streamAppearance(procFunc, flow, traceReason(traceid, &trace, "self-destruct"), receipt.ContractAddress, bn, txid, traceid, ts, addrMap)
 						}
 					}
 				}
@@ -299,7 +299,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
 				if addr, ok := IsImplicitAddress(str); ok {
-					streamAppearance(procFunc, flow, traceReason(traceid, &trace, "input"), addr.Hex(), bn, txid, traceid, ts, addrMap)
+					streamAppearance(procFunc, flow, traceReason(traceid, &trace, "input"), addr, bn, txid, traceid, ts, addrMap)
 				}
 			}
 		}
@@ -310,7 +310,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 			for i := 0; i < len(outputData)/64; i++ {
 				str := string(outputData[i*64 : (i+1)*64])
 				if addr, ok := IsImplicitAddress(str); ok {
-					streamAppearance(procFunc, flow, traceReason(traceid, &trace, "output"), addr.Hex(), bn, txid, traceid, ts, addrMap)
+					streamAppearance(procFunc, flow, traceReason(traceid, &trace, "output"), addr, bn, txid, traceid, ts, addrMap)
 				}
 			}
 		}
@@ -323,8 +323,8 @@ var mapSync2 sync.Mutex
 
 // streamAppearance streams an appearance to the model channel if we've not seen this appearance before. We
 // keep track of appearances we've seen with `appsMap`.
-func streamAppearance(procFunc UniqProcFunc, flow string, reason string, address string, bn base.Blknum, txid base.Txnum, traceid base.Tracenum, ts base.Timestamp, addrMap AddressBooleanMap) {
-	if base.IsPrecompile(address) {
+func streamAppearance(procFunc UniqProcFunc, flow string, reason string, addr base.Address, bn base.Blknum, txid base.Txnum, traceid base.Tracenum, ts base.Timestamp, addrMap AddressBooleanMap) {
+	if addr.IsPrecompile() {
 		return
 	}
 
@@ -349,21 +349,14 @@ func streamAppearance(procFunc UniqProcFunc, flow string, reason string, address
 		}
 	}
 
-	// Normalize implicit strings. (Implicit strings come in 32-bytes long with no leading `0x`.)
-	if !strings.HasPrefix(address, "0x") {
-		addr := base.HexToAddress("0x" + address)
-		address = addr.Hex()
-	}
-
-	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
-
+	key := fmt.Sprintf("%s\t%09d\t%05d", addr.Hex(), bn, txid)
 	mapSync2.Lock()
 	if !addrMap[key] {
 		addrMap[key] = true
 		mapSync2.Unlock()
 
 		s := &types.Appearance{
-			Address:          base.HexToAddress(address),
+			Address:          addr,
 			BlockNumber:      uint32(bn),
 			TransactionIndex: uint32(txid),
 			Reason:           reason,
