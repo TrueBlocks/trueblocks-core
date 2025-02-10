@@ -28,8 +28,7 @@ func UniqFromWithdrawals(chain string, withdrawals []types.Withdrawal, bn base.B
 // UniqFromReceipts extracts addresses from an array of receipts
 func UniqFromReceipts(chain string, receipts []types.Receipt, addrMap AddressBooleanMap) (err error) {
 	for _, receipt := range receipts {
-		created := receipt.ContractAddress
-		addAddressToMaps(created.Hex(), receipt.BlockNumber, receipt.TransactionIndex, addrMap)
+		addAddressToMaps(receipt.ContractAddress.Hex(), receipt.BlockNumber, receipt.TransactionIndex, addrMap)
 		if err := uniqFromLogs(chain, receipt.Logs, addrMap); err != nil {
 			return err
 		}
@@ -43,8 +42,8 @@ func uniqFromLogs(chain string, logs []types.Log, addrMap AddressBooleanMap) (er
 	for _, log := range logs {
 		for _, topic := range log.Topics {
 			str := string(topic.Hex()[2:])
-			if _, ok := IsImplicitAddress(str); ok {
-				addAddressToMaps(str, log.BlockNumber, log.TransactionIndex, addrMap)
+			if addr, ok := IsImplicitAddress(str); ok {
+				addAddressToMaps(addr.Hex(), log.BlockNumber, log.TransactionIndex, addrMap)
 			}
 		}
 
@@ -52,8 +51,8 @@ func uniqFromLogs(chain string, logs []types.Log, addrMap AddressBooleanMap) (er
 			inputData := log.Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
-				if _, ok := IsImplicitAddress(str); ok {
-					addAddressToMaps(str, log.BlockNumber, log.TransactionIndex, addrMap)
+				if addr, ok := IsImplicitAddress(str); ok {
+					addAddressToMaps(addr.Hex(), log.BlockNumber, log.TransactionIndex, addrMap)
 				}
 			}
 		}
@@ -70,11 +69,8 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 		bn := base.Blknum(trace.BlockNumber)
 		txid := trace.TransactionIndex
 
-		from := trace.Action.From.Hex()
-		addAddressToMaps(from, bn, txid, addrMap)
-
-		to := trace.Action.To.Hex()
-		addAddressToMaps(to, bn, txid, addrMap)
+		addAddressToMaps(trace.Action.From.Hex(), bn, txid, addrMap)
+		addAddressToMaps(trace.Action.To.Hex(), bn, txid, addrMap)
 
 		if trace.TraceType == "call" {
 			// If it's a call, get the to and from, we're done
@@ -100,8 +96,7 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 
 			} else if trace.Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
-				author := trace.Action.Author.Hex()
-				addAddressToMaps(author, bn, types.ExternalReward, addrMap)
+				addAddressToMaps(trace.Action.Author.Hex(), bn, types.ExternalReward, addrMap)
 
 			} else {
 				logger.Warn(fmt.Sprintf("Unknown reward type %s for trace: %d.%d.%d", trace.Action.RewardType, trace.BlockNumber, trace.TransactionIndex, trace.TraceIndex))
@@ -110,17 +105,13 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 
 		} else if trace.TraceType == "suicide" {
 			// add the contract that died, and where it sent it's money
-			refundAddress := trace.Action.RefundAddress.Hex()
-			addAddressToMaps(refundAddress, bn, txid, addrMap)
-
-			address := trace.Action.Address.Hex()
-			addAddressToMaps(address, bn, txid, addrMap)
+			addAddressToMaps(trace.Action.RefundAddress.Hex(), bn, txid, addrMap)
+			addAddressToMaps(trace.Action.Address.Hex(), bn, txid, addrMap)
 
 		} else if trace.TraceType == "create" {
 			if trace.Result != nil {
 				// may be both...record the self-destruct instead of the creation since we can only report on one
-				address := trace.Result.Address.Hex()
-				addAddressToMaps(address, bn, txid, addrMap)
+				addAddressToMaps(trace.Result.Address.Hex(), bn, txid, addrMap)
 			}
 
 			// If it's a top level trace, then the call data is the init,
@@ -130,8 +121,8 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 					initData := trace.Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						str := string(initData[i*64 : (i+1)*64])
-						if _, ok := IsImplicitAddress(str); ok {
-							addAddressToMaps(str, bn, txid, addrMap)
+						if addr, ok := IsImplicitAddress(str); ok {
+							addAddressToMaps(addr.Hex(), bn, txid, addrMap)
 						}
 					}
 				}
@@ -142,8 +133,7 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 				if trace.Result != nil && trace.Result.Address.IsZero() {
 					if trace.Error != "" {
 						if receipt, err := conn.GetReceiptNoTimestamp(bn, txid); err == nil {
-							address := receipt.ContractAddress.Hex()
-							addAddressToMaps(address, bn, txid, addrMap)
+							addAddressToMaps(receipt.ContractAddress.Hex(), bn, txid, addrMap)
 						}
 					}
 				}
@@ -161,8 +151,8 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 			inputData := trace.Action.Input[10:]
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
-				if _, ok := IsImplicitAddress(str); ok {
-					addAddressToMaps(str, bn, txid, addrMap)
+				if addr, ok := IsImplicitAddress(str); ok {
+					addAddressToMaps(addr.Hex(), bn, txid, addrMap)
 				}
 			}
 		}
@@ -172,8 +162,8 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 			outputData := trace.Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
 				str := string(outputData[i*64 : (i+1)*64])
-				if _, ok := IsImplicitAddress(str); ok {
-					addAddressToMaps(str, bn, txid, addrMap)
+				if addr, ok := IsImplicitAddress(str); ok {
+					addAddressToMaps(addr.Hex(), bn, txid, addrMap)
 				}
 			}
 		}
