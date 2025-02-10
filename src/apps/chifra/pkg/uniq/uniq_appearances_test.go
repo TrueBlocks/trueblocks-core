@@ -10,25 +10,19 @@ import (
 func TestAddAddressToMaps(t *testing.T) {
 	testCases := []struct {
 		name       string
-		input      string
+		input      base.Address
 		isInserted bool
 		normalized base.Address
 	}{
 		{
 			name:       "Precompile address not inserted",
-			input:      "0x1",
+			input:      base.HexToAddress("0x1"),
 			isInserted: false,
 			normalized: base.HexToAddress("0x1"),
 		},
 		{
-			name:       "Normalize implicit address without prefix",
-			input:      "abcdef123456",
-			isInserted: true,
-			normalized: base.HexToAddress("0xabcdef123456"),
-		},
-		{
 			name:       "Address with prefix used as-is",
-			input:      "0xabcdef123456abcdef123456abcdef123456abcd",
+			input:      base.HexToAddress("0xabcdef123456abcdef123456abcdef123456abcd"),
 			isInserted: true,
 			normalized: base.HexToAddress("0xabcdef123456abcdef123456abcdef123456abcd"),
 		},
