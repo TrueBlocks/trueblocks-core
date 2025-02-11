@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
-	"strings"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -213,85 +212,6 @@ func TestEndBalDiff(t *testing.T) {
 	}
 }
 
-type dummyLedgerer struct{}
-
-func (d dummyLedgerer) Prev() base.Blknum     { return 99 }
-func (d dummyLedgerer) Cur() base.Blknum      { return 100 }
-func (d dummyLedgerer) Next() base.Blknum     { return 101 }
-func (d dummyLedgerer) Recon() ReconType      { return 0 }
-func (d dummyLedgerer) Address() base.Address { return base.ZeroAddr }
-func (d dummyLedgerer) RunningBal() *base.Wei { return nil }
-
-func TestDebugStatement(t *testing.T) {
-	restore := resetLogger()
-	defer restore()
-
-	ledger := dummyLedgerer{}
-
-	stmt := &Statement{
-		AssetType:           TrialBalEth,
-		BlockNumber:         100,
-		TransactionIndex:    1,
-		LogIndex:            2,
-		ReconType:           0, // assume 0 for simplicity
-		AccountedFor:        base.HexToAddress("0xAAAABBBBCCCCDDDDEEEEFFFF0000111122223333"),
-		Sender:              base.HexToAddress("0x1111222233334444555566667777888899990000"),
-		Recipient:           base.HexToAddress("0x0000999988887777666655554444333322221111"),
-		AssetAddr:           base.HexToAddress("0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"),
-		AssetSymbol:         "ETH",
-		Decimals:            18,
-		TransactionHash:     base.HexToHash("0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"),
-		Timestamp:           1610000000,
-		SpotPrice:           2000, // sample value
-		PriceSource:         "TestSource",
-		PrevBal:             *base.NewWei(1000000000000000000),
-		BegBal:              *base.NewWei(1500000000000000000),
-		EndBal:              *base.NewWei(1600000000000000000),
-		CorrectingIn:        *base.NewWei(0),
-		CorrectingOut:       *base.NewWei(0),
-		AmountIn:            *base.NewWei(500000000000000000),
-		InternalIn:          *base.NewWei(0),
-		MinerBaseRewardIn:   *base.NewWei(0),
-		MinerNephewRewardIn: *base.NewWei(0),
-		MinerTxFeeIn:        *base.NewWei(0),
-		MinerUncleRewardIn:  *base.NewWei(0),
-		PrefundIn:           *base.NewWei(0),
-		AmountOut:           *base.NewWei(400000000000000000),
-		InternalOut:         *base.NewWei(0),
-		SelfDestructIn:      *base.NewWei(0),
-		SelfDestructOut:     *base.NewWei(0),
-		GasOut:              *base.NewWei(100000000000000000),
-	}
-
-	stmt.DebugStatement(ledger)
-
-	foundHeader := false
-	foundBlockLine := false
-	foundTrialBalance := false
-
-	for _, logLine := range capturedLogs {
-		if strings.Contains(logLine, "====> eth") {
-			foundHeader = true
-		}
-		if strings.Contains(logLine, fmt.Sprintf("Current:               %d", stmt.BlockNumber)) {
-			foundBlockLine = true
-		}
-		if strings.Contains(logLine, "Trial balance:") {
-			foundTrialBalance = true
-		}
-	}
-
-	if !foundHeader {
-		t.Error("DebugStatement output missing header with asset type")
-	}
-	if !foundBlockLine {
-		t.Error("DebugStatement output missing current block number information")
-	}
-	if !foundTrialBalance {
-		t.Error("DebugStatement output missing 'Trial balance:' section")
-	}
-}
-
 func TestCacheLocations(t *testing.T) {
 	addr := base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678")
 	var blockNumber base.Blknum = 123
@@ -374,97 +294,6 @@ func resetLogger() func() {
 	capturedLogs = nil
 	return func() {
 		logger.TestLog = orig
-	}
-}
-
-func TestReportE(t *testing.T) {
-	restore := resetLogger()
-	defer restore()
-
-	oneEther := base.NewWei(1000000000000000000) // 1e18 wei
-	reportE("ReportE:", oneEther)
-
-	if len(capturedLogs) != 1 {
-		t.Fatalf("Expected 1 log entry; got %d", len(capturedLogs))
-	}
-
-	expected := "ReportE:1"
-	got := capturedLogs[0]
-	if got != expected {
-		t.Errorf("Expected log %q; got %q", expected, capturedLogs[0])
-	}
-}
-
-func TestReport2(t *testing.T) {
-	restore := resetLogger()
-	defer restore()
-
-	val1 := base.NewWei(500000000000000000)
-	val2 := base.NewWei(2000000000000000000)
-
-	report2("TestReport2:", val1, val2)
-	if len(capturedLogs) != 1 {
-		t.Fatalf("Case 1: Expected 1 log entry; got %d", len(capturedLogs))
-	}
-	expected1 := "TestReport2:0.5 (2)"
-	got1 := capturedLogs[0]
-	if got1 != expected1 {
-		t.Errorf("Case 1: Expected %q; got %q", expected1, capturedLogs[0])
-	}
-
-	capturedLogs = nil
-
-	report2("TestReport2NilV1:", nil, val2)
-	if len(capturedLogs) != 1 {
-		t.Fatalf("Case 2: Expected 1 log entry; got %d", len(capturedLogs))
-	}
-	expected2 := "TestReport2NilV1: (2)"
-	got2 := capturedLogs[0]
-	if got2 != expected2 {
-		t.Errorf("Case 2: Expected %q; got %q", expected2, capturedLogs[0])
-	}
-
-	capturedLogs = nil
-
-	report2("TestReport2BothNil:", nil, nil)
-	if len(capturedLogs) != 1 {
-		t.Fatalf("Case 3: Expected 1 log entry; got %d", len(capturedLogs))
-	}
-	expected3 := "TestReport2BothNil:"
-	got3 := capturedLogs[0]
-	if got3 != expected3 {
-		t.Errorf("Case 3: Expected %q; got %q", expected3, capturedLogs[0])
-	}
-}
-
-func TestReportL(t *testing.T) {
-	restore := resetLogger()
-	defer restore()
-
-	reportL("--------------------")
-	if len(capturedLogs) != 1 {
-		t.Fatalf("Expected 1 log entry; got %d", len(capturedLogs))
-	}
-	expected := "--------------------"
-	got := capturedLogs[0]
-	if got != expected {
-		t.Errorf("Expected log %q; got %q", expected, capturedLogs[0])
-	}
-}
-
-func TestReport1(t *testing.T) {
-	restore := resetLogger()
-	defer restore()
-
-	val := base.NewWei(750000000000000000) // 0.75 Ether
-	report1("TestReport1:", val)
-	if len(capturedLogs) != 1 {
-		t.Fatalf("Expected 1 log entry; got %d", len(capturedLogs))
-	}
-	expected := "TestReport1:0.75"
-	got := capturedLogs[0]
-	if got != expected {
-		t.Errorf("Expected log %q; got %q", expected, capturedLogs[0])
 	}
 }
 
@@ -569,51 +398,6 @@ func TestStatementCacheRoundtrip(t *testing.T) {
 	// Compare the two statements.
 	if !reflect.DeepEqual(stmt, newStmt) {
 		t.Errorf("Roundtrip statement does not match original.\nOriginal: %+v\nNew: %+v", stmt, newStmt)
-	}
-}
-
-// ---------------------------------------------------------------------------
-// 4. Test that DebugStatement prints block number in the expected format
-//    when the asset type is for a token (or NFT).
-
-func TestDebugStatementTokenFormatting(t *testing.T) {
-	// Reset the logger to capture logs.
-	restore := resetLogger()
-	defer restore()
-
-	// Create a statement with asset type set to a token type.
-	stmt := &Statement{
-		AssetType:        TrialBalToken, // should trigger printing with 3-part block number
-		BlockNumber:      123,
-		TransactionIndex: 456,
-		LogIndex:         789,
-		ReconType:        0,
-		AccountedFor:     base.HexToAddress("0xAAAABBBBCCCCDDDDEEEEFFFF0000111122223333"),
-		Sender:           base.HexToAddress("0x1111222233334444555566667777888899990000"),
-		Recipient:        base.HexToAddress("0x0000999988887777666655554444333322221111"),
-		AssetAddr:        base.HexToAddress("0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"),
-		AssetSymbol:      "TKN",
-		Decimals:         18,
-		TransactionHash:  base.HexToHash("0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"),
-		Timestamp:        1610000000,
-		SpotPrice:        2000,
-		PriceSource:      "TestSource",
-	}
-
-	// Use the existing dummy ledger to supply context.
-	ledger := dummyLedgerer{}
-	stmt.DebugStatement(ledger)
-
-	// Look for a log line that shows the three-part block number (e.g., "123.456.789")
-	found := false
-	for _, logLine := range capturedLogs {
-		if strings.Contains(logLine, "blockNumber:") && strings.Contains(logLine, "123.456.789") {
-			found = true
-			break
-		}
-	}
-	if !found {
-		t.Error("DebugStatement did not format blockNumber as expected for token asset type")
 	}
 }
 
