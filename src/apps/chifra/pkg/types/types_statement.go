@@ -669,15 +669,16 @@ func (s *Statement) IsStableCoin() bool {
 	return stables[s.AssetAddr]
 }
 
-type LedgerContexter interface {
+type Balancer interface {
 	Prev() base.Blknum
 	Cur() base.Blknum
 	Next() base.Blknum
 	Recon() ReconType
 	Address() base.Address
+	RunningBal() *base.Wei
 }
 
-func (s *Statement) DebugStatement(ctx LedgerContexter) {
+func (s *Statement) DebugStatement(ctx Balancer) {
 	logger.TestLog(true, "===================================================")
 	logger.TestLog(true, fmt.Sprintf("====> %s", s.AssetType))
 	logger.TestLog(true, "===================================================")

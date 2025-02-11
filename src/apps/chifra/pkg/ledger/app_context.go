@@ -91,3 +91,7 @@ func (c *appContext) Recon() types.ReconType {
 func (c *appContext) Address() base.Address {
 	return c.address
 }
+
+func (c *appContext) RunningBal() *base.Wei {
+	return nil
+}

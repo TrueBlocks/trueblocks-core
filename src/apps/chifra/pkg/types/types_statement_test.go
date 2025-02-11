@@ -220,6 +220,7 @@ func (d dummyLedgerer) Cur() base.Blknum      { return 100 }
 func (d dummyLedgerer) Next() base.Blknum     { return 101 }
 func (d dummyLedgerer) Recon() ReconType      { return 0 }
 func (d dummyLedgerer) Address() base.Address { return base.ZeroAddr }
+func (d dummyLedgerer) RunningBal() *base.Wei { return nil }
 
 func TestDebugStatement(t *testing.T) {
 	restore := resetLogger()
