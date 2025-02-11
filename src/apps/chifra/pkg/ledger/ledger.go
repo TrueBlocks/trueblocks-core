@@ -33,7 +33,7 @@ type Ledger struct {
 	connection    *rpc.Connection
 	assetFilter   []base.Address
 	theTx         *types.Transaction
-	appContexts   map[appContextKey]*appContext
+	appBalancers  map[appBalancerKey]*appBalancer
 	assetContexts map[base.Address]*assetContext
 }
 
@@ -49,7 +49,7 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 		noZero:        noZero,
 		reversed:      reversed,
 		useTraces:     useTraces,
-		appContexts:   make(map[appContextKey]*appContext),
+		appBalancers:  make(map[appBalancerKey]*appBalancer),
 		assetContexts: make(map[base.Address]*assetContext),
 	}
 
@@ -70,9 +70,9 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 		prev := base.Blknum(apps[base.Max(1, index)-1].BlockNumber)
 		next := base.Blknum(apps[base.Min(index+1, len(apps)-1)].BlockNumber)
 		appKey := l.getAppContextKey(base.Blknum(curApp.BlockNumber), base.Txnum(curApp.TransactionIndex))
-		l.appContexts[appKey] = newAppContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.reversed)
+		l.appBalancers[appKey] = newAppContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.reversed)
 	}
-	debugContexts(l.testMode, l.appContexts)
+	debugContexts(l.testMode, l.appBalancers)
 
 	return l
 }
@@ -92,8 +92,8 @@ func (l *Ledger) assetOfInterest(needle base.Address) bool {
 	return false
 }
 
-func (l *Ledger) getAppContextKey(bn base.Blknum, txid base.Txnum) appContextKey {
-	return appContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
+func (l *Ledger) getAppContextKey(bn base.Blknum, txid base.Txnum) appBalancerKey {
+	return appBalancerKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }
 
 func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *assetContext {
@@ -102,11 +102,11 @@ func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetA
 	}
 
 	appKey := l.getAppContextKey(bn, txid)
-	appCtx, exists := l.appContexts[appKey]
+	appCtx, exists := l.appBalancers[appKey]
 	if !exists {
 		logger.Warn("This should never happen in get OrCreateAssetContext")
 		appCtx = newAppContext(bn, bn, bn, false, false, l.reversed)
-		l.appContexts[appKey] = appCtx
+		l.appBalancers[appKey] = appCtx
 	}
 
 	assetCtx := newAssetContext(appCtx.Prev(), appCtx.Cur(), appCtx.Next(), false, false, l.reversed, assetAddr)
@@ -118,7 +118,7 @@ const maxTestingBlock = 17000000
 
 func keyToString[K ~string | base.Address](k K) string {
 	switch v := any(k).(type) {
-	case appContextKey:
+	case appBalancerKey:
 		return string(v)
 	case base.Address:
 		return v.Hex()
@@ -146,7 +146,7 @@ func debugContexts[K ~string | base.Address, T Balancer](testMode bool, ctxs map
 	var isAppearance bool
 	if len(keys) > 0 {
 		switch any(keys[0]).(type) {
-		case appContextKey:
+		case appBalancerKey:
 			whichLabel = "Appearance"
 			isAppearance = true
 		case base.Address:

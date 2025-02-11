@@ -83,9 +83,9 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		}
 
 		key := l.getAppContextKey(log.BlockNumber, log.TransactionIndex)
-		var ctx *appContext
+		var ctx *appBalancer
 		var exists bool
-		if ctx, exists = l.appContexts[key]; !exists {
+		if ctx, exists = l.appBalancers[key]; !exists {
 			return s, fmt.Errorf("no context for %s", key)
 		}
 

@@ -6,9 +6,9 @@ import (
 )
 
 // assetContext represents the context for a specific asset within a transaction. It is defined
-// as an alias to appContext and carries the same block boundary and reconciliation information,
+// as an alias to appBalancer and carries the same block boundary and reconciliation information,
 // but it is used to track balance changes and other details at the asset level.
-type assetContext appContext
+type assetContext appBalancer
 
 func newAssetContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool, addr base.Address) *assetContext {
 	appCtx := newAppContext(prev, cur, next, isFirst, isLast, reversed)

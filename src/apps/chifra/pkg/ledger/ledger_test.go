@@ -12,7 +12,7 @@ import (
 func TestGetOrCreateAssetContext_New(t *testing.T) {
 	l := &Ledger{
 		reversed:      false,
-		appContexts:   make(map[appContextKey]*appContext),
+		appBalancers:  make(map[appBalancerKey]*appBalancer),
 		assetContexts: make(map[base.Address]*assetContext),
 	}
 
@@ -31,8 +31,8 @@ func TestGetOrCreateAssetContext_New(t *testing.T) {
 	}
 
 	appKey := l.getAppContextKey(bn, txid)
-	if _, exists := l.appContexts[appKey]; !exists {
-		t.Error("Expected app context to be created and stored in ledger.appContexts")
+	if _, exists := l.appBalancers[appKey]; !exists {
+		t.Error("Expected app context to be created and stored in ledger.appBalancers")
 	}
 
 	storedAssetCtx, exists := l.assetContexts[assetAddr]
@@ -47,7 +47,7 @@ func TestGetOrCreateAssetContext_New(t *testing.T) {
 func TestGetOrCreateAssetContext_Existing(t *testing.T) {
 	l := &Ledger{
 		reversed:      false,
-		appContexts:   make(map[appContextKey]*appContext),
+		appBalancers:  make(map[appBalancerKey]*appBalancer),
 		assetContexts: make(map[base.Address]*assetContext),
 	}
 
@@ -57,7 +57,7 @@ func TestGetOrCreateAssetContext_Existing(t *testing.T) {
 
 	appKey := l.getAppContextKey(bn, txid)
 	fakeAppCtx := newAppContext(bn-1, bn, bn+1, false, false, l.reversed)
-	l.appContexts[appKey] = fakeAppCtx
+	l.appBalancers[appKey] = fakeAppCtx
 
 	assetCtx1 := l.getOrCreateAssetContext(bn, txid, assetAddr)
 	if assetCtx1 == nil {
@@ -137,16 +137,16 @@ func TestNewLedger_WithAssetFiltersNil(t *testing.T) {
 	if len(l.assetFilter) != 0 {
 		t.Errorf("Expected assetFilter to be empty when assetFilters is nil, got length %d", len(l.assetFilter))
 	}
-	// Verify appContexts for each appearance.
-	if len(l.appContexts) != len(apps) {
-		t.Errorf("Expected %d appContexts, got %d", len(apps), len(l.appContexts))
+	// Verify appBalancers for each appearance.
+	if len(l.appBalancers) != len(apps) {
+		t.Errorf("Expected %d appBalancers, got %d", len(apps), len(l.appBalancers))
 	}
 	// For each appearance, check the computed prev, cur, and next block numbers.
 	for index, app := range apps {
 		expectedKey := fmt.Sprintf("%09d-%05d", app.BlockNumber, app.TransactionIndex)
-		ctx, exists := l.appContexts[appContextKey(expectedKey)]
+		ctx, exists := l.appBalancers[appBalancerKey(expectedKey)]
 		if !exists {
-			t.Errorf("Expected appContext with key %s to exist", expectedKey)
+			t.Errorf("Expected appBalancer with key %s to exist", expectedKey)
 			continue
 		}
 		// For the first appearance, prev should be one less than cur,
@@ -209,8 +209,8 @@ func TestNewLedger_WithAssetFiltersProvided(t *testing.T) {
 			t.Errorf("At index %d, expected assetFilter %s, got %s", i, expectedAddr.Hex(), l.assetFilter[i].Hex())
 		}
 	}
-	// Also verify that appContexts are created.
-	if len(l.appContexts) != len(apps) {
-		t.Errorf("Expected %d appContexts, got %d", len(apps), len(l.appContexts))
+	// Also verify that appBalancers are created.
+	if len(l.appBalancers) != len(apps) {
+		t.Errorf("Expected %d appBalancers, got %d", len(apps), len(l.appBalancers))
 	}
 }

@@ -46,10 +46,10 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
 	key := l.getAppContextKey(trans.BlockNumber, trans.TransactionIndex)
-	var ctx *appContext
+	var ctx *appBalancer
 	var exists bool
-	if ctx, exists = l.appContexts[key]; !exists {
-		debugContexts(l.testMode, l.appContexts)
+	if ctx, exists = l.appBalancers[key]; !exists {
+		debugContexts(l.testMode, l.appBalancers)
 		return statements, fmt.Errorf("no context for %s", key)
 	}
 
