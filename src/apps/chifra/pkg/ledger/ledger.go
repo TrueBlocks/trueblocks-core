@@ -21,36 +21,36 @@ import (
 // account being tracked, block ranges for processing, connection to an RPC endpoint,
 // asset filters, and maps for both application-level and asset-level contexts.
 type Ledger struct {
-	accountFor    base.Address
-	firstBlock    base.Blknum
-	lastBlock     base.Blknum
-	names         map[base.Address]types.Name
-	testMode      bool
-	asEther       bool
-	noZero        bool
-	reversed      bool
-	useTraces     bool
-	connection    *rpc.Connection
-	assetFilter   []base.Address
-	theTx         *types.Transaction
-	appBalancers  map[appBalancerKey]*appBalancer
-	assetContexts map[base.Address]*assetContext
+	accountFor     base.Address
+	firstBlock     base.Blknum
+	lastBlock      base.Blknum
+	names          map[base.Address]types.Name
+	testMode       bool
+	asEther        bool
+	noZero         bool
+	reversed       bool
+	useTraces      bool
+	connection     *rpc.Connection
+	assetFilter    []base.Address
+	theTx          *types.Transaction
+	appBalancers   map[appBalancerKey]*appBalancer
+	assetBalancers map[base.Address]*assetBalancer
 }
 
 // NewLedger returns a new empty Ledger struct
 func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
-		connection:    conn,
-		accountFor:    acctFor,
-		firstBlock:    fb,
-		lastBlock:     lb,
-		asEther:       asEther,
-		testMode:      testMode,
-		noZero:        noZero,
-		reversed:      reversed,
-		useTraces:     useTraces,
-		appBalancers:  make(map[appBalancerKey]*appBalancer),
-		assetContexts: make(map[base.Address]*assetContext),
+		connection:     conn,
+		accountFor:     acctFor,
+		firstBlock:     fb,
+		lastBlock:      lb,
+		asEther:        asEther,
+		testMode:       testMode,
+		noZero:         noZero,
+		reversed:       reversed,
+		useTraces:      useTraces,
+		appBalancers:   make(map[appBalancerKey]*appBalancer),
+		assetBalancers: make(map[base.Address]*assetBalancer),
 	}
 
 	if assetFilters != nil {
@@ -96,8 +96,8 @@ func (l *Ledger) getAppContextKey(bn base.Blknum, txid base.Txnum) appBalancerKe
 	return appBalancerKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }
 
-func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *assetContext {
-	if ctx, exists := l.assetContexts[assetAddr]; exists {
+func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *assetBalancer {
+	if ctx, exists := l.assetBalancers[assetAddr]; exists {
 		return ctx
 	}
 
@@ -110,7 +110,7 @@ func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetA
 	}
 
 	assetCtx := newAssetContext(appCtx.Prev(), appCtx.Cur(), appCtx.Next(), false, false, l.reversed, assetAddr)
-	l.assetContexts[assetAddr] = assetCtx
+	l.assetBalancers[assetAddr] = assetCtx
 	return assetCtx
 }
 

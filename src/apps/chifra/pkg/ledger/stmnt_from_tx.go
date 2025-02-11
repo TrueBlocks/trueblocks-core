@@ -157,7 +157,7 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 	if false && isFinal && isWritable && isEnabled {
 		for _, statement := range statements {
 			if statement.IsMaterial() && !statement.Reconciled() {
-				debugContexts(l.testMode, l.assetContexts)
+				debugContexts(l.testMode, l.assetBalancers)
 				return statements, nil
 			}
 		}
@@ -170,6 +170,6 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 		_ = l.connection.Store.Write(statementGroup, nil)
 	}
 
-	debugContexts(l.testMode, l.assetContexts)
+	debugContexts(l.testMode, l.assetBalancers)
 	return statements, nil
 }

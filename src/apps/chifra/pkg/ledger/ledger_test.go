@@ -11,9 +11,9 @@ import (
 
 func TestGetOrCreateAssetContext_New(t *testing.T) {
 	l := &Ledger{
-		reversed:      false,
-		appBalancers:  make(map[appBalancerKey]*appBalancer),
-		assetContexts: make(map[base.Address]*assetContext),
+		reversed:       false,
+		appBalancers:   make(map[appBalancerKey]*appBalancer),
+		assetBalancers: make(map[base.Address]*assetBalancer),
 	}
 
 	bn := base.Blknum(100)
@@ -35,9 +35,9 @@ func TestGetOrCreateAssetContext_New(t *testing.T) {
 		t.Error("Expected app context to be created and stored in ledger.appBalancers")
 	}
 
-	storedAssetCtx, exists := l.assetContexts[assetAddr]
+	storedAssetCtx, exists := l.assetBalancers[assetAddr]
 	if !exists {
-		t.Error("Expected asset context to be stored in ledger.assetContexts")
+		t.Error("Expected asset context to be stored in ledger.assetBalancers")
 	}
 	if storedAssetCtx != assetCtx {
 		t.Error("Stored asset context does not match returned asset context")
@@ -46,9 +46,9 @@ func TestGetOrCreateAssetContext_New(t *testing.T) {
 
 func TestGetOrCreateAssetContext_Existing(t *testing.T) {
 	l := &Ledger{
-		reversed:      false,
-		appBalancers:  make(map[appBalancerKey]*appBalancer),
-		assetContexts: make(map[base.Address]*assetContext),
+		reversed:       false,
+		appBalancers:   make(map[appBalancerKey]*appBalancer),
+		assetBalancers: make(map[base.Address]*assetBalancer),
 	}
 
 	bn := base.Blknum(200)

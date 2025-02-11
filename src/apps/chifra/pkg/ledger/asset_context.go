@@ -5,14 +5,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// assetContext represents the context for a specific asset within a transaction. It is defined
+// assetBalancer represents the context for a specific asset within a transaction. It is defined
 // as an alias to appBalancer and carries the same block boundary and reconciliation information,
 // but it is used to track balance changes and other details at the asset level.
-type assetContext appBalancer
+type assetBalancer appBalancer
 
-func newAssetContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool, addr base.Address) *assetContext {
+func newAssetContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool, addr base.Address) *assetBalancer {
 	appCtx := newAppContext(prev, cur, next, isFirst, isLast, reversed)
-	return &assetContext{
+	return &assetBalancer{
 		address:   addr,
 		prvBlk:    appCtx.Prev(),
 		curBlk:    appCtx.Cur(),
@@ -22,7 +22,7 @@ func newAssetContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool
 	}
 }
 
-func (c *assetContext) Prev() base.Blknum {
+func (c *assetBalancer) Prev() base.Blknum {
 	if c.reconType&types.First != 0 {
 		if c.prvBlk == 0 {
 			return 0
@@ -32,25 +32,25 @@ func (c *assetContext) Prev() base.Blknum {
 	return c.prvBlk
 }
 
-func (c *assetContext) Cur() base.Blknum {
+func (c *assetBalancer) Cur() base.Blknum {
 	return c.curBlk
 }
 
-func (c *assetContext) Next() base.Blknum {
+func (c *assetBalancer) Next() base.Blknum {
 	if c.reconType&types.Last != 0 {
 		return c.nxtBlk + 1
 	}
 	return c.nxtBlk
 }
 
-func (c *assetContext) Recon() types.ReconType {
+func (c *assetBalancer) Recon() types.ReconType {
 	return c.reconType
 }
 
-func (c *assetContext) Address() base.Address {
+func (c *assetBalancer) Address() base.Address {
 	return c.address
 }
 
-func (c *assetContext) RunningBal() *base.Wei {
+func (c *assetBalancer) RunningBal() *base.Wei {
 	return nil
 }
