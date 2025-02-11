@@ -110,15 +110,12 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 					return err
 				}
 				if !info.IsDir() && strings.HasSuffix(path, ".mon.bin") {
-					addr, _ := base.AddressFromPath(path, ".mon.bin")
-					bar.Prefix = fmt.Sprintf("Truncating monitor for %s", addr.Hex())
-					if !addr.IsZero() {
+					if addr, err := base.AddressFromPath(path, ".mon.bin"); err == nil && !addr.IsZero() {
+						bar.Prefix = fmt.Sprintf("Truncating monitor for %s", addr.Hex())
 						mon, _ := monitor.NewMonitor(chain, addr, false /* create */)
-						var removed bool
-						if removed, err = mon.TruncateTo(chain, uint32(latestChunk)); err != nil {
+						if removed, err := mon.TruncateTo(chain, uint32(latestChunk)); err != nil {
 							return err
-						}
-						if removed {
+						} else if removed {
 							nMonitorsTruncated++
 						}
 					}

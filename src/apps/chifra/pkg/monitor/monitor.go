@@ -206,8 +206,7 @@ func ListExistingMonitors(chain string, monitorChan chan<- Monitor) {
 			return err
 		}
 		if !info.IsDir() && strings.HasSuffix(path, ".mon.bin") {
-			addr, _ := base.AddressFromPath(path, ".mon.bin")
-			if !addr.IsZero() {
+			if addr, err := base.AddressFromPath(path, ".mon.bin"); err == nil && !addr.IsZero() {
 				mon, _ := NewMonitor(chain, addr, true /* create */)
 				if strings.Contains(path, "staging") {
 					mon.Staged = true
