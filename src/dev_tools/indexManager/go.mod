@@ -5,7 +5,7 @@ go 1.23.1
 
 replace github.com/TrueBlocks/trueblocks-core/sdk => ../../../sdk
 
-require github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250130023515-f86b9f89cfae
+require github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250131141006-ca15858b0e7c
 
 require (
 	github.com/ethereum/go-ethereum v1.14.13 // indirect
