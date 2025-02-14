@@ -69,6 +69,7 @@ Trial balance:
                        ======================= 
    endBal:              0 (0)
    endBalCalc:          0
+   rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           14.922878243871414864
    correctingOut:       -0.000000038340920823

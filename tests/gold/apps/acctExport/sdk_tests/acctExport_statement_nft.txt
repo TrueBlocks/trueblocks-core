@@ -39,6 +39,7 @@ Trial balance:
                        ======================= 
    endBal:              4.9995342 (0)
    endBalCalc:          4.9995342
+   rollingBalance:      0
 --------------------------------------------------- 
    material:            false
    reconciled:          true
@@ -72,6 +73,7 @@ Trial balance:
                        ======================= 
    endBal:              22500 (0)
    endBalCalc:          22500
+   rollingBalance:      0
 --------------------------------------------------- 
    amountIn:            22500
    material:            true
@@ -108,6 +110,7 @@ Trial balance:
                        ======================= 
    endBal:              4.9995342 (0)
    endBalCalc:          4.9995342
+   rollingBalance:      0
 --------------------------------------------------- 
    material:            false
    reconciled:          true
@@ -153,6 +156,7 @@ Trial balance:
                        ======================= 
    endBal:              0.000000000000000001 (0)
    endBalCalc:          0.000000000000000001
+   rollingBalance:      0
 --------------------------------------------------- 
    correctingOut:       -0.000000000000000001
    correctingReason:    endbal
@@ -192,6 +196,7 @@ Trial balance:
                        ======================= 
    endBal:              4.9995342 (0)
    endBalCalc:          4.9995342
+   rollingBalance:      0
 --------------------------------------------------- 
    material:            false
    reconciled:          true

@@ -55,3 +55,8 @@ func (c *assetContext) Recon() types.ReconType {
 func (c *assetContext) Address() base.Address {
 	return c.address
 }
+
+
+func (c *assetContext) RunningBal() *base.Wei {
+	return nil
+}

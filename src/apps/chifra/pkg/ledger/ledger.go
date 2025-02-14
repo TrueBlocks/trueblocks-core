@@ -121,7 +121,7 @@ func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetA
 
 const maxTestingBlock = 17000000
 
-func debugContexts[K ~string, T types.LedgerContexter](which string, testMode bool, ctxs map[K]T) {
+func debugContexts[K ~string, T Balancer](which string, testMode bool, ctxs map[K]T) {
 	if !testMode {
 		return
 	}
