@@ -3288,7 +3288,7 @@ components:
         reconciliationType:
           type: string
           format: string
-          description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token` (calculated)"
+          description: "one of `invalid`, `genesis`, `diffdiff`, `samesame`, `diffsame`, `samediff` ORed with `first`, `last`. (calculated)"
         reconciled:
           type: boolean
           format: boolean
@@ -3391,6 +3391,10 @@ components:
           items:
             $ref: "#/components/schemas/trialBalType"
           description: "one of eth, eth-trace, token, or token-721"
+        rollingBalance:
+          type: string
+          format: int256
+          description: "a rolling balance used to help debug intra-block reconciliations"
     appearanceTable:
       description: "an appearance table for an address"
       type: object

@@ -58,9 +58,8 @@ neigh    ,both ,fast  ,export   ,apps ,acctExport ,neighbor2_csv           ,n   
 on       ,both ,fast  ,export   ,apps ,acctExport ,export_traces           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & max_records = 5 & last_block = 1506480 & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,export_traces_cache     ,y    ,addrs = 0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8 & traces & max_records = 10 & cache_traces
 on       ,both ,fast  ,export   ,apps ,acctExport ,factory_not_trace_fail  ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & factory
-# These do not produce the right data
-factory  ,both ,fast  ,export   ,apps ,acctExport ,factory_traces          ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & traces & factory & last_block = 1603174
-factory  ,both ,fast  ,export   ,apps ,acctExport ,factory_traces_v        ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & traces & factory & last_block = 1603174 & verbose
+on       ,both ,fast  ,export   ,apps ,acctExport ,factory_traces          ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & traces & factory & last_block = 1603174
+on       ,both ,fast  ,export   ,apps ,acctExport ,factory_traces_v        ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & traces & factory & last_block = 1603174 & verbose
 
 # Testing --articulation
 local    ,both ,fast  ,export   ,apps ,acctExport ,old_bug2_1              ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & articulate & first_record = 1 & max_records = 1 & fmt = json
@@ -190,6 +189,7 @@ acctbad  ,both ,fast  ,export   ,apps ,acctExport ,statements_wei_2_2      ,y   
 acctbad  ,both ,fast  ,export   ,apps ,acctExport ,statement_token_ibt     ,y    ,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & statements & first_block = 7005600 & last_block = 7005780 & ether & fmt = json
 acctbad  ,both ,fast  ,export   ,apps ,acctExport ,statement_token_ibt_2   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 12704456 & last_block = 12705893 & ether & fmt = json & max_records = 4000
 acctbad  ,both ,fast  ,export   ,apps ,acctExport ,statement_forward       ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & accounting & statements & last_block = 8769141 & ether & fmt = json
+testing  ,both ,fast  ,export   ,apps ,acctExport ,statement_tributes      ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & accounting & statements & first_block = 8769018 & last_block = 8769053 & fmt = json & asset = 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
 
 # Not tested for chifra export
 # chifra export --cache

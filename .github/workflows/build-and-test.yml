@@ -36,7 +36,7 @@ jobs:
           skip-pkg-cache: true
   Build:
     needs: Lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout TrueBlocks repo
         uses: actions/checkout@v4
