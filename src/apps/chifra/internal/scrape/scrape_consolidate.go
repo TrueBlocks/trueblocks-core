@@ -206,8 +206,9 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 	return appMap, fileRange, nAdded
 }
 
-// hasNoAddresses returns true if (a) the miner is zero, (b) there are no transactions, uncles, or withdrawals.
-// (It is truly a block with no addresses -- for example block 15537860 on mainnet.)
+// hasNoAddresses returns true if (a) the miner is zero, (b) there are no transactions,
+// uncles, or withdrawals. (It is truly a block with no addresses -- for example block
+// 15537860 on mainnet.)
 func (bm *BlazeManager) hasNoAddresses(bn base.Blknum) bool {
 	if block, err := bm.opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 		return false
