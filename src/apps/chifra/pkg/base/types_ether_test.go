@@ -131,3 +131,49 @@ func TestUnmarshalEther(t *testing.T) {
 		}
 	}
 }
+
+func TestEtherBasicOperations(t *testing.T) {
+	// Test NewEther and its String method.
+	e1 := NewEther(1.5)
+	// The String method calls Text('f', -18) which removes trailing zeros.
+	if e1.String() != "1.5" {
+		t.Errorf("NewEther(1.5).String() = %s; want 1.5", e1.String())
+	}
+
+	// Test SetWei: 1 ether is 1e18 wei.
+	weiVal := NewWeiStr("1000000000000000000")
+	e2 := new(Ether).SetWei(weiVal)
+	if e2.String() != "1" {
+		t.Errorf("SetWei(1e18) = %s; want 1", e2.String())
+	}
+
+	// Test SetString.
+	e3, ok := new(Ether).SetString("2.5")
+	if !ok {
+		t.Errorf("SetString('2.5') failed")
+	}
+	if e3.String() != "2.5" {
+		t.Errorf("SetString('2.5') = %s; want 2.5", e3.String())
+	}
+
+	// Test arithmetic: Quo. (e2/e1 = 1/1.5 ≈ 0.666666666666666667)
+	e4 := new(Ether).Quo(e2, e1)
+	diff := e4.Float64() - 0.6666666666666667
+	if diff < -1e-10 || diff > 1e-10 {
+		t.Errorf("Quo: 1 / 1.5 = %f; want approximately 0.6666666666666667", e4.Float64())
+	}
+
+	// Test JSON marshalling and unmarshalling.
+	jsonData, err := e3.MarshalJSON()
+	if err != nil {
+		t.Errorf("Ether MarshalJSON error: %v", err)
+	}
+	e5 := new(Ether)
+	err = e5.UnmarshalJSON(jsonData)
+	if err != nil {
+		t.Errorf("Ether UnmarshalJSON error: %v", err)
+	}
+	if e5.String() != e3.String() {
+		t.Errorf("Ether JSON round-trip: got %s; want %s", e5.String(), e3.String())
+	}
+}

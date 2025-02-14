@@ -19,7 +19,17 @@ func NewWei(x int64) *Wei {
 
 func NewWeiStr(x string) *Wei {
 	val := big.NewInt(0)
-	val.SetString(strings.TrimPrefix(x, "0x"), 10)
+	if strings.HasPrefix(x, "0x") || strings.HasPrefix(x, "0X") {
+		_, ok := val.SetString(x[2:], 16)
+		if !ok {
+			return (*Wei)(big.NewInt(0))
+		}
+	} else {
+		_, ok := val.SetString(x, 10)
+		if !ok {
+			return (*Wei)(big.NewInt(0))
+		}
+	}
 	return (*Wei)(val)
 }
 
@@ -100,6 +110,10 @@ func (w *Wei) Cmp(y *Wei) int {
 	return (*big.Int)(w).Cmp((*big.Int)(y))
 }
 
+func (w *Wei) Equals(y *Wei) bool {
+	return (*big.Int)(w).Cmp((*big.Int)(y)) == 0
+}
+
 func (w *Wei) MarshalText() (text []byte, err error) {
 	if w == nil || len(text) == 0 {
 		return []byte("0"), nil
@@ -142,7 +156,7 @@ func (w *Wei) ToEtherStr(decimals int) string {
 func ToEther(wei *Wei) *Ether {
 	f := NewEther(0)
 	e := NewEther(1e18)
-	return f.Quo(new(Ether).SetWei(wei), e)
+	return f.Quo(new(Ether).SetRawWei(wei), e)
 }
 
 func BiFromBn(bn Blknum) *big.Int {
@@ -175,4 +189,18 @@ func WeiToHash(wei *Wei) string {
 	copy(padded[32-len(b):], b)
 	hash := BytesToHash(padded)
 	return hash.Hex()
+}
+
+// Sign returns -1 if the Wei is negative, 0 if it is zero, and 1 if it is positive.
+func (w *Wei) Sign() int {
+	if w == nil {
+		return 0
+	}
+	return (*big.Int)(w).Sign()
+}
+
+// Neg returns a new Wei that is the negation (i.e., multiplication by -1) of w.
+func (w *Wei) Neg() *Wei {
+	result := new(big.Int).Neg((*big.Int)(w))
+	return (*Wei)(result)
 }
