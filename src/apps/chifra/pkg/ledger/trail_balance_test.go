@@ -354,8 +354,8 @@ func TestCorrectForSomethingElseEth(t *testing.T) {
 // 	bn := base.Blknum(100)
 // 	txid := base.Txnum(1)
 // 	assetAddr := base.HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-// 	appCtx := newAppContext(bn-1, bn, bn+1, false, false, l.reversed)
-// 	ac := new AssetContext(appCtx.Prev(), appCtx.Cur(), appCtx.Next(), false, false, l.reversed, assetAddr)
+// 	appBal := newAppBalancer(bn-1, bn, bn+1, false, false, l.reversed)
+// 	ac := new AssetBalancer(appBal.Prev(), appBal.Cur(), appBal.Next(), false, false, l.reversed, assetAddr)
 // 	l.assetBalancers[assetAddr] = ac
 
 // 	s := new(types.Statement)

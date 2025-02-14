@@ -34,7 +34,7 @@ type Ledger struct {
 	assetFilter    []base.Address
 	theTx          *types.Transaction
 	appBalancers   map[appBalancerKey]*appBalancer
-	assetBalancers map[base.Address]*assetBalancer
+	assetBalancers map[base.Address]*appBalancer
 }
 
 // NewLedger returns a new empty Ledger struct
@@ -50,7 +50,7 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 		reversed:       reversed,
 		useTraces:      useTraces,
 		appBalancers:   make(map[appBalancerKey]*appBalancer),
-		assetBalancers: make(map[base.Address]*assetBalancer),
+		assetBalancers: make(map[base.Address]*appBalancer),
 	}
 
 	if assetFilters != nil {
@@ -69,8 +69,8 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 		cur := base.Blknum(curApp.BlockNumber)
 		prev := base.Blknum(apps[base.Max(1, index)-1].BlockNumber)
 		next := base.Blknum(apps[base.Min(index+1, len(apps)-1)].BlockNumber)
-		appKey := l.getAppContextKey(base.Blknum(curApp.BlockNumber), base.Txnum(curApp.TransactionIndex))
-		l.appBalancers[appKey] = newAppContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.reversed)
+		appKey := l.getAppBalancerKey(base.Blknum(curApp.BlockNumber), base.Txnum(curApp.TransactionIndex))
+		l.appBalancers[appKey] = newAppBalancer(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), index == 0, index == (len(apps)-1), l.reversed)
 	}
 	debugContexts(l.testMode, l.appBalancers)
 
@@ -92,26 +92,26 @@ func (l *Ledger) assetOfInterest(needle base.Address) bool {
 	return false
 }
 
-func (l *Ledger) getAppContextKey(bn base.Blknum, txid base.Txnum) appBalancerKey {
+func (l *Ledger) getAppBalancerKey(bn base.Blknum, txid base.Txnum) appBalancerKey {
 	return appBalancerKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }
 
-func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *assetBalancer {
+func (l *Ledger) getOrCreateAssetBalancer(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *appBalancer {
 	if ctx, exists := l.assetBalancers[assetAddr]; exists {
 		return ctx
 	}
 
-	appKey := l.getAppContextKey(bn, txid)
-	appCtx, exists := l.appBalancers[appKey]
+	appKey := l.getAppBalancerKey(bn, txid)
+	appBal, exists := l.appBalancers[appKey]
 	if !exists {
-		logger.Warn("This should never happen in get OrCreateAssetContext")
-		appCtx = newAppContext(bn, bn, bn, false, false, l.reversed)
-		l.appBalancers[appKey] = appCtx
+		logger.Warn("This should never happen in get OrCreateAssetBalancer")
+		appBal = newAppBalancer(bn, bn, bn, false, false, l.reversed)
+		l.appBalancers[appKey] = appBal
 	}
 
-	assetCtx := newAssetContext(appCtx.Prev(), appCtx.Cur(), appCtx.Next(), false, false, l.reversed, assetAddr)
-	l.assetBalancers[assetAddr] = assetCtx
-	return assetCtx
+	assetBal := newAssetBalancer(appBal.Prev(), appBal.Cur(), appBal.Next(), false, false, l.reversed, assetAddr)
+	l.assetBalancers[assetAddr] = assetBal
+	return assetBal
 }
 
 const maxTestingBlock = 17000000

@@ -21,7 +21,7 @@ type appBalancer struct {
 	reversed  bool
 }
 
-func newAppContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *appBalancer {
+func newAppBalancer(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *appBalancer {
 	if prev > cur || cur > next {
 		return &appBalancer{reconType: types.Invalid, reversed: reversed}
 	}

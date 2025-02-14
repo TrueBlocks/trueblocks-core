@@ -28,15 +28,15 @@ func TestLedgerContext1(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		// got := newAppContext(test.prev, test.cur, test.next, i == 0, false, test.reversed)
-		got := newAppContext(test.prev, test.cur, test.next, false, false, test.reversed)
+		// got := newAppBalancer(test.prev, test.cur, test.next, i == 0, false, test.reversed)
+		got := newAppBalancer(test.prev, test.cur, test.next, false, false, test.reversed)
 		if got.reconType != test.expected {
 			t.Error("expected:", test.expected, "got:", got.reconType)
 		}
 	}
 }
 
-func TestNewAppContext(t *testing.T) {
+func TestNewAppBalancer(t *testing.T) {
 	cases := []struct {
 		name        string
 		prev        base.Blknum
@@ -105,12 +105,12 @@ func TestNewAppContext(t *testing.T) {
 
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
-			ctx := newAppContext(tc.prev, tc.cur, tc.next, tc.isFirst, tc.isLast, tc.reversed)
-			if ctx.Recon() != tc.expectRecon {
-				t.Errorf("expected %v, got %v", tc.expectRecon, ctx.Recon())
+			appBal := newAppBalancer(tc.prev, tc.cur, tc.next, tc.isFirst, tc.isLast, tc.reversed)
+			if appBal.Recon() != tc.expectRecon {
+				t.Errorf("expected %v, got %v", tc.expectRecon, appBal.Recon())
 			}
-			if ctx.reversed != tc.reversed {
-				t.Errorf("expected reversed %v, got %v", tc.reversed, ctx.reversed)
+			if appBal.reversed != tc.reversed {
+				t.Errorf("expected reversed %v, got %v", tc.reversed, appBal.reversed)
 			}
 		})
 	}

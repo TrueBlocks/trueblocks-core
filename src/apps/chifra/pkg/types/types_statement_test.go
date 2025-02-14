@@ -3,13 +3,11 @@ package types
 import (
 	"bytes"
 	"fmt"
-	"os"
 	"path/filepath"
 	"reflect"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 func TestIsMaterial(t *testing.T) {
@@ -275,25 +273,6 @@ func TestStatementGroupCache(t *testing.T) {
 	if !reflect.DeepEqual(origGroup.Statements, newGroup.Statements) {
 		t.Errorf("Unmarshaled statements do not match original.\nOriginal: %+v\nNew: %+v",
 			origGroup.Statements, newGroup.Statements)
-	}
-}
-
-var capturedLogs []string
-
-func fakeTestLog(notDefault bool, args ...interface{}) {
-	if notDefault {
-		logMsg := fmt.Sprint(args...)
-		capturedLogs = append(capturedLogs, logMsg)
-	}
-}
-
-func resetLogger() func() {
-	os.Setenv("TEST_MODE", "true")
-	orig := logger.TestLog
-	logger.TestLog = fakeTestLog
-	capturedLogs = nil
-	return func() {
-		logger.TestLog = orig
 	}
 }
 
