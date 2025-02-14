@@ -16,8 +16,8 @@ import (
 // function tries to price the asset. it then prints optional debugging information. Note that
 // the statement may be modified in this function.
 func (l *Ledger) trialBalance(reason types.TrialBalType, s *types.Statement) bool {
-	key := l.getAppContextKey(s.BlockNumber, s.TransactionIndex)
-	if ctx, exists := l.appContexts[key]; !exists {
+	key := l.getAppBalancerKey(s.BlockNumber, s.TransactionIndex)
+	if ctx, exists := l.appBalancers[key]; !exists {
 		logger.Fatal(fmt.Sprintf("should never happen - no context for %s", key))
 
 	} else {

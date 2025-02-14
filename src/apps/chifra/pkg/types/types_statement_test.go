@@ -169,15 +169,14 @@ func TestBegBalDiff(t *testing.T) {
 
 	// Case 2: BlockNumber != 0.
 	// Let PrevBal = 90 and BegBal = 100, then BegBalDiff should be 10.
-	// TODO: BOGUS NOT DONE
-	// stmt.BlockNumber = 1
-	// stmt.PrevBal = *base.NewWei(90)
-	// stmt.BegBal = *base.NewWei(100)
-	// diff = stmt.BegBalDiff()
-	// expected = base.NewWei(10)
-	// if diff.Cmp(expected) != 0 {
-	// 	t.Errorf("BegBalDiff() with BlockNumber!=0: expected %s, got %s", expected.Text(10), diff.Text(10))
-	// }
+	stmt.BlockNumber = 1
+	stmt.PrevBal = *base.NewWei(90)
+	stmt.BegBal = *base.NewWei(100)
+	diff = stmt.BegBalDiff()
+	expected = base.NewWei(10)
+	if diff.Cmp(expected) != 0 {
+		t.Errorf("BegBalDiff() with BlockNumber!=0: expected %s, got %s", expected.Text(10), diff.Text(10))
+	}
 }
 
 func TestEndBalCalc(t *testing.T) {
@@ -210,85 +209,6 @@ func TestEndBalDiff(t *testing.T) {
 		t.Errorf("EndBalDiff(): expected %s, got %s", expected.Text(10), diff.Text(10))
 	}
 }
-
-// type dummyLedgerer struct{}
-
-// func (d dummyLedgerer) Prev() base.Blknum     { return 99 }
-// func (d dummyLedgerer) Cur() base.Blknum      { return 100 }
-// func (d dummyLedgerer) Next() base.Blknum     { return 101 }
-// func (d dummyLedgerer) Recon() ReconType      { return 0 }
-// func (d dummyLedgerer) Address() base.Address { return base.ZeroAddr }
-
-// func TestDebugStatement(t *testing.T) {
-// 	restore := resetLogger()
-// 	defer restore()
-
-// 	ledger := dummyLedgerer{}
-
-// 	stmt := &Statement{
-// 		AssetType:           TrialBalEth,
-// 		BlockNumber:         100,
-// 		TransactionIndex:    1,
-// 		LogIndex:            2,
-// 		ReconType:           0, // assume 0 for simplicity
-// 		AccountedFor:        base.HexToAddress("0xAAAABBBBCCCCDDDDEEEEFFFF0000111122223333"),
-// 		Sender:              base.HexToAddress("0x1111222233334444555566667777888899990000"),
-// 		Recipient:           base.HexToAddress("0x0000999988887777666655554444333322221111"),
-// 		AssetAddr:           base.HexToAddress("0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"),
-// 		AssetSymbol:         "ETH",
-// 		Decimals:            18,
-// 		TransactionHash:     base.HexToHash("0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"),
-// 		Timestamp:           1610000000,
-// 		SpotPrice:           2000, // sample value
-// 		PriceSource:         "TestSource",
-// 		PrevBal:             *base.NewWei(1000000000000000000),
-// 		BegBal:              *base.NewWei(1500000000000000000),
-// 		EndBal:              *base.NewWei(1600000000000000000),
-// 		CorrectingIn:        *base.NewWei(0),
-// 		CorrectingOut:       *base.NewWei(0),
-// 		AmountIn:            *base.NewWei(500000000000000000),
-// 		InternalIn:          *base.NewWei(0),
-// 		MinerBaseRewardIn:   *base.NewWei(0),
-// 		MinerNephewRewardIn: *base.NewWei(0),
-// 		MinerTxFeeIn:        *base.NewWei(0),
-// 		MinerUncleRewardIn:  *base.NewWei(0),
-// 		PrefundIn:           *base.NewWei(0),
-// 		AmountOut:           *base.NewWei(400000000000000000),
-// 		InternalOut:         *base.NewWei(0),
-// 		SelfDestructIn:      *base.NewWei(0),
-// 		SelfDestructOut:     *base.NewWei(0),
-// 		GasOut:              *base.NewWei(100000000000000000),
-// 	}
-
-// 	var Ledger l
-// 	l.DebugStatement(stmt, ledger)
-
-// 	foundHeader := false
-// 	foundBlockLine := false
-// 	foundTrialBalance := false
-
-// 	for _, logLine := range capturedLogs {
-// 		if strings.Contains(logLine, "====> eth") {
-// 			foundHeader = true
-// 		}
-// 		if strings.Contains(logLine, fmt.Sprintf("Current:               %d", stmt.BlockNumber)) {
-// 			foundBlockLine = true
-// 		}
-// 		if strings.Contains(logLine, "Trial balance:") {
-// 			foundTrialBalance = true
-// 		}
-// 	}
-
-// 	if !foundHeader {
-// 		t.Error("DebugStatement output missing header with asset type")
-// 	}
-// 	if !foundBlockLine {
-// 		t.Error("DebugStatement output missing current block number information")
-// 	}
-// 	if !foundTrialBalance {
-// 		t.Error("DebugStatement output missing 'Trial balance:' section")
-// 	}
-// }
 
 func TestCacheLocations(t *testing.T) {
 	addr := base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678")
@@ -375,93 +295,170 @@ func TestStatementGroupCache(t *testing.T) {
 // 	}
 // }
 
-// func TestReportE(t *testing.T) {
-// 	restore := resetLogger()
-// 	defer restore()
+// ---------------------------------------------------------------------------
+// Helper types for simulating errors during cache marshalling/unmarshalling
 
-// 	oneEther := base.NewWei(1000000000000000000) // 1e18 wei
-// 	reportE("ReportE:", oneEther)
+type failingWriter struct{}
 
-// 	if len(capturedLogs) != 1 {
-// 		t.Fatalf("Expected 1 log entry; got %d", len(capturedLogs))
-// 	}
+func (fw *failingWriter) Write(p []byte) (n int, err error) {
+	return 0, fmt.Errorf("write error")
+}
 
-// 	expected := "ReportE:1"
-// 	got := capturedLogs[0]
-// 	if got != expected {
-// 		t.Errorf("Expected log %q; got %q", expected, capturedLogs[0])
-// 	}
-// }
+type failingReader struct{}
 
-// func TestReport2(t *testing.T) {
-// 	restore := resetLogger()
-// 	defer restore()
+func (fr *failingReader) Read(p []byte) (n int, err error) {
+	return 0, fmt.Errorf("read error")
+}
 
-// 	val1 := base.NewWei(500000000000000000)
-// 	val2 := base.NewWei(2000000000000000000)
+// ---------------------------------------------------------------------------
+// 1. Test error handling in MarshalCache by simulating a writer error
 
-// 	report2("TestReport2:", val1, val2)
-// 	if len(capturedLogs) != 1 {
-// 		t.Fatalf("Case 1: Expected 1 log entry; got %d", len(capturedLogs))
-// 	}
-// 	expected1 := "TestReport2:0.5 (2)"
-// 	got1 := capturedLogs[0]
-// 	if got1 != expected1 {
-// 		t.Errorf("Case 1: Expected %q; got %q", expected1, capturedLogs[0])
-// 	}
+func TestMarshalCacheError(t *testing.T) {
+	stmt := &Statement{
+		// (We don’t need to populate all fields because the failing writer
+		//  will return an error on the very first write.)
+	}
+	fw := &failingWriter{}
+	err := stmt.MarshalCache(fw)
+	if err == nil {
+		t.Error("Expected MarshalCache to return an error, but got nil")
+	} else if err.Error() != "write error" {
+		t.Errorf("Expected error 'write error', got %v", err)
+	}
+}
 
-// 	capturedLogs = nil
+// ---------------------------------------------------------------------------
+// 2. Test error handling in UnmarshalCache by simulating a reader error
 
-// 	report2("TestReport2NilV1:", nil, val2)
-// 	if len(capturedLogs) != 1 {
-// 		t.Fatalf("Case 2: Expected 1 log entry; got %d", len(capturedLogs))
-// 	}
-// 	expected2 := "TestReport2NilV1: (2)"
-// 	got2 := capturedLogs[0]
-// 	if got2 != expected2 {
-// 		t.Errorf("Case 2: Expected %q; got %q", expected2, capturedLogs[0])
-// 	}
+func TestUnmarshalCacheError(t *testing.T) {
+	stmt := &Statement{}
+	fr := &failingReader{}
+	err := stmt.UnmarshalCache(1, fr)
+	if err == nil {
+		t.Error("Expected UnmarshalCache to return an error, but got nil")
+	} else if err.Error() != "read error" {
+		t.Errorf("Expected error 'read error', got %v", err)
+	}
+}
 
-// 	capturedLogs = nil
+// ---------------------------------------------------------------------------
+// 3. Test a single Statement’s cache roundtrip (marshal then unmarshal)
 
-// 	report2("TestReport2BothNil:", nil, nil)
-// 	if len(capturedLogs) != 1 {
-// 		t.Fatalf("Case 3: Expected 1 log entry; got %d", len(capturedLogs))
-// 	}
-// 	expected3 := "TestReport2BothNil:"
-// 	got3 := capturedLogs[0]
-// 	if got3 != expected3 {
-// 		t.Errorf("Case 3: Expected %q; got %q", expected3, capturedLogs[0])
-// 	}
-// }
+func TestStatementCacheRoundtrip(t *testing.T) {
+	// Populate a statement with representative (nonzero) values.
+	stmt := &Statement{
+		AccountedFor:        base.HexToAddress("0xAAAABBBBCCCCDDDDEEEEFFFF0000111122223333"),
+		AmountIn:            *base.NewWei(10),
+		AmountOut:           *base.NewWei(20),
+		AssetAddr:           base.HexToAddress("0x1111222233334444555566667777888899990000"),
+		AssetSymbol:         "TKN",
+		AssetType:           TrialBalEth, // using an example type; it could be any valid value
+		BegBal:              *base.NewWei(100),
+		BlockNumber:         123,
+		CorrectingIn:        *base.NewWei(5),
+		CorrectingOut:       *base.NewWei(3),
+		CorrectingReason:    "Test Correction",
+		Decimals:            18,
+		EndBal:              *base.NewWei(122),
+		GasOut:              *base.NewWei(2),
+		InternalIn:          *base.NewWei(7),
+		InternalOut:         *base.NewWei(4),
+		LogIndex:            1,
+		MinerBaseRewardIn:   *base.NewWei(8),
+		MinerNephewRewardIn: *base.NewWei(9),
+		MinerTxFeeIn:        *base.NewWei(10),
+		MinerUncleRewardIn:  *base.NewWei(11),
+		PrefundIn:           *base.NewWei(12),
+		PrevBal:             *base.NewWei(90),
+		PriceSource:         "TestSource",
+		Recipient:           base.HexToAddress("0x222233334444555566667777888899990000AAAA"),
+		ReconType:           1, // arbitrary test value
+		RollingBalance:      *base.NewWei(150),
+		SelfDestructIn:      *base.NewWei(13),
+		SelfDestructOut:     *base.NewWei(14),
+		Sender:              base.HexToAddress("0x3333444455556666777788889999AAAABBBBCCCC"),
+		SpotPrice:           100,
+		Timestamp:           1610000000,
+		TransactionHash:     base.HexToHash("0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"),
+		TransactionIndex:    2,
+	}
 
-// func TestReportL(t *testing.T) {
-// 	restore := resetLogger()
-// 	defer restore()
+	var buf bytes.Buffer
+	if err := stmt.MarshalCache(&buf); err != nil {
+		t.Fatalf("MarshalCache failed: %v", err)
+	}
 
-// 	reportL("--------------------")
-// 	if len(capturedLogs) != 1 {
-// 		t.Fatalf("Expected 1 log entry; got %d", len(capturedLogs))
-// 	}
-// 	expected := "--------------------"
-// 	got := capturedLogs[0]
-// 	if got != expected {
-// 		t.Errorf("Expected log %q; got %q", expected, capturedLogs[0])
-// 	}
-// }
+	newStmt := &Statement{}
+	if err := newStmt.UnmarshalCache(1, &buf); err != nil {
+		t.Fatalf("UnmarshalCache failed: %v", err)
+	}
 
-// func TestReport1(t *testing.T) {
-// 	restore := resetLogger()
-// 	defer restore()
+	// Compare the two statements.
+	if !reflect.DeepEqual(stmt, newStmt) {
+		t.Errorf("Roundtrip statement does not match original.\nOriginal: %+v\nNew: %+v", stmt, newStmt)
+	}
+}
 
-// 	val := base.NewWei(750000000000000000) // 0.75 Ether
-// 	report1("TestReport1:", val)
-// 	if len(capturedLogs) != 1 {
-// 		t.Fatalf("Expected 1 log entry; got %d", len(capturedLogs))
-// 	}
-// 	expected := "TestReport1:0.75"
-// 	got := capturedLogs[0]
-// 	if got != expected {
-// 		t.Errorf("Expected log %q; got %q", expected, capturedLogs[0])
-// 	}
-// }
+// ---------------------------------------------------------------------------
+// 5. Test arithmetic edge cases by using very large Wei values
+
+func TestArithmeticEdgeCasesLargeNumbers(t *testing.T) {
+	// Use a "huge" Wei value, e.g. 1e18.
+	huge := base.NewWei(1000000000000000000) // 1e18
+	stmt := &Statement{
+		// For TotalIn, there are 9 fields:
+		AmountIn:            *huge,
+		InternalIn:          *huge,
+		SelfDestructIn:      *huge,
+		MinerBaseRewardIn:   *huge,
+		MinerNephewRewardIn: *huge,
+		MinerTxFeeIn:        *huge,
+		MinerUncleRewardIn:  *huge,
+		CorrectingIn:        *huge,
+		PrefundIn:           *huge,
+		// For TotalOut, there are 5 fields:
+		AmountOut:       *huge,
+		InternalOut:     *huge,
+		CorrectingOut:   *huge,
+		SelfDestructOut: *huge,
+		GasOut:          *huge,
+	}
+
+	// Expected TotalIn: 9 * 1e18
+	totalIn := stmt.TotalIn()
+	expectedTotalIn := base.NewWei(9 * 1000000000000000000)
+	if totalIn.Cmp(expectedTotalIn) != 0 {
+		t.Errorf("TotalIn with huge values: expected %s, got %s", expectedTotalIn.Text(10), totalIn.Text(10))
+	}
+
+	// Expected TotalOut: 5 * 1e18
+	totalOut := stmt.TotalOut()
+	expectedTotalOut := base.NewWei(5 * 1000000000000000000)
+	if totalOut.Cmp(expectedTotalOut) != 0 {
+		t.Errorf("TotalOut with huge values: expected %s, got %s", expectedTotalOut.Text(10), totalOut.Text(10))
+	}
+
+	// AmountNet should be TotalIn - TotalOut = 4e18.
+	amountNet := stmt.AmountNet()
+	expectedAmountNet := base.NewWei(4 * 1000000000000000000)
+	if amountNet.Cmp(expectedAmountNet) != 0 {
+		t.Errorf("AmountNet with huge values: expected %s, got %s", expectedAmountNet.Text(10), amountNet.Text(10))
+	}
+
+	// TotalOutLessGas should be TotalOut - GasOut = 4e18.
+	totalOutLessGas := stmt.TotalOutLessGas()
+	expectedTotalOutLessGas := base.NewWei(4 * 1000000000000000000)
+	if totalOutLessGas.Cmp(expectedTotalOutLessGas) != 0 {
+		t.Errorf("TotalOutLessGas with huge values: expected %s, got %s", expectedTotalOutLessGas.Text(10), totalOutLessGas.Text(10))
+	}
+
+	// Test BegBalDiff: when BlockNumber != 0, it should be BegBal - PrevBal.
+	stmt.BlockNumber = 1
+	stmt.BegBal = *base.NewWei(2 * 1000000000000000000) // 2e18
+	stmt.PrevBal = *huge                                // 1e18
+	begBalDiff := stmt.BegBalDiff()
+	expectedBegBalDiff := huge // 1e18
+	if begBalDiff.Cmp(expectedBegBalDiff) != 0 {
+		t.Errorf("BegBalDiff with huge values: expected %s, got %s", expectedBegBalDiff.Text(10), begBalDiff.Text(10))
+	}
+}

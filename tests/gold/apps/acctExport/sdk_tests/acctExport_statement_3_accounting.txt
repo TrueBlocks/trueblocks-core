@@ -47,7 +47,7 @@ Trial balance:
 End of trial balance report
 ------------------------------------------------------------
 Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:          0
 Start of trial balance report
 Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -84,9 +84,8 @@ Trial balance:
 ---------------------------------------------------
 End of trial balance report
 ------------------------------------------------------------
-Asset Contexts (2)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046685-00000:          0      46685       46709 diff-diff
+Asset Contexts (1)
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:          0
 Start of trial balance report
 Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -123,10 +122,8 @@ Trial balance:
 ---------------------------------------------------
 End of trial balance report
 ------------------------------------------------------------
-Asset Contexts (3)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000000000-00270:          0          0       46685 genesis-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046685-00000:          0      46685       46709 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-000046709-00000:      46685      46709       46710 diff-diff
+Asset Contexts (1)
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:          0
 {
   "data": [
     {

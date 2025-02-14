@@ -80,9 +80,9 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Asset Contexts (3)
-INFO[DATE|TIME] 0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2-011670419-00091:   11670418   11670419    11670420 diff-diff
-INFO[DATE|TIME] 0xc713e5e149d5d0715dcd1c156a020976e7e56b88-011670419-00091:   11670418   11670419    11670420 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-011670419-00091:   11670418   11670419    11670420 diff-diff
+INFO[DATE|TIME] 0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2:   11670419
+INFO[DATE|TIME] 0xc713e5e149d5d0715dcd1c156a020976e7e56b88:   11670419
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:   11670419
 ----
 Results in ./failed_statement_2572_2_out.file
 {

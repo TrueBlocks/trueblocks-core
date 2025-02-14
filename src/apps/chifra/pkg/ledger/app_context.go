@@ -6,13 +6,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-type appContextKey string
+type appBalancerKey string
 
-// appContext provides context for a transaction appearance. It tracks the previous,
+// appBalancer provides context for a transaction appearance. It tracks the previous,
 // current, and next block numbers to help with determining how the balances should be
 // reconciled. Additionally, it holds a reconciliation type that describes the differences
 // between these block values, and a flag indicating if the ordering is reversed.
-type appContext struct {
+type appBalancer struct {
 	address   base.Address
 	prvBlk    base.Blknum
 	curBlk    base.Blknum
@@ -21,9 +21,9 @@ type appContext struct {
 	reversed  bool
 }
 
-func newAppContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *appContext {
+func newAppBalancer(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *appBalancer {
 	if prev > cur || cur > next {
-		return &appContext{reconType: types.Invalid, reversed: reversed}
+		return &appBalancer{reconType: types.Invalid, reversed: reversed}
 	}
 
 	reconType := types.Invalid
@@ -54,7 +54,7 @@ func newAppContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) 
 		reconType |= types.Last
 	}
 
-	return &appContext{
+	return &appBalancer{
 		prvBlk:    prev,
 		curBlk:    cur,
 		nxtBlk:    next,
@@ -63,7 +63,7 @@ func newAppContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) 
 	}
 }
 
-func (c *appContext) Prev() base.Blknum {
+func (c *appBalancer) Prev() base.Blknum {
 	if c.reconType&types.First != 0 {
 		if c.prvBlk == 0 {
 			return 0
@@ -73,25 +73,25 @@ func (c *appContext) Prev() base.Blknum {
 	return c.prvBlk
 }
 
-func (c *appContext) Cur() base.Blknum {
+func (c *appBalancer) Cur() base.Blknum {
 	return c.curBlk
 }
 
-func (c *appContext) Next() base.Blknum {
+func (c *appBalancer) Next() base.Blknum {
 	if c.reconType&types.Last != 0 {
 		return c.nxtBlk + 1
 	}
 	return c.nxtBlk
 }
 
-func (c *appContext) Recon() types.ReconType {
+func (c *appBalancer) Recon() types.ReconType {
 	return c.reconType
 }
 
-func (c *appContext) Address() base.Address {
+func (c *appBalancer) Address() base.Address {
 	return c.address
 }
 
-func (c *appContext) RunningBal() *base.Wei {
+func (c *appBalancer) RunningBal() *base.Wei {
 	return nil
 }

@@ -1,6 +1,7 @@
 package ledger
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -10,54 +11,53 @@ import (
 
 func TestGetOrCreateAssetBalancer_New(t *testing.T) {
 	l := &Ledger{
-		reversed:      false,
-		appContexts:   make(map[appContextKey]*appContext),
-		assetContexts: make(map[assetContextKey]*assetContext),
+		reversed:       false,
+		appBalancers:   make(map[appBalancerKey]*appBalancer),
+		assetBalancers: make(map[base.Address]*appBalancer),
 	}
 
 	bn := base.Blknum(100)
 	txid := base.Txnum(1)
 	assetAddr := base.HexToAddress("0xabcdefabcdefabcdefabcdefabcdefabcdefabcd")
 
-	assetCtx := l.getOrCreateAssetBalancer(bn, txid, assetAddr)
+	assetBal := l.getOrCreateAssetBalancer(bn, txid, assetAddr)
 
-	if assetCtx == nil {
+	if assetBal == nil {
 		t.Fatal("Expected asset context to be non-nil")
 	}
 
-	if assetCtx.address != assetAddr {
-		t.Errorf("Expected asset address %s, got %s", assetAddr.Hex(), assetCtx.address.Hex())
+	if assetBal.address != assetAddr {
+		t.Errorf("Expected asset address %s, got %s", assetAddr.Hex(), assetBal.address.Hex())
 	}
 
-	appKey := l.getAppContextKey(bn, txid)
-	if _, exists := l.appContexts[appKey]; !exists {
-		t.Error("Expected app context to be created and stored in ledger.appContexts")
+	appKey := l.getAppBalancerKey(bn, txid)
+	if _, exists := l.appBalancers[appKey]; !exists {
+		t.Error("Expected app context to be created and stored in appBalancers")
 	}
 
-	assetKey := l.getAssetContextKey(bn, txid, assetAddr)
-	storedAssetCtx, exists := l.assetContexts[assetKey]
+	storedAssetCtx, exists := l.assetBalancers[assetAddr]
 	if !exists {
-		t.Error("Expected asset context to be stored in ledger.assetContexts")
+		t.Error("Expected asset context to be stored in assetBalancers")
 	}
-	if storedAssetCtx != assetCtx {
+	if storedAssetCtx != assetBal {
 		t.Error("Stored asset context does not match returned asset context")
 	}
 }
 
 func TestGetOrCreateAssetBalancer_Existing(t *testing.T) {
 	l := &Ledger{
-		reversed:      false,
-		appContexts:   make(map[appContextKey]*appContext),
-		assetContexts: make(map[assetContextKey]*assetContext),
+		reversed:       false,
+		appBalancers:   make(map[appBalancerKey]*appBalancer),
+		assetBalancers: make(map[base.Address]*appBalancer),
 	}
 
 	bn := base.Blknum(200)
 	txid := base.Txnum(2)
 	assetAddr := base.HexToAddress("0x1111111111111111111111111111111111111111")
 
-	appKey := l.getAppContextKey(bn, txid)
-	fakeAppCtx := newAppContext(bn-1, bn, bn+1, false, false, l.reversed)
-	l.appContexts[appKey] = fakeAppCtx
+	appKey := l.getAppBalancerKey(bn, txid)
+	fakeAppBal := newAppBalancer(bn-1, bn, bn+1, false, false, l.reversed)
+	l.appBalancers[appKey] = fakeAppBal
 
 	assetCtx1 := l.getOrCreateAssetBalancer(bn, txid, assetAddr)
 	if assetCtx1 == nil {
@@ -69,9 +69,9 @@ func TestGetOrCreateAssetBalancer_Existing(t *testing.T) {
 		t.Error("Expected subsequent calls to return the same asset context instance")
 	}
 
-	if assetCtx1.Prev() != fakeAppCtx.Prev() ||
-		assetCtx1.Cur() != fakeAppCtx.Cur() ||
-		assetCtx1.Next() != fakeAppCtx.Next() {
+	if assetCtx1.Prev() != fakeAppBal.Prev() ||
+		assetCtx1.Cur() != fakeAppBal.Cur() ||
+		assetCtx1.Next() != fakeAppBal.Next() {
 		t.Error("Asset context values do not match those of the underlying app context")
 	}
 }
@@ -124,72 +124,72 @@ func TestAssetOfInterest(t *testing.T) {
 	}
 }
 
-// func TestNewLedger_WithAssetFiltersNil(t *testing.T) {
-// 	// Create a slice of dummy appearances.
-// 	apps := []types.Appearance{
-// 		{BlockNumber: 10, TransactionIndex: 1},
-// 		{BlockNumber: 20, TransactionIndex: 2},
-// 		{BlockNumber: 30, TransactionIndex: 3},
-// 	}
-// 	conn := rpc.TempConnection("mainnet")
-// 	l := NewLedger(conn, apps, base.HexToAddress("0xAAA"), 10, 30, false, true, false, false, false, nil)
-// 	// Expect that assetFilter is an empty slice.
-// 	if len(l.assetFilter) != 0 {
-// 		t.Errorf("Expected assetFilter to be empty when assetFilters is nil, got length %d", len(l.assetFilter))
-// 	}
-// 	// Verify appContexts for each appearance.
-// 	if len(l.appContexts) != len(apps) {
-// 		t.Errorf("Expected %d appContexts, got %d", len(apps), len(l.appContexts))
-// 	}
-// 	// For each appearance, check the computed prev, cur, and next block numbers.
-// 	for index, app := range apps {
-// 		expectedKey := fmt.Sprintf("%09d-%05d", app.BlockNumber, app.TransactionIndex)
-// 		ctx, exists := l.appContexts[appContextKey(expectedKey)]
-// 		if !exists {
-// 			t.Errorf("Expected appContext with key %s to exist", expectedKey)
-// 			continue
-// 		}
-// 		// For the first appearance, prev and cur should equal its block number,
-// 		// and next should equal the block number of the second appearance.
-// 		if index == 0 {
-// 			if ctx.Prev() != base.Blknum(app.BlockNumber) {
-// 				t.Errorf("For first app, expected Prev() to be %d, got %d", app.BlockNumber, ctx.Prev())
-// 			}
-// 			if ctx.Cur() != base.Blknum(app.BlockNumber) {
-// 				t.Errorf("For first app, expected Cur() to be %d, got %d", app.BlockNumber, ctx.Cur())
-// 			}
-// 			if ctx.Next() != base.Blknum(apps[1].BlockNumber) {
-// 				t.Errorf("For first app, expected Next() to be %d, got %d", apps[1].BlockNumber, ctx.Next())
-// 			}
-// 		}
-// 		// For a middle appearance, prev should be first app's block number,
-// 		// cur equal to its block, and next equal to the third app's block number.
-// 		if index == 1 {
-// 			if ctx.Prev() != base.Blknum(apps[0].BlockNumber) {
-// 				t.Errorf("For middle app, expected Prev() to be %d, got %d", apps[0].BlockNumber, ctx.Prev())
-// 			}
-// 			if ctx.Cur() != base.Blknum(app.BlockNumber) {
-// 				t.Errorf("For middle app, expected Cur() to be %d, got %d", app.BlockNumber, ctx.Cur())
-// 			}
-// 			if ctx.Next() != base.Blknum(apps[2].BlockNumber) {
-// 				t.Errorf("For middle app, expected Next() to be %d, got %d", apps[2].BlockNumber, ctx.Next())
-// 			}
-// 		}
-// 		// For the last appearance, prev should be the second app's block number,
-// 		// cur equal to its block, and next equal to its block.
-// 		if index == 2 {
-// 			if ctx.Prev() != base.Blknum(apps[1].BlockNumber) {
-// 				t.Errorf("For last app, expected Prev() to be %d, got %d", apps[1].BlockNumber, ctx.Prev())
-// 			}
-// 			if ctx.Cur() != base.Blknum(app.BlockNumber) {
-// 				t.Errorf("For last app, expected Cur() to be %d, got %d", app.BlockNumber, ctx.Cur())
-// 			}
-// 			if ctx.Next() != base.Blknum(app.BlockNumber) {
-// 				t.Errorf("For last app, expected Next() to be %d, got %d", app.BlockNumber, ctx.Next())
-// 			}
-// 		}
-// 	}
-// }
+func TestNewLedger_WithAssetFiltersNil(t *testing.T) {
+	// Create a slice of dummy appearances.
+	apps := []types.Appearance{
+		{BlockNumber: 10, TransactionIndex: 1},
+		{BlockNumber: 20, TransactionIndex: 2},
+		{BlockNumber: 30, TransactionIndex: 3},
+	}
+	conn := rpc.TempConnection("mainnet")
+	l := NewLedger(conn, apps, base.HexToAddress("0xAAA"), 10, 30, false, true, false, false, false, nil)
+	// Expect that assetFilter is an empty slice.
+	if len(l.assetFilter) != 0 {
+		t.Errorf("Expected assetFilter to be empty when assetFilters is nil, got length %d", len(l.assetFilter))
+	}
+	// Verify appBalancers for each appearance.
+	if len(l.appBalancers) != len(apps) {
+		t.Errorf("Expected %d appBalancers, got %d", len(apps), len(l.appBalancers))
+	}
+	// For each appearance, check the computed prev, cur, and next block numbers.
+	for index, app := range apps {
+		expectedKey := fmt.Sprintf("%09d-%05d", app.BlockNumber, app.TransactionIndex)
+		ctx, exists := l.appBalancers[appBalancerKey(expectedKey)]
+		if !exists {
+			t.Errorf("Expected appBalancer with key %s to exist", expectedKey)
+			continue
+		}
+		// For the first appearance, prev should be one less than cur,
+		// and next should equal the block number of the second appearance.
+		if index == 0 {
+			if ctx.Prev() != base.Blknum(app.BlockNumber)-1 {
+				t.Errorf("For first app, expected Prev() to be %d, got %d", app.BlockNumber, ctx.Prev())
+			}
+			if ctx.Cur() != base.Blknum(app.BlockNumber) {
+				t.Errorf("For first app, expected Cur() to be %d, got %d", app.BlockNumber, ctx.Cur())
+			}
+			if ctx.Next() != base.Blknum(apps[1].BlockNumber) {
+				t.Errorf("For first app, expected Next() to be %d, got %d", apps[1].BlockNumber, ctx.Next())
+			}
+		}
+		// For a middle appearance, prev should be first app's block number,
+		// cur equal to its block, and next equal to the third app's block number.
+		if index == 1 {
+			if ctx.Prev() != base.Blknum(apps[0].BlockNumber) {
+				t.Errorf("For middle app, expected Prev() to be %d, got %d", apps[0].BlockNumber, ctx.Prev())
+			}
+			if ctx.Cur() != base.Blknum(app.BlockNumber) {
+				t.Errorf("For middle app, expected Cur() to be %d, got %d", app.BlockNumber, ctx.Cur())
+			}
+			if ctx.Next() != base.Blknum(apps[2].BlockNumber) {
+				t.Errorf("For middle app, expected Next() to be %d, got %d", apps[2].BlockNumber, ctx.Next())
+			}
+		}
+		// For the last appearance, prev should be the second app's block number,
+		// cur equal to its block, and next one more than that.
+		if index == 2 {
+			if ctx.Prev() != base.Blknum(apps[1].BlockNumber) {
+				t.Errorf("For last app, expected Prev() to be %d, got %d", apps[1].BlockNumber, ctx.Prev())
+			}
+			if ctx.Cur() != base.Blknum(app.BlockNumber) {
+				t.Errorf("For last app, expected Cur() to be %d, got %d", app.BlockNumber, ctx.Cur())
+			}
+			if ctx.Next() != base.Blknum(app.BlockNumber)+1 {
+				t.Errorf("For last app, expected Next() to be %d, got %d", app.BlockNumber, ctx.Next())
+			}
+		}
+	}
+}
 
 func TestNewLedger_WithAssetFiltersProvided(t *testing.T) {
 	apps := []types.Appearance{
@@ -209,8 +209,8 @@ func TestNewLedger_WithAssetFiltersProvided(t *testing.T) {
 			t.Errorf("At index %d, expected assetFilter %s, got %s", i, expectedAddr.Hex(), l.assetFilter[i].Hex())
 		}
 	}
-	// Also verify that appContexts are created.
-	if len(l.appContexts) != len(apps) {
-		t.Errorf("Expected %d appContexts, got %d", len(apps), len(l.appContexts))
+	// Also verify that appBalancers are created.
+	if len(l.appBalancers) != len(apps) {
+		t.Errorf("Expected %d appBalancers, got %d", len(apps), len(l.appBalancers))
 	}
 }

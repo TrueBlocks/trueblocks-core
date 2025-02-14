@@ -54,14 +54,12 @@ Trial balance:
 End of trial balance report
 ------------------------------------------------------------
 Asset Contexts (2)
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860513-00085:    8860512    8860513     8860529 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860513-00085:    8860512    8860513     8860529 diff-diff
+0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 ------------------------------------------------------------
-Asset Contexts (4)
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860513-00085:    8860512    8860513     8860529 diff-diff
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860529-00145:    8860513    8860529     8860531 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860513-00085:    8860512    8860513     8860529 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860529-00145:    8860513    8860529     8860531 diff-diff
+Asset Contexts (2)
+0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 Start of trial balance report
 =========================================================
 ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
@@ -100,13 +98,9 @@ Trial balance:
 ---------------------------------------------------
 End of trial balance report
 ------------------------------------------------------------
-Asset Contexts (6)
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860513-00085:    8860512    8860513     8860529 diff-diff
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860529-00145:    8860513    8860529     8860531 diff-diff
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860531-00152:    8860529    8860531     8860532 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860513-00085:    8860512    8860513     8860529 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860529-00145:    8860513    8860529     8860531 diff-diff
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860531-00152:    8860529    8860531     8860532 diff-diff
+Asset Contexts (2)
+0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 {
   "data": [
     {

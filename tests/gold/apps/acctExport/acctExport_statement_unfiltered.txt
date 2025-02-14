@@ -99,8 +99,8 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Asset Contexts (2)
-INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860513-00085:    8860512    8860513     8860529 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860513-00085:    8860512    8860513     8860529 diff-diff
+INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 8860529 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
@@ -148,11 +148,9 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (4)
-INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860513-00085:    8860512    8860513     8860529 diff-diff
-INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860529-00145:    8860513    8860529     8860531 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860513-00085:    8860512    8860513     8860529 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860529-00145:    8860513    8860529     8860531 diff-diff
+INFO[DATE|TIME] Asset Contexts (2)
+INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 8860531 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
@@ -237,13 +235,9 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (6)
-INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860513-00085:    8860512    8860513     8860529 diff-diff
-INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860529-00145:    8860513    8860529     8860531 diff-diff
-INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359-008860531-00152:    8860529    8860531     8860532 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860513-00085:    8860512    8860513     8860529 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860529-00145:    8860513    8860529     8860531 diff-diff
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-008860531-00152:    8860529    8860531     8860532 diff-diff
+INFO[DATE|TIME] Asset Contexts (2)
+INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
+INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 ----
 Results in ./statement_unfiltered_out.file
 {
