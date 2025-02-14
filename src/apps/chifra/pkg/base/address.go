@@ -19,10 +19,10 @@ type Address struct {
 }
 
 // A few well-known address. ZeroAddr, of course, is 0x0. NotAMonitor is a marker to signify the end
-// of the monitor list produced by ListMonitors. SentinalAddr is for misconfigured miner appearances
+// of the monitor list produced by ListMonitors. SentinelAddr is for misconfigured miner appearances
 var (
 	NotAMonitor  = HexToAddress("0x1234deaddeaddead98766789deaddeaddead4321")
-	SentinalAddr = HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
+	SentinelAddr = HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
 	ZeroAddr     = HexToAddress("0x0")
 )
 

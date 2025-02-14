@@ -58,7 +58,7 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 			if base.IsPrecompile(author) {
 				// Some blocks have a misconfigured miner setting. We process this block, so that
 				// every block gets a record, but it will be excluded from the index. See #3252.
-				author = base.SentinalAddr.Hex()
+				author = base.SentinelAddr.Hex()
 				fakeId = types.MisconfigReward
 			}
 			streamAppearance(procFunc, flow, "miner", author, bn, fakeId, traceid, ts, addrMap)
@@ -72,7 +72,7 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 					if base.IsPrecompile(author) {
 						// Some blocks have a misconfigured miner setting. We process this block, so that
 						// every block gets a record, but it will be excluded from the index. See #3252.
-						author = base.SentinalAddr.Hex()
+						author = base.SentinelAddr.Hex()
 						fakeId = types.MisconfigReward
 					}
 					streamAppearance(procFunc, flow, "uncle", author, bn, fakeId, traceid, ts, addrMap)
@@ -227,7 +227,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				if base.IsPrecompile(author) {
 					// Some blocks have a misconfigured miner setting. We process this block, so that
 					// every block gets a record, but it will be excluded from the index. See #3252.
-					author = base.SentinalAddr.Hex()
+					author = base.SentinelAddr.Hex()
 					fakeId = types.MisconfigReward
 				}
 				streamAppearance(procFunc, flow, "miner", author, bn, fakeId, traceid, ts, addrMap)
@@ -238,7 +238,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				if base.IsPrecompile(author) {
 					// Some blocks have a misconfigured miner setting. We process this block, so that
 					// every block gets a record, but it will be excluded from the index. See #3252.
-					author = base.SentinalAddr.Hex()
+					author = base.SentinelAddr.Hex()
 					fakeId = types.MisconfigReward
 				}
 				streamAppearance(procFunc, flow, "uncle", author, bn, fakeId, traceid, ts, addrMap)
@@ -249,7 +249,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				if base.IsPrecompile(author) {
 					// Some blocks have a misconfigured miner setting. We process this block, so that
 					// every block gets a record, but it will be excluded from the index. See #3252.
-					author = base.SentinalAddr.Hex()
+					author = base.SentinelAddr.Hex()
 					fakeId = types.MisconfigReward
 				}
 				streamAppearance(procFunc, flow, "external", author, bn, fakeId, traceid, ts, addrMap)
