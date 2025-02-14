@@ -1,10 +1,10 @@
 package base
 
 import (
+	"bytes"
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"log"
 	"path/filepath"
 	"strings"
 
@@ -34,12 +34,8 @@ func (a *Address) Hex() string {
 	return bytesToAddressString(a.Address.Bytes())
 }
 
-func (a *Address) Prefix(n int) string {
+func (a *Address) DefaultSymbol() string {
 	return a.Hex()[:Min(len(a.Hex()), 6)]
-}
-
-func (a *Address) Encoded32() string {
-	return "000000000000000000000000" + a.Hex()[2:]
 }
 
 func (a Address) String() string {
@@ -67,8 +63,14 @@ func (a *Address) IsZero() bool {
 	return v == "0x0000000000000000000000000000000000000000"
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface for Address.
+// It supports multiple representations of a "zero" or uninitialized address. If the JSON input is
+// "0x0", an empty string, or the literal null, the Address is set to ZeroAddr. Otherwise, it delegates
+// to the embedded Address type's UnmarshalJSON method to handle a full-length hexadecimal address.
 func (e *Address) UnmarshalJSON(data []byte) error {
-	if string(data) == "\"0x0\"" || string(data) == "\"\"" || string(data) == "null" {
+	s := string(data)
+	if s == "\"0x0\"" || s == "\"\"" || s == "null" {
+		*e = ZeroAddr
 		return nil
 	}
 	return e.Address.UnmarshalJSON(data)
@@ -82,8 +84,7 @@ func (a *Address) SetCommon(c *common.Address) Address {
 	return BytesToAddress(c.Bytes())
 }
 
-// HexToAddress returns new address with the given string
-// as value.
+// HexToAddress returns new address with the given string as value.
 func HexToAddress(hex string) (addr Address) {
 	addr.SetHex(hex)
 	return
@@ -102,27 +103,30 @@ func (a *Address) Pad32() string {
 	return "000000000000000000000000" + a.Hex()[2:]
 }
 
-// AddressFromPath returns an address from a path -- is assumes the filename is
-// a valid address starting with 0x and ends with the fileType. if the path does
-// not contain an address, an error is returned. If the path does not end with the
-// given fileType, it panics.
-func AddressFromPath(path, fileType string) (Address, error) {
-	_, fileName := filepath.Split(path)
+// IsLessThan compares two addresses numerically.
+func (a Address) IsLessThan(b Address) bool {
+	return bytes.Compare(a.Bytes(), b.Bytes()) < 0
+}
 
-	if !strings.HasSuffix(fileName, fileType) {
-		log.Fatal("should not happen ==> path should contain fileType: " + path + " " + fileType)
-	}
+// IsLessThanOrEqual compares two addresses numerically.
+func (a *Address) IsLessThanOrEqual(b Address) bool {
+	return a.IsLessThan(b) || a.Equal(b)
+}
 
-	if !strings.HasPrefix(fileType, ".") {
-		log.Fatal("should not happen ==> fileType should have a leading dot: " + path + " " + fileType)
-	}
+// IsGreaterThan returns true if address a is numerically greater than address b.
+func (a Address) IsGreaterThan(b Address) bool {
+	// note the reversal here
+	return b.IsLessThan(a)
+}
 
-	if len(fileName) < (42+len(fileType)) || !strings.HasPrefix(fileName, "0x") || !strings.Contains(fileName, ".") {
-		return ZeroAddr, errors.New("path does not appear to contain an address")
-	}
+// IsGreaterThanOrEqual returns true if address a is numerically greater than or equal to address b.
+func (a Address) IsGreaterThanOrEqual(b Address) bool {
+	return !a.IsLessThan(b)
+}
 
-	parts := strings.Split(fileName, ".")
-	return HexToAddress(parts[0]), nil
+// Equal returns true if addresses a and b are identical.
+func (a Address) Equal(b Address) bool {
+	return bytes.Equal(a.Bytes(), b.Bytes())
 }
 
 // As per EIP 1352, all addresses less or equal to the following value are reserved for pre-compiles.
@@ -133,6 +137,31 @@ var maxPrecompile = "0x000000000000000000000000000000000000ffff"
 func IsPrecompile(addr string) bool {
 	test := HexToAddress(addr) // normalizes the input as an address
 	return test.Hex() <= maxPrecompile
+}
+
+// AddressFromPath returns an address from a path -- is assumes the filename is
+// a valid address starting with 0x and ends with the fileType. if the path does
+// not contain an address, an error is returned. If the path does not end with the
+// given fileType, it panics.
+func AddressFromPath(path, fileType string) (Address, error) {
+	_, fileName := filepath.Split(path)
+
+	if !strings.HasSuffix(fileName, fileType) {
+		return ZeroAddr, fmt.Errorf("file name %q does not have the expected file type suffix %q", fileName, fileType)
+	}
+
+	if !strings.HasPrefix(fileType, ".") {
+		return ZeroAddr, fmt.Errorf("file type %q should have a leading dot", fileType)
+	}
+
+	// Check that the fileName is long enough to contain a valid address and the fileType.
+	// A valid address is 42 characters (including "0x"). We require a '.' to separate the address from the file type.
+	if len(fileName) < (42+len(fileType)) || !strings.HasPrefix(fileName, "0x") || !strings.Contains(fileName, ".") {
+		return ZeroAddr, fmt.Errorf("path %q does not appear to contain a valid address", path)
+	}
+
+	parts := strings.Split(fileName, ".")
+	return HexToAddress(parts[0]), nil
 }
 
 func IsHex(str string) bool {
@@ -165,7 +194,10 @@ func IsValidAddress(val string) bool {
 
 func IsValidAddressE(val string) (bool, error) {
 	if strings.HasSuffix(val, ".eth") {
-		return strings.Replace(val, "\t\n\r", "", -1) == val, nil
+		if strings.ContainsAny(val, " \t\n\r") {
+			return false, nil
+		}
+		return true, nil
 	}
 	return isValidHex(val, 20)
 }

@@ -30,7 +30,7 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		return types.Statement{}, err
 
 	} else {
-		sym := log.Address.Prefix(6)
+		sym := log.Address.DefaultSymbol()
 		decimals := base.Value(18)
 		name := l.names[log.Address]
 		if name.Address == log.Address {

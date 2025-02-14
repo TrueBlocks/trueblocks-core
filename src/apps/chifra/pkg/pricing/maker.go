@@ -55,7 +55,7 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 	int0 = int0.Mul(int0, new(base.Wei).SetInt64(100000))
 	int1 := new(base.Wei).Quo(int0, divisor)
 
-	bigPrice := new(base.Ether).SetWei(int1)
+	bigPrice := new(base.Ether).SetRawWei(int1)
 	bigPrice = bigPrice.Quo(bigPrice, new(base.Ether).SetInt64(100000))
 	price = base.Float(bigPrice.Float64())
 	source = "maker"
