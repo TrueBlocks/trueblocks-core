@@ -34,7 +34,7 @@ func TestAddAddressToMaps(t *testing.T) {
 		tc := tc
 		t.Run(tc.name, func(t *testing.T) {
 			addrMap := make(AddressBooleanMap)
-			addAddressToMaps(tc.input.Hex(), testBn, testId, addrMap)
+			addAddressToMaps(tc.input, testBn, testId, addrMap)
 			key := fmt.Sprintf(AppearanceFmt, tc.normalized.Hex(), testBn, testId)
 			if addrMap[key] != tc.isInserted {
 				if tc.isInserted {
