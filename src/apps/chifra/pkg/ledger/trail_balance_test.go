@@ -342,8 +342,8 @@ func TestCorrectForSomethingElseEth(t *testing.T) {
 
 // func TestTrialBalance_Reconciled(t *testing.T) {
 // 	l := &Ledger{
-// 		testMode:      true,
-// 		assetContexts: make(map[assetContextKey]*assetContext),
+// 		testMode:       true,
+// 		assetBalancers: make(map[base.Address]*appBalancer),
 // 	}
 // 	l.theTx = &types.Transaction{
 // 		Receipt: new(types.Receipt),
@@ -354,10 +354,9 @@ func TestCorrectForSomethingElseEth(t *testing.T) {
 // 	bn := base.Blknum(100)
 // 	txid := base.Txnum(1)
 // 	assetAddr := base.HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-// 	appCtx := newAppContext(bn-1, bn, bn+1, false, false, l.reversed)
-// 	ac := newAssetContext(appCtx.Prev(), appCtx.Cur(), appCtx.Next(), false, false, l.reversed, assetAddr)
-// 	key := l.getAssetContextKey(bn, txid, assetAddr)
-// 	l.assetContexts[key] = ac
+// 	appBal := newAppBalancer(bn-1, bn, bn+1, false, false, l.reversed)
+// 	ac := new AssetBalancer(appBal.Prev(), appBal.Cur(), appBal.Next(), false, false, l.reversed, assetAddr)
+// 	l.assetBalancers[assetAddr] = ac
 
 // 	s := new(types.Statement)
 // 	s.BlockNumber = bn

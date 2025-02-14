@@ -100,7 +100,7 @@ func (l *Ledger) getAssetContextKey(bn base.Blknum, txid base.Txnum, assetAddr b
 	return assetContextKey(fmt.Sprintf("%s-%09d-%05d", assetAddr.Hex(), bn, txid))
 }
 
-func (l *Ledger) getOrCreateAssetContext(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *assetContext {
+func (l *Ledger) getOrCreateAssetBalancer(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *assetContext {
 	assetKey := l.getAssetContextKey(bn, txid, assetAddr)
 	if ctx, exists := l.assetContexts[assetKey]; exists {
 		return ctx

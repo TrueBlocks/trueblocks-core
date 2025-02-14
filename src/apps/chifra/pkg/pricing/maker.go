@@ -47,7 +47,7 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 	divisor.SetString("1000000000000000000", 10)
 
 	// TODO: Since Dawid fixed the articulate code, we should use the value at results["val_1"] instead of this
-	//       hacky string manipulation
+	// TODO: hacky string manipulation
 	trimmed := strings.TrimPrefix(string(result.ReturnedBytes), "0x")
 	trimmed = trimmed[:64]
 	int0 := new(base.Wei)

@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func TestGetOrCreateAssetContext_New(t *testing.T) {
+func TestGetOrCreateAssetBalancer_New(t *testing.T) {
 	l := &Ledger{
 		reversed:      false,
 		appContexts:   make(map[appContextKey]*appContext),
@@ -19,7 +19,7 @@ func TestGetOrCreateAssetContext_New(t *testing.T) {
 	txid := base.Txnum(1)
 	assetAddr := base.HexToAddress("0xabcdefabcdefabcdefabcdefabcdefabcdefabcd")
 
-	assetCtx := l.getOrCreateAssetContext(bn, txid, assetAddr)
+	assetCtx := l.getOrCreateAssetBalancer(bn, txid, assetAddr)
 
 	if assetCtx == nil {
 		t.Fatal("Expected asset context to be non-nil")
@@ -44,7 +44,7 @@ func TestGetOrCreateAssetContext_New(t *testing.T) {
 	}
 }
 
-func TestGetOrCreateAssetContext_Existing(t *testing.T) {
+func TestGetOrCreateAssetBalancer_Existing(t *testing.T) {
 	l := &Ledger{
 		reversed:      false,
 		appContexts:   make(map[appContextKey]*appContext),
@@ -59,12 +59,12 @@ func TestGetOrCreateAssetContext_Existing(t *testing.T) {
 	fakeAppCtx := newAppContext(bn-1, bn, bn+1, false, false, l.reversed)
 	l.appContexts[appKey] = fakeAppCtx
 
-	assetCtx1 := l.getOrCreateAssetContext(bn, txid, assetAddr)
+	assetCtx1 := l.getOrCreateAssetBalancer(bn, txid, assetAddr)
 	if assetCtx1 == nil {
 		t.Fatal("Expected asset context to be non-nil")
 	}
 
-	assetCtx2 := l.getOrCreateAssetContext(bn, txid, assetAddr)
+	assetCtx2 := l.getOrCreateAssetBalancer(bn, txid, assetAddr)
 	if assetCtx1 != assetCtx2 {
 		t.Error("Expected subsequent calls to return the same asset context instance")
 	}
