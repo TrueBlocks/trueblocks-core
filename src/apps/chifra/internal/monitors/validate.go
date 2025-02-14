@@ -51,7 +51,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 				if len(opts.Globals.File) > 0 {
 					// Do nothing
 				} else {
-					err := validate.ValidateAtLeastOneNonSentinal(opts.Addrs)
+					err := validate.ValidateAtLeastOneNonSentinel(opts.Addrs)
 					if err != nil {
 						return err
 					}
