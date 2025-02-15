@@ -26,8 +26,8 @@ func NewReconciler(accountedForAddress base.Address) Reconciler {
 }
 
 // String returns a summary of the Reconciler’s LedgerBook.
-func (r Reconciler) String() string {
-	return fmt.Sprintf("Reconciler for %s => %s", r.LedgerBook.AccountedForAddress, r.LedgerBook.String())
+func (r *Reconciler) String() string {
+	return fmt.Sprintf("Reconciler for %s => %s", r.LedgerBook.AccountedFor, r.LedgerBook.String())
 }
 
 // ProcessAppearances takes a list of Appearances and their related AssetTransfers,
@@ -64,7 +64,7 @@ func (r *Reconciler) ProcessAppearances(appearances []types.Appearance, allTrans
 		}
 
 		// Build a unique key per asset + app
-		key := fmt.Sprintf("%s|%s", at.AssetAddress, appID)
+		key := fmt.Sprintf("%s|%s", at.AssetAddr, appID)
 
 		// Create the LedgerEntry if needed
 		entry, found := entriesMap[key]
@@ -100,12 +100,12 @@ func (r *Reconciler) convertTransferToPosting(at AssetTransfer) Posting {
 	p := NewPosting(at.BlockNumber, at.TransactionIndex, at.Index, 0)
 
 	// We'll decide if it's incoming or outgoing for the accountedForAddress.
-	// This is oversimplified. Real logic might check "r.LedgerBook.AccountedForAddress"
+	// This is oversimplified. Real logic might check "r.LedgerBook.AccountedFor"
 	// to see if 'FromAddress' or 'ToAddress' matches.
-	if at.FromAddress == r.LedgerBook.AccountedForAddress {
+	if at.FromAddress == r.LedgerBook.AccountedFor {
 		// out
 		p.TransferOut = at.Amount
-	} else if at.ToAddress == r.LedgerBook.AccountedForAddress {
+	} else if at.ToAddress == r.LedgerBook.AccountedFor {
 		// in
 		p.TransferIn = at.Amount
 	}
@@ -147,6 +147,7 @@ func guessAssetName(addr string) string {
 // by checking the transaction's Value, its Logs for ERC20 events, and an optional Traces field.
 func DeriveAssetTransfers(accountFor base.Address, tx *types.Transaction) []AssetTransfer {
 	var results []AssetTransfer
+
 	if false { // assetOfInterest(l.assetFilter, base.FAKE_ETH_ADDRESS) {
 		/*
 				// TODO: We ignore errors in the next few lines, but we should not
@@ -246,7 +247,7 @@ func DeriveAssetTransfers(accountFor base.Address, tx *types.Transaction) []Asse
 		results = append(results, AssetTransfer{
 			BlockNumber:      tx.BlockNumber,
 			TransactionIndex: tx.TransactionIndex,
-			AssetAddress:     base.FAKE_ETH_ADDRESS, // for native chain coin
+			AssetAddr:        base.FAKE_ETH_ADDRESS, // for native chain coin
 			AssetName:        "ETH",                 // or another name if not Ethereum
 			Amount:           tx.Value,
 			Index:            "nativeVal",
@@ -302,7 +303,7 @@ func DeriveAssetTransfers(accountFor base.Address, tx *types.Transaction) []Asse
 					at := AssetTransfer{
 						BlockNumber:      tx.BlockNumber,
 						TransactionIndex: tx.TransactionIndex,
-						AssetAddress:     lg.Address,
+						AssetAddr:        lg.Address,
 						AssetName:        "ERC20", // you might map the address to a known symbol
 						Amount:           *amount,
 						Index:            logIndexToString(i),
@@ -324,7 +325,7 @@ func DeriveAssetTransfers(accountFor base.Address, tx *types.Transaction) []Asse
 	// 		xf := AssetTransfer{
 	// 			BlockNumber:      tx.BlockNumber,
 	// 			TransactionIndex: tx.TransactionIndex,
-	// 			AssetAddress:     "0x0",
+	// 			AssetAddr:        "0x0",
 	// 			AssetName:        "ETH",
 	// 			Amount:           *base.NewWei(tr.ValueWei),
 	// 			Index:            traceIndexToString(i),

@@ -18,13 +18,14 @@ import (
 // GetStatements returns a statement from a given transaction
 func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	if os.Getenv("NEW_CODE") == "true" {
-		return ledger2.GetStatements(l.accountFor, filter, trans)
+		r := ledger2.NewReconciler(l.accountFor)
+		return r.GetStatements(filter, trans)
+
 	} else {
 		// We need this below...
 		l.theTx = trans
 
 		if l.connection.StoreReadable() {
-			// walk.Cache_Statements
 			statementGroup := &types.StatementGroup{
 				BlockNumber:      trans.BlockNumber,
 				TransactionIndex: trans.TransactionIndex,

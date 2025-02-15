@@ -8,7 +8,7 @@ import (
 
 // StatementNew provides a summarized view of ledger activity for a specific asset and block range.
 type StatementNew struct {
-	AssetAddress string
+	AssetAddr    string
 	StartBlock   base.Blknum
 	EndBlock     base.Blknum
 	StartBalance base.Wei
@@ -30,7 +30,7 @@ func NewStatementNew(
 	generatedAt base.Timestamp,
 ) StatementNew {
 	return StatementNew{
-		AssetAddress: assetAddress,
+		AssetAddr:    assetAddress,
 		StartBlock:   startBlock,
 		EndBlock:     endBlock,
 		StartBalance: startBalance,
@@ -42,10 +42,10 @@ func NewStatementNew(
 }
 
 // String returns a human-readable description of StatementNew.
-func (s StatementNew) String() string {
+func (s *StatementNew) String() string {
 	return fmt.Sprintf(
 		"StatementNew(Asset=%s StartBlock=%d EndBlock=%d StartBal=%s EndBal=%s In=%s Out=%s GeneratedAt=%d)",
-		s.AssetAddress,
+		s.AssetAddr,
 		s.StartBlock,
 		s.EndBlock,
 		s.StartBalance.String(),

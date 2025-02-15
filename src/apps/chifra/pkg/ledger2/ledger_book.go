@@ -6,28 +6,28 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-// LedgerBook holds multiple Ledger items for a single AccountedForAddress.
+// LedgerBook holds multiple Ledger items for a single AccountedFor.
 type LedgerBook struct {
-	AccountedForAddress base.Address
-	Ledgers             map[string]Ledger
+	AccountedFor base.Address
+	Ledgers      map[string]Ledger
 }
 
 // NewLedgerBook creates a LedgerBook for a given address, with no Ledgers initially.
 func NewLedgerBook(accountedForAddress base.Address) LedgerBook {
 	return LedgerBook{
-		AccountedForAddress: accountedForAddress,
-		Ledgers:             make(map[string]Ledger),
+		AccountedFor: accountedForAddress,
+		Ledgers:      make(map[string]Ledger),
 	}
 }
 
 // String returns a concise description of this LedgerBook, including how many Ledgers it contains.
-func (lb LedgerBook) String() string {
+func (lb *LedgerBook) String() string {
 	totIn := lb.TotalIn()
 	totOut := lb.TotalOut()
 	net := lb.NetValue()
 	return fmt.Sprintf(
 		"LedgerBook(Address=%s Ledgers=%d In=%s Out=%s Net=%s)",
-		lb.AccountedForAddress,
+		lb.AccountedFor,
 		len(lb.Ledgers),
 		totIn.String(),
 		totOut.String(),
@@ -35,9 +35,9 @@ func (lb LedgerBook) String() string {
 	)
 }
 
-// AddLedger inserts a new Ledger into this LedgerBook, keyed by its AssetAddress.
+// AddLedger inserts a new Ledger into this LedgerBook, keyed by its AssetAddr.
 func (lb *LedgerBook) AddLedger(l Ledger) {
-	lb.Ledgers[l.AssetAddress.Hex()] = l
+	lb.Ledgers[l.AssetAddr.Hex()] = l
 }
 
 // GetLedger retrieves the Ledger for a given asset address, if it exists.

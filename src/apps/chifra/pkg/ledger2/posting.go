@@ -25,6 +25,8 @@ type Posting struct {
 	CorrectingReason  string
 	RunningBalance    base.Wei
 	Timestamp         base.Timestamp
+	From              base.Address
+	To                base.Address
 }
 
 // NewPosting creates a Posting with the essential fields set.
@@ -38,7 +40,7 @@ func NewPosting(blockNumber base.Blknum, txIndex base.Txnum, index string, times
 }
 
 // String returns a human-readable summary of the Posting.
-func (p Posting) String() string {
+func (p *Posting) String() string {
 	totIn := p.TotalIn()
 	totOut := p.TotalOut()
 	net := p.NetValue()

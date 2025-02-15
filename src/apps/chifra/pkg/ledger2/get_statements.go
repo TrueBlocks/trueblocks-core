@@ -6,13 +6,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func GetStatements(accountFor base.Address, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
-	r := NewReconciler(accountFor)
+func (r *Reconciler) GetStatements(filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	apps := []types.Appearance{
-		{Address: accountFor, BlockNumber: uint32(trans.BlockNumber), TransactionIndex: uint32(trans.TransactionIndex)},
+		{Address: r.LedgerBook.AccountedFor, BlockNumber: uint32(trans.BlockNumber), TransactionIndex: uint32(trans.TransactionIndex)},
 	}
-
-	xfers := DeriveAssetTransfers(accountFor, trans)
+	xfers := DeriveAssetTransfers(r.LedgerBook.AccountedFor, trans)
 	r.ProcessAppearances(apps, xfers)
 
 	return r.LedgerBook.Statements()
@@ -28,23 +26,14 @@ func (lb *LedgerBook) Statements() ([]types.Statement, error) {
 		for _, entry := range l.Entries {
 			for _, posting := range entry.Postings {
 				s := types.Statement{
-					// Mapped from LedgerBook
-					AccountedFor: base.Address(lb.AccountedForAddress),
-
-					// Mapped from Ledger (asset info)
-					AssetAddr:   base.Address(l.AssetAddress),
-					AssetSymbol: l.AssetName,
-
-					// Mapped from Posting
-					BlockNumber:      posting.BlockNumber,
-					TransactionIndex: posting.TransactionIndex,
-					Timestamp:        posting.Timestamp,
-
-					// Simple incoming/outgoing assignments
-					AmountIn:  posting.TransferIn,
-					AmountOut: posting.TransferOut,
-
-					// Fees and special movement types
+					AccountedFor:       base.Address(lb.AccountedFor),
+					AssetAddr:          base.Address(l.AssetAddr),
+					AssetSymbol:        l.AssetName,
+					BlockNumber:        posting.BlockNumber,
+					TransactionIndex:   posting.TransactionIndex,
+					Timestamp:          posting.Timestamp,
+					AmountIn:           posting.TransferIn,
+					AmountOut:          posting.TransferOut,
 					GasOut:             posting.GasOut,
 					InternalOut:        posting.InternalTxFeesOut,
 					PrefundIn:          posting.PrefundIn,
@@ -54,10 +43,10 @@ func (lb *LedgerBook) Statements() ([]types.Statement, error) {
 					CorrectingReason:   posting.CorrectingReason,
 					MinerBaseRewardIn:  posting.MiningRewardIn,
 					MinerUncleRewardIn: posting.UncleRewardIn,
-
-					// Rolling balance
-					RollingBalance: posting.RunningBalance,
-
+					RollingBalance:     posting.RunningBalance,
+					Sender:             posting.From,
+					Recipient:          posting.To,
+					// TODO: BOGUS SHIT!
 					// Some fields in Statement (like Sender, Recipient, TransactionHash, etc.)
 					// are not easily mapped from Posting or Ledger data, so they are left at default zero/empty.
 					// Similarly, BegBal, EndBal, SpotPrice, and so on remain at default values.

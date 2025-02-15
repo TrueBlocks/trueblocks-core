@@ -25,7 +25,7 @@ func TestReconcilerBasic(t *testing.T) {
 		{
 			BlockNumber:      123,
 			TransactionIndex: 0,
-			AssetAddress:     base.HexToAddress("0x0"), // native ETH
+			AssetAddr:        base.HexToAddress("0x0"), // native ETH
 			Amount:           *base.NewWei(50),
 			Index:            "trace_0",
 			FromAddress:      base.HexToAddress("0x1001"),
@@ -35,7 +35,7 @@ func TestReconcilerBasic(t *testing.T) {
 		{
 			BlockNumber:      123,
 			TransactionIndex: 1,
-			AssetAddress:     base.HexToAddress("0x0"),
+			AssetAddr:        base.HexToAddress("0x0"),
 			Amount:           *base.NewWei(20),
 			Index:            "trace_1",
 			FromAddress:      base.HexToAddress("0x1002"),
@@ -45,7 +45,7 @@ func TestReconcilerBasic(t *testing.T) {
 		{
 			BlockNumber:      124,
 			TransactionIndex: 0,
-			AssetAddress:     base.HexToAddress("0x0"),
+			AssetAddr:        base.HexToAddress("0x0"),
 			Amount:           *base.NewWei(100),
 			Index:            "trace_2",
 			FromAddress:      base.HexToAddress("0x1004"),
@@ -100,7 +100,7 @@ func TestReconcilerNoMatch(t *testing.T) {
 		{
 			BlockNumber:      10,
 			TransactionIndex: 6,
-			AssetAddress:     base.HexToAddress("0x0"),
+			AssetAddr:        base.HexToAddress("0x0"),
 			Amount:           *base.NewWei(10),
 			Index:            "trace_999",
 			FromAddress:      base.HexToAddress("0x1006"),

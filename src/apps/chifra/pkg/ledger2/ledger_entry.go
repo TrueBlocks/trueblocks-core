@@ -25,7 +25,7 @@ func NewLedgerEntry(appearanceID string, blockNum base.Blknum, txIndex base.Txnu
 }
 
 // String returns a human-readable summary of the LedgerEntry.
-func (le LedgerEntry) String() string {
+func (le *LedgerEntry) String() string {
 	totIn := le.TotalIn()
 	totOut := le.TotalOut()
 	net := le.NetValue()

@@ -8,28 +8,28 @@ import (
 
 // Ledger is a collection of LedgerEntry items that refer to a single asset.
 type Ledger struct {
-	AssetAddress base.Address
-	AssetName    string
-	Entries      []LedgerEntry
+	AssetAddr base.Address
+	AssetName string
+	Entries   []LedgerEntry
 }
 
 // NewLedger creates a Ledger with the given asset address and asset name.
 func NewLedger(assetAddress base.Address, assetName string) Ledger {
 	return Ledger{
-		AssetAddress: assetAddress,
-		AssetName:    assetName,
-		Entries:      make([]LedgerEntry, 0),
+		AssetAddr: assetAddress,
+		AssetName: assetName,
+		Entries:   make([]LedgerEntry, 0),
 	}
 }
 
 // String returns a human-readable summary of the Ledger.
-func (l Ledger) String() string {
+func (l *Ledger) String() string {
 	totIn := l.TotalIn()
 	totOut := l.TotalOut()
 	net := l.NetValue()
 	return fmt.Sprintf(
-		"Ledger(AssetAddress=%s AssetName=%s Entries=%d In=%s Out=%s Net=%s)",
-		l.AssetAddress.Hex(),
+		"Ledger(AssetAddr=%s AssetName=%s Entries=%d In=%s Out=%s Net=%s)",
+		l.AssetAddr,
 		l.AssetName,
 		len(l.Entries),
 		totIn.String(),
