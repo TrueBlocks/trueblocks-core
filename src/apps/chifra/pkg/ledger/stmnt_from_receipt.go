@@ -15,7 +15,7 @@ func (l *Ledger) getStatementsFromReceipt(filter *filter.AppearanceFilter, recei
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 	for _, log := range receipt.Logs {
 		addrArray := []base.Address{l.accountFor}
-		if filter.ApplyLogFilter(&log, addrArray) && l.assetOfInterest(log.Address) {
+		if filter.ApplyLogFilter(&log, addrArray) && assetOfInterest(l.assetFilter, log.Address) {
 			if statement, err := l.getStatementsFromLog(&log); err != nil {
 				return statements, err
 			} else {

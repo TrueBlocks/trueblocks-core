@@ -58,9 +58,8 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 			return statements, fmt.Errorf("no context for %s", key)
 		}
 
-		if l.assetOfInterest(base.FAKE_ETH_ADDRESS) {
+		if assetOfInterest(l.assetFilter, base.FAKE_ETH_ADDRESS) {
 			// TODO: We ignore errors in the next few lines, but we should not
-			// TODO: BOGUS PERF - This greatly increases the number of times we call into eth_getBalance which is quite slow
 			prevBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.Prev())
 			if trans.BlockNumber == 0 {
 				prevBal = new(base.Wei)
