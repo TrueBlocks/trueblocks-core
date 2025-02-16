@@ -80,10 +80,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (2)
-0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3:    8876232
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8876232
 Start of trial balance report
 ===================================================
 ====> eth
@@ -164,11 +160,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (3)
-0x22c1f6050e56d2876009903609a2cc3fef83b415:    9000998
-0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3:    8876232
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8876232
 Start of trial balance report
 ===================================================
 ====> eth
@@ -202,11 +193,6 @@ Trial balance:
 ---------------------------------------------------
 End of trial balance report
 Tx reconciled with a zero value net amount. It's okay.
-------------------------------------------------------------
-Asset Contexts (3)
-0x22c1f6050e56d2876009903609a2cc3fef83b415:    9000998
-0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3:    8876232
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8876232
 {
   "data": [
     {

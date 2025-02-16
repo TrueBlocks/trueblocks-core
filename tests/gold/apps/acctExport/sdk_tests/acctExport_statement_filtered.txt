@@ -52,14 +52,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (2)
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
-------------------------------------------------------------
-Asset Contexts (2)
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 Start of trial balance report
 =========================================================
 ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
@@ -97,10 +89,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (2)
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 {
   "data": [
     {

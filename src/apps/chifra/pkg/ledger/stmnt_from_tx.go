@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -33,18 +32,6 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 			}
 			if err := l.connection.Store.Read(statementGroup, nil); err == nil {
 				return statementGroup.Statements, nil
-			}
-		}
-
-		_ = l.getOrCreateAssetBalancer(trans.BlockNumber, trans.TransactionIndex, base.FAKE_ETH_ADDRESS)
-		if trans.Receipt != nil {
-			for _, log := range trans.Receipt.Logs {
-				if normalized, err := normalize.NormalizeTransferOrApproval(&log); err == nil {
-					checkAddress := l.accountFor == normalized.Address
-					if normalized.IsRelevant(l.accountFor, checkAddress) {
-						_ = l.getOrCreateAssetBalancer(trans.BlockNumber, trans.TransactionIndex, normalized.Address)
-					}
-				}
 			}
 		}
 
@@ -162,7 +149,6 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 		if false && isFinal && isWritable && isEnabled {
 			for _, statement := range statements {
 				if statement.IsMaterial() && !statement.Reconciled() {
-					debugContexts(l.testMode, l.assetBalancers)
 					return statements, nil
 				}
 			}
@@ -175,7 +161,6 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 			_ = l.connection.Store.Write(statementGroup, nil)
 		}
 
-		debugContexts(l.testMode, l.assetBalancers)
 		return statements, nil
 	}
 }

@@ -21,36 +21,34 @@ import (
 // account being tracked, block ranges for processing, connection to an RPC endpoint,
 // asset filters, and maps for both application-level and asset-level contexts.
 type Ledger struct {
-	accountFor     base.Address
-	firstBlock     base.Blknum
-	lastBlock      base.Blknum
-	names          map[base.Address]types.Name
-	testMode       bool
-	asEther        bool
-	noZero         bool
-	reversed       bool
-	useTraces      bool
-	connection     *rpc.Connection
-	assetFilter    []base.Address
-	theTx          *types.Transaction
-	appBalancers   map[appBalancerKey]*appBalancer
-	assetBalancers map[base.Address]*appBalancer
+	accountFor   base.Address
+	firstBlock   base.Blknum
+	lastBlock    base.Blknum
+	names        map[base.Address]types.Name
+	testMode     bool
+	asEther      bool
+	noZero       bool
+	reversed     bool
+	useTraces    bool
+	connection   *rpc.Connection
+	assetFilter  []base.Address
+	theTx        *types.Transaction
+	appBalancers map[appBalancerKey]*appBalancer
 }
 
 // NewLedger returns a new empty Ledger struct
 func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
-		connection:     conn,
-		accountFor:     acctFor,
-		firstBlock:     fb,
-		lastBlock:      lb,
-		asEther:        asEther,
-		testMode:       testMode,
-		noZero:         noZero,
-		reversed:       reversed,
-		useTraces:      useTraces,
-		appBalancers:   make(map[appBalancerKey]*appBalancer),
-		assetBalancers: make(map[base.Address]*appBalancer),
+		connection:   conn,
+		accountFor:   acctFor,
+		firstBlock:   fb,
+		lastBlock:    lb,
+		asEther:      asEther,
+		testMode:     testMode,
+		noZero:       noZero,
+		reversed:     reversed,
+		useTraces:    useTraces,
+		appBalancers: make(map[appBalancerKey]*appBalancer),
 	}
 
 	if assetFilters != nil {
@@ -94,24 +92,6 @@ func assetOfInterest(filters []base.Address, needle base.Address) bool {
 
 func (l *Ledger) getAppBalancerKey(bn base.Blknum, txid base.Txnum) appBalancerKey {
 	return appBalancerKey(fmt.Sprintf("%09d-%05d", bn, txid))
-}
-
-func (l *Ledger) getOrCreateAssetBalancer(bn base.Blknum, txid base.Txnum, assetAddr base.Address) *appBalancer {
-	if ctx, exists := l.assetBalancers[assetAddr]; exists {
-		return ctx
-	}
-
-	appKey := l.getAppBalancerKey(bn, txid)
-	appBal, exists := l.appBalancers[appKey]
-	if !exists {
-		logger.Warn("This should never happen in get OrCreateAssetBalancer")
-		appBal = newAppBalancer(bn, bn, bn, false, false, l.reversed)
-		l.appBalancers[appKey] = appBal
-	}
-
-	assetBal := newAssetBalancer(appBal.Prev(), appBal.Cur(), appBal.Next(), false, false, l.reversed, assetAddr)
-	l.assetBalancers[assetAddr] = assetBal
-	return assetBal
 }
 
 const maxTestingBlock = 17000000

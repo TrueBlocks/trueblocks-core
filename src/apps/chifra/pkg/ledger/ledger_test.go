@@ -9,71 +9,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func TestGetOrCreateAssetBalancer_New(t *testing.T) {
+func TestGetOrCreateAppBalancer2(t *testing.T) {
 	l := &Ledger{
-		reversed:       false,
-		appBalancers:   make(map[appBalancerKey]*appBalancer),
-		assetBalancers: make(map[base.Address]*appBalancer),
-	}
-
-	bn := base.Blknum(100)
-	txid := base.Txnum(1)
-	assetAddr := base.HexToAddress("0xabcdefabcdefabcdefabcdefabcdefabcdefabcd")
-
-	assetBal := l.getOrCreateAssetBalancer(bn, txid, assetAddr)
-
-	if assetBal == nil {
-		t.Fatal("Expected asset context to be non-nil")
-	}
-
-	if assetBal.address != assetAddr {
-		t.Errorf("Expected asset address %s, got %s", assetAddr.Hex(), assetBal.address.Hex())
-	}
-
-	appKey := l.getAppBalancerKey(bn, txid)
-	if _, exists := l.appBalancers[appKey]; !exists {
-		t.Error("Expected app context to be created and stored in appBalancers")
-	}
-
-	storedAssetCtx, exists := l.assetBalancers[assetAddr]
-	if !exists {
-		t.Error("Expected asset context to be stored in assetBalancers")
-	}
-	if storedAssetCtx != assetBal {
-		t.Error("Stored asset context does not match returned asset context")
-	}
-}
-
-func TestGetOrCreateAssetBalancer_Existing(t *testing.T) {
-	l := &Ledger{
-		reversed:       false,
-		appBalancers:   make(map[appBalancerKey]*appBalancer),
-		assetBalancers: make(map[base.Address]*appBalancer),
+		reversed:     false,
+		appBalancers: make(map[appBalancerKey]*appBalancer),
 	}
 
 	bn := base.Blknum(200)
 	txid := base.Txnum(2)
-	assetAddr := base.HexToAddress("0x1111111111111111111111111111111111111111")
-
 	appKey := l.getAppBalancerKey(bn, txid)
 	fakeAppBal := newAppBalancer(bn-1, bn, bn+1, false, false, l.reversed)
 	l.appBalancers[appKey] = fakeAppBal
-
-	assetCtx1 := l.getOrCreateAssetBalancer(bn, txid, assetAddr)
-	if assetCtx1 == nil {
-		t.Fatal("Expected asset context to be non-nil")
-	}
-
-	assetCtx2 := l.getOrCreateAssetBalancer(bn, txid, assetAddr)
-	if assetCtx1 != assetCtx2 {
-		t.Error("Expected subsequent calls to return the same asset context instance")
-	}
-
-	if assetCtx1.Prev() != fakeAppBal.Prev() ||
-		assetCtx1.Cur() != fakeAppBal.Cur() ||
-		assetCtx1.Next() != fakeAppBal.Next() {
-		t.Error("Asset context values do not match those of the underlying app context")
-	}
 }
 
 func TestAssetOfInterest(t *testing.T) {

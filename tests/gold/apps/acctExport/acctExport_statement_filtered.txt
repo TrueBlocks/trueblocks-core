@@ -52,14 +52,6 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
-INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (2)
-INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
-INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (2)
-INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
@@ -97,10 +89,6 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
-INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Asset Contexts (2)
-INFO[DATE|TIME] 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
-INFO[DATE|TIME] 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 ----
 Results in ./statement_filtered_out.file
 {

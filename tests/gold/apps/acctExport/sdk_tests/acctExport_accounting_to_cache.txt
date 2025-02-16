@@ -56,9 +56,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 Start of trial balance report
 Block 22 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -93,9 +90,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 Start of trial balance report
 Block 37 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -130,9 +124,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 Start of trial balance report
 Block 39 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -167,9 +158,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 Start of trial balance report
 Block 43 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -204,9 +192,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 Start of trial balance report
 Block 53 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -241,9 +226,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 Start of trial balance report
 Block 55 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -278,9 +260,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 Start of trial balance report
 Block 64 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -315,9 +294,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 Start of trial balance report
 Block 67 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -352,9 +328,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 Start of trial balance report
 Block 78 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -390,9 +363,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 Start of trial balance report
 Block 84 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -427,9 +397,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 Start of trial balance report
 Block 90 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -464,9 +431,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 Start of trial balance report
 Block 94 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
@@ -502,9 +466,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (1)
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:         13
 {
   "data": [
     {

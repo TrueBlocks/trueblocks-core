@@ -78,11 +78,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (3)
-0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2:   11670419
-0xc713e5e149d5d0715dcd1c156a020976e7e56b88:   11670419
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:   11670419
 {
   "data": [
     {

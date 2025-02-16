@@ -97,10 +97,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (2)
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 Start of trial balance report
 Block 8860529 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
@@ -147,10 +143,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (2)
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 Start of trial balance report
 Block 8860531 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
@@ -234,10 +226,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 End of trial balance report
-------------------------------------------------------------
-Asset Contexts (2)
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359:    8860513
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:    8860513
 {
   "data": [
     {
