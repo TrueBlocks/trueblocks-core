@@ -35,6 +35,8 @@ Previous:               8860512
 Current:                8860513
 Next:                   8860529
 reconciliationType:     first-diff
+first:                  true
+last:                   false
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
@@ -72,6 +74,8 @@ Previous:               8860512
 Current:                8860513
 Next:                   8860529
 reconciliationType:     first-diff
+first:                  true
+last:                   false
 assetType:              token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
@@ -118,6 +122,8 @@ Previous:               8860513
 Current:                8860529
 Next:                   8860531
 reconciliationType:     diff-diff
+first:                  false
+last:                   false
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
@@ -164,6 +170,8 @@ Previous:               8860529
 Current:                8860531
 Next:                   8860532
 reconciliationType:     diff-last
+first:                  false
+last:                   true
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
@@ -201,6 +209,8 @@ Previous:               8860529
 Current:                8860531
 Next:                   8860532
 reconciliationType:     diff-last
+first:                  false
+last:                   true
 assetType:              token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
@@ -257,12 +267,14 @@ End of trial balance report
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "4.999709998",
+      "first": true,
       "gasOut": "34017000000000",
       "gasOutEth": "0.000034017",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
+      "last": false,
       "logIndex": 0,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -274,6 +286,8 @@ End of trial balance report
       "minerUncleRewardInEth": "0",
       "prefundIn": "0",
       "prefundInEth": "0",
+      "prevBal": "4999744015000000000",
+      "prevBalEth": "4.999744015",
       "priceSource": "maker",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,
@@ -323,12 +337,14 @@ End of trial balance report
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "7000",
+      "first": true,
       "gasOut": "0",
       "gasOutEth": "0",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
+      "last": false,
       "logIndex": 84,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -340,6 +356,8 @@ End of trial balance report
       "minerUncleRewardInEth": "0",
       "prefundIn": "0",
       "prefundInEth": "0",
+      "prevBal": "7500000000000000000000",
+      "prevBalEth": "7500",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,
@@ -389,12 +407,14 @@ End of trial balance report
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "4.999663949",
+      "first": false,
       "gasOut": "46049000000000",
       "gasOutEth": "0.000046049",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
+      "last": false,
       "logIndex": 0,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -457,12 +477,14 @@ End of trial balance report
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "4.999639408",
+      "first": false,
       "gasOut": "24541000000000",
       "gasOutEth": "0.000024541",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
+      "last": true,
       "logIndex": 0,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -525,12 +547,14 @@ End of trial balance report
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "0",
+      "first": false,
       "gasOut": "0",
       "gasOutEth": "0",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
+      "last": true,
       "logIndex": 95,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",

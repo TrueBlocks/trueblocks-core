@@ -277,7 +277,9 @@ func TestCorrectForSomethingElseEth(t *testing.T) {
 			AssetAddr:        base.FAKE_ETH_ADDRESS, // so that IsEth() returns true
 			AssetType:        types.TrialBalTraceEth,
 			ReconType:        types.First | types.Last,
-			BlockNumber:      100, // arbitrary block number
+			BlockNumberPrev:  99,
+			BlockNumber:      100,
+			BlockNumberNext:  101,
 			TransactionIndex: 1,
 			BegBal:           *base.NewWei(1000),
 			AmountIn:         *base.NewWei(100),

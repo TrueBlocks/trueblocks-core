@@ -353,7 +353,6 @@ func TestStatementCacheRoundtrip(t *testing.T) {
 		PrevBal:             *base.NewWei(90),
 		PriceSource:         "TestSource",
 		Recipient:           base.HexToAddress("0x222233334444555566667777888899990000AAAA"),
-		ReconType:           1, // arbitrary test value
 		RollingBalance:      *base.NewWei(150),
 		SelfDestructIn:      *base.NewWei(13),
 		SelfDestructOut:     *base.NewWei(14),

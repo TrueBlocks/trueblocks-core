@@ -1,6 +1,8 @@
 package ledger
 
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -18,6 +20,8 @@ type appBalancer struct {
 	curBlk    base.Blknum
 	nxtBlk    base.Blknum
 	reconType types.ReconType
+	first     bool
+	last      bool
 	reversed  bool
 }
 
@@ -59,12 +63,14 @@ func newAppBalancer(prev, cur, next base.Blknum, isFirst, isLast, reversed bool)
 		curBlk:    cur,
 		nxtBlk:    next,
 		reconType: reconType,
+		first:     isFirst,
+		last:      isLast,
 		reversed:  reversed,
 	}
 }
 
 func (c *appBalancer) Prev() base.Blknum {
-	if c.reconType&types.First != 0 {
+	if c.first {
 		if c.prvBlk == 0 {
 			return 0
 		}
@@ -78,7 +84,7 @@ func (c *appBalancer) Cur() base.Blknum {
 }
 
 func (c *appBalancer) Next() base.Blknum {
-	if c.reconType&types.Last != 0 {
+	if c.last {
 		return c.nxtBlk + 1
 	}
 	return c.nxtBlk
@@ -86,6 +92,22 @@ func (c *appBalancer) Next() base.Blknum {
 
 func (c *appBalancer) Recon() types.ReconType {
 	return c.reconType
+}
+
+func (c *appBalancer) ReconStr() string {
+	ret := c.reconType.String()
+	if strings.Contains(ret, "genesis") || !strings.Contains(ret, "-") {
+		return ret
+	}
+
+	parts := strings.Split(ret, "-")
+	if c.first {
+		parts[0] = "first"
+	}
+	if c.last {
+		parts[1] = "last"
+	}
+	return strings.Join(parts, "-")
 }
 
 func (c *appBalancer) Address() base.Address {

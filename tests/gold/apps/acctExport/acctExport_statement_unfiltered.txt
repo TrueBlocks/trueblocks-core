@@ -35,6 +35,8 @@ TEST[DATE|TIME] Previous:               8860512
 TEST[DATE|TIME] Current:                8860513
 TEST[DATE|TIME] Next:                   8860529
 TEST[DATE|TIME] reconciliationType:     first-diff
+TEST[DATE|TIME] first:                  true
+TEST[DATE|TIME] last:                   false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
@@ -72,6 +74,8 @@ TEST[DATE|TIME] Previous:               8860512
 TEST[DATE|TIME] Current:                8860513
 TEST[DATE|TIME] Next:                   8860529
 TEST[DATE|TIME] reconciliationType:     first-diff
+TEST[DATE|TIME] first:                  true
+TEST[DATE|TIME] last:                   false
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
@@ -118,6 +122,8 @@ TEST[DATE|TIME] Previous:               8860513
 TEST[DATE|TIME] Current:                8860529
 TEST[DATE|TIME] Next:                   8860531
 TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] first:                  false
+TEST[DATE|TIME] last:                   false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
@@ -164,6 +170,8 @@ TEST[DATE|TIME] Previous:               8860529
 TEST[DATE|TIME] Current:                8860531
 TEST[DATE|TIME] Next:                   8860532
 TEST[DATE|TIME] reconciliationType:     diff-last
+TEST[DATE|TIME] first:                  false
+TEST[DATE|TIME] last:                   true
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
@@ -201,6 +209,8 @@ TEST[DATE|TIME] Previous:               8860529
 TEST[DATE|TIME] Current:                8860531
 TEST[DATE|TIME] Next:                   8860532
 TEST[DATE|TIME] reconciliationType:     diff-last
+TEST[DATE|TIME] first:                  false
+TEST[DATE|TIME] last:                   true
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
@@ -259,12 +269,14 @@ Results in ./statement_unfiltered_out.file
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "4.999709998",
+      "first": true,
       "gasOut": "34017000000000",
       "gasOutEth": "0.000034017",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
+      "last": false,
       "logIndex": 0,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -276,6 +288,8 @@ Results in ./statement_unfiltered_out.file
       "minerUncleRewardInEth": "0",
       "prefundIn": "0",
       "prefundInEth": "0",
+      "prevBal": "4999744015000000000",
+      "prevBalEth": "4.999744015",
       "priceSource": "maker",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,
@@ -325,12 +339,14 @@ Results in ./statement_unfiltered_out.file
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "7000",
+      "first": true,
       "gasOut": "0",
       "gasOutEth": "0",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
+      "last": false,
       "logIndex": 84,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -342,6 +358,8 @@ Results in ./statement_unfiltered_out.file
       "minerUncleRewardInEth": "0",
       "prefundIn": "0",
       "prefundInEth": "0",
+      "prevBal": "7500000000000000000000",
+      "prevBalEth": "7500",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,
@@ -391,12 +409,14 @@ Results in ./statement_unfiltered_out.file
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "4.999663949",
+      "first": false,
       "gasOut": "46049000000000",
       "gasOutEth": "0.000046049",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
+      "last": false,
       "logIndex": 0,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -459,12 +479,14 @@ Results in ./statement_unfiltered_out.file
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "4.999639408",
+      "first": false,
       "gasOut": "24541000000000",
       "gasOutEth": "0.000024541",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
+      "last": true,
       "logIndex": 0,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -527,12 +549,14 @@ Results in ./statement_unfiltered_out.file
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "0",
+      "first": false,
       "gasOut": "0",
       "gasOutEth": "0",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
+      "last": true,
       "logIndex": 95,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",

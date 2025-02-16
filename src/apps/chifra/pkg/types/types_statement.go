@@ -59,6 +59,10 @@ type Statement struct {
 	TransactionHash     base.Hash      `json:"transactionHash"`
 	TransactionIndex    base.Txnum     `json:"transactionIndex"`
 	// EXISTING_CODE
+	BlockNumberPrev     base.Blknum    `json:"blockNumberPrev"`
+	BlockNumberNext     base.Blknum    `json:"blockNumberNext"`
+	First               bool           `json:"first"`
+	Last                bool           `json:"last"`
 	// EXISTING_CODE
 }
 
@@ -73,58 +77,56 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 
 	// EXISTING_CODE
 	model = map[string]any{
-		"blockNumber":        s.BlockNumber,
-		"transactionIndex":   s.TransactionIndex,
-		"logIndex":           s.LogIndex,
-		"transactionHash":    s.TransactionHash,
-		"timestamp":          s.Timestamp,
-		"date":               s.Date(),
-		"assetAddr":          s.AssetAddr,
-		"assetType":          s.AssetType.String(),
-		"assetSymbol":        s.AssetSymbol,
-		"decimals":           s.Decimals,
-		"spotPrice":          s.SpotPrice,
-		"priceSource":        s.PriceSource,
-		"accountedFor":       s.AccountedFor,
-		"sender":             s.Sender,
-		"recipient":          s.Recipient,
-		"reconciliationType": s.ReconType.String(),
-		"reconciled":         s.Reconciled(),
-		"correctingReason":   s.CorrectingReason,
+		"blockNumber":         s.BlockNumber,
+		"transactionIndex":    s.TransactionIndex,
+		"logIndex":            s.LogIndex,
+		"transactionHash":     s.TransactionHash,
+		"timestamp":           s.Timestamp,
+		"date":                s.Date(),
+		"assetAddr":           s.AssetAddr,
+		"assetType":           s.AssetType.String(),
+		"assetSymbol":         s.AssetSymbol,
+		"decimals":            s.Decimals,
+		"spotPrice":           s.SpotPrice,
+		"priceSource":         s.PriceSource,
+		"accountedFor":        s.AccountedFor,
+		"sender":              s.Sender,
+		"recipient":           s.Recipient,
+		"reconciliationType":  s.ReconType.String(),
+		"first":               s.First,
+		"last":                s.Last,
+		"reconciled":          s.Reconciled(),
+		"correctingReason":    s.CorrectingReason,
+		"begBal":              s.BegBal.Text(10),
+		"amountNet":           s.AmountNet().Text(10),
+		"endBal":              s.EndBal.Text(10),
+		"totalIn":             s.TotalIn().Text(10),
+		"amountIn":            s.AmountIn.Text(10),
+		"internalIn":          s.InternalIn.Text(10),
+		"selfDestructIn":      s.SelfDestructIn.Text(10),
+		"minerBaseRewardIn":   s.MinerBaseRewardIn.Text(10),
+		"minerNephewRewardIn": s.MinerNephewRewardIn.Text(10),
+		"minerTxFeeIn":        s.MinerTxFeeIn.Text(10),
+		"minerUncleRewardIn":  s.MinerUncleRewardIn.Text(10),
+		"correctingIn":        s.CorrectingIn.Text(10),
+		"prefundIn":           s.PrefundIn.Text(10),
+		"totalOut":            s.TotalOut().Text(10),
+		"amountOut":           s.AmountOut.Text(10),
+		"internalOut":         s.InternalOut.Text(10),
+		"correctingOut":       s.CorrectingOut.Text(10),
+		"selfDestructOut":     s.SelfDestructOut.Text(10),
+		"gasOut":              s.GasOut.Text(10),
+		"totalOutLessGas":     s.TotalOutLessGas().Text(10),
+		"begBalDiff":          s.BegBalDiff().Text(10),
+		"endBalDiff":          s.EndBalDiff().Text(10),
+		"endBalCalc":          s.EndBalCalc().Text(10),
+		"prevBal":             s.PrevBal.Text(10),
 	}
 
-	model["begBal"] = s.BegBal.Text(10)
-	model["amountNet"] = s.AmountNet().Text(10)
-	model["endBal"] = s.EndBal.Text(10)
-	model["totalIn"] = s.TotalIn().Text(10)
-	model["amountIn"] = s.AmountIn.Text(10)
-	model["internalIn"] = s.InternalIn.Text(10)
-	model["selfDestructIn"] = s.SelfDestructIn.Text(10)
-	model["minerBaseRewardIn"] = s.MinerBaseRewardIn.Text(10)
-	model["minerNephewRewardIn"] = s.MinerNephewRewardIn.Text(10)
-	model["minerTxFeeIn"] = s.MinerTxFeeIn.Text(10)
-	model["minerUncleRewardIn"] = s.MinerUncleRewardIn.Text(10)
-	model["correctingIn"] = s.CorrectingIn.Text(10)
-	model["prefundIn"] = s.PrefundIn.Text(10)
-	model["totalOut"] = s.TotalOut().Text(10)
-	model["amountOut"] = s.AmountOut.Text(10)
-	model["internalOut"] = s.InternalOut.Text(10)
-	model["correctingOut"] = s.CorrectingOut.Text(10)
-	model["selfDestructOut"] = s.SelfDestructOut.Text(10)
-	model["gasOut"] = s.GasOut.Text(10)
-	model["totalOutLessGas"] = s.TotalOutLessGas().Text(10)
-	model["begBalDiff"] = s.BegBalDiff().Text(10)
-	model["endBalDiff"] = s.EndBalDiff().Text(10)
-	model["endBalCalc"] = s.EndBalCalc().Text(10)
-	if s.ReconType&First == 0 {
-		model["prevBal"] = s.PrevBal.Text(10)
-	} else if format != "json" {
-		model["prevBal"] = ""
-	}
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
 		"assetAddr", "assetType", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
-		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciliationType", "reconciled",
+		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciliationType", "first", "last", "reconciled",
 		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
 		"selfDestructOut", "gasOut", "totalOutLessGas", "prevBal", "begBalDiff",
@@ -156,11 +158,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		model["begBalDiffEth"] = s.BegBalDiff().ToEtherStr(decimals)
 		model["endBalDiffEth"] = s.EndBalDiff().ToEtherStr(decimals)
 		model["endBalCalcEth"] = s.EndBalCalc().ToEtherStr(decimals)
-		if s.ReconType&First == 0 {
-			model["prevBalEth"] = s.PrevBal.ToEtherStr(decimals)
-		} else if format != "json" {
-			model["prevBalEth"] = ""
-		}
+		model["prevBalEth"] = s.PrevBal.ToEtherStr(decimals)
 		order = append(order, []string{"begBalEth", "amountNetEth", "endBalEth",
 			"totalInEth", "amountInEth", "internalInEth", "selfDestructInEth",
 			"minerBaseRewardInEth", "minerNephewRewardInEth", "minerTxFeeInEth",
@@ -330,11 +328,6 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 
 	// Recipient
 	if err = cache.WriteValue(writer, s.Recipient); err != nil {
-		return err
-	}
-
-	// ReconType
-	if err = cache.WriteValue(writer, s.ReconType); err != nil {
 		return err
 	}
 
@@ -508,11 +501,6 @@ func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 
 	// Recipient
 	if err = cache.ReadValue(reader, &s.Recipient, vers); err != nil {
-		return err
-	}
-
-	// ReconType
-	if err = cache.ReadValue(reader, &s.ReconType, vers); err != nil {
 		return err
 	}
 
@@ -701,6 +689,8 @@ func (s *Statement) DebugStatement(prev, next base.Blknum) {
 	logger.TestLog(true, "Current:               ", s.BlockNumber)
 	logger.TestLog(true, "Next:                  ", next)
 	logger.TestLog(true, "reconciliationType:    ", s.ReconType.String())
+	logger.TestLog(true, "first:                 ", s.First)
+	logger.TestLog(true, "last:                  ", s.Last)
 	logger.TestLog(true, "assetType:             ", s.AssetType)
 	logger.TestLog(true, "accountedFor:          ", s.AccountedFor)
 	logger.TestLog(true, "sender:                ", s.Sender, " ==> ", s.Recipient)

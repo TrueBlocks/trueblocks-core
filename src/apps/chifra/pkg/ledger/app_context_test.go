@@ -44,43 +44,46 @@ func TestNewAppBalancer(t *testing.T) {
 		isFirst     bool
 		isLast      bool
 		reversed    bool
-		expectRecon types.ReconType
+		expectRecon string
+		expectFirst bool
+		expertLast  bool
 	}{
 		{
 			name: "Genesis Block",
 			prev: 0, cur: 0, next: 1,
 			isFirst: true, isLast: false, reversed: false,
-			expectRecon: types.Genesis | types.First,
+			expectRecon: "genesis-diff",
+			expectFirst: true,
 		},
 		{
 			name: "SameSame",
 			prev: 1, cur: 1, next: 1,
 			isFirst: false, isLast: false, reversed: false,
-			expectRecon: types.SameSame,
+			expectRecon: "same-same",
 		},
 		{
 			name: "DiffDiff",
 			prev: 1, cur: 2, next: 3,
 			isFirst: false, isLast: false, reversed: false,
-			expectRecon: types.DiffDiff,
+			expectRecon: "diff-diff",
 		},
 		{
 			name: "DiffSame",
 			prev: 1, cur: 2, next: 2,
 			isFirst: false, isLast: false, reversed: false,
-			expectRecon: types.DiffSame,
+			expectRecon: "diff-same",
 		},
 		{
 			name: "SameDiff",
 			prev: 2, cur: 2, next: 3,
 			isFirst: false, isLast: false, reversed: false,
-			expectRecon: types.SameDiff,
+			expectRecon: "same-diff",
 		},
 		{
 			name: "Invalid Block Order",
 			prev: 3, cur: 2, next: 1,
 			isFirst: false, isLast: false, reversed: false,
-			expectRecon: types.Invalid,
+			expectRecon: "invalid",
 		},
 		// {
 		// 	name: "Reversed DiffDiff",
@@ -105,8 +108,8 @@ func TestNewAppBalancer(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
 			appBal := newAppBalancer(tc.prev, tc.cur, tc.next, tc.isFirst, tc.isLast, tc.reversed)
-			if appBal.Recon() != tc.expectRecon {
-				t.Errorf("expected %v, got %v", tc.expectRecon, appBal.Recon())
+			if appBal.Recon().String() != tc.expectRecon {
+				t.Errorf("expected %v, got %v", tc.expectRecon, appBal.ReconStr())
 			}
 			if appBal.reversed != tc.reversed {
 				t.Errorf("expected reversed %v, got %v", tc.reversed, appBal.reversed)

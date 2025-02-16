@@ -21,6 +21,8 @@ Previous:               8876231
 Current:                8876232
 Next:                   9000998
 reconciliationType:     first-diff
+first:                  true
+last:                   false
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343  ==>  0xac104c988ff9c90dafc7754b2fb9072e25f93507
@@ -55,6 +57,8 @@ Previous:               8876231
 Current:                8876232
 Next:                   9000998
 reconciliationType:     first-diff
+first:                  true
+last:                   false
 assetType:              token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x0  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -88,6 +92,8 @@ Previous:               8876232
 Current:                9000998
 Next:                   9024185
 reconciliationType:     diff-diff
+first:                  false
+last:                   false
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x191167380d430036ca2cb067ab86b527e3d584ee  ==>  0x22c1f6050e56d2876009903609a2cc3fef83b415
@@ -134,6 +140,8 @@ Previous:               8876232
 Current:                9000998
 Next:                   9024185
 reconciliationType:     diff-diff
+first:                  false
+last:                   false
 assetType:              token-nft
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x0  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -168,6 +176,8 @@ Previous:               9000998
 Current:                9024185
 Next:                   9024186
 reconciliationType:     diff-last
+first:                  false
+last:                   true
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x86672b33ca6723d6da4a5cb69901f909824bdcfa  ==>  0x7c43c2fc7738ad078931dbcd787c2577d2c0332f
@@ -214,15 +224,18 @@ Tx reconciled with a zero value net amount. It's okay.
       "endBal": "22500000000000000000000",
       "endBalCalc": "22500000000000000000000",
       "endBalDiff": "0",
+      "first": true,
       "gasOut": "0",
       "internalIn": "0",
       "internalOut": "0",
+      "last": false,
       "logIndex": 169,
       "minerBaseRewardIn": "0",
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
+      "prevBal": "0",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "reconciled": true,
@@ -257,9 +270,11 @@ Tx reconciled with a zero value net amount. It's okay.
       "endBal": "1",
       "endBalCalc": "1",
       "endBalDiff": "0",
+      "first": false,
       "gasOut": "0",
       "internalIn": "0",
       "internalOut": "0",
+      "last": false,
       "logIndex": 52,
       "minerBaseRewardIn": "0",
       "minerNephewRewardIn": "0",

@@ -90,6 +90,9 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		}
 
 		if ofInterest {
+			s.First = ctx.first
+			s.Last = ctx.last
+
 			var err error
 			pBal := new(base.Wei)
 			pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", ctx.Prev()))

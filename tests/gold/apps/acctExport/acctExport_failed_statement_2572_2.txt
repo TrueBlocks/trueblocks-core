@@ -51,6 +51,8 @@ TEST[DATE|TIME] Previous:               11670418
 TEST[DATE|TIME] Current:                11670419
 TEST[DATE|TIME] Next:                   11670420
 TEST[DATE|TIME] reconciliationType:     first-last
+TEST[DATE|TIME] first:                  true
+TEST[DATE|TIME] last:                   true
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
 TEST[DATE|TIME] sender:                 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7  ==>  0x0
@@ -111,12 +113,14 @@ Results in ./failed_statement_2572_2_out.file
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "0",
+      "first": true,
       "gasOut": "0",
       "gasOutEth": "0",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
+      "last": true,
       "logIndex": 195,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -128,6 +132,8 @@ Results in ./failed_statement_2572_2_out.file
       "minerUncleRewardInEth": "0",
       "prefundIn": "0",
       "prefundInEth": "0",
+      "prevBal": "14922878205530494041",
+      "prevBalEth": "14.922878205530494041",
       "priceSource": "not-priced",
       "recipient": "0x0",
       "reconciled": true,

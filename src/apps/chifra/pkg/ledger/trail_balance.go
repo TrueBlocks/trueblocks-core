@@ -24,6 +24,11 @@ func (l *Ledger) trialBalance(reason types.TrialBalType, s *types.Statement) boo
 		logger.TestLog(l.testMode, "Start of trial balance report")
 
 		s.ReconType = ctx.Recon()
+		s.First = ctx.first
+		s.Last = ctx.last
+
+		s.BlockNumberPrev = ctx.Prev()
+		s.BlockNumberNext = ctx.Next()
 		s.AssetType = reason
 
 		var okay bool

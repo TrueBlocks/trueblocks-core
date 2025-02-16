@@ -76,7 +76,11 @@ func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Tra
 				BegBal:           *begBal,
 				EndBal:           *endBal,
 				ReconType:        ctx.Recon(),
+				BlockNumberPrev:  ctx.Prev(),
+				BlockNumberNext:  ctx.Next(),
 			}
+			ret.First = ctx.first
+			ret.Last = ctx.last
 
 			if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
 				ret.Recipient = trans.Receipt.ContractAddress
