@@ -59,8 +59,7 @@ func TestDebugStatement(t *testing.T) {
 		GasOut:              *base.NewWei(100000000000000000),
 	}
 
-	var l Ledger
-	l.DebugStatement(stmt, ctx)
+	stmt.DebugStatement(ctx.Prev(), ctx.Next())
 
 	foundHeader := false
 	foundBlockLine := false
@@ -117,9 +116,8 @@ func TestDebugStatementTokenFormatting(t *testing.T) {
 		PriceSource:      "TestSource",
 	}
 
-	var l Ledger
 	ctx := dummyLedgerer{}
-	l.DebugStatement(stmt, ctx)
+	stmt.DebugStatement(ctx.Prev(), ctx.Next())
 
 	// Look for a log line that shows the three-part block number (e.g., "123.456.789")
 	found := false

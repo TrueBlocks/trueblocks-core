@@ -16,13 +16,13 @@ func (l *Ledger) getStatementsFromReceipt(filter *filter.AppearanceFilter, recei
 	for _, log := range receipt.Logs {
 		addrArray := []base.Address{l.accountFor}
 		if filter.ApplyLogFilter(&log, addrArray) && assetOfInterest(l.assetFilter, log.Address) {
-			if statement, err := l.getStatementsFromLog(&log); err != nil {
+			if s, err := l.getStatementsFromLog(&log); err != nil {
 				return statements, err
 			} else {
-				if statement.Sender == l.accountFor || statement.Recipient == l.accountFor {
-					add := !l.noZero || statement.IsMaterial()
+				if s.Sender == l.accountFor || s.Recipient == l.accountFor {
+					add := !l.noZero || s.IsMaterial()
 					if add {
-						statements = append(statements, statement)
+						statements = append(statements, s)
 					}
 				}
 			}

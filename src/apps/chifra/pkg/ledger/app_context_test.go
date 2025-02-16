@@ -28,7 +28,6 @@ func TestLedgerContext1(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		// got := newAppBalancer(test.prev, test.cur, test.next, i == 0, false, test.reversed)
 		got := newAppBalancer(test.prev, test.cur, test.next, false, false, test.reversed)
 		if got.reconType != test.expected {
 			t.Error("expected:", test.expected, "got:", got.reconType)

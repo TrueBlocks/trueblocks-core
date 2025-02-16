@@ -42,7 +42,7 @@ func (l *Ledger) trialBalance(reason types.TrialBalType, s *types.Statement) boo
 		}
 
 		if l.testMode {
-			l.DebugStatement(s, ctx)
+			s.DebugStatement(ctx.Prev(), ctx.Next())
 		}
 	}
 
