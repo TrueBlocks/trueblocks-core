@@ -151,7 +151,7 @@ func debugContexts[K ~string | base.Address](testMode bool, ctxs map[K]*appBalan
 		rr := c.Recon() &^ (types.First | types.Last)
 		switch rr {
 		case types.Genesis:
-			msg = fmt.Sprintf(" %s", c.Recon().String()+"-diff")
+			msg = fmt.Sprintf(" %s", c.Recon().String())
 		case types.DiffDiff:
 			msg = fmt.Sprintf(" %s", c.Recon().String())
 		case types.SameSame:

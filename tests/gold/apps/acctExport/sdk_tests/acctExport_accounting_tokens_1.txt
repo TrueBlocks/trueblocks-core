@@ -21,7 +21,7 @@ Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               0
 Current:                0
 Next:                   202249
-reconciliationType:     genesis
+reconciliationType:     genesis-diff
 assetType:              eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x0000000000000000000000000050726566756e64  ==>  0x001d14804b399c6ef80e64576f657660804fec0b
@@ -181,7 +181,7 @@ End of trial balance report
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "reconciled": true,
-          "reconciliationType": "genesis",
+          "reconciliationType": "genesis-diff",
           "selfDestructIn": "0",
           "selfDestructInEth": "0",
           "selfDestructOut": "0",

@@ -37,7 +37,7 @@ func (r ReconType) String() string {
 	rr := r &^ (First | Last)
 	switch rr {
 	case Genesis:
-		return "genesis"
+		return "genesis-diff"
 	case DiffDiff:
 		return l(r, "diff-diff")
 	case SameSame:
@@ -50,6 +50,7 @@ func (r ReconType) String() string {
 		return "invalid"
 	}
 }
+
 func (r *ReconType) MarshalCache(writer io.Writer) error {
 	return cache.WriteValue(writer, int(*r))
 }

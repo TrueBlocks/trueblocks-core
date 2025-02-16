@@ -374,7 +374,7 @@ func TestCorrectForSomethingElseEth(t *testing.T) {
 // 	if s.AssetType != string(types.TrialBalEth) {
 // 		t.Errorf("Expected AssetType to be %s, got %s", types.TrialBalEth, s.AssetType)
 // 	}
-// 	if s.ReconType != ac.Recon() {
-// 		t.Errorf("Expected ReconType to be %v, got %v", ac.Recon(), s.ReconType)
+// 	if s.ReconType != ac.ReconStr() {
+// 		t.Errorf("Expected ReconType to be %v, got %v", ac.ReconStr(), s.ReconType)
 // 	}
 // }

@@ -19,7 +19,7 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                0
 TEST[DATE|TIME] Next:                   202249
-TEST[DATE|TIME] reconciliationType:     genesis
+TEST[DATE|TIME] reconciliationType:     genesis-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000050726566756e64  ==>  0x001d14804b399c6ef80e64576f657660804fec0b
@@ -163,7 +163,7 @@ Results in ./accounting_wei_1_out.file
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "reconciled": true,
-          "reconciliationType": "genesis",
+          "reconciliationType": "genesis-diff",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x0000000000000000000000000050726566756e64",

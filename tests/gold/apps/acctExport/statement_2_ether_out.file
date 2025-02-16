@@ -49,7 +49,7 @@
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "reconciled": true,
-      "reconciliationType": "genesis",
+      "reconciliationType": "genesis-diff",
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",

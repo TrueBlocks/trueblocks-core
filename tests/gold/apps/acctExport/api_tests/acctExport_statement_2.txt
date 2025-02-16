@@ -32,7 +32,7 @@ export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&statements&la
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "reconciled": true,
-      "reconciliationType": "genesis",
+      "reconciliationType": "genesis-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000050726566756e64",

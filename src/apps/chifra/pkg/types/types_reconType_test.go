@@ -9,7 +9,7 @@ func TestReconTypeString(t *testing.T) {
 		input    ReconType
 		expected string
 	}{
-		{Genesis, "genesis"},
+		{Genesis, "genesis-diff"},
 		{DiffDiff, "diff-diff"},
 		{SameSame, "same-same"},
 		{DiffSame, "diff-same"},
@@ -48,8 +48,8 @@ func TestReconTypeCombinationStrings(t *testing.T) {
 		input    ReconType
 		expected string
 	}{
-		{First | Genesis, "genesis"},
-		{First | Last | Genesis, "genesis"},
+		{First | Genesis, "genesis-diff"},
+		{First | Last | Genesis, "genesis-diff"},
 		{First | Last | DiffDiff, "first-diff-diff-last"},
 		{First | Last | SameSame, "first-last"},
 		{First | Last | DiffSame, "first-diff-last"},
