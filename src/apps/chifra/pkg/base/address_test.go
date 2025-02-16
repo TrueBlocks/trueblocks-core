@@ -381,29 +381,24 @@ func TestAddressComparison(t *testing.T) {
 			a := HexToAddress(tc.aStr)
 			b := HexToAddress(tc.bStr)
 
-			// Test Equal
 			if a.Equal(b) != tc.expectedEqual {
 				t.Errorf("Equal: got %v, expected %v", a.Equal(b), tc.expectedEqual)
 			}
 
-			// Test IsLessThan
-			if a.IsLessThan(b) != tc.expectedLess {
-				t.Errorf("IsLessThan: got %v, expected %v", a.IsLessThan(b), tc.expectedLess)
+			if a.LessThan(b) != tc.expectedLess {
+				t.Errorf("LessThan: got %v, expected %v", a.LessThan(b), tc.expectedLess)
 			}
 
-			// Test IsLessThanOrEqual
-			if a.IsLessThanOrEqual(b) != tc.expectedLessOrEqual {
-				t.Errorf("IsLessThanOrEqual: got %v, expected %v", a.IsLessThanOrEqual(b), tc.expectedLessOrEqual)
+			if a.LessThanOrEqual(b) != tc.expectedLessOrEqual {
+				t.Errorf("LessThanOrEqual: got %v, expected %v", a.LessThanOrEqual(b), tc.expectedLessOrEqual)
 			}
 
-			// Test IsGreaterThan
-			if a.IsGreaterThan(b) != tc.expectedGreater {
-				t.Errorf("IsGreaterThan: got %v, expected %v", a.IsGreaterThan(b), tc.expectedGreater)
+			if a.GreaterThan(b) != tc.expectedGreater {
+				t.Errorf("GreaterThan: got %v, expected %v", a.GreaterThan(b), tc.expectedGreater)
 			}
 
-			// Test IsGreaterThanOrEqual
-			if a.IsGreaterThanOrEqual(b) != tc.expectedGreaterOrEqual {
-				t.Errorf("IsGreaterThanOrEqual: got %v, expected %v", a.IsGreaterThanOrEqual(b), tc.expectedGreaterOrEqual)
+			if a.GreaterThanOrEqual(b) != tc.expectedGreaterOrEqual {
+				t.Errorf("GreaterThanOrEqual: got %v, expected %v", a.GreaterThanOrEqual(b), tc.expectedGreaterOrEqual)
 			}
 		})
 	}

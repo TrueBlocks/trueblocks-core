@@ -13,6 +13,10 @@ import (
 // are required because our Json encodes big.Ints as strings. Note that
 type Wei big.Int
 
+var (
+	ZeroWei = NewWei(0)
+)
+
 func NewWei(x int64) *Wei {
 	return (*Wei)(big.NewInt(x))
 }
@@ -43,6 +47,26 @@ func (w *Wei) Bytes() []byte {
 
 func (w *Wei) String() string {
 	return (*big.Int)(w).String()
+}
+
+func (w *Wei) Equal(other *Wei) bool {
+	return (*big.Int)(w).Cmp((*big.Int)(other)) == 0
+}
+
+func (w *Wei) LessThan(other *Wei) bool {
+	return (*big.Int)(w).Cmp((*big.Int)(other)) < 0
+}
+
+func (w *Wei) LessThanOrEqual(other *Wei) bool {
+	return w.LessThan(other) || w.Equal(other)
+}
+
+func (w *Wei) GreaterThan(other *Wei) bool {
+	return !w.LessThanOrEqual(other)
+}
+
+func (w *Wei) GreaterThanOrEqual(other *Wei) bool {
+	return !w.LessThan(other)
 }
 
 func (w *Wei) BigInt() *big.Int {
