@@ -108,7 +108,7 @@ func keyToString[K ~string | base.Address](k K) string {
 	}
 }
 
-func debugContexts[K ~string | base.Address, T Balancer](testMode bool, ctxs map[K]T) {
+func debugContexts[K ~string | base.Address](testMode bool, ctxs map[K]*appBalancer) {
 	if !testMode {
 		return
 	}

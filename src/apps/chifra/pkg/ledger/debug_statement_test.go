@@ -9,20 +9,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-type dummyLedgerer struct{}
-
-func (d dummyLedgerer) Prev() base.Blknum      { return 99 }
-func (d dummyLedgerer) Cur() base.Blknum       { return 100 }
-func (d dummyLedgerer) Next() base.Blknum      { return 101 }
-func (d dummyLedgerer) Recon() types.ReconType { return 0 }
-func (d dummyLedgerer) Address() base.Address  { return base.ZeroAddr }
-func (d dummyLedgerer) RunningBal() *base.Wei  { return nil }
-
 func TestDebugStatement(t *testing.T) {
 	restore := resetLogger()
 	defer restore()
 
-	ctx := dummyLedgerer{}
+	ctx := appBalancer{
+		prvBlk:    99,
+		curBlk:    100,
+		nxtBlk:    101,
+		reconType: 0,
+		address:   base.ZeroAddr,
+	}
 
 	stmt := &types.Statement{
 		AssetType:           types.TrialBalEth,
@@ -116,7 +113,13 @@ func TestDebugStatementTokenFormatting(t *testing.T) {
 		PriceSource:      "TestSource",
 	}
 
-	ctx := dummyLedgerer{}
+	ctx := appBalancer{
+		prvBlk:    99,
+		curBlk:    100,
+		nxtBlk:    101,
+		reconType: 0,
+		address:   base.ZeroAddr,
+	}
 	stmt.DebugStatement(ctx.Prev(), ctx.Next())
 
 	// Look for a log line that shows the three-part block number (e.g., "123.456.789")
