@@ -13,11 +13,21 @@ import (
 
 func (opts *TokensOptions) HandleShow(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
-	tokenAddr := base.HexToAddress(opts.Addrs[0])
+
+	var singleAddr base.Address
+	var addrRange []string
+
+	if opts.ByAcct {
+		singleAddr = base.HexToAddress(opts.Addrs[len(opts.Addrs)-1]) // by_acct case. Last address is for balance, all others are token addresses.
+		addrRange = opts.Addrs[:len(opts.Addrs)-1]
+	} else {
+		singleAddr = base.HexToAddress(opts.Addrs[0]) // normal case. First address is token, the rest are addresses for balances.
+		addrRange = opts.Addrs[1:]
+	}
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		for _, address := range opts.Addrs[1:] {
-			addr := base.HexToAddress(address)
+		for _, address := range addrRange {
+			addr := base.HexToAddress(address) // if by_acct, this is token not address
 			currentBn := base.Blknum(0)
 			currentTs := base.Timestamp(0)
 			for _, br := range opts.BlockIds {
@@ -32,6 +42,14 @@ func (opts *TokensOptions) HandleShow(rCtx *output.RenderCtx) error {
 				}
 
 				for _, bn := range blockNums {
+					var tokenAddr base.Address
+					if opts.ByAcct {
+						tokenAddr = addr
+						addr = singleAddr
+					} else {
+						tokenAddr = singleAddr
+					}
+
 					if balance, err := opts.Conn.GetBalanceAtToken(tokenAddr, addr, fmt.Sprintf("0x%x", bn)); balance == nil {
 						errorChan <- err
 					} else {
