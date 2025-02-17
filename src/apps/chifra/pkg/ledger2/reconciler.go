@@ -360,9 +360,6 @@ func (r *Reconciler) GetAssetTransfers(accountFor base.Address, prev, next base.
 						AssetType:        types.TrialBalToken,
 					}
 
-					// Do not collapse. A single transaction may have many movements of money
-					if r.LedgerBook.AccountedFor == at.Recipient {
-					}
 					results = append(results, at)
 				}
 			}
