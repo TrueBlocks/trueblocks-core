@@ -147,24 +147,9 @@ func debugContexts[K ~string | base.Address](testMode bool, ctxs map[K]*appBalan
 		if c.Cur() > maxTestingBlock {
 			continue
 		}
-		msg := ""
-		rr := c.Recon() &^ (types.First | types.Last)
-		switch rr {
-		case types.Genesis:
-			msg = fmt.Sprintf(" %s", c.Recon().String())
-		case types.DiffDiff:
-			msg = fmt.Sprintf(" %s", c.Recon().String())
-		case types.SameSame:
-			msg = fmt.Sprintf(" %s", c.Recon().String())
-		case types.DiffSame:
-			msg = fmt.Sprintf(" %s", c.Recon().String())
-		case types.SameDiff:
-			msg = fmt.Sprintf(" %s", c.Recon().String())
-		default:
-			msg = fmt.Sprintf(" %s should not happen!", c.Recon().String())
-		}
+
 		if isAppearance {
-			logger.Info(fmt.Sprintf("%s: %10d %10d %11d%s", keyToString(key), c.Prev(), c.Cur(), c.Next(), msg))
+			logger.Info(fmt.Sprintf("%s: %10d %10d %11d %s", keyToString(key), c.Prev(), c.Cur(), c.Next(), c.ReconStr()))
 		} else {
 			logger.Info(fmt.Sprintf("%s: %10d", keyToString(key), c.Cur()))
 		}

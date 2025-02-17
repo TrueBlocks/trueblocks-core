@@ -43,11 +43,11 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  noop-same-eth
+TEST[DATE|TIME]    postType:            noop-same-eth
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
@@ -119,11 +119,11 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  noop-same-trace-eth
+TEST[DATE|TIME]    postType:            noop-same-trace-eth
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
@@ -204,11 +204,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               14933657
 TEST[DATE|TIME] Current:                14933657
 TEST[DATE|TIME] Next:                   14933657
-TEST[DATE|TIME] reconciliationType:     first-same
+TEST[DATE|TIME] postType:               first-same
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME] sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4
-TEST[DATE|TIME] assetAddr:              0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f (SNX) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f (SNX) decimals: 18
 TEST[DATE|TIME] hash:                   0xb00176827961c29b713960b7a91f438cea976381577b3989f0781d896d38df61
 TEST[DATE|TIME] timestamp:              1654793734
 TEST[DATE|TIME] blockNumber:            14933657.302.493
@@ -260,11 +260,11 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  same-same-eth
+TEST[DATE|TIME]    postType:            same-same-eth
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
@@ -336,11 +336,11 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  same-same-trace-eth
+TEST[DATE|TIME]    postType:            same-same-trace-eth
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
@@ -438,11 +438,11 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  same-same-token
+TEST[DATE|TIME]    postType:            same-same-token
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4
-TEST[DATE|TIME]    assetAddr:           0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME]    assetAddress:        0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
 TEST[DATE|TIME]    assetSymbol:         YFI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
@@ -514,11 +514,11 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  same-noop-eth
+TEST[DATE|TIME]    postType:            same-noop-eth
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0x3506424f91fd33084466f402d5d97f05f8e3b4af
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
@@ -590,11 +590,11 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  same-noop-trace-eth
+TEST[DATE|TIME]    postType:            same-noop-trace-eth
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0x3506424f91fd33084466f402d5d97f05f8e3b4af
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
@@ -675,11 +675,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               14933657
 TEST[DATE|TIME] Current:                14933657
 TEST[DATE|TIME] Next:                   14933657
-TEST[DATE|TIME] reconciliationType:     same-last
+TEST[DATE|TIME] postType:               same-last
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME] sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d
-TEST[DATE|TIME] assetAddr:              0x3506424f91fd33084466f402d5d97f05f8e3b4af (0x3506) decimals: 18
+TEST[DATE|TIME] assetAddress:           0x3506424f91fd33084466f402d5d97f05f8e3b4af (0x3506) decimals: 18
 TEST[DATE|TIME] hash:                   0x9c07595dec64bb699ef24c1c5e5579edba940fb9596e38bd4465f5c840393aae
 TEST[DATE|TIME] timestamp:              1654793734
 TEST[DATE|TIME] blockNumber:            14933657.304.495
@@ -764,7 +764,7 @@ Results in ./accounting_intra_tokens_out.file
           "amountIn": "0",
           "amountNet": "-9143915636239443",
           "amountOut": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "WEI",
           "assetType": "trace-eth",
           "begBal": "568302725253886882348",
@@ -792,7 +792,7 @@ Results in ./accounting_intra_tokens_out.file
           "priceSource": "uniswap",
           "recipient": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
           "reconciled": true,
-          "reconciliationType": "first-same",
+          "postType": "first-same",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -809,7 +809,7 @@ Results in ./accounting_intra_tokens_out.file
           "amountIn": "0",
           "amountNet": "-73541760990000000000",
           "amountOut": "73541760990000000000",
-          "assetAddr": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+          "assetAddress": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
           "assetSymbol": "SNX",
           "assetType": "token",
           "begBal": "11321830602990000000000",
@@ -837,7 +837,7 @@ Results in ./accounting_intra_tokens_out.file
           "priceSource": "uniswap",
           "recipient": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
           "reconciled": true,
-          "reconciliationType": "first-same",
+          "postType": "first-same",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -917,7 +917,7 @@ Results in ./accounting_intra_tokens_out.file
           "amountIn": "0",
           "amountNet": "-3630819456680952",
           "amountOut": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "WEI",
           "assetType": "trace-eth",
           "begBal": "568293581338250642905",
@@ -945,7 +945,7 @@ Results in ./accounting_intra_tokens_out.file
           "priceSource": "uniswap",
           "recipient": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
           "reconciled": true,
-          "reconciliationType": "same-same",
+          "postType": "same-same",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -962,7 +962,7 @@ Results in ./accounting_intra_tokens_out.file
           "amountIn": "0",
           "amountNet": "-304442430000000000",
           "amountOut": "304442430000000000",
-          "assetAddr": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+          "assetAddress": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
           "assetSymbol": "YFI",
           "assetType": "token",
           "begBal": "18255476410000000000",
@@ -990,7 +990,7 @@ Results in ./accounting_intra_tokens_out.file
           "priceSource": "uniswap",
           "recipient": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
           "reconciled": true,
-          "reconciliationType": "same-same",
+          "postType": "same-same",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -1070,7 +1070,7 @@ Results in ./accounting_intra_tokens_out.file
           "amountIn": "0",
           "amountNet": "-5687415285765885",
           "amountOut": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "WEI",
           "assetType": "trace-eth",
           "begBal": "568289950518793961953",
@@ -1098,7 +1098,7 @@ Results in ./accounting_intra_tokens_out.file
           "priceSource": "uniswap",
           "recipient": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
           "reconciled": true,
-          "reconciliationType": "same-last",
+          "postType": "same-last",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -1115,7 +1115,7 @@ Results in ./accounting_intra_tokens_out.file
           "amountIn": "0",
           "amountNet": "-312679827610000000000",
           "amountOut": "312679827610000000000",
-          "assetAddr": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
+          "assetAddress": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
           "assetSymbol": "0x3506",
           "assetType": "token",
           "begBal": "791497378854640000000000",
@@ -1143,7 +1143,7 @@ Results in ./accounting_intra_tokens_out.file
           "priceSource": "uniswap",
           "recipient": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d",
           "reconciled": true,
-          "reconciliationType": "same-last",
+          "postType": "same-last",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -1165,4 +1165,3 @@ Results in ./accounting_intra_tokens_out.file
     }
   ]
 }
-

@@ -181,7 +181,7 @@ Statements consist of the following fields:
 | transactionHash     | the hash of the transaction that triggered this reconciliation                                                                        | hash         |
 | timestamp           | the Unix timestamp of the object                                                                                                      | timestamp    |
 | date                | the timestamp as a date (calculated)                                                                                                  | datetime     |
-| assetAddr           | 0xeeee...eeee for ETH reconciliations, the token address otherwise                                                                    | address      |
+| assetAddress        | 0xeeee...eeee for ETH reconciliations, the token address otherwise                                                                    | address      |
 | assetSymbol         | either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain                                              | string       |
 | decimals            | the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                             | value        |
 | spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                              | float        |
@@ -192,7 +192,7 @@ Statements consist of the following fields:
 | begBal              | the beginning balance of the asset prior to the transaction                                                                           | int256       |
 | amountNet           | totalIn - totalOut (calculated)                                                                                                       | int256       |
 | endBal              | the on-chain balance of the asset (see notes about intra-block reconciliations)                                                       | int256       |
-| reconciliationType  | one of `invalid`, `genesis`, `diffdiff`, `samesame`, `diffsame`, `samediff` ORed with `first`, `last`. (calculated)                   | string       |
+| postType            | one of `invalid`, `genesis-diff`, `diff-diff`, `same-same`, `diff-same`, `same-diff`                                                  | string       |
 | reconciled          | true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise. (calculated)                                             | bool         |
 | totalIn             | the sum of the following `In` fields (calculated)                                                                                     | int256       |
 | amountIn            | the top-level value of the incoming transfer for the accountedFor address                                                             | int256       |
@@ -216,7 +216,6 @@ Statements consist of the following fields:
 | endBalDiff          | endBal - endBalCalc, if non-zero, the reconciliation failed (calculated)                                                              | int256       |
 | endBalCalc          | begBal + amountNet (calculated)                                                                                                       | int256       |
 | correctingReason    | the reason for the correcting entries, if any                                                                                         | string       |
-| reconType           | description of the context for this statement related to previous, next, and current blocks                                           | ReconType    |
 | assetType           | one of eth, eth-trace, token, or token-721                                                                                            | TrialBalType |
 | rollingBalance      | a rolling balance used to help debug intra-block reconciliations                                                                      | int256       |
 

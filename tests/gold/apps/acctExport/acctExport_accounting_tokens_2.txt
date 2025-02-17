@@ -21,13 +21,13 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                0
 TEST[DATE|TIME] Next:                   202249
-TEST[DATE|TIME] reconciliationType:     genesis-diff
+TEST[DATE|TIME] postType:               genesis-diff
 TEST[DATE|TIME] first:                  true
 TEST[DATE|TIME] last:                   false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000050726566756e64  ==>  0x001d14804b399c6ef80e64576f657660804fec0b
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438269975
 TEST[DATE|TIME] blockNumber:            0.2
@@ -57,13 +57,13 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                202249
 TEST[DATE|TIME] Next:                   1501459
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] first:                  false
 TEST[DATE|TIME] last:                   false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0x2910543af39aba0cd09dbb2d50200b3e800a63d2
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 TEST[DATE|TIME] hash:                   0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
 TEST[DATE|TIME] timestamp:              1441703356
 TEST[DATE|TIME] blockNumber:            202249.0
@@ -94,13 +94,13 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               202249
 TEST[DATE|TIME] Current:                1501459
 TEST[DATE|TIME] Next:                   1501460
-TEST[DATE|TIME] reconciliationType:     diff-last
+TEST[DATE|TIME] postType:               diff-last
 TEST[DATE|TIME] first:                  false
 TEST[DATE|TIME] last:                   true
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 TEST[DATE|TIME] hash:                   0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
 TEST[DATE|TIME] timestamp:              1463025233
 TEST[DATE|TIME] blockNumber:            1501459.2
@@ -148,7 +148,7 @@ Results in ./accounting_tokens_2_out.file
           "amountNetEth": "4200",
           "amountOut": "0",
           "amountOutEth": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
           "assetType": "eth",
           "begBal": "0",
@@ -193,7 +193,7 @@ Results in ./accounting_tokens_2_out.file
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "reconciled": true,
-          "reconciliationType": "genesis-diff",
+          "postType": "genesis-diff",
           "selfDestructIn": "0",
           "selfDestructInEth": "0",
           "selfDestructOut": "0",
@@ -246,7 +246,7 @@ Results in ./accounting_tokens_2_out.file
           "amountNetEth": "-4199.925320679510922664",
           "amountOut": "4199900000000000000000",
           "amountOutEth": "4199.9",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
           "assetType": "eth",
           "begBal": "4200000000000000000000",
@@ -291,7 +291,7 @@ Results in ./accounting_tokens_2_out.file
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
           "reconciled": true,
-          "reconciliationType": "diff-diff",
+          "postType": "diff-diff",
           "selfDestructIn": "0",
           "selfDestructInEth": "0",
           "selfDestructOut": "0",
@@ -343,7 +343,7 @@ Results in ./accounting_tokens_2_out.file
           "amountNetEth": "-0.074679320489077336",
           "amountOut": "74259320489077336",
           "amountOutEth": "0.074259320489077336",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
           "assetType": "eth",
           "begBal": "74679320489077336",
@@ -388,7 +388,7 @@ Results in ./accounting_tokens_2_out.file
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
           "reconciled": true,
-          "reconciliationType": "diff-last",
+          "postType": "diff-last",
           "selfDestructIn": "0",
           "selfDestructInEth": "0",
           "selfDestructOut": "0",

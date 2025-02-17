@@ -186,7 +186,7 @@ chifra scrape:
 
 data models
 
-- Added `ReconType` and `AssetType` to `Reconciliation` data models.
+- Added `PostType` and `AssetType` to `Reconciliation` data models.
 
 ## v2.1.0 (2023/11/25)
 

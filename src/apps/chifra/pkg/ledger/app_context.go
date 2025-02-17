@@ -15,57 +15,49 @@ type appBalancerKey string
 // reconciled. Additionally, it holds a reconciliation type that describes the differences
 // between these block values, and a flag indicating if the ordering is reversed.
 type appBalancer struct {
-	address   base.Address
-	prvBlk    base.Blknum
-	curBlk    base.Blknum
-	nxtBlk    base.Blknum
-	reconType types.ReconType
-	first     bool
-	last      bool
-	reversed  bool
+	address  base.Address
+	prvBlk   base.Blknum
+	curBlk   base.Blknum
+	nxtBlk   base.Blknum
+	postType types.PostType
+	first    bool
+	last     bool
+	reversed bool
 }
 
 func newAppBalancer(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *appBalancer {
 	if prev > cur || cur > next {
-		return &appBalancer{reconType: types.Invalid, reversed: reversed}
+		return &appBalancer{postType: types.Invalid, reversed: reversed}
 	}
 
-	reconType := types.Invalid
+	postType := types.Invalid
 	if cur == 0 {
-		reconType = types.Genesis
+		postType = types.Genesis
 	} else {
 		prevDiff := prev != cur
 		nextDiff := cur != next
 		if prevDiff && nextDiff {
-			reconType = types.DiffDiff
+			postType = types.DiffDiff
 		} else if !prevDiff && !nextDiff {
-			reconType = types.SameSame
+			postType = types.SameSame
 		} else if prevDiff {
-			reconType = types.DiffSame
+			postType = types.DiffSame
 		} else if nextDiff {
-			reconType = types.SameDiff
+			postType = types.SameDiff
 		} else {
-			reconType = types.Invalid
+			postType = types.Invalid
 			logger.Panic("should not happen")
 		}
 	}
 
-	if isFirst {
-		reconType |= types.First
-	}
-
-	if isLast {
-		reconType |= types.Last
-	}
-
 	return &appBalancer{
-		prvBlk:    prev,
-		curBlk:    cur,
-		nxtBlk:    next,
-		reconType: reconType,
-		first:     isFirst,
-		last:      isLast,
-		reversed:  reversed,
+		prvBlk:   prev,
+		curBlk:   cur,
+		nxtBlk:   next,
+		postType: postType,
+		first:    isFirst,
+		last:     isLast,
+		reversed: reversed,
 	}
 }
 
@@ -90,12 +82,12 @@ func (c *appBalancer) Next() base.Blknum {
 	return c.nxtBlk
 }
 
-func (c *appBalancer) Recon() types.ReconType {
-	return c.reconType
+func (c *appBalancer) PostType() types.PostType {
+	return c.postType
 }
 
 func (c *appBalancer) ReconStr() string {
-	ret := c.reconType.String()
+	ret := c.postType.String()
 	if strings.Contains(ret, "genesis") || !strings.Contains(ret, "-") {
 		return ret
 	}

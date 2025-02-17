@@ -34,13 +34,13 @@ source:              maker
 Previous:               8860512
 Current:                8860513
 Next:                   8860529
-reconciliationType:     first-diff
-first:                  true
-last:                   false
+postType:               diff-diff
+postFirst:              true
+postLast:               false
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
 timestamp:              1572720150
 blockNumber:            8860513.85
@@ -73,13 +73,13 @@ stable-coin
 Previous:               8860512
 Current:                8860513
 Next:                   8860529
-reconciliationType:     first-diff
-first:                  true
-last:                   false
+postType:               diff-diff
+postFirst:              true
+postLast:               false
 assetType:              token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-assetAddr:              0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
 timestamp:              1572720150
 blockNumber:            8860513.85.84
@@ -121,13 +121,13 @@ source:              maker
 Previous:               8860513
 Current:                8860529
 Next:                   8860531
-reconciliationType:     diff-diff
-first:                  false
-last:                   false
+postType:               diff-diff
+postFirst:              false
+postLast:               false
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x3af5419098b5510f39ec64d6eb8ee08f3fe5cb538469fa9ef263cf7ebd4b607d
 timestamp:              1572720358
 blockNumber:            8860529.145
@@ -169,13 +169,13 @@ source:              maker
 Previous:               8860529
 Current:                8860531
 Next:                   8860532
-reconciliationType:     diff-last
-first:                  false
-last:                   true
+postType:               diff-diff
+postFirst:              false
+postLast:               true
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
 timestamp:              1572720361
 blockNumber:            8860531.152
@@ -208,13 +208,13 @@ stable-coin
 Previous:               8860529
 Current:                8860531
 Next:                   8860532
-reconciliationType:     diff-last
-first:                  false
-last:                   true
+postType:               diff-diff
+postFirst:              false
+postLast:               true
 assetType:              token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-assetAddr:              0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
 timestamp:              1572720361
 blockNumber:            8860531.152.95
@@ -246,7 +246,7 @@ End of trial balance report
       "amountNetEth": "-0.000034017",
       "amountOut": "0",
       "amountOutEth": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
       "assetType": "eth",
       "begBal": "4999744015000000000",
@@ -267,14 +267,12 @@ End of trial balance report
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "4.999709998",
-      "first": true,
       "gasOut": "34017000000000",
       "gasOutEth": "0.000034017",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
-      "last": false,
       "logIndex": 0,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -284,6 +282,9 @@ End of trial balance report
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postFirst": true,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "4999744015000000000",
@@ -291,7 +292,6 @@ End of trial balance report
       "priceSource": "maker",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,
-      "reconciliationType": "first-diff",
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",
@@ -316,7 +316,7 @@ End of trial balance report
       "amountNetEth": "-500",
       "amountOut": "500000000000000000000",
       "amountOutEth": "500",
-      "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "assetSymbol": "DAI",
       "assetType": "token",
       "begBal": "7500000000000000000000",
@@ -337,14 +337,12 @@ End of trial balance report
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "7000",
-      "first": true,
       "gasOut": "0",
       "gasOutEth": "0",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
-      "last": false,
       "logIndex": 84,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -354,6 +352,9 @@ End of trial balance report
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postFirst": true,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "7500000000000000000000",
@@ -361,7 +362,6 @@ End of trial balance report
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,
-      "reconciliationType": "first-diff",
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",
@@ -386,7 +386,7 @@ End of trial balance report
       "amountNetEth": "-0.000046049",
       "amountOut": "0",
       "amountOutEth": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
       "assetType": "eth",
       "begBal": "4999709998000000000",
@@ -414,7 +414,6 @@ End of trial balance report
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
-      "last": false,
       "logIndex": 0,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -424,6 +423,7 @@ End of trial balance report
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postLast": false,
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "4999709998000000000",
@@ -431,7 +431,7 @@ End of trial balance report
       "priceSource": "maker",
       "recipient": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",
@@ -456,7 +456,7 @@ End of trial balance report
       "amountNetEth": "-0.000024541",
       "amountOut": "0",
       "amountOutEth": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
       "assetType": "eth",
       "begBal": "4999663949000000000",
@@ -477,14 +477,12 @@ End of trial balance report
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "4.999639408",
-      "first": false,
       "gasOut": "24541000000000",
       "gasOutEth": "0.000024541",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
-      "last": true,
       "logIndex": 0,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -501,7 +499,9 @@ End of trial balance report
       "priceSource": "maker",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,
-      "reconciliationType": "diff-last",
+      "postFirst": false,
+      "postLast": true,
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",
@@ -526,7 +526,7 @@ End of trial balance report
       "amountNetEth": "-7000",
       "amountOut": "7000000000000000000000",
       "amountOutEth": "7000",
-      "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "assetSymbol": "DAI",
       "assetType": "token",
       "begBal": "7000000000000000000000",
@@ -547,14 +547,12 @@ End of trial balance report
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "0",
-      "first": false,
       "gasOut": "0",
       "gasOutEth": "0",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
-      "last": true,
       "logIndex": 95,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -571,7 +569,9 @@ End of trial balance report
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,
-      "reconciliationType": "diff-last",
+      "postType": "diff-diff",
+      "postFirst": false,
+      "postLast": true,
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",

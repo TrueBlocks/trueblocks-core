@@ -27,7 +27,7 @@ func (lb *LedgerBook) Statements() ([]types.Statement, error) {
 			for _, posting := range entry.Postings {
 				s := types.Statement{
 					AccountedFor:       base.Address(lb.AccountedFor),
-					AssetAddr:          base.Address(l.AssetAddress),
+					AssetAddress:       base.Address(l.AssetAddress),
 					AssetSymbol:        l.AssetName,
 					BlockNumber:        posting.BlockNumber,
 					TransactionIndex:   posting.TransactionIndex,

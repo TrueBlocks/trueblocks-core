@@ -67,7 +67,7 @@ func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.Appearance
 				TransactionHash:  trans.Hash,
 				LogIndex:         0,
 				Timestamp:        trans.Timestamp,
-				AssetAddr:        base.FAKE_ETH_ADDRESS,
+				AssetAddress:     base.FAKE_ETH_ADDRESS,
 				AssetSymbol:      "WEI",
 				Decimals:         18,
 				SpotPrice:        0.0,
@@ -75,12 +75,11 @@ func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.Appearance
 				PrevBal:          *prevBal,
 				BegBal:           *begBal,
 				EndBal:           *endBal,
-				ReconType:        ctx.Recon(),
 				BlockNumberPrev:  ctx.Prev(),
 				BlockNumberNext:  ctx.Next(),
 			}
-			ret.First = ctx.first
-			ret.Last = ctx.last
+			ret.PostFirst = ctx.first
+			ret.PostLast = ctx.last
 
 			if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
 				ret.Recipient = trans.Receipt.ContractAddress

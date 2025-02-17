@@ -21,13 +21,13 @@ Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               0
 Current:                0
 Next:                   202249
-reconciliationType:     genesis-diff
+postType:               genesis-diff
 first:                  true
 last:                   false
 assetType:              eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x0000000000000000000000000050726566756e64  ==>  0x001d14804b399c6ef80e64576f657660804fec0b
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438269975
 blockNumber:            0.2
@@ -57,13 +57,13 @@ Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               0
 Current:                202249
 Next:                   1501459
-reconciliationType:     diff-diff
+postType:               diff-diff
 first:                  false
 last:                   false
 assetType:              eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0x2910543af39aba0cd09dbb2d50200b3e800a63d2
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
 timestamp:              1441703356
 blockNumber:            202249.0
@@ -94,13 +94,13 @@ Block 1501459 is prior to deployment (3684349) of Maker. No fallback pricing met
 Previous:               202249
 Current:                1501459
 Next:                   1501460
-reconciliationType:     diff-last
+postType:               diff-last
 first:                  false
 last:                   true
 assetType:              eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
 timestamp:              1463025233
 blockNumber:            1501459.2
@@ -146,7 +146,7 @@ End of trial balance report
           "amountNetEth": "4200",
           "amountOut": "0",
           "amountOutEth": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
           "assetType": "eth",
           "begBal": "0",
@@ -191,7 +191,7 @@ End of trial balance report
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "reconciled": true,
-          "reconciliationType": "genesis-diff",
+          "postType": "genesis-diff",
           "selfDestructIn": "0",
           "selfDestructInEth": "0",
           "selfDestructOut": "0",
@@ -244,7 +244,7 @@ End of trial balance report
           "amountNetEth": "-4199.925320679510922664",
           "amountOut": "4199900000000000000000",
           "amountOutEth": "4199.9",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
           "assetType": "eth",
           "begBal": "4200000000000000000000",
@@ -289,7 +289,7 @@ End of trial balance report
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
           "reconciled": true,
-          "reconciliationType": "diff-diff",
+          "postType": "diff-diff",
           "selfDestructIn": "0",
           "selfDestructInEth": "0",
           "selfDestructOut": "0",
@@ -341,7 +341,7 @@ End of trial balance report
           "amountNetEth": "-0.074679320489077336",
           "amountOut": "74259320489077336",
           "amountOutEth": "0.074259320489077336",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
           "assetType": "eth",
           "begBal": "74679320489077336",
@@ -386,7 +386,7 @@ End of trial balance report
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
           "reconciled": true,
-          "reconciliationType": "diff-last",
+          "postType": "diff-last",
           "selfDestructIn": "0",
           "selfDestructInEth": "0",
           "selfDestructOut": "0",

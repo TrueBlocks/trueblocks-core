@@ -27,7 +27,7 @@ type Statement struct {
 	AccountedFor        base.Address   `json:"accountedFor"`
 	AmountIn            base.Wei       `json:"amountIn,omitempty"`
 	AmountOut           base.Wei       `json:"amountOut,omitempty"`
-	AssetAddr           base.Address   `json:"assetAddr"`
+	AssetAddress        base.Address   `json:"assetAddress"`
 	AssetSymbol         string         `json:"assetSymbol"`
 	AssetType           TrialBalType   `json:"assetType,omitempty"`
 	BegBal              base.Wei       `json:"begBal"`
@@ -49,7 +49,6 @@ type Statement struct {
 	PrevBal             base.Wei       `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`
 	Recipient           base.Address   `json:"recipient"`
-	ReconType           ReconType      `json:"reconType,omitempty"`
 	RollingBalance      base.Wei       `json:"rollingBalance,omitempty"`
 	SelfDestructIn      base.Wei       `json:"selfDestructIn,omitempty"`
 	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
@@ -59,10 +58,11 @@ type Statement struct {
 	TransactionHash     base.Hash      `json:"transactionHash"`
 	TransactionIndex    base.Txnum     `json:"transactionIndex"`
 	// EXISTING_CODE
-	BlockNumberPrev     base.Blknum    `json:"blockNumberPrev"`
-	BlockNumberNext     base.Blknum    `json:"blockNumberNext"`
-	First               bool           `json:"first"`
-	Last                bool           `json:"last"`
+	BlockNumberPrev base.Blknum `json:"blockNumberPrev"`
+	BlockNumberNext base.Blknum `json:"blockNumberNext"`
+	PostFirst       bool        `json:"postFirst"`
+	PostLast        bool        `json:"postLast"`
+	PostType        PostType    `json:"postType"`
 	// EXISTING_CODE
 }
 
@@ -83,7 +83,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		"transactionHash":     s.TransactionHash,
 		"timestamp":           s.Timestamp,
 		"date":                s.Date(),
-		"assetAddr":           s.AssetAddr,
+		"assetAddress":        s.AssetAddress,
 		"assetType":           s.AssetType.String(),
 		"assetSymbol":         s.AssetSymbol,
 		"decimals":            s.Decimals,
@@ -92,10 +92,10 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		"accountedFor":        s.AccountedFor,
 		"sender":              s.Sender,
 		"recipient":           s.Recipient,
-		"reconciliationType":  s.ReconType.String(),
-		"first":               s.First,
-		"last":                s.Last,
 		"reconciled":          s.Reconciled(),
+		"postType":            s.getPostType().String(),
+		"postFirst":           s.PostFirst,
+		"postLast":            s.PostLast,
 		"correctingReason":    s.CorrectingReason,
 		"begBal":              s.BegBal.Text(10),
 		"amountNet":           s.AmountNet().Text(10),
@@ -125,8 +125,8 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
-		"assetAddr", "assetType", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
-		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciliationType", "first", "last", "reconciled",
+		"assetAddress", "assetType", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
+		"sender", "recipient", "begBal", "amountNet", "endBal", "postType", "postFirst", "postLast", "reconciled",
 		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
 		"selfDestructOut", "gasOut", "totalOutLessGas", "prevBal", "begBalDiff",
@@ -221,8 +221,8 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// AssetAddr
-	if err = cache.WriteValue(writer, s.AssetAddr); err != nil {
+	// AssetAddress
+	if err = cache.WriteValue(writer, s.AssetAddress); err != nil {
 		return err
 	}
 
@@ -394,8 +394,8 @@ func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
-	// AssetAddr
-	if err = cache.ReadValue(reader, &s.AssetAddr, vers); err != nil {
+	// AssetAddress
+	if err = cache.ReadValue(reader, &s.AssetAddress, vers); err != nil {
 		return err
 	}
 
@@ -635,7 +635,7 @@ func (s *Statement) Reconciled() bool {
 }
 
 func (s *Statement) IsEth() bool {
-	return s.AssetAddr == base.FAKE_ETH_ADDRESS
+	return s.AssetAddress == base.FAKE_ETH_ADDRESS
 }
 
 var (
@@ -652,7 +652,7 @@ func (s *Statement) IsStableCoin() bool {
 		usdc: true,
 		usdt: true,
 	}
-	return stables[s.AssetAddr]
+	return stables[s.AssetAddress]
 }
 
 func (s *Statement) DebugStatement(prev, next base.Blknum) {
@@ -688,13 +688,13 @@ func (s *Statement) DebugStatement(prev, next base.Blknum) {
 	logger.TestLog(true, "Previous:              ", prev)
 	logger.TestLog(true, "Current:               ", s.BlockNumber)
 	logger.TestLog(true, "Next:                  ", next)
-	logger.TestLog(true, "reconciliationType:    ", s.ReconType.String())
-	logger.TestLog(true, "first:                 ", s.First)
-	logger.TestLog(true, "last:                  ", s.Last)
+	logger.TestLog(true, "postType:              ", s.getPostType().String())
+	logger.TestLog(true, "postFirst:             ", s.PostFirst)
+	logger.TestLog(true, "postLast:              ", s.PostLast)
 	logger.TestLog(true, "assetType:             ", s.AssetType)
 	logger.TestLog(true, "accountedFor:          ", s.AccountedFor)
 	logger.TestLog(true, "sender:                ", s.Sender, " ==> ", s.Recipient)
-	logger.TestLog(true, "assetAddr:             ", s.AssetAddr, "("+s.AssetSymbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
+	logger.TestLog(true, "assetAddress:          ", s.AssetAddress, "("+s.AssetSymbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
 	logger.TestLog(true, "hash:                  ", s.TransactionHash)
 	logger.TestLog(true, "timestamp:             ", s.Timestamp)
 	if s.AssetType != TrialBalToken && s.AssetType != TrialBalNft {
@@ -737,6 +737,27 @@ func (s *Statement) DebugStatement(prev, next base.Blknum) {
 	}
 	logger.TestLog(true, "---------------------------------------------------")
 	logger.TestLog(true, "End of trial balance report")
+}
+
+func (s *Statement) getPostType() PostType {
+	if s.BlockNumber == 0 {
+		return Genesis
+	}
+	prevDiff := s.BlockNumberPrev != s.BlockNumber
+	nextDiff := s.BlockNumberNext != s.BlockNumber
+	if prevDiff {
+		if nextDiff {
+			return DiffDiff
+		} else {
+			return DiffSame
+		}
+	} else {
+		if nextDiff {
+			return SameDiff
+		} else {
+			return SameSame
+		}
+	}
 }
 
 // EXISTING_CODE

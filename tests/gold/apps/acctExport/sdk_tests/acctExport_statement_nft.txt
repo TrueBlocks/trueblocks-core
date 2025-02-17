@@ -20,13 +20,13 @@ Start of trial balance report
 Previous:               8876231
 Current:                8876232
 Next:                   9000998
-reconciliationType:     first-diff
+postType:               first-diff
 first:                  true
 last:                   false
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343  ==>  0xac104c988ff9c90dafc7754b2fb9072e25f93507
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x389e24356a19c24cac14e99574553a33662099559921691fb592fba3232748fa
 timestamp:              1572938328
 blockNumber:            8876232.84
@@ -56,13 +56,13 @@ Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               8876231
 Current:                8876232
 Next:                   9000998
-reconciliationType:     first-diff
+postType:               first-diff
 first:                  true
 last:                   false
 assetType:              token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x0  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
-assetAddr:              0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 (CSTK) decimals: 18
+assetAddress:           0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 (CSTK) decimals: 18
 hash:                   0x389e24356a19c24cac14e99574553a33662099559921691fb592fba3232748fa
 timestamp:              1572938328
 blockNumber:            8876232.84.169
@@ -91,13 +91,13 @@ Start of trial balance report
 Previous:               8876232
 Current:                9000998
 Next:                   9024185
-reconciliationType:     diff-diff
+postType:               diff-diff
 first:                  false
 last:                   false
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x191167380d430036ca2cb067ab86b527e3d584ee  ==>  0x22c1f6050e56d2876009903609a2cc3fef83b415
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0xd50b63628667074810b0b6799ab53cdbaa1ab20757e1347f64db59ab660c7a0a
 timestamp:              1574722417
 blockNumber:            9000998.70
@@ -139,13 +139,13 @@ Block 9000998 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               8876232
 Current:                9000998
 Next:                   9024185
-reconciliationType:     diff-diff
+postType:               diff-diff
 first:                  false
 last:                   false
 assetType:              token-nft
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x0  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
-assetAddr:              0x22c1f6050e56d2876009903609a2cc3fef83b415 (The Proof of Attendance Protocol) decimals: 18
+assetAddress:           0x22c1f6050e56d2876009903609a2cc3fef83b415 (The Proof of Attendance Protocol) decimals: 18
 hash:                   0xd50b63628667074810b0b6799ab53cdbaa1ab20757e1347f64db59ab660c7a0a
 timestamp:              1574722417
 blockNumber:            9000998.70.52
@@ -175,13 +175,13 @@ Start of trial balance report
 Previous:               9000998
 Current:                9024185
 Next:                   9024186
-reconciliationType:     diff-last
+postType:               diff-last
 first:                  false
 last:                   true
 assetType:              eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x86672b33ca6723d6da4a5cb69901f909824bdcfa  ==>  0x7c43c2fc7738ad078931dbcd787c2577d2c0332f
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x88beff0d96ae355252184b2d45bce5d618461efa6b50a5576174f220f53780f3
 timestamp:              1575077741
 blockNumber:            9024185.29
@@ -210,7 +210,7 @@ Tx reconciled with a zero value net amount. It's okay.
       "amountIn": "22500000000000000000000",
       "amountNet": "22500000000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
+      "assetAddress": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
       "assetSymbol": "CSTK",
       "assetType": "token",
       "begBal": "0",
@@ -239,7 +239,7 @@ Tx reconciled with a zero value net amount. It's okay.
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "reconciled": true,
-      "reconciliationType": "first-diff",
+      "postType": "first-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0",
@@ -256,7 +256,7 @@ Tx reconciled with a zero value net amount. It's okay.
       "amountIn": "0",
       "amountNet": "1",
       "amountOut": "0",
-      "assetAddr": "0x22c1f6050e56d2876009903609a2cc3fef83b415",
+      "assetAddress": "0x22c1f6050e56d2876009903609a2cc3fef83b415",
       "assetSymbol": "The Proof of Attendance Protocol",
       "assetType": "token-nft",
       "begBal": "0",
@@ -285,7 +285,7 @@ Tx reconciled with a zero value net amount. It's okay.
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0",

@@ -32,15 +32,15 @@ func TestIsMaterial(t *testing.T) {
 func TestIsStableCoin(t *testing.T) {
 	dai := base.HexToAddress("0x6b175474e89094c44da98b954eedeac495271d0f")
 	stmtStable := new(Statement)
-	stmtStable.AssetAddr = dai // using DAI as an example
+	stmtStable.AssetAddress = dai // using DAI as an example
 	if !stmtStable.IsStableCoin() {
 		t.Errorf("Expected IsStableCoin to return true for address %s", dai.Hex())
 	}
 
 	stmtNonStable := new(Statement)
-	stmtNonStable.AssetAddr = base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678")
+	stmtNonStable.AssetAddress = base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678")
 	if stmtNonStable.IsStableCoin() {
-		t.Errorf("Expected IsStableCoin to return false for address %s", stmtNonStable.AssetAddr.Hex())
+		t.Errorf("Expected IsStableCoin to return false for address %s", stmtNonStable.AssetAddress.Hex())
 	}
 }
 
@@ -68,14 +68,14 @@ func TestReconciled(t *testing.T) {
 
 func TestIsEth(t *testing.T) {
 	ethStmt := &Statement{
-		AssetAddr: base.FAKE_ETH_ADDRESS,
+		AssetAddress: base.FAKE_ETH_ADDRESS,
 	}
 	if !ethStmt.IsEth() {
 		t.Error("Expected statement to be ETH")
 	}
 
 	nonEthStmt := &Statement{
-		AssetAddr: base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678"),
+		AssetAddress: base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678"),
 	}
 	if nonEthStmt.IsEth() {
 		t.Error("Expected statement not to be ETH")
@@ -244,7 +244,7 @@ func TestStatementGroupCache(t *testing.T) {
 		AccountedFor:     base.HexToAddress("0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"),
 		AmountIn:         *base.NewWei(1000000000000000000),
 		AmountOut:        *base.NewWei(500000000000000000),
-		AssetAddr:        base.HexToAddress("0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"),
+		AssetAddress:     base.HexToAddress("0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"),
 		AssetSymbol:      "TKN",
 		BegBal:           *base.NewWei(2000000000000000000),
 		BlockNumber:      100,
@@ -331,7 +331,7 @@ func TestStatementCacheRoundtrip(t *testing.T) {
 		AccountedFor:        base.HexToAddress("0xAAAABBBBCCCCDDDDEEEEFFFF0000111122223333"),
 		AmountIn:            *base.NewWei(10),
 		AmountOut:           *base.NewWei(20),
-		AssetAddr:           base.HexToAddress("0x1111222233334444555566667777888899990000"),
+		AssetAddress:        base.HexToAddress("0x1111222233334444555566667777888899990000"),
 		AssetSymbol:         "TKN",
 		AssetType:           TrialBalEth, // using an example type; it could be any valid value
 		BegBal:              *base.NewWei(100),

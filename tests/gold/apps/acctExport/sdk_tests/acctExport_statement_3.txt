@@ -20,13 +20,13 @@ Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               0
 Current:                0
 Next:                   46685
-reconciliationType:     genesis-diff
+postType:               genesis-diff
 first:                  true
 last:                   false
 assetType:              eth
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438269975
 blockNumber:            0.270
@@ -56,13 +56,13 @@ Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               0
 Current:                46685
 Next:                   46709
-reconciliationType:     diff-diff
+postType:               diff-diff
 first:                  false
 last:                   false
 assetType:              eth
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
 timestamp:              1438927408
 blockNumber:            46685.0
@@ -93,13 +93,13 @@ Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               46685
 Current:                46709
 Next:                   46710
-reconciliationType:     diff-last
+postType:               diff-last
 first:                  false
 last:                   true
 assetType:              eth
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
 timestamp:              1438927854
 blockNumber:            46709.0
@@ -129,7 +129,7 @@ End of trial balance report
       "amountIn": "0",
       "amountNet": "1970000000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "0",
@@ -158,7 +158,7 @@ End of trial balance report
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "reconciled": true,
-      "reconciliationType": "genesis-diff",
+      "postType": "genesis-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000050726566756e64",
@@ -175,7 +175,7 @@ End of trial balance report
       "amountIn": "0",
       "amountNet": "-5010500000000000000",
       "amountOut": "5000000000000000000",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "1970000000000000000000",
@@ -204,7 +204,7 @@ End of trial balance report
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",
@@ -221,7 +221,7 @@ End of trial balance report
       "amountIn": "0",
       "amountNet": "-1964900000000000000000",
       "amountOut": "1964889500000000000000",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "1964989500000000000000",
@@ -250,7 +250,7 @@ End of trial balance report
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
       "reconciled": true,
-      "reconciliationType": "diff-last",
+      "postType": "diff-last",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",

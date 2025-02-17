@@ -23,9 +23,8 @@ func (l *Ledger) trialBalance(reason types.TrialBalType, s *types.Statement) boo
 	} else {
 		logger.TestLog(l.testMode, "Start of trial balance report")
 
-		s.ReconType = ctx.Recon()
-		s.First = ctx.first
-		s.Last = ctx.last
+		s.PostFirst = ctx.first
+		s.PostLast = ctx.last
 
 		s.BlockNumberPrev = ctx.Prev()
 		s.BlockNumberNext = ctx.Next()
@@ -99,7 +98,7 @@ func (l *Ledger) correctForNullTransfer(s *types.Statement, tx *types.Transactio
 }
 
 func (l *Ledger) correctForSomethingElseEth(s *types.Statement) bool {
-	if s.AssetType == types.TrialBalTraceEth && s.ReconType&types.First != 0 && s.ReconType&types.Last != 0 {
+	if s.AssetType == types.TrialBalTraceEth && s.PostFirst && s.PostLast {
 		if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
 			s.EndBal = *s.EndBalCalc()
 			s.CorrectingReason = "per-block-balance"

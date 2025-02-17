@@ -246,7 +246,7 @@ func (m *Member) MarshalCode() string {
 	}
 
 `
-	} else if m.GoName() == "ReconType" || m.GoName() == "AssetType" {
+	} else if m.GoName() == "PostType" || m.GoName() == "AssetType" {
 		tmplName += "12"
 		tmpl = `// {{.GoName}}
 	if err = cache.WriteValue(writer, s.{{.GoName}}); err != nil {
@@ -347,7 +347,7 @@ func (m *Member) UnmarshalCode() string {
 	}
 
 `
-	} else if m.GoName() == "ReconType" || m.GoName() == "AssetType" {
+	} else if m.GoName() == "PostType" || m.GoName() == "AssetType" {
 		tmplName += "112"
 		tmpl = `// {{.GoName}}
 	if err = cache.ReadValue(reader, &s.{{.GoName}}, vers); err != nil {
@@ -478,7 +478,7 @@ func (m *Member) IsString() bool {
 }
 
 func (m *Member) YamlType() string {
-	o := fmt.Sprintf("\n          items:\n            $ref: \"#/components/schemas/" + CamelCase(m.Type) + "\"")
+	o := fmt.Sprintf("\n          items:\n            $ref: \"#/components/schemas/%s\"", CamelCase(m.Type))
 	f := fmt.Sprintf("\n          format: %s", m.Type)
 	if m.IsArray {
 		return "array" + o

@@ -184,7 +184,7 @@ func DeriveAssetTransfers(accountFor base.Address, tx *types.Transaction) []Asse
 				PrevBal:          *prevBal,
 				BegBal:           *begBal,
 				EndBal:           *endBal,
-				ReconType:        ctx.Recon(),
+				PostType:        ctx.PostType(),
 			}
 
 			if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
@@ -363,3 +363,93 @@ func logIndexToString(i int) string {
 // func traceIndexToString(i int) string {
 // 	return "trace_" + fmt.Sprintf("%d", i)
 // }
+
+/*
+Below is a summary of the exact event signatures (the textual definitions) as well as how they map to topics and data fields for the ERC-1155 TransferSingle and TransferBatch events. These are defined by EIP-1155.
+
+1. Textual Signatures
+TransferSingle
+solidity
+Copy
+event TransferSingle(
+    address indexed operator,
+    address indexed from,
+    address indexed to,
+    uint256 id,
+    uint256 value
+);
+Event Signature String:
+"TransferSingle(address,address,address,uint256,uint256)"
+Keccak-256 Hash (Topic0):
+0xc3d58168c13c4efa6bcad3d21043f75a5fcedf1fd025893feae1f62ff7b9be96
+TransferBatch
+solidity
+Copy
+event TransferBatch(
+    address indexed operator,
+    address indexed from,
+    address indexed to,
+    uint256[] ids,
+    uint256[] values
+);
+Event Signature String:
+"TransferBatch(address,address,address,uint256[],uint256[])"
+Keccak-256 Hash (Topic0):
+0x4a39dc06d4c0dbc64b70c19958dbf6dfc8d7dccb5d7f5bd8ca0bbd271e032194
+2. Topics and Data Encoding
+When these events are emitted, the Ethereum log is structured as follows:
+
+Topic0: Always the Keccak-256 hash of the event’s signature string.
+
+For TransferSingle: 0xc3d58168...
+For TransferBatch: 0x4a39dc06...
+Indexed Parameters:
+
+operator (indexed) → Topic1
+from (indexed) → Topic2
+to (indexed) → Topic3
+Data Field: Contains non-indexed parameters.
+
+For TransferSingle: The id (uint256) followed by value (uint256).
+For TransferBatch: Encoded dynamic arrays ids (uint256[]) and values (uint256[]) in standard ABI-encoded form.
+TransferSingle Encoding Layout
+topics[0] = keccak256("TransferSingle(address,address,address,uint256,uint256)")
+
+topics[1] = operator (indexed)
+
+topics[2] = from (indexed)
+
+topics[3] = to (indexed)
+
+data (ABI-encoded):
+
+id (uint256)
+value (uint256)
+TransferBatch Encoding Layout
+topics[0] = keccak256("TransferBatch(address,address,address,uint256[],uint256[])")
+
+topics[1] = operator (indexed)
+
+topics[2] = from (indexed)
+
+topics[3] = to (indexed)
+
+data (ABI-encoded):
+
+Offset pointer to ids[]
+Offset pointer to values[]
+Length of ids[]
+Each element of ids[] (uint256)
+Length of values[]
+Each element of values[] (uint256)
+Note that the arrays ids and values are dynamic, so ABI encoding places their length and contents in the data section according to standard Solidity ABI rules.
+
+3. Summary
+Event Names: TransferSingle and TransferBatch.
+Indexed Parameters: operator, from, to.
+Non-Indexed (Data) Parameters:
+TransferSingle: id, value
+TransferBatch : ids[], values[]
+No Native ERC-20 Transfer: ERC-1155 does not emit the ERC-20 Transfer event. All transfers (fungible or NFT-style) use TransferSingle or TransferBatch.
+These signatures and encodings are part of the official ERC-1155 standard and are how any compliant ERC-1155 contract must emit its transfer events.
+*/

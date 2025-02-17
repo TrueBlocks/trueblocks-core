@@ -145,7 +145,7 @@ var knownTypes = map[string]bool{
 	"TokenType":    true,
 	"StatePart":    true,
 	"DestType":     true,
-	"ReconType":    true,
+	"PostType":     true,
 	"TrialBalType": true,
 }
 

@@ -3241,7 +3241,7 @@ components:
           type: string
           format: datetime
           description: "the timestamp as a date (calculated)"
-        assetAddr:
+        assetAddress:
           type: string
           format: address
           description: "0xeeee...eeee for ETH reconciliations, the token address otherwise"
@@ -3285,10 +3285,10 @@ components:
           type: string
           format: int256
           description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
-        reconciliationType:
+        postType:
           type: string
           format: string
-          description: "one of `invalid`, `genesis`, `diffdiff`, `samesame`, `diffsame`, `samediff` ORed with `first`, `last`. (calculated)"
+          description: "one of `invalid`, `genesis-diff`, `diff-diff`, `same-same`, `diff-same`, `same-diff`"
         reconciled:
           type: boolean
           format: boolean
@@ -3381,11 +3381,6 @@ components:
           type: string
           format: string
           description: "the reason for the correcting entries, if any"
-        reconType:
-          type: object
-          items:
-            $ref: "#/components/schemas/reconType"
-          description: "description of the context for this statement related to previous, next, and current blocks"
         assetType:
           type: object
           items:

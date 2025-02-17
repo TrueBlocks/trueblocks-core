@@ -73,7 +73,7 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 			LogIndex:         log.LogIndex,
 			TransactionHash:  log.TransactionHash,
 			Timestamp:        log.Timestamp,
-			AssetAddr:        log.Address,
+			AssetAddress:     log.Address,
 			AssetSymbol:      sym,
 			Decimals:         decimals,
 			SpotPrice:        0.0,
@@ -90,8 +90,8 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 		}
 
 		if ofInterest {
-			s.First = ctx.first
-			s.Last = ctx.last
+			s.PostFirst = ctx.first
+			s.PostLast = ctx.last
 
 			var err error
 			pBal := new(base.Wei)

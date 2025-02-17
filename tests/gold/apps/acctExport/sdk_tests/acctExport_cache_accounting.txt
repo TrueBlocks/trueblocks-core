@@ -37,11 +37,11 @@ source:              uniswap
 Previous:               10277780
 Current:                10277780
 Next:                   10277780
-reconciliationType:     first-last
+postType:               first-last
 assetType:              eth
 accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0xdac17f958d2ee523a2206206994597c13d831ec7
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
 timestamp:              1592323744
 blockNumber:            10277780.88
@@ -73,11 +73,11 @@ stable-coin
 Previous:               10277780
 Current:                10277780
 Next:                   10277780
-reconciliationType:     first-last
+postType:               first-last
 assetType:              token
 accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9
-assetAddr:              0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) decimals: 6
+assetAddress:           0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) decimals: 6
 hash:                   0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
 timestamp:              1592323744
 blockNumber:            10277780.88.103
@@ -155,7 +155,7 @@ End of trial balance report
           "amountIn": "0",
           "amountNet": "-1048360000000000",
           "amountOut": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "WEI",
           "assetType": "eth",
           "begBal": "6511482167631885",
@@ -181,7 +181,7 @@ End of trial balance report
           "priceSource": "uniswap",
           "recipient": "0xdac17f958d2ee523a2206206994597c13d831ec7",
           "reconciled": true,
-          "reconciliationType": "first-last",
+          "postType": "first-last",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
@@ -198,7 +198,7 @@ End of trial balance report
           "amountIn": "0",
           "amountNet": "-381000000",
           "amountOut": "381000000",
-          "assetAddr": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+          "assetAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",
           "assetSymbol": "USDT",
           "assetType": "token",
           "begBal": "381000000",
@@ -224,7 +224,7 @@ End of trial balance report
           "priceSource": "stable-coin",
           "recipient": "0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9",
           "reconciled": true,
-          "reconciliationType": "first-last",
+          "postType": "first-last",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",

@@ -668,11 +668,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               14469880
 TEST[DATE|TIME] Current:                15549162
 TEST[DATE|TIME] Next:                   15549162
-TEST[DATE|TIME] reconciliationType:     diff-last
+TEST[DATE|TIME] postType:               diff-last
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
 TEST[DATE|TIME] sender:                 0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f  ==>  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
-TEST[DATE|TIME] assetAddr:              0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 (mdai.io) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 (mdai.io) decimals: 18
 TEST[DATE|TIME] hash:                   0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb
 TEST[DATE|TIME] timestamp:              1663367531
 TEST[DATE|TIME] blockNumber:            15549162.83.1774
@@ -732,7 +732,7 @@ Results in ./failed_statement_2572_1_out.file
       "amountNetEth": "0",
       "amountOut": "0",
       "amountOutEth": "0",
-      "assetAddr": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
+      "assetAddress": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
       "assetSymbol": "mdai.io",
       "assetType": "token",
       "begBal": "2017044745122853478376",
@@ -775,7 +775,7 @@ Results in ./failed_statement_2572_1_out.file
       "priceSource": "not-priced",
       "recipient": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
       "reconciled": true,
-      "reconciliationType": "diff-last",
+      "postType": "diff-last",
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",

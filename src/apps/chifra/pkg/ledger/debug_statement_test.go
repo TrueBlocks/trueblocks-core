@@ -14,11 +14,11 @@ func TestDebugStatement(t *testing.T) {
 	defer restore()
 
 	ctx := appBalancer{
-		prvBlk:    99,
-		curBlk:    100,
-		nxtBlk:    101,
-		reconType: 0,
-		address:   base.ZeroAddr,
+		prvBlk:   99,
+		curBlk:   100,
+		nxtBlk:   101,
+		postType: 0,
+		address:  base.ZeroAddr,
 	}
 
 	stmt := &types.Statement{
@@ -26,11 +26,10 @@ func TestDebugStatement(t *testing.T) {
 		BlockNumber:         100,
 		TransactionIndex:    1,
 		LogIndex:            2,
-		ReconType:           0, // assume 0 for simplicity
 		AccountedFor:        base.HexToAddress("0xAAAABBBBCCCCDDDDEEEEFFFF0000111122223333"),
 		Sender:              base.HexToAddress("0x1111222233334444555566667777888899990000"),
 		Recipient:           base.HexToAddress("0x0000999988887777666655554444333322221111"),
-		AssetAddr:           base.HexToAddress("0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"),
+		AssetAddress:        base.HexToAddress("0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"),
 		AssetSymbol:         "ETH",
 		Decimals:            18,
 		TransactionHash:     base.HexToHash("0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"),
@@ -100,11 +99,10 @@ func TestDebugStatementTokenFormatting(t *testing.T) {
 		BlockNumber:      123,
 		TransactionIndex: 456,
 		LogIndex:         789,
-		ReconType:        0,
 		AccountedFor:     base.HexToAddress("0xAAAABBBBCCCCDDDDEEEEFFFF0000111122223333"),
 		Sender:           base.HexToAddress("0x1111222233334444555566667777888899990000"),
 		Recipient:        base.HexToAddress("0x0000999988887777666655554444333322221111"),
-		AssetAddr:        base.HexToAddress("0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"),
+		AssetAddress:     base.HexToAddress("0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"),
 		AssetSymbol:      "TKN",
 		Decimals:         18,
 		TransactionHash:  base.HexToHash("0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"),
@@ -114,11 +112,11 @@ func TestDebugStatementTokenFormatting(t *testing.T) {
 	}
 
 	ctx := appBalancer{
-		prvBlk:    99,
-		curBlk:    100,
-		nxtBlk:    101,
-		reconType: 0,
-		address:   base.ZeroAddr,
+		prvBlk:   99,
+		curBlk:   100,
+		nxtBlk:   101,
+		postType: 0,
+		address:  base.ZeroAddr,
 	}
 	stmt.DebugStatement(ctx.Prev(), ctx.Next())
 

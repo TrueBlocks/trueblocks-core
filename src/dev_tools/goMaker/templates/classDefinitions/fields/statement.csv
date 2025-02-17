@@ -5,7 +5,7 @@ logIndex            ,lognum       ,           ,               ,       3 ,the zer
 transactionHash     ,hash         ,           ,               ,       4 ,the hash of the transaction that triggered this reconciliation
 timestamp           ,timestamp    ,           ,               ,       5 ,the Unix timestamp of the object
 date                ,datetime     ,           ,calc           ,       6 ,the timestamp as a date
-assetAddr           ,address      ,           ,               ,       7 ,0xeeee...eeee for ETH reconciliations&#44; the token address otherwise
+assetAddress        ,address      ,           ,               ,       7 ,0xeeee...eeee for ETH reconciliations&#44; the token address otherwise
 assetSymbol         ,string       ,           ,               ,       8 ,either ETH&#44; WEI&#44; or the symbol of the asset being reconciled as extracted from the chain
 decimals            ,value        ,      18   ,               ,       9 ,the value of `decimals` from an ERC20 contract or&#44; if ETH or WEI&#44; then 18
 spotPrice           ,float        ,       1.0 ,               ,      10 ,the on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction
@@ -16,7 +16,7 @@ recipient           ,address      ,           ,               ,      14 ,the rec
 begBal              ,int256       ,           ,               ,      15 ,the beginning balance of the asset prior to the transaction
 amountNet           ,int256       ,           ,calc           ,      16 ,totalIn - totalOut
 endBal              ,int256       ,           ,               ,      17 ,the on-chain balance of the asset (see notes about intra-block reconciliations)
-reconciliationType  ,string       ,           ,calc           ,      18 ,one of `invalid`&#44; `genesis`&#44; `diffdiff`&#44; `samesame`&#44; `diffsame`&#44; `samediff` ORed with `first`&#44; `last`.
+postType            ,string       ,           ,calc           ,      18 ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
 reconciled          ,bool         ,           ,calc           ,      19 ,true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.
 totalIn             ,int256       ,           ,calc           ,      20 ,the sum of the following `In` fields
 amountIn            ,int256       ,           ,omitempty      ,      21 ,the top-level value of the incoming transfer for the accountedFor address
@@ -40,6 +40,5 @@ begBalDiff          ,int256       ,           ,omitempty|calc ,      38 ,differe
 endBalDiff          ,int256       ,           ,omitempty|calc ,      39 ,endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
 endBalCalc          ,int256       ,           ,omitempty|calc ,      40 ,begBal + amountNet
 correctingReason    ,string       ,           ,omitempty      ,      41 ,the reason for the correcting entries&#44; if any
-reconType           ,ReconType    ,           ,omitempty      ,      42 ,description of the context for this statement related to previous&#44; next&#44; and current blocks
 assetType           ,TrialBalType ,           ,omitempty      ,      43 ,one of eth&#44; eth-trace&#44; token&#44; or token-721
 rollingBalance      ,int256       ,           ,omitempty      ,      44 ,a rolling balance used to help debug intra-block reconciliations

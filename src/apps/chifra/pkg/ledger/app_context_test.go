@@ -13,7 +13,7 @@ func TestLedgerContext1(t *testing.T) {
 		cur      base.Blknum
 		next     base.Blknum
 		reversed bool
-		expected types.ReconType
+		expected types.PostType
 	}{
 		{0, 0, 0, false, types.Genesis},
 		{0, 0, 1, false, types.Genesis},
@@ -29,8 +29,8 @@ func TestLedgerContext1(t *testing.T) {
 
 	for _, test := range tests {
 		got := newAppBalancer(test.prev, test.cur, test.next, false, false, test.reversed)
-		if got.reconType != test.expected {
-			t.Error("expected:", test.expected, "got:", got.reconType)
+		if got.postType != test.expected {
+			t.Error("expected:", test.expected, "got:", got.postType)
 		}
 	}
 }
@@ -108,7 +108,7 @@ func TestNewAppBalancer(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
 			appBal := newAppBalancer(tc.prev, tc.cur, tc.next, tc.isFirst, tc.isLast, tc.reversed)
-			if appBal.Recon().String() != tc.expectRecon {
+			if appBal.PostType().String() != tc.expectRecon {
 				t.Errorf("expected %v, got %v", tc.expectRecon, appBal.ReconStr())
 			}
 			if appBal.reversed != tc.reversed {

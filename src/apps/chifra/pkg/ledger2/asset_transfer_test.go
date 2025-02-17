@@ -9,7 +9,7 @@ import (
 func TestNewAssetTransfer(t *testing.T) {
 	blockNum := base.Blknum(12345)
 	txIndex := base.Txnum(3)
-	assetAddr := base.HexToAddress("0x1234")
+	assetAddress := base.HexToAddress("0x1234")
 	assetName := "TEST"
 	amount := base.NewWei(999)
 	indexVal := "trace_1"
@@ -19,7 +19,7 @@ func TestNewAssetTransfer(t *testing.T) {
 	at := NewAssetTransfer(
 		blockNum,
 		txIndex,
-		assetAddr,
+		assetAddress,
 		assetName,
 		*amount,
 		indexVal,
@@ -33,8 +33,8 @@ func TestNewAssetTransfer(t *testing.T) {
 	if at.TransactionIndex != txIndex {
 		t.Fatalf("TransactionIndex mismatch. got=%d want=%d", at.TransactionIndex, txIndex)
 	}
-	if at.AssetAddress != assetAddr {
-		t.Fatalf("AssetAddress mismatch. got=%s want=%s", at.AssetAddress, assetAddr)
+	if at.AssetAddress != assetAddress {
+		t.Fatalf("AssetAddress mismatch. got=%s want=%s", at.AssetAddress, assetAddress)
 	}
 	if at.AssetName != assetName {
 		t.Fatalf("AssetName mismatch. got=%s want=%s", at.AssetName, assetName)
