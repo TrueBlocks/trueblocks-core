@@ -3241,7 +3241,7 @@ components:
           type: string
           format: datetime
           description: "the timestamp as a date (calculated)"
-        assetAddr:
+        assetAddress:
           type: string
           format: address
           description: "0xeeee...eeee for ETH reconciliations, the token address otherwise"
@@ -3285,10 +3285,6 @@ components:
           type: string
           format: int256
           description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
-        reconciliationType:
-          type: string
-          format: string
-          description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token` (calculated)"
         reconciled:
           type: boolean
           format: boolean
@@ -3381,6 +3377,15 @@ components:
           type: string
           format: string
           description: "the reason for the correcting entries, if any"
+        assetType:
+          type: object
+          items:
+            $ref: "#/components/schemas/trialBalType"
+          description: "one of eth, eth-trace, token, or token-721"
+        rollingBalance:
+          type: string
+          format: int256
+          description: "a rolling balance used to help debug intra-block reconciliations"
     appearanceTable:
       description: "an appearance table for an address"
       type: object

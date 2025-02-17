@@ -53,7 +53,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 		name.Decimals = 18
 	}
 	if name.Symbol == "" {
-		name.Symbol = name.Address.Prefix(6)
+		name.Symbol = name.Address.DefaultSymbol()
 	}
 
 	wanted := extraOpts["parts"].([]string)

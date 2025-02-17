@@ -15,7 +15,7 @@ import (
 func PriceUsd(conn *rpc.Connection, statement *types.Statement) (price base.Float, source string, err error) {
 	if statement.IsStableCoin() {
 		r := priceDebugger{
-			address: statement.AssetAddr,
+			address: statement.AssetAddress,
 			symbol:  statement.AssetSymbol,
 		}
 		r.report("stable-coin")

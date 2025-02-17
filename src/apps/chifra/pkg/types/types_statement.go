@@ -27,10 +27,13 @@ type Statement struct {
 	AccountedFor        base.Address   `json:"accountedFor"`
 	AmountIn            base.Wei       `json:"amountIn,omitempty"`
 	AmountOut           base.Wei       `json:"amountOut,omitempty"`
-	AssetAddr           base.Address   `json:"assetAddr"`
+	AssetAddress        base.Address   `json:"assetAddress"`
 	AssetSymbol         string         `json:"assetSymbol"`
+	AssetType           TrialBalType   `json:"assetType,omitempty"`
 	BegBal              base.Wei       `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
+	BlockNumberNext     base.Blknum    `json:"blockNumberNext"`
+	BlockNumberPrev     base.Blknum    `json:"blockNumberPrev"`
 	CorrectingIn        base.Wei       `json:"correctingIn,omitempty"`
 	CorrectingOut       base.Wei       `json:"correctingOut,omitempty"`
 	CorrectingReason    string         `json:"correctingReason,omitempty"`
@@ -44,10 +47,13 @@ type Statement struct {
 	MinerNephewRewardIn base.Wei       `json:"minerNephewRewardIn,omitempty"`
 	MinerTxFeeIn        base.Wei       `json:"minerTxFeeIn,omitempty"`
 	MinerUncleRewardIn  base.Wei       `json:"minerUncleRewardIn,omitempty"`
+	PostFirst           bool           `json:"postFirst"`
+	PostLast            bool           `json:"postLast"`
 	PrefundIn           base.Wei       `json:"prefundIn,omitempty"`
 	PrevBal             base.Wei       `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`
 	Recipient           base.Address   `json:"recipient"`
+	RollingBalance      base.Wei       `json:"rollingBalance,omitempty"`
 	SelfDestructIn      base.Wei       `json:"selfDestructIn,omitempty"`
 	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
@@ -56,8 +62,7 @@ type Statement struct {
 	TransactionHash     base.Hash      `json:"transactionHash"`
 	TransactionIndex    base.Txnum     `json:"transactionIndex"`
 	// EXISTING_CODE
-	ReconType ReconType `json:"-"`
-	AssetType string    `json:"-"`
+	PostType PostType `json:"postType"`
 	// EXISTING_CODE
 }
 
@@ -72,68 +77,67 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 
 	// EXISTING_CODE
 	model = map[string]any{
-		"blockNumber":        s.BlockNumber,
-		"transactionIndex":   s.TransactionIndex,
-		"logIndex":           s.LogIndex,
-		"transactionHash":    s.TransactionHash,
-		"timestamp":          s.Timestamp,
-		"date":               s.Date(),
-		"assetAddr":          s.AssetAddr,
-		"assetType":          s.AssetType,
-		"assetSymbol":        s.AssetSymbol,
-		"decimals":           s.Decimals,
-		"spotPrice":          s.SpotPrice,
-		"priceSource":        s.PriceSource,
-		"accountedFor":       s.AccountedFor,
-		"sender":             s.Sender,
-		"recipient":          s.Recipient,
-		"reconciliationType": s.ReconType.String(),
-		"reconciled":         s.Reconciled(),
-		"correctingReason":   s.CorrectingReason,
+		"blockNumber":         s.BlockNumber,
+		"transactionIndex":    s.TransactionIndex,
+		"logIndex":            s.LogIndex,
+		"transactionHash":     s.TransactionHash,
+		"timestamp":           s.Timestamp,
+		"date":                s.Date(),
+		"assetAddress":        s.AssetAddress,
+		"assetType":           s.AssetType.String(),
+		"assetSymbol":         s.AssetSymbol,
+		"decimals":            s.Decimals,
+		"spotPrice":           s.SpotPrice,
+		"priceSource":         s.PriceSource,
+		"accountedFor":        s.AccountedFor,
+		"sender":              s.Sender,
+		"recipient":           s.Recipient,
+		"reconciled":          s.Reconciled(),
+		"correctingReason":    s.CorrectingReason,
+		"begBal":              s.BegBal.Text(10),
+		"amountNet":           s.AmountNet().Text(10),
+		"endBal":              s.EndBal.Text(10),
+		"totalIn":             s.TotalIn().Text(10),
+		"amountIn":            s.AmountIn.Text(10),
+		"internalIn":          s.InternalIn.Text(10),
+		"selfDestructIn":      s.SelfDestructIn.Text(10),
+		"minerBaseRewardIn":   s.MinerBaseRewardIn.Text(10),
+		"minerNephewRewardIn": s.MinerNephewRewardIn.Text(10),
+		"minerTxFeeIn":        s.MinerTxFeeIn.Text(10),
+		"minerUncleRewardIn":  s.MinerUncleRewardIn.Text(10),
+		"correctingIn":        s.CorrectingIn.Text(10),
+		"prefundIn":           s.PrefundIn.Text(10),
+		"totalOut":            s.TotalOut().Text(10),
+		"amountOut":           s.AmountOut.Text(10),
+		"internalOut":         s.InternalOut.Text(10),
+		"correctingOut":       s.CorrectingOut.Text(10),
+		"selfDestructOut":     s.SelfDestructOut.Text(10),
+		"gasOut":              s.GasOut.Text(10),
+		"totalOutLessGas":     s.TotalOutLessGas().Text(10),
+		"begBalDiff":          s.BegBalDiff().Text(10),
+		"endBalDiff":          s.EndBalDiff().Text(10),
+		"endBalCalc":          s.EndBalCalc().Text(10),
+		"prevBal":             s.PrevBal.Text(10),
 	}
 
-	decimals := int(s.Decimals)
-
-	model["begBal"] = s.BegBal.Text(10)
-	model["amountNet"] = s.AmountNet().Text(10)
-	model["endBal"] = s.EndBal.Text(10)
-	model["totalIn"] = s.TotalIn().Text(10)
-	model["amountIn"] = s.AmountIn.Text(10)
-	model["internalIn"] = s.InternalIn.Text(10)
-	model["selfDestructIn"] = s.SelfDestructIn.Text(10)
-	model["minerBaseRewardIn"] = s.MinerBaseRewardIn.Text(10)
-	model["minerNephewRewardIn"] = s.MinerNephewRewardIn.Text(10)
-	model["minerTxFeeIn"] = s.MinerTxFeeIn.Text(10)
-	model["minerUncleRewardIn"] = s.MinerUncleRewardIn.Text(10)
-	model["correctingIn"] = s.CorrectingIn.Text(10)
-	model["prefundIn"] = s.PrefundIn.Text(10)
-	model["totalOut"] = s.TotalOut().Text(10)
-	model["amountOut"] = s.AmountOut.Text(10)
-	model["internalOut"] = s.InternalOut.Text(10)
-	model["correctingOut"] = s.CorrectingOut.Text(10)
-	model["selfDestructOut"] = s.SelfDestructOut.Text(10)
-	model["gasOut"] = s.GasOut.Text(10)
-	model["totalOutLessGas"] = s.TotalOutLessGas().Text(10)
-	model["begBalDiff"] = s.BegBalDiff().Text(10)
-	model["endBalDiff"] = s.EndBalDiff().Text(10)
-	model["endBalCalc"] = s.EndBalCalc().Text(10)
-	if s.ReconType&First == 0 {
-		model["prevBal"] = s.PrevBal.Text(10)
-	} else if format != "json" {
-		model["prevBal"] = ""
+	if extraOpts["testMode"] == true {
+		model["postType"] = s.getPostType().String()
+		model["postFirst"] = s.PostFirst
+		model["postLast"] = s.PostLast
 	}
+
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
-		"assetAddr", "assetType", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
-		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciliationType", "reconciled",
+		"assetAddress", "assetType", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
+		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciled",
 		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
 		"selfDestructOut", "gasOut", "totalOutLessGas", "prevBal", "begBalDiff",
 		"endBalDiff", "endBalCalc", "correctingReason",
 	}
 
-	asEther := extraOpts["ether"] == true
-	if asEther {
+	if extraOpts["ether"] == true {
+		decimals := int(s.Decimals)
 		model["begBalEth"] = s.BegBal.ToEtherStr(decimals)
 		model["amountNetEth"] = s.AmountNet().ToEtherStr(decimals)
 		model["endBalEth"] = s.EndBal.ToEtherStr(decimals)
@@ -157,11 +161,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		model["begBalDiffEth"] = s.BegBalDiff().ToEtherStr(decimals)
 		model["endBalDiffEth"] = s.EndBalDiff().ToEtherStr(decimals)
 		model["endBalCalcEth"] = s.EndBalCalc().ToEtherStr(decimals)
-		if s.ReconType&First == 0 {
-			model["prevBalEth"] = s.PrevBal.ToEtherStr(decimals)
-		} else if format != "json" {
-			model["prevBalEth"] = ""
-		}
+		model["prevBalEth"] = s.PrevBal.ToEtherStr(decimals)
 		order = append(order, []string{"begBalEth", "amountNetEth", "endBalEth",
 			"totalInEth", "amountInEth", "internalInEth", "selfDestructInEth",
 			"minerBaseRewardInEth", "minerNephewRewardInEth", "minerTxFeeInEth",
@@ -224,13 +224,18 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// AssetAddr
-	if err = cache.WriteValue(writer, s.AssetAddr); err != nil {
+	// AssetAddress
+	if err = cache.WriteValue(writer, s.AssetAddress); err != nil {
 		return err
 	}
 
 	// AssetSymbol
 	if err = cache.WriteValue(writer, s.AssetSymbol); err != nil {
+		return err
+	}
+
+	// AssetType
+	if err = cache.WriteValue(writer, s.AssetType); err != nil {
 		return err
 	}
 
@@ -241,6 +246,16 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 
 	// BlockNumber
 	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+
+	// BlockNumberNext
+	if err = cache.WriteValue(writer, s.BlockNumberNext); err != nil {
+		return err
+	}
+
+	// BlockNumberPrev
+	if err = cache.WriteValue(writer, s.BlockNumberPrev); err != nil {
 		return err
 	}
 
@@ -309,6 +324,16 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// PostFirst
+	if err = cache.WriteValue(writer, s.PostFirst); err != nil {
+		return err
+	}
+
+	// PostLast
+	if err = cache.WriteValue(writer, s.PostLast); err != nil {
+		return err
+	}
+
 	// PrefundIn
 	if err = cache.WriteValue(writer, &s.PrefundIn); err != nil {
 		return err
@@ -326,6 +351,11 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 
 	// Recipient
 	if err = cache.WriteValue(writer, s.Recipient); err != nil {
+		return err
+	}
+
+	// RollingBalance
+	if err = cache.WriteValue(writer, &s.RollingBalance); err != nil {
 		return err
 	}
 
@@ -387,13 +417,18 @@ func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
-	// AssetAddr
-	if err = cache.ReadValue(reader, &s.AssetAddr, vers); err != nil {
+	// AssetAddress
+	if err = cache.ReadValue(reader, &s.AssetAddress, vers); err != nil {
 		return err
 	}
 
 	// AssetSymbol
 	if err = cache.ReadValue(reader, &s.AssetSymbol, vers); err != nil {
+		return err
+	}
+
+	// AssetType
+	if err = cache.ReadValue(reader, &s.AssetType, vers); err != nil {
 		return err
 	}
 
@@ -404,6 +439,16 @@ func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 
 	// BlockNumber
 	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
+		return err
+	}
+
+	// BlockNumberNext
+	if err = cache.ReadValue(reader, &s.BlockNumberNext, vers); err != nil {
+		return err
+	}
+
+	// BlockNumberPrev
+	if err = cache.ReadValue(reader, &s.BlockNumberPrev, vers); err != nil {
 		return err
 	}
 
@@ -472,6 +517,16 @@ func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
+	// PostFirst
+	if err = cache.ReadValue(reader, &s.PostFirst, vers); err != nil {
+		return err
+	}
+
+	// PostLast
+	if err = cache.ReadValue(reader, &s.PostLast, vers); err != nil {
+		return err
+	}
+
 	// PrefundIn
 	if err = cache.ReadValue(reader, &s.PrefundIn, vers); err != nil {
 		return err
@@ -489,6 +544,11 @@ func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 
 	// Recipient
 	if err = cache.ReadValue(reader, &s.Recipient, vers); err != nil {
+		return err
+	}
+
+	// RollingBalance
+	if err = cache.ReadValue(reader, &s.RollingBalance, vers); err != nil {
 		return err
 	}
 
@@ -598,7 +658,7 @@ func (s *Statement) BegBalDiff() *base.Wei {
 	if s.BlockNumber == 0 {
 		val = new(base.Wei).SetInt64(0)
 	} else {
-		new(base.Wei).Sub(&s.BegBal, &s.PrevBal)
+		val = new(base.Wei).Sub(&s.BegBal, &s.PrevBal)
 	}
 
 	return val
@@ -618,7 +678,7 @@ func (s *Statement) Reconciled() bool {
 }
 
 func (s *Statement) IsEth() bool {
-	return s.AssetAddr == base.FAKE_ETH_ADDRESS
+	return s.AssetAddress == base.FAKE_ETH_ADDRESS
 }
 
 var (
@@ -635,118 +695,52 @@ func (s *Statement) IsStableCoin() bool {
 		usdc: true,
 		usdt: true,
 	}
-	return stables[s.AssetAddr]
+	return stables[s.AssetAddress]
 }
 
-func (s *Statement) isNullTransfer(tx *Transaction) bool {
-	lotsOfLogs := len(tx.Receipt.Logs) > 10
-	mayBeAirdrop := s.Sender.IsZero() || s.Sender == tx.To
-	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.IsMaterial()
-	ret := (lotsOfLogs || mayBeAirdrop) && noBalanceChange
-
-	// TODO: BOGUS PERF
-	// logger.Warn("Statement is not reconciled", s.AssetSymbol, "at", s.BlockNumber, s.TransactionIndex, s.LogIndex)
-	logger.TestLog(true, "A possible nullTransfer")
-	logger.TestLog(true, "  nLogs:            ", len(tx.Receipt.Logs))
-	logger.TestLog(true, "    lotsOfLogs:      -->", lotsOfLogs)
-
-	logger.TestLog(true, "  Sender.IsZero:    ", s.Sender, s.Sender.IsZero())
-	logger.TestLog(true, "  or Sender == To:  ", s.Sender == tx.To)
-	logger.TestLog(true, "    mayBeAirdrop:    -->", mayBeAirdrop)
-
-	logger.TestLog(true, "  EndBal-BegBal:    ", s.EndBal.Cmp(&s.BegBal))
-	logger.TestLog(true, "  material:         ", s.IsMaterial())
-	logger.TestLog(true, "    noBalanceChange: -->", noBalanceChange)
-
-	if !ret {
-		logger.TestLog(true, "  ---> Not a nullTransfer")
-	}
-	return ret
-}
-
-func (s *Statement) CorrectForNullTransfer(tx *Transaction) bool {
-	if !s.IsEth() {
-		if s.isNullTransfer(tx) {
-			logger.TestLog(true, "Correcting token transfer for a null transfer")
-			amt := s.TotalIn() // use totalIn since this is the amount that was faked
-			s.AmountOut = *new(base.Wei)
-			s.AmountIn = *new(base.Wei)
-			s.CorrectingIn = *amt
-			s.CorrectingOut = *amt
-			s.CorrectingReason = "null-transfer"
-		} else {
-			logger.TestLog(true, "Needs correction for token transfer")
+func (s *Statement) DebugStatement(prev, next base.Blknum) {
+	reportE := func(msg string, val *base.Wei) {
+		isZero := func(val *base.Wei) bool {
+			return val.Cmp(base.NewWei(0)) == 0
 		}
-	} else {
-		logger.TestLog(true, "Needs correction for eth")
-	}
-	return s.Reconciled()
-}
-
-func (s *Statement) CorrectForSomethingElse(tx *Transaction) bool {
-	if s.IsEth() {
-		if s.AssetType == "trace-eth" && s.ReconType&First != 0 && s.ReconType&Last != 0 {
-			if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
-				s.EndBal = *s.EndBalCalc()
-				s.CorrectingReason = "per-block-balance"
-			}
-		} else {
-			logger.TestLog(true, "Needs correction for eth")
-		}
-	} else {
-		logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
-
-		s.CorrectingIn.SetUint64(0)
-		s.CorrectingOut.SetUint64(0)
-		s.CorrectingReason = ""
-		zero := new(base.Wei).SetInt64(0)
-		cmpBegBal := s.BegBalDiff().Cmp(zero)
-		cmpEndBal := s.EndBalDiff().Cmp(zero)
-
-		if cmpBegBal > 0 {
-			s.CorrectingIn = *s.BegBalDiff()
-			s.CorrectingReason = "begbal"
-		} else if cmpBegBal < 0 {
-			s.CorrectingOut = *s.BegBalDiff()
-			s.CorrectingReason = "begbal"
-		}
-
-		if cmpEndBal > 0 {
-			n := new(base.Wei).Add(&s.CorrectingIn, s.EndBalDiff())
-			s.CorrectingIn = *n
-			s.CorrectingReason += "endbal"
-		} else if cmpEndBal < 0 {
-			n := new(base.Wei).Add(&s.CorrectingOut, s.EndBalDiff())
-			s.CorrectingOut = *n
-			s.CorrectingReason += "endbal"
-		}
-		s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
+		logger.TestLog(!isZero(val), msg, val.ToEtherStr(18))
 	}
 
-	return s.Reconciled()
-}
+	report2 := func(msg string, v1 *base.Wei, v2 *base.Wei) {
+		s := ""
+		if v1 != nil {
+			s = v1.ToEtherStr(18)
+		}
+		if v2 != nil {
+			s += " (" + v2.ToEtherStr(18) + ")"
+		}
+		logger.TestLog(true, msg, s)
+	}
 
-type Ledgerer interface {
-	Prev() base.Blknum
-	Cur() base.Blknum
-	Next() base.Blknum
-}
+	reportL := func(msg string) {
+		report2(msg, nil, nil)
+	}
 
-func (s *Statement) DebugStatement(ctx Ledgerer) {
+	report1 := func(msg string, val *base.Wei) {
+		report2(msg, val, nil)
+	}
+
 	logger.TestLog(true, "===================================================")
 	logger.TestLog(true, fmt.Sprintf("====> %s", s.AssetType))
 	logger.TestLog(true, "===================================================")
-	logger.TestLog(true, "Previous:              ", ctx.Prev())
+	logger.TestLog(true, "Previous:              ", prev)
 	logger.TestLog(true, "Current:               ", s.BlockNumber)
-	logger.TestLog(true, "Next:                  ", ctx.Next())
-	logger.TestLog(true, "reconciliationType:    ", s.ReconType.String())
+	logger.TestLog(true, "Next:                  ", next)
+	logger.TestLog(true, "postType:              ", s.getPostType().String())
+	logger.TestLog(true, "postFirst:             ", s.PostFirst)
+	logger.TestLog(true, "postLast:              ", s.PostLast)
 	logger.TestLog(true, "assetType:             ", s.AssetType)
 	logger.TestLog(true, "accountedFor:          ", s.AccountedFor)
 	logger.TestLog(true, "sender:                ", s.Sender, " ==> ", s.Recipient)
-	logger.TestLog(true, "assetAddr:             ", s.AssetAddr, "("+s.AssetSymbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
+	logger.TestLog(true, "assetAddress:          ", s.AssetAddress, "("+s.AssetSymbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
 	logger.TestLog(true, "hash:                  ", s.TransactionHash)
 	logger.TestLog(true, "timestamp:             ", s.Timestamp)
-	if s.AssetType == "eth" {
+	if s.AssetType != TrialBalToken && s.AssetType != TrialBalNft {
 		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d", s.BlockNumber, s.TransactionIndex))
 	} else {
 		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex))
@@ -762,6 +756,7 @@ func (s *Statement) DebugStatement(ctx Ledgerer) {
 	reportL("                       =======================")
 	report2("   endBal:             ", &s.EndBal, s.BegBalDiff())
 	report1("   endBalCalc:         ", s.EndBalCalc())
+	report1("   rollingBalance:     ", &s.RollingBalance)
 	reportL("---------------------------------------------------")
 	reportE("   amountIn:           ", &s.AmountIn)
 	reportE("   internalIn:         ", &s.InternalIn)
@@ -787,31 +782,25 @@ func (s *Statement) DebugStatement(ctx Ledgerer) {
 	logger.TestLog(true, "End of trial balance report")
 }
 
-func isZero(val *base.Wei) bool {
-	return val.Cmp(base.NewWei(0)) == 0
-}
-
-func reportE(msg string, val *base.Wei) {
-	logger.TestLog(!isZero(val), msg, val.ToEtherStr(18))
-}
-
-func report2(msg string, v1 *base.Wei, v2 *base.Wei) {
-	s := ""
-	if v1 != nil {
-		s = v1.ToEtherStr(18)
+func (s *Statement) getPostType() PostType {
+	if s.BlockNumber == 0 {
+		return Genesis
 	}
-	if v2 != nil {
-		s += " (" + v2.ToEtherStr(18) + ")"
+	prevDiff := s.BlockNumberPrev != s.BlockNumber
+	nextDiff := s.BlockNumberNext != s.BlockNumber
+	if prevDiff {
+		if nextDiff {
+			return DiffDiff
+		} else {
+			return DiffSame
+		}
+	} else {
+		if nextDiff {
+			return SameDiff
+		} else {
+			return SameSame
+		}
 	}
-	logger.TestLog(true, msg, s)
-}
-
-func reportL(msg string) {
-	report2(msg, nil, nil)
-}
-
-func report1(msg string, val *base.Wei) {
-	report2(msg, val, nil)
 }
 
 // EXISTING_CODE

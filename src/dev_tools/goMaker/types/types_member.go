@@ -246,6 +246,14 @@ func (m *Member) MarshalCode() string {
 	}
 
 `
+	} else if m.GoName() == "PostType" || m.GoName() == "AssetType" {
+		tmplName += "12"
+		tmpl = `// {{.GoName}}
+	if err = cache.WriteValue(writer, s.{{.GoName}}); err != nil {
+		return err
+	}
+
+`
 	} else if m.IsArray &&
 		m.GoName() != "Topics" &&
 		m.GoName() != "Transactions" &&
@@ -336,6 +344,14 @@ func (m *Member) UnmarshalCode() string {
 	}
 	if err = json.Unmarshal([]byte({{.Lower}}), &s.{{.GoName}}); err != nil {
 		return fmt.Errorf("cannot unmarshal {{.GoName}}: %w", err)
+	}
+
+`
+	} else if m.GoName() == "PostType" || m.GoName() == "AssetType" {
+		tmplName += "112"
+		tmpl = `// {{.GoName}}
+	if err = cache.ReadValue(reader, &s.{{.GoName}}, vers); err != nil {
+		return err
 	}
 
 `
@@ -462,7 +478,7 @@ func (m *Member) IsString() bool {
 }
 
 func (m *Member) YamlType() string {
-	o := fmt.Sprintf("\n          items:\n            $ref: \"#/components/schemas/" + CamelCase(m.Type) + "\"")
+	o := fmt.Sprintf("\n          items:\n            $ref: \"#/components/schemas/%s\"", CamelCase(m.Type))
 	f := fmt.Sprintf("\n          format: %s", m.Type)
 	if m.IsArray {
 		return "array" + o

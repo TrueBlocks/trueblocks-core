@@ -21,7 +21,6 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 	opts.Articulate = true
 
 	ledgers := &ledger.Ledger{}
-	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
@@ -33,7 +32,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 	)
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		visitAppearance := func(app *types.Appearance) error {
+		visitAppearance := func(prev, next base.Blknum, app *types.Appearance) error {
 			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
 				errorChan <- err
 				return nil
@@ -47,7 +46,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 						}
 					}
 
-					if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
+					if statements, err := ledgers.GetStatements(prev, next, filter, tx); err != nil {
 						errorChan <- err
 
 					} else {
@@ -68,6 +67,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 			} else if !opts.NoZero || cnt > 0 {
 				ledgers = ledger.NewLedger(
 					opts.Conn,
+					apps,
 					mon.Address,
 					opts.FirstBlock,
 					opts.LastBlock,
@@ -78,10 +78,20 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 					opts.Reversed,
 					&opts.Asset,
 				)
-				_ = ledgers.SetContexts(chain, apps)
 
-				for _, app := range apps {
-					if err := visitAppearance(&app); err != nil {
+				for i, app := range apps {
+					prev := uint32(0)
+					if apps[i].BlockNumber > 0 {
+						prev = apps[i].BlockNumber - 1
+					}
+					if i > 0 {
+						prev = apps[i-1].BlockNumber
+					}
+					next := apps[i].BlockNumber + 1
+					if i < len(apps)-1 {
+						next = apps[i+1].BlockNumber
+					}
+					if err := visitAppearance(base.Blknum(prev), base.Blknum(next), &app); err != nil {
 						errorChan <- err
 						return
 					}

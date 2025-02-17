@@ -153,7 +153,7 @@ func (opts *ExportOptions) validateExport() error {
 
 	if opts.Accounting {
 		if len(opts.Addrs) != 1 {
-			return validate.Usage("The {0} option is allows with only a single address.", "--accounting")
+			return validate.Usage("The {0} option allows only a single address.", "--accounting")
 		}
 
 		if !opts.Conn.IsNodeArchive() {

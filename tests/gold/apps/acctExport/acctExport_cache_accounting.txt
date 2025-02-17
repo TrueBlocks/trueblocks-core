@@ -35,11 +35,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               10277780
 TEST[DATE|TIME] Current:                10277780
 TEST[DATE|TIME] Next:                   10277780
-TEST[DATE|TIME] reconciliationType:     first-last
+TEST[DATE|TIME] postType:               first-last
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 TEST[DATE|TIME] sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0xdac17f958d2ee523a2206206994597c13d831ec7
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
 TEST[DATE|TIME] timestamp:              1592323744
 TEST[DATE|TIME] blockNumber:            10277780.88.0
@@ -71,11 +71,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               10277780
 TEST[DATE|TIME] Current:                10277780
 TEST[DATE|TIME] Next:                   10277780
-TEST[DATE|TIME] reconciliationType:     first-last
+TEST[DATE|TIME] postType:               first-last
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 TEST[DATE|TIME] sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9
-TEST[DATE|TIME] assetAddr:              0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) decimals: 6
+TEST[DATE|TIME] assetAddress:           0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) decimals: 6
 TEST[DATE|TIME] hash:                   0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
 TEST[DATE|TIME] timestamp:              1592323744
 TEST[DATE|TIME] blockNumber:            10277780.88.103

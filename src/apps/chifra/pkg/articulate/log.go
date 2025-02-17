@@ -3,9 +3,12 @@ package articulate
 import (
 	"encoding/hex"
 	"errors"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -47,7 +50,10 @@ func articulateLogFromMap(log *types.Log, abiMap *abi.SelectorSyncMap) (*types.F
 	}
 
 	// Try to articulate the log using some common events
-	artLog := findCommonEvent(log)
+	artLog, err := findCommonEvent(log)
+	if err != nil {
+		return nil, err
+	}
 
 	// If we couldn't, then try to find the event in `abiMap`
 	if artLog == nil {
@@ -76,16 +82,23 @@ func articulateLogFromMap(log *types.Log, abiMap *abi.SelectorSyncMap) (*types.F
 	return artLog, nil
 }
 
-func findCommonEvent(log *types.Log) *types.Function {
-	if artLog := parseTransferEvent(log); artLog != nil {
-		return artLog
-
-	} else if artLog = parseEnsTransferEvent(log); artLog != nil {
-		return artLog
-
-	} else if artLog = parseApprovalEvent(log); artLog != nil {
-		return artLog
+func findCommonEvent(log *types.Log) (*types.Function, error) {
+	if !topics.KnownTopics[log.Topics[0]] {
+		return nil, nil
 	}
 
-	return nil
+	if normalize, err := normalize.NormalizeTransferOrApproval(log); err != nil {
+		return nil, err
+
+	} else {
+		switch normalize.Topics[0] {
+		case topics.TransferTopic:
+			return parseTransferEvent(normalize), nil
+		case topics.ApprovalTopic:
+			return parseApprovalEvent(normalize), nil
+		case topics.EnsTransferTopic:
+			return parseEnsTransferEvent(normalize), nil
+		}
+		return nil, fmt.Errorf("parseFunc(commonEvent): target is not of correct type %v", log.Topics[0])
+	}
 }

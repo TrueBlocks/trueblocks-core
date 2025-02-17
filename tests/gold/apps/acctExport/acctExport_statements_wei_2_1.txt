@@ -37,11 +37,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                1
 TEST[DATE|TIME] Next:                   5
-TEST[DATE|TIME] reconciliationType:     first-diff
+TEST[DATE|TIME] postType:               first-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438269988
 TEST[DATE|TIME] blockNumber:            1.99999.0
@@ -70,11 +70,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1
 TEST[DATE|TIME] Current:                5
 TEST[DATE|TIME] Next:                   56
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270083
 TEST[DATE|TIME] blockNumber:            5.99999.0
@@ -103,11 +103,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               5
 TEST[DATE|TIME] Current:                56
 TEST[DATE|TIME] Next:                   235
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270322
 TEST[DATE|TIME] blockNumber:            56.99998.0
@@ -136,11 +136,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               56
 TEST[DATE|TIME] Current:                235
 TEST[DATE|TIME] Next:                   247
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270713
 TEST[DATE|TIME] blockNumber:            235.99999.0
@@ -169,11 +169,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               235
 TEST[DATE|TIME] Current:                247
 TEST[DATE|TIME] Next:                   348
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270739
 TEST[DATE|TIME] blockNumber:            247.99998.0
@@ -202,11 +202,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               247
 TEST[DATE|TIME] Current:                348
 TEST[DATE|TIME] Next:                   500
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270943
 TEST[DATE|TIME] blockNumber:            348.99999.0
@@ -235,11 +235,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               348
 TEST[DATE|TIME] Current:                500
 TEST[DATE|TIME] Next:                   563
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438271212
 TEST[DATE|TIME] blockNumber:            500.99998.0
@@ -268,11 +268,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               500
 TEST[DATE|TIME] Current:                563
 TEST[DATE|TIME] Next:                   987
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438271337
 TEST[DATE|TIME] blockNumber:            563.99998.0
@@ -301,11 +301,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               563
 TEST[DATE|TIME] Current:                987
 TEST[DATE|TIME] Next:                   1450
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438272114
 TEST[DATE|TIME] blockNumber:            987.99998.0
@@ -334,11 +334,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               987
 TEST[DATE|TIME] Current:                1450
 TEST[DATE|TIME] Next:                   1580
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438273130
 TEST[DATE|TIME] blockNumber:            1450.99999.0
@@ -368,11 +368,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1450
 TEST[DATE|TIME] Current:                1580
 TEST[DATE|TIME] Next:                   1586
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438273478
 TEST[DATE|TIME] blockNumber:            1580.99998.0
@@ -401,11 +401,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1580
 TEST[DATE|TIME] Current:                1586
 TEST[DATE|TIME] Next:                   1861
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438273492
 TEST[DATE|TIME] blockNumber:            1586.99998.0
@@ -434,11 +434,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1586
 TEST[DATE|TIME] Current:                1861
 TEST[DATE|TIME] Next:                   1912
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438274241
 TEST[DATE|TIME] blockNumber:            1861.99999.0
@@ -467,11 +467,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1861
 TEST[DATE|TIME] Current:                1912
 TEST[DATE|TIME] Next:                   2057
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438274378
 TEST[DATE|TIME] blockNumber:            1912.99998.0
@@ -500,11 +500,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1912
 TEST[DATE|TIME] Current:                2057
 TEST[DATE|TIME] Next:                   2256
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438274782
 TEST[DATE|TIME] blockNumber:            2057.99999.0
@@ -533,11 +533,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               2057
 TEST[DATE|TIME] Current:                2256
 TEST[DATE|TIME] Next:                   2392
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438275372
 TEST[DATE|TIME] blockNumber:            2256.99999.0
@@ -566,11 +566,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               2256
 TEST[DATE|TIME] Current:                2392
 TEST[DATE|TIME] Next:                   2516
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438275753
 TEST[DATE|TIME] blockNumber:            2392.99999.0
@@ -600,11 +600,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               2392
 TEST[DATE|TIME] Current:                2516
 TEST[DATE|TIME] Next:                   3962
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438276092
 TEST[DATE|TIME] blockNumber:            2516.99998.0
@@ -633,11 +633,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               2516
 TEST[DATE|TIME] Current:                3962
 TEST[DATE|TIME] Next:                   4256
-TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438281538
 TEST[DATE|TIME] blockNumber:            3962.99998.0
@@ -666,11 +666,11 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               3962
 TEST[DATE|TIME] Current:                4256
 TEST[DATE|TIME] Next:                   4256
-TEST[DATE|TIME] reconciliationType:     diff-last
+TEST[DATE|TIME] postType:               diff-last
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438282794
 TEST[DATE|TIME] blockNumber:            4256.99998.0
@@ -700,7 +700,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "5000000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "0",
@@ -726,7 +726,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "first-diff",
+      "postType": "first-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -743,7 +743,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "5000000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "5000000000000000000",
@@ -770,7 +770,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -787,7 +787,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "3750000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "10000000000000000000",
@@ -814,7 +814,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -831,7 +831,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "5000000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "13750000000000000000",
@@ -858,7 +858,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -875,7 +875,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "3125000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "18750000000000000000",
@@ -902,7 +902,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -919,7 +919,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "5000000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "21875000000000000000",
@@ -946,7 +946,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -963,7 +963,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "3750000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "26875000000000000000",
@@ -990,7 +990,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -1007,7 +1007,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "3750000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "30625000000000000000",
@@ -1034,7 +1034,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -1051,7 +1051,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "2500000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "34375000000000000000",
@@ -1078,7 +1078,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -1095,7 +1095,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "5156250000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "36875000000000000000",
@@ -1122,7 +1122,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -1139,7 +1139,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "3750000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "42031250000000000000",
@@ -1166,7 +1166,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -1183,7 +1183,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "3750000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "45781250000000000000",
@@ -1210,7 +1210,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -1227,7 +1227,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "5000000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "49531250000000000000",
@@ -1254,7 +1254,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -1271,7 +1271,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "3750000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "54531250000000000000",
@@ -1298,7 +1298,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -1315,7 +1315,7 @@ Results in ./statements_wei_2_1_out.file
       "amountIn": "0",
       "amountNet": "5000000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "assetType": "eth",
       "begBal": "58281250000000000000",
@@ -1342,7 +1342,7 @@ Results in ./statements_wei_2_1_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
+      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -1356,4 +1356,3 @@ Results in ./statements_wei_2_1_out.file
     }
   ]
 }
-

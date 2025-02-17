@@ -20,11 +20,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  prevDiff-same-eth
+TEST[DATE|TIME]    postType:            prevDiff-same-eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237
 TEST[DATE|TIME]    recipient:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
@@ -69,11 +69,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  prevDiff-same-eth
+TEST[DATE|TIME]    postType:            prevDiff-same-eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237
 TEST[DATE|TIME]    recipient:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          7005645
@@ -120,11 +120,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-token
+TEST[DATE|TIME]    postType:            regular-token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237
 TEST[DATE|TIME]    recipient:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
+TEST[DATE|TIME]    assetAddress:        0x5c2c629feefcc07b338e97e39c73d2db33a85548
 TEST[DATE|TIME]    assetSymbol:         0x5c2c62
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
@@ -169,11 +169,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-token
+TEST[DATE|TIME]    postType:            regular-token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237
 TEST[DATE|TIME]    recipient:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
+TEST[DATE|TIME]    assetAddress:        0x5c2c629feefcc07b338e97e39c73d2db33a85548
 TEST[DATE|TIME]    assetSymbol:         0x5c2c62
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          7005645
@@ -216,7 +216,7 @@ TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
   "transactionHash": "0xea8b6bf39f8fe343ad1fbb95ad9a2dd695bee9de33d1ccfb79552fc0bf40b92f",
   "timestamp": 1546554524,
   "date": "2019-01-03 22:28:44 UTC",
-  "assetAddr": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+  "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
   "assetSymbol": "0x5c2c62",
   "decimals": 18,
   "spotPrice": 0.00000,
@@ -228,7 +228,7 @@ TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
   "amountNet": "3016.109787000000000000",
   "endBal": "67679.392659000000000000",
   "encoding": "0xa9059cbb",
-  "reconciliationType": "regular-token",
+  "postType": "regular-token",
   "reconciled": true,
   "totalIn": "3016.109787000000000000",
   "amountIn": "3016.109787000000000000",
@@ -262,11 +262,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  prevDiff-same-eth
+TEST[DATE|TIME]    postType:            prevDiff-same-eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237
 TEST[DATE|TIME]    recipient:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
@@ -311,11 +311,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  prevDiff-same-eth
+TEST[DATE|TIME]    postType:            prevDiff-same-eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237
 TEST[DATE|TIME]    recipient:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          7005645
@@ -360,11 +360,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-token
+TEST[DATE|TIME]    postType:            regular-token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237
 TEST[DATE|TIME]    recipient:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
+TEST[DATE|TIME]    assetAddress:        0x5c2c629feefcc07b338e97e39c73d2db33a85548
 TEST[DATE|TIME]    assetSymbol:         0x5c2c62
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
@@ -409,11 +409,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-token
+TEST[DATE|TIME]    postType:            regular-token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237
 TEST[DATE|TIME]    recipient:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
+TEST[DATE|TIME]    assetAddress:        0x5c2c629feefcc07b338e97e39c73d2db33a85548
 TEST[DATE|TIME]    assetSymbol:         0x5c2c62
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          7005646
@@ -454,7 +454,7 @@ TEST[DATE|TIME] ---------------------------------------------------
   "transactionHash": "0x234186f8fab2fb4ca1222031ad6d0b41d5a55b3d0e934fb2b47059f7a394433f",
   "timestamp": 1546554605,
   "date": "2019-01-03 22:30:05 UTC",
-  "assetAddr": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+  "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
   "assetSymbol": "0x5c2c62",
   "decimals": 18,
   "spotPrice": 0.00000,
@@ -466,7 +466,7 @@ TEST[DATE|TIME] ---------------------------------------------------
   "amountNet": "1982.984682000000000000",
   "endBal": "69662.377341000000000000",
   "encoding": "0xa9059cbb",
-  "reconciliationType": "regular-token",
+  "postType": "regular-token",
   "reconciled": true,
   "totalIn": "1982.984682000000000000",
   "amountIn": "1982.984682000000000000",
@@ -500,11 +500,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  prevDiff-same-eth
+TEST[DATE|TIME]    postType:            prevDiff-same-eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237
 TEST[DATE|TIME]    recipient:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
@@ -549,11 +549,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  prevDiff-same-eth
+TEST[DATE|TIME]    postType:            prevDiff-same-eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237
 TEST[DATE|TIME]    recipient:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          7005645
@@ -598,11 +598,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-token
+TEST[DATE|TIME]    postType:            regular-token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237
 TEST[DATE|TIME]    recipient:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
+TEST[DATE|TIME]    assetAddress:        0x5c2c629feefcc07b338e97e39c73d2db33a85548
 TEST[DATE|TIME]    assetSymbol:         0x5c2c62
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
@@ -647,11 +647,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-token
+TEST[DATE|TIME]    postType:            regular-token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237
 TEST[DATE|TIME]    recipient:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
+TEST[DATE|TIME]    assetAddress:        0x5c2c629feefcc07b338e97e39c73d2db33a85548
 TEST[DATE|TIME]    assetSymbol:         0x5c2c62
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          7005654
@@ -692,7 +692,7 @@ TEST[DATE|TIME] ---------------------------------------------------
   "transactionHash": "0xfa8eef26c445913833a6ace11e27df3821598b9aeb4896eb41213999e89ece7a",
   "timestamp": 1546554763,
   "date": "2019-01-03 22:32:43 UTC",
-  "assetAddr": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+  "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
   "assetSymbol": "0x5c2c62",
   "decimals": 18,
   "spotPrice": 0.00000,
@@ -704,7 +704,7 @@ TEST[DATE|TIME] ---------------------------------------------------
   "amountNet": "1377.663523000000000000",
   "endBal": "71040.040864000000000000",
   "encoding": "0xa9059cbb",
-  "reconciliationType": "regular-token",
+  "postType": "regular-token",
   "reconciled": true,
   "totalIn": "1377.663523000000000000",
   "amountIn": "1377.663523000000000000",
@@ -738,11 +738,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  prevDiff-same-eth
+TEST[DATE|TIME]    postType:            prevDiff-same-eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
 TEST[DATE|TIME]    recipient:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
@@ -787,11 +787,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  prevDiff-same-eth
+TEST[DATE|TIME]    postType:            prevDiff-same-eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
 TEST[DATE|TIME]    recipient:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          7005645
@@ -836,11 +836,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  prevDiff-same-token
+TEST[DATE|TIME]    postType:            prevDiff-same-token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
 TEST[DATE|TIME]    recipient:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
+TEST[DATE|TIME]    assetAddress:        0x5c2c629feefcc07b338e97e39c73d2db33a85548
 TEST[DATE|TIME]    assetSymbol:         0x5c2c62
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
@@ -885,11 +885,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  prevDiff-same-token
+TEST[DATE|TIME]    postType:            prevDiff-same-token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
 TEST[DATE|TIME]    recipient:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
+TEST[DATE|TIME]    assetAddress:        0x5c2c629feefcc07b338e97e39c73d2db33a85548
 TEST[DATE|TIME]    assetSymbol:         0x5c2c62
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          7005662
@@ -930,7 +930,7 @@ TEST[DATE|TIME] ---------------------------------------------------
   "transactionHash": "0x968d9ef3eee9d9526784622726cef4f23712dff17a7dc639f0a1ef79c8f89002",
   "timestamp": 1546555962,
   "date": "2019-01-03 22:52:42 UTC",
-  "assetAddr": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+  "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
   "assetSymbol": "0x5c2c62",
   "decimals": 18,
   "spotPrice": 0.00000,
@@ -942,7 +942,7 @@ TEST[DATE|TIME] ---------------------------------------------------
   "amountNet": "1787.395981000000000000",
   "endBal": "72827.436845000000000000",
   "encoding": "0xa9059cbb",
-  "reconciliationType": "prevDiff-same-token",
+  "postType": "prevDiff-same-token",
   "reconciled": true,
   "totalIn": "1787.395981000000000000",
   "amountIn": "1787.395981000000000000",
@@ -976,11 +976,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  prevDiff-same-eth
+TEST[DATE|TIME]    postType:            prevDiff-same-eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
 TEST[DATE|TIME]    recipient:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
@@ -1025,11 +1025,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  prevDiff-same-eth
+TEST[DATE|TIME]    postType:            prevDiff-same-eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
 TEST[DATE|TIME]    recipient:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          7005645
@@ -1074,11 +1074,11 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  same-nextDiff-token
+TEST[DATE|TIME]    postType:            same-nextDiff-token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
 TEST[DATE|TIME]    recipient:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
+TEST[DATE|TIME]    assetAddress:        0x5c2c629feefcc07b338e97e39c73d2db33a85548
 TEST[DATE|TIME]    assetSymbol:         0x5c2c62
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
@@ -1123,11 +1123,11 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  same-nextDiff-token
+TEST[DATE|TIME]    postType:            same-nextDiff-token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
 TEST[DATE|TIME]    recipient:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
+TEST[DATE|TIME]    assetAddress:        0x5c2c629feefcc07b338e97e39c73d2db33a85548
 TEST[DATE|TIME]    assetSymbol:         0x5c2c62
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          7005737
@@ -1168,7 +1168,7 @@ TEST[DATE|TIME] ---------------------------------------------------
   "transactionHash": "0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf",
   "timestamp": 1546555962,
   "date": "2019-01-03 22:52:42 UTC",
-  "assetAddr": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+  "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
   "assetSymbol": "0x5c2c62",
   "decimals": 18,
   "spotPrice": 0.00000,
@@ -1180,7 +1180,7 @@ TEST[DATE|TIME] ---------------------------------------------------
   "amountNet": "3016.109787000000000000",
   "endBal": "75843.546632000000000000",
   "encoding": "0xa9059cbb",
-  "reconciliationType": "same-nextDiff-token",
+  "postType": "same-nextDiff-token",
   "reconciled": true,
   "totalIn": "3016.109787000000000000",
   "amountIn": "3016.109787000000000000",

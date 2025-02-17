@@ -199,6 +199,7 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		}
 	}
 
+	// NOTIFY CODE
 	if bm.opts.Notify && bn <= bm.ripeBlock {
 		err = Notify(notify.Notification[[]notify.NotificationPayloadAppearance]{
 			Msg:     notify.MessageAppearance,

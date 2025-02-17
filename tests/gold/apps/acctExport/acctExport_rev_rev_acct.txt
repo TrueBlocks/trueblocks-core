@@ -36,11 +36,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  -eth
+TEST[DATE|TIME]    postType:            -eth
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x8c492d5f763841767362d716e3e69511f0527791
 TEST[DATE|TIME]    recipient:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
@@ -104,11 +104,11 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  -token
+TEST[DATE|TIME]    postType:            -token
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x8c492d5f763841767362d716e3e69511f0527791
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME]    assetAddr:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TEST[DATE|TIME]    assetAddress:        0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
 TEST[DATE|TIME]    assetSymbol:         DAI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
@@ -207,7 +207,7 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "amountIn": "4999",
           "amountNet": "9998",
           "amountOut": "0",
-          "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+          "assetAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
           "assetSymbol": "DAI",
           "begBal": "1",
           "begBalDiff": "0",
@@ -234,7 +234,7 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "priceSource": "stable-coin",
           "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
           "reconciled": true,
-          "reconciliationType": "regular-token",
+          "postType": "regular-token",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x8c492d5f763841767362d716e3e69511f0527791",
@@ -310,7 +310,7 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "amountIn": "1.0000000",
           "amountNet": "1.0000000",
           "amountOut": "0",
-          "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+          "assetAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
           "assetSymbol": "DAI",
           "begBal": "0",
           "begBalDiff": "-5000.0000000",
@@ -335,7 +335,7 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "priceSource": "stable-coin",
           "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
           "reconciled": false,
-          "reconciliationType": "regular-token",
+          "postType": "regular-token",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0xeba60d324c2546459e1e9dd4c7e740ca80134588",
@@ -380,7 +380,7 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "amountIn": "0.010000000000000000",
           "amountNet": "0.010000000000000000",
           "amountOut": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
           "begBal": "4.989790000000000000",
           "begBalDiff": "-0.010000000000000000",
@@ -405,7 +405,7 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "priceSource": "maker",
           "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
           "reconciled": false,
-          "reconciliationType": "regular-eth",
+          "postType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
@@ -449,7 +449,7 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "amountIn": "0",
           "amountNet": "-0.010210000000000000",
           "amountOut": "0.010000000000000000",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
           "begBal": "5.0000000",
           "begBalDiff": "0.000210000000000000",
@@ -474,7 +474,7 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "priceSource": "maker",
           "recipient": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
           "reconciled": false,
-          "reconciliationType": "regular-eth",
+          "postType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
@@ -590,7 +590,7 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "amountIn": "5.0000000",
           "amountNet": "5.0000000",
           "amountOut": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
           "begBal": "0",
           "begBalDiff": "-4.989790000000000000",
@@ -615,7 +615,7 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "priceSource": "maker",
           "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
           "reconciled": false,
-          "reconciliationType": "regular-eth",
+          "postType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc",

@@ -106,6 +106,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 			} else {
 				logger.Info(report.Report(isSnap, file.FileSize(chunkPath)))
 			}
+			// NOTIFY CODE
 			if err = bm.opts.NotifyChunkWritten(chunk, chunkPath); err != nil {
 				return err
 			}
@@ -152,6 +153,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
 	bm.report(len(blocks), int(bm.PerChunk()), nChunks, nAppsNow, nAppsFound, nAddrsFound)
 
+	// NOTIFY CODE
 	if bm.opts.Notify {
 		if err := Notify(notify.Notification[string]{
 			Msg:     notify.MessageStageUpdated,
@@ -188,7 +190,7 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 			bn := base.MustParseBlknum(strings.TrimLeft(parts[1], "0"))
 			txid := base.MustParseTxnum(strings.TrimLeft(parts[2], "0"))
 			// See #3252
-			if addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
+			if addr == base.SentinelAddr.Hex() && txid == types.MisconfigReward {
 				continue
 			}
 			fileRange.First = base.Min(fileRange.First, bn)
@@ -204,13 +206,14 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 	return appMap, fileRange, nAdded
 }
 
-// hasNoAddresses returns true if (a) the miner is zero, (b) there are no transactions, uncles, or withdrawals.
-// (It is truly a block with no addresses -- for example block 15537860 on mainnet.)
+// hasNoAddresses returns true if (a) the miner is zero, (b) there are no transactions,
+// uncles, or withdrawals. (It is truly a block with no addresses -- for example block
+// 15537860 on mainnet.)
 func (bm *BlazeManager) hasNoAddresses(bn base.Blknum) bool {
 	if block, err := bm.opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 		return false
 	} else {
-		return base.IsPrecompile(block.Miner.Hex()) &&
+		return block.Miner.IsPrecompile() &&
 			len(block.Transactions) == 0 &&
 			len(block.Uncles) == 0 &&
 			len(block.Withdrawals) == 0
