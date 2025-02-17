@@ -8,8 +8,8 @@ import (
 
 func TestNewLedger(t *testing.T) {
 	l := NewLedger(base.HexToAddress("0xABC"), "TEST")
-	if l.AssetAddr != base.HexToAddress("0xABC") {
-		t.Fatalf("AssetAddr mismatch. got=%s want=%s", l.AssetAddr, "0xABC")
+	if l.AssetAddress != base.HexToAddress("0xABC") {
+		t.Fatalf("AssetAddress mismatch. got=%s want=%s", l.AssetAddress, "0xABC")
 	}
 	if l.AssetName != "TEST" {
 		t.Fatalf("AssetName mismatch. got=%s want=%s", l.AssetName, "TEST")
@@ -82,8 +82,8 @@ func TestLedgerAggregation(t *testing.T) {
 // 	l.AppendEntry(e)
 
 // 	got := l.String()
-// 	// We expect: Ledger(AssetAddr=0xLED AssetName=LED Entries=1 In=100 Out=60 Net=40)
-// 	want := "Ledger(AssetAddr=0xLED AssetName=LED Entries=1 In=100 Out=60 Net=40)"
+// 	// We expect: Ledger(AssetAddress=0xLED AssetName=LED Entries=1 In=100 Out=60 Net=40)
+// 	want := "Ledger(AssetAddress=0xLED AssetName=LED Entries=1 In=100 Out=60 Net=40)"
 // 	if got != want {
 // 		t.Fatalf("String mismatch.\ngot:  %s\nwant: %s", got, want)
 // 	}

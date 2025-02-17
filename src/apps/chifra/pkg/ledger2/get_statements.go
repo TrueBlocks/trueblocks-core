@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (r *Reconciler) GetStatements(filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (r *Reconciler) GetStatements(prev, next base.Blknum, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	apps := []types.Appearance{
 		{Address: r.LedgerBook.AccountedFor, BlockNumber: uint32(trans.BlockNumber), TransactionIndex: uint32(trans.TransactionIndex)},
 	}
@@ -27,7 +27,7 @@ func (lb *LedgerBook) Statements() ([]types.Statement, error) {
 			for _, posting := range entry.Postings {
 				s := types.Statement{
 					AccountedFor:       base.Address(lb.AccountedFor),
-					AssetAddr:          base.Address(l.AssetAddr),
+					AssetAddr:          base.Address(l.AssetAddress),
 					AssetSymbol:        l.AssetName,
 					BlockNumber:        posting.BlockNumber,
 					TransactionIndex:   posting.TransactionIndex,

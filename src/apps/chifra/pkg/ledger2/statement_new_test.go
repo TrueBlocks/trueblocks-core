@@ -23,8 +23,8 @@ func TestNewStatementNew(t *testing.T) {
 		base.Timestamp(99999),
 	)
 
-	if st.AssetAddr != "0xASSET" {
-		t.Fatalf("AssetAddr mismatch. got=%s want=0xASSET", st.AssetAddr)
+	if st.AssetAddress != "0xASSET" {
+		t.Fatalf("AssetAddress mismatch. got=%s want=0xASSET", st.AssetAddress)
 	}
 	if st.StartBlock != 10 {
 		t.Fatalf("StartBlock mismatch. got=%d want=10", st.StartBlock)

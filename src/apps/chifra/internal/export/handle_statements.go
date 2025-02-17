@@ -127,8 +127,17 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 						)
 
 						items := make([]types.Statement, 0, len(thisMap))
-						for _, tx := range txArray {
-							if statements, err := ledgers.GetStatements(filter, tx); err != nil {
+						for i, tx := range txArray {
+							// Note: apps and txArray are the same list, so we can use the index from txArray
+							prev := uint32(0)
+							if i > 0 {
+								prev = apps[i-1].BlockNumber
+							}
+							next := apps[i].BlockNumber + 1
+							if i < len(apps)-1 {
+								next = apps[i+1].BlockNumber
+							}
+							if statements, err := ledgers.GetStatements(base.Blknum(prev), base.Blknum(next), filter, tx); err != nil {
 								errorChan <- err
 
 							} else if len(statements) > 0 {

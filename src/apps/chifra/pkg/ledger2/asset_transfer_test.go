@@ -33,8 +33,8 @@ func TestNewAssetTransfer(t *testing.T) {
 	if at.TransactionIndex != txIndex {
 		t.Fatalf("TransactionIndex mismatch. got=%d want=%d", at.TransactionIndex, txIndex)
 	}
-	if at.AssetAddr != assetAddr {
-		t.Fatalf("AssetAddr mismatch. got=%s want=%s", at.AssetAddr, assetAddr)
+	if at.AssetAddress != assetAddr {
+		t.Fatalf("AssetAddress mismatch. got=%s want=%s", at.AssetAddress, assetAddr)
 	}
 	if at.AssetName != assetName {
 		t.Fatalf("AssetName mismatch. got=%s want=%s", at.AssetName, assetName)

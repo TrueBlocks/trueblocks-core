@@ -15,10 +15,10 @@ import (
 )
 
 // GetStatements returns a statement from a given transaction
-func (l *Ledger) GetStatements(filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	if os.Getenv("NEW_CODE") == "true" {
-		r := ledger2.NewReconciler(l.accountFor)
-		return r.GetStatements(filter, trans)
+		r := ledger2.NewReconciler(l.connection, l.accountFor, l.names, l.asEther)
+		return r.GetStatements(prev, next, filter, trans)
 
 	} else {
 		// We need this below...

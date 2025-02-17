@@ -8,8 +8,8 @@ import (
 
 func TestNewFilter(t *testing.T) {
 	f := NewFilter("0xAsset", 100, 200)
-	if f.AssetAddr != "0xAsset" {
-		t.Fatalf("Expected AssetAddr=0xAsset, got=%s", f.AssetAddr)
+	if f.AssetAddress != "0xAsset" {
+		t.Fatalf("Expected AssetAddress=0xAsset, got=%s", f.AssetAddress)
 	}
 	if f.MinBlock != 100 {
 		t.Fatalf("Expected MinBlock=100, got=%d", f.MinBlock)

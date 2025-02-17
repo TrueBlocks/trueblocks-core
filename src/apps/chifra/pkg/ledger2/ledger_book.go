@@ -35,9 +35,9 @@ func (lb *LedgerBook) String() string {
 	)
 }
 
-// AddLedger inserts a new Ledger into this LedgerBook, keyed by its AssetAddr.
+// AddLedger inserts a new Ledger into this LedgerBook, keyed by its AssetAddress.
 func (lb *LedgerBook) AddLedger(l Ledger) {
-	lb.Ledgers[l.AssetAddr.Hex()] = l
+	lb.Ledgers[l.AssetAddress.Hex()] = l
 }
 
 // GetLedger retrieves the Ledger for a given asset address, if it exists.

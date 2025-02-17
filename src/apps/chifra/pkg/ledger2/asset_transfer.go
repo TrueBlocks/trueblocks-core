@@ -10,7 +10,7 @@ import (
 type AssetTransfer struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
-	AssetAddr        base.Address
+	AssetAddress     base.Address
 	AssetName        string
 	Amount           base.Wei
 	Index            string
@@ -39,7 +39,7 @@ func NewAssetTransfer(
 	return AssetTransfer{
 		BlockNumber:      blockNumber,
 		TransactionIndex: txIndex,
-		AssetAddr:        assetAddress,
+		AssetAddress:     assetAddress,
 		AssetName:        assetName,
 		Amount:           amount,
 		Index:            index,
@@ -54,7 +54,7 @@ func (at *AssetTransfer) String() string {
 		"AssetTransfer(Block=%d Tx=%d Asset=%s Amount=%s Index=%s From=%s To=%s)",
 		at.BlockNumber,
 		at.TransactionIndex,
-		at.AssetAddr,
+		at.AssetAddress,
 		at.Amount.String(),
 		at.Index,
 		at.FromAddress.Hex(),

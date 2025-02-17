@@ -6,12 +6,17 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // Reconciler is responsible for processing Appearances, constructing Postings
 // and LedgerEntries, appending them to Ledgers, and maintaining a LedgerBook.
 type Reconciler struct {
+	connection *rpc.Connection
+	names      map[base.Address]types.Name
+	asEther    bool
+
 	// Typically you'd store references to RPC clients or indexers here,
 	// but we'll keep it simple for demonstration.
 	LedgerBook LedgerBook
@@ -19,9 +24,12 @@ type Reconciler struct {
 }
 
 // NewReconciler creates a Reconciler for the specified accountedForAddress.
-func NewReconciler(accountedForAddress base.Address) Reconciler {
+func NewReconciler(conn *rpc.Connection, accountedForAddress base.Address, names map[base.Address]types.Name, asEth bool) Reconciler {
 	return Reconciler{
 		LedgerBook: NewLedgerBook(accountedForAddress),
+		connection: conn,
+		names:      names,
+		asEther:    asEth,
 	}
 }
 
@@ -30,8 +38,6 @@ func (r *Reconciler) String() string {
 	return fmt.Sprintf("Reconciler for %s => %s", r.LedgerBook.AccountedFor, r.LedgerBook.String())
 }
 
-// ProcessAppearances takes a list of Appearances and their related AssetTransfers,
-// converts them to Postings, and appends them into the appropriate Ledger.
 func (r *Reconciler) ProcessAppearances(appearances []types.Appearance, allTransfers []AssetTransfer) {
 	// We assume allTransfers includes every relevant AssetTransfer for the Appearances.
 	// In reality, you'd fetch them from an indexer or node calls.
@@ -64,7 +70,7 @@ func (r *Reconciler) ProcessAppearances(appearances []types.Appearance, allTrans
 		}
 
 		// Build a unique key per asset + app
-		key := fmt.Sprintf("%s|%s", at.AssetAddr, appID)
+		key := fmt.Sprintf("%s|%s", at.AssetAddress, appID)
 
 		// Create the LedgerEntry if needed
 		entry, found := entriesMap[key]
@@ -170,7 +176,7 @@ func DeriveAssetTransfers(accountFor base.Address, tx *types.Transaction) []Asse
 				TransactionHash:  trans.Hash,
 				LogIndex:         0,
 				Timestamp:        trans.Timestamp,
-				AssetAddr:        base.FAKE_ETH_ADDRESS,
+				AssetAddress:     base.FAKE_ETH_ADDRESS,
 				AssetSymbol:      "WEI",
 				Decimals:         18,
 				SpotPrice:        0.0,
@@ -247,7 +253,7 @@ func DeriveAssetTransfers(accountFor base.Address, tx *types.Transaction) []Asse
 		results = append(results, AssetTransfer{
 			BlockNumber:      tx.BlockNumber,
 			TransactionIndex: tx.TransactionIndex,
-			AssetAddr:        base.FAKE_ETH_ADDRESS, // for native chain coin
+			AssetAddress:     base.FAKE_ETH_ADDRESS, // for native chain coin
 			AssetName:        "ETH",                 // or another name if not Ethereum
 			Amount:           tx.Value,
 			Index:            "nativeVal",
@@ -303,7 +309,7 @@ func DeriveAssetTransfers(accountFor base.Address, tx *types.Transaction) []Asse
 					at := AssetTransfer{
 						BlockNumber:      tx.BlockNumber,
 						TransactionIndex: tx.TransactionIndex,
-						AssetAddr:        lg.Address,
+						AssetAddress:     lg.Address,
 						AssetName:        "ERC20", // you might map the address to a known symbol
 						Amount:           *amount,
 						Index:            logIndexToString(i),
@@ -325,7 +331,7 @@ func DeriveAssetTransfers(accountFor base.Address, tx *types.Transaction) []Asse
 	// 		xf := AssetTransfer{
 	// 			BlockNumber:      tx.BlockNumber,
 	// 			TransactionIndex: tx.TransactionIndex,
-	// 			AssetAddr:        "0x0",
+	// 			AssetAddress:     "0x0",
 	// 			AssetName:        "ETH",
 	// 			Amount:           *base.NewWei(tr.ValueWei),
 	// 			Index:            traceIndexToString(i),
