@@ -9,15 +9,13 @@ import (
 // Ledger is a collection of LedgerEntry items that refer to a single asset.
 type Ledger struct {
 	AssetAddress base.Address
-	AssetName    string
 	Entries      []LedgerEntry
 }
 
 // NewLedger creates a Ledger with the given asset address and asset name.
-func NewLedger(assetAddress base.Address, assetName string) Ledger {
+func NewLedger(assetAddress base.Address) Ledger {
 	return Ledger{
 		AssetAddress: assetAddress,
-		AssetName:    assetName,
 		Entries:      make([]LedgerEntry, 0),
 	}
 }
@@ -28,19 +26,13 @@ func (l *Ledger) String() string {
 	totOut := l.TotalOut()
 	net := l.NetValue()
 	return fmt.Sprintf(
-		"Ledger(AssetAddress=%s AssetName=%s Entries=%d In=%s Out=%s Net=%s)",
+		"Ledger(AssetAddress=%s Entries=%d In=%s Out=%s Net=%s)",
 		l.AssetAddress,
-		l.AssetName,
 		len(l.Entries),
 		totIn.String(),
 		totOut.String(),
 		net.String(),
 	)
-}
-
-// AppendEntry appends one LedgerEntry to the ledger.
-func (l *Ledger) AppendEntry(entry LedgerEntry) {
-	l.Entries = append(l.Entries, entry)
 }
 
 // TotalIn sums the total incoming values for all LedgerEntry items in this Ledger.

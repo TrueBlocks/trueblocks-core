@@ -5,8 +5,13 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pricing"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -35,10 +40,38 @@ func NewReconciler(conn *rpc.Connection, accountedForAddress base.Address, names
 
 // String returns a summary of the Reconciler’s LedgerBook.
 func (r *Reconciler) String() string {
-	return fmt.Sprintf("Reconciler for %s => %s", r.LedgerBook.AccountedFor, r.LedgerBook.String())
+	return r.LedgerBook.String()
 }
 
-func (r *Reconciler) ProcessAppearances(appearances []types.Appearance, allTransfers []AssetTransfer) {
+func (r *Reconciler) GetStatements(prev, next base.Blknum, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+	xfers := r.GetAssetTransfers(r.LedgerBook.AccountedFor, prev, next, trans)
+	r.ProcessTransaction(trans, xfers)
+
+	if !r.LedgerBook.IsMaterial() {
+		return []types.Statement{}, nil
+	}
+
+	return r.LedgerBook.Statements()
+}
+
+func (lb *LedgerBook) IsMaterial() bool {
+	if len(lb.Ledgers) == 0 {
+		return false
+	}
+
+	for _, l := range lb.Ledgers {
+		net := l.NetValue()
+		if !net.Equal(base.ZeroWei) {
+			return true
+		}
+	}
+
+	return false
+}
+
+// ProcessTransaction takes a list of Appearances and their related AssetTransfers,
+// converts them to Postings, and appends them into the appropriate Ledger.
+func (r *Reconciler) ProcessTransaction(tx *types.Transaction, allTransfers []AssetTransfer) {
 	// We assume allTransfers includes every relevant AssetTransfer for the Appearances.
 	// In reality, you'd fetch them from an indexer or node calls.
 	//
@@ -49,11 +82,9 @@ func (r *Reconciler) ProcessAppearances(appearances []types.Appearance, allTrans
 
 	// For quick lookups:
 	appearanceByID := make(map[string]types.Appearance)
-	for _, app := range appearances {
-		// Example unique ID could be "blockNum-txIndex"
-		appID := fmt.Sprintf("%d-%d", app.BlockNumber, app.TransactionIndex)
-		appearanceByID[appID] = app
-	}
+	app := types.Appearance{Address: r.LedgerBook.AccountedFor, BlockNumber: uint32(tx.BlockNumber), TransactionIndex: uint32(tx.TransactionIndex)}
+	appID := fmt.Sprintf("%d-%d", app.BlockNumber, app.TransactionIndex)
+	appearanceByID[appID] = app
 
 	// Build ledger entries keyed by (assetAddress + appearanceID)
 	// because we might have multiple assets in the same transaction appearance
@@ -80,47 +111,74 @@ func (r *Reconciler) ProcessAppearances(appearances []types.Appearance, allTrans
 			entry = &newEntry
 		}
 
+		if file.IsTestMode() {
+			logger.TestLog(true, "Start of trial balance report")
+		}
+
 		// Convert the AssetTransfer into a single Posting (some logic is simplified):
 		posting := r.convertTransferToPosting(at)
-		entry.AppendPosting(posting)
+		if posting.IsMaterial() {
+			posting.SpotPrice, posting.PriceSource, _ = pricing.PriceUsd(r.connection, (*types.Statement)(&posting))
+		}
+
+		// logger.Info(trans.BlockNumber, trans.TransactionIndex, r)
+		if file.IsTestMode() {
+			(*types.Statement)(&posting).DebugStatement(posting.BlockNumberPrev, posting.BlockNumberNext)
+		}
+
+		entry.Postings = append(entry.Postings, posting)
 	}
 
 	// Now we have a set of ledger entries. We'll append them into the correct Ledger for each asset.
 	for key, lePtr := range entriesMap {
 		// key is "assetAddress|block-tx"
 		assetAddress := key[:findSeparator(key)]
-		ledger, found := r.LedgerBook.GetLedger(assetAddress)
+		ledger, found := r.LedgerBook.GetLedger(base.HexToAddress(assetAddress))
 		if !found {
-			// We create a new ledger
-			assetName := guessAssetName(assetAddress) // or from at.AssetName
-			ledger = NewLedger(base.HexToAddress(assetAddress), assetName)
+			ledger = NewLedger(base.HexToAddress(assetAddress))
 		}
-		ledger.AppendEntry(*lePtr)
-		r.LedgerBook.AddLedger(ledger)
+		ledger.Entries = append(ledger.Entries, *lePtr)
+		r.LedgerBook.Ledgers[ledger.AssetAddress.Hex()] = ledger
 	}
 }
 
 // convertTransferToPosting transforms a single AssetTransfer into a basic Posting.
 func (r *Reconciler) convertTransferToPosting(at AssetTransfer) Posting {
-	// Timestamp is not retrieved here; could fetch from a block info if needed.
-	p := NewPosting(at.BlockNumber, at.TransactionIndex, at.Index, 0)
+	ret := Posting(at)
 
-	// We'll decide if it's incoming or outgoing for the accountedForAddress.
-	// This is oversimplified. Real logic might check "r.LedgerBook.AccountedFor"
-	// to see if 'FromAddress' or 'ToAddress' matches.
-	if at.FromAddress == r.LedgerBook.AccountedFor {
-		// out
-		p.TransferOut = at.Amount
-	} else if at.ToAddress == r.LedgerBook.AccountedFor {
-		// in
-		p.TransferIn = at.Amount
+	if at.AssetType != types.TrialBalToken && at.AssetType != types.TrialBalNft {
+		prevBal, _ := r.connection.GetBalanceAt(r.LedgerBook.AccountedFor, at.BlockNumberPrev)
+		if at.BlockNumber == 0 {
+			prevBal = new(base.Wei)
+		}
+
+		begBal, _ := r.connection.GetBalanceAt(r.LedgerBook.AccountedFor, at.BlockNumber-1)
+		if at.BlockNumber == 0 {
+			begBal = new(base.Wei)
+		}
+
+		endBal, _ := r.connection.GetBalanceAt(r.LedgerBook.AccountedFor, at.BlockNumber)
+
+		ret.PrevBal = *prevBal
+		ret.BegBal = *begBal
+		ret.EndBal = *endBal
+
+	} else {
+		prevBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.LedgerBook.AccountedFor, fmt.Sprintf("0x%x", at.BlockNumberPrev))
+		if at.BlockNumber == 0 {
+			prevBal = new(base.Wei)
+		}
+
+		begBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.LedgerBook.AccountedFor, fmt.Sprintf("0x%x", at.BlockNumber-1))
+		if at.BlockNumber == 0 {
+			begBal = new(base.Wei)
+		}
+		endBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.LedgerBook.AccountedFor, fmt.Sprintf("0x%x", at.BlockNumber))
+		ret.PrevBal = *prevBal
+		ret.BegBal = *begBal
+		ret.EndBal = *endBal
 	}
-
-	// If there's a gas cost or internal fees, you might handle them here similarly,
-	// checking whether they're relevant to the accountedForAddress.
-
-	// Return the constructed posting
-	return p
+	return ret
 }
 
 // ReconcileCheckpoint is a placeholder for a method that verifies final ledger balances
@@ -141,180 +199,169 @@ func findSeparator(s string) int {
 	return len(s)
 }
 
-// guessAssetName is a placeholder that might look up a known asset address map.
-func guessAssetName(addr string) string {
-	if addr == "0x0" || addr == "" {
-		return "ETH"
-	}
-	return "UnknownAsset"
-}
-
-// DeriveAssetTransfers parses a single Transaction and returns a slice of AssetTransfer
+// GetAssetTransfers parses a single Transaction and returns a slice of AssetTransfer
 // by checking the transaction's Value, its Logs for ERC20 events, and an optional Traces field.
-func DeriveAssetTransfers(accountFor base.Address, tx *types.Transaction) []AssetTransfer {
+func (r *Reconciler) GetAssetTransfers(accountFor base.Address, prev, next base.Blknum, trans *types.Transaction) []AssetTransfer {
 	var results []AssetTransfer
 
-	// if false { // assetOfInterest(l.assetFilter, base.FAKE_ETH_ADDRESS) {
+	at := AssetTransfer{
+		AccountedFor:     accountFor,
+		BlockNumber:      trans.BlockNumber,
+		BlockNumberPrev:  prev,
+		BlockNumberNext:  next,
+		TransactionIndex: trans.TransactionIndex,
+		TransactionHash:  trans.Hash,
+		Timestamp:        trans.Timestamp,
+		AssetAddress:     base.FAKE_ETH_ADDRESS,
+		AssetSymbol:      "WEI",
+		LogIndex:         0,
+		Sender:           trans.From,
+		Recipient:        trans.To,
+		AssetType:        types.TrialBalEth,
+		Decimals:         18,
+	}
+	if r.asEther {
+		at.AssetSymbol = "ETH"
+	}
+
+	if trans.BlockNumber != 0 {
+		if accountFor == trans.From {
+			at.AmountOut = trans.Value
+		} else if accountFor == trans.To {
+			at.AmountIn = trans.Value
+		}
+	}
+
+	if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
+		at.Recipient = trans.Receipt.ContractAddress
+	}
+
+	// Do not collapse. A single transaction may have many movements of money
+	if r.LedgerBook.AccountedFor == at.Sender {
+		gasUsed := new(base.Wei)
+		if trans.Receipt != nil {
+			gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
+		}
+		gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
+		gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
+
+		at.AmountOut = trans.Value
+		at.GasOut = *gasOut
+	}
+
+	// Do not collapse. A single transaction may have many movements of money
+	if r.LedgerBook.AccountedFor == at.Recipient {
+		if at.BlockNumber == 0 {
+			at.PrefundIn = trans.Value
+		} else {
+			if trans.Rewards != nil {
+				at.MinerBaseRewardIn = trans.Rewards.Block
+				at.MinerNephewRewardIn = trans.Rewards.Nephew
+				at.MinerTxFeeIn = trans.Rewards.TxFee
+				at.MinerUncleRewardIn = trans.Rewards.Uncle
+			} else {
+				at.AmountIn = trans.Value
+			}
+			// TODO: BOGUS PERF - WHAT ABOUT WITHDRAWALS?
+		}
+	}
+
 	/*
-			// TODO: We ignore errors in the next few lines, but we should not
-			prevBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.Prev())
-			if trans.BlockNumber == 0 {
-				prevBal = new(base.Wei)
-			}
-			begBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.Cur()-1)
-			if trans.BlockNumber == 0 {
-				begBal = new(base.Wei)
-			}
-			endBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.Cur())
 
-			ret := types.Statement{
-				AccountedFor:     l.accountFor,
-				Sender:           trans.From,
-				Recipient:        trans.To,
-				BlockNumber:      trans.BlockNumber,
-				TransactionIndex: trans.TransactionIndex,
-				TransactionHash:  trans.Hash,
-				LogIndex:         0,
-				Timestamp:        trans.Timestamp,
-				AssetAddress:     base.FAKE_ETH_ADDRESS,
-				AssetSymbol:      "WEI",
-				Decimals:         18,
-				SpotPrice:        0.0,
-				PriceSource:      "not-priced",
-				PrevBal:          *prevBal,
-				BegBal:           *begBal,
-				EndBal:           *endBal,
-				PostType:        ctx.PostType(),
+		if !l.useTraces && l.trialBalance(types.TrialBalEth, &ret) {
+			if ret.IsMaterial() {
+				statements = append(statements, ret)
+			} else {
+				logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
 			}
-
-			if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
-				ret.Recipient = trans.Receipt.ContractAddress
+		} else {
+			if !l.useTraces {
+				logger.TestLog(!l.useTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), " need to decend into traces")
 			}
-
-			// Do not collapse. A single transaction may have many movements of money
-			if l.accountFor == ret.Sender {
-				gasUsed := new(base.Wei)
-				if trans.Receipt != nil {
-					gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
-				}
-				gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
-				gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
-
-				ret.AmountOut = trans.Value
-				ret.GasOut = *gasOut
-			}
-
-			// Do not collapse. A single transaction may have many movements of money
-			if l.accountFor == ret.Recipient {
-				if ret.BlockNumber == 0 {
-					ret.PrefundIn = trans.Value
-				} else {
-					if trans.Rewards != nil {
-						ret.MinerBaseRewardIn = trans.Rewards.Block
-						ret.MinerNephewRewardIn = trans.Rewards.Nephew
-						ret.MinerTxFeeIn = trans.Rewards.TxFee
-						ret.MinerUncleRewardIn = trans.Rewards.Uncle
-					} else {
-						ret.AmountIn = trans.Value
-					}
-					// TODO: BOGUS PERF - WHAT ABOUT WITHDRAWALS?
-				}
-			}
-
-			if l.asEther {
-				ret.AssetSymbol = "ETH"
-			}
-
-			if !l.useTraces && l.trialBalance(types.TrialBalEth, &ret) {
-				if ret.IsMaterial() {
-					statements = append(statements, ret)
-				} else {
-					logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
+			if traceStatements, err := l.getStatementsFromTraces(trans, &ret); err != nil {
+				if !utils.IsFuzzing() {
+					logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 				}
 			} else {
-				if !l.useTraces {
-					logger.TestLog(!l.useTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), " need to decend into traces")
-				}
-				if traceStatements, err := l.getStatementsFromTraces(trans, &ret); err != nil {
-					if !utils.IsFuzzing() {
-						logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
-					}
-				} else {
-					statements = append(statements, traceStatements...)
-				}
+				statements = append(statements, traceStatements...)
 			}
 		}
-
 	*/
-	// }
 
-	// 1) Native transfer if tx.Value is non-zero.
-	if tx.Value.Cmp(base.NewWei(0)) != 0 {
-		results = append(results, AssetTransfer{
-			BlockNumber:      tx.BlockNumber,
-			TransactionIndex: tx.TransactionIndex,
-			AssetAddress:     base.FAKE_ETH_ADDRESS, // for native chain coin
-			AssetName:        "ETH",                 // or another name if not Ethereum
-			Amount:           tx.Value,
-			Index:            "nativeVal",
-			FromAddress:      tx.From,
-			ToAddress:        tx.To,
-		})
+	if at.IsMaterial() {
+		results = append(results, at)
 	}
 
 	// 2) Parse logs for ERC20 or other asset transfers. This is a simplified example
 	// that checks if a log looks like an ERC20 Transfer. Real logic should decode topics, etc.
-	if tx.Receipt != nil {
-		for i, lg := range tx.Receipt.Logs {
+	if trans.Receipt != nil {
+		for i, lg := range trans.Receipt.Logs {
 			if log, err := normalize.NormalizeTransferOrApproval(&lg); err != nil {
 				continue
 
 			} else {
-				// sym := log.Address.DefaultSymbol()
-				// decimals := base.Value(18)
-				// name := l.names[log.Address]
-				// if name.Address == log.Address {
-				// 	if name.Symbol != "" {
-				// 		sym = name.Symbol
-				// 	}
-				// 	if name.Decimals != 0 {
-				// 		decimals = base.Value(name.Decimals)
-				// 	}
-				// }
+				if log.Topics[0] != topics.TransferTopic {
+					continue
+				}
 
 				fromAddr := base.HexToAddress(log.Topics[1].Hex())
 				toAddr := base.HexToAddress(log.Topics[2].Hex())
 				var amount *base.Wei
-				if amount, _ = new(base.Wei).SetString(strings.Replace(log.Data, "0x", "", -1), 16); amount == nil {
+				if amount, _ = new(base.Wei).SetString(strings.Replace(log.Data, "0x", "", i), 16); amount == nil {
 					amount = base.NewWei(0)
 				}
 
 				ofInterest := false
 
 				// Do not collapse, may be both
+				amountOut := *base.ZeroWei
 				if accountFor == fromAddr {
-					// amountOut = *amt
+					amountOut = *amount
 					ofInterest = true
 				}
 
 				// Do not collapse, may be both
+				amountIn := *base.ZeroWei
 				if accountFor == toAddr {
-					// amountIn = *amt
+					amountIn = *amount
 					ofInterest = true
 				}
 
 				if ofInterest {
 
+					sym := log.Address.DefaultSymbol()
+					decimals := base.Value(18)
+					name := r.names[log.Address]
+					if name.Address == log.Address {
+						if name.Symbol != "" {
+							sym = name.Symbol
+						}
+						if name.Decimals != 0 {
+							decimals = base.Value(name.Decimals)
+						}
+					}
+
 					// The contract address is in log.Address, which typically is the ERC20 token.
 					at := AssetTransfer{
-						BlockNumber:      tx.BlockNumber,
-						TransactionIndex: tx.TransactionIndex,
+						BlockNumber:      trans.BlockNumber,
+						BlockNumberPrev:  prev,
+						BlockNumberNext:  next,
+						TransactionIndex: trans.TransactionIndex,
+						TransactionHash:  trans.Hash,
+						Timestamp:        trans.Timestamp,
 						AssetAddress:     lg.Address,
-						AssetName:        "ERC20", // you might map the address to a known symbol
-						Amount:           *amount,
-						Index:            logIndexToString(i),
-						FromAddress:      fromAddr,
-						ToAddress:        toAddr,
+						AssetSymbol:      sym,
+						AmountIn:         amountIn,
+						AmountOut:        amountOut,
+						Decimals:         decimals,
+						LogIndex:         lg.LogIndex,
+						Sender:           fromAddr,
+						Recipient:        toAddr,
+						AssetType:        types.TrialBalToken,
+					}
+
+					// Do not collapse. A single transaction may have many movements of money
+					if r.LedgerBook.AccountedFor == at.Recipient {
 					}
 					results = append(results, at)
 				}
@@ -324,15 +371,14 @@ func DeriveAssetTransfers(accountFor base.Address, tx *types.Transaction) []Asse
 
 	// // 3) If you have internal traces, parse them for self-destructs, internal calls, etc.
 	// // For each trace that shows a value transfer from A to B, create an AssetTransfer.
-	// for i, tr := range tx.Traces {
+	// for i, tr := range trans.Traces {
 	// 	// Example check if it's a simple call with a value transfer
 	// 	if strings.EqualFold(tr.Type, "call") && tr.ValueWei > 0 {
 	// 		// We treat it as a native coin movement
 	// 		xf := AssetTransfer{
-	// 			BlockNumber:      tx.BlockNumber,
-	// 			TransactionIndex: tx.TransactionIndex,
-	// 			AssetAddress:     "0x0",
-	// 			AssetName:        "ETH",
+	// 			BlockNumber:      trans.BlockNumber,
+	// 			TransactionIndex: trans.TransactionIndex,
+	// 			AssetAddress:        "0x0",
 	// 			Amount:           *base.NewWei(tr.ValueWei),
 	// 			Index:            traceIndexToString(i),
 	// 			FromAddress:      tr.From,
@@ -345,111 +391,3 @@ func DeriveAssetTransfers(accountFor base.Address, tx *types.Transaction) []Asse
 
 	return results
 }
-
-// // isLikelyErc20Transfer is a toy placeholder. Real code would check the log's Topics for the
-// // Transfer signature (0xddf252ad...), decode the from/to addresses, parse the amount, etc.
-// func isLikelyErc20Transfer(lg types.Log) bool {
-// 	if len(lg.Topics) == 0 {
-// 		return false
-// 	}
-// 	// For a real ERC20 Transfer, topic[0] would be the transfer signature. We'll do a naive check.
-// 	return strings.HasPrefix(lg.Topics[0].Hex(), "0xddf252ad")
-// }
-
-func logIndexToString(i int) string {
-	return "log_" + fmt.Sprintf("%d", i)
-}
-
-// func traceIndexToString(i int) string {
-// 	return "trace_" + fmt.Sprintf("%d", i)
-// }
-
-/*
-Below is a summary of the exact event signatures (the textual definitions) as well as how they map to topics and data fields for the ERC-1155 TransferSingle and TransferBatch events. These are defined by EIP-1155.
-
-1. Textual Signatures
-TransferSingle
-solidity
-Copy
-event TransferSingle(
-    address indexed operator,
-    address indexed from,
-    address indexed to,
-    uint256 id,
-    uint256 value
-);
-Event Signature String:
-"TransferSingle(address,address,address,uint256,uint256)"
-Keccak-256 Hash (Topic0):
-0xc3d58168c13c4efa6bcad3d21043f75a5fcedf1fd025893feae1f62ff7b9be96
-TransferBatch
-solidity
-Copy
-event TransferBatch(
-    address indexed operator,
-    address indexed from,
-    address indexed to,
-    uint256[] ids,
-    uint256[] values
-);
-Event Signature String:
-"TransferBatch(address,address,address,uint256[],uint256[])"
-Keccak-256 Hash (Topic0):
-0x4a39dc06d4c0dbc64b70c19958dbf6dfc8d7dccb5d7f5bd8ca0bbd271e032194
-2. Topics and Data Encoding
-When these events are emitted, the Ethereum log is structured as follows:
-
-Topic0: Always the Keccak-256 hash of the event’s signature string.
-
-For TransferSingle: 0xc3d58168...
-For TransferBatch: 0x4a39dc06...
-Indexed Parameters:
-
-operator (indexed) → Topic1
-from (indexed) → Topic2
-to (indexed) → Topic3
-Data Field: Contains non-indexed parameters.
-
-For TransferSingle: The id (uint256) followed by value (uint256).
-For TransferBatch: Encoded dynamic arrays ids (uint256[]) and values (uint256[]) in standard ABI-encoded form.
-TransferSingle Encoding Layout
-topics[0] = keccak256("TransferSingle(address,address,address,uint256,uint256)")
-
-topics[1] = operator (indexed)
-
-topics[2] = from (indexed)
-
-topics[3] = to (indexed)
-
-data (ABI-encoded):
-
-id (uint256)
-value (uint256)
-TransferBatch Encoding Layout
-topics[0] = keccak256("TransferBatch(address,address,address,uint256[],uint256[])")
-
-topics[1] = operator (indexed)
-
-topics[2] = from (indexed)
-
-topics[3] = to (indexed)
-
-data (ABI-encoded):
-
-Offset pointer to ids[]
-Offset pointer to values[]
-Length of ids[]
-Each element of ids[] (uint256)
-Length of values[]
-Each element of values[] (uint256)
-Note that the arrays ids and values are dynamic, so ABI encoding places their length and contents in the data section according to standard Solidity ABI rules.
-
-3. Summary
-Event Names: TransferSingle and TransferBatch.
-Indexed Parameters: operator, from, to.
-Non-Indexed (Data) Parameters:
-TransferSingle: id, value
-TransferBatch : ids[], values[]
-No Native ERC-20 Transfer: ERC-1155 does not emit the ERC-20 Transfer event. All transfers (fungible or NFT-style) use TransferSingle or TransferBatch.
-These signatures and encodings are part of the official ERC-1155 standard and are how any compliant ERC-1155 contract must emit its transfer events.
-*/

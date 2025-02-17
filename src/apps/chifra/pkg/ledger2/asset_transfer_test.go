@@ -10,22 +10,22 @@ func TestNewAssetTransfer(t *testing.T) {
 	blockNum := base.Blknum(12345)
 	txIndex := base.Txnum(3)
 	assetAddress := base.HexToAddress("0x1234")
-	assetName := "TEST"
+	assetSymbol := "TEST"
 	amount := base.NewWei(999)
-	indexVal := "trace_1"
+	indexVal := base.Lognum(1)
 	fromAddr := base.HexToAddress("0x1001")
 	toAddr := base.HexToAddress("0x1003")
 
-	at := NewAssetTransfer(
-		blockNum,
-		txIndex,
-		assetAddress,
-		assetName,
-		*amount,
-		indexVal,
-		fromAddr,
-		toAddr,
-	)
+	at := AssetTransfer{
+		BlockNumber:      blockNum,
+		TransactionIndex: txIndex,
+		AssetAddress:     assetAddress,
+		AssetSymbol:      assetSymbol,
+		AmountIn:         *amount,
+		LogIndex:         indexVal,
+		Sender:           fromAddr,
+		Recipient:        toAddr,
+	}
 
 	if at.BlockNumber != blockNum {
 		t.Fatalf("BlockNumber mismatch. got=%d want=%d", at.BlockNumber, blockNum)
@@ -36,20 +36,20 @@ func TestNewAssetTransfer(t *testing.T) {
 	if at.AssetAddress != assetAddress {
 		t.Fatalf("AssetAddress mismatch. got=%s want=%s", at.AssetAddress, assetAddress)
 	}
-	if at.AssetName != assetName {
-		t.Fatalf("AssetName mismatch. got=%s want=%s", at.AssetName, assetName)
+	if at.AssetSymbol != assetSymbol {
+		t.Fatalf("AssetSymbol mismatch. got=%s want=%s", at.AssetSymbol, assetSymbol)
 	}
-	if at.Amount.Cmp(amount) != 0 {
-		t.Fatalf("Amount mismatch. got=%s want=%s", at.Amount.String(), amount.String())
+	if at.AmountIn.Cmp(amount) != 0 {
+		t.Fatalf("Amount mismatch. got=%s want=%s", at.AmountIn.String(), amount.String())
 	}
-	if at.Index != indexVal {
-		t.Fatalf("Index mismatch. got=%s want=%s", at.Index, indexVal)
+	if at.LogIndex != indexVal {
+		t.Fatalf("Index mismatch. got=%d want=%d", at.LogIndex, indexVal)
 	}
-	if at.FromAddress != fromAddr {
-		t.Fatalf("FromAddress mismatch. got=%s want=%s", at.FromAddress, fromAddr)
+	if at.Sender != fromAddr {
+		t.Fatalf("FromAddress mismatch. got=%s want=%s", at.Sender, fromAddr)
 	}
-	if at.ToAddress != toAddr {
-		t.Fatalf("ToAddress mismatch. got=%s want=%s", at.ToAddress, toAddr)
+	if at.Recipient != toAddr {
+		t.Fatalf("ToAddress mismatch. got=%s want=%s", at.Recipient, toAddr)
 	}
 
 	zero := base.NewWei(0)
@@ -57,13 +57,13 @@ func TestNewAssetTransfer(t *testing.T) {
 		name string
 		val  base.Wei
 	}{
-		{"GasCost", at.GasCost},
-		{"MiningReward", at.MiningReward},
-		{"UncleReward", at.UncleReward},
-		{"Withdrawal", at.Withdrawal},
-		{"SelfDestruct", at.SelfDestruct},
-		{"Prefund", at.Prefund},
-		{"InternalTxFees", at.InternalTxFees},
+		{"GasCost", at.GasOut},
+		{"MiningReward", at.MinerBaseRewardIn},
+		{"UncleReward", at.MinerUncleRewardIn},
+		// {"Withdrawal", at.Withdrawal},
+		{"SelfDestruct", at.SelfDestructIn},
+		{"Prefund", at.PrefundIn},
+		{"InternalTxFees", at.InternalOut},
 	}
 	for _, fld := range fields {
 		if fld.val.Cmp(zero) != 0 {
@@ -73,19 +73,19 @@ func TestNewAssetTransfer(t *testing.T) {
 }
 
 // func TestAssetTransferString(t *testing.T) {
-// 	at := NewAssetTransfer(
-// 		100,
-// 		2,
-// 		base.HexToAddress("0xabcdef"),
-// 		"TEST",
-// 		*base.NewWei(500),
-// 		"log_5",
-// 		base.HexToAddress("0xFrom"),
-// 		base.HexToAddress("0xTo"),
-// 	)
+// 	at := AssetTransfer{
+// 		BlockNumber:      100,
+// 		TransactionIndex: 2,
+// 		AssetAddress:        base.HexToAddress("0xabcdef"),
+// 		AssetSymbol:      "TEST",
+// 		AmountIn:         *base.NewWei(500),
+// 		LogIndex:         5,
+// 		Sender:           base.HexToAddress("0xaaaa"),
+// 		Recipient:        base.HexToAddress("0xbbbb"),
+// 	}
 
 // 	got := at.String()
-// 	want := "AssetTransfer(Block=100 Tx=2 Asset=0xAsset Amount=500 Index=log_5 From=0xFrom To=0xTo)"
+// 	want := `{"accountedFor":"0x0","amountIn":{},"amountOut":{},"assetAddress":"0x0000000000000000000000000000000000abcdef","assetSymbol":"TEST","begBal":{},"blockNumber":100,"blockNumberPrev":0,"blockNumberNext":0,"correctingIn":{},"correctingOut":{},"decimals":0,"endBal":{},"gasOut":{},"internalIn":{},"internalOut":{},"logIndex":5,"minerBaseRewardIn":{},"minerNephewRewardIn":{},"minerTxFeeIn":{},"minerUncleRewardIn":{},"prefundIn":{},"prevBal":{},"priceSource":"","recipient":"0x000000000000000000000000000000000000bbbb","rollingBalance":{},"selfDestructIn":{},"selfDestructOut":{},"sender":"0x000000000000000000000000000000000000aaaa","spotPrice":0,"timestamp":0,"transactionHash":"0x0000000000000000000000000000000000000000000000000000000000000000","transactionIndex":2}`
 // 	if got != want {
 // 		t.Fatalf("String mismatch.\ngot:  %s\nwant: %s", got, want)
 // 	}

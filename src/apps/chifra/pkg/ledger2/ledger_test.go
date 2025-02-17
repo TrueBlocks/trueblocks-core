@@ -7,12 +7,9 @@ import (
 )
 
 func TestNewLedger(t *testing.T) {
-	l := NewLedger(base.HexToAddress("0xABC"), "TEST")
+	l := NewLedger(base.HexToAddress("0xABC"))
 	if l.AssetAddress != base.HexToAddress("0xABC") {
 		t.Fatalf("AssetAddress mismatch. got=%s want=%s", l.AssetAddress, "0xABC")
-	}
-	if l.AssetName != "TEST" {
-		t.Fatalf("AssetName mismatch. got=%s want=%s", l.AssetName, "TEST")
 	}
 	if len(l.Entries) != 0 {
 		t.Fatalf("Expected no entries initially. got=%d want=0", len(l.Entries))
@@ -20,39 +17,49 @@ func TestNewLedger(t *testing.T) {
 }
 
 func TestAppendEntry(t *testing.T) {
-	l := NewLedger(base.HexToAddress("0xAAA"), "AAA")
+	l := NewLedger(base.HexToAddress("0xAAA"))
 
 	e1 := NewLedgerEntry("appearance-1", 100, 0)
-	l.AppendEntry(e1)
+	l.Entries = append(l.Entries, e1)
 	if len(l.Entries) != 1 {
 		t.Fatalf("Expected 1 entry. got=%d want=1", len(l.Entries))
 	}
 
 	e2 := NewLedgerEntry("appearance-2", 101, 1)
-	l.AppendEntry(e2)
+	l.Entries = append(l.Entries, e2)
 	if len(l.Entries) != 2 {
 		t.Fatalf("Expected 2 entries. got=%d want=2", len(l.Entries))
 	}
 }
 
 func TestLedgerAggregation(t *testing.T) {
-	l := NewLedger(base.HexToAddress("0xDEF"), "DEF")
+	l := NewLedger(base.HexToAddress("0xDEF"))
 
 	// Entry 1: total in = 80, total out = 10
 	e1 := NewLedgerEntry("appearance-1", 200, 5)
-	p1 := NewPosting(200, 5, "log_1", 9999)
-	p1.TransferIn = *base.NewWei(80)
-	p1.TransferOut = *base.NewWei(10)
-	e1.AppendPosting(p1)
-	l.AppendEntry(e1)
+	p1 := Posting{
+		BlockNumber:      200,
+		TransactionIndex: 5,
+		LogIndex:         1,
+		Timestamp:        9999,
+	}
+	p1.AmountIn = *base.NewWei(80)
+	p1.AmountOut = *base.NewWei(10)
+	e1.Postings = append(e1.Postings, p1)
+	l.Entries = append(l.Entries, e1)
 
 	// Entry 2: total in = 25, total out = 5
 	e2 := NewLedgerEntry("appearance-2", 201, 3)
-	p2 := NewPosting(201, 3, "log_2", 9999)
-	p2.TransferIn = *base.NewWei(25)
+	p2 := Posting{
+		BlockNumber:      201,
+		TransactionIndex: 3,
+		LogIndex:         2,
+		Timestamp:        9999,
+	}
+	p2.AmountIn = *base.NewWei(25)
 	p2.GasOut = *base.NewWei(5)
-	e2.AppendPosting(p2)
-	l.AppendEntry(e2)
+	e2.Postings = append(e2.Postings, p2)
+	l.Entries = append(l.Entries, e2)
 
 	in := l.TotalIn()
 	if in.String() != "105" {
@@ -70,21 +77,24 @@ func TestLedgerAggregation(t *testing.T) {
 	}
 }
 
-// func TestLedgerString(t *testing.T) {
-// 	l := NewLedger(base.HexToAddress("0xFED"), "FED")
+func TestLedgerString(t *testing.T) {
+	l := NewLedger(base.HexToAddress("0xFED"))
 
-// 	e := NewLedgerEntry("some-app", 300, 2)
-// 	p := NewPosting(300, 2, "abc", 111)
-// 	p.TransferIn = *base.NewWei(100)
-// 	p.TransferOut = *base.NewWei(60)
-// 	e.AppendPosting(p)
+	e := NewLedgerEntry("some-app", 300, 2)
+	p := Posting{
+		BlockNumber:      300,
+		TransactionIndex: 2,
+		LogIndex:         12,
+		Timestamp:        2,
+		AmountIn:         *base.NewWei(100),
+		AmountOut:        *base.NewWei(60),
+	}
+	e.Postings = append(e.Postings, p)
+	l.Entries = append(l.Entries, e)
 
-// 	l.AppendEntry(e)
-
-// 	got := l.String()
-// 	// We expect: Ledger(AssetAddress=0xLED AssetName=LED Entries=1 In=100 Out=60 Net=40)
-// 	want := "Ledger(AssetAddress=0xLED AssetName=LED Entries=1 In=100 Out=60 Net=40)"
-// 	if got != want {
-// 		t.Fatalf("String mismatch.\ngot:  %s\nwant: %s", got, want)
-// 	}
-// }
+	got := l.String()
+	want := "Ledger(AssetAddress=0x0000000000000000000000000000000000000fed Entries=1 In=100 Out=60 Net=40)"
+	if got != want {
+		t.Fatalf("String mismatch.\ngot:  %s\nwant: %s", got, want)
+	}
+}

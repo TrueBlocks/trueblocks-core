@@ -41,17 +41,12 @@ func (le *LedgerEntry) String() string {
 	)
 }
 
-// AppendPosting adds one Posting to this LedgerEntry.
-func (le *LedgerEntry) AppendPosting(p Posting) {
-	le.Postings = append(le.Postings, p)
-}
-
 // TotalIn sums the total incoming values for all Postings in this LedgerEntry.
 func (le *LedgerEntry) TotalIn() base.Wei {
 	total := base.NewWei(0)
 	for _, posting := range le.Postings {
 		tmp := posting.TotalIn()
-		total = total.Add(total, &tmp)
+		total = total.Add(total, tmp)
 	}
 	return *total
 }
@@ -61,7 +56,7 @@ func (le *LedgerEntry) TotalOut() base.Wei {
 	total := base.NewWei(0)
 	for _, posting := range le.Postings {
 		tmp := posting.TotalOut()
-		total = total.Add(total, &tmp)
+		total = total.Add(total, tmp)
 	}
 	return *total
 }

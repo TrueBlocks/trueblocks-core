@@ -25,19 +25,29 @@ func TestNewLedgerEntry(t *testing.T) {
 func TestAppendPosting(t *testing.T) {
 	le := NewLedgerEntry("some-app", 100, 0)
 
-	p1 := NewPosting(100, 0, "log_1", 999)
-	p1.TransferIn = *base.NewWei(50)
-	p1.TransferOut = *base.NewWei(10)
-	le.AppendPosting(p1)
+	p1 := Posting{
+		BlockNumber:      100,
+		TransactionIndex: 0,
+		LogIndex:         1,
+		Timestamp:        999,
+		AmountIn:         *base.NewWei(50),
+		AmountOut:        *base.NewWei(10),
+	}
+	le.Postings = append(le.Postings, p1)
 
 	if len(le.Postings) != 1 {
 		t.Fatalf("Expected 1 posting after append. got=%d", len(le.Postings))
 	}
 
-	p2 := NewPosting(100, 0, "log_2", 999)
-	p2.TransferIn = *base.NewWei(20)
-	p2.GasOut = *base.NewWei(5)
-	le.AppendPosting(p2)
+	p2 := Posting{
+		BlockNumber:      100,
+		TransactionIndex: 0,
+		LogIndex:         2,
+		Timestamp:        999,
+		AmountIn:         *base.NewWei(20),
+		GasOut:           *base.NewWei(5),
+	}
+	le.Postings = append(le.Postings, p2)
 
 	if len(le.Postings) != 2 {
 		t.Fatalf("Expected 2 postings after second append. got=%d", len(le.Postings))
@@ -48,16 +58,26 @@ func TestLedgerEntryAggregation(t *testing.T) {
 	le := NewLedgerEntry("agg-app", 200, 5)
 
 	// Posting 1: In=80, Out=10
-	p1 := NewPosting(200, 5, "log_1", 123)
-	p1.TransferIn = *base.NewWei(80)
-	p1.TransferOut = *base.NewWei(10)
-	le.AppendPosting(p1)
+	p1 := Posting{
+		BlockNumber:      200,
+		TransactionIndex: 5,
+		LogIndex:         1,
+		Timestamp:        123,
+		AmountIn:         *base.NewWei(80),
+		AmountOut:        *base.NewWei(10),
+	}
+	le.Postings = append(le.Postings, p1)
 
 	// Posting 2: In=25, Out=5
-	p2 := NewPosting(200, 5, "log_2", 123)
-	p2.TransferIn = *base.NewWei(25)
-	p2.GasOut = *base.NewWei(5)
-	le.AppendPosting(p2)
+	p2 := Posting{
+		BlockNumber:      200,
+		TransactionIndex: 5,
+		LogIndex:         2,
+		Timestamp:        123,
+		AmountIn:         *base.NewWei(25),
+		GasOut:           *base.NewWei(5),
+	}
+	le.Postings = append(le.Postings, p2)
 
 	totalIn := le.TotalIn()
 	if totalIn.String() != "105" {
@@ -78,10 +98,15 @@ func TestLedgerEntryAggregation(t *testing.T) {
 func TestLedgerEntryString(t *testing.T) {
 	le := NewLedgerEntry("str-app", 300, 2)
 
-	p := NewPosting(300, 2, "abc", 9999)
-	p.TransferIn = *base.NewWei(100)
-	p.TransferOut = *base.NewWei(60)
-	le.AppendPosting(p)
+	p := Posting{
+		BlockNumber:      300,
+		TransactionIndex: 2,
+		LogIndex:         1,
+		Timestamp:        9999,
+		AmountIn:         *base.NewWei(100),
+		AmountOut:        *base.NewWei(60),
+	}
+	le.Postings = append(le.Postings, p)
 
 	got := le.String()
 	want := "LedgerEntry(AppearanceID=str-app Block=300 Tx=2 Postings=1 In=100 Out=60 Net=40)"

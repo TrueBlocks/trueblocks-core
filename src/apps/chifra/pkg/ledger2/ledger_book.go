@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // LedgerBook holds multiple Ledger items for a single AccountedFor.
@@ -26,7 +27,7 @@ func (lb *LedgerBook) String() string {
 	totOut := lb.TotalOut()
 	net := lb.NetValue()
 	return fmt.Sprintf(
-		"LedgerBook(Address=%s Ledgers=%d In=%s Out=%s Net=%s)",
+		"%s %d %s %s %s)",
 		lb.AccountedFor,
 		len(lb.Ledgers),
 		totIn.String(),
@@ -35,14 +36,9 @@ func (lb *LedgerBook) String() string {
 	)
 }
 
-// AddLedger inserts a new Ledger into this LedgerBook, keyed by its AssetAddress.
-func (lb *LedgerBook) AddLedger(l Ledger) {
-	lb.Ledgers[l.AssetAddress.Hex()] = l
-}
-
 // GetLedger retrieves the Ledger for a given asset address, if it exists.
-func (lb *LedgerBook) GetLedger(assetAddress string) (Ledger, bool) {
-	l, ok := lb.Ledgers[assetAddress]
+func (lb *LedgerBook) GetLedger(assetAddress base.Address) (Ledger, bool) {
+	l, ok := lb.Ledgers[assetAddress.Hex()]
 	return l, ok
 }
 
@@ -73,4 +69,52 @@ func (lb *LedgerBook) NetValue() base.Wei {
 	net := base.NewWei(0)
 	net = net.Sub(&in, &out)
 	return *net
+}
+
+// Statements returns a slice of types.Statement, one for each Posting in the LedgerBook.
+// It copies fields from the Posting and its parent Ledger and LedgerEntry as appropriate.
+// Unused fields in Statement are left at their default zero values.
+func (lb *LedgerBook) Statements() ([]types.Statement, error) {
+	var stmts []types.Statement
+
+	for _, l := range lb.Ledgers {
+		for _, entry := range l.Entries {
+			for _, posting := range entry.Postings {
+				s := types.Statement(posting)
+				s.AccountedFor = lb.AccountedFor
+				// {
+				// 	AccountedFor:       base.Address(lb.AccountedFor),
+				// 	AssetAddress:          base.Address(l.AssetAddress),
+				// 	AssetSymbol:        l.AssetSymbol,
+				// 	BlockNumber:        posting.BlockNumber,
+				// 	TransactionIndex:   posting.TransactionIndex,
+				// 	Timestamp:          posting.Timestamp,
+				// 	AmountIn:           posting.AmountIn,
+				// 	AmountOut:          posting.AmountOut,
+				// 	GasOut:             posting.GasOut,
+				// 	InternalOut:        posting.InternalOut,
+				// 	PrefundIn:          posting.PrefundIn,
+				// 	SelfDestructIn:     posting.SelfDestructIn,
+				// 	CorrectingIn:       posting.CorrectingIn,
+				// 	CorrectingOut:      posting.CorrectingOut,
+				// 	CorrectingReason:   posting.CorrectingReason,
+				// 	MinerBaseRewardIn:  posting.MinerBaseRewardIn,
+				// 	MinerUncleRewardIn: posting.UncleRewardIn,
+				// 	RollingBalance:     posting.RunningBalance,
+				// 	Sender:             posting.From,
+				// 	Recipient:          posting.To,
+				// 	// TODO: BOGUS SHIT!
+				// 	// Some fields in Statement (like Sender, Recipient, TransactionHash, etc.)
+				// 	// are not easily mapped from Posting or Ledger data, so they are left at default zero/empty.
+				// 	// Similarly, BegBal, EndBal, SpotPrice, and so on remain at default values.
+				// }
+
+				// You can further customize or derive additional fields here as needed.
+
+				stmts = append(stmts, s)
+			}
+		}
+	}
+
+	return stmts, nil
 }
