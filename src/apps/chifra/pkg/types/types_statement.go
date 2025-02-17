@@ -32,6 +32,8 @@ type Statement struct {
 	AssetType           TrialBalType   `json:"assetType,omitempty"`
 	BegBal              base.Wei       `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
+	BlockNumberNext     base.Blknum    `json:"blockNumberNext"`
+	BlockNumberPrev     base.Blknum    `json:"blockNumberPrev"`
 	CorrectingIn        base.Wei       `json:"correctingIn,omitempty"`
 	CorrectingOut       base.Wei       `json:"correctingOut,omitempty"`
 	CorrectingReason    string         `json:"correctingReason,omitempty"`
@@ -45,6 +47,8 @@ type Statement struct {
 	MinerNephewRewardIn base.Wei       `json:"minerNephewRewardIn,omitempty"`
 	MinerTxFeeIn        base.Wei       `json:"minerTxFeeIn,omitempty"`
 	MinerUncleRewardIn  base.Wei       `json:"minerUncleRewardIn,omitempty"`
+	PostFirst           bool           `json:"postFirst"`
+	PostLast            bool           `json:"postLast"`
 	PrefundIn           base.Wei       `json:"prefundIn,omitempty"`
 	PrevBal             base.Wei       `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`
@@ -58,11 +62,7 @@ type Statement struct {
 	TransactionHash     base.Hash      `json:"transactionHash"`
 	TransactionIndex    base.Txnum     `json:"transactionIndex"`
 	// EXISTING_CODE
-	BlockNumberPrev base.Blknum `json:"blockNumberPrev"`
-	BlockNumberNext base.Blknum `json:"blockNumberNext"`
-	PostFirst       bool        `json:"postFirst"`
-	PostLast        bool        `json:"postLast"`
-	PostType        PostType    `json:"postType"`
+	PostType PostType `json:"postType"`
 	// EXISTING_CODE
 }
 
@@ -246,6 +246,16 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// BlockNumberNext
+	if err = cache.WriteValue(writer, s.BlockNumberNext); err != nil {
+		return err
+	}
+
+	// BlockNumberPrev
+	if err = cache.WriteValue(writer, s.BlockNumberPrev); err != nil {
+		return err
+	}
+
 	// CorrectingIn
 	if err = cache.WriteValue(writer, &s.CorrectingIn); err != nil {
 		return err
@@ -308,6 +318,16 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 
 	// MinerUncleRewardIn
 	if err = cache.WriteValue(writer, &s.MinerUncleRewardIn); err != nil {
+		return err
+	}
+
+	// PostFirst
+	if err = cache.WriteValue(writer, s.PostFirst); err != nil {
+		return err
+	}
+
+	// PostLast
+	if err = cache.WriteValue(writer, s.PostLast); err != nil {
 		return err
 	}
 
@@ -419,6 +439,16 @@ func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 		return err
 	}
 
+	// BlockNumberNext
+	if err = cache.ReadValue(reader, &s.BlockNumberNext, vers); err != nil {
+		return err
+	}
+
+	// BlockNumberPrev
+	if err = cache.ReadValue(reader, &s.BlockNumberPrev, vers); err != nil {
+		return err
+	}
+
 	// CorrectingIn
 	if err = cache.ReadValue(reader, &s.CorrectingIn, vers); err != nil {
 		return err
@@ -481,6 +511,16 @@ func (s *Statement) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 
 	// MinerUncleRewardIn
 	if err = cache.ReadValue(reader, &s.MinerUncleRewardIn, vers); err != nil {
+		return err
+	}
+
+	// PostFirst
+	if err = cache.ReadValue(reader, &s.PostFirst, vers); err != nil {
+		return err
+	}
+
+	// PostLast
+	if err = cache.ReadValue(reader, &s.PostLast, vers); err != nil {
 		return err
 	}
 

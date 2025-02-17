@@ -3288,6 +3288,14 @@ components:
         postType:
           type: string
           format: string
+          description: "one of `invalid`, `genesis-diff`, `diff-diff`, `same-same`, `diff-same`, `same-diff` (calculated)"
+        postFirst:
+          type: boolean
+          format: boolean
+          description: "one of `invalid`, `genesis-diff`, `diff-diff`, `same-same`, `diff-same`, `same-diff`"
+        postLast:
+          type: boolean
+          format: boolean
           description: "one of `invalid`, `genesis-diff`, `diff-diff`, `same-same`, `diff-same`, `same-diff`"
         reconciled:
           type: boolean
@@ -3390,6 +3398,14 @@ components:
           type: string
           format: int256
           description: "a rolling balance used to help debug intra-block reconciliations"
+        blockNumberPrev:
+          type: number
+          format: blknum
+          description: "when reconciling, the number of the previous appearance block"
+        blockNumberNext:
+          type: number
+          format: blknum
+          description: "when reconciling, the number of the next appearance block"
     appearanceTable:
       description: "an appearance table for an address"
       type: object
