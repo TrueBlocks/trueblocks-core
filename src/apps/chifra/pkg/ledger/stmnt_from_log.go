@@ -89,6 +89,13 @@ func (l *Ledger) getStatementsFromLog(prev, next base.Blknum, logIn *types.Log) 
 			return s, fmt.Errorf("no context for %s", key)
 		}
 
+		if prev != ctx.Prev() {
+			logger.Error("getStatementsFromLog: prev != ctx.Prev()", prev, ctx.Prev())
+		}
+		if next != ctx.Next() {
+			logger.Error("getStatementsFromLog: next != ctx.Next()", next, ctx.Next())
+		}
+
 		if ofInterest {
 			s.PostFirst = ctx.first
 			s.PostLast = ctx.last

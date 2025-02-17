@@ -47,6 +47,13 @@ func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.Appearance
 		}
 
 		if assetOfInterest(l.assetFilter, base.FAKE_ETH_ADDRESS) {
+			if prev != ctx.Prev() {
+				logger.Error("GetStatements: prev != ctx.Prev()", prev, ctx.Prev())
+			}
+			if next != ctx.Next() {
+				logger.Error("GetStatements: next != ctx.Next()", next, ctx.Next())
+			}
+
 			// TODO: We ignore errors in the next few lines, but we should not
 			prevBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.Prev())
 			if trans.BlockNumber == 0 {
