@@ -50,9 +50,9 @@ source:              uniswap
 Previous:               11670418
 Current:                11670419
 Next:                   11670420
-postType:               first-last
-first:                  true
-last:                   true
+postType:               diff-diff
+postFirst:              true
+postLast:               true
 assetType:              token
 accountedFor:           0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
 sender:                 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7  ==>  0x0
@@ -111,14 +111,12 @@ End of trial balance report
       "endBalDiff": "0",
       "endBalDiffEth": "0",
       "endBalEth": "0",
-      "first": true,
       "gasOut": "0",
       "gasOutEth": "0",
       "internalIn": "0",
       "internalInEth": "0",
       "internalOut": "0",
       "internalOutEth": "0",
-      "last": true,
       "logIndex": 195,
       "minerBaseRewardIn": "0",
       "minerBaseRewardInEth": "0",
@@ -128,6 +126,9 @@ End of trial balance report
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postFirst": true,
+      "postLast": true,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "14922878205530494041",
@@ -135,7 +136,6 @@ End of trial balance report
       "priceSource": "not-priced",
       "recipient": "0x0",
       "reconciled": true,
-      "postType": "first-last",
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",

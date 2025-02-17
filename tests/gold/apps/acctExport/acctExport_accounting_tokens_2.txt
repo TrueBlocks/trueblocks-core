@@ -22,8 +22,8 @@ TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                0
 TEST[DATE|TIME] Next:                   202249
 TEST[DATE|TIME] postType:               genesis-diff
-TEST[DATE|TIME] first:                  true
-TEST[DATE|TIME] last:                   false
+TEST[DATE|TIME] postFirst:              true
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000050726566756e64  ==>  0x001d14804b399c6ef80e64576f657660804fec0b
@@ -58,8 +58,8 @@ TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                202249
 TEST[DATE|TIME] Next:                   1501459
 TEST[DATE|TIME] postType:               diff-diff
-TEST[DATE|TIME] first:                  false
-TEST[DATE|TIME] last:                   false
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0x2910543af39aba0cd09dbb2d50200b3e800a63d2
@@ -94,9 +94,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               202249
 TEST[DATE|TIME] Current:                1501459
 TEST[DATE|TIME] Next:                   1501460
-TEST[DATE|TIME] postType:               diff-last
-TEST[DATE|TIME] first:                  false
-TEST[DATE|TIME] last:                   true
+TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
@@ -169,14 +169,12 @@ Results in ./accounting_tokens_2_out.file
           "endBalDiff": "0",
           "endBalDiffEth": "0",
           "endBalEth": "4200",
-          "first": true,
           "gasOut": "0",
           "gasOutEth": "0",
           "internalIn": "0",
           "internalInEth": "0",
           "internalOut": "0",
           "internalOutEth": "0",
-          "last": false,
           "logIndex": 0,
           "minerBaseRewardIn": "0",
           "minerBaseRewardInEth": "0",
@@ -186,6 +184,9 @@ Results in ./accounting_tokens_2_out.file
           "minerTxFeeInEth": "0",
           "minerUncleRewardIn": "0",
           "minerUncleRewardInEth": "0",
+          "postFirst": true,
+          "postLast": false,
+          "postType": "genesis-diff",
           "prefundIn": "4200000000000000000000",
           "prefundInEth": "4200",
           "prevBal": "0",
@@ -193,7 +194,6 @@ Results in ./accounting_tokens_2_out.file
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "reconciled": true,
-          "postType": "genesis-diff",
           "selfDestructIn": "0",
           "selfDestructInEth": "0",
           "selfDestructOut": "0",
@@ -267,14 +267,12 @@ Results in ./accounting_tokens_2_out.file
           "endBalDiff": "0",
           "endBalDiffEth": "0",
           "endBalEth": "0.074679320489077336",
-          "first": false,
           "gasOut": "25320679510922664",
           "gasOutEth": "0.025320679510922664",
           "internalIn": "0",
           "internalInEth": "0",
           "internalOut": "0",
           "internalOutEth": "0",
-          "last": false,
           "logIndex": 0,
           "minerBaseRewardIn": "0",
           "minerBaseRewardInEth": "0",
@@ -284,6 +282,9 @@ Results in ./accounting_tokens_2_out.file
           "minerTxFeeInEth": "0",
           "minerUncleRewardIn": "0",
           "minerUncleRewardInEth": "0",
+          "postFirst": false,
+          "postLast": false,
+          "postType": "diff-diff",
           "prefundIn": "0",
           "prefundInEth": "0",
           "prevBal": "4200000000000000000000",
@@ -291,7 +292,6 @@ Results in ./accounting_tokens_2_out.file
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
           "reconciled": true,
-          "postType": "diff-diff",
           "selfDestructIn": "0",
           "selfDestructInEth": "0",
           "selfDestructOut": "0",
@@ -364,14 +364,12 @@ Results in ./accounting_tokens_2_out.file
           "endBalDiff": "0",
           "endBalDiffEth": "0",
           "endBalEth": "0",
-          "first": false,
           "gasOut": "420000000000000",
           "gasOutEth": "0.00042",
           "internalIn": "0",
           "internalInEth": "0",
           "internalOut": "0",
           "internalOutEth": "0",
-          "last": true,
           "logIndex": 0,
           "minerBaseRewardIn": "0",
           "minerBaseRewardInEth": "0",
@@ -381,6 +379,9 @@ Results in ./accounting_tokens_2_out.file
           "minerTxFeeInEth": "0",
           "minerUncleRewardIn": "0",
           "minerUncleRewardInEth": "0",
+          "postFirst": false,
+          "postLast": true,
+          "postType": "diff-diff",
           "prefundIn": "0",
           "prefundInEth": "0",
           "prevBal": "74679320489077336",
@@ -388,7 +389,6 @@ Results in ./accounting_tokens_2_out.file
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
           "reconciled": true,
-          "postType": "diff-last",
           "selfDestructIn": "0",
           "selfDestructInEth": "0",
           "selfDestructOut": "0",
