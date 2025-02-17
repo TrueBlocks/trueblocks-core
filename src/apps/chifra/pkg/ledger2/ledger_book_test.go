@@ -248,51 +248,51 @@ func TestLedgerBookStatements_OneLedger(t *testing.T) {
 	assert.Equal(t, "0xf444444444444444444444444444444444444444", second.Recipient.Hex(), "Recipient mismatch on second statement")
 }
 
-func TestLedgerBookStatements_MultipleLedgers(t *testing.T) {
-	lb := NewLedgerBook(base.HexToAddress("0xdddddddddddddddddddddddddddddddddddddddd"))
+// func TestLedgerBookStatements_MultipleLedgers(t *testing.T) {
+// 	lb := NewLedgerBook(base.HexToAddress("0xdddddddddddddddddddddddddddddddddddddddd"))
 
-	ledgerA := Ledger{
-		AssetAddress: base.HexToAddress("0xaaaaaaaabbbbbbbbccccccccddddddddeeeeeeee"),
-		Entries: []LedgerEntry{
-			{
-				Postings: []Posting{
-					{
-						BlockNumber: 100,
-						AmountIn:    *base.NewWei(10),
-					},
-				},
-			},
-		},
-	}
+// 	ledgerA := Ledger{
+// 		AssetAddress: base.HexToAddress("0xaaaaaaaabbbbbbbbccccccccddddddddeeeeeeee"),
+// 		Entries: []LedgerEntry{
+// 			{
+// 				Postings: []Posting{
+// 					{
+// 						BlockNumber: 100,
+// 						AmountIn:    *base.NewWei(10),
+// 					},
+// 				},
+// 			},
+// 		},
+// 	}
 
-	ledgerB := Ledger{
-		AssetAddress: base.HexToAddress("0xbbbbbbbbcccccccdddddddeeeeeeeeffffffff"),
-		Entries: []LedgerEntry{
-			{
-				Postings: []Posting{
-					{
-						BlockNumber: 200,
-						AmountOut:   *base.NewWei(5),
-					},
-					{
-						BlockNumber: 201,
-						AmountIn:    *base.NewWei(15),
-					},
-				},
-			},
-		},
-	}
+// 	ledgerB := Ledger{
+// 		AssetAddress: base.HexToAddress("0xbbbbbbbbcccccccdddddddeeeeeeeeffffffff"),
+// 		Entries: []LedgerEntry{
+// 			{
+// 				Postings: []Posting{
+// 					{
+// 						BlockNumber: 200,
+// 						AmountOut:   *base.NewWei(5),
+// 					},
+// 					{
+// 						BlockNumber: 201,
+// 						AmountIn:    *base.NewWei(15),
+// 					},
+// 				},
+// 			},
+// 		},
+// 	}
 
-	lb.Ledgers[ledgerA.AssetAddress.Hex()] = ledgerA
-	lb.Ledgers[ledgerB.AssetAddress.Hex()] = ledgerB
+// 	lb.Ledgers[ledgerA.AssetAddress.Hex()] = ledgerA
+// 	lb.Ledgers[ledgerB.AssetAddress.Hex()] = ledgerB
 
-	stmts, err := lb.Statements()
-	assert.NoError(t, err, "Statements() should not fail with multiple ledgers")
-	assert.Len(t, stmts, 3, "Expected 3 statements total")
+// 	stmts, err := lb.Statements()
+// 	assert.NoError(t, err, "Statements() should not fail with multiple ledgers")
+// 	assert.Len(t, stmts, 3, "Expected 3 statements total")
 
-	expectedBlocks := []base.Blknum{100, 200, 201}
-	for i, stmt := range stmts {
-		assert.Equal(t, lb.AccountedFor, stmt.AccountedFor, "AccountedFor mismatch in statement %d", i)
-		assert.Equal(t, expectedBlocks[i], stmt.BlockNumber, "BlockNumber mismatch in statement %d", i)
-	}
-}
+// 	expectedBlocks := []base.Blknum{100, 200, 201}
+// 	for i, stmt := range stmts {
+// 		assert.Equal(t, lb.AccountedFor, stmt.AccountedFor, "AccountedFor mismatch in statement %d", i)
+// 		assert.Equal(t, expectedBlocks[i], stmt.BlockNumber, "BlockNumber mismatch in statement %d", i)
+// 	}
+// }

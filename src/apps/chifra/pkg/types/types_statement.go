@@ -93,9 +93,6 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		"sender":              s.Sender,
 		"recipient":           s.Recipient,
 		"reconciled":          s.Reconciled(),
-		"postType":            s.getPostType().String(),
-		"postFirst":           s.PostFirst,
-		"postLast":            s.PostLast,
 		"correctingReason":    s.CorrectingReason,
 		"begBal":              s.BegBal.Text(10),
 		"amountNet":           s.AmountNet().Text(10),
@@ -123,10 +120,16 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		"prevBal":             s.PrevBal.Text(10),
 	}
 
+	if extraOpts["testMode"] == true {
+		model["postType"] = s.getPostType().String()
+		model["postFirst"] = s.PostFirst
+		model["postLast"] = s.PostLast
+	}
+
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
 		"assetAddress", "assetType", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
-		"sender", "recipient", "begBal", "amountNet", "endBal", "postType", "postFirst", "postLast", "reconciled",
+		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciled",
 		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
 		"selfDestructOut", "gasOut", "totalOutLessGas", "prevBal", "begBalDiff",

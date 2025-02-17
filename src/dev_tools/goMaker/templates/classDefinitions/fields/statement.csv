@@ -16,33 +16,33 @@ recipient           ,address      ,           ,               ,      14 ,the rec
 begBal              ,int256       ,           ,               ,      15 ,the beginning balance of the asset prior to the transaction
 amountNet           ,int256       ,           ,calc           ,      16 ,totalIn - totalOut
 endBal              ,int256       ,           ,               ,      17 ,the on-chain balance of the asset (see notes about intra-block reconciliations)
-postType            ,string       ,           ,calc           ,      18 ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
-postFirst           ,bool         ,           ,               ,      19 ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
-postLast            ,bool         ,           ,               ,      20 ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
-reconciled          ,bool         ,           ,calc           ,      21 ,true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.
-totalIn             ,int256       ,           ,calc           ,      22 ,the sum of the following `In` fields
-amountIn            ,int256       ,           ,omitempty      ,      23 ,the top-level value of the incoming transfer for the accountedFor address
-internalIn          ,int256       ,           ,omitempty      ,      24 ,the internal value of the incoming transfer for the accountedFor address
-selfDestructIn      ,int256       ,           ,omitempty      ,      25 ,the incoming value of a self-destruct if recipient is the accountedFor address
-minerBaseRewardIn   ,int256       ,           ,omitempty      ,      26 ,the base fee reward if the miner is the accountedFor address
-minerNephewRewardIn ,int256       ,           ,omitempty      ,      27 ,the nephew reward if the miner is the accountedFor address
-minerTxFeeIn        ,int256       ,           ,omitempty      ,      28 ,the transaction fee reward if the miner is the accountedFor address
-minerUncleRewardIn  ,int256       ,           ,omitempty      ,      29 ,the uncle reward if the miner who won the uncle block is the accountedFor address
-correctingIn        ,int256       ,           ,omitempty      ,      30 ,for unreconciled token transfers only&#44; the incoming amount needed to correct the transfer so it balances
-prefundIn           ,int256       ,           ,omitempty      ,      31 ,at block zero (0) only&#44; the amount of genesis income for the accountedFor address
-totalOut            ,int256       ,           ,calc           ,      32 ,the sum of the following `Out` fields
-amountOut           ,int256       ,           ,omitempty      ,      33 ,the amount (in units of the asset) of regular outflow during this transaction
-internalOut         ,int256       ,           ,omitempty      ,      34 ,the value of any internal value transfers out of the accountedFor account
-correctingOut       ,int256       ,           ,omitempty      ,      35 ,for unreconciled token transfers only&#44; the outgoing amount needed to correct the transfer so it balances
-selfDestructOut     ,int256       ,           ,omitempty      ,      36 ,the value of the self-destructed value out if the accountedFor address was self-destructed
-gasOut              ,int256       ,           ,omitempty      ,      37 ,if the transaction's original sender is the accountedFor address&#44; the amount of gas expended
-totalOutLessGas     ,int256       ,           ,calc           ,      38 ,totalOut - gasOut
-prevBal             ,int256       ,           ,omitempty      ,      39 ,the account balance for the given asset for the previous reconciliation
-begBalDiff          ,int256       ,           ,omitempty|calc ,      40 ,difference between expected beginning balance and balance at last reconciliation&#44; if non-zero&#44; the reconciliation failed
-endBalDiff          ,int256       ,           ,omitempty|calc ,      41 ,endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
-endBalCalc          ,int256       ,           ,omitempty|calc ,      42 ,begBal + amountNet
-correctingReason    ,string       ,           ,omitempty      ,      43 ,the reason for the correcting entries&#44; if any
-assetType           ,TrialBalType ,           ,omitempty      ,      44 ,one of eth&#44; eth-trace&#44; token&#44; or token-721
-rollingBalance      ,int256       ,           ,omitempty      ,      45 ,a rolling balance used to help debug intra-block reconciliations
-blockNumberPrev     ,blknum       ,           ,               ,      46 ,when reconciling&#44; the number of the previous appearance block
-blockNumberNext     ,blknum       ,           ,               ,      47 ,when reconciling&#44; the number of the next appearance block
+postType            ,string       ,           ,calc           ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
+postFirst           ,bool         ,           ,               ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
+postLast            ,bool         ,           ,               ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
+reconciled          ,bool         ,           ,calc           ,      18 ,true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.
+totalIn             ,int256       ,           ,calc           ,      19 ,the sum of the following `In` fields
+amountIn            ,int256       ,           ,omitempty      ,      20 ,the top-level value of the incoming transfer for the accountedFor address
+internalIn          ,int256       ,           ,omitempty      ,      21 ,the internal value of the incoming transfer for the accountedFor address
+selfDestructIn      ,int256       ,           ,omitempty      ,      22 ,the incoming value of a self-destruct if recipient is the accountedFor address
+minerBaseRewardIn   ,int256       ,           ,omitempty      ,      23 ,the base fee reward if the miner is the accountedFor address
+minerNephewRewardIn ,int256       ,           ,omitempty      ,      24 ,the nephew reward if the miner is the accountedFor address
+minerTxFeeIn        ,int256       ,           ,omitempty      ,      25 ,the transaction fee reward if the miner is the accountedFor address
+minerUncleRewardIn  ,int256       ,           ,omitempty      ,      26 ,the uncle reward if the miner who won the uncle block is the accountedFor address
+correctingIn        ,int256       ,           ,omitempty      ,      27 ,for unreconciled token transfers only&#44; the incoming amount needed to correct the transfer so it balances
+prefundIn           ,int256       ,           ,omitempty      ,      28 ,at block zero (0) only&#44; the amount of genesis income for the accountedFor address
+totalOut            ,int256       ,           ,calc           ,      29 ,the sum of the following `Out` fields
+amountOut           ,int256       ,           ,omitempty      ,      30 ,the amount (in units of the asset) of regular outflow during this transaction
+internalOut         ,int256       ,           ,omitempty      ,      31 ,the value of any internal value transfers out of the accountedFor account
+correctingOut       ,int256       ,           ,omitempty      ,      32 ,for unreconciled token transfers only&#44; the outgoing amount needed to correct the transfer so it balances
+selfDestructOut     ,int256       ,           ,omitempty      ,      33 ,the value of the self-destructed value out if the accountedFor address was self-destructed
+gasOut              ,int256       ,           ,omitempty      ,      34 ,if the transaction's original sender is the accountedFor address&#44; the amount of gas expended
+totalOutLessGas     ,int256       ,           ,calc           ,      35 ,totalOut - gasOut
+prevBal             ,int256       ,           ,omitempty      ,      36 ,the account balance for the given asset for the previous reconciliation
+begBalDiff          ,int256       ,           ,omitempty|calc ,      37 ,difference between expected beginning balance and balance at last reconciliation&#44; if non-zero&#44; the reconciliation failed
+endBalDiff          ,int256       ,           ,omitempty|calc ,      38 ,endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
+endBalCalc          ,int256       ,           ,omitempty|calc ,      39 ,begBal + amountNet
+correctingReason    ,string       ,           ,omitempty      ,      40 ,the reason for the correcting entries&#44; if any
+assetType           ,TrialBalType ,           ,omitempty      ,      41 ,one of eth&#44; eth-trace&#44; token&#44; or token-721
+rollingBalance      ,int256       ,           ,omitempty      ,      42 ,a rolling balance used to help debug intra-block reconciliations
+blockNumberPrev     ,blknum       ,           ,               ,         ,when reconciling&#44; the number of the previous appearance block
+blockNumberNext     ,blknum       ,           ,               ,         ,when reconciling&#44; the number of the next appearance block
