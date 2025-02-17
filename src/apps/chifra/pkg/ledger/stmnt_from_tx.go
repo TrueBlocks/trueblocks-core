@@ -119,7 +119,7 @@ func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.Appearance
 				ret.AssetSymbol = "ETH"
 			}
 
-			if !l.useTraces && l.trialBalance(types.TrialBalEth, &ret) {
+			if !l.useTraces && l.trialBalance(prev, next, types.TrialBalEth, &ret) {
 				if ret.IsMaterial() {
 					statements = append(statements, ret)
 				} else {
@@ -129,7 +129,7 @@ func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.Appearance
 				if !l.useTraces {
 					logger.TestLog(!l.useTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), " need to decend into traces")
 				}
-				if traceStatements, err := l.getStatementsFromTraces(trans, &ret); err != nil {
+				if traceStatements, err := l.getStatementsFromTraces(prev, next, trans, &ret); err != nil {
 					if !utils.IsFuzzing() {
 						logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 					}
@@ -139,7 +139,7 @@ func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.Appearance
 			}
 		}
 
-		if receiptStatements, err := l.getStatementsFromReceipt(filter, trans.Receipt); err != nil {
+		if receiptStatements, err := l.getStatementsFromReceipt(prev, next, filter, trans.Receipt); err != nil {
 			logger.Warn("Error getting statement from receipt", err)
 		} else {
 			statements = append(statements, receiptStatements...)

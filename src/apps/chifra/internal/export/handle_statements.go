@@ -130,6 +130,9 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 						for i, tx := range txArray {
 							// Note: apps and txArray are the same list, so we can use the index from txArray
 							prev := uint32(0)
+							if apps[i].BlockNumber > 0 {
+								prev = apps[i].BlockNumber - 1
+							}
 							if i > 0 {
 								prev = apps[i-1].BlockNumber
 							}

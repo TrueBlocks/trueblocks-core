@@ -14,7 +14,7 @@ import (
 )
 
 // getStatementsFromLog returns a statement from a given log
-func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error) {
+func (l *Ledger) getStatementsFromLog(prev, next base.Blknum, logIn *types.Log) (types.Statement, error) {
 	if logIn.Topics[0] != topics.TransferTopic {
 		return types.Statement{}, nil
 	}
@@ -120,7 +120,7 @@ func (l *Ledger) getStatementsFromLog(logIn *types.Log) (types.Statement, error)
 			if len(log.Topics) == 4 {
 				t = types.TrialBalNft
 			}
-			if !l.trialBalance(t, &s) {
+			if !l.trialBalance(prev, next, t, &s) {
 				if !utils.IsFuzzing() {
 					logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
 				}

@@ -44,7 +44,7 @@ func (r *Reconciler) String() string {
 }
 
 func (r *Reconciler) GetStatements(prev, next base.Blknum, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
-	xfers := r.GetAssetTransfers(r.LedgerBook.AccountedFor, prev, next, trans)
+	xfers := r.GetAssetTransfers(prev, next, trans)
 	r.ProcessTransaction(trans, xfers)
 
 	if !r.LedgerBook.IsMaterial() {
@@ -201,11 +201,11 @@ func findSeparator(s string) int {
 
 // GetAssetTransfers parses a single Transaction and returns a slice of AssetTransfer
 // by checking the transaction's Value, its Logs for ERC20 events, and an optional Traces field.
-func (r *Reconciler) GetAssetTransfers(accountFor base.Address, prev, next base.Blknum, trans *types.Transaction) []AssetTransfer {
+func (r *Reconciler) GetAssetTransfers(prev, next base.Blknum, trans *types.Transaction) []AssetTransfer {
 	var results []AssetTransfer
 
 	at := AssetTransfer{
-		AccountedFor:     accountFor,
+		AccountedFor:     r.LedgerBook.AccountedFor,
 		BlockNumber:      trans.BlockNumber,
 		BlockNumberPrev:  prev,
 		BlockNumberNext:  next,
@@ -225,9 +225,10 @@ func (r *Reconciler) GetAssetTransfers(accountFor base.Address, prev, next base.
 	}
 
 	if trans.BlockNumber != 0 {
-		if accountFor == trans.From {
+		if r.LedgerBook.AccountedFor == trans.From {
 			at.AmountOut = trans.Value
-		} else if accountFor == trans.To {
+		}
+		if r.LedgerBook.AccountedFor == trans.To {
 			at.AmountIn = trans.Value
 		}
 	}
@@ -268,7 +269,7 @@ func (r *Reconciler) GetAssetTransfers(accountFor base.Address, prev, next base.
 
 	/*
 
-		if !l.useTraces && l.trialBalance(types.TrialBalEth, &ret) {
+		if !l.useTraces && l.trialBalance(prev, next, types.TrialBalEth, &ret) {
 			if ret.IsMaterial() {
 				statements = append(statements, ret)
 			} else {
@@ -315,14 +316,14 @@ func (r *Reconciler) GetAssetTransfers(accountFor base.Address, prev, next base.
 
 				// Do not collapse, may be both
 				amountOut := *base.ZeroWei
-				if accountFor == fromAddr {
+				if r.LedgerBook.AccountedFor == fromAddr {
 					amountOut = *amount
 					ofInterest = true
 				}
 
 				// Do not collapse, may be both
 				amountIn := *base.ZeroWei
-				if accountFor == toAddr {
+				if r.LedgerBook.AccountedFor == toAddr {
 					amountIn = *amount
 					ofInterest = true
 				}

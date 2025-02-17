@@ -15,12 +15,19 @@ import (
 // any other reason. If that works and the statement is material (money moved in some way), the
 // function tries to price the asset. it then prints optional debugging information. Note that
 // the statement may be modified in this function.
-func (l *Ledger) trialBalance(reason types.TrialBalType, s *types.Statement) bool {
+func (l *Ledger) trialBalance(prev, next base.Blknum, reason types.TrialBalType, s *types.Statement) bool {
 	key := l.getAppBalancerKey(s.BlockNumber, s.TransactionIndex)
 	if ctx, exists := l.appBalancers[key]; !exists {
 		logger.Fatal(fmt.Sprintf("should never happen - no context for %s", key))
 
 	} else {
+		if prev != ctx.Prev() {
+			logger.Error("getStatementsFromLog: prev != ctx.Prev()", prev, ctx.Prev())
+		}
+		if next != ctx.Next() {
+			logger.Error("getStatementsFromLog: next != ctx.Next()", next, ctx.Next())
+		}
+
 		logger.TestLog(l.testMode, "Start of trial balance report")
 
 		s.PostFirst = ctx.first

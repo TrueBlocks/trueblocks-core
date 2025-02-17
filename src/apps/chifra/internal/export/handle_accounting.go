@@ -81,10 +81,13 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 
 				for i, app := range apps {
 					prev := uint32(0)
+					if apps[i].BlockNumber > 0 {
+						prev = apps[i].BlockNumber - 1
+					}
 					if i > 0 {
 						prev = apps[i-1].BlockNumber
 					}
-					next := app.BlockNumber + 1
+					next := apps[i].BlockNumber + 1
 					if i < len(apps)-1 {
 						next = apps[i+1].BlockNumber
 					}

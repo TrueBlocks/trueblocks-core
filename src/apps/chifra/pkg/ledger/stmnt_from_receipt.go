@@ -7,7 +7,7 @@ import (
 )
 
 // getStatementsFromReceipt returns a statement from a given receipt
-func (l *Ledger) getStatementsFromReceipt(filter *filter.AppearanceFilter, receipt *types.Receipt) ([]types.Statement, error) {
+func (l *Ledger) getStatementsFromReceipt(prev, next base.Blknum, filter *filter.AppearanceFilter, receipt *types.Receipt) ([]types.Statement, error) {
 	if receipt == nil {
 		return []types.Statement{}, nil
 	}
@@ -16,7 +16,7 @@ func (l *Ledger) getStatementsFromReceipt(filter *filter.AppearanceFilter, recei
 	for _, log := range receipt.Logs {
 		addrArray := []base.Address{l.accountFor}
 		if filter.ApplyLogFilter(&log, addrArray) && assetOfInterest(l.assetFilter, log.Address) {
-			if s, err := l.getStatementsFromLog(&log); err != nil {
+			if s, err := l.getStatementsFromLog(prev, next, &log); err != nil {
 				return statements, err
 			} else {
 				if s.Sender == l.accountFor || s.Recipient == l.accountFor {
