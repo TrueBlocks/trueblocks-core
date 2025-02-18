@@ -31,6 +31,7 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&receipts&fm
           "blockHash": "0x1059df813610004dbfdc516ddb23db491b444ce62c641ba12e18c4f5e240972d",
           "blockNumber": 15507094,
           "date": "2022-09-10 05:35:04 UTC",
+          "isNFT": true,
           "logIndex": 509,
           "timestamp": 1662788104,
           "topics": [

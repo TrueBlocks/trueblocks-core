@@ -45,7 +45,7 @@ func (s *Config) Model(chain, format string, verbose bool, extraOpts map[string]
 	}
 }
 
-func (s *Config) FinishUnmarshal() {
+func (s *Config) FinishUnmarshal(fileVersion uint64) {
 }
 
 func (s *Config) ShallowCopy() Config {

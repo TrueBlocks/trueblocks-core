@@ -154,9 +154,9 @@ func (e *Wei) UnmarshalJSON(data []byte) error {
 	return (*big.Int)(e).UnmarshalText([]byte(str))
 }
 
-func (w *Wei) UnmarshalCache(version uint64, reader io.Reader) error {
+func (w *Wei) UnmarshalCache(fileVersion uint64, reader io.Reader) error {
 	var v big.Int
-	if err := cache.ReadValue(reader, &v, version); err != nil {
+	if err := cache.ReadValue(reader, &v, fileVersion); err != nil {
 		return err
 	}
 	*w = (Wei)(v)

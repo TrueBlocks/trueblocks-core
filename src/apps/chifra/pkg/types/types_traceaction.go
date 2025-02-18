@@ -197,83 +197,83 @@ func (s *TraceAction) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *TraceAction) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *TraceAction) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, fileVersion); err != nil {
 		return err
 	}
 
 	// Author
-	if err = cache.ReadValue(reader, &s.Author, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Author, fileVersion); err != nil {
 		return err
 	}
 
 	// Balance
-	if err = cache.ReadValue(reader, &s.Balance, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Balance, fileVersion); err != nil {
 		return err
 	}
 
 	// CallType
-	if err = cache.ReadValue(reader, &s.CallType, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.CallType, fileVersion); err != nil {
 		return err
 	}
 
 	// From
-	if err = cache.ReadValue(reader, &s.From, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.From, fileVersion); err != nil {
 		return err
 	}
 
 	// Gas
-	if err = cache.ReadValue(reader, &s.Gas, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Gas, fileVersion); err != nil {
 		return err
 	}
 
 	// Init
-	if err = cache.ReadValue(reader, &s.Init, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Init, fileVersion); err != nil {
 		return err
 	}
 
 	// Input
-	if err = cache.ReadValue(reader, &s.Input, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Input, fileVersion); err != nil {
 		return err
 	}
 
 	// RefundAddress
-	if err = cache.ReadValue(reader, &s.RefundAddress, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.RefundAddress, fileVersion); err != nil {
 		return err
 	}
 
 	// RewardType
-	if err = cache.ReadValue(reader, &s.RewardType, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.RewardType, fileVersion); err != nil {
 		return err
 	}
 
 	// SelfDestructed
-	if err = cache.ReadValue(reader, &s.SelfDestructed, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.SelfDestructed, fileVersion); err != nil {
 		return err
 	}
 
 	// To
-	if err = cache.ReadValue(reader, &s.To, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.To, fileVersion); err != nil {
 		return err
 	}
 
 	// Value
-	if err = cache.ReadValue(reader, &s.Value, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Value, fileVersion); err != nil {
 		return err
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *TraceAction) FinishUnmarshal() {
+func (s *TraceAction) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

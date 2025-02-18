@@ -171,70 +171,70 @@ func (s *Function) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Function) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *Function) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	// Anonymous
-	if err = cache.ReadValue(reader, &s.Anonymous, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Anonymous, fileVersion); err != nil {
 		return err
 	}
 
 	// Constant
-	if err = cache.ReadValue(reader, &s.Constant, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Constant, fileVersion); err != nil {
 		return err
 	}
 
 	// Encoding
-	if err = cache.ReadValue(reader, &s.Encoding, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Encoding, fileVersion); err != nil {
 		return err
 	}
 
 	// Inputs
 	s.Inputs = make([]Parameter, 0)
-	if err = cache.ReadValue(reader, &s.Inputs, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Inputs, fileVersion); err != nil {
 		return err
 	}
 
 	// Message
-	if err = cache.ReadValue(reader, &s.Message, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Message, fileVersion); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.ReadValue(reader, &s.Name, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Name, fileVersion); err != nil {
 		return err
 	}
 
 	// Outputs
 	s.Outputs = make([]Parameter, 0)
-	if err = cache.ReadValue(reader, &s.Outputs, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Outputs, fileVersion); err != nil {
 		return err
 	}
 
 	// Signature
-	if err = cache.ReadValue(reader, &s.Signature, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Signature, fileVersion); err != nil {
 		return err
 	}
 
 	// StateMutability
-	if err = cache.ReadValue(reader, &s.StateMutability, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.StateMutability, fileVersion); err != nil {
 		return err
 	}
 
 	// FunctionType
-	if err = cache.ReadValue(reader, &s.FunctionType, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.FunctionType, fileVersion); err != nil {
 		return err
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Function) FinishUnmarshal() {
+func (s *Function) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

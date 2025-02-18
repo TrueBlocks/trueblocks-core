@@ -265,8 +265,8 @@ func (s *SlurpGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Slurps)
 }
 
-func (s *SlurpGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Slurps, vers)
+func (s *SlurpGroup) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Slurps, fileVersion)
 }
 
 func (s *Slurp) MarshalCache(writer io.Writer) (err error) {
@@ -391,7 +391,7 @@ func (s *Slurp) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Slurp) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *Slurp) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -400,128 +400,128 @@ func (s *Slurp) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	optArticulatedTx := &cache.Optional[Function]{
 		Value: s.ArticulatedTx,
 	}
-	if err = cache.ReadValue(reader, optArticulatedTx, vers); err != nil {
+	if err = cache.ReadValue(reader, optArticulatedTx, fileVersion); err != nil {
 		return err
 	}
 	s.ArticulatedTx = optArticulatedTx.Get()
 
 	// BlockHash
-	if err = cache.ReadValue(reader, &s.BlockHash, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockHash, fileVersion); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// ContractAddress
-	if err = cache.ReadValue(reader, &s.ContractAddress, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.ContractAddress, fileVersion); err != nil {
 		return err
 	}
 
 	// CumulativeGasUsed
-	if err = cache.ReadValue(reader, &s.CumulativeGasUsed, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.CumulativeGasUsed, fileVersion); err != nil {
 		return err
 	}
 
 	// From
-	if err = cache.ReadValue(reader, &s.From, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.From, fileVersion); err != nil {
 		return err
 	}
 
 	// FunctionName
-	if err = cache.ReadValue(reader, &s.FunctionName, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.FunctionName, fileVersion); err != nil {
 		return err
 	}
 
 	// Gas
-	if err = cache.ReadValue(reader, &s.Gas, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Gas, fileVersion); err != nil {
 		return err
 	}
 
 	// GasPrice
-	if err = cache.ReadValue(reader, &s.GasPrice, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.GasPrice, fileVersion); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.ReadValue(reader, &s.GasUsed, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.GasUsed, fileVersion); err != nil {
 		return err
 	}
 
 	// HasToken
-	if err = cache.ReadValue(reader, &s.HasToken, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.HasToken, fileVersion); err != nil {
 		return err
 	}
 
 	// Hash
-	if err = cache.ReadValue(reader, &s.Hash, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Hash, fileVersion); err != nil {
 		return err
 	}
 
 	// Input
-	if err = cache.ReadValue(reader, &s.Input, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Input, fileVersion); err != nil {
 		return err
 	}
 
 	// IsError
-	if err = cache.ReadValue(reader, &s.IsError, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.IsError, fileVersion); err != nil {
 		return err
 	}
 
 	// MethodId
-	if err = cache.ReadValue(reader, &s.MethodId, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.MethodId, fileVersion); err != nil {
 		return err
 	}
 
 	// Nonce
-	if err = cache.ReadValue(reader, &s.Nonce, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Nonce, fileVersion); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 
 	// To
-	if err = cache.ReadValue(reader, &s.To, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.To, fileVersion); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionIndex, fileVersion); err != nil {
 		return err
 	}
 
 	// TxReceiptStatus
-	if err = cache.ReadValue(reader, &s.TxReceiptStatus, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.TxReceiptStatus, fileVersion); err != nil {
 		return err
 	}
 
 	// ValidatorIndex
-	if err = cache.ReadValue(reader, &s.ValidatorIndex, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.ValidatorIndex, fileVersion); err != nil {
 		return err
 	}
 
 	// Value
-	if err = cache.ReadValue(reader, &s.Value, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Value, fileVersion); err != nil {
 		return err
 	}
 
 	// WithdrawalIndex
-	if err = cache.ReadValue(reader, &s.WithdrawalIndex, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.WithdrawalIndex, fileVersion); err != nil {
 		return err
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Slurp) FinishUnmarshal() {
+func (s *Slurp) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

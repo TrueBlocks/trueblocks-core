@@ -66,7 +66,7 @@ func (s *AppearanceTable) Model(chain, format string, verbose bool, extraOpts ma
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *AppearanceTable) FinishUnmarshal() {
+func (s *AppearanceTable) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

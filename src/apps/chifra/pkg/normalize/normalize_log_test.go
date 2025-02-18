@@ -19,7 +19,7 @@ func TestNormalizedLog_Standard(t *testing.T) {
 		Data: "0x00000000000000000000000000000000000000000000000000000000000003e8",
 	}
 
-	normLog, _, err := NormalizeKnownLogs(&log)
+	normLog, err := NormalizeKnownLogs(&log)
 	if err != nil {
 		t.Fatalf("unexpected error in standard case: %v", err)
 	}
@@ -51,7 +51,7 @@ func TestNormalizedLog_Approval(t *testing.T) {
 		Data: "0x00000000000000000000000000000000000000000000000000000000000003e8",
 	}
 
-	normLog, _, err := NormalizeKnownLogs(&log)
+	normLog, err := NormalizeKnownLogs(&log)
 	if err != nil {
 		t.Fatalf("unexpected error in standard case: %v", err)
 	}
@@ -89,7 +89,7 @@ func TestNormalizedLog_TwoTopics(t *testing.T) {
 		Data: data,
 	}
 
-	normLog, _, err := NormalizeKnownLogs(&log)
+	normLog, err := NormalizeKnownLogs(&log)
 	if err != nil {
 		t.Fatalf("unexpected error in two-topic case: %v", err)
 	}
@@ -122,7 +122,7 @@ func TestNormalizedLog_NonStandard(t *testing.T) {
 		Data: data,
 	}
 
-	normLog, _, err := NormalizeKnownLogs(&log)
+	normLog, err := NormalizeKnownLogs(&log)
 	if err != nil {
 		t.Fatalf("unexpected error in non-standard case: %v", err)
 	}
@@ -157,7 +157,7 @@ func TestNormalizedLog_UnrecognizedFormat(t *testing.T) {
 		Data: "0x00000000000000000000000000000000000000000000000000000000000003e8",
 	}
 
-	_, _, err := NormalizeKnownLogs(&log)
+	_, err := NormalizeKnownLogs(&log)
 	if err != nil {
 		t.Fatal("expected no error for unrecognized event format, got err", err)
 	}

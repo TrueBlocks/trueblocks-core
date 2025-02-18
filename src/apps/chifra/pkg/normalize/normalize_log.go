@@ -12,13 +12,13 @@ import (
 
 var ErrNormalization = errors.New("normalization error")
 
-func NormalizeKnownLogs(log *types.Log) (*types.Log, bool, error) {
+func NormalizeKnownLogs(log *types.Log) (*types.Log, error) {
 	if len(log.Topics) == 0 {
-		return log, false, fmt.Errorf("log has no topics: %w", ErrNormalization)
+		return log, fmt.Errorf("log has no topics: %w", ErrNormalization)
 	}
 
 	if !topics.KnownTopics[log.Topics[0]] {
-		return log, false, fmt.Errorf("unrecognized transfer type: %w", ErrNormalization)
+		return log, fmt.Errorf("unrecognized transfer type: %w", ErrNormalization)
 	}
 
 	var addr1, addr2 base.Address
@@ -27,7 +27,7 @@ func NormalizeKnownLogs(log *types.Log) (*types.Log, bool, error) {
 
 	if len(log.Topics) == 4 {
 		// This is an NFT Transfer...
-		return log, true, nil
+		return log, nil
 
 	} else if len(log.Topics) == 3 {
 		// A normal, every day Transfer. Assume the two indexed parameters are the addresses.
@@ -38,7 +38,7 @@ func NormalizeKnownLogs(log *types.Log) (*types.Log, bool, error) {
 	} else if len(log.Topics) == 2 {
 		// A non-standard format. Likely only for transfers.
 		if len(data) < 128 {
-			return log, false, fmt.Errorf("data length too short for two-value format in log %v: %w", log, ErrNormalization)
+			return log, fmt.Errorf("data length too short for two-value format in log %v: %w", log, ErrNormalization)
 		}
 		addr1 = base.HexToAddress(log.Topics[1].Hex())
 		addr2 = base.HexToAddress("0x" + data[:64])
@@ -47,14 +47,14 @@ func NormalizeKnownLogs(log *types.Log) (*types.Log, bool, error) {
 	} else if len(log.Topics) == 1 {
 		// Handle a third format if it exists (again, likely only for transfers)
 		if len(data) < 192 {
-			return log, false, fmt.Errorf("data length too short for three-value format in log %v: %w", log, ErrNormalization)
+			return log, fmt.Errorf("data length too short for three-value format in log %v: %w", log, ErrNormalization)
 		}
 		addr1 = base.HexToAddress("0x" + data[:64])
 		addr2 = base.HexToAddress("0x" + data[64:128])
 		value = base.HexToWei(data[128:192])
 
 	} else {
-		return log, false, fmt.Errorf("unrecognized event log format: %w", ErrNormalization)
+		return log, fmt.Errorf("unrecognized event log format: %w", ErrNormalization)
 	}
 
 	newLog := *log
@@ -65,5 +65,5 @@ func NormalizeKnownLogs(log *types.Log) (*types.Log, bool, error) {
 	}
 	newLog.Data, _ = base.WeiToHash(value)
 
-	return &newLog, false, nil
+	return &newLog, nil
 }

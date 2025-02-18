@@ -82,22 +82,21 @@ func articulateLogFromMap(log *types.Log, abiMap *abi.SelectorSyncMap) (*types.F
 	return artLog, nil
 }
 
-func findCommonEvent(log *types.Log) (*types.Function, error) {
-	if !topics.KnownTopics[log.Topics[0]] {
+func findCommonEvent(logIn *types.Log) (*types.Function, error) {
+	if !topics.KnownTopics[logIn.Topics[0]] {
 		return nil, nil
 	}
 
-	if normalized, isNFT, err := normalize.NormalizeKnownLogs(log); err != nil {
+	if log, err := normalize.NormalizeKnownLogs(logIn); err != nil {
 		return nil, err
 	} else {
-		log.IsNFT = isNFT
-		switch normalized.Topics[0] {
+		switch log.Topics[0] {
 		case topics.TransferTopic:
-			return parseTransferEvent(normalized), nil
+			return parseTransferEvent(log), nil
 		case topics.ApprovalTopic:
-			return parseApprovalEvent(normalized), nil
+			return parseApprovalEvent(log), nil
 		case topics.EnsTransferTopic:
-			return parseEnsTransferEvent(normalized), nil
+			return parseEnsTransferEvent(log), nil
 		}
 		return nil, fmt.Errorf("parseFunc(commonEvent): target is not of correct type %v", log.Topics[0])
 	}

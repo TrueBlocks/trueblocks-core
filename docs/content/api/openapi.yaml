@@ -3677,7 +3677,7 @@ components:
         isNFT:
           type: boolean
           format: boolean
-          description: "true if the log is an NFT transfer"
+          description: "true if the log is an NFT transfer (calculated)"
     trace:
       description: "trace data as returned from the RPC (with slight enhancements)"
       type: object

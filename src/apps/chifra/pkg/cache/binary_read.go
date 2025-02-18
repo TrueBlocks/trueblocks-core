@@ -16,14 +16,14 @@ func read(reader io.Reader, value any) (err error) {
 // ReadValue reads binary representation of fixed-size values, strings,
 // big.Int, Unmarshaler and slices of these values. Version number
 // is passed to any Unmarshaler to ease reading older formats.
-func ReadValue(reader io.Reader, value any, version uint64) (err error) {
+func ReadValue(reader io.Reader, value any, fileVersion uint64) (err error) {
 	switch v := value.(type) {
 	case Unmarshaler:
-		err = v.UnmarshalCache(version, reader)
+		err = v.UnmarshalCache(fileVersion, reader)
 	case *[]string:
-		err = readSlice(reader, v, version)
+		err = readSlice(reader, v, fileVersion)
 	case *[]big.Int:
-		err = readSlice(reader, v, version)
+		err = readSlice(reader, v, fileVersion)
 	case *string:
 		err = readString(reader, v)
 	case *big.Int:
@@ -35,7 +35,7 @@ func ReadValue(reader io.Reader, value any, version uint64) (err error) {
 		if reflectedValue.Kind() == reflect.Pointer {
 			if reflectedValue.Elem().Kind() == reflect.Slice {
 				// It is what we want, so let's try to read. If we get an error, we'll ignore it and still
-				err = readSliceReflect(reader, reflect.TypeOf(value).Elem(), reflectedValue.Elem(), version)
+				err = readSliceReflect(reader, reflect.TypeOf(value).Elem(), reflectedValue.Elem(), fileVersion)
 				if err == nil {
 					return
 				}
@@ -49,7 +49,7 @@ func ReadValue(reader io.Reader, value any, version uint64) (err error) {
 
 // readSlice reads binary representation of slice of T. ReadValue is called for each
 // item, so slice items can be of any type supported by ReadValue.
-func readSlice[T any](reader io.Reader, slice *[]T, version uint64) (err error) {
+func readSlice[T any](reader io.Reader, slice *[]T, fileVersion uint64) (err error) {
 	var itemCount uint64 = 0
 	if err = read(reader, &itemCount); err != nil {
 		return
@@ -59,7 +59,7 @@ func readSlice[T any](reader io.Reader, slice *[]T, version uint64) (err error) 
 	*slice = make([]T, 0, itemCount)
 	for i := 0; uint64(i) < itemCount; i++ {
 		item := new(T)
-		if err = ReadValue(reader, item, version); err != nil {
+		if err = ReadValue(reader, item, fileVersion); err != nil {
 			return
 		}
 
@@ -69,7 +69,7 @@ func readSlice[T any](reader io.Reader, slice *[]T, version uint64) (err error) 
 }
 
 // readSliceReflect uses reflection to read a slice (typically of Unmarshaler)
-func readSliceReflect(reader io.Reader, slice reflect.Type, destPointer reflect.Value, version uint64) (err error) {
+func readSliceReflect(reader io.Reader, slice reflect.Type, destPointer reflect.Value, fileVersion uint64) (err error) {
 	var itemCount uint64 = 0
 	if err = read(reader, &itemCount); err != nil {
 		return
@@ -94,11 +94,11 @@ func readSliceReflect(reader io.Reader, slice reflect.Type, destPointer reflect.
 		unmarshaler, ok := item.Interface().(Unmarshaler)
 		if !ok {
 			// If it's not Unmarshaler, it can be a simpler type, which we can read into
-			if err = ReadValue(reader, item.Interface(), version); err != nil {
+			if err = ReadValue(reader, item.Interface(), fileVersion); err != nil {
 				return
 			}
 		} else {
-			if err = ReadValue(reader, unmarshaler, version); err != nil {
+			if err = ReadValue(reader, unmarshaler, fileVersion); err != nil {
 				return
 			}
 		}

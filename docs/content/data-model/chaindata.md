@@ -164,7 +164,7 @@ Logs consist of the following fields:
 | blockHash        | the hash of the block                                                                             | hash                                    |
 | articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
 | compressedLog    | a truncated, more readable version of the articulation (calculated)                               | string                                  |
-| isNFT            | true if the log is an NFT transfer                                                                | bool                                    |
+| isNFT            | true if the log is an NFT transfer (calculated)                                                   | bool                                    |
 
 ## Trace
 

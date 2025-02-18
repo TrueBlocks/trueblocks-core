@@ -66,8 +66,8 @@ func (s *{{.ClassOrClassGroup}}) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.{{.Class}}s)
 }
 
-func (s *{{.ClassOrClassGroup}}) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.{{.Class}}s, vers)
+func (s *{{.ClassOrClassGroup}}) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.{{.Class}}s, fileVersion)
 }
 
 {{end}}
@@ -78,21 +78,21 @@ func (s *{{.Class}}) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *{{.Class}}) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *{{.Class}}) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	{{range .Members}}{{.UnmarshalCode}}{{end}}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 {{end}}
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *{{.Class}}) FinishUnmarshal() {
+func (s *{{.Class}}) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

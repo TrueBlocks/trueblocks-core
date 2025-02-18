@@ -19,8 +19,8 @@ func (t *testStoreData) MarshalCache(writer io.Writer) error {
 	return nil
 }
 
-func (t *testStoreData) UnmarshalCache(version uint64, reader io.Reader) error {
-	if err := ReadValue(reader, &t.Value, version); err != nil {
+func (t *testStoreData) UnmarshalCache(fileVersion uint64, reader io.Reader) error {
+	if err := ReadValue(reader, &t.Value, fileVersion); err != nil {
 		return err
 	}
 	return nil

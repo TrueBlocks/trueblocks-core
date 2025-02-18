@@ -47,7 +47,7 @@ func (s *Message) Model(chain, format string, verbose bool, extraOpts map[string
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Message) FinishUnmarshal() {
+func (s *Message) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

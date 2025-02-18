@@ -19,10 +19,10 @@ func (l *Ledger) getStatementsFromLog(pos *types.AppPosition, trans *types.Trans
 		return types.Statement{}, nil
 	}
 
-	if log, isNFT, err := normalize.NormalizeKnownLogs(logIn); err != nil {
+	if log, err := normalize.NormalizeKnownLogs(logIn); err != nil {
 		return types.Statement{}, err
 
-	} else if isNFT {
+	} else if log.IsNFT() {
 		return types.Statement{}, nil
 
 	} else {

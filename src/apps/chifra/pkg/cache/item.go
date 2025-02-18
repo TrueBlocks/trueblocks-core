@@ -17,8 +17,8 @@ var ErrInvalidMagic = errors.New("invalid magic number")
 var ErrIncompatibleVersion = errors.New("incompatible version")
 
 type header struct {
-	Magic   uint32
-	Version uint64
+	Magic       uint32
+	FileVersion uint64
 }
 
 var currentHeader *header
@@ -29,8 +29,8 @@ func init() {
 	// item.
 	ver := version.NewVersion(version.LibraryVersion)
 	currentHeader = &header{
-		Magic:   Magic,
-		Version: ver.Uint64(),
+		Magic:       Magic,
+		FileVersion: ver.Uint64(),
 	}
 }
 
@@ -70,8 +70,7 @@ func (i *Item) marshal(value any) (err error) {
 }
 
 func (i *Item) unmarshal(value any) (err error) {
-	// i.header.Version will be 0 when reading header
-	return ReadValue(i.readWriter, value, i.header.Version)
+	return ReadValue(i.readWriter, value, i.header.FileVersion)
 }
 
 func (i *Item) Encode(value any) (err error) {

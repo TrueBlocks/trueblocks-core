@@ -48,6 +48,7 @@ Format:  json
           "blockHash": "0x1059df813610004dbfdc516ddb23db491b444ce62c641ba12e18c4f5e240972d",
           "blockNumber": 15507094,
           "date": "2022-09-10 05:35:04 UTC",
+          "isNFT": true,
           "logIndex": 509,
           "timestamp": 1662788104,
           "topics": [

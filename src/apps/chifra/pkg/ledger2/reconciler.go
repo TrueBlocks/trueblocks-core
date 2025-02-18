@@ -294,11 +294,10 @@ func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, filter *filter.Ap
 	// that checks if a log looks like an ERC20 Transfer. Real logic should decode topics, etc.
 	if trans.Receipt != nil {
 		for i, lg := range trans.Receipt.Logs {
-			if log, isNFT, err := normalize.NormalizeKnownLogs(&lg); err != nil {
-				logger.Warn("Failed to normalize log", err)
+			if log, err := normalize.NormalizeKnownLogs(&lg); err != nil {
 				continue
 
-			} else if isNFT {
+			} else if log.IsNFT() {
 				continue
 
 			} else {
