@@ -27,7 +27,6 @@ func (opts *TokensOptions) HandleShow(rCtx *output.RenderCtx) error {
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, address := range addrRange {
-			addr := base.HexToAddress(address) // if by_acct, this is token not address
 			currentBn := base.Blknum(0)
 			currentTs := base.Timestamp(0)
 			for _, br := range opts.BlockIds {
@@ -42,15 +41,14 @@ func (opts *TokensOptions) HandleShow(rCtx *output.RenderCtx) error {
 				}
 
 				for _, bn := range blockNums {
-					var tokenAddr base.Address
+					tokenAddr := singleAddr
+					holder := base.HexToAddress(address)
 					if opts.ByAcct {
-						tokenAddr = addr
-						addr = singleAddr
-					} else {
-						tokenAddr = singleAddr
+						tokenAddr = base.HexToAddress(address)
+						holder = singleAddr
 					}
 
-					if balance, err := opts.Conn.GetBalanceAtToken(tokenAddr, addr, fmt.Sprintf("0x%x", bn)); balance == nil {
+					if balance, err := opts.Conn.GetBalanceAtToken(tokenAddr, holder, fmt.Sprintf("0x%x", bn)); balance == nil {
 						errorChan <- err
 					} else {
 						if opts.Globals.Verbose {
@@ -60,7 +58,7 @@ func (opts *TokensOptions) HandleShow(rCtx *output.RenderCtx) error {
 							currentBn = bn
 						}
 						s := &types.Token{
-							Holder:      addr,
+							Holder:      holder,
 							Address:     tokenAddr,
 							Balance:     *balance,
 							BlockNumber: bn,
