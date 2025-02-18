@@ -32,7 +32,6 @@ type Ledger struct {
 	useTraces    bool
 	connection   *rpc.Connection
 	assetFilter  []base.Address
-	theTx        *types.Transaction
 	appBalancers map[appBalancerKey]*appBalancer
 }
 

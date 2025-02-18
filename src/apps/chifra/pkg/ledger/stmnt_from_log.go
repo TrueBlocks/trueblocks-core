@@ -121,12 +121,11 @@ func (l *Ledger) getStatementsFromLog(pos *types.AppPosition, trans *types.Trans
 			if len(log.Topics) == 4 {
 				t = types.TrialBalNft
 			}
-			if !l.trialBalance(pos, t, trans, &s) {
-				if !utils.IsFuzzing() {
+
+			if !utils.IsFuzzing() {
+				if !l.trialBalance(pos, t, trans, &s) {
 					logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
-				}
-			} else {
-				if !utils.IsFuzzing() {
+				} else {
 					logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
 				}
 			}

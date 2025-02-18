@@ -4,6 +4,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (l *Ledger) getStatementsFromTraces(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
@@ -102,14 +103,16 @@ func (l *Ledger) getStatementsFromTraces(pos *types.AppPosition, trans *types.Tr
 		}
 	}
 
-	if l.trialBalance(pos, types.TrialBalTraceEth, trans, &ret) {
-		if ret.IsMaterial() {
-			statements = append(statements, ret)
+	if !utils.IsFuzzing() {
+		if l.trialBalance(pos, types.TrialBalTraceEth, trans, &ret) {
+			if ret.IsMaterial() {
+				statements = append(statements, ret)
+			} else {
+				logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
+			}
 		} else {
-			logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
+			statements = append(statements, ret)
 		}
-	} else {
-		statements = append(statements, ret)
 	}
 
 	return statements, nil
