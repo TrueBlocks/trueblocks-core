@@ -3,22 +3,6 @@ export?addrs=0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d&logs&nfts&maxRecords=10&
   "data": [
     {
       "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
-      "blockHash": "0x5b605ffe97e58c657dd3888c014a47fff085f356aeda27de46594b711da29e18",
-      "blockNumber": 12287507,
-      "date": "2021-04-22 03:03:16 UTC",
-      "isNFT": true,
-      "logIndex": 249,
-      "timestamp": 1619060596,
-      "topics": [
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
-        "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "0x000000000000000000000000aba7161a7fb69c88e16ed9f455ce62b791ee4d03"
-      ],
-      "transactionHash": "0x22199329b0aa1aa68902a78e3b32ca327c872fab166c7a2838273de6ad383eba",
-      "transactionIndex": 155
-    },
-    {
-      "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
       "blockHash": "0xe2d521d11856591b77506a383033cf85e1d46f1669321859154ab38643244293",
       "blockNumber": 12292922,
       "date": "2021-04-22 23:13:40 UTC",

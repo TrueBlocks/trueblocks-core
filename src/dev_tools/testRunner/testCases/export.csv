@@ -89,8 +89,8 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,export_logs_topics_fb_3 ,n   
 on       ,both ,fast  ,export   ,apps ,acctExport ,not_nfts                ,y    ,addrs = trueblocks.eth & logs & articulate & first_block = 8876230 & last_block = 9024186 & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,nfts                    ,y    ,addrs = trueblocks.eth & logs & articulate & nfts & first_block = 8876230 & last_block = 9024186 & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,nfts_fail               ,y    ,addrs = trueblocks.eth & nfts & articulate & first_block = 8876230 & last_block = 9024186 & fmt = json
-apes     ,both ,fast  ,export   ,apps ,acctExport ,nft_apes_1_not_nft      ,y    ,addrs = 0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d & logs & max_records = 10 & fmt = json
-apes     ,both ,fast  ,export   ,apps ,acctExport ,nft_apes_1              ,y    ,addrs = 0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d & logs & nfts & max_records = 10 & fmt = json
+on       ,both ,fast  ,export   ,apps ,acctExport ,nft_apes_1_not_nft      ,y    ,addrs = 0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d & logs & max_records = 10 & fmt = json
+on       ,both ,fast  ,export   ,apps ,acctExport ,nft_apes_1              ,y    ,addrs = 0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d & logs & nfts & max_records = 10 & fmt = json
 
 # Testing adding a fourbyte value
 on       ,both ,fast  ,export   ,apps ,acctExport ,invalid_fourbyte        ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fourbytes = 0xa9059c & max_records = 10 & fmt = json
