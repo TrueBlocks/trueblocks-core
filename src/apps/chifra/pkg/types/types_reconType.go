@@ -1,7 +1,10 @@
 package types
 
 import (
+	"fmt"
 	"io"
+	"strconv"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
@@ -57,6 +60,34 @@ func (r TrialBalType) String() string {
 	}[r]
 }
 
-func (r *TrialBalType) MarshalCache(writer io.Writer) error {
-	return cache.WriteValue(writer, int(*r))
+// UnmarshalText implements the encoding.TextUnmarshaler interface.
+func (r *TrialBalType) UnmarshalText(text []byte) error {
+	s := string(text)
+	switch s {
+	case "eth":
+		*r = TrialBalEth
+	case "trace-eth":
+		*r = TrialBalTraceEth
+	case "token":
+		*r = TrialBalToken
+	case "token-nft":
+		*r = TrialBalNft
+	default:
+		// If the input is numeric, try parsing it as a number.
+		n, err := strconv.ParseUint(s, 10, 64)
+		if err != nil {
+			return fmt.Errorf("unknown TrialBalType %q", s)
+		}
+		*r = TrialBalType(n)
+	}
+	return nil
+}
+
+// UnmarshalJSON implements the json.Unmarshaler interface.
+func (r *TrialBalType) UnmarshalJSON(data []byte) error {
+	str := strings.Trim(strings.TrimSpace(string(data)), "\"")
+	if len(str) == 0 {
+		return nil
+	}
+	return r.UnmarshalText([]byte(str))
 }

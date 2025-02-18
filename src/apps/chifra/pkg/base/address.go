@@ -107,6 +107,10 @@ func (a Address) Equal(b Address) bool {
 	return bytes.Equal(a.Bytes(), b.Bytes())
 }
 
+func (a Address) NotEqual(b Address) bool {
+	return !a.Equal(b)
+}
+
 func (a Address) LessThan(b Address) bool {
 	return bytes.Compare(a.Bytes(), b.Bytes()) < 0
 }

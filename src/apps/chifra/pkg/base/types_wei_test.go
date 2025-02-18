@@ -247,7 +247,7 @@ func TestWeiComparison(t *testing.T) {
 	}
 
 	a2 := NewWei(10)
-	if !a.Equals(a2) {
+	if !a.Equal(a2) {
 		t.Errorf("Equals: 10 should equal 10")
 	}
 }
@@ -297,7 +297,7 @@ func TestWeiCacheMarshalling(t *testing.T) {
 	if err := w2.UnmarshalCache(1, buf); err != nil {
 		t.Errorf("UnmarshalCache error: %v", err)
 	}
-	if !w.Equals(&w2) {
+	if !w.Equal(&w2) {
 		t.Errorf("Cache marshalling: expected %s, got %s", w.String(), w2.String())
 	}
 }

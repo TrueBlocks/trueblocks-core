@@ -44,6 +44,10 @@ func (e *Ether) SetWei(i *Wei) *Ether {
 	return (*Ether)(converted)
 }
 
+func (w *Ether) NotEqual(other *Ether) bool {
+	return !w.Equal(other)
+}
+
 func (w *Ether) Equal(other *Ether) bool {
 	return (*big.Float)(w).Cmp((*big.Float)(other)) == 0
 }

@@ -134,7 +134,7 @@ func (r *FileRange) LaterThanB(bn Blknum) bool {
 }
 
 // Equals returns true if the two ranges are equal
-func (r *FileRange) Equals(needle FileRange) bool {
+func (r *FileRange) Equal(needle FileRange) bool {
 	return r.First == needle.First && r.Last == needle.Last
 }
 

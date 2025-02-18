@@ -53,6 +53,10 @@ func (w *Wei) Equal(other *Wei) bool {
 	return (*big.Int)(w).Cmp((*big.Int)(other)) == 0
 }
 
+func (w *Wei) NotEqual(other *Wei) bool {
+	return !w.Equal(other)
+}
+
 func (w *Wei) LessThan(other *Wei) bool {
 	return (*big.Int)(w).Cmp((*big.Int)(other)) < 0
 }
@@ -132,10 +136,6 @@ func (w *Wei) Quo(x, y *Wei) *Wei {
 
 func (w *Wei) Cmp(y *Wei) int {
 	return (*big.Int)(w).Cmp((*big.Int)(y))
-}
-
-func (w *Wei) Equals(y *Wei) bool {
-	return (*big.Int)(w).Cmp((*big.Int)(y)) == 0
 }
 
 func (w *Wei) MarshalText() (text []byte, err error) {
