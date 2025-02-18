@@ -1,8 +1,6 @@
 package main
 
 import (
-	"os"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
@@ -24,7 +22,7 @@ func downloadAbis() error {
 			Decache: true,
 		},
 	}
-	os.Setenv("TB_TEST_MODE", "")
+
 	logger.SetTestMode(false)
 	if _, _, err := opts.Abis(); err != nil {
 		logger.Fatal(err)
@@ -34,7 +32,6 @@ func downloadAbis() error {
 		logger.Fatal(err)
 	}
 	logger.SetTestMode(true)
-	os.Setenv("TB_TEST_MODE", "true")
 
 	return nil
 }

@@ -70,6 +70,7 @@ func DoExport() {
 		// TestExport("neighbors", "", fn, &opts)
 		TestExport("balances", "", fn, &opts)
 		TestExport("withdrawals", "", fn, &opts)
+		TestExport("statements", "", fn, &opts)
 	}
 
 	/*

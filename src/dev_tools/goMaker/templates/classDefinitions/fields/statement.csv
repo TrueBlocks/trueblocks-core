@@ -16,9 +16,9 @@ recipient           ,address      ,           ,               ,      14 ,the rec
 begBal              ,int256       ,           ,               ,      15 ,the beginning balance of the asset prior to the transaction
 amountNet           ,int256       ,           ,calc           ,      16 ,totalIn - totalOut
 endBal              ,int256       ,           ,               ,      17 ,the on-chain balance of the asset (see notes about intra-block reconciliations)
-postType            ,string       ,           ,calc           ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
-postFirst           ,bool         ,           ,               ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
-postLast            ,bool         ,           ,               ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
+postType            ,string       ,           ,calc|omitempty ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
+postFirst           ,bool         ,           ,omitempty      ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
+postLast            ,bool         ,           ,omitempty      ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
 reconciled          ,bool         ,           ,calc           ,      18 ,true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.
 totalIn             ,int256       ,           ,calc           ,      19 ,the sum of the following `In` fields
 amountIn            ,int256       ,           ,omitempty      ,      20 ,the top-level value of the incoming transfer for the accountedFor address

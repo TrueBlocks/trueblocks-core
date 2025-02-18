@@ -95,9 +95,9 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,simple_prefund2         ,y   
 on       ,both ,fast  ,export   ,apps ,acctExport ,reverted                ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & reverted & max_records = 2 & fmt = txt
 on       ,both ,fast  ,export   ,apps ,acctExport ,reverted_fourbytes      ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & reverted & fourbytes = 0xab832b43 & max_records = 2 & fmt = txt
 
-with     ,both ,fast  ,export   ,apps ,acctExport ,not_withdrawals         ,y    ,addrs = 0x6193f68d97921f4765d72a3e6964fc990c59e0e5 & first_block = 17013606 & last_block = 17083530 & fmt = json
-with     ,both ,fast  ,export   ,apps ,acctExport ,withdrawals             ,y    ,addrs = 0x6193f68d97921f4765d72a3e6964fc990c59e0e5 & withdrawals & first_block = 17013606 & last_block = 17083530 & fmt = json
-on       ,both ,fast  ,export   ,apps ,acctExport ,withdrawals_fail        ,y    ,addrs = chasewright.eth & withdrawals & logs & first_block = 18345580 & last_block = 18409900 & fmt = json
+on       ,both ,fast  ,export   ,apps ,acctExport ,not_withdrawals         ,y    ,addrs = 0x6193f68d97921f4765d72a3e6964fc990c59e0e5 & first_block = 17013606 & last_block = 17083530 & fmt = json
+on       ,both ,fast  ,export   ,apps ,acctExport ,withdrawals             ,y    ,addrs = 0x6193f68d97921f4765d72a3e6964fc990c59e0e5 & withdrawals & first_block = 17013606 & last_block = 17083530 & fmt = json
+on       ,both ,fast  ,export   ,apps ,acctExport ,withdrawals_fail        ,y    ,addrs = chasewright.eth & withdrawals & logs & first_block = 17048500 & last_block = 17139600 & fmt = json
 
 on       ,both ,fast  ,export   ,apps ,acctExport ,invalid_key             ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & fmt = json & from
 on       ,both ,fast  ,export   ,apps ,acctExport ,simple_data             ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv
@@ -157,6 +157,7 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,accounting_tokens_1     ,y   
 on       ,both ,fast  ,export   ,apps ,acctExport ,accounting_tokens_2     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & articulate & accounting & last_block = 9231343 & ether & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,statement_3_accounting  ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & last_block = 4000000 & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,statement_nft           ,y    ,addrs = trueblocks.eth & accounting & statements & first_block = 8876230 & last_block = 9024186 & fmt = json
+on       ,both ,fast  ,export   ,apps ,acctExport ,statement_withdrawals   ,y    ,addrs = chasewright.eth & accounting & statements & withdrawals & first_block = 17048500 & last_block = 18409900 & fmt = json
 
 # still broken
 on       ,both ,fast  ,export   ,apps ,acctExport ,accounting_wei_1        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & accounting & fmt = json
