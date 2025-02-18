@@ -28,10 +28,7 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 		false,
 		[]string{},
 		base.BlockRange{First: first, Last: opts.LastBlock},
-		// TODO: I feel (but have not investigated) that this may be a misake
-		// TODO: Shouldn't the RecordRange start with zero not block number?
-		// TODO: It means firstRecord, after all.
-		base.RecordRange{First: uint64(first), Last: opts.GetMax()},
+		base.RecordRange{First: 0, Last: opts.GetMax()},
 	)
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
@@ -115,6 +112,9 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 						sort.Slice(items, func(i, j int) bool {
 							if opts.Reversed {
 								i, j = j, i
+							}
+							if items[i].BlockNumber == items[j].BlockNumber {
+								return items[i].Index < items[j].Index
 							}
 							return items[i].BlockNumber < items[j].BlockNumber
 						})
