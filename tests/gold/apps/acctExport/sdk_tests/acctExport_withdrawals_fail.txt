@@ -10,6 +10,6 @@ Caps:  cache,decache,ether
 Format:  json
 {
   "errors": [
-    "Please choose only a single mode (--appearances, --logs, etc.)"
+    "Please choose only a single mode (--logs, --withdrawals, etc.)"
   ]
 }

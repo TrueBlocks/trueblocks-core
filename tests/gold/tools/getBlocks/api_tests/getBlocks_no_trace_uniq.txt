@@ -1,6 +1,6 @@
 blocks?blocks=4012000-4012001&traces&uniq
 {
   "errors": [
-    "Please choose only a single mode (--uncles, --logs, --withdrawal, etc.)"
+    "Please choose only a single mode (--traces, --uniq, etc.)"
   ]
 }

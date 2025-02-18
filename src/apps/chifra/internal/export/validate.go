@@ -44,8 +44,8 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
 	}
 
-	if opts.tooMany() {
-		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.)")
+	if which, tooMany := opts.tooMany(); tooMany {
+		return validate.Usage("Please choose only a single mode ({0}, etc.)", strings.Join(which, ", "))
 	}
 
 	if opts.Traces {
@@ -207,28 +207,41 @@ func (opts *ExportOptions) validateExport() error {
 	// return err
 }
 
-func (opts *ExportOptions) tooMany() bool {
+func (opts *ExportOptions) tooMany() ([]string, bool) {
 	cnt := 0
+	which := []string{}
 	if opts.Appearances {
+		which = append(which, "--appearances")
 		cnt++
 	}
 	if opts.Receipts {
+		which = append(which, "--receipts")
 		cnt++
 	}
 	if opts.Logs {
+		which = append(which, "--logs")
 		cnt++
 	}
 	if opts.Traces {
+		which = append(which, "--traces")
 		cnt++
 	}
 	if opts.Neighbors {
+		which = append(which, "--neighbors")
 		cnt++
 	}
 	if opts.Accounting {
+		which = append(which, "--accounting")
 		cnt++
 	}
 	if opts.Withdrawals {
+		which = append(which, "--withdrawals")
 		cnt++
 	}
-	return cnt > 1
+
+	if len(which) > 2 {
+		which = which[:2]
+	}
+
+	return which, cnt > 1
 }
