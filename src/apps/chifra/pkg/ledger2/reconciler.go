@@ -43,9 +43,9 @@ func (r *Reconciler) String() string {
 	return r.LedgerBook.String()
 }
 
-func (r *Reconciler) GetStatements(prev, next base.Blknum, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
-	xfers := r.GetAssetTransfers(prev, next, trans)
-	r.ProcessTransaction(trans, xfers)
+func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+	xfers := r.GetAssetTransfers(pos, trans)
+	r.ProcessTransaction(pos, trans, xfers)
 
 	if !r.LedgerBook.IsMaterial() {
 		return []types.Statement{}, nil
@@ -71,7 +71,7 @@ func (lb *LedgerBook) IsMaterial() bool {
 
 // ProcessTransaction takes a list of Appearances and their related AssetTransfers,
 // converts them to Postings, and appends them into the appropriate Ledger.
-func (r *Reconciler) ProcessTransaction(tx *types.Transaction, allTransfers []AssetTransfer) {
+func (r *Reconciler) ProcessTransaction(pos *types.AppPosition, tx *types.Transaction, allTransfers []AssetTransfer) {
 	// We assume allTransfers includes every relevant AssetTransfer for the Appearances.
 	// In reality, you'd fetch them from an indexer or node calls.
 	//
@@ -123,7 +123,7 @@ func (r *Reconciler) ProcessTransaction(tx *types.Transaction, allTransfers []As
 
 		// logger.Info(trans.BlockNumber, trans.TransactionIndex, r)
 		if file.IsTestMode() {
-			(*types.Statement)(&posting).DebugStatement(posting.BlockNumberPrev, posting.BlockNumberNext)
+			(*types.Statement)(&posting).DebugStatement(pos)
 		}
 
 		entry.Postings = append(entry.Postings, posting)
@@ -201,14 +201,14 @@ func findSeparator(s string) int {
 
 // GetAssetTransfers parses a single Transaction and returns a slice of AssetTransfer
 // by checking the transaction's Value, its Logs for ERC20 events, and an optional Traces field.
-func (r *Reconciler) GetAssetTransfers(prev, next base.Blknum, trans *types.Transaction) []AssetTransfer {
+func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, trans *types.Transaction) []AssetTransfer {
 	var results []AssetTransfer
 
 	at := AssetTransfer{
 		AccountedFor:     r.LedgerBook.AccountedFor,
 		BlockNumber:      trans.BlockNumber,
-		BlockNumberPrev:  prev,
-		BlockNumberNext:  next,
+		BlockNumberPrev:  pos.Prev,
+		BlockNumberNext:  pos.Next,
 		TransactionIndex: trans.TransactionIndex,
 		TransactionHash:  trans.Hash,
 		Timestamp:        trans.Timestamp,
@@ -219,6 +219,8 @@ func (r *Reconciler) GetAssetTransfers(prev, next base.Blknum, trans *types.Tran
 		Recipient:        trans.To,
 		AssetType:        types.TrialBalEth,
 		Decimals:         18,
+		PostFirst:        pos.First,
+		PostLast:         pos.Last,
 	}
 	if r.asEther {
 		at.AssetSymbol = "ETH"
@@ -269,7 +271,7 @@ func (r *Reconciler) GetAssetTransfers(prev, next base.Blknum, trans *types.Tran
 
 	/*
 
-		if !l.useTraces && l.trialBalance(prev, next, types.TrialBalEth, &ret) {
+		if !l.useTraces && l.trial Balance(prev, next, types.TrialBalEth, &ret) {
 			if ret.IsMaterial() {
 				statements = append(statements, ret)
 			} else {
@@ -345,8 +347,8 @@ func (r *Reconciler) GetAssetTransfers(prev, next base.Blknum, trans *types.Tran
 					// The contract address is in log.Address, which typically is the ERC20 token.
 					at := AssetTransfer{
 						BlockNumber:      trans.BlockNumber,
-						BlockNumberPrev:  prev,
-						BlockNumberNext:  next,
+						BlockNumberPrev:  pos.Prev,
+						BlockNumberNext:  pos.Next,
 						TransactionIndex: trans.TransactionIndex,
 						TransactionHash:  trans.Hash,
 						Timestamp:        trans.Timestamp,

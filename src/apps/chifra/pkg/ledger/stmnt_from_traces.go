@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (l *Ledger) getStatementsFromTraces(prev, next base.Blknum, trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
+func (l *Ledger) getStatementsFromTraces(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
 	ret := *s
@@ -102,15 +102,13 @@ func (l *Ledger) getStatementsFromTraces(prev, next base.Blknum, trans *types.Tr
 		}
 	}
 
-	if l.trialBalance(prev, next, types.TrialBalTraceEth, &ret) {
+	if l.trialBalance(pos, types.TrialBalTraceEth, trans, &ret) {
 		if ret.IsMaterial() {
 			statements = append(statements, ret)
 		} else {
 			logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
 		}
 	} else {
-		// TODO: BOGUS PERF
-		// logger.Warn("Trace statement at", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile.")
 		statements = append(statements, ret)
 	}
 

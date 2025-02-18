@@ -55,7 +55,11 @@ func TestDebugStatement(t *testing.T) {
 		GasOut:              *base.NewWei(100000000000000000),
 	}
 
-	stmt.DebugStatement(ctx.Prev(), ctx.Next())
+	pos := &types.AppPosition{
+		Prev: ctx.Prev(),
+		Next: ctx.Next(),
+	}
+	stmt.DebugStatement(pos)
 
 	foundHeader := false
 	foundBlockLine := false
@@ -118,7 +122,11 @@ func TestDebugStatementTokenFormatting(t *testing.T) {
 		postType: 0,
 		address:  base.ZeroAddr,
 	}
-	stmt.DebugStatement(ctx.Prev(), ctx.Next())
+	pos := &types.AppPosition{
+		Prev: ctx.Prev(),
+		Next: ctx.Next(),
+	}
+	stmt.DebugStatement(pos)
 
 	// Look for a log line that shows the three-part block number (e.g., "123.456.789")
 	found := false

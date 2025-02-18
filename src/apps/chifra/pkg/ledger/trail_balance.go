@@ -15,19 +15,13 @@ import (
 // any other reason. If that works and the statement is material (money moved in some way), the
 // function tries to price the asset. it then prints optional debugging information. Note that
 // the statement may be modified in this function.
-func (l *Ledger) trialBalance(prev, next base.Blknum, reason types.TrialBalType, s *types.Statement) bool {
+func (l *Ledger) trialBalance(pos *types.AppPosition, reason types.TrialBalType, trans *types.Transaction, s *types.Statement) bool {
 	key := l.getAppBalancerKey(s.BlockNumber, s.TransactionIndex)
 	if ctx, exists := l.appBalancers[key]; !exists {
 		logger.Fatal(fmt.Sprintf("should never happen - no context for %s", key))
 
 	} else {
-		if prev != ctx.Prev() {
-			logger.Error("getStatementsFromLog: prev != ctx.Prev()", prev, ctx.Prev())
-		}
-		if next != ctx.Next() {
-			logger.Error("getStatementsFromLog: next != ctx.Next()", next, ctx.Next())
-		}
-
+		validatePosition(pos, ctx)
 		logger.TestLog(l.testMode, "Start of trial balance report")
 
 		s.PostFirst = ctx.first
@@ -39,7 +33,7 @@ func (l *Ledger) trialBalance(prev, next base.Blknum, reason types.TrialBalType,
 
 		var okay bool
 		if okay = s.Reconciled(); !okay {
-			if okay = l.correctForNullTransfer(s, l.theTx); !okay {
+			if okay = l.correctForNullTransfer(s, trans); !okay {
 				if s.IsEth() {
 					_ = l.correctForSomethingElseEth(s)
 				} else {
@@ -53,7 +47,7 @@ func (l *Ledger) trialBalance(prev, next base.Blknum, reason types.TrialBalType,
 		}
 
 		if l.testMode {
-			s.DebugStatement(ctx.Prev(), ctx.Next())
+			s.DebugStatement(pos)
 		}
 	}
 
@@ -105,12 +99,7 @@ func (l *Ledger) correctForNullTransfer(s *types.Statement, tx *types.Transactio
 }
 
 func (l *Ledger) correctForSomethingElseEth(s *types.Statement) bool {
-	if s.AssetType == types.TrialBalTraceEth && s.PostFirst && s.PostLast {
-		if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
-			s.EndBal = *s.EndBalCalc()
-			s.CorrectingReason = "per-block-balance"
-		}
-	}
+	// We used to do some weird stuff here, no longer.
 	return s.Reconciled()
 }
 

@@ -345,11 +345,6 @@ func resetLogger() func() {
 // 	l := &Ledger{
 // 		testMode:       true,
 // 	}
-// 	l.theTx = &types.Transaction{
-// 		Receipt: new(types.Receipt),
-// 		To:      base.HexToAddress("0xDummy"),
-// 	}
-// 	l.theTx.Receipt.Logs = []types.Log{}
 
 // 	bn := base.Blknum(100)
 // 	txid := base.Txnum(1)
@@ -368,9 +363,9 @@ func resetLogger() func() {
 // 	s.AmountIn = *base.NewWei(10)
 // 	s.AmountOut = *base.NewWei(10)
 
-// 	result := l.trialBalance(types.TrialBalEth, s)
+// 	result := l.trial Balance(types.TrialBalEth, s)
 // 	if !result {
-// 		t.Error("Expected trialBalance to return true for a reconciled statement")
+// 		t.Error("Expected trial Balance to return true for a reconciled statement")
 // 	}
 // 	if s.AssetType != string(types.TrialBalEth) {
 // 		t.Errorf("Expected AssetType to be %s, got %s", types.TrialBalEth, s.AssetType)

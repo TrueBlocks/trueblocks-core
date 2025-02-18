@@ -698,7 +698,12 @@ func (s *Statement) IsStableCoin() bool {
 	return stables[s.AssetAddress]
 }
 
-func (s *Statement) DebugStatement(prev, next base.Blknum) {
+type AppPosition struct {
+	Prev, Next  base.Blknum
+	First, Last bool
+}
+
+func (s *Statement) DebugStatement(pos *AppPosition) {
 	reportE := func(msg string, val *base.Wei) {
 		isZero := func(val *base.Wei) bool {
 			return val.Cmp(base.NewWei(0)) == 0
@@ -728,9 +733,9 @@ func (s *Statement) DebugStatement(prev, next base.Blknum) {
 	logger.TestLog(true, "===================================================")
 	logger.TestLog(true, fmt.Sprintf("====> %s", s.AssetType))
 	logger.TestLog(true, "===================================================")
-	logger.TestLog(true, "Previous:              ", prev)
+	logger.TestLog(true, "Previous:              ", pos.Prev)
 	logger.TestLog(true, "Current:               ", s.BlockNumber)
-	logger.TestLog(true, "Next:                  ", next)
+	logger.TestLog(true, "Next:                  ", pos.Next)
 	logger.TestLog(true, "postType:              ", s.getPostType().String())
 	logger.TestLog(true, "postFirst:             ", s.PostFirst)
 	logger.TestLog(true, "postLast:              ", s.PostLast)

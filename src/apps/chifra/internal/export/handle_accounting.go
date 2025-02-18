@@ -32,7 +32,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 	)
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		visitAppearance := func(prev, next base.Blknum, app *types.Appearance) error {
+		visitAppearance := func(pos *types.AppPosition, app *types.Appearance) error {
 			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
 				errorChan <- err
 				return nil
@@ -46,7 +46,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 						}
 					}
 
-					if statements, err := ledgers.GetStatements(prev, next, filter, tx); err != nil {
+					if statements, err := ledgers.GetStatements(pos, filter, tx); err != nil {
 						errorChan <- err
 
 					} else {
@@ -91,7 +91,13 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 					if i < len(apps)-1 {
 						next = apps[i+1].BlockNumber
 					}
-					if err := visitAppearance(base.Blknum(prev), base.Blknum(next), &app); err != nil {
+					pos := &types.AppPosition{
+						Prev:  base.Blknum(prev),
+						Next:  base.Blknum(next),
+						First: i == 0,
+						Last:  i == len(apps)-1,
+					}
+					if err := visitAppearance(pos, &app); err != nil {
 						errorChan <- err
 						return
 					}

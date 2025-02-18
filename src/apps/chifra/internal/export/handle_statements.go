@@ -140,7 +140,13 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							if i < len(apps)-1 {
 								next = apps[i+1].BlockNumber
 							}
-							if statements, err := ledgers.GetStatements(base.Blknum(prev), base.Blknum(next), filter, tx); err != nil {
+							pos := &types.AppPosition{
+								Prev:  base.Blknum(prev),
+								Next:  base.Blknum(next),
+								First: i == 0,
+								Last:  i == len(apps)-1,
+							}
+							if statements, err := ledgers.GetStatements(pos, filter, tx); err != nil {
 								errorChan <- err
 
 							} else if len(statements) > 0 {

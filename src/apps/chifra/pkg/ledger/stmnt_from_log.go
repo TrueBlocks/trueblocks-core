@@ -14,7 +14,7 @@ import (
 )
 
 // getStatementsFromLog returns a statement from a given log
-func (l *Ledger) getStatementsFromLog(prev, next base.Blknum, logIn *types.Log) (types.Statement, error) {
+func (l *Ledger) getStatementsFromLog(pos *types.AppPosition, trans *types.Transaction, logIn *types.Log) (types.Statement, error) {
 	if logIn.Topics[0] != topics.TransferTopic {
 		return types.Statement{}, nil
 	}
@@ -88,13 +88,7 @@ func (l *Ledger) getStatementsFromLog(prev, next base.Blknum, logIn *types.Log) 
 		if ctx, exists = l.appBalancers[key]; !exists {
 			return s, fmt.Errorf("no context for %s", key)
 		}
-
-		if prev != ctx.Prev() {
-			logger.Error("getStatementsFromLog: prev != ctx.Prev()", prev, ctx.Prev())
-		}
-		if next != ctx.Next() {
-			logger.Error("getStatementsFromLog: next != ctx.Next()", next, ctx.Next())
-		}
+		validatePosition(pos, ctx)
 
 		if ofInterest {
 			s.PostFirst = ctx.first
@@ -127,7 +121,7 @@ func (l *Ledger) getStatementsFromLog(prev, next base.Blknum, logIn *types.Log) 
 			if len(log.Topics) == 4 {
 				t = types.TrialBalNft
 			}
-			if !l.trialBalance(prev, next, t, &s) {
+			if !l.trialBalance(pos, t, trans, &s) {
 				if !utils.IsFuzzing() {
 					logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
 				}

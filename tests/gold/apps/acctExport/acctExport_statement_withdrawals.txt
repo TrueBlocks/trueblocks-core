@@ -1,12 +1,13 @@
-chifra export  chasewright.eth --withdrawals --logs --first_block 17048500 --last_block 17139600 --fmt json
+chifra export  chasewright.eth --accounting --statements --withdrawals --first_block 17048500 --last_block 18409900 --fmt json
 TEST[DATE|TIME] Addrs:  [0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63]
-TEST[DATE|TIME] Logs:  true
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] Withdrawals:  true
 TEST[DATE|TIME] FirstBlock:  17048500
-TEST[DATE|TIME] LastBlock:  17139600
+TEST[DATE|TIME] LastBlock:  18409900
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
-Error: Please choose only a single mode (--logs, --withdrawals, etc.)
+Error: Please choose only a single mode (--accounting, --withdrawals, etc.)
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 

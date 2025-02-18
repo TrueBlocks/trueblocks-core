@@ -15,10 +15,10 @@ import (
 )
 
 // GetStatements returns a statement from a given transaction
-func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (l *Ledger) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	if os.Getenv("NEW_CODE") == "true" {
 		r := ledger2.NewReconciler(l.connection, l.accountFor, l.names, l.asEther)
-		return r.GetStatements(prev, next, filter, trans)
+		return r.GetStatements(pos, filter, trans)
 
 	} else {
 		// We need this below...
@@ -47,12 +47,7 @@ func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.Appearance
 		}
 
 		if assetOfInterest(l.assetFilter, base.FAKE_ETH_ADDRESS) {
-			if prev != ctx.Prev() {
-				logger.Error("GetStatements: prev != ctx.Prev()", prev, ctx.Prev())
-			}
-			if next != ctx.Next() {
-				logger.Error("GetStatements: next != ctx.Next()", next, ctx.Next())
-			}
+			validatePosition(pos, ctx)
 
 			// TODO: We ignore errors in the next few lines, but we should not
 			prevBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.Prev())
@@ -126,7 +121,7 @@ func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.Appearance
 				ret.AssetSymbol = "ETH"
 			}
 
-			if !l.useTraces && l.trialBalance(prev, next, types.TrialBalEth, &ret) {
+			if !l.useTraces && l.trialBalance(pos, types.TrialBalEth, trans, &ret) {
 				if ret.IsMaterial() {
 					statements = append(statements, ret)
 				} else {
@@ -136,7 +131,7 @@ func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.Appearance
 				if !l.useTraces {
 					logger.TestLog(!l.useTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), " need to decend into traces")
 				}
-				if traceStatements, err := l.getStatementsFromTraces(prev, next, trans, &ret); err != nil {
+				if traceStatements, err := l.getStatementsFromTraces(pos, trans, &ret); err != nil {
 					if !utils.IsFuzzing() {
 						logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 					}
@@ -146,7 +141,7 @@ func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.Appearance
 			}
 		}
 
-		if receiptStatements, err := l.getStatementsFromReceipt(prev, next, filter, trans.Receipt); err != nil {
+		if receiptStatements, err := l.getStatementsFromReceipt(pos, filter, trans, trans.Receipt); err != nil {
 			logger.Warn("Error getting statement from receipt", err)
 		} else {
 			statements = append(statements, receiptStatements...)
@@ -172,5 +167,22 @@ func (l *Ledger) GetStatements(prev, next base.Blknum, filter *filter.Appearance
 		}
 
 		return statements, nil
+	}
+}
+
+func validatePosition(pos *types.AppPosition, ctx *appBalancer) {
+	if !utils.IsFuzzing() {
+		if pos.Prev != ctx.Prev() {
+			logger.Error("GetStatements: pos.Prev != ctx.Prev()", pos.Prev, ctx.Prev())
+		}
+		if pos.Next != ctx.Next() {
+			logger.Error("GetStatements: pos.Next != ctx.Next()", pos.Next, ctx.Next())
+		}
+		if pos.First != ctx.first {
+			logger.Error("GetStatements: pos.First != ctx.first", pos.First, ctx.first)
+		}
+		if pos.Last != ctx.last {
+			logger.Error("GetStatements: pos.Last != ctx.last", pos.Last, ctx.last)
+		}
 	}
 }
