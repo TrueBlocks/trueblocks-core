@@ -46,10 +46,6 @@ func (r *Reconciler) String() string {
 }
 
 func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
-	if trans.Hash.Hex() == "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124" {
-		fmt.Println()
-	}
-
 	xfers := r.GetAssetTransfers(pos, filter, trans)
 	r.ProcessTransaction(pos, trans, xfers)
 

@@ -63,17 +63,3 @@ func (opts *TokensOptions) HandleShow(rCtx *output.RenderCtx) error {
 
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
-
-// TODO: NOTE THIS - DOES IT STILL WORK THIS WAY?
-// } else if (by_acct) {
-//     // All user-provided addresses are assumed to be tokens, except the last one which is the holder
-//     holders.push_back(addrs[addrs.size() - 1]);
-//     CAddressArray::iterator it;
-//     it = prev(addrs.end());
-//     addrs.erase(it);
-//     for (auto addr : addrs) {
-//         if (!isContractAt(addr, latestBlock))
-//             errors.push_back("Address '" + addr + "' is not a token contract.");
-//         else
-//             tokens.push_back(addr);
-//     }
