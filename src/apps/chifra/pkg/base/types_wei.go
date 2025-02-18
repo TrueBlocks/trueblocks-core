@@ -1,6 +1,7 @@
 package base
 
 import (
+	"fmt"
 	"io"
 	"math/big"
 	"strings"
@@ -207,12 +208,15 @@ func HexToWei(hex string) *Wei {
 	return result
 }
 
-func WeiToHash(wei *Wei) string {
+func WeiToHash(wei *Wei) (string, error) {
 	b := wei.Bytes()
+	if len(b) > 32 {
+		return "", fmt.Errorf("wei.Bytes() returned %d bytes, which is more than the allowed 32", len(b))
+	}
 	padded := make([]byte, 32)
 	copy(padded[32-len(b):], b)
 	hash := BytesToHash(padded)
-	return hash.Hex()
+	return hash.Hex(), nil
 }
 
 // Sign returns -1 if the Wei is negative, 0 if it is zero, and 1 if it is positive.

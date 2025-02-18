@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -28,7 +29,7 @@ func TestAssetOfInterest(t *testing.T) {
 		assetFilter: []base.Address{},
 	}
 	needle := base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678")
-	if !assetOfInterest(l1.assetFilter, needle) {
+	if !ledger2.AssetOfInterest(l1.assetFilter, needle) {
 		t.Error("Expected assetOfInterest to return true when assetFilter is empty")
 	}
 
@@ -41,7 +42,7 @@ func TestAssetOfInterest(t *testing.T) {
 		},
 	}
 	needle2 := base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678")
-	if !assetOfInterest(l2.assetFilter, needle2) {
+	if !ledger2.AssetOfInterest(l2.assetFilter, needle2) {
 		t.Error("Expected assetOfInterest to return true when needle is present in assetFilter")
 	}
 
@@ -53,7 +54,7 @@ func TestAssetOfInterest(t *testing.T) {
 		},
 	}
 	needle3 := base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678")
-	if assetOfInterest(l3.assetFilter, needle3) {
+	if ledger2.AssetOfInterest(l3.assetFilter, needle3) {
 		t.Error("Expected assetOfInterest to return false when needle is not present in assetFilter")
 	}
 
@@ -65,7 +66,7 @@ func TestAssetOfInterest(t *testing.T) {
 			base.HexToAddress("0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"),
 		},
 	}
-	if !assetOfInterest(l4.assetFilter, needle2) {
+	if !ledger2.AssetOfInterest(l4.assetFilter, needle2) {
 		t.Error("Expected assetOfInterest to return true when needle is present among multiple addresses")
 	}
 }

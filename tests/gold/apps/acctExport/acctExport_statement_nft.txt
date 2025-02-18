@@ -118,55 +118,6 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Tx reconciled with a zero value net amount. It's okay.
 TEST[DATE|TIME] Start of trial balance report
-TEST[DATE|TIME] A possible nullTransfer
-TEST[DATE|TIME]   nLogs:             2
-TEST[DATE|TIME]     lotsOfLogs:      --> false
-TEST[DATE|TIME]   Sender.IsZero:     0x0 true
-TEST[DATE|TIME]   or Sender == To:   false
-TEST[DATE|TIME]     mayBeAirdrop:    --> true
-TEST[DATE|TIME]   EndBal-BegBal:     1
-TEST[DATE|TIME]   Material:          false
-TEST[DATE|TIME]     noBalanceChange: --> false
-TEST[DATE|TIME]   ---> Not a nullTransfer
-TEST[DATE|TIME] Needs correction for token transfer
-TEST[DATE|TIME] Correcting token transfer for unknown income or outflow
-TEST[DATE|TIME] Block 9000998 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token-nft
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8876232
-TEST[DATE|TIME] Current:                9000998
-TEST[DATE|TIME] Next:                   9024185
-TEST[DATE|TIME] postType:               diff-diff
-TEST[DATE|TIME] postFirst:              false
-TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token-nft
-TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] sender:                 0x0  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] assetAddress:           0x22c1f6050e56d2876009903609a2cc3fef83b415 (The Proof of Attendance Protocol) decimals: 18
-TEST[DATE|TIME] hash:                   0xd50b63628667074810b0b6799ab53cdbaa1ab20757e1347f64db59ab660c7a0a
-TEST[DATE|TIME] timestamp:              1574722417
-TEST[DATE|TIME] blockNumber:            9000998.70.52
-TEST[DATE|TIME] priceSource:            0 (token-not-priced-pre-uni)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              0 (0)
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    totalOut:            -0.000000000000000001
-TEST[DATE|TIME]    amountNet:           0.000000000000000001
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0.000000000000000001 (0)
-TEST[DATE|TIME]    endBalCalc:          0.000000000000000001
-TEST[DATE|TIME]    rollingBalance:      0
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    correctingOut:       -0.000000000000000001
-TEST[DATE|TIME]    correctingReason:    endbal
-TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
 TEST[DATE|TIME] ===================================================
@@ -248,52 +199,6 @@ TEST[DATE|TIME] Tx reconciled with a zero value net amount. It's okay.
       "totalOutLessGas": "0",
       "transactionHash": "0x389e24356a19c24cac14e99574553a33662099559921691fb592fba3232748fa",
       "transactionIndex": 84
-    },
-    {
-      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "amountIn": "0",
-      "amountNet": "1",
-      "amountOut": "0",
-      "assetAddress": "0x22c1f6050e56d2876009903609a2cc3fef83b415",
-      "assetSymbol": "The Proof of Attendance Protocol",
-      "assetType": "token-nft",
-      "begBal": "0",
-      "begBalDiff": "0",
-      "blockNumber": 9000998,
-      "correctingIn": "0",
-      "correctingOut": "-1",
-      "correctingReason": "endbal",
-      "date": "2019-11-25 22:53:37 UTC",
-      "decimals": 18,
-      "endBal": "1",
-      "endBalCalc": "1",
-      "endBalDiff": "0",
-      "gasOut": "0",
-      "internalIn": "0",
-      "internalOut": "0",
-      "logIndex": 52,
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "postFirst": false,
-      "postLast": false,
-      "postType": "diff-diff",
-      "prefundIn": "0",
-      "prevBal": "0",
-      "priceSource": "token-not-priced-pre-uni",
-      "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "reconciled": true,
-      "selfDestructIn": "0",
-      "selfDestructOut": "0",
-      "sender": "0x0",
-      "spotPrice": 0,
-      "timestamp": 1574722417,
-      "totalIn": "0",
-      "totalOut": "-1",
-      "totalOutLessGas": "-1",
-      "transactionHash": "0xd50b63628667074810b0b6799ab53cdbaa1ab20757e1347f64db59ab660c7a0a",
-      "transactionIndex": 70
     }
   ]
 }

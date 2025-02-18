@@ -18,9 +18,10 @@ import (
 // Reconciler is responsible for processing Appearances, constructing Postings
 // and LedgerEntries, appending them to Ledgers, and maintaining a LedgerBook.
 type Reconciler struct {
-	connection *rpc.Connection
-	names      map[base.Address]types.Name
-	asEther    bool
+	connection  *rpc.Connection
+	names       map[base.Address]types.Name
+	asEther     bool
+	assetFilter []base.Address
 
 	// Typically you'd store references to RPC clients or indexers here,
 	// but we'll keep it simple for demonstration.
@@ -29,12 +30,13 @@ type Reconciler struct {
 }
 
 // NewReconciler creates a Reconciler for the specified accountedForAddress.
-func NewReconciler(conn *rpc.Connection, accountedForAddress base.Address, names map[base.Address]types.Name, asEth bool) Reconciler {
+func NewReconciler(conn *rpc.Connection, assetFilter []base.Address, accountedForAddress base.Address, names map[base.Address]types.Name, asEth bool) Reconciler {
 	return Reconciler{
-		LedgerBook: NewLedgerBook(accountedForAddress),
-		connection: conn,
-		names:      names,
-		asEther:    asEth,
+		LedgerBook:  NewLedgerBook(accountedForAddress),
+		connection:  conn,
+		names:       names,
+		asEther:     asEth,
+		assetFilter: assetFilter,
 	}
 }
 
@@ -44,7 +46,11 @@ func (r *Reconciler) String() string {
 }
 
 func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
-	xfers := r.GetAssetTransfers(pos, trans)
+	if trans.Hash.Hex() == "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124" {
+		fmt.Println()
+	}
+
+	xfers := r.GetAssetTransfers(pos, filter, trans)
 	r.ProcessTransaction(pos, trans, xfers)
 
 	if !r.LedgerBook.IsMaterial() {
@@ -201,108 +207,110 @@ func findSeparator(s string) int {
 
 // GetAssetTransfers parses a single Transaction and returns a slice of AssetTransfer
 // by checking the transaction's Value, its Logs for ERC20 events, and an optional Traces field.
-func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, trans *types.Transaction) []AssetTransfer {
+func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) []AssetTransfer {
 	var results []AssetTransfer
 
-	at := AssetTransfer{
-		AccountedFor:     r.LedgerBook.AccountedFor,
-		BlockNumber:      trans.BlockNumber,
-		BlockNumberPrev:  pos.Prev,
-		BlockNumberNext:  pos.Next,
-		TransactionIndex: trans.TransactionIndex,
-		TransactionHash:  trans.Hash,
-		Timestamp:        trans.Timestamp,
-		AssetAddress:     base.FAKE_ETH_ADDRESS,
-		AssetSymbol:      "WEI",
-		LogIndex:         0,
-		Sender:           trans.From,
-		Recipient:        trans.To,
-		AssetType:        types.TrialBalEth,
-		Decimals:         18,
-		PostFirst:        pos.First,
-		PostLast:         pos.Last,
-	}
-	if r.asEther {
-		at.AssetSymbol = "ETH"
-	}
+	if AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
+		at := AssetTransfer{
+			AccountedFor:     r.LedgerBook.AccountedFor,
+			BlockNumber:      trans.BlockNumber,
+			BlockNumberPrev:  pos.Prev,
+			BlockNumberNext:  pos.Next,
+			TransactionIndex: trans.TransactionIndex,
+			TransactionHash:  trans.Hash,
+			Timestamp:        trans.Timestamp,
+			AssetAddress:     base.FAKE_ETH_ADDRESS,
+			AssetSymbol:      "WEI",
+			LogIndex:         0,
+			Sender:           trans.From,
+			Recipient:        trans.To,
+			AssetType:        types.TrialBalEth,
+			Decimals:         18,
+			PostFirst:        pos.First,
+			PostLast:         pos.Last,
+		}
 
-	if trans.BlockNumber != 0 {
-		if r.LedgerBook.AccountedFor == trans.From {
+		if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
+			at.Recipient = trans.Receipt.ContractAddress
+		}
+
+		// Do not collapse. A single transaction may have many movements of money
+		if r.LedgerBook.AccountedFor == at.Sender {
+			gasUsed := new(base.Wei)
+			if trans.Receipt != nil {
+				gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
+			}
+			gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
+			gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
+
 			at.AmountOut = trans.Value
+			at.GasOut = *gasOut
 		}
-		if r.LedgerBook.AccountedFor == trans.To {
-			at.AmountIn = trans.Value
-		}
-	}
 
-	if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
-		at.Recipient = trans.Receipt.ContractAddress
-	}
-
-	// Do not collapse. A single transaction may have many movements of money
-	if r.LedgerBook.AccountedFor == at.Sender {
-		gasUsed := new(base.Wei)
-		if trans.Receipt != nil {
-			gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
-		}
-		gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
-		gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
-
-		at.AmountOut = trans.Value
-		at.GasOut = *gasOut
-	}
-
-	// Do not collapse. A single transaction may have many movements of money
-	if r.LedgerBook.AccountedFor == at.Recipient {
-		if at.BlockNumber == 0 {
-			at.PrefundIn = trans.Value
-		} else {
-			if trans.Rewards != nil {
-				at.MinerBaseRewardIn = trans.Rewards.Block
-				at.MinerNephewRewardIn = trans.Rewards.Nephew
-				at.MinerTxFeeIn = trans.Rewards.TxFee
-				at.MinerUncleRewardIn = trans.Rewards.Uncle
+		// Do not collapse. A single transaction may have many movements of money
+		if r.LedgerBook.AccountedFor == at.Recipient {
+			if at.BlockNumber == 0 {
+				at.PrefundIn = trans.Value
 			} else {
-				at.AmountIn = trans.Value
+				if trans.Rewards != nil {
+					at.MinerBaseRewardIn = trans.Rewards.Block
+					at.MinerNephewRewardIn = trans.Rewards.Nephew
+					at.MinerTxFeeIn = trans.Rewards.TxFee
+					at.MinerUncleRewardIn = trans.Rewards.Uncle
+				} else {
+					at.AmountIn = trans.Value
+				}
+				// TODO: BOGUS PERF - WHAT ABOUT WITHDRAWALS?
 			}
-			// TODO: BOGUS PERF - WHAT ABOUT WITHDRAWALS?
 		}
-	}
 
-	/*
+		if r.asEther {
+			at.AssetSymbol = "ETH"
+		}
 
-		if !l.useTraces && l.trial Balance(prev, next, types.TrialBalEth, &ret) {
-			if ret.IsMaterial() {
-				statements = append(statements, ret)
-			} else {
-				logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
-			}
-		} else {
-			if !l.useTraces {
-				logger.TestLog(!l.useTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), " need to decend into traces")
-			}
-			if traceStatements, err := l.getStatementsFromTraces(trans, &ret); err != nil {
-				if !utils.IsFuzzing() {
-					logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
+		/*
+			if !l.useTraces && l.trial Balance(prev, next, types.TrialBalEth, &ret) {
+				if ret.IsMaterial() {
+					statements = append(statements, ret)
+				} else {
+					logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
 				}
 			} else {
-				statements = append(statements, traceStatements...)
+				if !l.useTraces {
+					logger.TestLog(!l.useTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), " need to decend into traces")
+				}
+				if traceStatements, err := l.getStatementsFromTraces(trans, &ret); err != nil {
+					if !utils.IsFuzzing() {
+						logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
+					}
+				} else {
+					statements = append(statements, traceStatements...)
+				}
 			}
-		}
-	*/
+		*/
 
-	if at.IsMaterial() {
-		results = append(results, at)
+		if at.IsMaterial() {
+			results = append(results, at)
+		}
 	}
 
 	// 2) Parse logs for ERC20 or other asset transfers. This is a simplified example
 	// that checks if a log looks like an ERC20 Transfer. Real logic should decode topics, etc.
 	if trans.Receipt != nil {
 		for i, lg := range trans.Receipt.Logs {
-			if log, err := normalize.NormalizeTransferOrApproval(&lg); err != nil {
+			if log, isNFT, err := normalize.NormalizeKnownLogs(&lg); err != nil {
+				logger.Warn("Failed to normalize log", err)
+				continue
+
+			} else if isNFT {
 				continue
 
 			} else {
+				addrArray := []base.Address{r.LedgerBook.AccountedFor}
+				if !filter.ApplyLogFilter(log, addrArray) || !AssetOfInterest(r.assetFilter, log.Address) {
+					continue
+				}
+
 				if log.Topics[0] != topics.TransferTopic {
 					continue
 				}
@@ -346,6 +354,7 @@ func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, trans *types.Tran
 
 					// The contract address is in log.Address, which typically is the ERC20 token.
 					at := AssetTransfer{
+						AccountedFor:     r.LedgerBook.AccountedFor,
 						BlockNumber:      trans.BlockNumber,
 						BlockNumberPrev:  pos.Prev,
 						BlockNumberNext:  pos.Next,
@@ -361,6 +370,8 @@ func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, trans *types.Tran
 						Sender:           fromAddr,
 						Recipient:        toAddr,
 						AssetType:        types.TrialBalToken,
+						PostFirst:        pos.First,
+						PostLast:         pos.Last,
 					}
 
 					results = append(results, at)
@@ -390,4 +401,19 @@ func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, trans *types.Tran
 	// }
 
 	return results
+}
+
+// AssetOfInterest returns true if the asset filter is empty or the asset matches
+func AssetOfInterest(filters []base.Address, needle base.Address) bool {
+	if len(filters) == 0 {
+		return true
+	}
+
+	for _, asset := range filters {
+		if asset.Hex() == needle.Hex() {
+			return true
+		}
+	}
+
+	return false
 }

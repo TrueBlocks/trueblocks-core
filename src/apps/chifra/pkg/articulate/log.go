@@ -87,17 +87,17 @@ func findCommonEvent(log *types.Log) (*types.Function, error) {
 		return nil, nil
 	}
 
-	if normalize, err := normalize.NormalizeTransferOrApproval(log); err != nil {
+	if normalized, _, err := normalize.NormalizeKnownLogs(log); err != nil {
 		return nil, err
 
 	} else {
-		switch normalize.Topics[0] {
+		switch normalized.Topics[0] {
 		case topics.TransferTopic:
-			return parseTransferEvent(normalize), nil
+			return parseTransferEvent(normalized), nil
 		case topics.ApprovalTopic:
-			return parseApprovalEvent(normalize), nil
+			return parseApprovalEvent(normalized), nil
 		case topics.EnsTransferTopic:
-			return parseEnsTransferEvent(normalize), nil
+			return parseEnsTransferEvent(normalized), nil
 		}
 		return nil, fmt.Errorf("parseFunc(commonEvent): target is not of correct type %v", log.Topics[0])
 	}

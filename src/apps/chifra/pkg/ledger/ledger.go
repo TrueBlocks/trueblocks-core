@@ -74,21 +74,6 @@ func NewLedger(conn *rpc.Connection, apps []types.Appearance, acctFor base.Addre
 	return l
 }
 
-// assetOfInterest returns true if the asset filter is empty or the asset matches
-func assetOfInterest(filters []base.Address, needle base.Address) bool {
-	if len(filters) == 0 {
-		return true
-	}
-
-	for _, asset := range filters {
-		if asset.Hex() == needle.Hex() {
-			return true
-		}
-	}
-
-	return false
-}
-
 func (l *Ledger) getAppBalancerKey(bn base.Blknum, txid base.Txnum) appBalancerKey {
 	return appBalancerKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }

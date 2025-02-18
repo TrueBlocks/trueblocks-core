@@ -31,7 +31,7 @@ func (l *Ledger) GetStatements(pos *types.AppPosition, filter *filter.Appearance
 	allStatements := make([]types.Statement, 0, 20)
 
 	if os.Getenv("NEW_CODE") == "true" {
-		r := ledger2.NewReconciler(l.connection, l.accountFor, l.names, l.asEther)
+		r := ledger2.NewReconciler(l.connection, l.assetFilter, l.accountFor, l.names, l.asEther)
 		if allStatements, err = r.GetStatements(pos, filter, trans); err != nil {
 			return allStatements, err
 		}
@@ -45,7 +45,7 @@ func (l *Ledger) GetStatements(pos *types.AppPosition, filter *filter.Appearance
 			return allStatements, fmt.Errorf("balancer not found for key %s", key)
 		}
 
-		if assetOfInterest(l.assetFilter, base.FAKE_ETH_ADDRESS) {
+		if ledger2.AssetOfInterest(l.assetFilter, base.FAKE_ETH_ADDRESS) {
 			validatePosition(pos, ctx)
 
 			prevBal, _ := l.connection.GetBalanceAt(l.accountFor, ctx.Prev())

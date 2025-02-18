@@ -19,15 +19,11 @@ func (l *Ledger) getStatementsFromLog(pos *types.AppPosition, trans *types.Trans
 		return types.Statement{}, nil
 	}
 
-	// TODO: BOGUS NOT DONE
-	// This is an NFT, probably should not try to balance it
-	// if len(logIn.Topics) == 4 {
-	// 	// an ERC721 token transfer - same topic[0], different semantics
-	// 	return types.Statement{}, nil
-	// }
-
-	if log, err := normalize.NormalizeTransferOrApproval(logIn); err != nil {
+	if log, isNFT, err := normalize.NormalizeKnownLogs(logIn); err != nil {
 		return types.Statement{}, err
+
+	} else if isNFT {
+		return types.Statement{}, nil
 
 	} else {
 		sym := log.Address.DefaultSymbol()

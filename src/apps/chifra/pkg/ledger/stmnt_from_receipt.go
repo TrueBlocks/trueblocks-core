@@ -3,6 +3,7 @@ package ledger
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -15,7 +16,7 @@ func (l *Ledger) getStatementsFromReceipt(pos *types.AppPosition, filter *filter
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 	for _, log := range receipt.Logs {
 		addrArray := []base.Address{l.accountFor}
-		if filter.ApplyLogFilter(&log, addrArray) && assetOfInterest(l.assetFilter, log.Address) {
+		if filter.ApplyLogFilter(&log, addrArray) && ledger2.AssetOfInterest(l.assetFilter, log.Address) {
 			if s, err := l.getStatementsFromLog(pos, trans, &log); err != nil {
 				return statements, err
 			} else {

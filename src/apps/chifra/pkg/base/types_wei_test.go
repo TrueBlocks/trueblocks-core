@@ -319,7 +319,7 @@ func TestHexToWeiAndWeiToHash(t *testing.T) {
 
 	// Test WeiToHash – the returned hash should be 32 bytes (hex string length 66 including "0x")
 	wHash := NewWei(255) // 255 => 0xff
-	hashHex := WeiToHash(wHash)
+	hashHex, _ := WeiToHash(wHash)
 	if !strings.HasPrefix(hashHex, "0x") || len(hashHex) != 66 {
 		t.Errorf("WeiToHash output = %s; want a 66-character hex string", hashHex)
 	}

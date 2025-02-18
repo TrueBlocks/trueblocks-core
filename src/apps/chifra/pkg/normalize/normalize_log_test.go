@@ -19,7 +19,7 @@ func TestNormalizedLog_Standard(t *testing.T) {
 		Data: "0x00000000000000000000000000000000000000000000000000000000000003e8",
 	}
 
-	normLog, err := NormalizeTransferOrApproval(&log)
+	normLog, _, err := NormalizeKnownLogs(&log)
 	if err != nil {
 		t.Fatalf("unexpected error in standard case: %v", err)
 	}
@@ -51,7 +51,7 @@ func TestNormalizedLog_Approval(t *testing.T) {
 		Data: "0x00000000000000000000000000000000000000000000000000000000000003e8",
 	}
 
-	normLog, err := NormalizeTransferOrApproval(&log)
+	normLog, _, err := NormalizeKnownLogs(&log)
 	if err != nil {
 		t.Fatalf("unexpected error in standard case: %v", err)
 	}
@@ -78,7 +78,7 @@ func TestNormalizedLog_TwoTopics(t *testing.T) {
 	toTopic := "0x000000000000000000000000bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 
 	value := base.NewWei(5000)
-	valueHex := base.WeiToHash(value)
+	valueHex, _ := base.WeiToHash(value)
 	data := "0x" + strings.TrimPrefix(toTopic, "0x") + strings.TrimPrefix(valueHex, "0x")
 
 	log := types.Log{
@@ -89,7 +89,7 @@ func TestNormalizedLog_TwoTopics(t *testing.T) {
 		Data: data,
 	}
 
-	normLog, err := NormalizeTransferOrApproval(&log)
+	normLog, _, err := NormalizeKnownLogs(&log)
 	if err != nil {
 		t.Fatalf("unexpected error in two-topic case: %v", err)
 	}
@@ -122,7 +122,7 @@ func TestNormalizedLog_NonStandard(t *testing.T) {
 		Data: data,
 	}
 
-	normLog, err := NormalizeTransferOrApproval(&log)
+	normLog, _, err := NormalizeKnownLogs(&log)
 	if err != nil {
 		t.Fatalf("unexpected error in non-standard case: %v", err)
 	}
@@ -157,7 +157,7 @@ func TestNormalizedLog_UnrecognizedFormat(t *testing.T) {
 		Data: "0x00000000000000000000000000000000000000000000000000000000000003e8",
 	}
 
-	_, err := NormalizeTransferOrApproval(&log)
+	_, _, err := NormalizeKnownLogs(&log)
 	if err != nil {
 		t.Fatal("expected no error for unrecognized event format, got err", err)
 	}
