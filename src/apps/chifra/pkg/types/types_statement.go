@@ -47,8 +47,8 @@ type Statement struct {
 	MinerNephewRewardIn base.Wei       `json:"minerNephewRewardIn,omitempty"`
 	MinerTxFeeIn        base.Wei       `json:"minerTxFeeIn,omitempty"`
 	MinerUncleRewardIn  base.Wei       `json:"minerUncleRewardIn,omitempty"`
-	PostFirst           bool           `json:"postFirst"`
-	PostLast            bool           `json:"postLast"`
+	PostFirst           bool           `json:"postFirst,omitempty"`
+	PostLast            bool           `json:"postLast,omitempty"`
 	PrefundIn           base.Wei       `json:"prefundIn,omitempty"`
 	PrevBal             base.Wei       `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`

@@ -30,6 +30,7 @@ type Log struct {
 	BlockHash        base.Hash      `json:"blockHash"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	Data             string         `json:"data,omitempty"`
+	IsNFT            bool           `json:"isNFT,omitempty"`
 	LogIndex         base.Lognum    `json:"logIndex"`
 	Timestamp        base.Timestamp `json:"timestamp,omitempty"`
 	Topics           []base.Hash    `json:"topics,omitempty"`
@@ -74,6 +75,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 		"topic2",
 		"topic3",
 		"data",
+		"isNFT",
 	}
 
 	isArticulated := extraOpts["articulate"] == true && s.ArticulatedLog != nil
@@ -87,9 +89,14 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 	}
 
 	if format == "json" {
+		if s.IsNFT {
+			model["isNFT"] = s.IsNFT
+		}
+
 		if len(s.Data) > 2 {
 			model["data"] = s.Data
 		}
+
 		if isArticulated {
 			model["articulatedLog"] = articulatedLog
 		}
@@ -97,6 +104,8 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 		model["topics"] = s.Topics
 
 	} else {
+		model["isNFT"] = s.IsNFT
+
 		if len(s.Data) > 2 {
 			model["data"] = s.Data
 		} else {
@@ -200,6 +209,11 @@ func (s *Log) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// IsNFT
+	if err = cache.WriteValue(writer, s.IsNFT); err != nil {
+		return err
+	}
+
 	// LogIndex
 	if err = cache.WriteValue(writer, s.LogIndex); err != nil {
 		return err
@@ -269,6 +283,15 @@ func (s *Log) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	// Data
 	if err = cache.ReadValue(reader, &s.Data, vers); err != nil {
 		return err
+	}
+
+	// IsNFT
+	vIsNFT := version.NewVersion("4.2.0")
+	if vers > vIsNFT.Uint64() {
+		// IsNFT
+		if err = cache.ReadValue(reader, &s.IsNFT, vers); err != nil {
+			return err
+		}
 	}
 
 	// LogIndex

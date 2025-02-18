@@ -11,3 +11,4 @@ transactionHash  ,hash      ,           ,           ,              ,       9 ,th
 blockHash        ,hash      ,           ,           ,              ,      10 ,the hash of the block
 articulatedLog   ,*Function ,           ,omitempty  ,              ,      11 ,a human-readable version of the topic and data fields
 compressedLog    ,string    ,           ,calc       ,2.5.10:string ,      12 ,a truncated&#44; more readable version of the articulation
+isNFT            ,bool      ,           ,omitempty  ,>4.2.0:bool   ,      13 ,true if the log is an NFT transfer

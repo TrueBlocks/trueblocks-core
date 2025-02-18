@@ -1,7 +1,12 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --fmt json --from
-Error: 
-  unknown flag: --from
-
+chifra export  trueblocks.eth --nfts --articulate --first_block 8876230 --last_block 9024186 --fmt json
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Nfts:  true
+TEST[DATE|TIME] FirstBlock:  8876230
+TEST[DATE|TIME] LastBlock:  9024186
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+Error: The --nfts option is only available with the --logs option.
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 

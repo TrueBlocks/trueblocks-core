@@ -38,6 +38,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13190,apps,Accounts,export,acctExport,relevant,N,,visible|docs,,switch,<boolean>,,,,,for log and accounting export only&#44; export only logs relevant to one of the given export addresses
 13200,apps,Accounts,export,acctExport,emitter,m,,visible|docs,,flag,list<addr>,,,,,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 13210,apps,Accounts,export,acctExport,topic,B,,visible|docs,,flag,list<topic>,,,,,for the --logs option only&#44; filter logs to show only those with this topic(s)
+13215,apps,Accounts,export,acctExport,nfts,T,,visible|docs,,switch,<boolean>,,,,,for the --logs option only&#44; filter logs to show only nft transfers
 13220,apps,Accounts,export,acctExport,reverted,V,,visible|docs,,switch,<boolean>,,,,,export only transactions that were reverted
 13230,apps,Accounts,export,acctExport,asset,P,,visible|docs,,flag,list<addr>,,,,,for the accounting options only&#44; export statements only for this asset
 13240,apps,Accounts,export,acctExport,flow,f,,visible|docs,,flag,enum[in|out|zero],,,,,for the accounting options only&#44; export statements with incoming&#44; outgoing&#44; or zero value

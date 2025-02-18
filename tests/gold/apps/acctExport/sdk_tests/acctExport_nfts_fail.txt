@@ -1,0 +1,15 @@
+export?addrs=trueblocks.eth&nfts&articulate&firstBlock=8876230&lastBlock=9024186
+Args: [addrs=trueblocks.eth nfts articulate firstBlock=8876230 lastBlock=9024186]
+Opts: {"addrs":["trueblocks.eth"],"articulate":true,"nfts":true,"firstBlock":8876230,"lastBlock":9024186}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Articulate:  true
+Nfts:  true
+FirstBlock:  8876230
+LastBlock:  9024186
+Caps:  cache,decache,ether
+Format:  json
+{
+  "errors": [
+    "The --nfts option is only available with the --logs option."
+  ]
+}

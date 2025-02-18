@@ -86,6 +86,10 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,export_logs_topics_10   ,n   
 on       ,both ,fast  ,export   ,apps ,acctExport ,export_logs_topics_3    ,n    ,addrs = 0x111111517e4929d3dcbdfa7cce55d30d4b6bc4d6 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & max_records = 3 & fmt = csv
 on       ,both ,fast  ,export   ,apps ,acctExport ,export_logs_topics_fb_3 ,n    ,addrs = 0x111111517e4929d3dcbdfa7cce55d30d4b6bc4d6 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & first_block = 14353374 & max_records = 3 & fmt = csv
 
+on       ,both ,fast  ,export   ,apps ,acctExport ,not_nfts                ,y    ,addrs = trueblocks.eth & logs & articulate & first_block = 8876230 & last_block = 9024186 & fmt = json
+on       ,both ,fast  ,export   ,apps ,acctExport ,nfts                    ,y    ,addrs = trueblocks.eth & logs & articulate & nfts & first_block = 8876230 & last_block = 9024186 & fmt = json
+on       ,both ,fast  ,export   ,apps ,acctExport ,nfts_fail               ,y    ,addrs = trueblocks.eth & nfts & articulate & first_block = 8876230 & last_block = 9024186 & fmt = json
+
 # Testing adding a fourbyte value
 on       ,both ,fast  ,export   ,apps ,acctExport ,invalid_fourbyte        ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fourbytes = 0xa9059c & max_records = 10 & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,invalid_fourbyte_2      ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fourbytes = 0xa9059c & logs & max_records = 10 & fmt = json
@@ -95,8 +99,8 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,simple_prefund2         ,y   
 on       ,both ,fast  ,export   ,apps ,acctExport ,reverted                ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & reverted & max_records = 2 & fmt = txt
 on       ,both ,fast  ,export   ,apps ,acctExport ,reverted_fourbytes      ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & reverted & fourbytes = 0xab832b43 & max_records = 2 & fmt = txt
 
-on       ,both ,fast  ,export   ,apps ,acctExport ,not_withdrawals         ,y    ,addrs = 0x6193f68d97921f4765d72a3e6964fc990c59e0e5 & first_block = 17013606 & last_block = 17083530 & fmt = json
-on       ,both ,fast  ,export   ,apps ,acctExport ,withdrawals             ,y    ,addrs = 0x6193f68d97921f4765d72a3e6964fc990c59e0e5 & withdrawals & first_block = 17013606 & last_block = 17083530 & fmt = json
+with     ,both ,fast  ,export   ,apps ,acctExport ,not_withdrawals         ,y    ,addrs = 0x6193f68d97921f4765d72a3e6964fc990c59e0e5 & first_block = 17013606 & last_block = 17083530 & fmt = json
+with     ,both ,fast  ,export   ,apps ,acctExport ,withdrawals             ,y    ,addrs = 0x6193f68d97921f4765d72a3e6964fc990c59e0e5 & withdrawals & first_block = 17013606 & last_block = 17083530 & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,withdrawals_fail        ,y    ,addrs = chasewright.eth & withdrawals & logs & first_block = 17048500 & last_block = 17139600 & fmt = json
 
 on       ,both ,fast  ,export   ,apps ,acctExport ,invalid_key             ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & fmt = json & from

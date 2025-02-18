@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 4.2.0-release
+  version: 4.3.0-release
   description: >
     A REST layer over the TrueBlocks chifra command line. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
@@ -420,6 +420,14 @@ paths:
             items:
               type: string
               format: topic
+        - name: nfts
+          description: for the --logs option only, filter logs to show only nft transfers
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: reverted
           description: export only transactions that were reverted
           required: false
@@ -3666,6 +3674,10 @@ components:
           type: string
           format: string
           description: "a truncated, more readable version of the articulation (calculated)"
+        isNFT:
+          type: boolean
+          format: boolean
+          description: "true if the log is an NFT transfer"
     trace:
       description: "trace data as returned from the RPC (with slight enhancements)"
       type: object

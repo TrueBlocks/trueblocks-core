@@ -2,7 +2,7 @@ blocks?blocks=4012000-4012001&logs&decache
 {
   "data": [
     {
-      "msg": "1 items totaling 12370 bytes were removed from the logs cache."
+      "msg": "1 items totaling 12404 bytes were removed from the logs cache."
     }
   ],
   "meta": {

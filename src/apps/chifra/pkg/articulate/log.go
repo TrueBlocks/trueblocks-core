@@ -87,10 +87,10 @@ func findCommonEvent(log *types.Log) (*types.Function, error) {
 		return nil, nil
 	}
 
-	if normalized, _, err := normalize.NormalizeKnownLogs(log); err != nil {
+	if normalized, isNFT, err := normalize.NormalizeKnownLogs(log); err != nil {
 		return nil, err
-
 	} else {
+		log.IsNFT = isNFT
 		switch normalized.Topics[0] {
 		case topics.TransferTopic:
 			return parseTransferEvent(normalized), nil

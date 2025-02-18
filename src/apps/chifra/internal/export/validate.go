@@ -119,7 +119,11 @@ func (opts *ExportOptions) validateExport() error {
 				return validate.Usage("Invalid topic: {0}", t)
 			}
 		}
+
 	} else {
+		if opts.Nfts {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--nfts", "--logs")
+		}
 		if len(opts.Emitter) > 0 {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--emitter", "--logs")
 		}

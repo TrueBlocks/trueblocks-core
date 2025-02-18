@@ -87,6 +87,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Relevant, "relevant", "N", false, `for log and accounting export only, export only logs relevant to one of the given export addresses`)
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Emitter, "emitter", "m", nil, `for the --logs option only, filter logs to show only those logs emitted by the given address(es)`)
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Topic, "topic", "B", nil, `for the --logs option only, filter logs to show only those with this topic(s)`)
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Nfts, "nfts", "T", false, `for the --logs option only, filter logs to show only nft transfers`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reverted, "reverted", "V", false, `export only transactions that were reverted`)
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Asset, "asset", "P", nil, `for the accounting options only, export statements only for this asset`)
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Flow, "flow", "f", "", `for the accounting options only, export statements with incoming, outgoing, or zero value
