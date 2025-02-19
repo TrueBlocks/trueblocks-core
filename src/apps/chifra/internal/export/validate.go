@@ -247,5 +247,14 @@ func (opts *ExportOptions) tooMany() ([]string, bool) {
 		which = which[:2]
 	}
 
+	m := map[string]bool{}
+	for _, w := range which {
+		m[w] = true
+	}
+
+	if len(which) == 2 && m["--accounting"] && m["--traces"] {
+		return []string{}, false
+	}
+
 	return which, cnt > 1
 }

@@ -8,13 +8,6 @@ FirstBlock:  8876230
 LastBlock:  9024186
 Caps:  cache,decache,ether
 Format:  json
-------------------------------------------------------------
-Appearance Contexts (3)
-008876232-00084:    8876231    8876232     9000998 first-diff
-009000998-00070:    8876232    9000998     9024185 diff-diff
-009024185-00029:    9000998    9024185     9024186 diff-last
-Start of trial balance report
-Start of trial balance report
 Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
 ====> token
@@ -49,9 +42,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
-Start of trial balance report
 {
   "data": [
     {

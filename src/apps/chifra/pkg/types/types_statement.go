@@ -783,7 +783,6 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 		logger.TestLog(true, " ^^ we need to fix this ^^")
 	}
 	logger.TestLog(true, "---------------------------------------------------")
-	logger.TestLog(true, "End of trial balance report")
 }
 
 func (s *Statement) getPostType() string {

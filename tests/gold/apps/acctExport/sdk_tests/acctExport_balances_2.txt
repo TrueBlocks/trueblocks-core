@@ -1,5 +1,38 @@
-export?addrs=trueblocks.eth&balances&fmt=txt&maxRecords=2
-blockNumber	date	holder	balance	diff	units
-8854723	2019-11-01 20:18:58 UTC	0xf503017d7baf7fbc0fff7492b751025c6a78179b	5	0	5000000000000000000
-8856290	2019-11-02 02:16:06 UTC	0xf503017d7baf7fbc0fff7492b751025c6a78179b	4.98979	-0.01021	4989790000000000000
-
+export?addrs=trueblocks.eth&balances&maxRecords=2
+Args: [addrs=trueblocks.eth balances maxRecords=2]
+Opts: {"addrs":["trueblocks.eth"],"balances":true,"maxRecords":2}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Balances:  true
+MaxRecords:  2
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "balance": "5000000000000000000",
+      "balanceDec": "5",
+      "blockNumber": 8854723,
+      "date": "2019-11-01 20:18:58 UTC",
+      "diff": "0",
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+    },
+    {
+      "balance": "4989790000000000000",
+      "balanceDec": "4.98979",
+      "blockNumber": 8856290,
+      "date": "2019-11-02 02:16:06 UTC",
+      "diff": "-0.01021",
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

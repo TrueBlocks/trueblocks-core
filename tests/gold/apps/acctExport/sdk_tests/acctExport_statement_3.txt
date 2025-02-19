@@ -7,12 +7,6 @@ Statements:  true
 LastBlock:  4000000
 Caps:  cache,decache,ether
 Format:  json
-------------------------------------------------------------
-Appearance Contexts (3)
-000000000-00270:          0          0       46685 genesis-diff
-000046685-00000:          0      46685       46709 diff-diff
-000046709-00000:      46685      46709       46710 diff-last
-Start of trial balance report
 Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -47,8 +41,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -84,8 +76,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -121,7 +111,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
 {
   "data": [
     {

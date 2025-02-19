@@ -109,7 +109,7 @@ TEST[DATE|TIME] Format:  json
       "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "traces": [],
       "transactionIndex": 91,
-      "value": "0.01"
+      "value": "10000000000000000"
     },
     {
       "blockHash": "0x61dfb0ff34d48012414f63f57273395259d5a1112132bc37f46b551d6d06dfbc",
@@ -133,7 +133,7 @@ TEST[DATE|TIME] Format:  json
       "to": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
       "traces": [],
       "transactionIndex": 62,
-      "value": "0.01"
+      "value": "10000000000000000"
     },
     {
       "blockHash": "0xeea275e000cb2119986bb0c4aa30a5e22bbafd92f140aff8c2a191aa84797e22",
@@ -206,7 +206,7 @@ TEST[DATE|TIME] Format:  json
       "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "traces": [],
       "transactionIndex": 61,
-      "value": "5"
+      "value": "5000000000000000000"
     }
   ]
 }

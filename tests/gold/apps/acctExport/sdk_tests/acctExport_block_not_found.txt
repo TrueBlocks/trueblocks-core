@@ -1,6 +1,12 @@
 export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&firstBlock=0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
+Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b firstBlock=0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2]
+Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"firstBlock":18446744073709551615}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+FirstBlock:  18446744073709551615
+Caps:  cache,decache,ether
+Format:  json
 {
   "errors": [
-    "chifra export - Value to --first_block parameter (0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2) must be a valid unsigned integer."
+    "first_block (18446744073709551615) must be strictly earlier than last_block (18446744073709551615)."
   ]
 }

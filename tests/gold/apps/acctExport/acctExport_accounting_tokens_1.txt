@@ -8,12 +8,6 @@ TEST[DATE|TIME] OutputFn:  accounting_tokens_1_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Appearance Contexts (3)
-INFO[DATE|TIME] 000000000-00002:          0          0      202249 genesis-diff
-INFO[DATE|TIME] 000202249-00000:          0     202249     1501459 diff-diff
-INFO[DATE|TIME] 001501459-00002:     202249    1501459     1501460 diff-last
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -48,8 +42,6 @@ TEST[DATE|TIME]    prefundIn:           4200
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -85,8 +77,6 @@ TEST[DATE|TIME]    gasOut:              0.025320679510922664
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 1501459 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -122,7 +112,6 @@ TEST[DATE|TIME]    gasOut:              0.00042
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
 ----
 Results in ./accounting_tokens_1_out.file
 {

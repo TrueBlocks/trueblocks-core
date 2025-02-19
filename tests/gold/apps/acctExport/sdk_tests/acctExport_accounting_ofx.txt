@@ -6,12 +6,6 @@ Accounting:  true
 MaxRecords:  3
 Caps:  cache,decache,ether
 Format:  json
-------------------------------------------------------------
-Appearance Contexts (3)
-000000000-00002:          0          0      202249 genesis-diff
-000202249-00000:          0     202249     1501459 diff-diff
-001501459-00002:     202249    1501459     1501460 diff-last
-Start of trial balance report
 Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -46,8 +40,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -83,8 +75,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 1501459 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -120,7 +110,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
 {
   "data": [
     {

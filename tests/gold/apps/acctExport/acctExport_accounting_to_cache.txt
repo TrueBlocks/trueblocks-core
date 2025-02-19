@@ -6,22 +6,6 @@ TEST[DATE|TIME] LastBlock:  100
 TEST[DATE|TIME] OutputFn:  accounting_to_cache_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
-INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Appearance Contexts (13)
-INFO[DATE|TIME] 000000013-99999:         12         13          22 first-diff
-INFO[DATE|TIME] 000000022-99999:         13         22          37 diff-diff
-INFO[DATE|TIME] 000000037-99998:         22         37          39 diff-diff
-INFO[DATE|TIME] 000000039-99999:         37         39          43 diff-diff
-INFO[DATE|TIME] 000000043-99999:         39         43          53 diff-diff
-INFO[DATE|TIME] 000000053-99999:         43         53          55 diff-diff
-INFO[DATE|TIME] 000000055-99998:         53         55          64 diff-diff
-INFO[DATE|TIME] 000000064-99999:         55         64          67 diff-diff
-INFO[DATE|TIME] 000000067-99999:         64         67          78 diff-diff
-INFO[DATE|TIME] 000000078-99999:         67         78          84 diff-diff
-INFO[DATE|TIME] 000000084-99999:         78         84          90 diff-diff
-INFO[DATE|TIME] 000000090-99999:         84         90          94 diff-diff
-INFO[DATE|TIME] 000000094-99999:         90         94          95 diff-last
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 13 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -56,8 +40,6 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 22 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -92,8 +74,6 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 37 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -128,8 +108,6 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 39 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -164,8 +142,6 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 43 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -200,8 +176,6 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 53 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -236,8 +210,6 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 55 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -272,8 +244,6 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 64 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -308,8 +278,6 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 67 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -344,8 +312,6 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 78 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -381,8 +347,6 @@ TEST[DATE|TIME]    minerNephewRewardIn: 0.15625
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 84 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -417,8 +381,6 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 90 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -453,8 +415,6 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 94 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -490,7 +450,6 @@ TEST[DATE|TIME]    minerNephewRewardIn: 0.15625
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
 ----
 Results in ./accounting_to_cache_out.file
 blockNumber	transactionIndex	logIndex	transactionHash	timestamp	date	assetAddress	assetType	assetSymbol	decimals	spotPrice	priceSource	accountedFor	sender	recipient	begBal	amountNet	endBal	reconciled	totalIn	amountIn	internalIn	selfDestructIn	minerBaseRewardIn	minerNephewRewardIn	minerTxFeeIn	minerUncleRewardIn	prefundIn	totalOut	amountOut	internalOut	selfDestructOut	gasOut	totalOutLessGas	prevBal	begBalDiff	endBalDiff	endBalCalc	correctingReason

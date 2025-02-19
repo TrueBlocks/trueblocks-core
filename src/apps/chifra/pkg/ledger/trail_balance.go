@@ -16,8 +16,6 @@ import (
 // function tries to price the asset. it then prints optional debugging information. Note that
 // the statement may be modified in this function.
 func (l *Ledger) trialBalance(pos *types.AppPosition, reason types.TrialBalType, trans *types.Transaction, s *types.Statement) bool {
-	logger.TestLog(l.testMode, "Start of trial balance report")
-
 	s.BlockNumberPrev = pos.Prev
 	s.BlockNumberNext = pos.Next
 	s.PostFirst = pos.First

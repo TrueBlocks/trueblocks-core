@@ -113,10 +113,6 @@ func (r *Reconciler) ProcessTransaction(pos *types.AppPosition, trans *types.Tra
 			entry = &newEntry
 		}
 
-		if file.IsTestMode() {
-			logger.TestLog(true, "Start of trial balance report")
-		}
-
 		// Convert the AssetTransfer into a single Posting (some logic is simplified):
 		posting := r.queryBalances(at)
 

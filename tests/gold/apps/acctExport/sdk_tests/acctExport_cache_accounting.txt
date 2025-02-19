@@ -10,10 +10,6 @@ Enabled:  statements, traces, transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json
-------------------------------------------------------------
-Contexts (1)
-010277780-00088:   10277780   10277780    10277780 first-last
-Start of trial balance report
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 =========================================================
@@ -34,10 +30,12 @@ source:              uniswap
 ===================================================
 ====> eth
 ===================================================
-Previous:               10277780
+Previous:               10277779
 Current:                10277780
-Next:                   10277780
-postType:               first-last
+Next:                   10277781
+postType:               diff-diff
+postFirst:              true
+postLast:               true
 assetType:              eth
 accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0xdac17f958d2ee523a2206206994597c13d831ec7
@@ -48,7 +46,7 @@ blockNumber:            10277780.88
 priceSource:            231.21081182360814 (uniswap)
 --------------------------------------------------- 
 Trial balance:
-   prevBal:             0.005463122167631885
+   prevBal:             0.006511482167631885
    begBal:              0.006511482167631885 (0)
    totalIn:             0
    totalOut:            0.00104836
@@ -56,13 +54,12 @@ Trial balance:
                        ======================= 
    endBal:              0.005463122167631885 (0)
    endBalCalc:          0.005463122167631885
+   rollingBalance:      0
 --------------------------------------------------- 
    gasOut:              0.00104836
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 =========================================================
 ===> PRICING FOR 0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) 
 =========================================================
@@ -70,10 +67,12 @@ stable-coin
 ===================================================
 ====> token
 ===================================================
-Previous:               10277780
+Previous:               10277779
 Current:                10277780
-Next:                   10277780
-postType:               first-last
+Next:                   10277781
+postType:               diff-diff
+postFirst:              true
+postLast:               true
 assetType:              token
 accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9
@@ -84,7 +83,7 @@ blockNumber:            10277780.88.103
 priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
-   prevBal:             0
+   prevBal:             0.000000000381
    begBal:              0.000000000381 (0)
    totalIn:             0
    totalOut:            0.000000000381
@@ -92,12 +91,12 @@ Trial balance:
                        ======================= 
    endBal:              0 (0)
    endBalCalc:          0
+   rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           0.000000000381
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
 {
   "data": [
     {
@@ -177,11 +176,14 @@ End of trial balance report
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
+          "postFirst": true,
+          "postLast": true,
+          "postType": "diff-diff",
           "prefundIn": "0",
+          "prevBal": "6511482167631885",
           "priceSource": "uniswap",
           "recipient": "0xdac17f958d2ee523a2206206994597c13d831ec7",
           "reconciled": true,
-          "postType": "first-last",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
@@ -220,11 +222,14 @@ End of trial balance report
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
+          "postFirst": true,
+          "postLast": true,
+          "postType": "diff-diff",
           "prefundIn": "0",
+          "prevBal": "381000000",
           "priceSource": "stable-coin",
           "recipient": "0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9",
           "reconciled": true,
-          "postType": "first-last",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",

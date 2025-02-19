@@ -7,22 +7,6 @@ Statements:  true
 LastBlock:  100
 Caps:  cache,decache,ether
 Format:  json
-------------------------------------------------------------
-Appearance Contexts (13)
-000000013-99999:         12         13          22 first-diff
-000000022-99999:         13         22          37 diff-diff
-000000037-99998:         22         37          39 diff-diff
-000000039-99999:         37         39          43 diff-diff
-000000043-99999:         39         43          53 diff-diff
-000000053-99999:         43         53          55 diff-diff
-000000055-99998:         53         55          64 diff-diff
-000000064-99999:         55         64          67 diff-diff
-000000067-99999:         64         67          78 diff-diff
-000000078-99999:         67         78          84 diff-diff
-000000084-99999:         78         84          90 diff-diff
-000000090-99999:         84         90          94 diff-diff
-000000094-99999:         90         94          95 diff-last
-Start of trial balance report
 Block 13 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -57,8 +41,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 22 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -93,8 +75,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 37 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -129,8 +109,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 39 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -165,8 +143,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 43 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -201,8 +177,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 53 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -237,8 +211,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 55 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -273,8 +245,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 64 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -309,8 +279,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 67 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -345,8 +313,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 78 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -382,8 +348,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 84 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -418,8 +382,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 90 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -454,8 +416,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
 Block 94 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 ====> eth
@@ -491,7 +451,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
 {
   "data": [
     {

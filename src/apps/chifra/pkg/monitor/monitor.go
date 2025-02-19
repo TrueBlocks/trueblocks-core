@@ -234,7 +234,7 @@ func (mon *Monitor) MoveToProduction() error {
 		return err
 	}
 
-	if before != after {
+	if before != after && os.Getenv("TEST_MODE") != "true" {
 		msg := fmt.Sprintf("%s %d duplicates removed.", mon.Address.Hex(), (before - after))
 		logger.Warn(msg)
 	}

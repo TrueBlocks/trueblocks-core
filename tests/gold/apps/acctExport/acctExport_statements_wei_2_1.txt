@@ -1,4 +1,4 @@
-chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --statements --fmt json --first_record 0 --max_records 15
+chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --statements --fmt json --first_record 0 --max_records 15 --output statements_wei_2_1_out.file
 TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
@@ -6,30 +6,7 @@ TEST[DATE|TIME] MaxRecords:  15
 TEST[DATE|TIME] OutputFn:  statements_wei_2_1_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
-{ "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Contexts (20)
-INFO[DATE|TIME] 000000001-99999:          0          1           5 first-diff
-INFO[DATE|TIME] 000000005-99999:          1          5          56 diff-diff
-INFO[DATE|TIME] 000000056-99998:          5         56         235 diff-diff
-INFO[DATE|TIME] 000000235-99999:         56        235         247 diff-diff
-INFO[DATE|TIME] 000000247-99998:        235        247         348 diff-diff
-INFO[DATE|TIME] 000000348-99999:        247        348         500 diff-diff
-INFO[DATE|TIME] 000000500-99998:        348        500         563 diff-diff
-INFO[DATE|TIME] 000000563-99998:        500        563         987 diff-diff
-INFO[DATE|TIME] 000000987-99998:        563        987        1450 diff-diff
-INFO[DATE|TIME] 000001450-99999:        987       1450        1580 diff-diff
-INFO[DATE|TIME] 000001580-99998:       1450       1580        1586 diff-diff
-INFO[DATE|TIME] 000001586-99998:       1580       1586        1861 diff-diff
-INFO[DATE|TIME] 000001861-99999:       1586       1861        1912 diff-diff
-INFO[DATE|TIME] 000001912-99998:       1861       1912        2057 diff-diff
-INFO[DATE|TIME] 000002057-99999:       1912       2057        2256 diff-diff
-INFO[DATE|TIME] 000002256-99999:       2057       2256        2392 diff-diff
-INFO[DATE|TIME] 000002392-99999:       2256       2392        2516 diff-diff
-INFO[DATE|TIME] 000002516-99998:       2392       2516        3962 diff-diff
-INFO[DATE|TIME] 000003962-99998:       2516       3962        4256 diff-diff
-INFO[DATE|TIME] 000004256-99998:       3962       4256        4256 diff-last
-TEST[DATE|TIME] Start of trial balance report
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Block 1 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -37,14 +14,16 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                1
 TEST[DATE|TIME] Next:                   5
-TEST[DATE|TIME] postType:               first-diff
+TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              true
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438269988
-TEST[DATE|TIME] blockNumber:            1.99999.0
+TEST[DATE|TIME] blockNumber:            1.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -56,13 +35,12 @@ TEST[DATE|TIME]    amountNet:           5
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              5 (0)
 TEST[DATE|TIME]    endBalCalc:          5
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 5 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -71,13 +49,15 @@ TEST[DATE|TIME] Previous:               1
 TEST[DATE|TIME] Current:                5
 TEST[DATE|TIME] Next:                   56
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270083
-TEST[DATE|TIME] blockNumber:            5.99999.0
+TEST[DATE|TIME] blockNumber:            5.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -89,13 +69,12 @@ TEST[DATE|TIME]    amountNet:           5
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              10 (0)
 TEST[DATE|TIME]    endBalCalc:          10
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 56 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -104,13 +83,15 @@ TEST[DATE|TIME] Previous:               5
 TEST[DATE|TIME] Current:                56
 TEST[DATE|TIME] Next:                   235
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270322
-TEST[DATE|TIME] blockNumber:            56.99998.0
+TEST[DATE|TIME] blockNumber:            56.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -122,13 +103,12 @@ TEST[DATE|TIME]    amountNet:           3.75
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              13.75 (0)
 TEST[DATE|TIME]    endBalCalc:          13.75
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 235 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -137,13 +117,15 @@ TEST[DATE|TIME] Previous:               56
 TEST[DATE|TIME] Current:                235
 TEST[DATE|TIME] Next:                   247
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270713
-TEST[DATE|TIME] blockNumber:            235.99999.0
+TEST[DATE|TIME] blockNumber:            235.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -155,13 +137,12 @@ TEST[DATE|TIME]    amountNet:           5
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              18.75 (0)
 TEST[DATE|TIME]    endBalCalc:          18.75
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 247 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -170,13 +151,15 @@ TEST[DATE|TIME] Previous:               235
 TEST[DATE|TIME] Current:                247
 TEST[DATE|TIME] Next:                   348
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270739
-TEST[DATE|TIME] blockNumber:            247.99998.0
+TEST[DATE|TIME] blockNumber:            247.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -188,13 +171,12 @@ TEST[DATE|TIME]    amountNet:           3.125
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              21.875 (0)
 TEST[DATE|TIME]    endBalCalc:          21.875
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  3.125
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 348 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -203,13 +185,15 @@ TEST[DATE|TIME] Previous:               247
 TEST[DATE|TIME] Current:                348
 TEST[DATE|TIME] Next:                   500
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270943
-TEST[DATE|TIME] blockNumber:            348.99999.0
+TEST[DATE|TIME] blockNumber:            348.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -221,13 +205,12 @@ TEST[DATE|TIME]    amountNet:           5
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              26.875 (0)
 TEST[DATE|TIME]    endBalCalc:          26.875
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 500 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -236,13 +219,15 @@ TEST[DATE|TIME] Previous:               348
 TEST[DATE|TIME] Current:                500
 TEST[DATE|TIME] Next:                   563
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438271212
-TEST[DATE|TIME] blockNumber:            500.99998.0
+TEST[DATE|TIME] blockNumber:            500.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -254,13 +239,12 @@ TEST[DATE|TIME]    amountNet:           3.75
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              30.625 (0)
 TEST[DATE|TIME]    endBalCalc:          30.625
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 563 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -269,13 +253,15 @@ TEST[DATE|TIME] Previous:               500
 TEST[DATE|TIME] Current:                563
 TEST[DATE|TIME] Next:                   987
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438271337
-TEST[DATE|TIME] blockNumber:            563.99998.0
+TEST[DATE|TIME] blockNumber:            563.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -287,13 +273,12 @@ TEST[DATE|TIME]    amountNet:           3.75
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              34.375 (0)
 TEST[DATE|TIME]    endBalCalc:          34.375
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 987 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -302,13 +287,15 @@ TEST[DATE|TIME] Previous:               563
 TEST[DATE|TIME] Current:                987
 TEST[DATE|TIME] Next:                   1450
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438272114
-TEST[DATE|TIME] blockNumber:            987.99998.0
+TEST[DATE|TIME] blockNumber:            987.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -320,13 +307,12 @@ TEST[DATE|TIME]    amountNet:           2.5
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              36.875 (0)
 TEST[DATE|TIME]    endBalCalc:          36.875
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  2.5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 1450 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -335,13 +321,15 @@ TEST[DATE|TIME] Previous:               987
 TEST[DATE|TIME] Current:                1450
 TEST[DATE|TIME] Next:                   1580
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438273130
-TEST[DATE|TIME] blockNumber:            1450.99999.0
+TEST[DATE|TIME] blockNumber:            1450.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -353,14 +341,13 @@ TEST[DATE|TIME]    amountNet:           5.15625
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              42.03125 (0)
 TEST[DATE|TIME]    endBalCalc:          42.03125
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    minerNephewRewardIn: 0.15625
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 1580 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -369,13 +356,15 @@ TEST[DATE|TIME] Previous:               1450
 TEST[DATE|TIME] Current:                1580
 TEST[DATE|TIME] Next:                   1586
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438273478
-TEST[DATE|TIME] blockNumber:            1580.99998.0
+TEST[DATE|TIME] blockNumber:            1580.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -387,13 +376,12 @@ TEST[DATE|TIME]    amountNet:           3.75
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              45.78125 (0)
 TEST[DATE|TIME]    endBalCalc:          45.78125
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 1586 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -402,13 +390,15 @@ TEST[DATE|TIME] Previous:               1580
 TEST[DATE|TIME] Current:                1586
 TEST[DATE|TIME] Next:                   1861
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438273492
-TEST[DATE|TIME] blockNumber:            1586.99998.0
+TEST[DATE|TIME] blockNumber:            1586.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -420,13 +410,12 @@ TEST[DATE|TIME]    amountNet:           3.75
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              49.53125 (0)
 TEST[DATE|TIME]    endBalCalc:          49.53125
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 1861 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -435,13 +424,15 @@ TEST[DATE|TIME] Previous:               1586
 TEST[DATE|TIME] Current:                1861
 TEST[DATE|TIME] Next:                   1912
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438274241
-TEST[DATE|TIME] blockNumber:            1861.99999.0
+TEST[DATE|TIME] blockNumber:            1861.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -453,13 +444,12 @@ TEST[DATE|TIME]    amountNet:           5
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              54.53125 (0)
 TEST[DATE|TIME]    endBalCalc:          54.53125
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 1912 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -468,13 +458,15 @@ TEST[DATE|TIME] Previous:               1861
 TEST[DATE|TIME] Current:                1912
 TEST[DATE|TIME] Next:                   2057
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438274378
-TEST[DATE|TIME] blockNumber:            1912.99998.0
+TEST[DATE|TIME] blockNumber:            1912.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -486,13 +478,12 @@ TEST[DATE|TIME]    amountNet:           3.75
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              58.28125 (0)
 TEST[DATE|TIME]    endBalCalc:          58.28125
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 2057 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -501,13 +492,15 @@ TEST[DATE|TIME] Previous:               1912
 TEST[DATE|TIME] Current:                2057
 TEST[DATE|TIME] Next:                   2256
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438274782
-TEST[DATE|TIME] blockNumber:            2057.99999.0
+TEST[DATE|TIME] blockNumber:            2057.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -519,13 +512,12 @@ TEST[DATE|TIME]    amountNet:           5
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              63.28125 (0)
 TEST[DATE|TIME]    endBalCalc:          63.28125
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 2256 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -534,13 +526,15 @@ TEST[DATE|TIME] Previous:               2057
 TEST[DATE|TIME] Current:                2256
 TEST[DATE|TIME] Next:                   2392
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438275372
-TEST[DATE|TIME] blockNumber:            2256.99999.0
+TEST[DATE|TIME] blockNumber:            2256.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -552,13 +546,12 @@ TEST[DATE|TIME]    amountNet:           5
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              68.28125 (0)
 TEST[DATE|TIME]    endBalCalc:          68.28125
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 2392 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -567,13 +560,15 @@ TEST[DATE|TIME] Previous:               2256
 TEST[DATE|TIME] Current:                2392
 TEST[DATE|TIME] Next:                   2516
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438275753
-TEST[DATE|TIME] blockNumber:            2392.99999.0
+TEST[DATE|TIME] blockNumber:            2392.99999
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -585,14 +580,13 @@ TEST[DATE|TIME]    amountNet:           5.15625
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              73.4375 (0)
 TEST[DATE|TIME]    endBalCalc:          73.4375
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    minerNephewRewardIn: 0.15625
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 2516 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -601,13 +595,15 @@ TEST[DATE|TIME] Previous:               2392
 TEST[DATE|TIME] Current:                2516
 TEST[DATE|TIME] Next:                   3962
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438276092
-TEST[DATE|TIME] blockNumber:            2516.99998.0
+TEST[DATE|TIME] blockNumber:            2516.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -619,13 +615,12 @@ TEST[DATE|TIME]    amountNet:           3.75
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              77.1875 (0)
 TEST[DATE|TIME]    endBalCalc:          77.1875
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 3962 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -634,13 +629,15 @@ TEST[DATE|TIME] Previous:               2516
 TEST[DATE|TIME] Current:                3962
 TEST[DATE|TIME] Next:                   4256
 TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438281538
-TEST[DATE|TIME] blockNumber:            3962.99998.0
+TEST[DATE|TIME] blockNumber:            3962.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -652,28 +649,29 @@ TEST[DATE|TIME]    amountNet:           3.75
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              80.9375 (0)
 TEST[DATE|TIME]    endBalCalc:          80.9375
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 4256 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               3962
 TEST[DATE|TIME] Current:                4256
-TEST[DATE|TIME] Next:                   4256
-TEST[DATE|TIME] postType:               diff-last
+TEST[DATE|TIME] Next:                   4257
+TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] assetType:              eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438282794
-TEST[DATE|TIME] blockNumber:            4256.99998.0
+TEST[DATE|TIME] blockNumber:            4256.99998
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -685,12 +683,12 @@ TEST[DATE|TIME]    amountNet:           3.75
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              84.6875 (0)
 TEST[DATE|TIME]    endBalCalc:          84.6875
+TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
 ----
 Results in ./statements_wei_2_1_out.file
 {
@@ -722,11 +720,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
+      "postFirst": true,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
+      "prevBal": "0",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "first-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -765,12 +766,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "5000000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -809,12 +812,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3750000000000000000",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "10000000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -853,12 +858,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "13750000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -897,12 +904,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3125000000000000000",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "18750000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -941,12 +950,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "21875000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -985,12 +996,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3750000000000000000",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "26875000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -1029,12 +1042,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3750000000000000000",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "30625000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -1073,12 +1088,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "2500000000000000000",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "34375000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -1117,12 +1134,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "156250000000000000",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "36875000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -1161,12 +1180,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3750000000000000000",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "42031250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -1205,12 +1226,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3750000000000000000",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "45781250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -1249,12 +1272,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "49531250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",
@@ -1293,12 +1318,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3750000000000000000",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "54531250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x000000000000000000000000000000556e636c65",
@@ -1337,12 +1364,14 @@ Results in ./statements_wei_2_1_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
+      "postFirst": false,
+      "postLast": false,
+      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "58281250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "reconciled": true,
-      "postType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000000004d696e6572",

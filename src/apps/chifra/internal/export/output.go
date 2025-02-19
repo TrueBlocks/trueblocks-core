@@ -67,8 +67,6 @@ func (opts *ExportOptions) ExportInternal(rCtx *output.RenderCtx) error {
 		err = opts.HandleReceipts(rCtx, monitorArray)
 	} else if opts.Logs {
 		err = opts.HandleLogs(rCtx, monitorArray)
-	} else if opts.Traces {
-		err = opts.HandleTraces(rCtx, monitorArray)
 	} else if opts.Withdrawals {
 		err = opts.HandleWithdrawals(rCtx, monitorArray)
 	} else if opts.Appearances {
@@ -81,6 +79,8 @@ func (opts *ExportOptions) ExportInternal(rCtx *output.RenderCtx) error {
 		err = opts.HandleStatements(rCtx, monitorArray)
 	} else if opts.Accounting {
 		err = opts.HandleAccounting(rCtx, monitorArray)
+	} else if opts.Traces {
+		err = opts.HandleTraces(rCtx, monitorArray)
 	} else {
 		err = opts.HandleShow(rCtx, monitorArray)
 	}

@@ -11,10 +11,6 @@ TEST[DATE|TIME] OutputFn:  failed_statement_2572_2_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Appearance Contexts (1)
-INFO[DATE|TIME] 011670419-00091:   11670418   11670419    11670420 first-last
-TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] A possible nullTransfer
 TEST[DATE|TIME]   nLogs:             8
 TEST[DATE|TIME]     lotsOfLogs:      --> false
@@ -79,7 +75,6 @@ TEST[DATE|TIME]    correctingReason:    endbal
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
 ----
 Results in ./failed_statement_2572_2_out.file
 {

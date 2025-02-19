@@ -11,10 +11,6 @@ LastBlock:  11670420
 Ether:  true
 Caps:  cache,decache,ether
 Format:  json
-------------------------------------------------------------
-Appearance Contexts (1)
-011670419-00091:   11670418   11670419    11670420 first-last
-Start of trial balance report
 A possible nullTransfer
   nLogs:             8
     lotsOfLogs:      --> false
@@ -79,7 +75,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
 {
   "data": [
     {
