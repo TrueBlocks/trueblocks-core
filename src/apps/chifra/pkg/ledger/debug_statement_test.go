@@ -13,14 +13,6 @@ func TestDebugStatement(t *testing.T) {
 	restore := resetLogger()
 	defer restore()
 
-	ctx := appBalancer{
-		prvBlk:   99,
-		curBlk:   100,
-		nxtBlk:   101,
-		postType: 0,
-		address:  base.ZeroAddr,
-	}
-
 	stmt := &types.Statement{
 		AssetType:           types.TrialBalEth,
 		BlockNumber:         100,
@@ -56,8 +48,8 @@ func TestDebugStatement(t *testing.T) {
 	}
 
 	pos := &types.AppPosition{
-		Prev: ctx.Prev(),
-		Next: ctx.Next(),
+		Prev: 99,
+		Next: 101,
 	}
 	stmt.DebugStatement(pos)
 
@@ -115,16 +107,9 @@ func TestDebugStatementTokenFormatting(t *testing.T) {
 		PriceSource:      "TestSource",
 	}
 
-	ctx := appBalancer{
-		prvBlk:   99,
-		curBlk:   100,
-		nxtBlk:   101,
-		postType: 0,
-		address:  base.ZeroAddr,
-	}
 	pos := &types.AppPosition{
-		Prev: ctx.Prev(),
-		Next: ctx.Next(),
+		Prev: 99,
+		Next: 101,
 	}
 	stmt.DebugStatement(pos)
 

@@ -62,7 +62,6 @@ type Statement struct {
 	TransactionHash     base.Hash      `json:"transactionHash"`
 	TransactionIndex    base.Txnum     `json:"transactionIndex"`
 	// EXISTING_CODE
-	PostType PostType `json:"postType"`
 	// EXISTING_CODE
 }
 
@@ -121,7 +120,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 	}
 
 	if extraOpts["testMode"] == true {
-		model["postType"] = s.getPostType().String()
+		model["postType"] = s.getPostType()
 		model["postFirst"] = s.PostFirst
 		model["postLast"] = s.PostLast
 	}
@@ -736,7 +735,7 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 	logger.TestLog(true, "Previous:              ", pos.Prev)
 	logger.TestLog(true, "Current:               ", s.BlockNumber)
 	logger.TestLog(true, "Next:                  ", pos.Next)
-	logger.TestLog(true, "postType:              ", s.getPostType().String())
+	logger.TestLog(true, "postType:              ", s.getPostType())
 	logger.TestLog(true, "postFirst:             ", s.PostFirst)
 	logger.TestLog(true, "postLast:              ", s.PostLast)
 	logger.TestLog(true, "assetType:             ", s.AssetType)
@@ -787,23 +786,23 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 	logger.TestLog(true, "End of trial balance report")
 }
 
-func (s *Statement) getPostType() PostType {
+func (s *Statement) getPostType() string {
 	if s.BlockNumber == 0 {
-		return Genesis
+		return "genesis-diff"
 	}
 	prevDiff := s.BlockNumberPrev != s.BlockNumber
 	nextDiff := s.BlockNumberNext != s.BlockNumber
 	if prevDiff {
 		if nextDiff {
-			return DiffDiff
+			return "diff-diff"
 		} else {
-			return DiffSame
+			return "diff-same"
 		}
 	} else {
 		if nextDiff {
-			return SameDiff
+			return "same-diff"
 		} else {
-			return SameSame
+			return "same-same"
 		}
 	}
 }

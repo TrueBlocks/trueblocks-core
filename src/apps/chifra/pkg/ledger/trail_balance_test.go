@@ -237,9 +237,9 @@ func resetLogger() func() {
 // 	bn := base.Blknum(100)
 // 	txid := base.Txnum(1)
 // 	assetAddress := base.HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-// 	appBal := newAppBalancer(bn-1, bn, bn+1, false, false, l.reversed)
-// 	ac := new AppBalancer(appBal.Prev(), appBal.Cur(), appBal.Next(), false, false, l.reversed, assetAddress)
-// 	l.appBalancers[assetAddress] = ac
+// 	appBal := new App Balancer(bn-1, bn, bn+1, false, false, l.reversed)
+// 	ac := new App Balancer(appBal.Prev(), appBal.Cur(), appBal.Next(), false, false, l.reversed, assetAddress)
+// 	l.app Balancers[assetAddress] = ac
 
 // 	s := new(types.Statement)
 // 	s.BlockNumber = bn
@@ -258,7 +258,3 @@ func resetLogger() func() {
 // 	if s.AssetType != string(types.TrialBalEth) {
 // 		t.Errorf("Expected AssetType to be %s, got %s", types.TrialBalEth, s.AssetType)
 // 	}
-// 	if s.PostType != ac.ReconStr() {
-// 		t.Errorf("Expected PostType to be %v, got %v", ac.ReconStr(), s.PostType)
-// 	}
-// }

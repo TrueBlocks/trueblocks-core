@@ -168,20 +168,3 @@ func (l *Ledger) GetStatements(pos *types.AppPosition, filter *filter.Appearance
 
 	return allStatements, nil
 }
-
-func validatePosition(pos *types.AppPosition, ctx *appBalancer) {
-	if !utils.IsFuzzing() {
-		if pos.Prev != ctx.Prev() {
-			logger.Error("GetStatements: pos.Prev != ctx.Prev()", pos.Prev, ctx.Prev())
-		}
-		if pos.Next != ctx.Next() {
-			logger.Error("GetStatements: pos.Next != ctx.Next()", pos.Next, ctx.Next())
-		}
-		if pos.First != ctx.first {
-			logger.Error("GetStatements: pos.First != ctx.first", pos.First, ctx.first)
-		}
-		if pos.Last != ctx.last {
-			logger.Error("GetStatements: pos.Last != ctx.last", pos.Last, ctx.last)
-		}
-	}
-}

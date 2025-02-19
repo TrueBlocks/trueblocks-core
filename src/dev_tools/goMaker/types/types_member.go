@@ -246,7 +246,7 @@ func (m *Member) MarshalCode() string {
 	}
 
 `
-	} else if m.GoName() == "PostType" || m.GoName() == "AssetType" {
+	} else if m.GoName() == "AssetType" {
 		tmplName += "12"
 		tmpl = `// {{.GoName}}
 	if err = cache.WriteValue(writer, s.{{.GoName}}); err != nil {
@@ -347,7 +347,7 @@ func (m *Member) UnmarshalCode() string {
 	}
 
 `
-	} else if m.GoName() == "PostType" || m.GoName() == "AssetType" {
+	} else if m.GoName() == "AssetType" {
 		tmplName += "112"
 		tmpl = `// {{.GoName}}
 	if err = cache.ReadValue(reader, &s.{{.GoName}}, fileVersion); err != nil {

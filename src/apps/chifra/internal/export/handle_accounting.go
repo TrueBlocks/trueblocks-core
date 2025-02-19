@@ -67,7 +67,6 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 			} else if !opts.NoZero || cnt > 0 {
 				ledgers = ledger.NewLedger(
 					opts.Conn,
-					apps,
 					mon.Address,
 					opts.FirstBlock,
 					opts.LastBlock,

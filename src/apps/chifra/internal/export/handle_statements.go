@@ -114,7 +114,6 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 
 						ledgers := ledger.NewLedger(
 							opts.Conn,
-							apps,
 							mon.Address,
 							opts.FirstBlock,
 							opts.LastBlock,
