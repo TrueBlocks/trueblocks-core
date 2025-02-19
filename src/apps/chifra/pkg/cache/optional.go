@@ -26,7 +26,7 @@ func (o *Optional[T]) MarshalCache(writer io.Writer) (err error) {
 	return WriteValue(writer, o.Value)
 }
 
-func (o *Optional[T]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (o *Optional[T]) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	var present bool
 	if err = read(reader, &present); err != nil {
 		return
@@ -36,7 +36,7 @@ func (o *Optional[T]) UnmarshalCache(version uint64, reader io.Reader) (err erro
 	}
 
 	var value T
-	if err = ReadValue(reader, &value, version); err != nil {
+	if err = ReadValue(reader, &value, fileVersion); err != nil {
 		return err
 	}
 	o.ptr = &value

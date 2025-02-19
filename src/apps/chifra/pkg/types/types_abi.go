@@ -124,7 +124,7 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Abi) FinishUnmarshal() {
+func (s *Abi) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

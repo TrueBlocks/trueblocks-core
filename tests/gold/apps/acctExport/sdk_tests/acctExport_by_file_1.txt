@@ -1,6 +1,0 @@
-export?file=cmd_file&fmt=csv
-{
-  "errors": [
-    "The --file option is not available in Api mode"
-  ]
-}

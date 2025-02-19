@@ -1,6 +1,0 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&firstBlock=10277780&lastBlock=10278000&articulate&output=output_test_file
-{
-  "errors": [
-    "The --output option is not available in api mode."
-  ]
-}

@@ -1,6 +1,7 @@
 package base
 
 import (
+	"fmt"
 	"io"
 	"math/big"
 	"strings"
@@ -13,8 +14,28 @@ import (
 // are required because our Json encodes big.Ints as strings. Note that
 type Wei big.Int
 
+var (
+	ZeroWei = NewWei(0)
+)
+
 func NewWei(x int64) *Wei {
 	return (*Wei)(big.NewInt(x))
+}
+
+func NewWeiStr(x string) *Wei {
+	val := big.NewInt(0)
+	if strings.HasPrefix(x, "0x") || strings.HasPrefix(x, "0X") {
+		_, ok := val.SetString(x[2:], 16)
+		if !ok {
+			return (*Wei)(big.NewInt(0))
+		}
+	} else {
+		_, ok := val.SetString(x, 10)
+		if !ok {
+			return (*Wei)(big.NewInt(0))
+		}
+	}
+	return (*Wei)(val)
 }
 
 func (b *Wei) ToInt() *big.Int {
@@ -27,6 +48,30 @@ func (w *Wei) Bytes() []byte {
 
 func (w *Wei) String() string {
 	return (*big.Int)(w).String()
+}
+
+func (w *Wei) Equal(other *Wei) bool {
+	return (*big.Int)(w).Cmp((*big.Int)(other)) == 0
+}
+
+func (w *Wei) NotEqual(other *Wei) bool {
+	return !w.Equal(other)
+}
+
+func (w *Wei) LessThan(other *Wei) bool {
+	return (*big.Int)(w).Cmp((*big.Int)(other)) < 0
+}
+
+func (w *Wei) LessThanOrEqual(other *Wei) bool {
+	return w.LessThan(other) || w.Equal(other)
+}
+
+func (w *Wei) GreaterThan(other *Wei) bool {
+	return !w.LessThanOrEqual(other)
+}
+
+func (w *Wei) GreaterThanOrEqual(other *Wei) bool {
+	return !w.LessThan(other)
 }
 
 func (w *Wei) BigInt() *big.Int {
@@ -70,7 +115,8 @@ func (x *Wei) Text(base int) string {
 }
 
 func (w *Wei) Add(x, y *Wei) *Wei {
-	return (*Wei)((*big.Int)(w).Add((*big.Int)(x), (*big.Int)(y)))
+	result := new(big.Int).Add((*big.Int)(x), (*big.Int)(y))
+	return (*Wei)(result)
 }
 
 func (w *Wei) Sub(x, y *Wei) *Wei {
@@ -108,9 +154,9 @@ func (e *Wei) UnmarshalJSON(data []byte) error {
 	return (*big.Int)(e).UnmarshalText([]byte(str))
 }
 
-func (w *Wei) UnmarshalCache(version uint64, reader io.Reader) error {
+func (w *Wei) UnmarshalCache(fileVersion uint64, reader io.Reader) error {
 	var v big.Int
-	if err := cache.ReadValue(reader, &v, version); err != nil {
+	if err := cache.ReadValue(reader, &v, fileVersion); err != nil {
 		return err
 	}
 	*w = (Wei)(v)
@@ -135,7 +181,7 @@ func (w *Wei) ToEtherStr(decimals int) string {
 func ToEther(wei *Wei) *Ether {
 	f := NewEther(0)
 	e := NewEther(1e18)
-	return f.Quo(new(Ether).SetWei(wei), e)
+	return f.Quo(new(Ether).SetRawWei(wei), e)
 }
 
 func BiFromBn(bn Blknum) *big.Int {
@@ -160,4 +206,29 @@ func HexToWei(hex string) *Wei {
 		result.SetString(hex[2:], 16)
 	}
 	return result
+}
+
+func WeiToHash(wei *Wei) (string, error) {
+	b := wei.Bytes()
+	if len(b) > 32 {
+		return "", fmt.Errorf("wei.Bytes() returned %d bytes, which is more than the allowed 32", len(b))
+	}
+	padded := make([]byte, 32)
+	copy(padded[32-len(b):], b)
+	hash := BytesToHash(padded)
+	return hash.Hex(), nil
+}
+
+// Sign returns -1 if the Wei is negative, 0 if it is zero, and 1 if it is positive.
+func (w *Wei) Sign() int {
+	if w == nil {
+		return 0
+	}
+	return (*big.Int)(w).Sign()
+}
+
+// Neg returns a new Wei that is the negation (i.e., multiplication by -1) of w.
+func (w *Wei) Neg() *Wei {
+	result := new(big.Int).Neg((*big.Int)(w))
+	return (*Wei)(result)
 }

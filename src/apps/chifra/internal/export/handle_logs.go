@@ -130,9 +130,10 @@ func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []mon
 						})
 
 						for _, item := range items {
-							var passes bool
-							passes, finished = filter.ApplyCountFilter()
-							if passes {
+							var passes1, passes2 bool
+							passes1, finished = filter.ApplyCountFilter()
+							passes2 = !opts.Nfts || item.IsNFT()
+							if passes1 && passes2 {
 								modelChan <- item
 							}
 							if finished {

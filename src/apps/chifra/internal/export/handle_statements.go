@@ -20,7 +20,6 @@ import (
 )
 
 func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
-	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
 		opts.Reversed,
@@ -113,23 +112,39 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							})
 						}
 
-						ledgers := ledger.NewLedger(
+						recon := ledger.NewReconciler(
 							opts.Conn,
 							mon.Address,
 							opts.FirstBlock,
 							opts.LastBlock,
 							opts.Globals.Ether,
 							testMode,
-							opts.NoZero,
 							opts.Traces,
 							opts.Reversed,
 							&opts.Asset,
 						)
-						_ = ledgers.SetContexts(chain, apps)
 
 						items := make([]types.Statement, 0, len(thisMap))
-						for _, tx := range txArray {
-							if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
+						for i, tx := range txArray {
+							// Note: apps and txArray are the same list, so we can use the index from txArray
+							prev := uint32(0)
+							if apps[i].BlockNumber > 0 {
+								prev = apps[i].BlockNumber - 1
+							}
+							if i > 0 {
+								prev = apps[i-1].BlockNumber
+							}
+							next := apps[i].BlockNumber + 1
+							if i < len(apps)-1 {
+								next = apps[i+1].BlockNumber
+							}
+							pos := &types.AppPosition{
+								Prev:  base.Blknum(prev),
+								Next:  base.Blknum(next),
+								First: i == 0,
+								Last:  i == len(apps)-1,
+							}
+							if statements, err := recon.GetStatements(pos, filter, tx); err != nil {
 								errorChan <- err
 
 							} else if len(statements) > 0 {

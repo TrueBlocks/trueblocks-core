@@ -4,7 +4,7 @@ TEST[DATE|TIME] Uncles:  true
 TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
-Error: Please choose only a single mode (--uncles, --logs, --withdrawal, etc.)
+Error: Please choose only a single mode (--uncles, --uniq, etc.)
 Usage:
   chifra blocks [flags] <block> [block...]
 

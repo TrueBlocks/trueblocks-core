@@ -8,6 +8,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -26,8 +27,8 @@ var fuzzProxyFors = []string{"", "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"}
 var fuzzTopics = []string{"", "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc"}
 
 func init() {
+	utils.SetIsFuzzing(true)
 	os.Setenv("TB_NO_USERQUERY", "true")
-	os.Setenv("TB_SDK_FUZZER", "true")
 }
 
 func getFilename(baseName string, g *sdk.Globals) string {

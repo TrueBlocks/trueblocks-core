@@ -120,58 +120,58 @@ func (s *Parameter) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Parameter) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *Parameter) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	// Components
 	s.Components = make([]Parameter, 0)
-	if err = cache.ReadValue(reader, &s.Components, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Components, fileVersion); err != nil {
 		return err
 	}
 
 	// Indexed
-	if err = cache.ReadValue(reader, &s.Indexed, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Indexed, fileVersion); err != nil {
 		return err
 	}
 
 	// InternalType
-	if err = cache.ReadValue(reader, &s.InternalType, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.InternalType, fileVersion); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.ReadValue(reader, &s.Name, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Name, fileVersion); err != nil {
 		return err
 	}
 
 	// StrDefault
-	if err = cache.ReadValue(reader, &s.StrDefault, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.StrDefault, fileVersion); err != nil {
 		return err
 	}
 
 	// ParameterType
-	if err = cache.ReadValue(reader, &s.ParameterType, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.ParameterType, fileVersion); err != nil {
 		return err
 	}
 
 	// Value
 	var value string
-	if err = cache.ReadValue(reader, &value, vers); err != nil {
+	if err = cache.ReadValue(reader, &value, fileVersion); err != nil {
 		return err
 	}
 	if err = json.Unmarshal([]byte(value), &s.Value); err != nil {
 		return fmt.Errorf("cannot unmarshal Value: %w", err)
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Parameter) FinishUnmarshal() {
+func (s *Parameter) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

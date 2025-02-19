@@ -53,7 +53,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 		name.Decimals = 18
 	}
 	if name.Symbol == "" {
-		name.Symbol = name.Address.Prefix(6)
+		name.Symbol = name.Address.DefaultSymbol()
 	}
 
 	wanted := extraOpts["parts"].([]string)
@@ -143,7 +143,7 @@ func (s *Token) Date() string {
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Token) FinishUnmarshal() {
+func (s *Token) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

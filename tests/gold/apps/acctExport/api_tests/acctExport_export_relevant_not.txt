@@ -52,6 +52,7 @@ export?addrs=0x9531c059098e3d194ff87febb587ab07b30b1306&logs&lastBlock=10272064&
       "blockHash": "0x0d76f061ed8c2102266bce4eb879fbb041aea4e9e7263d7859d4a81a371c5eeb",
       "blockNumber": 8917687,
       "date": "2019-11-12 01:36:42 UTC",
+      "isNFT": true,
       "logIndex": 142,
       "timestamp": 1573522602,
       "topics": [

@@ -11,6 +11,10 @@ import (
 // call in to the identical functions.
 type Ether big.Float
 
+var (
+	ZeroEther = NewEther(0)
+)
+
 func NewEther(f float64) *Ether {
 	e := new(Ether)
 	(*big.Float)(e).SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
@@ -27,8 +31,41 @@ func (x *Ether) Text(format byte, prec int) string {
 	return (*big.Float)(x).Text(format, prec)
 }
 
-func (e *Ether) SetWei(i *Wei) *Ether {
+// SetRawWei sets the Ether’s value directly from the Wei’s big.Int.
+// No scaling is done – it simply copies the Wei value into a big.Float.
+func (e *Ether) SetRawWei(i *Wei) *Ether {
 	return (*Ether)((*big.Float)(e).SetInt((*big.Int)(i)))
+}
+
+func (e *Ether) SetWei(i *Wei) *Ether {
+	weiFloat := new(big.Float).SetInt((*big.Int)(i))
+	divisor := new(big.Float).SetFloat64(1e18)
+	converted := new(big.Float).Quo(weiFloat, divisor)
+	return (*Ether)(converted)
+}
+
+func (w *Ether) NotEqual(other *Ether) bool {
+	return !w.Equal(other)
+}
+
+func (w *Ether) Equal(other *Ether) bool {
+	return (*big.Float)(w).Cmp((*big.Float)(other)) == 0
+}
+
+func (w *Ether) LessThan(other *Ether) bool {
+	return (*big.Float)(w).Cmp((*big.Float)(other)) < 0
+}
+
+func (w *Ether) LessThanOrEqual(other *Ether) bool {
+	return w.LessThan(other) || w.Equal(other)
+}
+
+func (w *Ether) GreaterThan(other *Ether) bool {
+	return !w.LessThanOrEqual(other)
+}
+
+func (w *Ether) GreaterThanOrEqual(other *Ether) bool {
+	return !w.LessThan(other)
 }
 
 func (e *Ether) SetInt64(i int64) *Ether {

@@ -21,15 +21,15 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,11,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
 13030,apps,Accounts,export,acctExport,topics,,,visible|docs,,positional,list<topic>,,,,,filter by one or more log topics (only for --logs option)
 13040,apps,Accounts,export,acctExport,fourbytes,,,visible|docs,,positional,list<fourbyte>,,,,,filter by one or more fourbytes (only for transactions and trace options)
-13050,apps,Accounts,export,acctExport,appearances,p,,visible|docs,6,switch,<boolean>,appearance,,,,export a list of appearances
+13050,apps,Accounts,export,acctExport,appearances,p,,visible|docs,5,switch,<boolean>,appearance,,,,export a list of appearances
 13060,apps,Accounts,export,acctExport,receipts,r,,visible|docs,2,switch,<boolean>,receipt,,,,export receipts instead of transactional data
 13070,apps,Accounts,export,acctExport,logs,l,,visible|docs,3,switch,<boolean>,log,,,,export logs instead of transactional data
-13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,4,switch,<boolean>,trace,,,,export traces instead of transactional data
-13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,8,switch,<boolean>,message,,,,export the neighbors of the given address
-13100,apps,Accounts,export,acctExport,accounting,C,,visible|docs,10,switch,<boolean>,,,,,attach accounting records to the exported data (applies to transactions export only)
-13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,9,switch,<boolean>,statement,,,,for the accounting options only&#44; export only statements
-13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,7,switch,<boolean>,state,,,,traverse the transaction history and show each change in ETH balances
-13130,apps,Accounts,export,acctExport,withdrawals,i,,visible|docs,5,switch,<boolean>,withdrawal,,,,export withdrawals for the given address
+13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,10,switch,<boolean>,trace,,,,export traces instead of transactional data
+13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,7,switch,<boolean>,message,,,,export the neighbors of the given address
+13100,apps,Accounts,export,acctExport,accounting,C,,visible|docs,9,switch,<boolean>,,,,,attach accounting records to the exported data (applies to transactions export only)
+13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,8,switch,<boolean>,statement,,,,for the accounting options only&#44; export only statements
+13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,6,switch,<boolean>,state,,,,traverse the transaction history and show each change in ETH balances
+13130,apps,Accounts,export,acctExport,withdrawals,i,,visible|docs,4,switch,<boolean>,withdrawal,,,,export withdrawals for the given address
 13140,apps,Accounts,export,acctExport,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate transactions&#44; traces&#44; logs&#44; and outputs
 13150,apps,Accounts,export,acctExport,cache_traces,R,,visible|docs,,switch,<boolean>,,,,,force the transaction's traces into the cache
 13160,apps,Accounts,export,acctExport,count,U,,visible|docs,1,switch,<boolean>,monitor,,,,for --appearances mode only&#44; display only the count of records
@@ -38,6 +38,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13190,apps,Accounts,export,acctExport,relevant,N,,visible|docs,,switch,<boolean>,,,,,for log and accounting export only&#44; export only logs relevant to one of the given export addresses
 13200,apps,Accounts,export,acctExport,emitter,m,,visible|docs,,flag,list<addr>,,,,,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 13210,apps,Accounts,export,acctExport,topic,B,,visible|docs,,flag,list<topic>,,,,,for the --logs option only&#44; filter logs to show only those with this topic(s)
+13215,apps,Accounts,export,acctExport,nfts,T,,visible|docs,,switch,<boolean>,,,,,for the --logs option only&#44; filter logs to show only nft transfers
 13220,apps,Accounts,export,acctExport,reverted,V,,visible|docs,,switch,<boolean>,,,,,export only transactions that were reverted
 13230,apps,Accounts,export,acctExport,asset,P,,visible|docs,,flag,list<addr>,,,,,for the accounting options only&#44; export statements only for this asset
 13240,apps,Accounts,export,acctExport,flow,f,,visible|docs,,flag,enum[in|out|zero],,,,,for the accounting options only&#44; export statements with incoming&#44; outgoing&#44; or zero value
@@ -69,17 +70,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 14070,apps,Accounts,monitors,acctExport,list,l,,visible|docs,3,switch,<boolean>,monitor,,,,list monitors in the cache (--verbose for more detail)
 14075,apps,Accounts,monitors,acctExport,count,c,,visible|docs,1,switch,<boolean>,count,,,,show the number of active monitors (included deleted but not removed monitors)
 14065,apps,Accounts,monitors,acctExport,staged,S,,visible|docs,,switch,<boolean>,,,,,for --clean&#44; --list&#44; and --count options only&#44; include staged monitors
-14080,apps,Accounts,monitors,acctExport,watch,w,,visible|docs|notApi,4,switch,<boolean>,,,,,continually scan for new blocks and extract data as per the command file
-14090,apps,Accounts,monitors,acctExport,watchlist,a,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; a file containing the addresses to watch
-14100,apps,Accounts,monitors,acctExport,commands,d,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; the file containing the list of commands to apply to each watched address
-14110,apps,Accounts,monitors,acctExport,batch_size,b,8,visible|docs|notApi,,flag,<uint64>,,,,,available with --watch option only&#44; the number of monitors to process in each batch
-14120,apps,Accounts,monitors,acctExport,run_count,u,,visible|docs|notApi,,flag,<uint64>,,,,,available with --watch option only&#44; run the monitor this many times&#44; then quit
-14130,apps,Accounts,monitors,acctExport,sleep,s,14,visible|docs|notApi,,flag,<float64>,,,,,available with --watch option only&#44; the number of seconds to sleep between runs
 14140,apps,Accounts,monitors,acctExport,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 14150,apps,Accounts,monitors,acctExport,n2,,,,,note,,,,,,If no address is presented to the --clean command&#44; all existing monitors will be cleaned.
-14160,apps,Accounts,monitors,acctExport,n3,,,,,note,,,,,,The --watch option requires two additional parameters to be specified: `--watchlist` and `--commands`.
-14170,apps,Accounts,monitors,acctExport,n4,,,,,note,,,,,,Addresses provided on the command line are ignored in `--watch` mode.
-14180,apps,Accounts,monitors,acctExport,n5,,,,,note,,,,,,Providing the value `existing` to the `--watchlist` monitors all existing monitor files (see --list).
 #
 15000,tools,Accounts,names,ethNames,,,,visible|docs,,command,,,Manage names,[flags] <term> [term...],default|,Query addresses or names of well-known accounts.
 15020,tools,Accounts,names,ethNames,terms,,,required|visible|docs,4,positional,list<string>,name,,,,a space separated list of one or more search terms

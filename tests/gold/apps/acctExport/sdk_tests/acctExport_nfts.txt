@@ -1,0 +1,49 @@
+export?addrs=trueblocks.eth&logs&articulate&nfts&firstBlock=8876230&lastBlock=9024186
+Args: [addrs=trueblocks.eth logs articulate nfts firstBlock=8876230 lastBlock=9024186]
+Opts: {"addrs":["trueblocks.eth"],"logs":true,"articulate":true,"nfts":true,"firstBlock":8876230,"lastBlock":9024186}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Logs:  true
+Articulate:  true
+Nfts:  true
+FirstBlock:  8876230
+LastBlock:  9024186
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "address": "0x22c1f6050e56d2876009903609a2cc3fef83b415",
+      "articulatedLog": {
+        "inputs": {
+          "_amount": "5373",
+          "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+        },
+        "name": "Transfer"
+      },
+      "blockHash": "0xa928f675c3a673df0a304e68f73332782fe912d765b680a7bad92b5a8500bd8c",
+      "blockNumber": 9000998,
+      "date": "2019-11-25 22:53:37 UTC",
+      "isNFT": true,
+      "logIndex": 52,
+      "timestamp": 1574722417,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+        "0x00000000000000000000000000000000000000000000000000000000000014fd"
+      ],
+      "transactionHash": "0xd50b63628667074810b0b6799ab53cdbaa1ab20757e1347f64db59ab660c7a0a",
+      "transactionIndex": 70
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

@@ -88,7 +88,7 @@ func (s *NamedBlock) Date() string {
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *NamedBlock) FinishUnmarshal() {
+func (s *NamedBlock) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

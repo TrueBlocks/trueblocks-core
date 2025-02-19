@@ -183,91 +183,91 @@ func (s *LightBlock) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *LightBlock) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *LightBlock) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	// BaseFeePerGas
 	vBaseFeePerGas := version.NewVersion("2.5.8")
-	if vers <= vBaseFeePerGas.Uint64() {
+	if fileVersion <= vBaseFeePerGas.Uint64() {
 		var val base.Wei
-		if err = cache.ReadValue(reader, &val, vers); err != nil {
+		if err = cache.ReadValue(reader, &val, fileVersion); err != nil {
 			return err
 		}
 		s.BaseFeePerGas = weiToGas(val)
 	} else {
 		// BaseFeePerGas
-		if err = cache.ReadValue(reader, &s.BaseFeePerGas, vers); err != nil {
+		if err = cache.ReadValue(reader, &s.BaseFeePerGas, fileVersion); err != nil {
 			return err
 		}
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// Difficulty
-	if err = cache.ReadValue(reader, &s.Difficulty, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Difficulty, fileVersion); err != nil {
 		return err
 	}
 
 	// GasLimit
-	if err = cache.ReadValue(reader, &s.GasLimit, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.GasLimit, fileVersion); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.ReadValue(reader, &s.GasUsed, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.GasUsed, fileVersion); err != nil {
 		return err
 	}
 
 	// Hash
-	if err = cache.ReadValue(reader, &s.Hash, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Hash, fileVersion); err != nil {
 		return err
 	}
 
 	// Miner
-	if err = cache.ReadValue(reader, &s.Miner, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Miner, fileVersion); err != nil {
 		return err
 	}
 
 	// ParentHash
-	if err = cache.ReadValue(reader, &s.ParentHash, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.ParentHash, fileVersion); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 
 	// Transactions
 	s.Transactions = make([]string, 0)
-	if err = cache.ReadValue(reader, &s.Transactions, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Transactions, fileVersion); err != nil {
 		return err
 	}
 
 	// Uncles
 	s.Uncles = make([]base.Hash, 0)
-	if err = cache.ReadValue(reader, &s.Uncles, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Uncles, fileVersion); err != nil {
 		return err
 	}
 
 	// Withdrawals
 	s.Withdrawals = make([]Withdrawal, 0)
-	if err = cache.ReadValue(reader, &s.Withdrawals, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Withdrawals, fileVersion); err != nil {
 		return err
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *LightBlock) FinishUnmarshal() {
+func (s *LightBlock) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

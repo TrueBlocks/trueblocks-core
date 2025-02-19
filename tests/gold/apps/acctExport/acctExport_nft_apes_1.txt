@@ -1,0 +1,164 @@
+chifra export  0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d --logs --nfts --max_records 10 --fmt json
+TEST[DATE|TIME] Addrs:  [0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d]
+TEST[DATE|TIME] Logs:  true
+TEST[DATE|TIME] MaxRecords:  10
+TEST[DATE|TIME] Nfts:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+      "blockHash": "0xe2d521d11856591b77506a383033cf85e1d46f1669321859154ab38643244293",
+      "blockNumber": 12292922,
+      "date": "2021-04-22 23:13:40 UTC",
+      "isNFT": true,
+      "logIndex": 85,
+      "timestamp": 1619133220,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x000000000000000000000000aba7161a7fb69c88e16ed9f455ce62b791ee4d03",
+        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "transactionHash": "0xcfb197f62ec5c7f0e71a11ec0c4a0e394a3aa41db5386e85526f86c84b3f2796",
+      "transactionIndex": 21
+    },
+    {
+      "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+      "blockHash": "0xe2d521d11856591b77506a383033cf85e1d46f1669321859154ab38643244293",
+      "blockNumber": 12292922,
+      "date": "2021-04-22 23:13:40 UTC",
+      "isNFT": true,
+      "logIndex": 86,
+      "timestamp": 1619133220,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x000000000000000000000000aba7161a7fb69c88e16ed9f455ce62b791ee4d03",
+        "0x0000000000000000000000000000000000000000000000000000000000000001"
+      ],
+      "transactionHash": "0xcfb197f62ec5c7f0e71a11ec0c4a0e394a3aa41db5386e85526f86c84b3f2796",
+      "transactionIndex": 21
+    },
+    {
+      "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+      "blockHash": "0xe2d521d11856591b77506a383033cf85e1d46f1669321859154ab38643244293",
+      "blockNumber": 12292922,
+      "date": "2021-04-22 23:13:40 UTC",
+      "isNFT": true,
+      "logIndex": 87,
+      "timestamp": 1619133220,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x000000000000000000000000aba7161a7fb69c88e16ed9f455ce62b791ee4d03",
+        "0x0000000000000000000000000000000000000000000000000000000000000002"
+      ],
+      "transactionHash": "0xcfb197f62ec5c7f0e71a11ec0c4a0e394a3aa41db5386e85526f86c84b3f2796",
+      "transactionIndex": 21
+    },
+    {
+      "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+      "blockHash": "0xe2d521d11856591b77506a383033cf85e1d46f1669321859154ab38643244293",
+      "blockNumber": 12292922,
+      "date": "2021-04-22 23:13:40 UTC",
+      "isNFT": true,
+      "logIndex": 88,
+      "timestamp": 1619133220,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x000000000000000000000000aba7161a7fb69c88e16ed9f455ce62b791ee4d03",
+        "0x0000000000000000000000000000000000000000000000000000000000000003"
+      ],
+      "transactionHash": "0xcfb197f62ec5c7f0e71a11ec0c4a0e394a3aa41db5386e85526f86c84b3f2796",
+      "transactionIndex": 21
+    },
+    {
+      "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+      "blockHash": "0xe2d521d11856591b77506a383033cf85e1d46f1669321859154ab38643244293",
+      "blockNumber": 12292922,
+      "date": "2021-04-22 23:13:40 UTC",
+      "isNFT": true,
+      "logIndex": 89,
+      "timestamp": 1619133220,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x000000000000000000000000aba7161a7fb69c88e16ed9f455ce62b791ee4d03",
+        "0x0000000000000000000000000000000000000000000000000000000000000004"
+      ],
+      "transactionHash": "0xcfb197f62ec5c7f0e71a11ec0c4a0e394a3aa41db5386e85526f86c84b3f2796",
+      "transactionIndex": 21
+    },
+    {
+      "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+      "blockHash": "0xe2d521d11856591b77506a383033cf85e1d46f1669321859154ab38643244293",
+      "blockNumber": 12292922,
+      "date": "2021-04-22 23:13:40 UTC",
+      "isNFT": true,
+      "logIndex": 90,
+      "timestamp": 1619133220,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x000000000000000000000000aba7161a7fb69c88e16ed9f455ce62b791ee4d03",
+        "0x0000000000000000000000000000000000000000000000000000000000000005"
+      ],
+      "transactionHash": "0xcfb197f62ec5c7f0e71a11ec0c4a0e394a3aa41db5386e85526f86c84b3f2796",
+      "transactionIndex": 21
+    },
+    {
+      "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+      "blockHash": "0xe2d521d11856591b77506a383033cf85e1d46f1669321859154ab38643244293",
+      "blockNumber": 12292922,
+      "date": "2021-04-22 23:13:40 UTC",
+      "isNFT": true,
+      "logIndex": 91,
+      "timestamp": 1619133220,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x000000000000000000000000aba7161a7fb69c88e16ed9f455ce62b791ee4d03",
+        "0x0000000000000000000000000000000000000000000000000000000000000006"
+      ],
+      "transactionHash": "0xcfb197f62ec5c7f0e71a11ec0c4a0e394a3aa41db5386e85526f86c84b3f2796",
+      "transactionIndex": 21
+    },
+    {
+      "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+      "blockHash": "0xe2d521d11856591b77506a383033cf85e1d46f1669321859154ab38643244293",
+      "blockNumber": 12292922,
+      "date": "2021-04-22 23:13:40 UTC",
+      "isNFT": true,
+      "logIndex": 92,
+      "timestamp": 1619133220,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x000000000000000000000000aba7161a7fb69c88e16ed9f455ce62b791ee4d03",
+        "0x0000000000000000000000000000000000000000000000000000000000000007"
+      ],
+      "transactionHash": "0xcfb197f62ec5c7f0e71a11ec0c4a0e394a3aa41db5386e85526f86c84b3f2796",
+      "transactionIndex": 21
+    },
+    {
+      "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+      "blockHash": "0xe2d521d11856591b77506a383033cf85e1d46f1669321859154ab38643244293",
+      "blockNumber": 12292922,
+      "date": "2021-04-22 23:13:40 UTC",
+      "isNFT": true,
+      "logIndex": 93,
+      "timestamp": 1619133220,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x000000000000000000000000aba7161a7fb69c88e16ed9f455ce62b791ee4d03",
+        "0x0000000000000000000000000000000000000000000000000000000000000008"
+      ],
+      "transactionHash": "0xcfb197f62ec5c7f0e71a11ec0c4a0e394a3aa41db5386e85526f86c84b3f2796",
+      "transactionIndex": 21
+    }
+  ]
+}

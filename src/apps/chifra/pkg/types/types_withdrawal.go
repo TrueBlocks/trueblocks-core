@@ -110,8 +110,8 @@ func (s *WithdrawalGroup) MarshalCache(writer io.Writer) (err error) {
 	return cache.WriteValue(writer, s.Withdrawals)
 }
 
-func (s *WithdrawalGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Withdrawals, vers)
+func (s *WithdrawalGroup) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Withdrawals, fileVersion)
 }
 
 func (s *Withdrawal) MarshalCache(writer io.Writer) (err error) {
@@ -148,48 +148,48 @@ func (s *Withdrawal) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *Withdrawal) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *Withdrawal) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, fileVersion); err != nil {
 		return err
 	}
 
 	// Amount
-	if err = cache.ReadValue(reader, &s.Amount, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Amount, fileVersion); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// Index
-	if err = cache.ReadValue(reader, &s.Index, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Index, fileVersion); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 
 	// ValidatorIndex
-	if err = cache.ReadValue(reader, &s.ValidatorIndex, vers); err != nil {
+	if err = cache.ReadValue(reader, &s.ValidatorIndex, fileVersion); err != nil {
 		return err
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Withdrawal) FinishUnmarshal() {
+func (s *Withdrawal) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

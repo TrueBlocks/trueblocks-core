@@ -20,8 +20,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 	// TODO: BOGUS - RECONSIDER THIS
 	opts.Articulate = true
 
-	ledgers := &ledger.Ledger{}
-	chain := opts.Globals.Chain
+	recon := &ledger.Reconciler{}
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
@@ -33,7 +32,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 	)
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		visitAppearance := func(app *types.Appearance) error {
+		visitAppearance := func(pos *types.AppPosition, app *types.Appearance) error {
 			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
 				errorChan <- err
 				return nil
@@ -47,7 +46,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 						}
 					}
 
-					if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
+					if statements, err := recon.GetStatements(pos, filter, tx); err != nil {
 						errorChan <- err
 
 					} else {
@@ -66,22 +65,37 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 				return
 
 			} else if !opts.NoZero || cnt > 0 {
-				ledgers = ledger.NewLedger(
+				recon = ledger.NewReconciler(
 					opts.Conn,
 					mon.Address,
 					opts.FirstBlock,
 					opts.LastBlock,
 					opts.Globals.Ether,
 					testMode,
-					opts.NoZero,
 					opts.Traces,
 					opts.Reversed,
 					&opts.Asset,
 				)
-				_ = ledgers.SetContexts(chain, apps)
 
-				for _, app := range apps {
-					if err := visitAppearance(&app); err != nil {
+				for i, app := range apps {
+					prev := uint32(0)
+					if apps[i].BlockNumber > 0 {
+						prev = apps[i].BlockNumber - 1
+					}
+					if i > 0 {
+						prev = apps[i-1].BlockNumber
+					}
+					next := apps[i].BlockNumber + 1
+					if i < len(apps)-1 {
+						next = apps[i+1].BlockNumber
+					}
+					pos := &types.AppPosition{
+						Prev:  base.Blknum(prev),
+						Next:  base.Blknum(next),
+						First: i == 0,
+						Last:  i == len(apps)-1,
+					}
+					if err := visitAppearance(pos, &app); err != nil {
 						errorChan <- err
 						return
 					}

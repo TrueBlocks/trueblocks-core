@@ -2,12 +2,11 @@ package ledger
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
+func (l *Reconciler) getStatementsFromTraces(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
 	ret := *s
@@ -30,7 +29,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Tran
 	ret.CorrectingOut.SetUint64(0)
 	ret.SelfDestructOut.SetUint64(0)
 
-	if traces, err := conn.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
+	if traces, err := l.connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 		return statements, err
 
 	} else {
@@ -40,6 +39,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Tran
 				// the first trace is identical to the transaction itself, so we can skip it
 				continue
 			}
+
 			if trace.Action.CallType == "delegatecall" && trace.Action.To != s.AccountedFor {
 				// delegate calls are not included in the transaction's gas cost, so we skip them
 				continue
@@ -103,16 +103,21 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Tran
 		}
 	}
 
-	if l.trialBalance("trace-eth", &ret) {
-		if ret.IsMaterial() {
-			statements = append(statements, ret)
-		} else {
-			logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
-		}
-	} else {
-		// TODO: BOGUS PERF
-		// logger.Warn("Trace statement at", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile.")
+	if utils.IsFuzzing() {
 		statements = append(statements, ret)
+		return statements, nil
+	}
+
+	reconciled := l.trialBalance(pos, types.TrialBalTraceEth, trans, &ret)
+	if !reconciled {
+		statements = append(statements, ret)
+		return statements, nil
+	}
+
+	if ret.IsMaterial() {
+		statements = append(statements, ret)
+		// } else {
+		// 	logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
 	}
 
 	return statements, nil

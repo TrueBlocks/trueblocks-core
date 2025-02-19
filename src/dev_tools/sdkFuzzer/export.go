@@ -35,6 +35,7 @@ func DoExport() {
 	relevant := []bool{false, true}
 	emitter := fuzzEmitters
 	topic := fuzzTopics
+	nfts := []bool{false, true}
 	reverted := []bool{false, true}
 	asset := fuzzAssets
 	// Option 'flow.enum' is an emum
@@ -52,6 +53,7 @@ func DoExport() {
 	_ = topic
 	_ = fourbytes
 	_ = articulate
+	_ = nfts
 	baseFn := "export/export"
 	opts = sdk.ExportOptions{
 		Addrs:       fuzzAddresses,
@@ -70,6 +72,7 @@ func DoExport() {
 		// TestExport("neighbors", "", fn, &opts)
 		TestExport("balances", "", fn, &opts)
 		TestExport("withdrawals", "", fn, &opts)
+		TestExport("statements", "", fn, &opts)
 	}
 
 	/*

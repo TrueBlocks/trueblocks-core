@@ -1,4 +1,11 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=1&firstRecord=212&fmt=json
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=1&firstRecord=212
+Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b maxRecords=1 firstRecord=212]
+Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"firstRecord":212,"maxRecords":1}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+FirstRecord:  212
+MaxRecords:  1
+Caps:  cache,decache,ether
+Format:  json
 {
   "data": [
     {

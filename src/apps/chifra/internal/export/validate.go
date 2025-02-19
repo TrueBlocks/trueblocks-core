@@ -44,8 +44,8 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
 	}
 
-	if opts.tooMany() {
-		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.)")
+	if which, tooMany := opts.tooMany(); tooMany {
+		return validate.Usage("Please choose only a single mode ({0}, etc.)", strings.Join(which, ", "))
 	}
 
 	if opts.Traces {
@@ -119,7 +119,11 @@ func (opts *ExportOptions) validateExport() error {
 				return validate.Usage("Invalid topic: {0}", t)
 			}
 		}
+
 	} else {
+		if opts.Nfts {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--nfts", "--logs")
+		}
 		if len(opts.Emitter) > 0 {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--emitter", "--logs")
 		}
@@ -153,7 +157,7 @@ func (opts *ExportOptions) validateExport() error {
 
 	if opts.Accounting {
 		if len(opts.Addrs) != 1 {
-			return validate.Usage("The {0} option is allows with only a single address.", "--accounting")
+			return validate.Usage("The {0} option allows only a single address.", "--accounting")
 		}
 
 		if !opts.Conn.IsNodeArchive() {
@@ -207,28 +211,50 @@ func (opts *ExportOptions) validateExport() error {
 	// return err
 }
 
-func (opts *ExportOptions) tooMany() bool {
+func (opts *ExportOptions) tooMany() ([]string, bool) {
 	cnt := 0
+	which := []string{}
 	if opts.Appearances {
+		which = append(which, "--appearances")
 		cnt++
 	}
 	if opts.Receipts {
+		which = append(which, "--receipts")
 		cnt++
 	}
 	if opts.Logs {
+		which = append(which, "--logs")
 		cnt++
 	}
 	if opts.Traces {
+		which = append(which, "--traces")
 		cnt++
 	}
 	if opts.Neighbors {
+		which = append(which, "--neighbors")
 		cnt++
 	}
 	if opts.Accounting {
+		which = append(which, "--accounting")
 		cnt++
 	}
 	if opts.Withdrawals {
+		which = append(which, "--withdrawals")
 		cnt++
 	}
-	return cnt > 1
+
+	if len(which) > 2 {
+		which = which[:2]
+	}
+
+	m := map[string]bool{}
+	for _, w := range which {
+		m[w] = true
+	}
+
+	if len(which) == 2 && m["--accounting"] && m["--traces"] {
+		return []string{}, false
+	}
+
+	return which, cnt > 1
 }

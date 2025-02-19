@@ -60,6 +60,7 @@ Format:  json
       "blockHash": "0x0d76f061ed8c2102266bce4eb879fbb041aea4e9e7263d7859d4a81a371c5eeb",
       "blockNumber": 8917687,
       "date": "2019-11-12 01:36:42 UTC",
+      "isNFT": true,
       "logIndex": 142,
       "timestamp": 1573522602,
       "topics": [

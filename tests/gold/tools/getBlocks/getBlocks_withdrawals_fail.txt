@@ -5,7 +5,7 @@ TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Withdrawals:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
-Error: Please choose only a single mode (--uncles, --logs, --withdrawal, etc.)
+Error: Please choose only a single mode (--logs, --withdrawals, etc.)
 Usage:
   chifra blocks [flags] <block> [block...]
 

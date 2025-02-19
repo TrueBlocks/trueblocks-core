@@ -1,7 +1,8 @@
-chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --count --logs
+chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --count --logs --last_block 15508000
 TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] LastBlock:  15508000
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
 Error: The --count option is not available with --logs, --traces, or --neighbors.
@@ -31,6 +32,7 @@ Flags:
   -N, --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
   -m, --emitter strings     for the --logs option only, filter logs to show only those logs emitted by the given address(es)
   -B, --topic strings       for the --logs option only, filter logs to show only those with this topic(s)
+  -T, --nfts                for the --logs option only, filter logs to show only nft transfers
   -V, --reverted            export only transactions that were reverted
   -P, --asset strings       for the accounting options only, export statements only for this asset
   -f, --flow string         for the accounting options only, export statements with incoming, outgoing, or zero value

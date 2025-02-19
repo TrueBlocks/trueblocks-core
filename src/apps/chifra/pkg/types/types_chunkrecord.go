@@ -76,7 +76,7 @@ func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOpts map[st
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *ChunkRecord) FinishUnmarshal() {
+func (s *ChunkRecord) FinishUnmarshal(fileVersion uint64) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

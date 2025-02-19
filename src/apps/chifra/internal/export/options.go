@@ -48,6 +48,7 @@ type ExportOptions struct {
 	Relevant    bool                  `json:"relevant,omitempty"`    // For log and accounting export only, export only logs relevant to one of the given export addresses
 	Emitter     []string              `json:"emitter,omitempty"`     // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
 	Topic       []string              `json:"topic,omitempty"`       // For the --logs option only, filter logs to show only those with this topic(s)
+	Nfts        bool                  `json:"nfts,omitempty"`        // For the --logs option only, filter logs to show only nft transfers
 	Reverted    bool                  `json:"reverted,omitempty"`    // Export only transactions that were reverted
 	Asset       []string              `json:"asset,omitempty"`       // For the accounting options only, export statements only for this asset
 	Flow        string                `json:"flow,omitempty"`        // For the accounting options only, export statements with incoming, outgoing, or zero value
@@ -91,6 +92,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Relevant, "Relevant: ", opts.Relevant)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
+	logger.TestLog(opts.Nfts, "Nfts: ", opts.Nfts)
 	logger.TestLog(opts.Reverted, "Reverted: ", opts.Reverted)
 	logger.TestLog(len(opts.Asset) > 0, "Asset: ", opts.Asset)
 	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
@@ -182,6 +184,8 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Topic = append(opts.Topic, s...)
 			}
+		case "nfts":
+			opts.Nfts = true
 		case "reverted":
 			opts.Reverted = true
 		case "asset":

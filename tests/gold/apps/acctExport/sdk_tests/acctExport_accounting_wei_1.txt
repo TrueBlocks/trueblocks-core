@@ -1,4 +1,115 @@
-export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&accounting&fmt=json
+export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&accounting
+Args: [addrs=0x001d14804b399c6ef80e64576f657660804fec0b maxRecords=3 accounting]
+Opts: {"addrs":["0x001d14804b399c6ef80e64576f657660804fec0b"],"accounting":true,"maxRecords":3}
+Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+Accounting:  true
+MaxRecords:  3
+Caps:  cache,decache,ether
+Format:  json
+Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+====> eth
+===================================================
+Previous:               0
+Current:                0
+Next:                   202249
+postType:               genesis-diff
+postFirst:              true
+postLast:               false
+postAssetType:          eth
+accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
+sender:                 0x0000000000000000000000000050726566756e64  ==>  0x001d14804b399c6ef80e64576f657660804fec0b
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438269975
+blockNumber:            0.2
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0 (0)
+   totalIn:             4200
+   totalOut:            0
+   amountNet:           4200
+                       ======================= 
+   endBal:              4200 (0)
+   endBalCalc:          4200
+   rollingBalance:      0
+--------------------------------------------------- 
+   prefundIn:           4200
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+====> eth
+===================================================
+Previous:               0
+Current:                202249
+Next:                   1501459
+postType:               diff-diff
+postFirst:              false
+postLast:               false
+postAssetType:          eth
+accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
+sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0x2910543af39aba0cd09dbb2d50200b3e800a63d2
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
+timestamp:              1441703356
+blockNumber:            202249.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4200
+   begBal:              4200 (0)
+   totalIn:             0
+   totalOut:            4199.925320679510922664
+   amountNet:           -4199.925320679510922664
+                       ======================= 
+   endBal:              0.074679320489077336 (0)
+   endBalCalc:          0.074679320489077336
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountOut:           4199.9
+   gasOut:              0.025320679510922664
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 1501459 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+====> eth
+===================================================
+Previous:               202249
+Current:                1501459
+Next:                   1501460
+postType:               diff-diff
+postFirst:              false
+postLast:               true
+postAssetType:          eth
+accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
+sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
+timestamp:              1463025233
+blockNumber:            1501459.2
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.074679320489077336
+   begBal:              0.074679320489077336 (0)
+   totalIn:             0
+   totalOut:            0.074679320489077336
+   amountNet:           -0.074679320489077336
+                       ======================= 
+   endBal:              0 (0)
+   endBalCalc:          0
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountOut:           0.074259320489077336
+   gasOut:              0.00042
+   material:            true
+   reconciled:          true
+---------------------------------------------------
 {
   "data": [
     {
@@ -19,9 +130,8 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&accounting&
           "amountIn": "0",
           "amountNet": "4200000000000000000000",
           "amountOut": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "WEI",
-          "assetType": "eth",
           "begBal": "0",
           "begBalDiff": "0",
           "blockNumber": 0,
@@ -41,11 +151,15 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&accounting&
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
+          "postAssetType": "eth",
+          "postFirst": true,
+          "postLast": false,
+          "postType": "genesis-diff",
           "prefundIn": "4200000000000000000000",
+          "prevBal": "0",
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "reconciled": true,
-          "reconciliationType": "genesis",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x0000000000000000000000000050726566756e64",
@@ -90,9 +204,8 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&accounting&
           "amountIn": "0",
           "amountNet": "-4199925320679510922664",
           "amountOut": "4199900000000000000000",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "WEI",
-          "assetType": "eth",
           "begBal": "4200000000000000000000",
           "begBalDiff": "0",
           "blockNumber": 202249,
@@ -112,12 +225,15 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&accounting&
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
+          "postAssetType": "eth",
+          "postFirst": false,
+          "postLast": false,
+          "postType": "diff-diff",
           "prefundIn": "0",
           "prevBal": "4200000000000000000000",
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
           "reconciled": true,
-          "reconciliationType": "diff-diff",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",
@@ -161,9 +277,8 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&accounting&
           "amountIn": "0",
           "amountNet": "-74679320489077336",
           "amountOut": "74259320489077336",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "WEI",
-          "assetType": "eth",
           "begBal": "74679320489077336",
           "begBalDiff": "0",
           "blockNumber": 1501459,
@@ -183,12 +298,15 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&accounting&
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
+          "postAssetType": "eth",
+          "postFirst": false,
+          "postLast": true,
+          "postType": "diff-diff",
           "prefundIn": "0",
           "prevBal": "74679320489077336",
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
           "reconciled": true,
-          "reconciliationType": "diff-last",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",

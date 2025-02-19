@@ -2,7 +2,7 @@ export?addrs=0x04fe1f0c597fbc65700f4fba6f87501edc20e665&firstBlock=10277780&last
 {
   "data": [
     {
-      "msg": "Monitor for 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 was permanently removed."
+      "msg": "Monitor for 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 was permanently removed.                              "
     }
   ],
   "meta": {
