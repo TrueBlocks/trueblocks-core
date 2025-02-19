@@ -1,10 +1,10 @@
 package ledger2
 
-// TestReconcilerBasic runs a simple scenario where the accountedForAddress is "0x1002"
+// TestReconciler2Basic runs a simple scenario where the accountedForAddress is "0x1002"
 // and we pass in one or two appearances plus some asset transfers.
-// func TestReconcilerBasic(t *testing.T) {
+// func TestReconciler2Basic(t *testing.T) {
 // 	// Suppose this is our address of interest
-// 	rec := NewReconciler(base.HexToAddress("0x1002"))
+// 	rec := NewReconciler2(base.HexToAddress("0x1002"))
 
 // 	// appearances := []types.Appearance{
 // 	// 	{Address: base.HexToAddress("0x1002"), BlockNumber: 123, TransactionIndex: 0},

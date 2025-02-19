@@ -15,7 +15,7 @@ import (
 )
 
 // GetStatements returns a statement from a given transaction
-func (l *Ledger) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	if l.connection.StoreReadable() {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
@@ -31,7 +31,7 @@ func (l *Ledger) GetStatements(pos *types.AppPosition, filter *filter.Appearance
 	allStatements := make([]types.Statement, 0, 20)
 
 	if os.Getenv("NEW_CODE") == "true" {
-		r := ledger2.NewReconciler(l.connection, l.assetFilter, l.accountFor, l.names, l.asEther)
+		r := ledger2.NewReconciler2(l.connection, l.assetFilter, l.accountFor, l.names, l.asEther)
 		if allStatements, err = r.GetStatements(pos, filter, trans); err != nil {
 			return allStatements, err
 		}

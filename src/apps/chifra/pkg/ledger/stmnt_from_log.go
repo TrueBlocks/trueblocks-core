@@ -14,7 +14,7 @@ import (
 )
 
 // getStatementsFromLog returns a statement from a given log
-func (l *Ledger) getStatementsFromLog(pos *types.AppPosition, trans *types.Transaction, logIn *types.Log) (types.Statement, error) {
+func (l *Reconciler) getStatementsFromLog(pos *types.AppPosition, trans *types.Transaction, logIn *types.Log) (types.Statement, error) {
 	if logIn.Topics[0] != topics.TransferTopic {
 		return types.Statement{}, nil
 	}

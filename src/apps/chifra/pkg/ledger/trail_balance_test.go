@@ -1,13 +1,10 @@
 package ledger
 
 import (
-	"fmt"
-	"os"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -137,25 +134,6 @@ func TestCorrectForNullTransfer(t *testing.T) {
 	})
 }
 
-var capturedLogs []string
-
-func fakeTestLog(notDefault bool, args ...interface{}) {
-	if notDefault {
-		logMsg := fmt.Sprint(args...)
-		capturedLogs = append(capturedLogs, logMsg)
-	}
-}
-
-func resetLogger() func() {
-	os.Setenv("TEST_MODE", "true")
-	orig := logger.TestLog
-	logger.TestLog = fakeTestLog
-	capturedLogs = nil
-	return func() {
-		logger.TestLog = orig
-	}
-}
-
 // func TestCorrectForSomethingElseEth(t *testing.T) {
 // 	restore := resetLogger()
 // 	defer restore()
@@ -173,7 +151,7 @@ func resetLogger() func() {
 // 			AmountOut:        *base.NewWei(0),
 // 			EndBal:           *base.NewWei(1050),
 // 		}
-// 		var l Ledger
+// 		var l Reconciler
 // 		reconciled := l.correctForSomethingElseEth(stmt)
 // 		expectedEndBal := base.NewWei(1100)
 // 		if stmt.EndBal.Cmp(expectedEndBal) != 0 {
@@ -209,7 +187,7 @@ func resetLogger() func() {
 // 		stmt.CorrectingOut = *base.NewWei(999)
 // 		stmt.CorrectingReason = "oldreason"
 
-// 		var l Ledger
+// 		var l Reconciler
 // 		reconciled := l.correctForSomethingElseToken(stmt)
 
 // 		expectedCorrectingIn := base.NewWei(20)
@@ -230,7 +208,7 @@ func resetLogger() func() {
 // }
 
 // func TestTrialBalance_Reconciled(t *testing.T) {
-// 	l := &Ledger{
+// 	l := &Reconciler{
 // 		testMode:       true,
 // 	}
 

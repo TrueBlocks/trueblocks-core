@@ -13,26 +13,31 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// Reconciler is responsible for processing Appearances, constructing Postings
+// Reconciler2 is responsible for processing Appearances, constructing Postings
 // and LedgerEntries, appending them to Ledgers, and maintaining a LedgerBook.
-type Reconciler struct {
-	connection  *rpc.Connection
-	names       map[base.Address]types.Name
-	asEther     bool
-	assetFilter []base.Address
-
-	// Typically you'd store references to RPC clients or indexers here,
-	// but we'll keep it simple for demonstration.
+type Reconciler2 struct {
 	LedgerBook LedgerBook
 	// mu         sync.Mutex
+	accountFor  base.Address
+	firstBlock  base.Blknum
+	lastBlock   base.Blknum
+	names       map[base.Address]types.Name
+	testMode    bool
+	asEther     bool
+	reversed    bool
+	useTraces   bool
+	connection  *rpc.Connection
+	assetFilter []base.Address
 }
 
-// NewReconciler creates a Reconciler for the specified accountedForAddress.
-func NewReconciler(conn *rpc.Connection, assetFilter []base.Address, accountedForAddress base.Address, names map[base.Address]types.Name, asEth bool) Reconciler {
-	return Reconciler{
+// NewReconciler2 creates a Reconciler2 for the specified accountedForAddress.
+func NewReconciler2(conn *rpc.Connection, assetFilter []base.Address, accountedForAddress base.Address, names map[base.Address]types.Name, asEth bool) Reconciler2 {
+	return Reconciler2{
 		LedgerBook:  NewLedgerBook(accountedForAddress),
+		accountFor:  accountedForAddress,
 		connection:  conn,
 		names:       names,
 		asEther:     asEth,
@@ -40,12 +45,12 @@ func NewReconciler(conn *rpc.Connection, assetFilter []base.Address, accountedFo
 	}
 }
 
-// String returns a summary of the Reconciler’s LedgerBook.
-func (r *Reconciler) String() string {
+// String returns a summary of the Reconciler2’s LedgerBook.
+func (r *Reconciler2) String() string {
 	return r.LedgerBook.String()
 }
 
-func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (r *Reconciler2) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	xfers := r.GetAssetTransfers(pos, filter, trans)
 	r.ProcessTransaction(pos, trans, xfers)
 
@@ -73,7 +78,7 @@ func (lb *LedgerBook) IsMaterial() bool {
 
 // ProcessTransaction takes a list of Appearances and their related AssetTransfers,
 // converts them to Postings, and appends them into the appropriate Ledger.
-func (r *Reconciler) ProcessTransaction(pos *types.AppPosition, trans *types.Transaction, allTransfers []AssetTransfer) {
+func (r *Reconciler2) ProcessTransaction(pos *types.AppPosition, trans *types.Transaction, allTransfers []AssetTransfer) {
 	// We assume allTransfers includes every relevant AssetTransfer for the Appearances.
 	// In reality, you'd fetch them from an indexer or node calls.
 	//
@@ -166,7 +171,7 @@ func CorrectForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 }
 
 // queryBalances transforms a single AssetTransfer into a basic Posting.
-func (r *Reconciler) queryBalances(at AssetTransfer) Posting {
+func (r *Reconciler2) queryBalances(at AssetTransfer) Posting {
 	ret := Posting(at)
 
 	if at.AssetType != types.TrialBalToken && at.AssetType != types.TrialBalNft {
@@ -207,7 +212,7 @@ func (r *Reconciler) queryBalances(at AssetTransfer) Posting {
 // ReconcileCheckpoint is a placeholder for a method that verifies final ledger balances
 // at a given block boundary. Real logic might compare on-chain balances and create
 // correcting postings if there's a mismatch.
-func (r *Reconciler) ReconcileCheckpoint(block base.Blknum) {
+func (r *Reconciler2) ReconcileCheckpoint(block base.Blknum) {
 	// Example placeholder
 	_ = block
 }
@@ -224,7 +229,7 @@ func findSeparator(s string) int {
 
 // GetAssetTransfers parses a single Transaction and returns a slice of AssetTransfer
 // by checking the transaction's Value, its Logs for ERC20 events, and an optional Traces field.
-func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) []AssetTransfer {
+func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) []AssetTransfer {
 	var results []AssetTransfer
 
 	if AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
@@ -431,4 +436,121 @@ func AssetOfInterest(filters []base.Address, needle base.Address) bool {
 	}
 
 	return false
+}
+
+func (l *Reconciler2) getStatementsFromTraces(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {
+	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
+
+	ret := types.Statement{} // *s
+	// clear all the internal accounting values. Keeps AmountIn, AmountOut and GasOut because
+	// those are at the top level (both the transaction itself and trace '0' have them). We
+	// skip trace '0' because it's the same as the transaction.
+	// ret.AmountIn.SetUint64(0)
+	ret.InternalIn.SetUint64(0)
+	ret.MinerBaseRewardIn.SetUint64(0)
+	ret.MinerNephewRewardIn.SetUint64(0)
+	ret.MinerTxFeeIn.SetUint64(0)
+	ret.MinerUncleRewardIn.SetUint64(0)
+	ret.CorrectingIn.SetUint64(0)
+	ret.PrefundIn.SetUint64(0)
+	ret.SelfDestructIn.SetUint64(0)
+
+	// ret.AmountOut.SetUint64(0)
+	// ret.GasOut.SetUint64(0)
+	ret.InternalOut.SetUint64(0)
+	ret.CorrectingOut.SetUint64(0)
+	ret.SelfDestructOut.SetUint64(0)
+
+	if traces, err := l.connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
+		return statements, err
+
+	} else {
+		// These values accumulate...so we use += instead of =
+		for i, trace := range traces {
+			if i == 0 {
+				// the first trace is identical to the transaction itself, so we can skip it
+				continue
+			}
+
+			if trace.Action.CallType == "delegatecall" && trace.Action.To != l.LedgerBook.AccountedFor {
+				// delegate calls are not included in the transaction's gas cost, so we skip them
+				continue
+			}
+
+			plusEq := func(a1, a2 *base.Wei) base.Wei {
+				return *a1.Add(a1, a2)
+			}
+
+			// Do not collapse, more than one of these can be true at the same time
+			if trace.Action.From == l.LedgerBook.AccountedFor {
+				ret.InternalOut = plusEq(&ret.InternalOut, &trace.Action.Value)
+				ret.Sender = trace.Action.From
+				if trace.Action.To.IsZero() {
+					if trace.Result != nil {
+						ret.Recipient = trace.Result.Address
+					}
+				} else {
+					ret.Recipient = trace.Action.To
+				}
+			}
+
+			if trace.Action.To == l.LedgerBook.AccountedFor {
+				ret.InternalIn = plusEq(&ret.InternalIn, &trace.Action.Value)
+				ret.Sender = trace.Action.From
+				ret.Recipient = trace.Action.To
+			}
+
+			if trace.Action.SelfDestructed == l.LedgerBook.AccountedFor {
+				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, &trace.Action.Balance)
+				ret.Sender = trace.Action.SelfDestructed
+				if ret.Sender.IsZero() {
+					ret.Sender = trace.Action.Address
+				}
+				ret.Recipient = trace.Action.RefundAddress
+			}
+
+			if trace.Action.RefundAddress == l.LedgerBook.AccountedFor {
+				ret.SelfDestructIn = plusEq(&ret.SelfDestructIn, &trace.Action.Balance)
+				ret.Sender = trace.Action.SelfDestructed
+				if ret.Sender.IsZero() {
+					ret.Sender = trace.Action.Address
+				}
+				ret.Recipient = trace.Action.RefundAddress
+			}
+
+			if trace.Action.Address == l.LedgerBook.AccountedFor && !trace.Action.RefundAddress.IsZero() {
+				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, &trace.Action.Balance)
+				// self destructed send
+				ret.Sender = trace.Action.Address
+				ret.Recipient = trace.Action.RefundAddress
+			}
+
+			if trace.Result != nil {
+				if trace.Result.Address == l.LedgerBook.AccountedFor {
+					ret.InternalIn = plusEq(&ret.InternalIn, &trace.Action.Value)
+					ret.Sender = trace.Action.From
+					ret.Recipient = trace.Result.Address
+				}
+			}
+		}
+	}
+
+	if utils.IsFuzzing() {
+		statements = append(statements, ret)
+		return statements, nil
+	}
+
+	// reconciled := l.trialBalance(pos, types.TrialBalTraceEth, trans, &ret)
+	// if !reconciled {
+	// 	statements = append(statements, ret)
+	// 	return statements, nil
+	// }
+
+	if ret.IsMaterial() {
+		statements = append(statements, ret)
+		// } else {
+		// 	logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
+	}
+
+	return statements, nil
 }
