@@ -332,7 +332,7 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&accoun
       "prevBal": "0.02405059",
       "priceSource": "not-priced",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "reconciled": false,
+      "reconciled": broken,
       "postType": "diff-same",
       "selfDestructIn": "0",
       "selfDestructOut": "0",

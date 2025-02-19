@@ -872,7 +872,7 @@ TEST[DATE|TIME]    endBal:              75843546632000000000000
 TEST[DATE|TIME]    begBalDiff:          71040040864000000000000
 TEST[DATE|TIME]    endBalDiff:          -3016109787000000000000
 TEST[DATE|TIME]    endBalCalc:          72827436845000000000000
-TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]    reconciled:          broken
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE TOKEN
@@ -1110,7 +1110,7 @@ TEST[DATE|TIME]    endBal:              75843546632000000000000
 TEST[DATE|TIME]    begBalDiff:          71040040864000000000000
 TEST[DATE|TIME]    endBalDiff:          -1787395981000000000000
 TEST[DATE|TIME]    endBalCalc:          74056150651000000000000
-TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]    reconciled:          broken
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE TOKEN
