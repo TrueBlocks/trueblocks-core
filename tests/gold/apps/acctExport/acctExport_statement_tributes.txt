@@ -87,7 +87,7 @@ TEST[DATE|TIME]    correctingIn:        85
 TEST[DATE|TIME]    amountOut:           85
 TEST[DATE|TIME]    correctingReason:    begbal
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]    reconciled:          broken
 TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 WARN[DATE|TIME] Log statement at   8769052.74.73  does not reconcile.

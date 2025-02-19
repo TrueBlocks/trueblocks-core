@@ -132,7 +132,7 @@ Trial balance:
 --------------------------------------------------- 
    gasOut:              0.00024718
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 Trial balance failed for  0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d  need to decend into traces
@@ -180,7 +180,7 @@ Trial balance:
 --------------------------------------------------- 
    gasOut:              0.00024718
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
@@ -227,7 +227,7 @@ Trial balance:
 --------------------------------------------------- 
    gasOut:              0.00070223
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 Trial balance failed for  0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265  need to decend into traces
@@ -275,7 +275,7 @@ Trial balance:
 --------------------------------------------------- 
    gasOut:              0.00070223
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 A possible nullTransfer
@@ -324,7 +324,7 @@ Trial balance:
    amountOut:           85
    correctingReason:    begbal
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 Log statement at   8769052.74.73  does not reconcile.
@@ -374,7 +374,7 @@ Trial balance:
 --------------------------------------------------- 
    internalIn:          0.4505622
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 Block 8769130 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)

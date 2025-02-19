@@ -205,7 +205,7 @@ TEST[DATE|TIME]    amountIn:            3016.109787
 TEST[DATE|TIME]    correctingOut:       -1787.395981
 TEST[DATE|TIME]    correctingReason:    begbal-endbal
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]    reconciled:          broken
 TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 WARN[DATE|TIME] Log statement at   7005737.30.20  does not reconcile.

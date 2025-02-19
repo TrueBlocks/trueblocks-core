@@ -132,7 +132,7 @@ TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    gasOut:              0.00024718
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]    reconciled:          broken
 TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance failed for  0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d  need to decend into traces
@@ -180,7 +180,7 @@ TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    gasOut:              0.00024718
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]    reconciled:          broken
 TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
@@ -227,7 +227,7 @@ TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    gasOut:              0.00070223
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]    reconciled:          broken
 TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance failed for  0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265  need to decend into traces
@@ -275,7 +275,7 @@ TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    gasOut:              0.00070223
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]    reconciled:          broken
 TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] A possible nullTransfer
@@ -324,7 +324,7 @@ TEST[DATE|TIME]    correctingIn:        85
 TEST[DATE|TIME]    amountOut:           85
 TEST[DATE|TIME]    correctingReason:    begbal
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]    reconciled:          broken
 TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 WARN[DATE|TIME] Log statement at   8769052.74.73  does not reconcile.
@@ -374,7 +374,7 @@ TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    internalIn:          0.4505622
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]    reconciled:          broken
 TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 8769130 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)

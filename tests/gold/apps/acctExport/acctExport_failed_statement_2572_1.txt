@@ -70,7 +70,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME]    correctingIn:        2017.044745122853478376
 TEST[DATE|TIME]    correctingReason:    begbal
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]    reconciled:          broken
 TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 WARN[DATE|TIME] Log statement at   15549162.83.1774  does not reconcile.

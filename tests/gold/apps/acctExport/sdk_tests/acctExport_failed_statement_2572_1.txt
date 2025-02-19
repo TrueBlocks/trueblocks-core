@@ -70,7 +70,7 @@ Trial balance:
    correctingIn:        2017.044745122853478376
    correctingReason:    begbal
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 Log statement at   15549162.83.1774  does not reconcile.

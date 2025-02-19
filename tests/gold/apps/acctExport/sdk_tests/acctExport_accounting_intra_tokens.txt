@@ -55,7 +55,7 @@ Trial balance:
 --------------------------------------------------- 
    gasOut:              0.009143915636239443
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 Trial balance failed for  0xb00176827961c29b713960b7a91f438cea976381577b3989f0781d896d38df61  need to decend into traces
@@ -107,7 +107,7 @@ Trial balance:
 --------------------------------------------------- 
    gasOut:              0.009143915636239443
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
@@ -225,7 +225,7 @@ Trial balance:
 --------------------------------------------------- 
    gasOut:              0.003630819456680952
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 Trial balance failed for  0x458ae31579274588f04850853ec71f67e1e21b2d4e72ada18fdc04352fc22295  need to decend into traces
@@ -277,7 +277,7 @@ Trial balance:
 --------------------------------------------------- 
    gasOut:              0.003630819456680952
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 A possible nullTransfer
@@ -359,7 +359,7 @@ Trial balance:
    amountOut:           0.30444243
    correctingReason:    begbal-endbal
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 Log statement at   14933657.303.494  does not reconcile.
@@ -411,7 +411,7 @@ Trial balance:
 --------------------------------------------------- 
    gasOut:              0.005687415285765885
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 Trial balance failed for  0x9c07595dec64bb699ef24c1c5e5579edba940fb9596e38bd4465f5c840393aae  need to decend into traces
@@ -463,7 +463,7 @@ Trial balance:
 --------------------------------------------------- 
    gasOut:              0.005687415285765885
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 A possible nullTransfer
@@ -545,7 +545,7 @@ Trial balance:
    amountOut:           312.67982761
    correctingReason:    begbal
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 Log statement at   14933657.304.495  does not reconcile.

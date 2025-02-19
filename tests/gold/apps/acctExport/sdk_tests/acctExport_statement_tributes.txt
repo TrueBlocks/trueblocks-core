@@ -89,7 +89,7 @@ Trial balance:
    amountOut:           85
    correctingReason:    begbal
    material:            true
-   reconciled:          false
+   reconciled:          broken
  ^^ we need to fix this ^^
 ---------------------------------------------------
 Log statement at   8769052.74.73  does not reconcile.
