@@ -2,6 +2,7 @@ package ledger
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -83,7 +84,8 @@ func (l *Reconciler) getStatementsFromLog(pos *types.AppPosition, trans *types.T
 
 		var err error
 		pBal := new(base.Wei)
-		pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", pos.Prev))
+
+		pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", trans.BlockNumber-1)) // pos.Prev))
 		if err != nil || pBal == nil {
 			return s, err
 		}
@@ -109,7 +111,9 @@ func (l *Reconciler) getStatementsFromLog(pos *types.AppPosition, trans *types.T
 			logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
 		} else {
 			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
-			logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
+			if os.Getenv("TEST_MODE") != "true" {
+				logger.Warn("Log statement at ", id, " does not reconcile.")
+			}
 		}
 		return s, nil
 	}

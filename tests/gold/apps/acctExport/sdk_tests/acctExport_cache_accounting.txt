@@ -36,7 +36,7 @@ Next:                   10277781
 postType:               diff-diff
 postFirst:              true
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0xdac17f958d2ee523a2206206994597c13d831ec7
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -73,7 +73,7 @@ Next:                   10277781
 postType:               diff-diff
 postFirst:              true
 postLast:               true
-assetType:              token
+postAssetType:          token
 accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9
 assetAddress:           0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) decimals: 6
@@ -156,7 +156,6 @@ Trial balance:
           "amountOut": "0",
           "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "WEI",
-          "assetType": "eth",
           "begBal": "6511482167631885",
           "begBalDiff": "0",
           "blockNumber": 10277780,
@@ -176,6 +175,7 @@ Trial balance:
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
+          "postAssetType": "eth",
           "postFirst": true,
           "postLast": true,
           "postType": "diff-diff",
@@ -202,7 +202,6 @@ Trial balance:
           "amountOut": "381000000",
           "assetAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",
           "assetSymbol": "USDT",
-          "assetType": "token",
           "begBal": "381000000",
           "begBalDiff": "0",
           "blockNumber": 10277780,
@@ -222,6 +221,7 @@ Trial balance:
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
+          "postAssetType": "token",
           "postFirst": true,
           "postLast": true,
           "postType": "diff-diff",

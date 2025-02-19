@@ -173,7 +173,7 @@ func CorrectForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 func (r *Reconciler2) queryBalances(at AssetTransfer) Posting {
 	ret := Posting(at)
 
-	if at.AssetType != types.TrialBalToken && at.AssetType != types.TrialBalNft {
+	if at.PostAssetType != types.TrialBalToken && at.PostAssetType != types.TrialBalNft {
 		prevBal, _ := r.connection.GetBalanceAt(r.LedgerBook.AccountedFor, at.BlockNumberPrev)
 		if at.BlockNumber == 0 {
 			prevBal = new(base.Wei)
@@ -245,7 +245,7 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 			LogIndex:         0,
 			Sender:           trans.From,
 			Recipient:        trans.To,
-			AssetType:        types.TrialBalEth,
+			PostAssetType:    types.TrialBalEth,
 			Decimals:         18,
 			PostFirst:        pos.First,
 			PostLast:         pos.Last,
@@ -388,7 +388,7 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 						LogIndex:         lg.LogIndex,
 						Sender:           fromAddr,
 						Recipient:        toAddr,
-						AssetType:        types.TrialBalToken,
+						PostAssetType:    types.TrialBalToken,
 						PostFirst:        pos.First,
 						PostLast:         pos.Last,
 					}

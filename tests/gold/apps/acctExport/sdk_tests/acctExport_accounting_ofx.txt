@@ -16,7 +16,7 @@ Next:                   202249
 postType:               genesis-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x0000000000000000000000000050726566756e64  ==>  0x001d14804b399c6ef80e64576f657660804fec0b
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -50,7 +50,7 @@ Next:                   1501459
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0x2910543af39aba0cd09dbb2d50200b3e800a63d2
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -85,7 +85,7 @@ Next:                   1501460
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -132,7 +132,6 @@ Trial balance:
           "amountOut": "0",
           "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "WEI",
-          "assetType": "eth",
           "begBal": "0",
           "begBalDiff": "0",
           "blockNumber": 0,
@@ -152,6 +151,7 @@ Trial balance:
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
+          "postAssetType": "eth",
           "postFirst": true,
           "postLast": false,
           "postType": "genesis-diff",
@@ -206,7 +206,6 @@ Trial balance:
           "amountOut": "4199900000000000000000",
           "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "WEI",
-          "assetType": "eth",
           "begBal": "4200000000000000000000",
           "begBalDiff": "0",
           "blockNumber": 202249,
@@ -226,6 +225,7 @@ Trial balance:
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
+          "postAssetType": "eth",
           "postFirst": false,
           "postLast": false,
           "postType": "diff-diff",
@@ -279,7 +279,6 @@ Trial balance:
           "amountOut": "74259320489077336",
           "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "WEI",
-          "assetType": "eth",
           "begBal": "74679320489077336",
           "begBalDiff": "0",
           "blockNumber": 1501459,
@@ -299,6 +298,7 @@ Trial balance:
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
+          "postAssetType": "eth",
           "postFirst": false,
           "postLast": true,
           "postType": "diff-diff",

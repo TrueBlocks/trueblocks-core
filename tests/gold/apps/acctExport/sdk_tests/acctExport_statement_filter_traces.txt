@@ -24,7 +24,7 @@ Next:                   8860529
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
 assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
@@ -61,7 +61,7 @@ Next:                   8860532
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              token
+postAssetType:          token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
 assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
@@ -97,7 +97,6 @@ Trial balance:
       "amountOutEth": "500",
       "assetAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "assetSymbol": "DAI",
-      "assetType": "token",
       "begBal": "7500000000000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -131,6 +130,7 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "token",
       "postFirst": true,
       "postLast": false,
       "postType": "diff-diff",
@@ -167,7 +167,6 @@ Trial balance:
       "amountOutEth": "7000",
       "assetAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "assetSymbol": "DAI",
-      "assetType": "token",
       "begBal": "7000000000000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -201,6 +200,7 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "token",
       "postFirst": false,
       "postLast": true,
       "postType": "diff-diff",

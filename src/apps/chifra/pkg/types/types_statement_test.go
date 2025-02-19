@@ -336,7 +336,7 @@ func TestStatementCacheRoundtrip(t *testing.T) {
 		AmountOut:           *base.NewWei(20),
 		AssetAddress:        base.HexToAddress("0x1111222233334444555566667777888899990000"),
 		AssetSymbol:         "TKN",
-		AssetType:           TrialBalEth, // using an example type; it could be any valid value
+		PostAssetType:       TrialBalEth, // using an example type; it could be any valid value
 		BegBal:              *base.NewWei(100),
 		BlockNumber:         123,
 		CorrectingIn:        *base.NewWei(5),
@@ -561,7 +561,7 @@ func TestDebugStatement(t *testing.T) {
 	defer restore()
 
 	stmt := &Statement{
-		AssetType:           TrialBalEth,
+		PostAssetType:       TrialBalEth,
 		BlockNumber:         100,
 		TransactionIndex:    1,
 		LogIndex:            2,
@@ -638,7 +638,7 @@ func TestDebugStatementTokenFormatting(t *testing.T) {
 
 	// Create a statement with asset type set to a token type.
 	stmt := &Statement{
-		AssetType:        TrialBalToken, // should trigger printing with 3-part block number
+		PostAssetType:    TrialBalToken, // should trigger printing with 3-part block number
 		BlockNumber:      123,
 		TransactionIndex: 456,
 		LogIndex:         789,

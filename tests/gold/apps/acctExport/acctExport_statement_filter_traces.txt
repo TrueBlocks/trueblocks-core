@@ -22,7 +22,7 @@ TEST[DATE|TIME] Next:                   8860529
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
 TEST[DATE|TIME] assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
@@ -59,7 +59,7 @@ TEST[DATE|TIME] Next:                   8860532
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
 TEST[DATE|TIME] assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
@@ -95,7 +95,6 @@ TEST[DATE|TIME] ---------------------------------------------------
       "amountOutEth": "500",
       "assetAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "assetSymbol": "DAI",
-      "assetType": "token",
       "begBal": "7500000000000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -129,6 +128,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "token",
       "postFirst": true,
       "postLast": false,
       "postType": "diff-diff",
@@ -165,7 +165,6 @@ TEST[DATE|TIME] ---------------------------------------------------
       "amountOutEth": "7000",
       "assetAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "assetSymbol": "DAI",
-      "assetType": "token",
       "begBal": "7000000000000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -199,6 +198,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "token",
       "postFirst": false,
       "postLast": true,
       "postType": "diff-diff",

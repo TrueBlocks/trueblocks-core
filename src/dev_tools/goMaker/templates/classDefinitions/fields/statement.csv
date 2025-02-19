@@ -16,6 +16,7 @@ recipient           ,address      ,           ,               ,      14 ,the rec
 begBal              ,int256       ,           ,               ,      15 ,the beginning balance of the asset prior to the transaction
 amountNet           ,int256       ,           ,calc           ,      16 ,totalIn - totalOut
 endBal              ,int256       ,           ,               ,      17 ,the on-chain balance of the asset (see notes about intra-block reconciliations)
+postAssetType       ,TrialBalType ,           ,omitempty      ,      41 ,one of eth&#44; eth-trace&#44; token&#44; or token-721
 postType            ,string       ,           ,calc|omitempty ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
 postFirst           ,bool         ,           ,omitempty      ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
 postLast            ,bool         ,           ,omitempty      ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
@@ -42,7 +43,6 @@ begBalDiff          ,int256       ,           ,omitempty|calc ,      37 ,differe
 endBalDiff          ,int256       ,           ,omitempty|calc ,      38 ,endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
 endBalCalc          ,int256       ,           ,omitempty|calc ,      39 ,begBal + amountNet
 correctingReason    ,string       ,           ,omitempty      ,      40 ,the reason for the correcting entries&#44; if any
-assetType           ,TrialBalType ,           ,omitempty      ,      41 ,one of eth&#44; eth-trace&#44; token&#44; or token-721
 rollingBalance      ,int256       ,           ,omitempty      ,      42 ,a rolling balance used to help debug intra-block reconciliations
 blockNumberPrev     ,blknum       ,           ,               ,         ,when reconciling&#44; the number of the previous appearance block
 blockNumberNext     ,blknum       ,           ,               ,         ,when reconciling&#44; the number of the next appearance block
