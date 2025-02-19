@@ -808,4 +808,29 @@ func (s *Statement) getPostType() PostType {
 	}
 }
 
+func (s *Statement) IsNullTransfer(tx *Transaction) bool {
+	lotsOfLogs := len(tx.Receipt.Logs) > 10
+	mayBeAirdrop := s.Sender.IsZero() || s.Sender == tx.To
+	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.IsMaterial()
+	ret := (lotsOfLogs || mayBeAirdrop) && noBalanceChange
+
+	logger.TestLog(true, "A possible nullTransfer")
+	logger.TestLog(true, "  nLogs:            ", len(tx.Receipt.Logs))
+	logger.TestLog(true, "    lotsOfLogs:      -->", lotsOfLogs)
+
+	logger.TestLog(true, "  Sender.IsZero:    ", s.Sender, s.Sender.IsZero())
+	logger.TestLog(true, "  or Sender == To:  ", s.Sender == tx.To)
+	logger.TestLog(true, "    mayBeAirdrop:    -->", mayBeAirdrop)
+
+	logger.TestLog(true, "  EndBal-BegBal:    ", s.EndBal.Cmp(&s.BegBal))
+	logger.TestLog(true, "  Material:         ", s.IsMaterial())
+	logger.TestLog(true, "    noBalanceChange: -->", noBalanceChange)
+
+	if !ret {
+		logger.TestLog(true, "  ---> Not a nullTransfer")
+	}
+
+	return ret
+}
+
 // EXISTING_CODE

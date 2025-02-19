@@ -8,13 +8,9 @@ import (
 )
 
 // getStatementsFromReceipt returns a statement from a given receipt
-func (l *Ledger) getStatementsFromReceipt(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction, receipt *types.Receipt) ([]types.Statement, error) {
-	if receipt == nil {
-		return []types.Statement{}, nil
-	}
-
+func (l *Ledger) getStatementsFromReceipt(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
-	for _, log := range receipt.Logs {
+	for _, log := range trans.Receipt.Logs {
 		addrArray := []base.Address{l.accountFor}
 		if filter.ApplyLogFilter(&log, addrArray) && ledger2.AssetOfInterest(l.assetFilter, log.Address) {
 			if s, err := l.getStatementsFromLog(pos, trans, &log); err != nil {

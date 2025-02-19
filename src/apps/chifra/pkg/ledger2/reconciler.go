@@ -73,7 +73,7 @@ func (lb *LedgerBook) IsMaterial() bool {
 
 // ProcessTransaction takes a list of Appearances and their related AssetTransfers,
 // converts them to Postings, and appends them into the appropriate Ledger.
-func (r *Reconciler) ProcessTransaction(pos *types.AppPosition, tx *types.Transaction, allTransfers []AssetTransfer) {
+func (r *Reconciler) ProcessTransaction(pos *types.AppPosition, trans *types.Transaction, allTransfers []AssetTransfer) {
 	// We assume allTransfers includes every relevant AssetTransfer for the Appearances.
 	// In reality, you'd fetch them from an indexer or node calls.
 	//
@@ -84,7 +84,7 @@ func (r *Reconciler) ProcessTransaction(pos *types.AppPosition, tx *types.Transa
 
 	// For quick lookups:
 	appearanceByID := make(map[string]types.Appearance)
-	app := types.Appearance{Address: r.LedgerBook.AccountedFor, BlockNumber: uint32(tx.BlockNumber), TransactionIndex: uint32(tx.TransactionIndex)}
+	app := types.Appearance{Address: r.LedgerBook.AccountedFor, BlockNumber: uint32(trans.BlockNumber), TransactionIndex: uint32(trans.TransactionIndex)}
 	appID := fmt.Sprintf("%d-%d", app.BlockNumber, app.TransactionIndex)
 	appearanceByID[appID] = app
 
@@ -118,12 +118,21 @@ func (r *Reconciler) ProcessTransaction(pos *types.AppPosition, tx *types.Transa
 		}
 
 		// Convert the AssetTransfer into a single Posting (some logic is simplified):
-		posting := r.convertTransferToPosting(at)
+		posting := r.queryBalances(at)
+
+		// 	var okay bool
+		// 	if okay = s.Reconciled(); !okay {
+		// 		if okay = l.CorrectForNullTransfer(s, trans); !okay {
+		// 			if !s.IsEth() {
+		// 				_ = l.correctForSomethingElseToken(s)
+		// 			}
+		// 		}
+		// 	}
+
 		if posting.IsMaterial() {
 			posting.SpotPrice, posting.PriceSource, _ = pricing.PriceUsd(r.connection, (*types.Statement)(&posting))
 		}
 
-		// logger.Info(trans.BlockNumber, trans.TransactionIndex, r)
 		if file.IsTestMode() {
 			(*types.Statement)(&posting).DebugStatement(pos)
 		}
@@ -144,8 +153,24 @@ func (r *Reconciler) ProcessTransaction(pos *types.AppPosition, tx *types.Transa
 	}
 }
 
-// convertTransferToPosting transforms a single AssetTransfer into a basic Posting.
-func (r *Reconciler) convertTransferToPosting(at AssetTransfer) Posting {
+func CorrectForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
+	if s.IsNullTransfer(tx) {
+		logger.TestLog(true, "Correcting token transfer for a null transfer")
+		amt := s.TotalIn() // use totalIn since this is the amount that was faked
+		s.AmountOut = *base.ZeroWei
+		s.AmountIn = *base.ZeroWei
+		s.CorrectingIn = *amt
+		s.CorrectingOut = *amt
+		s.CorrectingReason = "null-transfer"
+	} else {
+		logger.TestLog(true, "Needs correction for token transfer")
+	}
+
+	return s.Reconciled()
+}
+
+// queryBalances transforms a single AssetTransfer into a basic Posting.
+func (r *Reconciler) queryBalances(at AssetTransfer) Posting {
 	ret := Posting(at)
 
 	if at.AssetType != types.TrialBalToken && at.AssetType != types.TrialBalNft {
@@ -256,7 +281,6 @@ func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, filter *filter.Ap
 				} else {
 					at.AmountIn = trans.Value
 				}
-				// TODO: BOGUS PERF - WHAT ABOUT WITHDRAWALS?
 			}
 		}
 

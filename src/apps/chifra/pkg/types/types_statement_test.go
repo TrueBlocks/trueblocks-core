@@ -442,3 +442,113 @@ func TestArithmeticEdgeCasesLargeNumbers(t *testing.T) {
 		t.Errorf("BegBalDiff with huge values: expected %s, got %s", expectedBegBalDiff.Text(10), begBalDiff.Text(10))
 	}
 }
+
+func TestIsNullTransfer(t *testing.T) {
+	// 	// Case 1: lotsOfLogs true, airdrop true, noBalanceChange true.
+	t.Run("Case 1: lotsOfLogs true, airdrop true, noBalanceChange true", func(t *testing.T) {
+		tx := &Transaction{
+			To: base.HexToAddress("0xABC"),
+		}
+		tx.Receipt = new(Receipt)
+		tx.Receipt.Logs = make([]Log, 11) // >10 logs
+
+		stmt := new(Statement)
+		stmt.Sender = base.HexToAddress("0x0")
+		stmt.BegBal = *base.NewWei(100)
+		stmt.EndBal = *base.NewWei(100)
+		stmt.AmountIn = *base.NewWei(50)
+
+		if !stmt.IsNullTransfer(tx) {
+			t.Error("Case 1: Expected IsNullTransfer to return true")
+		}
+	})
+
+	t.Run("Case 2: lotsOfLogs false, airdrop true, noBalanceChange true", func(t *testing.T) {
+		tx := &Transaction{
+			To: base.HexToAddress("0xABC"),
+		}
+		// Initialize Receipt and Logs.
+		tx.Receipt = new(Receipt)
+		tx.Receipt.Logs = make([]Log, 5) // ≤10 logs
+
+		stmt := new(Statement)
+		stmt.Sender = base.HexToAddress("0x0") // triggers airdrop condition.
+		stmt.BegBal = *base.NewWei(100)
+		stmt.EndBal = *base.NewWei(100)
+		stmt.AmountIn = *base.NewWei(50)
+
+		if !stmt.IsNullTransfer(tx) {
+			t.Error("Case 2: Expected IsNullTransfer to return true")
+		}
+	})
+
+	t.Run("Case 3: lotsOfLogs true, airdrop false, noBalanceChange true", func(t *testing.T) {
+		tx := &Transaction{
+			To: base.HexToAddress("0xDEF"),
+		}
+		tx.Receipt = new(Receipt)
+		tx.Receipt.Logs = make([]Log, 11) // >10 logs
+
+		stmt := new(Statement)
+		stmt.Sender = base.HexToAddress("0xABC")
+		stmt.BegBal = *base.NewWei(100)
+		stmt.EndBal = *base.NewWei(100)
+		stmt.AmountIn = *base.NewWei(50)
+
+		if !stmt.IsNullTransfer(tx) {
+			t.Error("Case 3: Expected IsNullTransfer to return true")
+		}
+	})
+
+	t.Run("Case 4: lotsOfLogs false, airdrop false, noBalanceChange true", func(t *testing.T) {
+		tx := &Transaction{
+			To: base.HexToAddress("0xDEF"),
+		}
+		tx.Receipt = new(Receipt)
+		tx.Receipt.Logs = make([]Log, 5) // fewer logs
+
+		stmt := new(Statement)
+		stmt.Sender = base.HexToAddress("0xABC")
+		stmt.BegBal = *base.NewWei(100)
+		stmt.EndBal = *base.NewWei(100)
+		stmt.AmountIn = *base.NewWei(50)
+
+		if stmt.IsNullTransfer(tx) {
+			t.Error("Case 4: Expected IsNullTransfer to return false")
+		}
+	})
+
+	t.Run("Case 5: Balance change present", func(t *testing.T) {
+		tx := &Transaction{
+			To: base.HexToAddress("0x0"), // may trigger airdrop condition.
+		}
+		tx.Receipt = new(Receipt)
+		tx.Receipt.Logs = make([]Log, 11)
+
+		stmt := new(Statement)
+		stmt.Sender = base.HexToAddress("0x0")
+		stmt.BegBal = *base.NewWei(100)
+		stmt.EndBal = *base.NewWei(110) // Balance changes: difference of 10.
+		stmt.AmountIn = *base.NewWei(50)
+
+		if stmt.IsNullTransfer(tx) {
+			t.Error("Case 5: Expected IsNullTransfer to return false due to balance change")
+		}
+	})
+
+	t.Run("Case 6: Not material", func(t *testing.T) {
+		tx := &Transaction{
+			To: base.HexToAddress("0x0"),
+		}
+		tx.Receipt = new(Receipt)
+		tx.Receipt.Logs = make([]Log, 11)
+
+		stmt := new(Statement)
+		stmt.Sender = base.HexToAddress("0x0")
+		stmt.BegBal = *base.NewWei(100)
+		stmt.EndBal = *base.NewWei(100)
+		if stmt.IsNullTransfer(tx) {
+			t.Error("Case 6: Expected IsNullTransfer to return false because statement is not material")
+		}
+	})
+}

@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -24,8 +25,7 @@ func TestCorrectForNullTransfer(t *testing.T) {
 
 		prevAmountIn := &stmt.AmountIn
 		prevCorrectingIn := &stmt.CorrectingIn
-		var l Ledger
-		result := l.correctForNullTransfer(stmt, tx)
+		result := ledger2.CorrectForNullTransfer(stmt, tx)
 		if stmt.AmountIn.Cmp(prevAmountIn) != 0 {
 			t.Error("ETH branch: AmountIn should remain unchanged")
 		}
@@ -66,8 +66,7 @@ func TestCorrectForNullTransfer(t *testing.T) {
 
 		originalTotalIn := stmt.TotalIn()
 
-		var l Ledger
-		result := l.correctForNullTransfer(stmt, tx)
+		result := ledger2.CorrectForNullTransfer(stmt, tx)
 		if stmt.AmountIn.Cmp(base.NewWei(0)) != 0 {
 			t.Errorf("Token branch (null transfer): Expected AmountIn to be 0, got %s", stmt.AmountIn.Text(10))
 		}
@@ -116,8 +115,7 @@ func TestCorrectForNullTransfer(t *testing.T) {
 		origCorrectingOut := &stmt.CorrectingOut
 		origReason := stmt.CorrectingReason
 
-		var l Ledger
-		result := l.correctForNullTransfer(stmt, tx)
+		result := ledger2.CorrectForNullTransfer(stmt, tx)
 		if stmt.AmountIn.Cmp(origAmountIn) != 0 {
 			t.Error("Token branch (non-null transfer): AmountIn should remain unchanged")
 		}
@@ -135,116 +133,6 @@ func TestCorrectForNullTransfer(t *testing.T) {
 		}
 		if result != stmt.Reconciled() {
 			t.Error("Token branch (non-null transfer): Function return should equal s.Reconciled()")
-		}
-	})
-}
-
-func TestIsNullTransfer(t *testing.T) {
-	// 	// Case 1: lotsOfLogs true, airdrop true, noBalanceChange true.
-	t.Run("Case 1: lotsOfLogs true, airdrop true, noBalanceChange true", func(t *testing.T) {
-		tx := &types.Transaction{
-			To: base.HexToAddress("0xABC"),
-		}
-		tx.Receipt = new(types.Receipt)
-		tx.Receipt.Logs = make([]types.Log, 11) // >10 logs
-
-		stmt := new(types.Statement)
-		stmt.Sender = base.HexToAddress("0x0")
-		stmt.BegBal = *base.NewWei(100)
-		stmt.EndBal = *base.NewWei(100)
-		stmt.AmountIn = *base.NewWei(50)
-
-		if !isNullTransfer(stmt, tx) {
-			t.Error("Case 1: Expected isNullTransfer to return true")
-		}
-	})
-
-	t.Run("Case 2: lotsOfLogs false, airdrop true, noBalanceChange true", func(t *testing.T) {
-		tx := &types.Transaction{
-			To: base.HexToAddress("0xABC"),
-		}
-		// Initialize Receipt and Logs.
-		tx.Receipt = new(types.Receipt)
-		tx.Receipt.Logs = make([]types.Log, 5) // ≤10 logs
-
-		stmt := new(types.Statement)
-		stmt.Sender = base.HexToAddress("0x0") // triggers airdrop condition.
-		stmt.BegBal = *base.NewWei(100)
-		stmt.EndBal = *base.NewWei(100)
-		stmt.AmountIn = *base.NewWei(50)
-
-		if !isNullTransfer(stmt, tx) {
-			t.Error("Case 2: Expected isNullTransfer to return true")
-		}
-	})
-
-	t.Run("Case 3: lotsOfLogs true, airdrop false, noBalanceChange true", func(t *testing.T) {
-		tx := &types.Transaction{
-			To: base.HexToAddress("0xDEF"),
-		}
-		tx.Receipt = new(types.Receipt)
-		tx.Receipt.Logs = make([]types.Log, 11) // >10 logs
-
-		stmt := new(types.Statement)
-		stmt.Sender = base.HexToAddress("0xABC")
-		stmt.BegBal = *base.NewWei(100)
-		stmt.EndBal = *base.NewWei(100)
-		stmt.AmountIn = *base.NewWei(50)
-
-		if !isNullTransfer(stmt, tx) {
-			t.Error("Case 3: Expected isNullTransfer to return true")
-		}
-	})
-
-	t.Run("Case 4: lotsOfLogs false, airdrop false, noBalanceChange true", func(t *testing.T) {
-		tx := &types.Transaction{
-			To: base.HexToAddress("0xDEF"),
-		}
-		tx.Receipt = new(types.Receipt)
-		tx.Receipt.Logs = make([]types.Log, 5) // fewer logs
-
-		stmt := new(types.Statement)
-		stmt.Sender = base.HexToAddress("0xABC")
-		stmt.BegBal = *base.NewWei(100)
-		stmt.EndBal = *base.NewWei(100)
-		stmt.AmountIn = *base.NewWei(50)
-
-		if isNullTransfer(stmt, tx) {
-			t.Error("Case 4: Expected isNullTransfer to return false")
-		}
-	})
-
-	t.Run("Case 5: Balance change present", func(t *testing.T) {
-		tx := &types.Transaction{
-			To: base.HexToAddress("0x0"), // may trigger airdrop condition.
-		}
-		tx.Receipt = new(types.Receipt)
-		tx.Receipt.Logs = make([]types.Log, 11)
-
-		stmt := new(types.Statement)
-		stmt.Sender = base.HexToAddress("0x0")
-		stmt.BegBal = *base.NewWei(100)
-		stmt.EndBal = *base.NewWei(110) // Balance changes: difference of 10.
-		stmt.AmountIn = *base.NewWei(50)
-
-		if isNullTransfer(stmt, tx) {
-			t.Error("Case 5: Expected isNullTransfer to return false due to balance change")
-		}
-	})
-
-	t.Run("Case 6: Not material", func(t *testing.T) {
-		tx := &types.Transaction{
-			To: base.HexToAddress("0x0"),
-		}
-		tx.Receipt = new(types.Receipt)
-		tx.Receipt.Logs = make([]types.Log, 11)
-
-		stmt := new(types.Statement)
-		stmt.Sender = base.HexToAddress("0x0")
-		stmt.BegBal = *base.NewWei(100)
-		stmt.EndBal = *base.NewWei(100)
-		if isNullTransfer(stmt, tx) {
-			t.Error("Case 6: Expected isNullTransfer to return false because statement is not material")
 		}
 	})
 }
