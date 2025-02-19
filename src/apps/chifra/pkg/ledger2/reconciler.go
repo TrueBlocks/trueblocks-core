@@ -21,14 +21,14 @@ import (
 type Reconciler2 struct {
 	LedgerBook LedgerBook
 	// mu         sync.Mutex
-	accountFor  base.Address
-	firstBlock  base.Blknum
-	lastBlock   base.Blknum
-	names       map[base.Address]types.Name
-	testMode    bool
-	asEther     bool
-	reversed    bool
-	useTraces   bool
+	accountFor base.Address
+	// firstBlock  base.Blknum
+	// lastBlock   base.Blknum
+	names map[base.Address]types.Name
+	// testMode    bool
+	asEther bool
+	// reversed    bool
+	// useTraces   bool
 	connection  *rpc.Connection
 	assetFilter []base.Address
 }
@@ -439,6 +439,7 @@ func AssetOfInterest(filters []base.Address, needle base.Address) bool {
 }
 
 func (l *Reconciler2) getStatementsFromTraces(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {
+	_ = pos
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 
 	ret := types.Statement{} // *s
