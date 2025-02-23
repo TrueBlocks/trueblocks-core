@@ -1,13 +1,10 @@
 package ledger
 
 import (
-	"fmt"
-	"os"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -137,24 +134,24 @@ func TestCorrectForNullTransfer(t *testing.T) {
 	})
 }
 
-var capturedLogs []string
+// var capturedLogs []string
 
-func fakeTestLog(notDefault bool, args ...interface{}) {
-	if notDefault {
-		logMsg := fmt.Sprint(args...)
-		capturedLogs = append(capturedLogs, logMsg)
-	}
-}
+// func fakeTestLog(notDefault bool, args ...interface{}) {
+// 	if notDefault {
+// 		logMsg := fmt.Sprint(args...)
+// 		capturedLogs = append(capturedLogs, logMsg)
+// 	}
+// }
 
-func resetLogger() func() {
-	os.Setenv("TEST_MODE", "true")
-	orig := logger.TestLog
-	logger.TestLog = fakeTestLog
-	capturedLogs = nil
-	return func() {
-		logger.TestLog = orig
-	}
-}
+// func resetLogger() func() {
+// 	os.Setenv("TEST_MODE", "true")
+// 	orig := logger.TestLog
+// 	logger.TestLog = fakeTestLog
+// 	capturedLogs = nil
+// 	return func() {
+// 		logger.TestLog = orig
+// 	}
+// }
 
 // func TestCorrectForSomethingElseEth(t *testing.T) {
 // 	restore := resetLogger()
