@@ -20,7 +20,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 	// TODO: BOGUS - RECONSIDER THIS
 	opts.Articulate = true
 
-	ledgers := &ledger.Reconciler{}
+	recon := &ledger.Reconciler{}
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
@@ -46,7 +46,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 						}
 					}
 
-					if statements, err := ledgers.GetStatements(pos, filter, tx); err != nil {
+					if statements, err := recon.GetStatements(pos, filter, tx); err != nil {
 						errorChan <- err
 
 					} else {
@@ -65,14 +65,13 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 				return
 
 			} else if !opts.NoZero || cnt > 0 {
-				ledgers = ledger.NewLedger(
+				recon = ledger.NewReconciler(
 					opts.Conn,
 					mon.Address,
 					opts.FirstBlock,
 					opts.LastBlock,
 					opts.Globals.Ether,
 					testMode,
-					opts.NoZero,
 					opts.Traces,
 					opts.Reversed,
 					&opts.Asset,

@@ -22,15 +22,14 @@ type Reconciler struct {
 	names       map[base.Address]types.Name
 	testMode    bool
 	asEther     bool
-	noZero      bool
 	reversed    bool
 	useTraces   bool
 	connection  *rpc.Connection
 	assetFilter []base.Address
 }
 
-// NewLedger returns a new empty Reconciler struct
-func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Reconciler {
+// NewReconciler returns a new empty Reconciler struct
+func NewReconciler(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, useTraces, reversed bool, assetFilters *[]string) *Reconciler {
 	l := &Reconciler{
 		connection: conn,
 		accountFor: acctFor,
@@ -38,7 +37,6 @@ func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, a
 		lastBlock:  lb,
 		asEther:    asEther,
 		testMode:   testMode,
-		noZero:     noZero,
 		reversed:   reversed,
 		useTraces:  useTraces,
 	}

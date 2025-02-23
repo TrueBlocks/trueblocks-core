@@ -1,11 +1,15 @@
 run:
-  tests: false
+  tests: true # Lint test files as well
+  timeout: 5m
+
 linters:
+  enable-all: true # Enable all linters by default
   disable:
-    - ineffassign
+    - ineffassign # Still disable ineffassign if desired
+
 linters-settings:
   staticcheck:
     checks:
       - all
-      # Disable ST1003 correct capitalization of initialisms
+      # Disable ST1003: correct capitalization of initialisms (if this rule causes noise)
       - -ST1003

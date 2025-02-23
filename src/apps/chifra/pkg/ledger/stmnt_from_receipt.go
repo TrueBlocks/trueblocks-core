@@ -17,8 +17,7 @@ func (l *Reconciler) getStatementsFromReceipt(pos *types.AppPosition, filter *fi
 				return statements, err
 			} else {
 				if s.Sender == l.accountFor || s.Recipient == l.accountFor {
-					add := !l.noZero || s.IsMaterial()
-					if add {
+					if s.IsMaterial() {
 						statements = append(statements, s)
 					}
 				}

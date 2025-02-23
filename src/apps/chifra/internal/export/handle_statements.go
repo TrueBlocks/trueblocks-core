@@ -112,14 +112,13 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							})
 						}
 
-						ledgers := ledger.NewLedger(
+						recon := ledger.NewReconciler(
 							opts.Conn,
 							mon.Address,
 							opts.FirstBlock,
 							opts.LastBlock,
 							opts.Globals.Ether,
 							testMode,
-							opts.NoZero,
 							opts.Traces,
 							opts.Reversed,
 							&opts.Asset,
@@ -145,7 +144,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 								First: i == 0,
 								Last:  i == len(apps)-1,
 							}
-							if statements, err := ledgers.GetStatements(pos, filter, tx); err != nil {
+							if statements, err := recon.GetStatements(pos, filter, tx); err != nil {
 								errorChan <- err
 
 							} else if len(statements) > 0 {
