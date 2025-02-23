@@ -215,7 +215,7 @@ Statements consist of the following fields:
 | endBalDiff          | endBal - endBalCalc, if non-zero, the reconciliation failed (calculated)                                                              | int256       |
 | endBalCalc          | begBal + amountNet (calculated)                                                                                                       | int256       |
 | correctingReason    | the reason for the correcting entries, if any                                                                                         | string       |
-| assetType           | one of eth, eth-trace, token, or token-721                                                                                            | TrialBalType |
+| postAssetType       | one of eth, eth-trace, token, or token-721                                                                                            | TrialBalType |
 | rollingBalance      | a rolling balance used to help debug intra-block reconciliations                                                                      | int256       |
 
 ## AppearanceTable

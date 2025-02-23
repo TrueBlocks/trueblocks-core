@@ -49,7 +49,7 @@ Next:                   11670420
 postType:               diff-diff
 postFirst:              true
 postLast:               true
-assetType:              token
+postAssetType:          token
 accountedFor:           0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
 sender:                 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7  ==>  0x0
 assetAddress:           0xc713e5e149d5d0715dcd1c156a020976e7e56b88 (aMKR) decimals: 18
@@ -87,7 +87,6 @@ Trial balance:
       "amountOutEth": "14.922878243871414864",
       "assetAddress": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
       "assetSymbol": "aMKR",
-      "assetType": "token",
       "begBal": "14922878205530494041",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -121,6 +120,7 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "token",
       "postFirst": true,
       "postLast": true,
       "postType": "diff-diff",

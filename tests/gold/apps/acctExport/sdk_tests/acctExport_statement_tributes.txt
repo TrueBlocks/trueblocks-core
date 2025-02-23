@@ -19,7 +19,7 @@ Next:                   8769052
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
 assetAddress:           0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
@@ -43,18 +43,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-A possible nullTransfer
-  nLogs:             2
-    lotsOfLogs:      --> false
-  Sender.IsZero:     0x868b8fd259abfcfdf9634c343593b34ef359641d false
-  or Sender == To:   false
-    mayBeAirdrop:    --> false
-  EndBal-BegBal:     -1
-  Material:          true
-    noBalanceChange: --> false
-  ---> Not a nullTransfer
-Needs correction for token transfer
-Correcting token transfer for unknown income or outflow
 Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
 ====> token
@@ -65,7 +53,7 @@ Next:                   8769053
 postType:               same-diff
 postFirst:              false
 postLast:               true
-assetType:              token
+postAssetType:          token
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
 assetAddress:           0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
@@ -75,24 +63,20 @@ blockNumber:            8769052.74.73
 priceSource:            0 (token-not-priced-pre-uni)
 --------------------------------------------------- 
 Trial balance:
-   prevBal:             0
-   begBal:              85 (85)
-   totalIn:             85
+   prevBal:             85
+   begBal:              85 (0)
+   totalIn:             0
    totalOut:            85
-   amountNet:           0
+   amountNet:           -85
                        ======================= 
-   endBal:              0 (85)
-   endBalCalc:          85
+   endBal:              0 (0)
+   endBalCalc:          0
    rollingBalance:      0
 --------------------------------------------------- 
-   correctingIn:        85
    amountOut:           85
-   correctingReason:    begbal
    material:            true
-   reconciled:          false
- ^^ we need to fix this ^^
+   reconciled:          true
 ---------------------------------------------------
-Log statement at   8769052.74.73  does not reconcile.
 {
   "data": [
     {
@@ -102,7 +86,6 @@ Log statement at   8769052.74.73  does not reconcile.
       "amountOut": "0",
       "assetAddress": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
       "assetSymbol": "TRB",
-      "assetType": "token",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 8769029,
@@ -122,6 +105,7 @@ Log statement at   8769052.74.73  does not reconcile.
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
+      "postAssetType": "token",
       "postFirst": false,
       "postLast": false,
       "postType": "diff-diff",
@@ -144,22 +128,21 @@ Log statement at   8769052.74.73  does not reconcile.
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountNet": "0",
+      "amountNet": "-85000000000000000000",
       "amountOut": "85000000000000000000",
       "assetAddress": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
       "assetSymbol": "TRB",
-      "assetType": "token",
       "begBal": "85000000000000000000",
-      "begBalDiff": "85000000000000000000",
+      "begBalDiff": "0",
       "blockNumber": 8769052,
-      "correctingIn": "85000000000000000000",
+      "correctingIn": "0",
       "correctingOut": "0",
-      "correctingReason": "begbal",
+      "correctingReason": "",
       "date": "2019-10-19 04:06:45 UTC",
       "decimals": 18,
       "endBal": "0",
-      "endBalCalc": "85000000000000000000",
-      "endBalDiff": "85000000000000000000",
+      "endBalCalc": "0",
+      "endBalDiff": "0",
       "gasOut": "0",
       "internalIn": "0",
       "internalOut": "0",
@@ -168,20 +151,21 @@ Log statement at   8769052.74.73  does not reconcile.
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
+      "postAssetType": "token",
       "postFirst": false,
       "postLast": true,
       "postType": "same-diff",
       "prefundIn": "0",
-      "prevBal": "0",
+      "prevBal": "85000000000000000000",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "reconciled": false,
+      "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "spotPrice": 0,
       "timestamp": 1571458005,
-      "totalIn": "85000000000000000000",
+      "totalIn": "0",
       "totalOut": "85000000000000000000",
       "totalOutLessGas": "85000000000000000000",
       "transactionHash": "0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265",

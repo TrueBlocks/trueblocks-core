@@ -19,7 +19,7 @@ TEST[DATE|TIME] Next:                   7005654
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
@@ -53,7 +53,7 @@ TEST[DATE|TIME] Next:                   7005662
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
@@ -87,7 +87,7 @@ TEST[DATE|TIME] Next:                   7005737
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
@@ -133,7 +133,7 @@ TEST[DATE|TIME] Next:                   7005737
 TEST[DATE|TIME] postType:               diff-same
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x28adfa7a3ab67fb19410beabb1c1bf880fef0541  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
@@ -181,7 +181,7 @@ TEST[DATE|TIME] Next:                   7005738
 TEST[DATE|TIME] postType:               same-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x28adfa7a3ab67fb19410beabb1c1bf880fef0541  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
@@ -191,24 +191,22 @@ TEST[DATE|TIME] blockNumber:            7005737.30.20
 TEST[DATE|TIME] priceSource:            0 (token-not-priced-pre-uni)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             75843.546632
+TEST[DATE|TIME]    prevBal:             71040.040864
 TEST[DATE|TIME]    begBal:              71040.040864 (0)
 TEST[DATE|TIME]    totalIn:             3016.109787
 TEST[DATE|TIME]    totalOut:            -1787.395981
 TEST[DATE|TIME]    amountNet:           4803.505768
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              75843.546632 (-4803.505768)
+TEST[DATE|TIME]    endBal:              75843.546632 (0)
 TEST[DATE|TIME]    endBalCalc:          75843.546632
 TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountIn:            3016.109787
 TEST[DATE|TIME]    correctingOut:       -1787.395981
-TEST[DATE|TIME]    correctingReason:    begbal-endbal
+TEST[DATE|TIME]    correctingReason:    endbal
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Log statement at   7005737.30.20  does not reconcile.
 ----
 Results in ./statement_token_ibt_out.file
 {
@@ -223,7 +221,6 @@ Results in ./statement_token_ibt_out.file
       "amountOutEth": "0",
       "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
       "assetSymbol": "0x5c2c",
-      "assetType": "token",
       "begBal": "64663282872000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -257,6 +254,7 @@ Results in ./statement_token_ibt_out.file
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "token",
       "postFirst": true,
       "postLast": false,
       "postType": "diff-diff",
@@ -293,7 +291,6 @@ Results in ./statement_token_ibt_out.file
       "amountOutEth": "0",
       "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
       "assetSymbol": "0x5c2c",
-      "assetType": "token",
       "begBal": "67679392659000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -327,6 +324,7 @@ Results in ./statement_token_ibt_out.file
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "token",
       "postFirst": false,
       "postLast": false,
       "postType": "diff-diff",
@@ -363,7 +361,6 @@ Results in ./statement_token_ibt_out.file
       "amountOutEth": "0",
       "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
       "assetSymbol": "0x5c2c",
-      "assetType": "token",
       "begBal": "69662377341000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -397,6 +394,7 @@ Results in ./statement_token_ibt_out.file
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "token",
       "postFirst": false,
       "postLast": false,
       "postType": "diff-diff",
@@ -433,7 +431,6 @@ Results in ./statement_token_ibt_out.file
       "amountOutEth": "0",
       "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
       "assetSymbol": "0x5c2c",
-      "assetType": "token",
       "begBal": "71040040864000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -467,6 +464,7 @@ Results in ./statement_token_ibt_out.file
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "token",
       "postFirst": false,
       "postLast": false,
       "postType": "diff-same",
@@ -503,17 +501,16 @@ Results in ./statement_token_ibt_out.file
       "amountOutEth": "0",
       "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
       "assetSymbol": "0x5c2c",
-      "assetType": "token",
       "begBal": "71040040864000000000000",
-      "begBalDiff": "-4803505768000000000000",
-      "begBalDiffEth": "-4803.505768",
+      "begBalDiff": "0",
+      "begBalDiffEth": "0",
       "begBalEth": "71040.040864",
       "blockNumber": 7005737,
       "correctingIn": "0",
       "correctingInEth": "0",
       "correctingOut": "-1787395981000000000000",
       "correctingOutEth": "-1787.395981",
-      "correctingReason": "begbal-endbal",
+      "correctingReason": "endbal",
       "date": "2019-01-03 22:52:42 UTC",
       "decimals": 18,
       "endBal": "75843546632000000000000",
@@ -537,16 +534,17 @@ Results in ./statement_token_ibt_out.file
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "token",
       "postFirst": false,
       "postLast": true,
       "postType": "same-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
-      "prevBal": "75843546632000000000000",
-      "prevBalEth": "75843.546632",
+      "prevBal": "71040040864000000000000",
+      "prevBalEth": "71040.040864",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
-      "reconciled": false,
+      "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",

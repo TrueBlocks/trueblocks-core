@@ -30,7 +30,7 @@ Next:                   8769029
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -64,7 +64,7 @@ Next:                   8769052
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
 assetAddress:           0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
@@ -110,7 +110,7 @@ Next:                   8769052
 postType:               diff-same
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -158,7 +158,7 @@ Next:                   8769052
 postType:               diff-same
 postFirst:              false
 postLast:               false
-assetType:              trace-eth
+postAssetType:          trace-eth
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -205,7 +205,7 @@ Next:                   8769064
 postType:               same-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -253,7 +253,7 @@ Next:                   8769064
 postType:               same-diff
 postFirst:              false
 postLast:               false
-assetType:              trace-eth
+postAssetType:          trace-eth
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -300,7 +300,7 @@ Next:                   8769064
 postType:               same-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
 assetAddress:           0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
@@ -327,7 +327,6 @@ Trial balance:
    reconciled:          false
  ^^ we need to fix this ^^
 ---------------------------------------------------
-Log statement at   8769052.74.73  does not reconcile.
 Trial balance failed for  0x07b939fa3dbb62bc7fc6d2c408d53f15ecca50a54d57fe7bab23f5df1f274033  need to decend into traces
 Trial balance failed for  0x0934c85fb30abe84acbc26afe3f209593dbe97aac6c205569b88b90376c65033  need to decend into traces
 Block 8769064 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
@@ -352,7 +351,7 @@ Next:                   8769130
 postType:               same-diff
 postFirst:              false
 postLast:               false
-assetType:              trace-eth
+postAssetType:          trace-eth
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -399,7 +398,7 @@ Next:                   8769141
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x103348c47ffc3254aff761894e7c13ca0c680465
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -446,7 +445,7 @@ Next:                   8769142
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0xf322ccd630465c8a6fc517326ff58fe102310251
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -483,7 +482,6 @@ Trial balance:
       "amountOutEth": "0",
       "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
-      "assetType": "eth",
       "begBal": "0",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -517,6 +515,7 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "eth",
       "postFirst": true,
       "postLast": false,
       "postType": "diff-diff",
@@ -553,7 +552,6 @@ Trial balance:
       "amountOutEth": "0",
       "assetAddress": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
       "assetSymbol": "TRB",
-      "assetType": "token",
       "begBal": "0",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -587,6 +585,7 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "token",
       "postFirst": false,
       "postLast": false,
       "postType": "diff-diff",
@@ -623,7 +622,6 @@ Trial balance:
       "amountOutEth": "0",
       "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
-      "assetType": "trace-eth",
       "begBal": "25000000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -639,9 +637,9 @@ Trial balance:
       "endBal": "24050590000000000",
       "endBalCalc": "24752820000000000",
       "endBalCalcEth": "0.02475282",
-      "endBalDiff": "702230000000000",
-      "endBalDiffEth": "0.00070223",
-      "endBalEth": "0.02405059",
+      "endBalDiff": "0",
+      "endBalDiffEth": "0",
+      "endBalEth": "0.02475282",
       "gasOut": "247180000000000",
       "gasOutEth": "0.00024718",
       "internalIn": "0",
@@ -666,7 +664,7 @@ Trial balance:
       "prevBalEth": "0.025",
       "priceSource": "maker",
       "recipient": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
-      "reconciled": false,
+      "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",
@@ -686,224 +684,145 @@ Trial balance:
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountInEth": "0",
-      "amountNet": "-702230000000000",
-      "amountNetEth": "-0.00070223",
+      "amountNet": "-0.00070223",
       "amountOut": "0",
-      "amountOutEth": "0",
       "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
       "assetType": "trace-eth",
-      "begBal": "25000000000000000",
-      "begBalDiff": "949410000000000",
-      "begBalDiffEth": "0.00094941",
-      "begBalEth": "0.025",
+      "begBal": "0.02475282",
+      "begBalDiff": "0",
       "blockNumber": 8769052,
       "correctingIn": "0",
-      "correctingInEth": "0",
       "correctingOut": "0",
-      "correctingOutEth": "0",
       "correctingReason": "",
       "date": "2019-10-19 04:06:45 UTC",
       "decimals": 18,
-      "endBal": "24050590000000000",
-      "endBalCalc": "24297770000000000",
-      "endBalCalcEth": "0.02429777",
-      "endBalDiff": "247180000000000",
-      "endBalDiffEth": "0.00024718",
-      "endBalEth": "0.02405059",
-      "gasOut": "702230000000000",
-      "gasOutEth": "0.00070223",
+      "endBal": "0.02405059",
+      "endBalCalc": "0.02405059",
+      "endBalDiff": "0",
+      "gasOut": "0.00070223",
       "internalIn": "0",
-      "internalInEth": "0",
       "internalOut": "0",
-      "internalOutEth": "0",
       "logIndex": 0,
       "minerBaseRewardIn": "0",
-      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
-      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
-      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
-      "minerUncleRewardInEth": "0",
-      "postFirst": false,
-      "postLast": false,
-      "postType": "same-diff",
       "prefundIn": "0",
-      "prefundInEth": "0",
-      "prevBal": "24050590000000000",
-      "prevBalEth": "0.02405059",
+      "prevAppBlk": 8769052,
+      "prevBal": "0.02475282",
       "priceSource": "maker",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "reconciled": false,
+      "reconciled": true,
+      "postType": "same-diff",
       "selfDestructIn": "0",
-      "selfDestructInEth": "0",
       "selfDestructOut": "0",
-      "selfDestructOutEth": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "spotPrice": 173.765,
       "timestamp": 1571458005,
       "totalIn": "0",
-      "totalInEth": "0",
-      "totalOut": "702230000000000",
-      "totalOutEth": "0.00070223",
+      "totalOut": "0.00070223",
       "totalOutLessGas": "0",
-      "totalOutLessGasEth": "0",
       "transactionHash": "0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265",
       "transactionIndex": 74
     },
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountInEth": "0",
-      "amountNet": "0",
-      "amountNetEth": "0",
-      "amountOut": "85000000000000000000",
-      "amountOutEth": "85",
+      "amountNet": "-85",
+      "amountOut": "85",
       "assetAddress": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
       "assetSymbol": "TRB",
       "assetType": "token",
-      "begBal": "85000000000000000000",
-      "begBalDiff": "85000000000000000000",
-      "begBalDiffEth": "85",
-      "begBalEth": "85",
+      "begBal": "85",
+      "begBalDiff": "0",
       "blockNumber": 8769052,
-      "correctingIn": "85000000000000000000",
-      "correctingInEth": "85",
+      "correctingIn": "0",
       "correctingOut": "0",
-      "correctingOutEth": "0",
-      "correctingReason": "begbal",
+      "correctingReason": "",
       "date": "2019-10-19 04:06:45 UTC",
       "decimals": 18,
       "endBal": "0",
-      "endBalCalc": "85000000000000000000",
-      "endBalCalcEth": "85",
-      "endBalDiff": "85000000000000000000",
-      "endBalDiffEth": "85",
-      "endBalEth": "0",
+      "endBalCalc": "0",
+      "endBalDiff": "0",
       "gasOut": "0",
-      "gasOutEth": "0",
       "internalIn": "0",
-      "internalInEth": "0",
       "internalOut": "0",
-      "internalOutEth": "0",
       "logIndex": 73,
       "minerBaseRewardIn": "0",
-      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
-      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
-      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
-      "minerUncleRewardInEth": "0",
-      "postFirst": false,
-      "postLast": false,
-      "postType": "same-diff",
       "prefundIn": "0",
-      "prefundInEth": "0",
       "prevBal": "0",
-      "prevBalEth": "0",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "reconciled": false,
+      "reconciled": true,
+      "postType": "same-diff",
       "selfDestructIn": "0",
-      "selfDestructInEth": "0",
       "selfDestructOut": "0",
-      "selfDestructOutEth": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "spotPrice": 0,
       "timestamp": 1571458005,
-      "totalIn": "85000000000000000000",
-      "totalInEth": "85",
-      "totalOut": "85000000000000000000",
-      "totalOutEth": "85",
-      "totalOutLessGas": "85000000000000000000",
-      "totalOutLessGasEth": "85",
+      "totalIn": "0",
+      "totalOut": "85",
+      "totalOutLessGas": "85",
       "transactionHash": "0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265",
       "transactionIndex": 74
     },
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountInEth": "0",
       "amountNet": "0",
-      "amountNetEth": "0",
       "amountOut": "0",
-      "amountOutEth": "0",
       "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
       "assetType": "trace-eth",
-      "begBal": "24050590000000000",
+      "begBal": "0.02405059",
       "begBalDiff": "0",
-      "begBalDiffEth": "0",
-      "begBalEth": "0.02405059",
       "blockNumber": 8769064,
       "correctingIn": "0",
-      "correctingInEth": "0",
       "correctingOut": "0",
-      "correctingOutEth": "0",
       "correctingReason": "",
       "date": "2019-10-19 04:10:09 UTC",
       "decimals": 18,
-      "endBal": "474612790000000000",
-      "endBalCalc": "24050590000000000",
-      "endBalCalcEth": "0.02405059",
-      "endBalDiff": "-450562200000000000",
-      "endBalDiffEth": "-0.4505622",
-      "endBalEth": "0.47461279",
+      "endBal": "0.02405059",
+      "endBalCalc": "0.02405059",
+      "endBalDiff": "0",
       "gasOut": "0",
-      "gasOutEth": "0",
       "internalIn": "0",
-      "internalInEth": "0",
       "internalOut": "0",
-      "internalOutEth": "0",
       "logIndex": 0,
       "minerBaseRewardIn": "0",
-      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
-      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
-      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
-      "minerUncleRewardInEth": "0",
-      "postFirst": false,
-      "postLast": false,
-      "postType": "diff-same",
       "prefundIn": "0",
-      "prefundInEth": "0",
-      "prevBal": "24050590000000000",
-      "prevBalEth": "0.02405059",
+      "prevAppBlk": 8769052,
+      "prevBal": "0.02405059",
       "priceSource": "not-priced",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "reconciled": false,
+      "reconciled": broken,
+      "postType": "diff-same",
       "selfDestructIn": "0",
-      "selfDestructInEth": "0",
       "selfDestructOut": "0",
-      "selfDestructOutEth": "0",
       "sender": "0xa7a7899d944fe658c4b0a1803bab2f490bd3849e",
       "spotPrice": 0,
       "timestamp": 1571458209,
       "totalIn": "0",
-      "totalInEth": "0",
       "totalOut": "0",
-      "totalOutEth": "0",
       "totalOutLessGas": "0",
-      "totalOutLessGasEth": "0",
       "transactionHash": "0x07b939fa3dbb62bc7fc6d2c408d53f15ecca50a54d57fe7bab23f5df1f274033",
       "transactionIndex": 130
     },
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountInEth": "0",
-      "amountNet": "450562200000000000",
-      "amountNetEth": "0.4505622",
+      "amountNet": "0.4505622",
       "amountOut": "0",
       "amountOutEth": "0",
       "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
-      "assetType": "trace-eth",
       "begBal": "24050590000000000",
       "begBalDiff": "-450562200000000000",
       "begBalDiffEth": "-0.4505622",
@@ -937,6 +856,7 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "trace-eth",
       "postFirst": false,
       "postLast": false,
       "postType": "same-diff",
@@ -973,7 +893,6 @@ Trial balance:
       "amountOutEth": "0.1",
       "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
-      "assetType": "eth",
       "begBal": "474612790000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -1007,6 +926,7 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
       "postType": "diff-diff",
@@ -1043,7 +963,6 @@ Trial balance:
       "amountOutEth": "0.37457079",
       "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
-      "assetType": "eth",
       "begBal": "374591790000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -1077,6 +996,7 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "eth",
       "postFirst": false,
       "postLast": true,
       "postType": "diff-diff",

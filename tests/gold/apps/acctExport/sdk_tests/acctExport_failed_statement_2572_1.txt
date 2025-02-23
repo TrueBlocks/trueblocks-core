@@ -1,11 +1,12 @@
-export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&statements&ether&asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384&lastBlock=15549163&maxRecords=40
-Args: [addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 accounting statements ether asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 lastBlock=15549163 maxRecords=40]
-Opts: {"addrs":["0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"],"accounting":true,"statements":true,"maxRecords":40,"asset":["0xf5b2c59f6db42ffcdfc1625999c81fdf17953384"],"lastBlock":15549163,"ether":true}
+export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&statements&ether&asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384&firstBlock=15549162&lastBlock=15549163&maxRecords=1
+Args: [addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 accounting statements ether asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 firstBlock=15549162 lastBlock=15549163 maxRecords=1]
+Opts: {"addrs":["0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"],"accounting":true,"statements":true,"maxRecords":1,"asset":["0xf5b2c59f6db42ffcdfc1625999c81fdf17953384"],"firstBlock":15549162,"lastBlock":15549163,"ether":true}
 Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6]
 Accounting:  true
 Statements:  true
-MaxRecords:  40
+MaxRecords:  1
 Asset:  [0xf5b2c59f6db42ffcdfc1625999c81fdf17953384]
+FirstBlock:  15549162
 LastBlock:  15549163
 Ether:  true
 Caps:  cache,decache,ether
@@ -20,7 +21,6 @@ A possible nullTransfer
   Material:          true
     noBalanceChange: --> true
 Correcting token transfer for a null transfer
-Correcting token transfer for unknown income or outflow
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 =========================================================
@@ -41,13 +41,13 @@ source:              uniswap
 ===================================================
 ====> token
 ===================================================
-Previous:               14469880
+Previous:               15549161
 Current:                15549162
 Next:                   15549163
 postType:               diff-diff
-postFirst:              false
+postFirst:              true
 postLast:               true
-assetType:              token
+postAssetType:          token
 accountedFor:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
 sender:                 0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f  ==>  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
 assetAddress:           0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 (mdai.io) decimals: 18
@@ -57,53 +57,51 @@ blockNumber:            15549162.83.1774
 priceSource:            0 (not-priced)
 --------------------------------------------------- 
 Trial balance:
-   prevBal:             0
-   begBal:              2017.044745122853478376 (2017.044745122853478376)
-   totalIn:             2017.044745122853478376
-   totalOut:            0
-   amountNet:           2017.044745122853478376
+   prevBal:             2017.044745122853478376
+   begBal:              2017.044745122853478376 (0)
+   totalIn:             2017
+   totalOut:            2017
+   amountNet:           0
                        ======================= 
-   endBal:              2017.044745122853478376 (2017.044745122853478376)
-   endBalCalc:          4034.089490245706956752
+   endBal:              2017.044745122853478376 (0)
+   endBalCalc:          2017.044745122853478376
    rollingBalance:      0
 --------------------------------------------------- 
-   correctingIn:        2017.044745122853478376
-   correctingReason:    begbal
+   correctingIn:        2017
+   correctingOut:       2017
+   correctingReason:    null-transfer
    material:            true
-   reconciled:          false
- ^^ we need to fix this ^^
+   reconciled:          true
 ---------------------------------------------------
-Log statement at   15549162.83.1774  does not reconcile.
 {
   "data": [
     {
       "accountedFor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
       "amountIn": "0",
       "amountInEth": "0",
-      "amountNet": "2017044745122853478376",
-      "amountNetEth": "2017.044745122853478376",
+      "amountNet": "0",
+      "amountNetEth": "0",
       "amountOut": "0",
       "amountOutEth": "0",
       "assetAddress": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
       "assetSymbol": "mdai.io",
-      "assetType": "token",
       "begBal": "2017044745122853478376",
-      "begBalDiff": "2017044745122853478376",
-      "begBalDiffEth": "2017.044745122853478376",
+      "begBalDiff": "0",
+      "begBalDiffEth": "0",
       "begBalEth": "2017.044745122853478376",
       "blockNumber": 15549162,
-      "correctingIn": "2017044745122853478376",
-      "correctingInEth": "2017.044745122853478376",
-      "correctingOut": "0",
-      "correctingOutEth": "0",
-      "correctingReason": "begbal",
+      "correctingIn": "2017000000000000000000",
+      "correctingInEth": "2017",
+      "correctingOut": "2017000000000000000000",
+      "correctingOutEth": "2017",
+      "correctingReason": "null-transfer",
       "date": "2022-09-16 22:32:11 UTC",
       "decimals": 18,
       "endBal": "2017044745122853478376",
-      "endBalCalc": "4034089490245706956752",
-      "endBalCalcEth": "4034.089490245706956752",
-      "endBalDiff": "2017044745122853478376",
-      "endBalDiffEth": "2017.044745122853478376",
+      "endBalCalc": "2017044745122853478376",
+      "endBalCalcEth": "2017.044745122853478376",
+      "endBalDiff": "0",
+      "endBalDiffEth": "0",
       "endBalEth": "2017.044745122853478376",
       "gasOut": "0",
       "gasOutEth": "0",
@@ -120,16 +118,17 @@ Log statement at   15549162.83.1774  does not reconcile.
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
-      "postFirst": false,
+      "postAssetType": "token",
+      "postFirst": true,
       "postLast": true,
       "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
-      "prevBal": "0",
-      "prevBalEth": "0",
+      "prevBal": "2017044745122853478376",
+      "prevBalEth": "2017.044745122853478376",
       "priceSource": "not-priced",
       "recipient": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
-      "reconciled": false,
+      "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",
@@ -137,12 +136,12 @@ Log statement at   15549162.83.1774  does not reconcile.
       "sender": "0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f",
       "spotPrice": 0,
       "timestamp": 1663367531,
-      "totalIn": "2017044745122853478376",
-      "totalInEth": "2017.044745122853478376",
-      "totalOut": "0",
-      "totalOutEth": "0",
-      "totalOutLessGas": "0",
-      "totalOutLessGasEth": "0",
+      "totalIn": "2017000000000000000000",
+      "totalInEth": "2017",
+      "totalOut": "2017000000000000000000",
+      "totalOutEth": "2017",
+      "totalOutLessGas": "2017000000000000000000",
+      "totalOutLessGasEth": "2017",
       "transactionHash": "0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb",
       "transactionIndex": 83
     }

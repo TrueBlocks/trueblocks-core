@@ -3293,6 +3293,11 @@ components:
           type: string
           format: int256
           description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
+        postAssetType:
+          type: object
+          items:
+            $ref: "#/components/schemas/trialBalType"
+          description: "one of eth, eth-trace, token, or token-721"
         reconciled:
           type: boolean
           format: boolean
@@ -3385,11 +3390,6 @@ components:
           type: string
           format: string
           description: "the reason for the correcting entries, if any"
-        assetType:
-          type: object
-          items:
-            $ref: "#/components/schemas/trialBalType"
-          description: "one of eth, eth-trace, token, or token-721"
         rollingBalance:
           type: string
           format: int256

@@ -173,7 +173,7 @@ func CorrectForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 func (r *Reconciler2) queryBalances(at AssetTransfer) Posting {
 	ret := Posting(at)
 
-	if at.AssetType != types.TrialBalToken && at.AssetType != types.TrialBalNft {
+	if at.PostAssetType != types.TrialBalToken && at.PostAssetType != types.TrialBalNft {
 		prevBal, _ := r.connection.GetBalanceAt(r.LedgerBook.AccountedFor, at.BlockNumberPrev)
 		if at.BlockNumber == 0 {
 			prevBal = new(base.Wei)
@@ -245,7 +245,7 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 			LogIndex:         0,
 			Sender:           trans.From,
 			Recipient:        trans.To,
-			AssetType:        types.TrialBalEth,
+			PostAssetType:    types.TrialBalEth,
 			Decimals:         18,
 			PostFirst:        pos.First,
 			PostLast:         pos.Last,
@@ -388,7 +388,7 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 						LogIndex:         lg.LogIndex,
 						Sender:           fromAddr,
 						Recipient:        toAddr,
-						AssetType:        types.TrialBalToken,
+						PostAssetType:    types.TrialBalToken,
 						PostFirst:        pos.First,
 						PostLast:         pos.Last,
 					}
@@ -436,3 +436,121 @@ func AssetOfInterest(filters []base.Address, needle base.Address) bool {
 
 	return false
 }
+
+// func (l *Reconciler2) getStatementsFromTraces(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {
+// 	_ = pos
+// 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
+
+// 	ret := types.Statement{} // *s
+// 	// clear all the internal accounting values. Keeps AmountIn, AmountOut and GasOut because
+// 	// those are at the top level (both the transaction itself and trace '0' have them). We
+// 	// skip trace '0' because it's the same as the transaction.
+// 	// ret.AmountIn.SetUint64(0)
+// 	ret.InternalIn.SetUint64(0)
+// 	ret.MinerBaseRewardIn.SetUint64(0)
+// 	ret.MinerNephewRewardIn.SetUint64(0)
+// 	ret.MinerTxFeeIn.SetUint64(0)
+// 	ret.MinerUncleRewardIn.SetUint64(0)
+// 	ret.CorrectingIn.SetUint64(0)
+// 	ret.PrefundIn.SetUint64(0)
+// 	ret.SelfDestructIn.SetUint64(0)
+
+// 	// ret.AmountOut.SetUint64(0)
+// 	// ret.GasOut.SetUint64(0)
+// 	ret.InternalOut.SetUint64(0)
+// 	ret.CorrectingOut.SetUint64(0)
+// 	ret.SelfDestructOut.SetUint64(0)
+
+// 	if traces, err := l.connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
+// 		return statements, err
+
+// 	} else {
+// 		// These values accumulate...so we use += instead of =
+// 		for i, trace := range traces {
+// 			if i == 0 {
+// 				// the first trace is identical to the transaction itself, so we can skip it
+// 				continue
+// 			}
+
+// 			if trace.Action.CallType == "delegatecall" && trace.Action.To != l.LedgerBook.AccountedFor {
+// 				// delegate calls are not included in the transaction's gas cost, so we skip them
+// 				continue
+// 			}
+
+// 			plusEq := func(a1, a2 *base.Wei) base.Wei {
+// 				return *a1.Add(a1, a2)
+// 			}
+
+// 			// Do not collapse, more than one of these can be true at the same time
+// 			if trace.Action.From == l.LedgerBook.AccountedFor {
+// 				ret.InternalOut = plusEq(&ret.InternalOut, &trace.Action.Value)
+// 				ret.Sender = trace.Action.From
+// 				if trace.Action.To.IsZero() {
+// 					if trace.Result != nil {
+// 						ret.Recipient = trace.Result.Address
+// 					}
+// 				} else {
+// 					ret.Recipient = trace.Action.To
+// 				}
+// 			}
+
+// 			if trace.Action.To == l.LedgerBook.AccountedFor {
+// 				ret.InternalIn = plusEq(&ret.InternalIn, &trace.Action.Value)
+// 				ret.Sender = trace.Action.From
+// 				ret.Recipient = trace.Action.To
+// 			}
+
+// 			if trace.Action.SelfDestructed == l.LedgerBook.AccountedFor {
+// 				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, &trace.Action.Balance)
+// 				ret.Sender = trace.Action.SelfDestructed
+// 				if ret.Sender.IsZero() {
+// 					ret.Sender = trace.Action.Address
+// 				}
+// 				ret.Recipient = trace.Action.RefundAddress
+// 			}
+
+// 			if trace.Action.RefundAddress == l.LedgerBook.AccountedFor {
+// 				ret.SelfDestructIn = plusEq(&ret.SelfDestructIn, &trace.Action.Balance)
+// 				ret.Sender = trace.Action.SelfDestructed
+// 				if ret.Sender.IsZero() {
+// 					ret.Sender = trace.Action.Address
+// 				}
+// 				ret.Recipient = trace.Action.RefundAddress
+// 			}
+
+// 			if trace.Action.Address == l.LedgerBook.AccountedFor && !trace.Action.RefundAddress.IsZero() {
+// 				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, &trace.Action.Balance)
+// 				// self destructed send
+// 				ret.Sender = trace.Action.Address
+// 				ret.Recipient = trace.Action.RefundAddress
+// 			}
+
+// 			if trace.Result != nil {
+// 				if trace.Result.Address == l.LedgerBook.AccountedFor {
+// 					ret.InternalIn = plusEq(&ret.InternalIn, &trace.Action.Value)
+// 					ret.Sender = trace.Action.From
+// 					ret.Recipient = trace.Result.Address
+// 				}
+// 			}
+// 		}
+// 	}
+
+// 	if utils.IsFuzzing() {
+// 		statements = append(statements, ret)
+// 		return statements, nil
+// 	}
+
+// 	// reconciled := l.trialBalance(pos, types.TrialBalTraceEth, trans, &ret)
+// 	// if !reconciled {
+// 	// 	statements = append(statements, ret)
+// 	// 	return statements, nil
+// 	// }
+
+// 	if ret.IsMaterial() {
+// 		statements = append(statements, ret)
+// 		// } else {
+// 		// 	logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
+// 	}
+
+// 	return statements, nil
+// }

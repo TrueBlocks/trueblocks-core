@@ -18,7 +18,7 @@ Next:                   202249
 postType:               genesis-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x0000000000000000000000000050726566756e64  ==>  0x001d14804b399c6ef80e64576f657660804fec0b
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -52,7 +52,7 @@ Next:                   1501459
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0x2910543af39aba0cd09dbb2d50200b3e800a63d2
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -87,7 +87,7 @@ Next:                   1501460
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -137,7 +137,6 @@ Trial balance:
           "amountOutEth": "0",
           "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
-          "assetType": "eth",
           "begBal": "0",
           "begBalDiff": "0",
           "begBalDiffEth": "0",
@@ -171,6 +170,7 @@ Trial balance:
           "minerTxFeeInEth": "0",
           "minerUncleRewardIn": "0",
           "minerUncleRewardInEth": "0",
+          "postAssetType": "eth",
           "postFirst": true,
           "postLast": false,
           "postType": "genesis-diff",
@@ -235,7 +235,6 @@ Trial balance:
           "amountOutEth": "4199.9",
           "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
-          "assetType": "eth",
           "begBal": "4200000000000000000000",
           "begBalDiff": "0",
           "begBalDiffEth": "0",
@@ -269,6 +268,7 @@ Trial balance:
           "minerTxFeeInEth": "0",
           "minerUncleRewardIn": "0",
           "minerUncleRewardInEth": "0",
+          "postAssetType": "eth",
           "postFirst": false,
           "postLast": false,
           "postType": "diff-diff",
@@ -332,7 +332,6 @@ Trial balance:
           "amountOutEth": "0.074259320489077336",
           "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
-          "assetType": "eth",
           "begBal": "74679320489077336",
           "begBalDiff": "0",
           "begBalDiffEth": "0",
@@ -366,6 +365,7 @@ Trial balance:
           "minerTxFeeInEth": "0",
           "minerUncleRewardIn": "0",
           "minerUncleRewardInEth": "0",
+          "postAssetType": "eth",
           "postFirst": false,
           "postLast": true,
           "postType": "diff-diff",

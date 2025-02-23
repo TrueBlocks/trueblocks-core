@@ -20,7 +20,7 @@ func (l *Reconciler) trialBalance(pos *types.AppPosition, reason types.TrialBalT
 	s.BlockNumberNext = pos.Next
 	s.PostFirst = pos.First
 	s.PostLast = pos.Last
-	s.AssetType = reason
+	s.PostAssetType = reason
 
 	var okay bool
 	if okay = s.Reconciled(); !okay {

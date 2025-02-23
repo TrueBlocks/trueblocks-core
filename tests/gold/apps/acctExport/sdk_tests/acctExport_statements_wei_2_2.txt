@@ -18,7 +18,7 @@ Next:                   5
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -52,7 +52,7 @@ Next:                   56
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -86,7 +86,7 @@ Next:                   235
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -120,7 +120,7 @@ Next:                   247
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -154,7 +154,7 @@ Next:                   348
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -188,7 +188,7 @@ Next:                   500
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -222,7 +222,7 @@ Next:                   563
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -256,7 +256,7 @@ Next:                   987
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -290,7 +290,7 @@ Next:                   1450
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -324,7 +324,7 @@ Next:                   1580
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -359,7 +359,7 @@ Next:                   1586
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -393,7 +393,7 @@ Next:                   1861
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -427,7 +427,7 @@ Next:                   1912
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -461,7 +461,7 @@ Next:                   2057
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -495,7 +495,7 @@ Next:                   2256
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -529,7 +529,7 @@ Next:                   2392
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -563,7 +563,7 @@ Next:                   2516
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -598,7 +598,7 @@ Next:                   3962
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -632,7 +632,7 @@ Next:                   4256
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -666,7 +666,7 @@ Next:                   4257
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -700,7 +700,7 @@ Next:                   5122
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -734,7 +734,7 @@ Next:                   5306
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -768,7 +768,7 @@ Next:                   5567
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -802,7 +802,7 @@ Next:                   5631
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -837,7 +837,7 @@ Next:                   6412
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -871,7 +871,7 @@ Next:                   6658
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -905,7 +905,7 @@ Next:                   6693
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -939,7 +939,7 @@ Next:                   7069
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -973,7 +973,7 @@ Next:                   7777
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1007,7 +1007,7 @@ Next:                   8361
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1041,7 +1041,7 @@ Next:                   10710
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1075,7 +1075,7 @@ Next:                   10797
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1109,7 +1109,7 @@ Next:                   11305
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1143,7 +1143,7 @@ Next:                   12113
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1177,7 +1177,7 @@ Next:                   12155
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1211,7 +1211,7 @@ Next:                   13662
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1245,7 +1245,7 @@ Next:                   13899
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1279,7 +1279,7 @@ Next:                   14133
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1313,7 +1313,7 @@ Next:                   14195
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1347,7 +1347,7 @@ Next:                   14196
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1381,7 +1381,7 @@ Next:                   15398
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1415,7 +1415,7 @@ Next:                   15972
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1449,7 +1449,7 @@ Next:                   16047
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1483,7 +1483,7 @@ Next:                   16063
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1518,7 +1518,7 @@ Next:                   16769
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1552,7 +1552,7 @@ Next:                   17281
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1586,7 +1586,7 @@ Next:                   17282
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1620,7 +1620,7 @@ Next:                   19205
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1654,7 +1654,7 @@ Next:                   21060
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1688,7 +1688,7 @@ Next:                   21792
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1722,7 +1722,7 @@ Next:                   22071
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1756,7 +1756,7 @@ Next:                   23065
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1790,7 +1790,7 @@ Next:                   23456
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1824,7 +1824,7 @@ Next:                   23853
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1858,7 +1858,7 @@ Next:                   24057
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1892,7 +1892,7 @@ Next:                   24151
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1926,7 +1926,7 @@ Next:                   24748
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1960,7 +1960,7 @@ Next:                   25963
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1994,7 +1994,7 @@ Next:                   26164
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2028,7 +2028,7 @@ Next:                   26165
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2062,7 +2062,7 @@ Next:                   28883
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2096,7 +2096,7 @@ Next:                   30829
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2130,7 +2130,7 @@ Next:                   31104
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2164,7 +2164,7 @@ Next:                   31289
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2198,7 +2198,7 @@ Next:                   31596
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2232,7 +2232,7 @@ Next:                   47521
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2266,7 +2266,7 @@ Next:                   55885
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2300,7 +2300,7 @@ Next:                   66040
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2334,7 +2334,7 @@ Next:                   66526
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2368,7 +2368,7 @@ Next:                   67431
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2402,7 +2402,7 @@ Next:                   67975
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2436,7 +2436,7 @@ Next:                   68362
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2470,7 +2470,7 @@ Next:                   74263
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2505,7 +2505,7 @@ Next:                   75212
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2539,7 +2539,7 @@ Next:                   79098
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x05a56e2d52c817161883f50c441c3228cfe54d9f  ==>  0xc130afe98f8c42e19bdacf8c6e63e48a44a26ca8
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2574,7 +2574,7 @@ Next:                   84279
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2608,7 +2608,7 @@ Next:                   89785
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2642,7 +2642,7 @@ Next:                   94656
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2676,7 +2676,7 @@ Next:                   99961
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2710,7 +2710,7 @@ Next:                   99962
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2744,7 +2744,7 @@ Next:                   112684
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2778,7 +2778,7 @@ Next:                   115289
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2812,7 +2812,7 @@ Next:                   116814
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2846,7 +2846,7 @@ Next:                   119338
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2880,7 +2880,7 @@ Next:                   121873
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2914,7 +2914,7 @@ Next:                   137310
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2948,7 +2948,7 @@ Next:                   139781
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2982,7 +2982,7 @@ Next:                   142351
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3016,7 +3016,7 @@ Next:                   144968
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3050,7 +3050,7 @@ Next:                   147418
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3084,7 +3084,7 @@ Next:                   149846
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3118,7 +3118,7 @@ Next:                   152194
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3152,7 +3152,7 @@ Next:                   154610
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3186,7 +3186,7 @@ Next:                   156892
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3220,7 +3220,7 @@ Next:                   159155
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3254,7 +3254,7 @@ Next:                   161286
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3288,7 +3288,7 @@ Next:                   163274
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3322,7 +3322,7 @@ Next:                   165427
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3356,7 +3356,7 @@ Next:                   167519
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3390,7 +3390,7 @@ Next:                   167520
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3424,7 +3424,7 @@ Next:                   171561
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3458,7 +3458,7 @@ Next:                   173513
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3492,7 +3492,7 @@ Next:                   175468
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3526,7 +3526,7 @@ Next:                   178888
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3560,7 +3560,7 @@ Next:                   180570
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3594,7 +3594,7 @@ Next:                   182535
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3628,7 +3628,7 @@ Next:                   184834
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3662,7 +3662,7 @@ Next:                   187219
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3696,7 +3696,7 @@ Next:                   189720
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3730,7 +3730,7 @@ Next:                   192125
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3764,7 +3764,7 @@ Next:                   194670
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3798,7 +3798,7 @@ Next:                   197063
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3832,7 +3832,7 @@ Next:                   199867
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3866,7 +3866,7 @@ Next:                   200396
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3900,7 +3900,7 @@ Next:                   200941
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3934,7 +3934,7 @@ Next:                   217743
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3968,7 +3968,7 @@ Next:                   220166
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4002,7 +4002,7 @@ Next:                   222691
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4036,7 +4036,7 @@ Next:                   225223
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4070,7 +4070,7 @@ Next:                   225224
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4104,7 +4104,7 @@ Next:                   230210
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4138,7 +4138,7 @@ Next:                   232621
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4172,7 +4172,7 @@ Next:                   235084
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4206,7 +4206,7 @@ Next:                   237365
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4240,7 +4240,7 @@ Next:                   239905
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4274,7 +4274,7 @@ Next:                   242287
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4308,7 +4308,7 @@ Next:                   244838
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4342,7 +4342,7 @@ Next:                   290137
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4376,7 +4376,7 @@ Next:                   292580
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4410,7 +4410,7 @@ Next:                   295102
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4444,7 +4444,7 @@ Next:                   297504
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4478,7 +4478,7 @@ Next:                   299915
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4512,7 +4512,7 @@ Next:                   302037
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4546,7 +4546,7 @@ Next:                   304582
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4580,7 +4580,7 @@ Next:                   306942
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4614,7 +4614,7 @@ Next:                   309237
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4648,7 +4648,7 @@ Next:                   311569
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4682,7 +4682,7 @@ Next:                   313983
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4716,7 +4716,7 @@ Next:                   316543
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4750,7 +4750,7 @@ Next:                   316544
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4784,7 +4784,7 @@ Next:                   321677
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4818,7 +4818,7 @@ Next:                   324268
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4852,7 +4852,7 @@ Next:                   326662
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4886,7 +4886,7 @@ Next:                   329408
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4920,7 +4920,7 @@ Next:                   331597
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4954,7 +4954,7 @@ Next:                   334242
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4988,7 +4988,7 @@ Next:                   336725
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5022,7 +5022,7 @@ Next:                   475307
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5056,7 +5056,7 @@ Next:                   475329
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x05a56e2d52c817161883f50c441c3228cfe54d9f  ==>  0x1e2683322af6f316a53b6e7e3efd8f605ab2afcf
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5091,7 +5091,7 @@ Next:                   606414
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x05a56e2d52c817161883f50c441c3228cfe54d9f  ==>  0x1e2683322af6f316a53b6e7e3efd8f605ab2afcf
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5126,7 +5126,7 @@ Next:                   608946
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5160,7 +5160,7 @@ Next:                   611470
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5194,7 +5194,7 @@ Next:                   614026
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5228,7 +5228,7 @@ Next:                   616520
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5262,7 +5262,7 @@ Next:                   619061
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5296,7 +5296,7 @@ Next:                   621649
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5330,7 +5330,7 @@ Next:                   624102
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5364,7 +5364,7 @@ Next:                   626679
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5398,7 +5398,7 @@ Next:                   629208
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5432,7 +5432,7 @@ Next:                   629209
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5466,7 +5466,7 @@ Next:                   634166
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5500,7 +5500,7 @@ Next:                   636686
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5534,7 +5534,7 @@ Next:                   639224
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5568,7 +5568,7 @@ Next:                   641752
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5602,7 +5602,7 @@ Next:                   644239
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5636,7 +5636,7 @@ Next:                   646725
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5670,7 +5670,7 @@ Next:                   649167
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5704,7 +5704,7 @@ Next:                   651658
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5738,7 +5738,7 @@ Next:                   654065
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5772,7 +5772,7 @@ Next:                   656611
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5806,7 +5806,7 @@ Next:                   659187
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5840,7 +5840,7 @@ Next:                   661544
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5874,7 +5874,7 @@ Next:                   697422
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5908,7 +5908,7 @@ Next:                   699786
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5942,7 +5942,7 @@ Next:                   702357
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5976,7 +5976,7 @@ Next:                   704888
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6010,7 +6010,7 @@ Next:                   707520
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6044,7 +6044,7 @@ Next:                   709880
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6078,7 +6078,7 @@ Next:                   712439
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6112,7 +6112,7 @@ Next:                   712440
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6146,7 +6146,7 @@ Next:                   717432
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6180,7 +6180,7 @@ Next:                   719886
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6214,7 +6214,7 @@ Next:                   722415
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6248,7 +6248,7 @@ Next:                   724840
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6282,7 +6282,7 @@ Next:                   727374
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6316,7 +6316,7 @@ Next:                   729928
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6350,7 +6350,7 @@ Next:                   732541
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6384,7 +6384,7 @@ Next:                   735009
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6418,7 +6418,7 @@ Next:                   737612
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6452,7 +6452,7 @@ Next:                   740085
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6486,7 +6486,7 @@ Next:                   742656
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6520,7 +6520,7 @@ Next:                   745147
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6554,7 +6554,7 @@ Next:                   747694
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6588,7 +6588,7 @@ Next:                   750150
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6622,7 +6622,7 @@ Next:                   752713
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6656,7 +6656,7 @@ Next:                   755220
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6690,7 +6690,7 @@ Next:                   757756
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6724,7 +6724,7 @@ Next:                   760265
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6758,7 +6758,7 @@ Next:                   762844
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6792,7 +6792,7 @@ Next:                   762845
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6826,7 +6826,7 @@ Next:                   767833
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6860,7 +6860,7 @@ Next:                   770255
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6894,7 +6894,7 @@ Next:                   772812
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6928,7 +6928,7 @@ Next:                   775343
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6962,7 +6962,7 @@ Next:                   777889
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6996,7 +6996,7 @@ Next:                   780339
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7030,7 +7030,7 @@ Next:                   782792
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7064,7 +7064,7 @@ Next:                   785271
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7098,7 +7098,7 @@ Next:                   787827
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7132,7 +7132,7 @@ Next:                   790429
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7166,7 +7166,7 @@ Next:                   792966
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7200,7 +7200,7 @@ Next:                   795507
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7234,7 +7234,7 @@ Next:                   798082
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7268,7 +7268,7 @@ Next:                   800601
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7302,7 +7302,7 @@ Next:                   813253
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7336,7 +7336,7 @@ Next:                   815836
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7370,7 +7370,7 @@ Next:                   818423
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7404,7 +7404,7 @@ Next:                   821837
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7438,7 +7438,7 @@ Next:                   823524
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7472,7 +7472,7 @@ Next:                   823525
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7506,7 +7506,7 @@ Next:                   828596
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7540,7 +7540,7 @@ Next:                   831182
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7574,7 +7574,7 @@ Next:                   833764
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7608,7 +7608,7 @@ Next:                   836210
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7642,7 +7642,7 @@ Next:                   838703
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7676,7 +7676,7 @@ Next:                   841055
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7710,7 +7710,7 @@ Next:                   843662
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7744,7 +7744,7 @@ Next:                   846142
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7778,7 +7778,7 @@ Next:                   848750
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7812,7 +7812,7 @@ Next:                   851291
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7846,7 +7846,7 @@ Next:                   853861
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7880,7 +7880,7 @@ Next:                   856336
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7914,7 +7914,7 @@ Next:                   858922
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7948,7 +7948,7 @@ Next:                   861400
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7982,7 +7982,7 @@ Next:                   863901
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8016,7 +8016,7 @@ Next:                   866526
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8050,7 +8050,7 @@ Next:                   998791
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8084,7 +8084,7 @@ Next:                   5422450
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x05a56e2d52c817161883f50c441c3228cfe54d9f  ==>  0xf94eee144446a9fe6e444dad9f69cd01954c0a34
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8131,7 +8131,7 @@ Next:                   5422454
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x20c945800de43394f70d789874a4dac9cfa57451  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8177,7 +8177,7 @@ Next:                   5422455
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xf898f063d22a994ba6943d50a96c2dbc0bd9218c  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8223,7 +8223,7 @@ Next:                   5653137
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x51852d9eafd93dd7f973607cc96e32ef122b0cb6  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8257,7 +8257,7 @@ Next:                   6408597
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0d81d9e21bd7c5bb095535624dcb0759e64b3899  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xf5ba8a8c87f976b79b17ccd25ee8dc2f8e82fb59 (ETHS) decimals: 18
@@ -8291,7 +8291,7 @@ Next:                   7053546
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x035d45345cdc7e4f91ef8cddf7c55d79cc65bc16  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9 (ETHU) decimals: 8
@@ -8337,7 +8337,7 @@ Next:                   7053572
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xb5fb6e595568b53115c4fea8f3ef005d908bf17d  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8383,7 +8383,7 @@ Next:                   7243835
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0975629a80cf23d706358093891b655e1267bb17  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8417,7 +8417,7 @@ Next:                   7406592
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x909decd5ed6f7b6168786feff372849d89250bf7  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0x4fbb0b4cd8f960ac3428194f1c94c805d5b35836 (BBGC) decimals: 8
@@ -8451,7 +8451,7 @@ Next:                   7604845
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0x7f4c7b32b822d2b61826d9345078198ef9668505 (0x7f4c) decimals: 18
@@ -8497,7 +8497,7 @@ Next:                   7604913
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x3b4a51b7ce963f67eff60d8b9a7748fea93bd9a4  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8543,7 +8543,7 @@ Next:                   10574152
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x3b4a51b7ce963f67eff60d8b9a7748fea93bd9a4  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8605,7 +8605,7 @@ Next:                   10574152
 postType:               diff-same
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xbff1bab50c94a502c2d3345cdedbd45eb8d1a398  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0x8f179114235842978d8917e08721541072c46584 (0x8f17) decimals: 18
@@ -8669,7 +8669,7 @@ Next:                   10876001
 postType:               same-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xbff1bab50c94a502c2d3345cdedbd45eb8d1a398  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0x8f179114235842978d8917e08721541072c46584 (0x8f17) decimals: 18
@@ -8740,7 +8740,7 @@ Next:                   11290737
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xb0babeac276a23e48098f7b8c76755c0a9e422e0  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0x6867958907fb5a7064748388221da5209184409e (BOBA) decimals: 18
@@ -8790,7 +8790,7 @@ Next:                   11290738
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              eth
+postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x4c549990a7ef3fea8784406c1eecc98bf4211fa5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8857,7 +8857,7 @@ Next:                   12812092
 postType:               diff-diff
 postFirst:              true
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xff37ffb2ca23800ee4704757863e426e11d72921  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0x4c6719bf85903d18c295da44216f862b01b36f43 (0x4c67) decimals: 18
@@ -8907,7 +8907,7 @@ Next:                   13466288
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x106b30bbebe6b443a978cfb2e47eb4998689f74b  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0x95aa5d2dbd3c16ee3fdea82d5c6ec3e38ce3314f (PXP) decimals: 18
@@ -8944,7 +8944,7 @@ Next:                   13719258
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xd1917932a7db6af687b523d5db5d7f5c2734763f  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) decimals: 6
@@ -9011,7 +9011,7 @@ Next:                   14821090
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x3c9172ffbe21657ec95753ef90879e18e9e7db08  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0x6c936d4ae98e6d2172db18c16c4b601c99918ee6 (0x6c93) decimals: 18
@@ -9061,7 +9061,7 @@ Next:                   15699908
 postType:               diff-diff
 postFirst:              false
 postLast:               false
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0d81d9e21bd7c5bb095535624dcb0759e64b3899  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0x1da4858ad385cc377165a298cc2ce3fce0c5fd31 (0x1da4) decimals: 18
@@ -9128,7 +9128,7 @@ Next:                   16772613
 postType:               diff-diff
 postFirst:              false
 postLast:               true
-assetType:              token
+postAssetType:          token
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0xa5025faba6e70b84f74e9b1113e5f7f4e7f4859f  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 assetAddress:           0x1da4858ad385cc377165a298cc2ce3fce0c5fd31 (0x1da4) decimals: 18

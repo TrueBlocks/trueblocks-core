@@ -18,7 +18,7 @@ TEST[DATE|TIME] Next:                   5
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -52,7 +52,7 @@ TEST[DATE|TIME] Next:                   56
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -86,7 +86,7 @@ TEST[DATE|TIME] Next:                   235
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -120,7 +120,7 @@ TEST[DATE|TIME] Next:                   247
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -154,7 +154,7 @@ TEST[DATE|TIME] Next:                   348
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -188,7 +188,7 @@ TEST[DATE|TIME] Next:                   500
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -222,7 +222,7 @@ TEST[DATE|TIME] Next:                   563
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -256,7 +256,7 @@ TEST[DATE|TIME] Next:                   987
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -290,7 +290,7 @@ TEST[DATE|TIME] Next:                   1450
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -324,7 +324,7 @@ TEST[DATE|TIME] Next:                   1580
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -359,7 +359,7 @@ TEST[DATE|TIME] Next:                   1586
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -393,7 +393,7 @@ TEST[DATE|TIME] Next:                   1861
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -427,7 +427,7 @@ TEST[DATE|TIME] Next:                   1912
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -461,7 +461,7 @@ TEST[DATE|TIME] Next:                   2057
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -495,7 +495,7 @@ TEST[DATE|TIME] Next:                   2256
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -529,7 +529,7 @@ TEST[DATE|TIME] Next:                   2392
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -563,7 +563,7 @@ TEST[DATE|TIME] Next:                   2516
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -598,7 +598,7 @@ TEST[DATE|TIME] Next:                   3962
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -632,7 +632,7 @@ TEST[DATE|TIME] Next:                   4256
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -666,7 +666,7 @@ TEST[DATE|TIME] Next:                   4257
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -700,7 +700,7 @@ TEST[DATE|TIME] Next:                   5122
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -734,7 +734,7 @@ TEST[DATE|TIME] Next:                   5306
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -768,7 +768,7 @@ TEST[DATE|TIME] Next:                   5567
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -802,7 +802,7 @@ TEST[DATE|TIME] Next:                   5631
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -837,7 +837,7 @@ TEST[DATE|TIME] Next:                   6412
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -871,7 +871,7 @@ TEST[DATE|TIME] Next:                   6658
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -905,7 +905,7 @@ TEST[DATE|TIME] Next:                   6693
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -939,7 +939,7 @@ TEST[DATE|TIME] Next:                   7069
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -973,7 +973,7 @@ TEST[DATE|TIME] Next:                   7777
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1007,7 +1007,7 @@ TEST[DATE|TIME] Next:                   8361
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1041,7 +1041,7 @@ TEST[DATE|TIME] Next:                   10710
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1075,7 +1075,7 @@ TEST[DATE|TIME] Next:                   10797
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1109,7 +1109,7 @@ TEST[DATE|TIME] Next:                   11305
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1143,7 +1143,7 @@ TEST[DATE|TIME] Next:                   12113
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1177,7 +1177,7 @@ TEST[DATE|TIME] Next:                   12155
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1211,7 +1211,7 @@ TEST[DATE|TIME] Next:                   13662
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1245,7 +1245,7 @@ TEST[DATE|TIME] Next:                   13899
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1279,7 +1279,7 @@ TEST[DATE|TIME] Next:                   14133
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1313,7 +1313,7 @@ TEST[DATE|TIME] Next:                   14195
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1347,7 +1347,7 @@ TEST[DATE|TIME] Next:                   14196
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1381,7 +1381,7 @@ TEST[DATE|TIME] Next:                   15398
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1415,7 +1415,7 @@ TEST[DATE|TIME] Next:                   15972
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1449,7 +1449,7 @@ TEST[DATE|TIME] Next:                   16047
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1483,7 +1483,7 @@ TEST[DATE|TIME] Next:                   16063
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1518,7 +1518,7 @@ TEST[DATE|TIME] Next:                   16769
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1552,7 +1552,7 @@ TEST[DATE|TIME] Next:                   17281
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1586,7 +1586,7 @@ TEST[DATE|TIME] Next:                   17282
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1620,7 +1620,7 @@ TEST[DATE|TIME] Next:                   19205
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1654,7 +1654,7 @@ TEST[DATE|TIME] Next:                   21060
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1688,7 +1688,7 @@ TEST[DATE|TIME] Next:                   21792
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1722,7 +1722,7 @@ TEST[DATE|TIME] Next:                   22071
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1756,7 +1756,7 @@ TEST[DATE|TIME] Next:                   23065
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1790,7 +1790,7 @@ TEST[DATE|TIME] Next:                   23456
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1824,7 +1824,7 @@ TEST[DATE|TIME] Next:                   23853
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1858,7 +1858,7 @@ TEST[DATE|TIME] Next:                   24057
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1892,7 +1892,7 @@ TEST[DATE|TIME] Next:                   24151
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1926,7 +1926,7 @@ TEST[DATE|TIME] Next:                   24748
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1960,7 +1960,7 @@ TEST[DATE|TIME] Next:                   25963
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -1994,7 +1994,7 @@ TEST[DATE|TIME] Next:                   26164
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2028,7 +2028,7 @@ TEST[DATE|TIME] Next:                   26165
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2062,7 +2062,7 @@ TEST[DATE|TIME] Next:                   28883
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2096,7 +2096,7 @@ TEST[DATE|TIME] Next:                   30829
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2130,7 +2130,7 @@ TEST[DATE|TIME] Next:                   31104
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2164,7 +2164,7 @@ TEST[DATE|TIME] Next:                   31289
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2198,7 +2198,7 @@ TEST[DATE|TIME] Next:                   31596
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2232,7 +2232,7 @@ TEST[DATE|TIME] Next:                   47521
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2266,7 +2266,7 @@ TEST[DATE|TIME] Next:                   55885
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2300,7 +2300,7 @@ TEST[DATE|TIME] Next:                   66040
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2334,7 +2334,7 @@ TEST[DATE|TIME] Next:                   66526
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2368,7 +2368,7 @@ TEST[DATE|TIME] Next:                   67431
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2402,7 +2402,7 @@ TEST[DATE|TIME] Next:                   67975
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2436,7 +2436,7 @@ TEST[DATE|TIME] Next:                   68362
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2470,7 +2470,7 @@ TEST[DATE|TIME] Next:                   74263
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2505,7 +2505,7 @@ TEST[DATE|TIME] Next:                   75212
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2539,7 +2539,7 @@ TEST[DATE|TIME] Next:                   79098
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x05a56e2d52c817161883f50c441c3228cfe54d9f  ==>  0xc130afe98f8c42e19bdacf8c6e63e48a44a26ca8
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2574,7 +2574,7 @@ TEST[DATE|TIME] Next:                   84279
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2608,7 +2608,7 @@ TEST[DATE|TIME] Next:                   89785
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2642,7 +2642,7 @@ TEST[DATE|TIME] Next:                   94656
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2676,7 +2676,7 @@ TEST[DATE|TIME] Next:                   99961
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2710,7 +2710,7 @@ TEST[DATE|TIME] Next:                   99962
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2744,7 +2744,7 @@ TEST[DATE|TIME] Next:                   112684
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2778,7 +2778,7 @@ TEST[DATE|TIME] Next:                   115289
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2812,7 +2812,7 @@ TEST[DATE|TIME] Next:                   116814
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2846,7 +2846,7 @@ TEST[DATE|TIME] Next:                   119338
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2880,7 +2880,7 @@ TEST[DATE|TIME] Next:                   121873
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2914,7 +2914,7 @@ TEST[DATE|TIME] Next:                   137310
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2948,7 +2948,7 @@ TEST[DATE|TIME] Next:                   139781
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -2982,7 +2982,7 @@ TEST[DATE|TIME] Next:                   142351
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3016,7 +3016,7 @@ TEST[DATE|TIME] Next:                   144968
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3050,7 +3050,7 @@ TEST[DATE|TIME] Next:                   147418
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3084,7 +3084,7 @@ TEST[DATE|TIME] Next:                   149846
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3118,7 +3118,7 @@ TEST[DATE|TIME] Next:                   152194
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3152,7 +3152,7 @@ TEST[DATE|TIME] Next:                   154610
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3186,7 +3186,7 @@ TEST[DATE|TIME] Next:                   156892
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3220,7 +3220,7 @@ TEST[DATE|TIME] Next:                   159155
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3254,7 +3254,7 @@ TEST[DATE|TIME] Next:                   161286
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3288,7 +3288,7 @@ TEST[DATE|TIME] Next:                   163274
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3322,7 +3322,7 @@ TEST[DATE|TIME] Next:                   165427
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3356,7 +3356,7 @@ TEST[DATE|TIME] Next:                   167519
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3390,7 +3390,7 @@ TEST[DATE|TIME] Next:                   167520
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3424,7 +3424,7 @@ TEST[DATE|TIME] Next:                   171561
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3458,7 +3458,7 @@ TEST[DATE|TIME] Next:                   173513
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3492,7 +3492,7 @@ TEST[DATE|TIME] Next:                   175468
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3526,7 +3526,7 @@ TEST[DATE|TIME] Next:                   178888
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3560,7 +3560,7 @@ TEST[DATE|TIME] Next:                   180570
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3594,7 +3594,7 @@ TEST[DATE|TIME] Next:                   182535
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3628,7 +3628,7 @@ TEST[DATE|TIME] Next:                   184834
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3662,7 +3662,7 @@ TEST[DATE|TIME] Next:                   187219
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3696,7 +3696,7 @@ TEST[DATE|TIME] Next:                   189720
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3730,7 +3730,7 @@ TEST[DATE|TIME] Next:                   192125
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3764,7 +3764,7 @@ TEST[DATE|TIME] Next:                   194670
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3798,7 +3798,7 @@ TEST[DATE|TIME] Next:                   197063
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3832,7 +3832,7 @@ TEST[DATE|TIME] Next:                   199867
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3866,7 +3866,7 @@ TEST[DATE|TIME] Next:                   200396
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3900,7 +3900,7 @@ TEST[DATE|TIME] Next:                   200941
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3934,7 +3934,7 @@ TEST[DATE|TIME] Next:                   217743
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -3968,7 +3968,7 @@ TEST[DATE|TIME] Next:                   220166
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4002,7 +4002,7 @@ TEST[DATE|TIME] Next:                   222691
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4036,7 +4036,7 @@ TEST[DATE|TIME] Next:                   225223
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4070,7 +4070,7 @@ TEST[DATE|TIME] Next:                   225224
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4104,7 +4104,7 @@ TEST[DATE|TIME] Next:                   230210
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4138,7 +4138,7 @@ TEST[DATE|TIME] Next:                   232621
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4172,7 +4172,7 @@ TEST[DATE|TIME] Next:                   235084
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4206,7 +4206,7 @@ TEST[DATE|TIME] Next:                   237365
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4240,7 +4240,7 @@ TEST[DATE|TIME] Next:                   239905
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4274,7 +4274,7 @@ TEST[DATE|TIME] Next:                   242287
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4308,7 +4308,7 @@ TEST[DATE|TIME] Next:                   244838
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4342,7 +4342,7 @@ TEST[DATE|TIME] Next:                   290137
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4376,7 +4376,7 @@ TEST[DATE|TIME] Next:                   292580
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4410,7 +4410,7 @@ TEST[DATE|TIME] Next:                   295102
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4444,7 +4444,7 @@ TEST[DATE|TIME] Next:                   297504
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4478,7 +4478,7 @@ TEST[DATE|TIME] Next:                   299915
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4512,7 +4512,7 @@ TEST[DATE|TIME] Next:                   302037
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4546,7 +4546,7 @@ TEST[DATE|TIME] Next:                   304582
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4580,7 +4580,7 @@ TEST[DATE|TIME] Next:                   306942
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4614,7 +4614,7 @@ TEST[DATE|TIME] Next:                   309237
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4648,7 +4648,7 @@ TEST[DATE|TIME] Next:                   311569
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4682,7 +4682,7 @@ TEST[DATE|TIME] Next:                   313983
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4716,7 +4716,7 @@ TEST[DATE|TIME] Next:                   316543
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4750,7 +4750,7 @@ TEST[DATE|TIME] Next:                   316544
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4784,7 +4784,7 @@ TEST[DATE|TIME] Next:                   321677
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4818,7 +4818,7 @@ TEST[DATE|TIME] Next:                   324268
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4852,7 +4852,7 @@ TEST[DATE|TIME] Next:                   326662
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4886,7 +4886,7 @@ TEST[DATE|TIME] Next:                   329408
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4920,7 +4920,7 @@ TEST[DATE|TIME] Next:                   331597
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4954,7 +4954,7 @@ TEST[DATE|TIME] Next:                   334242
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -4988,7 +4988,7 @@ TEST[DATE|TIME] Next:                   336725
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5022,7 +5022,7 @@ TEST[DATE|TIME] Next:                   475307
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5056,7 +5056,7 @@ TEST[DATE|TIME] Next:                   475329
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x05a56e2d52c817161883f50c441c3228cfe54d9f  ==>  0x1e2683322af6f316a53b6e7e3efd8f605ab2afcf
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5091,7 +5091,7 @@ TEST[DATE|TIME] Next:                   606414
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x05a56e2d52c817161883f50c441c3228cfe54d9f  ==>  0x1e2683322af6f316a53b6e7e3efd8f605ab2afcf
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5126,7 +5126,7 @@ TEST[DATE|TIME] Next:                   608946
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5160,7 +5160,7 @@ TEST[DATE|TIME] Next:                   611470
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5194,7 +5194,7 @@ TEST[DATE|TIME] Next:                   614026
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5228,7 +5228,7 @@ TEST[DATE|TIME] Next:                   616520
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5262,7 +5262,7 @@ TEST[DATE|TIME] Next:                   619061
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5296,7 +5296,7 @@ TEST[DATE|TIME] Next:                   621649
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5330,7 +5330,7 @@ TEST[DATE|TIME] Next:                   624102
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5364,7 +5364,7 @@ TEST[DATE|TIME] Next:                   626679
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5398,7 +5398,7 @@ TEST[DATE|TIME] Next:                   629208
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5432,7 +5432,7 @@ TEST[DATE|TIME] Next:                   629209
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5466,7 +5466,7 @@ TEST[DATE|TIME] Next:                   634166
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5500,7 +5500,7 @@ TEST[DATE|TIME] Next:                   636686
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5534,7 +5534,7 @@ TEST[DATE|TIME] Next:                   639224
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5568,7 +5568,7 @@ TEST[DATE|TIME] Next:                   641752
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5602,7 +5602,7 @@ TEST[DATE|TIME] Next:                   644239
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5636,7 +5636,7 @@ TEST[DATE|TIME] Next:                   646725
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5670,7 +5670,7 @@ TEST[DATE|TIME] Next:                   649167
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5704,7 +5704,7 @@ TEST[DATE|TIME] Next:                   651658
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5738,7 +5738,7 @@ TEST[DATE|TIME] Next:                   654065
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5772,7 +5772,7 @@ TEST[DATE|TIME] Next:                   656611
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5806,7 +5806,7 @@ TEST[DATE|TIME] Next:                   659187
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5840,7 +5840,7 @@ TEST[DATE|TIME] Next:                   661544
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5874,7 +5874,7 @@ TEST[DATE|TIME] Next:                   697422
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5908,7 +5908,7 @@ TEST[DATE|TIME] Next:                   699786
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5942,7 +5942,7 @@ TEST[DATE|TIME] Next:                   702357
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -5976,7 +5976,7 @@ TEST[DATE|TIME] Next:                   704888
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6010,7 +6010,7 @@ TEST[DATE|TIME] Next:                   707520
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6044,7 +6044,7 @@ TEST[DATE|TIME] Next:                   709880
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6078,7 +6078,7 @@ TEST[DATE|TIME] Next:                   712439
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6112,7 +6112,7 @@ TEST[DATE|TIME] Next:                   712440
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6146,7 +6146,7 @@ TEST[DATE|TIME] Next:                   717432
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6180,7 +6180,7 @@ TEST[DATE|TIME] Next:                   719886
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6214,7 +6214,7 @@ TEST[DATE|TIME] Next:                   722415
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6248,7 +6248,7 @@ TEST[DATE|TIME] Next:                   724840
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6282,7 +6282,7 @@ TEST[DATE|TIME] Next:                   727374
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6316,7 +6316,7 @@ TEST[DATE|TIME] Next:                   729928
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6350,7 +6350,7 @@ TEST[DATE|TIME] Next:                   732541
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6384,7 +6384,7 @@ TEST[DATE|TIME] Next:                   735009
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6418,7 +6418,7 @@ TEST[DATE|TIME] Next:                   737612
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6452,7 +6452,7 @@ TEST[DATE|TIME] Next:                   740085
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6486,7 +6486,7 @@ TEST[DATE|TIME] Next:                   742656
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6520,7 +6520,7 @@ TEST[DATE|TIME] Next:                   745147
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6554,7 +6554,7 @@ TEST[DATE|TIME] Next:                   747694
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6588,7 +6588,7 @@ TEST[DATE|TIME] Next:                   750150
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6622,7 +6622,7 @@ TEST[DATE|TIME] Next:                   752713
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6656,7 +6656,7 @@ TEST[DATE|TIME] Next:                   755220
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6690,7 +6690,7 @@ TEST[DATE|TIME] Next:                   757756
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6724,7 +6724,7 @@ TEST[DATE|TIME] Next:                   760265
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6758,7 +6758,7 @@ TEST[DATE|TIME] Next:                   762844
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6792,7 +6792,7 @@ TEST[DATE|TIME] Next:                   762845
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6826,7 +6826,7 @@ TEST[DATE|TIME] Next:                   767833
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6860,7 +6860,7 @@ TEST[DATE|TIME] Next:                   770255
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6894,7 +6894,7 @@ TEST[DATE|TIME] Next:                   772812
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6928,7 +6928,7 @@ TEST[DATE|TIME] Next:                   775343
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6962,7 +6962,7 @@ TEST[DATE|TIME] Next:                   777889
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -6996,7 +6996,7 @@ TEST[DATE|TIME] Next:                   780339
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7030,7 +7030,7 @@ TEST[DATE|TIME] Next:                   782792
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7064,7 +7064,7 @@ TEST[DATE|TIME] Next:                   785271
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7098,7 +7098,7 @@ TEST[DATE|TIME] Next:                   787827
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7132,7 +7132,7 @@ TEST[DATE|TIME] Next:                   790429
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7166,7 +7166,7 @@ TEST[DATE|TIME] Next:                   792966
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7200,7 +7200,7 @@ TEST[DATE|TIME] Next:                   795507
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7234,7 +7234,7 @@ TEST[DATE|TIME] Next:                   798082
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7268,7 +7268,7 @@ TEST[DATE|TIME] Next:                   800601
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7302,7 +7302,7 @@ TEST[DATE|TIME] Next:                   813253
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7336,7 +7336,7 @@ TEST[DATE|TIME] Next:                   815836
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7370,7 +7370,7 @@ TEST[DATE|TIME] Next:                   818423
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7404,7 +7404,7 @@ TEST[DATE|TIME] Next:                   821837
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7438,7 +7438,7 @@ TEST[DATE|TIME] Next:                   823524
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7472,7 +7472,7 @@ TEST[DATE|TIME] Next:                   823525
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7506,7 +7506,7 @@ TEST[DATE|TIME] Next:                   828596
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7540,7 +7540,7 @@ TEST[DATE|TIME] Next:                   831182
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7574,7 +7574,7 @@ TEST[DATE|TIME] Next:                   833764
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7608,7 +7608,7 @@ TEST[DATE|TIME] Next:                   836210
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7642,7 +7642,7 @@ TEST[DATE|TIME] Next:                   838703
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7676,7 +7676,7 @@ TEST[DATE|TIME] Next:                   841055
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7710,7 +7710,7 @@ TEST[DATE|TIME] Next:                   843662
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7744,7 +7744,7 @@ TEST[DATE|TIME] Next:                   846142
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7778,7 +7778,7 @@ TEST[DATE|TIME] Next:                   848750
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7812,7 +7812,7 @@ TEST[DATE|TIME] Next:                   851291
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7846,7 +7846,7 @@ TEST[DATE|TIME] Next:                   853861
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7880,7 +7880,7 @@ TEST[DATE|TIME] Next:                   856336
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7914,7 +7914,7 @@ TEST[DATE|TIME] Next:                   858922
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7948,7 +7948,7 @@ TEST[DATE|TIME] Next:                   861400
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -7982,7 +7982,7 @@ TEST[DATE|TIME] Next:                   863901
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8016,7 +8016,7 @@ TEST[DATE|TIME] Next:                   866526
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8050,7 +8050,7 @@ TEST[DATE|TIME] Next:                   998791
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8084,7 +8084,7 @@ TEST[DATE|TIME] Next:                   5422450
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x05a56e2d52c817161883f50c441c3228cfe54d9f  ==>  0xf94eee144446a9fe6e444dad9f69cd01954c0a34
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8131,7 +8131,7 @@ TEST[DATE|TIME] Next:                   5422454
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x20c945800de43394f70d789874a4dac9cfa57451  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8177,7 +8177,7 @@ TEST[DATE|TIME] Next:                   5422455
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xf898f063d22a994ba6943d50a96c2dbc0bd9218c  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8223,7 +8223,7 @@ TEST[DATE|TIME] Next:                   5653137
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x51852d9eafd93dd7f973607cc96e32ef122b0cb6  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8257,7 +8257,7 @@ TEST[DATE|TIME] Next:                   6408597
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0d81d9e21bd7c5bb095535624dcb0759e64b3899  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xf5ba8a8c87f976b79b17ccd25ee8dc2f8e82fb59 (ETHS) decimals: 18
@@ -8291,7 +8291,7 @@ TEST[DATE|TIME] Next:                   7053546
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x035d45345cdc7e4f91ef8cddf7c55d79cc65bc16  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9 (ETHU) decimals: 8
@@ -8337,7 +8337,7 @@ TEST[DATE|TIME] Next:                   7053572
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xb5fb6e595568b53115c4fea8f3ef005d908bf17d  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8383,7 +8383,7 @@ TEST[DATE|TIME] Next:                   7243835
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0975629a80cf23d706358093891b655e1267bb17  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8417,7 +8417,7 @@ TEST[DATE|TIME] Next:                   7406592
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x909decd5ed6f7b6168786feff372849d89250bf7  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0x4fbb0b4cd8f960ac3428194f1c94c805d5b35836 (BBGC) decimals: 8
@@ -8451,7 +8451,7 @@ TEST[DATE|TIME] Next:                   7604845
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0x7f4c7b32b822d2b61826d9345078198ef9668505 (0x7f4c) decimals: 18
@@ -8497,7 +8497,7 @@ TEST[DATE|TIME] Next:                   7604913
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x3b4a51b7ce963f67eff60d8b9a7748fea93bd9a4  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8543,7 +8543,7 @@ TEST[DATE|TIME] Next:                   10574152
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x3b4a51b7ce963f67eff60d8b9a7748fea93bd9a4  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8605,7 +8605,7 @@ TEST[DATE|TIME] Next:                   10574152
 TEST[DATE|TIME] postType:               diff-same
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xbff1bab50c94a502c2d3345cdedbd45eb8d1a398  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0x8f179114235842978d8917e08721541072c46584 (0x8f17) decimals: 18
@@ -8669,7 +8669,7 @@ TEST[DATE|TIME] Next:                   10876001
 TEST[DATE|TIME] postType:               same-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xbff1bab50c94a502c2d3345cdedbd45eb8d1a398  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0x8f179114235842978d8917e08721541072c46584 (0x8f17) decimals: 18
@@ -8740,7 +8740,7 @@ TEST[DATE|TIME] Next:                   11290737
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xb0babeac276a23e48098f7b8c76755c0a9e422e0  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0x6867958907fb5a7064748388221da5209184409e (BOBA) decimals: 18
@@ -8790,7 +8790,7 @@ TEST[DATE|TIME] Next:                   11290738
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x4c549990a7ef3fea8784406c1eecc98bf4211fa5  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -8857,7 +8857,7 @@ TEST[DATE|TIME] Next:                   12812092
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xff37ffb2ca23800ee4704757863e426e11d72921  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0x4c6719bf85903d18c295da44216f862b01b36f43 (0x4c67) decimals: 18
@@ -8907,7 +8907,7 @@ TEST[DATE|TIME] Next:                   13466288
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x106b30bbebe6b443a978cfb2e47eb4998689f74b  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0x95aa5d2dbd3c16ee3fdea82d5c6ec3e38ce3314f (PXP) decimals: 18
@@ -8944,7 +8944,7 @@ TEST[DATE|TIME] Next:                   13719258
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xd1917932a7db6af687b523d5db5d7f5c2734763f  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) decimals: 6
@@ -9011,7 +9011,7 @@ TEST[DATE|TIME] Next:                   14821090
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x3c9172ffbe21657ec95753ef90879e18e9e7db08  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0x6c936d4ae98e6d2172db18c16c4b601c99918ee6 (0x6c93) decimals: 18
@@ -9061,7 +9061,7 @@ TEST[DATE|TIME] Next:                   15699908
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0x0d81d9e21bd7c5bb095535624dcb0759e64b3899  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0x1da4858ad385cc377165a298cc2ce3fce0c5fd31 (0x1da4) decimals: 18
@@ -9128,7 +9128,7 @@ TEST[DATE|TIME] Next:                   16772613
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] sender:                 0xa5025faba6e70b84f74e9b1113e5f7f4e7f4859f  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] assetAddress:           0x1da4858ad385cc377165a298cc2ce3fce0c5fd31 (0x1da4) decimals: 18

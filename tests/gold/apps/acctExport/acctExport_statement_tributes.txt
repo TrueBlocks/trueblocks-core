@@ -17,7 +17,7 @@ TEST[DATE|TIME] Next:                   8769052
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] assetAddress:           0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
@@ -41,18 +41,6 @@ TEST[DATE|TIME]    amountIn:            85
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] A possible nullTransfer
-TEST[DATE|TIME]   nLogs:             2
-TEST[DATE|TIME]     lotsOfLogs:      --> false
-TEST[DATE|TIME]   Sender.IsZero:     0x868b8fd259abfcfdf9634c343593b34ef359641d false
-TEST[DATE|TIME]   or Sender == To:   false
-TEST[DATE|TIME]     mayBeAirdrop:    --> false
-TEST[DATE|TIME]   EndBal-BegBal:     -1
-TEST[DATE|TIME]   Material:          true
-TEST[DATE|TIME]     noBalanceChange: --> false
-TEST[DATE|TIME]   ---> Not a nullTransfer
-TEST[DATE|TIME] Needs correction for token transfer
-TEST[DATE|TIME] Correcting token transfer for unknown income or outflow
 TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> token
@@ -63,7 +51,7 @@ TEST[DATE|TIME] Next:                   8769053
 TEST[DATE|TIME] postType:               same-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
 TEST[DATE|TIME] assetAddress:           0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
@@ -73,24 +61,20 @@ TEST[DATE|TIME] blockNumber:            8769052.74.73
 TEST[DATE|TIME] priceSource:            0 (token-not-priced-pre-uni)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              85 (85)
-TEST[DATE|TIME]    totalIn:             85
+TEST[DATE|TIME]    prevBal:             85
+TEST[DATE|TIME]    begBal:              85 (0)
+TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            85
-TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]    amountNet:           -85
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (85)
-TEST[DATE|TIME]    endBalCalc:          85
+TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBalCalc:          0
 TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    correctingIn:        85
 TEST[DATE|TIME]    amountOut:           85
-TEST[DATE|TIME]    correctingReason:    begbal
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Log statement at   8769052.74.73  does not reconcile.
 {
   "data": [
     {
@@ -100,7 +84,6 @@ WARN[DATE|TIME] Log statement at   8769052.74.73  does not reconcile.
       "amountOut": "0",
       "assetAddress": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
       "assetSymbol": "TRB",
-      "assetType": "token",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 8769029,
@@ -120,6 +103,7 @@ WARN[DATE|TIME] Log statement at   8769052.74.73  does not reconcile.
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
+      "postAssetType": "token",
       "postFirst": false,
       "postLast": false,
       "postType": "diff-diff",
@@ -142,22 +126,21 @@ WARN[DATE|TIME] Log statement at   8769052.74.73  does not reconcile.
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountNet": "0",
+      "amountNet": "-85000000000000000000",
       "amountOut": "85000000000000000000",
       "assetAddress": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
       "assetSymbol": "TRB",
-      "assetType": "token",
       "begBal": "85000000000000000000",
-      "begBalDiff": "85000000000000000000",
+      "begBalDiff": "0",
       "blockNumber": 8769052,
-      "correctingIn": "85000000000000000000",
+      "correctingIn": "0",
       "correctingOut": "0",
-      "correctingReason": "begbal",
+      "correctingReason": "",
       "date": "2019-10-19 04:06:45 UTC",
       "decimals": 18,
       "endBal": "0",
-      "endBalCalc": "85000000000000000000",
-      "endBalDiff": "85000000000000000000",
+      "endBalCalc": "0",
+      "endBalDiff": "0",
       "gasOut": "0",
       "internalIn": "0",
       "internalOut": "0",
@@ -166,20 +149,21 @@ WARN[DATE|TIME] Log statement at   8769052.74.73  does not reconcile.
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
+      "postAssetType": "token",
       "postFirst": false,
       "postLast": true,
       "postType": "same-diff",
       "prefundIn": "0",
-      "prevBal": "0",
+      "prevBal": "85000000000000000000",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "reconciled": false,
+      "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "spotPrice": 0,
       "timestamp": 1571458005,
-      "totalIn": "85000000000000000000",
+      "totalIn": "0",
       "totalOut": "85000000000000000000",
       "totalOutLessGas": "85000000000000000000",
       "transactionHash": "0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265",

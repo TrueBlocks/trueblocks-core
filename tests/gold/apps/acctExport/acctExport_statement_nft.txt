@@ -16,7 +16,7 @@ TEST[DATE|TIME] Next:                   9000998
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0x0  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] assetAddress:           0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 (CSTK) decimals: 18
@@ -49,7 +49,6 @@ TEST[DATE|TIME] ---------------------------------------------------
       "amountOut": "0",
       "assetAddress": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
       "assetSymbol": "CSTK",
-      "assetType": "token",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 8876232,
@@ -69,6 +68,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
+      "postAssetType": "token",
       "postFirst": true,
       "postLast": false,
       "postType": "diff-diff",

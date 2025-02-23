@@ -29,7 +29,6 @@ type Statement struct {
 	AmountOut           base.Wei       `json:"amountOut,omitempty"`
 	AssetAddress        base.Address   `json:"assetAddress"`
 	AssetSymbol         string         `json:"assetSymbol"`
-	AssetType           TrialBalType   `json:"assetType,omitempty"`
 	BegBal              base.Wei       `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
 	BlockNumberNext     base.Blknum    `json:"blockNumberNext"`
@@ -47,6 +46,7 @@ type Statement struct {
 	MinerNephewRewardIn base.Wei       `json:"minerNephewRewardIn,omitempty"`
 	MinerTxFeeIn        base.Wei       `json:"minerTxFeeIn,omitempty"`
 	MinerUncleRewardIn  base.Wei       `json:"minerUncleRewardIn,omitempty"`
+	PostAssetType       TrialBalType   `json:"postAssetType,omitempty"`
 	PostFirst           bool           `json:"postFirst,omitempty"`
 	PostLast            bool           `json:"postLast,omitempty"`
 	PrefundIn           base.Wei       `json:"prefundIn,omitempty"`
@@ -83,7 +83,6 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		"timestamp":           s.Timestamp,
 		"date":                s.Date(),
 		"assetAddress":        s.AssetAddress,
-		"assetType":           s.AssetType.String(),
 		"assetSymbol":         s.AssetSymbol,
 		"decimals":            s.Decimals,
 		"spotPrice":           s.SpotPrice,
@@ -120,6 +119,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 	}
 
 	if extraOpts["testMode"] == true {
+		model["postAssetType"] = s.PostAssetType.String()
 		model["postType"] = s.getPostType()
 		model["postFirst"] = s.PostFirst
 		model["postLast"] = s.PostLast
@@ -127,7 +127,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
-		"assetAddress", "assetType", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
+		"assetAddress", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
 		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciled",
 		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
@@ -233,11 +233,6 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// AssetType
-	if err = cache.WriteValue(writer, s.AssetType); err != nil {
-		return err
-	}
-
 	// BegBal
 	if err = cache.WriteValue(writer, &s.BegBal); err != nil {
 		return err
@@ -320,6 +315,11 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 
 	// MinerUncleRewardIn
 	if err = cache.WriteValue(writer, &s.MinerUncleRewardIn); err != nil {
+		return err
+	}
+
+	// PostAssetType
+	if err = cache.WriteValue(writer, s.PostAssetType); err != nil {
 		return err
 	}
 
@@ -426,11 +426,6 @@ func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 		return err
 	}
 
-	// AssetType
-	if err = cache.ReadValue(reader, &s.AssetType, fileVersion); err != nil {
-		return err
-	}
-
 	// BegBal
 	if err = cache.ReadValue(reader, &s.BegBal, fileVersion); err != nil {
 		return err
@@ -513,6 +508,11 @@ func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 
 	// MinerUncleRewardIn
 	if err = cache.ReadValue(reader, &s.MinerUncleRewardIn, fileVersion); err != nil {
+		return err
+	}
+
+	// PostAssetType
+	if err = cache.ReadValue(reader, &s.PostAssetType, fileVersion); err != nil {
 		return err
 	}
 
@@ -730,7 +730,7 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 	}
 
 	logger.TestLog(true, "===================================================")
-	logger.TestLog(true, fmt.Sprintf("====> %s", s.AssetType))
+	logger.TestLog(true, fmt.Sprintf("====> %s", s.PostAssetType))
 	logger.TestLog(true, "===================================================")
 	logger.TestLog(true, "Previous:              ", pos.Prev)
 	logger.TestLog(true, "Current:               ", s.BlockNumber)
@@ -738,13 +738,13 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 	logger.TestLog(true, "postType:              ", s.getPostType())
 	logger.TestLog(true, "postFirst:             ", s.PostFirst)
 	logger.TestLog(true, "postLast:              ", s.PostLast)
-	logger.TestLog(true, "assetType:             ", s.AssetType)
+	logger.TestLog(true, "postAssetType:         ", s.PostAssetType)
 	logger.TestLog(true, "accountedFor:          ", s.AccountedFor)
 	logger.TestLog(true, "sender:                ", s.Sender, " ==> ", s.Recipient)
 	logger.TestLog(true, "assetAddress:          ", s.AssetAddress, "("+s.AssetSymbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
 	logger.TestLog(true, "hash:                  ", s.TransactionHash)
 	logger.TestLog(true, "timestamp:             ", s.Timestamp)
-	if s.AssetType != TrialBalToken && s.AssetType != TrialBalNft {
+	if s.PostAssetType != TrialBalToken && s.PostAssetType != TrialBalNft {
 		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d", s.BlockNumber, s.TransactionIndex))
 	} else {
 		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex))

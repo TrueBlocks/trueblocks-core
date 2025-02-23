@@ -43,7 +43,7 @@ func TestCorrectForNullTransfer(t *testing.T) {
 
 		stmt := new(types.Statement)
 		stmt.AssetAddress = base.HexToAddress("0xCCC")
-		stmt.AssetType = types.TrialBalToken
+		stmt.PostAssetType = types.TrialBalToken
 		stmt.Sender = base.HexToAddress("0x0")
 		stmt.BegBal = *base.NewWei(100)
 		stmt.EndBal = *base.NewWei(100)
@@ -95,7 +95,7 @@ func TestCorrectForNullTransfer(t *testing.T) {
 
 		stmt := new(types.Statement)
 		stmt.AssetAddress = base.HexToAddress("0xCCC")
-		stmt.AssetType = types.TrialBalToken
+		stmt.PostAssetType = types.TrialBalToken
 		stmt.Sender = base.HexToAddress("0xABC")
 		stmt.BegBal = *base.NewWei(100)
 		stmt.EndBal = *base.NewWei(100)
@@ -160,7 +160,7 @@ func TestCorrectForNullTransfer(t *testing.T) {
 // 	t.Run("ETH branch: per-block-balance correction", func(t *testing.T) {
 // 		stmt := &types.Statement{
 // 			AssetAddress:     base.FAKE_ETH_ADDRESS, // so that IsEth() returns true
-// 			AssetType:        types.TrialBalTraceEth,
+// 			PostAssetType:        types.TrialBalTraceEth,
 // 			BlockNumberPrev:  99,
 // 			BlockNumber:      100,
 // 			BlockNumberNext:  101,
@@ -191,7 +191,7 @@ func TestCorrectForNullTransfer(t *testing.T) {
 // 		stmt := new(types.Statement)
 
 // 		stmt.AssetAddress = base.HexToAddress("0x1111111111111111111111111111111111111111") // Not ETH.
-// 		stmt.AssetType = types.TrialBalToken
+// 		stmt.PostAssetType = types.TrialBalToken
 // 		stmt.BlockNumber = 200
 
 // 		stmt.PrevBal = *base.NewWei(90)
@@ -252,6 +252,6 @@ func TestCorrectForNullTransfer(t *testing.T) {
 // 	if !result {
 // 		t.Error("Expected trial Balance to return true for a reconciled statement")
 // 	}
-// 	if s.AssetType != string(types.TrialBalEth) {
-// 		t.Errorf("Expected AssetType to be %s, got %s", types.TrialBalEth, s.AssetType)
+// 	if s.PostAssetType != string(types.TrialBalEth) {
+// 		t.Errorf("Expected PostAssetType to be %s, got %s", types.TrialBalEth, s.PostAssetType)
 // 	}

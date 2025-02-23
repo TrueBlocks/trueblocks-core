@@ -18,7 +18,7 @@ TEST[DATE|TIME] Next:                   46685
 TEST[DATE|TIME] postType:               genesis-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -52,7 +52,7 @@ TEST[DATE|TIME] Next:                   46709
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -87,7 +87,7 @@ TEST[DATE|TIME] Next:                   46710
 TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
 TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -126,7 +126,6 @@ Results in ./statement_2_ether_out.file
       "amountOutEth": "0",
       "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
-      "assetType": "eth",
       "begBal": "0",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -160,6 +159,7 @@ Results in ./statement_2_ether_out.file
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "eth",
       "postFirst": true,
       "postLast": false,
       "postType": "genesis-diff",
@@ -196,7 +196,6 @@ Results in ./statement_2_ether_out.file
       "amountOutEth": "5",
       "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
-      "assetType": "eth",
       "begBal": "1970000000000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -230,6 +229,7 @@ Results in ./statement_2_ether_out.file
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
       "postType": "diff-diff",
@@ -266,7 +266,6 @@ Results in ./statement_2_ether_out.file
       "amountOutEth": "1964.8895",
       "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
-      "assetType": "eth",
       "begBal": "1964989500000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -300,6 +299,7 @@ Results in ./statement_2_ether_out.file
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
+      "postAssetType": "eth",
       "postFirst": false,
       "postLast": true,
       "postType": "diff-diff",
