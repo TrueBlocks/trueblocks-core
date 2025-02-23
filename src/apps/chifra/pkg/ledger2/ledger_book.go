@@ -82,35 +82,6 @@ func (lb *LedgerBook) Statements() ([]types.Statement, error) {
 			for _, posting := range entry.Postings {
 				s := types.Statement(posting)
 				s.AccountedFor = lb.AccountedFor
-				// {
-				// 	AccountedFor:       base.Address(lb.AccountedFor),
-				// 	AssetAddress:          base.Address(l.AssetAddress),
-				// 	AssetSymbol:        l.AssetSymbol,
-				// 	BlockNumber:        posting.BlockNumber,
-				// 	TransactionIndex:   posting.TransactionIndex,
-				// 	Timestamp:          posting.Timestamp,
-				// 	AmountIn:           posting.AmountIn,
-				// 	AmountOut:          posting.AmountOut,
-				// 	GasOut:             posting.GasOut,
-				// 	InternalOut:        posting.InternalOut,
-				// 	PrefundIn:          posting.PrefundIn,
-				// 	SelfDestructIn:     posting.SelfDestructIn,
-				// 	CorrectingIn:       posting.CorrectingIn,
-				// 	CorrectingOut:      posting.CorrectingOut,
-				// 	CorrectingReason:   posting.CorrectingReason,
-				// 	MinerBaseRewardIn:  posting.MinerBaseRewardIn,
-				// 	MinerUncleRewardIn: posting.UncleRewardIn,
-				// 	RollingBalance:     posting.RunningBalance,
-				// 	Sender:             posting.From,
-				// 	Recipient:          posting.To,
-				// 	// TODO: BOGUS SHIT!
-				// 	// Some fields in Statement (like Sender, Recipient, TransactionHash, etc.)
-				// 	// are not easily mapped from Posting or Ledger data, so they are left at default zero/empty.
-				// 	// Similarly, BegBal, EndBal, SpotPrice, and so on remain at default values.
-				// }
-
-				// You can further customize or derive additional fields here as needed.
-
 				stmts = append(stmts, s)
 			}
 		}

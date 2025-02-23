@@ -31,7 +31,7 @@ func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 	allStatements := make([]types.Statement, 0, 20)
 
 	if os.Getenv("NEW_CODE") == "true" {
-		r := ledger2.NewReconciler(l.connection, l.assetFilter, l.accountFor, l.names, l.asEther)
+		r := ledger2.NewReconciler2(l.connection, l.assetFilter, l.accountFor, l.names, l.asEther)
 		if allStatements, err = r.GetStatements(pos, filter, trans); err != nil {
 			return allStatements, err
 		}

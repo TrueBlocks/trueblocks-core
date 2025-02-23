@@ -1,7 +1,7 @@
 package ledger2
 
 import (
-	"fmt"
+	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
@@ -26,24 +26,13 @@ func NewLedgerEntry(appearanceID string, blockNum base.Blknum, txIndex base.Txnu
 
 // String returns a human-readable summary of the LedgerEntry.
 func (le *LedgerEntry) String() string {
-	totIn := le.TotalIn()
-	totOut := le.TotalOut()
-	net := le.NetValue()
-	return fmt.Sprintf(
-		"LedgerEntry(AppearanceID=%s Block=%d Tx=%d Postings=%d In=%s Out=%s Net=%s)",
-		le.AppearanceID,
-		le.BlockNumber,
-		le.TransactionIndex,
-		len(le.Postings),
-		totIn.String(),
-		totOut.String(),
-		net.String(),
-	)
+	bytes, _ := json.Marshal(le)
+	return string(bytes)
 }
 
 // TotalIn sums the total incoming values for all Postings in this LedgerEntry.
 func (le *LedgerEntry) TotalIn() base.Wei {
-	total := base.NewWei(0)
+	total := base.ZeroWei
 	for _, posting := range le.Postings {
 		tmp := posting.TotalIn()
 		total = total.Add(total, tmp)
@@ -53,7 +42,7 @@ func (le *LedgerEntry) TotalIn() base.Wei {
 
 // TotalOut sums the total outgoing values for all Postings in this LedgerEntry.
 func (le *LedgerEntry) TotalOut() base.Wei {
-	total := base.NewWei(0)
+	total := base.ZeroWei
 	for _, posting := range le.Postings {
 		tmp := posting.TotalOut()
 		total = total.Add(total, tmp)
@@ -65,7 +54,7 @@ func (le *LedgerEntry) TotalOut() base.Wei {
 func (le *LedgerEntry) NetValue() base.Wei {
 	in := le.TotalIn()
 	out := le.TotalOut()
-	net := base.NewWei(0)
+	net := base.ZeroWei
 	net = net.Sub(&in, &out)
 	return *net
 }

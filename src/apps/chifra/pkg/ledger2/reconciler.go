@@ -15,24 +15,28 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// Reconciler is responsible for processing Appearances, constructing Postings
+// Reconciler2 is responsible for processing Appearances, constructing Postings
 // and LedgerEntries, appending them to Ledgers, and maintaining a LedgerBook.
-type Reconciler struct {
-	connection  *rpc.Connection
-	names       map[base.Address]types.Name
-	asEther     bool
-	assetFilter []base.Address
-
-	// Typically you'd store references to RPC clients or indexers here,
-	// but we'll keep it simple for demonstration.
+type Reconciler2 struct {
 	LedgerBook LedgerBook
 	// mu         sync.Mutex
+	accountFor base.Address
+	// firstBlock  base.Blknum
+	// lastBlock   base.Blknum
+	names map[base.Address]types.Name
+	// testMode    bool
+	asEther bool
+	// reversed    bool
+	// useTraces   bool
+	connection  *rpc.Connection
+	assetFilter []base.Address
 }
 
-// NewReconciler creates a Reconciler for the specified accountedForAddress.
-func NewReconciler(conn *rpc.Connection, assetFilter []base.Address, accountedForAddress base.Address, names map[base.Address]types.Name, asEth bool) Reconciler {
-	return Reconciler{
+// NewReconciler2 creates a Reconciler2 for the specified accountedForAddress.
+func NewReconciler2(conn *rpc.Connection, assetFilter []base.Address, accountedForAddress base.Address, names map[base.Address]types.Name, asEth bool) Reconciler2 {
+	return Reconciler2{
 		LedgerBook:  NewLedgerBook(accountedForAddress),
+		accountFor:  accountedForAddress,
 		connection:  conn,
 		names:       names,
 		asEther:     asEth,
@@ -40,12 +44,12 @@ func NewReconciler(conn *rpc.Connection, assetFilter []base.Address, accountedFo
 	}
 }
 
-// String returns a summary of the Reconciler’s LedgerBook.
-func (r *Reconciler) String() string {
+// String returns a summary of the Reconciler2’s LedgerBook.
+func (r *Reconciler2) String() string {
 	return r.LedgerBook.String()
 }
 
-func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (r *Reconciler2) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	xfers := r.GetAssetTransfers(pos, filter, trans)
 	r.ProcessTransaction(pos, trans, xfers)
 
@@ -73,7 +77,7 @@ func (lb *LedgerBook) IsMaterial() bool {
 
 // ProcessTransaction takes a list of Appearances and their related AssetTransfers,
 // converts them to Postings, and appends them into the appropriate Ledger.
-func (r *Reconciler) ProcessTransaction(pos *types.AppPosition, trans *types.Transaction, allTransfers []AssetTransfer) {
+func (r *Reconciler2) ProcessTransaction(pos *types.AppPosition, trans *types.Transaction, allTransfers []AssetTransfer) {
 	// We assume allTransfers includes every relevant AssetTransfer for the Appearances.
 	// In reality, you'd fetch them from an indexer or node calls.
 	//
@@ -166,7 +170,7 @@ func CorrectForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 }
 
 // queryBalances transforms a single AssetTransfer into a basic Posting.
-func (r *Reconciler) queryBalances(at AssetTransfer) Posting {
+func (r *Reconciler2) queryBalances(at AssetTransfer) Posting {
 	ret := Posting(at)
 
 	if at.AssetType != types.TrialBalToken && at.AssetType != types.TrialBalNft {
@@ -207,7 +211,7 @@ func (r *Reconciler) queryBalances(at AssetTransfer) Posting {
 // ReconcileCheckpoint is a placeholder for a method that verifies final ledger balances
 // at a given block boundary. Real logic might compare on-chain balances and create
 // correcting postings if there's a mismatch.
-func (r *Reconciler) ReconcileCheckpoint(block base.Blknum) {
+func (r *Reconciler2) ReconcileCheckpoint(block base.Blknum) {
 	// Example placeholder
 	_ = block
 }
@@ -224,7 +228,7 @@ func findSeparator(s string) int {
 
 // GetAssetTransfers parses a single Transaction and returns a slice of AssetTransfer
 // by checking the transaction's Value, its Logs for ERC20 events, and an optional Traces field.
-func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) []AssetTransfer {
+func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) []AssetTransfer {
 	var results []AssetTransfer
 
 	if AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
