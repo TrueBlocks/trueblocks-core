@@ -120,19 +120,23 @@ func (w *Wei) Add(x, y *Wei) *Wei {
 }
 
 func (w *Wei) Sub(x, y *Wei) *Wei {
-	return (*Wei)((*big.Int)(w).Sub((*big.Int)(x), (*big.Int)(y)))
+	result := new(big.Int).Sub((*big.Int)(x), (*big.Int)(y))
+	return (*Wei)(result)
 }
 
 func (w *Wei) Mul(x, y *Wei) *Wei {
-	return (*Wei)((*big.Int)(w).Mul((*big.Int)(x), (*big.Int)(y)))
+	result := new(big.Int).Mul((*big.Int)(x), (*big.Int)(y))
+	return (*Wei)(result)
 }
 
 func (w *Wei) Div(x, y *Wei) *Wei {
-	return (*Wei)((*big.Int)(w).Div((*big.Int)(x), (*big.Int)(y)))
+	result := new(big.Int).Div((*big.Int)(x), (*big.Int)(y))
+	return (*Wei)(result)
 }
 
 func (w *Wei) Quo(x, y *Wei) *Wei {
-	return (*Wei)((*big.Int)(w).Quo((*big.Int)(x), (*big.Int)(y)))
+	result := new(big.Int).Quo((*big.Int)(x), (*big.Int)(y))
+	return (*Wei)(result)
 }
 
 func (w *Wei) Cmp(y *Wei) int {

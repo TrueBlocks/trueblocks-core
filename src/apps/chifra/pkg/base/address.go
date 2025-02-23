@@ -103,15 +103,15 @@ func (a *Address) Pad32() string {
 	return "000000000000000000000000" + a.Hex()[2:]
 }
 
-func (a Address) Equal(b Address) bool {
+func (a *Address) Equal(b Address) bool {
 	return bytes.Equal(a.Bytes(), b.Bytes())
 }
 
-func (a Address) NotEqual(b Address) bool {
+func (a *Address) NotEqual(b Address) bool {
 	return !a.Equal(b)
 }
 
-func (a Address) LessThan(b Address) bool {
+func (a *Address) LessThan(b Address) bool {
 	return bytes.Compare(a.Bytes(), b.Bytes()) < 0
 }
 
@@ -119,11 +119,11 @@ func (a *Address) LessThanOrEqual(b Address) bool {
 	return a.LessThan(b) || a.Equal(b)
 }
 
-func (a Address) GreaterThan(b Address) bool {
+func (a *Address) GreaterThan(b Address) bool {
 	return !a.LessThanOrEqual(b)
 }
 
-func (a Address) GreaterThanOrEqual(b Address) bool {
+func (a *Address) GreaterThanOrEqual(b Address) bool {
 	return !a.LessThan(b)
 }
 
@@ -209,7 +209,7 @@ func GetTestPublisher() Address {
 
 // CheckSum returns the checksum address of the given address. We might want this, for example,
 // to pick up ABIs and source code from Sourcify which requires checksum addresses.
-func (a Address) CheckSum() string {
+func (a *Address) CheckSum() string {
 	str := a.Hex()[2:]
 	str = strings.ToLower(str)
 	hash := sha3.NewLegacyKeccak256()
@@ -225,4 +225,22 @@ func (a Address) CheckSum() string {
 		}
 	}
 	return result
+}
+
+// Display returns a string representation of the address with the left and right most characters
+// displayed. If left is 0, only the `right` trailing characters are display. If right is 0,
+// only the `left` leading characters are displayed. Otherwise, all the characters between left
+// and right are replaced with three dots.
+func (a *Address) Display(left, right int) string {
+	ret := a.Hex()[2:]
+	n := len(ret)
+	if (left == 0 && right == 0) || left > n || right > n || (left+right) > n {
+		return "0x" + ret
+	} else if left == 0 {
+		return "0x" + ret[len(ret)-right:]
+	} else if right == 0 {
+		return "0x" + ret[:left]
+	} else {
+		return "0x" + ret[:left] + "..." + ret[len(ret)-right:]
+	}
 }

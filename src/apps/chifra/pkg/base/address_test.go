@@ -403,3 +403,58 @@ func TestAddressComparison(t *testing.T) {
 		})
 	}
 }
+
+func TestDisplay(t *testing.T) {
+	addr := HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b")
+	tests := []struct {
+		name        string
+		left, right int
+		expected    string
+	}{
+		{
+			name:     "Full address with left=0, right=0",
+			left:     0,
+			right:    0,
+			expected: "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+		},
+		{
+			name:     "Last 4 digits with left=0, right=4",
+			left:     0,
+			right:    4,
+			expected: "0x179b",
+		},
+		{
+			name:     "First 4 digits with left=4, right=0",
+			left:     4,
+			right:    0,
+			expected: "0xf503",
+		},
+		{
+			name:     "Both left and right non-zero with left=4, right=4",
+			left:     4,
+			right:    4,
+			expected: "0xf503...179b",
+		},
+		{
+			name:     "Left digits exceed available length (not recommended in production)",
+			left:     100,
+			right:    0,
+			expected: "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+		},
+		{
+			name:     "Right digits exceed available length (not recommended in production)",
+			left:     0,
+			right:    100,
+			expected: "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			result := addr.Display(tc.left, tc.right)
+			if result != tc.expected {
+				t.Errorf("Display(%d, %d) = %q; want %q", tc.left, tc.right, result, tc.expected)
+			}
+		})
+	}
+}
