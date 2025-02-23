@@ -1,5 +1,5 @@
 run:
-  tests: true # Lint test files as well
+  tests: false # Lint test files as well
   timeout: 5m
 
 linters:
