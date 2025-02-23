@@ -15,7 +15,7 @@ import (
 )
 
 // GetStatements returns a statement from a given transaction
-func (l *Ledger) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	if l.connection.StoreReadable() {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,

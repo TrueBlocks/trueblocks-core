@@ -173,7 +173,7 @@ func resetLogger() func() {
 // 			AmountOut:        *base.NewWei(0),
 // 			EndBal:           *base.NewWei(1050),
 // 		}
-// 		var l Ledger
+// 		var l Reconciler
 // 		reconciled := l.correctForSomethingElseEth(stmt)
 // 		expectedEndBal := base.NewWei(1100)
 // 		if stmt.EndBal.Cmp(expectedEndBal) != 0 {
@@ -209,7 +209,7 @@ func resetLogger() func() {
 // 		stmt.CorrectingOut = *base.NewWei(999)
 // 		stmt.CorrectingReason = "oldreason"
 
-// 		var l Ledger
+// 		var l Reconciler
 // 		reconciled := l.correctForSomethingElseToken(stmt)
 
 // 		expectedCorrectingIn := base.NewWei(20)
@@ -230,7 +230,7 @@ func resetLogger() func() {
 // }
 
 // func TestTrialBalance_Reconciled(t *testing.T) {
-// 	l := &Ledger{
+// 	l := &Reconciler{
 // 		testMode:       true,
 // 	}
 

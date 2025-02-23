@@ -187,16 +187,16 @@ func (r *Reconciler) queryBalances(at AssetTransfer) Posting {
 		ret.EndBal = *endBal
 
 	} else {
-		prevBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.LedgerBook.AccountedFor, fmt.Sprintf("0x%x", at.BlockNumberPrev))
+		prevBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.LedgerBook.AccountedFor, at.BlockNumberPrev)
 		if at.BlockNumber == 0 {
 			prevBal = new(base.Wei)
 		}
 
-		begBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.LedgerBook.AccountedFor, fmt.Sprintf("0x%x", at.BlockNumber-1))
+		begBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.LedgerBook.AccountedFor, at.BlockNumber-1)
 		if at.BlockNumber == 0 {
 			begBal = new(base.Wei)
 		}
-		endBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.LedgerBook.AccountedFor, fmt.Sprintf("0x%x", at.BlockNumber))
+		endBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.LedgerBook.AccountedFor, at.BlockNumber)
 		ret.PrevBal = *prevBal
 		ret.BegBal = *begBal
 		ret.EndBal = *endBal

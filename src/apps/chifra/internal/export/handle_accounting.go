@@ -20,7 +20,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 	// TODO: BOGUS - RECONSIDER THIS
 	opts.Articulate = true
 
-	ledgers := &ledger.Ledger{}
+	ledgers := &ledger.Reconciler{}
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(

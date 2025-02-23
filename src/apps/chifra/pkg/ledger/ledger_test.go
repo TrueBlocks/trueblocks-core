@@ -10,7 +10,7 @@ import (
 
 func TestAssetOfInterest(t *testing.T) {
 	// Case 1: Empty assetFilter should always return true.
-	l1 := &Ledger{
+	l1 := &Reconciler{
 		assetFilter: []base.Address{},
 	}
 	needle := base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678")
@@ -19,7 +19,7 @@ func TestAssetOfInterest(t *testing.T) {
 	}
 
 	// Case 2: Non-empty assetFilter where needle is present.
-	l2 := &Ledger{
+	l2 := &Reconciler{
 		assetFilter: []base.Address{
 			base.HexToAddress("0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"),
 			base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678"), // needle below
@@ -32,7 +32,7 @@ func TestAssetOfInterest(t *testing.T) {
 	}
 
 	// Case 3: Non-empty assetFilter where needle is not present.
-	l3 := &Ledger{
+	l3 := &Reconciler{
 		assetFilter: []base.Address{
 			base.HexToAddress("0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"),
 			base.HexToAddress("0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"),
@@ -44,7 +44,7 @@ func TestAssetOfInterest(t *testing.T) {
 	}
 
 	// Case 4: Multiple entries with mixed ordering. (This is similar to Case 2.)
-	l4 := &Ledger{
+	l4 := &Reconciler{
 		assetFilter: []base.Address{
 			base.HexToAddress("0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"),
 			base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678"),
@@ -60,7 +60,7 @@ func TestNewLedger_WithAssetFiltersProvided(t *testing.T) {
 	filters := []string{"0x1111111111111111111111111111111111111111", "0x2222222222222222222222222222222222222222"}
 	conn := rpc.TempConnection("mainnet")
 	l := NewLedger(conn, base.HexToAddress("0xAAA"), 100, 200, false, true, false, false, false, &filters)
-	// Check that assetFilter in Ledger is populated correctly.
+	// Check that assetFilter in Reconciler is populated correctly.
 	if len(l.assetFilter) != len(filters) {
 		t.Errorf("Expected assetFilter length %d, got %d", len(filters), len(l.assetFilter))
 	}

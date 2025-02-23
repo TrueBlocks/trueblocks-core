@@ -14,7 +14,7 @@ import (
 )
 
 // getStatementsFromLog returns a statement from a given log
-func (l *Ledger) getStatementsFromLog(pos *types.AppPosition, trans *types.Transaction, logIn *types.Log) (types.Statement, error) {
+func (l *Reconciler) getStatementsFromLog(pos *types.AppPosition, trans *types.Transaction, logIn *types.Log) (types.Statement, error) {
 	if logIn.Topics[0] != topics.TransferTopic {
 		return types.Statement{}, nil
 	}
@@ -83,21 +83,21 @@ func (l *Ledger) getStatementsFromLog(pos *types.AppPosition, trans *types.Trans
 
 		var err error
 		pBal := new(base.Wei)
-		pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", pos.Prev))
+		pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, pos.Prev)
 		if err != nil || pBal == nil {
 			return s, err
 		}
 		s.PrevBal = *pBal
 
 		bBal := new(base.Wei)
-		bBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", trans.BlockNumber-1))
+		bBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, trans.BlockNumber-1)
 		if err != nil || bBal == nil {
 			return s, err
 		}
 		s.BegBal = *bBal
 
 		eBal := new(base.Wei)
-		eBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, fmt.Sprintf("0x%x", trans.BlockNumber))
+		eBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, trans.BlockNumber)
 		if err != nil || eBal == nil {
 			return s, err
 		}

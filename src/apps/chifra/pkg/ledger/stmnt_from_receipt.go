@@ -8,7 +8,7 @@ import (
 )
 
 // getStatementsFromReceipt returns a statement from a given receipt
-func (l *Ledger) getStatementsFromReceipt(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (l *Reconciler) getStatementsFromReceipt(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	statements := make([]types.Statement, 0, 20) // a high estimate of the number of statements we'll need
 	for _, log := range trans.Receipt.Logs {
 		addrArray := []base.Address{l.accountFor}

@@ -146,7 +146,8 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo stri
 
 // GetBalanceAtToken returns token balance for given block. `hexBlockNo` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func (conn *Connection) GetBalanceAtToken(token, holder base.Address, hexBlockNo string) (*base.Wei, error) {
+func (conn *Connection) GetBalanceAtToken(token, holder base.Address, bn base.Blknum) (*base.Wei, error) {
+	hexBlockNo := fmt.Sprintf("0x%x", bn)
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
 		hexBlockNo = fmt.Sprintf("0x%x", base.MustParseUint64(hexBlockNo))
 	}
