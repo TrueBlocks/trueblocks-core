@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // LedgerEntry represents a collection of Posting items that derive from a single appearance.
@@ -11,7 +12,7 @@ type LedgerEntry struct {
 	AppearanceID     string
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
-	Postings         []Posting
+	Postings         []types.Posting
 }
 
 // NewLedgerEntry creates a LedgerEntry from the given appearance data, returning by value.
@@ -20,7 +21,7 @@ func NewLedgerEntry(appearanceID string, blockNum base.Blknum, txIndex base.Txnu
 		AppearanceID:     appearanceID,
 		BlockNumber:      blockNum,
 		TransactionIndex: txIndex,
-		Postings:         make([]Posting, 0),
+		Postings:         make([]types.Posting, 0),
 	}
 }
 

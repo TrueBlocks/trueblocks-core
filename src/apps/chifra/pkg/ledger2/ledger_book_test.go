@@ -8,6 +8,7 @@ import (
 
 	// Adjust to your actual import paths
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // createTestLedger builds a Ledger from 'in' and 'out' amounts. Each index
@@ -23,7 +24,7 @@ func createTestLedger(
 	}
 
 	for i := 0; i < maxLen; i++ {
-		posting := Posting{}
+		posting := types.Posting{}
 		if i < len(inAmounts) {
 			posting.AmountIn = *base.NewWei(inAmounts[i])
 		}
@@ -31,7 +32,7 @@ func createTestLedger(
 			posting.AmountOut = *base.NewWei(outAmounts[i])
 		}
 		entry := LedgerEntry{
-			Postings: []Posting{posting},
+			Postings: []types.Posting{posting},
 		}
 		entries = append(entries, entry)
 	}
@@ -196,27 +197,27 @@ func TestLedgerBookStatements_Empty(t *testing.T) {
 func TestLedgerBookStatements_OneLedger(t *testing.T) {
 	lb := NewLedgerBook(base.HexToAddress("0xcccccccccccccccccccccccccccccccccccccccc"))
 
+	p1 := types.NewPosting(100, 0, 0, 0, base.ZeroAddr)
+	p1.AmountIn = *base.NewWei(50)
+	p1.Sender = base.HexToAddress("0xf111111111111111111111111111111111111111")
+	p1.Recipient = base.HexToAddress("0xf222222222222222222222222222222222222222")
+
+	p2 := types.NewPosting(101, 0, 0, 0, base.ZeroAddr)
+	p2.AmountOut = *base.NewWei(30)
+	p2.Sender = base.HexToAddress("0xf333333333333333333333333333333333333333")
+	p2.Recipient = base.HexToAddress("0xf444444444444444444444444444444444444444")
+
 	singleLedger := Ledger{
 		AssetAddress: base.HexToAddress("0x1111111111111111111111111111111111111111"),
 		Entries: []LedgerEntry{
 			{
-				Postings: []Posting{
-					{
-						BlockNumber: 100,
-						AmountIn:    *base.NewWei(50),
-						Sender:      base.HexToAddress("0xf111111111111111111111111111111111111111"),
-						Recipient:   base.HexToAddress("0xf222222222222222222222222222222222222222"),
-					},
+				Postings: []types.Posting{
+					p1,
 				},
 			},
 			{
-				Postings: []Posting{
-					{
-						BlockNumber: 101,
-						AmountOut:   *base.NewWei(30),
-						Sender:      base.HexToAddress("0xf333333333333333333333333333333333333333"),
-						Recipient:   base.HexToAddress("0xf444444444444444444444444444444444444444"),
-					},
+				Postings: []types.Posting{
+					p2,
 				},
 			},
 		},

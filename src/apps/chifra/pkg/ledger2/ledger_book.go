@@ -80,7 +80,7 @@ func (lb *LedgerBook) Statements() ([]types.Statement, error) {
 	for _, l := range lb.Ledgers {
 		for _, entry := range l.Entries {
 			for _, posting := range entry.Postings {
-				s := types.Statement(posting)
+				s := posting.Statement
 				s.AccountedFor = lb.AccountedFor
 				stmts = append(stmts, s)
 			}

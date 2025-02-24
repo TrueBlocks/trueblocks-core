@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func TestNewPosting(t *testing.T) {
@@ -11,12 +12,7 @@ func TestNewPosting(t *testing.T) {
 	txIdx := base.Txnum(1)
 	idx := base.Lognum(0)
 	ts := base.Timestamp(999999)
-	p := Posting{
-		BlockNumber:      blk,
-		TransactionIndex: txIdx,
-		LogIndex:         idx,
-		Timestamp:        ts,
-	}
+	p := types.NewPosting(blk, txIdx, idx, ts, base.ZeroAddr)
 	if p.BlockNumber != blk {
 		t.Fatalf("BlockNumber mismatch. got=%d want=%d", p.BlockNumber, blk)
 	}
@@ -61,12 +57,7 @@ func TestNewPosting(t *testing.T) {
 }
 
 func TestPostingCalculations(t *testing.T) {
-	p := Posting{
-		BlockNumber:      10,
-		TransactionIndex: 0,
-		LogIndex:         1,
-		Timestamp:        base.Timestamp(12345),
-	}
+	p := types.NewPosting(10, 0, 1, base.Timestamp(12345), base.ZeroAddr)
 	p.AmountIn = *base.NewWei(100)
 	p.MinerBaseRewardIn = *base.NewWei(10)
 	p.MinerUncleRewardIn = *base.NewWei(1)

@@ -130,11 +130,11 @@ func (r *Reconciler2) ProcessTransaction(pos *types.AppPosition, trans *types.Tr
 		// 	}
 
 		if posting.IsMaterial() {
-			posting.SpotPrice, posting.PriceSource, _ = pricing.PriceUsd(r.connection, (*types.Statement)(&posting))
+			posting.SpotPrice, posting.PriceSource, _ = pricing.PriceUsd(r.connection, (*types.Statement)(&posting.Statement))
 		}
 
 		if file.IsTestMode() {
-			(*types.Statement)(&posting).DebugStatement(pos)
+			(*types.Statement)(&posting.Statement).DebugStatement(pos)
 		}
 
 		entry.Postings = append(entry.Postings, posting)
@@ -170,8 +170,9 @@ func CorrectForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 }
 
 // queryBalances transforms a single AssetTransfer into a basic Posting.
-func (r *Reconciler2) queryBalances(at AssetTransfer) Posting {
-	ret := Posting(at)
+func (r *Reconciler2) queryBalances(at AssetTransfer) types.Posting {
+	ret := types.Posting{}
+	ret.Statement = at
 
 	if at.PostAssetType != types.TrialBalToken && at.PostAssetType != types.TrialBalNft {
 		prevBal, _ := r.connection.GetBalanceAt(r.LedgerBook.AccountedFor, at.BlockNumberPrev)
