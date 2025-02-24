@@ -5,16 +5,16 @@ run:
 
 linters:
   enable:
-    - gofmt # Existing: enforces formatting
-    - revive # Existing: custom rules like unused-parameter
-    - errcheck # Existing: unchecked errors
-    - staticcheck # Existing: static analysis
-    - unused # Existing: unused code
-    - misspell # New: catches typos
-    # - goconst # New: finds repeated strings for consts
-    # - ineffassign # New: ineffective assignments
-    # - prealloc # New: suggests pre-allocation
-    # - gosec # New: basic security checks
+    - gofmt # enforces formatting
+    - revive # custom rules like unused-parameter
+    - errcheck # unchecked errors
+    - staticcheck # static analysis
+    - unused # unused code
+    - misspell # catches typos
+    - ineffassign # ineffective assignments
+    - prealloc # suggests pre-allocation
+    # - goconst # finds repeated strings for consts
+    # - gosec # basic security checks
   disable-all: true
 
 linters-settings:
@@ -35,6 +35,15 @@ linters-settings:
 
 issues:
   exclude-rules:
+    - path: src/apps/chifra/internal/scrape/handle_show.go
+      linters:
+        - ineffassign
+    - path: src/apps/chifra/internal/[^/]+/options\.go
+      linters:
+        - ineffassign
+    - path: src/apps/chifra/pkg/types/types_
+      linters:
+        - ineffassign
     - path: _test\.go
       linters:
         - gofmt

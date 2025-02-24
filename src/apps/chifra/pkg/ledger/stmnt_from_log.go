@@ -82,23 +82,19 @@ func (l *Reconciler) getStatementsFromLog(pos *types.AppPosition, trans *types.T
 			PostLast:         pos.Last,
 		}
 
-		var err error
-		pBal := new(base.Wei)
-		pBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, pos.Prev)
+		pBal, err := l.connection.GetBalanceAtToken(log.Address, l.accountFor, pos.Prev)
 		if err != nil || pBal == nil {
 			return s, err
 		}
 		s.PrevBal = *pBal
 
-		bBal := new(base.Wei)
-		bBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, trans.BlockNumber-1)
+		bBal, err := l.connection.GetBalanceAtToken(log.Address, l.accountFor, trans.BlockNumber-1)
 		if err != nil || bBal == nil {
 			return s, err
 		}
 		s.BegBal = *bBal
 
-		eBal := new(base.Wei)
-		eBal, err = l.connection.GetBalanceAtToken(log.Address, l.accountFor, trans.BlockNumber)
+		eBal, err := l.connection.GetBalanceAtToken(log.Address, l.accountFor, trans.BlockNumber)
 		if err != nil || eBal == nil {
 			return s, err
 		}

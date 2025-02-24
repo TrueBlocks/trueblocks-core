@@ -264,7 +264,7 @@ func toCamelCase(s string) string {
 }
 
 func toSnakeCase(str string) string {
-	var result []rune
+	var result = make([]rune, 0, len(str))
 	for i, r := range str {
 		if unicode.IsUpper(r) && i > 0 {
 			result = append(result, '_')

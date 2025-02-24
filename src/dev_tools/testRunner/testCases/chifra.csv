@@ -35,5 +35,5 @@ on      ,both ,fast  ,names   ,apps ,chifra ,run_names_tags      ,y    ,modes = 
 on      ,cmd  ,fast  ,explore ,apps ,chifra ,run_explore         ,n    ,modes = explore & terms = 0x1234567812345678123456781234567812345678
 on      ,both ,fast  ,blocks  ,apps ,chifra ,run_blocks          ,y    ,modes = blocks & blocks = 12
 on      ,both ,fast  ,blocks  ,apps ,chifra ,run_blocks2         ,n    ,modes = blocks & blocks = 12 & fmt = csv & no_header
-on      ,both ,fast  ,abis    ,apps ,chifra ,run_abi             ,y    ,modes = abis & addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+local   ,both ,fast  ,abis    ,apps ,chifra ,run_abi             ,y    ,modes = abis & addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 on      ,both ,fast  ,when    ,apps ,chifra ,run_when            ,y    ,modes = when & list

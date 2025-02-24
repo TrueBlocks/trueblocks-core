@@ -254,14 +254,13 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, theApp *
 		if uncles, err := conn.GetUncleBodiesByNumber(base.Blknum(theApp.BlockNumber)); err != nil {
 			return nil, err
 		} else {
-			var blockReward = base.NewWei(0)
 			var nephewReward = base.NewWei(0)
 			var feeReward = base.NewWei(0)
 			var uncleReward = base.NewWei(0)
 
 			sender := theApp.Address
 			bn := base.Blknum(theApp.BlockNumber)
-			blockReward = conn.getBlockReward(bn)
+			blockReward := conn.getBlockReward(bn)
 			switch rt {
 			case types.BlockReward:
 				if block.Miner == theApp.Address {
