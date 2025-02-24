@@ -81,6 +81,7 @@ func (opts *BlocksOptions) HandleCount(rCtx *output.RenderCtx) error {
 
 				if opts.Uniq {
 					countFunc := func(s *types.Appearance) error {
+						_ = s
 						blockCount.AddressCnt++
 						return nil
 					}

@@ -23,6 +23,7 @@ import (
 
 // RunStatus handles the status command for the command line. Returns error only as per cobra.
 func RunStatus(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := statusFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

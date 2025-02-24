@@ -78,6 +78,7 @@ func (op Option) Validate() bool {
 }
 
 func readCmdOption(op *Option, data *any) (bool, error) {
+	_ = data
 	op.Group = strings.Trim(op.Group, wss)
 	op.Folder = strings.Trim(op.Folder, wss)
 	op.Route = strings.Trim(op.Route, wss)

@@ -27,6 +27,7 @@ func IsFolderEmpty(folder string) (bool, error) {
 
 // CleanFolder removes any files that may be partial or incomplete
 func CleanFolder(chain, rootFolder string, subFolders []string) error {
+	_ = chain
 	for _, f := range subFolders {
 		folder := filepath.Join(rootFolder, f)
 		// We want to remove whatever is there...

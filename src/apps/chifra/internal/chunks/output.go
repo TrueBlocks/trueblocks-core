@@ -25,6 +25,7 @@ import (
 
 // RunChunks handles the chunks command for the command line. Returns error only as per cobra.
 func RunChunks(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := chunksFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

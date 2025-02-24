@@ -35,7 +35,7 @@ type AbisOptions struct {
 	Count    bool                  `json:"count,omitempty"`    // Show the number of abis downloaded
 	Find     []string              `json:"find,omitempty"`     // Search for function or event declarations given a four- or 32-byte code(s)
 	Hint     []string              `json:"hint,omitempty"`     // For the --find option only, provide hints to speed up the search
-	Encode   string                `json:"encode,omitempty"`   // Generate the 32-byte encoding for a given cannonical function or event signature
+	Encode   string                `json:"encode,omitempty"`   // Generate the 32-byte encoding for a given canonical function or event signature
 	Globals  globals.GlobalOptions `json:"globals,omitempty"`  // The global options
 	Conn     *rpc.Connection       `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                 `json:"badFlag,omitempty"`  // An error flag if needed

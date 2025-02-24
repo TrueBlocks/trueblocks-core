@@ -194,22 +194,22 @@ func Test_Relative(t *testing.T) {
 	}
 	tests := []TestType{
 		{
-			name:  "left preceeds right",
+			name:  "left precedes right",
 			left:  FileRange{100, 200},
 			right: FileRange{300, 400},
 			want:  []bool{true, false},
 		},
 		{
-			name:  "left preceeds right",
+			name:  "left precedes right",
 			left:  FileRange{300, 400},
 			right: FileRange{100, 200},
 			want:  []bool{false, true},
 		},
 	}
 	for _, tt := range tests {
-		s := tt.left.Preceeds(tt.right, false)
+		s := tt.left.Precedes(tt.right, false)
 		if s != tt.want[0] {
-			t.Error("Test", tt.name, "failed Preceeds.")
+			t.Error("Test", tt.name, "failed Precedes.")
 		}
 		s = tt.left.Follows(tt.right, false)
 		if s != tt.want[1] {

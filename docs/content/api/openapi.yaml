@@ -1024,7 +1024,7 @@ paths:
               type: string
               format: string
         - name: encode
-          description: generate the 32-byte encoding for a given cannonical function or event signature
+          description: generate the 32-byte encoding for a given canonical function or event signature
           required: false
           style: form
           in: query
@@ -3613,7 +3613,7 @@ components:
         status:
           type: number
           format: value
-          description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
+          description: "`1` on transaction suceess, `null` if tx precedes Byzantium, `0` otherwise"
         transactionHash:
           type: string
           format: hash

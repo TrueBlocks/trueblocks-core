@@ -18,6 +18,8 @@ func (opts *ChunksOptions) HandleStats(rCtx *output.RenderCtx, blockNums []base.
 	chain := opts.Globals.Chain
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showFinalizedStats := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			_ = walker
+			_ = first
 			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showFinalizedStats")
 			}

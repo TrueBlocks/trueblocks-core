@@ -19,6 +19,7 @@ import (
 // of the files needed to run an example. This is a convenience function for
 // developers to quickly get started with the example.
 func (opts *InitOptions) HandleExample(rCtx *output.RenderCtx) error {
+	_ = rCtx
 	template := "base/"                                  // will use opts.Template in the future
 	tmplFolder := filepath.Join("./templates", template) // will later support opts.Template
 	exampleDir := filepath.Join("./", opts.Example)

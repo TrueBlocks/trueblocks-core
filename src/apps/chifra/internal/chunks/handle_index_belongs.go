@@ -24,6 +24,8 @@ func (opts *ChunksOptions) HandleIndexBelongs(rCtx *output.RenderCtx, blockNums 
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showAddressesBelongs := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			_ = walker
+			_ = first
 			return opts.handleResolvedRecords(modelChan, walker, path)
 		}
 

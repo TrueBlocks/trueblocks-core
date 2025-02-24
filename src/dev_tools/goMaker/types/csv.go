@@ -24,7 +24,7 @@ func LoadCsv[T Validater, D any](thePath string, callBack func(*T, *D) (bool, er
 		}
 	}
 	thePath += ".tmp"
-	file.StringToAsciiFile(thePath, strings.Join(noComments, "\n"))
+	_ = file.StringToAsciiFile(thePath, strings.Join(noComments, "\n"))
 	defer os.Remove(thePath)
 
 	records := make([]T, 0)

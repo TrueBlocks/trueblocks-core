@@ -6,6 +6,7 @@ import (
 )
 
 func ReadName(dbType DatabaseType, chain string, address base.Address) (name *types.Name) {
+	_ = chain
 	switch dbType {
 	case DatabaseCustom:
 		return customReadName(address)

@@ -27,6 +27,8 @@ func (abiMap *SelectorSyncMap) SetValue(encoding string, function *types.Functio
 func (abiMap *SelectorSyncMap) Count() int64 {
 	var cnt atomic.Int64
 	countFunc := func(k any, b any) bool {
+		_ = k
+		_ = b
 		cnt.Add(1)
 		return true
 	}
@@ -37,6 +39,8 @@ func (abiMap *SelectorSyncMap) Count() int64 {
 func (abiMap *SelectorSyncMap) Keys() []string {
 	ret := make([]string, 0, abiMap.Count())
 	visit := func(k any, b any) bool {
+		_ = k
+		_ = b
 		name, _ := k.(string)
 		ret = append(ret, name)
 		return true
@@ -48,6 +52,8 @@ func (abiMap *SelectorSyncMap) Keys() []string {
 func (abiMap *SelectorSyncMap) Values() []types.Function {
 	ret := make([]types.Function, 0, abiMap.Count())
 	visit := func(k any, b any) bool {
+		_ = k
+		_ = b
 		function, _ := b.(*types.Function)
 		ret = append(ret, *function)
 		return true
@@ -75,6 +81,8 @@ func (addrMap *AddressSyncMap) SetValue(addr base.Address, set bool) {
 func (addrMap *AddressSyncMap) Count() int64 {
 	var cnt atomic.Int64
 	countFunc := func(k any, b any) bool {
+		_ = k
+		_ = b
 		cnt.Add(1)
 		return true
 	}
@@ -85,6 +93,8 @@ func (addrMap *AddressSyncMap) Count() int64 {
 func (addrMap *AddressSyncMap) Keys() []base.Address {
 	ret := make([]base.Address, 0, addrMap.Count())
 	visit := func(k any, b any) bool {
+		_ = k
+		_ = b
 		addr, _ := k.(base.Address)
 		ret = append(ret, addr)
 		return true
@@ -96,6 +106,8 @@ func (addrMap *AddressSyncMap) Keys() []base.Address {
 func (addrMap *AddressSyncMap) Values() []bool {
 	ret := make([]bool, 0, addrMap.Count())
 	visit := func(k any, b any) bool {
+		_ = k
+		_ = b
 		set, _ := b.(bool)
 		ret = append(ret, set)
 		return true

@@ -23,6 +23,7 @@ import (
 
 // RunTransactions handles the transactions command for the command line. Returns error only as per cobra.
 func RunTransactions(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := transactionsFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

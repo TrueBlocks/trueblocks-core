@@ -58,6 +58,10 @@ func (s Slurp) String() string {
 }
 
 func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -522,6 +526,7 @@ func (s *Slurp) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error)
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Slurp) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

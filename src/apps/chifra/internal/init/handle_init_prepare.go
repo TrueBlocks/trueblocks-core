@@ -59,6 +59,8 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	// Visit each chunk on disc. If the chunk belongs and is of the right size and shape, mark it as OKAY,
 	// otherwise mark it with its reason for being invalid.
 	cleanIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+		_ = walker
+		_ = first
 		// sanity...
 		if path != index.ToBloomPath(path) {
 			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
@@ -209,7 +211,7 @@ func (opts *InitOptions) reportReason(prefix string, status InitReason, path str
 		col := colors.BrightMagenta
 		if status == FILE_ERROR || status == NOT_IN_MANIFEST {
 			col = colors.BrightRed
-		} else if strings.Contains(path, string(os.PathSeparator) + "blooms" + string(os.PathSeparator)) {
+		} else if strings.Contains(path, string(os.PathSeparator)+"blooms"+string(os.PathSeparator)) {
 			col = colors.BrightYellow
 		}
 		rng := base.RangeFromFilename(path)

@@ -285,6 +285,7 @@ func TestStatementGroupCache(t *testing.T) {
 type failingWriter struct{}
 
 func (fw *failingWriter) Write(p []byte) (n int, err error) {
+	_ = p
 	return 0, fmt.Errorf("write error")
 }
 

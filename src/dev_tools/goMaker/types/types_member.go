@@ -126,6 +126,7 @@ func (m *Member) MarkdownDescription() string {
 }
 
 func (m *Member) TypeToGroup(t string) string {
+	_ = t
 	return m.stPtr.cbPtr.TypeToGroup(m.Type)
 }
 
@@ -502,6 +503,7 @@ func (m *Member) YamlType() string {
 }
 
 func readMember(m *Member, data *any) (bool, error) {
+	_ = data
 	// trim spaces read from the file (if any)
 	m.Name = strings.Trim(m.Name, " ")
 	m.Type = strings.Trim(m.Type, " ")

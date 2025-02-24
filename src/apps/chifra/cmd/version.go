@@ -21,6 +21,8 @@ var versionCmd = &cobra.Command{
 	Short: "Print the version number of Chifra",
 	Long:  `All software has versions. This is Chifra's`,
 	Run: func(cmd *cobra.Command, args []string) {
+		_ = cmd
+		_ = args
 		fmt.Println(versionText)
 	},
 }

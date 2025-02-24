@@ -211,6 +211,7 @@ func (opts *ChunksOptions) check(rCtx *output.RenderCtx, blockNums []base.Blknum
 	}
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		_ = errorChan
 		for _, report := range reports {
 			if !silent {
 				modelChan <- &report

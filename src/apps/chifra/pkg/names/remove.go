@@ -27,7 +27,7 @@ func RemoveName(dbType DatabaseType, chain string, address base.Address) (name *
 func customRemoveName(chain string, address base.Address) (*types.Name, error) {
 	name, exists := customNames[address]
 	if !exists {
-		return nil, fmt.Errorf("cannot remove non-existant custom name for address %s", address.Hex())
+		return nil, fmt.Errorf("cannot remove non-existent custom name for address %s", address.Hex())
 	}
 
 	if !name.Deleted {

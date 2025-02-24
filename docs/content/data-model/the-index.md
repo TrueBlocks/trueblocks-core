@@ -30,7 +30,7 @@ to point out that the Unchained Index:
 - Allows perfectly-private access to query blockchain data completely locally
 - Naturally shards itself and distributes itself using IPFS and user behaviour
 - Is published periodically to a smart contract and once published cannot be removed from public use
-- Is reproducable directly from immutable data with a well-defined series of operations meaning its as immutable as the original blockchain data
+- Is reproducible directly from immutable data with a well-defined series of operations meaning its as immutable as the original blockchain data
 - Compact
 - Digs deeper into the blockchain than any other source allowing for instantaneous, 18-decimal-place accurate off-chain reconciliation of any account
 - Blazingly fast

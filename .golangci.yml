@@ -1,0 +1,49 @@
+# ./.golangci.yml
+run:
+  timeout: 5m
+  modules-download-mode: readonly
+
+linters:
+  enable:
+    - gofmt # Existing: enforces formatting
+    - revive # Existing: custom rules like unused-parameter
+    - errcheck # Existing: unchecked errors
+    - staticcheck # Existing: static analysis
+    - unused # Existing: unused code
+    - misspell # New: catches typos
+    # - goconst # New: finds repeated strings for consts
+    # - ineffassign # New: ineffective assignments
+    # - prealloc # New: suggests pre-allocation
+    # - gosec # New: basic security checks
+  disable-all: true
+
+linters-settings:
+  gofmt:
+    simplify: true
+  revive:
+    rules:
+      # - name: var-naming
+      #   severity: warning
+      - name: unused-parameter
+        severity: warning
+  goconst:
+    min-len: 3 # Minimum length of repeated string
+    min-occurrences: 3 # Minimum times it must appear
+  gosec:
+    excludes:
+      - G104 # Ignore some noisy security rules (e.g., error handling)
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gofmt
+        - revive
+        - errcheck
+        - staticcheck
+        - unused
+        - misspell
+        - goconst
+        - ineffassign
+        - prealloc
+        - gosec

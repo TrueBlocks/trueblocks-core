@@ -202,7 +202,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 		lines := []string{}
 		for addr, mon := range updater.MonitorMap {
 			bn := base.Blknum(mon.LastScanned)
-			if !rng.LaterThanB(bn) { // the range preceeds the block number
+			if !rng.LaterThanB(bn) { // the range precedes the block number
 				if len(lines) == 0 {
 					lines = file.AsciiFileToLines(stageFn)
 					sort.Slice(lines, func(i, j int) bool {

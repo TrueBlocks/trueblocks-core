@@ -23,6 +23,7 @@ import (
 
 // RunTokens handles the tokens command for the command line. Returns error only as per cobra.
 func RunTokens(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := tokensFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

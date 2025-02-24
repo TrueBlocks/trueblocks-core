@@ -23,6 +23,7 @@ import (
 
 // RunLogs handles the logs command for the command line. Returns error only as per cobra.
 func RunLogs(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := logsFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

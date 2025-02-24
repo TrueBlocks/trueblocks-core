@@ -6,6 +6,7 @@ import (
 )
 
 func (opts *ExportOptions) FreshenMonitorsForExport(rCtx *output.RenderCtx, monitorArray *[]monitor.Monitor) (bool, error) {
+	_ = rCtx
 	var updater = monitor.NewUpdater(opts.Globals.Chain, opts.Globals.TestMode, opts.Globals.Decache /* skipFreshen */, opts.Addrs)
 	return updater.FreshenMonitors(monitorArray)
 }

@@ -27,11 +27,14 @@ func (opts *ChunksOptions) HandleDiff(rCtx *output.RenderCtx, blockNums []base.B
 	testMode := opts.Globals.TestMode
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		_ = modelChan
 		walker := walk.NewCacheWalker(
 			chain,
 			testMode,
 			10000, /* maxTests */
 			func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+				_ = walker
+				_ = first
 				return opts.handleDiff(chain, path)
 			},
 		)
@@ -195,6 +198,8 @@ func findFileByBlockNumber(chain, path string, bn base.Blknum) (fileName string,
 		false,
 		10000, /* maxTests */
 		func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			_ = walker
+			_ = first
 			rng := base.RangeFromFilename(path)
 			if rng.IntersectsB(bn) {
 				fileName = index.ToIndexPath(path)

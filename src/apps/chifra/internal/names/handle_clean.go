@@ -23,6 +23,7 @@ import (
 )
 
 func (opts *NamesOptions) HandleClean(rCtx *output.RenderCtx) error {
+	_ = rCtx
 	chain := opts.Globals.Chain
 
 	label := "custom"
@@ -54,6 +55,7 @@ func (opts *NamesOptions) HandleClean(rCtx *output.RenderCtx) error {
 
 	if opts.Globals.IsApiMode() {
 		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+			_ = errorChan
 			modelChan <- &types.Message{
 				Msg: message,
 			}

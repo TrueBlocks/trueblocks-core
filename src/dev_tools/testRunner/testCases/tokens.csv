@@ -71,7 +71,7 @@ on      ,both ,slow  ,tokens ,tools ,getTokens ,balance_annually              ,y
 on      ,both ,slow  ,tokens ,tools ,getTokens ,balance_quarterly             ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0-2900000:quarterly
 on      ,both ,slow  ,tokens ,tools ,getTokens ,balance_monthly               ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0-780000:monthly
 
-# See issue #3001 - non-existant block not identified as such
+# See issue #3001 - non-existent block not identified as such
 delay   ,both ,fast  ,tokens ,tools ,getTokens ,block_not_found               ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 
 # Returns a weird (very large) totalSupply

@@ -205,6 +205,7 @@ type Meta struct {
 }
 
 func (e *KeyProvider) fetchData(ctx context.Context, address base.Address, paginator Paginator, _ string) (data []SlurpedPageItem, count int, err error) {
+	_ = ctx
 	pageId, ok := paginator.Page().(string)
 	if !ok {
 		err = errors.New("cannot get page id")

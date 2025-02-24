@@ -32,6 +32,7 @@ func (c *writeReport) Report(isSnapped bool, fileSize int64) string {
 }
 
 func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string, addrAppearanceMap map[string][]types.AppRecord, nApps int) (*writeReport, error) {
+	_ = publisher
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -119,7 +120,7 @@ func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string,
 				return nil, err
 			}
 
-			// We're sucessfully written the chunk, so we don't need this any more. If the pin
+			// We're successfully written the chunk, so we don't need this any more. If the pin
 			// fails we don't want to have to re-do this chunk, so remove this here.
 			backup.Clear()
 			return &writeReport{

@@ -17,11 +17,13 @@ func (opts *AbisOptions) HandleCount(rCtx *output.RenderCtx) error {
 	testMode := opts.Globals.TestMode
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		_ = errorChan
 		count := uint64(0)
 		if testMode {
 			count = 199
 		} else {
 			vFunc := func(fn string, vP any) (bool, error) {
+				_ = vP
 				_, name := filepath.Split(fn)
 				if strings.HasSuffix(name, ".json") {
 					count++

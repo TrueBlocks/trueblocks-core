@@ -184,7 +184,7 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 		// return all numbers as strings.
 		// We could return numbers or strings depending on whether or not the value is safe,
 		// but the consumer would then have to check the type of returned value first and only
-		// then try to interpet the actual value.
+		// then try to interpret the actual value.
 		// In at least some languages, strings can be used to create big Int equivalents, so
 		// using strings only should make it easier for the consumers.
 		result = fmt.Sprint(value)

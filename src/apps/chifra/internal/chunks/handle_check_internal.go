@@ -18,6 +18,7 @@ import (
 // CheckInternal reads the header of each chunk on disc looking for the Magic number and
 // the hash of the spec version for expected values.
 func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []base.Blknum, report *types.ReportCheck) error {
+	_ = blockNums
 	for _, fileName := range fileNames {
 		opts.checkIndexChunkInternal(fileName, false /* check version */, report)
 		// opts.checkBloomInternal(testId, fileName, report)

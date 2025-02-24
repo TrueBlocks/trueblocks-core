@@ -10,6 +10,7 @@ import (
 func (opts *ConfigOptions) HandleDump(rCtx *output.RenderCtx) error {
 	config.ReloadConfig()
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		_ = errorChan
 		config := *config.GetRootConfig()
 		s := types.Config{
 			Version:   config.Version,

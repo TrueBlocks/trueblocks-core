@@ -23,7 +23,7 @@ func (cb *CodeBase) Generate() {
 	cb.verifyValidators()
 
 	generatedPath := GetGeneratedPath()
-	file.EstablishFolder(generatedPath)
+	_ = file.EstablishFolder(generatedPath)
 
 	generators, err := getGenerators()
 	if err != nil {
@@ -89,6 +89,7 @@ func getGenerators() ([]Generator, error) {
 
 	theMap := make(map[string][]string)
 	vFunc := func(file string, vP any) (bool, error) {
+		_ = vP
 		isTemplate := strings.HasSuffix(file, ".tmpl")
 		filter := os.Getenv("TB_GENERATOR_FILTER")
 		if len(filter) > 0 && !strings.Contains(file, filter) {
@@ -104,7 +105,7 @@ func getGenerators() ([]Generator, error) {
 		return true, nil
 	}
 
-	walk.ForEveryFileInFolder(generatorsPath, vFunc, nil)
+	_ = walk.ForEveryFileInFolder(generatorsPath, vFunc, nil)
 
 	ret := []Generator{}
 	for against, templates := range theMap {

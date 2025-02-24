@@ -140,6 +140,7 @@ func (t *Runner) Failed() string {
 }
 
 func (tr *Runner) AppendLog(t *TestCase) {
+	_ = t
 	// s := fmt.Sprintf("%s\t%s.txt\t%s", t.Route, t.Filename, t.OptionsForMode(tr.Mode))
 	// tr.Logs[tr.Mode] = append(tr.Logs[tr.Mode], s)
 }

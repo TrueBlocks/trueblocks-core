@@ -162,7 +162,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Publish {
-		return validate.Usage("The {0} option is currenlty unavailable.", "--publish")
+		return validate.Usage("The {0} option is currently unavailable.", "--publish")
 	}
 
 	if opts.Mode != "index" {

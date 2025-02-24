@@ -6,9 +6,9 @@ package progress
 
 import (
 	"fmt"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"io"
 	"strings"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 type ScanBar struct {

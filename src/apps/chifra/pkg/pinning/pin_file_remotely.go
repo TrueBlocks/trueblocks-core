@@ -19,6 +19,7 @@ import (
 
 // pinFileRemotely pins a file remotely to the pinning service
 func (s *Service) pinFileRemotely(chain, filepath string) (base.IpfsHash, error) {
+	_ = chain
 	if s.HeaderFunc == nil {
 		return "", fmt.Errorf("header function is nil")
 	}

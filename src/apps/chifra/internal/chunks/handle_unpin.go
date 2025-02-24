@@ -8,6 +8,8 @@ import (
 )
 
 func (opts *ChunksOptions) HandleUnpin(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
+	_ = rCtx
+	_ = blockNums
 	testMode := opts.Globals.TestMode
 	if testMode {
 		logger.Info("Test mode: unpin not tested")

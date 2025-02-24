@@ -64,6 +64,7 @@ func (opts *ScrapeOptions) HandleScrape(rCtx *output.RenderCtx) error {
 	if opts.DryRun {
 		opts.Globals.NoHeader = true
 		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+			_ = errorChan
 			nl := "\n"
 			modelChan <- &types.Message{Msg: msg1 + nl + msg2 + nl + msg3 + nl + msg4}
 		}
@@ -187,7 +188,7 @@ func (opts *ScrapeOptions) HandleScrape(rCtx *output.RenderCtx) error {
 			}
 		}
 
-		// Scrape this round. Only quit on catostrophic errors. Report and sleep otherwise.
+		// Scrape this round. Only quit on catastrophic errors. Report and sleep otherwise.
 		if err = bm.ScrapeBatch(sigintCtx, blocks); err != nil || sigintCtx.Err() != nil {
 			if err != nil {
 				logger.Error(colors.BrightRed+err.Error(), colors.Off)
@@ -205,7 +206,7 @@ func (opts *ScrapeOptions) HandleScrape(rCtx *output.RenderCtx) error {
 			goto PAUSE
 
 		} else {
-			// Consilidate a chunk (if possible). Only quit on catostrophic errors. Report and sleep otherwise.
+			// Consolidate a chunk (if possible). Only quit on catastrophic errors. Report and sleep otherwise.
 			if err = bm.Consolidate(sigintCtx, blocks); err != nil || sigintCtx.Err() != nil {
 				if err != nil {
 					logger.Error(colors.BrightRed+err.Error(), colors.Off)

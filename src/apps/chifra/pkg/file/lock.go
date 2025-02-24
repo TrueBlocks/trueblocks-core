@@ -5,10 +5,10 @@
 package file
 
 import (
-	"os"
-	"time"
-	"syscall"
 	"errors"
+	"os"
+	"syscall"
+	"time"
 )
 
 var maxSecondsLock = 3

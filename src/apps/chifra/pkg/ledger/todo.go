@@ -2,7 +2,7 @@ package ledger
 
 // TODO: Is this comment relavant any longer?
 
-// See issue #2791 - This is the code that used to generate extra traces to make reconcilation work
+// See issue #2791 - This is the code that used to generate extra traces to make reconciliation work
 // (or, at least, similar code in `chifra export` generated these traces.
 // bool isSuicide = trace.action.selfDestructed != "";
 // bool isCreation = trace.result.address != "";
@@ -65,4 +65,3 @@ package ledger
 //     }
 //     return true;
 // }
-

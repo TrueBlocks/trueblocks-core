@@ -28,7 +28,7 @@ var ErrCanceled = errors.New("write canceled")
 var defaultStore *Store
 var defaultStoreOnce sync.Once
 
-// Store holds all information neccessary to access the cache, no matter
+// Store holds all information necessary to access the cache, no matter
 // which concrete location (FS, IPFS, memory, etc.) is being used
 type Store struct {
 	resolvedPaths map[Locator]string
@@ -85,6 +85,7 @@ type WriteOptions interface{}
 // then FileSystem is used. The value has to implement Locator interface, which
 // provides information about in-cache path and ID.
 func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
+	_ = options
 	if s.readOnly {
 		err = ErrReadOnly
 		printErr("write", err)
@@ -129,6 +130,7 @@ type ReadOptions interface{}
 // then FileSystem is used. The value has to implement Locator interface, which
 // provides information about in-cache path
 func (s *Store) Read(value Locator, options *ReadOptions) (err error) {
+	_ = options
 	itemPath, err := s.resolvePath(value)
 	if err != nil {
 		printErr("read resolving path", err)

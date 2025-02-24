@@ -146,5 +146,7 @@ func (n *ArgNumber) Convert(abiType *abi.Type) (any, error) {
 }
 
 func debug(name string, values []string) {
+	_ = name
+	_ = values
 	// fmt.Printf("%s%s: %v%s\n", colors.BrightGreen, name, values, colors.Off)
 }

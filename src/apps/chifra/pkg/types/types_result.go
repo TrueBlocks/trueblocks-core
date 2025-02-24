@@ -43,6 +43,10 @@ func (s Result) String() string {
 }
 
 func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -241,6 +245,7 @@ func (s *Result) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Result) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	s.Values = make(map[string]string)
 	for index, output := range s.ArticulatedOut.Outputs {

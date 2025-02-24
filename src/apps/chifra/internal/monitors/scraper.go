@@ -19,6 +19,8 @@ type Scraper struct {
 }
 
 func NewScraper(color, name string, secs float64, logLev uint64) Scraper {
+	_ = color
+	_ = logLev
 	scraper := new(Scraper)
 	scraper.Name = name
 	scraper.SleepSecs = secs

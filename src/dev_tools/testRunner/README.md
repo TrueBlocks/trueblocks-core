@@ -20,7 +20,7 @@ testRunner <routeList>:<modeList>
 
 The filter consists of two lists `<routeList>` and `<modeList>` separated by a colon (:). If either of the lists is empty, the given filter is disabled. The tests proceed in the following order, unless you provide a filter, in which case they run in the order you provide. The special `tools` and `apps` routes are used as shorthand for all tests of that type.
 
-`routeList` may be empty or one or more (comma seperated) items from:
+`routeList` may be empty or one or more (comma separated) items from:
 
 ```[bash]
 - tools (runs all tools routes)
@@ -49,7 +49,7 @@ The filter consists of two lists `<routeList>` and `<modeList>` separated by a c
     - init
 ```
 
-`modeList` may be empty or one or more (comma seperated) items from:
+`modeList` may be empty or one or more (comma separated) items from:
 
 ```[bash]
 - api

@@ -18,6 +18,7 @@ var sourceMap = map[bool]manifest.Source{
 }
 
 func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
+	_ = blockNums
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	man, err := manifest.LoadManifest(chain, opts.PublisherAddr, sourceMap[opts.Remote])
@@ -33,6 +34,7 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 
 	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
 		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+			_ = errorChan
 			for _, chunk := range man.Chunks {
 				rng := base.RangeFromRangeString(chunk.Range)
 				s := types.ChunkRecord{
@@ -52,6 +54,7 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 
 	} else {
 		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+			_ = errorChan
 			s := types.Manifest{
 				Version:       man.Version,
 				Chain:         man.Chain,

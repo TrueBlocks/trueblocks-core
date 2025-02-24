@@ -30,6 +30,7 @@ func (h *Hash) String() string {
 
 // Format is used by Stringer don't remove
 func (h Hash) Format(s fmt.State, c rune) {
+	_ = c
 	_, _ = s.Write([]byte(h.Hex()))
 }
 
