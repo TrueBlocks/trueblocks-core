@@ -83,7 +83,7 @@ TEST[DATE|TIME]    endBalDiff:          22309461070293783
 TEST[DATE|TIME]    endBalCalc:          568293581338250642905
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          broken
+TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -159,7 +159,7 @@ TEST[DATE|TIME]    endBalDiff:          22309461070293783
 TEST[DATE|TIME]    endBalCalc:          568293581338250642905
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          broken
+TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -300,7 +300,7 @@ TEST[DATE|TIME]    endBalDiff:          27822557249852274
 TEST[DATE|TIME]    endBalCalc:          568299094434430201396
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          broken
+TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -376,7 +376,7 @@ TEST[DATE|TIME]    endBalDiff:          27822557249852274
 TEST[DATE|TIME]    endBalCalc:          568299094434430201396
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          broken
+TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -478,7 +478,7 @@ TEST[DATE|TIME]    endBalDiff:          1922180000000000
 TEST[DATE|TIME]    endBalCalc:          17951995070000000000
 TEST[DATE|TIME]    correctingReason:    endbal
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          broken
+TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -554,7 +554,7 @@ TEST[DATE|TIME]    endBalDiff:          25765961420767341
 TEST[DATE|TIME]    endBalCalc:          568297037838601116463
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          broken
+TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -630,7 +630,7 @@ TEST[DATE|TIME]    endBalDiff:          25765961420767341
 TEST[DATE|TIME]    endBalCalc:          568297037838601116463
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          broken
+TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report

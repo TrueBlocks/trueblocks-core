@@ -802,7 +802,7 @@ Trial balance:
       "prevBal": "0.02405059",
       "priceSource": "not-priced",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "reconciled": broken,
+      "reconciled": false,
       "postType": "diff-same",
       "selfDestructIn": "0",
       "selfDestructOut": "0",

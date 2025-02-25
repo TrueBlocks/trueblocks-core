@@ -290,7 +290,7 @@
           "prevBal": "17950072890000000000",
           "priceSource": "uniswap",
           "recipient": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
-          "reconciled": broken,
+          "reconciled": false,
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
