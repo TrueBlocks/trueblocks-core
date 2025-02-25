@@ -6,16 +6,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
+type WeiWei int64
+
 type Posting struct {
 	Statement
 	Holder            base.Address
 	StatementId       int
 	CorrectionIndex   int
 	CorrectionReason  string
-	BeginBalance      int64
-	EventAmount       int64
-	TentativeBalance  int64
-	CheckpointBalance int64
+	BeginBalance      WeiWei
+	EventAmount       WeiWei
+	TentativeBalance  WeiWei
+	CheckpointBalance WeiWei
 }
 
 func NewPosting(blk base.Blknum, txIdx base.Txnum, logId base.Lognum, ts base.Timestamp, holder base.Address) Posting {

@@ -31,7 +31,7 @@ func MustParseTimestamp(input string) Timestamp {
 
 func MustParseWei(input string) Wei {
 	i := MustParseUint64(input)
-	return *NewWei(0).SetUint64(i)
+	return *new(Wei).SetUint64(i)
 }
 
 func MustParseInt64(input string) int64 {
