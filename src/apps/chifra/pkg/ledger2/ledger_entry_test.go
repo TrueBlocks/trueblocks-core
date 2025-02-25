@@ -26,7 +26,7 @@ func TestNewLedgerEntry(t *testing.T) {
 func TestAppendPosting(t *testing.T) {
 	le := NewLedgerEntry("some-app", 100, 0)
 
-	p1 := types.NewPosting(100, 0, 1, 999, base.ZeroAddr)
+	p1 := types.NewPosting(100, 0, 1, 999)
 	p1.AmountIn = *base.NewWei(50)
 	p1.AmountOut = *base.NewWei(10)
 	le.Postings = append(le.Postings, p1)
@@ -35,7 +35,7 @@ func TestAppendPosting(t *testing.T) {
 		t.Fatalf("Expected 1 posting after append. got=%d", len(le.Postings))
 	}
 
-	p2 := types.NewPosting(100, 0, 2, 999, base.ZeroAddr)
+	p2 := types.NewPosting(100, 0, 2, 999)
 	p2.AmountIn = *base.NewWei(20)
 	p2.GasOut = *base.NewWei(5)
 	le.Postings = append(le.Postings, p2)
@@ -49,13 +49,13 @@ func TestLedgerEntryAggregation(t *testing.T) {
 	le := NewLedgerEntry("agg-app", 200, 5)
 
 	// Posting 1: In=80, Out=10
-	p1 := types.NewPosting(200, 5, 1, 123, base.ZeroAddr)
+	p1 := types.NewPosting(200, 5, 1, 123)
 	p1.AmountIn = *base.NewWei(80)
 	p1.AmountOut = *base.NewWei(10)
 	le.Postings = append(le.Postings, p1)
 
 	// Posting 2: In=25, Out=5
-	p2 := types.NewPosting(200, 5, 2, 123, base.ZeroAddr)
+	p2 := types.NewPosting(200, 5, 2, 123)
 	p2.AmountIn = *base.NewWei(25)
 	p2.GasOut = *base.NewWei(5)
 	le.Postings = append(le.Postings, p2)
@@ -79,13 +79,13 @@ func TestLedgerEntryAggregation(t *testing.T) {
 func TestLedgerEntryString(t *testing.T) {
 	le := NewLedgerEntry("str-app", 300, 2)
 
-	p := types.NewPosting(300, 2, 1, 9999, base.ZeroAddr)
+	p := types.NewPosting(300, 2, 1, 9999)
 	p.AmountIn = *base.NewWei(100)
 	p.AmountOut = *base.NewWei(60)
 	le.Postings = append(le.Postings, p)
 
 	got := le.String()
-	want := `{"AppearanceID":"str-app","BlockNumber":300,"TransactionIndex":2,"Postings":[{"accountedFor":"0x0","amountIn":"0","amountOut":"0","assetAddress":"0x0","assetSymbol":"","begBal":"0","blockNumber":300,"blockNumberNext":0,"blockNumberPrev":0,"correctingIn":"0","correctingOut":"0","decimals":0,"endBal":"0","gasOut":"0","internalIn":"0","internalOut":"0","logIndex":1,"minerBaseRewardIn":"0","minerNephewRewardIn":"0","minerTxFeeIn":"0","minerUncleRewardIn":"0","prefundIn":"0","prevBal":"0","priceSource":"","recipient":"0x0","rollingBalance":"0","selfDestructIn":"0","selfDestructOut":"0","sender":"0x0","spotPrice":0,"timestamp":9999,"transactionHash":"0x0000000000000000000000000000000000000000000000000000000000000000","transactionIndex":2,"Holder":"0x0","StatementId":0,"CorrectionIndex":0,"CorrectionReason":"","BeginBalance":0,"EventAmount":0,"TentativeBalance":0,"CheckpointBalance":0}]}`
+	want := `{"AppearanceID":"str-app","BlockNumber":300,"TransactionIndex":2,"Postings":[{"accountedFor":"0x0","amountIn":"0","amountOut":"0","assetAddress":"0x0","assetSymbol":"","begBal":"0","blockNumber":300,"blockNumberNext":0,"blockNumberPrev":0,"correctingIn":"0","correctingOut":"0","decimals":0,"endBal":"0","gasOut":"0","internalIn":"0","internalOut":"0","logIndex":1,"minerBaseRewardIn":"0","minerNephewRewardIn":"0","minerTxFeeIn":"0","minerUncleRewardIn":"0","prefundIn":"0","prevBal":"0","priceSource":"","recipient":"0x0","rollingBalance":"0","selfDestructIn":"0","selfDestructOut":"0","sender":"0x0","spotPrice":0,"timestamp":9999,"transactionHash":"0x0000000000000000000000000000000000000000000000000000000000000000","transactionIndex":2}]}`
 	if got != want {
 		t.Fatalf("String mismatch.\ngot:  %s\nwant: %s", got, want)
 	}

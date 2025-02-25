@@ -38,7 +38,7 @@ func TestLedgerAggregation(t *testing.T) {
 
 	// Entry 1: total in = 80, total out = 10
 	e1 := NewLedgerEntry("appearance-1", 200, 5)
-	p1 := types.NewPosting(200, 5, 1, 9999, base.ZeroAddr)
+	p1 := types.NewPosting(200, 5, 1, 9999)
 	p1.AmountIn = *base.NewWei(80)
 	p1.AmountOut = *base.NewWei(10)
 	e1.Postings = append(e1.Postings, p1)
@@ -46,7 +46,7 @@ func TestLedgerAggregation(t *testing.T) {
 
 	// Entry 2: total in = 25, total out = 5
 	e2 := NewLedgerEntry("appearance-2", 201, 3)
-	p2 := types.NewPosting(201, 3, 2, 9999, base.ZeroAddr)
+	p2 := types.NewPosting(201, 3, 2, 9999)
 	p2.AmountIn = *base.NewWei(25)
 	p2.GasOut = *base.NewWei(5)
 	e2.Postings = append(e2.Postings, p2)
@@ -72,7 +72,7 @@ func TestLedgerString(t *testing.T) {
 	l := NewLedger(base.HexToAddress("0xFED"))
 
 	e := NewLedgerEntry("some-app", 300, 2)
-	p := types.NewPosting(300, 2, 12, 2, base.ZeroAddr)
+	p := types.NewPosting(300, 2, 12, 2)
 	p.AmountIn = *base.NewWei(100)
 	p.AmountOut = *base.NewWei(60)
 	e.Postings = append(e.Postings, p)

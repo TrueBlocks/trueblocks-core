@@ -12,7 +12,7 @@ func TestNewPosting(t *testing.T) {
 	txIdx := base.Txnum(1)
 	idx := base.Lognum(0)
 	ts := base.Timestamp(999999)
-	p := types.NewPosting(blk, txIdx, idx, ts, base.ZeroAddr)
+	p := types.NewPosting(blk, txIdx, idx, ts)
 	if p.BlockNumber != blk {
 		t.Fatalf("BlockNumber mismatch. got=%d want=%d", p.BlockNumber, blk)
 	}
@@ -57,7 +57,7 @@ func TestNewPosting(t *testing.T) {
 }
 
 func TestPostingCalculations(t *testing.T) {
-	p := types.NewPosting(10, 0, 1, base.Timestamp(12345), base.ZeroAddr)
+	p := types.NewPosting(10, 0, 1, base.Timestamp(12345))
 	p.AmountIn = *base.NewWei(100)
 	p.MinerBaseRewardIn = *base.NewWei(10)
 	p.MinerUncleRewardIn = *base.NewWei(1)

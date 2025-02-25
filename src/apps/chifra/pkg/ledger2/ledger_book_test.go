@@ -197,12 +197,12 @@ func TestLedgerBookStatements_Empty(t *testing.T) {
 func TestLedgerBookStatements_OneLedger(t *testing.T) {
 	lb := NewLedgerBook(base.HexToAddress("0xcccccccccccccccccccccccccccccccccccccccc"))
 
-	p1 := types.NewPosting(100, 0, 0, 0, base.ZeroAddr)
+	p1 := types.NewPosting(100, 0, 0, 0)
 	p1.AmountIn = *base.NewWei(50)
 	p1.Sender = base.HexToAddress("0xf111111111111111111111111111111111111111")
 	p1.Recipient = base.HexToAddress("0xf222222222222222222222222222222222222222")
 
-	p2 := types.NewPosting(101, 0, 0, 0, base.ZeroAddr)
+	p2 := types.NewPosting(101, 0, 0, 0)
 	p2.AmountOut = *base.NewWei(30)
 	p2.Sender = base.HexToAddress("0xf333333333333333333333333333333333333333")
 	p2.Recipient = base.HexToAddress("0xf444444444444444444444444444444444444444")
