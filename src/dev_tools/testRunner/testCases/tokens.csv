@@ -70,6 +70,7 @@ on      ,both ,slow  ,tokens ,tools ,getTokens ,top_three_swarm1              ,y
 on      ,both ,slow  ,tokens ,tools ,getTokens ,balance_annually              ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0-4900000:annually
 on      ,both ,slow  ,tokens ,tools ,getTokens ,balance_quarterly             ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0-2900000:quarterly
 on      ,both ,slow  ,tokens ,tools ,getTokens ,balance_monthly               ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0-780000:monthly
+on      ,both ,fast  ,tokens ,tools ,getTokens ,balance_for_eth               ,y    ,addrs = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee vitalik.eth & blocks = 0-4326080:quarterly 
 
 # See issue #3001 - non-existent block not identified as such
 delay   ,both ,fast  ,tokens ,tools ,getTokens ,block_not_found               ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2

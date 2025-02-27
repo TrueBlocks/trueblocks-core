@@ -146,6 +146,10 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo stri
 
 // GetBalanceAtToken returns token balance for given block.
 func (conn *Connection) GetBalanceAtToken(token, holder base.Address, bn base.Blknum) (*base.Wei, error) {
+	if token.Equal(base.FAKE_ETH_ADDRESS) {
+		return conn.GetBalanceAt(holder, bn)
+	}
+
 	hexBlockNo := fmt.Sprintf("0x%x", bn)
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
 		hexBlockNo = fmt.Sprintf("0x%x", base.MustParseUint64(hexBlockNo))

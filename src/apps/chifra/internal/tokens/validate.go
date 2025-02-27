@@ -46,6 +46,20 @@ func (opts *TokensOptions) validateTokens() error {
 
 			// all but the last is assumed to be a token
 			for _, addr := range opts.Addrs[:len(opts.Addrs)-1] {
+				if addr != base.FAKE_ETH_ADDRESS.Hex() {
+					err := opts.Conn.IsContractAtLatest(base.HexToAddress(addr))
+					if err != nil {
+						if errors.Is(err, rpc.ErrNotAContract) {
+							return validate.Usage("The value {0} is not a token contract.", addr)
+						}
+						return err
+					}
+				}
+			}
+		} else {
+			// the first is assumed to be a smart contract, the rest can be either non-existent, another smart contract or an EOA
+			addr := opts.Addrs[0]
+			if addr != base.FAKE_ETH_ADDRESS.Hex() {
 				err := opts.Conn.IsContractAtLatest(base.HexToAddress(addr))
 				if err != nil {
 					if errors.Is(err, rpc.ErrNotAContract) {
@@ -53,16 +67,6 @@ func (opts *TokensOptions) validateTokens() error {
 					}
 					return err
 				}
-			}
-		} else {
-			// the first is assumed to be a smart contract, the rest can be either non-existent, another smart contract or an EOA
-			addr := opts.Addrs[0]
-			err := opts.Conn.IsContractAtLatest(base.HexToAddress(addr))
-			if err != nil {
-				if errors.Is(err, rpc.ErrNotAContract) {
-					return validate.Usage("The value {0} is not a token contract.", addr)
-				}
-				return err
 			}
 		}
 	}
