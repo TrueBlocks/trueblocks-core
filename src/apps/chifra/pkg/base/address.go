@@ -200,8 +200,14 @@ func IsValidAddressE(val string) (bool, error) {
 	return isValidHex(val, 20)
 }
 
-// FAKE_ETH_ADDRESS is the address we use to represent ETH in the ledgers
-var FAKE_ETH_ADDRESS = HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+var (
+	// FAKE_ETH_ADDRESS is the address we use to represent ETH in the ledgers
+	FAKE_ETH_ADDRESS = HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+	// EndOfBlockSentinel is used in some streaming instances to make the end of a block
+	EndOfBlockSentinel = HexToAddress("0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef")
+	// EndOfStreamSentinel is used in some streaming instances to make the end of the stream
+	EndOfStreamSentinel = HexToAddress("0xbeefdeadbeefdeadbeefdeadbeefdeadbeefdead")
+)
 
 // GetTestPublisher does not get customized per chain. We can only test against mainnet currently
 func GetTestPublisher() Address {
