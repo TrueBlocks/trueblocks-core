@@ -268,12 +268,13 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, theApp *
 					nUncles := len(uncles)
 					if nUncles > 0 {
 						nephewReward = new(base.Wei).Mul(blockReward, base.NewWei(int64(nUncles)))
-						nephewReward.Div(nephewReward, base.NewWei(32))
+						nephewReward = new(base.Wei).Div(nephewReward, base.NewWei(32))
 					}
 					for _, tx := range block.Transactions {
 						gp := base.NewWei(int64(tx.GasPrice))
 						gu := base.NewWei(int64(tx.Receipt.GasUsed))
-						feeReward = feeReward.Add(feeReward, gp.Mul(gp, gu))
+						income := new(base.Wei).Mul(gp, gu)
+						feeReward = new(base.Wei).Add(feeReward, income)
 					}
 				} else {
 					blockReward = base.NewWei(0)
@@ -285,7 +286,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, theApp *
 						if bn < uncle.BlockNumber+6 {
 							diff := (uncle.BlockNumber + 8 - bn) // positive since +6 < bn
 							uncleReward = new(base.Wei).Mul(blockReward, base.NewWei(int64(diff)))
-							uncleReward.Div(uncleReward, base.NewWei(8))
+							uncleReward = new(base.Wei).Div(uncleReward, base.NewWei(8))
 						}
 					}
 				}

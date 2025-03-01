@@ -21,7 +21,7 @@ func NormalizeKnownLogs(log *types.Log) (*types.Log, error) {
 		return log, fmt.Errorf("unrecognized transfer type: %w", ErrNormalization)
 	}
 
-	var addr1, addr2 base.Address
+	var from, to base.Address
 	var value *base.Wei
 	var data = strings.TrimPrefix(log.Data, "0x")
 
@@ -31,26 +31,26 @@ func NormalizeKnownLogs(log *types.Log) (*types.Log, error) {
 
 	} else if len(log.Topics) == 3 {
 		// A normal, every day Transfer. Assume the two indexed parameters are the addresses.
-		addr1 = base.HexToAddress(log.Topics[1].Hex())
-		addr2 = base.HexToAddress(log.Topics[2].Hex())
+		from = base.HexToAddress(log.Topics[1].Hex())
+		to = base.HexToAddress(log.Topics[2].Hex())
 		value = base.HexToWei(log.Data)
 
 	} else if len(log.Topics) == 2 {
-		// A non-standard format. Likely only for transfers.
+		// Handle a second format -- neither to is not indexed.
 		if len(data) < 128 {
 			return log, fmt.Errorf("data length too short for two-value format in log %v: %w", log, ErrNormalization)
 		}
-		addr1 = base.HexToAddress(log.Topics[1].Hex())
-		addr2 = base.HexToAddress("0x" + data[:64])
+		from = base.HexToAddress(log.Topics[1].Hex())
+		to = base.HexToAddress("0x" + data[:64])
 		value = base.HexToWei("0x" + string(data[64:128]))
 
 	} else if len(log.Topics) == 1 {
-		// Handle a third format if it exists (again, likely only for transfers)
+		// Handle a third format -- neither form or to are indexed.
 		if len(data) < 192 {
 			return log, fmt.Errorf("data length too short for three-value format in log %v: %w", log, ErrNormalization)
 		}
-		addr1 = base.HexToAddress("0x" + data[:64])
-		addr2 = base.HexToAddress("0x" + data[64:128])
+		from = base.HexToAddress("0x" + data[:64])
+		to = base.HexToAddress("0x" + data[64:128])
 		value = base.HexToWei(data[128:192])
 
 	} else {
@@ -60,8 +60,8 @@ func NormalizeKnownLogs(log *types.Log) (*types.Log, error) {
 	newLog := *log
 	newLog.Topics = []base.Hash{
 		log.Topics[0],
-		base.HexToHash(addr1.Hex()),
-		base.HexToHash(addr2.Hex()),
+		base.HexToHash(from.Hex()),
+		base.HexToHash(to.Hex()),
 	}
 	newLog.Data, _ = base.WeiToHash(value)
 

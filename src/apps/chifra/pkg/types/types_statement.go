@@ -624,7 +624,7 @@ func (s *Statement) TotalIn() *base.Wei {
 
 	sum := base.NewWei(0)
 	for _, n := range vals {
-		sum = sum.Add(sum, &n)
+		sum = new(base.Wei).Add(sum, &n)
 	}
 
 	return sum
@@ -641,7 +641,7 @@ func (s *Statement) TotalOut() *base.Wei {
 
 	sum := base.NewWei(0)
 	for _, n := range vals {
-		sum = sum.Add(sum, &n)
+		sum = new(base.Wei).Add(sum, &n)
 	}
 
 	return sum

@@ -15,20 +15,20 @@ import (
 )
 
 // GetTransfers returns a statement from a given transaction
-func (l *Reconciler) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
-	r := ledger2.NewReconciler2(l.connection, l.assetFilter, l.accountFor, l.names, l.asEther)
-	return r.GetTransfers(pos, filter, trans)
+func (r *Reconciler) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
+	r2 := ledger2.NewReconciler2(r.connection, r.assetFilter, r.accountFor, r.names, r.asEther)
+	return r2.GetTransfers(pos, filter, trans)
 }
 
 // GetStatements returns a statement from a given transaction
-func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
-	if l.connection.StoreReadable() {
+func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+	if r.connection.StoreReadable() {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
-			Address:          l.accountFor,
+			Address:          r.accountFor,
 		}
-		if err := l.connection.Store.Read(statementGroup, nil); err == nil {
+		if err := r.connection.Store.Read(statementGroup, nil); err == nil {
 			return statementGroup.Statements, nil
 		}
 	}
@@ -37,28 +37,28 @@ func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 	allStatements := make([]types.Statement, 0, 20)
 
 	if os.Getenv("NEW_CODE") == "true" {
-		r := ledger2.NewReconciler2(l.connection, l.assetFilter, l.accountFor, l.names, l.asEther)
+		r := ledger2.NewReconciler2(r.connection, r.assetFilter, r.accountFor, r.names, r.asEther)
 		if allStatements, err = r.GetStatements(pos, filter, trans); err != nil {
 			return allStatements, err
 		}
 
 	} else {
-		if ledger2.AssetOfInterest(l.assetFilter, base.FAKE_ETH_ADDRESS) {
+		if ledger2.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
 
-			prevBal, _ := l.connection.GetBalanceAt(l.accountFor, pos.Prev)
+			prevBal, _ := r.connection.GetBalanceAt(r.accountFor, pos.Prev)
 			if trans.BlockNumber == 0 {
 				prevBal = base.ZeroWei
 			}
 
-			begBal, _ := l.connection.GetBalanceAt(l.accountFor, trans.BlockNumber-1)
+			begBal, _ := r.connection.GetBalanceAt(r.accountFor, trans.BlockNumber-1)
 			if trans.BlockNumber == 0 {
 				begBal = base.ZeroWei
 			}
 
-			endBal, _ := l.connection.GetBalanceAt(l.accountFor, trans.BlockNumber)
+			endBal, _ := r.connection.GetBalanceAt(r.accountFor, trans.BlockNumber)
 
 			s := types.Statement{
-				AccountedFor:     l.accountFor,
+				AccountedFor:     r.accountFor,
 				Sender:           trans.From,
 				Recipient:        trans.To,
 				BlockNumber:      trans.BlockNumber,
@@ -78,7 +78,7 @@ func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 				PostLast:         pos.Last,
 			}
 
-			if l.asEther {
+			if r.asEther {
 				s.AssetSymbol = "ETH"
 			}
 
@@ -86,8 +86,8 @@ func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 				s.Recipient = trans.Receipt.ContractAddress
 			}
 
-			if l.useTraces {
-				if traceStatements, err := l.getStatementsFromTraces(pos, trans, &s); err != nil {
+			if r.useTraces {
+				if traceStatements, err := r.getStatementsFromTraces(pos, trans, &s); err != nil {
 					if !utils.IsFuzzing() {
 						logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 					}
@@ -97,7 +97,7 @@ func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 
 			} else {
 				// Do not collapse. A single transaction may have many movements of money
-				if s.Sender == l.accountFor {
+				if s.Sender == r.accountFor {
 					gasUsed := new(base.Wei)
 					if trans.Receipt != nil {
 						gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
@@ -109,7 +109,7 @@ func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 				}
 
 				// Do not collapse. A single transaction may have many movements of money
-				if s.Recipient == l.accountFor {
+				if s.Recipient == r.accountFor {
 					if s.BlockNumber == 0 {
 						s.PrefundIn = trans.Value
 					} else {
@@ -128,10 +128,10 @@ func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 					// do nothing
 
 				} else {
-					reconciled := l.trialBalance(pos, types.TrialBalEth, trans, &s)
+					reconciled := r.trialBalance(pos, types.TrialBalEth, trans, &s)
 					if !reconciled {
-						logger.TestLog(!l.useTraces, "Trial balance failed for ", s.TransactionHash.Hex(), " need to decend into traces")
-						if traceStatements, err := l.getStatementsFromTraces(pos, trans, &s); err != nil {
+						logger.TestLog(!r.useTraces, "Trial balance failed for ", s.TransactionHash.Hex(), " need to decend into traces")
+						if traceStatements, err := r.getStatementsFromTraces(pos, trans, &s); err != nil {
 							logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 						} else {
 							allStatements = append(allStatements, traceStatements...)
@@ -145,15 +145,15 @@ func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 		}
 
 		if trans.Receipt != nil {
-			if receiptStatements, err := l.getStatementsFromReceipt(pos, filter, trans); err == nil {
+			if receiptStatements, err := r.getStatementsFromReceipt(pos, filter, trans); err == nil {
 				allStatements = append(allStatements, receiptStatements...)
 			}
 		}
 	}
 
-	isFinal := base.IsFinal(l.connection.LatestBlockTimestamp, trans.Timestamp)
-	isWritable := l.connection.StoreWritable()
-	isEnabled := l.connection.EnabledMap[walk.Cache_Statements]
+	isFinal := base.IsFinal(r.connection.LatestBlockTimestamp, trans.Timestamp)
+	isWritable := r.connection.StoreWritable()
+	isEnabled := r.connection.EnabledMap[walk.Cache_Statements]
 	// TODO: BOGUS Turn on caching for allStatements once we get 100% coverage
 	if false && isFinal && isWritable && isEnabled {
 		for _, statement := range allStatements {
@@ -164,10 +164,10 @@ func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
-			Address:          l.accountFor,
+			Address:          r.accountFor,
 			Statements:       allStatements,
 		}
-		_ = l.connection.Store.Write(statementGroup, nil)
+		_ = r.connection.Store.Write(statementGroup, nil)
 	}
 
 	return allStatements, nil

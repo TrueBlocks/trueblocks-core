@@ -1,7 +1,8 @@
-export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&accounting&transfers&lastBlock=8769141&ether
-Args: [addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d accounting transfers lastBlock=8769141 ether]
-Opts: {"addrs":["0x868b8fd259abfcfdf9634c343593b34ef359641d"],"accounting":true,"transfers":true,"lastBlock":8769141,"ether":true}
+export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&accounting&transfers&traces&lastBlock=8769141&ether
+Args: [addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d accounting transfers traces lastBlock=8769141 ether]
+Opts: {"addrs":["0x868b8fd259abfcfdf9634c343593b34ef359641d"],"traces":true,"accounting":true,"transfers":true,"lastBlock":8769141,"ether":true}
 Addrs:  [0x868b8fd259abfcfdf9634c343593b34ef359641d]
+Traces:  true
 Accounting:  true
 Transfers:  true
 LastBlock:  8769141
@@ -132,53 +133,6 @@ Trial balance:
    reconciled:          false
  ^^ we need to fix this ^^
 ---------------------------------------------------
-Trial balance failed for  0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d  need to decend into traces
-Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-=========================================================
-blockNumber:         8769052
-source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-str0 (call):         peek()
-str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-int0:                17376500000000000000000000
-int1:                17376500
-bigPrice:            173.765
-price:               173.765
-source:              maker
-===================================================
-====> trace-eth
-===================================================
-Previous:               8769029
-Current:                8769052
-Next:                   8769052
-postFirst:              false
-postLast:               false
-postAssetType:          trace-eth
-accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-hash:                   0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d
-timestamp:              1571458005
-blockNumber:            8769052.73
-priceSource:            173.765 (maker)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             0.025
-   begBal:              0.025 (0.00070223)
-   totalIn:             0
-   totalOut:            0.00024718
-   amountNet:           -0.00024718
-                       ======================= 
-   endBal:              0.02405059 (0)
-   endBalCalc:          0.02475282
-   rollingBalance:      0
---------------------------------------------------- 
-   gasOut:              0.00024718
-   material:            true
-   reconciled:          false
- ^^ we need to fix this ^^
----------------------------------------------------
 Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
@@ -225,65 +179,6 @@ Trial balance:
    reconciled:          false
  ^^ we need to fix this ^^
 ---------------------------------------------------
-Trial balance failed for  0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265  need to decend into traces
-Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-=========================================================
-blockNumber:         8769052
-source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-str0 (call):         peek()
-str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-int0:                17376500000000000000000000
-int1:                17376500
-bigPrice:            173.765
-price:               173.765
-source:              maker
-===================================================
-====> trace-eth
-===================================================
-Previous:               8769052
-Current:                8769052
-Next:                   8769064
-postFirst:              false
-postLast:               false
-postAssetType:          trace-eth
-accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
-timestamp:              1571458005
-blockNumber:            8769052.74
-priceSource:            173.765 (maker)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             0.02405059
-   begBal:              0.025 (0.00024718)
-   totalIn:             0
-   totalOut:            0.00070223
-   amountNet:           -0.00070223
-                       ======================= 
-   endBal:              0.02405059 (0.00094941)
-   endBalCalc:          0.02429777
-   rollingBalance:      0
---------------------------------------------------- 
-   gasOut:              0.00070223
-   material:            true
-   reconciled:          false
- ^^ we need to fix this ^^
----------------------------------------------------
-A possible nullTransfer
-  nLogs:             2
-    lotsOfLogs:      --> false
-  Sender.IsZero:     0x868b8fd259abfcfdf9634c343593b34ef359641d false
-  or Sender == To:   false
-    mayBeAirdrop:    --> false
-  EndBal-BegBal:     -1
-  Material:          true
-    noBalanceChange: --> false
-  ---> Not a nullTransfer
-Needs correction for token transfer
-Correcting token transfer for unknown income or outflow
 Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
 ====> token
@@ -304,13 +199,13 @@ priceSource:            0 (token-not-priced-pre-uni)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0
-   begBal:              85 (85)
-   totalIn:             85
+   begBal:              85 (0)
+   totalIn:             0
    totalOut:            85
-   amountNet:           0
+   amountNet:           -85
                        ======================= 
    endBal:              0 (85)
-   endBalCalc:          85
+   endBalCalc:          0
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           85

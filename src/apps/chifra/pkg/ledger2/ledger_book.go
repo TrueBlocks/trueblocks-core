@@ -47,7 +47,7 @@ func (lb *LedgerBook) TotalIn() base.Wei {
 	total := base.NewWei(0)
 	for _, l := range lb.Ledgers {
 		sum := l.TotalIn()
-		total = total.Add(total, &sum)
+		total = new(base.Wei).Add(total, &sum)
 	}
 	return *total
 }
@@ -57,7 +57,7 @@ func (lb *LedgerBook) TotalOut() base.Wei {
 	total := base.NewWei(0)
 	for _, l := range lb.Ledgers {
 		sum := l.TotalOut()
-		total = total.Add(total, &sum)
+		total = new(base.Wei).Add(total, &sum)
 	}
 	return *total
 }
@@ -66,8 +66,7 @@ func (lb *LedgerBook) TotalOut() base.Wei {
 func (lb *LedgerBook) NetValue() base.Wei {
 	in := lb.TotalIn()
 	out := lb.TotalOut()
-	net := base.NewWei(0)
-	net = net.Sub(&in, &out)
+	net := new(base.Wei).Sub(&in, &out)
 	return *net
 }
 

@@ -36,7 +36,7 @@ func (le *LedgerEntry) TotalIn() base.Wei {
 	total := base.ZeroWei
 	for _, posting := range le.Postings {
 		tmp := posting.TotalIn()
-		total = total.Add(total, tmp)
+		total = new(base.Wei).Add(total, tmp)
 	}
 	return *total
 }
@@ -46,7 +46,7 @@ func (le *LedgerEntry) TotalOut() base.Wei {
 	total := base.ZeroWei
 	for _, posting := range le.Postings {
 		tmp := posting.TotalOut()
-		total = total.Add(total, tmp)
+		total = new(base.Wei).Add(total, tmp)
 	}
 	return *total
 }
@@ -55,7 +55,6 @@ func (le *LedgerEntry) TotalOut() base.Wei {
 func (le *LedgerEntry) NetValue() base.Wei {
 	in := le.TotalIn()
 	out := le.TotalOut()
-	net := base.ZeroWei
-	net = net.Sub(&in, &out)
+	net := new(base.Wei).Sub(&in, &out)
 	return *net
 }

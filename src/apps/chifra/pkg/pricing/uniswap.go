@@ -91,7 +91,7 @@ func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price ba
 		reserve1.SetString(result.Values["_reserve1"])
 	}
 	bigPrice := new(base.Ether)
-	bigPrice = bigPrice.Quo(reserve0, reserve1)
+	bigPrice = new(base.Ether).Quo(reserve0, reserve1)
 
 	price = base.Float(bigPrice.Float64())
 	price *= multiplier

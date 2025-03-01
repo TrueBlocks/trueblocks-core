@@ -40,7 +40,7 @@ func (l *Ledger) TotalIn() base.Wei {
 	total := base.NewWei(0)
 	for _, entry := range l.Entries {
 		entryIn := entry.TotalIn()
-		total = total.Add(total, &entryIn)
+		total = new(base.Wei).Add(total, &entryIn)
 	}
 	return *total
 }
@@ -50,7 +50,7 @@ func (l *Ledger) TotalOut() base.Wei {
 	total := base.NewWei(0)
 	for _, entry := range l.Entries {
 		entryOut := entry.TotalOut()
-		total = total.Add(total, &entryOut)
+		total = new(base.Wei).Add(total, &entryOut)
 	}
 	return *total
 }
@@ -59,7 +59,6 @@ func (l *Ledger) TotalOut() base.Wei {
 func (l *Ledger) NetValue() base.Wei {
 	in := l.TotalIn()
 	out := l.TotalOut()
-	net := base.NewWei(0)
-	net = net.Sub(&in, &out)
+	net := new(base.Wei).Sub(&in, &out)
 	return *net
 }
