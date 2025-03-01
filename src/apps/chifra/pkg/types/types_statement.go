@@ -812,6 +812,7 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 	logger.TestLog(true, "   material:           ", s.IsMaterial())
 	logger.TestLog(true, "   reconciled:         ", s.Reconciled())
 	if !s.Reconciled() {
+		// TODO: BOGUS - FIX THIS
 		logger.TestLog(true, " ^^ we need to fix this ^^")
 	}
 	logger.TestLog(true, "---------------------------------------------------")

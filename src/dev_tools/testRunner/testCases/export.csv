@@ -210,7 +210,7 @@ broken2  ,both ,fast  ,export   ,apps ,acctExport ,transfer_tributes      ,y    
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_failed_2572_1 ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & accounting & transfers & ether & asset = 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 & fmt = json & last_block = 15549163 & max_records = 40
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_failed_2572_2 ,y    ,addrs = 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 & accounting & transfers & ether & asset = 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 & fmt = json & first_block = 11670418 & last_block = 11670420 & max_records = 40
 broken2  ,both ,fast  ,export   ,apps ,acctExport ,transfer_token_ibt     ,y    ,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & transfers & first_block = 7005600 & last_block = 7005780 & ether & fmt = json
-broken2  ,both ,fast  ,export   ,apps ,acctExport ,transfer_token_ibt_2   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & transfers & first_block = 12704456 & last_block = 12705893 & ether & fmt = json & max_records = 4000
+on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_token_ibt_2   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & transfers & first_block = 12704456 & last_block = 12705893 & ether & fmt = json & max_records = 9
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_2_asset_filt  ,y    ,addrs = trueblocks.eth & accounting & transfers & ether & asset = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = csv & first_block = 8856476 & last_block = 9193814
 
 

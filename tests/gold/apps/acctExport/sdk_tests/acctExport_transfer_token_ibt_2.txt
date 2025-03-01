@@ -1,66 +1,15 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&transfers&firstBlock=12704456&lastBlock=12705893&ether&maxRecords=4000
-Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b accounting transfers firstBlock=12704456 lastBlock=12705893 ether maxRecords=4000]
-Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"accounting":true,"transfers":true,"maxRecords":4000,"firstBlock":12704456,"lastBlock":12705893,"ether":true}
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&transfers&firstBlock=12704456&lastBlock=12705893&ether&maxRecords=9
+Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b accounting transfers firstBlock=12704456 lastBlock=12705893 ether maxRecords=9]
+Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"accounting":true,"transfers":true,"maxRecords":9,"firstBlock":12704456,"lastBlock":12705893,"ether":true}
 Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 Accounting:  true
 Transfers:  true
-MaxRecords:  4000
+MaxRecords:  9
 FirstBlock:  12704456
 LastBlock:  12705893
 Ether:  true
 Caps:  cache,decache,ether
 Format:  json
-Trial balance failed for  0xc4d90e497f91f7feb1f9d1019bee148d3b00b7c900c9ba657cacdb156b67d781  need to decend into traces
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Uniswap
-=========================================================
-blockNumber:         12704456
-source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-str1 (call/data):    getReserves()
-first:               0x6b175474e89094c44da98b954eedeac495271d0f
-second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-reversed:            false
-float0:              36936252061481304330000000
-float1:              20243962597672319668000
-float2:              1
-bigPrice:            1824.5564267999728689
-price:               1824.5564267999728
-source:              uniswap
-===================================================
-====> trace-eth
-===================================================
-Previous:               12704455
-Current:                12704456
-Next:                   12704710
-postType:               diff-diff
-postFirst:              true
-postLast:               false
-postAssetType:          trace-eth
-accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-sender:                 0x7d655c57f71464b6f83811c55d84009cd9f5221c  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-hash:                   0xc4d90e497f91f7feb1f9d1019bee148d3b00b7c900c9ba657cacdb156b67d781
-timestamp:              1624640874
-blockNumber:            12704456.92
-priceSource:            1824.5564267999728 (uniswap)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             36.711034261192445316
-   begBal:              36.711034261192445316 (0)
-   totalIn:             0.0095
-   totalOut:            0
-   amountNet:           0.0095
-                       ======================= 
-   endBal:              36.720534261192445316 (0)
-   endBalCalc:          36.720534261192445316
-   rollingBalance:      0
---------------------------------------------------- 
-   internalIn:          0.0095
-   material:            true
-   reconciled:          true
----------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
 =========================================================
@@ -246,18 +195,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -283,18 +233,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -320,18 +271,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -357,18 +309,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -394,18 +347,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -431,18 +385,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -468,18 +423,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -505,18 +461,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -542,18 +499,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -579,18 +537,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -616,18 +575,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -653,18 +613,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -690,18 +651,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -727,18 +689,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -764,18 +727,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -801,18 +765,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -838,18 +803,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -875,18 +841,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -912,18 +879,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -949,18 +917,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -986,18 +955,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1023,18 +993,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1060,18 +1031,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1097,18 +1069,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1134,18 +1107,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1171,18 +1145,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1208,18 +1183,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1245,18 +1221,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1282,18 +1259,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1319,18 +1297,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1356,18 +1335,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1393,18 +1373,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1430,18 +1411,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1467,18 +1449,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1504,18 +1487,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1541,18 +1525,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1578,18 +1563,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1615,18 +1601,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1652,18 +1639,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1689,18 +1677,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1726,18 +1715,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1763,18 +1753,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1800,18 +1791,19 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -1837,34 +1829,23 @@ priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1553.721842513858802649
-   begBal:              1553.721842513858802649 (0)
+   begBal:              1553.721842513858802649 (86)
    totalIn:             0
    totalOut:            2
    amountNet:           -2
                        ======================= 
-   endBal:              1551.721842513858802649 (0)
+   endBal:              1465.721842513858802649 (0)
    endBalCalc:          1551.721842513858802649
    rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           2
    material:            true
-   reconciled:          true
+   reconciled:          false
+ ^^ we need to fix this ^^
 ---------------------------------------------------
 {
   "data": [
     {
-      "amount": "9500000000000000",
-      "amountEth": "0.0095",
-      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "blockNumber": 12704456,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 0,
-      "transactionIndex": 92
-    },
-    {
-      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "amountIn": "4750000000000000000",
-      "amountInEth": "4.75",
       "amount": "4750000000000000000",
       "amountEth": "4.75",
       "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -1943,357 +1924,6 @@ Trial balance:
       "blockNumber": 12705892,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 294,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 296,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 298,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 300,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 302,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 304,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 306,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 308,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 310,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 312,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 314,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 316,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 318,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 320,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 322,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 324,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 326,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 328,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 330,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 332,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 334,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 336,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 338,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 340,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 342,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 344,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 346,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 348,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 350,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 352,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 354,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 356,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 358,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 360,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 362,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 364,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 366,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 368,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 370,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 372,
       "transactionIndex": 117
     }
   ],
