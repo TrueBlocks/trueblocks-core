@@ -77,6 +77,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Neighbors, "neighbors", "n", false, `export the neighbors of the given address`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Accounting, "accounting", "C", false, `attach accounting records to the exported data (applies to transactions export only)`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, `for the accounting options only, export only statements`)
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Transfers, "transfers", "X", false, `for the accounting options only, export only eth or token transfers`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Balances, "balances", "b", false, `traverse the transaction history and show each change in ETH balances`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Withdrawals, "withdrawals", "i", false, `export withdrawals for the given address`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Articulate, "articulate", "a", false, `articulate transactions, traces, logs, and outputs`)
@@ -89,8 +90,8 @@ func init() {
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Topic, "topic", "B", nil, `for the --logs option only, filter logs to show only those with this topic(s)`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Nfts, "nfts", "T", false, `for the --logs option only, filter logs to show only nft transfers`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reverted, "reverted", "V", false, `export only transactions that were reverted`)
-	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Asset, "asset", "P", nil, `for the accounting options only, export statements only for this asset`)
-	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Flow, "flow", "f", "", `for the accounting options only, export statements with incoming, outgoing, or zero value
+	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Asset, "asset", "P", nil, `for the accounting options only, export transfers, balances, or statements only for this asset`)
+	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Flow, "flow", "f", "", `for the accounting options only, export transfers, balances, or statements with incoming, outgoing, or zero value
 One of [ in | out | zero ]`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Factory, "factory", "y", false, `for --traces only, report addresses created by (or self-destructed by) the given address(es)`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Unripe, "unripe", "u", false, `export transactions labeled unripe (i.e. less than 28 blocks old)`)

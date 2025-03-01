@@ -1,0 +1,12 @@
+[settings]
+    class = "Transfer"
+    contained_by = ""
+    doc_group = "01-Accounts"
+    doc_descr = "a movement of an asset from one address to another (derived from a transaction or a log)"
+    doc_route = "121-transfer"
+    attributes = ""
+    produced_by = "export"
+    contains = ""
+    cache_type = "cacheable"
+    cache_by = "tx"
+    cache_as = "group"

@@ -38,6 +38,7 @@ type ExportOptions struct {
 	Neighbors   bool                  `json:"neighbors,omitempty"`   // Export the neighbors of the given address
 	Accounting  bool                  `json:"accounting,omitempty"`  // Attach accounting records to the exported data (applies to transactions export only)
 	Statements  bool                  `json:"statements,omitempty"`  // For the accounting options only, export only statements
+	Transfers   bool                  `json:"transfers,omitempty"`   // For the accounting options only, export only eth or token transfers
 	Balances    bool                  `json:"balances,omitempty"`    // Traverse the transaction history and show each change in ETH balances
 	Withdrawals bool                  `json:"withdrawals,omitempty"` // Export withdrawals for the given address
 	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
@@ -50,8 +51,8 @@ type ExportOptions struct {
 	Topic       []string              `json:"topic,omitempty"`       // For the --logs option only, filter logs to show only those with this topic(s)
 	Nfts        bool                  `json:"nfts,omitempty"`        // For the --logs option only, filter logs to show only nft transfers
 	Reverted    bool                  `json:"reverted,omitempty"`    // Export only transactions that were reverted
-	Asset       []string              `json:"asset,omitempty"`       // For the accounting options only, export statements only for this asset
-	Flow        string                `json:"flow,omitempty"`        // For the accounting options only, export statements with incoming, outgoing, or zero value
+	Asset       []string              `json:"asset,omitempty"`       // For the accounting options only, export transfers, balances, or statements only for this asset
+	Flow        string                `json:"flow,omitempty"`        // For the accounting options only, export transfers, balances, or statements with incoming, outgoing, or zero value
 	Factory     bool                  `json:"factory,omitempty"`     // For --traces only, report addresses created by (or self-destructed by) the given address(es)
 	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled unripe (i.e. less than 28 blocks old)
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
@@ -82,6 +83,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Neighbors, "Neighbors: ", opts.Neighbors)
 	logger.TestLog(opts.Accounting, "Accounting: ", opts.Accounting)
 	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
+	logger.TestLog(opts.Transfers, "Transfers: ", opts.Transfers)
 	logger.TestLog(opts.Balances, "Balances: ", opts.Balances)
 	logger.TestLog(opts.Withdrawals, "Withdrawals: ", opts.Withdrawals)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
@@ -158,6 +160,8 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 			opts.Accounting = true
 		case "statements":
 			opts.Statements = true
+		case "transfers":
+			opts.Transfers = true
 		case "balances":
 			opts.Balances = true
 		case "withdrawals":
@@ -318,6 +322,7 @@ func (opts *ExportOptions) getCaches() (caches map[walk.CacheType]bool) {
 		// TODO: Enable neighbors cache
 		walk.Cache_Transactions: true,
 		walk.Cache_Statements:   opts.Accounting,
+		walk.Cache_Transfers:    opts.Transfers,
 		walk.Cache_Traces:       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Neighbors)),
 	}
 	// EXISTING_CODE

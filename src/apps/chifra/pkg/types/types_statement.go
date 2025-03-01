@@ -74,6 +74,14 @@ func (s Statement) String() string {
 }
 
 func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
+	var model = map[string]any{}
+	var order = []string{}
+
+	// EXISTING_CODE
 	if extraOpts != nil && extraOpts["accounting"] == true {
 		_, _, _, _ = chain, format, verbose, extraOpts
 		check1, check2, reconciles, byCheckpoint := s.Reconciled2()
@@ -98,14 +106,6 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		)
 		return Model{}
 	}
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
 	model = map[string]any{
 		"blockNumber":         s.BlockNumber,
 		"transactionIndex":    s.TransactionIndex,

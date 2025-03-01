@@ -14,6 +14,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
+// GetTransfers returns a statement from a given transaction
+func (l *Reconciler) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
+	r := ledger2.NewReconciler2(l.connection, l.assetFilter, l.accountFor, l.names, l.asEther)
+	return r.GetTransfers(pos, filter, trans)
+}
+
 // GetStatements returns a statement from a given transaction
 func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	if l.connection.StoreReadable() {

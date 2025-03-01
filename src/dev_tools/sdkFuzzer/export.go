@@ -73,6 +73,7 @@ func DoExport() {
 		TestExport("balances", "", fn, &opts)
 		TestExport("withdrawals", "", fn, &opts)
 		TestExport("statements", "", fn, &opts)
+		TestExport("transfers", "", fn, &opts)
 	}
 
 	/*
@@ -162,6 +163,16 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Statement](fn, statements); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "transfers":
+		if transfers, _, err := opts.ExportTransfers(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Transfer](fn, transfers); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

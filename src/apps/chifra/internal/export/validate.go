@@ -168,13 +168,17 @@ func (opts *ExportOptions) validateExport() error {
 			logger.Warn("The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
 		}
 
+		if opts.Statements && opts.Transfers {
+			return validate.Usage("Choose either {0} or {1}, not both.", "--transfers", "--statements")
+		}
+
 		if len(opts.Flow) > 0 {
 			if err := validate.ValidateEnum("--flow", opts.Flow, "[in|out|zero]"); err != nil {
 				return err
 			}
 
-			if !opts.Statements {
-				return validate.Usage("The {0} option is only available with the {1} option.", "--flow", "--statements")
+			if !opts.Statements && !opts.Transfers {
+				return validate.Usage("The {0} option is only available with the {1} option.", "--flow", "--transfers or --statements")
 			}
 		}
 
@@ -183,13 +187,19 @@ func (opts *ExportOptions) validateExport() error {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--statements", "--accounting")
 		}
 
+		if opts.Transfers {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--transfers", "--accounting")
+		}
+
 		if opts.Globals.Format == "ofx" {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
 		}
 	}
 
-	if len(opts.Asset) > 0 && !opts.Statements {
-		return validate.Usage("The {0} option is only available with the {1} option.", "--asset", "--statements")
+	if len(opts.Asset) > 0 && (!opts.Statements && !opts.Transfers && !opts.Balances) {
+		return validate.Usage("The {0} option is only available with the {1} option.", "--asset", "--transfers, --balances, or --statements")
+	} else if opts.Balances && len(opts.Asset) == 0 {
+		opts.Asset = []string{base.FAKE_ETH_ADDRESS.Hex()}
 	}
 
 	if !validate.HasArticulationKey(opts.Articulate) {

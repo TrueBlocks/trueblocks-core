@@ -78,7 +78,8 @@ Transactions consist of the following fields:
 | gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                            |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                          |
 | receipt          |                                                                                                       | [Receipt](/data-model/chaindata/#receipt)      |
-| statements       | array of reconciliations (calculated)                                                                 | [Statement[]](/data-model/accounts/#statement) |
+| statements       | array of reconciliation statements (calculated)                                                       | [Statement[]](/data-model/accounts/#statement) |
+| transfers        | array of all transfers making up statements (calculated)                                              | [Transfer[]](/data-model/accounts/#transfer)   |
 | articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)        |
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | bool                                           |
 | isError          | `true` if the transaction ended in error, `false` otherwise                                           | bool                                           |

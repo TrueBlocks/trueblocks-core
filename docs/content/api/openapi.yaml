@@ -332,6 +332,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: transfers
+          description: for the accounting options only, export only eth or token transfers
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: balances
           description: traverse the transaction history and show each change in ETH balances
           required: false
@@ -437,7 +445,7 @@ paths:
           schema:
             type: boolean
         - name: asset
-          description: for the accounting options only, export statements only for this asset
+          description: for the accounting options only, export transfers, balances, or statements only for this asset
           required: false
           style: form
           in: query
@@ -448,7 +456,7 @@ paths:
               type: string
               format: address
         - name: flow
-          description: for the accounting options only, export statements with incoming, outgoing, or zero value
+          description: for the accounting options only, export transfers, balances, or statements with incoming, outgoing, or zero value
           required: false
           style: form
           in: query
@@ -565,7 +573,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a>, <a href="/data-model/chaindata/#transaction">Transaction</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, <a href="/data-model/accounts/#transfer">Transfer</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -582,6 +590,7 @@ paths:
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
                         - $ref: "#/components/schemas/transaction"
+                        - $ref: "#/components/schemas/transfer"
                         - $ref: "#/components/schemas/withdrawal"
                 examples:
                   [
@@ -2503,6 +2512,7 @@ paths:
                 - traces
                 - logs
                 - statements
+                - transfers
                 - results
                 - state
                 - tokens
@@ -3394,6 +3404,34 @@ components:
           type: string
           format: int256
           description: "a rolling balance used to help debug intra-block reconciliations"
+    transfer:
+      description: "a movement of an asset from one address to another (derived from a transaction or a log)"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: txnum
+          description: "the zero-indexed position of the transaction in the block"
+        logIndex:
+          type: number
+          format: lognum
+          description: "the zero-indexed position the log in the block, if applicable"
+        asset:
+          type: string
+          format: address
+          description: "0xeeee...eeee for ETH transfers, the token address otherwise"
+        holder:
+          type: string
+          format: address
+          description: "the address of the holder of the address"
+        amount:
+          type: string
+          format: int256
+          description: "a positive or negative (or zero) amount of the transfer in asset units"
     appearanceTable:
       description: "an appearance table for an address"
       type: object
@@ -3511,18 +3549,26 @@ components:
           type: string
           format: ether
           description: "if --ether is specified, the value in ether (calculated)"
-        gasPrice:
-          type: number
-          format: gas
-          description: "the number of wei per unit of gas the sender is willing to spend"
         gas:
           type: number
           format: gas
           description: "the maximum number of gas allowed for this transaction"
+        gasPrice:
+          type: number
+          format: gas
+          description: "the number of wei per unit of gas the sender is willing to spend"
         input:
           type: string
           format: bytes
           description: "byte data either containing a message or funcational data for a smart contracts. See the --articulate"
+        isError:
+          type: boolean
+          format: boolean
+          description: "`true` if the transaction ended in error, `false` otherwise"
+        hasToken:
+          type: boolean
+          format: boolean
+          description: "`true` if the transaction is token related, `false` otherwise"
         receipt:
           type: object
           items:
@@ -3531,19 +3577,16 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/statement"
-          description: "array of reconciliations (calculated)"
+          description: "array of reconciliation statements (calculated)"
+        transfers:
+          type: array
+          items:
+            $ref: "#/components/schemas/transfer"
+          description: "array of all transfers making up statements (calculated)"
         articulatedTx:
           type: object
           items:
             $ref: "#/components/schemas/function"
-        hasToken:
-          type: boolean
-          format: boolean
-          description: "`true` if the transaction is token related, `false` otherwise"
-        isError:
-          type: boolean
-          format: boolean
-          description: "`true` if the transaction ended in error, `false` otherwise"
         compressedTx:
           type: string
           format: string

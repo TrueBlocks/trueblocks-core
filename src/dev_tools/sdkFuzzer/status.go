@@ -64,6 +64,7 @@ func DoStatus() {
 					TestStatus("traces", "", fn, &opts)
 					TestStatus("logs", "", fn, &opts)
 					TestStatus("statements", "", fn, &opts)
+					TestStatus("transfers", "", fn, &opts)
 					TestStatus("results", "", fn, &opts)
 					TestStatus("state", "", fn, &opts)
 					TestStatus("tokens", "", fn, &opts)
@@ -155,6 +156,16 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile[types.Status](fn, statements); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "transfers":
+		if transfers, _, err := opts.StatusTransfers(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile[types.Status](fn, transfers); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

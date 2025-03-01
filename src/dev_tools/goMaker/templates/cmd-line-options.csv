@@ -18,16 +18,17 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 12150,apps,Accounts,list,acctExport,n2,,,,,note,,,,,,No other options are permitted when --silent is selected.
 #
 13000,apps,Accounts,export,acctExport,,,,visible|docs,,command,,,Export details,[flags] <address> [address...] [topics...] [fourbytes...],default|caching|ether|names|,Export full details of transactions for one or more addresses.
-13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,11,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
+13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,12,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
 13030,apps,Accounts,export,acctExport,topics,,,visible|docs,,positional,list<topic>,,,,,filter by one or more log topics (only for --logs option)
 13040,apps,Accounts,export,acctExport,fourbytes,,,visible|docs,,positional,list<fourbyte>,,,,,filter by one or more fourbytes (only for transactions and trace options)
 13050,apps,Accounts,export,acctExport,appearances,p,,visible|docs,5,switch,<boolean>,appearance,,,,export a list of appearances
 13060,apps,Accounts,export,acctExport,receipts,r,,visible|docs,2,switch,<boolean>,receipt,,,,export receipts instead of transactional data
 13070,apps,Accounts,export,acctExport,logs,l,,visible|docs,3,switch,<boolean>,log,,,,export logs instead of transactional data
-13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,10,switch,<boolean>,trace,,,,export traces instead of transactional data
+13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,11,switch,<boolean>,trace,,,,export traces instead of transactional data
 13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,7,switch,<boolean>,message,,,,export the neighbors of the given address
-13100,apps,Accounts,export,acctExport,accounting,C,,visible|docs,9,switch,<boolean>,,,,,attach accounting records to the exported data (applies to transactions export only)
+13100,apps,Accounts,export,acctExport,accounting,C,,visible|docs,10,switch,<boolean>,,,,,attach accounting records to the exported data (applies to transactions export only)
 13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,8,switch,<boolean>,statement,,,,for the accounting options only&#44; export only statements
+13110,apps,Accounts,export,acctExport,transfers,X,,visible|docs,9,switch,<boolean>,transfer,,,,for the accounting options only&#44; export only eth or token transfers
 13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,6,switch,<boolean>,state,,,,traverse the transaction history and show each change in ETH balances
 13130,apps,Accounts,export,acctExport,withdrawals,i,,visible|docs,4,switch,<boolean>,withdrawal,,,,export withdrawals for the given address
 13140,apps,Accounts,export,acctExport,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate transactions&#44; traces&#44; logs&#44; and outputs
@@ -40,8 +41,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13210,apps,Accounts,export,acctExport,topic,B,,visible|docs,,flag,list<topic>,,,,,for the --logs option only&#44; filter logs to show only those with this topic(s)
 13215,apps,Accounts,export,acctExport,nfts,T,,visible|docs,,switch,<boolean>,,,,,for the --logs option only&#44; filter logs to show only nft transfers
 13220,apps,Accounts,export,acctExport,reverted,V,,visible|docs,,switch,<boolean>,,,,,export only transactions that were reverted
-13230,apps,Accounts,export,acctExport,asset,P,,visible|docs,,flag,list<addr>,,,,,for the accounting options only&#44; export statements only for this asset
-13240,apps,Accounts,export,acctExport,flow,f,,visible|docs,,flag,enum[in|out|zero],,,,,for the accounting options only&#44; export statements with incoming&#44; outgoing&#44; or zero value
+13230,apps,Accounts,export,acctExport,asset,P,,visible|docs,,flag,list<addr>,,,,,for the accounting options only&#44; export transfers&#44; balances&#44; or statements only for this asset
+13240,apps,Accounts,export,acctExport,flow,f,,visible|docs,,flag,enum[in|out|zero],,,,,for the accounting options only&#44; export transfers&#44; balances&#44; or statements with incoming&#44; outgoing&#44; or zero value
 13250,apps,Accounts,export,acctExport,factory,y,,visible|docs,,switch,<boolean>,,,,,for --traces only&#44; report addresses created by (or self-destructed by) the given address(es)
 13260,apps,Accounts,export,acctExport,unripe,u,,visible|docs,,switch,<boolean>,,,,,export transactions labeled unripe (i.e. less than 28 blocks old)
 13280,apps,Accounts,export,acctExport,reversed,E,,visible|docs,,switch,<boolean>,,,,,produce results in reverse chronological order
@@ -238,7 +239,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 42040,apps,Admin,config,config,dump,d,,visible|docs,2,switch,<boolean>,config,,,,dump the configuration to stdout
 #
 43000,apps,Admin,status,cacheStatus,,,,visible|docs,,command,,,Get status on caches,<mode> [mode...] [flags],default|,Report on the state of the internal binary caches.
-43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,2,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,status,,,,the (optional) name of the binary cache to report on&#44; terse otherwise
+43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,2,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|transfers|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,status,,,,the (optional) name of the binary cache to report on&#44; terse otherwise
 43030,apps,Admin,status,cacheStatus,diagnose,d,,visible|docs,1,switch,<boolean>,status,,,,same as the default but with additional diagnostics
 43040,apps,Admin,status,cacheStatus,first_record,c,,visible|docs,,flag,<uint64>,,,,,the first record to process
 43050,apps,Admin,status,cacheStatus,max_records,e,10000,visible|docs,,flag,<uint64>,,,,,the maximum number of records to process

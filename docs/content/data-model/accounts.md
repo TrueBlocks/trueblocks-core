@@ -218,6 +218,25 @@ Statements consist of the following fields:
 | postAssetType       | one of eth, eth-trace, token, or token-721                                                                                            | TrialBalType |
 | rollingBalance      | a rolling balance used to help debug intra-block reconciliations                                                                      | int256       |
 
+## Transfer
+
+
+
+The following commands produce and manage Transfers:
+
+- [chifra export](/chifra/accounts/#chifra-export)
+
+Transfers consist of the following fields:
+
+| Field            | Description                                                            | Type    |
+| ---------------- | ---------------------------------------------------------------------- | ------- |
+| blockNumber      | the number of the block                                                | blknum  |
+| transactionIndex | the zero-indexed position of the transaction in the block              | txnum   |
+| logIndex         | the zero-indexed position the log in the block, if applicable          | lognum  |
+| asset            | 0xeeee...eeee for ETH transfers, the token address otherwise           | address |
+| holder           | the address of the holder of the address                               | address |
+| amount           | a positive or negative (or zero) amount of the transfer in asset units | int256  |
+
 ## AppearanceTable
 
 The `appearanceTable` data model carries an address and all appearances for that address found in any given chunk.

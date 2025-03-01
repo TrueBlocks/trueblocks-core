@@ -17,12 +17,13 @@ gasPrice             ,gas           ,           ,           ,      13 ,the numbe
 maxFeePerGas         ,gas           ,           ,           ,         ,
 maxPriorityFeePerGas ,gas           ,           ,           ,         ,
 input                ,bytes         ,           ,           ,      14 ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
-isError              ,bool          ,           ,           ,      19 ,`true` if the transaction ended in error&#44; `false` otherwise
-hasToken             ,bool          ,           ,           ,      18 ,`true` if the transaction is token related&#44; `false` otherwise
+isError              ,bool          ,           ,           ,      20 ,`true` if the transaction ended in error&#44; `false` otherwise
+hasToken             ,bool          ,           ,           ,      19 ,`true` if the transaction is token related&#44; `false` otherwise
 receipt              ,*Receipt      ,           ,           ,      15 ,
 traces               ,[]Trace       ,           ,           ,         ,
-articulatedTx        ,*Function     ,           ,           ,      17 ,
-compressedTx         ,string        ,           ,calc       ,      20 ,truncated&#44; more readable version of the articulation
-statements           ,[]Statement   ,           ,calc       ,      16 ,array of reconciliations
+articulatedTx        ,*Function     ,           ,           ,      18 ,
+compressedTx         ,string        ,           ,calc       ,      21 ,truncated&#44; more readable version of the articulation
+statements           ,[]Statement   ,           ,calc       ,      16 ,array of reconciliation statements
+transfers            ,[]Transfer    ,           ,calc       ,      17 ,array of all transfers making up statements
 gasUsed              ,gas           ,           ,           ,         ,
 type                 ,string        ,           ,           ,         ,

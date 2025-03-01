@@ -15,7 +15,7 @@ import (
 )
 
 // getStatementsFromLog returns a statement from a given log
-func (l *Reconciler) getStatementsFromLog(pos *types.AppPosition, trans *types.Transaction, logIn *types.Log) (types.Statement, error) {
+func (r *Reconciler) getStatementsFromLog(pos *types.AppPosition, trans *types.Transaction, logIn *types.Log) (types.Statement, error) {
 	if logIn.Topics[0] != topics.TransferTopic {
 		return types.Statement{}, nil
 	}
@@ -30,14 +30,14 @@ func (l *Reconciler) getStatementsFromLog(pos *types.AppPosition, trans *types.T
 		sender := base.HexToAddress(log.Topics[1].Hex())
 		recipient := base.HexToAddress(log.Topics[2].Hex())
 
-		isSender, isRecipient := l.accountFor == sender, l.accountFor == recipient
+		isSender, isRecipient := r.accountFor == sender, r.accountFor == recipient
 		if utils.IsFuzzing() || (!isSender && !isRecipient) {
 			return types.Statement{}, err
 		}
 
 		sym := log.Address.DefaultSymbol()
 		decimals := base.Value(18)
-		name := l.names[log.Address]
+		name := r.names[log.Address]
 		if name.Address == log.Address {
 			if name.Symbol != "" {
 				sym = name.Symbol
@@ -54,16 +54,16 @@ func (l *Reconciler) getStatementsFromLog(pos *types.AppPosition, trans *types.T
 		}
 
 		// Do not collapse, may be both
-		if l.accountFor == sender {
+		if r.accountFor == sender {
 			amountOut = *amt
 		}
 		// Do not collapse, may be both
-		if l.accountFor == recipient {
+		if r.accountFor == recipient {
 			amountIn = *amt
 		}
 
 		s := types.Statement{
-			AccountedFor:     l.accountFor,
+			AccountedFor:     r.accountFor,
 			Sender:           sender,
 			Recipient:        recipient,
 			BlockNumber:      log.BlockNumber,
@@ -82,25 +82,25 @@ func (l *Reconciler) getStatementsFromLog(pos *types.AppPosition, trans *types.T
 			PostLast:         pos.Last,
 		}
 
-		pBal, err := l.connection.GetBalanceAtToken(log.Address, l.accountFor, pos.Prev)
+		pBal, err := r.connection.GetBalanceAtToken(log.Address, r.accountFor, pos.Prev)
 		if err != nil || pBal == nil {
 			return s, err
 		}
 		s.PrevBal = *pBal
 
-		bBal, err := l.connection.GetBalanceAtToken(log.Address, l.accountFor, trans.BlockNumber-1)
+		bBal, err := r.connection.GetBalanceAtToken(log.Address, r.accountFor, trans.BlockNumber-1)
 		if err != nil || bBal == nil {
 			return s, err
 		}
 		s.BegBal = *bBal
 
-		eBal, err := l.connection.GetBalanceAtToken(log.Address, l.accountFor, trans.BlockNumber)
+		eBal, err := r.connection.GetBalanceAtToken(log.Address, r.accountFor, trans.BlockNumber)
 		if err != nil || eBal == nil {
 			return s, err
 		}
 		s.EndBal = *eBal
 
-		reconciled := l.trialBalance(pos, types.TrialBalToken, trans, &s)
+		reconciled := r.trialBalance(pos, types.TrialBalToken, trans, &s)
 		if reconciled {
 			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 			logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
