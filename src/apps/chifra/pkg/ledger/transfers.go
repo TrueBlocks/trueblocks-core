@@ -1,13 +1,15 @@
-package ledger2
+package ledger
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (r *Reconciler2) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
+// GetTransfers returns a statement from a given transaction
+func (r *Reconciler) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
 	if r.connection.StoreReadable() {
 		transferGroup := &types.TransferGroup{
 			BlockNumber:      trans.BlockNumber,
@@ -18,41 +20,39 @@ func (r *Reconciler2) GetTransfers(pos *types.AppPosition, filter *filter.Appear
 		}
 	}
 
-	if statements, err := r.GetStatements(pos, filter, trans); err != nil {
+	var err error
+	var statements []types.Statement
+	if true { // !r.useTraces {
+		r2 := ledger2.NewReconciler2(r.connection, r.assetFilter, r.accountFor, r.names, r.asEther)
+		if statements, err = r2.GetStatements(pos, filter, trans); err != nil {
+			return nil, err
+		}
+		// } else {
+		// 	if statements, err = r.GetStatements(pos, filter, trans); err != nil {
+		// 		return nil, err
+		// 	}
+	}
+
+	if transfers, err := types.ConvertToTransfers(statements); err != nil {
 		return nil, err
 	} else {
-		allTransfers := make([]types.Transfer, 0, len(statements)*2)
-		for _, stmnt := range statements {
-			t := types.Transfer{
-				Asset:            stmnt.AssetAddress,
-				Holder:           stmnt.AccountedFor,
-				Amount:           *stmnt.AmountNet(),
-				BlockNumber:      stmnt.BlockNumber,
-				TransactionIndex: stmnt.TransactionIndex,
-				LogIndex:         stmnt.LogIndex,
-				Decimals:         stmnt.Decimals,
-			}
-			allTransfers = append(allTransfers, t)
-		}
-
 		isFinal := base.IsFinal(r.connection.LatestBlockTimestamp, trans.Timestamp)
 		isWritable := r.connection.StoreWritable()
 		isEnabled := r.connection.EnabledMap[walk.Cache_Transfers]
 		// TODO: BOGUS Turn on caching for allTransfers once we get 100% coverage
 		if false && isFinal && isWritable && isEnabled {
-			for _, transfer := range allTransfers {
+			for _, transfer := range transfers {
 				if transfer.IsMaterial() {
-					return allTransfers, nil
+					return transfers, nil
 				}
 			}
 			transfersGroup := &types.TransferGroup{
 				BlockNumber:      trans.BlockNumber,
 				TransactionIndex: trans.TransactionIndex,
-				Transfers:        allTransfers,
+				Transfers:        transfers,
 			}
 			_ = r.connection.Store.Write(transfersGroup, nil)
 		}
-
-		return allTransfers, nil
+		return transfers, nil
 	}
 }
