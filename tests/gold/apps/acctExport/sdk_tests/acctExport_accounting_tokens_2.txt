@@ -15,7 +15,6 @@ Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               0
 Current:                0
 Next:                   202249
-postType:               genesis-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -49,7 +48,6 @@ Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               0
 Current:                202249
 Next:                   1501459
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -84,7 +82,6 @@ Block 1501459 is prior to deployment (3684349) of Maker. No fallback pricing met
 Previous:               202249
 Current:                1501459
 Next:                   1501460
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -173,7 +170,6 @@ Trial balance:
           "postAssetType": "eth",
           "postFirst": true,
           "postLast": false,
-          "postType": "genesis-diff",
           "prefundIn": "4200000000000000000000",
           "prefundInEth": "4200",
           "prevBal": "0",
@@ -271,7 +267,6 @@ Trial balance:
           "postAssetType": "eth",
           "postFirst": false,
           "postLast": false,
-          "postType": "diff-diff",
           "prefundIn": "0",
           "prefundInEth": "0",
           "prevBal": "4200000000000000000000",
@@ -368,7 +363,6 @@ Trial balance:
           "postAssetType": "eth",
           "postFirst": false,
           "postLast": true,
-          "postType": "diff-diff",
           "prefundIn": "0",
           "prefundInEth": "0",
           "prevBal": "74679320489077336",

@@ -46,7 +46,6 @@
       "postAssetType": "token",
       "postFirst": true,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "2017044745122853478376",

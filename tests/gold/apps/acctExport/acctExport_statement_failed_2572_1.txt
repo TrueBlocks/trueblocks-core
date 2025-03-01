@@ -45,7 +45,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               15549161
 TEST[DATE|TIME] Current:                15549162
 TEST[DATE|TIME] Next:                   15549163
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -124,7 +123,6 @@ Results in ./failed_statement_2572_1_out.file
       "postAssetType": "token",
       "postFirst": true,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "2017044745122853478376",

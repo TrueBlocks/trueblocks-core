@@ -20,7 +20,6 @@ stable-coin
 Previous:               12704456
 Current:                12704710
 Next:                   12704812
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -57,7 +56,6 @@ stable-coin
 Previous:               12704710
 Current:                12704812
 Next:                   12705275
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -94,7 +92,6 @@ stable-coin
 Previous:               12704812
 Current:                12705275
 Next:                   12705892
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -144,7 +141,6 @@ source:              uniswap
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -181,7 +177,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -219,7 +214,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -257,7 +251,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -295,7 +288,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -333,7 +325,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -371,7 +362,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -409,7 +399,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -447,7 +436,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -485,7 +473,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -523,7 +510,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -561,7 +547,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -599,7 +584,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -637,7 +621,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -675,7 +658,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -713,7 +695,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -751,7 +732,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -789,7 +769,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -827,7 +806,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -865,7 +843,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -903,7 +880,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -941,7 +917,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -979,7 +954,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1017,7 +991,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1055,7 +1028,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1093,7 +1065,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1131,7 +1102,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1169,7 +1139,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1207,7 +1176,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1245,7 +1213,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1283,7 +1250,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1321,7 +1287,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1359,7 +1324,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1397,7 +1361,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1435,7 +1398,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1473,7 +1435,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1511,7 +1472,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1549,7 +1509,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1587,7 +1546,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1625,7 +1583,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1663,7 +1620,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1701,7 +1657,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1739,7 +1694,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1777,7 +1731,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -1815,7 +1768,6 @@ stable-coin
 Previous:               12705275
 Current:                12705892
 Next:                   12705893
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token

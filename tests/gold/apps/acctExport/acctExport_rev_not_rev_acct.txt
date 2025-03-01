@@ -38,7 +38,6 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            same-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -106,7 +105,6 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x3b161d57f482cd2dfbb626f0307ef92b3b094fce
 TEST[DATE|TIME]    recipient:           0x226159d592e2b063810a10ebf6dcbada94ed68b8
@@ -174,7 +172,6 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    recipient:           0xb97073b754660bb356dfe12f78ae366d77dbc80f
@@ -242,7 +239,6 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xb97073b754660bb356dfe12f78ae366d77dbc80f
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -310,7 +306,6 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xeba60d324c2546459e1e9dd4c7e740ca80134588
 TEST[DATE|TIME]    recipient:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
@@ -369,7 +364,6 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            diff-diff-token
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xeba60d324c2546459e1e9dd4c7e740ca80134588
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -437,7 +431,6 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x8c492d5f763841767362d716e3e69511f0527791
 TEST[DATE|TIME]    recipient:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
@@ -496,7 +489,6 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            diff-diff-token
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x8c492d5f763841767362d716e3e69511f0527791
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -691,7 +683,6 @@ Results in ./rev_not_rev_acct_out.file
           "priceSource": "maker",
           "recipient": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
           "reconciled": true,
-          "postType": "diff-diff-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
@@ -762,7 +753,6 @@ Results in ./rev_not_rev_acct_out.file
           "priceSource": "maker",
           "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
           "reconciled": true,
-          "postType": "diff-diff-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
@@ -865,7 +855,6 @@ Results in ./rev_not_rev_acct_out.file
           "priceSource": "stable-coin",
           "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
           "reconciled": true,
-          "postType": "diff-diff-token",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0xeba60d324c2546459e1e9dd4c7e740ca80134588",
@@ -968,7 +957,6 @@ Results in ./rev_not_rev_acct_out.file
           "priceSource": "stable-coin",
           "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
           "reconciled": true,
-          "postType": "diff-diff-token",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x8c492d5f763841767362d716e3e69511f0527791",

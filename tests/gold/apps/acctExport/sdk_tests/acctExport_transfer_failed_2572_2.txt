@@ -34,7 +34,6 @@ source:              uniswap
 Previous:               11670418
 Current:                11670419
 Next:                   11670420
-postType:               diff-diff
 postFirst:              true
 postLast:               true
 postAssetType:          token

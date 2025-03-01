@@ -16,7 +16,6 @@ Block 7005646 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               7005645
 Current:                7005646
 Next:                   7005654
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          token
@@ -50,7 +49,6 @@ Block 7005654 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               7005646
 Current:                7005654
 Next:                   7005662
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -84,7 +82,6 @@ Block 7005662 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               7005654
 Current:                7005662
 Next:                   7005737
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -130,7 +127,6 @@ Block 7005737 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               7005662
 Current:                7005737
 Next:                   7005737
-postType:               diff-same
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -178,7 +174,6 @@ Block 7005737 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               7005737
 Current:                7005737
 Next:                   7005738
-postType:               same-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -255,7 +250,6 @@ Trial balance:
       "postAssetType": "token",
       "postFirst": true,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "64663282872000000000000",
@@ -325,7 +319,6 @@ Trial balance:
       "postAssetType": "token",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "67679392659000000000000",
@@ -395,7 +388,6 @@ Trial balance:
       "postAssetType": "token",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "69662377341000000000000",
@@ -465,7 +457,6 @@ Trial balance:
       "postAssetType": "token",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-same",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "71040040864000000000000",
@@ -535,7 +526,6 @@ Trial balance:
       "postAssetType": "token",
       "postFirst": false,
       "postLast": true,
-      "postType": "same-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "71040040864000000000000",

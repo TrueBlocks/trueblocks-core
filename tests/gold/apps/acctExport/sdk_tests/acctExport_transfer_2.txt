@@ -14,7 +14,6 @@ Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               0
 Current:                0
 Next:                   46685
-postType:               genesis-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -48,7 +47,6 @@ Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               0
 Current:                46685
 Next:                   46709
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -83,7 +81,6 @@ Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               46685
 Current:                46709
 Next:                   46710
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth

@@ -74,8 +74,6 @@ func (l *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 				PrevBal:          *prevBal,
 				BegBal:           *begBal,
 				EndBal:           *endBal,
-				BlockNumberPrev:  pos.Prev,
-				BlockNumberNext:  pos.Next,
 				PostFirst:        pos.First,
 				PostLast:         pos.Last,
 			}

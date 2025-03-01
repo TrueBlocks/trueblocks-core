@@ -13,7 +13,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8876231
 TEST[DATE|TIME] Current:                8876232
 TEST[DATE|TIME] Next:                   9000998
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          token
@@ -71,7 +70,6 @@ TEST[DATE|TIME] ---------------------------------------------------
       "postAssetType": "token",
       "postFirst": true,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "0",
       "priceSource": "token-not-priced-pre-uni",

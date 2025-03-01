@@ -80,20 +80,3 @@ func TestPostingCalculations(t *testing.T) {
 		t.Fatalf("NetValue mismatch. got=%s want=56", netVal.String())
 	}
 }
-
-// func TestPostingString(t *testing.T) {
-// 	p := Posting{
-// 		BlockNumber:      50,
-// 		TransactionIndex: 2,
-// 		LogIndex:         12,
-// 		Timestamp:        base.Timestamp(123456),
-// 	}
-// 	p.AmountIn = *base.NewWei(123)
-// 	p.AmountOut = *base.NewWei(100)
-
-// 	got := p.String()
-// 	want := `{"accountedFor":"0x0","amountIn":{},"amountOut":{},"assetAddress":"0x0","assetSymbol":"","begBal":{},"blockNumber":50,"blockNumberPrev":0,"blockNumberNext":0,"correctingIn":{},"correctingOut":{},"decimals":0,"endBal":{},"gasOut":{},"internalIn":{},"internalOut":{},"logIndex":12,"minerBaseRewardIn":{},"minerNephewRewardIn":{},"minerTxFeeIn":{},"minerUncleRewardIn":{},"prefundIn":{},"prevBal":{},"priceSource":"","recipient":"0x0","rollingBalance":{},"selfDestructIn":{},"selfDestructOut":{},"sender":"0x0","spotPrice":0,"timestamp":123456,"transactionHash":"0x0000000000000000000000000000000000000000000000000000000000000000","transactionIndex":2}`
-// 	if got != want {
-// 		t.Fatalf("String mismatch.\ngot:  %s\nwant: %s", got, want)
-// 	}
-// }

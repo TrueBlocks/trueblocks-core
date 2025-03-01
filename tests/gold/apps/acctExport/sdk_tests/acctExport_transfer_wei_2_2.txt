@@ -16,7 +16,6 @@ Block 1 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               0
 Current:                1
 Next:                   5
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -50,7 +49,6 @@ Block 5 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               1
 Current:                5
 Next:                   56
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -84,7 +82,6 @@ Block 56 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               5
 Current:                56
 Next:                   235
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -118,7 +115,6 @@ Block 235 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               56
 Current:                235
 Next:                   247
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -152,7 +148,6 @@ Block 247 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               235
 Current:                247
 Next:                   348
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -186,7 +181,6 @@ Block 348 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               247
 Current:                348
 Next:                   500
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -220,7 +214,6 @@ Block 500 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               348
 Current:                500
 Next:                   563
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -254,7 +247,6 @@ Block 563 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               500
 Current:                563
 Next:                   987
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -288,7 +280,6 @@ Block 987 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               563
 Current:                987
 Next:                   1450
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -322,7 +313,6 @@ Block 1450 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               987
 Current:                1450
 Next:                   1580
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -357,7 +347,6 @@ Block 1580 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               1450
 Current:                1580
 Next:                   1586
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -391,7 +380,6 @@ Block 1586 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               1580
 Current:                1586
 Next:                   1861
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -425,7 +413,6 @@ Block 1861 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               1586
 Current:                1861
 Next:                   1912
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -459,7 +446,6 @@ Block 1912 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               1861
 Current:                1912
 Next:                   2057
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -493,7 +479,6 @@ Block 2057 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               1912
 Current:                2057
 Next:                   2256
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -527,7 +512,6 @@ Block 2256 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               2057
 Current:                2256
 Next:                   2392
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -561,7 +545,6 @@ Block 2392 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               2256
 Current:                2392
 Next:                   2516
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -596,7 +579,6 @@ Block 2516 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               2392
 Current:                2516
 Next:                   3962
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -630,7 +612,6 @@ Block 3962 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               2516
 Current:                3962
 Next:                   4256
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -664,7 +645,6 @@ Block 4256 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               3962
 Current:                4256
 Next:                   4257
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -698,7 +678,6 @@ Block 4834 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               4833
 Current:                4834
 Next:                   5122
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -732,7 +711,6 @@ Block 5122 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               4834
 Current:                5122
 Next:                   5306
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -766,7 +744,6 @@ Block 5306 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               5122
 Current:                5306
 Next:                   5567
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -800,7 +777,6 @@ Block 5567 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               5306
 Current:                5567
 Next:                   5631
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -835,7 +811,6 @@ Block 5631 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               5567
 Current:                5631
 Next:                   6412
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -869,7 +844,6 @@ Block 6412 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               5631
 Current:                6412
 Next:                   6658
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -903,7 +877,6 @@ Block 6658 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               6412
 Current:                6658
 Next:                   6693
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -937,7 +910,6 @@ Block 6693 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               6658
 Current:                6693
 Next:                   7069
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -971,7 +943,6 @@ Block 7069 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               6693
 Current:                7069
 Next:                   7777
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1005,7 +976,6 @@ Block 7777 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               7069
 Current:                7777
 Next:                   8361
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1039,7 +1009,6 @@ Block 8361 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               7777
 Current:                8361
 Next:                   10710
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1073,7 +1042,6 @@ Block 10710 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               8361
 Current:                10710
 Next:                   10797
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1107,7 +1075,6 @@ Block 10797 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               10710
 Current:                10797
 Next:                   11305
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1141,7 +1108,6 @@ Block 11305 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               10797
 Current:                11305
 Next:                   12113
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1175,7 +1141,6 @@ Block 12113 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               11305
 Current:                12113
 Next:                   12155
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1209,7 +1174,6 @@ Block 12155 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               12113
 Current:                12155
 Next:                   13662
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1243,7 +1207,6 @@ Block 13662 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               12155
 Current:                13662
 Next:                   13899
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1277,7 +1240,6 @@ Block 13899 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               13662
 Current:                13899
 Next:                   14133
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1311,7 +1273,6 @@ Block 14133 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               13899
 Current:                14133
 Next:                   14195
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1345,7 +1306,6 @@ Block 14195 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               14133
 Current:                14195
 Next:                   14196
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -1379,7 +1339,6 @@ Block 14948 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               14947
 Current:                14948
 Next:                   15398
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -1413,7 +1372,6 @@ Block 15398 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               14948
 Current:                15398
 Next:                   15972
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1447,7 +1405,6 @@ Block 15972 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               15398
 Current:                15972
 Next:                   16047
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1481,7 +1438,6 @@ Block 16047 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               15972
 Current:                16047
 Next:                   16063
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1516,7 +1472,6 @@ Block 16063 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               16047
 Current:                16063
 Next:                   16769
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1550,7 +1505,6 @@ Block 16769 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               16063
 Current:                16769
 Next:                   17281
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1584,7 +1538,6 @@ Block 17281 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               16769
 Current:                17281
 Next:                   17282
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1618,7 +1571,6 @@ Block 17282 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               17281
 Current:                17282
 Next:                   19205
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1652,7 +1604,6 @@ Block 19205 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               17282
 Current:                19205
 Next:                   21060
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1686,7 +1637,6 @@ Block 21060 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               19205
 Current:                21060
 Next:                   21792
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1720,7 +1670,6 @@ Block 21792 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               21060
 Current:                21792
 Next:                   22071
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1754,7 +1703,6 @@ Block 22071 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               21792
 Current:                22071
 Next:                   23065
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1788,7 +1736,6 @@ Block 23065 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               22071
 Current:                23065
 Next:                   23456
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1822,7 +1769,6 @@ Block 23456 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               23065
 Current:                23456
 Next:                   23853
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1856,7 +1802,6 @@ Block 23853 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               23456
 Current:                23853
 Next:                   24057
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1890,7 +1835,6 @@ Block 24057 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               23853
 Current:                24057
 Next:                   24151
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1924,7 +1868,6 @@ Block 24151 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               24057
 Current:                24151
 Next:                   24748
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1958,7 +1901,6 @@ Block 24748 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               24151
 Current:                24748
 Next:                   25963
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -1992,7 +1934,6 @@ Block 25963 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               24748
 Current:                25963
 Next:                   26164
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2026,7 +1967,6 @@ Block 26164 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               25963
 Current:                26164
 Next:                   26165
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -2060,7 +2000,6 @@ Block 27355 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               27354
 Current:                27355
 Next:                   28883
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -2094,7 +2033,6 @@ Block 28883 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               27355
 Current:                28883
 Next:                   30829
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2128,7 +2066,6 @@ Block 30829 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               28883
 Current:                30829
 Next:                   31104
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2162,7 +2099,6 @@ Block 31104 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               30829
 Current:                31104
 Next:                   31289
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2196,7 +2132,6 @@ Block 31289 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               31104
 Current:                31289
 Next:                   31596
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2230,7 +2165,6 @@ Block 31596 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               31289
 Current:                31596
 Next:                   47521
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2264,7 +2198,6 @@ Block 47521 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               31596
 Current:                47521
 Next:                   55885
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2298,7 +2231,6 @@ Block 55885 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               47521
 Current:                55885
 Next:                   66040
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2332,7 +2264,6 @@ Block 66040 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               55885
 Current:                66040
 Next:                   66526
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2366,7 +2297,6 @@ Block 66526 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               66040
 Current:                66526
 Next:                   67431
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2400,7 +2330,6 @@ Block 67431 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               66526
 Current:                67431
 Next:                   67975
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2434,7 +2363,6 @@ Block 67975 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               67431
 Current:                67975
 Next:                   68362
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2468,7 +2396,6 @@ Block 68362 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               67975
 Current:                68362
 Next:                   74263
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2503,7 +2430,6 @@ Block 74263 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               68362
 Current:                74263
 Next:                   75212
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2537,7 +2463,6 @@ Block 75212 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               74263
 Current:                75212
 Next:                   79098
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2572,7 +2497,6 @@ Block 79098 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               75212
 Current:                79098
 Next:                   84279
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2606,7 +2530,6 @@ Block 84279 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               79098
 Current:                84279
 Next:                   89785
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2640,7 +2563,6 @@ Block 89785 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               84279
 Current:                89785
 Next:                   94656
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2674,7 +2596,6 @@ Block 94656 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               89785
 Current:                94656
 Next:                   99961
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2708,7 +2629,6 @@ Block 99961 is prior to deployment (3684349) of Maker. No fallback pricing metho
 Previous:               94656
 Current:                99961
 Next:                   99962
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -2742,7 +2662,6 @@ Block 105316 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               105315
 Current:                105316
 Next:                   112684
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -2776,7 +2695,6 @@ Block 112684 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               105316
 Current:                112684
 Next:                   115289
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2810,7 +2728,6 @@ Block 115289 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               112684
 Current:                115289
 Next:                   116814
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2844,7 +2761,6 @@ Block 116814 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               115289
 Current:                116814
 Next:                   119338
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2878,7 +2794,6 @@ Block 119338 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               116814
 Current:                119338
 Next:                   121873
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2912,7 +2827,6 @@ Block 121873 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               119338
 Current:                121873
 Next:                   137310
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2946,7 +2860,6 @@ Block 137310 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               121873
 Current:                137310
 Next:                   139781
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -2980,7 +2893,6 @@ Block 139781 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               137310
 Current:                139781
 Next:                   142351
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3014,7 +2926,6 @@ Block 142351 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               139781
 Current:                142351
 Next:                   144968
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3048,7 +2959,6 @@ Block 144968 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               142351
 Current:                144968
 Next:                   147418
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3082,7 +2992,6 @@ Block 147418 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               144968
 Current:                147418
 Next:                   149846
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3116,7 +3025,6 @@ Block 149846 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               147418
 Current:                149846
 Next:                   152194
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3150,7 +3058,6 @@ Block 152194 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               149846
 Current:                152194
 Next:                   154610
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3184,7 +3091,6 @@ Block 154610 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               152194
 Current:                154610
 Next:                   156892
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3218,7 +3124,6 @@ Block 156892 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               154610
 Current:                156892
 Next:                   159155
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3252,7 +3157,6 @@ Block 159155 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               156892
 Current:                159155
 Next:                   161286
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3286,7 +3190,6 @@ Block 161286 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               159155
 Current:                161286
 Next:                   163274
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3320,7 +3223,6 @@ Block 163274 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               161286
 Current:                163274
 Next:                   165427
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3354,7 +3256,6 @@ Block 165427 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               163274
 Current:                165427
 Next:                   167519
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3388,7 +3289,6 @@ Block 167519 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               165427
 Current:                167519
 Next:                   167520
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -3422,7 +3322,6 @@ Block 169571 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               169570
 Current:                169571
 Next:                   171561
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -3456,7 +3355,6 @@ Block 171561 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               169571
 Current:                171561
 Next:                   173513
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3490,7 +3388,6 @@ Block 173513 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               171561
 Current:                173513
 Next:                   175468
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3524,7 +3421,6 @@ Block 175468 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               173513
 Current:                175468
 Next:                   178888
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3558,7 +3454,6 @@ Block 178888 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               175468
 Current:                178888
 Next:                   180570
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3592,7 +3487,6 @@ Block 180570 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               178888
 Current:                180570
 Next:                   182535
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3626,7 +3520,6 @@ Block 182535 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               180570
 Current:                182535
 Next:                   184834
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3660,7 +3553,6 @@ Block 184834 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               182535
 Current:                184834
 Next:                   187219
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3694,7 +3586,6 @@ Block 187219 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               184834
 Current:                187219
 Next:                   189720
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3728,7 +3619,6 @@ Block 189720 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               187219
 Current:                189720
 Next:                   192125
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3762,7 +3652,6 @@ Block 192125 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               189720
 Current:                192125
 Next:                   194670
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3796,7 +3685,6 @@ Block 194670 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               192125
 Current:                194670
 Next:                   197063
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3830,7 +3718,6 @@ Block 197063 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               194670
 Current:                197063
 Next:                   199867
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3864,7 +3751,6 @@ Block 199867 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               197063
 Current:                199867
 Next:                   200396
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3898,7 +3784,6 @@ Block 200396 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               199867
 Current:                200396
 Next:                   200941
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3932,7 +3817,6 @@ Block 200941 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               200396
 Current:                200941
 Next:                   217743
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -3966,7 +3850,6 @@ Block 217743 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               200941
 Current:                217743
 Next:                   220166
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4000,7 +3883,6 @@ Block 220166 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               217743
 Current:                220166
 Next:                   222691
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4034,7 +3916,6 @@ Block 222691 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               220166
 Current:                222691
 Next:                   225223
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4068,7 +3949,6 @@ Block 225223 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               222691
 Current:                225223
 Next:                   225224
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -4102,7 +3982,6 @@ Block 227706 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               227705
 Current:                227706
 Next:                   230210
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -4136,7 +4015,6 @@ Block 230210 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               227706
 Current:                230210
 Next:                   232621
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4170,7 +4048,6 @@ Block 232621 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               230210
 Current:                232621
 Next:                   235084
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4204,7 +4081,6 @@ Block 235084 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               232621
 Current:                235084
 Next:                   237365
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4238,7 +4114,6 @@ Block 237365 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               235084
 Current:                237365
 Next:                   239905
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4272,7 +4147,6 @@ Block 239905 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               237365
 Current:                239905
 Next:                   242287
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4306,7 +4180,6 @@ Block 242287 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               239905
 Current:                242287
 Next:                   244838
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4340,7 +4213,6 @@ Block 244838 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               242287
 Current:                244838
 Next:                   290137
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4374,7 +4246,6 @@ Block 290137 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               244838
 Current:                290137
 Next:                   292580
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4408,7 +4279,6 @@ Block 292580 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               290137
 Current:                292580
 Next:                   295102
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4442,7 +4312,6 @@ Block 295102 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               292580
 Current:                295102
 Next:                   297504
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4476,7 +4345,6 @@ Block 297504 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               295102
 Current:                297504
 Next:                   299915
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4510,7 +4378,6 @@ Block 299915 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               297504
 Current:                299915
 Next:                   302037
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4544,7 +4411,6 @@ Block 302037 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               299915
 Current:                302037
 Next:                   304582
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4578,7 +4444,6 @@ Block 304582 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               302037
 Current:                304582
 Next:                   306942
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4612,7 +4477,6 @@ Block 306942 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               304582
 Current:                306942
 Next:                   309237
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4646,7 +4510,6 @@ Block 309237 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               306942
 Current:                309237
 Next:                   311569
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4680,7 +4543,6 @@ Block 311569 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               309237
 Current:                311569
 Next:                   313983
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4714,7 +4576,6 @@ Block 313983 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               311569
 Current:                313983
 Next:                   316543
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4748,7 +4609,6 @@ Block 316543 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               313983
 Current:                316543
 Next:                   316544
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -4782,7 +4642,6 @@ Block 319149 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               319148
 Current:                319149
 Next:                   321677
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -4816,7 +4675,6 @@ Block 321677 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               319149
 Current:                321677
 Next:                   324268
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4850,7 +4708,6 @@ Block 324268 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               321677
 Current:                324268
 Next:                   326662
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4884,7 +4741,6 @@ Block 326662 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               324268
 Current:                326662
 Next:                   329408
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4918,7 +4774,6 @@ Block 329408 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               326662
 Current:                329408
 Next:                   331597
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4952,7 +4807,6 @@ Block 331597 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               329408
 Current:                331597
 Next:                   334242
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -4986,7 +4840,6 @@ Block 334242 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               331597
 Current:                334242
 Next:                   336725
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5020,7 +4873,6 @@ Block 336725 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               334242
 Current:                336725
 Next:                   475307
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5054,7 +4906,6 @@ Block 475307 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               336725
 Current:                475307
 Next:                   475329
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5089,7 +4940,6 @@ Block 475329 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               475307
 Current:                475329
 Next:                   606414
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5124,7 +4974,6 @@ Block 606414 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               475329
 Current:                606414
 Next:                   608946
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5158,7 +5007,6 @@ Block 608946 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               606414
 Current:                608946
 Next:                   611470
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5192,7 +5040,6 @@ Block 611470 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               608946
 Current:                611470
 Next:                   614026
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5226,7 +5073,6 @@ Block 614026 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               611470
 Current:                614026
 Next:                   616520
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5260,7 +5106,6 @@ Block 616520 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               614026
 Current:                616520
 Next:                   619061
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5294,7 +5139,6 @@ Block 619061 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               616520
 Current:                619061
 Next:                   621649
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5328,7 +5172,6 @@ Block 621649 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               619061
 Current:                621649
 Next:                   624102
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5362,7 +5205,6 @@ Block 624102 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               621649
 Current:                624102
 Next:                   626679
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5396,7 +5238,6 @@ Block 626679 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               624102
 Current:                626679
 Next:                   629208
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5430,7 +5271,6 @@ Block 629208 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               626679
 Current:                629208
 Next:                   629209
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -5464,7 +5304,6 @@ Block 631525 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               631524
 Current:                631525
 Next:                   634166
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -5498,7 +5337,6 @@ Block 634166 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               631525
 Current:                634166
 Next:                   636686
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5532,7 +5370,6 @@ Block 636686 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               634166
 Current:                636686
 Next:                   639224
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5566,7 +5403,6 @@ Block 639224 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               636686
 Current:                639224
 Next:                   641752
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5600,7 +5436,6 @@ Block 641752 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               639224
 Current:                641752
 Next:                   644239
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5634,7 +5469,6 @@ Block 644239 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               641752
 Current:                644239
 Next:                   646725
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5668,7 +5502,6 @@ Block 646725 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               644239
 Current:                646725
 Next:                   649167
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5702,7 +5535,6 @@ Block 649167 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               646725
 Current:                649167
 Next:                   651658
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5736,7 +5568,6 @@ Block 651658 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               649167
 Current:                651658
 Next:                   654065
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5770,7 +5601,6 @@ Block 654065 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               651658
 Current:                654065
 Next:                   656611
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5804,7 +5634,6 @@ Block 656611 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               654065
 Current:                656611
 Next:                   659187
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5838,7 +5667,6 @@ Block 659187 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               656611
 Current:                659187
 Next:                   661544
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5872,7 +5700,6 @@ Block 661544 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               659187
 Current:                661544
 Next:                   697422
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5906,7 +5733,6 @@ Block 697422 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               661544
 Current:                697422
 Next:                   699786
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5940,7 +5766,6 @@ Block 699786 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               697422
 Current:                699786
 Next:                   702357
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -5974,7 +5799,6 @@ Block 702357 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               699786
 Current:                702357
 Next:                   704888
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6008,7 +5832,6 @@ Block 704888 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               702357
 Current:                704888
 Next:                   707520
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6042,7 +5865,6 @@ Block 707520 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               704888
 Current:                707520
 Next:                   709880
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6076,7 +5898,6 @@ Block 709880 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               707520
 Current:                709880
 Next:                   712439
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6110,7 +5931,6 @@ Block 712439 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               709880
 Current:                712439
 Next:                   712440
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -6144,7 +5964,6 @@ Block 714904 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               714903
 Current:                714904
 Next:                   717432
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -6178,7 +5997,6 @@ Block 717432 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               714904
 Current:                717432
 Next:                   719886
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6212,7 +6030,6 @@ Block 719886 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               717432
 Current:                719886
 Next:                   722415
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6246,7 +6063,6 @@ Block 722415 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               719886
 Current:                722415
 Next:                   724840
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6280,7 +6096,6 @@ Block 724840 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               722415
 Current:                724840
 Next:                   727374
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6314,7 +6129,6 @@ Block 727374 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               724840
 Current:                727374
 Next:                   729928
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6348,7 +6162,6 @@ Block 729928 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               727374
 Current:                729928
 Next:                   732541
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6382,7 +6195,6 @@ Block 732541 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               729928
 Current:                732541
 Next:                   735009
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6416,7 +6228,6 @@ Block 735009 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               732541
 Current:                735009
 Next:                   737612
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6450,7 +6261,6 @@ Block 737612 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               735009
 Current:                737612
 Next:                   740085
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6484,7 +6294,6 @@ Block 740085 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               737612
 Current:                740085
 Next:                   742656
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6518,7 +6327,6 @@ Block 742656 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               740085
 Current:                742656
 Next:                   745147
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6552,7 +6360,6 @@ Block 745147 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               742656
 Current:                745147
 Next:                   747694
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6586,7 +6393,6 @@ Block 747694 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               745147
 Current:                747694
 Next:                   750150
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6620,7 +6426,6 @@ Block 750150 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               747694
 Current:                750150
 Next:                   752713
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6654,7 +6459,6 @@ Block 752713 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               750150
 Current:                752713
 Next:                   755220
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6688,7 +6492,6 @@ Block 755220 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               752713
 Current:                755220
 Next:                   757756
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6722,7 +6525,6 @@ Block 757756 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               755220
 Current:                757756
 Next:                   760265
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6756,7 +6558,6 @@ Block 760265 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               757756
 Current:                760265
 Next:                   762844
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6790,7 +6591,6 @@ Block 762844 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               760265
 Current:                762844
 Next:                   762845
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -6824,7 +6624,6 @@ Block 765297 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               765296
 Current:                765297
 Next:                   767833
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -6858,7 +6657,6 @@ Block 767833 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               765297
 Current:                767833
 Next:                   770255
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6892,7 +6690,6 @@ Block 770255 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               767833
 Current:                770255
 Next:                   772812
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6926,7 +6723,6 @@ Block 772812 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               770255
 Current:                772812
 Next:                   775343
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6960,7 +6756,6 @@ Block 775343 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               772812
 Current:                775343
 Next:                   777889
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -6994,7 +6789,6 @@ Block 777889 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               775343
 Current:                777889
 Next:                   780339
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7028,7 +6822,6 @@ Block 780339 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               777889
 Current:                780339
 Next:                   782792
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7062,7 +6855,6 @@ Block 782792 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               780339
 Current:                782792
 Next:                   785271
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7096,7 +6888,6 @@ Block 785271 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               782792
 Current:                785271
 Next:                   787827
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7130,7 +6921,6 @@ Block 787827 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               785271
 Current:                787827
 Next:                   790429
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7164,7 +6954,6 @@ Block 790429 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               787827
 Current:                790429
 Next:                   792966
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7198,7 +6987,6 @@ Block 792966 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               790429
 Current:                792966
 Next:                   795507
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7232,7 +7020,6 @@ Block 795507 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               792966
 Current:                795507
 Next:                   798082
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7266,7 +7053,6 @@ Block 798082 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               795507
 Current:                798082
 Next:                   800601
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7300,7 +7086,6 @@ Block 800601 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               798082
 Current:                800601
 Next:                   813253
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7334,7 +7119,6 @@ Block 813253 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               800601
 Current:                813253
 Next:                   815836
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7368,7 +7152,6 @@ Block 815836 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               813253
 Current:                815836
 Next:                   818423
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7402,7 +7185,6 @@ Block 818423 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               815836
 Current:                818423
 Next:                   821837
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7436,7 +7218,6 @@ Block 821837 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               818423
 Current:                821837
 Next:                   823524
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7470,7 +7251,6 @@ Block 823524 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               821837
 Current:                823524
 Next:                   823525
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -7504,7 +7284,6 @@ Block 826050 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               826049
 Current:                826050
 Next:                   828596
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -7538,7 +7317,6 @@ Block 828596 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               826050
 Current:                828596
 Next:                   831182
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7572,7 +7350,6 @@ Block 831182 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               828596
 Current:                831182
 Next:                   833764
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7606,7 +7383,6 @@ Block 833764 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               831182
 Current:                833764
 Next:                   836210
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7640,7 +7416,6 @@ Block 836210 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               833764
 Current:                836210
 Next:                   838703
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7674,7 +7449,6 @@ Block 838703 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               836210
 Current:                838703
 Next:                   841055
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7708,7 +7482,6 @@ Block 841055 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               838703
 Current:                841055
 Next:                   843662
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7742,7 +7515,6 @@ Block 843662 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               841055
 Current:                843662
 Next:                   846142
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7776,7 +7548,6 @@ Block 846142 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               843662
 Current:                846142
 Next:                   848750
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7810,7 +7581,6 @@ Block 848750 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               846142
 Current:                848750
 Next:                   851291
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7844,7 +7614,6 @@ Block 851291 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               848750
 Current:                851291
 Next:                   853861
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7878,7 +7647,6 @@ Block 853861 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               851291
 Current:                853861
 Next:                   856336
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7912,7 +7680,6 @@ Block 856336 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               853861
 Current:                856336
 Next:                   858922
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7946,7 +7713,6 @@ Block 858922 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               856336
 Current:                858922
 Next:                   861400
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -7980,7 +7746,6 @@ Block 861400 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               858922
 Current:                861400
 Next:                   863901
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -8014,7 +7779,6 @@ Block 863901 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               861400
 Current:                863901
 Next:                   866526
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -8048,7 +7812,6 @@ Block 866526 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               863901
 Current:                866526
 Next:                   998791
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -8082,7 +7845,6 @@ Block 998791 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               866526
 Current:                998791
 Next:                   5422450
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -8129,7 +7891,6 @@ source:              maker
 Previous:               998791
 Current:                5422450
 Next:                   5422454
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -8175,7 +7936,6 @@ source:              maker
 Previous:               5422450
 Current:                5422454
 Next:                   5422455
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -8221,7 +7981,6 @@ source:              maker
 Previous:               5422467
 Current:                5422468
 Next:                   5653137
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -8255,7 +8014,6 @@ Block 5774019 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               5755674
 Current:                5774019
 Next:                   6408597
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -8289,7 +8047,6 @@ Block 6419392 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               6408722
 Current:                6419392
 Next:                   7053546
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -8335,7 +8092,6 @@ source:              maker
 Previous:               6419392
 Current:                7053546
 Next:                   7053572
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -8381,7 +8137,6 @@ source:              maker
 Previous:               7053546
 Current:                7053572
 Next:                   7243835
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -8415,7 +8170,6 @@ Block 7243835 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               7053572
 Current:                7243835
 Next:                   7406592
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -8449,7 +8203,6 @@ Block 7406592 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               7243835
 Current:                7406592
 Next:                   7604845
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -8495,7 +8248,6 @@ source:              maker
 Previous:               7406592
 Current:                7604845
 Next:                   7604913
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -8541,7 +8293,6 @@ source:              maker
 Previous:               7604845
 Current:                7604913
 Next:                   10574152
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -8603,7 +8354,6 @@ source:              uniswap
 Previous:               7604913
 Current:                10574152
 Next:                   10574152
-postType:               diff-same
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -8667,7 +8417,6 @@ source:              uniswap
 Previous:               10574152
 Current:                10574152
 Next:                   10876001
-postType:               same-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -8738,7 +8487,6 @@ source:              uniswap
 Previous:               10876001
 Current:                10876009
 Next:                   11290737
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -8788,7 +8536,6 @@ source:              uniswap
 Previous:               10876009
 Current:                11290737
 Next:                   11290738
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -8855,7 +8602,6 @@ source:              uniswap
 Previous:               12751770
 Current:                12751771
 Next:                   12812092
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          token
@@ -8905,7 +8651,6 @@ source:              uniswap
 Previous:               12751771
 Current:                12812092
 Next:                   13466288
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -8942,7 +8687,6 @@ stable-coin
 Previous:               12812092
 Current:                13466288
 Next:                   13719258
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -9009,7 +8753,6 @@ source:              uniswap
 Previous:               13466288
 Current:                13719258
 Next:                   14821090
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -9059,7 +8802,6 @@ source:              uniswap
 Previous:               13719258
 Current:                14821090
 Next:                   15699908
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -9126,7 +8868,6 @@ source:              uniswap
 Previous:               15700078
 Current:                16772612
 Next:                   16772613
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -9184,7 +8925,6 @@ Trial balance:
       "minerUncleRewardIn": "0",
       "postFirst": false,
       "postLast": false,
-      "postType": "same-diff",
       "prefundIn": "0",
       "prevBal": "34921",
       "priceSource": "not-priced",
@@ -9230,7 +8970,6 @@ Trial balance:
       "minerUncleRewardIn": "0",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "0",
       "priceSource": "uniswap",
@@ -9276,7 +9015,6 @@ Trial balance:
       "minerUncleRewardIn": "0",
       "postFirst": false,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "21200000000008130",
       "priceSource": "uniswap",
@@ -9322,7 +9060,6 @@ Trial balance:
       "minerUncleRewardIn": "0",
       "postFirst": true,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "0",
       "priceSource": "uniswap",
@@ -9368,7 +9105,6 @@ Trial balance:
       "minerUncleRewardIn": "0",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "0",
       "priceSource": "not-priced",
@@ -9414,7 +9150,6 @@ Trial balance:
       "minerUncleRewardIn": "0",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "0",
       "priceSource": "stable-coin",
@@ -9460,7 +9195,6 @@ Trial balance:
       "minerUncleRewardIn": "0",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "0",
       "priceSource": "uniswap",
@@ -9506,7 +9240,6 @@ Trial balance:
       "minerUncleRewardIn": "0",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "0",
       "priceSource": "not-priced",
@@ -9552,7 +9285,6 @@ Trial balance:
       "minerUncleRewardIn": "0",
       "postFirst": false,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "5",
       "priceSource": "uniswap",

@@ -33,7 +33,6 @@ source:              uniswap
 Previous:               10277779
 Current:                10277780
 Next:                   10277781
-postType:               diff-diff
 postFirst:              true
 postLast:               true
 postAssetType:          eth
@@ -70,7 +69,6 @@ stable-coin
 Previous:               10277779
 Current:                10277780
 Next:                   10277781
-postType:               diff-diff
 postFirst:              true
 postLast:               true
 postAssetType:          token
@@ -178,7 +176,6 @@ Trial balance:
           "postAssetType": "eth",
           "postFirst": true,
           "postLast": true,
-          "postType": "diff-diff",
           "prefundIn": "0",
           "prevBal": "6511482167631885",
           "priceSource": "uniswap",
@@ -224,7 +221,6 @@ Trial balance:
           "postAssetType": "token",
           "postFirst": true,
           "postLast": true,
-          "postType": "diff-diff",
           "prefundIn": "0",
           "prevBal": "381000000",
           "priceSource": "stable-coin",

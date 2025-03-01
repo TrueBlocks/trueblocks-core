@@ -27,7 +27,6 @@ source:              maker
 Previous:               8769018
 Current:                8769019
 Next:                   8769029
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -61,7 +60,6 @@ Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               8769019
 Current:                8769029
 Next:                   8769052
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -107,7 +105,6 @@ source:              maker
 Previous:               8769029
 Current:                8769052
 Next:                   8769052
-postType:               diff-same
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -155,7 +152,6 @@ source:              maker
 Previous:               8769029
 Current:                8769052
 Next:                   8769052
-postType:               diff-same
 postFirst:              false
 postLast:               false
 postAssetType:          trace-eth
@@ -202,7 +198,6 @@ source:              maker
 Previous:               8769052
 Current:                8769052
 Next:                   8769064
-postType:               same-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -250,7 +245,6 @@ source:              maker
 Previous:               8769052
 Current:                8769052
 Next:                   8769064
-postType:               same-diff
 postFirst:              false
 postLast:               false
 postAssetType:          trace-eth
@@ -297,7 +291,6 @@ Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               8769052
 Current:                8769052
 Next:                   8769064
-postType:               same-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -344,7 +337,6 @@ source:              maker
 Previous:               8769064
 Current:                8769130
 Next:                   8769141
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -391,7 +383,6 @@ source:              maker
 Previous:               8769130
 Current:                8769141
 Next:                   8769142
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth

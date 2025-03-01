@@ -44,7 +44,6 @@ source:              uniswap
 Previous:               15549161
 Current:                15549162
 Next:                   15549163
-postType:               diff-diff
 postFirst:              true
 postLast:               true
 postAssetType:          token
@@ -121,7 +120,6 @@ Trial balance:
       "postAssetType": "token",
       "postFirst": true,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "2017044745122853478376",

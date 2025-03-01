@@ -20,7 +20,6 @@ stable-coin
 Previous:               8856475
 Current:                8856476
 Next:                   8856511
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          token
@@ -57,7 +56,6 @@ stable-coin
 Previous:               8856476
 Current:                8856511
 Next:                   8860434
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -94,7 +92,6 @@ stable-coin
 Previous:               8856511
 Current:                8860434
 Next:                   8860511
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -140,7 +137,6 @@ source:              maker
 Previous:               8860434
 Current:                8860511
 Next:                   8860513
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -186,7 +182,6 @@ source:              maker
 Previous:               8860511
 Current:                8860513
 Next:                   8860529
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -223,7 +218,6 @@ stable-coin
 Previous:               8860511
 Current:                8860513
 Next:                   8860529
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -269,7 +263,6 @@ source:              maker
 Previous:               8860513
 Current:                8860529
 Next:                   8860531
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -315,7 +308,6 @@ source:              maker
 Previous:               8860529
 Current:                8860531
 Next:                   8867898
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -352,7 +344,6 @@ stable-coin
 Previous:               8860529
 Current:                8860531
 Next:                   8867898
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -398,7 +389,6 @@ source:              maker
 Previous:               8860531
 Current:                8867898
 Next:                   8875684
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -444,7 +434,6 @@ source:              maker
 Previous:               9024196
 Current:                9024350
 Next:                   9046970
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -490,7 +479,6 @@ source:              maker
 Previous:               9024350
 Current:                9046970
 Next:                   9061086
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -536,7 +524,6 @@ source:              maker
 Previous:               9193234
 Current:                9193753
 Next:                   9193754
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -582,7 +569,6 @@ source:              maker
 Previous:               9193776
 Current:                9193777
 Next:                   9193806
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -628,7 +614,6 @@ source:              maker
 Previous:               9193777
 Current:                9193806
 Next:                   9193814
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -674,7 +659,6 @@ source:              maker
 Previous:               9193806
 Current:                9193814
 Next:                   9193815
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth

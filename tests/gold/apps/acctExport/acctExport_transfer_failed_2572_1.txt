@@ -33,7 +33,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               14469880
 TEST[DATE|TIME] Current:                15549162
 TEST[DATE|TIME] Next:                   15549163
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token

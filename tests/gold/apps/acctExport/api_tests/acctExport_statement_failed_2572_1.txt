@@ -47,7 +47,6 @@ export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&statements&et
       "postAssetType": "token",
       "postFirst": true,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "2017044745122853478376",

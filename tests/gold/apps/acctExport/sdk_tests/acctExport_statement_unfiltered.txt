@@ -28,7 +28,6 @@ source:              maker
 Previous:               8860512
 Current:                8860513
 Next:                   8860529
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          eth
@@ -65,7 +64,6 @@ stable-coin
 Previous:               8860512
 Current:                8860513
 Next:                   8860529
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          token
@@ -111,7 +109,6 @@ source:              maker
 Previous:               8860513
 Current:                8860529
 Next:                   8860531
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          eth
@@ -157,7 +154,6 @@ source:              maker
 Previous:               8860529
 Current:                8860531
 Next:                   8860532
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          eth
@@ -194,7 +190,6 @@ stable-coin
 Previous:               8860529
 Current:                8860531
 Next:                   8860532
-postType:               diff-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token
@@ -269,7 +264,6 @@ Trial balance:
       "postAssetType": "eth",
       "postFirst": true,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "4999744015000000000",
@@ -339,7 +333,6 @@ Trial balance:
       "postAssetType": "token",
       "postFirst": true,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "7500000000000000000000",
@@ -409,7 +402,6 @@ Trial balance:
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "4999709998000000000",
@@ -479,7 +471,6 @@ Trial balance:
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "4999663949000000000",
@@ -549,7 +540,6 @@ Trial balance:
       "postAssetType": "token",
       "postFirst": false,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "7000000000000000000000",

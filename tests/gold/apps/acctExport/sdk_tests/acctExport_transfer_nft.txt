@@ -15,7 +15,6 @@ Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               8876231
 Current:                8876232
 Next:                   9000998
-postType:               diff-diff
 postFirst:              true
 postLast:               false
 postAssetType:          token

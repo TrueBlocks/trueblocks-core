@@ -14,7 +14,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                1
 TEST[DATE|TIME] Next:                   5
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -48,7 +47,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1
 TEST[DATE|TIME] Current:                5
 TEST[DATE|TIME] Next:                   56
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -82,7 +80,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               5
 TEST[DATE|TIME] Current:                56
 TEST[DATE|TIME] Next:                   235
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -116,7 +113,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               56
 TEST[DATE|TIME] Current:                235
 TEST[DATE|TIME] Next:                   247
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -150,7 +146,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               235
 TEST[DATE|TIME] Current:                247
 TEST[DATE|TIME] Next:                   348
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -184,7 +179,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               247
 TEST[DATE|TIME] Current:                348
 TEST[DATE|TIME] Next:                   500
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -218,7 +212,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               348
 TEST[DATE|TIME] Current:                500
 TEST[DATE|TIME] Next:                   563
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -252,7 +245,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               500
 TEST[DATE|TIME] Current:                563
 TEST[DATE|TIME] Next:                   987
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -286,7 +278,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               563
 TEST[DATE|TIME] Current:                987
 TEST[DATE|TIME] Next:                   1450
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -320,7 +311,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               987
 TEST[DATE|TIME] Current:                1450
 TEST[DATE|TIME] Next:                   1580
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -355,7 +345,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1450
 TEST[DATE|TIME] Current:                1580
 TEST[DATE|TIME] Next:                   1586
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -389,7 +378,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1580
 TEST[DATE|TIME] Current:                1586
 TEST[DATE|TIME] Next:                   1861
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -423,7 +411,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1586
 TEST[DATE|TIME] Current:                1861
 TEST[DATE|TIME] Next:                   1912
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -457,7 +444,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1861
 TEST[DATE|TIME] Current:                1912
 TEST[DATE|TIME] Next:                   2057
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -491,7 +477,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1912
 TEST[DATE|TIME] Current:                2057
 TEST[DATE|TIME] Next:                   2256
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -525,7 +510,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               2057
 TEST[DATE|TIME] Current:                2256
 TEST[DATE|TIME] Next:                   2392
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -559,7 +543,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               2256
 TEST[DATE|TIME] Current:                2392
 TEST[DATE|TIME] Next:                   2516
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -594,7 +577,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               2392
 TEST[DATE|TIME] Current:                2516
 TEST[DATE|TIME] Next:                   3962
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -628,7 +610,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               2516
 TEST[DATE|TIME] Current:                3962
 TEST[DATE|TIME] Next:                   4256
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -662,7 +643,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               3962
 TEST[DATE|TIME] Current:                4256
 TEST[DATE|TIME] Next:                   4257
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          eth
@@ -722,7 +702,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": true,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "0",
       "priceSource": "eth-not-priced-pre-maker",
@@ -768,7 +747,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "5000000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -814,7 +792,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "10000000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -860,7 +837,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "13750000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -906,7 +882,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "18750000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -952,7 +927,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "21875000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -998,7 +972,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "26875000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1044,7 +1017,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "30625000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1090,7 +1062,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "34375000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1136,7 +1107,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "36875000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1182,7 +1152,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "42031250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1228,7 +1197,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "45781250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1274,7 +1242,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "49531250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1320,7 +1287,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "54531250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1366,7 +1332,6 @@ Results in ./statements_wei_2_1_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "58281250000000000000",
       "priceSource": "eth-not-priced-pre-maker",

@@ -16,7 +16,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005645
 TEST[DATE|TIME] Current:                7005646
 TEST[DATE|TIME] Next:                   7005654
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          token
@@ -50,7 +49,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005646
 TEST[DATE|TIME] Current:                7005654
 TEST[DATE|TIME] Next:                   7005662
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          token
@@ -84,7 +82,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005654
 TEST[DATE|TIME] Current:                7005662
 TEST[DATE|TIME] Next:                   7005737
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          token
@@ -118,7 +115,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005662
 TEST[DATE|TIME] Current:                7005737
 TEST[DATE|TIME] Next:                   7005737
-TEST[DATE|TIME] postType:               diff-same
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          token
@@ -154,7 +150,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005737
 TEST[DATE|TIME] Current:                7005737
 TEST[DATE|TIME] Next:                   7005738
-TEST[DATE|TIME] postType:               same-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token

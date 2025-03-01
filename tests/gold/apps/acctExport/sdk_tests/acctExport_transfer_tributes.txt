@@ -16,7 +16,6 @@ Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               8769019
 Current:                8769029
 Next:                   8769052
-postType:               diff-diff
 postFirst:              false
 postLast:               false
 postAssetType:          token
@@ -50,7 +49,6 @@ Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               8769052
 Current:                8769052
 Next:                   8769053
-postType:               same-diff
 postFirst:              false
 postLast:               true
 postAssetType:          token

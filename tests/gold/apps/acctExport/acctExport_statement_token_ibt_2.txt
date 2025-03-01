@@ -34,7 +34,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12704455
 TEST[DATE|TIME] Current:                12704456
 TEST[DATE|TIME] Next:                   12704710
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          trace-eth
@@ -71,7 +70,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12704456
 TEST[DATE|TIME] Current:                12704710
 TEST[DATE|TIME] Next:                   12704812
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          token
@@ -108,7 +106,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12704710
 TEST[DATE|TIME] Current:                12704812
 TEST[DATE|TIME] Next:                   12705275
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          token
@@ -145,7 +142,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12704812
 TEST[DATE|TIME] Current:                12705275
 TEST[DATE|TIME] Next:                   12705892
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          token
@@ -195,7 +191,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          eth
@@ -232,7 +227,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -269,7 +263,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -306,7 +299,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -343,7 +335,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -380,7 +371,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -417,7 +407,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -454,7 +443,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -491,7 +479,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -528,7 +515,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -565,7 +551,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -602,7 +587,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -639,7 +623,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -676,7 +659,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -713,7 +695,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -750,7 +731,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -787,7 +767,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -824,7 +803,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -861,7 +839,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -898,7 +875,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -935,7 +911,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -972,7 +947,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1009,7 +983,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1046,7 +1019,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1083,7 +1055,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1120,7 +1091,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1157,7 +1127,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1194,7 +1163,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1231,7 +1199,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1268,7 +1235,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1305,7 +1271,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1342,7 +1307,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1379,7 +1343,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1416,7 +1379,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1453,7 +1415,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1490,7 +1451,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1527,7 +1487,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1564,7 +1523,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1601,7 +1559,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1638,7 +1595,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1675,7 +1631,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1712,7 +1667,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1749,7 +1703,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1786,7 +1739,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1823,7 +1775,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275
 TEST[DATE|TIME] Current:                12705892
 TEST[DATE|TIME] Next:                   12705893
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          token
@@ -1900,7 +1851,6 @@ Results in ./statement_token_ibt_2_out.file
       "postAssetType": "trace-eth",
       "postFirst": true,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "36711034261192445316",
@@ -1970,7 +1920,6 @@ Results in ./statement_token_ibt_2_out.file
       "postAssetType": "token",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "1540171842513858802649",
@@ -2040,7 +1989,6 @@ Results in ./statement_token_ibt_2_out.file
       "postAssetType": "token",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "1544921842513858802649",
@@ -2110,7 +2058,6 @@ Results in ./statement_token_ibt_2_out.file
       "postAssetType": "token",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "1549921842513858802649",
@@ -2180,7 +2127,6 @@ Results in ./statement_token_ibt_2_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "36720534261192445316",
@@ -2250,7 +2196,6 @@ Results in ./statement_token_ibt_2_out.file
       "postAssetType": "token",
       "postFirst": false,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "1553721842513858802649",
@@ -2320,7 +2265,6 @@ Results in ./statement_token_ibt_2_out.file
       "postAssetType": "token",
       "postFirst": false,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "1551721842513858802649",
@@ -2390,7 +2334,6 @@ Results in ./statement_token_ibt_2_out.file
       "postAssetType": "token",
       "postFirst": false,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "1549721842513858802649",
@@ -2460,7 +2403,6 @@ Results in ./statement_token_ibt_2_out.file
       "postAssetType": "token",
       "postFirst": false,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "1547721842513858802649",
@@ -2530,7 +2472,6 @@ Results in ./statement_token_ibt_2_out.file
       "postAssetType": "token",
       "postFirst": false,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "1545721842513858802649",

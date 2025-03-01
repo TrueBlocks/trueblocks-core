@@ -161,9 +161,7 @@ func TestCorrectForNullTransfer(t *testing.T) {
 // 		stmt := &types.Statement{
 // 			AssetAddress:     base.FAKE_ETH_ADDRESS, // so that IsEth() returns true
 // 			PostAssetType:        types.TrialBalTraceEth,
-// 			BlockNumberPrev:  99,
 // 			BlockNumber:      100,
-// 			BlockNumberNext:  101,
 // 			TransactionIndex: 1,
 // 			BegBal:           *base.NewWei(1000),
 // 			AmountIn:         *base.NewWei(100),

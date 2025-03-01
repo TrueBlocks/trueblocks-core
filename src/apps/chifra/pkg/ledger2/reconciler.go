@@ -118,7 +118,7 @@ func (r *Reconciler2) ProcessTransaction(pos *types.AppPosition, trans *types.Tr
 		}
 
 		// Convert the AssetTransfer into a single Posting (some logic is simplified):
-		posting := r.queryBalances(at)
+		posting := r.queryBalances(pos, at)
 
 		// 	var okay bool
 		// 	if okay = s.Reconciled(); !okay {
@@ -170,12 +170,12 @@ func CorrectForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 }
 
 // queryBalances transforms a single AssetTransfer into a basic Posting.
-func (r *Reconciler2) queryBalances(at AssetTransfer) types.Posting {
+func (r *Reconciler2) queryBalances(pos *types.AppPosition, at AssetTransfer) types.Posting {
 	ret := types.Posting{}
 	ret.Statement = at
 
 	if at.PostAssetType != types.TrialBalToken && at.PostAssetType != types.TrialBalNft {
-		prevBal, _ := r.connection.GetBalanceAt(r.LedgerBook.AccountedFor, at.BlockNumberPrev)
+		prevBal, _ := r.connection.GetBalanceAt(r.LedgerBook.AccountedFor, pos.Prev)
 		if at.BlockNumber == 0 {
 			prevBal = new(base.Wei)
 		}
@@ -192,7 +192,7 @@ func (r *Reconciler2) queryBalances(at AssetTransfer) types.Posting {
 		ret.EndBal = *endBal
 
 	} else {
-		prevBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.LedgerBook.AccountedFor, at.BlockNumberPrev)
+		prevBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.LedgerBook.AccountedFor, pos.Prev)
 		if at.BlockNumber == 0 {
 			prevBal = new(base.Wei)
 		}
@@ -236,8 +236,6 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 		at := AssetTransfer{
 			AccountedFor:     r.LedgerBook.AccountedFor,
 			BlockNumber:      trans.BlockNumber,
-			BlockNumberPrev:  pos.Prev,
-			BlockNumberNext:  pos.Next,
 			TransactionIndex: trans.TransactionIndex,
 			TransactionHash:  trans.Hash,
 			Timestamp:        trans.Timestamp,
@@ -376,8 +374,6 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 					at := AssetTransfer{
 						AccountedFor:     r.LedgerBook.AccountedFor,
 						BlockNumber:      trans.BlockNumber,
-						BlockNumberPrev:  pos.Prev,
-						BlockNumberNext:  pos.Next,
 						TransactionIndex: trans.TransactionIndex,
 						TransactionHash:  trans.Hash,
 						Timestamp:        trans.Timestamp,

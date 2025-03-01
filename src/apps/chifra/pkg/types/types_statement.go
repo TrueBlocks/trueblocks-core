@@ -31,8 +31,6 @@ type Statement struct {
 	AssetSymbol         string         `json:"assetSymbol"`
 	BegBal              base.Wei       `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
-	BlockNumberNext     base.Blknum    `json:"blockNumberNext"`
-	BlockNumberPrev     base.Blknum    `json:"blockNumberPrev"`
 	CorrectingIn        base.Wei       `json:"correctingIn,omitempty"`
 	CorrectingOut       base.Wei       `json:"correctingOut,omitempty"`
 	CorrectingReason    string         `json:"correctingReason,omitempty"`
@@ -151,7 +149,6 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 
 	if extraOpts["testMode"] == true {
 		model["postAssetType"] = s.PostAssetType.String()
-		model["postType"] = s.getPostType()
 		model["postFirst"] = s.PostFirst
 		model["postLast"] = s.PostLast
 	}
@@ -271,16 +268,6 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 
 	// BlockNumber
 	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
-		return err
-	}
-
-	// BlockNumberNext
-	if err = cache.WriteValue(writer, s.BlockNumberNext); err != nil {
-		return err
-	}
-
-	// BlockNumberPrev
-	if err = cache.WriteValue(writer, s.BlockNumberPrev); err != nil {
 		return err
 	}
 
@@ -464,16 +451,6 @@ func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 
 	// BlockNumber
 	if err = cache.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
-		return err
-	}
-
-	// BlockNumberNext
-	if err = cache.ReadValue(reader, &s.BlockNumberNext, fileVersion); err != nil {
-		return err
-	}
-
-	// BlockNumberPrev
-	if err = cache.ReadValue(reader, &s.BlockNumberPrev, fileVersion); err != nil {
 		return err
 	}
 
@@ -767,7 +744,6 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 	logger.TestLog(true, "Previous:              ", pos.Prev)
 	logger.TestLog(true, "Current:               ", s.BlockNumber)
 	logger.TestLog(true, "Next:                  ", pos.Next)
-	logger.TestLog(true, "postType:              ", s.getPostType())
 	logger.TestLog(true, "postFirst:             ", s.PostFirst)
 	logger.TestLog(true, "postLast:              ", s.PostLast)
 	logger.TestLog(true, "postAssetType:         ", s.PostAssetType)
@@ -816,27 +792,6 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 		logger.TestLog(true, " ^^ we need to fix this ^^")
 	}
 	logger.TestLog(true, "---------------------------------------------------")
-}
-
-func (s *Statement) getPostType() string {
-	if s.BlockNumber == 0 {
-		return "genesis-diff"
-	}
-	prevDiff := s.BlockNumberPrev != s.BlockNumber
-	nextDiff := s.BlockNumberNext != s.BlockNumber
-	if prevDiff {
-		if nextDiff {
-			return "diff-diff"
-		} else {
-			return "diff-same"
-		}
-	} else {
-		if nextDiff {
-			return "same-diff"
-		} else {
-			return "same-same"
-		}
-	}
 }
 
 func (s *Statement) IsNullTransfer(tx *Transaction) bool {

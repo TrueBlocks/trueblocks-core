@@ -14,7 +14,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                0
 TEST[DATE|TIME] Next:                   46685
-TEST[DATE|TIME] postType:               genesis-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -48,7 +47,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                46685
 TEST[DATE|TIME] Next:                   46709
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -83,7 +81,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               46685
 TEST[DATE|TIME] Current:                46709
 TEST[DATE|TIME] Next:                   46710
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          eth
@@ -144,7 +141,6 @@ Results in ./statement_3_out.file
       "postAssetType": "eth",
       "postFirst": true,
       "postLast": false,
-      "postType": "genesis-diff",
       "prefundIn": "1970000000000000000000",
       "prevBal": "0",
       "priceSource": "eth-not-priced-pre-maker",
@@ -190,7 +186,6 @@ Results in ./statement_3_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": false,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "1970000000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -236,7 +231,6 @@ Results in ./statement_3_out.file
       "postAssetType": "eth",
       "postFirst": false,
       "postLast": true,
-      "postType": "diff-diff",
       "prefundIn": "0",
       "prevBal": "1964989500000000000000",
       "priceSource": "eth-not-priced-pre-maker",

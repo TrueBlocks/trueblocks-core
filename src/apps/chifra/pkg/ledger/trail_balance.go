@@ -16,8 +16,6 @@ import (
 // function tries to price the asset. it then prints optional debugging information. Note that
 // the statement may be modified in this function.
 func (l *Reconciler) trialBalance(pos *types.AppPosition, reason types.TrialBalType, trans *types.Transaction, s *types.Statement) bool {
-	s.BlockNumberPrev = pos.Prev
-	s.BlockNumberNext = pos.Next
 	s.PostFirst = pos.First
 	s.PostLast = pos.Last
 	s.PostAssetType = reason

@@ -36,7 +36,6 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            -eth
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x8c492d5f763841767362d716e3e69511f0527791
 TEST[DATE|TIME]    recipient:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
@@ -104,7 +103,6 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            -token
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x8c492d5f763841767362d716e3e69511f0527791
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -234,7 +232,6 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "priceSource": "stable-coin",
           "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
           "reconciled": true,
-          "postType": "regular-token",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x8c492d5f763841767362d716e3e69511f0527791",
@@ -335,7 +332,6 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "priceSource": "stable-coin",
           "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
           "reconciled": false,
-          "postType": "regular-token",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0xeba60d324c2546459e1e9dd4c7e740ca80134588",
@@ -405,7 +401,6 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "priceSource": "maker",
           "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
           "reconciled": false,
-          "postType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
@@ -474,7 +469,6 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "priceSource": "maker",
           "recipient": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
           "reconciled": false,
-          "postType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
@@ -615,7 +609,6 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "priceSource": "maker",
           "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
           "reconciled": false,
-          "postType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc",

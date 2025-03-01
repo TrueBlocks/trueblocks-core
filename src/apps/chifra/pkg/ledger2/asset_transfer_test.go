@@ -71,22 +71,3 @@ func TestNewAssetTransfer(t *testing.T) {
 		}
 	}
 }
-
-// func TestAssetTransferString(t *testing.T) {
-// 	at := AssetTransfer{
-// 		BlockNumber:      100,
-// 		TransactionIndex: 2,
-// 		AssetAddress:        base.HexToAddress("0xabcdef"),
-// 		AssetSymbol:      "TEST",
-// 		AmountIn:         *base.NewWei(500),
-// 		LogIndex:         5,
-// 		Sender:           base.HexToAddress("0xaaaa"),
-// 		Recipient:        base.HexToAddress("0xbbbb"),
-// 	}
-
-// 	got := at.String()
-// 	want := `{"accountedFor":"0x0","amountIn":{},"amountOut":{},"assetAddress":"0x0000000000000000000000000000000000abcdef","assetSymbol":"TEST","begBal":{},"blockNumber":100,"blockNumberPrev":0,"blockNumberNext":0,"correctingIn":{},"correctingOut":{},"decimals":0,"endBal":{},"gasOut":{},"internalIn":{},"internalOut":{},"logIndex":5,"minerBaseRewardIn":{},"minerNephewRewardIn":{},"minerTxFeeIn":{},"minerUncleRewardIn":{},"prefundIn":{},"prevBal":{},"priceSource":"","recipient":"0x000000000000000000000000000000000000bbbb","rollingBalance":{},"selfDestructIn":{},"selfDestructOut":{},"sender":"0x000000000000000000000000000000000000aaaa","spotPrice":0,"timestamp":0,"transactionHash":"0x0000000000000000000000000000000000000000000000000000000000000000","transactionIndex":2}`
-// 	if got != want {
-// 		t.Fatalf("String mismatch.\ngot:  %s\nwant: %s", got, want)
-// 	}
-// }

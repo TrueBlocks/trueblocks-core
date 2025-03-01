@@ -15,7 +15,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                0
 TEST[DATE|TIME] Next:                   202249
-TEST[DATE|TIME] postType:               genesis-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -49,7 +48,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                202249
 TEST[DATE|TIME] Next:                   1501459
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -84,7 +82,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               202249
 TEST[DATE|TIME] Current:                1501459
 TEST[DATE|TIME] Next:                   1501460
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          eth
@@ -175,7 +172,6 @@ Results in ./accounting_tokens_2_out.file
           "postAssetType": "eth",
           "postFirst": true,
           "postLast": false,
-          "postType": "genesis-diff",
           "prefundIn": "4200000000000000000000",
           "prefundInEth": "4200",
           "prevBal": "0",
@@ -273,7 +269,6 @@ Results in ./accounting_tokens_2_out.file
           "postAssetType": "eth",
           "postFirst": false,
           "postLast": false,
-          "postType": "diff-diff",
           "prefundIn": "0",
           "prefundInEth": "0",
           "prevBal": "4200000000000000000000",
@@ -370,7 +365,6 @@ Results in ./accounting_tokens_2_out.file
           "postAssetType": "eth",
           "postFirst": false,
           "postLast": true,
-          "postType": "diff-diff",
           "prefundIn": "0",
           "prefundInEth": "0",
           "prevBal": "74679320489077336",

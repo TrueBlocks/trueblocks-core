@@ -43,7 +43,6 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            noop-same-eth
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f
@@ -119,7 +118,6 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            noop-same-trace-eth
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f
@@ -204,7 +202,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               14933657
 TEST[DATE|TIME] Current:                14933657
 TEST[DATE|TIME] Next:                   14933657
-TEST[DATE|TIME] postType:               first-same
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME] sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4
@@ -260,7 +257,6 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            same-same-eth
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
@@ -336,7 +332,6 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            same-same-trace-eth
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
@@ -438,7 +433,6 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            same-same-token
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4
@@ -514,7 +508,6 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            same-noop-eth
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0x3506424f91fd33084466f402d5d97f05f8e3b4af
@@ -590,7 +583,6 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    postType:            same-noop-trace-eth
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0x3506424f91fd33084466f402d5d97f05f8e3b4af
@@ -675,7 +667,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               14933657
 TEST[DATE|TIME] Current:                14933657
 TEST[DATE|TIME] Next:                   14933657
-TEST[DATE|TIME] postType:               same-last
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME] sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d
@@ -792,7 +783,6 @@ Results in ./accounting_intra_tokens_out.file
           "priceSource": "uniswap",
           "recipient": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
           "reconciled": true,
-          "postType": "first-same",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -837,7 +827,6 @@ Results in ./accounting_intra_tokens_out.file
           "priceSource": "uniswap",
           "recipient": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
           "reconciled": true,
-          "postType": "first-same",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -945,7 +934,6 @@ Results in ./accounting_intra_tokens_out.file
           "priceSource": "uniswap",
           "recipient": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
           "reconciled": true,
-          "postType": "same-same",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -990,7 +978,6 @@ Results in ./accounting_intra_tokens_out.file
           "priceSource": "uniswap",
           "recipient": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
           "reconciled": true,
-          "postType": "same-same",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -1098,7 +1085,6 @@ Results in ./accounting_intra_tokens_out.file
           "priceSource": "uniswap",
           "recipient": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
           "reconciled": true,
-          "postType": "same-last",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -1143,7 +1129,6 @@ Results in ./accounting_intra_tokens_out.file
           "priceSource": "uniswap",
           "recipient": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d",
           "reconciled": true,
-          "postType": "same-last",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",

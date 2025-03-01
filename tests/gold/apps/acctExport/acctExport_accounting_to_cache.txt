@@ -13,7 +13,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12
 TEST[DATE|TIME] Current:                13
 TEST[DATE|TIME] Next:                   22
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              true
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -47,7 +46,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               13
 TEST[DATE|TIME] Current:                22
 TEST[DATE|TIME] Next:                   37
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -81,7 +79,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               22
 TEST[DATE|TIME] Current:                37
 TEST[DATE|TIME] Next:                   39
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -115,7 +112,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               37
 TEST[DATE|TIME] Current:                39
 TEST[DATE|TIME] Next:                   43
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -149,7 +145,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               39
 TEST[DATE|TIME] Current:                43
 TEST[DATE|TIME] Next:                   53
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -183,7 +178,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               43
 TEST[DATE|TIME] Current:                53
 TEST[DATE|TIME] Next:                   55
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -217,7 +211,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               53
 TEST[DATE|TIME] Current:                55
 TEST[DATE|TIME] Next:                   64
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -251,7 +244,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               55
 TEST[DATE|TIME] Current:                64
 TEST[DATE|TIME] Next:                   67
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -285,7 +277,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               64
 TEST[DATE|TIME] Current:                67
 TEST[DATE|TIME] Next:                   78
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -319,7 +310,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               67
 TEST[DATE|TIME] Current:                78
 TEST[DATE|TIME] Next:                   84
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -354,7 +344,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               78
 TEST[DATE|TIME] Current:                84
 TEST[DATE|TIME] Next:                   90
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -388,7 +377,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               84
 TEST[DATE|TIME] Current:                90
 TEST[DATE|TIME] Next:                   94
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               false
 TEST[DATE|TIME] postAssetType:          eth
@@ -422,7 +410,6 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               90
 TEST[DATE|TIME] Current:                94
 TEST[DATE|TIME] Next:                   95
-TEST[DATE|TIME] postType:               diff-diff
 TEST[DATE|TIME] postFirst:              false
 TEST[DATE|TIME] postLast:               true
 TEST[DATE|TIME] postAssetType:          eth
