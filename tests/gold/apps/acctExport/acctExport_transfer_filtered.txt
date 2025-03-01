@@ -1,0 +1,110 @@
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --transfers --first_block 8860513 --last_block 8860531 --ether --asset 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 --fmt json --output transfer_filtered_out.file
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Transfers:  true
+TEST[DATE|TIME] Asset:  [0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
+TEST[DATE|TIME] FirstBlock:  8860513
+TEST[DATE|TIME] LastBlock:  8860531
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] OutputFn:  transfer_filtered_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] stable-coin
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> token
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               8860512
+TEST[DATE|TIME] Current:                8860513
+TEST[DATE|TIME] Next:                   8860529
+TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              true
+TEST[DATE|TIME] postLast:               false
+TEST[DATE|TIME] postAssetType:          token
+TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
+TEST[DATE|TIME] assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+TEST[DATE|TIME] hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
+TEST[DATE|TIME] timestamp:              1572720150
+TEST[DATE|TIME] blockNumber:            8860513.85.84
+TEST[DATE|TIME] priceSource:            1 (stable-coin)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             7500
+TEST[DATE|TIME]    begBal:              7500 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            500
+TEST[DATE|TIME]    amountNet:           -500
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              7000 (0)
+TEST[DATE|TIME]    endBalCalc:          7000
+TEST[DATE|TIME]    rollingBalance:      0
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountOut:           500
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] stable-coin
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> token
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               8860529
+TEST[DATE|TIME] Current:                8860531
+TEST[DATE|TIME] Next:                   8860532
+TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               true
+TEST[DATE|TIME] postAssetType:          token
+TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
+TEST[DATE|TIME] assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+TEST[DATE|TIME] hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
+TEST[DATE|TIME] timestamp:              1572720361
+TEST[DATE|TIME] blockNumber:            8860531.152.95
+TEST[DATE|TIME] priceSource:            1 (stable-coin)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             7000
+TEST[DATE|TIME]    begBal:              7000 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            7000
+TEST[DATE|TIME]    amountNet:           -7000
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    rollingBalance:      0
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountOut:           7000
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+----
+Results in ./transfer_filtered_out.file
+{
+  "data": [
+    {
+      "amount": "-500000000000000000000",
+      "amountEth": "-500",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "blockNumber": 8860513,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 84,
+      "transactionIndex": 85
+    },
+    {
+      "amount": "-7000000000000000000000",
+      "amountEth": "-7000",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "blockNumber": 8860531,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 95,
+      "transactionIndex": 152
+    }
+  ]
+}

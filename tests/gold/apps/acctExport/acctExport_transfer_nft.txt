@@ -1,0 +1,58 @@
+chifra export  trueblocks.eth --accounting --transfers --first_block 8876230 --last_block 9024186 --fmt json --output transfer_nft_out.file
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Transfers:  true
+TEST[DATE|TIME] FirstBlock:  8876230
+TEST[DATE|TIME] LastBlock:  9024186
+TEST[DATE|TIME] OutputFn:  transfer_nft_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+TEST[DATE|TIME] Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> token
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               8876231
+TEST[DATE|TIME] Current:                8876232
+TEST[DATE|TIME] Next:                   9000998
+TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              true
+TEST[DATE|TIME] postLast:               false
+TEST[DATE|TIME] postAssetType:          token
+TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] sender:                 0x0  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] assetAddress:           0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 (CSTK) decimals: 18
+TEST[DATE|TIME] hash:                   0x389e24356a19c24cac14e99574553a33662099559921691fb592fba3232748fa
+TEST[DATE|TIME] timestamp:              1572938328
+TEST[DATE|TIME] blockNumber:            8876232.84.169
+TEST[DATE|TIME] priceSource:            0 (token-not-priced-pre-uni)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0 (0)
+TEST[DATE|TIME]    totalIn:             22500
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           22500
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              22500 (0)
+TEST[DATE|TIME]    endBalCalc:          22500
+TEST[DATE|TIME]    rollingBalance:      0
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            22500
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+----
+Results in ./transfer_nft_out.file
+{
+  "data": [
+    {
+      "amount": "22500000000000000000000",
+      "asset": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
+      "blockNumber": 8876232,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 169,
+      "transactionIndex": 84
+    }
+  ]
+}

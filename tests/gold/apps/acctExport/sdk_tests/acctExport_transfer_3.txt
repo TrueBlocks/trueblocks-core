@@ -1,0 +1,151 @@
+export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&transfers&lastBlock=4000000
+Args: [addrs=0x08166f02313feae18bb044e7877c808b55b5bf58 accounting transfers lastBlock=4000000]
+Opts: {"addrs":["0x08166f02313feae18bb044e7877c808b55b5bf58"],"accounting":true,"transfers":true,"lastBlock":4000000}
+Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
+Accounting:  true
+Transfers:  true
+LastBlock:  4000000
+Caps:  cache,decache,ether
+Format:  json
+Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+====> eth
+===================================================
+Previous:               0
+Current:                0
+Next:                   46685
+postType:               genesis-diff
+postFirst:              true
+postLast:               false
+postAssetType:          eth
+accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438269975
+blockNumber:            0.270
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0 (0)
+   totalIn:             1970
+   totalOut:            0
+   amountNet:           1970
+                       ======================= 
+   endBal:              1970 (0)
+   endBalCalc:          1970
+   rollingBalance:      0
+--------------------------------------------------- 
+   prefundIn:           1970
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+====> eth
+===================================================
+Previous:               0
+Current:                46685
+Next:                   46709
+postType:               diff-diff
+postFirst:              false
+postLast:               false
+postAssetType:          eth
+accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
+timestamp:              1438927408
+blockNumber:            46685.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             1970
+   begBal:              1970 (0)
+   totalIn:             0
+   totalOut:            5.0105
+   amountNet:           -5.0105
+                       ======================= 
+   endBal:              1964.9895 (0)
+   endBalCalc:          1964.9895
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountOut:           5
+   gasOut:              0.0105
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+====> eth
+===================================================
+Previous:               46685
+Current:                46709
+Next:                   46710
+postType:               diff-diff
+postFirst:              false
+postLast:               true
+postAssetType:          eth
+accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
+assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
+timestamp:              1438927854
+blockNumber:            46709.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             1964.9895
+   begBal:              1964.9895 (0)
+   totalIn:             0
+   totalOut:            1964.9
+   amountNet:           -1964.9
+                       ======================= 
+   endBal:              0.0895 (0)
+   endBalCalc:          0.0895
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountOut:           1964.8895
+   gasOut:              0.0105
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+{
+  "data": [
+    {
+      "amount": "1970000000000000000000",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "blockNumber": 0,
+      "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "logIndex": 0,
+      "transactionIndex": 270
+    },
+    {
+      "amount": "-5010500000000000000",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "blockNumber": 46685,
+      "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "logIndex": 0,
+      "transactionIndex": 0
+    },
+    {
+      "amount": "-1964900000000000000000",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "blockNumber": 46709,
+      "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "logIndex": 0,
+      "transactionIndex": 0
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

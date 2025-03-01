@@ -1,0 +1,10 @@
+chifra status  transfers --max_records 100
+TEST[DATE|TIME] Modes:  [transfers]
+TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] Format:  json
+{
+  "data": [],
+  "errors": [
+    "no files were found in the [transfers] caches"
+  ]
+}

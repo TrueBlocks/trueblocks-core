@@ -1,6 +1,6 @@
 status?modes=monitors&maxRecords=100
 Args: [modes=monitors maxRecords=100]
-Opts: {"modes":2048,"maxRecords":100}
+Opts: {"modes":4096,"maxRecords":100}
 Modes:  [monitors]
 MaxRecords:  100
 Format:  json

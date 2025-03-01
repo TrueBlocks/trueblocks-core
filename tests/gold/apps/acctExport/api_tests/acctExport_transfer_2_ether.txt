@@ -1,0 +1,42 @@
+export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&transfers&lastBlock=4000000&fmt=json&ether
+{
+  "data": [
+    {
+      "amount": "1970000000000000000000",
+      "amountEth": "1970",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "blockNumber": 0,
+      "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "logIndex": 0,
+      "transactionIndex": 270
+    },
+    {
+      "amount": "-5010500000000000000",
+      "amountEth": "-5.0105",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "blockNumber": 46685,
+      "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "logIndex": 0,
+      "transactionIndex": 0
+    },
+    {
+      "amount": "-1964900000000000000000",
+      "amountEth": "-1964.9",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "blockNumber": 46709,
+      "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "logIndex": 0,
+      "transactionIndex": 0
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

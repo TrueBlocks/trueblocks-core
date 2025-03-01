@@ -1,6 +1,6 @@
 status?modes=names&verbose&maxRecords=0
 Args: [modes=names verbose maxRecords=0]
-Opts: {"modes":4096,"verbose":true}
+Opts: {"modes":8192,"verbose":true}
 Modes:  [names]
 Verbose:  true
 Format:  json

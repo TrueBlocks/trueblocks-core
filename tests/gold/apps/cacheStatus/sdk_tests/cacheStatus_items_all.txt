@@ -1,6 +1,6 @@
 status?modes=all&maxRecords=100
 Args: [modes=all maxRecords=100]
-Opts: {"modes":262142,"maxRecords":100}
+Opts: {"modes":524286,"maxRecords":100}
 Modes:  [all]
 MaxRecords:  100
 Format:  json
@@ -134,6 +134,15 @@ Format:  json
           "path": "--paths--",
           "sizeInBytes": 789,
           "type": "statementsCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "transfersCache"
         },
         {
           "items": [],

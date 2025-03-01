@@ -1,6 +1,6 @@
 status?modes=ripe&verbose&maxRecords=2
 {
   "errors": [
-    "The mode option (ripe) must be one of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]"
+    "The mode option (ripe) must be one of [ index | blooms | blocks | transactions | traces | logs | statements | transfers | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]"
   ]
 }

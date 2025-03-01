@@ -24,6 +24,7 @@ Flags:
   -n, --neighbors           export the neighbors of the given address
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -A, --statements          for the accounting options only, export only statements
+  -X, --transfers           for the accounting options only, export only eth or token transfers
   -b, --balances            traverse the transaction history and show each change in ETH balances
   -i, --withdrawals         export withdrawals for the given address
   -a, --articulate          articulate transactions, traces, logs, and outputs
@@ -36,8 +37,8 @@ Flags:
   -B, --topic strings       for the --logs option only, filter logs to show only those with this topic(s)
   -T, --nfts                for the --logs option only, filter logs to show only nft transfers
   -V, --reverted            export only transactions that were reverted
-  -P, --asset strings       for the accounting options only, export statements only for this asset
-  -f, --flow string         for the accounting options only, export statements with incoming, outgoing, or zero value
+  -P, --asset strings       for the accounting options only, export transfers, balances, or statements only for this asset
+  -f, --flow string         for the accounting options only, export transfers, balances, or statements with incoming, outgoing, or zero value
                             One of [ in | out | zero ]
   -y, --factory             for --traces only, report addresses created by (or self-destructed by) the given address(es)
   -u, --unripe              export transactions labeled unripe (i.e. less than 28 blocks old)

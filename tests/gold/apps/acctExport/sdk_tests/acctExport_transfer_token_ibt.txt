@@ -1,0 +1,244 @@
+export?addrs=0xec3ef464bf821c3b10a18adf9ac7177a628e87cc&accounting&transfers&firstBlock=7005600&lastBlock=7005780&ether
+Args: [addrs=0xec3ef464bf821c3b10a18adf9ac7177a628e87cc accounting transfers firstBlock=7005600 lastBlock=7005780 ether]
+Opts: {"addrs":["0xec3ef464bf821c3b10a18adf9ac7177a628e87cc"],"accounting":true,"transfers":true,"firstBlock":7005600,"lastBlock":7005780,"ether":true}
+Addrs:  [0xec3ef464bf821c3b10a18adf9ac7177a628e87cc]
+Accounting:  true
+Transfers:  true
+FirstBlock:  7005600
+LastBlock:  7005780
+Ether:  true
+Caps:  cache,decache,ether
+Format:  json
+Block 7005646 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+====> token
+===================================================
+Previous:               7005645
+Current:                7005646
+Next:                   7005654
+postType:               diff-diff
+postFirst:              true
+postLast:               false
+postAssetType:          token
+accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+hash:                   0xea8b6bf39f8fe343ad1fbb95ad9a2dd695bee9de33d1ccfb79552fc0bf40b92f
+timestamp:              1546554524
+blockNumber:            7005646.182.42
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             64663.282872
+   begBal:              64663.282872 (0)
+   totalIn:             3016.109787
+   totalOut:            0
+   amountNet:           3016.109787
+                       ======================= 
+   endBal:              67679.392659 (0)
+   endBalCalc:          67679.392659
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountIn:            3016.109787
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 7005654 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+====> token
+===================================================
+Previous:               7005646
+Current:                7005654
+Next:                   7005662
+postType:               diff-diff
+postFirst:              false
+postLast:               false
+postAssetType:          token
+accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+hash:                   0x234186f8fab2fb4ca1222031ad6d0b41d5a55b3d0e934fb2b47059f7a394433f
+timestamp:              1546554605
+blockNumber:            7005654.54.32
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             67679.392659
+   begBal:              67679.392659 (0)
+   totalIn:             1982.984682
+   totalOut:            0
+   amountNet:           1982.984682
+                       ======================= 
+   endBal:              69662.377341 (0)
+   endBalCalc:          69662.377341
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountIn:            1982.984682
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 7005662 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+====> token
+===================================================
+Previous:               7005654
+Current:                7005662
+Next:                   7005737
+postType:               diff-diff
+postFirst:              false
+postLast:               false
+postAssetType:          token
+accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+hash:                   0xfa8eef26c445913833a6ace11e27df3821598b9aeb4896eb41213999e89ece7a
+timestamp:              1546554763
+blockNumber:            7005662.5.5
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             69662.377341
+   begBal:              69662.377341 (0)
+   totalIn:             1377.663523
+   totalOut:            0
+   amountNet:           1377.663523
+                       ======================= 
+   endBal:              71040.040864 (0)
+   endBalCalc:          71040.040864
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountIn:            1377.663523
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 7005737 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+====> token
+===================================================
+Previous:               7005662
+Current:                7005737
+Next:                   7005737
+postType:               diff-same
+postFirst:              false
+postLast:               false
+postAssetType:          token
+accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+sender:                 0x28adfa7a3ab67fb19410beabb1c1bf880fef0541  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+hash:                   0x968d9ef3eee9d9526784622726cef4f23712dff17a7dc639f0a1ef79c8f89002
+timestamp:              1546555962
+blockNumber:            7005737.27.17
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             71040.040864
+   begBal:              71040.040864 (0)
+   totalIn:             1787.395981
+   totalOut:            -3016.109787
+   amountNet:           4803.505768
+                       ======================= 
+   endBal:              75843.546632 (0)
+   endBalCalc:          75843.546632
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountIn:            1787.395981
+   correctingOut:       -3016.109787
+   correctingReason:    endbal
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 7005737 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+====> token
+===================================================
+Previous:               7005737
+Current:                7005737
+Next:                   7005738
+postType:               same-diff
+postFirst:              false
+postLast:               true
+postAssetType:          token
+accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+sender:                 0x28adfa7a3ab67fb19410beabb1c1bf880fef0541  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+hash:                   0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
+timestamp:              1546555962
+blockNumber:            7005737.30.20
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             71040.040864
+   begBal:              71040.040864 (0)
+   totalIn:             3016.109787
+   totalOut:            -1787.395981
+   amountNet:           4803.505768
+                       ======================= 
+   endBal:              75843.546632 (0)
+   endBalCalc:          75843.546632
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountIn:            3016.109787
+   correctingOut:       -1787.395981
+   correctingReason:    endbal
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+{
+  "data": [
+    {
+      "amount": "3016109787000000000000",
+      "amountEth": "3016.109787",
+      "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+      "blockNumber": 7005646,
+      "holder": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
+      "logIndex": 42,
+      "transactionIndex": 182
+    },
+    {
+      "amount": "1982984682000000000000",
+      "amountEth": "1982.984682",
+      "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+      "blockNumber": 7005654,
+      "holder": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
+      "logIndex": 32,
+      "transactionIndex": 54
+    },
+    {
+      "amount": "1377663523000000000000",
+      "amountEth": "1377.663523",
+      "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+      "blockNumber": 7005662,
+      "holder": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
+      "logIndex": 5,
+      "transactionIndex": 5
+    },
+    {
+      "amount": "4803505768000000000000",
+      "amountEth": "4803.505768",
+      "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+      "blockNumber": 7005737,
+      "holder": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
+      "logIndex": 17,
+      "transactionIndex": 27
+    },
+    {
+      "amount": "4803505768000000000000",
+      "amountEth": "4803.505768",
+      "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+      "blockNumber": 7005737,
+      "holder": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
+      "logIndex": 20,
+      "transactionIndex": 30
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

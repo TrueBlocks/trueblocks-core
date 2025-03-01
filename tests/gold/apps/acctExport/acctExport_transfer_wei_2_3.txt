@@ -1,0 +1,15 @@
+chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --statements --fmt json --first_block 15700073 --last_block 15700075 --output statements_wei_2_3_out.file
+TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Statements:  true
+TEST[DATE|TIME] FirstBlock:  15700073
+TEST[DATE|TIME] LastBlock:  15700075
+TEST[DATE|TIME] OutputFn:  statements_wei_2_3_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+----
+Results in ./statements_wei_2_3_out.file
+{
+  "data": []
+}

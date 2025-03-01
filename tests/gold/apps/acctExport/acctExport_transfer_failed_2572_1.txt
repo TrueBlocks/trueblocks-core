@@ -1,0 +1,78 @@
+chifra export  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 --accounting --transfers --ether --asset 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 --fmt json --last_block 15549163 --max_records 40 --output transfer_failed_2572_1_out.file
+TEST[DATE|TIME] Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Transfers:  true
+TEST[DATE|TIME] MaxRecords:  40
+TEST[DATE|TIME] Asset:  [0xf5b2c59f6db42ffcdfc1625999c81fdf17953384]
+TEST[DATE|TIME] LastBlock:  15549163
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] OutputFn:  transfer_failed_2572_1_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         15549162
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              7102397413752175341300000
+TEST[DATE|TIME] float1:              4931839383183232451600
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            1440.1112570636812698
+TEST[DATE|TIME] price:               1440.1112570636813
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> token
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14469880
+TEST[DATE|TIME] Current:                15549162
+TEST[DATE|TIME] Next:                   15549163
+TEST[DATE|TIME] postType:               diff-diff
+TEST[DATE|TIME] postFirst:              false
+TEST[DATE|TIME] postLast:               true
+TEST[DATE|TIME] postAssetType:          token
+TEST[DATE|TIME] accountedFor:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+TEST[DATE|TIME] sender:                 0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f  ==>  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+TEST[DATE|TIME] assetAddress:           0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 (mdai.io) decimals: 18
+TEST[DATE|TIME] hash:                   0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb
+TEST[DATE|TIME] timestamp:              1663367531
+TEST[DATE|TIME] blockNumber:            15549162.83.1774
+TEST[DATE|TIME] priceSource:            0 (not-priced)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              2017.044745122853478376 (2017)
+TEST[DATE|TIME]    totalIn:             2017
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           2017
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              2017.044745122853478376 (2017.044745122853478376)
+TEST[DATE|TIME]    endBalCalc:          4034.044745122853478376
+TEST[DATE|TIME]    rollingBalance:      0
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            2017
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]  ^^ we need to fix this ^^
+TEST[DATE|TIME] ---------------------------------------------------
+----
+Results in ./transfer_failed_2572_1_out.file
+{
+  "data": [
+    {
+      "amount": "2017000000000000000000",
+      "amountEth": "2017",
+      "asset": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
+      "blockNumber": 15549162,
+      "holder": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "logIndex": 1774,
+      "transactionIndex": 83
+    }
+  ]
+}

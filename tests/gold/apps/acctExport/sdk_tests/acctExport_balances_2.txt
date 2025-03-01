@@ -9,6 +9,7 @@ Format:  json
 {
   "data": [
     {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "balance": "5000000000000000000",
       "balanceDec": "5",
       "blockNumber": 8854723,
@@ -17,6 +18,7 @@ Format:  json
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
     },
     {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "balance": "4989790000000000000",
       "balanceDec": "4.98979",
       "blockNumber": 8856290,
