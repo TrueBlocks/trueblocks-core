@@ -18,7 +18,7 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN,
 		}
-		if err := conn.Store.Read(logGroup, nil); err == nil {
+		if err := conn.Store.Read(logGroup); err == nil {
 			return logGroup.Logs, nil
 		}
 	}
@@ -32,13 +32,15 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 		return logs, err
 	} else {
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Logs] {
+		isWritable := conn.StoreWritable()
+		isEnabled := conn.EnabledMap[walk.Cache_Logs]
+		if isFinal && isWritable && isEnabled {
 			logGroup := &types.LogGroup{
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,
 				Logs:             logs,
 			}
-			if err = conn.Store.Write(logGroup, nil); err != nil {
+			if err = conn.Store.Write(logGroup); err != nil {
 				logger.Warn("Failed to write logs to cache", err)
 			}
 		}

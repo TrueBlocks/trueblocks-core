@@ -22,7 +22,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		lightBlock := &types.LightBlock{
 			BlockNumber: bn,
 		}
-		if err := conn.Store.Read(lightBlock, nil); err == nil {
+		if err := conn.Store.Read(lightBlock); err == nil {
 			// We need to fill in the actual transactions (from cache hopefully, but
 			// if not, then from the RPC)
 			transactions := make([]types.Transaction, 0, len(lightBlock.Transactions))
@@ -66,7 +66,6 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 	if err != nil {
 		return types.Block{}, err
 	}
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
 
 	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, block.Timestamp)
 	for i := 0; i < len(block.Transactions); i++ {
@@ -83,13 +82,20 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		block.Transactions[i].Receipt = receipt
 		block.Transactions[i].Timestamp = block.Timestamp
 		block.Transactions[i].HasToken = types.IsTokenFunction(block.Transactions[i].Input)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Transactions] {
-			_ = conn.Store.Write(&block.Transactions[i], nil)
+
+		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
+		isWritable := conn.StoreWritable()
+		isEnabled := conn.EnabledMap[walk.Cache_Transactions]
+		if isFinal && isWritable && isEnabled {
+			_ = conn.Store.Write(&block.Transactions[i])
 		}
 	}
 
-	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
-		_ = conn.Store.Write(block, nil)
+	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
+	isWritable := conn.StoreWritable()
+	isEnabled := conn.EnabledMap[walk.Cache_Blocks]
+	if isFinal && isWritable && isEnabled {
+		_ = conn.Store.Write(block)
 	}
 
 	// TODO: BOGUS - avoid copy

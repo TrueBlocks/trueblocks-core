@@ -21,13 +21,12 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN, // no tx id means we're storing the whole block
 		}
-		if err := conn.Store.Read(traceGroup, nil); err == nil {
+		if err := conn.Store.Read(traceGroup); err == nil {
 			return traceGroup.Traces, nil
 		}
 	}
 
 	curTs := conn.GetBlockTimestamp(bn) // same for every trace
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, curTs)
 
 	method := "trace_block"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
@@ -63,13 +62,16 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 			traceIndex++
 		}
 
-		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Traces] {
+		isFinal := base.IsFinal(conn.LatestBlockTimestamp, curTs)
+		isWritable := conn.StoreWritable()
+		isEnabled := conn.EnabledMap[walk.Cache_Traces]
+		if isFinal && isWritable && isEnabled {
 			traceGroup := &types.TraceGroup{
 				Traces:           *traces,
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,
 			}
-			_ = conn.Store.Write(traceGroup, nil)
+			_ = conn.Store.Write(traceGroup)
 		}
 		return *traces, nil
 	}
@@ -84,7 +86,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			TransactionIndex: transaction.TransactionIndex,
 			Traces:           make([]types.Trace, 0, len(transaction.Traces)),
 		}
-		if err := conn.Store.Read(traceGroup, nil); err == nil {
+		if err := conn.Store.Read(traceGroup); err == nil {
 			return traceGroup.Traces, nil
 		}
 	}
@@ -129,13 +131,15 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 
 		if transaction != nil {
 			isFinal := base.IsFinal(conn.LatestBlockTimestamp, transaction.Timestamp)
-			if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Traces] {
+			isWritable := conn.StoreWritable()
+			isEnabled := conn.EnabledMap[walk.Cache_Traces]
+			if isFinal && isWritable && isEnabled {
 				traceGroup := &types.TraceGroup{
 					BlockNumber:      transaction.BlockNumber,
 					TransactionIndex: transaction.TransactionIndex,
 					Traces:           *traces,
 				}
-				_ = conn.Store.Write(traceGroup, nil)
+				_ = conn.Store.Write(traceGroup)
 			}
 		}
 

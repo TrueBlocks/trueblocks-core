@@ -17,7 +17,7 @@ func (conn *Connection) GetTracesByTransactionId(bn base.Blknum, txid base.Txnum
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
-		if err := conn.Store.Read(traceGroup, nil); err == nil {
+		if err := conn.Store.Read(traceGroup); err == nil {
 			return traceGroup.Traces, nil
 		}
 	}

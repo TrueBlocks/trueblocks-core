@@ -7,12 +7,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pricing"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // Reconciler2 is responsible for processing Appearances, constructing Postings
@@ -231,85 +233,89 @@ func findSeparator(s string) int {
 // by checking the transaction's Value, its Logs for ERC20 events, and an optional Traces field.
 func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) []AssetTransfer {
 	var results []AssetTransfer
-
-	if AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
-		at := AssetTransfer{
-			AccountedFor:     r.LedgerBook.AccountedFor,
+	if ledger3.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
+		type AAA = AssetTransfer
+		accountedFor := r.LedgerBook.AccountedFor
+		at := AAA{
+			AccountedFor:     accountedFor,
+			Sender:           trans.From,
+			Recipient:        trans.To,
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
 			TransactionHash:  trans.Hash,
+			LogIndex:         0,
 			Timestamp:        trans.Timestamp,
 			AssetAddress:     base.FAKE_ETH_ADDRESS,
 			AssetSymbol:      "WEI",
-			LogIndex:         0,
-			Sender:           trans.From,
-			Recipient:        trans.To,
-			PostAssetType:    types.TrialBalEth,
 			Decimals:         18,
+			PostAssetType:    types.TrialBalEth,
 			PostFirst:        pos.First,
 			PostLast:         pos.Last,
-		}
-
-		if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
-			at.Recipient = trans.Receipt.ContractAddress
-		}
-
-		// Do not collapse. A single transaction may have many movements of money
-		if r.LedgerBook.AccountedFor == at.Sender {
-			gasUsed := new(base.Wei)
-			if trans.Receipt != nil {
-				gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
-			}
-			gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
-			gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
-
-			at.AmountOut = trans.Value
-			at.GasOut = *gasOut
-		}
-
-		// Do not collapse. A single transaction may have many movements of money
-		if r.LedgerBook.AccountedFor == at.Recipient {
-			if at.BlockNumber == 0 {
-				at.PrefundIn = trans.Value
-			} else {
-				if trans.Rewards != nil {
-					at.MinerBaseRewardIn = trans.Rewards.Block
-					at.MinerNephewRewardIn = trans.Rewards.Nephew
-					at.MinerTxFeeIn = trans.Rewards.TxFee
-					at.MinerUncleRewardIn = trans.Rewards.Uncle
-				} else {
-					at.AmountIn = trans.Value
-				}
-			}
 		}
 
 		if r.asEther {
 			at.AssetSymbol = "ETH"
 		}
 
-		/*
-			if !l.useTraces && l.trial Balance(prev, next, types.TrialBalEth, &ret) {
-				if ret.IsMaterial() {
-					statements = append(statements, ret)
+		if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
+			at.Recipient = trans.Receipt.ContractAddress
+		}
+
+		if false { // r.useTraces {
+			// if traceStatements, err := r.getStatementsFromTraces(pos, trans, &at); err != nil {
+			// 	if !utils.IsFuzzing() {
+			// 		logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
+			// 	}
+			// } else {
+			// 	allStatements = append(allStatements, traceStatements...)
+			// }
+
+		} else {
+			// Do not collapse. A single transaction may have many movements of money
+			if at.Sender == accountedFor {
+				gasUsed := new(base.Wei)
+				if trans.Receipt != nil {
+					gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
+				}
+				gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
+				gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
+				at.AmountOut = trans.Value
+				at.GasOut = *gasOut
+			}
+
+			// Do not collapse. A single transaction may have many movements of money
+			if at.Recipient == accountedFor {
+				if at.BlockNumber == 0 {
+					at.PrefundIn = trans.Value
 				} else {
-					logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
-				}
-			} else {
-				if !l.useTraces {
-					logger.TestLog(!l.useTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), " need to decend into traces")
-				}
-				if traceStatements, err := l.getStatementsFromTraces(trans, &ret); err != nil {
-					if !utils.IsFuzzing() {
-						logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
+					if trans.Rewards != nil {
+						at.MinerBaseRewardIn = trans.Rewards.Block
+						at.MinerNephewRewardIn = trans.Rewards.Nephew
+						at.MinerTxFeeIn = trans.Rewards.TxFee
+						at.MinerUncleRewardIn = trans.Rewards.Uncle
+					} else {
+						at.AmountIn = trans.Value
 					}
-				} else {
-					statements = append(statements, traceStatements...)
 				}
 			}
-		*/
 
-		if at.IsMaterial() {
-			results = append(results, at)
+			if !utils.IsFuzzing() {
+				/*
+					reconciled := r.trialBalance(pos, types.TrialBalEth, trans, &at)
+					if !reconciled {
+						logger.TestLog(!r.useTraces, "Trial balance failed for ", at.TransactionHash.Hex(), " need to decend into traces")
+						if traceStatements, err := r.getStatementsFromTraces(pos, trans, &at); err != nil {
+							logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
+						} else {
+							results = append(results, traceStatements...)
+						}
+
+					} else
+				*/
+				if at.IsMaterial() {
+					results = append(results, at)
+				}
+			}
 		}
 	}
 
@@ -325,7 +331,7 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 
 			} else {
 				addrArray := []base.Address{r.LedgerBook.AccountedFor}
-				if !filter.ApplyLogFilter(log, addrArray) || !AssetOfInterest(r.assetFilter, log.Address) {
+				if !filter.ApplyLogFilter(log, addrArray) || !ledger3.AssetOfInterest(r.assetFilter, log.Address) {
 					continue
 				}
 
@@ -417,21 +423,6 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 	// }
 
 	return results
-}
-
-// AssetOfInterest returns true if the asset filter is empty or the asset matches
-func AssetOfInterest(filters []base.Address, needle base.Address) bool {
-	if len(filters) == 0 {
-		return true
-	}
-
-	for _, asset := range filters {
-		if asset.Hex() == needle.Hex() {
-			return true
-		}
-	}
-
-	return false
 }
 
 // func (l *Reconciler2) getStatementsFromTraces(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {

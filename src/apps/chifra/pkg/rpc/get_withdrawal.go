@@ -40,7 +40,7 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN,
 		}
-		if err := conn.Store.Read(withdrawalGroup, nil); err == nil {
+		if err := conn.Store.Read(withdrawalGroup); err == nil {
 			return withdrawalGroup.Withdrawals, nil
 		}
 	}
@@ -49,13 +49,15 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 		return withdrawals, err
 	} else {
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Withdrawals] {
+		isWritable := conn.StoreWritable()
+		isEnabled := conn.EnabledMap[walk.Cache_Withdrawals]
+		if isFinal && isWritable && isEnabled {
 			withdrawalGroup := &types.WithdrawalGroup{
 				BlockNumber:      bn,
 				TransactionIndex: base.NOPOSN,
 				Withdrawals:      withdrawals,
 			}
-			if err = conn.Store.Write(withdrawalGroup, nil); err != nil {
+			if err = conn.Store.Write(withdrawalGroup); err != nil {
 				logger.Warn("Failed to write withdrawals to cache", err)
 			}
 		}

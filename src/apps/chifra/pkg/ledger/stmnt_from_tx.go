@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -22,22 +23,24 @@ func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 			TransactionIndex: trans.TransactionIndex,
 			Address:          r.accountFor,
 		}
-		if err := r.connection.Store.Read(statementGroup, nil); err == nil {
+		if err := r.connection.Store.Read(statementGroup); err == nil {
 			return statementGroup.Statements, nil
 		}
 	}
 
 	var err error
-	allStatements := make([]types.Statement, 0, 20)
+	results := make([]types.Statement, 0, 20)
 
 	if os.Getenv("NEW_CODE") == "true" {
 		r := ledger2.NewReconciler2(r.connection, r.assetFilter, r.accountFor, r.names, r.asEther)
-		if allStatements, err = r.GetStatements(pos, filter, trans); err != nil {
-			return allStatements, err
+		if results, err = r.GetStatements(pos, filter, trans); err != nil {
+			return results, err
 		}
 
 	} else {
-		if ledger2.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
+		if ledger3.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
+			type AAA = types.Statement
+			accountedFor := r.accountFor
 
 			prevBal, _ := r.connection.GetBalanceAt(r.accountFor, pos.Prev)
 			if trans.BlockNumber == 0 {
@@ -51,8 +54,8 @@ func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 
 			endBal, _ := r.connection.GetBalanceAt(r.accountFor, trans.BlockNumber)
 
-			s := types.Statement{
-				AccountedFor:     r.accountFor,
+			at := AAA{
+				AccountedFor:     accountedFor,
 				Sender:           trans.From,
 				Recipient:        trans.To,
 				BlockNumber:      trans.BlockNumber,
@@ -73,66 +76,63 @@ func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 			}
 
 			if r.asEther {
-				s.AssetSymbol = "ETH"
+				at.AssetSymbol = "ETH"
 			}
 
 			if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
-				s.Recipient = trans.Receipt.ContractAddress
+				at.Recipient = trans.Receipt.ContractAddress
 			}
 
 			if r.useTraces {
-				if traceStatements, err := r.getStatementsFromTraces(pos, trans, &s); err != nil {
+				if traceStatements, err := r.getStatementsFromTraces(pos, trans, &at); err != nil {
 					if !utils.IsFuzzing() {
 						logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 					}
 				} else {
-					allStatements = append(allStatements, traceStatements...)
+					results = append(results, traceStatements...)
 				}
 
 			} else {
 				// Do not collapse. A single transaction may have many movements of money
-				if s.Sender == r.accountFor {
+				if at.Sender == accountedFor {
 					gasUsed := new(base.Wei)
 					if trans.Receipt != nil {
 						gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
 					}
 					gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
 					gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
-					s.AmountOut = trans.Value
-					s.GasOut = *gasOut
+					at.AmountOut = trans.Value
+					at.GasOut = *gasOut
 				}
 
 				// Do not collapse. A single transaction may have many movements of money
-				if s.Recipient == r.accountFor {
-					if s.BlockNumber == 0 {
-						s.PrefundIn = trans.Value
+				if at.Recipient == accountedFor {
+					if at.BlockNumber == 0 {
+						at.PrefundIn = trans.Value
 					} else {
 						if trans.Rewards != nil {
-							s.MinerBaseRewardIn = trans.Rewards.Block
-							s.MinerNephewRewardIn = trans.Rewards.Nephew
-							s.MinerTxFeeIn = trans.Rewards.TxFee
-							s.MinerUncleRewardIn = trans.Rewards.Uncle
+							at.MinerBaseRewardIn = trans.Rewards.Block
+							at.MinerNephewRewardIn = trans.Rewards.Nephew
+							at.MinerTxFeeIn = trans.Rewards.TxFee
+							at.MinerUncleRewardIn = trans.Rewards.Uncle
 						} else {
-							s.AmountIn = trans.Value
+							at.AmountIn = trans.Value
 						}
 					}
 				}
 
-				if utils.IsFuzzing() {
-					// do nothing
-
-				} else {
-					reconciled := r.trialBalance(pos, types.TrialBalEth, trans, &s)
+				if !utils.IsFuzzing() {
+					reconciled := r.trialBalance(pos, types.TrialBalEth, trans, &at)
 					if !reconciled {
-						logger.TestLog(!r.useTraces, "Trial balance failed for ", s.TransactionHash.Hex(), " need to decend into traces")
-						if traceStatements, err := r.getStatementsFromTraces(pos, trans, &s); err != nil {
+						logger.TestLog(!r.useTraces, "Trial balance failed for ", at.TransactionHash.Hex(), " need to decend into traces")
+						if traceStatements, err := r.getStatementsFromTraces(pos, trans, &at); err != nil {
 							logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 						} else {
-							allStatements = append(allStatements, traceStatements...)
+							results = append(results, traceStatements...)
 						}
 
-					} else if s.IsMaterial() {
-						allStatements = append(allStatements, s)
+					} else if at.IsMaterial() {
+						results = append(results, at)
 					}
 				}
 			}
@@ -140,29 +140,33 @@ func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 
 		if trans.Receipt != nil {
 			if receiptStatements, err := r.getStatementsFromReceipt(pos, filter, trans); err == nil {
-				allStatements = append(allStatements, receiptStatements...)
+				results = append(results, receiptStatements...)
 			}
 		}
 	}
 
-	isFinal := base.IsFinal(r.connection.LatestBlockTimestamp, trans.Timestamp)
-	isWritable := r.connection.StoreWritable()
-	isEnabled := r.connection.EnabledMap[walk.Cache_Statements]
-	// TODO: BOGUS Turn on caching for allStatements once we get 100% coverage
-	if false && isFinal && isWritable && isEnabled {
-		for _, statement := range allStatements {
-			if statement.IsMaterial() && !statement.Reconciled() {
-				return allStatements, nil
-			}
+	allReconciled := true
+	for _, statement := range results {
+		if statement.IsMaterial() && !statement.Reconciled() {
+			allReconciled = false
+			break
 		}
+	}
+
+	conn := r.connection
+	isFinal := base.IsFinal(r.connection.LatestBlockTimestamp, trans.Timestamp)
+	isWritable := conn.StoreWritable()
+	isEnabled := conn.EnabledMap[walk.Cache_Statements]
+	// TODO: BOGUS Turn on caching for results once we get 100% coverage
+	if false && isFinal && isWritable && isEnabled && allReconciled {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
 			Address:          r.accountFor,
-			Statements:       allStatements,
+			Statements:       results,
 		}
-		_ = r.connection.Store.Write(statementGroup, nil)
+		_ = conn.Store.Write(statementGroup)
 	}
 
-	return allStatements, nil
+	return results, nil
 }

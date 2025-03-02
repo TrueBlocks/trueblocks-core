@@ -28,7 +28,7 @@ func TestBlockCache(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if err := store.Write(expected, nil); err != nil {
+	if err := store.Write(expected); err != nil {
 		t.Fatal(err)
 	}
 
@@ -36,7 +36,7 @@ func TestBlockCache(t *testing.T) {
 	readBack := &LightBlock{
 		BlockNumber: expected.BlockNumber,
 	}
-	if err := store.Read(readBack, nil); err != nil {
+	if err := store.Read(readBack); err != nil {
 		t.Fatal(err)
 	}
 

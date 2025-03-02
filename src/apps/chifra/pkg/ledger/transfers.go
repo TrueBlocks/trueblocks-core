@@ -15,7 +15,7 @@ func (r *Reconciler) GetTransfers(pos *types.AppPosition, filter *filter.Appeara
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
 		}
-		if err := r.connection.Store.Read(transferGroup, nil); err == nil {
+		if err := r.connection.Store.Read(transferGroup); err == nil {
 			return transferGroup.Transfers, nil
 		}
 	}
@@ -36,22 +36,26 @@ func (r *Reconciler) GetTransfers(pos *types.AppPosition, filter *filter.Appeara
 	if transfers, err := types.ConvertToTransfers(statements); err != nil {
 		return nil, err
 	} else {
-		isFinal := base.IsFinal(r.connection.LatestBlockTimestamp, trans.Timestamp)
-		isWritable := r.connection.StoreWritable()
-		isEnabled := r.connection.EnabledMap[walk.Cache_Transfers]
-		// TODO: BOGUS Turn on caching for allTransfers once we get 100% coverage
-		if false && isFinal && isWritable && isEnabled {
-			for _, transfer := range transfers {
-				if transfer.IsMaterial() {
-					return transfers, nil
-				}
+
+		allReconciled := true
+		for _, transfer := range transfers {
+			if transfer.IsMaterial() {
+				allReconciled = false
+				break
 			}
+		}
+		conn := r.connection
+		isFinal := base.IsFinal(r.connection.LatestBlockTimestamp, trans.Timestamp)
+		isWritable := conn.StoreWritable()
+		isEnabled := conn.EnabledMap[walk.Cache_Transfers]
+		// TODO: BOGUS Turn on caching for allTransfers once we get 100% coverage
+		if false && isFinal && isWritable && isEnabled && allReconciled {
 			transfersGroup := &types.TransferGroup{
 				BlockNumber:      trans.BlockNumber,
 				TransactionIndex: trans.TransactionIndex,
 				Transfers:        transfers,
 			}
-			_ = r.connection.Store.Write(transfersGroup, nil)
+			_ = conn.Store.Write(transfersGroup)
 		}
 		return transfers, nil
 	}
