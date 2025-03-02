@@ -20,13 +20,8 @@ func (conn *Connection) GetBlockHashByHash(hash string) (base.Hash, error) {
 	if block, err := conn.getLightBlockFromRpc(base.NOPOSN, base.HexToHash(hash)); err != nil {
 		return base.Hash{}, err
 	} else {
-		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-		isWritable := conn.Store.Enabled()
-		isEnabled := conn.EnabledMap[walk.Cache_Blocks]
-		if isFinal && isWritable && isEnabled {
-			_ = conn.Store.Write(block)
-		}
-		return block.Hash, nil
+		err = conn.Store.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
+		return block.Hash, err
 	}
 }
 
@@ -35,13 +30,8 @@ func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
 	if block, err := conn.getLightBlockFromRpc(base.NOPOSN, base.HexToHash(hash)); err != nil {
 		return 0, err
 	} else {
-		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-		isWritable := conn.Store.Enabled()
-		isEnabled := conn.EnabledMap[walk.Cache_Blocks]
-		if isFinal && isWritable && isEnabled {
-			_ = conn.Store.Write(block)
-		}
-		return block.BlockNumber, nil
+		err = conn.Store.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
+		return block.BlockNumber, err
 	}
 }
 

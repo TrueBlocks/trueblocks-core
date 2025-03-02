@@ -1,7 +1,6 @@
 package ledger
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -44,19 +43,15 @@ func (r *Reconciler) GetTransfers(pos *types.AppPosition, filter *filter.Appeara
 				break
 			}
 		}
-		conn := r.connection
-		isFinal := base.IsFinal(r.connection.LatestBlockTimestamp, trans.Timestamp)
-		isWritable := conn.Store.Enabled()
-		isEnabled := conn.EnabledMap[walk.Cache_Transfers]
-		// TODO: BOGUS Turn on caching for allTransfers once we get 100% coverage
-		if false && isFinal && isWritable && isEnabled && allReconciled {
-			transfersGroup := &types.TransferGroup{
-				BlockNumber:      trans.BlockNumber,
-				TransactionIndex: trans.TransactionIndex,
-				Transfers:        transfers,
-			}
-			_ = conn.Store.Write(transfersGroup)
+
+		transfersGroup := &types.TransferGroup{
+			BlockNumber:      trans.BlockNumber,
+			TransactionIndex: trans.TransactionIndex,
+			Transfers:        transfers,
 		}
-		return transfers, nil
+
+		// TODO: BOGUS Turn on caching (remove the false below) for results once we get 100% coverage
+		err = r.connection.Store.WriteToCache(transfersGroup, walk.Cache_Transfers, trans.Timestamp, allReconciled, false)
+		return transfers, err
 	}
 }

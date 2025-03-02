@@ -52,7 +52,7 @@ func (opts *InitOptions) testLog() {
 	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
-	opts.Conn.TestLog(opts.getCaches())
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 

@@ -8,7 +8,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -90,21 +89,16 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 	if receipts, err := conn.getBlockReceiptsFromRpc(bn); err != nil {
 		return receipts, nil, err
 	} else {
-		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		isWritable := conn.Store.Enabled()
-		isEnabled := conn.EnabledMap[walk.Cache_Receipts]
-		if isFinal && isWritable && isEnabled {
-			receiptGroup := &types.ReceiptGroup{
-				BlockNumber:      bn,
-				TransactionIndex: base.NOPOSN,
-				Receipts:         receipts,
-			}
-			if err = conn.Store.Write(receiptGroup); err != nil {
-				logger.Warn("Failed to write receipts to cache", err)
-			}
+		receiptGroup := &types.ReceiptGroup{
+			BlockNumber:      bn,
+			TransactionIndex: base.NOPOSN,
+			Receipts:         receipts,
 		}
 
 		receiptMap := make(map[base.Txnum]*types.Receipt, len(receipts))
+
+		// even if there's an error, this spin through won't matter
+		err = conn.Store.WriteToCache(receiptGroup, walk.Cache_Receipts, ts)
 		for index := 0; index < len(receipts); index++ {
 			pReceipt := &receipts[index]
 			receiptMap[pReceipt.TransactionIndex] = pReceipt

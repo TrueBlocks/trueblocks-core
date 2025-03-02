@@ -83,23 +83,11 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		block.Transactions[i].Timestamp = block.Timestamp
 		block.Transactions[i].HasToken = types.IsTokenFunction(block.Transactions[i].Input)
 
-		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-		isWritable := conn.Store.Enabled()
-		isEnabled := conn.EnabledMap[walk.Cache_Transactions]
-		if isFinal && isWritable && isEnabled {
-			_ = conn.Store.Write(&block.Transactions[i])
-		}
+		_ = conn.Store.WriteToCache(&block.Transactions[i], walk.Cache_Transactions, block.Timestamp)
 	}
 
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-	isWritable := conn.Store.Enabled()
-	isEnabled := conn.EnabledMap[walk.Cache_Blocks]
-	if isFinal && isWritable && isEnabled {
-		_ = conn.Store.Write(block)
-	}
-
-	// TODO: BOGUS - avoid copy
-	return *block, nil
+	err = conn.Store.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
+	return *block, err
 }
 
 // getBlockFromRpc returns the block as received from the node

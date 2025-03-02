@@ -153,20 +153,14 @@ func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 		}
 	}
 
-	conn := r.connection
-	isFinal := base.IsFinal(r.connection.LatestBlockTimestamp, trans.Timestamp)
-	isWritable := conn.Store.Enabled()
-	isEnabled := conn.EnabledMap[walk.Cache_Statements]
-	// TODO: BOGUS Turn on caching for results once we get 100% coverage
-	if false && isFinal && isWritable && isEnabled && allReconciled {
-		statementGroup := &types.StatementGroup{
-			BlockNumber:      trans.BlockNumber,
-			TransactionIndex: trans.TransactionIndex,
-			Address:          r.accountFor,
-			Statements:       results,
-		}
-		_ = conn.Store.Write(statementGroup)
+	statementGroup := &types.StatementGroup{
+		BlockNumber:      trans.BlockNumber,
+		TransactionIndex: trans.TransactionIndex,
+		Address:          r.accountFor,
+		Statements:       results,
 	}
 
-	return results, nil
+	// TODO: BOGUS Turn on caching (remove the false below) for results once we get 100% coverage
+	err = r.connection.Store.WriteToCache(statementGroup, walk.Cache_Statements, trans.Timestamp, allReconciled, false)
+	return results, err
 }

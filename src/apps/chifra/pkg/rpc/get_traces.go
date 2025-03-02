@@ -62,18 +62,14 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 			traceIndex++
 		}
 
-		isFinal := base.IsFinal(conn.LatestBlockTimestamp, curTs)
-		isWritable := conn.Store.Enabled()
-		isEnabled := conn.EnabledMap[walk.Cache_Traces]
-		if isFinal && isWritable && isEnabled {
-			traceGroup := &types.TraceGroup{
-				Traces:           *traces,
-				BlockNumber:      bn,
-				TransactionIndex: base.NOPOSN,
-			}
-			_ = conn.Store.Write(traceGroup)
+		traceGroup := &types.TraceGroup{
+			Traces:           *traces,
+			BlockNumber:      bn,
+			TransactionIndex: base.NOPOSN,
 		}
-		return *traces, nil
+
+		err = conn.Store.WriteToCache(traceGroup, walk.Cache_Traces, curTs)
+		return *traces, err
 	}
 }
 
@@ -129,20 +125,16 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			traceIndex++
 		}
 
-		if transaction != nil {
-			isFinal := base.IsFinal(conn.LatestBlockTimestamp, transaction.Timestamp)
-			isWritable := conn.Store.Enabled()
-			isEnabled := conn.EnabledMap[walk.Cache_Traces]
-			if isFinal && isWritable && isEnabled {
-				traceGroup := &types.TraceGroup{
-					BlockNumber:      transaction.BlockNumber,
-					TransactionIndex: transaction.TransactionIndex,
-					Traces:           *traces,
-				}
-				_ = conn.Store.Write(traceGroup)
-			}
+		if transaction == nil {
+			return *traces, nil
 		}
 
-		return *traces, nil
+		traceGroup := &types.TraceGroup{
+			BlockNumber:      transaction.BlockNumber,
+			TransactionIndex: transaction.TransactionIndex,
+			Traces:           *traces,
+		}
+		err = conn.Store.WriteToCache(traceGroup, walk.Cache_Traces, transaction.Timestamp)
+		return *traces, err
 	}
 }

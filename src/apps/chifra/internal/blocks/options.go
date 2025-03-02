@@ -68,7 +68,7 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.CacheTxs, "CacheTxs: ", opts.CacheTxs)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
-	opts.Conn.TestLog(opts.getCaches())
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 

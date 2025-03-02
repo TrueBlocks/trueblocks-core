@@ -32,15 +32,8 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 		return types.LightBlock{}, err
 	}
 
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-	isWritable := conn.Store.Enabled()
-	isEnabled := conn.EnabledMap[walk.Cache_Blocks]
-	if isFinal && isWritable && isEnabled {
-		_ = conn.Store.Write(block)
-	}
-
-	// TODO: BOGUS - avoid copies
-	return *block, nil
+	err = conn.Store.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
+	return *block, err
 }
 
 // getLightBlockFromRpc returns the block as received from the node

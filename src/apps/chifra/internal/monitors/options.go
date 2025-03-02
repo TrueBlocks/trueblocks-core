@@ -55,7 +55,7 @@ func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Staged, "Staged: ", opts.Staged)
-	opts.Conn.TestLog(opts.getCaches())
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 

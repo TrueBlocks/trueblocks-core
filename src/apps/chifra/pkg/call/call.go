@@ -261,13 +261,6 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 		results.Values[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 
-	conn := call.Conn
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-	isWritable := conn.Store.Enabled()
-	isEnabled := conn.EnabledMap[walk.Cache_Results]
-	if isFinal && isWritable && isEnabled {
-		_ = conn.Store.Write(results)
-	}
-
-	return results, nil
+	err = call.Conn.Store.WriteToCache(results, walk.Cache_Results, blockTs)
+	return results, err
 }

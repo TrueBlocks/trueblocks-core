@@ -141,20 +141,13 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 		}
 	}
 
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-	isWritable := conn.Store.Enabled()
-	isEnabled := conn.EnabledMap[walk.Cache_State]
-	if isFinal && isWritable && isEnabled {
-		_ = conn.Store.Write(state)
-	}
-
+	err = conn.Store.WriteToCache(state, walk.Cache_State, blockTs)
 	if filters.BalanceCheck != nil {
 		if !filters.BalanceCheck(address, &state.Balance) {
-			return nil, nil
+			return nil, err
 		}
 	}
-
-	return state, nil
+	return state, err
 }
 
 // GetBalanceAt returns a balance for an address at a block

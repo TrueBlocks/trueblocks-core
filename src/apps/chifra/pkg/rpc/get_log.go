@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -31,19 +30,12 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 	if logs, err := conn.getLogsFromRpc(filter); err != nil {
 		return logs, err
 	} else {
-		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		isWritable := conn.Store.Enabled()
-		isEnabled := conn.EnabledMap[walk.Cache_Logs]
-		if isFinal && isWritable && isEnabled {
-			logGroup := &types.LogGroup{
-				BlockNumber:      bn,
-				TransactionIndex: base.NOPOSN,
-				Logs:             logs,
-			}
-			if err = conn.Store.Write(logGroup); err != nil {
-				logger.Warn("Failed to write logs to cache", err)
-			}
+		logGroup := &types.LogGroup{
+			BlockNumber:      bn,
+			TransactionIndex: base.NOPOSN,
+			Logs:             logs,
 		}
+		err = conn.Store.WriteToCache(logGroup, walk.Cache_Logs, ts)
 		return logs, err
 	}
 }

@@ -66,7 +66,7 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	logger.TestLog(opts.Notify, "Notify: ", opts.Notify)
 	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
-	opts.Conn.TestLog(opts.getCaches())
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
