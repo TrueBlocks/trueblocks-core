@@ -1,8 +1,6 @@
 package rpc
 
 import (
-	"sort"
-	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -49,7 +47,7 @@ func newConnection(chain string, cacheEnabled bool, enabledMap map[walk.CacheTyp
 	}
 
 	if store != nil && store.Enabled() {
-		ret.Store.Latest = ret.GetBlockTimestamp(base.NOPOSN)
+		ret.Store.SetLatest(ret.GetBlockTimestamp(base.NOPOSN))
 	}
 
 	return ret
@@ -57,14 +55,5 @@ func newConnection(chain string, cacheEnabled bool, enabledMap map[walk.CacheTyp
 
 // TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
 func (conn *Connection) TestLog() {
-	if conn.Store.Enabled() {
-		enabled := []string{}
-		for k, v := range conn.Store.EnabledMap {
-			if v {
-				enabled = append(enabled, k.String())
-			}
-		}
-		sort.Strings(enabled)
-		logger.TestLog(len(enabled) > 0, "Enabled: ", strings.Join(enabled, ", "))
-	}
+	conn.Store.TestLog()
 }

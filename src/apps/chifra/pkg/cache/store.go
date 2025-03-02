@@ -8,6 +8,8 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
+	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -31,8 +33,8 @@ type Store struct {
 	location      Storer
 	rootDir       string
 	enabled       bool
-	EnabledMap    map[walk.CacheType]bool
-	Latest        base.Timestamp
+	enabledMap    map[walk.CacheType]bool
+	latest        base.Timestamp
 }
 
 // StoreOptions used by Store
@@ -42,6 +44,7 @@ type StoreOptions struct {
 	RootDir    string
 	Enabled    bool
 	EnabledMap map[walk.CacheType]bool
+	Latest     base.Timestamp
 }
 
 func NewStore(options *StoreOptions) (*Store, error) {
@@ -60,7 +63,7 @@ func NewStore(options *StoreOptions) (*Store, error) {
 		location:      location,
 		rootDir:       options.rootDir(),
 		enabled:       options.Enabled || options.Location == MemoryCache,
-		EnabledMap:    enabledMap,
+		enabledMap:    enabledMap,
 		resolvedPaths: make(map[Locator]string),
 	}, nil
 }
@@ -73,8 +76,12 @@ func DefaultStore() (*Store, error) {
 	return defaultStore, err
 }
 
+func (s *Store) SetLatest(ts base.Timestamp) {
+	s.latest = ts
+}
+
 func (s *Store) IsFinal(ts base.Timestamp) bool {
-	return base.IsFinal(s.Latest, ts)
+	return base.IsFinal(s.latest, ts)
 }
 
 func (s *Store) resolvePath(value Locator) (string, error) {
@@ -194,10 +201,24 @@ func (s *Store) Enabled() bool {
 	return s != nil && s.enabled
 }
 
+// TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
+func (s *Store) TestLog() {
+	if s.Enabled() {
+		enabled := []string{}
+		for k, v := range s.enabledMap {
+			if v {
+				enabled = append(enabled, k.String())
+			}
+		}
+		sort.Strings(enabled)
+		logger.TestLog(len(enabled) > 0, "Enabled: ", strings.Join(enabled, ", "))
+	}
+}
+
 // WriteToCache handles caching of any data type that implements the Locator interface. Precondition: Caller
 // must ensure caching is enabled and provide all conditions (e.g., isFinal, isWritable).
 func (s *Store) WriteToCache(data Locator, cacheType walk.CacheType, ts base.Timestamp, conditions ...bool) error {
-	if !s.Enabled() || !s.EnabledMap[cacheType] || !s.IsFinal(ts) {
+	if !s.Enabled() || !s.enabledMap[cacheType] || !s.IsFinal(ts) {
 		return nil
 	}
 	for _, cond := range conditions {
