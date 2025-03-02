@@ -34,7 +34,7 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 		return []types.Withdrawal{}, nil
 	}
 
-	if conn.StoreReadable() {
+	if conn.Store != nil {
 		// walk.Cache_Withdrawals
 		withdrawalGroup := &types.WithdrawalGroup{
 			BlockNumber:      bn,
@@ -49,7 +49,7 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 		return withdrawals, err
 	} else {
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		isWritable := conn.StoreWritable()
+		isWritable := conn.Store.Enabled()
 		isEnabled := conn.EnabledMap[walk.Cache_Withdrawals]
 		if isFinal && isWritable && isEnabled {
 			withdrawalGroup := &types.WithdrawalGroup{

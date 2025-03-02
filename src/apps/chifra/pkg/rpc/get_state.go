@@ -18,7 +18,7 @@ type StateFilters struct {
 // GetState returns account state (search: FromRpc)
 func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (*types.State, error) {
 	blockTs := base.Timestamp(0)
-	if conn.StoreReadable() {
+	if conn.Store != nil {
 		// walk.Cache_State
 		state := &types.State{
 			BlockNumber: blockNumber,
@@ -142,7 +142,7 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 	}
 
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-	isWritable := conn.StoreWritable()
+	isWritable := conn.Store.Enabled()
 	isEnabled := conn.EnabledMap[walk.Cache_State]
 	if isFinal && isWritable && isEnabled {
 		_ = conn.Store.Write(state)

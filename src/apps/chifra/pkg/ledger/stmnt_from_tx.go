@@ -17,7 +17,7 @@ import (
 
 // GetStatements returns a statement from a given transaction
 func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
-	if r.connection.StoreReadable() {
+	if r.connection.Store != nil {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
@@ -155,7 +155,7 @@ func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.Appear
 
 	conn := r.connection
 	isFinal := base.IsFinal(r.connection.LatestBlockTimestamp, trans.Timestamp)
-	isWritable := conn.StoreWritable()
+	isWritable := conn.Store.Enabled()
 	isEnabled := conn.EnabledMap[walk.Cache_Statements]
 	// TODO: BOGUS Turn on caching for results once we get 100% coverage
 	if false && isFinal && isWritable && isEnabled && allReconciled {

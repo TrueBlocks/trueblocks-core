@@ -10,7 +10,7 @@ import (
 
 // GetTransfers returns a statement from a given transaction
 func (r *Reconciler) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
-	if r.connection.StoreReadable() {
+	if r.connection.Store != nil {
 		transferGroup := &types.TransferGroup{
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
@@ -46,7 +46,7 @@ func (r *Reconciler) GetTransfers(pos *types.AppPosition, filter *filter.Appeara
 		}
 		conn := r.connection
 		isFinal := base.IsFinal(r.connection.LatestBlockTimestamp, trans.Timestamp)
-		isWritable := conn.StoreWritable()
+		isWritable := conn.Store.Enabled()
 		isEnabled := conn.EnabledMap[walk.Cache_Transfers]
 		// TODO: BOGUS Turn on caching for allTransfers once we get 100% coverage
 		if false && isFinal && isWritable && isEnabled && allReconciled {

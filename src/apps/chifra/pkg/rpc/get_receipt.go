@@ -32,7 +32,7 @@ func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested ba
 // GetReceiptNoTimestamp fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
 func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (receipt types.Receipt, err error) {
-	if conn.StoreReadable() {
+	if conn.Store != nil {
 		// walk.Cache_Transactions
 		tx := &types.Transaction{
 			BlockNumber:      bn,
@@ -71,7 +71,7 @@ func (conn *Connection) getReceiptFromRpc(bn base.Blknum, txid base.Txnum) (rece
 
 // GetReceiptsByNumber returns all receipts in a blocks along with their logs
 func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.Receipt, map[base.Txnum]*types.Receipt, error) {
-	if conn.StoreReadable() {
+	if conn.Store != nil {
 		// walk.Cache_Receipts
 		receiptGroup := &types.ReceiptGroup{
 			BlockNumber:      bn,
@@ -91,7 +91,7 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 		return receipts, nil, err
 	} else {
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		isWritable := conn.StoreWritable()
+		isWritable := conn.Store.Enabled()
 		isEnabled := conn.EnabledMap[walk.Cache_Receipts]
 		if isFinal && isWritable && isEnabled {
 			receiptGroup := &types.ReceiptGroup{

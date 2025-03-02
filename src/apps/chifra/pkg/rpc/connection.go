@@ -58,23 +58,9 @@ func newConnection(chain string, cacheEnabled bool, enabledMap map[walk.CacheTyp
 	return ret
 }
 
-// StoreReadable is a shorthand to check if Store is initialized. It will return
-// false for nil pointer to Connection
-func (conn *Connection) StoreReadable() bool {
-	if conn == nil {
-		logger.Fatal("should not happen ==> implementation error in StoreReadable.")
-	}
-
-	return conn.Store != nil
-}
-
-func (conn *Connection) StoreWritable() bool {
-	return conn.StoreReadable() && conn.Store.Enabled()
-}
-
 // TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
 func (conn *Connection) TestLog(caches map[walk.CacheType]bool) {
-	if conn.StoreWritable() {
+	if conn.Store.Enabled() {
 		enabled := []string{}
 		for k, v := range caches {
 			if v {

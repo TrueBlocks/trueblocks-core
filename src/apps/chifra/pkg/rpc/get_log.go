@@ -12,7 +12,7 @@ import (
 
 // GetLogsByNumber returns the logs of a block
 func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.Log, error) {
-	if conn.StoreReadable() {
+	if conn.Store != nil {
 		// walk.Cache_Logs
 		logGroup := &types.LogGroup{
 			BlockNumber:      bn,
@@ -32,7 +32,7 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 		return logs, err
 	} else {
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		isWritable := conn.StoreWritable()
+		isWritable := conn.Store.Enabled()
 		isEnabled := conn.EnabledMap[walk.Cache_Logs]
 		if isFinal && isWritable && isEnabled {
 			logGroup := &types.LogGroup{

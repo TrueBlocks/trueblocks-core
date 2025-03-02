@@ -201,7 +201,7 @@ func (s *Store) Decache(locators []Locator, procFunc, skipFunc func(*locations.I
 }
 
 func (s *Store) Enabled() bool {
-	return s.enabled
+	return s != nil && s.enabled
 }
 
 func printErr(desc string, err error) {
@@ -214,11 +214,16 @@ func printErr(desc string, err error) {
 
 // WriteToCache handles caching of any data type that implements the Locator interface. Precondition: Caller
 // must ensure caching is enabled and provide all conditions (e.g., isFinal, isWritable).
-func (store *Store) WriteToCache(data Locator, conditions ...bool) error {
-	for _, cond := range conditions {
-		if !cond {
-			return nil
+func (s *Store) WriteToCache(data Locator, conditions ...bool) error {
+	if s.Enabled() {
+		for _, cond := range conditions {
+			if !cond {
+				return nil
+			}
+		}
+		if err := s.Write(data); err != nil {
+			return err // Could add logging if desired
 		}
 	}
-	return store.Write(data)
+	return nil
 }

@@ -188,7 +188,7 @@ func (call *ContractCall) forceEncoding(encoding string) {
 
 func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (results *types.Result, err error) {
 	blockTs := base.Timestamp(0)
-	if call.Conn.StoreReadable() {
+	if call.Conn.Store != nil {
 		// walk.Cache_Results
 		results = &types.Result{
 			BlockNumber: call.BlockNumber,
@@ -263,7 +263,7 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 
 	conn := call.Conn
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-	isWritable := conn.StoreWritable()
+	isWritable := conn.Store.Enabled()
 	isEnabled := conn.EnabledMap[walk.Cache_Results]
 	if isFinal && isWritable && isEnabled {
 		_ = conn.Store.Write(results)

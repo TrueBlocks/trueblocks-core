@@ -16,7 +16,7 @@ import (
 
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
 func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock, error) {
-	if conn.StoreReadable() && bn != base.NOPOSN {
+	if conn.Store != nil && bn != base.NOPOSN {
 		// walk.Cache_Blocks
 		block := types.LightBlock{
 			BlockNumber: bn,
@@ -33,7 +33,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 	}
 
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-	isWritable := conn.StoreWritable()
+	isWritable := conn.Store.Enabled()
 	isEnabled := conn.EnabledMap[walk.Cache_Blocks]
 	if isFinal && isWritable && isEnabled {
 		_ = conn.Store.Write(block)

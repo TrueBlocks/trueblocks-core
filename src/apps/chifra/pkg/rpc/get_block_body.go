@@ -17,7 +17,7 @@ import (
 // GetBlockBodyByNumber fetches the block with transactions from the RPC.
 func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error) {
 	var err error
-	if conn.StoreReadable() {
+	if conn.Store != nil {
 		// walk.Cache_Transactions, walk.Cache_Blocks
 		lightBlock := &types.LightBlock{
 			BlockNumber: bn,
@@ -84,7 +84,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		block.Transactions[i].HasToken = types.IsTokenFunction(block.Transactions[i].Input)
 
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-		isWritable := conn.StoreWritable()
+		isWritable := conn.Store.Enabled()
 		isEnabled := conn.EnabledMap[walk.Cache_Transactions]
 		if isFinal && isWritable && isEnabled {
 			_ = conn.Store.Write(&block.Transactions[i])
@@ -92,7 +92,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 	}
 
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-	isWritable := conn.StoreWritable()
+	isWritable := conn.Store.Enabled()
 	isEnabled := conn.EnabledMap[walk.Cache_Blocks]
 	if isFinal && isWritable && isEnabled {
 		_ = conn.Store.Write(block)
