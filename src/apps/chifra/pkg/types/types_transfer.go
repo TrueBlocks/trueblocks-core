@@ -17,7 +17,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 // EXISTING_CODE
@@ -92,41 +91,41 @@ type TransferGroup struct {
 }
 
 func (s *TransferGroup) MarshalCache(writer io.Writer) (err error) {
-	return cache.WriteValue(writer, s.Transfers)
+	return base.WriteValue(writer, s.Transfers)
 }
 
 func (s *TransferGroup) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Transfers, fileVersion)
+	return base.ReadValue(reader, &s.Transfers, fileVersion)
 }
 
 func (s *Transfer) MarshalCache(writer io.Writer) (err error) {
 	// Amount
-	if err = cache.WriteValue(writer, &s.Amount); err != nil {
+	if err = base.WriteValue(writer, &s.Amount); err != nil {
 		return err
 	}
 
 	// Asset
-	if err = cache.WriteValue(writer, s.Asset); err != nil {
+	if err = base.WriteValue(writer, s.Asset); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
 
 	// Holder
-	if err = cache.WriteValue(writer, s.Holder); err != nil {
+	if err = base.WriteValue(writer, s.Holder); err != nil {
 		return err
 	}
 
 	// LogIndex
-	if err = cache.WriteValue(writer, s.LogIndex); err != nil {
+	if err = base.WriteValue(writer, s.LogIndex); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
+	if err = base.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
 
@@ -139,32 +138,32 @@ func (s *Transfer) UnmarshalCache(fileVersion uint64, reader io.Reader) (err err
 	// EXISTING_CODE
 
 	// Amount
-	if err = cache.ReadValue(reader, &s.Amount, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Amount, fileVersion); err != nil {
 		return err
 	}
 
 	// Asset
-	if err = cache.ReadValue(reader, &s.Asset, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Asset, fileVersion); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// Holder
-	if err = cache.ReadValue(reader, &s.Holder, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Holder, fileVersion); err != nil {
 		return err
 	}
 
 	// LogIndex
-	if err = cache.ReadValue(reader, &s.LogIndex, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.LogIndex, fileVersion); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.TransactionIndex, fileVersion); err != nil {
 		return err
 	}
 

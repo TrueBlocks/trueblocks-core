@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
@@ -83,32 +84,32 @@ func (s *Parameter) MarshalCache(writer io.Writer) (err error) {
 	for _, component := range s.Components {
 		components = append(components, &component)
 	}
-	if err = cache.WriteValue(writer, components); err != nil {
+	if err = base.WriteValue(writer, components); err != nil {
 		return err
 	}
 
 	// Indexed
-	if err = cache.WriteValue(writer, s.Indexed); err != nil {
+	if err = base.WriteValue(writer, s.Indexed); err != nil {
 		return err
 	}
 
 	// InternalType
-	if err = cache.WriteValue(writer, s.InternalType); err != nil {
+	if err = base.WriteValue(writer, s.InternalType); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.WriteValue(writer, s.Name); err != nil {
+	if err = base.WriteValue(writer, s.Name); err != nil {
 		return err
 	}
 
 	// StrDefault
-	if err = cache.WriteValue(writer, s.StrDefault); err != nil {
+	if err = base.WriteValue(writer, s.StrDefault); err != nil {
 		return err
 	}
 
 	// ParameterType
-	if err = cache.WriteValue(writer, s.ParameterType); err != nil {
+	if err = base.WriteValue(writer, s.ParameterType); err != nil {
 		return err
 	}
 
@@ -117,7 +118,7 @@ func (s *Parameter) MarshalCache(writer io.Writer) (err error) {
 	if err != nil {
 		return fmt.Errorf("cannot marshal Value: %w", err)
 	}
-	if err = cache.WriteValue(writer, value); err != nil {
+	if err = base.WriteValue(writer, value); err != nil {
 		return err
 	}
 
@@ -131,38 +132,38 @@ func (s *Parameter) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 
 	// Components
 	s.Components = make([]Parameter, 0)
-	if err = cache.ReadValue(reader, &s.Components, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Components, fileVersion); err != nil {
 		return err
 	}
 
 	// Indexed
-	if err = cache.ReadValue(reader, &s.Indexed, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Indexed, fileVersion); err != nil {
 		return err
 	}
 
 	// InternalType
-	if err = cache.ReadValue(reader, &s.InternalType, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.InternalType, fileVersion); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.ReadValue(reader, &s.Name, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Name, fileVersion); err != nil {
 		return err
 	}
 
 	// StrDefault
-	if err = cache.ReadValue(reader, &s.StrDefault, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.StrDefault, fileVersion); err != nil {
 		return err
 	}
 
 	// ParameterType
-	if err = cache.ReadValue(reader, &s.ParameterType, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.ParameterType, fileVersion); err != nil {
 		return err
 	}
 
 	// Value
 	var value string
-	if err = cache.ReadValue(reader, &value, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &value, fileVersion); err != nil {
 		return err
 	}
 	if err = json.Unmarshal([]byte(value), &s.Value); err != nil {

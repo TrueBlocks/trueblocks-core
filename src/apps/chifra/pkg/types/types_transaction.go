@@ -338,72 +338,72 @@ func (s *Transaction) MarshalCache(writer io.Writer) (err error) {
 	optArticulatedTx := &cache.Optional[Function]{
 		Value: s.ArticulatedTx,
 	}
-	if err = cache.WriteValue(writer, optArticulatedTx); err != nil {
+	if err = base.WriteValue(writer, optArticulatedTx); err != nil {
 		return err
 	}
 
 	// BlockHash
-	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
+	if err = base.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
 
 	// From
-	if err = cache.WriteValue(writer, s.From); err != nil {
+	if err = base.WriteValue(writer, s.From); err != nil {
 		return err
 	}
 
 	// Gas
-	if err = cache.WriteValue(writer, s.Gas); err != nil {
+	if err = base.WriteValue(writer, s.Gas); err != nil {
 		return err
 	}
 
 	// GasPrice
-	if err = cache.WriteValue(writer, s.GasPrice); err != nil {
+	if err = base.WriteValue(writer, s.GasPrice); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.WriteValue(writer, s.GasUsed); err != nil {
+	if err = base.WriteValue(writer, s.GasUsed); err != nil {
 		return err
 	}
 
 	// HasToken
-	if err = cache.WriteValue(writer, s.HasToken); err != nil {
+	if err = base.WriteValue(writer, s.HasToken); err != nil {
 		return err
 	}
 
 	// Hash
-	if err = cache.WriteValue(writer, &s.Hash); err != nil {
+	if err = base.WriteValue(writer, &s.Hash); err != nil {
 		return err
 	}
 
 	// Input
-	if err = cache.WriteValue(writer, s.Input); err != nil {
+	if err = base.WriteValue(writer, s.Input); err != nil {
 		return err
 	}
 
 	// IsError
-	if err = cache.WriteValue(writer, s.IsError); err != nil {
+	if err = base.WriteValue(writer, s.IsError); err != nil {
 		return err
 	}
 
 	// MaxFeePerGas
-	if err = cache.WriteValue(writer, s.MaxFeePerGas); err != nil {
+	if err = base.WriteValue(writer, s.MaxFeePerGas); err != nil {
 		return err
 	}
 
 	// MaxPriorityFeePerGas
-	if err = cache.WriteValue(writer, s.MaxPriorityFeePerGas); err != nil {
+	if err = base.WriteValue(writer, s.MaxPriorityFeePerGas); err != nil {
 		return err
 	}
 
 	// Nonce
-	if err = cache.WriteValue(writer, s.Nonce); err != nil {
+	if err = base.WriteValue(writer, s.Nonce); err != nil {
 		return err
 	}
 
@@ -411,32 +411,32 @@ func (s *Transaction) MarshalCache(writer io.Writer) (err error) {
 	optReceipt := &cache.Optional[Receipt]{
 		Value: s.Receipt,
 	}
-	if err = cache.WriteValue(writer, optReceipt); err != nil {
+	if err = base.WriteValue(writer, optReceipt); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+	if err = base.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
 	// To
-	if err = cache.WriteValue(writer, s.To); err != nil {
+	if err = base.WriteValue(writer, s.To); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
+	if err = base.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
 
 	// TransactionType
-	if err = cache.WriteValue(writer, s.TransactionType); err != nil {
+	if err = base.WriteValue(writer, s.TransactionType); err != nil {
 		return err
 	}
 
 	// Value
-	if err = cache.WriteValue(writer, &s.Value); err != nil {
+	if err = base.WriteValue(writer, &s.Value); err != nil {
 		return err
 	}
 
@@ -452,73 +452,73 @@ func (s *Transaction) UnmarshalCache(fileVersion uint64, reader io.Reader) (err 
 	optArticulatedTx := &cache.Optional[Function]{
 		Value: s.ArticulatedTx,
 	}
-	if err = cache.ReadValue(reader, optArticulatedTx, fileVersion); err != nil {
+	if err = base.ReadValue(reader, optArticulatedTx, fileVersion); err != nil {
 		return err
 	}
 	s.ArticulatedTx = optArticulatedTx.Get()
 
 	// BlockHash
-	if err = cache.ReadValue(reader, &s.BlockHash, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.BlockHash, fileVersion); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// From
-	if err = cache.ReadValue(reader, &s.From, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.From, fileVersion); err != nil {
 		return err
 	}
 
 	// Gas
-	if err = cache.ReadValue(reader, &s.Gas, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Gas, fileVersion); err != nil {
 		return err
 	}
 
 	// GasPrice
-	if err = cache.ReadValue(reader, &s.GasPrice, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.GasPrice, fileVersion); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.ReadValue(reader, &s.GasUsed, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.GasUsed, fileVersion); err != nil {
 		return err
 	}
 
 	// HasToken
-	if err = cache.ReadValue(reader, &s.HasToken, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.HasToken, fileVersion); err != nil {
 		return err
 	}
 
 	// Hash
-	if err = cache.ReadValue(reader, &s.Hash, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Hash, fileVersion); err != nil {
 		return err
 	}
 
 	// Input
-	if err = cache.ReadValue(reader, &s.Input, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Input, fileVersion); err != nil {
 		return err
 	}
 
 	// IsError
-	if err = cache.ReadValue(reader, &s.IsError, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.IsError, fileVersion); err != nil {
 		return err
 	}
 
 	// MaxFeePerGas
-	if err = cache.ReadValue(reader, &s.MaxFeePerGas, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.MaxFeePerGas, fileVersion); err != nil {
 		return err
 	}
 
 	// MaxPriorityFeePerGas
-	if err = cache.ReadValue(reader, &s.MaxPriorityFeePerGas, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.MaxPriorityFeePerGas, fileVersion); err != nil {
 		return err
 	}
 
 	// Nonce
-	if err = cache.ReadValue(reader, &s.Nonce, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Nonce, fileVersion); err != nil {
 		return err
 	}
 
@@ -526,33 +526,33 @@ func (s *Transaction) UnmarshalCache(fileVersion uint64, reader io.Reader) (err 
 	optReceipt := &cache.Optional[Receipt]{
 		Value: s.Receipt,
 	}
-	if err = cache.ReadValue(reader, optReceipt, fileVersion); err != nil {
+	if err = base.ReadValue(reader, optReceipt, fileVersion); err != nil {
 		return err
 	}
 	s.Receipt = optReceipt.Get()
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 
 	// To
-	if err = cache.ReadValue(reader, &s.To, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.To, fileVersion); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.TransactionIndex, fileVersion); err != nil {
 		return err
 	}
 
 	// TransactionType
-	if err = cache.ReadValue(reader, &s.TransactionType, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.TransactionType, fileVersion); err != nil {
 		return err
 	}
 
 	// Value
-	if err = cache.ReadValue(reader, &s.Value, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Value, fileVersion); err != nil {
 		return err
 	}
 

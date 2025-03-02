@@ -6,8 +6,6 @@ package base
 
 import (
 	"fmt"
-	"os"
-	"strings"
 	"testing"
 )
 
@@ -57,41 +55,6 @@ func TestFileRange(t *testing.T) {
 		s, err := RangeFromFilenameE(tt.fileName)
 		check(t, tt, s, err)
 		fmt.Println(s)
-	}
-}
-
-func TestFilenameFromRange(t *testing.T) {
-	type TestType struct {
-		name      string
-		fileRange FileRange
-		rangeStr  string
-	}
-	tests := []TestType{
-		{
-			name:      "Pads numbers",
-			fileRange: FileRange{0, 1},
-			rangeStr:  "000000000-000000001",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got, err := RangeFromFilenameE(tt.rangeStr); err != nil {
-				t.Errorf("FilenameFromRange() error: %v", err)
-			} else if got != tt.fileRange {
-				t.Errorf("FilenameFromRange() = %v, want %v", got, tt.rangeStr)
-			}
-			if got := RangeFromRangeString(tt.rangeStr); got != tt.fileRange {
-				t.Errorf("FilenameFromRange() = %v, want %v", got, tt.rangeStr)
-			}
-		})
-	}
-
-	fR := FileRange{0, 100}
-	want := "mainnet/finalized/000000000-000000100.bin"
-	got := fR.RangeToFilename("mainnet")
-	parts := strings.Split(got, "unchained"+string(os.PathSeparator))
-	if len(parts) != 2 || parts[1] != want {
-		t.Errorf("FilenameFromRange() = %v, want %v", got, parts[1])
 	}
 }
 

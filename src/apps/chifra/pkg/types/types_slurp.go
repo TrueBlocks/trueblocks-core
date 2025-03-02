@@ -266,11 +266,11 @@ type SlurpGroup struct {
 }
 
 func (s *SlurpGroup) MarshalCache(writer io.Writer) (err error) {
-	return cache.WriteValue(writer, s.Slurps)
+	return base.WriteValue(writer, s.Slurps)
 }
 
 func (s *SlurpGroup) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Slurps, fileVersion)
+	return base.ReadValue(reader, &s.Slurps, fileVersion)
 }
 
 func (s *Slurp) MarshalCache(writer io.Writer) (err error) {
@@ -278,117 +278,117 @@ func (s *Slurp) MarshalCache(writer io.Writer) (err error) {
 	optArticulatedTx := &cache.Optional[Function]{
 		Value: s.ArticulatedTx,
 	}
-	if err = cache.WriteValue(writer, optArticulatedTx); err != nil {
+	if err = base.WriteValue(writer, optArticulatedTx); err != nil {
 		return err
 	}
 
 	// BlockHash
-	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
+	if err = base.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
 
 	// ContractAddress
-	if err = cache.WriteValue(writer, s.ContractAddress); err != nil {
+	if err = base.WriteValue(writer, s.ContractAddress); err != nil {
 		return err
 	}
 
 	// CumulativeGasUsed
-	if err = cache.WriteValue(writer, s.CumulativeGasUsed); err != nil {
+	if err = base.WriteValue(writer, s.CumulativeGasUsed); err != nil {
 		return err
 	}
 
 	// From
-	if err = cache.WriteValue(writer, s.From); err != nil {
+	if err = base.WriteValue(writer, s.From); err != nil {
 		return err
 	}
 
 	// FunctionName
-	if err = cache.WriteValue(writer, s.FunctionName); err != nil {
+	if err = base.WriteValue(writer, s.FunctionName); err != nil {
 		return err
 	}
 
 	// Gas
-	if err = cache.WriteValue(writer, s.Gas); err != nil {
+	if err = base.WriteValue(writer, s.Gas); err != nil {
 		return err
 	}
 
 	// GasPrice
-	if err = cache.WriteValue(writer, s.GasPrice); err != nil {
+	if err = base.WriteValue(writer, s.GasPrice); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.WriteValue(writer, s.GasUsed); err != nil {
+	if err = base.WriteValue(writer, s.GasUsed); err != nil {
 		return err
 	}
 
 	// HasToken
-	if err = cache.WriteValue(writer, s.HasToken); err != nil {
+	if err = base.WriteValue(writer, s.HasToken); err != nil {
 		return err
 	}
 
 	// Hash
-	if err = cache.WriteValue(writer, &s.Hash); err != nil {
+	if err = base.WriteValue(writer, &s.Hash); err != nil {
 		return err
 	}
 
 	// Input
-	if err = cache.WriteValue(writer, s.Input); err != nil {
+	if err = base.WriteValue(writer, s.Input); err != nil {
 		return err
 	}
 
 	// IsError
-	if err = cache.WriteValue(writer, s.IsError); err != nil {
+	if err = base.WriteValue(writer, s.IsError); err != nil {
 		return err
 	}
 
 	// MethodId
-	if err = cache.WriteValue(writer, s.MethodId); err != nil {
+	if err = base.WriteValue(writer, s.MethodId); err != nil {
 		return err
 	}
 
 	// Nonce
-	if err = cache.WriteValue(writer, s.Nonce); err != nil {
+	if err = base.WriteValue(writer, s.Nonce); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+	if err = base.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
 	// To
-	if err = cache.WriteValue(writer, s.To); err != nil {
+	if err = base.WriteValue(writer, s.To); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
+	if err = base.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
 
 	// TxReceiptStatus
-	if err = cache.WriteValue(writer, s.TxReceiptStatus); err != nil {
+	if err = base.WriteValue(writer, s.TxReceiptStatus); err != nil {
 		return err
 	}
 
 	// ValidatorIndex
-	if err = cache.WriteValue(writer, s.ValidatorIndex); err != nil {
+	if err = base.WriteValue(writer, s.ValidatorIndex); err != nil {
 		return err
 	}
 
 	// Value
-	if err = cache.WriteValue(writer, &s.Value); err != nil {
+	if err = base.WriteValue(writer, &s.Value); err != nil {
 		return err
 	}
 
 	// WithdrawalIndex
-	if err = cache.WriteValue(writer, s.WithdrawalIndex); err != nil {
+	if err = base.WriteValue(writer, s.WithdrawalIndex); err != nil {
 		return err
 	}
 
@@ -404,118 +404,118 @@ func (s *Slurp) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error)
 	optArticulatedTx := &cache.Optional[Function]{
 		Value: s.ArticulatedTx,
 	}
-	if err = cache.ReadValue(reader, optArticulatedTx, fileVersion); err != nil {
+	if err = base.ReadValue(reader, optArticulatedTx, fileVersion); err != nil {
 		return err
 	}
 	s.ArticulatedTx = optArticulatedTx.Get()
 
 	// BlockHash
-	if err = cache.ReadValue(reader, &s.BlockHash, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.BlockHash, fileVersion); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// ContractAddress
-	if err = cache.ReadValue(reader, &s.ContractAddress, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.ContractAddress, fileVersion); err != nil {
 		return err
 	}
 
 	// CumulativeGasUsed
-	if err = cache.ReadValue(reader, &s.CumulativeGasUsed, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.CumulativeGasUsed, fileVersion); err != nil {
 		return err
 	}
 
 	// From
-	if err = cache.ReadValue(reader, &s.From, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.From, fileVersion); err != nil {
 		return err
 	}
 
 	// FunctionName
-	if err = cache.ReadValue(reader, &s.FunctionName, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.FunctionName, fileVersion); err != nil {
 		return err
 	}
 
 	// Gas
-	if err = cache.ReadValue(reader, &s.Gas, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Gas, fileVersion); err != nil {
 		return err
 	}
 
 	// GasPrice
-	if err = cache.ReadValue(reader, &s.GasPrice, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.GasPrice, fileVersion); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.ReadValue(reader, &s.GasUsed, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.GasUsed, fileVersion); err != nil {
 		return err
 	}
 
 	// HasToken
-	if err = cache.ReadValue(reader, &s.HasToken, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.HasToken, fileVersion); err != nil {
 		return err
 	}
 
 	// Hash
-	if err = cache.ReadValue(reader, &s.Hash, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Hash, fileVersion); err != nil {
 		return err
 	}
 
 	// Input
-	if err = cache.ReadValue(reader, &s.Input, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Input, fileVersion); err != nil {
 		return err
 	}
 
 	// IsError
-	if err = cache.ReadValue(reader, &s.IsError, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.IsError, fileVersion); err != nil {
 		return err
 	}
 
 	// MethodId
-	if err = cache.ReadValue(reader, &s.MethodId, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.MethodId, fileVersion); err != nil {
 		return err
 	}
 
 	// Nonce
-	if err = cache.ReadValue(reader, &s.Nonce, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Nonce, fileVersion); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 
 	// To
-	if err = cache.ReadValue(reader, &s.To, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.To, fileVersion); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.TransactionIndex, fileVersion); err != nil {
 		return err
 	}
 
 	// TxReceiptStatus
-	if err = cache.ReadValue(reader, &s.TxReceiptStatus, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.TxReceiptStatus, fileVersion); err != nil {
 		return err
 	}
 
 	// ValidatorIndex
-	if err = cache.ReadValue(reader, &s.ValidatorIndex, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.ValidatorIndex, fileVersion); err != nil {
 		return err
 	}
 
 	// Value
-	if err = cache.ReadValue(reader, &s.Value, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Value, fileVersion); err != nil {
 		return err
 	}
 
 	// WithdrawalIndex
-	if err = cache.ReadValue(reader, &s.WithdrawalIndex, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.WithdrawalIndex, fileVersion); err != nil {
 		return err
 	}
 

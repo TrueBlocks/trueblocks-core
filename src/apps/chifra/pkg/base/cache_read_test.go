@@ -1,4 +1,4 @@
-package cache
+package base
 
 import (
 	"bytes"
@@ -171,10 +171,10 @@ func TestReadBigInt(t *testing.T) {
 		t.Fatal(err)
 	}
 	size := uint64(len(data))
-	if err := write(buf, size); err != nil {
+	if err := binary.Write(buf, binary.LittleEndian, size); err != nil {
 		t.Fatal(err)
 	}
-	if err := write(buf, data); err != nil {
+	if err := binary.Write(buf, binary.LittleEndian, data); err != nil {
 		t.Fatal(err)
 	}
 

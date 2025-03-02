@@ -14,7 +14,6 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -134,67 +133,67 @@ func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[st
 
 func (s *TraceAction) MarshalCache(writer io.Writer) (err error) {
 	// Address
-	if err = cache.WriteValue(writer, s.Address); err != nil {
+	if err = base.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
 	// Author
-	if err = cache.WriteValue(writer, s.Author); err != nil {
+	if err = base.WriteValue(writer, s.Author); err != nil {
 		return err
 	}
 
 	// Balance
-	if err = cache.WriteValue(writer, &s.Balance); err != nil {
+	if err = base.WriteValue(writer, &s.Balance); err != nil {
 		return err
 	}
 
 	// CallType
-	if err = cache.WriteValue(writer, s.CallType); err != nil {
+	if err = base.WriteValue(writer, s.CallType); err != nil {
 		return err
 	}
 
 	// From
-	if err = cache.WriteValue(writer, s.From); err != nil {
+	if err = base.WriteValue(writer, s.From); err != nil {
 		return err
 	}
 
 	// Gas
-	if err = cache.WriteValue(writer, s.Gas); err != nil {
+	if err = base.WriteValue(writer, s.Gas); err != nil {
 		return err
 	}
 
 	// Init
-	if err = cache.WriteValue(writer, s.Init); err != nil {
+	if err = base.WriteValue(writer, s.Init); err != nil {
 		return err
 	}
 
 	// Input
-	if err = cache.WriteValue(writer, s.Input); err != nil {
+	if err = base.WriteValue(writer, s.Input); err != nil {
 		return err
 	}
 
 	// RefundAddress
-	if err = cache.WriteValue(writer, s.RefundAddress); err != nil {
+	if err = base.WriteValue(writer, s.RefundAddress); err != nil {
 		return err
 	}
 
 	// RewardType
-	if err = cache.WriteValue(writer, s.RewardType); err != nil {
+	if err = base.WriteValue(writer, s.RewardType); err != nil {
 		return err
 	}
 
 	// SelfDestructed
-	if err = cache.WriteValue(writer, s.SelfDestructed); err != nil {
+	if err = base.WriteValue(writer, s.SelfDestructed); err != nil {
 		return err
 	}
 
 	// To
-	if err = cache.WriteValue(writer, s.To); err != nil {
+	if err = base.WriteValue(writer, s.To); err != nil {
 		return err
 	}
 
 	// Value
-	if err = cache.WriteValue(writer, &s.Value); err != nil {
+	if err = base.WriteValue(writer, &s.Value); err != nil {
 		return err
 	}
 
@@ -207,67 +206,67 @@ func (s *TraceAction) UnmarshalCache(fileVersion uint64, reader io.Reader) (err 
 	// EXISTING_CODE
 
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Address, fileVersion); err != nil {
 		return err
 	}
 
 	// Author
-	if err = cache.ReadValue(reader, &s.Author, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Author, fileVersion); err != nil {
 		return err
 	}
 
 	// Balance
-	if err = cache.ReadValue(reader, &s.Balance, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Balance, fileVersion); err != nil {
 		return err
 	}
 
 	// CallType
-	if err = cache.ReadValue(reader, &s.CallType, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.CallType, fileVersion); err != nil {
 		return err
 	}
 
 	// From
-	if err = cache.ReadValue(reader, &s.From, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.From, fileVersion); err != nil {
 		return err
 	}
 
 	// Gas
-	if err = cache.ReadValue(reader, &s.Gas, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Gas, fileVersion); err != nil {
 		return err
 	}
 
 	// Init
-	if err = cache.ReadValue(reader, &s.Init, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Init, fileVersion); err != nil {
 		return err
 	}
 
 	// Input
-	if err = cache.ReadValue(reader, &s.Input, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Input, fileVersion); err != nil {
 		return err
 	}
 
 	// RefundAddress
-	if err = cache.ReadValue(reader, &s.RefundAddress, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.RefundAddress, fileVersion); err != nil {
 		return err
 	}
 
 	// RewardType
-	if err = cache.ReadValue(reader, &s.RewardType, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.RewardType, fileVersion); err != nil {
 		return err
 	}
 
 	// SelfDestructed
-	if err = cache.ReadValue(reader, &s.SelfDestructed, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.SelfDestructed, fileVersion); err != nil {
 		return err
 	}
 
 	// To
-	if err = cache.ReadValue(reader, &s.To, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.To, fileVersion); err != nil {
 		return err
 	}
 
 	// Value
-	if err = cache.ReadValue(reader, &s.Value, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Value, fileVersion); err != nil {
 		return err
 	}
 

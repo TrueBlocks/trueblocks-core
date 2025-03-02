@@ -177,16 +177,16 @@ type LogGroup struct {
 }
 
 func (s *LogGroup) MarshalCache(writer io.Writer) (err error) {
-	return cache.WriteValue(writer, s.Logs)
+	return base.WriteValue(writer, s.Logs)
 }
 
 func (s *LogGroup) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Logs, fileVersion)
+	return base.ReadValue(reader, &s.Logs, fileVersion)
 }
 
 func (s *Log) MarshalCache(writer io.Writer) (err error) {
 	// Address
-	if err = cache.WriteValue(writer, s.Address); err != nil {
+	if err = base.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
@@ -194,47 +194,47 @@ func (s *Log) MarshalCache(writer io.Writer) (err error) {
 	optArticulatedLog := &cache.Optional[Function]{
 		Value: s.ArticulatedLog,
 	}
-	if err = cache.WriteValue(writer, optArticulatedLog); err != nil {
+	if err = base.WriteValue(writer, optArticulatedLog); err != nil {
 		return err
 	}
 
 	// BlockHash
-	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
+	if err = base.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
 
 	// Data
-	if err = cache.WriteValue(writer, s.Data); err != nil {
+	if err = base.WriteValue(writer, s.Data); err != nil {
 		return err
 	}
 
 	// LogIndex
-	if err = cache.WriteValue(writer, s.LogIndex); err != nil {
+	if err = base.WriteValue(writer, s.LogIndex); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+	if err = base.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
 	// Topics
-	if err = cache.WriteValue(writer, s.Topics); err != nil {
+	if err = base.WriteValue(writer, s.Topics); err != nil {
 		return err
 	}
 
 	// TransactionHash
-	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
+	if err = base.WriteValue(writer, &s.TransactionHash); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
+	if err = base.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
 
@@ -247,7 +247,7 @@ func (s *Log) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// EXISTING_CODE
 
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Address, fileVersion); err != nil {
 		return err
 	}
 
@@ -255,18 +255,18 @@ func (s *Log) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	optArticulatedLog := &cache.Optional[Function]{
 		Value: s.ArticulatedLog,
 	}
-	if err = cache.ReadValue(reader, optArticulatedLog, fileVersion); err != nil {
+	if err = base.ReadValue(reader, optArticulatedLog, fileVersion); err != nil {
 		return err
 	}
 	s.ArticulatedLog = optArticulatedLog.Get()
 
 	// BlockHash
-	if err = cache.ReadValue(reader, &s.BlockHash, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.BlockHash, fileVersion); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
@@ -274,39 +274,39 @@ func (s *Log) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	vCompressedLog := version.NewVersion("2.5.10")
 	if fileVersion <= vCompressedLog.Uint64() {
 		var val string
-		if err = cache.ReadValue(reader, &val, fileVersion); err != nil {
+		if err = base.ReadValue(reader, &val, fileVersion); err != nil {
 			return err
 		}
 	}
 
 	// Data
-	if err = cache.ReadValue(reader, &s.Data, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Data, fileVersion); err != nil {
 		return err
 	}
 
 	// LogIndex
-	if err = cache.ReadValue(reader, &s.LogIndex, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.LogIndex, fileVersion); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 
 	// Topics
 	s.Topics = make([]base.Hash, 0)
-	if err = cache.ReadValue(reader, &s.Topics, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Topics, fileVersion); err != nil {
 		return err
 	}
 
 	// TransactionHash
-	if err = cache.ReadValue(reader, &s.TransactionHash, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.TransactionHash, fileVersion); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.TransactionIndex, fileVersion); err != nil {
 		return err
 	}
 

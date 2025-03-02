@@ -14,7 +14,6 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -93,42 +92,42 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string
 
 func (s *Monitor) MarshalCache(writer io.Writer) (err error) {
 	// Address
-	if err = cache.WriteValue(writer, s.Address); err != nil {
+	if err = base.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
 	// Deleted
-	if err = cache.WriteValue(writer, s.Deleted); err != nil {
+	if err = base.WriteValue(writer, s.Deleted); err != nil {
 		return err
 	}
 
 	// FileSize
-	if err = cache.WriteValue(writer, s.FileSize); err != nil {
+	if err = base.WriteValue(writer, s.FileSize); err != nil {
 		return err
 	}
 
 	// IsEmpty
-	if err = cache.WriteValue(writer, s.IsEmpty); err != nil {
+	if err = base.WriteValue(writer, s.IsEmpty); err != nil {
 		return err
 	}
 
 	// IsStaged
-	if err = cache.WriteValue(writer, s.IsStaged); err != nil {
+	if err = base.WriteValue(writer, s.IsStaged); err != nil {
 		return err
 	}
 
 	// LastScanned
-	if err = cache.WriteValue(writer, s.LastScanned); err != nil {
+	if err = base.WriteValue(writer, s.LastScanned); err != nil {
 		return err
 	}
 
 	// NRecords
-	if err = cache.WriteValue(writer, s.NRecords); err != nil {
+	if err = base.WriteValue(writer, s.NRecords); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.WriteValue(writer, s.Name); err != nil {
+	if err = base.WriteValue(writer, s.Name); err != nil {
 		return err
 	}
 
@@ -141,17 +140,17 @@ func (s *Monitor) UnmarshalCache(fileVersion uint64, reader io.Reader) (err erro
 	// EXISTING_CODE
 
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Address, fileVersion); err != nil {
 		return err
 	}
 
 	// Deleted
-	if err = cache.ReadValue(reader, &s.Deleted, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Deleted, fileVersion); err != nil {
 		return err
 	}
 
 	// FileSize
-	if err = cache.ReadValue(reader, &s.FileSize, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.FileSize, fileVersion); err != nil {
 		return err
 	}
 
@@ -159,7 +158,7 @@ func (s *Monitor) UnmarshalCache(fileVersion uint64, reader io.Reader) (err erro
 	vIsEmpty := version.NewVersion("3.1.2")
 	if fileVersion > vIsEmpty.Uint64() {
 		// IsEmpty
-		if err = cache.ReadValue(reader, &s.IsEmpty, fileVersion); err != nil {
+		if err = base.ReadValue(reader, &s.IsEmpty, fileVersion); err != nil {
 			return err
 		}
 	}
@@ -168,23 +167,23 @@ func (s *Monitor) UnmarshalCache(fileVersion uint64, reader io.Reader) (err erro
 	vIsStaged := version.NewVersion("3.1.2")
 	if fileVersion > vIsStaged.Uint64() {
 		// IsStaged
-		if err = cache.ReadValue(reader, &s.IsStaged, fileVersion); err != nil {
+		if err = base.ReadValue(reader, &s.IsStaged, fileVersion); err != nil {
 			return err
 		}
 	}
 
 	// LastScanned
-	if err = cache.ReadValue(reader, &s.LastScanned, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.LastScanned, fileVersion); err != nil {
 		return err
 	}
 
 	// NRecords
-	if err = cache.ReadValue(reader, &s.NRecords, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.NRecords, fileVersion); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.ReadValue(reader, &s.Name, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Name, fileVersion); err != nil {
 		return err
 	}
 

@@ -11,7 +11,6 @@ import (
 	"io"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -58,8 +57,8 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *types.
 		logger.Info("Checking each address in each index against its Bloom filter...")
 		iterFunc = func(rangeStr string, item *reporter) (err error) {
 			_ = rangeStr
-			rng := base.RangeFromRangeString(item.chunk.Range)
-			path := rng.RangeToFilename(chain)
+			rng := config.RangeFromRangeString(item.chunk.Range)
+			path := config.RangeToFilename(chain, &rng)
 			bl, err := index.OpenBloom(index.ToBloomPath(path), true /* check */)
 			if err != nil {
 				return

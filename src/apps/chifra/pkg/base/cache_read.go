@@ -1,4 +1,4 @@
-package cache
+package base
 
 import (
 	"encoding/binary"
@@ -8,9 +8,8 @@ import (
 	"reflect"
 )
 
-// read reads bytes in a correct byte order
-func read(reader io.Reader, value any) (err error) {
-	return binary.Read(reader, binary.LittleEndian, value)
+type Unmarshaler interface {
+	UnmarshalCache(vers uint64, reader io.Reader) error
 }
 
 // ReadValue reads binary representation of fixed-size values, strings,
@@ -42,8 +41,9 @@ func ReadValue(reader io.Reader, value any, fileVersion uint64) (err error) {
 			}
 		}
 
-		err = read(reader, value)
+		err = binary.Read(reader, binary.LittleEndian, value)
 	}
+
 	return
 }
 
@@ -51,7 +51,7 @@ func ReadValue(reader io.Reader, value any, fileVersion uint64) (err error) {
 // item, so slice items can be of any type supported by ReadValue.
 func readSlice[T any](reader io.Reader, slice *[]T, fileVersion uint64) (err error) {
 	var itemCount uint64 = 0
-	if err = read(reader, &itemCount); err != nil {
+	if err = binary.Read(reader, binary.LittleEndian, &itemCount); err != nil {
 		return
 	}
 
@@ -71,7 +71,7 @@ func readSlice[T any](reader io.Reader, slice *[]T, fileVersion uint64) (err err
 // readSliceReflect uses reflection to read a slice (typically of Unmarshaler)
 func readSliceReflect(reader io.Reader, slice reflect.Type, destPointer reflect.Value, fileVersion uint64) (err error) {
 	var itemCount uint64 = 0
-	if err = read(reader, &itemCount); err != nil {
+	if err = binary.Read(reader, binary.LittleEndian, &itemCount); err != nil {
 		return
 	}
 
@@ -112,7 +112,7 @@ func readSliceReflect(reader io.Reader, slice reflect.Type, destPointer reflect.
 
 func readString(reader io.Reader, str *string) (err error) {
 	var size uint64
-	if err = read(reader, &size); err != nil {
+	if err = binary.Read(reader, binary.LittleEndian, &size); err != nil {
 		return
 	}
 
@@ -129,13 +129,13 @@ func readBigInt(reader io.Reader, target *big.Int) (err error) {
 	// (GobEncode that we use to write big.Int produces
 	// variable-length []byte)
 	var size uint64
-	if err = read(reader, &size); err != nil {
+	if err = binary.Read(reader, binary.LittleEndian, &size); err != nil {
 		return
 	}
 
 	// now we read as many bytes as we need
 	data := make([]byte, size)
-	if err = read(reader, data); err != nil {
+	if err = binary.Read(reader, binary.LittleEndian, data); err != nil {
 		return
 	}
 	// and use big.Int.GobDecode to decode the value

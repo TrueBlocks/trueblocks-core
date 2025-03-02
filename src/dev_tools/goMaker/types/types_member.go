@@ -230,7 +230,7 @@ func (m *Member) MarshalCode() string {
 	for _, tx := range s.Transactions {
 		txHashes = append(txHashes, tx.Hash.Hex())
 	}
-	if err = cache.WriteValue(writer, txHashes); err != nil {
+	if err = base.WriteValue(writer, txHashes); err != nil {
 		return err
 	}
 
@@ -242,7 +242,7 @@ func (m *Member) MarshalCode() string {
 	if err != nil {
 		return fmt.Errorf("cannot marshal {{.GoName}}: %w", err)
 	}
-	if err = cache.WriteValue(writer, {{.Lower}}); err != nil {
+	if err = base.WriteValue(writer, {{.Lower}}); err != nil {
 		return err
 	}
 
@@ -250,7 +250,7 @@ func (m *Member) MarshalCode() string {
 	} else if m.GoName() == "PostAssetType" {
 		tmplName += "12"
 		tmpl = `// {{.GoName}}
-	if err = cache.WriteValue(writer, s.{{.GoName}}); err != nil {
+	if err = base.WriteValue(writer, s.{{.GoName}}); err != nil {
 		return err
 	}
 
@@ -266,7 +266,7 @@ func (m *Member) MarshalCode() string {
 	for _, {{.LowerSingular}} := range s.{{.GoName}} {
 		{{.Lower}} = append({{.Lower}}, {{if .NeedsPtr}}&{{end}}{{.LowerSingular}})
 	}
-	if err = cache.WriteValue(writer, {{.Lower}}); err != nil {
+	if err = base.WriteValue(writer, {{.Lower}}); err != nil {
 		return err
 	}
 
@@ -274,7 +274,7 @@ func (m *Member) MarshalCode() string {
 	} else if m.GoName() == "Parts" && m.Container() == "State" {
 		tmplName += "4"
 		tmpl = `// {{.GoName}}
-	if err = cache.WriteValue(writer, uint64(s.{{.GoName}})); err != nil {
+	if err = base.WriteValue(writer, uint64(s.{{.GoName}})); err != nil {
 		return err
 	}
 
@@ -285,7 +285,7 @@ func (m *Member) MarshalCode() string {
 	opt{{.GoName}} := &cache.Optional[{{.Type}}]{
 		Value: s.{{.GoName}},
 	}
-	if err = cache.WriteValue(writer, opt{{.GoName}}); err != nil {
+	if err = base.WriteValue(writer, opt{{.GoName}}); err != nil {
 		return err
 	}
 
@@ -293,7 +293,7 @@ func (m *Member) MarshalCode() string {
 	} else {
 		tmplName += "6"
 		tmpl = `// {{.GoName}}
-	if err = cache.WriteValue(writer, {{if .NeedsPtr}}&{{end}}s.{{.GoName}}); err != nil {
+	if err = base.WriteValue(writer, {{if .NeedsPtr}}&{{end}}s.{{.GoName}}); err != nil {
 		return err
 	}
 
@@ -318,7 +318,7 @@ func (m *Member) UnmarshalCode() string {
 		tmplName += "1"
 		tmpl = `		// Transactions
 	s.Transactions = make([]string, 0)
-	if err = cache.ReadValue(reader, &s.Transactions, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Transactions, fileVersion); err != nil {
 		return err
 	}
 
@@ -327,7 +327,7 @@ func (m *Member) UnmarshalCode() string {
 		tmplName += "2"
 		tmpl = `		// Transactions
 	hashes := make([]string, 0, len(s.Transactions))
-	if err = cache.ReadValue(reader, &hashes, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &hashes, fileVersion); err != nil {
 		return err
 	}
 	s.Transactions = make([]Transaction, 0, len(hashes))
@@ -340,7 +340,7 @@ func (m *Member) UnmarshalCode() string {
 		tmplName += "3"
 		tmpl = `// {{.GoName}}
 	var {{.Lower}} string
-	if err = cache.ReadValue(reader, &{{.Lower}}, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &{{.Lower}}, fileVersion); err != nil {
 		return err
 	}
 	if err = json.Unmarshal([]byte({{.Lower}}), &s.{{.GoName}}); err != nil {
@@ -351,7 +351,7 @@ func (m *Member) UnmarshalCode() string {
 	} else if m.GoName() == "PostAssetType" {
 		tmplName += "112"
 		tmpl = `// {{.GoName}}
-	if err = cache.ReadValue(reader, &s.{{.GoName}}, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.{{.GoName}}, fileVersion); err != nil {
 		return err
 	}
 
@@ -360,7 +360,7 @@ func (m *Member) UnmarshalCode() string {
 		tmplName += "4"
 		tmpl = `// {{.GoName}}
 	s.{{.GoName}} = make({{.GoType}}, 0)
-	if err = cache.ReadValue(reader, &s.{{.GoName}}, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.{{.GoName}}, fileVersion); err != nil {
 		return err
 	}
 
@@ -369,7 +369,7 @@ func (m *Member) UnmarshalCode() string {
 		tmplName += "5"
 		tmpl = `// {{.GoName}}
 	var parts uint64
-	if err = cache.ReadValue(reader, &parts, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &parts, fileVersion); err != nil {
 		return err
 	}
 	s.{{.GoName}} = StatePart(parts)
@@ -381,7 +381,7 @@ func (m *Member) UnmarshalCode() string {
 	opt{{.GoName}} := &cache.Optional[{{.Type}}]{
 		Value: s.{{.GoName}},
 	}
-	if err = cache.ReadValue(reader, opt{{.GoName}}, fileVersion); err != nil {
+	if err = base.ReadValue(reader, opt{{.GoName}}, fileVersion); err != nil {
 		return err
 	}
 	s.{{.GoName}} = opt{{.GoName}}.Get()
@@ -390,7 +390,7 @@ func (m *Member) UnmarshalCode() string {
 	} else {
 		tmplName += "7"
 		tmpl = `// {{.GoName}}
-	if err = cache.ReadValue(reader, &s.{{.GoName}}, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.{{.GoName}}, fileVersion); err != nil {
 		return err
 	}
 
@@ -409,7 +409,7 @@ func (m *Member) UnmarshalCode() string {
 	v{{.GoName}} := version.NewVersion("++VERS++")
 	if fileVersion <= v{{.GoName}}.Uint64() {
 		var val ++PRIOR_TYPE++
-		if err = cache.ReadValue(reader, &val, fileVersion); err != nil {
+		if err = base.ReadValue(reader, &val, fileVersion); err != nil {
 			return err
 		}
 	}
@@ -430,7 +430,7 @@ func (m *Member) UnmarshalCode() string {
 	v{{.GoName}} := version.NewVersion("++VERS++")
 	if fileVersion <= v{{.GoName}}.Uint64() {
 		var val ++PRIOR_TYPE++
-		if err = cache.ReadValue(reader, &val, fileVersion); err != nil {
+		if err = base.ReadValue(reader, &val, fileVersion); err != nil {
 			return err
 		}
 		s.{{.GoName}} = ++CONV_FUNC++(val)

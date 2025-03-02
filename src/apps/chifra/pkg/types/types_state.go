@@ -18,7 +18,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -148,52 +147,52 @@ func (s *State) CacheLocations() (string, string, string) {
 
 func (s *State) MarshalCache(writer io.Writer) (err error) {
 	// AccountType
-	if err = cache.WriteValue(writer, s.AccountType); err != nil {
+	if err = base.WriteValue(writer, s.AccountType); err != nil {
 		return err
 	}
 
 	// Address
-	if err = cache.WriteValue(writer, s.Address); err != nil {
+	if err = base.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
 	// Balance
-	if err = cache.WriteValue(writer, &s.Balance); err != nil {
+	if err = base.WriteValue(writer, &s.Balance); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
 
 	// Code
-	if err = cache.WriteValue(writer, s.Code); err != nil {
+	if err = base.WriteValue(writer, s.Code); err != nil {
 		return err
 	}
 
 	// Deployed
-	if err = cache.WriteValue(writer, s.Deployed); err != nil {
+	if err = base.WriteValue(writer, s.Deployed); err != nil {
 		return err
 	}
 
 	// Nonce
-	if err = cache.WriteValue(writer, s.Nonce); err != nil {
+	if err = base.WriteValue(writer, s.Nonce); err != nil {
 		return err
 	}
 
 	// Parts
-	if err = cache.WriteValue(writer, uint64(s.Parts)); err != nil {
+	if err = base.WriteValue(writer, uint64(s.Parts)); err != nil {
 		return err
 	}
 
 	// Proxy
-	if err = cache.WriteValue(writer, s.Proxy); err != nil {
+	if err = base.WriteValue(writer, s.Proxy); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+	if err = base.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
@@ -206,54 +205,54 @@ func (s *State) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error)
 	// EXISTING_CODE
 
 	// AccountType
-	if err = cache.ReadValue(reader, &s.AccountType, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.AccountType, fileVersion); err != nil {
 		return err
 	}
 
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Address, fileVersion); err != nil {
 		return err
 	}
 
 	// Balance
-	if err = cache.ReadValue(reader, &s.Balance, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Balance, fileVersion); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// Code
-	if err = cache.ReadValue(reader, &s.Code, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Code, fileVersion); err != nil {
 		return err
 	}
 
 	// Deployed
-	if err = cache.ReadValue(reader, &s.Deployed, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Deployed, fileVersion); err != nil {
 		return err
 	}
 
 	// Nonce
-	if err = cache.ReadValue(reader, &s.Nonce, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Nonce, fileVersion); err != nil {
 		return err
 	}
 
 	// Parts
 	var parts uint64
-	if err = cache.ReadValue(reader, &parts, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &parts, fileVersion); err != nil {
 		return err
 	}
 	s.Parts = StatePart(parts)
 
 	// Proxy
-	if err = cache.ReadValue(reader, &s.Proxy, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Proxy, fileVersion); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 

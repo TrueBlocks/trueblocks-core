@@ -5,10 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"reflect"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -74,39 +72,6 @@ func TestHexToAddress(t *testing.T) {
 	expected := "0xf1aa581f353005ba3765b81bf52d6b1c488c2101"
 	if result := addr.Hex(); result != expected {
 		t.Fatal("HexToAddress: wrong Hex() return value:", result)
-	}
-}
-
-func TestAddressCache(t *testing.T) {
-	buf := new(bytes.Buffer)
-	item := cache.NewItem(buf)
-
-	addr := HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b")
-	if err := item.Encode(addr); err != nil {
-		t.Fatal(err)
-	}
-	result := buf.Bytes()[cache.HeaderByteSize:]
-	if !reflect.DeepEqual(result, addr.Bytes()) {
-		t.Fatalf("values are not same: got %x, expected %x", result, addr.Bytes())
-	}
-	readerItem := cache.NewItem(buf)
-	var readAddr Address
-	if err := readerItem.Decode(&readAddr); err != nil {
-		return
-	}
-	if readAddr.Hex() != addr.Hex() {
-		t.Fatal("read wrong value:", readAddr)
-	}
-
-	// 0x0 case
-	zeroAddr := Address{}
-	buf.Reset()
-	if err := item.Encode(zeroAddr); err != nil {
-		t.Fatal(err)
-	}
-	resultAddr := BytesToAddress(buf.Bytes()[cache.HeaderByteSize:])
-	if !resultAddr.IsZero() {
-		t.Fatalf("expected zero address, but got %s", resultAddr)
 	}
 }
 

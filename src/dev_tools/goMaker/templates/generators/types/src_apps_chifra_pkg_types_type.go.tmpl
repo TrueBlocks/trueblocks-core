@@ -67,11 +67,11 @@ type {{.ClassOrClassGroup}} struct {
 }
 
 func (s *{{.ClassOrClassGroup}}) MarshalCache(writer io.Writer) (err error) {
-	return cache.WriteValue(writer, s.{{.Class}}s)
+	return base.WriteValue(writer, s.{{.Class}}s)
 }
 
 func (s *{{.ClassOrClassGroup}}) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.{{.Class}}s, fileVersion)
+	return base.ReadValue(reader, &s.{{.Class}}s, fileVersion)
 }
 
 {{end}}

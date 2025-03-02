@@ -17,7 +17,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 // EXISTING_CODE
@@ -111,41 +110,41 @@ type WithdrawalGroup struct {
 }
 
 func (s *WithdrawalGroup) MarshalCache(writer io.Writer) (err error) {
-	return cache.WriteValue(writer, s.Withdrawals)
+	return base.WriteValue(writer, s.Withdrawals)
 }
 
 func (s *WithdrawalGroup) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Withdrawals, fileVersion)
+	return base.ReadValue(reader, &s.Withdrawals, fileVersion)
 }
 
 func (s *Withdrawal) MarshalCache(writer io.Writer) (err error) {
 	// Address
-	if err = cache.WriteValue(writer, s.Address); err != nil {
+	if err = base.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
 	// Amount
-	if err = cache.WriteValue(writer, &s.Amount); err != nil {
+	if err = base.WriteValue(writer, &s.Amount); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
 
 	// Index
-	if err = cache.WriteValue(writer, s.Index); err != nil {
+	if err = base.WriteValue(writer, s.Index); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+	if err = base.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
 	// ValidatorIndex
-	if err = cache.WriteValue(writer, s.ValidatorIndex); err != nil {
+	if err = base.WriteValue(writer, s.ValidatorIndex); err != nil {
 		return err
 	}
 
@@ -158,32 +157,32 @@ func (s *Withdrawal) UnmarshalCache(fileVersion uint64, reader io.Reader) (err e
 	// EXISTING_CODE
 
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Address, fileVersion); err != nil {
 		return err
 	}
 
 	// Amount
-	if err = cache.ReadValue(reader, &s.Amount, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Amount, fileVersion); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// Index
-	if err = cache.ReadValue(reader, &s.Index, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Index, fileVersion); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 
 	// ValidatorIndex
-	if err = cache.ReadValue(reader, &s.ValidatorIndex, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.ValidatorIndex, fileVersion); err != nil {
 		return err
 	}
 

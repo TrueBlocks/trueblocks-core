@@ -30,8 +30,8 @@ func (opts *ScrapeOptions) HandleTouch(rCtx *output.RenderCtx) error {
 			First: meta.Finalized,
 			Last:  opts.Touch,
 		}
-		indexPath := index.ToIndexPath(rng.RangeToFilename(chain))
-		stagePath := index.ToStagingPath(rng.RangeToFilename(chain))
+		indexPath := index.ToIndexPath(config.RangeToFilename(chain, &rng))
+		stagePath := index.ToStagingPath(config.RangeToFilename(chain, &rng))
 		var chunk index.Chunk
 		var bm = BlazeManager{}
 		_ = file.StringToAsciiFile(stagePath, base.SkippedSender.Hex()+"\t0\t0\n")

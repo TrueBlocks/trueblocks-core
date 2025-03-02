@@ -7,6 +7,7 @@ import (
 	"io"
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -25,13 +26,13 @@ func (e *ExampleBlock) MarshalCache(writer io.Writer) (err error) {
 	// WriteValue serializes its second argument. It works for
 	// fixed-size numeric types, slices and structs that implement
 	// CacheMarshaler interface (and slices of such types).
-	if err = WriteValue(writer, e.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, e.BlockNumber); err != nil {
 		return err
 	}
-	if err = WriteValue(writer, e.Name); err != nil {
+	if err = base.WriteValue(writer, e.Name); err != nil {
 		return err
 	}
-	if err = WriteValue(writer, e.Timestamp); err != nil {
+	if err = base.WriteValue(writer, e.Timestamp); err != nil {
 		return err
 	}
 
@@ -53,13 +54,13 @@ func (e *ExampleBlock) UnmarshalCache(itemVersion uint64, reader io.Reader) (err
 		return errors.New("unsupported version")
 	}
 
-	if err = ReadValue(reader, &e.BlockNumber, itemVersion); err != nil {
+	if err = base.ReadValue(reader, &e.BlockNumber, itemVersion); err != nil {
 		return err
 	}
-	if err = ReadValue(reader, &e.Name, itemVersion); err != nil {
+	if err = base.ReadValue(reader, &e.Name, itemVersion); err != nil {
 		return err
 	}
-	if err = ReadValue(reader, &e.Timestamp, itemVersion); err != nil {
+	if err = base.ReadValue(reader, &e.Timestamp, itemVersion); err != nil {
 		return err
 	}
 	return

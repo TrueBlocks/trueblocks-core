@@ -1,4 +1,4 @@
-package cache
+package base
 
 import (
 	"bytes"
@@ -142,7 +142,7 @@ func TestWriteBigInt(t *testing.T) {
 	}
 
 	var size uint64
-	if err := read(buf, &size); err != nil {
+	if err := binary.Read(buf, binary.LittleEndian, &size); err != nil {
 		t.Fatal(err)
 	}
 	// we expect size to be len(bigint.Bytes()) + 1, because GobEncode adds 1 byte
@@ -152,7 +152,7 @@ func TestWriteBigInt(t *testing.T) {
 	}
 
 	data := make([]byte, size)
-	if err := read(buf, data); err != nil {
+	if err := binary.Read(buf, binary.LittleEndian, data); err != nil {
 		t.Fatal(err)
 	}
 

@@ -78,7 +78,7 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 
 		newChunks := []types.ChunkRecord{}
 		for _, chunk := range man.Chunks {
-			chunkRange := base.RangeFromRangeString(chunk.Range)
+			chunkRange := config.RangeFromRangeString(chunk.Range)
 			if chunkRange.EarlierThan(removedRange) {
 				newChunks = append(newChunks, chunk)
 				// 	fmt.Println(colors.Green, "Keeping", chunk.Range, colors.Off)

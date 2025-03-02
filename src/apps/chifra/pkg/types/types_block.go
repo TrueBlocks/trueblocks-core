@@ -151,47 +151,47 @@ func (s *Block) CacheLocations() (string, string, string) {
 
 func (s *Block) MarshalCache(writer io.Writer) (err error) {
 	// BaseFeePerGas
-	if err = cache.WriteValue(writer, s.BaseFeePerGas); err != nil {
+	if err = base.WriteValue(writer, s.BaseFeePerGas); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
 
 	// Difficulty
-	if err = cache.WriteValue(writer, s.Difficulty); err != nil {
+	if err = base.WriteValue(writer, s.Difficulty); err != nil {
 		return err
 	}
 
 	// GasLimit
-	if err = cache.WriteValue(writer, s.GasLimit); err != nil {
+	if err = base.WriteValue(writer, s.GasLimit); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.WriteValue(writer, s.GasUsed); err != nil {
+	if err = base.WriteValue(writer, s.GasUsed); err != nil {
 		return err
 	}
 
 	// Hash
-	if err = cache.WriteValue(writer, &s.Hash); err != nil {
+	if err = base.WriteValue(writer, &s.Hash); err != nil {
 		return err
 	}
 
 	// Miner
-	if err = cache.WriteValue(writer, s.Miner); err != nil {
+	if err = base.WriteValue(writer, s.Miner); err != nil {
 		return err
 	}
 
 	// ParentHash
-	if err = cache.WriteValue(writer, &s.ParentHash); err != nil {
+	if err = base.WriteValue(writer, &s.ParentHash); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+	if err = base.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
@@ -200,12 +200,12 @@ func (s *Block) MarshalCache(writer io.Writer) (err error) {
 	for _, tx := range s.Transactions {
 		txHashes = append(txHashes, tx.Hash.Hex())
 	}
-	if err = cache.WriteValue(writer, txHashes); err != nil {
+	if err = base.WriteValue(writer, txHashes); err != nil {
 		return err
 	}
 
 	// Uncles
-	if err = cache.WriteValue(writer, s.Uncles); err != nil {
+	if err = base.WriteValue(writer, s.Uncles); err != nil {
 		return err
 	}
 
@@ -214,7 +214,7 @@ func (s *Block) MarshalCache(writer io.Writer) (err error) {
 	for _, withdrawal := range s.Withdrawals {
 		withdrawals = append(withdrawals, &withdrawal)
 	}
-	if err = cache.WriteValue(writer, withdrawals); err != nil {
+	if err = base.WriteValue(writer, withdrawals); err != nil {
 		return err
 	}
 
@@ -230,60 +230,60 @@ func (s *Block) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error)
 	vBaseFeePerGas := version.NewVersion("2.5.8")
 	if fileVersion <= vBaseFeePerGas.Uint64() {
 		var val base.Wei
-		if err = cache.ReadValue(reader, &val, fileVersion); err != nil {
+		if err = base.ReadValue(reader, &val, fileVersion); err != nil {
 			return err
 		}
 		s.BaseFeePerGas = weiToGas(val)
 	} else {
 		// BaseFeePerGas
-		if err = cache.ReadValue(reader, &s.BaseFeePerGas, fileVersion); err != nil {
+		if err = base.ReadValue(reader, &s.BaseFeePerGas, fileVersion); err != nil {
 			return err
 		}
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// Difficulty
-	if err = cache.ReadValue(reader, &s.Difficulty, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Difficulty, fileVersion); err != nil {
 		return err
 	}
 
 	// GasLimit
-	if err = cache.ReadValue(reader, &s.GasLimit, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.GasLimit, fileVersion); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.ReadValue(reader, &s.GasUsed, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.GasUsed, fileVersion); err != nil {
 		return err
 	}
 
 	// Hash
-	if err = cache.ReadValue(reader, &s.Hash, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Hash, fileVersion); err != nil {
 		return err
 	}
 
 	// Miner
-	if err = cache.ReadValue(reader, &s.Miner, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Miner, fileVersion); err != nil {
 		return err
 	}
 
 	// ParentHash
-	if err = cache.ReadValue(reader, &s.ParentHash, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.ParentHash, fileVersion); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 
 	// Transactions
 	hashes := make([]string, 0, len(s.Transactions))
-	if err = cache.ReadValue(reader, &hashes, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &hashes, fileVersion); err != nil {
 		return err
 	}
 	s.Transactions = make([]Transaction, 0, len(hashes))
@@ -293,13 +293,13 @@ func (s *Block) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error)
 
 	// Uncles
 	s.Uncles = make([]base.Hash, 0)
-	if err = cache.ReadValue(reader, &s.Uncles, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Uncles, fileVersion); err != nil {
 		return err
 	}
 
 	// Withdrawals
 	s.Withdrawals = make([]Withdrawal, 0)
-	if err = cache.ReadValue(reader, &s.Withdrawals, fileVersion); err != nil {
+	if err = base.ReadValue(reader, &s.Withdrawals, fileVersion); err != nil {
 		return err
 	}
 

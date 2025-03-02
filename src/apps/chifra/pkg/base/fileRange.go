@@ -10,8 +10,6 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 type RecordRange struct {
@@ -65,18 +63,8 @@ func RangeFromFilenameE(path string) (blkRange FileRange, err error) {
 	return
 }
 
-// RangeFromRangeString returns a file range from a string
-func RangeFromRangeString(rngStr string) FileRange {
-	return RangeFromFilename(filepath.Join(config.PathToIndex("mainnet"), "finalized", rngStr+".bin")) // okay to use mainnet since we're only interested in range
-}
-
 func (r FileRange) String() string {
 	return fmt.Sprintf("%09d-%09d", r.First, r.Last)
-}
-
-// RangeToFilename returns a fileName and existence bool given a file range and a type
-func (r *FileRange) RangeToFilename(chain string) string {
-	return filepath.Join(config.PathToIndex(chain), "finalized", r.String()+".bin")
 }
 
 // Follows returns true if the range is strictly after the needle range.

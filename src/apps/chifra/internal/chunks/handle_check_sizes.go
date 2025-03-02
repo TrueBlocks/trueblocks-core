@@ -8,6 +8,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -29,7 +30,7 @@ func (opts *ChunksOptions) CheckSizes(fileNames []string, blockNums []base.Blknu
 	bloomSizeInMan := make(map[base.FileRange]int64, len(theManifest.Chunks))
 	maxInManifest := base.FileRange{}
 	for _, r := range theManifest.Chunks {
-		rng := base.RangeFromRangeString(r.Range)
+		rng := config.RangeFromRangeString(r.Range)
 		idxSizeInMan[rng] = r.IndexSize
 		bloomSizeInMan[rng] = r.BloomSize
 		if rng.LaterThan(maxInManifest) {

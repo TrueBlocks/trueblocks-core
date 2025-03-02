@@ -169,11 +169,11 @@ func (opts *InitOptions) updateLocalManifest(existing, remote *manifest.Manifest
 	copy := *remote
 
 	if existing != nil {
-		lastExisting := base.RangeFromRangeString(existing.Chunks[len(existing.Chunks)-1].Range)
-		lastRemote := base.RangeFromRangeString(remote.Chunks[len(remote.Chunks)-1].Range)
+		lastExisting := config.RangeFromRangeString(existing.Chunks[len(existing.Chunks)-1].Range)
+		lastRemote := config.RangeFromRangeString(remote.Chunks[len(remote.Chunks)-1].Range)
 		if !lastExisting.LaterThan(lastRemote) {
 			for _, ch := range existing.Chunks {
-				rng := base.RangeFromRangeString(ch.Range)
+				rng := config.RangeFromRangeString(ch.Range)
 				if rng.LaterThan(lastRemote) {
 					copy.Chunks = append(copy.Chunks, ch)
 				}

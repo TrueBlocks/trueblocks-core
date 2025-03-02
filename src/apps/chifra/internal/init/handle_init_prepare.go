@@ -53,7 +53,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 
 	// We assume we're going to have download everything...
 	for _, chunk := range man.Chunks {
-		downloadMap[base.RangeFromRangeString(chunk.Range)] = FILE_MISSING
+		downloadMap[config.RangeFromRangeString(chunk.Range)] = FILE_MISSING
 	}
 
 	// Visit each chunk on disc. If the chunk belongs and is of the right size and shape, mark it as OKAY,
@@ -102,7 +102,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			lastInManifest := base.FileRange{}
 			if len(man.Chunks) > 0 {
 				lastChunk := man.Chunks[len(man.Chunks)-1]
-				lastInManifest = base.RangeFromRangeString(lastChunk.Range)
+				lastInManifest = config.RangeFromRangeString(lastChunk.Range)
 			}
 
 			// The chunk is on disc but not in the manifest. We need to delete it
@@ -130,7 +130,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 
 	nDeleted := 0
 	for rng, reason := range deleteMap {
-		indexPath := rng.RangeToFilename(chain)
+		indexPath := config.RangeToFilename(chain, &rng)
 		bloomPath := index.ToBloomPath(indexPath)
 		indexExists := file.FileExists(indexPath)
 		bloomExists := file.FileExists(bloomPath)
@@ -158,11 +158,11 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	downloadList := make([]types.ChunkRecord, 0, len(man.ChunkMap))
 	nToDownload := 0
 	for _, chunk := range man.ChunkMap {
-		rng := base.RangeFromRangeString(chunk.Range)
+		rng := config.RangeFromRangeString(chunk.Range)
 		if downloadMap[rng] == OKAY || rng.Last < opts.FirstBlock {
 			continue
 		}
-		indexPath := rng.RangeToFilename(chain)
+		indexPath := config.RangeToFilename(chain, &rng)
 		bloomStatus, indexStatus, err := isValidChunk(index.ToBloomPath(indexPath), chunk.BloomSize, chunk.IndexSize, opts.All)
 		if err != nil {
 			return nil, 0, nDeleted, err
