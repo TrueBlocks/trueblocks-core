@@ -34,9 +34,7 @@ type Store struct {
 	resolvedPaths map[Locator]string
 	location      Storer
 	rootDir       string
-	// If readOnly is true, Store will not write to the cache, but
-	// still read (issue #3047)
-	readOnly bool
+	enabled       bool
 }
 
 func NewStore(options *StoreOptions) (*Store, error) {
@@ -47,7 +45,7 @@ func NewStore(options *StoreOptions) (*Store, error) {
 	return &Store{
 		location: location,
 		rootDir:  options.rootDir(),
-		readOnly: options.ReadOnly,
+		enabled:  options.Enabled || options.Location == MemoryCache,
 	}, nil
 }
 
@@ -84,17 +82,17 @@ type WriteOptions interface{}
 // Write saves value to a location defined by options.Location. If options is nil,
 // then FileSystem is used. The value has to implement Locator interface, which
 // provides information about in-cache path and ID.
-func (s *Store) Write(value Locator) (err error) {
-	if s.readOnly {
-		err = ErrReadOnly
+func (s *Store) Write(value Locator) error {
+	if !s.enabled {
+		err := ErrReadOnly
 		printErr("write", err)
-		return
+		return err
 	}
 
 	itemPath, err := s.resolvePath(value)
 	if err != nil {
 		printErr("write resolving path", err)
-		return
+		return err
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -107,7 +105,7 @@ func (s *Store) Write(value Locator) (err error) {
 	writer, err := s.location.Writer(itemPath)
 	if err != nil {
 		printErr("getting writer", err)
-		return
+		return err
 	}
 	defer writer.Close()
 
@@ -115,11 +113,10 @@ func (s *Store) Write(value Locator) (err error) {
 	item := NewItem(buffer)
 	if err = item.Encode(value); err != nil {
 		printErr("encoding", err)
-		return
+		return err
 	}
 	_, err = buffer.WriteTo(writer)
-
-	return
+	return err
 }
 
 // ReadOptions are options that we might need in the future
@@ -203,8 +200,8 @@ func (s *Store) Decache(locators []Locator, procFunc, skipFunc func(*locations.I
 	return nil
 }
 
-func (s *Store) ReadOnly() bool {
-	return s.readOnly
+func (s *Store) Enabled() bool {
+	return s.enabled
 }
 
 func printErr(desc string, err error) {
@@ -213,4 +210,15 @@ func printErr(desc string, err error) {
 	}
 
 	log.Warn("cache error:", desc+":", err)
+}
+
+// WriteToCache handles caching of any data type that implements the Locator interface. Precondition: Caller
+// must ensure caching is enabled and provide all conditions (e.g., isFinal, isWritable).
+func (store *Store) WriteToCache(data Locator, conditions ...bool) error {
+	for _, cond := range conditions {
+		if !cond {
+			return nil
+		}
+	}
+	return store.Write(data)
 }

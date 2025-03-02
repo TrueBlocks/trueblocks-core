@@ -35,9 +35,7 @@ func TestStoreWrite(t *testing.T) {
 		Id:    "1",
 		Value: "trueblocks",
 	}
-	opts := &StoreOptions{
-		Location: MemoryCache,
-	}
+	opts := &StoreOptions{Location: MemoryCache}
 	cacheStore, err := NewStore(opts)
 	if err != nil {
 		panic(err)

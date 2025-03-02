@@ -51,14 +51,10 @@ type Marshaler interface {
 
 // StoreOptions used by Store
 type StoreOptions struct {
-	Location StoreLocation
 	Chain    string
-
-	// Optional
-
-	RootDir string
-	// If ReadOnly is true, then we will not write to the cache
-	ReadOnly bool
+	Location StoreLocation
+	RootDir  string
+	Enabled  bool
 }
 
 func (s *StoreOptions) location() (loc Storer, err error) {
@@ -90,7 +86,6 @@ func (s *StoreOptions) rootDir() (dir string) {
 	}
 
 	if dir != "" {
-		// TODO: v1 suffix
 		return filepath.Join(dir, "v1")
 	}
 

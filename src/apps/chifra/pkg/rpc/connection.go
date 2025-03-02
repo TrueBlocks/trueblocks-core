@@ -22,63 +22,36 @@ type Connection struct {
 	cacheMutex           sync.Mutex
 }
 
-// settings allows every command has its own options type, we have to
-// accept any here, but will use interfaces to read the needed information
-type settings struct {
-	Chain         string
-	ReadonlyCache bool
-	CacheEnabled  bool
-	EnabledMap    map[walk.CacheType]bool
-}
-
-func NewConnection(chain string, cacheEnabled bool, caches map[walk.CacheType]bool) *Connection {
-	settings := settings{
-		Chain:        chain,
-		CacheEnabled: cacheEnabled,
-		EnabledMap:   caches,
-	}
-	return settings.GetRpcConnection()
+func NewConnection(chain string, cacheEnabled bool, enabledMap map[walk.CacheType]bool) *Connection {
+	return newConnection(chain, cacheEnabled, enabledMap)
 }
 
 func TempConnection(chain string) *Connection {
-	settings := settings{
-		Chain: chain,
-	}
-	return settings.GetRpcConnection()
-}
-
-func NewReadOnlyConnection(chain string) *Connection {
-	settings := settings{
-		Chain:         chain,
-		ReadonlyCache: true,
-	}
-	return settings.GetRpcConnection()
+	return newConnection(chain, false, nil)
 }
 
 // GetRpcConnection builds the store and enables the caches and returns the RPC connection
-func (settings settings) GetRpcConnection() *Connection {
-	forceReadonly := !settings.CacheEnabled || settings.ReadonlyCache
-
+func newConnection(chain string, cacheEnabled bool, enabledMap map[walk.CacheType]bool) *Connection {
 	var store *cache.Store
 	var err error
 	if store, err = cache.NewStore(&cache.StoreOptions{
 		Location: cache.FsCache,
-		Chain:    settings.Chain,
-		ReadOnly: forceReadonly,
+		Chain:    chain,
+		Enabled:  cacheEnabled,
 	}); err != nil {
 		// If there was an error, we won't use the cache
 		logger.Warn("Cannot initialize cache:", err)
 	}
 
 	ret := &Connection{
-		Chain:             settings.Chain,
+		Chain:             chain,
 		Store:             store,
-		EnabledMap:        settings.EnabledMap,
+		EnabledMap:        enabledMap,
 		balanceCache:      make(map[string]*base.Wei),
 		tokenBalanceCache: make(map[string]*base.Wei),
 	}
 
-	if store != nil && !store.ReadOnly() {
+	if store != nil && store.Enabled() {
 		ret.LatestBlockTimestamp = ret.GetBlockTimestamp(base.NOPOSN)
 	}
 
@@ -96,10 +69,7 @@ func (conn *Connection) StoreReadable() bool {
 }
 
 func (conn *Connection) StoreWritable() bool {
-	if !conn.StoreReadable() {
-		return false
-	}
-	return !conn.Store.ReadOnly()
+	return conn.StoreReadable() && conn.Store.Enabled()
 }
 
 // TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
