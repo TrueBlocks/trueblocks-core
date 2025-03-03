@@ -22,7 +22,11 @@ func (r *Reconciler) GetTransfers(pos *types.AppPosition, filter *filter.Appeara
 	var err error
 	var statements []types.Statement
 	if true { // !r.useTraces {
-		r2 := ledger2.NewReconciler2(r.connection, r.assetFilter, r.accountFor, r.names, r.asEther)
+		strs := []string{}
+		for _, af := range r.assetFilter {
+			strs = append(strs, af.Hex())
+		}
+		r2 := ledger2.NewReconciler2(r.connection, &strs, r.accountFor, r.asEther)
 		if statements, err = r2.GetStatements(pos, filter, trans); err != nil {
 			return nil, err
 		}
@@ -49,7 +53,6 @@ func (r *Reconciler) GetTransfers(pos *types.AppPosition, filter *filter.Appeara
 			TransactionIndex: trans.TransactionIndex,
 			Transfers:        transfers,
 		}
-
 		// TODO: BOGUS Turn on caching (remove the false below) for results once we get 100% coverage
 		err = r.connection.Store.WriteToCache(transfersGroup, walk.Cache_Transfers, trans.Timestamp, allReconciled, false)
 		return transfers, err

@@ -6,11 +6,13 @@ package exportPkg
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -20,7 +22,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 	// TODO: BOGUS - RECONSIDER THIS
 	opts.Articulate = true
 
-	recon := &ledger.Reconciler{}
+	var recon ledger.Reconcilerer
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
@@ -65,17 +67,27 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 				return
 
 			} else if !opts.NoZero || cnt > 0 {
-				recon = ledger.NewReconciler(
-					opts.Conn,
-					mon.Address,
-					opts.FirstBlock,
-					opts.LastBlock,
-					opts.Globals.Ether,
-					testMode,
-					opts.Traces,
-					opts.Reversed,
-					&opts.Asset,
-				)
+				if os.Getenv("NEW_CODE") == "true" {
+					r := ledger2.NewReconciler2(
+						opts.Conn,
+						&opts.Asset,
+						mon.Address,
+						opts.Globals.Ether,
+					)
+					recon = &r
+				} else {
+					recon = ledger.NewReconciler(
+						opts.Conn,
+						mon.Address,
+						opts.FirstBlock,
+						opts.LastBlock,
+						opts.Globals.Ether,
+						testMode,
+						opts.Traces,
+						opts.Reversed,
+						&opts.Asset,
+					)
+				}
 
 				for i, app := range apps {
 					prev := uint32(0)

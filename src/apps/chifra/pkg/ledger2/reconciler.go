@@ -9,12 +9,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pricing"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // Reconciler2 is responsible for processing Appearances, constructing Postings
@@ -35,15 +37,25 @@ type Reconciler2 struct {
 }
 
 // NewReconciler2 creates a Reconciler2 for the specified accountedForAddress.
-func NewReconciler2(conn *rpc.Connection, assetFilter []base.Address, accountedForAddress base.Address, names map[base.Address]types.Name, asEth bool) Reconciler2 {
-	return Reconciler2{
-		LedgerBook:  NewLedgerBook(accountedForAddress),
-		accountFor:  accountedForAddress,
-		connection:  conn,
-		names:       names,
-		asEther:     asEth,
-		assetFilter: assetFilter,
+func NewReconciler2(conn *rpc.Connection, assetFilters *[]string, accountedForAddress base.Address, asEth bool) Reconciler2 {
+	parts := types.Custom | types.Prefund | types.Regular
+	names, _ := names.LoadNamesMap(conn.Chain, parts, []string{})
+	ret := Reconciler2{
+		LedgerBook: NewLedgerBook(accountedForAddress),
+		accountFor: accountedForAddress,
+		connection: conn,
+		names:      names,
+		asEther:    asEth,
 	}
+	if assetFilters != nil {
+		ret.assetFilter = make([]base.Address, len(*assetFilters))
+		for i, addr := range *assetFilters {
+			ret.assetFilter[i] = base.HexToAddress(addr)
+		}
+	} else {
+		ret.assetFilter = []base.Address{}
+	}
+	return ret
 }
 
 // String returns a summary of the Reconciler2’s LedgerBook.
@@ -52,14 +64,15 @@ func (r *Reconciler2) String() string {
 }
 
 func (r *Reconciler2) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
-	xfers := r.GetAssetTransfers(pos, filter, trans)
-	r.ProcessTransaction(pos, trans, xfers)
-
-	if !r.LedgerBook.IsMaterial() {
-		return []types.Statement{}, nil
+	if transfers, err := r.GetAssetTransfers(pos, filter, trans); err != nil {
+		return []types.Statement{}, err
+	} else {
+		r.ProcessTransaction(pos, trans, transfers)
+		if !r.LedgerBook.IsMaterial() {
+			return []types.Statement{}, nil
+		}
+		return r.LedgerBook.Statements()
 	}
-
-	return r.LedgerBook.Statements()
 }
 
 func (lb *LedgerBook) IsMaterial() bool {
@@ -231,11 +244,22 @@ func findSeparator(s string) int {
 
 // GetAssetTransfers parses a single Transaction and returns a slice of AssetTransfer
 // by checking the transaction's Value, its Logs for ERC20 events, and an optional Traces field.
-func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) []AssetTransfer {
+func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]AssetTransfer, error) {
+	if r.connection.Store != nil {
+		statementGroup := &types.StatementGroup{
+			BlockNumber:      trans.BlockNumber,
+			TransactionIndex: trans.TransactionIndex,
+			Address:          r.accountFor,
+		}
+		if err := r.connection.Store.Read(statementGroup); err == nil {
+			return statementGroup.Statements, nil
+		}
+	}
+
 	var results []AssetTransfer
 	if ledger3.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
 		type AAA = AssetTransfer
-		accountedFor := r.LedgerBook.AccountedFor
+		accountedFor := r.accountFor
 		at := AAA{
 			AccountedFor:     accountedFor,
 			Sender:           trans.From,
@@ -396,7 +420,9 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 						PostLast:         pos.Last,
 					}
 
-					results = append(results, at)
+					if at.IsMaterial() {
+						results = append(results, at)
+					}
 				}
 			}
 		}
@@ -422,7 +448,15 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 	// 	// Additional logic for selfdestruct or create, etc.
 	// }
 
-	return results
+	// TODO: BOGUS Turn on caching (remove the false below) for results once we get 100% coverage
+	statementGroup := &types.StatementGroup{
+		BlockNumber:      trans.BlockNumber,
+		TransactionIndex: trans.TransactionIndex,
+		Address:          r.accountFor,
+		Statements:       results,
+	}
+	err := r.connection.Store.WriteToCache(statementGroup, walk.Cache_Statements, trans.Timestamp, false)
+	return results, err
 }
 
 // func (l *Reconciler2) getStatementsFromTraces(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {
