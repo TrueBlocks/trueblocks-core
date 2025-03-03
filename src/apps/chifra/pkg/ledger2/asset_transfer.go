@@ -13,12 +13,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-// AssetTransfer is a raw movement of an asset derived from logs, traces, or transaction details.
-type AssetTransfer = types.Statement
-
-// GetAssetTransfers parses a single Transaction and returns a slice of AssetTransfer
+// GetAssetTransfers parses a single Transaction and returns a slice of ledger3.AssetTransfer
 // by checking the transaction's Value, its Logs for ERC20 events, and an optional Traces field.
-func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]AssetTransfer, error) {
+func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]ledger3.AssetTransfer, error) {
 	if r.connection.Store != nil {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
@@ -30,9 +27,9 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 		}
 	}
 
-	var results []AssetTransfer
+	var results []ledger3.AssetTransfer
 	if ledger3.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
-		type AAA = AssetTransfer
+		type AAA = ledger3.AssetTransfer
 		accountedFor := r.accountFor
 		at := AAA{
 			AccountedFor:     accountedFor,
@@ -175,7 +172,7 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 					}
 
 					// The contract address is in log.Address, which typically is the ERC20 token.
-					at := AssetTransfer{
+					at := ledger3.AssetTransfer{
 						AccountedFor:     r.LedgerBook.AccountedFor,
 						BlockNumber:      trans.BlockNumber,
 						TransactionIndex: trans.TransactionIndex,
@@ -203,12 +200,12 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 	}
 
 	// // 3) If you have internal traces, parse them for self-destructs, internal calls, etc.
-	// // For each trace that shows a value transfer from A to B, create an AssetTransfer.
+	// // For each trace that shows a value transfer from A to B, create an ledger3.AssetTransfer.
 	// for i, tr := range trans.Traces {
 	// 	// Example check if it's a simple call with a value transfer
 	// 	if strings.EqualFold(tr.Type, "call") && tr.ValueWei > 0 {
 	// 		// We treat it as a native coin movement
-	// 		xf := AssetTransfer{
+	// 		xf := ledger3.AssetTransfer{
 	// 			BlockNumber:      trans.BlockNumber,
 	// 			TransactionIndex: trans.TransactionIndex,
 	// 			AssetAddress:        "0x0",

@@ -1,8 +1,9 @@
 package ledger
 
 import (
+	"encoding/json"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -11,11 +12,6 @@ import (
 // TODO: Two things to note. (1) if balances were part of this structure, we could fill those
 // TODO: balances in a concurrent way before spinning through the appearances. And (2) if we did that
 // TODO: prior to doing the accounting, we could easily travers in reverse order.
-
-type Reconcilerer interface {
-	GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error)
-	GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error)
-}
 
 // Reconciler represents the ledger state and provides methods to process and reconcile
 // transactions and their associated logs. It holds configuration details such as the
@@ -32,6 +28,11 @@ type Reconciler struct {
 	useTraces   bool
 	connection  *rpc.Connection
 	assetFilter []base.Address
+}
+
+func (r *Reconciler) String() string {
+	bytes, _ := json.MarshalIndent(r, "", "  ")
+	return string(bytes)
 }
 
 // NewReconciler returns a new empty Reconciler struct

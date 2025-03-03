@@ -14,7 +14,7 @@ package ledger2
 // 	tx := types.Transaction{BlockNumber: 123, TransactionIndex: 0}
 
 // 	// We have 3 appearances, each might have multiple AssetTransfers. We'll create a small set:
-// 	transfers := []AssetTransfer{
+// 	transfers := []ledger3.AssetTransfer{
 // 		// For block=123 tx=0, an incoming amount
 // 		{
 // 			BlockNumber:      123,

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
 )
 
 func TestNewAssetTransfer(t *testing.T) {
@@ -16,7 +17,7 @@ func TestNewAssetTransfer(t *testing.T) {
 	fromAddr := base.HexToAddress("0x1001")
 	toAddr := base.HexToAddress("0x1003")
 
-	at := AssetTransfer{
+	at := ledger3.AssetTransfer{
 		BlockNumber:      blockNum,
 		TransactionIndex: txIndex,
 		AssetAddress:     assetAddress,
