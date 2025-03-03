@@ -7,11 +7,13 @@ package exportPkg
 import (
 	"context"
 	"fmt"
+	"os"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -29,6 +31,7 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
+	var recon ledger.Reconcilerer
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
@@ -112,17 +115,27 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 							})
 						}
 
-						recon := ledger.NewReconciler(
-							opts.Conn,
-							mon.Address,
-							opts.FirstBlock,
-							opts.LastBlock,
-							opts.Globals.Ether,
-							testMode,
-							opts.Traces,
-							opts.Reversed,
-							&opts.Asset,
-						)
+						if os.Getenv("NEW_CODE") == "true" {
+							r := ledger2.NewReconciler2(
+								opts.Conn,
+								&opts.Asset,
+								mon.Address,
+								opts.Globals.Ether,
+							)
+							recon = &r
+						} else {
+							recon = ledger.NewReconciler(
+								opts.Conn,
+								mon.Address,
+								opts.FirstBlock,
+								opts.LastBlock,
+								opts.Globals.Ether,
+								testMode,
+								opts.Traces,
+								opts.Reversed,
+								&opts.Asset,
+							)
+						}
 
 						items := make([]types.Transfer, 0, len(thisMap))
 						for i, tx := range txArray {

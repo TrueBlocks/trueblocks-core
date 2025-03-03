@@ -14,6 +14,7 @@ import (
 
 type Reconcilerer interface {
 	GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error)
+	GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error)
 }
 
 // Reconciler represents the ledger state and provides methods to process and reconcile
