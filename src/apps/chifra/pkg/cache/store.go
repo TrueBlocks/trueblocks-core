@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
-	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
@@ -22,9 +21,6 @@ import (
 
 var ErrReadOnly = errors.New("cache is read-only")
 var ErrCanceled = errors.New("write canceled")
-
-var defaultStore *Store
-var defaultStoreOnce sync.Once
 
 // Store holds all information necessary to access the cache, no matter
 // which concrete location (FS, IPFS, memory, etc.) is being used
@@ -68,14 +64,6 @@ func NewStore(options *StoreOptions) (*Store, error) {
 	}, nil
 }
 
-func DefaultStore() (*Store, error) {
-	var err error
-	defaultStoreOnce.Do(func() {
-		defaultStore, err = NewStore(nil)
-	})
-	return defaultStore, err
-}
-
 func (s *Store) SetLatest(ts base.Timestamp) {
 	s.latest = ts
 }
@@ -88,12 +76,10 @@ func (s *Store) resolvePath(value Locator) (string, error) {
 	if cachedPath, ok := s.resolvedPaths[value]; ok {
 		return cachedPath, nil
 	}
-
 	directory, id, extension := value.CacheLocations()
-	if directory == "" || extension == "" {
+	if directory == "" || id == "" || extension == "" {
 		return "", errors.New("empty CacheLocations")
 	}
-
 	if filepath.IsAbs(directory) {
 		return filepath.Join(directory, (id + "." + extension)), nil
 	} else {
@@ -108,7 +94,6 @@ func (s *Store) Write(value Locator) error {
 	if !s.enabled {
 		return ErrReadOnly
 	}
-
 	if itemPath, err := s.resolvePath(value); err != nil {
 		return err
 	} else {
@@ -123,13 +108,11 @@ func (s *Store) Write(value Locator) error {
 			return err
 		} else {
 			defer writer.Close()
-
 			buffer := new(bytes.Buffer)
 			item := NewItem(buffer)
 			if err = item.Encode(value); err != nil {
 				return err
 			}
-
 			_, err = buffer.WriteTo(writer)
 			return err
 		}
@@ -218,7 +201,7 @@ func (s *Store) TestLog() {
 // WriteToCache handles caching of any data type that implements the Locator interface. Precondition: Caller
 // must ensure caching is enabled and provide all conditions (e.g., isFinal, isWritable).
 func (s *Store) WriteToCache(data Locator, cacheType walk.CacheType, ts base.Timestamp, conditions ...bool) error {
-	if !s.Enabled() || !s.enabledMap[cacheType] || !s.IsFinal(ts) {
+	if s == nil || !s.Enabled() || !s.enabledMap[cacheType] || !s.IsFinal(ts) {
 		return nil
 	}
 	for _, cond := range conditions {

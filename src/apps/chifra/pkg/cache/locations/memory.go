@@ -58,7 +58,6 @@ func Memory() (*memory, error) {
 // Writer returns io.WriterCloser for the item at given path
 func (l *memory) Writer(path string) (io.WriteCloser, error) {
 	l.mutex.Lock()
-
 	record, ok := l.records[path]
 	if !ok {
 		record = &memoryReadWriteCloser{
@@ -66,16 +65,15 @@ func (l *memory) Writer(path string) (io.WriteCloser, error) {
 		}
 		l.records[path] = record
 	}
-
 	return record, nil
 }
 
 // Reader returns io.ReaderCloser for the item at given path
 func (l *memory) Reader(path string) (io.ReadCloser, error) {
 	l.mutex.Lock()
-
 	record, ok := l.records[path]
-	if !ok {
+	if !ok || record == nil {
+		l.mutex.Unlock()
 		return nil, fmt.Errorf("%s: %w", path, ErrNotFound)
 	}
 	return record, nil
@@ -84,7 +82,8 @@ func (l *memory) Reader(path string) (io.ReadCloser, error) {
 // Remove removes the item at given path
 func (l *memory) Remove(path string) error {
 	l.mutex.Lock()
-	l.records[path] = nil
+	defer l.mutex.Unlock()
+	delete(l.records, path)
 	return nil
 }
 
