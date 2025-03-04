@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]ledger4.AssetTransfer, error) {
+func (r *Reconciler1) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]ledger3.AssetTransfer, error) {
 	if r.connection.Store != nil {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
@@ -32,7 +32,7 @@ func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, filter *filter.Ap
 	var err error
 	results := make([]types.Statement, 0, 20)
 
-	if ledger4.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
+	if ledger3.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
 		type AAA = types.Statement
 		accountedFor := r.accountFor
 
@@ -139,7 +139,7 @@ func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, filter *filter.Ap
 				continue
 			}
 			addrArray := []base.Address{r.accountFor}
-			if filter.ApplyLogFilter(&log, addrArray) && ledger4.AssetOfInterest(r.assetFilter, log.Address) {
+			if filter.ApplyLogFilter(&log, addrArray) && ledger3.AssetOfInterest(r.assetFilter, log.Address) {
 				normalized, err := normalize.NormalizeKnownLogs(&log)
 				if err != nil {
 					continue

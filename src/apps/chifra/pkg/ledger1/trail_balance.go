@@ -15,7 +15,7 @@ import (
 // any other reason. If that works and the statement is material (money moved in some way), the
 // function tries to price the asset. it then prints optional debugging information. Note that
 // the statement may be modified in this function.
-func (l *Reconciler) trialBalance(pos *types.AppPosition, reason types.TrialBalType, trans *types.Transaction, s *types.Statement) bool {
+func (l *Reconciler1) trialBalance(pos *types.AppPosition, reason types.TrialBalType, trans *types.Transaction, s *types.Statement) bool {
 	s.PostFirst = pos.First
 	s.PostLast = pos.Last
 	s.PostAssetType = reason
@@ -39,7 +39,7 @@ func (l *Reconciler) trialBalance(pos *types.AppPosition, reason types.TrialBalT
 	return s.Reconciled()
 }
 
-func (l *Reconciler) correctForSomethingElseToken(s *types.Statement) bool {
+func (l *Reconciler1) correctForSomethingElseToken(s *types.Statement) bool {
 	logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
 
 	s.CorrectingIn.SetUint64(0)

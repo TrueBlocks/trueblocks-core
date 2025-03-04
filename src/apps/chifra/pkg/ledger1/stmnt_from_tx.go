@@ -6,6 +6,6 @@ import (
 )
 
 // GetStatements returns a statement from a given transaction
-func (r *Reconciler) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (r *Reconciler1) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	return r.GetAssetTransfers(pos, filter, trans)
 }

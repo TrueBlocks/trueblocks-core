@@ -13,11 +13,11 @@ import (
 // TODO: balances in a concurrent way before spinning through the appearances. And (2) if we did that
 // TODO: prior to doing the accounting, we could easily travers in reverse order.
 
-// Reconciler represents the ledger state and provides methods to process and reconcile
+// Reconciler1 represents the ledger state and provides methods to process and reconcile
 // transactions and their associated logs. It holds configuration details such as the
 // account being tracked, block ranges for processing, connection to an RPC endpoint,
 // asset filters, and maps for both application-level and asset-level contexts.
-type Reconciler struct {
+type Reconciler1 struct {
 	accountFor  base.Address
 	firstBlock  base.Blknum
 	lastBlock   base.Blknum
@@ -30,14 +30,14 @@ type Reconciler struct {
 	assetFilter []base.Address
 }
 
-func (r *Reconciler) String() string {
+func (r *Reconciler1) String() string {
 	bytes, _ := json.MarshalIndent(r, "", "  ")
 	return string(bytes)
 }
 
-// NewReconciler returns a new empty Reconciler struct
-func NewReconciler(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, useTraces, reversed bool, assetFilters *[]string) *Reconciler {
-	l := &Reconciler{
+// NewReconciler returns a new empty Reconciler1 struct
+func NewReconciler(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, useTraces, reversed bool, assetFilters *[]string) *Reconciler1 {
+	l := &Reconciler1{
 		connection: conn,
 		accountFor: acctFor,
 		firstBlock: fb,

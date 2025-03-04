@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pricing"
@@ -87,8 +87,8 @@ func (lb *LedgerBook) IsMaterial() bool {
 
 // ProcessTransaction takes a list of Appearances and their related AssetTransfers,
 // converts them to Postings, and appends them into the appropriate Ledger.
-func (r *Reconciler2) ProcessTransaction(pos *types.AppPosition, trans *types.Transaction, allTransfers []ledger4.AssetTransfer) {
-	// We assume allTransfers includes every relevant ledger4.AssetTransfer for the Appearances.
+func (r *Reconciler2) ProcessTransaction(pos *types.AppPosition, trans *types.Transaction, allTransfers []ledger3.AssetTransfer) {
+	// We assume allTransfers includes every relevant ledger3.AssetTransfer for the Appearances.
 	// In reality, you'd fetch them from an indexer or node calls.
 	//
 	// We'll map an appearanceID => LedgerEntry as we go along, then store them in the
@@ -112,7 +112,7 @@ func (r *Reconciler2) ProcessTransaction(pos *types.AppPosition, trans *types.Tr
 		appID := fmt.Sprintf("%d-%d", at.BlockNumber, at.TransactionIndex)
 		app, ok := appearanceByID[appID]
 		if !ok {
-			// Possibly this is not relevant to the Reconciler's address or is missing
+			// Possibly this is not relevant to the address or is missing
 			continue
 		}
 
@@ -127,7 +127,7 @@ func (r *Reconciler2) ProcessTransaction(pos *types.AppPosition, trans *types.Tr
 			entry = &newEntry
 		}
 
-		// Convert the ledger4.AssetTransfer into a single Posting (some logic is simplified):
+		// Convert the ledger3.AssetTransfer into a single Posting (some logic is simplified):
 		posting := r.queryBalances(pos, at)
 
 		// 	var okay bool
@@ -179,8 +179,8 @@ func CorrectForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 	return s.Reconciled()
 }
 
-// queryBalances transforms a single ledger4.AssetTransfer into a basic Posting.
-func (r *Reconciler2) queryBalances(pos *types.AppPosition, at ledger4.AssetTransfer) types.Posting {
+// queryBalances transforms a single ledger3.AssetTransfer into a basic Posting.
+func (r *Reconciler2) queryBalances(pos *types.AppPosition, at ledger3.AssetTransfer) types.Posting {
 	ret := types.Posting{}
 	ret.Statement = at
 

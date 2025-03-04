@@ -56,7 +56,7 @@ func (opts *ExportOptions) ExportInternal(rCtx *output.RenderCtx) error {
 	msg := "chifra export"
 	// EXISTING_CODE
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
-	if canceled, err := opts.FreshenMonitorsForExport(rCtx, &monitorArray); err != nil || canceled {
+	if canceled, err := opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
 		return err
 	}
 	// EXISTING_CODE

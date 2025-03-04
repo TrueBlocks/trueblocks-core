@@ -8,7 +8,7 @@ import (
 )
 
 // GetTransfers returns a statement from a given transaction
-func (r *Reconciler) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
+func (r *Reconciler1) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
 	if r.connection.Store != nil {
 		transferGroup := &types.TransferGroup{
 			BlockNumber:      trans.BlockNumber,

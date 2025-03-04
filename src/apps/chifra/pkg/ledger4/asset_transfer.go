@@ -1,14 +1,7 @@
 package ledger4
 
-import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-)
-
-// AssetTransfer is a raw movement of an asset derived from logs, traces, or transaction details.
-type AssetTransfer = types.Statement
-
-type AssetTransferNew struct {
+/*
+type A ssetTransferNew struct {
 	Amount           *base.Wei
 	AssetAddress     base.Address
 	BlockNumber      base.Blknum
@@ -24,3 +17,4 @@ type AssetTransferNew struct {
 	TransactionHash  base.Hash
 	TransactionIndex base.Txnum
 }
+*/

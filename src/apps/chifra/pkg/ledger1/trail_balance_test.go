@@ -168,7 +168,7 @@ func TestCorrectForNullTransfer(t *testing.T) {
 // 			AmountOut:        *base.NewWei(0),
 // 			EndBal:           *base.NewWei(1050),
 // 		}
-// 		var l Reconciler
+// 		var l Reconciler1
 // 		reconciled := l.correctForSomethingElseEth(stmt)
 // 		expectedEndBal := base.NewWei(1100)
 // 		if stmt.EndBal.Cmp(expectedEndBal) != 0 {
@@ -204,7 +204,7 @@ func TestCorrectForNullTransfer(t *testing.T) {
 // 		stmt.CorrectingOut = *base.NewWei(999)
 // 		stmt.CorrectingReason = "oldreason"
 
-// 		var l Reconciler
+// 		var l Reconciler1
 // 		reconciled := l.correctForSomethingElseToken(stmt)
 
 // 		expectedCorrectingIn := base.NewWei(20)
@@ -225,7 +225,7 @@ func TestCorrectForNullTransfer(t *testing.T) {
 // }
 
 // func TestTrialBalance_Reconciled(t *testing.T) {
-// 	l := &Reconciler{
+// 	l := &Reconciler1{
 // 		testMode:       true,
 // 	}
 
