@@ -11,13 +11,15 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // ---------------------------------------------------------
 type Reconciler3 struct {
-	// conn *rpc.Connection
-	conn              *Connection
+	conn *rpc.Connection
+	// conn              *Connection
 	apps              []types.Appearance
 	account           base.Address
 	accountLedger     map[assetHolderKey]base.Wei
@@ -35,8 +37,8 @@ func NewReconciler3(chain string, addr base.Address) *Reconciler3 {
 		account:       addr,
 		accountLedger: make(map[assetHolderKey]base.Wei),
 		transfers:     make(map[blockTxKey][]ledger4.AssetTransfer),
-		// conn:          rpc.NewConnection(chain, false, map[walk.CacheType]bool{}),
-		conn:          NewConnection(),
+		conn:          rpc.NewConnection(chain, false, map[walk.CacheType]bool{}),
+		// conn:          NewConnection(),
 		hasStartBlock: false,
 		ledgerAssets:  make(map[base.Address]bool),
 	}
@@ -46,26 +48,26 @@ func NewReconciler3(chain string, addr base.Address) *Reconciler3 {
 	return r
 }
 
-// ---------------------------------------------------------
-type Connection struct {
-	balanceMap map[bnAssetHolderKey]base.Wei
-}
+// // ---------------------------------------------------------
+// type Connection struct {
+// 	balanceMap map[bnAssetHolderKey]base.Wei
+// }
 
-// ---------------------------------------------------------
-func NewConnection() *Connection {
-	return &Connection{
-		balanceMap: make(map[bnAssetHolderKey]base.Wei),
-	}
-}
+// // ---------------------------------------------------------
+// func NewConnection() *Connection {
+// 	return &Connection{
+// 		balanceMap: make(map[bnAssetHolderKey]base.Wei),
+// 	}
+// }
 
-// ---------------------------------------------------------
-func (conn *Connection) GetBalanceAtToken(asset base.Address, holder base.Address, bn base.Blknum) (*base.Wei, error) {
-	key := bnAssetHolderKey{BlockNumber: bn, AssetAddress: asset, Holder: holder}
-	if bal, ok := conn.balanceMap[key]; ok {
-		return &bal, nil
-	}
-	return base.ZeroWei, fmt.Errorf("balance not found")
-}
+// // ---------------------------------------------------------
+// func (conn *Connection) GetBalanceAtToken(asset base.Address, holder base.Address, bn base.Blknum) (*base.Wei, error) {
+// 	key := bnAssetHolderKey{BlockNumber: bn, AssetAddress: asset, Holder: holder}
+// 	if bal, ok := conn.balanceMap[key]; ok {
+// 		return &bal, nil
+// 	}
+// 	return base.ZeroWei, fmt.Errorf("balance not found")
+// }
 
 // ---------------------------------------------------------
 func (r *Reconciler3) getPostingChannel(app *types.Appearance) <-chan ledger4.AssetTransfer {
@@ -249,33 +251,33 @@ func (r *Reconciler3) initData() {
 		}
 	}
 
-	// blockNumber,assetAddress,accountedFor,endBal
-	balFn := filepath.Join(folder, "balances.csv")
-	balFile, _ := os.Open(balFn)
-	defer balFile.Close()
-	balReader := csv.NewReader(balFile)
-	balReader.Comment = '#'
-	if balRecords, err := balReader.ReadAll(); err != nil {
-		fmt.Println("Problem with data file:", balFn)
-		logger.Fatal(err)
-	} else if len(balRecords) == 0 {
-		logger.Fatal("no transfers")
-	} else {
-		for _, record := range balRecords[1:] {
-			if strings.HasPrefix(record[0], "#") {
-				continue
-			}
-			b := ledger4.AssetTransfer{
-				BlockNumber:  base.Blknum(base.MustParseUint64(record[0])),
-				AssetAddress: base.HexToAddress(record[1]),
-				Holder:       base.HexToAddress(record[2]),
-				EndBal:       *base.NewWeiStr(record[3]),
-			}
+	// // blockNumber,assetAddress,accountedFor,endBal
+	// balFn := filepath.Join(folder, "balances.csv")
+	// balFile, _ := os.Open(balFn)
+	// defer balFile.Close()
+	// balReader := csv.NewReader(balFile)
+	// balReader.Comment = '#'
+	// if balRecords, err := balReader.ReadAll(); err != nil {
+	// 	fmt.Println("Problem with data file:", balFn)
+	// 	logger.Fatal(err)
+	// } else if len(balRecords) == 0 {
+	// 	logger.Fatal("no transfers")
+	// } else {
+	// 	for _, record := range balRecords[1:] {
+	// 		if strings.HasPrefix(record[0], "#") {
+	// 			continue
+	// 		}
+	// 		b := ledger4.AssetTransfer{
+	// 			BlockNumber:  base.Blknum(base.MustParseUint64(record[0])),
+	// 			AssetAddress: base.HexToAddress(record[1]),
+	// 			Holder:       base.HexToAddress(record[2]),
+	// 			EndBal:       *base.NewWeiStr(record[3]),
+	// 		}
 
-			key := bnAssetHolderKey{BlockNumber: b.BlockNumber, AssetAddress: b.AssetAddress, Holder: b.Holder}
-			r.conn.balanceMap[key] = b.EndBal
-		}
-	}
+	// 		key := bnAssetHolderKey{BlockNumber: b.BlockNumber, AssetAddress: b.AssetAddress, Holder: b.Holder}
+	// 		r.conn.balanceMap[key] = b.EndBal
+	// 	}
+	// }
 
 	// blockNumber,transactionIndex,logIndex,assetAddress,accountedFor,amountNet,endBal
 	transfersFn := filepath.Join(folder, "transfers.csv")
