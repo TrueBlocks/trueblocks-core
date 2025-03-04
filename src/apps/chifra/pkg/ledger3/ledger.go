@@ -18,9 +18,7 @@ import (
 
 // ---------------------------------------------------------
 type Reconciler3 struct {
-	conn *rpc.Connection
-	// conn              *Connection
-	apps              []types.Appearance
+	conn              *rpc.Connection
 	account           base.Address
 	accountLedger     map[assetHolderKey]base.Wei
 	transfers         map[blockTxKey][]ledger4.AssetTransfer
@@ -38,7 +36,6 @@ func NewReconciler3(chain string, addr base.Address) *Reconciler3 {
 		accountLedger: make(map[assetHolderKey]base.Wei),
 		transfers:     make(map[blockTxKey][]ledger4.AssetTransfer),
 		conn:          rpc.NewConnection(chain, false, map[walk.CacheType]bool{}),
-		// conn:          NewConnection(),
 		hasStartBlock: false,
 		ledgerAssets:  make(map[base.Address]bool),
 	}
@@ -47,27 +44,6 @@ func NewReconciler3(chain string, addr base.Address) *Reconciler3 {
 
 	return r
 }
-
-// // ---------------------------------------------------------
-// type Connection struct {
-// 	balanceMap map[bnAssetHolderKey]base.Wei
-// }
-
-// // ---------------------------------------------------------
-// func NewConnection() *Connection {
-// 	return &Connection{
-// 		balanceMap: make(map[bnAssetHolderKey]base.Wei),
-// 	}
-// }
-
-// // ---------------------------------------------------------
-// func (conn *Connection) GetBalanceAtToken(asset base.Address, holder base.Address, bn base.Blknum) (*base.Wei, error) {
-// 	key := bnAssetHolderKey{BlockNumber: bn, AssetAddress: asset, Holder: holder}
-// 	if bal, ok := conn.balanceMap[key]; ok {
-// 		return &bal, nil
-// 	}
-// 	return base.ZeroWei, fmt.Errorf("balance not found")
-// }
 
 // ---------------------------------------------------------
 func (r *Reconciler3) getPostingChannel(app *types.Appearance) <-chan ledger4.AssetTransfer {
@@ -176,12 +152,12 @@ func (r *Reconciler3) flushBlock(postings []ledger4.AssetTransfer, modelChan cha
 }
 
 // ---------------------------------------------------------
-func (r *Reconciler3) ProcessStream(modelChan chan<- types.Modeler) {
+func (r *Reconciler3) ProcessStream(apps []types.Appearance, modelChan chan<- types.Modeler) {
 	postingStream := make(chan ledger4.AssetTransfer, 100)
 	go func() {
 		defer close(postingStream)
 		var prevBlock base.Blknum
-		for _, app := range r.apps {
+		for _, app := range apps {
 			bn := base.Blknum(app.BlockNumber)
 			if bn != prevBlock && prevBlock != 0 {
 				postingStream <- ledger4.AssetTransfer{
@@ -228,56 +204,6 @@ func (r *Reconciler3) initData() {
 	if folder == "" {
 		folder = "tests"
 	}
-	// blockNumber,transactionIndex
-	appsFn := filepath.Join(folder, "apps.csv")
-	appsFile, _ := os.Open(appsFn)
-	defer appsFile.Close()
-	appsReader := csv.NewReader(appsFile)
-	appsReader.Comment = '#'
-	if appsRecords, err := appsReader.ReadAll(); err != nil {
-		fmt.Println("Problem with data file:", appsFn)
-		logger.Fatal(err)
-	} else if len(appsRecords) == 0 {
-		logger.Fatal("no transfers")
-	} else {
-		for _, record := range appsRecords[1:] {
-			if strings.HasPrefix(record[0], "#") {
-				continue
-			}
-			r.apps = append(r.apps, types.Appearance{
-				BlockNumber:      uint32(base.MustParseInt64(record[0])),
-				TransactionIndex: uint32(base.MustParseInt64(record[1])),
-			})
-		}
-	}
-
-	// // blockNumber,assetAddress,accountedFor,endBal
-	// balFn := filepath.Join(folder, "balances.csv")
-	// balFile, _ := os.Open(balFn)
-	// defer balFile.Close()
-	// balReader := csv.NewReader(balFile)
-	// balReader.Comment = '#'
-	// if balRecords, err := balReader.ReadAll(); err != nil {
-	// 	fmt.Println("Problem with data file:", balFn)
-	// 	logger.Fatal(err)
-	// } else if len(balRecords) == 0 {
-	// 	logger.Fatal("no transfers")
-	// } else {
-	// 	for _, record := range balRecords[1:] {
-	// 		if strings.HasPrefix(record[0], "#") {
-	// 			continue
-	// 		}
-	// 		b := ledger4.AssetTransfer{
-	// 			BlockNumber:  base.Blknum(base.MustParseUint64(record[0])),
-	// 			AssetAddress: base.HexToAddress(record[1]),
-	// 			Holder:       base.HexToAddress(record[2]),
-	// 			EndBal:       *base.NewWeiStr(record[3]),
-	// 		}
-
-	// 		key := bnAssetHolderKey{BlockNumber: b.BlockNumber, AssetAddress: b.AssetAddress, Holder: b.Holder}
-	// 		r.conn.balanceMap[key] = b.EndBal
-	// 	}
-	// }
 
 	// blockNumber,transactionIndex,logIndex,assetAddress,accountedFor,amountNet,endBal
 	transfersFn := filepath.Join(folder, "transfers.csv")
@@ -330,13 +256,6 @@ type blockTxKey struct {
 
 // ---------------------------------------------------------
 type assetHolderKey struct {
-	AssetAddress base.Address
-	Holder       base.Address
-}
-
-// ---------------------------------------------------------
-type bnAssetHolderKey struct {
-	BlockNumber  base.Blknum
 	AssetAddress base.Address
 	Holder       base.Address
 }
