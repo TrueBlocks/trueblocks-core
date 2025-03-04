@@ -154,12 +154,12 @@ func (r *Reconciler2) ProcessTransaction(pos *types.AppPosition, trans *types.Tr
 	for key, lePtr := range entriesMap {
 		// key is "assetAddress|block-tx"
 		assetAddress := key[:findSeparator(key)]
-		ledger, found := r.LedgerBook.GetLedger(base.HexToAddress(assetAddress))
+		ll, found := r.LedgerBook.GetLedger(base.HexToAddress(assetAddress))
 		if !found {
-			ledger = NewLedger(base.HexToAddress(assetAddress))
+			ll = NewLedger(base.HexToAddress(assetAddress))
 		}
-		ledger.Entries = append(ledger.Entries, *lePtr)
-		r.LedgerBook.Ledgers[ledger.AssetAddress.Hex()] = ledger
+		ll.Entries = append(ll.Entries, *lePtr)
+		r.LedgerBook.Ledgers[ll.AssetAddress.Hex()] = ll
 	}
 }
 

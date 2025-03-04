@@ -22,7 +22,7 @@ func TestNewFilter(t *testing.T) {
 func TestFilterString(t *testing.T) {
 	f := NewFilter("0xTest", 1, 10)
 	got := f.String()
-	want := "Filter(Asset=0xTest MinBlock=1 MaxBlock=10)"
+	want := "Filter(AssetAddress=0xTest MinBlock=1 MaxBlock=10)"
 	if got != want {
 		t.Fatalf("String mismatch.\ngot:  %s\nwant: %s", got, want)
 	}

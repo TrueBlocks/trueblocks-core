@@ -16,6 +16,7 @@ import (
 
 // ---------------------------------------------------------
 type Reconciler3 struct {
+	// conn *rpc.Connection
 	conn              *Connection
 	apps              []types.Appearance
 	account           base.Address
@@ -28,11 +29,12 @@ type Reconciler3 struct {
 }
 
 // ---------------------------------------------------------
-func NewReconciler3(addr base.Address) *Reconciler3 {
+func NewReconciler3(chain string, addr base.Address) *Reconciler3 {
 	r := &Reconciler3{
 		account:       addr,
 		accountLedger: make(map[assetHolderKey]base.Wei),
 		transfers:     make(map[blockTxKey][]ledger4.AssetTransfer),
+		// conn:          rpc.NewConnection(chain, false, map[walk.CacheType]bool{}),
 		conn:          NewConnection(),
 		hasStartBlock: false,
 		ledgerAssets:  make(map[base.Address]bool),
@@ -56,12 +58,12 @@ func NewConnection() *Connection {
 }
 
 // ---------------------------------------------------------
-func (conn *Connection) GetBalanceAtToken(asset base.Address, holder base.Address, bn base.Blknum) (base.Wei, bool) {
-	key := bnAssetHolderKey{BlockNumber: bn, Asset: asset, Holder: holder}
+func (conn *Connection) GetBalanceAtToken(asset base.Address, holder base.Address, bn base.Blknum) (*base.Wei, error) {
+	key := bnAssetHolderKey{BlockNumber: bn, AssetAddress: asset, Holder: holder}
 	if bal, ok := conn.balanceMap[key]; ok {
-		return bal, true
+		return &bal, nil
 	}
-	return *base.ZeroWei, false
+	return base.ZeroWei, fmt.Errorf("balance not found")
 }
 
 // ---------------------------------------------------------
@@ -101,18 +103,24 @@ func (r *Reconciler3) flushBlock(postings []ledger4.AssetTransfer, modelChan cha
 	blockProcessedAssets := make(map[base.Address]bool)
 	assetLastSeen := make(map[base.Address]int)
 	for i, p := range postings {
-		key := assetHolderKey{Asset: p.AssetAddress, Holder: p.Holder}
+		key := assetHolderKey{AssetAddress: p.AssetAddress, Holder: p.Holder}
 		if !blockProcessedAssets[p.AssetAddress] {
 			if r.hasStartBlock && !r.ledgerAssets[p.AssetAddress] {
-				if onChain, ok := r.conn.GetBalanceAtToken(p.AssetAddress, p.Holder, p.BlockNumber-1); ok {
-					r.accountLedger[key] = onChain
+				if onChain, err := r.conn.GetBalanceAtToken(p.AssetAddress, p.Holder, p.BlockNumber-1); err == nil {
+					if p.BlockNumber == 0 {
+						onChain = base.ZeroWei
+					}
+					r.accountLedger[key] = *onChain
 				}
 				r.ledgerAssets[p.AssetAddress] = true
 			}
-			if onChain, ok := r.conn.GetBalanceAtToken(p.AssetAddress, p.Holder, p.BlockNumber-1); ok {
+			if onChain, err := r.conn.GetBalanceAtToken(p.AssetAddress, p.Holder, p.BlockNumber-1); err == nil {
+				if p.BlockNumber == 0 {
+					onChain = base.ZeroWei
+				}
 				curBal := r.accountLedger[key]
 				if !onChain.Equal(&curBal) {
-					correctingEntry := r.correctingEntry("mis", onChain, curBal, &p)
+					correctingEntry := r.correctingEntry("mis", *onChain, curBal, &p)
 					r.correctionCounter++
 					correctingEntry.CorrectionId = r.correctionCounter
 					r.entryCounter++
@@ -135,7 +143,7 @@ func (r *Reconciler3) flushBlock(postings []ledger4.AssetTransfer, modelChan cha
 	var corrections []ledger4.AssetTransfer
 	for _, idx := range assetLastSeen {
 		p := postings[idx]
-		key := assetHolderKey{Asset: p.AssetAddress, Holder: p.Holder}
+		key := assetHolderKey{AssetAddress: p.AssetAddress, Holder: p.Holder}
 		curBal := r.accountLedger[key]
 		if !p.EndBal.Equal(&curBal) {
 			correctingEntry := r.correctingEntry("imb", p.EndBal, curBal, &p)
@@ -159,7 +167,7 @@ func (r *Reconciler3) flushBlock(postings []ledger4.AssetTransfer, modelChan cha
 		r.entryCounter++
 		correction.StatementId = r.entryCounter
 		modelChan <- &correction
-		key := assetHolderKey{Asset: correction.AssetAddress, Holder: correction.Holder}
+		key := assetHolderKey{AssetAddress: correction.AssetAddress, Holder: correction.Holder}
 		r.accountLedger[key] = correction.EndBal
 	}
 }
@@ -263,7 +271,7 @@ func (r *Reconciler3) initData() {
 				EndBal:       *base.NewWeiStr(record[3]),
 			}
 
-			key := bnAssetHolderKey{BlockNumber: b.BlockNumber, Asset: b.AssetAddress, Holder: b.Holder}
+			key := bnAssetHolderKey{BlockNumber: b.BlockNumber, AssetAddress: b.AssetAddress, Holder: b.Holder}
 			r.conn.balanceMap[key] = b.EndBal
 		}
 	}
@@ -299,7 +307,8 @@ func (r *Reconciler3) initData() {
 			} else if amt.Cmp(base.ZeroWei) < 0 {
 				p.AmountOut = *amt.Neg()
 			}
-			p.EndBal, _ = r.conn.GetBalanceAtToken(p.AssetAddress, p.Holder, p.BlockNumber)
+			eb, _ := r.conn.GetBalanceAtToken(p.AssetAddress, p.Holder, p.BlockNumber)
+			p.EndBal = *eb
 
 			key := blockTxKey{BlockNumber: p.BlockNumber, TransactionIndex: p.TransactionIndex}
 			r.transfers[key] = append(r.transfers[key], p)
@@ -318,13 +327,13 @@ type blockTxKey struct {
 
 // ---------------------------------------------------------
 type assetHolderKey struct {
-	Asset  base.Address
-	Holder base.Address
+	AssetAddress base.Address
+	Holder       base.Address
 }
 
 // ---------------------------------------------------------
 type bnAssetHolderKey struct {
-	BlockNumber base.Blknum
-	Asset       base.Address
-	Holder      base.Address
+	BlockNumber  base.Blknum
+	AssetAddress base.Address
+	Holder       base.Address
 }

@@ -204,6 +204,9 @@ func (r *Reconciler) GetAssetTransfers(pos *types.AppPosition, filter *filter.Ap
 					if err != nil || bBal == nil {
 						continue
 					}
+					if trans.BlockNumber == 0 {
+						bBal = base.NewWei(0)
+					}
 					s.BegBal = *bBal
 					eBal, err := r.connection.GetBalanceAtToken(normalized.Address, r.accountFor, trans.BlockNumber)
 					if err != nil || eBal == nil {

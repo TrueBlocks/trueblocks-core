@@ -25,7 +25,7 @@ func NewFilter(assetAddress string, minBlock, maxBlock base.Blknum) Filter {
 
 // String returns a human-readable description of this Filter.
 func (f *Filter) String() string {
-	return "Filter(Asset=" + f.AssetAddress +
+	return "Filter(AssetAddress=" + f.AssetAddress +
 		" MinBlock=" + fmt.Sprintf("%d", f.MinBlock) +
 		" MaxBlock=" + fmt.Sprintf("%d", f.MaxBlock) + ")"
 }
