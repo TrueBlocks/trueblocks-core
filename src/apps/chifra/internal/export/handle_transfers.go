@@ -12,7 +12,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -125,7 +125,7 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 							)
 							recon = &r
 						} else {
-							recon = ledger.NewReconciler(
+							recon = ledger1.NewReconciler(
 								opts.Conn,
 								mon.Address,
 								opts.FirstBlock,
