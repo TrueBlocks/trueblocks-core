@@ -14,7 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -32,7 +32,7 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	var recon ledger3.Reconcilerer
+	var recon ledger4.Reconcilerer
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {

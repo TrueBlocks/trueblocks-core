@@ -5,7 +5,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -13,9 +13,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-// GetAssetTransfers parses a single Transaction and returns a slice of ledger3.AssetTransfer
+// GetAssetTransfers parses a single Transaction and returns a slice of ledger4.AssetTransfer
 // by checking the transaction's Value, its Logs for ERC20 events, and an optional Traces field.
-func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]ledger3.AssetTransfer, error) {
+func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]ledger4.AssetTransfer, error) {
 	if r.connection.Store != nil {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
@@ -27,9 +27,9 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 		}
 	}
 
-	var results []ledger3.AssetTransfer
-	if ledger3.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
-		type AAA = ledger3.AssetTransfer
+	var results []ledger4.AssetTransfer
+	if ledger4.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
+		type AAA = ledger4.AssetTransfer
 		accountedFor := r.accountFor
 		at := AAA{
 			AccountedFor:     accountedFor,
@@ -126,7 +126,7 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 
 			} else {
 				addrArray := []base.Address{r.LedgerBook.AccountedFor}
-				if !filter.ApplyLogFilter(log, addrArray) || !ledger3.AssetOfInterest(r.assetFilter, log.Address) {
+				if !filter.ApplyLogFilter(log, addrArray) || !ledger4.AssetOfInterest(r.assetFilter, log.Address) {
 					continue
 				}
 
@@ -172,7 +172,7 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 					}
 
 					// The contract address is in log.Address, which typically is the ERC20 token.
-					at := ledger3.AssetTransfer{
+					at := ledger4.AssetTransfer{
 						AccountedFor:     r.LedgerBook.AccountedFor,
 						BlockNumber:      trans.BlockNumber,
 						TransactionIndex: trans.TransactionIndex,
@@ -200,12 +200,12 @@ func (r *Reconciler2) GetAssetTransfers(pos *types.AppPosition, filter *filter.A
 	}
 
 	// // 3) If you have internal traces, parse them for self-destructs, internal calls, etc.
-	// // For each trace that shows a value transfer from A to B, create an ledger3.AssetTransfer.
+	// // For each trace that shows a value transfer from A to B, create an ledger4.AssetTransfer.
 	// for i, tr := range trans.Traces {
 	// 	// Example check if it's a simple call with a value transfer
 	// 	if strings.EqualFold(tr.Type, "call") && tr.ValueWei > 0 {
 	// 		// We treat it as a native coin movement
-	// 		xf := ledger3.AssetTransfer{
+	// 		xf := ledger4.AssetTransfer{
 	// 			BlockNumber:      trans.BlockNumber,
 	// 			TransactionIndex: trans.TransactionIndex,
 	// 			AssetAddress:        "0x0",
