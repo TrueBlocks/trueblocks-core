@@ -30,6 +30,7 @@ type Reconciler3 struct {
 
 // ---------------------------------------------------------
 func NewReconciler3(chain string, addr base.Address) *Reconciler3 {
+	_ = chain
 	r := &Reconciler3{
 		account:       addr,
 		accountLedger: make(map[assetHolderKey]base.Wei),
