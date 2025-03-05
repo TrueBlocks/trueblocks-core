@@ -4,14 +4,11 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
-
-// TODO: Two things to note. (1) if balances were part of this structure, we could fill those
-// TODO: balances in a concurrent way before spinning through the appearances. And (2) if we did that
-// TODO: prior to doing the accounting, we could easily travers in reverse order.
 
 // Reconciler1 represents the ledger state and provides methods to process and reconcile
 // transactions and their associated logs. It holds configuration details such as the
@@ -35,30 +32,22 @@ func (r *Reconciler1) String() string {
 	return string(bytes)
 }
 
-// NewReconciler returns a new empty Reconciler1 struct
-func NewReconciler(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, useTraces, reversed bool, assetFilters *[]string) *Reconciler1 {
+// NewReconciler1 returns a new empty Reconciler1 struct
+func NewReconciler1(opts *ledger4.ReconcilerOptions) *Reconciler1 {
 	l := &Reconciler1{
-		connection: conn,
-		accountFor: acctFor,
-		firstBlock: fb,
-		lastBlock:  lb,
-		asEther:    asEther,
-		testMode:   testMode,
-		reversed:   reversed,
-		useTraces:  useTraces,
-	}
-
-	if assetFilters != nil {
-		l.assetFilter = make([]base.Address, len(*assetFilters))
-		for i, addr := range *assetFilters {
-			l.assetFilter[i] = base.HexToAddress(addr)
-		}
-	} else {
-		l.assetFilter = []base.Address{}
+		connection:  opts.Connection,
+		accountFor:  opts.AccountFor,
+		firstBlock:  opts.FirstBlock,
+		lastBlock:   opts.LastBlock,
+		asEther:     opts.AsEther,
+		testMode:    opts.TestMode,
+		reversed:    opts.Reversed,
+		useTraces:   opts.UseTraces,
+		assetFilter: opts.AssetFilters,
 	}
 
 	parts := types.Custom | types.Prefund | types.Regular
-	l.names, _ = names.LoadNamesMap(conn.Chain, parts, []string{})
+	l.names, _ = names.LoadNamesMap(l.connection.Chain, parts, []string{})
 
 	return l
 }

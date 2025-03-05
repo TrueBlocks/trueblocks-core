@@ -3,6 +3,7 @@ package ledger1
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -22,11 +23,22 @@ func (r *Reconciler1) GetTransfers(pos *types.AppPosition, filter *filter.Appear
 	var err error
 	var statements []types.Statement
 	if true { // !r.useTraces {
+		ledgerOpts := &ledger4.ReconcilerOptions{
+			Connection: r.connection,
+			AccountFor: r.accountFor,
+			// FirstBlock:   opts.FirstBlock,
+			// LastBlock:    opts.LastBlock,
+			AsEther: r.asEther,
+			// TestMode:     testMode,
+			// UseTraces:    opts.Traces,
+			// Reversed:     opts.Reversed,
+			AssetFilters: r.assetFilter,
+		}
 		strs := []string{}
 		for _, af := range r.assetFilter {
 			strs = append(strs, af.Hex())
 		}
-		r2 := ledger2.NewReconciler2(r.connection, &strs, r.accountFor, r.asEther)
+		r2 := ledger2.NewReconciler2(ledgerOpts)
 		if statements, err = r2.GetStatements(pos, filter, trans); err != nil {
 			return nil, err
 		}

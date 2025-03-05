@@ -1,14 +1,15 @@
-package ledger2
+package ledger3
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // GetTransfers returns a statement from a given transaction
-func (r *Reconciler2) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
+func (r *Reconciler3) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
 	if r.connection.Store != nil {
 		transferGroup := &types.TransferGroup{
 			BlockNumber:      trans.BlockNumber,
@@ -33,7 +34,7 @@ func (r *Reconciler2) GetTransfers(pos *types.AppPosition, filter *filter.Appear
 			// Reversed:     opts.Reversed,
 			AssetFilters: r.assetFilter,
 		}
-		r2 := NewReconciler2(ledgerOpts)
+		r2 := ledger2.NewReconciler2(ledgerOpts)
 		if statements, err = r2.GetStatements(pos, filter, trans); err != nil {
 			return nil, err
 		}

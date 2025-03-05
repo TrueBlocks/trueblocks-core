@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -31,8 +32,12 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
+	assetFilters := make([]base.Address, 0, len(opts.Asset))
+	for _, asset := range opts.Asset {
+		assetFilters = append(assetFilters, base.HexToAddress(asset))
+	}
 
-	var recon ledger3.Reconcilerer
+	var recon ledger4.Reconcilerer
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
@@ -116,26 +121,24 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 							})
 						}
 
+						ledgerOpts := &ledger4.ReconcilerOptions{
+							Connection:   opts.Conn,
+							AccountFor:   mon.Address,
+							FirstBlock:   opts.FirstBlock,
+							LastBlock:    opts.LastBlock,
+							AsEther:      opts.Globals.Ether,
+							TestMode:     testMode,
+							UseTraces:    opts.Traces,
+							Reversed:     opts.Reversed,
+							AssetFilters: assetFilters,
+						}
+
 						if os.Getenv("NEW_CODE") == "true" {
-							r := ledger2.NewReconciler2(
-								opts.Conn,
-								&opts.Asset,
-								mon.Address,
-								opts.Globals.Ether,
-							)
-							recon = &r
+							recon = ledger2.NewReconciler2(ledgerOpts)
+						} else if os.Getenv("NEW_CODE") == "3" {
+							recon = ledger3.NewReconciler3(ledgerOpts)
 						} else {
-							recon = ledger1.NewReconciler(
-								opts.Conn,
-								mon.Address,
-								opts.FirstBlock,
-								opts.LastBlock,
-								opts.Globals.Ether,
-								testMode,
-								opts.Traces,
-								opts.Reversed,
-								&opts.Asset,
-							)
+							recon = ledger1.NewReconciler1(ledgerOpts)
 						}
 
 						items := make([]types.Transfer, 0, len(thisMap))

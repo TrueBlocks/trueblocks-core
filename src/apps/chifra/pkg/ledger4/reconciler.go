@@ -1,5 +1,22 @@
 package ledger4
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+)
+
+type ReconcilerOptions struct {
+	Connection   *rpc.Connection
+	AccountFor   base.Address
+	FirstBlock   base.Blknum
+	LastBlock    base.Blknum
+	AsEther      bool
+	TestMode     bool
+	UseTraces    bool
+	Reversed     bool
+	AssetFilters []base.Address
+}
+
 /*
 // R econciler4 tracks asset movements for a specific holder
 type R econciler4 struct {
@@ -9,7 +26,7 @@ type R econciler4 struct {
 	transfers []A ssetTransferNew
 }
 
-func NewReconciler4(chain string, holder base.Address, enabled bool, enabledMap map[walk.CacheType]bool) *R econciler4 {
+func NewR econciler4(chain string, holder base.Address, enabled bool, enabledMap map[walk.CacheType]bool) *R econciler4 {
 	return &R econciler4{
 		holder:    holder,
 		conn:      rpc.NewConnection(chain, enabled, enabledMap),
