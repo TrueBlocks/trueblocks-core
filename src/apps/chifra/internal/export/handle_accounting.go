@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -23,7 +24,6 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 	// TODO: BOGUS - RECONSIDER THIS
 	opts.Articulate = true
 
-	var recon ledger4.Reconcilerer
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
@@ -38,6 +38,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 		assetFilters = append(assetFilters, base.HexToAddress(asset))
 	}
 
+	var recon ledger4.Reconcilerer
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		visitAppearance := func(pos *types.AppPosition, app *types.Appearance) error {
 			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
@@ -84,10 +85,12 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 					AssetFilters: assetFilters,
 				}
 
-				if os.Getenv("NEW_CODE") == "true" || os.Getenv("NEW_CODE") == "3" {
-					recon = ledger2.NewReconciler2(ledgerOpts)
+				if os.Getenv("NEW_CODE") == "3" {
+					recon = ledger3.NewReconciler(ledgerOpts)
+				} else if os.Getenv("NEW_CODE") == "true" {
+					recon = ledger2.NewReconciler(ledgerOpts)
 				} else {
-					recon = ledger1.NewReconciler1(ledgerOpts)
+					recon = ledger1.NewReconciler(ledgerOpts)
 				}
 
 				for i, app := range apps {

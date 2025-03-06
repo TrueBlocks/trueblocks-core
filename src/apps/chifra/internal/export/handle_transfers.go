@@ -133,12 +133,13 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 							AssetFilters: assetFilters,
 						}
 
-						if os.Getenv("NEW_CODE") == "true" {
-							recon = ledger2.NewReconciler2(ledgerOpts)
+						if os.Getenv("NEW_CODE") == "3" {
+							recon = ledger3.NewReconciler(ledgerOpts)
 						} else if os.Getenv("NEW_CODE") == "3" {
-							recon = ledger3.NewReconciler3(ledgerOpts)
+							recon = ledger2.NewReconciler(ledgerOpts)
+							// recon.InitData()
 						} else {
-							recon = ledger1.NewReconciler1(ledgerOpts)
+							recon = ledger1.NewReconciler(ledgerOpts)
 						}
 
 						items := make([]types.Transfer, 0, len(thisMap))

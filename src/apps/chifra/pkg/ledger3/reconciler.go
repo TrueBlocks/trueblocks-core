@@ -2,6 +2,7 @@ package ledger3
 
 import (
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -9,54 +10,66 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-// ---------------------------------------------------------
 type Reconciler3 struct {
-	accountFor base.Address
-	// firstBlock        base.Blknum
-	// lastBlock         base.Blknum
-	names map[base.Address]types.Name
-	// testMode          bool
-	asEther bool
-	// reversed          bool
-	// useTraces         bool
 	connection        *rpc.Connection
+	accountFor        base.Address
+	firstBlock        base.Blknum
+	lastBlock         base.Blknum
+	asEther           bool
+	testMode          bool
+	reversed          bool
+	useTraces         bool
 	assetFilter       []base.Address
-	accountLedger     map[assetHolderKey]base.Wei
+	names             map[base.Address]types.Name
+	hasStartBlock     bool
 	transfers         map[blockTxKey][]ledger4.AssetTransfer
+	accountLedger     map[assetHolderKey]base.Wei
+	ledgerAssets      map[base.Address]bool
 	correctionCounter base.Value
 	entryCounter      base.Value
-	hasStartBlock     bool
-	ledgerAssets      map[base.Address]bool
+	ledgers           map[base.Address]Ledger
 }
 
-// ---------------------------------------------------------
-func NewReconciler3(opts *ledger4.ReconcilerOptions) *Reconciler3 {
+func (r *Reconciler3) String() string {
+	bytes, _ := json.MarshalIndent(r, "", "  ")
+	return string(bytes)
+}
+
+func NewReconciler(opts *ledger4.ReconcilerOptions) *Reconciler3 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
-	ret := Reconciler3{
-		accountFor:    opts.AccountFor,
+	return &Reconciler3{
 		connection:    opts.Connection,
-		names:         names,
+		accountFor:    opts.AccountFor,
+		firstBlock:    opts.FirstBlock,
+		lastBlock:     opts.LastBlock,
 		asEther:       opts.AsEther,
-		accountLedger: make(map[assetHolderKey]base.Wei),
-		transfers:     make(map[blockTxKey][]ledger4.AssetTransfer),
-		hasStartBlock: false,
-		ledgerAssets:  make(map[base.Address]bool),
+		testMode:      opts.TestMode,
+		reversed:      opts.Reversed,
+		useTraces:     opts.UseTraces,
 		assetFilter:   opts.AssetFilters,
+		names:         names,
+		hasStartBlock: false,
+		transfers:     make(map[blockTxKey][]ledger4.AssetTransfer),
+		accountLedger: make(map[assetHolderKey]base.Wei),
+		ledgerAssets:  make(map[base.Address]bool),
+		ledgers:       make(map[base.Address]Ledger),
 	}
-	ret.initData()
-	return &ret
 }
 
-// ---------------------------------------------------------
-func (r *Reconciler3) getPostingChannel(app *types.Appearance) <-chan ledger4.AssetTransfer {
+type Ledger struct{}
+
+func (r *Reconciler3) getTransferChannel(app *types.Appearance) <-chan ledger4.AssetTransfer {
 	ch := make(chan ledger4.AssetTransfer)
 	go func() {
 		defer close(ch)
@@ -70,7 +83,6 @@ func (r *Reconciler3) getPostingChannel(app *types.Appearance) <-chan ledger4.As
 	return ch
 }
 
-// ---------------------------------------------------------
 func (r *Reconciler3) correctingEntry(reason string, onChain, curBal base.Wei, p *ledger4.AssetTransfer) ledger4.AssetTransfer {
 	correction := *p
 	correctionDiff := *new(base.Wei).Sub(&onChain, &curBal)
@@ -87,7 +99,6 @@ func (r *Reconciler3) correctingEntry(reason string, onChain, curBal base.Wei, p
 	return correction
 }
 
-// ---------------------------------------------------------
 func (r *Reconciler3) flushBlock(postings []ledger4.AssetTransfer, modelChan chan<- types.Modeler) {
 	blockProcessedAssets := make(map[base.Address]bool)
 	assetLastSeen := make(map[base.Address]int)
@@ -161,7 +172,6 @@ func (r *Reconciler3) flushBlock(postings []ledger4.AssetTransfer, modelChan cha
 	}
 }
 
-// ---------------------------------------------------------
 func (r *Reconciler3) ProcessStream(apps []types.Appearance, modelChan chan<- types.Modeler) {
 	postingStream := make(chan ledger4.AssetTransfer, 100)
 	go func() {
@@ -175,7 +185,7 @@ func (r *Reconciler3) ProcessStream(apps []types.Appearance, modelChan chan<- ty
 					AssetAddress: base.EndOfBlockSentinel,
 				}
 			}
-			for p := range r.getPostingChannel(&app) {
+			for p := range r.getTransferChannel(&app) {
 				postingStream <- p
 			}
 			prevBlock = bn
@@ -208,14 +218,12 @@ func (r *Reconciler3) ProcessStream(apps []types.Appearance, modelChan chan<- ty
 	}
 }
 
-// ---------------------------------------------------------
-func (r *Reconciler3) initData() {
+func (r *Reconciler3) InitData() {
 	folder := os.Getenv("FOLDER")
 	if folder == "" {
 		folder = "tests"
 	}
 
-	// blockNumber,transactionIndex,logIndex,assetAddress,accountedFor,amountNet,endBal
 	transfersFn := filepath.Join(folder, "transfers.csv")
 	transfersFile, _ := os.Open(transfersFn)
 	defer transfersFile.Close()
@@ -258,14 +266,62 @@ func (r *Reconciler3) initData() {
 	}
 }
 
-// ---------------------------------------------------------
 type blockTxKey struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
 }
 
-// ---------------------------------------------------------
 type assetHolderKey struct {
 	AssetAddress base.Address
 	Holder       base.Address
+}
+
+func (r *Reconciler3) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+	return []types.Statement{}, nil
+}
+
+func (r *Reconciler3) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
+	if r.connection.Store != nil {
+		transferGroup := &types.TransferGroup{
+			BlockNumber:      trans.BlockNumber,
+			TransactionIndex: trans.TransactionIndex,
+		}
+		if err := r.connection.Store.Read(transferGroup); err == nil {
+			return transferGroup.Transfers, nil
+		}
+	}
+
+	var err error
+	var statements []types.Statement
+	ledgerOpts := &ledger4.ReconcilerOptions{
+		Connection:   r.connection,
+		AccountFor:   r.accountFor,
+		AsEther:      r.asEther,
+		AssetFilters: r.assetFilter,
+	}
+	r2 := ledger2.NewReconciler(ledgerOpts)
+	if statements, err = r2.GetStatements(pos, filter, trans); err != nil {
+		return nil, err
+	}
+
+	if transfers, err := types.ConvertToTransfers(statements); err != nil {
+		return nil, err
+	} else {
+
+		allReconciled := true
+		for _, transfer := range transfers {
+			if transfer.IsMaterial() {
+				allReconciled = false
+				break
+			}
+		}
+
+		transfersGroup := &types.TransferGroup{
+			BlockNumber:      trans.BlockNumber,
+			TransactionIndex: trans.TransactionIndex,
+			Transfers:        transfers,
+		}
+		err = r.connection.Store.WriteToCache(transfersGroup, walk.Cache_Transfers, trans.Timestamp, allReconciled, false)
+		return transfers, err
+	}
 }

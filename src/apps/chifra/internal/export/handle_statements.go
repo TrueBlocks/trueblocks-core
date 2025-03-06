@@ -7,11 +7,14 @@ package exportPkg
 import (
 	"context"
 	"fmt"
+	"os"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -34,6 +37,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 		assetFilters = append(assetFilters, base.HexToAddress(asset))
 	}
 
+	var recon ledger4.Reconcilerer
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
@@ -128,7 +132,13 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							Reversed:     opts.Reversed,
 							AssetFilters: assetFilters,
 						}
-						recon := ledger1.NewReconciler1(ledgerOpts)
+						if os.Getenv("NEW_CODE") == "3" {
+							recon = ledger3.NewReconciler(ledgerOpts)
+						} else if os.Getenv("NEW_CODE") == "true" {
+							recon = ledger2.NewReconciler(ledgerOpts)
+						} else {
+							recon = ledger1.NewReconciler(ledgerOpts)
+						}
 
 						items := make([]types.Statement, 0, len(thisMap))
 						for i, tx := range txArray {

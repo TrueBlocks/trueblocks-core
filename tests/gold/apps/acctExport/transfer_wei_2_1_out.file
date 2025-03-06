@@ -17,7 +17,7 @@
       "transactionIndex": 99999
     },
     {
-      "amount": "30000000000000000000",
+      "amount": "3750000000000000000",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "blockNumber": 56,
       "holder": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
@@ -33,7 +33,7 @@
       "transactionIndex": 99999
     },
     {
-      "amount": "25000000000000000000",
+      "amount": "3125000000000000000",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "blockNumber": 247,
       "holder": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
@@ -49,7 +49,7 @@
       "transactionIndex": 99999
     },
     {
-      "amount": "30000000000000000000",
+      "amount": "3750000000000000000",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "blockNumber": 500,
       "holder": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
@@ -57,7 +57,7 @@
       "transactionIndex": 99998
     },
     {
-      "amount": "30000000000000000000",
+      "amount": "3750000000000000000",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "blockNumber": 563,
       "holder": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
@@ -65,7 +65,7 @@
       "transactionIndex": 99998
     },
     {
-      "amount": "20000000000000000000",
+      "amount": "2500000000000000000",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "blockNumber": 987,
       "holder": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
@@ -73,7 +73,7 @@
       "transactionIndex": 99998
     },
     {
-      "amount": "10000000000000000000",
+      "amount": "5156250000000000000",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "blockNumber": 1450,
       "holder": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
@@ -81,7 +81,7 @@
       "transactionIndex": 99999
     },
     {
-      "amount": "30000000000000000000",
+      "amount": "3750000000000000000",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "blockNumber": 1580,
       "holder": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
@@ -89,7 +89,7 @@
       "transactionIndex": 99998
     },
     {
-      "amount": "30000000000000000000",
+      "amount": "3750000000000000000",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "blockNumber": 1586,
       "holder": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
@@ -105,7 +105,7 @@
       "transactionIndex": 99999
     },
     {
-      "amount": "30000000000000000000",
+      "amount": "3750000000000000000",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "blockNumber": 1912,
       "holder": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
