@@ -44,12 +44,9 @@ source:              uniswap
 Previous:               15549161
 Current:                15549162
 Next:                   15549163
-postFirst:              true
-postLast:               true
-postAssetType:          token
 accountedFor:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
 sender:                 0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f  ==>  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
-assetAddress:           0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 (mdai.io) decimals: 18
+asset:           0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 (mdai.io) decimals: 18
 hash:                   0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb
 timestamp:              1663367531
 blockNumber:            15549162.83.1774
@@ -82,8 +79,8 @@ Trial balance:
       "amountNetEth": "0",
       "amountOut": "0",
       "amountOutEth": "0",
-      "assetAddress": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
-      "assetSymbol": "mdai.io",
+      "asset": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
+      "symbol": "mdai.io",
       "begBal": "2017044745122853478376",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -117,9 +114,6 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
-      "postAssetType": "token",
-      "postFirst": true,
-      "postLast": true,
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "2017044745122853478376",

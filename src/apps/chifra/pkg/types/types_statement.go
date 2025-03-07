@@ -26,8 +26,8 @@ type Statement struct {
 	AccountedFor        base.Address   `json:"accountedFor"`
 	AmountIn            base.Wei       `json:"amountIn,omitempty"`
 	AmountOut           base.Wei       `json:"amountOut,omitempty"`
-	AssetAddress        base.Address   `json:"assetAddress"`
-	AssetSymbol         string         `json:"assetSymbol"`
+	Asset               base.Address   `json:"asset"`
+	Symbol              string         `json:"symbol"`
 	BegBal              base.Wei       `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
 	CorrectingIn        base.Wei       `json:"correctingIn,omitempty"`
@@ -43,9 +43,6 @@ type Statement struct {
 	MinerNephewRewardIn base.Wei       `json:"minerNephewRewardIn,omitempty"`
 	MinerTxFeeIn        base.Wei       `json:"minerTxFeeIn,omitempty"`
 	MinerUncleRewardIn  base.Wei       `json:"minerUncleRewardIn,omitempty"`
-	PostAssetType       TrialBalType   `json:"postAssetType,omitempty"`
-	PostFirst           bool           `json:"postFirst,omitempty"`
-	PostLast            bool           `json:"postLast,omitempty"`
 	PrefundIn           base.Wei       `json:"prefundIn,omitempty"`
 	PrevBal             base.Wei       `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`
@@ -84,7 +81,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		check1, check2, reconciles, byCheckpoint := s.Reconciled2()
 		calc := s.EndBalCalc()
 		fmt.Printf("%s\t%s\t%d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%t\t%t\n",
-			s.AssetAddress.Hex(),
+			s.Asset.Hex(),
 			s.Holder.Hex(),
 			s.BlockNumber,
 			s.TransactionIndex,
@@ -110,8 +107,8 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		"transactionHash":     s.TransactionHash,
 		"timestamp":           s.Timestamp,
 		"date":                s.Date(),
-		"assetAddress":        s.AssetAddress,
-		"assetSymbol":         s.AssetSymbol,
+		"asset":               s.Asset,
+		"symbol":              s.Symbol,
 		"decimals":            s.Decimals,
 		"spotPrice":           s.SpotPrice,
 		"priceSource":         s.PriceSource,
@@ -146,15 +143,9 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		"prevBal":             s.PrevBal.Text(10),
 	}
 
-	if extraOpts["testMode"] == true {
-		model["postAssetType"] = s.PostAssetType.String()
-		model["postFirst"] = s.PostFirst
-		model["postLast"] = s.PostLast
-	}
-
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
-		"assetAddress", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
+		"asset", "symbol", "decimals", "spotPrice", "priceSource", "accountedFor",
 		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciled",
 		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
@@ -250,13 +241,13 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// AssetAddress
-	if err = base.WriteValue(writer, s.AssetAddress); err != nil {
+	// Asset
+	if err = base.WriteValue(writer, s.Asset); err != nil {
 		return err
 	}
 
-	// AssetSymbol
-	if err = base.WriteValue(writer, s.AssetSymbol); err != nil {
+	// Symbol
+	if err = base.WriteValue(writer, s.Symbol); err != nil {
 		return err
 	}
 
@@ -332,21 +323,6 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 
 	// MinerUncleRewardIn
 	if err = base.WriteValue(writer, &s.MinerUncleRewardIn); err != nil {
-		return err
-	}
-
-	// PostAssetType
-	if err = base.WriteValue(writer, s.PostAssetType); err != nil {
-		return err
-	}
-
-	// PostFirst
-	if err = base.WriteValue(writer, s.PostFirst); err != nil {
-		return err
-	}
-
-	// PostLast
-	if err = base.WriteValue(writer, s.PostLast); err != nil {
 		return err
 	}
 
@@ -433,13 +409,13 @@ func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 		return err
 	}
 
-	// AssetAddress
-	if err = base.ReadValue(reader, &s.AssetAddress, fileVersion); err != nil {
+	// Asset
+	if err = base.ReadValue(reader, &s.Asset, fileVersion); err != nil {
 		return err
 	}
 
-	// AssetSymbol
-	if err = base.ReadValue(reader, &s.AssetSymbol, fileVersion); err != nil {
+	// Symbol
+	if err = base.ReadValue(reader, &s.Symbol, fileVersion); err != nil {
 		return err
 	}
 
@@ -515,21 +491,6 @@ func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 
 	// MinerUncleRewardIn
 	if err = base.ReadValue(reader, &s.MinerUncleRewardIn, fileVersion); err != nil {
-		return err
-	}
-
-	// PostAssetType
-	if err = base.ReadValue(reader, &s.PostAssetType, fileVersion); err != nil {
-		return err
-	}
-
-	// PostFirst
-	if err = base.ReadValue(reader, &s.PostFirst, fileVersion); err != nil {
-		return err
-	}
-
-	// PostLast
-	if err = base.ReadValue(reader, &s.PostLast, fileVersion); err != nil {
 		return err
 	}
 
@@ -685,7 +646,7 @@ func (s *Statement) Reconciled() bool {
 }
 
 func (s *Statement) IsEth() bool {
-	return s.AssetAddress == base.FAKE_ETH_ADDRESS
+	return s.Asset == base.FAKE_ETH_ADDRESS
 }
 
 var (
@@ -702,7 +663,7 @@ func (s *Statement) IsStableCoin() bool {
 		usdc: true,
 		usdt: true,
 	}
-	return stables[s.AssetAddress]
+	return stables[s.Asset]
 }
 
 type AppPosition struct {
@@ -738,24 +699,15 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 	}
 
 	logger.TestLog(true, "===================================================")
-	logger.TestLog(true, fmt.Sprintf("====> %s", s.PostAssetType))
-	logger.TestLog(true, "===================================================")
 	logger.TestLog(true, "Previous:              ", pos.Prev)
 	logger.TestLog(true, "Current:               ", s.BlockNumber)
 	logger.TestLog(true, "Next:                  ", pos.Next)
-	logger.TestLog(true, "postFirst:             ", s.PostFirst)
-	logger.TestLog(true, "postLast:              ", s.PostLast)
-	logger.TestLog(true, "postAssetType:         ", s.PostAssetType)
 	logger.TestLog(true, "accountedFor:          ", s.AccountedFor)
 	logger.TestLog(true, "sender:                ", s.Sender, " ==> ", s.Recipient)
-	logger.TestLog(true, "assetAddress:          ", s.AssetAddress, "("+s.AssetSymbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
+	logger.TestLog(true, "asset:          ", s.Asset, "("+s.Symbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
 	logger.TestLog(true, "hash:                  ", s.TransactionHash)
 	logger.TestLog(true, "timestamp:             ", s.Timestamp)
-	if s.PostAssetType != TrialBalToken && s.PostAssetType != TrialBalNft {
-		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d", s.BlockNumber, s.TransactionIndex))
-	} else {
-		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex))
-	}
+	logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex))
 	logger.TestLog(true, "priceSource:           ", s.SpotPrice, "("+s.PriceSource+")")
 	reportL("---------------------------------------------------")
 	logger.TestLog(true, "Trial balance:")

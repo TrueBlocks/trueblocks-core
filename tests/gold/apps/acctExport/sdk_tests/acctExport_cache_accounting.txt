@@ -33,12 +33,9 @@ source:              uniswap
 Previous:               10277779
 Current:                10277780
 Next:                   10277781
-postFirst:              true
-postLast:               true
-postAssetType:          eth
 accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0xdac17f958d2ee523a2206206994597c13d831ec7
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
 timestamp:              1592323744
 blockNumber:            10277780.88
@@ -69,12 +66,9 @@ stable-coin
 Previous:               10277779
 Current:                10277780
 Next:                   10277781
-postFirst:              true
-postLast:               true
-postAssetType:          token
 accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9
-assetAddress:           0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) decimals: 6
+asset:           0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) decimals: 6
 hash:                   0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
 timestamp:              1592323744
 blockNumber:            10277780.88.103
@@ -152,8 +146,8 @@ Trial balance:
           "amountIn": "0",
           "amountNet": "-1048360000000000",
           "amountOut": "0",
-          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "WEI",
+          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "symbol": "WEI",
           "begBal": "6511482167631885",
           "begBalDiff": "0",
           "blockNumber": 10277780,
@@ -173,9 +167,6 @@ Trial balance:
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
-          "postAssetType": "eth",
-          "postFirst": true,
-          "postLast": true,
           "prefundIn": "0",
           "prevBal": "6511482167631885",
           "priceSource": "uniswap",
@@ -197,8 +188,8 @@ Trial balance:
           "amountIn": "0",
           "amountNet": "-381000000",
           "amountOut": "381000000",
-          "assetAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "assetSymbol": "USDT",
+          "asset": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+          "symbol": "USDT",
           "begBal": "381000000",
           "begBalDiff": "0",
           "blockNumber": 10277780,
@@ -218,10 +209,7 @@ Trial balance:
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
-          "postAssetType": "token",
-          "postFirst": true,
-          "postLast": true,
-          "prefundIn": "0",
+              "prefundIn": "0",
           "prevBal": "381000000",
           "priceSource": "stable-coin",
           "recipient": "0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9",

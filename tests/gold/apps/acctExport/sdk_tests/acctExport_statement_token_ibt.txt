@@ -16,12 +16,9 @@ Block 7005646 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               7005645
 Current:                7005646
 Next:                   7005654
-postFirst:              true
-postLast:               false
-postAssetType:          token
 accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+asset:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
 hash:                   0xea8b6bf39f8fe343ad1fbb95ad9a2dd695bee9de33d1ccfb79552fc0bf40b92f
 timestamp:              1546554524
 blockNumber:            7005646.182.42
@@ -49,12 +46,9 @@ Block 7005654 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               7005646
 Current:                7005654
 Next:                   7005662
-postFirst:              false
-postLast:               false
-postAssetType:          token
 accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+asset:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
 hash:                   0x234186f8fab2fb4ca1222031ad6d0b41d5a55b3d0e934fb2b47059f7a394433f
 timestamp:              1546554605
 blockNumber:            7005654.54.32
@@ -82,12 +76,9 @@ Block 7005662 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               7005654
 Current:                7005662
 Next:                   7005737
-postFirst:              false
-postLast:               false
-postAssetType:          token
 accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+asset:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
 hash:                   0xfa8eef26c445913833a6ace11e27df3821598b9aeb4896eb41213999e89ece7a
 timestamp:              1546554763
 blockNumber:            7005662.5.5
@@ -127,12 +118,9 @@ Block 7005737 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               7005662
 Current:                7005737
 Next:                   7005737
-postFirst:              false
-postLast:               false
-postAssetType:          token
 accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 sender:                 0x28adfa7a3ab67fb19410beabb1c1bf880fef0541  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+asset:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
 hash:                   0x968d9ef3eee9d9526784622726cef4f23712dff17a7dc639f0a1ef79c8f89002
 timestamp:              1546555962
 blockNumber:            7005737.27.17
@@ -174,12 +162,9 @@ Block 7005737 is prior to deployment (10000835) of Uniswap V2. No other source f
 Previous:               7005737
 Current:                7005737
 Next:                   7005738
-postFirst:              false
-postLast:               true
-postAssetType:          token
 accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 sender:                 0x28adfa7a3ab67fb19410beabb1c1bf880fef0541  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+asset:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
 hash:                   0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
 timestamp:              1546555962
 blockNumber:            7005737.30.20
@@ -212,8 +197,8 @@ Trial balance:
       "amountNetEth": "3016.109787",
       "amountOut": "0",
       "amountOutEth": "0",
-      "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
-      "assetSymbol": "0x5c2c",
+      "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+      "symbol": "0x5c2c",
       "begBal": "64663282872000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -247,9 +232,6 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
-      "postAssetType": "token",
-      "postFirst": true,
-      "postLast": false,
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "64663282872000000000000",
@@ -281,8 +263,8 @@ Trial balance:
       "amountNetEth": "1982.984682",
       "amountOut": "0",
       "amountOutEth": "0",
-      "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
-      "assetSymbol": "0x5c2c",
+      "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+      "symbol": "0x5c2c",
       "begBal": "67679392659000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -316,9 +298,6 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
-      "postAssetType": "token",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "67679392659000000000000",
@@ -350,8 +329,8 @@ Trial balance:
       "amountNetEth": "1377.663523",
       "amountOut": "0",
       "amountOutEth": "0",
-      "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
-      "assetSymbol": "0x5c2c",
+      "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+      "symbol": "0x5c2c",
       "begBal": "69662377341000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -385,9 +364,6 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
-      "postAssetType": "token",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "69662377341000000000000",
@@ -419,8 +395,8 @@ Trial balance:
       "amountNetEth": "4803.505768",
       "amountOut": "0",
       "amountOutEth": "0",
-      "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
-      "assetSymbol": "0x5c2c",
+      "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+      "symbol": "0x5c2c",
       "begBal": "71040040864000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -454,9 +430,6 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
-      "postAssetType": "token",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "71040040864000000000000",
@@ -488,8 +461,8 @@ Trial balance:
       "amountNetEth": "4803.505768",
       "amountOut": "0",
       "amountOutEth": "0",
-      "assetAddress": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
-      "assetSymbol": "0x5c2c",
+      "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+      "symbol": "0x5c2c",
       "begBal": "71040040864000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -523,9 +496,6 @@ Trial balance:
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
-      "postAssetType": "token",
-      "postFirst": false,
-      "postLast": true,
       "prefundIn": "0",
       "prefundInEth": "0",
       "prevBal": "71040040864000000000000",

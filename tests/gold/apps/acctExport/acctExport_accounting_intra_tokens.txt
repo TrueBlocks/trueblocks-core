@@ -46,8 +46,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         WEI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
 TEST[DATE|TIME]    hash:                0xb00176827961c29b713960b7a91f438cea976381577b3989f0781d896d38df61
@@ -121,8 +121,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         WEI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
 TEST[DATE|TIME]    hash:                0xb00176827961c29b713960b7a91f438cea976381577b3989f0781d896d38df61
@@ -205,7 +205,7 @@ TEST[DATE|TIME] Next:                   14933657
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME] sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4
-TEST[DATE|TIME] assetAddress:           0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f (SNX) decimals: 18
+TEST[DATE|TIME] asset:           0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f (SNX) decimals: 18
 TEST[DATE|TIME] hash:                   0xb00176827961c29b713960b7a91f438cea976381577b3989f0781d896d38df61
 TEST[DATE|TIME] timestamp:              1654793734
 TEST[DATE|TIME] blockNumber:            14933657.302.493
@@ -260,8 +260,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         WEI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
 TEST[DATE|TIME]    hash:                0x458ae31579274588f04850853ec71f67e1e21b2d4e72ada18fdc04352fc22295
@@ -335,8 +335,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         WEI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
 TEST[DATE|TIME]    hash:                0x458ae31579274588f04850853ec71f67e1e21b2d4e72ada18fdc04352fc22295
@@ -436,8 +436,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4
-TEST[DATE|TIME]    assetAddress:        0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
-TEST[DATE|TIME]    assetSymbol:         YFI
+TEST[DATE|TIME]    asset:        0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME]    symbol:         YFI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
 TEST[DATE|TIME]    hash:                0x458ae31579274588f04850853ec71f67e1e21b2d4e72ada18fdc04352fc22295
@@ -511,8 +511,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0x3506424f91fd33084466f402d5d97f05f8e3b4af
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         WEI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
 TEST[DATE|TIME]    hash:                0x9c07595dec64bb699ef24c1c5e5579edba940fb9596e38bd4465f5c840393aae
@@ -586,8 +586,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    sender:              0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME]    recipient:           0x3506424f91fd33084466f402d5d97f05f8e3b4af
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         WEI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          14933657
 TEST[DATE|TIME]    hash:                0x9c07595dec64bb699ef24c1c5e5579edba940fb9596e38bd4465f5c840393aae
@@ -670,7 +670,7 @@ TEST[DATE|TIME] Next:                   14933657
 TEST[DATE|TIME] assetType:              token
 TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME] sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d
-TEST[DATE|TIME] assetAddress:           0x3506424f91fd33084466f402d5d97f05f8e3b4af (0x3506) decimals: 18
+TEST[DATE|TIME] asset:           0x3506424f91fd33084466f402d5d97f05f8e3b4af (0x3506) decimals: 18
 TEST[DATE|TIME] hash:                   0x9c07595dec64bb699ef24c1c5e5579edba940fb9596e38bd4465f5c840393aae
 TEST[DATE|TIME] timestamp:              1654793734
 TEST[DATE|TIME] blockNumber:            14933657.304.495
@@ -755,8 +755,8 @@ Results in ./accounting_intra_tokens_out.file
           "amountIn": "0",
           "amountNet": "-9143915636239443",
           "amountOut": "0",
-          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "WEI",
+          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "symbol": "WEI",
           "assetType": "trace-eth",
           "begBal": "568302725253886882348",
           "begBalDiff": "0",
@@ -799,8 +799,8 @@ Results in ./accounting_intra_tokens_out.file
           "amountIn": "0",
           "amountNet": "-73541760990000000000",
           "amountOut": "73541760990000000000",
-          "assetAddress": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
-          "assetSymbol": "SNX",
+          "asset": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+          "symbol": "SNX",
           "assetType": "token",
           "begBal": "11321830602990000000000",
           "begBalDiff": "0",
@@ -906,8 +906,8 @@ Results in ./accounting_intra_tokens_out.file
           "amountIn": "0",
           "amountNet": "-3630819456680952",
           "amountOut": "0",
-          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "WEI",
+          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "symbol": "WEI",
           "assetType": "trace-eth",
           "begBal": "568293581338250642905",
           "begBalDiff": "0",
@@ -950,8 +950,8 @@ Results in ./accounting_intra_tokens_out.file
           "amountIn": "0",
           "amountNet": "-304442430000000000",
           "amountOut": "304442430000000000",
-          "assetAddress": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-          "assetSymbol": "YFI",
+          "asset": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+          "symbol": "YFI",
           "assetType": "token",
           "begBal": "18255476410000000000",
           "begBalDiff": "0",
@@ -1057,8 +1057,8 @@ Results in ./accounting_intra_tokens_out.file
           "amountIn": "0",
           "amountNet": "-5687415285765885",
           "amountOut": "0",
-          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "WEI",
+          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "symbol": "WEI",
           "assetType": "trace-eth",
           "begBal": "568289950518793961953",
           "begBalDiff": "0",
@@ -1101,8 +1101,8 @@ Results in ./accounting_intra_tokens_out.file
           "amountIn": "0",
           "amountNet": "-312679827610000000000",
           "amountOut": "312679827610000000000",
-          "assetAddress": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
-          "assetSymbol": "0x3506",
+          "asset": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
+          "symbol": "0x3506",
           "assetType": "token",
           "begBal": "791497378854640000000000",
           "begBalDiff": "0",

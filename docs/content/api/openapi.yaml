@@ -3259,11 +3259,11 @@ components:
           type: string
           format: datetime
           description: "the timestamp as a date (calculated)"
-        assetAddress:
+        asset:
           type: string
           format: address
           description: "0xeeee...eeee for ETH reconciliations, the token address otherwise"
-        assetSymbol:
+        symbol:
           type: string
           format: string
           description: "either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain"
@@ -3303,11 +3303,6 @@ components:
           type: string
           format: int256
           description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
-        postAssetType:
-          type: object
-          items:
-            $ref: "#/components/schemas/trialBalType"
-          description: "one of eth, eth-trace, token, or token-721"
         reconciled:
           type: boolean
           format: boolean

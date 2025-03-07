@@ -145,7 +145,6 @@ var knownTypes = map[string]bool{
 	"TokenType":    true,
 	"StatePart":    true,
 	"DestType":     true,
-	"TrialBalType": true,
 }
 
 func (cb *CodeBase) Validate() error {

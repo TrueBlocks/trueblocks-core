@@ -5,8 +5,8 @@ logIndex            ,lognum       ,           ,               ,       3 ,the zer
 transactionHash     ,hash         ,           ,               ,       4 ,the hash of the transaction that triggered this reconciliation
 timestamp           ,timestamp    ,           ,               ,       5 ,the Unix timestamp of the object
 date                ,datetime     ,           ,calc           ,       6 ,the timestamp as a date
-assetAddress        ,address      ,           ,               ,       7 ,0xeeee...eeee for ETH reconciliations&#44; the token address otherwise
-assetSymbol         ,string       ,           ,               ,       8 ,either ETH&#44; WEI&#44; or the symbol of the asset being reconciled as extracted from the chain
+asset               ,address      ,           ,               ,       7 ,0xeeee...eeee for ETH reconciliations&#44; the token address otherwise
+symbol         ,string       ,           ,               ,       8 ,either ETH&#44; WEI&#44; or the symbol of the asset being reconciled as extracted from the chain
 decimals            ,value        ,      18   ,               ,       9 ,the value of `decimals` from an ERC20 contract or&#44; if ETH or WEI&#44; then 18
 spotPrice           ,float        ,       1.0 ,               ,      10 ,the on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction
 priceSource         ,string       ,           ,               ,      11 ,the on-chain source from which the spot price was taken
@@ -16,9 +16,6 @@ recipient           ,address      ,           ,               ,      14 ,the rec
 begBal              ,int256       ,           ,               ,      15 ,the beginning balance of the asset prior to the transaction
 amountNet           ,int256       ,           ,calc           ,      16 ,totalIn - totalOut
 endBal              ,int256       ,           ,               ,      17 ,the on-chain balance of the asset (see notes about intra-block reconciliations)
-postAssetType       ,TrialBalType ,           ,omitempty      ,      41 ,one of eth&#44; eth-trace&#44; token&#44; or token-721
-postFirst           ,bool         ,           ,omitempty      ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
-postLast            ,bool         ,           ,omitempty      ,         ,one of `invalid`&#44; `genesis-diff`&#44; `diff-diff`&#44; `same-same`&#44; `diff-same`&#44; `same-diff`
 reconciled          ,bool         ,           ,calc           ,      18 ,true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.
 totalIn             ,int256       ,           ,calc           ,      19 ,the sum of the following `In` fields
 amountIn            ,int256       ,           ,omitempty      ,      20 ,the top-level value of the incoming transfer for the accountedFor address
@@ -42,4 +39,4 @@ begBalDiff          ,int256       ,           ,omitempty|calc ,      37 ,differe
 endBalDiff          ,int256       ,           ,omitempty|calc ,      38 ,endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
 endBalCalc          ,int256       ,           ,omitempty|calc ,      39 ,begBal + amountNet
 correctingReason    ,string       ,           ,omitempty      ,      40 ,the reason for the correcting entries&#44; if any
-rollingBalance      ,int256       ,           ,omitempty      ,      42 ,a rolling balance used to help debug intra-block reconciliations
+rollingBalance      ,int256       ,           ,omitempty      ,      41 ,a rolling balance used to help debug intra-block reconciliations

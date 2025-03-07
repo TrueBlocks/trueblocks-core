@@ -20,12 +20,9 @@ stable-coin
 Previous:               8856475
 Current:                8856476
 Next:                   8856511
-postFirst:              true
-postLast:               false
-postAssetType:          token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xeba60d324c2546459e1e9dd4c7e740ca80134588  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
-assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+asset:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 hash:                   0x118f8d42e6b858427f6b54c1636a6ec1f72e0cf8941da03deffa55a3c2357204
 timestamp:              1572663370
 blockNumber:            8856476.55.40
@@ -56,12 +53,9 @@ stable-coin
 Previous:               8856476
 Current:                8856511
 Next:                   8860434
-postFirst:              false
-postLast:               false
-postAssetType:          token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x8c492d5f763841767362d716e3e69511f0527791  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
-assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+asset:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 hash:                   0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed
 timestamp:              1572663859
 blockNumber:            8856511.161.94
@@ -92,12 +86,9 @@ stable-coin
 Previous:               8856511
 Current:                8860434
 Next:                   8860511
-postFirst:              false
-postLast:               false
-postAssetType:          token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x3f1c1e14fd919415010c03f9de29cbafd5866e81  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
-assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+asset:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 hash:                   0xf411e204daf3b005c251d506bbbf421de482ea468b1c3b76289e76d33459a083
 timestamp:              1572719011
 blockNumber:            8860434.21.19
@@ -137,12 +128,9 @@ source:              maker
 Previous:               8860434
 Current:                8860511
 Next:                   8860513
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0xc36909ffb8335811e5b92d662f39c5e5c0e75394bb9638d7136ab4a4bb2b6951
 timestamp:              1572720103
 blockNumber:            8860511.47
@@ -182,12 +170,9 @@ source:              maker
 Previous:               8860511
 Current:                8860513
 Next:                   8860529
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
 timestamp:              1572720150
 blockNumber:            8860513.85
@@ -218,12 +203,9 @@ stable-coin
 Previous:               8860511
 Current:                8860513
 Next:                   8860529
-postFirst:              false
-postLast:               false
-postAssetType:          token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+asset:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
 timestamp:              1572720150
 blockNumber:            8860513.85.84
@@ -263,12 +245,9 @@ source:              maker
 Previous:               8860513
 Current:                8860529
 Next:                   8860531
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x3af5419098b5510f39ec64d6eb8ee08f3fe5cb538469fa9ef263cf7ebd4b607d
 timestamp:              1572720358
 blockNumber:            8860529.145
@@ -308,12 +287,9 @@ source:              maker
 Previous:               8860529
 Current:                8860531
 Next:                   8867898
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
 timestamp:              1572720361
 blockNumber:            8860531.152
@@ -344,12 +320,9 @@ stable-coin
 Previous:               8860529
 Current:                8860531
 Next:                   8867898
-postFirst:              false
-postLast:               false
-postAssetType:          token
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-assetAddress:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+asset:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
 timestamp:              1572720361
 blockNumber:            8860531.152.95
@@ -389,12 +362,9 @@ source:              maker
 Previous:               8860531
 Current:                8867898
 Next:                   8875684
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x9062c0a6dbd6108336bcbe4593a3d1ce05512069
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0xbf2b254e62f24f10e59281aca2e04204228a9fef109363881286677ca206ab91
 timestamp:              1572821537
 blockNumber:            8867898.28
@@ -434,12 +404,9 @@ source:              maker
 Previous:               9024196
 Current:                9024350
 Next:                   9046970
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x6874facd48c3ddc4716148ce7721e4fa66dfd49564b371026d6ec6856a1f6c0e
 timestamp:              1575080501
 blockNumber:            9024350.73
@@ -479,12 +446,9 @@ source:              maker
 Previous:               9024350
 Current:                9046970
 Next:                   9061086
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0xc28a260c6b2969349eeaa3ba5253b616c1d9ac0b
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0xe1e3c29fdebdfaa3b261b8f294d5007427163a7b90ba4beb79e940c957d393d1
 timestamp:              1575426133
 blockNumber:            9046970.71
@@ -524,12 +488,9 @@ source:              maker
 Previous:               9193234
 Current:                9193753
 Next:                   9193754
-postFirst:              false
-postLast:               true
-postAssetType:          eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x6b175474e89094c44da98b954eedeac495271d0f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x823221aac029b0495c8b045fe2a345bad618f2f6e3a6e473d55338b60eaf4763
 timestamp:              1577845169
 blockNumber:            9193753.147
@@ -569,12 +530,9 @@ source:              maker
 Previous:               9193776
 Current:                9193777
 Next:                   9193806
-postFirst:              true
-postLast:               false
-postAssetType:          eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x6b175474e89094c44da98b954eedeac495271d0f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x0c71e18450039b2a06f548b30217a063d905d3fb8642b3f767562027e1036ccd
 timestamp:              1577845600
 blockNumber:            9193777.226
@@ -614,12 +572,9 @@ source:              maker
 Previous:               9193777
 Current:                9193806
 Next:                   9193814
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x6b175474e89094c44da98b954eedeac495271d0f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0xa5d76ece0db3a7621313d79950e2a933db3e06724402c5c9231313fdd8705661
 timestamp:              1577846201
 blockNumber:            9193806.80
@@ -659,12 +614,9 @@ source:              maker
 Previous:               9193806
 Current:                9193814
 Next:                   9193815
-postFirst:              false
-postLast:               true
-postAssetType:          eth
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x6b175474e89094c44da98b954eedeac495271d0f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x4150e6fff9eca62c06b94b188b6287b424d703dcf4e5cba0b5c1ee338ea7cd7b
 timestamp:              1577846341
 blockNumber:            9193814.38

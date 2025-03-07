@@ -15,12 +15,9 @@ Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               0
 Current:                0
 Next:                   202249
-postFirst:              true
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x0000000000000000000000000050726566756e64  ==>  0x001d14804b399c6ef80e64576f657660804fec0b
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438269975
 blockNumber:            0.2
@@ -48,12 +45,9 @@ Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing meth
 Previous:               0
 Current:                202249
 Next:                   1501459
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0x2910543af39aba0cd09dbb2d50200b3e800a63d2
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
 timestamp:              1441703356
 blockNumber:            202249.0
@@ -82,12 +76,9 @@ Block 1501459 is prior to deployment (3684349) of Maker. No fallback pricing met
 Previous:               202249
 Current:                1501459
 Next:                   1501460
-postFirst:              false
-postLast:               true
-postAssetType:          eth
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
 timestamp:              1463025233
 blockNumber:            1501459.2
@@ -132,8 +123,8 @@ Trial balance:
           "amountNetEth": "4200",
           "amountOut": "0",
           "amountOutEth": "0",
-          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "ETH",
+          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "symbol": "ETH",
           "begBal": "0",
           "begBalDiff": "0",
           "begBalDiffEth": "0",
@@ -167,9 +158,6 @@ Trial balance:
           "minerTxFeeInEth": "0",
           "minerUncleRewardIn": "0",
           "minerUncleRewardInEth": "0",
-          "postAssetType": "eth",
-          "postFirst": true,
-          "postLast": false,
           "prefundIn": "4200000000000000000000",
           "prefundInEth": "4200",
           "prevBal": "0",
@@ -229,8 +217,8 @@ Trial balance:
           "amountNetEth": "-4199.925320679510922664",
           "amountOut": "4199900000000000000000",
           "amountOutEth": "4199.9",
-          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "ETH",
+          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "symbol": "ETH",
           "begBal": "4200000000000000000000",
           "begBalDiff": "0",
           "begBalDiffEth": "0",
@@ -264,9 +252,6 @@ Trial balance:
           "minerTxFeeInEth": "0",
           "minerUncleRewardIn": "0",
           "minerUncleRewardInEth": "0",
-          "postAssetType": "eth",
-          "postFirst": false,
-          "postLast": false,
           "prefundIn": "0",
           "prefundInEth": "0",
           "prevBal": "4200000000000000000000",
@@ -325,8 +310,8 @@ Trial balance:
           "amountNetEth": "-0.074679320489077336",
           "amountOut": "74259320489077336",
           "amountOutEth": "0.074259320489077336",
-          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "ETH",
+          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "symbol": "ETH",
           "begBal": "74679320489077336",
           "begBalDiff": "0",
           "begBalDiffEth": "0",
@@ -360,9 +345,6 @@ Trial balance:
           "minerTxFeeInEth": "0",
           "minerUncleRewardIn": "0",
           "minerUncleRewardInEth": "0",
-          "postAssetType": "eth",
-          "postFirst": false,
-          "postLast": true,
           "prefundIn": "0",
           "prefundInEth": "0",
           "prevBal": "74679320489077336",

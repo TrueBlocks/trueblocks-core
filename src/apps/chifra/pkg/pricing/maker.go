@@ -60,8 +60,8 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 	price = base.Float(bigPrice.Float64())
 	source = "maker"
 	r := priceDebugger{
-		address:     statement.AssetAddress,
-		symbol:      statement.AssetSymbol,
+		address:     statement.Asset,
+		symbol:      statement.Symbol,
 		blockNumber: statement.BlockNumber,
 		source1:     makerMedianizer,
 		theCall1:    theCall,

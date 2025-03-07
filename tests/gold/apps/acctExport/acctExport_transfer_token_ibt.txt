@@ -16,12 +16,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005645
 TEST[DATE|TIME] Current:                7005646
 TEST[DATE|TIME] Next:                   7005654
-TEST[DATE|TIME] postFirst:              true
-TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME] assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+TEST[DATE|TIME] asset:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
 TEST[DATE|TIME] hash:                   0xea8b6bf39f8fe343ad1fbb95ad9a2dd695bee9de33d1ccfb79552fc0bf40b92f
 TEST[DATE|TIME] timestamp:              1546554524
 TEST[DATE|TIME] blockNumber:            7005646.182.42
@@ -49,12 +46,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005646
 TEST[DATE|TIME] Current:                7005654
 TEST[DATE|TIME] Next:                   7005662
-TEST[DATE|TIME] postFirst:              false
-TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME] assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+TEST[DATE|TIME] asset:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
 TEST[DATE|TIME] hash:                   0x234186f8fab2fb4ca1222031ad6d0b41d5a55b3d0e934fb2b47059f7a394433f
 TEST[DATE|TIME] timestamp:              1546554605
 TEST[DATE|TIME] blockNumber:            7005654.54.32
@@ -82,12 +76,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005654
 TEST[DATE|TIME] Current:                7005662
 TEST[DATE|TIME] Next:                   7005737
-TEST[DATE|TIME] postFirst:              false
-TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME] assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+TEST[DATE|TIME] asset:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
 TEST[DATE|TIME] hash:                   0xfa8eef26c445913833a6ace11e27df3821598b9aeb4896eb41213999e89ece7a
 TEST[DATE|TIME] timestamp:              1546554763
 TEST[DATE|TIME] blockNumber:            7005662.5.5
@@ -115,12 +106,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005662
 TEST[DATE|TIME] Current:                7005737
 TEST[DATE|TIME] Next:                   7005737
-TEST[DATE|TIME] postFirst:              false
-TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x28adfa7a3ab67fb19410beabb1c1bf880fef0541  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME] assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+TEST[DATE|TIME] asset:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
 TEST[DATE|TIME] hash:                   0x968d9ef3eee9d9526784622726cef4f23712dff17a7dc639f0a1ef79c8f89002
 TEST[DATE|TIME] timestamp:              1546555962
 TEST[DATE|TIME] blockNumber:            7005737.27.17
@@ -150,12 +138,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005737
 TEST[DATE|TIME] Current:                7005737
 TEST[DATE|TIME] Next:                   7005738
-TEST[DATE|TIME] postFirst:              false
-TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x28adfa7a3ab67fb19410beabb1c1bf880fef0541  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME] assetAddress:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+TEST[DATE|TIME] asset:           0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
 TEST[DATE|TIME] hash:                   0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
 TEST[DATE|TIME] timestamp:              1546555962
 TEST[DATE|TIME] blockNumber:            7005737.30.20

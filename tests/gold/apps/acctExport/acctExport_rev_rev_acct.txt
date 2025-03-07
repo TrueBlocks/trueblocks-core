@@ -39,8 +39,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x8c492d5f763841767362d716e3e69511f0527791
 TEST[DATE|TIME]    recipient:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
 TEST[DATE|TIME]    hash:                0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed
@@ -106,8 +106,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x8c492d5f763841767362d716e3e69511f0527791
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME]    assetAddress:        0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-TEST[DATE|TIME]    assetSymbol:         DAI
+TEST[DATE|TIME]    asset:        0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TEST[DATE|TIME]    symbol:         DAI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
 TEST[DATE|TIME]    hash:                0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed
@@ -205,8 +205,8 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "amountIn": "4999",
           "amountNet": "9998",
           "amountOut": "0",
-          "assetAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-          "assetSymbol": "DAI",
+          "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+          "symbol": "DAI",
           "begBal": "1",
           "begBalDiff": "0",
           "blockNumber": 8856511,
@@ -307,8 +307,8 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "amountIn": "1.0000000",
           "amountNet": "1.0000000",
           "amountOut": "0",
-          "assetAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-          "assetSymbol": "DAI",
+          "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+          "symbol": "DAI",
           "begBal": "0",
           "begBalDiff": "-5000.0000000",
           "blockNumber": 8856476,
@@ -376,8 +376,8 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "amountIn": "0.010000000000000000",
           "amountNet": "0.010000000000000000",
           "amountOut": "0",
-          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "ETH",
+          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "symbol": "ETH",
           "begBal": "4.989790000000000000",
           "begBalDiff": "-0.010000000000000000",
           "blockNumber": 8856316,
@@ -444,8 +444,8 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "amountIn": "0",
           "amountNet": "-0.010210000000000000",
           "amountOut": "0.010000000000000000",
-          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "ETH",
+          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "symbol": "ETH",
           "begBal": "5.0000000",
           "begBalDiff": "0.000210000000000000",
           "blockNumber": 8856290,
@@ -584,8 +584,8 @@ WARN[DATE|TIME] Transaction 8856511.161.94 does not reconcile
           "amountIn": "5.0000000",
           "amountNet": "5.0000000",
           "amountOut": "0",
-          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "ETH",
+          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "symbol": "ETH",
           "begBal": "0",
           "begBalDiff": "-4.989790000000000000",
           "blockNumber": 8854723,

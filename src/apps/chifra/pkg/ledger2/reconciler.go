@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pricing"
@@ -31,7 +31,7 @@ type Reconciler2 struct {
 	assetFilter       []base.Address
 	names             map[base.Address]types.Name
 	hasStartBlock     bool
-	transfers         map[blockTxKey][]ledger4.AssetTransfer
+	transfers         map[blockTxKey][]ledger10.AssetTransfer
 	accountLedger     map[assetHolderKey]base.Wei
 	ledgerAssets      map[base.Address]bool
 	correctionCounter base.Value
@@ -44,7 +44,7 @@ func (r *Reconciler2) String() string {
 	return string(bytes)
 }
 
-func NewReconciler(opts *ledger4.ReconcilerOptions) *Reconciler2 {
+func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler2 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
 	return &Reconciler2{
@@ -59,14 +59,14 @@ func NewReconciler(opts *ledger4.ReconcilerOptions) *Reconciler2 {
 		assetFilter:   opts.AssetFilters,
 		names:         names,
 		hasStartBlock: false,
-		transfers:     make(map[blockTxKey][]ledger4.AssetTransfer),
+		transfers:     make(map[blockTxKey][]ledger10.AssetTransfer),
 		accountLedger: make(map[assetHolderKey]base.Wei),
 		ledgerAssets:  make(map[base.Address]bool),
 		ledgers:       make(map[base.Address]Ledger),
 	}
 }
 
-func (r *Reconciler2) getStatementsInner(pos *types.AppPosition, trans *types.Transaction, allTransfers []ledger4.AssetTransfer) {
+func (r *Reconciler2) getStatementsInner(pos *types.AppPosition, trans *types.Transaction, allTransfers []ledger10.AssetTransfer) {
 	appearanceByID := make(map[string]types.Appearance)
 	app := types.Appearance{Address: r.accountFor, BlockNumber: uint32(trans.BlockNumber), TransactionIndex: uint32(trans.TransactionIndex)}
 	appID := fmt.Sprintf("%d-%d", app.BlockNumber, app.TransactionIndex)
@@ -80,7 +80,7 @@ func (r *Reconciler2) getStatementsInner(pos *types.AppPosition, trans *types.Tr
 			continue
 		}
 
-		key := fmt.Sprintf("%s|%s", at.AssetAddress, appID)
+		key := fmt.Sprintf("%s|%s", at.Asset, appID)
 		entry, found := entriesMap[key]
 		if !found {
 			newEntry := NewLedgerEntry(appID, base.Blknum(app.BlockNumber), base.Txnum(app.TransactionIndex))
@@ -102,52 +102,35 @@ func (r *Reconciler2) getStatementsInner(pos *types.AppPosition, trans *types.Tr
 	}
 
 	for key, lePtr := range entriesMap {
-		assetAddress := key[:findSeparator(key)]
-		ll, found := r.GetLedger(base.HexToAddress(assetAddress))
+		asset := key[:findSeparator(key)]
+		ll, found := r.GetLedger(base.HexToAddress(asset))
 		if !found {
-			ll = NewLedger(base.HexToAddress(assetAddress))
+			ll = NewLedger(base.HexToAddress(asset))
 		}
 		ll.Entries = append(ll.Entries, *lePtr)
-		r.ledgers[ll.AssetAddress] = ll
+		r.ledgers[ll.Asset] = ll
 	}
 }
 
-func (r *Reconciler2) queryBalances(pos *types.AppPosition, at ledger4.AssetTransfer) types.Posting {
+func (r *Reconciler2) queryBalances(pos *types.AppPosition, at ledger10.AssetTransfer) types.Posting {
 	ret := types.Posting{}
 	ret.Statement = at
 
-	if at.PostAssetType != types.TrialBalToken && at.PostAssetType != types.TrialBalNft {
-		prevBal, _ := r.connection.GetBalanceAt(r.accountFor, pos.Prev)
-		if at.BlockNumber == 0 {
-			prevBal = new(base.Wei)
-		}
-
-		begBal, _ := r.connection.GetBalanceAt(r.accountFor, at.BlockNumber-1)
-		if at.BlockNumber == 0 {
-			begBal = new(base.Wei)
-		}
-
-		endBal, _ := r.connection.GetBalanceAt(r.accountFor, at.BlockNumber)
-
-		ret.PrevBal = *prevBal
-		ret.BegBal = *begBal
-		ret.EndBal = *endBal
-
-	} else {
-		prevBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.accountFor, pos.Prev)
-		if at.BlockNumber == 0 {
-			prevBal = new(base.Wei)
-		}
-
-		begBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.accountFor, at.BlockNumber-1)
-		if at.BlockNumber == 0 {
-			begBal = new(base.Wei)
-		}
-		endBal, _ := r.connection.GetBalanceAtToken(at.AssetAddress, r.accountFor, at.BlockNumber)
-		ret.PrevBal = *prevBal
-		ret.BegBal = *begBal
-		ret.EndBal = *endBal
+	prevBal, _ := r.connection.GetBalanceAtToken(at.Asset, r.accountFor, pos.Prev)
+	if at.BlockNumber == 0 {
+		prevBal = new(base.Wei)
 	}
+	ret.PrevBal = *prevBal
+
+	begBal, _ := r.connection.GetBalanceAtToken(at.Asset, r.accountFor, at.BlockNumber-1)
+	if at.BlockNumber == 0 {
+		begBal = new(base.Wei)
+	}
+	ret.BegBal = *begBal
+
+	endBal, _ := r.connection.GetBalanceAtToken(at.Asset, r.accountFor, at.BlockNumber)
+	ret.EndBal = *endBal
+
 	return ret
 }
 
@@ -170,12 +153,12 @@ type blockTxKey struct {
 }
 
 type assetHolderKey struct {
-	AssetAddress base.Address
-	Holder       base.Address
+	Asset  base.Address
+	Holder base.Address
 }
 
-func (r *Reconciler2) GetLedger(assetAddress base.Address) (Ledger, bool) {
-	l, ok := r.ledgers[assetAddress]
+func (r *Reconciler2) GetLedger(asset base.Address) (Ledger, bool) {
+	l, ok := r.ledgers[asset]
 	return l, ok
 }
 
@@ -194,7 +177,7 @@ func (r *Reconciler2) Statements() ([]types.Statement, error) {
 	return stmts, nil
 }
 
-func (r *Reconciler2) getAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]ledger4.AssetTransfer, error) {
+func (r *Reconciler2) getAssetTransfers2(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]ledger10.AssetTransfer, error) {
 	if r.connection.Store != nil {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
@@ -206,11 +189,11 @@ func (r *Reconciler2) getAssetTransfers(pos *types.AppPosition, filter *filter.A
 		}
 	}
 
-	type AAA = ledger4.AssetTransfer
+	type AAA = ledger10.AssetTransfer
 
 	results := make([]AAA, 0, 20)
 	var err error
-	if ledger4.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
+	if ledger10.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
 		accountedFor := r.accountFor
 		at := AAA{
 			AccountedFor:     accountedFor,
@@ -221,18 +204,15 @@ func (r *Reconciler2) getAssetTransfers(pos *types.AppPosition, filter *filter.A
 			TransactionHash:  trans.Hash,
 			LogIndex:         0,
 			Timestamp:        trans.Timestamp,
-			AssetAddress:     base.FAKE_ETH_ADDRESS,
-			AssetSymbol:      "WEI",
+			Asset:            base.FAKE_ETH_ADDRESS,
+			Symbol:           "WEI",
 			Decimals:         18,
-			PostAssetType:    types.TrialBalEth,
 			SpotPrice:        0.0,
 			PriceSource:      "not-priced",
-			PostFirst:        pos.First,
-			PostLast:         pos.Last,
 		}
 
 		if r.asEther {
-			at.AssetSymbol = "ETH"
+			at.Symbol = "ETH"
 		}
 
 		if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
@@ -279,7 +259,7 @@ func (r *Reconciler2) getAssetTransfers(pos *types.AppPosition, filter *filter.A
 				continue
 			}
 			addrArray := []base.Address{r.accountFor}
-			if filter.ApplyLogFilter(&log, addrArray) && ledger4.AssetOfInterest(r.assetFilter, log.Address) {
+			if filter.ApplyLogFilter(&log, addrArray) && ledger10.AssetOfInterest(r.assetFilter, log.Address) {
 				normalized, err := normalize.NormalizeKnownLogs(&log)
 				if err != nil {
 					continue
@@ -325,16 +305,13 @@ func (r *Reconciler2) getAssetTransfers(pos *types.AppPosition, filter *filter.A
 						LogIndex:         normalized.LogIndex,
 						TransactionHash:  normalized.TransactionHash,
 						Timestamp:        normalized.Timestamp,
-						AssetAddress:     normalized.Address,
-						AssetSymbol:      sym,
+						Asset:            normalized.Address,
+						Symbol:           sym,
 						AmountIn:         amountIn,
 						AmountOut:        amountOut,
 						Decimals:         decimals,
 						SpotPrice:        0.0,
 						PriceSource:      "not-priced",
-						PostAssetType:    types.TrialBalToken,
-						PostFirst:        pos.First,
-						PostLast:         pos.Last,
 					}
 
 					if s.IsMaterial() {
@@ -411,14 +388,14 @@ func (le *LedgerEntry) NetValue() base.Wei {
 }
 
 type Ledger struct {
-	AssetAddress base.Address
-	Entries      []LedgerEntry
+	Asset   base.Address
+	Entries []LedgerEntry
 }
 
-func NewLedger(assetAddress base.Address) Ledger {
+func NewLedger(asset base.Address) Ledger {
 	return Ledger{
-		AssetAddress: assetAddress,
-		Entries:      make([]LedgerEntry, 0),
+		Asset:   asset,
+		Entries: make([]LedgerEntry, 0),
 	}
 }
 
@@ -427,8 +404,8 @@ func (l *Ledger) String() string {
 	totOut := l.TotalOut()
 	net := l.NetValue()
 	return fmt.Sprintf(
-		"Ledger(AssetAddress=%s Entries=%d In=%s Out=%s Net=%s)",
-		l.AssetAddress,
+		"Ledger(Asset=%s Entries=%d In=%s Out=%s Net=%s)",
+		l.Asset,
 		len(l.Entries),
 		totIn.String(),
 		totOut.String(),
@@ -462,7 +439,7 @@ func (l *Ledger) NetValue() base.Wei {
 }
 
 func (r *Reconciler2) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
-	if transfers, err := r.getAssetTransfers(pos, filter, trans); err != nil {
+	if transfers, err := r.getAssetTransfers2(pos, filter, trans); err != nil {
 		return []types.Statement{}, err
 	} else {
 		r.getStatementsInner(pos, trans, transfers)
@@ -483,7 +460,7 @@ func (r *Reconciler2) GetTransfers(pos *types.AppPosition, filter *filter.Appear
 
 	var err error
 	var statements []types.Statement
-	ledgerOpts := &ledger4.ReconcilerOptions{
+	ledgerOpts := &ledger10.ReconcilerOptions{
 		Connection:   r.connection,
 		AccountFor:   r.accountFor,
 		AsEther:      r.asEther,

@@ -14,12 +14,9 @@ Block 1 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               0
 Current:                1
 Next:                   5
-postFirst:              true
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438269988
 blockNumber:            1.99999
@@ -47,12 +44,9 @@ Block 5 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               1
 Current:                5
 Next:                   56
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438270083
 blockNumber:            5.99999
@@ -80,12 +74,9 @@ Block 56 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               5
 Current:                56
 Next:                   235
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438270322
 blockNumber:            56.99998
@@ -113,12 +104,9 @@ Block 235 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               56
 Current:                235
 Next:                   247
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438270713
 blockNumber:            235.99999
@@ -146,12 +134,9 @@ Block 247 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               235
 Current:                247
 Next:                   348
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438270739
 blockNumber:            247.99998
@@ -179,12 +164,9 @@ Block 348 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               247
 Current:                348
 Next:                   500
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438270943
 blockNumber:            348.99999
@@ -212,12 +194,9 @@ Block 500 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               348
 Current:                500
 Next:                   563
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438271212
 blockNumber:            500.99998
@@ -245,12 +224,9 @@ Block 563 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               500
 Current:                563
 Next:                   987
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438271337
 blockNumber:            563.99998
@@ -278,12 +254,9 @@ Block 987 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               563
 Current:                987
 Next:                   1450
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438272114
 blockNumber:            987.99998
@@ -311,12 +284,9 @@ Block 1450 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               987
 Current:                1450
 Next:                   1580
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438273130
 blockNumber:            1450.99999
@@ -345,12 +315,9 @@ Block 1580 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               1450
 Current:                1580
 Next:                   1586
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438273478
 blockNumber:            1580.99998
@@ -378,12 +345,9 @@ Block 1586 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               1580
 Current:                1586
 Next:                   1861
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438273492
 blockNumber:            1586.99998
@@ -411,12 +375,9 @@ Block 1861 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               1586
 Current:                1861
 Next:                   1912
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438274241
 blockNumber:            1861.99999
@@ -444,12 +405,9 @@ Block 1912 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               1861
 Current:                1912
 Next:                   2057
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438274378
 blockNumber:            1912.99998
@@ -477,12 +435,9 @@ Block 2057 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               1912
 Current:                2057
 Next:                   2256
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438274782
 blockNumber:            2057.99999
@@ -510,12 +465,9 @@ Block 2256 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               2057
 Current:                2256
 Next:                   2392
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438275372
 blockNumber:            2256.99999
@@ -543,12 +495,9 @@ Block 2392 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               2256
 Current:                2392
 Next:                   2516
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438275753
 blockNumber:            2392.99999
@@ -577,12 +526,9 @@ Block 2516 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               2392
 Current:                2516
 Next:                   3962
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438276092
 blockNumber:            2516.99998
@@ -610,12 +556,9 @@ Block 3962 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               2516
 Current:                3962
 Next:                   4256
-postFirst:              false
-postLast:               false
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438281538
 blockNumber:            3962.99998
@@ -643,12 +586,9 @@ Block 4256 is prior to deployment (3684349) of Maker. No fallback pricing method
 Previous:               3962
 Current:                4256
 Next:                   4257
-postFirst:              false
-postLast:               true
-postAssetType:          eth
 accountedFor:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0x05a56e2d52c817161883f50c441c3228cfe54d9f
-assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438282794
 blockNumber:            4256.99998
@@ -676,8 +616,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "5000000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 1,
@@ -697,9 +637,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
-      "postAssetType": "eth",
-      "postFirst": true,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "0",
       "priceSource": "eth-not-priced-pre-maker",
@@ -721,8 +658,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "5000000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "5000000000000000000",
       "begBalDiff": "0",
       "blockNumber": 5,
@@ -742,9 +679,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "5000000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -766,8 +700,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "3750000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "10000000000000000000",
       "begBalDiff": "0",
       "blockNumber": 56,
@@ -787,9 +721,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3750000000000000000",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "10000000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -811,8 +742,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "5000000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "13750000000000000000",
       "begBalDiff": "0",
       "blockNumber": 235,
@@ -832,9 +763,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "13750000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -856,8 +784,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "3125000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "18750000000000000000",
       "begBalDiff": "0",
       "blockNumber": 247,
@@ -877,9 +805,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3125000000000000000",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "18750000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -901,8 +826,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "5000000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "21875000000000000000",
       "begBalDiff": "0",
       "blockNumber": 348,
@@ -922,9 +847,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "21875000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -946,8 +868,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "3750000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "26875000000000000000",
       "begBalDiff": "0",
       "blockNumber": 500,
@@ -967,9 +889,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3750000000000000000",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "26875000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -991,8 +910,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "3750000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "30625000000000000000",
       "begBalDiff": "0",
       "blockNumber": 563,
@@ -1012,9 +931,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3750000000000000000",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "30625000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1036,8 +952,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "2500000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "34375000000000000000",
       "begBalDiff": "0",
       "blockNumber": 987,
@@ -1057,9 +973,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "2500000000000000000",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "34375000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1081,8 +994,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "5156250000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "36875000000000000000",
       "begBalDiff": "0",
       "blockNumber": 1450,
@@ -1102,9 +1015,6 @@ Trial balance:
       "minerNephewRewardIn": "156250000000000000",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "36875000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1126,8 +1036,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "3750000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "42031250000000000000",
       "begBalDiff": "0",
       "blockNumber": 1580,
@@ -1147,9 +1057,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3750000000000000000",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "42031250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1171,8 +1078,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "3750000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "45781250000000000000",
       "begBalDiff": "0",
       "blockNumber": 1586,
@@ -1192,9 +1099,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3750000000000000000",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "45781250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1216,8 +1120,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "5000000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "49531250000000000000",
       "begBalDiff": "0",
       "blockNumber": 1861,
@@ -1237,9 +1141,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "49531250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1261,8 +1162,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "3750000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "54531250000000000000",
       "begBalDiff": "0",
       "blockNumber": 1912,
@@ -1282,9 +1183,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "3750000000000000000",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "54531250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
@@ -1306,8 +1204,8 @@ Trial balance:
       "amountIn": "0",
       "amountNet": "5000000000000000000",
       "amountOut": "0",
-      "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "WEI",
       "begBal": "58281250000000000000",
       "begBalDiff": "0",
       "blockNumber": 2057,
@@ -1327,9 +1225,6 @@ Trial balance:
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
-      "postAssetType": "eth",
-      "postFirst": false,
-      "postLast": false,
       "prefundIn": "0",
       "prevBal": "58281250000000000000",
       "priceSource": "eth-not-priced-pre-maker",

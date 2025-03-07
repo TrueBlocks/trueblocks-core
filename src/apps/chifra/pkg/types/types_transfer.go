@@ -23,7 +23,7 @@ import (
 
 type Transfer struct {
 	Amount           base.Wei     `json:"amount"`
-	AssetAddress     base.Address `json:"asset"`
+	Asset            base.Address `json:"asset"`
 	BlockNumber      base.Blknum  `json:"blockNumber"`
 	Holder           base.Address `json:"holder"`
 	LogIndex         base.Lognum  `json:"logIndex"`
@@ -51,7 +51,7 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 		"blockNumber":      s.BlockNumber,
 		"transactionIndex": s.TransactionIndex,
 		"logIndex":         s.LogIndex,
-		"asset":            s.AssetAddress,
+		"asset":            s.Asset,
 		"holder":           s.Holder,
 		"amount":           s.Amount.Text(10),
 	}
@@ -104,8 +104,8 @@ func (s *Transfer) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// AssetAddress
-	if err = base.WriteValue(writer, s.AssetAddress); err != nil {
+	// Asset
+	if err = base.WriteValue(writer, s.Asset); err != nil {
 		return err
 	}
 
@@ -142,8 +142,8 @@ func (s *Transfer) UnmarshalCache(fileVersion uint64, reader io.Reader) (err err
 		return err
 	}
 
-	// AssetAddress
-	if err = base.ReadValue(reader, &s.AssetAddress, fileVersion); err != nil {
+	// Asset
+	if err = base.ReadValue(reader, &s.Asset, fileVersion); err != nil {
 		return err
 	}
 
@@ -188,7 +188,7 @@ func ConvertToTransfers(statements []Statement) ([]Transfer, error) {
 	transfers := make([]Transfer, 0, len(statements)*2)
 	for _, stmnt := range statements {
 		t := Transfer{
-			AssetAddress:     stmnt.AssetAddress,
+			Asset:            stmnt.Asset,
 			Holder:           stmnt.AccountedFor,
 			Amount:           *stmnt.AmountNet(),
 			BlockNumber:      stmnt.BlockNumber,

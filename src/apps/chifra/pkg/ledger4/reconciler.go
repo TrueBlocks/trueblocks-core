@@ -1,41 +1,113 @@
 package ledger4
 
 import (
+	"container/list"
+	"encoding/json"
+	"sync"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-type Reconcilerer interface {
-	GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error)
-	GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error)
+type Reconciler4 struct {
+	opts  *ledger10.ReconcilerOptions
+	names map[base.Address]types.Name
 }
 
-type ReconcilerOptions struct {
-	Connection   *rpc.Connection
-	AccountFor   base.Address
-	FirstBlock   base.Blknum
-	LastBlock    base.Blknum
-	AsEther      bool
-	TestMode     bool
-	UseTraces    bool
-	Reversed     bool
-	AssetFilters []base.Address
+func (r *Reconciler4) String() string {
+	bytes, _ := json.MarshalIndent(r, "", "  ")
+	return string(bytes)
 }
 
-type AssetTransfer = types.Statement
-
-func AssetOfInterest(filters []base.Address, needle base.Address) bool {
-	if len(filters) == 0 {
-		return true
+func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler4 {
+	parts := types.Custom | types.Prefund | types.Regular
+	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
+	return &Reconciler4{
+		opts:  opts,
+		names: names,
 	}
+}
 
-	for _, asset := range filters {
-		if asset.Hex() == needle.Hex() {
-			return true
+type Ledger struct{}
+
+// type blockTxKey struct {
+// 	BlockNumber      base.Blknum
+// 	TransactionIndex base.Txnum
+// }
+
+// type assetHolderKey struct {
+// 	AssetAddress base.Address
+// 	Holder       base.Address
+// }
+
+type Node struct {
+	Appearance *types.Appearance
+	Tx         *types.Transaction
+	Transfers  []ledger10.AssetTransfer
+	Statement  []types.Statement
+	Reconciled bool
+}
+
+func BuildDoublyLinkedList(appearances []types.Appearance) *list.List {
+	l := list.New()
+	for _, app := range appearances {
+		node := &Node{Appearance: &app}
+		l.PushBack(node)
+	}
+	return l
+}
+
+func (r *Reconciler4) ProcessTransactionsConcurrently(l *list.List, accountFor base.Address) {
+	var wg sync.WaitGroup
+	for e := l.Front(); e != nil; e = e.Next() {
+		wg.Add(1)
+		go func(elem *list.Element) {
+			defer wg.Done()
+			node := elem.Value.(*Node)
+			node.Tx = fetchTx(node.Appearance, false)
+			if node.Tx != nil {
+				node.Transfers = r.createTransfers(node.Tx)
+				node.Statement = r.queryBalances(node.Transfers)
+			}
+		}(e)
+	}
+	wg.Wait()
+}
+
+var conn *rpc.Connection = nil
+
+func getConnection() *rpc.Connection {
+	if conn == nil {
+		conn = rpc.NewConnection("mainnet", false, map[walk.CacheType]bool{})
+	}
+	return conn
+}
+
+func (r *Reconciler4) createTransfers(tx *types.Transaction) []ledger10.AssetTransfer {
+	r1 := ledger1.NewReconciler(r.opts)
+	pos := &types.AppPosition{}
+	filter := &filter.AppearanceFilter{}
+	transfers, err := r1.GetStatements(pos, filter, tx)
+	if err != nil {
+		return []ledger10.AssetTransfer{}
+	}
+	return transfers
+}
+
+func (r *Reconciler4) queryBalances(transfers []ledger10.AssetTransfer) []types.Statement {
+	statements := make([]types.Statement, 0)
+	for range transfers {
+		s := types.Statement{
+			BegBal: *base.NewWei(100),
+			EndBal: *base.NewWei(100),
 		}
+		statements = append(statements, s)
 	}
-
-	return false
+	return statements
 }

@@ -247,14 +247,6 @@ func (m *Member) MarshalCode() string {
 	}
 
 `
-	} else if m.GoName() == "PostAssetType" {
-		tmplName += "12"
-		tmpl = `// {{.GoName}}
-	if err = base.WriteValue(writer, s.{{.GoName}}); err != nil {
-		return err
-	}
-
-`
 	} else if m.IsArray &&
 		m.GoName() != "Topics" &&
 		m.GoName() != "Transactions" &&
@@ -345,14 +337,6 @@ func (m *Member) UnmarshalCode() string {
 	}
 	if err = json.Unmarshal([]byte({{.Lower}}), &s.{{.GoName}}); err != nil {
 		return fmt.Errorf("cannot unmarshal {{.GoName}}: %w", err)
-	}
-
-`
-	} else if m.GoName() == "PostAssetType" {
-		tmplName += "112"
-		tmpl = `// {{.GoName}}
-	if err = base.ReadValue(reader, &s.{{.GoName}}, fileVersion); err != nil {
-		return err
 	}
 
 `

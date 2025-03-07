@@ -28,12 +28,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8769018
 TEST[DATE|TIME] Current:                8769019
 TEST[DATE|TIME] Next:                   8769029
-TEST[DATE|TIME] postFirst:              true
-TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+TEST[DATE|TIME] asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 TEST[DATE|TIME] hash:                   0xf6bce3d9edd00f2e8a996505fded2e7e28a1b6af193d94e9524b9ac7fbf3e8b3
 TEST[DATE|TIME] timestamp:              1571457514
 TEST[DATE|TIME] blockNumber:            8769019.124
@@ -61,12 +58,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8769019
 TEST[DATE|TIME] Current:                8769029
 TEST[DATE|TIME] Next:                   8769052
-TEST[DATE|TIME] postFirst:              false
-TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] assetAddress:           0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
+TEST[DATE|TIME] asset:           0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
 TEST[DATE|TIME] hash:                   0x22f3135a1c2b201456a4770ef9c1ac65a759db3aebe5cb8ad36ad7373f48532f
 TEST[DATE|TIME] timestamp:              1571457649
 TEST[DATE|TIME] blockNumber:            8769029.80.61
@@ -106,12 +100,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8769029
 TEST[DATE|TIME] Current:                8769052
 TEST[DATE|TIME] Next:                   8769052
-TEST[DATE|TIME] postFirst:              false
-TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
-TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+TEST[DATE|TIME] asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 TEST[DATE|TIME] hash:                   0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d
 TEST[DATE|TIME] timestamp:              1571458005
 TEST[DATE|TIME] blockNumber:            8769052.73
@@ -152,12 +143,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8769052
 TEST[DATE|TIME] Current:                8769052
 TEST[DATE|TIME] Next:                   8769064
-TEST[DATE|TIME] postFirst:              false
-TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
-TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+TEST[DATE|TIME] asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 TEST[DATE|TIME] hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
 TEST[DATE|TIME] timestamp:              1571458005
 TEST[DATE|TIME] blockNumber:            8769052.74
@@ -186,12 +174,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8769052
 TEST[DATE|TIME] Current:                8769052
 TEST[DATE|TIME] Next:                   8769064
-TEST[DATE|TIME] postFirst:              false
-TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] postAssetType:          token
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
-TEST[DATE|TIME] assetAddress:           0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
+TEST[DATE|TIME] asset:           0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
 TEST[DATE|TIME] hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
 TEST[DATE|TIME] timestamp:              1571458005
 TEST[DATE|TIME] blockNumber:            8769052.74.73
@@ -232,12 +217,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8769064
 TEST[DATE|TIME] Current:                8769130
 TEST[DATE|TIME] Next:                   8769141
-TEST[DATE|TIME] postFirst:              false
-TEST[DATE|TIME] postLast:               false
-TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x103348c47ffc3254aff761894e7c13ca0c680465
-TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+TEST[DATE|TIME] asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 TEST[DATE|TIME] hash:                   0xe9278cb13db118e569d98b43b5d7feb01f799ad734d255198d46c293f9455b9e
 TEST[DATE|TIME] timestamp:              1571458850
 TEST[DATE|TIME] blockNumber:            8769130.51
@@ -278,12 +260,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8769130
 TEST[DATE|TIME] Current:                8769141
 TEST[DATE|TIME] Next:                   8769142
-TEST[DATE|TIME] postFirst:              false
-TEST[DATE|TIME] postLast:               true
-TEST[DATE|TIME] postAssetType:          eth
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0xf322ccd630465c8a6fc517326ff58fe102310251
-TEST[DATE|TIME] assetAddress:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+TEST[DATE|TIME] asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 TEST[DATE|TIME] hash:                   0xcc85517a32761d7de6b4aa07c75d54f4b54a88663505d2734f4e98e441e8e35e
 TEST[DATE|TIME] timestamp:              1571459025
 TEST[DATE|TIME] blockNumber:            8769141.27

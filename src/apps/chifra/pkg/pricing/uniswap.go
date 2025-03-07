@@ -29,14 +29,14 @@ func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price ba
 
 	} else {
 		temp := *statement
-		temp.AssetAddress = base.FAKE_ETH_ADDRESS
-		temp.AssetSymbol = "WEI"
+		temp.Asset = base.FAKE_ETH_ADDRESS
+		temp.Symbol = "WEI"
 		multiplier, _, err = priceUsdUniswap(conn, &temp)
 		if err != nil {
 			return 0.0, "not-priced", err
 		}
 		first = wethAddress
-		second = statement.AssetAddress
+		second = statement.Asset
 	}
 
 	reversed := false
@@ -97,8 +97,8 @@ func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price ba
 	source = "uniswap"
 
 	r := priceDebugger{
-		address:     statement.AssetAddress,
-		symbol:      statement.AssetSymbol,
+		address:     statement.Asset,
+		symbol:      statement.Symbol,
 		blockNumber: statement.BlockNumber,
 		source1:     uniswapFactoryV2,
 		theCall1:    theCall1,

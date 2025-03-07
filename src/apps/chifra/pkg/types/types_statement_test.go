@@ -35,15 +35,15 @@ func TestIsMaterial(t *testing.T) {
 func TestIsStableCoin(t *testing.T) {
 	dai := base.HexToAddress("0x6b175474e89094c44da98b954eedeac495271d0f")
 	stmtStable := new(Statement)
-	stmtStable.AssetAddress = dai // using DAI as an example
+	stmtStable.Asset = dai // using DAI as an example
 	if !stmtStable.IsStableCoin() {
 		t.Errorf("Expected IsStableCoin to return true for address %s", dai.Hex())
 	}
 
 	stmtNonStable := new(Statement)
-	stmtNonStable.AssetAddress = base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678")
+	stmtNonStable.Asset = base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678")
 	if stmtNonStable.IsStableCoin() {
-		t.Errorf("Expected IsStableCoin to return false for address %s", stmtNonStable.AssetAddress.Hex())
+		t.Errorf("Expected IsStableCoin to return false for address %s", stmtNonStable.Asset.Hex())
 	}
 }
 
@@ -71,14 +71,14 @@ func TestReconciled(t *testing.T) {
 
 func TestIsEth(t *testing.T) {
 	ethStmt := &Statement{
-		AssetAddress: base.FAKE_ETH_ADDRESS,
+		Asset: base.FAKE_ETH_ADDRESS,
 	}
 	if !ethStmt.IsEth() {
 		t.Error("Expected statement to be ETH")
 	}
 
 	nonEthStmt := &Statement{
-		AssetAddress: base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678"),
+		Asset: base.HexToAddress("0x1234567890abcdef1234567890abcdef12345678"),
 	}
 	if nonEthStmt.IsEth() {
 		t.Error("Expected statement not to be ETH")
@@ -247,8 +247,8 @@ func TestStatementGroupCache(t *testing.T) {
 		AccountedFor:     base.HexToAddress("0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"),
 		AmountIn:         *base.NewWei(1000000000000000000),
 		AmountOut:        *base.NewWei(500000000000000000),
-		AssetAddress:     base.HexToAddress("0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"),
-		AssetSymbol:      "TKN",
+		Asset:            base.HexToAddress("0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"),
+		Symbol:           "TKN",
 		BegBal:           *base.NewWei(2000000000000000000),
 		BlockNumber:      100,
 		LogIndex:         1,
@@ -335,9 +335,8 @@ func TestStatementCacheRoundtrip(t *testing.T) {
 		AccountedFor:        base.HexToAddress("0xAAAABBBBCCCCDDDDEEEEFFFF0000111122223333"),
 		AmountIn:            *base.NewWei(10),
 		AmountOut:           *base.NewWei(20),
-		AssetAddress:        base.HexToAddress("0x1111222233334444555566667777888899990000"),
-		AssetSymbol:         "TKN",
-		PostAssetType:       TrialBalEth, // using an example type; it could be any valid value
+		Asset:               base.HexToAddress("0x1111222233334444555566667777888899990000"),
+		Symbol:              "TKN",
 		BegBal:              *base.NewWei(100),
 		BlockNumber:         123,
 		CorrectingIn:        *base.NewWei(5),
@@ -562,15 +561,14 @@ func TestDebugStatement(t *testing.T) {
 	defer restore()
 
 	stmt := &Statement{
-		PostAssetType:       TrialBalEth,
 		BlockNumber:         100,
 		TransactionIndex:    1,
 		LogIndex:            2,
 		AccountedFor:        base.HexToAddress("0xAAAABBBBCCCCDDDDEEEEFFFF0000111122223333"),
 		Sender:              base.HexToAddress("0x1111222233334444555566667777888899990000"),
 		Recipient:           base.HexToAddress("0x0000999988887777666655554444333322221111"),
-		AssetAddress:        base.HexToAddress("0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"),
-		AssetSymbol:         "ETH",
+		Asset:               base.HexToAddress("0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"),
+		Symbol:              "ETH",
 		Decimals:            18,
 		TransactionHash:     base.HexToHash("0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"),
 		Timestamp:           1610000000,
@@ -639,15 +637,14 @@ func TestDebugStatementTokenFormatting(t *testing.T) {
 
 	// Create a statement with asset type set to a token type.
 	stmt := &Statement{
-		PostAssetType:    TrialBalToken, // should trigger printing with 3-part block number
 		BlockNumber:      123,
 		TransactionIndex: 456,
 		LogIndex:         789,
 		AccountedFor:     base.HexToAddress("0xAAAABBBBCCCCDDDDEEEEFFFF0000111122223333"),
 		Sender:           base.HexToAddress("0x1111222233334444555566667777888899990000"),
 		Recipient:        base.HexToAddress("0x0000999988887777666655554444333322221111"),
-		AssetAddress:     base.HexToAddress("0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"),
-		AssetSymbol:      "TKN",
+		Asset:            base.HexToAddress("0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"),
+		Symbol:           "TKN",
 		Decimals:         18,
 		TransactionHash:  base.HexToHash("0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"),
 		Timestamp:        1610000000,

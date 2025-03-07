@@ -9,8 +9,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger4"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
@@ -34,7 +34,7 @@ type Reconciler1 struct {
 	assetFilter       []base.Address
 	names             map[base.Address]types.Name
 	hasStartBlock     bool
-	transfers         map[blockTxKey][]ledger4.AssetTransfer
+	transfers         map[blockTxKey][]ledger10.AssetTransfer
 	accountLedger     map[assetHolderKey]base.Wei
 	ledgerAssets      map[base.Address]bool
 	correctionCounter base.Value
@@ -47,7 +47,7 @@ func (r *Reconciler1) String() string {
 	return string(bytes)
 }
 
-func NewReconciler(opts *ledger4.ReconcilerOptions) *Reconciler1 {
+func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler1 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
 	return &Reconciler1{
@@ -62,7 +62,7 @@ func NewReconciler(opts *ledger4.ReconcilerOptions) *Reconciler1 {
 		assetFilter:   opts.AssetFilters,
 		names:         names,
 		hasStartBlock: false,
-		transfers:     make(map[blockTxKey][]ledger4.AssetTransfer),
+		transfers:     make(map[blockTxKey][]ledger10.AssetTransfer),
 		accountLedger: make(map[assetHolderKey]base.Wei),
 		ledgerAssets:  make(map[base.Address]bool),
 		ledgers:       make(map[base.Address]Ledger),
@@ -70,17 +70,18 @@ func NewReconciler(opts *ledger4.ReconcilerOptions) *Reconciler1 {
 }
 
 type Ledger struct{}
+
 type blockTxKey struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
 }
 
 type assetHolderKey struct {
-	AssetAddress base.Address
-	Holder       base.Address
+	Asset  base.Address
+	Holder base.Address
 }
 
-func (r *Reconciler1) getAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]ledger4.AssetTransfer, error) {
+func (r *Reconciler1) getAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]ledger10.AssetTransfer, error) {
 	if r.connection.Store != nil {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
@@ -96,7 +97,7 @@ func (r *Reconciler1) getAssetTransfers(pos *types.AppPosition, filter *filter.A
 
 	results := make([]AAA, 0, 20)
 	var err error
-	if ledger4.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
+	if ledger10.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
 		accountedFor := r.accountFor
 
 		prevBal, _ := r.connection.GetBalanceAt(r.accountFor, pos.Prev)
@@ -111,7 +112,7 @@ func (r *Reconciler1) getAssetTransfers(pos *types.AppPosition, filter *filter.A
 
 		endBal, _ := r.connection.GetBalanceAt(r.accountFor, trans.BlockNumber)
 
-		at := AAA{
+		at := ledger10.AssetTransfer{
 			AccountedFor:     accountedFor,
 			Sender:           trans.From,
 			Recipient:        trans.To,
@@ -120,21 +121,18 @@ func (r *Reconciler1) getAssetTransfers(pos *types.AppPosition, filter *filter.A
 			TransactionHash:  trans.Hash,
 			LogIndex:         0,
 			Timestamp:        trans.Timestamp,
-			AssetAddress:     base.FAKE_ETH_ADDRESS,
-			AssetSymbol:      "WEI",
+			Asset:            base.FAKE_ETH_ADDRESS,
+			Symbol:           "WEI",
 			Decimals:         18,
-			PostAssetType:    types.TrialBalEth,
 			SpotPrice:        0.0,
 			PriceSource:      "not-priced",
 			PrevBal:          *prevBal,
 			BegBal:           *begBal,
 			EndBal:           *endBal,
-			PostFirst:        pos.First,
-			PostLast:         pos.Last,
 		}
 
 		if r.asEther {
-			at.AssetSymbol = "ETH"
+			at.Symbol = "ETH"
 		}
 
 		if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
@@ -178,7 +176,7 @@ func (r *Reconciler1) getAssetTransfers(pos *types.AppPosition, filter *filter.A
 			}
 
 			if !utils.IsFuzzing() {
-				reconciled := r.trialBalance(pos, types.TrialBalEth, trans, &at)
+				reconciled := r.trialBalance(pos, trans, &at)
 				if !reconciled {
 					logger.TestLog(!r.useTraces, "Trial balance failed for ", at.TransactionHash.Hex(), " need to decend into traces")
 					if traceStatements, err := r.getStatementsFromTraces(pos, trans, &at); err != nil {
@@ -201,7 +199,7 @@ func (r *Reconciler1) getAssetTransfers(pos *types.AppPosition, filter *filter.A
 				continue
 			}
 			addrArray := []base.Address{r.accountFor}
-			if filter.ApplyLogFilter(&log, addrArray) && ledger4.AssetOfInterest(r.assetFilter, log.Address) {
+			if filter.ApplyLogFilter(&log, addrArray) && ledger10.AssetOfInterest(r.assetFilter, log.Address) {
 				normalized, err := normalize.NormalizeKnownLogs(&log)
 				if err != nil {
 					continue
@@ -247,16 +245,13 @@ func (r *Reconciler1) getAssetTransfers(pos *types.AppPosition, filter *filter.A
 						LogIndex:         normalized.LogIndex,
 						TransactionHash:  normalized.TransactionHash,
 						Timestamp:        normalized.Timestamp,
-						AssetAddress:     normalized.Address,
-						AssetSymbol:      sym,
+						Asset:            normalized.Address,
+						Symbol:           sym,
 						Decimals:         decimals,
 						SpotPrice:        0.0,
 						PriceSource:      "not-priced",
 						AmountIn:         amountIn,
 						AmountOut:        amountOut,
-						PostAssetType:    types.TrialBalToken,
-						PostFirst:        pos.First,
-						PostLast:         pos.Last,
 					}
 
 					pBal, err := r.connection.GetBalanceAtToken(normalized.Address, r.accountFor, pos.Prev)
@@ -277,7 +272,7 @@ func (r *Reconciler1) getAssetTransfers(pos *types.AppPosition, filter *filter.A
 						continue
 					}
 					s.EndBal = *eBal
-					reconciled := r.trialBalance(pos, types.TrialBalToken, trans, &s)
+					reconciled := r.trialBalance(pos, trans, &s)
 					if reconciled {
 						id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 						logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
@@ -323,6 +318,10 @@ func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *typ
 	statements := make([]types.Statement, 0, 20)
 
 	ret := *s
+	// clear all the internal accounting values. Keeps AmountIn, AmountOut and GasOut because
+	// those are at the top level (both the transaction itself and trace '0' have them). We
+	// skip trace '0' because it's the same as the transaction.
+	// ret.AmountIn.SetUint64(0)
 	ret.InternalIn.SetUint64(0)
 	ret.MinerBaseRewardIn.SetUint64(0)
 	ret.MinerNephewRewardIn.SetUint64(0)
@@ -332,6 +331,8 @@ func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *typ
 	ret.PrefundIn.SetUint64(0)
 	ret.SelfDestructIn.SetUint64(0)
 
+	// ret.AmountOut.SetUint64(0)
+	// ret.GasOut.SetUint64(0)
 	ret.InternalOut.SetUint64(0)
 	ret.CorrectingOut.SetUint64(0)
 	ret.SelfDestructOut.SetUint64(0)
@@ -340,12 +341,15 @@ func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *typ
 		return statements, err
 
 	} else {
+		// These values accumulate...so we use += instead of =
 		for i, trace := range traces {
 			if i == 0 {
+				// the first trace is identical to the transaction itself, so we can skip it
 				continue
 			}
 
 			if trace.Action.CallType == "delegatecall" && trace.Action.To != s.AccountedFor {
+				// delegate calls are not included in the transaction's gas cost, so we skip them
 				continue
 			}
 
@@ -353,6 +357,7 @@ func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *typ
 				return *a1.Add(a1, a2)
 			}
 
+			// Do not collapse, more than one of these can be true at the same time
 			if trace.Action.From == s.AccountedFor {
 				ret.InternalOut = plusEq(&ret.InternalOut, &trace.Action.Value)
 				ret.Sender = trace.Action.From
@@ -391,6 +396,7 @@ func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *typ
 
 			if trace.Action.Address == s.AccountedFor && !trace.Action.RefundAddress.IsZero() {
 				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, &trace.Action.Balance)
+				// self destructed send
 				ret.Sender = trace.Action.Address
 				ret.Recipient = trace.Action.RefundAddress
 			}
@@ -410,7 +416,7 @@ func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *typ
 		return statements, nil
 	}
 
-	reconciled := r.trialBalance(pos, types.TrialBalTraceEth, trans, &ret)
+	reconciled := r.trialBalance(pos, trans, &ret)
 	if !reconciled {
 		statements = append(statements, ret)
 		return statements, nil
@@ -423,11 +429,12 @@ func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *typ
 	return statements, nil
 }
 
-func (r *Reconciler1) trialBalance(pos *types.AppPosition, reason types.TrialBalType, trans *types.Transaction, s *types.Statement) bool {
-	s.PostFirst = pos.First
-	s.PostLast = pos.Last
-	s.PostAssetType = reason
-
+// trialBalance returns true of the reconciliation balances, false otherwise. If the statement
+// does not reconcile, it tries to repair it in two ways (a) for null transfers and (b) for
+// any other reason. If that works and the statement is material (money moved in some way), the
+// function tries to price the asset. it then prints optional debugging information. Note that
+// the statement may be modified in this function.
+func (r *Reconciler1) trialBalance(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) bool {
 	var okay bool
 	if okay = s.Reconciled(); !okay {
 		if !s.IsEth() {
@@ -482,7 +489,7 @@ func (r *Reconciler1) correctForSomethingElseToken(s *types.Statement) bool {
 func correctForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 	if s.IsNullTransfer(tx) {
 		logger.TestLog(true, "Correcting token transfer for a null transfer")
-		amt := s.TotalIn()
+		amt := s.TotalIn() // use totalIn since this is the amount that was faked
 		s.AmountOut = *base.ZeroWei
 		s.AmountIn = *base.ZeroWei
 		s.CorrectingIn = *amt
@@ -495,6 +502,7 @@ func correctForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 	return s.Reconciled()
 }
 
+// GetTransfers returns a statement from a given transaction
 func (r *Reconciler1) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
 	if r.connection.Store != nil {
 		transferGroup := &types.TransferGroup{
@@ -508,15 +516,26 @@ func (r *Reconciler1) GetTransfers(pos *types.AppPosition, filter *filter.Appear
 
 	var err error
 	var statements []types.Statement
-	ledgerOpts := &ledger4.ReconcilerOptions{
-		Connection:   r.connection,
-		AccountFor:   r.accountFor,
-		AsEther:      r.asEther,
-		AssetFilters: r.assetFilter,
-	}
-	r2 := ledger2.NewReconciler(ledgerOpts)
-	if statements, err = r2.GetStatements(pos, filter, trans); err != nil {
-		return nil, err
+	if true { // !r.useTraces {
+		ledgerOpts := &ledger10.ReconcilerOptions{
+			Connection: r.connection,
+			AccountFor: r.accountFor,
+			// FirstBlock:   opts.FirstBlock,
+			// LastBlock:    opts.LastBlock,
+			AsEther: r.asEther,
+			// TestMode:     testMode,
+			// UseTraces:    opts.Traces,
+			// Reversed:     opts.Reversed,
+			AssetFilters: r.assetFilter,
+		}
+		r2 := ledger2.NewReconciler(ledgerOpts)
+		if statements, err = r2.GetStatements(pos, filter, trans); err != nil {
+			return nil, err
+		}
+		// } else {
+		// 	if statements, err = r.GetStatements(pos, filter, trans); err != nil {
+		// 		return nil, err
+		// 	}
 	}
 
 	if transfers, err := types.ConvertToTransfers(statements); err != nil {
@@ -536,8 +555,37 @@ func (r *Reconciler1) GetTransfers(pos *types.AppPosition, filter *filter.Appear
 			TransactionIndex: trans.TransactionIndex,
 			Transfers:        transfers,
 		}
-
+		// TODO: BOGUS Turn on caching (remove the false below) for results once we get 100% coverage
 		err = r.connection.Store.WriteToCache(transfersGroup, walk.Cache_Transfers, trans.Timestamp, allReconciled, false)
 		return transfers, err
 	}
+}
+
+func GetTransfersFromTransaction(tx *types.Transaction) ([]ledger10.AssetTransfer, error) {
+	transfers := make([]ledger10.AssetTransfer, 0, 20)
+	for _, log := range tx.Receipt.Logs {
+		if log.Topics[0] != topics.TransferTopic {
+			continue
+		}
+		normalized, err := normalize.NormalizeKnownLogs(&log)
+		if err != nil {
+			continue
+		} else if normalized.IsNFT() {
+			continue
+		} else {
+			sender := base.HexToAddress(normalized.Topics[1].Hex())
+			recipient := base.HexToAddress(normalized.Topics[2].Hex())
+			amount, _ := new(base.Wei).SetString(strings.ReplaceAll(normalized.Data, "0x", ""), 16)
+			if amount == nil {
+				amount = base.NewWei(0)
+			}
+			transfers = append(transfers, ledger10.AssetTransfer{
+				Sender:       sender,
+				Recipient:    recipient,
+				AmountIn:     *amount,
+				AssetAddress: normalized.Address,
+			})
+		}
+	}
+	return transfers, nil
 }

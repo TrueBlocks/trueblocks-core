@@ -41,8 +41,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          8854723
 TEST[DATE|TIME]    hash:                0x1a898c5448b37f693343917ea40b7ad1c43b28a4ddd37af1bd6d0bb4a0c99891
@@ -108,8 +108,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x3b161d57f482cd2dfbb626f0307ef92b3b094fce
 TEST[DATE|TIME]    recipient:           0x226159d592e2b063810a10ebf6dcbada94ed68b8
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          8854723
 TEST[DATE|TIME]    hash:                0xecfbe561392a3b0ca8cd7557c7856a9202919d6bc8543538670736db159f1929
@@ -175,8 +175,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    recipient:           0xb97073b754660bb356dfe12f78ae366d77dbc80f
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          8855603
 TEST[DATE|TIME]    hash:                0xb7d80298ad62d68f47a9e3faeaa78ca7888e33dc714707a83eb4dfbbcdc01b09
@@ -242,8 +242,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xb97073b754660bb356dfe12f78ae366d77dbc80f
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          8856290
 TEST[DATE|TIME]    hash:                0x6d62aaef0653a83fd9c876f58f04aaf1ce6a750699d34ed870dd171e3de2d80a
@@ -309,8 +309,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xeba60d324c2546459e1e9dd4c7e740ca80134588
 TEST[DATE|TIME]    recipient:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          8856316
 TEST[DATE|TIME]    hash:                0x118f8d42e6b858427f6b54c1636a6ec1f72e0cf8941da03deffa55a3c2357204
@@ -367,8 +367,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xeba60d324c2546459e1e9dd4c7e740ca80134588
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME]    assetAddress:        0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-TEST[DATE|TIME]    assetSymbol:         DAI
+TEST[DATE|TIME]    asset:        0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TEST[DATE|TIME]    symbol:         DAI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          8856316
 TEST[DATE|TIME]    hash:                0x118f8d42e6b858427f6b54c1636a6ec1f72e0cf8941da03deffa55a3c2357204
@@ -434,8 +434,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x8c492d5f763841767362d716e3e69511f0527791
 TEST[DATE|TIME]    recipient:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-TEST[DATE|TIME]    assetAddress:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    asset:        0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    symbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          8856476
 TEST[DATE|TIME]    hash:                0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed
@@ -492,8 +492,8 @@ TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x8c492d5f763841767362d716e3e69511f0527791
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME]    assetAddress:        0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-TEST[DATE|TIME]    assetSymbol:         DAI
+TEST[DATE|TIME]    asset:        0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TEST[DATE|TIME]    symbol:         DAI
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          8856476
 TEST[DATE|TIME]    hash:                0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed
@@ -656,8 +656,8 @@ Results in ./rev_not_rev_acct_out.file
           "amountIn": "0",
           "amountNet": "-0.01021",
           "amountOut": "0.01",
-          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "ETH",
+          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "symbol": "ETH",
           "begBal": "5",
           "begBalDiff": "0",
           "blockNumber": 8856290,
@@ -726,8 +726,8 @@ Results in ./rev_not_rev_acct_out.file
           "amountIn": "0.01",
           "amountNet": "0.01",
           "amountOut": "0",
-          "assetAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "ETH",
+          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "symbol": "ETH",
           "begBal": "4.98979",
           "begBalDiff": "0",
           "blockNumber": 8856316,
@@ -828,8 +828,8 @@ Results in ./rev_not_rev_acct_out.file
           "amountIn": "1",
           "amountNet": "1",
           "amountOut": "0",
-          "assetAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-          "assetSymbol": "DAI",
+          "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+          "symbol": "DAI",
           "begBal": "0",
           "begBalDiff": "0",
           "blockNumber": 8856476,
@@ -930,8 +930,8 @@ Results in ./rev_not_rev_acct_out.file
           "amountIn": "4999",
           "amountNet": "4999",
           "amountOut": "0",
-          "assetAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-          "assetSymbol": "DAI",
+          "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+          "symbol": "DAI",
           "begBal": "1",
           "begBalDiff": "0",
           "blockNumber": 8856511,
